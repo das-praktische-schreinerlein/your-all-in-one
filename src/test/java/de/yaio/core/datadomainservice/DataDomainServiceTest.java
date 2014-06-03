@@ -1,0 +1,125 @@
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Collaboration
+ *
+ * <h4>FeatureDescription:</h4>
+ *     software for projectmanagement and documentation
+ * 
+ * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category collaboration
+ * @copyright Copyright (c) 2014, Michael Schreiner
+ * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+package de.yaio.core.datadomainservice;
+import org.apache.log4j.Logger;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
+import org.springframework.mock.staticmock.MockStaticEntityMethods;
+
+import de.yaio.BaseTest;
+import de.yaio.core.datadomain.DataDomain;
+import de.yaio.core.nodeservice.NodeService;
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Tests
+ * <h4>FeatureDescription:</h4>
+ *     interface for test of the datadomainservice-logic<br>
+ *     test: doRecalc...
+ * 
+ * @package de.yaio.core.datadomainservice
+ * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category tests
+ * @copyright Copyright (c) 2014, Michael Schreiner
+ * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ */
+
+@RunWith(JUnit4.class)
+@MockStaticEntityMethods
+public abstract class DataDomainServiceTest extends BaseTest {
+    // Logger
+    private static final Logger LOGGER =
+            Logger.getLogger(DataDomainServiceTest.class);
+
+    // define Service
+    protected DataDomainRecalc dataDomainService = null;
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Tests
+     * <h4>FeatureDescription:</h4>
+     *     setup the datadomainservice-obj to test
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>updates membervar dataDomainService
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Test Config Initialisation
+     * @throws Exception
+     */
+    @Before
+    public abstract void setupDataDomainService() throws Exception;
+    
+    @Test
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Tests
+     * <h4>FeatureDescription:</h4>
+     *     do the ServiceRecalc-tests
+     * <h4>FeatureKeywords:</h4>
+     *     Test
+     * @throws Exception
+     */
+    public abstract void testServiceDoRecalc() throws Exception;
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Tests
+     * <h4>FeatureDescription:</h4>
+     *     does a datadomainservice-test on the datadomainservice-obj with the dataobj<br>
+     *     calls dataDomainService.doRecalcBeforeChildren and checks the result with checkServiceResult()<br>  
+     *     calls recalcData for every childNode<br>  
+     *     calls dataDomainService.doRecalcAfterChildren and checks the result with checkServiceResult()<br>  
+     * <h4>FeatureKeywords:</h4>
+     *     Test
+     * @param myDataDomainObj - the dataobj to test
+     * @param expectedAfterDoBeforeChildren - the expected result after call doRecalcBeforeChildren
+     * @param expectedAfterDoAfterChildren - the expected result after call doRecalcAfterChildren
+     * @param recurseDirection - direction of recalc
+     * @throws Exception
+     */
+    public void testServiceDoRecalc(TestObj testObj, 
+                    String expectedAfterDoBeforeChildren,
+                    String expectedAfterDoAfterChildren,
+                    int recurseDirection) throws Exception {
+        
+        DataDomain myDataDomainObj = (DataDomain)testObj;
+        
+        // run doRecalcBeforeChildren
+        if (LOGGER.isDebugEnabled())
+            LOGGER.debug("src before doRecalcBeforeChildren:" 
+                         + myDataDomainObj.toString());
+        dataDomainService.doRecalcBeforeChildren((DataDomain)myDataDomainObj, recurseDirection);
+        testService.checkToStringResult(testObj, expectedAfterDoBeforeChildren);
+        
+        // recalc children
+        if (recurseDirection == NodeService.CONST_RECURSE_DIRECTION_CHILDREN) {
+            for (String name : myDataDomainObj.getChildNodesByNameMap().keySet()) {
+                myDataDomainObj.getChildNodesByNameMap().get(name).recalcData(recurseDirection);
+            }
+        }
+
+        // run doRecalcBeforeChildren
+        if (LOGGER.isDebugEnabled())
+            LOGGER.debug("src before doRecalcAfterChildren:" 
+                         + myDataDomainObj.toString());
+        dataDomainService.doRecalcAfterChildren(myDataDomainObj, recurseDirection);
+        testService.checkToStringResult(testObj, expectedAfterDoAfterChildren);
+    };
+}

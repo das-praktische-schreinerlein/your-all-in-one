@@ -1,0 +1,55 @@
+    </div>
+
+    <div class="menueFooterDummy" id="menueFooterDummy"> </div>
+    <div class="menueFooter" id="menueFooter">
+        <div class="menueFooterBox">
+            <ul id="ulMenueFooter" class="ulMenueFooter">
+                <li class="menueFooterMasterLink display-if-js-block"><a href="#" class="a-menue-footer-norm flg-textonly" onclick='javascript:showAsPrintVersion(); window.print(); return false;'><img class="icon-menufooter" border="0" title="Drucken" alt="Drucken" src="images/icon-print.gif">Drucken</a></li>
+                <li class="menueFooterMasterLink display-if-js-block"><a href="#" class="a-menue-footer-norm flg-textonly" onclick='javascript:doAllNodeToggler(true, getElementById("inputNodeEbene").value); return false;'><img class="icon-menufooter" src="./images/icon-up.gif"  title="Bis 4 aufklappen" alt="Bis  aufklappen">Nodes bis <input type=text value="4" id="inputNodeEbene" size=2> auf</a></li>
+                <li class="menueFooterMasterLink display-if-js-block"><a href="#" class="a-menue-footer-norm flg-textonly" onclick='javascript:doAllNodeToggler(true, 100); return false;'><img class="icon-menufooter" src="./images/icon-up.gif"  title="Alles aufklappen" alt="Alles aufklappen">Alle Nodes auf</a></li>
+                <li class="menueFooterMasterLink display-if-js-block"><a href="#" class="a-menue-footer-norm flg-textonly" onclick='javascript:jMATService.getPageLayoutService().doAllBlockToggler(true); return false;'><img class="icon-menufooter" src="./images/icon-up.gif"  title="Alles aufklappen" alt="Alles aufklappen">Alles auf</a></li>
+                <li class="menueFooterMasterLink display-if-js-block"><a href="#" class="a-menue-footer-norm flg-textonly" onclick='javascript:jMATService.getPageLayoutService().doAllBlockToggler(false); return false;'><img class="icon-menufooter" src="./images/icon-down.gif" title="Alles zuklappen" alt="Alles zuklappen">Alles zu</a></li>
+                <li class="menueFooterMasterLink display-if-js-block">
+                   <input type="text" style="width:200px" class="volltextsuchfeld" id="vlt_msglist">
+                   <input type=button onclick="javascript:startSearch();" value="Suchen">
+                   <input type=button onclick="javascript:resetSearch();doAllNodeToggler(true, 3);" value="Reset">
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+
+<script type="text/javascript">
+    // alle Bloecke toggeln
+    jMATService.getPageLayoutService().doAllBlockToggler(false);
+</script>
+<script type="text/javascript">
+    // alle OFFEN hervorheben
+    var styles = {
+        "color": "red",
+        "font-size": "13px",
+        "font-weight": "bold"
+    };
+    $( "span:contains('OFFEN')" ).css( styles );
+</script>
+<script type="text/javascript">
+    // verzoegerte Druckoptimierung
+    delayedOptimize = window.setInterval(
+            function() {
+                // nach 2 Sekunden ausfuehren und Intervall loeschen
+                /*
+                jMATService.getLayoutService().toggleBlock(
+                        'node_2_childrencontainer',
+                        'node_2_childrencontainer',
+                        function () {
+                            new ToggleEffect('node_2_childrencontainer').doEffect();
+                        }
+                );
+                */
+                doAllNodeToggler(true, 3);
+                initSearch();
+                window.clearInterval(delayedOptimize);
+            }, 2000);
+
+</script>
+</body></html>

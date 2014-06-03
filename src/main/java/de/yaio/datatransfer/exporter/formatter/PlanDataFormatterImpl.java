@@ -1,0 +1,148 @@
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Collaboration
+ *
+ * <h4>FeatureDescription:</h4>
+ *     software for projectmanagement and documentation
+ * 
+ * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category collaboration
+ * @copyright Copyright (c) 2014, Michael Schreiner
+ * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+package de.yaio.datatransfer.exporter.formatter;
+
+import java.util.Date;
+
+import org.apache.log4j.Logger;
+
+import de.yaio.core.datadomain.DataDomain;
+import de.yaio.core.datadomain.PlanData;
+import de.yaio.datatransfer.exporter.Exporter;
+import de.yaio.datatransfer.exporter.OutputOptions;
+import de.yaio.utils.Calculator;
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Praesentation
+ * <h4>FeatureDescription:</h4>
+ *     service-functions for formatting of dataDomain:PlanData
+ * 
+ * @package de.yaio.datatransfer.exporter.formatter
+ * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category collaboration
+ * @copyright Copyright (c) 2014, Michael Schreiner
+ * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ */
+public class PlanDataFormatterImpl extends FormatterImpl implements PlanDataFormatter {
+
+    // Logger
+    private static final Logger LOGGER =
+            Logger.getLogger(PlanDataFormatterImpl.class);
+
+    @Override
+    public Class<?> getTargetClass() {
+        return PlanData.class;
+    }
+
+    @Override
+    public int getTargetOrder() {
+        return PlanData.CONST_ORDER;
+    }
+
+
+    public static void configureDataDomainFormatter(Exporter nodeFactory) {
+        Formatter formatter = new PlanDataFormatterImpl();
+        nodeFactory.addDataDomainFormatter(formatter);
+    }
+
+    @Override
+    public void format(DataDomain node, StringBuffer nodeOutput, OutputOptions options) throws Exception {
+        // Check if node is compatibel
+        if (node != null) {
+            if (! PlanData.class.isInstance(node)) {
+                throw new IllegalArgumentException();
+            }
+        }
+        formatPlanData((PlanData)node, nodeOutput, options);
+    }
+
+    @Override
+    public void formatPlanData(PlanData node, StringBuffer nodeOutput, OutputOptions oOptions) throws Exception {
+        // exit if Flg not set
+        if (! oOptions.isFlgShowPlan()) {
+            if (LOGGER.isDebugEnabled())
+                LOGGER.debug("SKIP: isFlgShowPlan not set for node:" + node.getNameForLogger());
+            return;
+        }
+
+        // lets roll
+
+        // Label-Itented fuer IstSum konfiurieren
+        String labelIntend = "";
+        if (oOptions.isFlgIntendSum() && oOptions != null && oOptions.isFlgShowChildrenSum()) {
+            labelIntend = "   ";
+        }
+
+        // Daten einlesen
+        Double aufwand = node.getPlanAufwand();
+        Date start = node.getPlanStart();
+        Date ende = node.getPlanEnde();
+        String task = node.getPlanTask();
+
+        // Ausgabe erzeugen
+        if ( (aufwand != null && aufwand >= Calculator.CONST_DOUBLE_NULL)
+                || start != null
+                || ende != null
+                || task != null) {
+            if (LOGGER.isDebugEnabled())
+                LOGGER.debug("Do: PlanDataFormatter for Node:" + node.getNameForLogger());
+
+            // Abstand
+            if (nodeOutput.length() > 0)
+                nodeOutput.append(" ");
+
+            // Einrueckung
+            if (oOptions.getIntendFuncArea() > 0) {
+                if (LOGGER.isDebugEnabled())
+                    LOGGER.debug("Do: IntendPlanPos Output " + nodeOutput.toString() 
+                            + " for Node:" + node.getNameForLogger());
+                while (nodeOutput.length() < oOptions.getIntendFuncArea()) {
+                    nodeOutput.append(" ");
+                }
+            }
+            if (oOptions.isFlgShowBrackets()) {
+                nodeOutput.append("[");
+            }
+            nodeOutput.append("Plan: ")
+            .append(labelIntend)
+            .append(this.intendLeft(this.formatNumber(aufwand, 0, 2), (oOptions.isFlgDoIntend() ? 6 : 0)) + "h");
+            if (start != null || ende != null) {
+                nodeOutput.append(" ");
+                if (start != null) {
+                    nodeOutput.append(formatDate(start));
+                } else if (oOptions.isFlgDoIntend()) {
+                    nodeOutput.append("          ");
+                }
+                if (ende != null) {
+                    nodeOutput.append("-" + formatDate(ende));
+                } else if (oOptions.isFlgDoIntend()) {
+                    nodeOutput.append("-          ");
+                }
+            }
+            if (task != null) {
+                nodeOutput.append(" " + task);
+            }
+            if (oOptions.isFlgShowBrackets()) {
+                nodeOutput.append("]");
+            }
+        } else if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("SKIP: PlanDataFormatter not PlanData for Node:" + node.getNameForLogger());
+        }
+        
+    }
+}
