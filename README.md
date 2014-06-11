@@ -5,7 +5,7 @@ your-all-in-one - Le petit D'Artagnan
 "Your-All-In-One" or "Le petit D'Artagnan" is the prototype of my 
 collaboration-softwareproject: "D'Artagnan - Dein persönlicher Software-Musketier".
 
-More information about the prototype can you find at http://www.your-all-in-one.de/yaio/static/lepetit 
+More information about the prototype at http://www.your-all-in-one.de/yaio/static/lepetit 
 
 # TODO for me
 - [ ] documentation
@@ -23,9 +23,9 @@ More information about the prototype can you find at http://www.your-all-in-one.
 - 2012
    - java-progs for parsing and converting wiki to export-media
 - 2011
-   - planing and documentation with a javascript-wiki-editor/parser
+   - planning and documentation with a javascript-wiki-editor/parser
 - 2010
-   - initial version with excel for private project-planing
+   - initial version with excel for private project-planning
    - used at private projects and some projects at work
 
 # Requires
@@ -33,7 +33,7 @@ More information about the prototype can you find at http://www.your-all-in-one.
    - maven
    - spring-roo
    - IDE (I built it with eclipse)
-- for use, take a look at http://www.your-all-in-one.de/yaio/static/lepetithow#h3_YAIO716
+- to use, take a look at http://www.your-all-in-one.de/yaio/static/lepetithow#h3_YAIO716
    - java
    - notepadd++
    - freemind
