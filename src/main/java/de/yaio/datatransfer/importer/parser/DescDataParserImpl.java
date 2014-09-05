@@ -107,7 +107,7 @@ public class DescDataParserImpl  extends ParserImpl implements DescDataParser {
                 LOGGER.debug("Pattern: " + CONST_PATTERN_SEG_DESC + " " 
                     + matcherindex + ":" + matcher.group(matcherindex));
             if (matcher.group(matcherindex) != null) {
-                node.setDesc(matcher.group(matcherindex));
+                node.setNodeDesc(matcher.group(matcherindex));
             }
 
             found++;

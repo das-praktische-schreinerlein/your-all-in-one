@@ -36,8 +36,8 @@ public interface BaseData extends DataDomain {
     public String getSrcName();    
     public void setSrcName(String srcName);
 
-    public Long getId();
-    public void setId(Long id);
+    public Long getImportTmpId();
+    public void setImportTmpId(Long id);
     public String getType();
     public void setType(String type);
     public String getName();

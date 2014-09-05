@@ -11,6 +11,14 @@ import java.util.Set;
 
 privileged aspect BaseNode_Roo_JavaBean {
     
+    public Long BaseNode.getImportTmpId() {
+        return this.importTmpId;
+    }
+    
+    public void BaseNode.setImportTmpId(Long importTmpId) {
+        this.importTmpId = importTmpId;
+    }
+    
     public String BaseNode.getFullSrc() {
         return this.fullSrc;
     }
@@ -43,12 +51,12 @@ privileged aspect BaseNode_Roo_JavaBean {
         this.ebene = ebene;
     }
     
-    public String BaseNode.getDesc() {
-        return this.desc;
+    public String BaseNode.getNodeDesc() {
+        return this.nodeDesc;
     }
     
-    public void BaseNode.setDesc(String desc) {
-        this.desc = desc;
+    public void BaseNode.setNodeDesc(String nodeDesc) {
+        this.nodeDesc = nodeDesc;
     }
     
     public String BaseNode.getDocLayoutTagCommand() {

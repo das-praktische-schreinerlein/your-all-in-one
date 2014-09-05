@@ -360,12 +360,12 @@ public class HtmlExporter extends WikiExporter {
                         +   " class='a-img" + tagEbene + "-urlres "
                         +     (addStyle.length() > 0
                                 ? " " + "a-img" + tagEbene + "-urlres-" + addStyle : "") + "'"
-                        +   " id='a_" + curNode.getId() + "'>" 
+                        +   " id='a_" + curNode.getWorkingId() + "'>" 
                         + "<img src='" + urlResNode.getResLocRef() + "' "
                         + " class='img" + tagEbene + "-urlres "
                         + (addStyle.length() > 0
                             ? " " + "img" + tagEbene + "-urlres-" + addStyle : "") + "'"
-                        +   " id='img_" + curNode.getId() + "' alt='" + label + "' title='" + label + "'></a>";
+                        +   " id='img_" + curNode.getWorkingId() + "' alt='" + label + "' title='" + label + "'></a>";
                 } else {
                     // Url
                     content += "<a href='" + urlResNode.getResLocRef() + "' "
@@ -373,7 +373,7 @@ public class HtmlExporter extends WikiExporter {
                         + " class='a" + tagEbene + "-urlres "
                         + (addStyle.length() > 0
                             ? " " + "a" + tagEbene + "-urlres-" + addStyle : "") + "'"
-                        +   " id='a_" + curNode.getId() + "'>"
+                        +   " id='a_" + curNode.getWorkingId() + "'>"
                         + label + "</a> ";
                 }
             }

@@ -23,7 +23,7 @@ privileged aspect BaseNodeServiceImpl_Roo_Service {
         baseNode.remove();
     }
     
-    public BaseNode BaseNodeServiceImpl.findBaseNode(Long id) {
+    public BaseNode BaseNodeServiceImpl.findBaseNode(String id) {
         return BaseNode.findBaseNode(id);
     }
     

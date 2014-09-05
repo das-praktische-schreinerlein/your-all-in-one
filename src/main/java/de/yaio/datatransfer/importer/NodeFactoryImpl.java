@@ -204,7 +204,7 @@ public class NodeFactoryImpl implements NodeFactory {
         node.setFullSrc(strFullSrc);
         node.setSrcName(strFullSrc);
         node.setName(srcName);
-        node.setId(new Long(id));
+        node.setImportTmpId(new Long(id));
         node.setEbene(0);
         node.setType(nodeTypeIdentifier);
         node.setParentNode(curParentNode);

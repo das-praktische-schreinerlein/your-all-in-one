@@ -23,10 +23,16 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+import javax.persistence.Version;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -109,6 +115,8 @@ public class BaseNode implements BaseData, MetaData, SysData,
         return nodeService;
     }
 
+    private Long importTmpId;
+    
     /**
      */
     @Size(min = 1, max = 64000)
@@ -116,13 +124,13 @@ public class BaseNode implements BaseData, MetaData, SysData,
 
     /**
      */
-    @Size(max = 255)
+    @Size(max = 5000)
     private String srcName;
 
     /**
      */
     @NotNull
-    @Size(max = 255)
+    @Size(max = 2000)
     private String name;
 
     /**
@@ -134,7 +142,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     /**
      */
     @Size(max = 64000)
-    private String desc;
+    private String nodeDesc;
 
     /**
      */
@@ -158,12 +166,13 @@ public class BaseNode implements BaseData, MetaData, SysData,
 
     /**
      */
+    @Id
     @Size(max = 80)
     private String sysUID;
 
     /**
      */
-    @Size(max = 30)
+    @Size(max = 50)
     private String sysCurChecksum;
 
     /**
@@ -331,6 +340,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     //####################
     // Hirarchy-functions
     //####################
+    @Transient
     protected Map<String, DataDomain> childNodesByNameMapMap = new LinkedHashMap <String, DataDomain>();
 
     public void initChildNodesByNameMap() {
@@ -424,7 +434,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
             .append(" metaNodeNummer=").append(getMetaNodeNummer())
             .append(" metaNodeTypeTags=").append(getMetaNodeTypeTags())
             .append(" metaNodeSubTypeTags=").append(getMetaNodeSubTypeTags())
-            .append(" desc=").append(getDesc())
+            .append(" desc=").append(getNodeDesc())
             ;
         return data.toString();
     }
@@ -487,7 +497,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     
     @Override
     public String getWorkingId() {
-        String res = this.getId().toString();
+        String res = this.getImportTmpId().toString();
         
         if (this.getMetaNodeNummer() != null && (this.getMetaNodeNummer().length() > 0)) {
             res = this.getMetaNodePraefix() + this.getMetaNodeNummer();

@@ -28,9 +28,9 @@ privileged aspect BaseNode_Roo_Jpa_ActiveRecord {
         return entityManager().createQuery("SELECT o FROM BaseNode o", BaseNode.class).getResultList();
     }
     
-    public static BaseNode BaseNode.findBaseNode(Long id) {
-        if (id == null) return null;
-        return entityManager().find(BaseNode.class, id);
+    public static BaseNode BaseNode.findBaseNode(String sysUID) {
+        if (sysUID == null || sysUID.length() == 0) return null;
+        return entityManager().find(BaseNode.class, sysUID);
     }
     
     public static List<BaseNode> BaseNode.findBaseNodeEntries(int firstResult, int maxResults) {
@@ -49,7 +49,7 @@ privileged aspect BaseNode_Roo_Jpa_ActiveRecord {
         if (this.entityManager.contains(this)) {
             this.entityManager.remove(this);
         } else {
-            BaseNode attached = BaseNode.findBaseNode(this.id);
+            BaseNode attached = BaseNode.findBaseNode(this.sysUID);
             this.entityManager.remove(attached);
         }
     }

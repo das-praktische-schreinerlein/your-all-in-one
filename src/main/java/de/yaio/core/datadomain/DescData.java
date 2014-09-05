@@ -31,6 +31,6 @@ package de.yaio.core.datadomain;
 public interface DescData extends DataDomain {
     public static final int CONST_ORDER = 999;
     
-    public String getDesc();
-    public void setDesc(String nodedesc);
+    public String getNodeDesc();
+    public void setNodeDesc(String nodedesc);
 }

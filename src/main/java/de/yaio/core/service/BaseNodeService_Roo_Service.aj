@@ -11,7 +11,7 @@ privileged aspect BaseNodeService_Roo_Service {
     
     public abstract long BaseNodeService.countAllBaseNodes();    
     public abstract void BaseNodeService.deleteBaseNode(BaseNode baseNode);    
-    public abstract BaseNode BaseNodeService.findBaseNode(Long id);    
+    public abstract BaseNode BaseNodeService.findBaseNode(String id);    
     public abstract List<BaseNode> BaseNodeService.findAllBaseNodes();    
     public abstract List<BaseNode> BaseNodeService.findBaseNodeEntries(int firstResult, int maxResults);    
     public abstract void BaseNodeService.saveBaseNode(BaseNode baseNode);    

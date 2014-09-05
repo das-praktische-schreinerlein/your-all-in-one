@@ -306,7 +306,7 @@ public class ExcelImporter extends ImporterImpl {
             idesc = idesc.replaceAll("\n", "<WLBR>");
             idesc = idesc.replaceAll("\t", "<WLTAB>");
         }
-        node.setDesc(idesc);
+        node.setNodeDesc(idesc);
 
         // Ausgabetext
         StringBuffer tmpBuffer = new StringBuffer();

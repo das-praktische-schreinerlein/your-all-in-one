@@ -80,7 +80,7 @@ public class DescDataFormatterImpl extends FormatterImpl implements DescDataForm
 
         // lets roll
 
-        String dummyText = node.getDesc();
+        String dummyText = node.getNodeDesc();
         if (dummyText != null) {
             // Zeilenumbruch
             if (oOptions.isFlgShowDescInNextLine()) {

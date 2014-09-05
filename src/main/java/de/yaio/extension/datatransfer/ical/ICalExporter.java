@@ -120,7 +120,7 @@ public class ICalExporter extends WikiExporter {
         // max. Ebene pruefen
         if (paramCurNode.getEbene() > oOptions.getMaxEbene()) {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("node:" + paramCurNode.getId() 
+                LOGGER.debug("node:" + paramCurNode.getWorkingId() 
                     + " ignore:" + paramCurNode.getEbene() + ">" + oOptions.getMaxEbene());
             }
             return res;
@@ -128,7 +128,7 @@ public class ICalExporter extends WikiExporter {
 
         // Anfang
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("curnode:" + paramCurNode.getId() + " start processing");
+            LOGGER.debug("curnode:" + paramCurNode.getWorkingId() + " start processing");
         }
         
         // alle Kindselemente durchlaufen
@@ -138,7 +138,7 @@ public class ICalExporter extends WikiExporter {
                 && paramCurNode.getChildNodes().size() > 0) {
             // Elternblock: Zweig
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("node:" + paramCurNode.getId() 
+                LOGGER.debug("node:" + paramCurNode.getWorkingId() 
                     + " iterate subnodes:" + paramCurNode.getChildNodes().size());
             }
             for (String nodeName : paramCurNode.getChildNodesByNameMap().keySet()) {
@@ -166,14 +166,14 @@ public class ICalExporter extends WikiExporter {
         } else {
             // Blatt
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("node:" + paramCurNode.getId() + " no subnodes");
+                LOGGER.debug("node:" + paramCurNode.getWorkingId() + " no subnodes");
             }
         }
         
         // nur Projektnodes zulassen
         if (! TaskNode.class.isInstance(paramCurNode)) {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("node:" + paramCurNode.getId() 
+                LOGGER.debug("node:" + paramCurNode.getWorkingId() 
                     + " ignore: not TaskNode but " + paramCurNode.getClass());
             }
             return blockChildren;
@@ -185,7 +185,7 @@ public class ICalExporter extends WikiExporter {
         if (! curNode.isWFStatus(state) || flgHasWFChildren) {
             // kein eigener WFNode oder Kindelemente haben WF-State -> SKIP
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("SKIP - No WFNode - node:" + curNode.getId() + " return datalength:" + res.length());
+                LOGGER.debug("SKIP - No WFNode - node:" + curNode.getWorkingId() + " return datalength:" + res.length());
             }
             return blockChildren;
         }
@@ -202,7 +202,7 @@ public class ICalExporter extends WikiExporter {
         res += blockChildren;
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("node:" + curNode.getId() + " return datalength:" + res.length());
+            LOGGER.debug("node:" + curNode.getWorkingId() + " return datalength:" + res.length());
         }
 
         return res;
@@ -232,7 +232,7 @@ public class ICalExporter extends WikiExporter {
         // max. Ebene pruefen
         if (paramCurNode.getEbene() > oOptions.getMaxEbene()) {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("node:" + paramCurNode.getId() 
+                LOGGER.debug("node:" + paramCurNode.getWorkingId() 
                     + " ignore:" + paramCurNode.getEbene() + ">" + oOptions.getMaxEbene());
             }
             return res;
@@ -240,13 +240,13 @@ public class ICalExporter extends WikiExporter {
 
         // Anfang
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("curnode:" + paramCurNode.getId() + " start processing");
+            LOGGER.debug("curnode:" + paramCurNode.getWorkingId() + " start processing");
         }
         
         // nur Projektnodes zulassen
         if (! TaskNode.class.isInstance(paramCurNode)) {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("node:" + paramCurNode.getId() 
+                LOGGER.debug("node:" + paramCurNode.getWorkingId() 
                     + " ignore: not ProjektNode but " + paramCurNode.getClass());
             }
             return "";
@@ -258,7 +258,7 @@ public class ICalExporter extends WikiExporter {
         if (! curNode.isWFStatus(state)) {
             // kein eigener WFNode oder Kindelemente haben WF-State -> SKIP
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("SKIP - No WFNode - node:" + curNode.getId() + " return datalength:" + res.length());
+                LOGGER.debug("SKIP - No WFNode - node:" + curNode.getWorkingId() + " return datalength:" + res.length());
             }
             return res;
         }
@@ -332,7 +332,7 @@ public class ICalExporter extends WikiExporter {
         res += "END:VTODO\n";
         
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("node:" + curNode.getId() + " return datalength:" + res.length());
+            LOGGER.debug("node:" + curNode.getWorkingId() + " return datalength:" + res.length());
         }
 
         return res;
@@ -362,7 +362,7 @@ public class ICalExporter extends WikiExporter {
         // max. Ebene pruefen
         if (paramCurNode.getEbene() > oOptions.getMaxEbene()) {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("node:" + paramCurNode.getId() 
+                LOGGER.debug("node:" + paramCurNode.getWorkingId() 
                     + " ignore:" + paramCurNode.getEbene() + ">" + oOptions.getMaxEbene());
             }
             return res;
@@ -370,13 +370,13 @@ public class ICalExporter extends WikiExporter {
 
         // Anfang
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("curnode:" + paramCurNode.getId() + " start processing");
+            LOGGER.debug("curnode:" + paramCurNode.getWorkingId() + " start processing");
         }
         
         // nur Projektnodes zulassen
         if (! TaskNode.class.isInstance(paramCurNode)) {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("node:" + paramCurNode.getId() 
+                LOGGER.debug("node:" + paramCurNode.getWorkingId() 
                     + " ignore: not EventNode but " + paramCurNode.getClass());
             }
             return "";
@@ -388,7 +388,7 @@ public class ICalExporter extends WikiExporter {
         if (! curNode.isWFStatus(state)) {
             // kein eigener WFNode oder Kindelemente haben WF-State -> SKIP
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("SKIP - No WFNode - node:" + curNode.getId() + " return datalength:" + res.length());
+                LOGGER.debug("SKIP - No WFNode - node:" + curNode.getWorkingId() + " return datalength:" + res.length());
             }
             return res;
         }
@@ -487,7 +487,7 @@ public class ICalExporter extends WikiExporter {
         res += "END:VEVENT\n";
         
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("node:" + curNode.getId() + " return datalength:" + res.length());
+            LOGGER.debug("node:" + curNode.getWorkingId() + " return datalength:" + res.length());
         }
 
         return res;
