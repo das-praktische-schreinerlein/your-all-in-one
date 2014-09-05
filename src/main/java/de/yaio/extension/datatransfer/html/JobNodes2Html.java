@@ -44,11 +44,6 @@ public class JobNodes2Html extends JobNodes2Wiki {
         exporter = new HtmlExporter();
     }
 
-    @Override
-    public void createImporter() {
-        importer = new PPLImporter(null);
-    }
-
     /**
     * @param args the command line arguments
     */

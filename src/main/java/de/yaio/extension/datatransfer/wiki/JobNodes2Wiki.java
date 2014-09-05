@@ -19,6 +19,8 @@ package de.yaio.extension.datatransfer.wiki;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.datatransfer.exporter.Exporter;
@@ -48,6 +50,8 @@ public class JobNodes2Wiki extends CmdLineJob {
 
     public JobNodes2Wiki(String[] args) {
         super(args);
+        ApplicationContext context = 
+                        new ClassPathXmlApplicationContext("classpath*:**/applicationContext*.xml");
         createExporter();
         createImporter();
     }

@@ -44,11 +44,6 @@ public class JobNodes2ICal extends JobNodes2Wiki {
         exporter = new ICalExporter();
     }
 
-    @Override
-    public void createImporter() {
-        importer = new PPLImporter(null);
-    }
-
     /**
     * @param args the command line arguments
     */

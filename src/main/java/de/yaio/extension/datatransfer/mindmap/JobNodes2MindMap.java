@@ -44,11 +44,6 @@ public class JobNodes2MindMap extends JobNodes2Wiki {
         exporter = new MindMapExporter();
     }
 
-    @Override
-    public void createImporter() {
-        importer = new PPLImporter(null);
-    }
-
     /**
     * @param args the command line arguments
     */

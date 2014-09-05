@@ -79,11 +79,6 @@ public class JobNodes2Excel extends JobNodes2Wiki {
         exporter = new ExcelExporter();
     }
 
-    @Override
-    public void createImporter() {
-        importer = new PPLImporter(null);
-    }
-
     /**
     * @param args the command line arguments
     */

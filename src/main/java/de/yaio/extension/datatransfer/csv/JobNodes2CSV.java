@@ -44,11 +44,6 @@ public class JobNodes2CSV extends JobNodes2Wiki {
         exporter = new CSVExporter();
     }
 
-    @Override
-    public void createImporter() {
-        importer = new PPLImporter(null);
-    }
-
     /**
     * @param args the command line arguments
     */

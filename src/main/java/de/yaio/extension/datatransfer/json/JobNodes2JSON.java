@@ -44,11 +44,6 @@ public class JobNodes2JSON extends JobNodes2Wiki {
         exporter = new JSONExporter();
     }
 
-    @Override
-    public void createImporter() {
-        importer = new PPLImporter(null);
-    }
-
     /**
     * @param args the command line arguments
     */
