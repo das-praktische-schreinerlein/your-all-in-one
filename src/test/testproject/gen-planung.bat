@@ -11,6 +11,7 @@ goto shortway
 call %BASEPATH%gen-planung-fromwiki.bat %PLANDIR% %PLANFILEBASE% %PLANNAME% --onlyifstate
 call %BASEPATH%checkdiffs %PLANDIR%%PLANFILEBASE%.wiki %PLANDIR%%PLANFILEBASE%-real.new.wiki
 
+call %BASEPATH%importJPAFromPPL.bat %PLANDIR% %PLANFILEBASE%-real %PLANNAME%
 call %BASEPATH%genICalFromPPL.bat %PLANDIR% %PLANFILEBASE%-real %PLANNAME%
 call %BASEPATH%genCsvFromPPL.bat %PLANDIR% %PLANFILEBASE%-real %PLANNAME%
 call %BASEPATH%genMMFromPPL.bat %PLANDIR% %PLANFILEBASE%-real %PLANNAME%
