@@ -16,17 +16,18 @@
  */
 package de.yaio.extension.datatransfer.wiki;
 
-import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
+import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.transaction.annotation.Transactional;
 
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.datatransfer.exporter.Exporter;
 import de.yaio.datatransfer.exporter.OutputOptions;
 import de.yaio.datatransfer.exporter.OutputOptionsImpl;
-import de.yaio.extension.datatransfer.ppl.PPLImporter;
+import de.yaio.extension.datatransfer.common.CommonImporter;
 import de.yaio.utils.CmdLineJob;
 
 /**
@@ -45,32 +46,78 @@ import de.yaio.utils.CmdLineJob;
 public class JobNodes2Wiki extends CmdLineJob {
 
     public Exporter exporter;
-    public PPLImporter importer;
-
+    protected CommonImporter commonImporter;
+    
+    // Logger
+    private static final Logger LOGGER =
+        Logger.getLogger(JobNodes2Wiki.class);
 
     public JobNodes2Wiki(String[] args) {
         super(args);
-        ApplicationContext context = 
-                        new ClassPathXmlApplicationContext("classpath*:**/applicationContext*.xml");
-        createExporter();
-        createImporter();
+        createCommonImporter();
     }
-
 
     @Override
     protected Options genAvailiableCmdLineOptions() throws Throwable {
         Options availiableCmdLineOptions = new Options();
 
-        // Hilfe-Option
-        Option helpOption = new Option("h", "help", false, "usage");
-        helpOption.setRequired(false);
-        availiableCmdLineOptions.addOption(helpOption);
+        // add Options
+        commonImporter.addAvailiableCommonCmdLineOptions(availiableCmdLineOptions);
+        commonImporter.addAvailiableExcelCmdLineOptions(availiableCmdLineOptions);
+        commonImporter.addAvailiableWikiCmdLineOptions(availiableCmdLineOptions);
+        commonImporter.addAvailiableJPACmdLineOptions(availiableCmdLineOptions);
+        commonImporter.addAvailiablePPLCmdLineOptions(availiableCmdLineOptions);
 
-        // Hirarchy-Delimiter  
-        Option delimiterOption = new Option("", "delimiter", true,
-                "Hirarchy-Delimiter (default TAB)");
-        delimiterOption.setRequired(false);
-        availiableCmdLineOptions.addOption(delimiterOption);
+        // my OutputOptions
+        this.addAvailiableCommonOutputCmdLineOptions(availiableCmdLineOptions);
+        this.addAvailiableOutputCmdLineOptions(availiableCmdLineOptions);
+        
+        return availiableCmdLineOptions;
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     CLI
+     * <h4>FeatureDescription:</h4>
+     *     add common output-options to the availiableCmdLineOptions
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>update availiableCmdLineOptions
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     CLI
+     * @param availiableCmdLineOptions - the conatiner wirh the availiableCmdLineOptions
+     */
+    protected Options addAvailiableCommonOutputCmdLineOptions(Options availiableCmdLineOptions) throws Throwable {
+        // Mastername
+        Option masternameOption = new Option("m", "mastername", true,
+                "Name of Masternode (default Master)");
+        masternameOption.setRequired(false);
+        availiableCmdLineOptions.addOption(masternameOption);
+
+        // Maxebene
+        Option maxEbeneOption = new Option("e", "maxEbene", true,
+                "Max Darstellungsebene (default 9999)");
+        maxEbeneOption.setRequired(false);
+        availiableCmdLineOptions.addOption(maxEbeneOption);
+
+        return availiableCmdLineOptions;
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     CLI
+     * <h4>FeatureDescription:</h4>
+     *     add special wiki output-options to the availiableCmdLineOptions
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>update availiableCmdLineOptions
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     CLI
+     * @param availiableCmdLineOptions - the conatiner wirh the availiableCmdLineOptions
+     */
+    protected Options addAvailiableOutputCmdLineOptions(Options availiableCmdLineOptions) throws Throwable {
 
         // Show DescData
         Option flgShowChildrenSumOption = new Option("c", "calcsum", false,
@@ -114,40 +161,28 @@ public class JobNodes2Wiki extends CmdLineJob {
         flgShowState.setRequired(false);
         availiableCmdLineOptions.addOption(flgShowState);
 
-        // Mastername
-        Option masternameOption = new Option("m", "mastername", true,
-                "Name of Masternode (default Master)");
-        masternameOption.setRequired(false);
-        availiableCmdLineOptions.addOption(masternameOption);
-
-        // Maxebene
-        Option maxEbeneOption = new Option("e", "maxEbene", true,
-                "Max Darstellungsebene (default 9999)");
-        maxEbeneOption.setRequired(false);
-        availiableCmdLineOptions.addOption(maxEbeneOption);
-
         // Intend
         Option itendOption = new Option("", "intend", true,
-                "Einr�ckung der Daten-Bl�cke Leerzeichen (default 0)");
+                "Einrueckung der Daten-Bloecke Leerzeichen (default 0)");
         itendOption.setRequired(false);
         availiableCmdLineOptions.addOption(itendOption);
 
         // IntendLi
         Option itendLiOption = new Option("", "intendli", true,
-                "Einr�ckung Unternodes - Leerzeichen (default 0)");
+                "Einrueckung Unternodes - Leerzeichen (default 0)");
         itendLiOption.setRequired(false);
         availiableCmdLineOptions.addOption(itendLiOption);
 
         // IntendSys
         Option itendSysOption = new Option("", "intendsys", true,
-                "Einr�ckung Sys-Bl�cke hinter den Datenbl�cken zus�tzlich zu intend - Leerzeichen (default 80)");
+                "Einrueckung Sys-Bloecke hinter den Datenbloecken zusaetzlich zu intend - Leerzeichen (default 80)");
         itendSysOption.setRequired(false);
         availiableCmdLineOptions.addOption(itendSysOption);
 
         // MaxUeebene
         Option maxUeEbeneOption = new Option("U", "maxUeEbene", true,
                 "Max Ue-Darstellungsebene (default 0 - keine Ue)");
-        maxEbeneOption.setRequired(false);
+        maxUeEbeneOption.setRequired(false);
         availiableCmdLineOptions.addOption(maxUeEbeneOption);
 
         // Show DocLayout
@@ -184,10 +219,13 @@ public class JobNodes2Wiki extends CmdLineJob {
     }
 
     @Override
+    @Transactional()
     public void doJob() throws Throwable {
-        // initialsieren
+        // init
         createExporter();
-        createImporter();
+        initApplicationContet();
+        initCommonImporter();
+        initTransaction();
         
         // Mastername extrahieren
         String masterName = this.cmdLine.getOptionValue("m", "Master");
@@ -195,7 +233,7 @@ public class JobNodes2Wiki extends CmdLineJob {
 
         // Output-Options parsen
         OutputOptions oOptions = 
-                this.getOutputOptions(this.cmdLine);
+                this.getOutputOptions();
 
         // Daten parsen
         importDataToMasterNode(masterNode);;
@@ -205,28 +243,34 @@ public class JobNodes2Wiki extends CmdLineJob {
 
         // Masternode ausgeben
         this.publishResult(exporter, masterNode, oOptions);
+        
+        commitTransaction();
     }
 
     // #############
     // common functions
     // #############
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     BusinessLogic
+     * <h4>FeatureDescription:</h4>
+     *     create the masternode on which all other nodes are added
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returns masternode
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     BusinessLogic
+     * @return masternode - the masternode on which all other nodes are added
+     */
     public DataDomain createMasternode(String name) throws Throwable {
-        DataDomain masterNode  = importer.createNodeObjFromText(1, name, name, null);
+        DataDomain masterNode  = commonImporter.getPPLImporter().createNodeObjFromText(1, name, name, null);
         return masterNode;
     }
 
     public void importDataToMasterNode(DataDomain masterNode) throws Exception {
-        // Delimiter
-        String delimiter = this.cmdLine.getOptionValue("delimiter", "\t");
-
-        // aus Datei oder nur Test ??
-        if (this.cmdLine.getArgs().length > 0) {
-            // aus datei
-            importer.extractNodesFromFile(masterNode, this.cmdLine.getArgs()[0], delimiter);
-        } else {
-            // nur Test
-            importer.extractNodesFromLines(masterNode, "", delimiter); // TODO
-        }
+        commonImporter.importDataToMasterNode(masterNode);
     }
 
     public void publishResult(Exporter exporter, DataDomain masterNode, 
@@ -235,8 +279,7 @@ public class JobNodes2Wiki extends CmdLineJob {
                 exporter.getMasterNodeResult(masterNode, oOptions));
     }
 
-    public OutputOptions getOutputOptions(
-            CommandLine cmdLine) {
+    public OutputOptions getOutputOptions() {
         // Konfiguration
         OutputOptions oOptions = new OutputOptionsImpl();
         oOptions.setFlgShowPlan(cmdLine.hasOption("p"));
@@ -266,7 +309,7 @@ public class JobNodes2Wiki extends CmdLineJob {
                 cmdLine.getOptionValue("intendsys", 
                         new Integer(oOptions.getIntendSys()).toString())));
         oOptions.setFlgProcessDocLayout(cmdLine.hasOption("processdoclayout"));
-        oOptions.setStrReadIfStatusInListOnly(this.cmdLine.getOptionValue("onlyifstateinlist", null));
+        oOptions.setStrReadIfStatusInListOnly(cmdLine.getOptionValue("onlyifstateinlist", null));
 
         return oOptions;
     }
@@ -278,11 +321,27 @@ public class JobNodes2Wiki extends CmdLineJob {
         exporter = new WikiExporter();
     }
 
-    public void createImporter() {
-        importer = new PPLImporter(null);
+    protected void createCommonImporter() {
+        // create commonImporter
+        commonImporter = new CommonImporter("ppl");
+    }
+    
+    protected void initTransaction() throws Exception {
     }
 
-    
+    protected void commitTransaction() throws Exception {
+    }
+
+    protected void initCommonImporter() {
+        // init commonImporter
+        commonImporter.setCmdLine(cmdLine);
+    }
+
+    protected void initApplicationContet() {
+        ApplicationContext context = 
+                        new ClassPathXmlApplicationContext("classpath*:**/applicationContext*.xml");
+    }
+
     /**
      * @param args the command line arguments
      */

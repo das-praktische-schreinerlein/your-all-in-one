@@ -51,7 +51,8 @@ public class JobNodes2Excel extends JobNodes2Wiki {
         Options availiableCmdLineOptions = super.genAvailiableCmdLineOptions();
         
         // Excel-Option
-        Option mergeOption = new Option("", "mergeexcelplanunggantsheets", false, "mergeexcelplanunggantsheets");
+        Option mergeOption = new Option("", "mergeexcelplanunggantsheets", false, 
+                        "mergeexcelplanunggantsheets");
         mergeOption.setRequired(false);
         availiableCmdLineOptions.addOption(mergeOption);
         

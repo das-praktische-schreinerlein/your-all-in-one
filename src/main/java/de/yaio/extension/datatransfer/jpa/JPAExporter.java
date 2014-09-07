@@ -17,16 +17,12 @@
  */
 package de.yaio.extension.datatransfer.jpa;
 
-import java.util.Date;
-
 import org.apache.log4j.Logger;
 
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.node.BaseNode;
+import de.yaio.core.nodeservice.NodeService;
 import de.yaio.datatransfer.exporter.OutputOptions;
-import de.yaio.datatransfer.exporter.formatter.BaseDataFormatterImpl;
-import de.yaio.datatransfer.exporter.formatter.DescDataFormatterImpl;
-import de.yaio.datatransfer.exporter.formatter.FormatterImpl;
 import de.yaio.extension.datatransfer.wiki.WikiExporter;
 
 /**
@@ -59,32 +55,32 @@ public class JPAExporter extends WikiExporter {
     @Override
     public String getMasterNodeResult(DataDomain masterNode, OutputOptions oOptions)
             throws Exception {
+        // merge BaseNode with db and all recursivly
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("save node:" + masterNode);
+        }
         
-        // iterate 
-        super.getMasterNodeResult(masterNode, oOptions);
+        // look for this Basenode in DB
+        BaseNode newNode = ((BaseNode)masterNode);
+        BaseNode dbNode = BaseNode.findBaseNode(((BaseNode)masterNode).getSysUID());
+        if (dbNode != null) {
+            // delete the old dbNode with all children
+            dbNode.removeChildNodesFromDB();
+            dbNode.remove();
+        }
         
-        return null;
+        // save the newNode
+        newNode.persist();
+        
+        // save the children
+        newNode.persistChildNodesToDB(NodeService.CONST_DB_RECURSIONLEVEL_ALL_CHILDREN);
+        
+        return "saved node: " + masterNode.getName() + "\n";
     }
 
     @Override
     public StringBuffer getNodeResult(DataDomain node,  String praefix,
             OutputOptions oOptions) throws Exception {
-        // merge BaseNode with db and all recursivly
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("save node:" + node);
-        }
-        
-        // look for this Basenode in DB
-        BaseNode newNode = ((BaseNode)node);
-        BaseNode dbNode = BaseNode.findBaseNode(((BaseNode)node).getSysUID());
-        if (dbNode != null) {
-            // delete the old dbNode with all children
-            dbNode.remove();
-        }
-        
-        // save the newNode with new children
-        newNode.persist();
-        
-        return new StringBuffer("saved node: " + node.getName() + "\n");
+        throw new IllegalStateException("This function should not be used, but you used it for " + node);
     }
 }

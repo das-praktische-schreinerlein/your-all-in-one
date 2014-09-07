@@ -36,6 +36,9 @@ public interface NodeService {
     public static final int CONST_RECURSE_DIRECTION_CHILDREN = -1;
     public static final int CONST_RECURSE_DIRECTION_ONLYME = 0;
     public static final int CONST_RECURSE_DIRECTION_PARENT = 1;
+    
+    // recurse all level
+    public static final int CONST_DB_RECURSIONLEVEL_ALL_CHILDREN = -1;
 
     /**
      * <h4>FeatureDomain:</h4>

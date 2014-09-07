@@ -20,8 +20,12 @@ import java.util.List;
 
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import de.yaio.core.datadomainservice.NodeNumberService;
+import de.yaio.extension.datatransfer.common.CommonImporter;
+import de.yaio.extension.datatransfer.ppl.PPLImporter;
 import de.yaio.extension.datatransfer.wiki.WikiImporter.WikiStructLine;
 import de.yaio.utils.CmdLineJob;
 
@@ -38,113 +42,51 @@ import de.yaio.utils.CmdLineJob;
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class JobParseWiki extends CmdLineJob {
+    
+    protected CommonImporter commonImporter;
 
 
     public JobParseWiki(String[] args) {
         super(args);
+        createCommonImporter();
     }
-
-
+    
     @Override
     protected Options genAvailiableCmdLineOptions() throws Throwable {
         Options availiableCmdLineOptions = new Options();
-
-        // Hilfe-Option
-        Option helpOption = new Option("h", "help", false, "usage");
-        helpOption.setRequired(false);
-        availiableCmdLineOptions.addOption(helpOption);
-
-        // Id-File
-        Option pathIdDB = new Option("", "pathiddb", true,
-                "Pfad zur ID-Datenbank");
-        pathIdDB.setRequired(true);
-        availiableCmdLineOptions.addOption(pathIdDB);
-
-        // Show State
-        Option flgShowState = new Option("s", "onlyifstate", false,
-                "Show Only if State/Type set (default false)");
-        flgShowState.setRequired(false);
-        availiableCmdLineOptions.addOption(flgShowState);
-
-        // Show State
-        Option flgShowWFState = new Option("w", "onlyifwfstate", false,
-                "Show Only if WFState set (default false)");
-        flgShowWFState.setRequired(false);
-        availiableCmdLineOptions.addOption(flgShowWFState);
-
-        // InputState
-        Option flgShowIfStateList = new Option("", "onlyifstateinlist", true,
-                "Show only if State in List (CSV)");
-        flgShowIfStateList.setRequired(false);
-        availiableCmdLineOptions.addOption(flgShowIfStateList);
-
-        // Dont Parse Ue
-        Option flgShowUe = new Option("u", "dontparseue", false,
-                "Parse no Ue (default false)");
-        flgShowUe.setRequired(false);
-        availiableCmdLineOptions.addOption(flgShowUe);
-
-        // Dont Parse List
-        Option flgShowList = new Option("l", "dontparselist", false,
-                "Parse no List (default false)");
-        flgShowList.setRequired(false);
-        availiableCmdLineOptions.addOption(flgShowList);
+        
+        // add Options
+        commonImporter.addAvailiableCommonCmdLineOptions(availiableCmdLineOptions);
+        commonImporter.addAvailiableWikiCmdLineOptions(availiableCmdLineOptions);
+        commonImporter.addAvailiableProductiveImportCmdLineOptions(availiableCmdLineOptions);
 
         return availiableCmdLineOptions;
     }
 
     @Override
     public void doJob() throws Throwable {
-        // Parser+Options anlegen
-        WikiImportOptions inputOptions = new WikiImportOptions();
-        inputOptions.flgReadList = true;
-        inputOptions.flgReadUe = true;
-        inputOptions.flgReadWithStatusOnly = this.cmdLine.hasOption("s");
-        inputOptions.flgReadWithWFStatusOnly = this.cmdLine.hasOption("w");
-        if (this.cmdLine.hasOption("l")) {
-            inputOptions.flgReadList = false;
-        }
-        if (this.cmdLine.hasOption("u")) {
-            inputOptions.flgReadUe = false;
-        }
-        inputOptions.strReadIfStatusInListOnly = 
-                this.cmdLine.getOptionValue("onlyifstateinlist", null);
-        WikiImporter importer = new WikiImporter(inputOptions);
-        
-        // gets NodeNumberService
-        NodeNumberService nodeNumberService = 
-                importer.getNodeFactory().getMetaDataService().getNodeNumberService();
-        
-        // Id-Datei einlesen
-        String strPathIdDB = this.cmdLine.getOptionValue("pathiddb", null);
-        if (strPathIdDB != null) {
-            nodeNumberService.initNextNodeNumbersFromFile(strPathIdDB);
-        }
+        // init
+        initApplicationContet();
+        initCommonImporter();
 
-        // aus Datei oder nur Test ??
-        List<WikiStructLine> lstWikiLines;
-        if (this.cmdLine.getArgs().length > 0) {
-            // aus datei
-            lstWikiLines =
-                    importer.extractWikiStructLinesFromFile(this.cmdLine.getArgs()[0], inputOptions);
-        } else {
-            // nur Test
-            lstWikiLines =
-                    importer.extractWikiStructLinesFromSrc(WikiImporter.testStr, inputOptions);
-        }
+        // parse PPL-source
+        String pplSource = commonImporter.extractDataFromWiki();
+        System.out.println(pplSource);
+    }
 
-        // Ids speichern
-        if (strPathIdDB != null) {
-            // save to file
-            nodeNumberService.exportNextNodeNumbersToFile(strPathIdDB);
-        }
+    protected void createCommonImporter() {
+        // create commonImporter
+        commonImporter = new CommonImporter("ppl");
+    }
 
-        // WikiListe ausgeben
-        if (lstWikiLines != null) {
-            for (WikiStructLine wk : lstWikiLines) {
-                System.out.println(wk.hirarchy);
-            }
-        }
+    protected void initCommonImporter() {
+        // init commonImporter
+        commonImporter.setCmdLine(cmdLine);
+    }
+
+    protected void initApplicationContet() {
+        ApplicationContext context = 
+                        new ClassPathXmlApplicationContext("classpath*:**/applicationContext*.xml");
     }
 
     /**

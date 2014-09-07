@@ -19,25 +19,24 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-import javax.persistence.Version;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.apache.log4j.Logger;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
@@ -76,6 +75,10 @@ import de.yaio.core.nodeservice.NodeService;
 public class BaseNode implements BaseData, MetaData, SysData, 
     DescData, BaseWorkflowData {
     
+    // Logger
+    private static final Logger LOGGER =
+        Logger.getLogger(BaseNode.class);
+
     public static final String CONST_NODETYPE_IDENTIFIER_UNKNOWN = "UNKNOWN";
     public static Map<String, Object> CONST_MAP_NODETYPE_IDENTIFIER = new HashMap<String, Object>();
     static {
@@ -120,6 +123,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     /**
      */
     @Size(min = 1, max = 64000)
+    @Transient
     private String fullSrc;
 
     /**
@@ -318,7 +322,8 @@ public class BaseNode implements BaseData, MetaData, SysData,
 
     /**
      */
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "parentNode")
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "parentNode", fetch = FetchType.LAZY)
+    @Transient
     private Set<BaseNode> childNodes = new HashSet<BaseNode>();
 
     /**
@@ -337,6 +342,135 @@ public class BaseNode implements BaseData, MetaData, SysData,
     private String type;
     
     
+    //####################
+    // persistence-functions
+    //####################
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Persistence
+     * <h4>FeatureDescription:</h4>
+     *     initialize the Children from database (childNodes and childNodesByNameMapMap)
+     *     recursivly
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>updates memberfields childNodes
+     *     <li>updates memberfields childNodesByNameMapMap
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Persistence
+     * @param recursionLevel: how many recursion-level will be read from DB
+     */
+    public void initChildNodesFromDB(int recursionLevel) {
+        // clear the children
+        this.childNodes.clear();
+        this.childNodesByNameMapMap.clear();
+        
+        // read my childNodes
+        List<BaseNode> tmpChildNodes = BaseNode.findChildNodes(this.getSysUID());
+        
+        // set new level if it is not -1
+        recursionLevel = (recursionLevel > 0 ? recursionLevel-- : recursionLevel);
+
+        // interate children
+        for (BaseNode childNode : tmpChildNodes) {
+            // add to childrenMaps
+            if (LOGGER.isDebugEnabled())
+                LOGGER.debug("initChildNodesFromDB add to " + this.getNameForLogger() 
+                           + " child:" + childNode.getNameForLogger());
+            this.addChildNode(childNode);
+            
+            // check recursionLevel
+            if (    (recursionLevel == NodeService.CONST_DB_RECURSIONLEVEL_ALL_CHILDREN) 
+                 || (recursionLevel > 0)) {
+                // recurse
+                childNode.initChildNodesFromDB(recursionLevel);
+            }
+        }
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Persistence
+     * <h4>FeatureDescription:</h4>
+     *     read the children for the sysUID from database
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue List<BaseNode> - list of the the children
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Persistence JPA
+     * @param sysUID - sysUID for the filter on parent_node
+     */
+    public static List<BaseNode> findChildNodes(String sysUID) {
+        return entityManager().createQuery(
+                        "SELECT o FROM BaseNode o where parent_node = :sysUID", 
+                        BaseNode.class
+                        ).setParameter("sysUID", sysUID).getResultList();
+    }
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Persistence
+     * <h4>FeatureDescription:</h4>
+     *     persists the children to database (childNodes)
+     *     recursivly
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>saves memberfields childNodes to database
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Persistence
+     * @param recursionLevel: how many recursion-level will be saved to DB
+     */
+    public void persistChildNodesToDB(int recursionLevel) {
+        // set new level if it is not -1
+        recursionLevel = (recursionLevel > 0 ? recursionLevel-- : recursionLevel);
+
+        // interate children
+        for (BaseNode childNode : this.getChildNodes()) {
+            // persist to DB
+            if (LOGGER.isDebugEnabled())
+                LOGGER.debug("persistChildNodesToDB from " + this.getNameForLogger() 
+                           + " child:" + childNode.getNameForLogger());
+            childNode.persist();
+            
+            // check recursionLevel
+            if (    (recursionLevel == NodeService.CONST_DB_RECURSIONLEVEL_ALL_CHILDREN) 
+                 || (recursionLevel > 0)) {
+                // recurse
+                childNode.persistChildNodesToDB(recursionLevel);
+            }
+        }
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Persistence
+     * <h4>FeatureDescription:</h4>
+     *     remove the children from database recursivly
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>deletes all children with this,.getSysUID recursivly from db
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Persistence
+     */
+    public void removeChildNodesFromDB() {
+        // interate children on db
+        for (BaseNode childNode : findChildNodes(this.getSysUID())) {
+            // persist to DB
+            if (LOGGER.isDebugEnabled())
+                LOGGER.debug("removeChildNodesFromDB from " + this.getNameForLogger() 
+                           + " child:" + childNode.getNameForLogger());
+            // recurse
+            childNode.removeChildNodesFromDB();
+            
+            // remove this child
+            childNode.remove();
+        }
+    }
+
     //####################
     // Hirarchy-functions
     //####################
@@ -366,6 +500,8 @@ public class BaseNode implements BaseData, MetaData, SysData,
 
     @Override
     public void addChildNode(DataDomain childNode) {
+        if (LOGGER.isDebugEnabled())
+            LOGGER.debug("add child:" + childNode.getNameForLogger() + " to " + this.getNameForLogger());
         if (childNode != null) {
             this.childNodesByNameMapMap.put(childNode.getIdForChildByNameMap(), childNode);
             this.childNodes.add((BaseNode)childNode);
