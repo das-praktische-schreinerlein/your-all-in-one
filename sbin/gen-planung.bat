@@ -20,6 +20,7 @@ set MMPATH=%1%
 set SRCFILE=%2%
 set PROJNAME=%3%
 set FLGWP=%4%
+set SYSUID=%5%
 
 
 rem set pathes
@@ -31,14 +32,54 @@ set YAIOCONFIGPATH=%YAIOSCRIPTPATH%..\config\
 rem init config
 call %YAIOCONFIGPATH%\config-yaio.bat %YAIOSCRIPTPATH%
 
+rem 
+rem parse from wiki
+rem 
+if "%FLG_PARSE_PPL_FROM_WIKI%" EQU "" goto end_PARSE_PPL_FROM_WIKI
+
+:do_PARSE_PPL_FROM_WIKI
+set SRC_OPTIONS=--sourcetype ppl
+
 rem only if html-Src: 
 call %YAIOSCRIPTPATH%genPPLFromWiki.bat %MMPATH% %SRCFILE% %PROJNAME%
 rem only if Excel-Src: call %YAIOSCRIPTPATH%genPPLFromExcel.bat %MMPATH% %SRCFILE% %PROJNAME%
 call %YAIOSCRIPTPATH%genWikiFromPPL.bat %MMPATH% %SRCFILE% %PROJNAME%
+:end_PARSE_PPL_FROM_WIKI
 
-if NOT "%WIKIONLY%" EQU "" goto end
+rem 
+rem import ppl to db
+rem 
+if "%FLG_IMPORT_PPL_TO_DB%" EQU "" goto end_IMPORT_PPL_TO_DB
+set SRC_OPTIONS=--sourcetype ppl
+call %BASEPATH%importJPAFromPPL.bat %MMPATH% %SRCFILE% %PROJNAME%
+:end_IMPORT_PPL_TO_DB
 
+
+rem 
+rem other exports
+rem 
+if NOT "%PARSEONLY%" EQU "" goto end
+
+if "%GEN_SRC%" EQU "ppl" goto configure_ppl
+if "%GEN_SRC%" EQU "jpa" goto configure_jpa
+
+echo "unknown %GEN_SRC%";
+halt;
+goto end
+
+rem configure jpl
+:configure_ppl
+set SRC_OPTIONS=--sourcetype ppl
+goto otherexports
+
+rem jpa
+:configure_jpa
+set SRC_OPTIONS=--sourcetype jpa --exportsysuid %SYSUID%
+goto otherexports
+
+rem generate all other
 :otherexports
+call %YAIOSCRIPTPATH%genWikiFromPPL.bat %MMPATH% %SRCFILE% %PROJNAME%
 call %YAIOSCRIPTPATH%genJSONFromPPL.bat %MMPATH% %SRCFILE% %PROJNAME%
 call %YAIOSCRIPTPATH%genCsvFromPPL.bat %MMPATH% %SRCFILE% %PROJNAME%
 call %YAIOSCRIPTPATH%genHtmlFromPPL.bat %MMPATH% %SRCFILE% %PROJNAME%

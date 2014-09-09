@@ -5,14 +5,26 @@ set BASEPATH=%1%
 set FLGWP=%2%
 
 rem Gen Wiki-Only
-set WIKIONLY=
+set PARSEONLY=
+rem parse ppl from wiki an generate 
+set FLG_PARSE_PPL_FROM_WIKI=1
+rem import the ppl to db
+set FLG_IMPORT_PPL_TO_DB=1
+rem the generate src: ppl or jpa
+set GEN_SRC=jpa
+rem the masternode
+set IMPORT_OPTIONS_JPA=--addnodestosysuid MasterplanMasternode1
 
 rem set Path
 set YAIOCONFIGPATH=%BASEPATH%\..\config\
 set YAIOSCRIPTPATH=%BASEPATH%\..\sbin\
 set YAIORESPATH=%BASEPATH%\..\ressources\
 set YAIOVARPATH=%BASEPATH%\..\var\
-set CP="%BASEPATH%..\lib\poi-extended.jar;%BASEPATH%..\lib\commons-cli-1.2.jar;%BASEPATH%..\target\yaio-0.1.0.BUILD-SNAPSHOT-jar-with-dependencies.jar;"
+rem old set YAIOAPP=%BASEPATH%..\target\yaio-0.1.0.BUILD-SNAPSHOT-jar-with-dependencies.jar
+rem fast set YAIOAPP=%BASEPATH%..\target\classes\;%BASEPATH%..\target\yaio-0.1.0.BUILD-SNAPSHOT-shaded.jar
+rem prod
+set YAIOAPP=%BASEPATH%..\target\yaio-0.1.0.BUILD-SNAPSHOT-shaded.jar
+set CP="%BASEPATH%..\lib\poi-extended.jar;%BASEPATH%..\lib\commons-cli-1.2.jar;%YAIOAPP%;"
 set JAVAOPTIONS=-Xmx512m -Xms128m -Dlog4j.configuration=file:%BASEPATH%..\config\log4j.properties
 set CFG="%BASEPATH%..\config"
 
@@ -41,7 +53,7 @@ echo %CP%
 rem set Config
 set PARSER_OPTIONS=-pathiddb %YAIOVARPATH%\nodeids.properties %FLGWP%
 set PARSER_OPTIONS_EXCEL=-pathiddb %YAIOVARPATH%\\nodeids.properties
-set OUTPUT_OPTIONS=-c -U 3 -p -i -s -d -t -intend 80 -intendli 2 -l 
+set OUTPUT_OPTIONS=--calcsum -U 3 -p -i -s -d -t -intend 80 -intendli 2 -l 
 set OUTPUT_OPTIONS_WIKI=-U 3 -p -i -s -d -t -intend 80 -intendli 2 -l 
-rem set OUTPUT_OPTIONS=-c -U 3 -p -i -s -d -t -intend 80 -intendli 2 -l -shownometadata -shownosysdata
+rem set OUTPUT_OPTIONS=--calcsum -U 3 -p -i -s -d -t -intend 80 -intendli 2 -l -shownometadata -shownosysdata
 

@@ -33,7 +33,7 @@ call %YAIOCONFIGPATH%\config-yaio.bat %BASEPATH%
 rem save old outputoptions
 set OUTPUT_OPTIONS_OLD=%OUTPUT_OPTIONS%
 
-rem cipy src-files
+rem copy src-files
 copy %MYPLANDIR%%MYPLANFILEBASE%.ppl %MYPLANDIR%%MYPLANFILEBASE%-changelog.ppl
 copy %MYPLANDIR%%MYPLANFILEBASE%.ppl %MYPLANDIR%%MYPLANFILEBASE%-roadmap.ppl
 

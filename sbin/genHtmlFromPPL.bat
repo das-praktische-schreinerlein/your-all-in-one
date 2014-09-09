@@ -21,15 +21,15 @@ set SRCFILE=%2%
 set PROJNAME=%3%
 
 rem create Html from PPL
-set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_HN% -m %PROJNAME% %OUTPUT_OPTIONS% %MMPATH%%SRCFILE%.ppl
-echo "create Html from PPL: %PROG_HN% -m %PROJNAME% %OUTPUT_OPTIONS% %MMPATH%%SRCFILE%.ppl > %MMPATH%\%SRCFILE%.tmp"
+set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_HN% -m %PROJNAME% %SRC_OPTIONS%  %OUTPUT_OPTIONS% %MMPATH%%SRCFILE%.ppl
+echo "create Html from PPL: %PROG_HN% -m %PROJNAME% %SRC_OPTIONS%  %OUTPUT_OPTIONS% %MMPATH%%SRCFILE%.ppl > %MMPATH%\%SRCFILE%.tmp"
 rem echo %CMD%
 %CMD% > %MMPATH%\%SRCFILE%.tmp
 type %YAIORESPATH%\projektplan-export-header.html %MMPATH%\%SRCFILE%.tmp %YAIORESPATH%\projektplan-export-footer.html > %MMPATH%\%SRCFILE%-export.html
 
 rem create Html wirh doclayout from PPL
-set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_HN% -m %PROJNAME% %OUTPUT_OPTIONS% -processdoclayout %MMPATH%%SRCFILE%.ppl
-echo "create Html from PPL: %PROG_HN% -m %PROJNAME% %OUTPUT_OPTIONS% -processdoclayout %MMPATH%%SRCFILE%.ppl > %MMPATH%\%SRCFILE%.tmp"
+set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_HN% -m %PROJNAME% %SRC_OPTIONS%  %OUTPUT_OPTIONS% -processdoclayout %MMPATH%%SRCFILE%.ppl
+echo "create Html from PPL: %PROG_HN% -m %PROJNAME% %SRC_OPTIONS%  %OUTPUT_OPTIONS% -processdoclayout %MMPATH%%SRCFILE%.ppl > %MMPATH%\%SRCFILE%.tmp"
 rem echo %CMD%
 %CMD% > %MMPATH%\%SRCFILE%.tmp
 type %YAIORESPATH%\projektplan-export-header.html %MMPATH%\%SRCFILE%.tmp %YAIORESPATH%\projektplan-export-footer.html > %MMPATH%\%SRCFILE%-docexport.html

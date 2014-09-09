@@ -21,8 +21,8 @@ set SRCFILE=%2%
 set PROJNAME=%3%
 
 rem create Wiki from PPL
-set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_WN% -m %PROJNAME% %OUTPUT_OPTIONS_WIKI% %MMPATH%%SRCFILE%.ppl
-echo "create Wiki from PPL: %PROG_WN% -m %PROJNAME% %OUTPUT_OPTIONS_WIKI% %MMPATH%%SRCFILE%.ppl > %MMPATH%\%SRCFILE%.wiki"
+set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_WN% -m %PROJNAME% %SRC_OPTIONS%  %OUTPUT_OPTIONS_WIKI% %MMPATH%%SRCFILE%.ppl
+echo "create Wiki from PPL: %PROG_WN% -m %PROJNAME% %SRC_OPTIONS%  %OUTPUT_OPTIONS_WIKI% %MMPATH%%SRCFILE%.ppl > %MMPATH%\%SRCFILE%.wiki"
 rem echo %CMD%
 %CMD% > %MMPATH%\%SRCFILE%.new.wiki
 
