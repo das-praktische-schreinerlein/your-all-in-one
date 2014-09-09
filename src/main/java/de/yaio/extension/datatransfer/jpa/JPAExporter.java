@@ -18,6 +18,7 @@
 package de.yaio.extension.datatransfer.jpa;
 
 import org.apache.log4j.Logger;
+import org.springframework.transaction.annotation.Transactional;
 
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.node.BaseNode;
@@ -53,9 +54,9 @@ public class JPAExporter extends WikiExporter {
     };
 
     @Override
+    @Transactional()
     public String getMasterNodeResult(DataDomain masterNode, OutputOptions oOptions)
             throws Exception {
-        // merge BaseNode with db and all recursivly
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("save node:" + masterNode);
         }

@@ -43,8 +43,6 @@ import de.yaio.utils.CmdLineJob;
  */
 public class JobParseExcel extends JobParseWiki {
 
-    protected CommonImporter commonImporter;
-
     public JobParseExcel(String[] args) {
         super(args);
     }
@@ -69,6 +67,10 @@ public class JobParseExcel extends JobParseWiki {
 
     @Override
     public void doJob() throws Throwable {
+        // init
+        initApplicationContext();
+        initCommonImporter();
+
         // parse PPL-source
         String pplSource = commonImporter.extractDataFromExcel();
         System.out.println(pplSource);

@@ -219,13 +219,11 @@ public class JobNodes2Wiki extends CmdLineJob {
     }
 
     @Override
-    @Transactional()
     public void doJob() throws Throwable {
         // init
         createExporter();
         initApplicationContet();
         initCommonImporter();
-        initTransaction();
         
         // Mastername extrahieren
         String masterName = this.cmdLine.getOptionValue("m", "Master");
@@ -243,8 +241,6 @@ public class JobNodes2Wiki extends CmdLineJob {
 
         // Masternode ausgeben
         this.publishResult(exporter, masterNode, oOptions);
-        
-        commitTransaction();
     }
 
     // #############
@@ -326,12 +322,6 @@ public class JobNodes2Wiki extends CmdLineJob {
         commonImporter = new CommonImporter("ppl");
     }
     
-    protected void initTransaction() throws Exception {
-    }
-
-    protected void commitTransaction() throws Exception {
-    }
-
     protected void initCommonImporter() {
         // init commonImporter
         commonImporter.setCmdLine(cmdLine);
@@ -339,7 +329,8 @@ public class JobNodes2Wiki extends CmdLineJob {
 
     protected void initApplicationContet() {
         ApplicationContext context = 
-                        new ClassPathXmlApplicationContext("classpath*:**/applicationContext*.xml");
+            new ClassPathXmlApplicationContext("/META-INF/spring/applicationContext.xml");
+
     }
 
     /**

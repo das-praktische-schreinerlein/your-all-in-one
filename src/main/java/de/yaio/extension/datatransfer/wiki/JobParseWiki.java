@@ -66,7 +66,7 @@ public class JobParseWiki extends CmdLineJob {
     @Override
     public void doJob() throws Throwable {
         // init
-        initApplicationContet();
+        initApplicationContext();
         initCommonImporter();
 
         // parse PPL-source
@@ -84,9 +84,9 @@ public class JobParseWiki extends CmdLineJob {
         commonImporter.setCmdLine(cmdLine);
     }
 
-    protected void initApplicationContet() {
+    protected void initApplicationContext() {
         ApplicationContext context = 
-                        new ClassPathXmlApplicationContext("classpath*:**/applicationContext*.xml");
+            new ClassPathXmlApplicationContext("/META-INF/spring/applicationContext.xml");
     }
 
     /**

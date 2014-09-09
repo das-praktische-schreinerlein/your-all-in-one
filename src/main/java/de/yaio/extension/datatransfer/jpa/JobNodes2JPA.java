@@ -53,16 +53,6 @@ public class JobNodes2JPA extends JobNodes2Wiki {
     }
     
     @Override
-    protected void initTransaction() throws Exception {
-    }
-
-    @Override
-    protected void commitTransaction() throws Exception {
-    }
-
-    
-    
-    @Override
     public DataDomain createMasternode(String name) throws Throwable {
         DataDomain masterNode = null;
 
