@@ -341,6 +341,18 @@ public class BaseNode implements BaseData, MetaData, SysData,
     @Size(max = 255)
     private String type;
     
+    /**
+     * position in list
+     */
+    @Min(0L)
+    private Integer sortPos;
+    
+    /**
+     * next position in list
+     */
+    @Transient
+    protected int curSortIdx = 0;
+    
     
     //####################
     // persistence-functions
@@ -404,7 +416,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
      */
     public static List<BaseNode> findChildNodes(String sysUID) {
         return entityManager().createQuery(
-                        "SELECT o FROM BaseNode o where parent_node = :sysUID", 
+                        "SELECT o FROM BaseNode o where parent_node = :sysUID order by sort_pos asc", 
                         BaseNode.class
                         ).setParameter("sysUID", sysUID).getResultList();
     }
@@ -503,6 +515,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
         if (LOGGER.isDebugEnabled())
             LOGGER.debug("add child:" + childNode.getNameForLogger() + " to " + this.getNameForLogger());
         if (childNode != null) {
+            childNode.setSortPos(curSortIdx++);
             this.childNodesByNameMapMap.put(childNode.getIdForChildByNameMap(), childNode);
             this.childNodes.add((BaseNode)childNode);
         }
@@ -554,6 +567,8 @@ public class BaseNode implements BaseData, MetaData, SysData,
         data.append(this.getType())
             .append(this.getState())
             .append(" name=").append(getName())
+// TODO difference DB + PPL-Import          .append(" parentNode=").append((getParentNode() != null ? getParentNode().getSysUID() : null))
+// TODO difference DB + PPL-Import         .append(" sortPos=").append(getSortPos())
 //            .append(" ebene=").append(getEbene())
 //            .append(" istStandChildrenSum=").append(getIstChildrenSumStand())
 //            .append(" istStartChildrenSum=").append(getIstChildrenSumStart())

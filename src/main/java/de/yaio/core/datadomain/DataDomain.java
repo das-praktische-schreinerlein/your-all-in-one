@@ -49,6 +49,8 @@ public interface DataDomain {
     public String getIdForChildByNameMap();
     public void addChildNode(DataDomain childNode);
     public boolean hasChildNode(DataDomain childNode);
+    public Integer getSortPos();
+    public void setSortPos(Integer sortPos);
 
     // basefields
     public Integer getEbene();

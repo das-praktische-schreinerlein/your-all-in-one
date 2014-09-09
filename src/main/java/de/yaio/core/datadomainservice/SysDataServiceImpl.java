@@ -105,11 +105,16 @@ public class SysDataServiceImpl extends DataDomainRecalcImpl implements SysDataS
             node.setSysCreateDate(new Date());
         }
 
-        // Checksum tsten und ggf. aktualisieren aktualisieren
+        // Checksum testen und ggf. aktualisieren
         String checksum = node.getSysCurChecksum();
         String newChecksum = this.getCheckSum(node);
         boolean flgChanged = false;
-        if (checksum == null || ! newChecksum.equals(checksum)) {
+        if ((checksum == null) || (! newChecksum.equals(checksum))) {
+            if (LOGGER.isDebugEnabled())
+                LOGGER.debug("initSysData checksum changed old:" + checksum 
+                           + " new:" + newChecksum 
+                           + " cmp=" + newChecksum.equals(checksum)
+                           + " nullchecksum=" + (checksum == null));
             checksum = newChecksum;
             node.setSysCurChecksum(checksum);
             flgChanged = true;

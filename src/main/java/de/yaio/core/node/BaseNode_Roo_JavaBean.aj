@@ -311,6 +311,22 @@ privileged aspect BaseNode_Roo_JavaBean {
         return this.type;
     }
     
+    public Integer BaseNode.getSortPos() {
+        return this.sortPos;
+    }
+    
+    public void BaseNode.setSortPos(Integer sortPos) {
+        this.sortPos = sortPos;
+    }
+    
+    public int BaseNode.getCurSortIdx() {
+        return this.curSortIdx;
+    }
+    
+    public void BaseNode.setCurSortIdx(int curSortIdx) {
+        this.curSortIdx = curSortIdx;
+    }
+    
     public Map<String, DataDomain> BaseNode.getChildNodesByNameMapMap() {
         return this.childNodesByNameMapMap;
     }
