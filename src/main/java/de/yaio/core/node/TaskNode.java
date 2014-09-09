@@ -112,18 +112,24 @@ public class TaskNode extends BaseNode implements ExtendedWorkflowData {
     public String getDataBlocks4CheckSum() throws Exception {
         // Content erzeugen
         StringBuffer data = new StringBuffer();
+        
         data.append(super.getDataBlocks4CheckSum())
             .append(" istStand=").append(getIstStand())
-            .append(" istStart=").append(getIstStart())
-            .append(" istEnde=").append(getIstEnde())
+            .append(" istStart=").append(getNewDate(getIstStart()))
+            .append(" istEnde=").append(getNewDate(getIstEnde()))
             .append(" istAufwand=").append(getIstAufwand())
             .append(" istTask=").append(getIstTask())
-            .append(" planStart=").append(getPlanStart())
-            .append(" planEnde=").append(getPlanEnde())
+            .append(" planStart=").append(getNewDate(getPlanStart()))
+            .append(" planEnde=").append(getNewDate(getPlanEnde()))
             .append(" planAufwand=").append(getPlanAufwand())
             .append(" planTask=").append(getPlanTask())
             ;
         return data.toString();
+    }
+    
+    
+    protected Date getNewDate(Date oldDate) {
+        return (oldDate != null ? new Date(oldDate.getTime()) : null);
     }
     
     @Override
