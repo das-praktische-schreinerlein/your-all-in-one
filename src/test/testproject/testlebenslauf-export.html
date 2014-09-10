@@ -1,0 +1,1046 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+<!--     
+    <base href="http://www.michas-ausflugstipps.de/">
+-->
+    <base href="http://localhost/">
+    <link rel="stylesheet" type="text/css" media="all" href="/mybusiness/css/style.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="/mybusiness/css/main.css" />
+    <link rel="stylesheet" type="text/css" media="print" href="/mybusiness/css/print.css" />
+    <script type="text/javascript">var flgDetailFrameAllowed = false;</script>
+    <script type="text/javascript" src="/mybusiness/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/mybusiness/js/jquery-ui-1.10.3.custom.js"></script>
+    <script type="text/javascript" src="/mybusiness/js/JMATAllIn.js"></script>    
+    <style>
+body { 
+    background: white; 
+	color: black; 
+	font-family: Verdana, Arial, Helvetica, sans-serif; 
+	line-height: 1.3em; 
+	font-size: 11px;
+}
+
+.menueFooterDummy {
+   clear: both;
+}
+
+.node-block {
+    width: 100%;
+    clear: both;
+    float: left;
+}
+.node-block-leaf {
+}
+.node-block-leaf1 {
+}
+.node-block-twig {
+}
+.node-block-twig1 {
+    border: 2px solid #D3D3D3
+}
+.node-line-ue {
+    width: 100%;
+    clear: both;
+    float: left;
+}
+
+.node-style-ue {
+    font-weight: bold;
+    font-size: 12px;
+}
+
+
+/**
+ * Node-Styles
+ */
+.node-style-ue1 {
+}
+
+.node-style-list {
+}
+
+.node-style-list1 {
+}
+
+.node-line-trenner {
+    border: none;
+    height: 1px;
+    font-size: 1px;
+    line-height: 1px;
+}
+
+.node-trenner-area-state {
+}
+
+.node-trenner-area-name {
+}
+
+.node-trenner-area-intend {
+    background: lightgrey;
+    width: 100%;
+}
+
+
+/**
+ * Node-Elemente
+ */
+.node-area-stateshort {
+    vertical-align: top;
+    width: 30px;
+    float: left;
+}
+.node-area-name-container {
+    vertical-align: top;
+    width: 600px;
+    float: left;
+}
+.node-area-name-container2 {
+    border-left: 1px solid black;
+}
+.node-area-name {
+    vertical-align: top;
+    display: inline;
+    float: left;
+    width: 90%;
+}
+.node-area-state {
+    vertical-align: top;
+    width: 80px;
+    float: left;
+}
+
+.node-area-istplan {
+    vertical-align: top;
+    width: 620px;
+    float: left;
+}
+
+.node-block-ist {
+    vertical-align: top;
+    width: 330px;
+    float: left;
+}
+.node-block-istcalcsum {
+    vertical-align: top;
+    width: 330px;
+    float: left;
+}
+
+.node-block-plan {
+    vertical-align: top;
+    width: 290px;
+    float: left;
+}
+.node-block-plancalcsum {
+    vertical-align: top;
+    width: 290px;
+    float: left;
+}
+
+.node-container-desc {
+    width: 100%;
+    clear: both;
+    float: left;
+}
+
+.node-block-desc {
+    width: 100%;
+    clear: both;
+    float: left;
+    font-style: italic;
+}
+
+
+.node-container-children {
+    width: 100%;
+    clear: both;
+    float: left;
+}
+
+.node-block-children {
+    width: 100%;
+    clear: both;
+    float: left;
+}
+
+/**
+ * Node-Typ
+ */
+.node-type-leaf {
+    border-top: 1px dotted #D3D3D3
+}
+
+.node-type-leaf1 {
+}
+
+.node-type-twig {
+    font-weight: bold;
+    border-top: 2px solid #D3D3D3
+}
+
+.node-type-twig1 {
+}
+
+/**
+ * Node-Level
+ */
+.node-level1 {
+   margin-left: 30px;
+}
+.node-level2 {
+   margin-left: 60px;
+}
+.node-level3 {
+   margin-left: 90px;
+}
+.node-level4 {
+   margin-left: 120px;
+}
+.node-level5 {
+   margin-left: 150px;
+}
+.node-level6 {
+   margin-left: 180px;
+}
+.node-level7 {
+   margin-left: 210px;
+}
+.node-level8 {
+   margin-left: 240px;
+}
+.node-level9 {
+   margin-left: 270px;
+}
+.node-level10 {
+   margin-left: 300px;
+}
+.node-level11 {
+   margin-left: 330px;
+}
+.node-level12 {
+   margin-left: 360px;
+}
+
+
+/**
+ * Node-Stati
+ */
+.node-state-INFO {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-DOKU {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-IDEE {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-HOWTO {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-URLRES {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-FILERES {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-MAILRES {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-SYMLINK {
+    background-color: #FFC0CB; /*#33CCCC;*/
+}
+.node-state-OPEN {
+    background-color: #ADFF2F CFF9BB; /*#99FF66;*/
+}
+.node-state-OFFEN {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-RUNNING {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-LATE {
+    background-color: #FFD700; /*#F6F9AE; #FFFF66;*/
+}
+.node-state-VERSPAETET {
+    background-color: #FFD700; /*#F6F9AE; #FFFF66;*/
+}
+.node-state-SHORT {
+    background-color: #FF6347; /* #FCD2C9; /*#FF9966;*/
+}
+.node-state-UEBERFAELLIG {
+    background-color: #FF6347; /* #FCD2C9; /*#FF9966;*/
+}
+.node-state-WARNING {
+    background-color: #FF6347; /* #FCD2C9; /*#FF9966;*/
+}
+.node-state-DONE {
+    background-color: #E0F2FC; /*#B0E0E6;*/
+}
+.node-state-ERLEDIGT {
+    background-color: #E0F2FC; /*#B0E0E6;*/
+}
+.node-state-CANCELED {
+    background-color: #F5F5F5; /*#CCCCCC;*/
+}
+.node-state-VERWORFEN {
+    background-color: #F5F5F5; /*#CCCCCC;*/
+}
+.node-state-UNKNOWN {
+    background-color: #FFFFFF;
+}
+.node-state-UNBEKANNT {
+    background-color: #FFFFFF;
+}
+
+.node-state-EVENT_PLANED {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-EVENT_GEPLANT {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-EVENT_OPEN {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-EVENT_OFFEN {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-EVENT_RUNNING {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-EVENT_LATE {
+    background-color: #FFD700; /*#F6F9AE; #FFFF66;*/
+}
+.node-state-EVENT_VERSPAETET {
+    background-color: #FFD700; /*#F6F9AE; #FFFF66;*/
+}
+.node-state-EVENT_SHORT {
+    background-color: #FF6347; /* #FF6347; /* #FCD2C9; /*#FF9966;*/
+}
+.node-state-EVENT_UEBERFAELLIG {
+    background-color: #FF6347; /* #FCD2C9; /*#FF9966;*/
+}
+.node-state-EVENT_WARNING {
+    background-color: #FF6347; /* #FCD2C9; /*#FF9966;*/
+}
+.node-state-EVENT_DONE {
+    background-color: #E0F2FC; /*#B0E0E6;*/
+}
+.node-state-EVENT_ERLEDIGT {
+    background-color: #E0F2FC; /*#B0E0E6;*/
+}
+.node-state-EVENT_CANCELED {
+    background-color: #F5F5F5; /*#CCCCCC;*/
+}
+.node-state-EVENT_VERWORFEN {
+    background-color: #F5F5F5; /*#CCCCCC;*/
+}
+
+
+
+.box {
+    width: 712px;
+}
+
+h1, h2, h3, h4, h5, h6, h7, h8 {
+    padding-top: 5px;
+    border-top: 1px dotted green; 
+    clear: both;
+}
+
+.h1-portdesc {
+    
+}
+.h2-portdesc {
+    font-size: 15px;
+    font-weight: bold;
+}
+.h3-portdesc {
+    margin-left: 10px;
+    font-size: 13px;
+    font-weight: bold;
+}
+.h4-portdesc {
+    margin-left: 20px;
+    font-size: 11px;
+    font-weight: bold;
+}
+.h5-portdesc {
+    margin-left: 30px;
+    font-size: 10px;
+    font-weight: bold;
+}
+.h6-portdesc {
+    margin-left: 35px;
+    font-size: 9px;
+    font-weight: bold;
+}
+.p-portdesc {
+    margin-left: 20px;
+    line-height: 15px;
+    float: left;
+    clear: both;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+.p-portdesc-ue {
+    display: inline-block;
+    width: 150px;
+    text-align: left;
+    float: left;
+    clear: both;
+}
+.p-portdesc-desc {
+    display: inline-block;
+    width: 510px;
+    vertical-align: top;
+}
+.p-portdesc-descdetail {
+    clear: both;
+    display: inline-block;
+    width: 510px;
+    vertical-align: top;
+    font-style:italic;
+    float: left;
+    clear: both;
+    font-size: 9px;
+}
+.p-portdesc-desc-full {
+    display: inline-block;
+    margin-left: 30px;
+    width: 640px;
+    vertical-align: top;
+}
+.li-portdesc {
+    margin-left: 10px;
+    list-style: none outside none;
+}
+.li-portdesc-ue {
+    text-align: left;
+    display: inline-block;
+    width: 200px;
+    float: left;
+    clear: both;
+}
+.li-portdesc-desc {
+    display: inline-block;
+    width: 400px;
+    vertical-align: top;
+}
+.li-portdesc-descdetail {
+    display: inline-block;
+    width: 400px;
+    vertical-align: top;
+    font-style:italic;
+    float: left;
+    clear: both;
+    font-size: 9px;
+}
+
+
+/* Tabellen */
+.tr-portdesc-ue {
+    font-weight: bold;
+    background: #8CACD3;
+}
+.tr-portdesc-gesamt {
+    font-weight: bold;
+    background: #DEE9EF;
+}
+
+
+
+/* spezielle Abwandlungen fuer MyBusness*/
+.p-portdesc-ue {
+/**    display: none;**/
+}
+.p-portdesc-desc {
+    margin-left: 30px;
+    width: 640px;
+}
+
+.li-portdesc-ue-faehigkeiten {
+    font-weight: bold;
+    width: 150px;
+}
+.li-portdesc-desc-faehigkeiten {
+    width: 500px;
+    line-height: 15px;
+}
+
+
+
+.a-node-symlink {
+    color: blue;
+    font-weight: bold;
+}
+.a-node-urlres {
+    color: blue;
+    font-weight: bold;
+}
+
+
+
+    </style>
+    
+	<script type="text/javascript">
+    
+    /*
+     * ###########################
+     * # Klakulation
+     * ###########################
+     */
+    const CONST_FUNCNAME_SUM = "SUM";
+    
+    function calcColumns(nodeTDId, functionName, praefix, suffix) {
+       // Variablen belegen
+       var errMsg = null;
+       var elemNodeTD = null;
+       var idxCol = null;
+       var elemNodeTABLE = null;
+        
+       // Parameter checken und Eelemente einlesen
+       
+       // TD-Element einlesen
+       if (! errMsg && ! functionName) { 
+           errMsg = "Parameter functionName required"; 
+       } else {
+           if (functionName != CONST_FUNCNAME_SUM) {
+              errMsg = "Parameter functionName must be [" + CONST_FUNCNAME_SUM + "]"; 
+           }
+       }
+       if (! errMsg && ! nodeTDId) { 
+           errMsg = "Parameter nodeTDId required"; 
+       } else {
+           elemNodeTD = $("#" + nodeTDId);
+       }
+       
+       // TABLE-Element einlesen
+       if (! errMsg && ! elemNodeTD) { 
+           errMsg = "HTMLElement nodeTDId not found"; 
+       } else {
+           idxCol = elemNodeTD.attr('cellIndex');
+           elemNodeTABLE = $(elemNodeTD).closest('table');
+       }
+
+       // IDX einlesen
+       if (! errMsg && ! elemNodeTABLE) { 
+           errMsg = "HTMLElement elemNodeTABLE not found"; 
+       } else {
+           idxCol = elemNodeTD[0].cellIndex;
+       }
+       if (! errMsg && ! idxCol) { 
+           errMsg = "idxCol not found"; 
+       }
+       
+       // abschließender Fehlercheck
+       if (errMsg) {
+          alert("Fehler aufgetreten: " + errMsg);
+          return null;
+       }
+       
+       // Funktionalitaet: alle x-Spalten iterieren und Zahlen extrahieren
+       var filterTD = "td:nth-child(" + (idxCol + 1) + ")";
+       var numbers = new Array();
+       $(elemNodeTABLE).children("tbody").children("tr").children(filterTD).each(function (i) {
+           var col = $(this);
+
+           // mich selbst herauslassen 
+           if (col.attr('id') == nodeTDId) {
+              // Jquery continue;
+              //alert("SKIP NODEID: Zeile:" + (i+1) + " ID:" + col.id + " Content:" + col.html() + " Number" + number);
+              return;
+           }
+
+           // normalisieren
+           var strNumber = col.html();
+           strNumber = strNumber.replace(".", "");
+           strNumber = strNumber.replace(",", ".");
+           
+           // auf Zahl testen
+           var number = parseFloat(strNumber, "10");
+           if (isNaN(number)) {
+              // Jquery continue;
+              //alert("SKIP NAN: Zeile:" + (i+1) + " ID:" + col.id + " Content:" + col.html() + " Number" + number);
+              return;
+           }
+           
+           // an Zahlen anhaengen
+           //alert("ADD NUMBER: Zeile:" + (i+1) + " ID:" + col.id + " Content:" + col.html() + " Number" + number);
+           numbers.push(number);
+       });       
+       
+       // Funktionalitaet: gewünsche Aktion auf alle Zahlen ausführen
+       var funcResult = 0;
+       for (index = 0; index < numbers.length; ++index) {
+           // alert("funcResult +" +  numbers[index]);
+           if (functionName == CONST_FUNCNAME_SUM) {
+              funcResult += numbers[index]; 
+           }
+       }
+       
+       // Inhalt des Elements setzen
+       //alert("funcResult:" + funcResult);
+       var text = (praefix ? praefix : "") + funcResult + (suffix ? suffix : "");
+       elemNodeTD.html(funcResult);
+    }
+    
+    /*
+     * ######################
+     * # Volltextsuche
+     * #######################
+     */
+    function doAllNodeToggler(flgShow, minEbene) {
+        try {
+            // Bloecke Oeffnen/Schließen
+            var toggleList = document.getElementsByClassName("blockToggler");
+            if (toggleList.length > 0) {
+                // Elemente vorhanden
+                for (var j = 0; j < toggleList.length; j++) {
+                    // Elemente iterieren
+                    var element = toggleList[j];
+                    var toggleId = element.getAttribute('toggleId');
+                    var togglerBaseId = element.getAttribute('togglerBaseId');
+
+                    // Pruefen ob Node-Toggler
+                    if (toggleId && toggleId.search("childrencontainer") > 0) {
+                        // Ebene einlesen
+                        var toggleBlock = document.getElementById(toggleId);
+                        var curEbene = 0;
+                        if (toggleBlock) {
+                            curEbene = toggleBlock.getAttribute('data-pjebene');
+                        }
+
+                        var effect = function(){
+                            // Leertoggler
+                            var togEf = new ToggleEffect(toggleId); 
+                            togEf.slideAniLen = 1; 
+                            togEf.doEffect();
+                        };
+                        if (flgShow) {
+                            // Block zeigen
+                            if (minEbene && curEbene && curEbene < minEbene) {
+                                jMATService.getLayoutService().togglerBlockShow(
+                                    togglerBaseId, toggleId, effect);
+                            } else {
+                                jMATService.getLayoutService().togglerBlockHide(
+                                    togglerBaseId, toggleId, effect);
+                            }
+                        }
+                        else {
+                            // Block verbergen
+                            if (minEbene && curEbene && curEbene > minEbene) {
+                                jMATService.getLayoutService().togglerBlockHide(
+                                    togglerBaseId, toggleId, effect);
+                            } else {
+                                jMATService.getLayoutService().togglerBlockShow(
+                                    togglerBaseId, toggleId, effect);
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (e) {
+            // anscheinend  nicht definiert
+            alert(e);
+        }
+    }
+    
+    function doParentNodeToggler(myId, flgShow) {
+        try {
+            // Parent-Container einlesen (Child)
+            var parents = $("#" + myId).parents();
+            if (parents) {
+                parents.map( 
+                    function () {
+                        // Toggler visible setzen, wenn gefunden
+                        var parentId = $(this).attr("id");
+                        if (parentId) {
+                            var nodeIdMatcher = parentId.match(/node_(.*)_childrencontainer/);
+                            if (nodeIdMatcher && nodeIdMatcher.length > 0) {
+                                // Toggler aktivieren
+                                var togglerId = parentId;
+                                if (! $(this).is(":visible")) {
+                                    jMATService.getLayoutService().togglerBlockShow(
+                                        togglerId, togglerId, function () { 
+                                            var togEf = new ToggleEffect(togglerId); 
+                                            togEf.slideAniLen = 1; 
+                                            togEf.doEffect();
+                                        }
+                                     );
+                                }
+
+                                // Element anzeigen
+                                var nodeId = nodeIdMatcher[1];
+                                var master = $("#node_" + nodeId + "_master");
+                                if (master && ! $(master).is(":visible") ) {
+                                    $(master).show();                                
+                                }
+                            }
+                        }
+                    }
+                );
+            }
+        } catch (e) {
+            // anscheinend  nicht definiert
+            alert(e);
+        }
+    }
+    
+
+    /* Um einen Volltext-Treffer zu haben, müssen alle Worte im durchsuchten Text vorkommen. */
+    function VolltextTreffer(inhalt, suchworte) {
+        // Wenn keine Suchzeichenkette als gefnden kennzeichnen
+        if ( suchworte.length == 0 )
+            return true;
+     
+        // alle Suchworte iterieren
+        for ( i = 0; i < suchworte.length; i++) {
+            if ( inhalt.indexOf(suchworte[i]) == -1) {
+                // Wort nicht gefunden
+                return false;
+            }
+        }
+     
+        // alle Worte gefunden
+        return true;
+    }
+    
+    function doSearch(suchworte) {
+        // Suche auf alle Node-Elemente ausführen
+        $(".node-block").each(
+            function(index, value) {
+                var flgFound = false;
+                
+                // Datenelemente konfigurieren
+                var searchElements = new Array();
+                searchElements.push($("#" + $(value).attr("id") + " > div:eq(1)").attr("id")); // Desc
+                searchElements.push($("#" + $(value).attr("id") + " > div:first > div:first > div:first > div:eq(1)").attr("id")); // Name
+                searchElements.push($("#" + $(value).attr("id") + " > div:first > div:eq(1)").attr("id")); // Status 
+
+                // alle Datenelemente iterieren
+                $.each(searchElements,
+                    function(subIndex, subId) {
+                        // Inhalt auslesen
+                        inhalt = $("#"+subId).text().toLowerCase();
+                        
+                        // Volltextsuche
+                        if (VolltextTreffer(inhalt, suchworte)) {
+                            // wenn geufndne: verlassen;
+                            flgFound = true;
+                            return;
+                        }
+                    }
+                 );
+                
+                // Elemente je nach Status der SubElemente ein/ausblenden
+                if (flgFound) {
+                    if ( !$(value).is(":visible") ) {
+                        // Element aktivieren
+                        $(value).show();
+                    }  
+
+                    // Eltern oeffnen
+                    doParentNodeToggler($(value).attr("id"), true);
+                } else {
+                    // Element deaktivieren
+                    $(value).hide();
+                }
+            }
+        );
+    }
+    
+    function startSearch() {
+        // Suchworte auslesen
+        suchworte = $(".volltextsuchfeld").val().toLowerCase().split(" ");
+
+        // alle Toggler schließen
+        doAllNodeToggler(false, 0);
+        
+        // Suche ausfuehren
+        doSearch(suchworte);
+    }
+
+    function resetSearch() {
+        // Suchworte leeren
+        $(".volltextsuchfeld").val('');
+        
+        // suche ausfuehren
+        startSearch();
+    }
+
+    function initSearch() {
+        // Volltextsuche
+        $(".volltextsuchfeld").keyup(
+            function(event) {
+                // nur ausfuehren wenn enter
+                if(event.keyCode != 13) {
+                   return;
+                }
+                
+                // Suche ausfuehren
+                startSearch();
+            }
+        );
+    }
+    
+    /*
+     * ######################
+     * # Symlink
+     * #######################
+     */
+    function openNode(nodeId) {
+        var masterId = "node_" + nodeId + "_master";
+        
+        // Node aktivieren
+        $("#" + masterId).show();
+        
+        // openParent-Nodes
+        doParentNodeToggler(masterId, true);
+        
+        // animated ScrollTo after intervall, because of time used for ToggleEffects
+        delayedFocus = window.setInterval(
+            function() {
+                // nach 0,1 Sekunden ausfuehren und Intervall loeschen
+                $('html, body').animate({
+                    scrollTop: $("#" + masterId).offset().top
+                    }, 
+                    1000);
+                window.clearInterval(delayedFocus);
+            }, 
+            100
+        );
+    }
+    
+    
+    </script>
+
+</head>
+<body>
+    <div id="div_full" style="width: 100%">
+<div id='node_Buis1_master' data-pjebene='1' class='node-block  node-block-twig node-block-twig1'>
+  <div id='node_Buis1_datacontainer' class='node-line-ue node-style-ue node-style-ue1 node-type-twig node-type-twig1'>
+    <div id='node_Buis1_namecontainer' class='node-area-name-container'>
+      <div id='node_Buis1_namecontainer2' class='node-area-name-container2  node-level1'>
+        <div id='node_Buis1_stateshort' class='node-area-stateshort node-state-UNKNOWN'>-</div>
+        <div id='node_Buis1_name' class='node-area-name '>Projekt Meine Firma (Buis1)</div>
+      </div>
+    </div>
+    <div id='node_Buis1_state' class='node-area-state node-state-UNKNOWN'>UNKNOWN</div>
+    <div id='node_Buis1_istplan' class='node-area-istplan node-state-UNKNOWN'></div>
+  </div>
+  <div id='node_Buis1_desccontainer' class='node-container-desc'></div>
+  <div id='node_Buis1_childrencontainer' data-pjebene='1' class='node-container-children'><div id='node_Buis1_cildren' class='node-block-children'>
+<div id='node_Buis20_master' data-pjebene='2' class='node-block  node-block-twig node-block-twig2'>
+  <div id='node_Buis20_datacontainer' class='node-line-ue node-style-ue node-style-ue2 node-type-twig node-type-twig2'>
+    <div id='node_Buis20_namecontainer' class='node-area-name-container'>
+      <div id='node_Buis20_namecontainer2' class='node-area-name-container2  node-level2'>
+        <div id='node_Buis20_stateshort' class='node-area-stateshort node-state-UNKNOWN'>-</div>
+        <div id='node_Buis20_name' class='node-area-name '>Laufende kurzfristige Projekte (Buis20)</div>
+      </div>
+    </div>
+    <div id='node_Buis20_state' class='node-area-state node-state-UNKNOWN'>UNKNOWN</div>
+    <div id='node_Buis20_istplan' class='node-area-istplan node-state-UNKNOWN'></div>
+  </div>
+  <div id='node_Buis20_desccontainer' class='node-container-desc'></div>
+  <div id='node_Buis20_childrencontainer' data-pjebene='2' class='node-container-children'><div id='node_Buis20_cildren' class='node-block-children'>
+<div id='node_Buis570_master' data-pjebene='3' class='node-block  node-block-twig node-block-twig3'>
+  <div id='node_Buis570_datacontainer' class='node-line-ue node-style-ue node-style-ue3 node-type-twig node-type-twig3'>
+    <div id='node_Buis570_namecontainer' class='node-area-name-container'>
+      <div id='node_Buis570_namecontainer2' class='node-area-name-container2  node-level3'>
+        <div id='node_Buis570_stateshort' class='node-area-stateshort node-state-INFO'>-</div>
+        <div id='node_Buis570_name' class='node-area-name '>Lebenslauf bis 2013 (Buis570)</div>
+      </div>
+    </div>
+    <div id='node_Buis570_state' class='node-area-state node-state-INFO'>INFO</div>
+    <div id='node_Buis570_istplan' class='node-area-istplan node-state-INFO'></div>
+  </div>
+  <div id='node_Buis570_desccontainer' class='node-container-desc'></div>
+  <div id='node_Buis570_childrencontainer' data-pjebene='3' class='node-container-children'><div id='node_Buis570_cildren' class='node-block-children'>
+<div id='node_Buis571_master' data-pjebene='4' class='node-block  node-block-twig node-block-twig4'>
+  <div id='node_Buis571_datacontainer' class='node-line-ue node-style-list node-style-list4 node-type-twig node-type-twig4'>
+    <div id='node_Buis571_namecontainer' class='node-area-name-container'>
+      <div id='node_Buis571_namecontainer2' class='node-area-name-container2  node-level4'>
+        <div id='node_Buis571_stateshort' class='node-area-stateshort node-state-INFO'>-</div>
+        <div id='node_Buis571_name' class='node-area-name '>Bewerbung (Buis571)</div>
+      </div>
+    </div>
+    <div id='node_Buis571_state' class='node-area-state node-state-INFO'>INFO</div>
+    <div id='node_Buis571_istplan' class='node-area-istplan node-state-INFO'></div>
+  </div>
+  <div id='node_Buis571_desccontainer' class='node-container-desc'></div>
+  <div id='node_Buis571_childrencontainer' data-pjebene='4' class='node-container-children'><div id='node_Buis571_cildren' class='node-block-children'>
+<div id='node_Buis572_master' data-pjebene='5' class='node-block  node-block-twig node-block-twig5'>
+  <div id='node_Buis572_datacontainer' class='node-line-ue node-style-list node-style-list5 node-type-twig node-type-twig5'>
+    <div id='node_Buis572_namecontainer' class='node-area-name-container'>
+      <div id='node_Buis572_namecontainer2' class='node-area-name-container2  node-level5'>
+        <div id='node_Buis572_stateshort' class='node-area-stateshort node-state-INFO'>-</div>
+        <div id='node_Buis572_name' class='node-area-name '>Michael Schreiner - Your IT-Fellow (Buis572)</div>
+      </div>
+    </div>
+    <div id='node_Buis572_state' class='node-area-state node-state-INFO'>INFO</div>
+    <div id='node_Buis572_istplan' class='node-area-istplan node-state-INFO'></div>
+  </div>
+  <div id='node_Buis572_desccontainer' class='node-container-desc'></div>
+  <div id='node_Buis572_childrencontainer' data-pjebene='5' class='node-container-children'><div id='node_Buis572_cildren' class='node-block-children'>
+<div id='node_Buis1468_master' data-pjebene='6' class='node-block  node-block-twig node-block-twig6'>
+  <div id='node_Buis1468_datacontainer' class='node-line-ue node-style-list node-style-list6 node-type-twig node-type-twig6'>
+    <div id='node_Buis1468_namecontainer' class='node-area-name-container'>
+      <div id='node_Buis1468_namecontainer2' class='node-area-name-container2  node-level6'>
+        <div id='node_Buis1468_stateshort' class='node-area-stateshort node-state-INFO'>-</div>
+        <div id='node_Buis1468_name' class='node-area-name '>Sie haben Ihr Ziel erreicht. (Buis1468)</div>
+      </div>
+    </div>
+    <div id='node_Buis1468_state' class='node-area-state node-state-INFO'>INFO</div>
+    <div id='node_Buis1468_istplan' class='node-area-istplan node-state-INFO'></div>
+  </div>
+  <div id='node_Buis1468_desccontainer' class='node-container-desc'></div>
+  <div id='node_Buis1468_childrencontainer' data-pjebene='6' class='node-container-children'><div id='node_Buis1468_cildren' class='node-block-children'>
+<div id='node_Buis1469_master' data-pjebene='7' class='node-block  node-block-leaf node-block-leaf7'>
+  <div id='node_Buis1469_datacontainer' class='node-line-ue node-style-list node-style-list7 node-type-leaf node-type-leaf7'>
+    <div id='node_Buis1469_namecontainer' class='node-area-name-container'>
+      <div id='node_Buis1469_namecontainer2' class='node-area-name-container2  node-level7'>
+        <div id='node_Buis1469_stateshort' class='node-area-stateshort node-state-INFO'>-</div>
+        <div id='node_Buis1469_name' class='node-area-name '>Gesucht: Sie suchen Unterstuetzung fuer Ihr Programmierteam? Sie suchen einen faehigen Projektleiter? Sie benoetigen kompetente Beratung? <b>Sie haben mich gefunden!</b> Lassen Sie mich auf den folgenden Seiten zeigen, wie ich Sie bei der Loesung Ihrer Probleme unterstuetzen kann. (Buis1469)</div>
+      </div>
+    </div>
+    <div id='node_Buis1469_state' class='node-area-state node-state-INFO'>INFO</div>
+    <div id='node_Buis1469_istplan' class='node-area-istplan node-state-INFO'></div>
+  </div>
+  <div id='node_Buis1469_desccontainer' class='node-container-desc'></div>
+</div>
+</div>
+</div>
+</div>
+<script type='text/javascript'>jMATService.getPageLayoutService().appendBlockToggler('node_Buis1468_stateshort', 'node_Buis1468_childrencontainer');</script>
+<div id='node_Buis573_master' data-pjebene='6' class='node-block  node-block-twig node-block-twig6'>
+  <div id='node_Buis573_datacontainer' class='node-line-ue node-style-list node-style-list6 node-type-twig node-type-twig6'>
+    <div id='node_Buis573_namecontainer' class='node-area-name-container'>
+      <div id='node_Buis573_namecontainer2' class='node-area-name-container2  node-level6'>
+        <div id='node_Buis573_stateshort' class='node-area-stateshort node-state-INFO'>-</div>
+        <div id='node_Buis573_name' class='node-area-name '>Also - Willkommen! (Buis573)</div>
+      </div>
+    </div>
+    <div id='node_Buis573_state' class='node-area-state node-state-INFO'>INFO</div>
+    <div id='node_Buis573_istplan' class='node-area-istplan node-state-INFO'></div>
+  </div>
+  <div id='node_Buis573_desccontainer' class='node-container-desc'></div>
+  <div id='node_Buis573_childrencontainer' data-pjebene='6' class='node-container-children'><div id='node_Buis573_cildren' class='node-block-children'>
+<div id='node_Buis574_master' data-pjebene='7' class='node-block  node-block-leaf node-block-leaf7'>
+  <div id='node_Buis574_datacontainer' class='node-line-ue node-style-list node-style-list7 node-type-leaf node-type-leaf7'>
+    <div id='node_Buis574_namecontainer' class='node-area-name-container'>
+      <div id='node_Buis574_namecontainer2' class='node-area-name-container2  node-level7'>
+        <div id='node_Buis574_stateshort' class='node-area-stateshort node-state-INFO'>-</div>
+        <div id='node_Buis574_name' class='node-area-name '>Einleitung: Ich bin Software-Entwickler und IT-Berater mit 15 Jahren Berufserfahrung aus dem Raum Berlin.<br>Als kompetenter Partner biete ich Ihnen Expertise entlang der gesamten IT-Dienstleistungskette aus einer Hand - von der IST-Aufnahme, ueber die Systemkonzeption, Programmierung und Systemintegration bis zum Management von komplexen IT-Infrastrukturen. (Buis574)</div>
+      </div>
+    </div>
+    <div id='node_Buis574_state' class='node-area-state node-state-INFO'>INFO</div>
+    <div id='node_Buis574_istplan' class='node-area-istplan node-state-INFO'></div>
+  </div>
+  <div id='node_Buis574_desccontainer' class='node-container-desc'></div>
+</div>
+<div id='node_Buis575_master' data-pjebene='7' class='node-block  node-block-leaf node-block-leaf7'>
+  <div id='node_Buis575_datacontainer' class='node-line-ue node-style-list node-style-list7 node-type-leaf node-type-leaf7'>
+    <div id='node_Buis575_namecontainer' class='node-area-name-container'>
+      <div id='node_Buis575_namecontainer2' class='node-area-name-container2  node-level7'>
+        <div id='node_Buis575_stateshort' class='node-area-stateshort node-state-INFO'>-</div>
+        <div id='node_Buis575_name' class='node-area-name '>Rollen: Ob nun Portalprogrammierung mit LAMPP-Stack, ob Abrechnungssysteme mit Java und Oracle, der Aufbau von Hochverfuegbarkeitsloesungen, Konzeption oder Projektmanagement - ueber die Jahre konnte ich mich als Dipl. Wirtschaftsinformatiker in die verschiedensten Themen einarbeiten und diese immer zur vollsten Zufriedenheit der Kunden erledigen. (Buis575)</div>
+      </div>
+    </div>
+    <div id='node_Buis575_state' class='node-area-state node-state-INFO'>INFO</div>
+    <div id='node_Buis575_istplan' class='node-area-istplan node-state-INFO'></div>
+  </div>
+  <div id='node_Buis575_desccontainer' class='node-container-desc'></div>
+</div>
+</div>
+</div>
+</div>
+<script type='text/javascript'>jMATService.getPageLayoutService().appendBlockToggler('node_Buis573_stateshort', 'node_Buis573_childrencontainer');</script>
+</div>
+</div>
+</div>
+<script type='text/javascript'>jMATService.getPageLayoutService().appendBlockToggler('node_Buis572_stateshort', 'node_Buis572_childrencontainer');</script>
+</div>
+</div>
+</div>
+<script type='text/javascript'>jMATService.getPageLayoutService().appendBlockToggler('node_Buis571_stateshort', 'node_Buis571_childrencontainer');</script>
+<div id='node_Buis1011_master' data-pjebene='4' class='node-block  node-block-leaf node-block-leaf4'>
+  <div id='node_Buis1011_datacontainer' class='node-line-ue node-style-list node-style-list4 node-type-leaf node-type-leaf4'>
+    <div id='node_Buis1011_namecontainer' class='node-area-name-container'>
+      <div id='node_Buis1011_namecontainer2' class='node-area-name-container2  node-level4'>
+        <div id='node_Buis1011_stateshort' class='node-area-stateshort node-state-INFO'>-</div>
+        <div id='node_Buis1011_name' class='node-area-name '>Ende (Buis1011)</div>
+      </div>
+    </div>
+    <div id='node_Buis1011_state' class='node-area-state node-state-INFO'>INFO</div>
+    <div id='node_Buis1011_istplan' class='node-area-istplan node-state-INFO'></div>
+  </div>
+  <div id='node_Buis1011_desccontainer' class='node-container-desc'></div>
+</div>
+</div>
+</div>
+</div>
+<script type='text/javascript'>jMATService.getPageLayoutService().appendBlockToggler('node_Buis570_stateshort', 'node_Buis570_childrencontainer');</script>
+</div>
+</div>
+</div>
+<script type='text/javascript'>jMATService.getPageLayoutService().appendBlockToggler('node_Buis20_stateshort', 'node_Buis20_childrencontainer');</script>
+</div>
+</div>
+</div>
+<script type='text/javascript'>jMATService.getPageLayoutService().appendBlockToggler('node_Buis1_stateshort', 'node_Buis1_childrencontainer');</script>
+
+    </div>
+
+    <div class="menueFooterDummy" id="menueFooterDummy"> </div>
+    <div class="menueFooter" id="menueFooter">
+        <div class="menueFooterBox">
+            <ul id="ulMenueFooter" class="ulMenueFooter">
+                <li class="menueFooterMasterLink display-if-js-block"><a href="#" class="a-menue-footer-norm flg-textonly" onclick='javascript:showAsPrintVersion(); window.print(); return false;'><img class="icon-menufooter" border="0" title="Drucken" alt="Drucken" src="images/icon-print.gif">Drucken</a></li>
+                <li class="menueFooterMasterLink display-if-js-block"><a href="#" class="a-menue-footer-norm flg-textonly" onclick='javascript:doAllNodeToggler(true, getElementById("inputNodeEbene").value); return false;'><img class="icon-menufooter" src="./images/icon-up.gif"  title="Bis 4 aufklappen" alt="Bis  aufklappen">Nodes bis <input type=text value="4" id="inputNodeEbene" size=2> auf</a></li>
+                <li class="menueFooterMasterLink display-if-js-block"><a href="#" class="a-menue-footer-norm flg-textonly" onclick='javascript:doAllNodeToggler(true, 100); return false;'><img class="icon-menufooter" src="./images/icon-up.gif"  title="Alles aufklappen" alt="Alles aufklappen">Alle Nodes auf</a></li>
+                <li class="menueFooterMasterLink display-if-js-block"><a href="#" class="a-menue-footer-norm flg-textonly" onclick='javascript:jMATService.getPageLayoutService().doAllBlockToggler(true); return false;'><img class="icon-menufooter" src="./images/icon-up.gif"  title="Alles aufklappen" alt="Alles aufklappen">Alles auf</a></li>
+                <li class="menueFooterMasterLink display-if-js-block"><a href="#" class="a-menue-footer-norm flg-textonly" onclick='javascript:jMATService.getPageLayoutService().doAllBlockToggler(false); return false;'><img class="icon-menufooter" src="./images/icon-down.gif" title="Alles zuklappen" alt="Alles zuklappen">Alles zu</a></li>
+                <li class="menueFooterMasterLink display-if-js-block">
+                   <input type="text" style="width:200px" class="volltextsuchfeld" id="vlt_msglist">
+                   <input type=button onclick="javascript:startSearch();" value="Suchen">
+                   <input type=button onclick="javascript:resetSearch();doAllNodeToggler(true, 3);" value="Reset">
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+
+<script type="text/javascript">
+    // alle Bloecke toggeln
+    jMATService.getPageLayoutService().doAllBlockToggler(false);
+</script>
+<script type="text/javascript">
+    // alle OFFEN hervorheben
+    var styles = {
+        "color": "red",
+        "font-size": "13px",
+        "font-weight": "bold"
+    };
+    $( "span:contains('OFFEN')" ).css( styles );
+</script>
+<script type="text/javascript">
+    // verzoegerte Druckoptimierung
+    delayedOptimize = window.setInterval(
+            function() {
+                // nach 2 Sekunden ausfuehren und Intervall loeschen
+                /*
+                jMATService.getLayoutService().toggleBlock(
+                        'node_2_childrencontainer',
+                        'node_2_childrencontainer',
+                        function () {
+                            new ToggleEffect('node_2_childrencontainer').doEffect();
+                        }
+                );
+                */
+                doAllNodeToggler(true, 3);
+                initSearch();
+                window.clearInterval(delayedOptimize);
+            }, 2000);
+
+</script>
+</body></html>

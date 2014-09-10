@@ -8,7 +8,7 @@ set PLANFILEBASE=test
 set PLANNAME=TestPlanung
 set PLANSYSUID=DT201401231236052431
 
-goto regen-from-excel
+rem goto regen-from-excel
 :gen-all
 rem gen all
 call %BASEPATH%gen-planung-fromwiki.bat %PLANDIR% %PLANFILEBASE% %PLANNAME% --onlyifstate %PLANSYSUID%
