@@ -34,6 +34,7 @@ import de.yaio.extension.datatransfer.ppl.PPLImporter;
 import de.yaio.extension.datatransfer.wiki.WikiImportOptions;
 import de.yaio.extension.datatransfer.wiki.WikiImporter;
 import de.yaio.extension.datatransfer.wiki.WikiImporter.WikiStructLine;
+import de.yaio.utils.CmdLineJob;
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -59,6 +60,19 @@ public class CommonImporter {
         Logger.getLogger(CommonImporter.class);
 
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Constructor
+     * <h4>FeatureDescription:</h4>
+     *     create importer-object to import nodes
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>initialize the importer
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Constructor
+     * @param defaultSourceType - the default sourcetype if commandline-option not set
+     */
     public CommonImporter(String defaultSourceType) {
         this.defaultSourceType = defaultSourceType;
         createPPLImporter();
@@ -72,7 +86,20 @@ public class CommonImporter {
      * ##############
      */
     
-    public void addAvailiableCommonCmdLineOptions(Options availiableCmdLineOptions) throws Throwable {
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     CLI
+     * <h4>FeatureDescription:</h4>
+     *     add common import-options to the availiableCmdLineOptions
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>update availiableCmdLineOptions
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     CLI
+     * @param availiableCmdLineOptions - the container with the availiableCmdLineOptions
+     */
+    public void addAvailiableCommonCmdLineOptions(Options availiableCmdLineOptions) {
         // Hilfe-Option
         Option helpOption = new Option("h", "help", false, "usage");
         helpOption.setRequired(false);
@@ -92,7 +119,20 @@ public class CommonImporter {
     }
     
 
-    public void addAvailiableWikiCmdLineOptions(Options availiableCmdLineOptions) throws Throwable {
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     CLI
+     * <h4>FeatureDescription:</h4>
+     *     add Wiki-import-options to the availiableCmdLineOptions
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>update availiableCmdLineOptions
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     CLI
+     * @param availiableCmdLineOptions - the container with the availiableCmdLineOptions
+     */
+    public void addAvailiableWikiCmdLineOptions(Options availiableCmdLineOptions) {
         // Show State
         Option flgShowState = new Option("", "onlyifstate", false,
                 "Show Only if State/Type set (default false)");
@@ -124,13 +164,52 @@ public class CommonImporter {
         availiableCmdLineOptions.addOption(flgShowList);
     }
     
-    public void addAvailiableExcelCmdLineOptions(Options availiableCmdLineOptions) throws Throwable {
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     CLI
+     * <h4>FeatureDescription:</h4>
+     *     add Excel-import-options to the availiableCmdLineOptions
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>update availiableCmdLineOptions
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     CLI
+     * @param availiableCmdLineOptions - the container with the availiableCmdLineOptions
+     */
+    public void addAvailiableExcelCmdLineOptions(Options availiableCmdLineOptions) {
     }
 
-    public void addAvailiablePPLCmdLineOptions(Options availiableCmdLineOptions) throws Throwable {
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     CLI
+     * <h4>FeatureDescription:</h4>
+     *     add PPL-import-options to the availiableCmdLineOptions
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>update availiableCmdLineOptions
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     CLI
+     * @param availiableCmdLineOptions - the container with the availiableCmdLineOptions
+     */
+    public void addAvailiablePPLCmdLineOptions(Options availiableCmdLineOptions) {
     }
 
-    public void addAvailiableJPACmdLineOptions(Options availiableCmdLineOptions) throws Throwable {
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     CLI
+     * <h4>FeatureDescription:</h4>
+     *     add JPA-import-options to the availiableCmdLineOptions
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>update availiableCmdLineOptions
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     CLI
+     * @param availiableCmdLineOptions - the container with the availiableCmdLineOptions
+     */
+    public void addAvailiableJPACmdLineOptions(Options availiableCmdLineOptions) {
         // exportsysuid
         Option exportSysUid = new Option("", "exportsysuid", true,
                 "SysUId of the masterNode to export.");
@@ -138,7 +217,20 @@ public class CommonImporter {
         availiableCmdLineOptions.addOption(exportSysUid);
     }
 
-    public void addAvailiableProductiveImportCmdLineOptions(Options availiableCmdLineOptions) throws Throwable {
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     CLI
+     * <h4>FeatureDescription:</h4>
+     *     add Production-import-options to the availiableCmdLineOptions
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>update availiableCmdLineOptions
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     CLI
+     * @param availiableCmdLineOptions - the container with the availiableCmdLineOptions
+     */
+    public void addAvailiableProductiveImportCmdLineOptions(Options availiableCmdLineOptions) {
         // Id-File
         Option pathIdDB = new Option("", "pathiddb", true,
                 "Pfad zur ID-Datenbank");
@@ -152,6 +244,21 @@ public class CommonImporter {
      * ##############
      */
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     BusinessLogic
+     * <h4>FeatureDescription:</h4>
+     *     import the data from PPL-File configured by cmdline-options and add 
+     *     them to the masterNode 
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>updates masternode
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     BusinessLogic
+     * @param masterNode - the masternode on which all other nodes are added
+     * @throws Exception - parse/io-Exceptions possible
+     */
     public void importDataToMasterNodeFromPPLFile(DataDomain masterNode) throws Exception {
         // check srcFile
         if (cmdLine.getArgs().length <= 0) {
@@ -169,6 +276,21 @@ public class CommonImporter {
         pplImporter.extractNodesFromFile(masterNode, srcFile, delimiter);
     }
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     BusinessLogic
+     * <h4>FeatureDescription:</h4>
+     *     import the data from JPA configured by cmdline-options and add 
+     *     them to the masterNode 
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>updates masternode
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     BusinessLogic
+     * @param masterNode - the masternode on which all other nodes are added
+     * @throws Exception - parse/io-Exceptions possible
+     */
     public void importDataToMasterNodeFromJPA(DataDomain masterNode) throws Exception {
         if (LOGGER.isInfoEnabled()) {
             LOGGER.info("read from JPA");
@@ -179,7 +301,10 @@ public class CommonImporter {
         if (exportSysUID == null || "".equalsIgnoreCase(exportSysUID)) {
             throw new IllegalArgumentException("For sourcetype=jpa a exportsysuid is expected");
         }
- 
+        
+        // initApplicationContext
+        CmdLineJob.initApplicationContext();
+
         // create own importer
         JPAImporter jpaImporter = new JPAImporter(null);
         if (LOGGER.isInfoEnabled()) {
@@ -199,6 +324,21 @@ public class CommonImporter {
         baseNode.setParentNode(masterNode);
     }
     
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     BusinessLogic
+     * <h4>FeatureDescription:</h4>
+     *     import the data from Excel-File configured by cmdline-options and add 
+     *     them to the masterNode 
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>updates masternode
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     BusinessLogic
+     * @param masterNode - the masternode on which all other nodes are added
+     * @throws Exception - parse/io-Exceptions possible
+     */
     public void importDataToMasterNodeFromExcel(DataDomain masterNode) throws Exception {
         // config
         String delimiter = cmdLine.getOptionValue("delimiter", "\t");
@@ -210,8 +350,21 @@ public class CommonImporter {
         pplImporter.extractNodesFromLines(masterNode, pplSource, delimiter);
     }
 
-
-
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     BusinessLogic
+     * <h4>FeatureDescription:</h4>
+     *     import the nodes from Excel-File configured by cmdline-options and 
+     *     return them as PPL-String
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue String in PPL-format
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     BusinessLogic
+     * @return String with nodes in PPL-format
+     * @throws Exception - parse/io-Exceptions possible
+     */
     public String extractDataFromExcel() throws Exception {
         // check srcFile
         if (cmdLine.getArgs().length <= 0) {
@@ -256,6 +409,21 @@ public class CommonImporter {
         return resBuf.toString();
     }
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     BusinessLogic
+     * <h4>FeatureDescription:</h4>
+     *     import the data from Wiki-File configured by cmdline-options and add 
+     *     them to the masterNode 
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>updates masternode
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     BusinessLogic
+     * @param masterNode - the masternode on which all other nodes are added
+     * @throws Exception - parse/io-Exceptions possible
+     */
     public void importDataToMasterNodeFromWiki(DataDomain masterNode) throws Exception {
         // config
         String delimiter = cmdLine.getOptionValue("delimiter", "\t");
@@ -266,6 +434,21 @@ public class CommonImporter {
     }
     
     
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     BusinessLogic
+     * <h4>FeatureDescription:</h4>
+     *     import the nodes from Wiki-File configured by cmdline-options and 
+     *     return them as PPL-String
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue String in PPL-format
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     BusinessLogic
+     * @return String with nodes in PPL-format
+     * @throws Exception - parse/io-Exceptions possible
+     */
     public String extractDataFromWiki() throws Exception {
         // check srcFile
         if (cmdLine.getArgs().length <= 0) {
@@ -278,18 +461,18 @@ public class CommonImporter {
 
         // Parser+Options anlegen
         WikiImportOptions inputOptions = new WikiImportOptions();
-        inputOptions.flgReadList = true;
-        inputOptions.flgReadUe = true;
-        inputOptions.flgReadWithStatusOnly = cmdLine.hasOption("s");
-        inputOptions.flgReadWithWFStatusOnly = cmdLine.hasOption("w");
+        inputOptions.setFlgReadList(true);
+        inputOptions.setFlgReadUe(true);
+        inputOptions.setFlgReadWithStatusOnly(cmdLine.hasOption("s"));
+        inputOptions.setFlgReadWithWFStatusOnly(cmdLine.hasOption("w"));
         if (cmdLine.hasOption("l")) {
-            inputOptions.flgReadList = false;
+            inputOptions.setFlgReadList(false);
         }
         if (cmdLine.hasOption("u")) {
-            inputOptions.flgReadUe = false;
+            inputOptions.setFlgReadUe(false);
         }
-        inputOptions.strReadIfStatusInListOnly = 
-                cmdLine.getOptionValue("onlyifstateinlist", null);
+        inputOptions.setStrReadIfStatusInListOnly(
+                cmdLine.getOptionValue("onlyifstateinlist", null));
         WikiImporter wikiImporter = new WikiImporter(inputOptions);
         
         // gets NodeNumberService
@@ -316,12 +499,27 @@ public class CommonImporter {
         StringBuffer resBuf = new StringBuffer();
         if (lstWikiLines != null) {
             for (WikiStructLine wk : lstWikiLines) {
-                resBuf.append(wk.hirarchy).append("\n");
+                resBuf.append(wk.getHirarchy()).append("\n");
             }
         }
         return resBuf.toString();
     }
     
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     BusinessLogic
+     * <h4>FeatureDescription:</h4>
+     *     import the data from source configured by cmdline-options and add 
+     *     them to the masterNode 
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>updates masternode
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     BusinessLogic
+     * @param masterNode - the masternode on which all other nodes are added
+     * @throws Exception - parse/io-Exceptions possible
+     */
     public void importDataToMasterNode(DataDomain masterNode) throws Exception {
         // check datasource
         String sourceType = cmdLine.getOptionValue("sourcetype", defaultSourceType);
@@ -347,16 +545,56 @@ public class CommonImporter {
      * service-functions
      * ##############
      */
+    
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     BusinessLogic
+     * <h4>FeatureDescription:</h4>
+     *     create the commonly used PPLimporter
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>updates MemberVar pplImporter - for the import
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     BusinessLogic
+     */
     protected void createPPLImporter() {
         // create commonImporter
         pplImporter = new PPLImporter(null);
     }
     
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     BusinessLogic
+     * <h4>FeatureDescription:</h4>
+     *     get the commonly used PPLimporter
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue an instance of PPLImporter
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     BusinessLogic
+     * @return an instance of PPLImporter
+     */
     public PPLImporter getPPLImporter() {
         return pplImporter;
     }
     
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     BusinessLogic
+     * <h4>FeatureDescription:</h4>
+     *     set the CommandLine to parse the import-options
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>updates membervar cmdLine
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     BusinessLogic
+     * @param cmdLine - the parsed cmdLine
+     */
     public void setCmdLine(CommandLine cmdLine) {
         this.cmdLine = cmdLine;
     }

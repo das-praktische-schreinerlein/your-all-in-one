@@ -23,6 +23,8 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.PosixParser;
 import org.apache.log4j.Logger;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 
 /**
@@ -52,6 +54,8 @@ public abstract class CmdLineJob {
 
     private final static Logger LOGGER = Logger.getLogger(CmdLineJob.class);
 
+    public static ApplicationContext springApplicationContext = null;
+    
     public static final int CONST_EXITCODE_OK = 0;
     public static final int CONST_EXITCODE_FAILED_ARGS = 1;
     public static final int CONST_EXITCODE_FAILED_CONFIG = 2;
@@ -313,6 +317,11 @@ public abstract class CmdLineJob {
         }
     }
 
+    public static void initApplicationContext() {
+        springApplicationContext = 
+            new ClassPathXmlApplicationContext("/META-INF/spring/applicationContext.xml");
+    }
+
     protected void initJob() throws Throwable {
     }
 
@@ -321,5 +330,8 @@ public abstract class CmdLineJob {
 
 
     protected void cleanUpAfterJob() throws Throwable {
+        // TODO: hack to close HSLDB-connection -> Hibernate don't close the 
+        //       database and so the content is not written to file
+        org.hsqldb.DatabaseManager.closeDatabases(CONST_EXITCODE_OK);
     }
 }

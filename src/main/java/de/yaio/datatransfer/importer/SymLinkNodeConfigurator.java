@@ -34,14 +34,44 @@ public class SymLinkNodeConfigurator {
 
     protected static SymLinkNodeConfigurator me = new SymLinkNodeConfigurator();
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     DataImport
+     * <h4>FeatureDescription:</h4>
+     *     ueber diese Funktionen werden die Schlagworte und die dann zu 
+     *     über NodeFactory.getNodeTypeFromText zu instantiierenden Node-Klassen 
+     *     bekannt gemacht
+     * <h4>FeatureKeywords:</h4>
+     *     Config
+     * @param nodeFactory - instance of the nodeFactory which will use the config 
+     */
     public static void configureNodeTypeIdentifier(NodeFactory nodeFactory) {
         nodeFactory.addNodeTypeIdentifier(SymLinkNode.CONST_MAP_NODETYPE_IDENTIFIER, SymLinkNode.class);
     }
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     DataImport
+     * <h4>FeatureDescription:</h4>
+     *     configure variants of NodeTypeIdentifier (used by parser to normalize 
+     *     the sourcedata)<br>
+     * <h4>FeatureKeywords:</h4>
+     *     Config
+     * @param importer - instance of the importer which will use the config 
+     */
     public static void configureNodeTypes(Importer importer) {
         importer.addNodeTypeIdentifierVariantMapping(SymLinkNode.CONST_MAP_NODETYPE_IDENTIFIER);
     }
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     DataImport
+     * <h4>FeatureDescription:</h4>
+     *     configure special Workflow-NodeTypeIdentifier (used by Importer.isWFStatus)
+     * <h4>FeatureKeywords:</h4>
+     *     Config
+     * @param importer - instance of the importer which will use the config 
+     */
     public static void configureWorkflowNodeTypeMapping(Importer importer) {
         // NOP 
     }

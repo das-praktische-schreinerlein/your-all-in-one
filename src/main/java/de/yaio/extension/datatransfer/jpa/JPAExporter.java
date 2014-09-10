@@ -41,6 +41,18 @@ import de.yaio.extension.datatransfer.wiki.WikiExporter;
  */
 public class JPAExporter extends WikiExporter {
     
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Constructor
+     * <h4>FeatureDescription:</h4>
+     *     service functions to export nodes to JPA
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>initialize the exporter
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Constructor
+     */
     public JPAExporter() {
         super();
     }
@@ -75,7 +87,7 @@ public class JPAExporter extends WikiExporter {
         
         // save the children
         newNode.persistChildNodesToDB(NodeService.CONST_DB_RECURSIONLEVEL_ALL_CHILDREN);
-        
+
         return "saved node: " + masterNode.getName() + "\n";
     }
 

@@ -33,6 +33,7 @@ import de.yaio.core.datadomain.DataDomain;
  */
 public interface DataDomainRecalc extends Comparable<DataDomainRecalc> {
     
+    /** the position in the recalc-order at which the recalcer will run */
     public static final int CONST_ORDER_NOOP = -1;
     
     /**
@@ -49,7 +50,7 @@ public interface DataDomainRecalc extends Comparable<DataDomainRecalc> {
      *     BsuinessLogic
      * @param node - node to recalc
      * @param recurceDirection - Type of recursion (parent, me, children) NodeService.CONST_RECURSE_DIRECTION_*
-     * @throws Exception
+     * @throws Exception - parser/format-Exceptions possible
      */
     public void doRecalcBeforeChildren(DataDomain node, int recurceDirection) throws Exception;
 
@@ -67,7 +68,7 @@ public interface DataDomainRecalc extends Comparable<DataDomainRecalc> {
      *     BsuinessLogic
      * @param node - node to recalc
      * @param recurceDirection - Type of recursion (parent, me, children) NodeService.CONST_RECURSE_DIRECTION_*
-     * @throws Exception
+     * @throws Exception - parser/format-Exceptions possible
      */
     public void doRecalcAfterChildren(DataDomain node, int recurceDirection) throws Exception;
     

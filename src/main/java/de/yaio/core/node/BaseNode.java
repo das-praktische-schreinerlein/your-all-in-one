@@ -413,6 +413,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
      * <h4>FeatureKeywords:</h4>
      *     Persistence JPA
      * @param sysUID - sysUID for the filter on parent_node
+     * @return List of childnodes for basenode with sysUID
      */
     public static List<BaseNode> findChildNodes(String sysUID) {
         return entityManager().createQuery(
@@ -433,7 +434,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     Persistence
-     * @param recursionLevel: how many recursion-level will be saved to DB
+     * @param recursionLevel - how many recursion-level will be saved to DB
      */
     public void persistChildNodesToDB(int recursionLevel) {
         // set new level if it is not -1

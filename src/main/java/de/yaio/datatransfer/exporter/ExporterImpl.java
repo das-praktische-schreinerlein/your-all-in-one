@@ -57,10 +57,22 @@ public class ExporterImpl implements Exporter {
     private static final Logger LOGGER =
             Logger.getLogger(ExporterImpl.class);
 
-    public TreeSet<Formatter> hshDataDomainFormatter = new TreeSet<Formatter>();
-    public Map<String, Formatter> hshDataDomainFormatterByClassName = 
+    protected TreeSet<Formatter> hshDataDomainFormatter = new TreeSet<Formatter>();
+    protected Map<String, Formatter> hshDataDomainFormatterByClassName = 
             new HashMap<String, Formatter>();
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Constructor
+     * <h4>FeatureDescription:</h4>
+     *     create Exporter to export nodes
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>initialize the exporter
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Constructor
+     */
     public ExporterImpl() {
         // NodeTypes konfigurieren
         this.initDataDomainFormatter();
@@ -99,7 +111,7 @@ public class ExporterImpl implements Exporter {
                 formatter.getClass().getName(), formatter);
     }
 
-    public Formatter getDataDomainFormatterByClassName(String className) {
+    protected Formatter getDataDomainFormatterByClassName(String className) {
         return this.hshDataDomainFormatterByClassName.get(className);
     }
     
@@ -163,7 +175,7 @@ public class ExporterImpl implements Exporter {
      * @param praefix - string to use as prefix in front of nodeoutput
      * @param oOptions - options for output (formatter)
      * @return - formatted output of node-hierarchy and DataDomains
-     * @throws Exception
+     * @throws Exception - parser/format/io-Exceptions possible
      */
     public StringBuffer getNodeResult(DataDomain node, String praefix,
             OutputOptions oOptions) throws Exception {

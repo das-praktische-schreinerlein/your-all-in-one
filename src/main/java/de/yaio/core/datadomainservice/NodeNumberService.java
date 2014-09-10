@@ -47,7 +47,7 @@ public interface NodeNumberService {
      *     BusinessLogic
      * @param node - node (praefix)
      * @return next available Node-number for this node-hierarchy (praefix)
-     * @throws Exception
+     * @throws Exception - io-Exceptions possible
      */
     public Object getNextNodeNumber(MetaData node) throws Exception;
     
@@ -64,7 +64,7 @@ public interface NodeNumberService {
      *     BusinessLogic
      * @param praefix - node-praefix
      * @param number - next available Node-number for this node-hierarchy (praefix)
-     * @throws Exception
+     * @throws Exception - io-Exceptions possible
      */
     public void initNextNodeNumber(String praefix, Integer number) throws Exception;
 
@@ -80,7 +80,7 @@ public interface NodeNumberService {
      * <h4>FeatureKeywords:</h4>
      *     Config
      * @return map <praefix, nextId>
-     * @throws Exception
+     * @throws Exception - io-Exceptions possible
      */
     public Map<String, Integer> getNextNodeNumberMap() throws Exception;
 
@@ -92,7 +92,7 @@ public interface NodeNumberService {
      * <h4>FeatureKeywords:</h4>
      *     Config
      * @param strPathIdDB - filename
-     * @throws Exception
+     * @throws Exception - io-Exceptions possible
      */
     public void exportNextNodeNumbersToFile(String strPathIdDB) throws Exception;
 
@@ -108,7 +108,7 @@ public interface NodeNumberService {
      * <h4>FeatureKeywords:</h4>
      *     Config
      * @param strPathIdDB - parth to the idFile
-     * @throws Exception
+     * @throws Exception - parser/format/io-Exceptions possible
      */
     public void initNextNodeNumbersFromFile(String strPathIdDB) throws Exception;
 }

@@ -23,6 +23,7 @@ import org.apache.log4j.Logger;
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.node.BaseNode;
 import de.yaio.extension.datatransfer.wiki.JobNodes2Wiki;
+import de.yaio.utils.CmdLineJob;
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -39,10 +40,22 @@ import de.yaio.extension.datatransfer.wiki.JobNodes2Wiki;
  */
 public class JobNodes2JPA extends JobNodes2Wiki {
     
-    // Logger
     private static final Logger LOGGER =
         Logger.getLogger(JobNodes2JPA.class);
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Constructor
+     * <h4>FeatureDescription:</h4>
+     *     job to import nodes and output to JPA
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>initialize the application
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Constructor
+     * @param args the command line arguments
+     */
     public JobNodes2JPA(String[] args) {
         super(args);
     }
@@ -55,6 +68,9 @@ public class JobNodes2JPA extends JobNodes2Wiki {
     @Override
     public DataDomain createMasternode(String name) throws Throwable {
         DataDomain masterNode = null;
+
+        // initApplicationContext
+        CmdLineJob.initApplicationContext();
 
         // check for sysUID
         String sysUID = this.cmdLine.getOptionValue("addnodestosysuid");
@@ -86,10 +102,39 @@ public class JobNodes2JPA extends JobNodes2Wiki {
     }
 
     /**
-    * @param args the command line arguments
-    */
+     * <h4>FeatureDomain:</h4>
+     *     Logging
+     * <h4>FeatureDescription:</h4>
+     *     get the Class-logger
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue Logger - use it !!!!
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Logging
+     * @return logger - the logger
+     */
+    public static Logger getLogger() {
+        return LOGGER;
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     CLI
+     * <h4>FeatureDescription:</h4>
+     *     Main-method to start the application
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>initialize the application
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     CLI
+     * @param args the command line arguments
+     */
     public static void main(String[] args) {
         JobNodes2JPA me = new JobNodes2JPA(args);
+        
+        // start processing
         me.startJobProcessing();
     }
 }

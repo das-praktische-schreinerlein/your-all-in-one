@@ -33,11 +33,11 @@ import de.yaio.datatransfer.importer.ImportOptionsImpl;
  */
 public class WikiImportOptions extends ImportOptionsImpl {
 
-    public boolean flgReadUe = true;
-    public boolean flgReadList = true;
-    public boolean flgReadWithStatusOnly = false;
-    public boolean flgReadWithWFStatusOnly = false;
-    public String strReadIfStatusInListOnly = null;
+    protected boolean flgReadUe = true;
+    protected boolean flgReadList = true;
+    protected boolean flgReadWithStatusOnly = false;
+    protected boolean flgReadWithWFStatusOnly = false;
+    protected String strReadIfStatusInListOnly = null;
 
     public String toString() {
         return "WikiImportOptions" 
@@ -49,42 +49,158 @@ public class WikiImportOptions extends ImportOptionsImpl {
 
     }
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     DataImport
+     * <h4>FeatureDescription:</h4>
+     *     get the flag for WikiParser that Wiki-UE will be read or ignored
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>ResturnValue true/false = read/ignore
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     DataImport ParserOptions
+     * @return flgReadUe - true/false = read/ignore
+     */
     public boolean isFlgReadUe() {
         return flgReadUe;
     }
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     DataImport
+     * <h4>FeatureDescription:</h4>
+     *     set the flag for WikiParser that Wiki-UE will be read or ignored
+     * <h4>FeatureKeywords:</h4>
+     *     DataImport ParserOptions
+     * @param flgReadUe - true/false = read/ignore
+     */
     public void setFlgReadUe(boolean flgReadUe) {
         this.flgReadUe = flgReadUe;
     }
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     DataImport
+     * <h4>FeatureDescription:</h4>
+     *     get the flag for WikiParser that Wiki-LIST will be read or ignored
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>ResturnValue true/false = read/ignore
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     DataImport ParserOptions
+     * @return flgReadList - true/false = read/ignore
+     */
     public boolean isFlgReadList() {
         return flgReadList;
     }
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     DataImport
+     * <h4>FeatureDescription:</h4>
+     *     set the flag for WikiParser that Wiki-LIST will be read or ignored
+     * <h4>FeatureKeywords:</h4>
+     *     DataImport ParserOptions
+     * @param flgReadList - true/false = read/ignore
+     */
     public void setFlgReadList(boolean flgReadList) {
         this.flgReadList = flgReadList;
     }
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     DataImport
+     * <h4>FeatureDescription:</h4>
+     *     get the flag for WikiParser that Nodes with status will 
+     *     be read or all others too
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>ResturnValue true/false = read only with Status/ read all
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     DataImport ParserOptions
+     * @return flgReadWithStatusOnly - true/false = read only with Status/ read all
+     */
     public boolean isFlgReadWithStatusOnly() {
         return flgReadWithStatusOnly;
     }
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     DataImport
+     * <h4>FeatureDescription:</h4>
+     *     set the flag for WikiParser that Nodes with status will 
+     *     be read or all others too
+     * <h4>FeatureKeywords:</h4>
+     *     DataImport ParserOptions
+     * @param flgReadWithStatusOnly - true/false = read only with Status/ read all
+     */
     public void setFlgReadWithStatusOnly(boolean flgReadWithStatusOnly) {
         this.flgReadWithStatusOnly = flgReadWithStatusOnly;
     }
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     DataImport
+     * <h4>FeatureDescription:</h4>
+     *     get the flag for WikiParser that Nodes with Workflowstatus will 
+     *     be read or all others too
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>ResturnValue true/false = read only with WFStatus/ read all
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     DataImport ParserOptions
+     * @return flgReadWithWFStatusOnly - true/false = read only with WFStatus/ read all
+     */
     public boolean isFlgReadWithWFStatusOnly() {
         return flgReadWithWFStatusOnly;
     }
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     DataImport
+     * <h4>FeatureDescription:</h4>
+     *     set the flag for WikiParser that only Nodes with Workflowstatus will 
+     *     be read or all others too
+     * <h4>FeatureKeywords:</h4>
+     *     DataImport ParserOptions
+     * @param flgReadWithWFStatusOnly - true/false = read only with WFStatus/ read all
+     */
     public void setFlgReadWithWFStatusOnly(boolean flgReadWithWFStatusOnly) {
         this.flgReadWithWFStatusOnly = flgReadWithWFStatusOnly;
     }
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     DataImport
+     * <h4>FeatureDescription:</h4>
+     *     get the commaseparated string of node-stati for WikiImporter to filter 
+     *     on import
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>ResturnValue string = commaseparated list of node-stati to filter
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     DataImport ParserOptions
+     * @return strReadIfStatusInListOnly - commaseparated list of node-stati to filter
+     */
     public String getStrReadIfStatusInListOnly() {
         return strReadIfStatusInListOnly;
     }
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     DataImport
+     * <h4>FeatureDescription:</h4>
+     *     set the commaseparated string of node-stati for WikiImporter to filter 
+     *     on import
+     * <h4>FeatureKeywords:</h4>
+     *     DataImport ParserOptions
+     * @param strReadIfStatusInListOnly - commaseparated list of node-stati to filter
+     */
     public void setStrReadIfStatusInListOnly(String strReadIfStatusInListOnly) {
         this.strReadIfStatusInListOnly = strReadIfStatusInListOnly;
     }

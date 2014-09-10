@@ -152,7 +152,7 @@ public interface NodeFactory {
      *     sets the MetaDataService to use for generating NodeNumbers
      * <h4>FeatureKeywords:</h4>
      *     Config
-     * @param MetaDataService to use for generating NodeNumbers
+     * @param metaDataService to use for generating NodeNumbers
      */
     public void setMetaDataService (MetaDataService metaDataService);
 
@@ -195,7 +195,7 @@ public interface NodeFactory {
      * @param node - zu parsenden Node
      * @param options - Parser-Optionen
      * @return - Anzahl der gefundenen Fragmente
-     * @throws Exception
+     * @throws Exception - parser/format-Exceptions possible
      */
     public int parseNodeDataDomains(DataDomain node, ImportOptions options) throws Exception;
 
@@ -218,9 +218,8 @@ public interface NodeFactory {
      * @param node - zu parsenden Node
      * @param parser - Instanz des auszufuehrenden Parsers
      * @param options - Parser-Optionen
-     * @throws Exception
      * @return - Anzahl der gefundenen Fragmente
-     * @throws Exception
+     * @throws Exception - parser/format-Exceptions possible
      */
     public int parseNodeDataDomain(DataDomain node, Parser parser, ImportOptions options) throws Exception;
 
@@ -248,7 +247,7 @@ public interface NodeFactory {
      * @param srcName - Name der Node (wird geparst)
      * @param curParentNode - ParentNode
      * @return - erzeugte Node-Instanz
-     * @throws Exception
+     * @throws Exception - parser/format-Exceptions possible
      */
     public DataDomain createNodeObjFromText(Class<?> classType, int id,
             String strFullSrc, String srcName, DataDomain curParentNode)
@@ -270,7 +269,7 @@ public interface NodeFactory {
      * @param strFullSrc - FullSrc der Node
      * @param srcName - NodeName
      * @return - Klasse die anhand des Namens zugeordnet wurde (anhand der Daten aus NodeFactory.initNodeTypeIdentifier)
-     * @throws Exception
+     * @throws Exception - parser/format-Exceptions possible
      */
     public Class<?> getNodeTypeFromText(String strFullSrc, String srcName)
             throws Exception;

@@ -50,10 +50,10 @@ public class ResLocDataParserImpl  extends ParserImpl implements ResLocDataParse
             Logger.getLogger(ResLocDataParserImpl.class);
 
     // Patterns
-    public static String CONST_PATTERN_SEG_STRING1 = "[^,:\\[\\]]";
-    public static final String CONST_PATTERN_SEG_URL =
+    protected static String CONST_PATTERN_SEG_STRING1 = "[^,:\\[\\]]";
+    protected static final String CONST_PATTERN_SEG_URL =
         "[-a-zA-Z0-9\\.:%&=_?/#+\\(\\)!]+";
-    public static final String CONST_PATTERN_SEG_URLRES =
+    protected static final String CONST_PATTERN_SEG_URLRES =
         "ResLoc: (" + CONST_PATTERN_SEG_URL + ")?," 
                + "(" + CONST_PATTERN_SEG_STRING1 + "*)?,"
                + "(" + CONST_PATTERN_SEG_TAGS + "*)?";
@@ -70,6 +70,16 @@ public class ResLocDataParserImpl  extends ParserImpl implements ResLocDataParse
         return ResLocData.CONST_ORDER;
     }
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     DataImport
+     * <h4>FeatureDescription:</h4>
+     *     hängt den Parser für das spätere Extrahieren der NodeDaten aus dem 
+     *     Namen (NodeFactory.parseNodeDataDomains) in die Parserliste
+     * <h4>FeatureKeywords:</h4>
+     *     Config
+     * @param nodeFactory - instance of the nodeFactory which will use the parser 
+     */
     public static void configureDataDomainParser(NodeFactory nodeFactory) {
         nodeFactory.addDataDomainParser(new ResLocDataParserImpl());
     }

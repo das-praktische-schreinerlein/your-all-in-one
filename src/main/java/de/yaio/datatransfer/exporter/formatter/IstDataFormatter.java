@@ -51,7 +51,7 @@ public interface IstDataFormatter extends Formatter{
      * @param node - node to be formatted
      * @param nodeOutput - to append the output
      * @param options - options for formatter
-     * @throws Exception
+     * @throws Exception - parser/format-Exceptions possible
      */
     public void formatIstData(IstData node, StringBuffer nodeOutput, OutputOptions options) throws Exception;
 }

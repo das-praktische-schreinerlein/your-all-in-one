@@ -50,9 +50,9 @@ public class SymLinkDataParserImpl  extends ParserImpl implements SymLinkDataPar
             Logger.getLogger(SymLinkDataParserImpl.class);
 
     // Patterns
-    public static String CONST_PATTERN_SEG_STRING1 = "[^,:\\[\\]]";
-    public static final String CONST_PATTERN_SEG_SYMREF = "[A-Za-z]+[0-9]+";
-    public static final String CONST_PATTERN_SEG_SYMLINK =
+    protected static String CONST_PATTERN_SEG_STRING1 = "[^,:\\[\\]]";
+    protected static final String CONST_PATTERN_SEG_SYMREF = "[A-Za-z]+[0-9]+";
+    protected static final String CONST_PATTERN_SEG_SYMLINK =
         "SymLink: (" + CONST_PATTERN_SEG_SYMREF + ")?," 
                + "(" + CONST_PATTERN_SEG_STRING1 + "*)?,"
                + "(" + CONST_PATTERN_SEG_TAGS + "*)?";
@@ -69,6 +69,16 @@ public class SymLinkDataParserImpl  extends ParserImpl implements SymLinkDataPar
         return SymLinkData.CONST_ORDER;
     }
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     DataImport
+     * <h4>FeatureDescription:</h4>
+     *     hängt den Parser für das spätere Extrahieren der NodeDaten aus dem 
+     *     Namen (NodeFactory.parseNodeDataDomains) in die Parserliste
+     * <h4>FeatureKeywords:</h4>
+     *     Config
+     * @param nodeFactory - instance of the nodeFactory which will use the parser 
+     */
     public static void configureDataDomainParser(NodeFactory nodeFactory) {
         nodeFactory.addDataDomainParser(new SymLinkDataParserImpl());
     }

@@ -49,12 +49,19 @@ import de.yaio.core.nodeservice.NodeService;
 public class EventNode extends TaskNode {
     
     // Daten
+    /** nodetype-identifier for parser/formatter on Eventnode Ist=0 and planstart>today */
     public static final String CONST_NODETYPE_IDENTIFIER_EVENT_PLANED = "EVENT_PLANED";
+    /** nodetype-identifier for parser/formatter on Eventnode Ist=0 and planstart>today */
     public static final String CONST_NODETYPE_IDENTIFIER_EVENT_CONFIRMED = "EVENT_CONFIRMED";
+    /** nodetype-identifier for parser/formatter on Eventnode Ist=0 and planstart<today */
     public static final String CONST_NODETYPE_IDENTIFIER_EVENT_LATE = "EVENT_LATE";
+    /** nodetype-identifier for parser/formatter on Eventnode Ist>0 and planende<today */
     public static final String CONST_NODETYPE_IDENTIFIER_EVENT_SHORT = "EVENT_SHORT";
+    /** nodetype-identifier for parser/formatter on Eventnode Ist>0 and planende>today */
     public static final String CONST_NODETYPE_IDENTIFIER_EVENT_RUNNNING = "EVENT_RUNNING";
+    /** nodetype-identifier for parser/formatter on Eventnode Ist=100 and planende<today */
     public static final String CONST_NODETYPE_IDENTIFIER_EVENT_DONE = "EVENT_ERLEDIGT";
+    /** nodetype-identifier for parser/formatter on Eventnode canceled */
     public static final String CONST_NODETYPE_IDENTIFIER_EVENT_CANCELED = "EVENT_VERWORFEN";
     
     protected static SysDataService sysDataService = new SysDataServiceImpl();

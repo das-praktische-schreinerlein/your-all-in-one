@@ -42,15 +42,28 @@ public class ImporterImpl implements Importer {
     protected Map<String, Object> hshWorkflowNodeTypeMapping = new HashMap<String, Object>();
     protected Map<Integer, Parser> hshDataDomainParser = new HashMap<Integer, Parser>();
 
-    public static int curId = 1;
+    protected static int curId = 1;
 
     protected ImportOptions options = null;
     protected NodeFactory nodeFactory = null;
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Constructor
+     * <h4>FeatureDescription:</h4>
+     *     create Importer to import nodes
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>initialize the importer
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Constructor
+     *  @param options - the importoptions for the parser...
+     */
     public ImporterImpl(ImportOptions options) {
         this.options = options;
         
-        // NodeFaxctory anlegen
+        // NodeFactory anlegen
         this.initNodeFactory(options);
 
         // NodeTypes konfigurieren
@@ -78,7 +91,7 @@ public class ImporterImpl implements Importer {
         }
     }
 
-    public void addNodeTypeIdentifierVariantMapping(String type, String masterType) {
+    protected void addNodeTypeIdentifierVariantMapping(String type, String masterType) {
         this.hshNodeTypeIdentifierVariantMapping.put(type, masterType);
     }
 
@@ -87,7 +100,7 @@ public class ImporterImpl implements Importer {
         return hshNodeTypeIdentifierVariantMapping;
     }
     
-    public void initNodeFactory(ImportOptions iOptions) {
+    protected void initNodeFactory(ImportOptions iOptions) {
         this.nodeFactory = new NodeFactoryImpl(iOptions);
     }
     
@@ -112,7 +125,7 @@ public class ImporterImpl implements Importer {
         }
     }
 
-    public void addWorkflowNodeTypeMapping(String type, String masterType) {
+    protected void addWorkflowNodeTypeMapping(String type, String masterType) {
         this.hshWorkflowNodeTypeMapping.put(type, masterType);
     }
 

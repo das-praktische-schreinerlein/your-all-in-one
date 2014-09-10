@@ -49,7 +49,7 @@ public interface IstDataParser extends Parser {
      * @param node - DataDomain to parse
      * @param options - ImportOptionen for the parser
      * @return count elements found
-     * @throws Exception
+     * @throws Exception - parser-Exceptions possible
      */
     public int parseIstDataFromName(IstData node, ImportOptions options) throws Exception;
 }

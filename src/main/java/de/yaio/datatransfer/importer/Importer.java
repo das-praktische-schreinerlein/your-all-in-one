@@ -155,7 +155,7 @@ public interface Importer {
      * @param srcName - Name of the node (for parsing)
      * @param curParentNode - ParentNode
      * @return - new Node-instance
-     * @throws Exception
+     * @throws Exception - parser/format-Exceptions possible
      */
     public DataDomain createNodeObjFromText(int id, String strFullSrc, String srcName, 
             DataDomain curParentNode)
@@ -176,6 +176,7 @@ public interface Importer {
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     Service Workflow Parser
+     * @param state - the state to check
      * @return true/false Workflow-state from getHshWorkflowNodeTypeMapping
      */
     public boolean isWFStatus (String state);

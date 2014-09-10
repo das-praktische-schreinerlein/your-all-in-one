@@ -49,7 +49,7 @@ public interface SysDataParser extends Parser {
      * @param node - DataDomain to parse
      * @param options - ImportOptionen for the parser
      * @return count elements found
-     * @throws Exception
+     * @throws Exception - parser-Exceptions possible
      */
     public int parseSysDataFromName(SysData node, ImportOptions options) throws Exception;
 }

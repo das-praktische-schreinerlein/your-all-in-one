@@ -50,9 +50,9 @@ public class DescDataParserImpl  extends ParserImpl implements DescDataParser {
             Logger.getLogger(DescDataParserImpl.class);
 
     // Pattern fuer die Projectbeschreibung
-    public static final String CONST_PATTERN_SEG_DESC =
+    protected static final String CONST_PATTERN_SEG_DESC =
         "ProjektDesc: *(.*)";
-    private static final Pattern CONST_PATTERN_DESC =
+    protected static final Pattern CONST_PATTERN_DESC =
         Pattern.compile("(.*)" + CONST_PATTERN_SEG_DESC + "(.*)");
 
 
@@ -66,6 +66,16 @@ public class DescDataParserImpl  extends ParserImpl implements DescDataParser {
         return DescData.CONST_ORDER;
     }
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     DataImport
+     * <h4>FeatureDescription:</h4>
+     *     hängt den Parser für das spätere Extrahieren der NodeDaten aus dem 
+     *     Namen (NodeFactory.parseNodeDataDomains) in die Parserliste
+     * <h4>FeatureKeywords:</h4>
+     *     Config
+     * @param nodeFactory - instance of the nodeFactory which will use the parser 
+     */
     public static void configureDataDomainParser(NodeFactory nodeFactory) {
         nodeFactory.addDataDomainParser(new DescDataParserImpl());
     }

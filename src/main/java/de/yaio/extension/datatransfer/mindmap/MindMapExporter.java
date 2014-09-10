@@ -31,7 +31,7 @@ import de.yaio.extension.datatransfer.wiki.WikiExporter;
  *     DatenExport
  *     Praesentation
  * <h4>FeatureDescription:</h4>
- *     export of Nodes in CSV-format
+ *     export of Nodes as Mindmap
  * 
  * @package de.yaio.extension.datatransfer.ical
  * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
@@ -41,11 +41,23 @@ import de.yaio.extension.datatransfer.wiki.WikiExporter;
  */
 public class MindMapExporter extends WikiExporter {
     
-    public static int CONST_MIN4CLOUD = 2;
+    protected static int CONST_MIN4CLOUD = 2;
     
-    public static WorkflowFormatConfigurator workflowFormatConfigurator = 
+    protected static WorkflowFormatConfigurator workflowFormatConfigurator = 
             WorkflowFormatConfigurator.getWorkflowFormatConfigurator();
     
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Constructor
+     * <h4>FeatureDescription:</h4>
+     *     service functions to export nodes as Mindmap
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>initialize the exporter
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Constructor
+     */
     public MindMapExporter() {
         super();
     }

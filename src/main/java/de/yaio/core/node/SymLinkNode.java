@@ -46,6 +46,7 @@ import de.yaio.core.datadomain.SymLinkData;
 @RooJpaActiveRecord
 public class SymLinkNode extends BaseNode implements SymLinkData {
     
+    /** nodetype-identifier for parser/formatter on SymLinknode */
     public static final String CONST_NODETYPE_IDENTIFIER_SYMLINK = "SYMLINK";
     
     // Status-Konstanten

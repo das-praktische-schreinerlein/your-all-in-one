@@ -51,13 +51,13 @@ public class MetaDataParserImpl  extends ParserImpl implements MetaDataParser {
 
     // Patterns
     // Pattern fuer NodeMeta: Praefix,Id,NodeTyp-Tags,NodeSubType-Tags
-    public static final String CONST_PATTERN_SEG_NODEMETA =
+    protected static final String CONST_PATTERN_SEG_NODEMETA =
         "NodeMeta:\\W*"
                + "(" + CONST_PATTERN_SEG_PRAEFIX + "*)?,"
                + "("+ CONST_PATTERN_SEG_ID + "*)?,"
                + "(" + CONST_PATTERN_SEG_TAGS + "*)?,"
                + "(" + CONST_PATTERN_SEG_TAGS + "*)? *";
-    public static final Pattern CONST_PATTERN_NODEMETA =
+    protected static final Pattern CONST_PATTERN_NODEMETA =
         Pattern.compile("(.*)" + CONST_PATTERN_SEG_NODEMETA + "(.*)");
 
     @Override
@@ -70,6 +70,16 @@ public class MetaDataParserImpl  extends ParserImpl implements MetaDataParser {
         return MetaData.CONST_ORDER;
     }
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     DataImport
+     * <h4>FeatureDescription:</h4>
+     *     hängt den Parser für das spätere Extrahieren der NodeDaten aus dem 
+     *     Namen (NodeFactory.parseNodeDataDomains) in die Parserliste
+     * <h4>FeatureKeywords:</h4>
+     *     Config
+     * @param nodeFactory - instance of the nodeFactory which will use the parser 
+     */
     public static void configureDataDomainParser(NodeFactory nodeFactory) {
         nodeFactory.addDataDomainParser(new MetaDataParserImpl());
     }

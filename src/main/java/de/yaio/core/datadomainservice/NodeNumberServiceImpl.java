@@ -38,6 +38,7 @@ import de.yaio.core.datadomain.MetaData;
  */
 public class NodeNumberServiceImpl implements NodeNumberService {
     
+    /** the map with the nextNodeIds per nodePraefix */
     public static Map<String, Integer>  MAP_CUR_NEXTNODEID = null;
     
     @Override

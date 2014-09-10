@@ -16,17 +16,9 @@
  */
 package de.yaio.extension.datatransfer.wiki;
 
-import java.util.List;
-
-import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import de.yaio.core.datadomainservice.NodeNumberService;
 import de.yaio.extension.datatransfer.common.CommonImporter;
-import de.yaio.extension.datatransfer.ppl.PPLImporter;
-import de.yaio.extension.datatransfer.wiki.WikiImporter.WikiStructLine;
 import de.yaio.utils.CmdLineJob;
 
 /**
@@ -45,7 +37,19 @@ public class JobParseWiki extends CmdLineJob {
     
     protected CommonImporter commonImporter;
 
-
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Constructor
+     * <h4>FeatureDescription:</h4>
+     *     job to import nodes in Wiki-Format and output as PPL
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>initialize the application
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Constructor
+     * @param args the command line arguments
+     */
     public JobParseWiki(String[] args) {
         super(args);
         createCommonImporter();
@@ -74,22 +78,52 @@ public class JobParseWiki extends CmdLineJob {
         System.out.println(pplSource);
     }
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     BusinessLogic
+     * <h4>FeatureDescription:</h4>
+     *     create the commonly used importer to imports the data from differenet 
+     *     sourcetypes
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>updates MemberVar commonImporter - for the import
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     BusinessLogic
+     */
     protected void createCommonImporter() {
         // create commonImporter
         commonImporter = new CommonImporter("ppl");
     }
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     BusinessLogic
+     * <h4>FeatureDescription:</h4>
+     *     initialize the commonly used importer with the parsed commandline
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>updates MemberVar commonImporter - for the import
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     BusinessLogic
+     */
     protected void initCommonImporter() {
         // init commonImporter
         commonImporter.setCmdLine(cmdLine);
     }
 
-    protected void initApplicationContext() {
-        ApplicationContext context = 
-            new ClassPathXmlApplicationContext("/META-INF/spring/applicationContext.xml");
-    }
-
     /**
+     * <h4>FeatureDomain:</h4>
+     *     CLI
+     * <h4>FeatureDescription:</h4>
+     *     Main-method to start the application
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>initialize the application
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     CLI
      * @param args the command line arguments
      */
     public static void main(String[] args) {

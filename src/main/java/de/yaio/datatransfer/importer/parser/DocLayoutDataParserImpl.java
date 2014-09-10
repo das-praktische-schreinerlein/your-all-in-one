@@ -50,14 +50,14 @@ public class DocLayoutDataParserImpl  extends ParserImpl implements DocLayoutDat
             Logger.getLogger(DocLayoutDataParserImpl.class);
 
     // Pattern fuer das Doc-Layout (Type, Styleclass, ShortUe, FlagDivBeenden)
-    public static String CONST_PATTERN_SEG_STRING1 = "[^,:\\[\\]]";
-    public static final String CONST_PATTERN_SEG_DOCLAYOUT =
+    protected static String CONST_PATTERN_SEG_STRING1 = "[^,:\\[\\]]";
+    protected static final String CONST_PATTERN_SEG_DOCLAYOUT =
         "DocLayout:\\W*"
                + "(" + CONST_PATTERN_SEG_STRING1 + "*)?,"
                + "(" + CONST_PATTERN_SEG_STRING1 + "*)?,"
                + "(" + CONST_PATTERN_SEG_STRING1 + "*)?,"
                + "(" + CONST_PATTERN_SEG_FLAG + "*)?";
-    public static final Pattern CONST_PATTERN_DOCLAYOUT =
+    protected static final Pattern CONST_PATTERN_DOCLAYOUT =
         Pattern.compile("(.*)" + CONST_PATTERN_SEG_DOCLAYOUT + "(.*)");
 
 
@@ -71,6 +71,16 @@ public class DocLayoutDataParserImpl  extends ParserImpl implements DocLayoutDat
         return DocLayoutData.CONST_ORDER;
     }
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     DataImport
+     * <h4>FeatureDescription:</h4>
+     *     hängt den Parser für das spätere Extrahieren der NodeDaten aus dem 
+     *     Namen (NodeFactory.parseNodeDataDomains) in die Parserliste
+     * <h4>FeatureKeywords:</h4>
+     *     Config
+     * @param nodeFactory - instance of the nodeFactory which will use the parser 
+     */
     public static void configureDataDomainParser(NodeFactory nodeFactory) {
         nodeFactory.addDataDomainParser(new DocLayoutDataParserImpl());
     }

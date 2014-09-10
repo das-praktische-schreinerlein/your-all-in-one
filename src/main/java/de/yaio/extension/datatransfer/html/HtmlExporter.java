@@ -38,7 +38,7 @@ import de.yaio.extension.datatransfer.wiki.WikiExporter;
  *     DatenExport
  *     Praesentation
  * <h4>FeatureDescription:</h4>
- *     export of Nodes in Html-format
+ *     export of Nodes as Html
  * 
  * @package de.yaio.extension.datatransfer.html
  * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
@@ -48,23 +48,35 @@ import de.yaio.extension.datatransfer.wiki.WikiExporter;
  */
 public class HtmlExporter extends WikiExporter {
     
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Constructor
+     * <h4>FeatureDescription:</h4>
+     *     service functions to export nodes as Html
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>initialize the exporter
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Constructor
+     */
     public HtmlExporter() {
         super();
     }
     
-    public static String CONST_LAYOUT_TAG_DIV = "DIV";
-    public static String CONST_LAYOUT_TAG_UE = "UE";
-    public static String CONST_LAYOUT_TAG_P = "P";
-    public static String CONST_LAYOUT_TAG_LI = "LI";
-    public static String CONST_LAYOUT_TAG_TR = "TR";
-    public static String CONST_LAYOUT_TAG_DIRECT = "DIRECT";
-    public static String CONST_LAYOUT_TAG_ENDDIV = "ENDDIV";
+    protected static String CONST_LAYOUT_TAG_DIV = "DIV";
+    protected static String CONST_LAYOUT_TAG_UE = "UE";
+    protected static String CONST_LAYOUT_TAG_P = "P";
+    protected static String CONST_LAYOUT_TAG_LI = "LI";
+    protected static String CONST_LAYOUT_TAG_TR = "TR";
+    protected static String CONST_LAYOUT_TAG_DIRECT = "DIRECT";
+    protected static String CONST_LAYOUT_TAG_ENDDIV = "ENDDIV";
     
-    public static String CONST_FORMATTER_DESC = DescDataFormatterImpl.class.getName();
-    public static String CONST_FORMATTER_IST = IstDataFormatterImpl.class.getName();
-    public static String CONST_FORMATTER_PLAN = PlanDataFormatterImpl.class.getName();
-    public static String CONST_FORMATTER_ISTCHILDRENSUM = IstChildrenSumDataFormatterImpl.class.getName();
-    public static String CONST_FORMATTER_PLANCHILDRENSUM = PlanChildrenSumDataFormatterImpl.class.getName();
+    protected static String CONST_FORMATTER_DESC = DescDataFormatterImpl.class.getName();
+    protected static String CONST_FORMATTER_IST = IstDataFormatterImpl.class.getName();
+    protected static String CONST_FORMATTER_PLAN = PlanDataFormatterImpl.class.getName();
+    protected static String CONST_FORMATTER_ISTCHILDRENSUM = IstChildrenSumDataFormatterImpl.class.getName();
+    protected static String CONST_FORMATTER_PLANCHILDRENSUM = PlanChildrenSumDataFormatterImpl.class.getName();
     
 
     // Logger
@@ -159,10 +171,10 @@ public class HtmlExporter extends WikiExporter {
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     Layout
-     * @param node - node for output recursively
+     * @param curNode - node for output recursively
      * @param oOptions - options for output (formatter)
      * @return - formatted output of node-hierarchy and DataDomains
-     * @throws Exception
+     * @throws Exception - parser/format-Exceptions possible
      */
     public String genHtmlDokuLayoutForNode(BaseNode curNode,
         OutputOptions oOptions) throws Exception {
@@ -499,7 +511,8 @@ public class HtmlExporter extends WikiExporter {
             } else if (CONST_LAYOUT_TAG_ENDDIV.equalsIgnoreCase(layoutCommand)) {
                 // ENDDIV
                 res += "</div></div>\n\n\n";
-            } else if (1 == 1 || CONST_LAYOUT_TAG_P.equalsIgnoreCase(layoutCommand)) {
+            } else { 
+                //if (CONST_LAYOUT_TAG_P.equalsIgnoreCase(layoutCommand) || 1 == 1) {
                 // DEFAULT: Block
                 String tag = "p";
                 res += "<" + tag + " class='" + tag + "-portdesc"
@@ -556,10 +569,10 @@ public class HtmlExporter extends WikiExporter {
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     Layout
-     * @param node - node for output recursively
+     * @param curNode - node for output recursively
      * @param oOptions - options for output (formatter)
      * @return - formatted output of node-hierarchy and DataDomains
-     * @throws Exception
+     * @throws Exception - parser/format-Exceptions possible
      */
     public String genHtmlProjektLayoutForNode(BaseNode curNode,
         OutputOptions oOptions) throws Exception {
@@ -802,7 +815,25 @@ public class HtmlExporter extends WikiExporter {
     }
 
 
-    // TODO Doku
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     DataExport
+     *     Presentation
+     * <h4>FeatureDescription:</h4>
+     *     generate a html-block for the node
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue String - htmlblock of the node
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Layout
+     * @param curNode - the node
+     * @param data - the formatted data to export in html-block
+     * @param dataName - the name for idFields
+     * @param flgShow - true/false show the block or ignore it 
+     * @return - htmlblock of the node
+     * @throws Exception - parser/format-Exceptions possible
+     */
     public String genHtmlDataBlock(BaseNode curNode, String data, String dataName, boolean flgShow) {
         // Plan-Daten
         String res = "";
@@ -822,7 +853,24 @@ public class HtmlExporter extends WikiExporter {
         return res;
     }
         
-    // TODO Doku
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     DataExport
+     *     Presentation
+     * <h4>FeatureDescription:</h4>
+     *     return the DocLoayoutTagCommand configured in the node<br>
+     *     if it is not set: CONST_LAYOUT_TAG_P<br>
+     *     if is has children: CONST_LAYOUT_TAG_UE
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue String - tagcommand
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Layout
+     * @param curNode - node for output recursively
+     * @return - the tagcommand
+     * @throws Exception - parser/format-Exceptions possible
+     */
     public String getDocLayoutTagCommand(BaseNode curNode) {
         String command = curNode.getDocLayoutTagCommand();
         if (command == null || (! (command.length() > 0))) {

@@ -21,8 +21,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.apache.log4j.Logger;
-
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.node.BaseNode;
 import de.yaio.datatransfer.exporter.OutputOptions;
@@ -43,16 +41,24 @@ import de.yaio.extension.datatransfer.csv.CSVExporter;
  */
 public class JSONExporter extends CSVExporter {
     
-    public static DateFormat DF = new SimpleDateFormat("yyyy-MM-dd");
-    public static DateFormat TF = new SimpleDateFormat("HH-mm-ss");
+    protected static DateFormat DF = new SimpleDateFormat("yyyy-MM-dd");
+    protected static DateFormat TF = new SimpleDateFormat("HH-mm-ss");
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Constructor
+     * <h4>FeatureDescription:</h4>
+     *     service functions to export nodes as JSON
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>initialize the exporter
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Constructor
+     */
     public JSONExporter() {
         super();
     }
-
-    // Logger
-    private static final Logger LOGGER =
-        Logger.getLogger(JSONExporter.class);
 
     @Override
     public String getMasterNodeResult(DataDomain masterNode, OutputOptions oOptions)

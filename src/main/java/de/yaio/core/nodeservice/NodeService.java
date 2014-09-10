@@ -33,11 +33,14 @@ import de.yaio.core.datadomainservice.DataDomainRecalc;
  */
 public interface NodeService {
     
+    /** constants for recursion of recalc-functions: recurse all children */
     public static final int CONST_RECURSE_DIRECTION_CHILDREN = -1;
+    /** constants for recursion of recalc-functions: recurse only me */
     public static final int CONST_RECURSE_DIRECTION_ONLYME = 0;
+    /** constants for recursion of recalc-functions: recurse parents */
     public static final int CONST_RECURSE_DIRECTION_PARENT = 1;
     
-    // recurse all level
+    /** constants for recursion of DB-functions: recurse all children */
     public static final int CONST_DB_RECURSIONLEVEL_ALL_CHILDREN = -1;
 
     /**
@@ -76,8 +79,8 @@ public interface NodeService {
      * <h4>FeatureKeywords:</h4>
      *     BsuinessLogic
      * @param node - node to recalc
-     * @param recurceDirection - Type of recursion (parent, me, children) NodeService.CONST_RECURSE_DIRECTION_*
-     * @throws Exception
+     * @param recurseDirection - Type of recursion (parent, me, children) NodeService.CONST_RECURSE_DIRECTION_*
+     * @throws Exception - parser/format-Exceptions possible
      */
     public void doRecalc(DataDomain node, int recurseDirection) throws Exception;
 
@@ -94,7 +97,7 @@ public interface NodeService {
      *     BsuinessLogic
      * @param node - node to recalc
      * @param recurceDirection - Type of recursion (parent, me, children) NodeService.CONST_RECURSE_DIRECTION_*
-     * @throws Exception
+     * @throws Exception - parser/format-Exceptions possible
      */
     public void doRecalcBeforeChildren(DataDomain node, int recurceDirection) throws Exception;
 
@@ -111,7 +114,7 @@ public interface NodeService {
      *     BsuinessLogic
      * @param node - node which children to recalc
      * @param recurceDirection - Type of recursion (parent, me, children) NodeService.CONST_RECURSE_DIRECTION_*
-     * @throws Exception
+     * @throws Exception - parser/format-Exceptions possible
      */
     public void doRecalcChildren(DataDomain node, int recurceDirection) throws Exception;
 
@@ -128,7 +131,7 @@ public interface NodeService {
      *     BsuinessLogic
      * @param node - node to recalc
      * @param recurceDirection - Type of recursion (parent, me, children) NodeService.CONST_RECURSE_DIRECTION_*
-     * @throws Exception
+     * @throws Exception - parser/format-Exceptions possible
      */
     public void doRecalcAfterChildren(DataDomain node, int recurceDirection) throws Exception;
     
@@ -165,9 +168,9 @@ public interface NodeService {
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     BusinessLogic
-     * @param node - node to get the state from
+     * @param baseNode - node to get the state from
      * @param recursionDirection - direction for recursivly recalc CONST_RECURSE_DIRECTION_* 
-     * @throws Exception
+     * @throws Exception - parser/format-Exceptions possible
      */
     public void recalcData(DataDomain baseNode, int recursionDirection) throws Exception;
 

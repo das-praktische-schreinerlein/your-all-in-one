@@ -52,9 +52,20 @@ public class DescDataFormatterImpl extends FormatterImpl implements DescDataForm
     }
 
 
-    public static void configureDataDomainFormatter(Exporter nodeFactory) {
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     DataExport
+     *     Presentation
+     * <h4>FeatureDescription:</h4>
+     *     add me as formatter for formatting DataDomains with (Exporter.formatNodeDataDomains) 
+     *     to the Exporter-Config
+     * <h4>FeatureKeywords:</h4>
+     *     Config
+     * @param exporter - instance of the Exporter which will use me
+     */
+    public static void configureDataDomainFormatter(Exporter exporter) {
         Formatter formatter = new DescDataFormatterImpl();
-        nodeFactory.addDataDomainFormatter(formatter);
+        exporter.addDataDomainFormatter(formatter);
     }
 
     @Override

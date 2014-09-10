@@ -32,6 +32,7 @@ import de.yaio.core.datadomain.MetaData;
  */
 public interface MetaDataService {
 
+    /** the position in the recalc-order at which the recalcer will run */
     public static final int CONST_RECALC_ORDER = 1;
 
     /**
@@ -46,7 +47,7 @@ public interface MetaDataService {
      * <h4>FeatureKeywords:</h4>
      *     BusinessLogic
      * @param node - node to initialize
-     * @throws Exception
+     * @throws Exception - parser/format-Exceptions possible
      */
     public void initMetaData(MetaData node) throws Exception;
 
@@ -63,7 +64,7 @@ public interface MetaDataService {
      *     BusinessLogic
      * @param node - node (praefix)
      * @return next available Node-number for this node-hierarchy (praefix)
-     * @throws Exception
+     * @throws Exception - io-Exceptions possible
      */
     public Object getNextNodeNumber(MetaData node) throws Exception;
 
@@ -75,7 +76,7 @@ public interface MetaDataService {
      * <h4>FeatureKeywords:</h4>
      *     Config
      * @param nodeNumberService - service to get nodeNumbers
-     * @throws Exception
+     * @throws Exception - io-Exceptions possible
      */
     public void setNodeNumberService(NodeNumberService nodeNumberService) throws Exception;
 
@@ -91,7 +92,7 @@ public interface MetaDataService {
      * <h4>FeatureKeywords:</h4>
      *     Config
      * @return service to get nodeNumbers
-     * @throws Exception
+     * @throws Exception - io-Exceptions possible
      */
     public NodeNumberService getNodeNumberService() throws Exception;
 }

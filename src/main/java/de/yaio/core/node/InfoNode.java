@@ -44,9 +44,13 @@ import de.yaio.core.datadomain.DocLayoutData;
 public class InfoNode extends BaseNode implements DocLayoutData {
     
     // Daten
+    /** nodetype-identifier for parser/formatter on Infonode INFO */
     public static final String CONST_NODETYPE_IDENTIFIER_INFO = "INFO";
+    /** nodetype-identifier for parser/formatter on Infonode Idea */
     public static final String CONST_NODETYPE_IDENTIFIER_IDEE = "IDEE";
+    /** nodetype-identifier for parser/formatter on Infonode Documentation */
     public static final String CONST_NODETYPE_IDENTIFIER_DOKU = "DOKU";
+    /** nodetype-identifier for parser/formatter on Infonode Howto */
     public static final String CONST_NODETYPE_IDENTIFIER_HOWTO = "HOWTO";
     
     // Status-Konstanten

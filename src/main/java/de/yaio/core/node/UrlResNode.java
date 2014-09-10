@@ -46,9 +46,13 @@ import de.yaio.core.datadomain.ResLocData;
 public class UrlResNode extends BaseNode implements ResLocData {
     
     // Status-Konstanten
+    /** nodetype-identifier for parser/formatter on UrlResnode URL */
     public static final String CONST_NODETYPE_IDENTIFIER_URLRES = "URLRES";
+    /** nodetype-identifier for parser/formatter on UrlResnode FILE */
     public static final String CONST_NODETYPE_IDENTIFIER_FILERES = "FILERES";
+    /** nodetype-identifier for parser/formatter on UrlResnode IMAGEFILE */
     public static final String CONST_NODETYPE_IDENTIFIER_IMAGERES = "IMAGERES";
+    /** nodetype-identifier for parser/formatter on UrlResnode EMAIL */
     public static final String CONST_NODETYPE_IDENTIFIER_EMAILRES = "EMAILRES";
     
     // Status-Konstanten

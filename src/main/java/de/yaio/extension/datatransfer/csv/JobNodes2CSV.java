@@ -16,7 +16,6 @@
  */
 package de.yaio.extension.datatransfer.csv;
 
-import de.yaio.extension.datatransfer.ppl.PPLImporter;
 import de.yaio.extension.datatransfer.wiki.JobNodes2Wiki;
 
 /**
@@ -35,6 +34,19 @@ import de.yaio.extension.datatransfer.wiki.JobNodes2Wiki;
 public class JobNodes2CSV extends JobNodes2Wiki {
     
     
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Constructor
+     * <h4>FeatureDescription:</h4>
+     *     create job-object to import nodes and output as CSV
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>initialize the application
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Constructor
+     * @param args the command line arguments
+     */
     public JobNodes2CSV(String[] args) {
         super(args);
     }
@@ -45,8 +57,18 @@ public class JobNodes2CSV extends JobNodes2Wiki {
     }
 
     /**
-    * @param args the command line arguments
-    */
+     * <h4>FeatureDomain:</h4>
+     *     CLI
+     * <h4>FeatureDescription:</h4>
+     *     Main-method to start the application
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>initialize the application
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     CLI
+     * @param args the command line arguments
+     */
     public static void main(String[] args) {
         JobNodes2CSV me = new JobNodes2CSV(args);
         me.startJobProcessing();

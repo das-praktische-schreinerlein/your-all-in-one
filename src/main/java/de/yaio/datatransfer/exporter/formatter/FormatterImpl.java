@@ -57,6 +57,18 @@ public abstract class FormatterImpl implements Formatter {
     public abstract void format(DataDomain node, StringBuffer nodeOutput, OutputOptions options) throws Exception;
 
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     DataExport
+     *     Presentation
+     * <h4>FeatureDescription:</h4>
+     *     intend the string with " " on the left side till newLength
+     * <h4>FeatureKeywords:</h4>
+     *     Format
+     * @param src - the string to format
+     * @param newLength - max places behind comma
+     * @return - the formated string
+     */
     public StringBuffer intendLeft(Object src, int newLength) {
 
         // Parameter pruefen
@@ -73,6 +85,19 @@ public abstract class FormatterImpl implements Formatter {
         return res;
     }
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     DataExport
+     *     Presentation
+     * <h4>FeatureDescription:</h4>
+     *     format the number to string (trim trailing 0)
+     * <h4>FeatureKeywords:</h4>
+     *     Format
+     * @param src - the number to format
+     * @param minStellen - min places behind comma
+     * @param maxStellen - max places behind comma
+     * @return - the formated numberstring
+     */
     public String formatNumber(Double src, int minStellen, int maxStellen) {
         String res = "";
 
@@ -130,6 +155,17 @@ public abstract class FormatterImpl implements Formatter {
         return res;
     }
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     DataExport
+     *     Presentation
+     * <h4>FeatureDescription:</h4>
+     *     format the date to string
+     * <h4>FeatureKeywords:</h4>
+     *     Format
+     * @param src - the date to format
+     * @return - the formated datestring
+     */
     public String formatDate(Date src) {
         String res = "";
         if (src != null) {

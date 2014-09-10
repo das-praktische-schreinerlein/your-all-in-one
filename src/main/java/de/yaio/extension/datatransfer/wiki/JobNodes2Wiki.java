@@ -19,9 +19,6 @@ package de.yaio.extension.datatransfer.wiki;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.log4j.Logger;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.transaction.annotation.Transactional;
 
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.datatransfer.exporter.Exporter;
@@ -35,7 +32,7 @@ import de.yaio.utils.CmdLineJob;
  *     DatenExport
  *     Praesentation
  * <h4>FeatureDescription:</h4>
- *     job for import of Nodes in PPL-Format and output in Wiki-format
+ *     job to import nodes in PPL-Format and output as Wiki
  * 
  * @package de.yaio.extension.datatransfer.wiki
  * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
@@ -45,13 +42,28 @@ import de.yaio.utils.CmdLineJob;
  */
 public class JobNodes2Wiki extends CmdLineJob {
 
+    /**
+     * the exporter to format the masternode-data 
+     */
     public Exporter exporter;
     protected CommonImporter commonImporter;
     
-    // Logger
     private static final Logger LOGGER =
         Logger.getLogger(JobNodes2Wiki.class);
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Constructor
+     * <h4>FeatureDescription:</h4>
+     *     job to import nodes in PPL-Format and output as Wiki
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>initialize the application
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Constructor
+     * @param args the command line arguments
+     */
     public JobNodes2Wiki(String[] args) {
         super(args);
         createCommonImporter();
@@ -86,7 +98,7 @@ public class JobNodes2Wiki extends CmdLineJob {
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     CLI
-     * @param availiableCmdLineOptions - the conatiner wirh the availiableCmdLineOptions
+     * @param availiableCmdLineOptions - the container with the availiableCmdLineOptions
      */
     protected Options addAvailiableCommonOutputCmdLineOptions(Options availiableCmdLineOptions) throws Throwable {
         // Mastername
@@ -115,7 +127,7 @@ public class JobNodes2Wiki extends CmdLineJob {
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     CLI
-     * @param availiableCmdLineOptions - the conatiner wirh the availiableCmdLineOptions
+     * @param availiableCmdLineOptions - the container with the availiableCmdLineOptions
      */
     protected Options addAvailiableOutputCmdLineOptions(Options availiableCmdLineOptions) throws Throwable {
 
@@ -222,7 +234,6 @@ public class JobNodes2Wiki extends CmdLineJob {
     public void doJob() throws Throwable {
         // init
         createExporter();
-        initApplicationContet();
         initCommonImporter();
         
         // Mastername extrahieren
@@ -254,27 +265,73 @@ public class JobNodes2Wiki extends CmdLineJob {
      *     create the masternode on which all other nodes are added
      * <h4>FeatureResult:</h4>
      *   <ul>
-     *     <li>returns masternode
+     *     <li>returnValue masternode
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     BusinessLogic
+     * @param name - name of the masternode
      * @return masternode - the masternode on which all other nodes are added
+     * @throws Throwable - parse/io-Exceptions possible
      */
     public DataDomain createMasternode(String name) throws Throwable {
         DataDomain masterNode  = commonImporter.getPPLImporter().createNodeObjFromText(1, name, name, null);
         return masterNode;
     }
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     BusinessLogic
+     * <h4>FeatureDescription:</h4>
+     *     import the data from source configured by cmdline-options and add 
+     *     them to the masterNode 
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>updates masternode
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     BusinessLogic
+     * @param masterNode - the masternode on which all other nodes are added
+     * @throws Exception - parse/io-Exceptions possible
+     */
     public void importDataToMasterNode(DataDomain masterNode) throws Exception {
         commonImporter.importDataToMasterNode(masterNode);
     }
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     BusinessLogic
+     * <h4>FeatureDescription:</h4>
+     *     publish the masternode and all children with the help of exporter
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>prints on STDOUT
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     BusinessLogic
+     * @param exporter - exporter to format the output
+     * @param masterNode - the masternode to export
+     * @param oOptions - Outputoptions
+     * @throws Exception - parse/io-Exceptions possible
+     */
     public void publishResult(Exporter exporter, DataDomain masterNode, 
             OutputOptions oOptions) throws Exception {
         System.out.println(
                 exporter.getMasterNodeResult(masterNode, oOptions));
     }
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     BusinessLogic
+     * <h4>FeatureDescription:</h4>
+     *     get the Outputoptions for export from commandline
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>Returnvalue OutputOptions - the parsed options from commandline
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     BusinessLogic
+     * @return oOptions - Outputoptions
+     */
     public OutputOptions getOutputOptions() {
         // Konfiguration
         OutputOptions oOptions = new OutputOptionsImpl();
@@ -313,27 +370,86 @@ public class JobNodes2Wiki extends CmdLineJob {
     // ######################
     // specific functions
     // ######################
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     BusinessLogic
+     * <h4>FeatureDescription:</h4>
+     *     create the exporter for the export with publishResult
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>updates MemberVar exporter - to format the output
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     BusinessLogic
+     */
     public void createExporter() {
         exporter = new WikiExporter();
     }
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     BusinessLogic
+     * <h4>FeatureDescription:</h4>
+     *     create the commonly used importer to imports the data from differenet 
+     *     sourcetypes
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>updates MemberVar commonImporter - for the import
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     BusinessLogic
+     */
     protected void createCommonImporter() {
         // create commonImporter
         commonImporter = new CommonImporter("ppl");
     }
     
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     BusinessLogic
+     * <h4>FeatureDescription:</h4>
+     *     initialize the commonly used importer with the parsed commandline
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>updates MemberVar commonImporter - for the import
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     BusinessLogic
+     */
     protected void initCommonImporter() {
         // init commonImporter
         commonImporter.setCmdLine(cmdLine);
     }
 
-    protected void initApplicationContet() {
-        ApplicationContext context = 
-            new ClassPathXmlApplicationContext("/META-INF/spring/applicationContext.xml");
-
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Logging
+     * <h4>FeatureDescription:</h4>
+     *     get the Class-logger
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue Logger - use it !!!!
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Logging
+     * @return logger - the logger
+     */
+    public static Logger getLogger() {
+        return LOGGER;
     }
 
     /**
+     * <h4>FeatureDomain:</h4>
+     *     CLI
+     * <h4>FeatureDescription:</h4>
+     *     Main-method to start the application
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>initialize the application
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     CLI
      * @param args the command line arguments
      */
     public static void main(String[] args) {

@@ -18,7 +18,6 @@ package de.yaio.datatransfer.importer.parser;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Formatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,26 +37,44 @@ import de.yaio.datatransfer.importer.ImportOptions;
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public interface Parser extends Comparable<Parser> {
+    
+    /** Pattern to parse Task-segments */
     public static final String CONST_PATTERN_SEG_TASK = "__[A-Za-z]+?[0-9]+?__";
+    /** Pattern to parse Aufwand-segments */
     public static final String CONST_PATTERN_SEG_HOURS = "[0-9]?\\.?[0-9.]+";
+    /** Pattern to parse Stand-segments */
     public static final String CONST_PATTERN_SEG_STAND = "[0-9]?\\.?[0-9.]+";
+    /** Pattern to parse Date-segments */
     public static final String CONST_PATTERN_SEG_DATUM = "\\d\\d\\.\\d\\d.\\d\\d\\d\\d";
+    /** Pattern to parse common String-segments */
     public static final String CONST_PATTERN_SEG_STRING = "[-0-9ÜÖÄüöäß/A-Za-z+_\\*\\. ]";
+    /** Pattern to parse Flag-segments */
     public static final String CONST_PATTERN_SEG_FLAG = "[-0-9ÜÖÄüöäßA-Za-z+_]";
+    /** Pattern to parse Integer-segments */
     public static final String CONST_PATTERN_SEG_INT = "[0-9]";
+    /** Pattern to parse UID-segments */
     public static final String CONST_PATTERN_SEG_UID = "[0-9A-Za-z]";
+    /** Pattern to parse ID-segments */
     public static final String CONST_PATTERN_SEG_ID = "[0-9]";
+    /** Pattern to parse Tag-segments */
     public static final String CONST_PATTERN_SEG_TAGS = "[-0-9ÜÖÄüöäß/A-Za-z+_\\*\\.;]";
+    /** Pattern to parse ID-Praefix-segments */
     public static final String CONST_PATTERN_SEG_PRAEFIX = "[A-Za-z]";
+    /** Pattern to parse Checksum-segments */
     public static final String CONST_PATTERN_SEG_CHECKSUM = "[0-9A-Za-z]";
+    /** Pattern to parse Time-segments */
     public static final String CONST_PATTERN_SEG_TIME = "\\d\\d\\:\\d\\d";
 
+    /** dateformat-instance for german date dd.MM.yyyy  */
     public static DateFormat DF = new SimpleDateFormat("dd.MM.yyyy");
+    /** dateformat-instance for german time HH:mm */
     public static DateFormat TF = new SimpleDateFormat("HH:mm");
+    /** dateformat-instance for german datetime dd.MM.yyyy HH:mm */
     public static DateFormat DTF = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+    /** dateformat-instance for UID yyyyMMddHHmmssSSS */
     public static DateFormat UIDF = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-    public static Formatter NF = new Formatter();
 
+    /** if second of time are set to this value -> then ignore the seconds */
     public static final int CONST_FLAG_NODATE_SECONDS = 59;
 
     /**
@@ -108,7 +125,7 @@ public interface Parser extends Comparable<Parser> {
      * @param node - DataDomain to parse
      * @param options - ImportOptionen for the parser
      * @return count elements found
-     * @throws Exception
+     * @throws Exception - parser-Exceptions possible
      */
     public int parseFromName(DataDomain node, ImportOptions options) throws Exception;
 
@@ -131,7 +148,7 @@ public interface Parser extends Comparable<Parser> {
      * @param first - first Matcher to set as new name
      * @param last - last Matcher to append to new name
      * @return brackets found ?
-     * @throws Exception
+     * @throws Exception - parser-Exceptions possible
      */
     public boolean trimNodeName(DataDomain node, Pattern pattern, 
             Matcher matcher, int first, int last) throws Exception;

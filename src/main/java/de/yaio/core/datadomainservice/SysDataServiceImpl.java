@@ -45,7 +45,7 @@ public class SysDataServiceImpl extends DataDomainRecalcImpl implements SysDataS
     private static final Logger LOGGER =
             Logger.getLogger(SysDataServiceImpl.class);
 
-    public static DateFormat UIDF = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+    protected static DateFormat UIDF = new SimpleDateFormat("yyyyMMddHHmmssSSS");
     protected static int VAR_CUR_UID = 1;
     protected static MessageDigest objMD5Coder;
     static { 
@@ -56,6 +56,17 @@ public class SysDataServiceImpl extends DataDomainRecalcImpl implements SysDataS
         }
     }
     
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     DataExport
+     *     Presentation
+     * <h4>FeatureDescription:</h4>
+     *     add me as DataDomainRecalcer to the Service-Config
+     * <h4>FeatureKeywords:</h4>
+     *     Config
+     * @param nodeService - instance of the nodeService which will call me as recalcer
+     */
     public static void configureDataDomainRecalcer(NodeService nodeService) {
         DataDomainRecalc baseDataDomainRecalc  = new SysDataServiceImpl();
         nodeService.addDataDomainRecalcer(baseDataDomainRecalc);

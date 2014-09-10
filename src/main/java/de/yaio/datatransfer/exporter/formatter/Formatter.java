@@ -35,11 +35,13 @@ import de.yaio.datatransfer.exporter.OutputOptions;
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public interface Formatter extends Comparable<Formatter> {
+    /** dateformat-instance for german date dd.MM.yyyy  */
     public static DateFormat DF = new SimpleDateFormat("dd.MM.yyyy");
+    /** dateformat-instance for german time HH:mm */
     public static DateFormat TF = new SimpleDateFormat("HH:mm");
+    /** dateformat-instance for german datetime dd.MM.yyyy HH:mm */
     public static DateFormat DTF = new SimpleDateFormat("dd.MM.yyyy HH:mm");
-    public static java.util.Formatter NF = new java.util.Formatter();
-
+    /** if second of time are set to this value -> then ignore the seconds */
     public static final int CONST_FLAG_NODATE_SECONDS = 59;
     
     /**
@@ -89,7 +91,7 @@ public interface Formatter extends Comparable<Formatter> {
      * @param node - node to be formatted
      * @param nodeOutput - to append the output
      * @param options - options for formatter
-     * @throws Exception
+     * @throws Exception - parser/format-Exceptions possible
      */
     public void format(DataDomain node, StringBuffer nodeOutput, OutputOptions options) throws Exception;
 }

@@ -16,18 +16,10 @@
  */
 package de.yaio.extension.datatransfer.excel;
 
-import java.util.List;
-
-import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 
-import de.yaio.core.datadomainservice.NodeNumberService;
-import de.yaio.datatransfer.importer.ImportOptions;
-import de.yaio.datatransfer.importer.ImportOptionsImpl;
 import de.yaio.extension.datatransfer.common.CommonImporter;
-import de.yaio.extension.datatransfer.ppl.PPLImporter;
 import de.yaio.extension.datatransfer.wiki.JobParseWiki;
-import de.yaio.utils.CmdLineJob;
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -43,6 +35,19 @@ import de.yaio.utils.CmdLineJob;
  */
 public class JobParseExcel extends JobParseWiki {
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Constructor
+     * <h4>FeatureDescription:</h4>
+     *     job to import nodes in excel-format and output as PPL
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>initialize the application
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Constructor
+     * @param args the command line arguments
+     */
     public JobParseExcel(String[] args) {
         super(args);
     }
@@ -77,6 +82,16 @@ public class JobParseExcel extends JobParseWiki {
     }
 
     /**
+     * <h4>FeatureDomain:</h4>
+     *     CLI
+     * <h4>FeatureDescription:</h4>
+     *     Main-method to start the application
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>initialize the application
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     CLI
      * @param args the command line arguments
      */
     public static void main(String[] args) {

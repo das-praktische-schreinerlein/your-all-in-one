@@ -38,6 +38,19 @@ import de.yaio.datatransfer.importer.ImporterImpl;
  */
 public class PPLImporter extends ImporterImpl {
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Constructor
+     * <h4>FeatureDescription:</h4>
+     *     Importer to import/parse nodes in PPL-Format
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>initialize the importer
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Constructor
+     *  @param options - the importoptions for the parser...
+     */
     public PPLImporter(ImportOptions options) {
         super(options);
     }
@@ -59,7 +72,7 @@ public class PPLImporter extends ImporterImpl {
      * @param masterNode - node to append extracted Nodes
      * @param nodeSrc - PPL nodeSrc to be parsed
      * @param delimiter - delimiter of PPL node-hirarchy
-     * @throws Exception
+     * @throws Exception - parser/format-Exceptions possible
      */
     public void extractNodeFromSrcLine(DataDomain masterNode, String nodeSrc, String delimiter) throws Exception {
         // Parameter pruefen
@@ -126,7 +139,7 @@ public class PPLImporter extends ImporterImpl {
      * @param masterNode - node to append extracted Nodes
      * @param lstNodeSrc - list of PPL nodeSrc to be parsed
      * @param delimiter - delimiter of PPL node-hirarchy
-     * @throws Exception
+     * @throws Exception - parser/format-Exceptions possible
      */
     public void extractNodesFromLines(DataDomain masterNode, String [] lstNodeSrc, String delimiter) throws Exception {
         // Parameter pruefen
@@ -153,9 +166,9 @@ public class PPLImporter extends ImporterImpl {
      * <h4>FeatureKeywords:</h4>
      *     Parser
      * @param masterNode - node to append extracted Nodes
-     * @param nodeSrc - PPL nodeSrc (several lines) to be parsed
+     * @param nodesSrc - PPL nodeSrc (several lines) to be parsed
      * @param delimiter - delimiter of PPL node-hirarchy
-     * @throws Exception
+     * @throws Exception - parser/format-Exceptions possible
      */
     public void extractNodesFromLines(DataDomain masterNode, String nodesSrc, String delimiter) throws Exception {
         if (nodesSrc == null || nodesSrc.trim().length() <= 0) {
@@ -187,7 +200,7 @@ public class PPLImporter extends ImporterImpl {
      * @param masterNode - node to append extracted Nodes
      * @param fileName - fileName with the PPL-nodeSrc
      * @param delimiter - delimiter of PPL node-hirarchy
-     * @throws Exception
+     * @throws Exception - parser/format/io-Exceptions possible
      */
     public void extractNodesFromFile(DataDomain masterNode, String fileName, String delimiter) throws Exception {
         String fileContent = readFromFile(fileName);
@@ -205,7 +218,8 @@ public class PPLImporter extends ImporterImpl {
      * <h4>FeatureKeywords:</h4>
      *     Tools
      * @param fileName - fileName to read
-     * @throws Exception
+     * @throws Exception - io-Exceptions possible
+     * @return filecontent
      */
     public static String readFromFile(String fileName) throws Exception {
         // Parameter pruefen

@@ -89,7 +89,7 @@ public interface Exporter {
      * @param node - node to be formatted
      * @param nodeOutput -StringBuffer to append output of the formatter
      * @param options - options for output (formatter)formatter
-     * @throws Exception
+     * @throws Exception - parser/format-Exceptions possible
      */
     public void formatNodeDataDomains(DataDomain node, StringBuffer nodeOutput, 
             OutputOptions options) throws Exception;
@@ -114,7 +114,7 @@ public interface Exporter {
      * @param formatter - formatter to be run
      * @param nodeOutput -StringBuffer to append output of the formatter
      * @param options - options for output (formatter)formatter
-     * @throws Exception
+     * @throws Exception - parser/format-Exceptions possible
      */
     public void formatNodeDataDomain(DataDomain node, Formatter formatter, 
             StringBuffer nodeOutput, OutputOptions options) throws Exception;
@@ -138,7 +138,7 @@ public interface Exporter {
      *     Layout
      * @param node - node to prepare
      * @param oOptions - options for output (formatter)
-     * @throws Exception
+     * @throws Exception - parser/format/io-Exceptions possible
      */
     public void prepareNodeForExport(DataDomain node, OutputOptions oOptions)
             throws Exception;
@@ -157,10 +157,10 @@ public interface Exporter {
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     Layout
-     * @param masternode - node for output recursively
+     * @param masterNode - node for output recursively
      * @param oOptions - options for output (formatter)
      * @return - formatted output of node-hierarchy and DataDomains
-     * @throws Exception
+     * @throws Exception - parser/format/io-Exceptions possible
      */
     public String getMasterNodeResult(DataDomain masterNode, OutputOptions oOptions)
             throws Exception;
@@ -179,9 +179,9 @@ public interface Exporter {
      * <h4>FeatureKeywords:</h4>
      *     Praesentation Filter
      * @param masterNode - Masternode with childnodes to filter
-     * @param options - options with filter
+     * @param oOptions - options with filter
      * @return - new MasterNode with filtered childnodes
-     * @throws Exception
+     * @throws Exception - parser/format-Exceptions possible
      */
     public DataDomain filterNodes(DataDomain masterNode, OutputOptions oOptions)
             throws Exception;
@@ -198,11 +198,11 @@ public interface Exporter {
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     Praesentation Filter
-     * @param masterNode - Masternode with childnodes to filter
-     * @param options - options with filter
+     * @param node - Masternode with childnodes to filter
+     * @param oOptions - options with filter
      * @param mpStates - types/status to filter (TypIdentifier)
      * @return - new MasterNode with filtered childnodes
-     * @throws Exception
+     * @throws Exception - parser/format-Exceptions possible
      */
     public DataDomain filterNodeByState(DataDomain node, OutputOptions oOptions,
             Map<String, Object> mpStates) throws Exception;

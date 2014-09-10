@@ -41,10 +41,21 @@ import de.yaio.core.node.BaseNode;
  */
 public class BaseNodeService extends NodeServiceImpl {
     
-    // Logger
     private static final Logger LOGGER =
             Logger.getLogger(NodeServiceImpl.class);
     
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Constructor
+     * <h4>FeatureDescription:</h4>
+     *     service-functions for the BaseNode
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>initialize the service-class
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Constructor
+     */
     public BaseNodeService() {
         configureDataDomainRecalcer();
     }

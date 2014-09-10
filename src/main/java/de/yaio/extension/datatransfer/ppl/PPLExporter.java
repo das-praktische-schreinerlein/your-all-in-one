@@ -41,6 +41,18 @@ public class PPLExporter extends ExporterImpl {
             Logger.getLogger(PPLExporter.class);
 
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Constructor
+     * <h4>FeatureDescription:</h4>
+     *     service functions to export nodes as PPL
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>initialize the exporter
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Constructor
+     */
     public PPLExporter() {
         super();
     }

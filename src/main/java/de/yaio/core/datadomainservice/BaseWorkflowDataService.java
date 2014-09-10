@@ -32,6 +32,7 @@ import de.yaio.core.datadomain.BaseWorkflowData;
  */
 public interface BaseWorkflowDataService {
 
+    /** the position in the recalc-order at which the recalcer will run */
     public static final int CONST_RECALC_ORDER = 10;
 
     /**
@@ -46,7 +47,7 @@ public interface BaseWorkflowDataService {
      * <h4>FeatureKeywords:</h4>
      *     BusinessLogic Workflow
      * @param node - node
-     * @throws Exception
+     * @throws Exception - parser/format-Exceptions possible
      */
     public void recalcWorkflowData(BaseWorkflowData node) throws Exception;
 
@@ -62,7 +63,7 @@ public interface BaseWorkflowDataService {
      * <h4>FeatureKeywords:</h4>
      *     BusinessLogic Workflow
      * @param node - node
-     * @throws Exception
+     * @throws Exception - parser/format-Exceptions possible
      */
     public void recalcStateData(BaseWorkflowData node) throws Exception;
 }

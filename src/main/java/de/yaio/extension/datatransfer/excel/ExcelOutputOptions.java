@@ -24,7 +24,7 @@ import de.yaio.datatransfer.exporter.OutputOptionsImpl;
  * <h4>FeatureDomain:</h4>
 *     export
  * <h4>FeatureDescription:</h4>
- *    options for export of Nodes in Excel-Format
+ *    options for export of Nodes as Excel
  * 
  * @package de.yaio.extension.datatransfer.excel
  * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>

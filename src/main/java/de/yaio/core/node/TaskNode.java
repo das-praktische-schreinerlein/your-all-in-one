@@ -51,11 +51,17 @@ import de.yaio.core.nodeservice.TaskNodeService;
 @RooJpaActiveRecord
 public class TaskNode extends BaseNode implements ExtendedWorkflowData {
     // Daten
+    /** nodetype-identifier for parser/formatter on Tasknode Ist=0% */
     public static final String CONST_NODETYPE_IDENTIFIER_OPEN = "OFFEN";
+    /** nodetype-identifier for parser/formatter on Tasknode Ist=0 and planstart<today */
     public static final String CONST_NODETYPE_IDENTIFIER_LATE = "LATE";
+    /** nodetype-identifier for parser/formatter on Tasknode Ist>0 */
     public static final String CONST_NODETYPE_IDENTIFIER_RUNNNING = "RUNNING";
+    /** nodetype-identifier for parser/formatter on Tasknode Ist>0 and planende<today */
     public static final String CONST_NODETYPE_IDENTIFIER_SHORT = "WARNING";
+    /** nodetype-identifier for parser/formatter on Tasknode Ist=100 */
     public static final String CONST_NODETYPE_IDENTIFIER_DONE = "ERLEDIGT";
+    /** nodetype-identifier for parser/formatter on Tasknode canceled */
     public static final String CONST_NODETYPE_IDENTIFIER_CANCELED = "VERWORFEN";
 
     protected static SysDataService sysDataService = new SysDataServiceImpl();

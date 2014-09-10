@@ -63,6 +63,16 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
         return BaseWorkflowDataService.CONST_RECALC_ORDER;
     }
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     DataExport
+     *     Presentation
+     * <h4>FeatureDescription:</h4>
+     *     add me as DataDomainRecalcer to the Service-Config
+     * <h4>FeatureKeywords:</h4>
+     *     Config
+     * @param nodeService - instance of the nodeService which will call me as recalcer
+     */
     public static void configureDataDomainRecalcer(NodeService nodeService) {
         DataDomainRecalc baseDataDomainRecalc  = new BaseWorkflowDataServiceImpl();
         nodeService.addDataDomainRecalcer(baseDataDomainRecalc);
@@ -102,7 +112,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
      *     BsuinessLogic
      * @param node - node to process
      * @return standFaktor of the node
-     * @throws Exception
+     * @throws Exception - parser/format-Exceptions possible
      */
     public Double getMyStandFaktor(BaseWorkflowData node) throws Exception {
         Double standFaktor = 0.0;
@@ -139,7 +149,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
      * <h4>FeatureKeywords:</h4>
      *     BsuinessLogic
      * @param node - node to process
-     * @throws Exception
+     * @throws Exception - parser/format-Exceptions possible
      */
     public void initChildSumData(BaseWorkflowData node) throws Exception {
         PlanChildrenSumData planChildrenSumData = node;
@@ -256,9 +266,9 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     BsuinessLogic
-     * @param node - node to process
+     * @param baseNode - node to process
      * @return recalced state
-     * @throws Exception
+     * @throws Exception - parser/format-Exceptions possible
      */
     public String getRecalcedState(BaseWorkflowData baseNode) throws Exception {
         if (! ExtendedWorkflowData.class.isInstance(baseNode)) {
@@ -286,9 +296,9 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     BsuinessLogic
-     * @param node - node to process
+     * @param baseNode - node to process
      * @return recalced state
-     * @throws Exception
+     * @throws Exception - parser/format-Exceptions possible
      */
     public String getRecalcedEventState(ExtendedWorkflowData baseNode) {
         // Status aus den Plan/Istzahlen extrahieren
@@ -360,9 +370,9 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     BsuinessLogic
-     * @param node - node to process
+     * @param baseNode - node to process
      * @return recalced state
-     * @throws Exception
+     * @throws Exception - parser/format-Exceptions possible
      */
     public String getRecalcedTaskState(ExtendedWorkflowData baseNode) {
         // Status aus den Plan/Istzahlen extrahieren

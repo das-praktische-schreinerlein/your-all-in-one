@@ -41,7 +41,7 @@ import de.yaio.extension.datatransfer.wiki.WikiExporter;
  *     DatenExport
  *     Praesentation
  * <h4>FeatureDescription:</h4>
- *     export of Nodes in ICal-Format
+ *     export of Nodes as ICal
  * 
  * @package de.yaio.extension.datatransfer.ical
  * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
@@ -51,12 +51,24 @@ import de.yaio.extension.datatransfer.wiki.WikiExporter;
  */
 public class ICalExporter extends WikiExporter {
     
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Constructor
+     * <h4>FeatureDescription:</h4>
+     *     service functions to export nodes as ICal
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>initialize the exporter
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Constructor
+     */
     public ICalExporter() {
         super();
     }
 
-    public static DateFormat DF = new SimpleDateFormat("yyyyMMdd");
-    public static DateFormat TF = new SimpleDateFormat("HHmmss");
+    protected static DateFormat DF = new SimpleDateFormat("yyyyMMdd");
+    protected static DateFormat TF = new SimpleDateFormat("HHmmss");
     
     // Logger
     private static final Logger LOGGER =
@@ -108,10 +120,10 @@ public class ICalExporter extends WikiExporter {
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     Layout
-     * @param node - node for output recursively
+     * @param paramCurNode - node for output recursively
      * @param oOptions - options for output (formatter)
      * @return - formatted output of node-hierarchy and DataDomains
-     * @throws Exception
+     * @throws Exception - parser/format-Exceptions possible
      */
     public String genICalForNode(BaseNode paramCurNode, 
         OutputOptions oOptions) throws Exception {
@@ -220,10 +232,10 @@ public class ICalExporter extends WikiExporter {
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     Layout
-     * @param node - node for output
+     * @param paramCurNode - node for output
      * @param oOptions - options for output (formatter)
      * @return - formatted output
-     * @throws Exception
+     * @throws Exception - parser/format-Exceptions possible
      */
     public String genICalForTaskNode(TaskNode paramCurNode, 
         OutputOptions oOptions) throws Exception {
@@ -350,10 +362,10 @@ public class ICalExporter extends WikiExporter {
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     Layout
-     * @param node - node for output
+     * @param paramCurNode - node for output
      * @param oOptions - options for output (formatter)
      * @return - formatted output
-     * @throws Exception
+     * @throws Exception - parser/format-Exceptions possible
      */
     public String genICalForEventNode(EventNode paramCurNode, 
         OutputOptions oOptions) throws Exception {

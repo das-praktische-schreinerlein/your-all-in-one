@@ -46,6 +46,16 @@ public class MetaDataServiceImpl extends DataDomainRecalcImpl implements MetaDat
         return MetaDataService.CONST_RECALC_ORDER;
     }
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     DataExport
+     *     Presentation
+     * <h4>FeatureDescription:</h4>
+     *     add me as DataDomainRecalcer to the Service-Config
+     * <h4>FeatureKeywords:</h4>
+     *     Config
+     * @param nodeService - instance of the nodeService which will call me as recalcer
+     */
     public static void configureDataDomainRecalcer(NodeService nodeService) {
         DataDomainRecalc baseDataDomainRecalc  = new MetaDataServiceImpl();
         nodeService.addDataDomainRecalcer(baseDataDomainRecalc);

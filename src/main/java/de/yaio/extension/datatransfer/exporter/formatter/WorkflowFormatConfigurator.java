@@ -42,11 +42,22 @@ public class WorkflowFormatConfigurator {
 
     protected static WorkflowFormatConfigurator me = new WorkflowFormatConfigurator();
     
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Factory
+     * <h4>FeatureDescription:</h4>
+     *     return the global WorkflowFormatConfigurator
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue WorkflowFormatConfigurator
+     *   </ul>
+     * @return the global WorkflowFormatConfigurator 
+     */
     public static WorkflowFormatConfigurator getWorkflowFormatConfigurator() {
         return me;
     }
 
-    public static Map<String, String> CONST_STATI_COLOR = new HashMap<String, String>();
+    protected static Map<String, String> CONST_STATI_COLOR = new HashMap<String, String>();
     static {
         CONST_STATI_COLOR.put(BaseNode.CONST_NODETYPE_IDENTIFIER_UNKNOWN, "#fffafa");
 
@@ -79,7 +90,7 @@ public class WorkflowFormatConfigurator {
         CONST_STATI_COLOR.put(UrlResNode.CONST_NODETYPE_IDENTIFIER_EMAILRES, "#FFFFFF");
         }
 
-    public static Map<String, String> CONST_STATI_ICON = new HashMap<String, String>();
+    protected static Map<String, String> CONST_STATI_ICON = new HashMap<String, String>();
     static {
         CONST_STATI_ICON.put(BaseNode.CONST_NODETYPE_IDENTIFIER_UNKNOWN, null);
 
@@ -112,19 +123,65 @@ public class WorkflowFormatConfigurator {
         CONST_STATI_ICON.put(UrlResNode.CONST_NODETYPE_IDENTIFIER_EMAILRES, null);
     }
     
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Presentation
+     * <h4>FeatureDescription:</h4>
+     *     return the Mapping of color for which state
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue StateToColorMapping
+     *   </ul>
+     * @return the StateToColorMapping 
+     */
     public Map<String, String> getConfigStateColor() {
         return CONST_STATI_COLOR;
     }
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Presentation
+     * <h4>FeatureDescription:</h4>
+     *     return the Mapping of icon for which state
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue StateToIconMapping
+     *   </ul>
+     * @return the StateToIconMapping 
+     */
     public Map<String, String> getConfigStateIcon() {
         return CONST_STATI_ICON;
     }
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Presentation
+     * <h4>FeatureDescription:</h4>
+     *     return the mapped color for the state
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue color
+     *   </ul>
+     * @param state - the state to get the mapped color
+     * @return the mapped color
+     */
     public String getStateColor(String state) {
         String color = (String)this.getConfigStateColor().get(state);
         return color;
     }
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Presentation
+     * <h4>FeatureDescription:</h4>
+     *     return the mapped icon for the state
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue icon
+     *   </ul>
+     * @param state - the state to get the mapped icon
+     * @return the mapped icon
+     */
     public String getStateIcon(String state) {
         String color = (String)this.getConfigStateIcon().get(state);
         return color;

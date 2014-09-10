@@ -66,12 +66,27 @@ public class WikiImporter extends ImporterImpl {
      */
     public class WikiStructLine {
 
-        public String wiki;
-        public String text;
-        public String hirarchy;
-        public String desc;
-        public String idPraefix;
+        protected String wiki;
+        protected String text;
+        protected String hirarchy;
+        protected String desc;
+        protected String idPraefix;
 
+        /**
+         * <h4>FeatureDomain:</h4>
+         *     Constructor
+         * <h4>FeatureDescription:</h4>
+         *     create object of WikiStructLine
+         * <h4>FeatureResult:</h4>
+         *   <ul>
+         *     <li>initialize the exporter
+         *   </ul> 
+         * <h4>FeatureKeywords:</h4>
+         *     Constructor
+         * @param wiki - the wiki-sourceline
+         * @param text - the text
+         * @param desc - the optional desc
+         */
         public WikiStructLine (String wiki, String text, String desc) {
             this.wiki = wiki;
             this.text = text;
@@ -80,6 +95,23 @@ public class WikiImporter extends ImporterImpl {
 
         public String toString() {
             return "WL: " + wiki + " " + text + " HI:" + hirarchy;
+        }
+
+        /**
+         * <h4>FeatureDomain:</h4>
+         *     DataImport
+         * <h4>FeatureDescription:</h4>
+         *     get the wiki-hirarchy-line
+         * <h4>FeatureResult:</h4>
+         *   <ul>
+         *     <li>ResturnValue wiki-hirarchy-line
+         *   </ul> 
+         * <h4>FeatureKeywords:</h4>
+         *     DataImport ParserOptions
+         * @return wiki-hirarchy-line
+         */
+        public String getHirarchy() {
+            return this.hirarchy;
         }
 
         /**
@@ -156,16 +188,16 @@ public class WikiImporter extends ImporterImpl {
         }
     }
 
-    public static final String CONST_UE = "=";
-    public static final String CONST_LIST = "*";
+    protected static final String CONST_UE = "=";
+    protected static final String CONST_LIST = "*";
 
-    public static final String CONST_PATTERN =
+    protected static final String CONST_PATTERN =
             "^[ ]*?([-" + CONST_UE + "\\" + CONST_LIST + "]+)[ ]*(.*)";
     private static final Pattern CONST_WIKI =
             Pattern.compile(CONST_PATTERN);
 
 
-    public static String testStr =
+    protected static String testStr =
             "= LATE - Projekt3" + PPLService.LINE_DELIMITER
             + "=== OFFEN - Unterprojekt1"  + PPLService.LINE_DELIMITER
             + "** OFFEN - Punkt0" + PPLService.LINE_DELIMITER
@@ -187,9 +219,22 @@ public class WikiImporter extends ImporterImpl {
             + "** DONE - Punkt1.2" + PPLService.LINE_DELIMITER
             ;
 
-    public PPLImporter importer = new PPLImporter(new ImportOptionsImpl());
-    public PPLExporter exporter = new PPLExporter();
+    protected PPLImporter importer = new PPLImporter(new ImportOptionsImpl());
+    protected PPLExporter exporter = new PPLExporter();
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Constructor
+     * <h4>FeatureDescription:</h4>
+     *     Importer to import/parse nodes in Wiki-Format
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>initialize the importer
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Constructor
+     *  @param options - the importoptions for the parser...
+     */
     public WikiImporter(ImportOptions options) {
         super(options);
     }
@@ -259,7 +304,7 @@ public class WikiImporter extends ImporterImpl {
      * @param nodeSrc - nodeSrc to be parsed
      * @param inputOptions - ImportOptions for the parser
      * @return list of extracted WikiStructLine
-     * @throws Exception
+     * @throws Exception - parser/format-Exceptions possible
      */
     public List<WikiStructLine> extractWikiStructLines(String nodeSrc,
             WikiImportOptions inputOptions) throws Exception {
@@ -334,7 +379,7 @@ public class WikiImporter extends ImporterImpl {
      * @param flgWFStatesOnly - filter only node with this isWFState = true
      * @param inputOptions - ImportOptions for the parser+filter
      * @return list of filtered WikiStructLine
-     * @throws Exception
+     * @throws Exception - parser/format-Exceptions possible
      */
     public List<WikiStructLine> filterOnlyKnownNodeTypesFromWikiStructLines(
             List<WikiStructLine> lstWikiLines, 
@@ -352,7 +397,6 @@ public class WikiImporter extends ImporterImpl {
                     mpStates.put(arrStatusFilter[zaehler], arrStatusFilter[zaehler]);
                 }
             }
-
 
             // Identifier konfigurieren
             Map<String, Class<?>> hshNodeTypeIdentifier = 
@@ -408,7 +452,7 @@ public class WikiImporter extends ImporterImpl {
      * @param lstWikiLines - WikiStructLines to be normalized
      * @param inputOptions - ImportOptions for the parser
      * @return list of sorted and normalized WikiStructLine
-     * @throws Exception
+     * @throws Exception - parser/format-Exceptions possible
      */
     public List<WikiStructLine> normalizeWikiStructLines(List<WikiStructLine> lstWikiLines, 
             WikiImportOptions inputOptions) throws Exception {
@@ -484,7 +528,7 @@ public class WikiImporter extends ImporterImpl {
                 cleanText += curWk.getEscapedDesc(" ProjektDesc:");
 
                 // Ueberschrift
-                if (wiki.startsWith(CONST_UE) && inputOptions.flgReadUe) {
+                if (wiki.startsWith(CONST_UE) && inputOptions.isFlgReadUe()) {
                     if (ebene == 1) {
                         // 1. Ebene belegen
                         lastUe = new ArrayList<WikiStructLine>();
@@ -532,7 +576,7 @@ public class WikiImporter extends ImporterImpl {
 
                     // an Resultliste anfuegen
                     lstWikiTab.add(curWk);
-                } else if (wiki.startsWith(CONST_LIST) && inputOptions.flgReadList) {
+                } else if (wiki.startsWith(CONST_LIST) && inputOptions.isFlgReadList()) {
                     if (ebene == 1) {
                         // 1. Ebene belegen
                         lastUl = new ArrayList<WikiStructLine>();
@@ -622,10 +666,10 @@ public class WikiImporter extends ImporterImpl {
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     Parser
-     * @param nodeSrc - nodeSrc to be parsed
+     * @param src - src to be parsed
      * @param inputOptions - ImportOptions for the parser
      * @return list of extracted WikiStructLine
-     * @throws Exception
+     * @throws Exception - parser/format-Exceptions possible
      */
     public List<WikiStructLine> extractWikiStructLinesFromSrc(String src,
             WikiImportOptions inputOptions) throws Exception {
@@ -665,7 +709,7 @@ public class WikiImporter extends ImporterImpl {
      * @param fileName - fileName to be read and parsed
      * @param inputOptions - ImportOptions for the parser
      * @return list of extracted WikiStructLine
-     * @throws Exception
+     * @throws Exception - parser/format/io-Exceptions possible
      */
     public List<WikiStructLine> extractWikiStructLinesFromFile(String fileName,
             WikiImportOptions inputOptions) throws Exception {

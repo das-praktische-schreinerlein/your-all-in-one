@@ -17,6 +17,22 @@
 package de.yaio.extension.datatransfer.wiki;
 
 
+/**
+ * <h4>FeatureDomain:</h4>
+ *     DatenExport
+ *     Praesentation
+ * <h4>FeatureDescription:</h4>
+ *     service-functions for Wiki
+ * 
+ * @package de.yaio.extension.datatransfer.wiki
+ * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category collaboration
+ * @copyright Copyright (c) 2014, Michael Schreiner
+ * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ */
 public class WikiService  {
+    /**
+     * format a node as UE if it has eq/more than CONST_MIN4UE childnodes 
+     */
     public static int CONST_MIN4UE = 1;
 }

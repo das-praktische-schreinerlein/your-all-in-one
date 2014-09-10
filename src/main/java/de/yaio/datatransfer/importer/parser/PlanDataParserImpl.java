@@ -51,7 +51,7 @@ public class PlanDataParserImpl  extends ParserImpl implements PlanDataParser {
             Logger.getLogger(PlanDataParserImpl.class);
 
     // Patterns
-    public static String CONST_PATTERN_SEG_OPTIONAL_DATETIME = 
+    protected static String CONST_PATTERN_SEG_OPTIONAL_DATETIME = 
             //          "("+ CONST_PATTERN_SEG_DATUM + ")?\\s?("+ CONST_PATTERN_SEG_TIME + ")?" 
             //        + "-?("+ CONST_PATTERN_SEG_DATUM + ")?\\s?("+ CONST_PATTERN_SEG_TIME + ")?";
             // TODO: TASK aif TIME umsetzen und schauen was das Problem ist
@@ -59,12 +59,12 @@ public class PlanDataParserImpl  extends ParserImpl implements PlanDataParser {
             + "-?("+ CONST_PATTERN_SEG_DATUM + ")?[ ]?("+ CONST_PATTERN_SEG_TIME + ")?";        
 
     // Plan: Stunden Start-Ende Task
-    public static final String CONST_PATTERN_SEG_PLAN =
+    protected static final String CONST_PATTERN_SEG_PLAN =
             "Plan:\\W*"
                     + "(" + CONST_PATTERN_SEG_HOURS + ")h[ ]*"
                     + CONST_PATTERN_SEG_OPTIONAL_DATETIME
                     + "[ ]*("+ CONST_PATTERN_SEG_TASK + ")?";
-    public static final Pattern CONST_PATTERN_PLAN =
+    protected static final Pattern CONST_PATTERN_PLAN =
             Pattern.compile("(.*)" + CONST_PATTERN_SEG_PLAN + "(.*)");
 
     @Override
@@ -77,6 +77,16 @@ public class PlanDataParserImpl  extends ParserImpl implements PlanDataParser {
         return PlanData.CONST_ORDER;
     }
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     DataImport
+     * <h4>FeatureDescription:</h4>
+     *     hängt den Parser für das spätere Extrahieren der NodeDaten aus dem 
+     *     Namen (NodeFactory.parseNodeDataDomains) in die Parserliste
+     * <h4>FeatureKeywords:</h4>
+     *     Config
+     * @param nodeFactory - instance of the nodeFactory which will use the parser 
+     */
     public static void configureDataDomainParser(NodeFactory nodeFactory) {
         nodeFactory.addDataDomainParser(new PlanDataParserImpl());
     }

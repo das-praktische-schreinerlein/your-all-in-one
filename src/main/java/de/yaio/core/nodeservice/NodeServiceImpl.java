@@ -39,8 +39,10 @@ import de.yaio.core.datadomainservice.DataDomainRecalc;
  */
 public abstract class NodeServiceImpl implements NodeService {
 
-    public TreeSet<DataDomainRecalc> hshDataDomainRecalcer = 
+    /** sorted Treeset of the configured DadaDomainRecacler */
+    protected TreeSet<DataDomainRecalc> hshDataDomainRecalcer = 
                     new TreeSet<DataDomainRecalc>();
+    /** Hashmap of the configured DadaDomainRecacler by ClassName */
     public HashMap<Class<?>, DataDomainRecalc> hshDataDomainRecalcerByClass = 
                     new HashMap<Class<?>, DataDomainRecalc>();
     

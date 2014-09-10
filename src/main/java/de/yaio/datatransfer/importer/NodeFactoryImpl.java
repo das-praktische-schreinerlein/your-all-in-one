@@ -65,9 +65,22 @@ public class NodeFactoryImpl implements NodeFactory {
     // Parameter des Standard-Node-Konstruktors
     private static final Class<?>[] CONST_NODE_CONSTRUCTOR = {};
 
-    public static int curId = 1;
+    protected static int curId = 1;
     protected ImportOptions options = null;
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Constructor
+     * <h4>FeatureDescription:</h4>
+     *     create Factory to create nodes
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>initialize the importer
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Constructor
+     *  @param options - the importoptions for the parser...
+     */
     public NodeFactoryImpl(ImportOptions options) {
         this.options = options;
 
@@ -96,7 +109,7 @@ public class NodeFactoryImpl implements NodeFactory {
         }
     }
 
-    public void putNodeTypeIdentifier(String type, Class<?> classType) {
+    protected void putNodeTypeIdentifier(String type, Class<?> classType) {
         this.hshNodeTypeIdentifier.put(type, classType);
     }
 
@@ -235,7 +248,7 @@ public class NodeFactoryImpl implements NodeFactory {
         return classType;
     }
 
-    public String getNodeTypeIdentifierFromText(
+    protected String getNodeTypeIdentifierFromText(
             Map<String, Class<?>>hshCurNodeTypeIdentifier, String srcName) throws Exception {
         // TODO - change implementation: extract first word an check if key exists in hash
         for (Iterator<String> iter = hshCurNodeTypeIdentifier.keySet().iterator();

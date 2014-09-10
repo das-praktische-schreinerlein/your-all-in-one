@@ -51,7 +51,7 @@ public class IstDataParserImpl  extends ParserImpl implements IstDataParser {
             Logger.getLogger(IstDataParserImpl.class);
 
     // Patterns
-    public static String CONST_PATTERN_SEG_OPTIONAL_DATETIME = 
+    protected static String CONST_PATTERN_SEG_OPTIONAL_DATETIME = 
             //          "("+ CONST_PATTERN_SEG_DATUM + ")?\\s?("+ CONST_PATTERN_SEG_TIME + ")?" 
             //        + "-?("+ CONST_PATTERN_SEG_DATUM + ")?\\s?("+ CONST_PATTERN_SEG_TIME + ")?";
             // TODO: TASK aif TIME umsetzen und schauen was das Problem ist
@@ -59,15 +59,25 @@ public class IstDataParserImpl  extends ParserImpl implements IstDataParser {
             + "-?("+ CONST_PATTERN_SEG_DATUM + ")?[ ]?("+ CONST_PATTERN_SEG_TIME + ")?";        
 
     // Ist: Stand% Stunden Start-Ende Task
-    public static final String CONST_PATTERN_SEG_IST =
+    protected static final String CONST_PATTERN_SEG_IST =
         "Ist:\\W*"
                +"(" + CONST_PATTERN_SEG_STAND + ")%[ ]*"
                + "(" + CONST_PATTERN_SEG_HOURS + ")?h?[ ]*"
                + CONST_PATTERN_SEG_OPTIONAL_DATETIME
                + "[ ]*("+ CONST_PATTERN_SEG_TASK + ")?";
-    public static final Pattern CONST_PATTERN_IST =
+    protected static final Pattern CONST_PATTERN_IST =
         Pattern.compile("(.*)" + CONST_PATTERN_SEG_IST + "(.*)");
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     DataImport
+     * <h4>FeatureDescription:</h4>
+     *     hängt den Parser für das spätere Extrahieren der NodeDaten aus dem 
+     *     Namen (NodeFactory.parseNodeDataDomains) in die Parserliste
+     * <h4>FeatureKeywords:</h4>
+     *     Config
+     * @param nodeFactory - instance of the nodeFactory which will use the parser 
+     */
     public static void configureDataDomainParser(NodeFactory nodeFactory) {
         nodeFactory.addDataDomainParser(new IstDataParserImpl());
     }

@@ -34,7 +34,7 @@ import de.yaio.extension.datatransfer.wiki.WikiExporter;
  *     DatenExport
  *     Praesentation
  * <h4>FeatureDescription:</h4>
- *     export of Nodes in CSV-format
+ *     export nodes as CSV
  * 
  * @package de.yaio.extension.datatransfer.ical
  * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
@@ -44,13 +44,24 @@ import de.yaio.extension.datatransfer.wiki.WikiExporter;
  */
 public class CSVExporter extends WikiExporter {
     
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Constructor
+     * <h4>FeatureDescription:</h4>
+     *     export nodes as CSV
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>initialize the exporter
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Constructor
+     */
     public CSVExporter() {
         super();
     }
 
-    public static FormatterImpl baseFormatter = new BaseDataFormatterImpl();
+    protected static FormatterImpl baseFormatter = new BaseDataFormatterImpl();
     
-    // Logger
     private static final Logger LOGGER =
         Logger.getLogger(CSVExporter.class);
 
@@ -193,21 +204,26 @@ public class CSVExporter extends WikiExporter {
 
         return res;
     }
+    
+    
+    //////////
+    // Service-functions
+    //////////
 
-    public String getFieldDelimiter() {
+    protected String getFieldDelimiter() {
         return "\t";
     }
-    public String getLineStart() {
+    protected String getLineStart() {
         return "";
     }
-    public String getLineEnd() {
+    protected String getLineEnd() {
         return "\n";
     }
     
-    public String formatNodeDate(BaseNode curNode, Date src) {
+    protected String formatNodeDate(BaseNode curNode, Date src) {
         return baseFormatter.formatDate(src);
     }
-    public String formatNodeNumber(BaseNode curNode, Double src, int minStellen, int maxStellen) {
+    protected String formatNodeNumber(BaseNode curNode, Double src, int minStellen, int maxStellen) {
         return baseFormatter.formatNumber(src, minStellen, maxStellen).replace(".", ",");
     }
 

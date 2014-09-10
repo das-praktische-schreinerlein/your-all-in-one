@@ -51,14 +51,14 @@ public class SysDataParserImpl  extends ParserImpl implements SysDataParser {
 
     // Patterns
     // Pattern fuer NodeSys: UID,CreateDatum Uhrzeit, Checksum, ChangeDatum Uhrzeit,ChangeCount)
-    public static final String CONST_PATTERN_SEG_NODESYS =
+    protected static final String CONST_PATTERN_SEG_NODESYS =
         "NodeSys:\\W*"
                + "(" + CONST_PATTERN_SEG_UID + "*)?,"
                + "("+ CONST_PATTERN_SEG_DATUM + " " + CONST_PATTERN_SEG_TIME + ")?,"
                + "(" + CONST_PATTERN_SEG_CHECKSUM + "*)?,"
                + "("+ CONST_PATTERN_SEG_DATUM + " "+ CONST_PATTERN_SEG_TIME + ")?,"
                + "("+ CONST_PATTERN_SEG_INT + "*)?";
-    public static final Pattern CONST_PATTERN_NODESYS =
+    protected static final Pattern CONST_PATTERN_NODESYS =
         Pattern.compile("(.*)" + CONST_PATTERN_SEG_NODESYS + "(.*)");
 
     @Override
@@ -71,6 +71,16 @@ public class SysDataParserImpl  extends ParserImpl implements SysDataParser {
         return SysData.CONST_ORDER;
     }
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     DataImport
+     * <h4>FeatureDescription:</h4>
+     *     hängt den Parser für das spätere Extrahieren der NodeDaten aus dem 
+     *     Namen (NodeFactory.parseNodeDataDomains) in die Parserliste
+     * <h4>FeatureKeywords:</h4>
+     *     Config
+     * @param nodeFactory - instance of the nodeFactory which will use the parser 
+     */
     public static void configureDataDomainParser(NodeFactory nodeFactory) {
         nodeFactory.addDataDomainParser(new SysDataParserImpl());
     }

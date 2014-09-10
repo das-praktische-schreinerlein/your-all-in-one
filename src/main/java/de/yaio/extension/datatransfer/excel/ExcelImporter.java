@@ -47,7 +47,7 @@ import de.yaio.utils.ExcelService;
  * <h4>FeatureDomain:</h4>
 *     import
  * <h4>FeatureDescription:</h4>
- *     import of Nodes from Excel-Format
+ *     import of Nodes from Excel
  * 
  * @package de.yaio.extension.datatransfer.excel
  * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>

@@ -56,7 +56,7 @@ import de.yaio.utils.ExcelService;
  *     DatenExport
  *     Praesentation
  * <h4>FeatureDescription:</h4>
- *     export of Nodes in Excel-format
+ *     export of Nodes as Excel
  * 
  * @package de.yaio.extension.datatransfer.excel
  * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>

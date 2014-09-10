@@ -31,7 +31,7 @@ import de.yaio.datatransfer.exporter.OutputOptionsImpl;
  *     DatenExport
  *     Praesentation
  * <h4>FeatureDescription:</h4>
- *     export of Nodes in Wiki-Format
+ *     export nodes in Wiki-Format
  * 
  * @package de.yaio.extension.datatransfer.wiki
  * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
@@ -45,6 +45,18 @@ public class WikiExporter extends ExporterImpl {
             Logger.getLogger(WikiExporter.class);
 
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Constructor
+     * <h4>FeatureDescription:</h4>
+     *     service functions to export nodes as Wiki
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>initialize the exporter
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Constructor
+     */
     public WikiExporter() {
         super();
     }

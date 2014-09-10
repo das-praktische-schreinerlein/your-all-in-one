@@ -16,7 +16,6 @@
  */
 package de.yaio.extension.datatransfer.ical;
 
-import de.yaio.extension.datatransfer.ppl.PPLImporter;
 import de.yaio.extension.datatransfer.wiki.JobNodes2Wiki;
 
 /**
@@ -24,7 +23,7 @@ import de.yaio.extension.datatransfer.wiki.JobNodes2Wiki;
  *     DatenExport
  *     Praesentation
  * <h4>FeatureDescription:</h4>
- *     job for import of Nodes in PPL-Format and output in ICal-format
+ *     job for import of Nodes in PPL-Format and output as ICal
  * 
  * @package de.yaio.extension.datatransfer.ical
  * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
@@ -35,6 +34,19 @@ import de.yaio.extension.datatransfer.wiki.JobNodes2Wiki;
 public class JobNodes2ICal extends JobNodes2Wiki {
     
     
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Constructor
+     * <h4>FeatureDescription:</h4>
+     *     job to import nodes and output as ICal
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>initialize the application
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Constructor
+     * @param args the command line arguments
+     */
     public JobNodes2ICal(String[] args) {
         super(args);
     }
@@ -45,8 +57,18 @@ public class JobNodes2ICal extends JobNodes2Wiki {
     }
 
     /**
-    * @param args the command line arguments
-    */
+     * <h4>FeatureDomain:</h4>
+     *     CLI
+     * <h4>FeatureDescription:</h4>
+     *     Main-method to start the application
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>initialize the application
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     CLI
+     * @param args the command line arguments
+     */
     public static void main(String[] args) {
         JobNodes2ICal me = new JobNodes2ICal(args);
         me.startJobProcessing();
