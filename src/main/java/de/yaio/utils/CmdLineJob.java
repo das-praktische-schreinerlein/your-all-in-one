@@ -330,7 +330,7 @@ public abstract class CmdLineJob {
 
 
     protected void cleanUpAfterJob() throws Throwable {
-        // TODO: hack to close HSLDB-connection -> Hibernate don't close the 
+        // TODO: hack to close HSLDB-connection -> Hibernate doesn't close the 
         //       database and so the content is not written to file
         org.hsqldb.DatabaseManager.closeDatabases(CONST_EXITCODE_OK);
     }
