@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
+    <!-- the base -->
     <groupId>de.yaio</groupId>
     <artifactId>yaio</artifactId>
+    <name>yaio</name>
+    
+    <!-- packaging jar or war and version -->
     <packaging>jar</packaging>
     <version>0.1.0.BUILD-SNAPSHOT</version>
-    <name>yaio</name>
+    
+    <!-- settings-->
     <properties>
         <aspectj.version>1.7.2</aspectj.version>
         <java.version>1.6</java.version>
@@ -14,6 +20,8 @@
         <slf4j.version>1.7.5</slf4j.version>
         <spring.version>3.2.3.RELEASE</spring.version>
     </properties>
+
+    <!-- use these repositories to solve dependencies and get jars -->
     <repositories>
         <repository>
             <id>spring-maven-release</id>
@@ -48,6 +56,8 @@
             <url>http://spring-roo-repository.springsource.org/release</url>
         </pluginRepository>
     </pluginRepositories>
+
+    <!-- dependencies to compile and run the application -->
     <dependencies>
         <!-- General dependencies for standard applications -->
         <dependency>
@@ -245,6 +255,8 @@
             <version>2.2.9</version>
         </dependency>
     </dependencies>
+
+    <!-- build options -->
     <build>
         <plugins>
             <plugin>
@@ -398,6 +410,10 @@
                     </webAppConfig>
                 </configuration>
             </plugin>
+            <!-- 
+               use this becase of jar-manifest-problems in super-duper-all-in-one-jars
+               look at  http://robert-reiz.com/2011/11/14/832/
+            -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
