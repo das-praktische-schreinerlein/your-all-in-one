@@ -131,15 +131,15 @@ public class JobNodes2Wiki extends CmdLineJob {
      */
     protected Options addAvailiableOutputCmdLineOptions(Options availiableCmdLineOptions) throws Throwable {
 
-        // Show DescData
+        // Show ChildrenSum
         Option flgShowChildrenSumOption = new Option("c", "calcsum", false,
-                "Calc+Show ChildrenSum (default false)");
+                "Show ChildrenSum (default false)");
         flgShowChildrenSumOption.setRequired(false);
         availiableCmdLineOptions.addOption(flgShowChildrenSumOption);
 
-        // Show DescData
+        // Calc+Show 
         Option flgReChildrenSumOption = new Option("C", "recalcsum", false,
-                "Show ChildrenSum (default false)");
+                "Calc+Show ChildrenSum (default false)");
         flgReChildrenSumOption.setRequired(false);
         availiableCmdLineOptions.addOption(flgReChildrenSumOption);
 

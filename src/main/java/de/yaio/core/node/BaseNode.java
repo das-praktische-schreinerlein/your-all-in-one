@@ -128,7 +128,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
 
     /**
      */
-    @Size(max = 5000)
+    @Size(max = 64000)
     private String srcName;
 
     /**
@@ -371,7 +371,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     Persistence
-     * @param recursionLevel: how many recursion-level will be read from DB
+     * @param recursionLevel - how many recursion-level will be read from DB
      */
     public void initChildNodesFromDB(int recursionLevel) {
         // clear the children
@@ -435,23 +435,51 @@ public class BaseNode implements BaseData, MetaData, SysData,
      * <h4>FeatureKeywords:</h4>
      *     Persistence
      * @param recursionLevel - how many recursion-level will be saved to DB
+     * @throws Exception - ioExceptions possible
      */
-    public void persistChildNodesToDB(int recursionLevel) {
+    public void persistChildNodesToDB(int recursionLevel) throws Exception {
         // set new level if it is not -1
         recursionLevel = (recursionLevel > 0 ? recursionLevel-- : recursionLevel);
 
         // interate children
         for (BaseNode childNode : this.getChildNodes()) {
+            // validate data
+            if (childNode.getMetaNodeNummer() == null) {
+                //childNode.initMetaData();
+            }
+            if (childNode.getSysUID() == null) {
+                childNode.initSysData();
+            }
+
             // persist to DB
             if (LOGGER.isDebugEnabled())
                 LOGGER.debug("persistChildNodesToDB from " + this.getNameForLogger() 
                            + " child:" + childNode.getNameForLogger());
+
             childNode.persist();
+
+//            boolean flgOK = true;
+//            try {
+//                childNode.persist();
+//            } catch (Exception ex) {
+//                LOGGER.error("persistChildNodesToDB error for childnode " 
+//                           + childNode.getMetaNodePraefix() 
+//                           + "," + childNode.getMetaNodeNummer() 
+//                           + " SysUID: " + childNode.getSysUID() 
+//                           + " Name: " + childNode.getName() 
+//                           + " ex:" + ex);
+////                LOGGER.error("persistChildNodesToDB error for parent " + this.getSysUID() + " Name: " + this.getName());
+////                LOGGER.error("persistChildNodesToDB error for childnodedetails " + childNode.getNameForLogger());
+////                LOGGER.error("persistChildNodesToDB error for parentdetails " + this.getNameForLogger());
+//                flgOK = false;
+////                throw new Exception(ex);
+//            }
             
             // check recursionLevel
             if (    (recursionLevel == NodeService.CONST_DB_RECURSIONLEVEL_ALL_CHILDREN) 
                  || (recursionLevel > 0)) {
                 // recurse
+//                if (flgOK)
                 childNode.persistChildNodesToDB(recursionLevel);
             }
         }
@@ -649,11 +677,13 @@ public class BaseNode implements BaseData, MetaData, SysData,
     
     @Override
     public String getWorkingId() {
-        String res = this.getImportTmpId().toString();
-        
+        String res = "UNKNOWN";
         if (this.getMetaNodeNummer() != null && (this.getMetaNodeNummer().length() > 0)) {
             res = this.getMetaNodePraefix() + this.getMetaNodeNummer();
+        } else if (this.getImportTmpId() != null) {
+            res = this.getImportTmpId().toString();
         }
+
         return res;
     }
 
