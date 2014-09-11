@@ -35,12 +35,15 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.apache.log4j.Logger;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import de.yaio.core.datadomain.BaseData;
 import de.yaio.core.datadomain.BaseWorkflowData;
@@ -92,28 +95,44 @@ public class BaseNode implements BaseData, MetaData, SysData,
     protected static SysDataService sysDataService = new SysDataServiceImpl();
     protected static MetaDataService metaDataService = new MetaDataServiceImpl();
     protected static NodeService nodeService = new BaseNodeService();
+    @XmlTransient
+    @JsonIgnore
     public SysDataService getSysDataService() {
         return sysDataService;
     }
+    @XmlTransient
+    @JsonIgnore
     public static SysDataService getConfiguredSysDataService() {
         return sysDataService;
     }
+    @XmlTransient
+    @JsonIgnore
     public static final void setSysDataService(SysDataService newSysDataService) {
         sysDataService = newSysDataService;
     }
+    @XmlTransient
+    @JsonIgnore
     public static MetaDataService getConfiguredMetaDataService() {
         return metaDataService;
     }
+    @XmlTransient
+    @JsonIgnore
     public MetaDataService getMetaDataService() {
         return metaDataService;
     }
 
+    @XmlTransient
+    @JsonIgnore
     public static final void setMetaDataService(MetaDataService newMetaDataService) {
         metaDataService = newMetaDataService;
     }
+    @XmlTransient
+    @JsonIgnore
     public static NodeService getConfiguredNodeService() {
         return nodeService;
     }
+    @XmlTransient
+    @JsonIgnore
     public NodeService getNodeService() {
         return nodeService;
     }
@@ -516,6 +535,8 @@ public class BaseNode implements BaseData, MetaData, SysData,
     // Hirarchy-functions
     //####################
     @Transient
+    @XmlTransient
+    @JsonIgnore
     protected Map<String, DataDomain> childNodesByNameMapMap = new LinkedHashMap <String, DataDomain>();
 
     public void initChildNodesByNameMap() {
@@ -530,11 +551,15 @@ public class BaseNode implements BaseData, MetaData, SysData,
         getNodeService().setParentNode(this, parentNode, true);
     }
     @Override
+    @XmlTransient
+    @JsonIgnore
     public void setParentNodeOnly(DataDomain parentNode) {
         this.parentNode = (BaseNode)parentNode;
     }
 
     @Override
+    @XmlTransient
+    @JsonIgnore
     public String getIdForChildByNameMap() {
         return getSrcName();
     }
@@ -556,6 +581,8 @@ public class BaseNode implements BaseData, MetaData, SysData,
     }
 
     @Override
+    @XmlTransient
+    @JsonIgnore
     public Map<String, DataDomain> getChildNodesByNameMap() {
         return childNodesByNameMapMap;
     }
@@ -590,6 +617,8 @@ public class BaseNode implements BaseData, MetaData, SysData,
     }
 
     @Override
+    @XmlTransient
+    @JsonIgnore
     public String getDataBlocks4CheckSum() throws Exception {
         // Content erzeugen
         StringBuffer data = new StringBuffer();
@@ -671,11 +700,15 @@ public class BaseNode implements BaseData, MetaData, SysData,
     }
 
     @Override
+    @XmlTransient
+    @JsonIgnore
     public String getNameForLogger() {
         return this.getSrcName();    
     }
     
     @Override
+    @XmlTransient
+    @JsonIgnore
     public String getWorkingId() {
         String res = "UNKNOWN";
         if (this.getMetaNodeNummer() != null && (this.getMetaNodeNummer().length() > 0)) {
@@ -690,6 +723,8 @@ public class BaseNode implements BaseData, MetaData, SysData,
     
     
     @Override
+    @XmlTransient
+    @JsonIgnore
     public String getParentNameHirarchry(String delimiter, boolean directionForward) {
         String parentNames = "";
         if (delimiter == null) {
@@ -714,6 +749,8 @@ public class BaseNode implements BaseData, MetaData, SysData,
     }
     
     // TODO cache this
+    @XmlTransient
+    @JsonIgnore
     public int getMaxChildEbene() {
         int maxEbene = this.getEbene();
 

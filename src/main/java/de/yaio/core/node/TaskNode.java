@@ -19,9 +19,14 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.persistence.Transient;
+import javax.xml.bind.annotation.XmlTransient;
+
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import de.yaio.core.datadomain.ExtendedWorkflowData;
 import de.yaio.core.datadomainservice.MetaDataService;
@@ -64,16 +69,23 @@ public class TaskNode extends BaseNode implements ExtendedWorkflowData {
     /** nodetype-identifier for parser/formatter on Tasknode canceled */
     public static final String CONST_NODETYPE_IDENTIFIER_CANCELED = "VERWORFEN";
 
+    @Transient
     protected static SysDataService sysDataService = new SysDataServiceImpl();
+    @Transient
     protected static MetaDataService metaDataService = new MetaDataServiceImpl();
+    @Transient
     protected static NodeService nodeDataService = new TaskNodeService();
 
+    @XmlTransient
+    @JsonIgnore
     public NodeService getNodeService() {
         return nodeDataService;
     }
     public static void setNodeDataService(NodeService newNodeDataService) {
         nodeDataService = newNodeDataService;
     }
+    @XmlTransient
+    @JsonIgnore
     public static NodeService getConfiguredNodeService() {
         return nodeDataService;
     }
@@ -110,11 +122,15 @@ public class TaskNode extends BaseNode implements ExtendedWorkflowData {
     }
 
     @Override
+    @XmlTransient
+    @JsonIgnore
     public Map<String, Object> getConfigState() {
         return CONST_MAP_NODETYPE_IDENTIFIER;
     }
     
     @Override
+    @XmlTransient
+    @JsonIgnore
     public String getDataBlocks4CheckSum() throws Exception {
         // Content erzeugen
         StringBuffer data = new StringBuffer();
@@ -134,11 +150,15 @@ public class TaskNode extends BaseNode implements ExtendedWorkflowData {
     }
     
     
+    @XmlTransient
+    @JsonIgnore
     protected Date getNewDate(Date oldDate) {
         return (oldDate != null ? new Date(oldDate.getTime()) : null);
     }
     
     @Override
+    @XmlTransient
+    @JsonIgnore
     public Date getCurrentStart() {
         // wenn belegt IST-Daten benutzen, sonst Plandaten
         Date curStart = getIstStart();
@@ -150,6 +170,8 @@ public class TaskNode extends BaseNode implements ExtendedWorkflowData {
     }
 
     @Override
+    @XmlTransient
+    @JsonIgnore
     public Date getCurrentEnde() {
         // wenn belegt IST-Daten benutzen, sonst Plandaten
         Date curEnde = getIstEnde();

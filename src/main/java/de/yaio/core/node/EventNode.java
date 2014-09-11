@@ -18,9 +18,13 @@ package de.yaio.core.node;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.xml.bind.annotation.XmlTransient;
+
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import de.yaio.core.datadomainservice.MetaDataService;
 import de.yaio.core.datadomainservice.MetaDataServiceImpl;
@@ -68,9 +72,13 @@ public class EventNode extends TaskNode {
     protected static MetaDataService metaDataService = new MetaDataServiceImpl();
     protected static NodeService nodeDataService = new EventNodeService();
 
+    @XmlTransient
+    @JsonIgnore
     public NodeService getNodeService() {
         return nodeDataService;
     }
+    @XmlTransient
+    @JsonIgnore
     public static void setNodeDataService(NodeService newNodeDataService) {
         nodeDataService = newNodeDataService;
     }
@@ -109,6 +117,8 @@ public class EventNode extends TaskNode {
     }
 
     @Override
+    @XmlTransient
+    @JsonIgnore
     public Map<String, Object> getConfigState() {
         return CONST_MAP_NODETYPE_IDENTIFIER;
     }

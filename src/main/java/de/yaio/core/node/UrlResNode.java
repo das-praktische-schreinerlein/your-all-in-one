@@ -19,10 +19,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import de.yaio.core.datadomain.ResLocData;
 
@@ -87,6 +90,8 @@ public class UrlResNode extends BaseNode implements ResLocData {
     private String resLocTags;
 
     @Override
+    @XmlTransient
+    @JsonIgnore
     public Map<String, Object> getConfigState() {
         return CONST_MAP_NODETYPE_IDENTIFIER;
     }

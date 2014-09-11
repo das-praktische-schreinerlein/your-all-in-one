@@ -18,9 +18,13 @@ package de.yaio.core.node;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.xml.bind.annotation.XmlTransient;
+
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import de.yaio.core.datadomain.DocLayoutData;
 
@@ -69,6 +73,8 @@ public class InfoNode extends BaseNode implements DocLayoutData {
     }
 
     @Override
+    @XmlTransient
+    @JsonIgnore
     public Map<String, Object> getConfigState() {
         return CONST_MAP_NODETYPE_IDENTIFIER;
     }

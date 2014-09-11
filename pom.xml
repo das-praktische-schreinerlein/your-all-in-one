@@ -18,8 +18,22 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <roo.version>1.2.4.RELEASE</roo.version>
         <slf4j.version>1.7.5</slf4j.version>
+<!-- 
+      old version
         <spring.version>3.2.3.RELEASE</spring.version>
+ -->
+        <!-- spring boot starter -->
+        <spring.version>4.0.7.RELEASE</spring.version>
+         <start-class>de.yaio.rest.Application</start-class>
+        <springboot.version>1.1.6.RELEASE</springboot.version>
     </properties>
+
+    <!-- for spring boot -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.1.6.RELEASE</version>
+    </parent>
 
     <!-- use these repositories to solve dependencies and get jars -->
     <repositories>
@@ -38,6 +52,13 @@
             <name>Spring Roo Repository</name>
             <url>http://spring-roo-repository.springsource.org/release</url>
         </repository>
+        <!-- spring boot -->
+        <repository>
+            <id>spring-releases</id>
+            <name>Spring Releases</name>
+            <url>http://repo.spring.io/libs-release</url>
+        </repository>
+        
     </repositories>
     <pluginRepositories>
         <pluginRepository>
@@ -54,6 +75,12 @@
             <id>spring-roo-repository</id>
             <name>Spring Roo Repository</name>
             <url>http://spring-roo-repository.springsource.org/release</url>
+        </pluginRepository>
+        <!-- spring boot -->
+        <pluginRepository>
+            <id>spring-releases</id>
+            <name>Spring Releases</name>
+            <url>http://repo.spring.io/libs-release</url>
         </pluginRepository>
     </pluginRepositories>
 
@@ -232,6 +259,33 @@
                     <artifactId>xml-apis</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <!-- spring-boot -->
+       <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>${springboot.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <version>${springboot.version}</version>
+            <exclusions>
+                 <exclusion>
+                         <groupId>org.springframework.boot</groupId>
+                         <artifactId>spring-boot-starter-logging</artifactId>
+                 </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j</artifactId>
+            <version>${springboot.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+            <version>${springboot.version}</version>
         </dependency>
         <!-- YAIO -->
         <dependency>
@@ -434,6 +488,15 @@
                     </configuration>
                   </execution>
                 </executions>
+            </plugin>
+            
+            <!-- spring boot -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                    <configuration>
+                        <addResources>false</addResources>
+                    </configuration>
             </plugin>
         </plugins>
     </build>
