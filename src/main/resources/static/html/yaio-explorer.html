@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+  <title>YAIO - D'Artagnan - Explorer</title>
+
+  <link type="text/css" rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/smoothness/jquery-ui.css" />
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" type="text/javascript"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js" type="text/javascript"></script>
+
+  <link rel="stylesheet" type="text/css" media="all" href="http://www.your-all-in-one.de/yaio//css/style.css" />
+  <link rel="stylesheet" type="text/css" media="all" href="http://www.your-all-in-one.de/yaio//css/main.css" />
+  <link rel="stylesheet" type="text/css" media="print" href="http://www.your-all-in-one.de/yaio/css/print.css" />
+
+<style type="text/css">
+  .ui-menu kbd { /* Keyboard shortcuts for ui-contextmenu titles */
+    float: right;
+  }
+  /* custom alignment (set by 'renderColumns'' event) */
+  td.alignRight {
+     text-align: right;
+  }
+  td input[type=input] {
+    width: 40px;
+  }
+</style>
+  <!-- jquery-contextmenu (https://github.com/mar10/jquery-ui-contextmenu/) -->
+  <script src="http://cdn.jsdelivr.net/jquery.ui-contextmenu/1/jquery.ui-contextmenu.min.js"></script>
+
+  <link href="../js/fancytree/skin-win8/ui.fancytree.css" rel="stylesheet" type="text/css">
+  <script src="../js/fancytree/jquery.fancytree.js" type="text/javascript"></script>
+  <script src="../js/fancytree/jquery.fancytree.dnd.js" type="text/javascript"></script>
+  <script src="../js/fancytree/jquery.fancytree.edit.js" type="text/javascript"></script>
+  <script src="../js/fancytree/jquery.fancytree.gridnav.js" type="text/javascript"></script>
+  <script src="../js/fancytree/jquery.fancytree.table.js" type="text/javascript"></script>
+<!--
+  <script src="../js/fancytree/jquery.fancytree-all.min.js" type="text/javascript"></script>
+-->
+
+  <!-- (Irrelevant source removed.) -->
+
+<style type="text/css">
+  .ui-menu {
+    width: 150px;
+    font-size: 63%;
+  }
+
+body { 
+    background: white; 
+	color: black; 
+	font-family: Verdana, Arial, Helvetica, sans-serif; 
+	line-height: 1.3em; 
+	font-size: 11px;
+}
+
+.pageContent {
+    width: 95%;
+}
+.blockContent {
+    width: 100%;
+}
+.content {
+    width: 100%;
+    padding-left: 0px;
+}
+.blockPageFooter {
+    width: 100%;
+}
+.box-portdesc-data {
+    width: 100%;
+}
+
+.field_name {
+   text-align: left;
+   min-width: 600px;
+}
+.field_type {
+   text-align: left;
+}
+.field_state {
+   text-align: left;
+}
+.field_istChildrenSumStand {
+   text-align: right;
+}
+.field_istChildrenSumAufwand {
+   text-align: right;
+}
+.field_istChildrenSum {
+   text-align: right;
+}
+.field_planChildrenSumAufwand {
+   text-align: right;
+}
+.field_planChildrenSum {
+   text-align: right;
+}
+
+
+/**
+ * Node-Stati
+ */
+.node-state-INFO {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-DOKU {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-IDEE {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-HOWTO {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-URLRES {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-FILERES {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-MAILRES {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-SYMLINK {
+    background-color: #FFC0CB; /*#33CCCC;*/
+}
+.node-state-OPEN {
+    background-color: #ADFF2F CFF9BB; /*#99FF66;*/
+}
+.node-state-OFFEN {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-RUNNING {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-LATE {
+    background-color: #FFD700; /*#F6F9AE; #FFFF66;*/
+}
+.node-state-VERSPAETET {
+    background-color: #FFD700; /*#F6F9AE; #FFFF66;*/
+}
+.node-state-SHORT {
+    background-color: #FF6347; /* #FCD2C9; /*#FF9966;*/
+}
+.node-state-UEBERFAELLIG {
+    background-color: #FF6347; /* #FCD2C9; /*#FF9966;*/
+}
+.node-state-WARNING {
+    background-color: #FF6347; /* #FCD2C9; /*#FF9966;*/
+}
+.node-state-DONE {
+    background-color: #E0F2FC; /*#B0E0E6;*/
+}
+.node-state-ERLEDIGT {
+    background-color: #E0F2FC; /*#B0E0E6;*/
+}
+.node-state-CANCELED {
+    background-color: #F5F5F5; /*#CCCCCC;*/
+}
+.node-state-VERWORFEN {
+    background-color: #F5F5F5; /*#CCCCCC;*/
+}
+.node-state-UNKNOWN {
+    background-color: #FFFFFF;
+}
+.node-state-UNBEKANNT {
+    background-color: #FFFFFF;
+}
+
+.node-state-EVENT_PLANED {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-EVENT_GEPLANT {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-EVENT_OPEN {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-EVENT_OFFEN {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-EVENT_RUNNING {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-EVENT_LATE {
+    background-color: #FFD700; /*#F6F9AE; #FFFF66;*/
+}
+.node-state-EVENT_VERSPAETET {
+    background-color: #FFD700; /*#F6F9AE; #FFFF66;*/
+}
+.node-state-EVENT_SHORT {
+    background-color: #FF6347; /* #FF6347; /* #FCD2C9; /*#FF9966;*/
+}
+.node-state-EVENT_UEBERFAELLIG {
+    background-color: #FF6347; /* #FCD2C9; /*#FF9966;*/
+}
+.node-state-EVENT_WARNING {
+    background-color: #FF6347; /* #FCD2C9; /*#FF9966;*/
+}
+.node-state-EVENT_DONE {
+    background-color: #E0F2FC; /*#B0E0E6;*/
+}
+.node-state-EVENT_ERLEDIGT {
+    background-color: #E0F2FC; /*#B0E0E6;*/
+}
+.node-state-EVENT_CANCELED {
+    background-color: #F5F5F5; /*#CCCCCC;*/
+}
+.node-state-EVENT_VERWORFEN {
+    background-color: #F5F5F5; /*#CCCCCC;*/
+}
+
+</style>
+
+<script type="text/javascript">
+var CLIPBOARD = null;
+
+var baseUrl = "../nodes/";
+$(function(){
+
+  $("#tree").fancytree({
+    checkbox: true,
+    titlesTabbable: true,     // Add all node titles to TAB chain
+
+//// MS Start
+  // initial source is MasterplanMasternode1
+  source: { 
+      url: baseUrl + "MasterplanMasternode1", 
+      cache: false 
+  },
+  
+  // lazy load the children
+  lazyLoad: function(event, data) {
+      var node = data.node;
+      console.debug("load data for " + node.key + " from " + baseUrl + node.key);
+      data.result = {
+          url: baseUrl + node.key,
+          cache: false
+      };
+  },
+  
+  
+  // parse the nodedata
+  postProcess: function(event, data) {
+    var list = new Array();
+    for (var zaehler =0; zaehler < data.response.childNodes.length; zaehler++) {
+       var node = data.response.childNodes[zaehler];
+       var datanode = {
+          title: node.name,
+          key: node.sysUID, 
+          children: null,
+          lazy: true,
+          basenode: node
+       };
+       console.debug("add childnode for " + data.response.sysUID + " = " + node.name);
+       list.push(datanode);
+    }
+   data.result = list;
+  },
+
+    // render the extra nodedata in grid
+    renderColumns: function(event, data) {
+      var node = data.node,
+        $tdList = $(node.tr).find(">td");
+
+      // (index #0 is rendered by fancytree by adding the checkbox)
+      if( node.isFolder() ) {
+        // make the title cell span the remaining columns, if it is a folder:
+        $tdList.eq(2)
+          .prop("colspan", 6)
+          .nextAll().remove();
+      }
+      
+      var basenodedata = node.data.basenode;
+
+      var nodestate = basenodedata.state;
+      var statestyle = "node-state-" + nodestate;
+      $tdList.eq(1).text(node.getIndexHier()).addClass("alignRight").addClass(statestyle);
+      // (index #2 is rendered by fancytree)
+      $tdList.eq(2).addClass("field_name").addClass(statestyle);
+      $tdList.eq(3).html(basenodedata.type).addClass("field_type").addClass(statestyle);
+      $tdList.eq(4).html(basenodedata.state).addClass("field_state").addClass(statestyle);
+      $tdList.eq(5).html(formatNumbers(basenodedata.istChildrenSumStand, 2, "%")).addClass("field_istChildrenSumStand").addClass(statestyle); 
+      $tdList.eq(6).html(formatNumbers(basenodedata.istChildrenSumAufwand, 2, "h")).addClass("field_istChildrenSumAufwand").addClass(statestyle);
+      $tdList.eq(7).html(formatGermanDate(basenodedata.istChildrenSumStart)
+                       + "-" + formatGermanDate(basenodedata.istChildrenSumEnde)).addClass("field_istChildrenSum").addClass(statestyle);
+      $tdList.eq(8).html(formatNumbers(basenodedata.planChildrenSumAufwand, 2, "h")).addClass("field_planChildrenSumAufwand").addClass(statestyle);
+      $tdList.eq(9).html(formatGermanDate(basenodedata.planChildrenSumStart)
+                       + "-" + formatGermanDate(basenodedata.planChildrenSumEnde)).addClass("field_planChildrenSum").addClass(statestyle);
+    },
+
+//// MS ENDE
+    // extensions: ["edit", "table", "gridnav"],
+    extensions: ["edit", "dnd", "table", "gridnav"],
+
+    dnd: {
+      preventVoidMoves: true,
+      preventRecursiveMoves: true,
+      autoExpandMS: 400,
+      dragStart: function(node, data) {
+        return true;
+      },
+      dragEnter: function(node, data) {
+        // return ["before", "after"];
+        return true;
+      },
+      dragDrop: function(node, data) {
+        data.otherNode.moveTo(node, data.hitMode);
+      }
+    },
+    edit: {
+    },
+    table: {
+      indentation: 20,
+      nodeColumnIdx: 2,
+      checkboxColumnIdx: 0
+    },
+    gridnav: {
+      autofocusInput: false,
+      handleCursorKeys: true
+    }
+
+  }).on("nodeCommand", function(event, data){
+    // Custom event handler that is triggered by keydown-handler and
+    // context menu:
+    var refNode, moveMode,
+      tree = $(this).fancytree("getTree"),
+      node = tree.getActiveNode();
+
+    switch( data.cmd ) {
+    case "moveUp":
+      node.moveTo(node.getPrevSibling(), "before");
+      node.setActive();
+      break;
+    case "moveDown":
+      node.moveTo(node.getNextSibling(), "after");
+      node.setActive();
+      break;
+    case "indent":
+      refNode = node.getPrevSibling();
+      node.moveTo(refNode, "child");
+      refNode.setExpanded();
+      node.setActive();
+      break;
+    case "outdent":
+      node.moveTo(node.getParent(), "after");
+      node.setActive();
+      break;
+    case "rename":
+      node.editStart();
+      break;
+    case "remove":
+      node.remove();
+      break;
+    case "addChild":
+      node.editCreateNode("child", "New node");
+      // refNode = node.addChildren({
+      //   title: "New node",
+      //   isNew: true
+      // });
+      // node.setExpanded();
+      // refNode.editStart();
+      break;
+    case "addSibling":
+      node.editCreateNode("after", "New node");
+      // refNode = node.getParent().addChildren({
+      //   title: "New node",
+      //   isNew: true
+      // }, node.getNextSibling());
+      // refNode.editStart();
+      break;
+    case "cut":
+      CLIPBOARD = {mode: data.cmd, data: node};
+      break;
+    case "copy":
+      CLIPBOARD = {
+        mode: data.cmd,
+        data: node.toDict(function(n){
+          delete n.key;
+        })
+      };
+      break;
+    case "clear":
+      CLIPBOARD = null;
+      break;
+    case "paste":
+      if( CLIPBOARD.mode === "cut" ) {
+        // refNode = node.getPrevSibling();
+        CLIPBOARD.data.moveTo(node, "child");
+        CLIPBOARD.data.setActive();
+      } else if( CLIPBOARD.mode === "copy" ) {
+        node.addChildren(CLIPBOARD.data).setActive();
+      }
+      break;
+    default:
+      alert("Unhandled command: " + data.cmd);
+      return;
+    }
+
+  }).on("keydown", function(e){
+    var c = String.fromCharCode(e.which),
+      cmd = null;
+
+    if( c === "N" && e.ctrlKey && e.shiftKey) {
+      cmd = "addChild";
+    } else if( c === "C" && e.ctrlKey ) {
+      cmd = "copy";
+    } else if( c === "V" && e.ctrlKey ) {
+      cmd = "paste";
+    } else if( c === "X" && e.ctrlKey ) {
+      cmd = "cut";
+    } else if( c === "N" && e.ctrlKey ) {
+      cmd = "addSibling";
+    } else if( e.which === $.ui.keyCode.DELETE ) {
+      cmd = "remove";
+    } else if( e.which === $.ui.keyCode.F2 ) {
+      cmd = "rename";
+    } else if( e.which === $.ui.keyCode.UP && e.ctrlKey ) {
+      cmd = "moveUp";
+    } else if( e.which === $.ui.keyCode.DOWN && e.ctrlKey ) {
+      cmd = "moveDown";
+    } else if( e.which === $.ui.keyCode.RIGHT && e.ctrlKey ) {
+      cmd = "indent";
+    } else if( e.which === $.ui.keyCode.LEFT && e.ctrlKey ) {
+      cmd = "outdent";
+    }
+    if( cmd ){
+      $(this).trigger("nodeCommand", {cmd: cmd});
+      return false;
+    }
+  });
+
+  /*
+   * Context menu (https://github.com/mar10/jquery-ui-contextmenu)
+   */
+  $("#tree").contextmenu({
+    delegate: "span.fancytree-node",
+    menu: [
+      {title: "Edit <kbd>[F2]</kbd>", cmd: "rename", uiIcon: "ui-icon-pencil" },
+      {title: "Delete <kbd>[Del]</kbd>", cmd: "remove", uiIcon: "ui-icon-trash" },
+      {title: "----"},
+      {title: "New sibling <kbd>[Ctrl+N]</kbd>", cmd: "addSibling", uiIcon: "ui-icon-plus" },
+      {title: "New child <kbd>[Ctrl+Shift+N]</kbd>", cmd: "addChild", uiIcon: "ui-icon-arrowreturn-1-e" },
+      {title: "----"},
+      {title: "Cut <kbd>Ctrl+X</kbd>", cmd: "cut", uiIcon: "ui-icon-scissors"},
+      {title: "Copy <kbd>Ctrl-C</kbd>", cmd: "copy", uiIcon: "ui-icon-copy"},
+      {title: "Paste as child<kbd>Ctrl+V</kbd>", cmd: "paste", uiIcon: "ui-icon-clipboard", disabled: true }
+      ],
+    beforeOpen: function(event, ui) {
+      var node = $.ui.fancytree.getNode(ui.target);
+      $("#tree").contextmenu("enableEntry", "paste", !!CLIPBOARD);
+      node.setActive();
+    },
+    select: function(event, ui) {
+      var that = this;
+      // delay the event, so the menu can close and the click event does
+      // not interfere with the edit control
+      setTimeout(function(){
+        $(that).trigger("nodeCommand", {cmd: ui.cmd});
+      }, 100);
+    }
+  });
+});
+
+
+/**
+ *
+ * Service-Funktions
+ *
+ */
+function formatGermanDateTime(millis) {
+    if (millis == null) {
+       return "";
+    }
+    var date = new Date(millis);
+    return padNumber(date.getDate(), 2)
+        + "." + padNumber(date.getMonth(), 2)
+        + "." + date.getFullYear()
+        + " " + padNumber(date.getHours(), 2)
+        + ":" + padNumber(date.getMinutes(), 2)
+        + ":" + padNumber(date.getSeconds(), 2);
+}
+function formatGermanDate(millis) {
+    if (millis == null) {
+       return "";
+    }
+    var date = new Date(millis);
+    return padNumber(date.getDate(), 2)
+        + "." + padNumber(date.getMonth(), 2)
+        + "." + date.getFullYear();
+}
+function padNumber(number, count) {
+    var r = String(number);
+    while ( r.length < count) {
+    r = '0' + r;
+    }
+    return r;
+} 
+function formatNumbers(number, nachkomma, suffix) {
+   if (number == null) {
+       return "";
+   }
+   
+   return (number.toFixed(nachkomma)) + suffix;
+}
+
+
+</script>
+</head>
+
+<body>
+<div align="center" class="page-div-center">
+    <!-- Hauptseite-->
+    <div class="pageContent" id="pageContent">
+
+        <!-- Content -->
+        <div class="blockContent" id="blockContent">
+            <div class="content" id="content">
+                <div class="txt-content" id="txt-content">
+                    <div class="menueTop" id="menueTop">
+                        <!-- Hauptmenue -->
+                        <div class="">
+                           <div class="ue1MenueTop">D'Artagnan - Dein pers&ouml;nlicher Software-Musketier</div>
+                           <div class="ue2MenueTop">"Einer f&uuml;r Alles - Alles in Einem"</div>
+                           <div class="ue3MenueTop">
+                               <ul class="ulTopKontakt">
+                                   <li class="liTopKontakt liTopKontaktTwitter"><a 
+                                       target="_blank" 
+                                       title="D'Artagnan auf Twitter folgen" 
+                                       href="https://twitter.com/YourITFellow">Twitter</a></li>
+                                   <li class="liTopKontakt liTopKontaktEmail"><a 
+                                       title="D'Artagnan kontaktieren" 
+                                       href="http://www.your-all-in-one/yaio/contact/form">Kontakt</a></li>
+                               </ul>
+                           </div>
+                        </div>
+                    </div>
+                
+                    
+                    
+                    <div class="content">
+                        <!-- Page: Content -->
+
+<div class='box box-portdesc add2toc-h1 box-portdesc-thatsit' toclabel='Explorer' id='box_YAIO801'>
+<div class='boxline boxline-ue2 h2-portdesc h2-portdesc-thatsit' id='ue_YAIO801'>YAIO - D'Artagnan - Explorer</div>
+<div class='togglecontainer togglecontainer-thatsit' id='detail_YAIO801'>
+</div></div>
+
+<div class='box box-portdesc add2toc-h1 box-portdesc-data' toclabel='Daten' id='box_YAIO801'>
+  <table id="tree">
+    <colgroup>
+    <col ></col>
+    <col ></col>
+    <col class="name"></col>
+    <col class="type"></col>
+    <col class="state"></col>
+    <col class="stand"></col>
+    <col class="aufwand"></col>
+    <col class="date"></col>
+    <col class="aufwand"></col>
+    <col class="date"></col>
+    </colgroup>
+    <thead>
+      <tr> 
+        <th>O</th>
+        <th>Hirarchie</th>
+        <th>Name</th>
+        <th>Typ</th>
+        <th>Status</th>
+        <th>IST %</th>
+        <th>IST h</th>
+        <th>IST Zeit</th>
+        <th>Plan h</th>
+        <th>Plan Zeit</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</div>
+
+                                            </div>
+                    
+                    
+                   <div class="blockPageFooter" id="blockPageFooter">
+                      <div class="blockQRCode" id="qrcode"></div>
+                      <div class="blockTxtFooter" id="blockTxtFooter">
+                        <div class="txt-lastupdate">2014 by <a href="mailto:michael.schreiner@your-it-fellow.de" class="a-lastupdate">Micha</a> -&gt; <a href="http://www.your-all-in-one.de/yaio/static/impressum" class="a-lastupdate">Impressum</a></div>
+                        <div class="txt-copyrights">Copyright 
+                            <a href="http://www.your-all-in-one.de/yaio/static/impressum" >www.your-all-in-one.de</a></div>
+                        <div class="txt-copyrights">
+                            Die Seite wurde mit <a href="https://github.com/mar10/fancytree/" target="_blank">FancyTree</a> implementiert.<br />
+                            F&uuml;r Layout+Effekte+Funktionen wird mein <a href="http://www.your-it-fellow.de/mybusiness/static/projects">MATWeb-Framework</a> benutzt.<br />
+                            Die Pflege und Transformation der Inhalte erfolgt mit <a href="/yaio/static/lepetit">"Le petit D'Artagnan"</a>.<br />
+                            F&uuml;r bestimmte Layoutfunktionen wurde auf frei Bibliotheken der Projekte
+                            <a href="http://jquery.com/" target="_blank">JQuery</a>,
+                            <a href="http://jqueryui.com/" target="_blank">JQuery-UI</a>,
+                            <a href="http://paulrobertlloyd.com/2009/06/social_media_icons/" target="_blank">paulrobertlloyd.com</a>
+                            zugegriffen.<br />
+                        </div>
+                      </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+doJsAfterLoad();
+</script>
+<script type="text/javascript">
+// Druckversion �berladen
+function showAsPrintVersion() {
+    // Default-Druckversion laden
+    jMATService.getPageLayoutService().showAsPrintVersion();
+
+    // Content begrenzen
+    divBlock = document.getElementById('pageContent');
+    if (divBlock) {
+        divBlock.style.width = "750px";
+    }
+}
+</script>
+
+</body>
+</html>

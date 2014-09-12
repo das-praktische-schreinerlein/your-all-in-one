@@ -44,7 +44,7 @@ public class NodeController {
      * <h4>FeatureDomain:</h4>
      *     Webservice
      * <h4>FeatureDescription:</h4>
-     *     read the node for sysUID and return it wirh children as JSON
+     *     read the node for sysUID and return it with children as JSON
      * <h4>FeatureResult:</h4>
      *   <ul>
      *     <li>BaseNode - the node for sysUID
