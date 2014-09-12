@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.node.BaseNode;
+import de.yaio.core.nodeservice.BaseNodeService;
 import de.yaio.core.nodeservice.NodeService;
 import de.yaio.datatransfer.exporter.OutputOptions;
 import de.yaio.extension.datatransfer.wiki.WikiExporter;
@@ -81,6 +82,9 @@ public class JPAExporter extends WikiExporter {
             dbNode.removeChildNodesFromDB();
             dbNode.remove();
         }
+        
+        // initia recalc data
+        newNode.recalcData(BaseNodeService.CONST_RECURSE_DIRECTION_CHILDREN);
         
         // save the newNode
         newNode.persist();
