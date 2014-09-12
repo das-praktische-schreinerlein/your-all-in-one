@@ -19,6 +19,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -343,7 +344,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
      */
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "parentNode", fetch = FetchType.LAZY)
     @Transient
-    private Set<BaseNode> childNodes = new HashSet<BaseNode>();
+    private LinkedHashSet<BaseNode> childNodes = new LinkedHashSet<BaseNode>();
 
     /**
      */
