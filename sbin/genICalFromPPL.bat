@@ -22,12 +22,12 @@ set PROJNAME=%3%
 
 rem create Event-ICal from PPL
 grep EVENT_ %MMPATH%%SRCFILE%.ppl > %MMPATH%%SRCFILE%-events.ppl
-set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_ICalN% -m %PROJNAME% %SRC_OPTIONS%  %OUTPUT_OPTIONS% %MMPATH%%SRCFILE%-events.ppl
-echo "create ICal from PPL: %PROG_ICalN% -m %PROJNAME% %SRC_OPTIONS%  %OUTPUT_OPTIONS% %MMPATH%%SRCFILE%-events.ppl > %MMPATH%\%SRCFILE%-events.ics"
+set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_ICalN% %CFG% -m %PROJNAME% %SRC_OPTIONS%  %OUTPUT_OPTIONS% %MMPATH%%SRCFILE%-events.ppl
+echo "create ICal from PPL: %PROG_ICalN% %CFG% -m %PROJNAME% %SRC_OPTIONS%  %OUTPUT_OPTIONS% %MMPATH%%SRCFILE%-events.ppl > %MMPATH%\%SRCFILE%-events.ics"
 %CMD% > %MMPATH%\%SRCFILE%-events.ics
 
 rem create ToDo-ICal from PPL
 grep -v EVENT_ %MMPATH%%SRCFILE%.ppl > %MMPATH%%SRCFILE%-tasks.ppl
-set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_ICalN% -m %PROJNAME% %SRC_OPTIONS%  %OUTPUT_OPTIONS% %MMPATH%%SRCFILE%-tasks.ppl
-echo "create ICal from PPL: %PROG_ICalN% -m %PROJNAME% %SRC_OPTIONS%  %OUTPUT_OPTIONS% %MMPATH%%SRCFILE%-tasks.ppl > %MMPATH%\%SRCFILE%-tasks.ics"
+set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_ICalN% %CFG% -m %PROJNAME% %SRC_OPTIONS%  %OUTPUT_OPTIONS% %MMPATH%%SRCFILE%-tasks.ppl
+echo "create ICal from PPL: %PROG_ICalN% %CFG% -m %PROJNAME% %SRC_OPTIONS%  %OUTPUT_OPTIONS% %MMPATH%%SRCFILE%-tasks.ppl > %MMPATH%\%SRCFILE%-tasks.ics"
 %CMD% > %MMPATH%\%SRCFILE%-tasks.ics

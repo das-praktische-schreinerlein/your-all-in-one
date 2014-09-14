@@ -21,7 +21,7 @@ set SRCFILE=%2%
 set PROJNAME=%3%
 
 rem create Excel from PPL
-set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_EX% -m %PROJNAME% %SRC_OPTIONS%  %OUTPUT_OPTIONS%  --mergeexcelplanunggantsheets %MMPATH%%SRCFILE%.ppl %MMPATH%%SRCFILE%.xls
-echo "create Excel from PPL: %PROG_EX% -m %PROJNAME% %SRC_OPTIONS%  %OUTPUT_OPTIONS%  --mergeexcelplanunggantsheets %MMPATH%%SRCFILE%.ppl %MMPATH%%SRCFILE%.xls"
+set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_EX% %CFG% -m %PROJNAME% %SRC_OPTIONS%  %OUTPUT_OPTIONS%  --mergeexcelplanunggantsheets %MMPATH%%SRCFILE%.ppl %MMPATH%%SRCFILE%.xls
+echo "create Excel from PPL: %PROG_EX% %CFG% -m %PROJNAME% %SRC_OPTIONS%  %OUTPUT_OPTIONS%  --mergeexcelplanunggantsheets %MMPATH%%SRCFILE%.ppl %MMPATH%%SRCFILE%.xls"
 rem echo %CMD%
 %CMD%

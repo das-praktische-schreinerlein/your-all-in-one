@@ -21,7 +21,7 @@ set SRCFILE=%2%
 set PROJNAME=%3%
 
 rem create PPL from Excel
-set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_EP% %PARSER_OPTIONS_EXCEL% %MMPATH%%SRCFILE%.xls
-echo "create PPL from Excel: %PROG_EP% %PARSER_OPTIONS_EXCEL% %MMPATH%%SRCFILE%.xls > %MMPATH%\%SRCFILE%.ppl"
+set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_EP% %CFG% %PARSER_OPTIONS_EXCEL% %MMPATH%%SRCFILE%.xls
+echo "create PPL from Excel: %PROG_EP% %CFG% %PARSER_OPTIONS_EXCEL% %MMPATH%%SRCFILE%.xls > %MMPATH%\%SRCFILE%.ppl"
 rem echo %CMD%
 %CMD% > %MMPATH%\%SRCFILE%.ppl

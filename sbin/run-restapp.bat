@@ -24,6 +24,6 @@ set YAIOCONFIGPATH=%YAIOSCRIPTPATH%..\config\
 rem init config
 call %YAIOCONFIGPATH%\config-yaio.bat %YAIOSCRIPTPATH%
 
-set CMD=java %JAVAOPTIONS% -cp %CP% de.yaio.rest.Application
+set CMD=java %JAVAOPTIONS% -cp %CP% de.yaio.rest.Application %CFG%
 echo "runrest-app: %CMD%"
 %CMD%
