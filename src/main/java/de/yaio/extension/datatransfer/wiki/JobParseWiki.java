@@ -60,6 +60,7 @@ public class JobParseWiki extends CmdLineJob {
         Options availiableCmdLineOptions = new Options();
         
         // add Options
+        CmdLineJob.addAvailiableBaseCmdLineOptions(availiableCmdLineOptions);
         commonImporter.addAvailiableCommonCmdLineOptions(availiableCmdLineOptions);
         commonImporter.addAvailiableWikiCmdLineOptions(availiableCmdLineOptions);
         commonImporter.addAvailiableProductiveImportCmdLineOptions(availiableCmdLineOptions);
@@ -70,7 +71,7 @@ public class JobParseWiki extends CmdLineJob {
     @Override
     public void doJob() throws Throwable {
         // init
-        initApplicationContext();
+        initApplicationContext(this.getCmdLine());
         initCommonImporter();
 
         // parse PPL-source

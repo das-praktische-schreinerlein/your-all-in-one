@@ -100,11 +100,6 @@ public class CommonImporter {
      * @param availiableCmdLineOptions - the container with the availiableCmdLineOptions
      */
     public void addAvailiableCommonCmdLineOptions(Options availiableCmdLineOptions) {
-        // Hilfe-Option
-        Option helpOption = new Option("h", "help", false, "usage");
-        helpOption.setRequired(false);
-        availiableCmdLineOptions.addOption(helpOption);
-
         // sourceType
         Option sourceType = new Option("", "sourcetype", true,
                 "Source to read from (jpa,ppl,wiki,excel).");
@@ -303,7 +298,7 @@ public class CommonImporter {
         }
         
         // initApplicationContext
-        CmdLineJob.initApplicationContext();
+        CmdLineJob.initApplicationContext(this.cmdLine);
 
         // create own importer
         JPAImporter jpaImporter = new JPAImporter(null);

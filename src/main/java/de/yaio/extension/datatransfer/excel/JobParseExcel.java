@@ -20,6 +20,7 @@ import org.apache.commons.cli.Options;
 
 import de.yaio.extension.datatransfer.common.CommonImporter;
 import de.yaio.extension.datatransfer.wiki.JobParseWiki;
+import de.yaio.utils.CmdLineJob;
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -63,6 +64,7 @@ public class JobParseExcel extends JobParseWiki {
         Options availiableCmdLineOptions = new Options();
         
         // add Options
+        CmdLineJob.addAvailiableBaseCmdLineOptions(availiableCmdLineOptions);
         commonImporter.addAvailiableCommonCmdLineOptions(availiableCmdLineOptions);
         commonImporter.addAvailiableExcelCmdLineOptions(availiableCmdLineOptions);
         commonImporter.addAvailiableProductiveImportCmdLineOptions(availiableCmdLineOptions);
@@ -73,7 +75,7 @@ public class JobParseExcel extends JobParseWiki {
     @Override
     public void doJob() throws Throwable {
         // init
-        initApplicationContext();
+        initApplicationContext(this.getCmdLine());
         initCommonImporter();
 
         // parse PPL-source

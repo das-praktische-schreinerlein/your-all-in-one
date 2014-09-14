@@ -24,7 +24,6 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.PosixParser;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 
 /**
@@ -53,7 +52,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public abstract class CmdLineJob {
 
     private final static Logger LOGGER = Logger.getLogger(CmdLineJob.class);
-
+    
     public static ApplicationContext springApplicationContext = null;
     
     public static final int CONST_EXITCODE_OK = 0;
@@ -84,6 +83,21 @@ public abstract class CmdLineJob {
 
         Options availiableCmdLineOptions = new Options();
 
+        addAvailiableBaseCmdLineOptions(availiableCmdLineOptions);
+
+        return availiableCmdLineOptions;
+    }
+
+    /**
+     * <h1>Bereich:</h1>
+     *     Tools - CLI-Config
+     * <h1>Funktionalitaet:</h1>
+     *     konfiguriert die verfuegbaren Base-CLI-Optionen
+     * <h1>Nebenwirkungen:</h1>
+     *     aktualisiert availiableCmdLineOptions
+     * @param availiableCmdLineOptions Options
+     */
+    public static void addAvailiableBaseCmdLineOptions(Options availiableCmdLineOptions) {
         // Config-File
         Option configOption = new Option("c", "config", true,
                 "comma separated list of JobConfig property files");
@@ -94,8 +108,6 @@ public abstract class CmdLineJob {
         Option helpOption = new Option("h", "help", false, "usage");
         helpOption.setRequired(false);
         availiableCmdLineOptions.addOption(helpOption);
-
-        return availiableCmdLineOptions;
     }
 
     /**
@@ -124,7 +136,7 @@ public abstract class CmdLineJob {
      * @return CommandLine
      * @throws Throwable
      */
-    protected CommandLine genCommandLineFromCmdArgs(String[] cmdArgs,
+    public static CommandLine genCommandLineFromCmdArgs(String[] cmdArgs,
             Options availiableCmdLineOptions) throws Throwable {
         CommandLineParser parser = new PosixParser();
         return parser.parse(availiableCmdLineOptions, cmdArgs);
@@ -281,7 +293,6 @@ public abstract class CmdLineJob {
             LOGGER.info("start cleanUpAfterJob");
             this.cleanUpAfterJob();
             LOGGER.info("done cleanUpAfterJob");
-
         } catch(Throwable e) {
             // Catch Error
             try {
@@ -317,9 +328,8 @@ public abstract class CmdLineJob {
         }
     }
 
-    public static void initApplicationContext() {
-        springApplicationContext = 
-            new ClassPathXmlApplicationContext("/META-INF/spring/applicationContext.xml");
+    public static void initApplicationContext(CommandLine commandLine) throws Exception {
+        springApplicationContext = Configurator.createApplicationContext(commandLine);
     }
 
     protected void initJob() throws Throwable {
@@ -332,6 +342,6 @@ public abstract class CmdLineJob {
     protected void cleanUpAfterJob() throws Throwable {
         // TODO: hack to close HSLDB-connection -> Hibernate doesn't close the 
         //       database and so the content is not written to file
-        org.hsqldb.DatabaseManager.closeDatabases(CONST_EXITCODE_OK);
+        org.hsqldb.DatabaseManager.closeDatabases(0);
     }
 }

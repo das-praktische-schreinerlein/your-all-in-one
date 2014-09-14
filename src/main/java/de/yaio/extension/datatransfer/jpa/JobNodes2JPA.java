@@ -70,7 +70,7 @@ public class JobNodes2JPA extends JobNodes2Wiki {
         DataDomain masterNode = null;
 
         // initApplicationContext
-        CmdLineJob.initApplicationContext();
+        CmdLineJob.initApplicationContext(this.getCmdLine());
 
         // check for sysUID
         String sysUID = this.cmdLine.getOptionValue("addnodestosysuid");

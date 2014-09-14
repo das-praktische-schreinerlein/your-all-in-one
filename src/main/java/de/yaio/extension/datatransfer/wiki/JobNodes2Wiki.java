@@ -74,6 +74,7 @@ public class JobNodes2Wiki extends CmdLineJob {
         Options availiableCmdLineOptions = new Options();
 
         // add Options
+        CmdLineJob.addAvailiableBaseCmdLineOptions(availiableCmdLineOptions);
         commonImporter.addAvailiableCommonCmdLineOptions(availiableCmdLineOptions);
         commonImporter.addAvailiableExcelCmdLineOptions(availiableCmdLineOptions);
         commonImporter.addAvailiableWikiCmdLineOptions(availiableCmdLineOptions);

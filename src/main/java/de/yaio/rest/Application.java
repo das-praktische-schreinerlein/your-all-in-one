@@ -16,6 +16,8 @@
  */
 package de.yaio.rest;
 
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.Options;
 import org.apache.log4j.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -23,6 +25,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import de.yaio.utils.CmdLineJob;
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -58,21 +62,35 @@ public class Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        initApplicationContext();
-        LOGGER.info("start application");
-        SpringApplication.run(Application.class, args);
-        LOGGER.debug("done application");
-        cleanUpAfterJob();
-    }
+        try {
+            // init data
+            Options availiableCmdLineOptions = new Options();
+            CmdLineJob.addAvailiableBaseCmdLineOptions(availiableCmdLineOptions);
+            LOGGER.debug("valiable:" + availiableCmdLineOptions);
+            CommandLine cmdLine = CmdLineJob.genCommandLineFromCmdArgs(args, 
+                            availiableCmdLineOptions);
+            CmdLineJob.initApplicationContext(cmdLine);
 
-    protected static void initApplicationContext() {
-        springApplicationContext = 
-            new ClassPathXmlApplicationContext("/META-INF/spring/applicationContext.xml");
+            // initApp
+            LOGGER.info("start application");
+            SpringApplication.run(Application.class, args);
+            LOGGER.info("done application");
+            
+            // cleanupApp
+//            cleanUpAfterJob();
+        } catch (Throwable ex) {
+            // catch Exception
+            System.out.println(ex);
+            LOGGER.fatal(ex);
+            LOGGER.info("Exit: 1");
+            System.exit(CmdLineJob.CONST_EXITCODE_FAILED_ARGS);
+        }
     }
-
-    protected static void cleanUpAfterJob() {
+    
+    protected static void cleanUpAfterJob() throws Throwable {
         // TODO: hack to close HSLDB-connection -> Hibernate doesn't close the 
         //       database and so the content is not written to file
         org.hsqldb.DatabaseManager.closeDatabases(0);
     }
+    
 }
