@@ -4,6 +4,7 @@
   <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
   <title>YAIO - D'Artagnan - Explorer</title>
 
+<!-- 
   <link type="text/css" rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/smoothness/jquery-ui.css" />
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" type="text/javascript"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js" type="text/javascript"></script>
@@ -11,7 +12,14 @@
   <link rel="stylesheet" type="text/css" media="all" href="http://www.your-all-in-one.de/yaio//css/style.css" />
   <link rel="stylesheet" type="text/css" media="all" href="http://www.your-all-in-one.de/yaio//css/main.css" />
   <link rel="stylesheet" type="text/css" media="print" href="http://www.your-all-in-one.de/yaio/css/print.css" />
+ -->
+  <link type="text/css" rel="stylesheet" href="../css/jqueryui//jquery-ui.css" />
+  <script src="../js/jquery/jquery.min.js" type="text/javascript"></script>
+  <script src="../js/jqueryui/jquery-ui.min.js" type="text/javascript"></script>
 
+  <link rel="stylesheet" type="text/css" media="all" href="../css/yaio/style.css" />
+  <link rel="stylesheet" type="text/css" media="all" href="../css/yaio/main.css" />
+  <link rel="stylesheet" type="text/css" media="print" href="../css/yaio/print.css" />
 <style type="text/css">
   .ui-menu kbd { /* Keyboard shortcuts for ui-contextmenu titles */
     float: right;
@@ -25,8 +33,10 @@
   }
 </style>
   <!-- jquery-contextmenu (https://github.com/mar10/jquery-ui-contextmenu/) -->
-  <script src="http://cdn.jsdelivr.net/jquery.ui-contextmenu/1/jquery.ui-contextmenu.min.js"></script>
-
+  <!-- 
+    <script src="http://cdn.jsdelivr.net/jquery.ui-contextmenu/1/jquery.ui-contextmenu.min.js"></script>
+  -->
+  <script src="../js/jqueryui/jquery.ui-contextmenu.min.js"></script>
   <link href="../js/fancytree/skin-win8/ui.fancytree.css" rel="stylesheet" type="text/css">
   <script src="../js/fancytree/jquery.fancytree.js" type="text/javascript"></script>
   <script src="../js/fancytree/jquery.fancytree.dnd.js" type="text/javascript"></script>
@@ -215,7 +225,7 @@ body {
 <script type="text/javascript">
 var CLIPBOARD = null;
 
-var baseUrl = "../nodes/";
+var baseUrl = "/nodes/";
 $(function(){
 
   $("#tree").fancytree({
@@ -608,10 +618,7 @@ function formatNumbers(number, nachkomma, suffix) {
 </div>
 
 <script type="text/javascript">
-doJsAfterLoad();
-</script>
-<script type="text/javascript">
-// Druckversion �berladen
+// Druckversion ueberladen
 function showAsPrintVersion() {
     // Default-Druckversion laden
     jMATService.getPageLayoutService().showAsPrintVersion();

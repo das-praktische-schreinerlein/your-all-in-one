@@ -1,0 +1,458 @@
+/**
+ * Basistyles: Tags
+ **/
+body {
+    background: #fcebbf; /* Old browsers */
+    /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZjZWJiZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjQ5JSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmY2ViYmYiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+    background: -moz-linear-gradient(left, #fcebbf 0%, #ffffff 49%, #fcebbf 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,#fcebbf), color-stop(49%,#ffffff), color-stop(100%,#fcebbf)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(left, #fcebbf 0%,#ffffff 49%,#fcebbf 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(left, #fcebbf 0%,#ffffff 49%,#fcebbf 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(left, #fcebbf 0%,#ffffff 49%,#fcebbf 100%); /* IE10+ */
+    background: linear-gradient(to right, #fcebbf 0%,#ffffff 49%,#fcebbf 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcebbf', endColorstr='#fcebbf',GradientType=1 ); /* IE6-8 */
+    overflow-y:scroll;
+}
+
+h1, h2, h3, h4, h5 {
+    padding-top: 5px;
+    border-top: 1px dotted green; 
+}
+/**
+ * Basisstyles Webfonts
+ **/
+@font-face {
+  font-family: 'Allura';
+  src: url('http://www.fontsaddict.com/fontface/allura.ttf');
+}
+.allura{
+    font-family: 'Allura', sans-serif;
+}
+
+/**
+ * Basistyles: Site
+ **/
+ 
+.a-logo {
+    font-family: 'Allura', sans-serif;
+    font-size: 100px;
+}
+.menueNavLogo {
+    background-color: #FFFFFF;
+}
+.txt-content {
+    font-size: 11px;
+}
+.pageContent {
+    width: 890px;
+}
+.blockContent {
+    width: 732px;
+}
+.content {
+    width: 712px;
+}
+.blockSupport {
+    float: left;
+    width: 132px;
+    text-align: center;
+}
+
+#boxSupport {
+    display: none;
+}
+
+.blockPageFooter {
+    clear: both;
+    float: left;
+    padding-top: 50px;
+}
+
+.box-hint4bigwindowdetailframe {
+   display: none !IMPORTANT;
+}
+
+/**
+ * Effekte
+ **/
+.fx-bg-button-sitenav {
+    background: #8cacd3; /* Old browsers */
+}
+
+.fx-bg-change-content {
+    background-color: #FCEFB7; /*#FFFFCC;*/
+    background: #fcf1b5; /* Old browsers */
+    background: -moz-linear-gradient(left, #fcf1b5 0%, #fefcea 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%, #fcf1b5), color-stop(100%, #fefcea) ); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(left, #fcf1b5 0%, #fefcea 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(left, #fcf1b5 0%, #fefcea 100%);  /* Opera 11.10+ */
+    background: -ms-linear-gradient(left, #fcf1b5 0%, #fefcea 100%); /* IE10+ */
+    background: linear-gradient(to right, #fcf1b5 0%, #fefcea 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(  startColorstr='#fcf1b5', endColorstr='#fefcea', GradientType=1 ); /* IE6-9 */
+}
+
+.fx-bg-pageaction {
+    background-color: #F3F7FB; /*#FCEFB7; /*#FFFFCC;*/
+    background: #F3F7FB; /* Old browsers */
+    background: -moz-linear-gradient(left, #ffffff 0%, #dee9ef 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%, #ffffff), color-stop(100%, #dee9ef) ); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(left, #ffffff 0%, #dee9ef 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(left, #ffffff 0%, #dee9ef 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(left, #ffffff 0%, #dee9ef 100%); /* IE10+ */
+    background: linear-gradient(to right, #ffffff 0%, #dee9ef 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(  startColorstr='#ffffff', endColorstr='#dee9ef', GradientType=1 ); /* IE6-9 */
+}
+
+
+/**
+ * Ueberschriften
+ **/
+ 
+.box-portdesc-index {
+/**
+    background: url("/mybusiness/images/twitter-24x24.png") no-repeat scroll 0 0 #FFFFFF;
+    background-position: 0px 80px;
+**/
+} 
+
+/**
+ * Menues
+ **/
+
+/** Navigation links **/
+.ulMenueNavBlockInActive {
+    display: none;
+}
+.menueNavMasterLink {
+    float: left;
+    width: 100%;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    text-align: center;
+    background-color: #8CACD3; /*#FFFFCC;*/
+    background: #8cacd3; /* Old browsers */
+}
+.a-menue-nav-aktiv {
+    color: #FF9933;
+}
+
+
+/** Top **/
+.menueTop {
+    margin-left: 3px;
+    border: 2px solid #8CACD3;
+    border-radius: 10px;
+}
+.ue1MenueTop {
+    font-size: 25px;
+    color: #FCF1B5;
+    padding-bottom: 20px;
+    padding-top: 15px;
+    text-align: center;
+}
+.ue2MenueTop {
+    font-size: 16px;
+    color: white;
+    padding-bottom: 0px;
+    text-align: center;
+}
+.ue3MenueTop {
+    width: 100px;
+    margin: 0;
+    padding: 0;
+    float: right;
+}
+.ulTopKontakt {
+    padding: 0;
+    margin: 0;
+}
+.liTopKontakt {
+    list-style: none outside none;
+    margin-left: 10px;
+    float: right;    
+    display: inline-block;
+    height: 26px;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    white-space: nowrap;
+    width: 26px;
+}
+.liTopKontaktTwitter {
+    background: url("/mybusiness/images/twitter-24x24.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+}
+.liTopKontaktXing {
+    background: url("/mybusiness/images/xing-24x24.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+}
+.liTopKontaktEmail {
+    background: url("/mybusiness/images/email-24x24.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+}
+.liTopKontakt a {
+    color: #333333;
+    display: inline-block;
+    height: 26px;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    text-indent: -99em;
+    white-space: nowrap;
+    width: 26px;
+}
+
+
+
+/**
+ * Basistyles: Content
+ **/
+.boxline-ue2 {
+    color: #FF9933;
+    float: left;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.h1-portdesc {
+}
+.h2-portdesc {
+    font-size: 16px;
+    font-weight: bold;
+}
+.h3-portdesc {
+    margin-left: 10px;
+    font-size: 13px;
+    font-weight: bold;
+}
+.h4-portdesc {
+    margin-left: 20px;
+    font-size: 11px;
+    font-weight: bold;
+}
+.h5-portdesc {
+    margin-left: 30px;
+    font-size: 10px;
+    font-weight: bold;
+}
+.p-portdesc {
+    margin-left: 20px;
+    line-height: 15px;
+}
+
+.p-portdesc-ue {
+    display: inline-block;
+    width: 150px;
+    text-align: left;
+}
+.p-portdesc-desc {
+    display: inline-block;
+    width: 510px;
+    vertical-align: top;
+}
+.p-portdesc-desc-full {
+    display: inline-block;
+    margin-left: 30px;
+    width: 640px;
+    vertical-align: top;
+}
+
+.li-portdesc {
+    margin-left: 10px;
+    list-style: none outside none;
+}
+.li-portdesc-ue {
+    text-align: left;
+    display: inline-block;
+    width: 200px;
+}
+.li-portdesc-desc {
+    display: inline-block;
+    width: 400px;
+    vertical-align: top;
+}
+
+/* Tabellen */
+.table-portdesc {
+    border: 1px solid #8CACD3;
+    margin-left: 30px;
+    border
+}
+.td-portdesc {
+    border: 1px solid #8CACD3;
+}
+.tr-portdesc-datenue {
+    font-weight: bold;
+    background: #8CACD3;
+}
+.tr-portdesc-gesamt {
+    font-weight: bold;
+    background: #DEE9EF;
+}
+
+/**
+ * spezielle Ueberarbeitungen
+ **/
+
+.h3-portdesc-intro {
+    margin-left: 0px;
+    font-size: 15px;
+    font-weight: bold;
+}
+.p-portdesc-ue {
+    display: none;
+}
+.p-portdesc-desc {
+    margin-left: 30px;
+    display: inline-block;
+    width: 640px;
+    vertical-align: top;
+}
+
+.li-portdesc-ue-faehigkeiten {
+    font-weight: bold;
+    width: 100px;
+}
+.li-portdesc-desc-faehigkeiten {
+    width: 550px;
+    line-height: 15px;
+}
+.li-portdesc-ue-continuance {
+    font-weight: bold;
+    width: 200px;
+}
+.li-portdesc-desc-continuance {
+    width: 450px;
+    line-height: 15px;
+}
+.li-portdesc-ue-version {
+    font-weight: bold;
+    width: 150px;
+}
+.li-portdesc-desc-version {
+    width: 500px;
+    line-height: 15px;
+}
+.li-portdesc-ue-ausgabeformate {
+    font-weight: bold;
+    width: 150px;
+}
+.li-portdesc-desc-ausgabeformate {
+    width: 500px;
+    line-height: 15px;
+}
+.li-portdesc-ue-helper {
+    font-weight: bold;
+    width: 100px;
+}
+.li-portdesc-desc-helper {
+    width: 550px;
+    line-height: 15px;
+}
+.li-portdesc-ue-knotenkenner {
+    font-weight: bold;
+    width: 150px;
+}
+.li-portdesc-desc-knotenkenner {
+    width: 500px;
+    line-height: 15px;
+}
+.li-portdesc-ue-knotentypen {
+    font-weight: bold;
+    width: 100px;
+}
+.li-portdesc-desc-knotentypen {
+    width: 550px;
+    line-height: 15px;
+}
+.li-portdesc-ue-strukturinfotypen {
+    font-weight: bold;
+    width: 200px;
+}
+.li-portdesc-desc-strukturinfotypen {
+    width: 450px;
+    line-height: 15px;
+}
+.li-portdesc-ue-exportexample {
+    font-weight: bold;
+    width: 150px;
+}
+.li-portdesc-desc-exportexample {
+    width: 500px;
+    line-height: 15px;
+}
+.img5-urlres {
+    width: 500px;
+}
+.img6-urlres {
+    width: 500px;
+}
+.img7-urlres {
+    width: 500px;
+}
+.img6-urlres-exportexample {
+    width: 500px;
+}
+.img7-urlres-exportexample {
+    width: 500px;
+}
+
+
+.a-node-symlink {
+    color: blue;
+    font-weight: bold;
+}
+.a-node-urlres {
+    color: blue;
+    font-weight: bold;
+}
+
+/** Styles fuer News **/
+.box-portdesc-shortnews {
+    background: #D2FFA5;
+}
+
+.li-portdesc-shortnews {
+    margin-left: 20px;
+}
+.li-portdesc-ue-shortnews {
+    color: black;
+    display: inline-block;
+    text-align: left;
+    width: 100px;
+    font-weight: bold;
+}
+.li-portdesc-desc-shortnews {
+    display: inline-block;
+    width: 500px;
+    vertical-align: top;
+    line-height: 15px;
+}
+
+
+/**
+ * Symfony
+**/
+ul.error_list {
+    display: inline-block;
+    list-style: none outside none;
+    color: red;
+    padding-left: 0px;
+}
+ul.error_list li {
+    display: inline-block;
+    list-style: none outside none;
+    color: red;
+}
+
+
+/**
+ * Toggler
+ **/
+.detailToggler {
+   display: block;
+   margin-left: 450px;
+}
+.blockToggler {
+   float: none;
+   display: inline-block;
+}
