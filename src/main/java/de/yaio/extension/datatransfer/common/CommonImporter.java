@@ -18,7 +18,6 @@ package de.yaio.extension.datatransfer.common;
 
 import java.util.List;
 
-import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.log4j.Logger;
@@ -34,7 +33,7 @@ import de.yaio.extension.datatransfer.ppl.PPLImporter;
 import de.yaio.extension.datatransfer.wiki.WikiImportOptions;
 import de.yaio.extension.datatransfer.wiki.WikiImporter;
 import de.yaio.extension.datatransfer.wiki.WikiImporter.WikiStructLine;
-import de.yaio.utils.CmdLineJob;
+import de.yaio.utils.Configurator;
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -52,7 +51,6 @@ import de.yaio.utils.CmdLineJob;
 public class CommonImporter {
     
     protected String defaultSourceType = "ppl";
-    protected CommandLine cmdLine = null;
     protected PPLImporter pplImporter = null;
     
     // Logger
@@ -256,16 +254,18 @@ public class CommonImporter {
      */
     public void importDataToMasterNodeFromPPLFile(DataDomain masterNode) throws Exception {
         // check srcFile
-        if (cmdLine.getArgs().length <= 0) {
+        if (Configurator.getInstance().getCommandLine().getArgs().length <= 0) {
             throw new IllegalArgumentException("Import from PPL-File requires filename.");
         }
-        String srcFile = cmdLine.getArgs()[0];
+        String srcFile = Configurator.getInstance().getCommandLine().getArgs()[0];
         if (LOGGER.isInfoEnabled()) {
             LOGGER.info("read from PPL file:" + srcFile);
         }
 
         // config
-        String delimiter = cmdLine.getOptionValue("delimiter", "\t");
+        String delimiter = 
+                        Configurator.getInstance().getCommandLine().getOptionValue(
+                                        "delimiter", "\t");
         
         // export PPL 
         pplImporter.extractNodesFromFile(masterNode, srcFile, delimiter);
@@ -292,13 +292,15 @@ public class CommonImporter {
         }
         
         // check exportsysuid
-        String exportSysUID = cmdLine.getOptionValue("exportsysuid");
+        String exportSysUID = 
+                        Configurator.getInstance().getCommandLine().getOptionValue(
+                                        "exportsysuid");
         if (exportSysUID == null || "".equalsIgnoreCase(exportSysUID)) {
             throw new IllegalArgumentException("For sourcetype=jpa a exportsysuid is expected");
         }
         
         // initApplicationContext
-        CmdLineJob.initApplicationContext(this.cmdLine);
+        Configurator.getInstance().getSpringApplicationContext();
 
         // create own importer
         JPAImporter jpaImporter = new JPAImporter(null);
@@ -336,7 +338,9 @@ public class CommonImporter {
      */
     public void importDataToMasterNodeFromExcel(DataDomain masterNode) throws Exception {
         // config
-        String delimiter = cmdLine.getOptionValue("delimiter", "\t");
+        String delimiter = 
+                        Configurator.getInstance().getCommandLine().getOptionValue(
+                                        "delimiter", "\t");
 
         // create Importer
         String pplSource = this.extractDataFromExcel();
@@ -362,10 +366,10 @@ public class CommonImporter {
      */
     public String extractDataFromExcel() throws Exception {
         // check srcFile
-        if (cmdLine.getArgs().length <= 0) {
+        if (Configurator.getInstance().getCommandLine().getArgs().length <= 0) {
             throw new IllegalArgumentException("Import from Excel-File requires filename.");
         }
-        String srcFile = cmdLine.getArgs()[0];
+        String srcFile = Configurator.getInstance().getCommandLine().getArgs()[0];
         if (LOGGER.isInfoEnabled()) {
             LOGGER.info("read from PPL file:" + srcFile);
         }
@@ -380,7 +384,9 @@ public class CommonImporter {
                         excelImporter.getNodeFactory().getMetaDataService().getNodeNumberService();
 
         // Id-Datei einlesen
-        String strPathIdDB = cmdLine.getOptionValue("pathiddb", null);
+        String strPathIdDB = 
+                        Configurator.getInstance().getCommandLine().getOptionValue(
+                                        "pathiddb", null);
         if (strPathIdDB != null) {
             nodeNumberService.initNextNodeNumbersFromFile(strPathIdDB);
         }
@@ -421,7 +427,9 @@ public class CommonImporter {
      */
     public void importDataToMasterNodeFromWiki(DataDomain masterNode) throws Exception {
         // config
-        String delimiter = cmdLine.getOptionValue("delimiter", "\t");
+        String delimiter = 
+                        Configurator.getInstance().getCommandLine().getOptionValue(
+                                        "delimiter", "\t");
 
         // parse PPL-source
         String pplSource = this.extractDataFromWiki();
@@ -446,10 +454,10 @@ public class CommonImporter {
      */
     public String extractDataFromWiki() throws Exception {
         // check srcFile
-        if (cmdLine.getArgs().length <= 0) {
+        if (Configurator.getInstance().getCommandLine().getArgs().length <= 0) {
             throw new IllegalArgumentException("Import from Wiki-File requires filename.");
         }
-        String srcFile = cmdLine.getArgs()[0];
+        String srcFile = Configurator.getInstance().getCommandLine().getArgs()[0];
         if (LOGGER.isInfoEnabled()) {
             LOGGER.info("read from PPL file:" + srcFile);
         }
@@ -458,16 +466,19 @@ public class CommonImporter {
         WikiImportOptions inputOptions = new WikiImportOptions();
         inputOptions.setFlgReadList(true);
         inputOptions.setFlgReadUe(true);
-        inputOptions.setFlgReadWithStatusOnly(cmdLine.hasOption("s"));
-        inputOptions.setFlgReadWithWFStatusOnly(cmdLine.hasOption("w"));
-        if (cmdLine.hasOption("l")) {
+        inputOptions.setFlgReadWithStatusOnly(
+                        Configurator.getInstance().getCommandLine().hasOption("s"));
+        inputOptions.setFlgReadWithWFStatusOnly(
+                        Configurator.getInstance().getCommandLine().hasOption("w"));
+        if (Configurator.getInstance().getCommandLine().hasOption("l")) {
             inputOptions.setFlgReadList(false);
         }
-        if (cmdLine.hasOption("u")) {
+        if (Configurator.getInstance().getCommandLine().hasOption("u")) {
             inputOptions.setFlgReadUe(false);
         }
         inputOptions.setStrReadIfStatusInListOnly(
-                cmdLine.getOptionValue("onlyifstateinlist", null));
+                Configurator.getInstance().getCommandLine().getOptionValue(
+                                "onlyifstateinlist", null));
         WikiImporter wikiImporter = new WikiImporter(inputOptions);
         
         // gets NodeNumberService
@@ -475,7 +486,9 @@ public class CommonImporter {
                 pplImporter.getNodeFactory().getMetaDataService().getNodeNumberService();
         
         // Id-Datei einlesen
-        String strPathIdDB = cmdLine.getOptionValue("pathiddb", null);
+        String strPathIdDB = 
+                        Configurator.getInstance().getCommandLine().getOptionValue(
+                                        "pathiddb", null);
         if (strPathIdDB != null) {
             nodeNumberService.initNextNodeNumbersFromFile(strPathIdDB);
         }
@@ -517,7 +530,9 @@ public class CommonImporter {
      */
     public void importDataToMasterNode(DataDomain masterNode) throws Exception {
         // check datasource
-        String sourceType = cmdLine.getOptionValue("sourcetype", defaultSourceType);
+        String sourceType = 
+                        Configurator.getInstance().getCommandLine().getOptionValue(
+                                        "sourcetype", defaultSourceType);
         if (sourceType.equalsIgnoreCase("jpa")) {
             // from jpa
             this.importDataToMasterNodeFromJPA(masterNode);
@@ -575,22 +590,5 @@ public class CommonImporter {
      */
     public PPLImporter getPPLImporter() {
         return pplImporter;
-    }
-    
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     BusinessLogic
-     * <h4>FeatureDescription:</h4>
-     *     set the CommandLine to parse the import-options
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>updates membervar cmdLine
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     BusinessLogic
-     * @param cmdLine - the parsed cmdLine
-     */
-    public void setCmdLine(CommandLine cmdLine) {
-        this.cmdLine = cmdLine;
     }
 }

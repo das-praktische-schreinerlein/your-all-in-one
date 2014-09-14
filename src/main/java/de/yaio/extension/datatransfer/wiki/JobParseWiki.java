@@ -56,11 +56,10 @@ public class JobParseWiki extends CmdLineJob {
     }
     
     @Override
-    protected Options genAvailiableCmdLineOptions() throws Throwable {
+    protected Options addAvailiableCmdLineOptions() throws Throwable {
         Options availiableCmdLineOptions = new Options();
         
         // add Options
-        CmdLineJob.addAvailiableBaseCmdLineOptions(availiableCmdLineOptions);
         commonImporter.addAvailiableCommonCmdLineOptions(availiableCmdLineOptions);
         commonImporter.addAvailiableWikiCmdLineOptions(availiableCmdLineOptions);
         commonImporter.addAvailiableProductiveImportCmdLineOptions(availiableCmdLineOptions);
@@ -70,10 +69,6 @@ public class JobParseWiki extends CmdLineJob {
 
     @Override
     public void doJob() throws Throwable {
-        // init
-        initApplicationContext(this.getCmdLine());
-        initCommonImporter();
-
         // parse PPL-source
         String pplSource = commonImporter.extractDataFromWiki();
         System.out.println(pplSource);
@@ -95,23 +90,6 @@ public class JobParseWiki extends CmdLineJob {
     protected void createCommonImporter() {
         // create commonImporter
         commonImporter = new CommonImporter("ppl");
-    }
-
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     BusinessLogic
-     * <h4>FeatureDescription:</h4>
-     *     initialize the commonly used importer with the parsed commandline
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>updates MemberVar commonImporter - for the import
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     BusinessLogic
-     */
-    protected void initCommonImporter() {
-        // init commonImporter
-        commonImporter.setCmdLine(cmdLine);
     }
 
     /**

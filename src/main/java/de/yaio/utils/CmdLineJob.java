@@ -16,12 +16,8 @@
  */
 package de.yaio.utils;
 
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
-import org.apache.commons.cli.PosixParser;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 
@@ -60,141 +56,11 @@ public abstract class CmdLineJob {
     public static final int CONST_EXITCODE_FAILED_CONFIG = 2;
     public static final int CONST_EXITCODE_FAILED_JOB = 3;
 
-    protected String[] cmdLineArgs = null;
-    protected Options availiableCmdLineOptions = null;
-    protected CommandLine cmdLine = null;
     protected String jobConfFile = null;
 
     public CmdLineJob(String[] args) {
-        this.cmdLineArgs = args;
-    }
-
-    /**
-     * <h1>Bereich:</h1>
-     *     Tools - CLI-Config
-     * <h1>Funktionalitaet:</h1>
-     *     konfiguriert die verfuegbaren CLI-Optionen -> sollte ueberladen werden
-     * <h1>Nebenwirkungen:</h1>
-     *     Rueckgabe als Options
-     * @return Options
-     * @throws Throwable
-     */
-    protected Options genAvailiableCmdLineOptions() throws Throwable {
-
-        Options availiableCmdLineOptions = new Options();
-
-        addAvailiableBaseCmdLineOptions(availiableCmdLineOptions);
-
-        return availiableCmdLineOptions;
-    }
-
-    /**
-     * <h1>Bereich:</h1>
-     *     Tools - CLI-Config
-     * <h1>Funktionalitaet:</h1>
-     *     konfiguriert die verfuegbaren Base-CLI-Optionen
-     * <h1>Nebenwirkungen:</h1>
-     *     aktualisiert availiableCmdLineOptions
-     * @param availiableCmdLineOptions Options
-     */
-    public static void addAvailiableBaseCmdLineOptions(Options availiableCmdLineOptions) {
-        // Config-File
-        Option configOption = new Option("c", "config", true,
-                "comma separated list of JobConfig property files");
-        configOption.setRequired(true);
-        availiableCmdLineOptions.addOption(configOption);
-
-        // Hilfe-Option
-        Option helpOption = new Option("h", "help", false, "usage");
-        helpOption.setRequired(false);
-        availiableCmdLineOptions.addOption(helpOption);
-    }
-
-    /**
-     * <h1>Bereich:</h1>
-     *     Tools - CLI-Handling
-     * <h1>Funktionalitaet:</h1>
-     *     liefert die verfuegbaren CLI-Optionen
-     * <h1>Nebenwirkungen:</h1>
-     *     Rueckgabe als Options
-     * @return Options
-     * @throws Throwable
-     */
-    protected Options getAvailiableCmdLineOptions() throws Throwable {
-        return this.availiableCmdLineOptions;
-    }
-
-    /**
-     * <h1>Bereich:</h1>
-     *     Tools - CLI-Handling
-     * <h1>Funktionalitaet:</h1>
-     *     erzeugt aus den CMD-Args ein CLI-Commandline-Object
-     * <h1>Nebenwirkungen:</h1>
-     *     Rueckgabe als CommandLine
-     * @param cmdArgs - Parameter aus z.B. main
-     * @param availiableCmdLineOptions - verfuegbare CLI-Optionen
-     * @return CommandLine
-     * @throws Throwable
-     */
-    public static CommandLine genCommandLineFromCmdArgs(String[] cmdArgs,
-            Options availiableCmdLineOptions) throws Throwable {
-        CommandLineParser parser = new PosixParser();
-        return parser.parse(availiableCmdLineOptions, cmdArgs);
-    }
-
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tools - CLI-Handling
-     * <h4>FeatureDescription:</h4>
-     *     return current CLI-Commandline
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue CommandLine - current CLI-Commandline
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     CLI-Handling
-     * @return CommandLine - current CLI-Commandline
-     * @throws Throwable
-     */
-    public CommandLine getCmdLine() throws Throwable {
-        return this.cmdLine;
-    }
-
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tools - CLI-Handling
-     * <h4>FeatureDescription:</h4>
-     *     return current CMD-Args
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue String[] - current CMD-Args
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     CLI-Handling
-     * @return String[] - current CMD-Args
-     * @throws Throwable
-     */
-    public String[] getCmdLineArgs() throws Throwable  {
-        return this.cmdLineArgs;
-    }
-
-
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tools - CLI-Handling
-     * <h4>FeatureDescription:</h4>
-     *     checks weather Commandline is valid
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue boolean - valid Commandline?
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     CLI-Handling
-     * @return boolean - valid Commandline?
-     * @throws Throwable
-     */
-    protected boolean validateCmdLine(CommandLine cmdLine) throws Throwable {
-        return true;
+        // set args
+        Configurator.getInstance().setCmdLineArgs(args);
     }
 
     /**
@@ -230,33 +96,48 @@ public abstract class CmdLineJob {
      */
     protected void printUsage() throws Throwable  {
         HelpFormatter formatter = new HelpFormatter();
-        formatter.printHelp(this.getJobName(), this.availiableCmdLineOptions);
+        formatter.printHelp(this.getJobName(), 
+                        Configurator.getInstance().getAvailiableCmdLineOptions());
     }
 
-    protected boolean loadConfigFile(String confFile) throws Throwable {
-        ///ToDo
-        return true;
-    }
+    /**
+     * <h1>Bereich:</h1>
+     *     Tools - CLI-Config
+     * <h1>Funktionalitaet:</h1>
+     *     konfiguriert die verfuegbaren CLI-Optionen -> muss ueberladen werden
+     * <h1>Nebenwirkungen:</h1>
+     *     Rueckgabe als Options
+     * @return Options
+     * @throws Throwable
+     */
+    protected abstract Options addAvailiableCmdLineOptions() throws Throwable;
 
     public void startJobProcessing() {
         try {
             // config cmdArgs
             LOGGER.info("configure CmdArgs");
-            this.availiableCmdLineOptions = this.genAvailiableCmdLineOptions();
+            Options newAvailiableCmdLineOptions = this.addAvailiableCmdLineOptions();
+            if (LOGGER.isDebugEnabled())
+                LOGGER.debug("startJobProcessing: "
+                                + "add commandLineOptions:" + newAvailiableCmdLineOptions);
+
+            Configurator.getInstance().addAvailiableCmdLineOptions(newAvailiableCmdLineOptions);
 
             // parse cmdArgs
-            LOGGER.info("parse CmdArgs");
-            this.cmdLine = this.genCommandLineFromCmdArgs(this.cmdLineArgs, this.availiableCmdLineOptions);
+            LOGGER.info("initCommandLine");
+            Configurator.getInstance().getCommandLine();
 
             // check for unknown Args
-            LOGGER.info("used CmdLineArgs: " + this.cmdLineArgs);
-            if (this.cmdLine != null) {
-                LOGGER.info("unknown CmdLineArgs: " + this.cmdLine.getArgs());
+            LOGGER.info("used CmdLineArgs: " 
+                            + Configurator.getInstance().getCmdLineArgs());
+            if (Configurator.getInstance().getCommandLine() != null) {
+                LOGGER.info("unknown CmdLineArgs: " 
+                            + Configurator.getInstance().getCommandLine().getArgs());
             }
 
             // validate cmdLine
             LOGGER.info("validate CmdLine");
-            if (! this.validateCmdLine(this.cmdLine)) {
+            if (! Configurator.getInstance().validateCmdLine()) {
                 logErrorMsg("Illegal CmdArgs: print Usage");
                 this.printUsage();
                 LOGGER.info("Exit: 1");
@@ -264,22 +145,11 @@ public abstract class CmdLineJob {
             }
 
             // print Usage
-            if (this.cmdLine.hasOption("h")) {
+            if (Configurator.getInstance().getCommandLine().hasOption("h")) {
                 LOGGER.info("print Usage");
                 this.printUsage();
                 LOGGER.info("Exit: " + CONST_EXITCODE_OK);
                 System.exit(CONST_EXITCODE_OK);
-            }
-
-            // load Config
-            LOGGER.info("load Config");
-            this.jobConfFile = this.cmdLine.getOptionValue("c");
-            if (this.jobConfFile != null) {
-                if (!loadConfigFile(this.jobConfFile)) {
-                    logErrorMsg("cant load Config: " + this.jobConfFile);
-                    logErrorMsg("Exit: " + CONST_EXITCODE_FAILED_CONFIG);
-                    System.exit(CONST_EXITCODE_FAILED_CONFIG);
-                }
             }
 
             LOGGER.info("start initJob");
@@ -326,10 +196,6 @@ public abstract class CmdLineJob {
             logErrorMsg("Exit: " + exitCode);
             System.exit(exitCode);
         }
-    }
-
-    public static void initApplicationContext(CommandLine commandLine) throws Exception {
-        springApplicationContext = Configurator.createApplicationContext(commandLine);
     }
 
     protected void initJob() throws Throwable {

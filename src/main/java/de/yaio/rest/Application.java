@@ -16,17 +16,15 @@
  */
 package de.yaio.rest;
 
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.Options;
 import org.apache.log4j.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import de.yaio.utils.CmdLineJob;
+import de.yaio.utils.Configurator;
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -63,13 +61,28 @@ public class Application {
      */
     public static void main(String[] args) {
         try {
-            // init data
-            Options availiableCmdLineOptions = new Options();
-            CmdLineJob.addAvailiableBaseCmdLineOptions(availiableCmdLineOptions);
-            LOGGER.debug("valiable:" + availiableCmdLineOptions);
-            CommandLine cmdLine = CmdLineJob.genCommandLineFromCmdArgs(args, 
-                            availiableCmdLineOptions);
-            CmdLineJob.initApplicationContext(cmdLine);
+            // parse cmdArgs
+            LOGGER.info("initCommandLine");
+            Configurator.getInstance().setCmdLineArgs(args);
+            Configurator.getInstance().getCommandLine();
+
+            // check for unknown Args
+            LOGGER.info("used CmdLineArgs: " 
+                            + Configurator.getInstance().getCmdLineArgs());
+            if (Configurator.getInstance().getCommandLine() != null) {
+                LOGGER.info("unknown CmdLineArgs: " 
+                            + Configurator.getInstance().getCommandLine().getArgs());
+            }
+
+            // validate cmdLine
+            LOGGER.info("validate CmdLine");
+            if (! Configurator.getInstance().validateCmdLine()) {
+                LOGGER.info("Illegal CmdArgs Exit: 1");
+                System.exit(CmdLineJob.CONST_EXITCODE_FAILED_ARGS);
+            }
+            
+            // initApplicationContext
+            Configurator.getInstance().getSpringApplicationContext();
 
             // initApp
             LOGGER.info("start application");

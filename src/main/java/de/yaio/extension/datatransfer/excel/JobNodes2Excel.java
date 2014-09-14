@@ -24,6 +24,7 @@ import de.yaio.core.node.BaseNode;
 import de.yaio.datatransfer.exporter.Exporter;
 import de.yaio.datatransfer.exporter.OutputOptions;
 import de.yaio.extension.datatransfer.wiki.JobNodes2Wiki;
+import de.yaio.utils.Configurator;
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -59,8 +60,8 @@ public class JobNodes2Excel extends JobNodes2Wiki {
     }
     
     @Override
-    protected Options genAvailiableCmdLineOptions() throws Throwable {
-        Options availiableCmdLineOptions = super.genAvailiableCmdLineOptions();
+    protected Options addAvailiableCmdLineOptions() throws Throwable {
+        Options availiableCmdLineOptions = super.addAvailiableCmdLineOptions();
         
         // Excel-Option
         Option mergeOption = new Option("", "mergeexcelplanunggantsheets", false, 
@@ -75,14 +76,14 @@ public class JobNodes2Excel extends JobNodes2Wiki {
     public void publishResult(Exporter exporter, DataDomain masterNode, 
             OutputOptions oOptions) throws Exception {
         String outFile = "test.xls";
-        if (this.cmdLine.getArgs().length > 1) {
+        if (Configurator.getInstance().getCommandLine().getArgs().length > 1) {
             // aus Datei
-            outFile = this.cmdLine.getArgs()[1];
+            outFile = Configurator.getInstance().getCommandLine().getArgs()[1];
         }
 
         ExcelOutputOptions excelOptions = new ExcelOutputOptions(oOptions);
         excelOptions.flgMergeExcelPlanungGantSheets = 
-                this.cmdLine.hasOption("mergeexcelplanunggantsheets");
+                        Configurator.getInstance().getCommandLine().hasOption("mergeexcelplanunggantsheets");
 
         // Masternode ausgeben
         ((ExcelExporter)exporter).toExcel((BaseNode)masterNode, outFile, excelOptions);

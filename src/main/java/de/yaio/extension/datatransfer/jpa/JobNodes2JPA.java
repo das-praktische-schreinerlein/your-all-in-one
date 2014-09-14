@@ -23,7 +23,7 @@ import org.apache.log4j.Logger;
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.node.BaseNode;
 import de.yaio.extension.datatransfer.wiki.JobNodes2Wiki;
-import de.yaio.utils.CmdLineJob;
+import de.yaio.utils.Configurator;
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -70,10 +70,10 @@ public class JobNodes2JPA extends JobNodes2Wiki {
         DataDomain masterNode = null;
 
         // initApplicationContext
-        CmdLineJob.initApplicationContext(this.getCmdLine());
+        Configurator.getInstance().getSpringApplicationContext();
 
         // check for sysUID
-        String sysUID = this.cmdLine.getOptionValue("addnodestosysuid");
+        String sysUID = Configurator.getInstance().getCommandLine().getOptionValue("addnodestosysuid");
         if (sysUID != null || ! "".equalsIgnoreCase(sysUID)) {
             // if is set: read masternode from JPA
             if (LOGGER.isInfoEnabled()) {

@@ -16,6 +16,7 @@
  */
 package de.yaio.extension.datatransfer.wiki;
 
+import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.log4j.Logger;
@@ -26,6 +27,7 @@ import de.yaio.datatransfer.exporter.OutputOptions;
 import de.yaio.datatransfer.exporter.OutputOptionsImpl;
 import de.yaio.extension.datatransfer.common.CommonImporter;
 import de.yaio.utils.CmdLineJob;
+import de.yaio.utils.Configurator;
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -70,11 +72,10 @@ public class JobNodes2Wiki extends CmdLineJob {
     }
 
     @Override
-    protected Options genAvailiableCmdLineOptions() throws Throwable {
+    protected Options addAvailiableCmdLineOptions() throws Throwable {
         Options availiableCmdLineOptions = new Options();
 
         // add Options
-        CmdLineJob.addAvailiableBaseCmdLineOptions(availiableCmdLineOptions);
         commonImporter.addAvailiableCommonCmdLineOptions(availiableCmdLineOptions);
         commonImporter.addAvailiableExcelCmdLineOptions(availiableCmdLineOptions);
         commonImporter.addAvailiableWikiCmdLineOptions(availiableCmdLineOptions);
@@ -84,6 +85,9 @@ public class JobNodes2Wiki extends CmdLineJob {
         // my OutputOptions
         this.addAvailiableCommonOutputCmdLineOptions(availiableCmdLineOptions);
         this.addAvailiableOutputCmdLineOptions(availiableCmdLineOptions);
+        
+        if (LOGGER.isDebugEnabled())
+            LOGGER.debug("addAvailiableCmdLineOptions: " + availiableCmdLineOptions);
         
         return availiableCmdLineOptions;
     }
@@ -235,10 +239,9 @@ public class JobNodes2Wiki extends CmdLineJob {
     public void doJob() throws Throwable {
         // init
         createExporter();
-        initCommonImporter();
         
         // Mastername extrahieren
-        String masterName = this.cmdLine.getOptionValue("m", "Master");
+        String masterName = Configurator.getInstance().getCommandLine().getOptionValue("m", "Master");
         DataDomain masterNode = createMasternode(masterName);
 
         // Output-Options parsen
@@ -332,9 +335,11 @@ public class JobNodes2Wiki extends CmdLineJob {
      * <h4>FeatureKeywords:</h4>
      *     BusinessLogic
      * @return oOptions - Outputoptions
+     * @throws Exception  - parse-Exceptions possible
      */
-    public OutputOptions getOutputOptions() {
+    public OutputOptions getOutputOptions() throws Exception {
         // Konfiguration
+        CommandLine cmdLine = Configurator.getInstance().getCommandLine();
         OutputOptions oOptions = new OutputOptionsImpl();
         oOptions.setFlgShowPlan(cmdLine.hasOption("p"));
         oOptions.setFlgShowIst(cmdLine.hasOption("i"));
@@ -406,23 +411,6 @@ public class JobNodes2Wiki extends CmdLineJob {
         commonImporter = new CommonImporter("ppl");
     }
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     BusinessLogic
-     * <h4>FeatureDescription:</h4>
-     *     initialize the commonly used importer with the parsed commandline
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>updates MemberVar commonImporter - for the import
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     BusinessLogic
-     */
-    protected void initCommonImporter() {
-        // init commonImporter
-        commonImporter.setCmdLine(cmdLine);
-    }
-
     /**
      * <h4>FeatureDomain:</h4>
      *     Logging
