@@ -73,7 +73,8 @@ public class JobNodes2Wiki extends CmdLineJob {
 
     @Override
     protected Options addAvailiableCmdLineOptions() throws Throwable {
-        Options availiableCmdLineOptions = new Options();
+        Options availiableCmdLineOptions = 
+                        Configurator.getNewOptionsInstance();
 
         // add Options
         commonImporter.addAvailiableCommonCmdLineOptions(availiableCmdLineOptions);

@@ -3,13 +3,12 @@
 
 package de.yaio.core.node;
 
-import de.yaio.core.datadomain.DataDomain;
-import de.yaio.core.node.BaseNode;
-
 import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+
+import de.yaio.core.datadomain.DataDomain;
 
 privileged aspect BaseNode_Roo_JavaBean {
     

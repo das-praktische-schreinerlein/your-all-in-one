@@ -20,6 +20,7 @@ import org.apache.commons.cli.Options;
 
 import de.yaio.extension.datatransfer.common.CommonImporter;
 import de.yaio.utils.CmdLineJob;
+import de.yaio.utils.Configurator;
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -57,7 +58,8 @@ public class JobParseWiki extends CmdLineJob {
     
     @Override
     protected Options addAvailiableCmdLineOptions() throws Throwable {
-        Options availiableCmdLineOptions = new Options();
+        Options availiableCmdLineOptions = 
+                        Configurator.getNewOptionsInstance();
         
         // add Options
         commonImporter.addAvailiableCommonCmdLineOptions(availiableCmdLineOptions);

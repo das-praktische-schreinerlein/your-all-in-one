@@ -3,11 +3,12 @@
 
 package de.yaio.core.service;
 
-import de.yaio.core.node.TaskNode;
-import de.yaio.core.service.TaskNodeServiceImpl;
 import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import de.yaio.core.node.TaskNode;
 
 privileged aspect TaskNodeServiceImpl_Roo_Service {
     

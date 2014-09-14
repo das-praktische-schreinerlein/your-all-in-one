@@ -3,9 +3,9 @@
 
 package de.yaio.core.service;
 
-import de.yaio.core.node.TaskNode;
-import de.yaio.core.service.TaskNodeService;
 import java.util.List;
+
+import de.yaio.core.node.TaskNode;
 
 privileged aspect TaskNodeService_Roo_Service {
     

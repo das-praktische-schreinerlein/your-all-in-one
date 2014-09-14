@@ -3,8 +3,8 @@
 
 package de.yaio.core.node;
 
-import de.yaio.core.node.TaskNode;
 import java.util.List;
+
 import org.springframework.transaction.annotation.Transactional;
 
 privileged aspect TaskNode_Roo_Jpa_ActiveRecord {

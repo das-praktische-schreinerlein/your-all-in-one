@@ -19,6 +19,11 @@ package de.yaio.utils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 import org.apache.commons.cli.CommandLine;
@@ -65,6 +70,115 @@ public class Configurator {
     protected CommandLine commandLine;
     protected String[] cmdLineArgs;
     protected Options availiableCmdLineOptions;
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Configuration
+     * <h4>FeatureDescription:</h4>
+     *     Bugfix-Class because Options.getOptions returns only shortoptions
+     *
+     * @package base
+     * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
+     * @copyright Copyright (c) 2013, Michael Schreiner
+     * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+     *
+     * This Source Code Form is subject to the terms of the Mozilla Public
+     * License, v. 2.0. If a copy of the MPL was not distributed with this
+     * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+     */
+    public static class CommandlineOptions extends Options {
+        
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 1L;
+
+        /**
+         * <h4>FeatureDomain:</h4>
+         *     Configuration
+         * <h4>FeatureDescription:</h4>
+         *     create CommandlineOptions 
+         *     Bugfix-Class because Options.getOptions returns only shortoptions
+         * <h4>FeatureKeywords:</h4>
+         *     Configuration
+         */
+        public CommandlineOptions() {
+            super();
+            if (LOGGER.isDebugEnabled())
+                LOGGER.debug("new FixedOptions"); 
+        }
+        
+        /** a protected (not private!!!) map of the options with the long key */
+        protected Map<String, Option> mylongOpts = new HashMap<String, Option>();
+        
+        /**
+         * Retrieve a read-only list of options in this set
+         * override original because this only retrieved the shortoptions
+         *
+         * @return read-only Collection of {@link Option} objects in this descriptor
+         */
+        @SuppressWarnings("unchecked")
+        @Override
+        public Collection<Option> getOptions() {
+            // get the hacked Options
+            Collection<Option> myCollection = new ArrayList<Option>(super.getOptions());
+            if (LOGGER.isDebugEnabled())
+                LOGGER.debug("getOptions: "
+                                + "orig " + myCollection.size() + ": " + myCollection); 
+            
+            // add my LongOptions
+            myCollection.addAll(mylongOpts.values());
+            if (LOGGER.isDebugEnabled())
+                LOGGER.debug("getOptions: "
+                                + "new " + myCollection.size() + ": " + myCollection); 
+            
+            return Collections.unmodifiableCollection(myCollection);
+        }
+
+         /**
+         * Adds an option instance 
+         * if it has only longopt, add it to mylongOpts
+         *
+         * @param opt the option that is to be added
+         * @return the resulting Options instance
+         */
+        @Override
+        public Options addOption(Option opt) {
+            super.addOption(opt);
+            
+            // add to my longopts
+            if (opt.getOpt() == null || opt.getOpt() == "" && opt.hasLongOpt()) {
+                if (LOGGER.isDebugEnabled())
+                    LOGGER.debug("addOption: "
+                                    + "toMyLongOption " + mylongOpts.size() + ": " + opt); 
+                mylongOpts.put(opt.getLongOpt(), opt);
+            } else {
+                if (LOGGER.isDebugEnabled())
+                    LOGGER.debug("addOption: "
+                                    + "only to shortOption because of " + opt.getOpt() + " : " + opt); 
+            }
+            return this;
+        }
+
+    }
+    
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Tools - CLI-Handling
+     * <h4>FeatureDescription:</h4>
+     *     return new Instance of CommandlineOptions
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue CommandlineOptions - a new instance to define CommandlineOptions
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     CLI-Handling
+     * @return a new instance to define CommandlineOptions
+     */
+    public static CommandlineOptions getNewOptionsInstance() {
+        return new CommandlineOptions();
+    }
     
     
     /* 
@@ -241,7 +355,7 @@ public class Configurator {
      * <h4>FeatureDomain:</h4>
      *     Tools - CLI-Handling
      * <h4>FeatureDescription:</h4>
-     *     return current CLI-Commandline (if not set, call initCommandLine)
+     *     return current parsed CLI-Commandline (if not set, call initCommandLine)
      * <h4>FeatureResult:</h4>
      *   <ul>
      *     <li>returnValue CommandLine - current CLI-Commandline
@@ -310,7 +424,7 @@ public class Configurator {
                             + "cant create availiableCmdLineOptions "
                             + "because availiableCmdLineOptions already set");
         }
-        availiableCmdLineOptions = new Options();
+        availiableCmdLineOptions = getNewOptionsInstance();
         this.addAvailiableBaseCmdLineOptions(availiableCmdLineOptions);
     }
     
@@ -330,6 +444,7 @@ public class Configurator {
                             + "cant add availiableCmdLineOptions "
                             + "because commandLine already set");
         }
+        
         if (newAvailiableCmdLineOptions != null) {
             // add new Options
             if (LOGGER.isDebugEnabled()) {
@@ -337,6 +452,8 @@ public class Configurator {
                                 + "add commandLineOptions:" + newAvailiableCmdLineOptions.getOptions().size()); 
                 LOGGER.debug("addAvailiableCmdLineOptions: "
                                 + "add commandLineOptions:" + newAvailiableCmdLineOptions.getOptions()); 
+                LOGGER.debug("addAvailiableCmdLineOptions: "
+                                + "add commandLineOptions:" + newAvailiableCmdLineOptions.getRequiredOptions()); 
                 LOGGER.debug("addAvailiableCmdLineOptions: "
                                 + " details:" + newAvailiableCmdLineOptions);
             }
@@ -389,7 +506,22 @@ public class Configurator {
      ***********************
      */
     
-    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Configuration
+     * <h4>FeatureDescription:</h4>
+     *     read the properties from the given filepath (first by filesystem, 
+     *     if failed by classpath)
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue Properties - the properties read from propertyfile
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Configuration
+     * @param filePath - path to the file (filesystem or classressource)
+     * @return the properties read from propertyfile
+     * @throws Exception - parse/io-Exceptions possible
+     */
     public static Properties readProperties(String filePath) throws Exception {
         Properties prop = new Properties();
         

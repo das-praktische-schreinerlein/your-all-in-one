@@ -19,7 +19,6 @@ package de.yaio.utils;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.log4j.Logger;
-import org.springframework.context.ApplicationContext;
 
 
 /**
@@ -49,15 +48,30 @@ public abstract class CmdLineJob {
 
     private final static Logger LOGGER = Logger.getLogger(CmdLineJob.class);
     
-    public static ApplicationContext springApplicationContext = null;
-    
+    /** exitcode for shell */
     public static final int CONST_EXITCODE_OK = 0;
+    /** exitcode for shell */
     public static final int CONST_EXITCODE_FAILED_ARGS = 1;
+    /** exitcode for shell */
     public static final int CONST_EXITCODE_FAILED_CONFIG = 2;
+    /** exitcode for shell */
     public static final int CONST_EXITCODE_FAILED_JOB = 3;
 
     protected String jobConfFile = null;
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Constructor
+     * <h4>FeatureDescription:</h4>
+     *     baseclass for CommandLineJobs
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>initialize the application
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Constructor
+     * @param args the command line arguments
+     */
     public CmdLineJob(String[] args) {
         // set args
         Configurator.getInstance().setCmdLineArgs(args);
@@ -112,6 +126,20 @@ public abstract class CmdLineJob {
      */
     protected abstract Options addAvailiableCmdLineOptions() throws Throwable;
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Jobhandling
+     * <h4>FeatureDescription:</h4>
+     *     do the jobprocessing
+     *     <ul>
+     *        <li>initialize Configurator and Commandline
+     *        <li>call initJob
+     *        <li>call doJob
+     *        <li>call cleanUpAfterJob
+     *     </ul>
+     * <h4>FeatureKeywords:</h4>
+     *     Jobhandling
+     */
     public void startJobProcessing() {
         try {
             // config cmdArgs
@@ -179,11 +207,30 @@ public abstract class CmdLineJob {
         }
     }
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Jobhandling
+     * <h4>FeatureDescription:</h4>
+     *     log errormessages
+     * <h4>FeatureKeywords:</h4>
+     *     Jobhandling
+     * @param errorMsg - the errormsg for output on System.out and Logger
+     */
     public static void logErrorMsg(String errorMsg) {
         System.out.println(errorMsg);
         LOGGER.fatal(errorMsg);
     }
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Jobhandling
+     * <h4>FeatureDescription:</h4>
+     *     handle throable (log errorme4ssages and exit if flgExit is set)
+     * <h4>FeatureKeywords:</h4>
+     *     Jobhandling
+     * @param e - the exceptuiion/error...
+     * @param flgExit - do exit if it is set
+     */
     public void handleThrowable(Throwable e, boolean flgExit) {
 
         String errorMsg = "JOB - Exception:\n" + e.getMessage();

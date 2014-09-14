@@ -3,9 +3,9 @@
 
 package de.yaio.core.service;
 
-import de.yaio.core.node.BaseNode;
-import de.yaio.core.service.BaseNodeService;
 import java.util.List;
+
+import de.yaio.core.node.BaseNode;
 
 privileged aspect BaseNodeService_Roo_Service {
     
