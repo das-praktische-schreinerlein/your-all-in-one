@@ -12,6 +12,10 @@ More information about the prototype at http://www.your-all-in-one.de/yaio/stati
 - [ ] use and optimize it :-)
 
 # History and milestones
+- 2014
+   - added yaio-explorer as frontendview
+   - added RESTfull-WS
+   - added first persistence-functions and support for database as datasource (mysql, hsqldb)
 - 2014 
    - prepared the prototype for going public (documentation...) 
    - separated the public-version
@@ -68,6 +72,17 @@ cd d:\public_projects\yaio
 src\test\testproject\gen-planung.bat
 ```
 Take a look at the Wiki, Mindmaps, Excel, html, ICal...
+
+# Thanks to
+- https://github.com/apache/maven
+- https://github.com/apache/poi
+- https://github.com/jquery/jquery
+- https://github.com/jquery/jquery-ui
+- https://github.com/mar10/fancytree
+- https://github.com/spring-projects/spring-boot
+- https://github.com/spring-projects/spring-framework
+- https://github.com/spring-projects/spring-roo
+ 
 
 # License
 ```
