@@ -335,7 +335,31 @@ $(function(){
       }
     },
     edit: {
-    },
+        triggerStart: ["f2", "dblclick", "shift+click", "mac+enter"],
+        beforeEdit: function(event, data){
+          // Return false to prevent edit mode
+        },
+        edit: function(event, data){
+          // Editor was opened (available as data.input)
+        },
+        beforeClose: function(event, data){
+          // Return false to prevent cancel/save (data.input is available)
+        },
+        save: function(event, data){
+          // Save data.input.val() or return false to keep editor open
+          saveNode(this, data);
+          // We return true, so ext-edit will set the current user input
+          // as title
+          return true;
+        },
+        close: function(event, data){
+          // Editor was removed
+          if( data.save ) {
+            // Since we started an async request, mark the node as preliminary
+            $(data.node.span).addClass("pending");
+          }
+        }
+      },
     table: {
       indentation: 20,
       nodeColumnIdx: 2,
@@ -570,6 +594,49 @@ function openNodeHierarchy(treeId, lstIdsHierarchy) {
     firstNode.setExpanded(true, opts);
 }
 
+
+function saveNode(newData, data) {
+    var json = JSON.stringify({name: data.input.val()});
+    console.log("update node:" + data.node.key + " with:" + json);
+    $.ajax({
+        headers : {
+            'Accept' : 'application/json',
+            'Content-Type' : 'application/json'
+        },
+        url : baseUrl + data.node.key,
+        type : 'PATCH',
+        data : json,
+        success : function(response, textStatus, jqXhr) {
+            console.log("OK done!" + response.state + " " + response.node.name);
+            if (response.state == "OK") {
+                console.log("OK saved node:" + data.node.key + " load:" + response.parentIdHierarchy);
+                if (response.parentIdHierarchy && response.parentIdHierarchy.length > 0) {
+                    // reload tree
+                    var tree = $("#tree").fancytree("getTree");
+                    tree.reload().done(function(){
+                        // handler when done
+                        console.log("reload tree done:" + response.parentIdHierarchy);
+                        console.log("call openNodeHierarchy load hierarchy:" + response.parentIdHierarchy);
+                        openNodeHierarchy("#tree", response.parentIdHierarchy);
+                    });
+                } else {
+                    console.error("got no hierarchy for:" + data.node.key + " hierarchy:" + response.parentIdHierarchy);
+                }
+            } else {
+                console.error("cant save node:" + data.node.key + " error:" + response.stateMsg);
+                alert("cant save node:" + data.node.key + " error:" + response.stateMsg);
+            }
+        },
+        error : function(jqXHR, textStatus, errorThrown) {
+            // log the error to the console
+            console.error("The following error occured: " + textStatus, errorThrown);
+            alert("cant save node:" + data.node.key + " error:" + textStatus, errorThrown)
+        },
+        complete : function() {
+            console.log("Venue Patch Ran");
+        }
+    });
+}
 
 
 </script>
