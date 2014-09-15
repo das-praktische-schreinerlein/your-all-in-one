@@ -101,12 +101,12 @@ public class NodeController {
      * @param sysUID - sysUID to filter
      * @return NodeControllerResponse (OK, ERROR) with the node for sysUID
      */
-    @RequestMapping(method=RequestMethod.GET, value = "/{sysUID}")
+    @RequestMapping(method=RequestMethod.GET, value = "/show/{sysUID}")
     public @ResponseBody NodeResponse getNodeWithChildren(
            @PathVariable(value="sysUID") String sysUID) {
         // create default response
         NodeResponse response = new NodeResponse(
-                        "ERROR", "node '" + sysUID + "' doest exists", 
+                        "ERROR", "node '" + sysUID + "' doesnt exists", 
                         null, null, null);
 
         // find a specific node
@@ -131,7 +131,7 @@ public class NodeController {
      * <h4>FeatureDomain:</h4>
      *     Webservice
      * <h4>FeatureDescription:</h4>
-     *     update the node for sysUID and return it with children as JSON
+     *     update the node sysUID and return it with children as JSON
      * <h4>FeatureResult:</h4>
      *   <ul>
      *     <li>NodeControllerResponse (OK, ERROR) with the node for sysUID
@@ -142,84 +142,164 @@ public class NodeController {
      * @param newNode - the node created from request-data
      * @return NodeControllerResponse (OK, ERROR) with the node for sysUID
      */
-    @RequestMapping(method=RequestMethod.PATCH, value = "/{sysUID}")
+    @RequestMapping(method=RequestMethod.PATCH, value = "/update/{sysUID}")
     public @ResponseBody NodeResponse updateNode(
                 @PathVariable(value="sysUID") String sysUID, 
                 @RequestBody BaseNode newNode) {
         // create default response
         NodeResponse response = new NodeResponse(
-                        "ERROR", "node '" + sysUID + "' doest exists", 
+                        "ERROR", "node '" + sysUID + "' doesnt exists", 
                         null, null, null);
 
         // find a specific node
         BaseNode node = BaseNode.findBaseNode(sysUID);
-        if (node != null) {
-            // map the data
-            boolean flgChange = false;
-            boolean flgChangedParent = false;
+        if (node == null) {
+            // node not found
+            return response;
+        }
 
-            try {
-                // read children
-                BaseNode parent = null;
-                node.initChildNodesFromDB(0);
-                node.initChildNodesForParentsFromDB();
+        // map the data
+        boolean flgChange = false;
 
-                // check for new name
-                if (newNode.getName() != null) {
-                    node.setName(newNode.getName());
-                    flgChange = true;
-                }
+        try {
+            // read children
+            BaseNode parent = null;
+            node.initChildNodesFromDB(0);
+            node.initChildNodesForParentsFromDB();
 
-                // check for new parent
-                BaseNode oldParent = node.getParentNode();
-                if (newNode.getParentNode() !=  null) {
-                    // got parent
-                    if (newNode.getParentNode() != oldParent) {
-                        // set new parent
-                        flgChangedParent = true;
-                        node.setParentNode(newNode.getParentNode());
-                    }
-                }
-
-                // check for needed update
-                if (flgChange || flgChangedParent) {
-                    // recalc 
-                    node.recalcData(BaseNodeService.CONST_RECURSE_DIRECTION_PARENT);
-
-                    // save
-                    node.merge();
-                    parent = node.getParentNode();
-                    while (parent != null) {
-                        parent.merge();
-                        parent = parent.getParentNode();
-                    }
-                }
-
-                if (flgChangedParent) {
-                    // reinit Children (only 1 level
-                    oldParent.initChildNodesFromDB(0);
-                    oldParent.initChildNodesForParentsFromDB();
-
-                    // recalc old parent 
-                    // TODO recalcParents
-                    parent = oldParent;
-                    parent.recalcData(BaseNodeService.CONST_RECURSE_DIRECTION_PARENT);
-                    while (parent != null) {
-                        parent.merge();
-                        parent = parent.getParentNode();
-                    }
-                }
-
-                // create response
-                response = createResponseObj(node, "node '" + sysUID + "' updated");
-
-            } catch (Throwable ex) {
-                // errorhandling
-                ex.printStackTrace();
-                response = new NodeResponse(
-                                "ERROR", "error while updating node '" + sysUID + "':" + ex, 
-                                null, null, null);
+            // check for new name
+            if (newNode.getName() != null) {
+                node.setName(newNode.getName());
+                flgChange = true;
             }
+
+            // check for needed update
+            if (flgChange) {
+                // recalc 
+                node.recalcData(BaseNodeService.CONST_RECURSE_DIRECTION_PARENT);
+
+                // save
+                node.merge();
+                parent = node.getParentNode();
+                while (parent != null) {
+                    parent.merge();
+                    parent = parent.getParentNode();
+                }
+            }
+
+            // create response
+            response = createResponseObj(node, "node '" + sysUID + "' updated");
+
+        } catch (Throwable ex) {
+            // errorhandling
+            ex.printStackTrace();
+            response = new NodeResponse(
+                            "ERROR", "error while updating node '" + sysUID + "':" + ex, 
+                            null, null, null);
+        }
+        
+        return response;
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
+     *     move the node sysUID to newParentSysUID and return it with children as JSON
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>NodeControllerResponse (OK, ERROR) with the node for sysUID
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice Query
+     * @param sysUID - sysUID to filter
+     * @param newParentSysUID - sysUID of the new parent
+     * @param newNode - the node created from request-data
+     * @return NodeControllerResponse (OK, ERROR) with the node for sysUID
+     */
+    @RequestMapping(method=RequestMethod.PATCH, value = "/move/{sysUID}/{newParentSysUID}")
+    public @ResponseBody NodeResponse updateNode(
+                @PathVariable(value="sysUID") String sysUID,
+                @PathVariable(value="newParentSysUID") String newParentSysUID) {
+        // create default response
+        NodeResponse response = new NodeResponse(
+                        "ERROR", "node '" + sysUID + "' doesnt exists", 
+                        null, null, null);
+
+        // find a specific node
+        BaseNode node = BaseNode.findBaseNode(sysUID);
+        if (node == null) {
+            return response;
+        }
+        
+        // check new parent
+        BaseNode newParent = BaseNode.findBaseNode(newParentSysUID);
+        if (newParent == null) {
+            response = new NodeResponse(
+                            "ERROR", "new parentNode '" + newParentSysUID 
+                            + "' for node '" + sysUID + "' doesnt exists", 
+                            null, null, null);
+            return response;
+        }
+        // map the data
+        boolean flgChangedParent = false;
+
+        try {
+            // read children
+            BaseNode parent = null;
+            node.initChildNodesFromDB(0);
+            node.initChildNodesForParentsFromDB();
+
+            // check for new parent
+            BaseNode oldParent = node.getParentNode();
+            if (newParent !=  null) {
+                // got parent
+                if (newParent.getSysUID() != oldParent.getSysUID()) {
+                    // set new parent
+                    flgChangedParent = true;
+                    node.setParentNode(newParent);
+                }
+            }
+
+            // check for needed update
+            if (flgChangedParent) {
+                // recalc 
+                node.recalcData(BaseNodeService.CONST_RECURSE_DIRECTION_PARENT);
+
+                // save
+                node.merge();
+                parent = node.getParentNode();
+                while (parent != null) {
+                    parent.merge();
+                    parent = parent.getParentNode();
+                }
+
+                // renew oldParent
+                oldParent = BaseNode.findBaseNode(oldParent.getSysUID());
+                
+                // reinit Children (only 1 level
+                oldParent.initChildNodesFromDB(0);
+                oldParent.initChildNodesForParentsFromDB();
+
+                // recalc old parent 
+                parent = oldParent;
+                parent.recalcData(BaseNodeService.CONST_RECURSE_DIRECTION_PARENT);
+                while (parent != null) {
+                    parent.merge();
+                    parent = parent.getParentNode();
+                }
+            }
+
+            // create response
+            response = createResponseObj(node, "node '" + sysUID 
+                            + "' moved to " + newParentSysUID);
+
+        } catch (Throwable ex) {
+            // errorhandling
+            ex.printStackTrace();
+            response = new NodeResponse(
+                            "ERROR", "error while moving node '" + sysUID + "':" + ex, 
+                            null, null, null);
         }
         
         return response;

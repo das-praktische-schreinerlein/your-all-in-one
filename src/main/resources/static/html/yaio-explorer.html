@@ -226,6 +226,9 @@ body {
 var CLIPBOARD = null;
 
 var baseUrl = "/nodes/";
+var showUrl = baseUrl + "show/";
+var updateUrl = baseUrl + "update/";
+var moveUrl = baseUrl + "move/";
 $(function(){
 
   $("#tree").fancytree({
@@ -235,16 +238,16 @@ $(function(){
 //// MS Start
   // initial source is MasterplanMasternode1
   source: { 
-      url: baseUrl + "MasterplanMasternode1", 
+      url: showUrl + "MasterplanMasternode1", 
       cache: false 
   },
   
   // lazy load the children
   lazyLoad: function(event, data) {
       var node = data.node;
-      console.debug("load data for " + node.key + " from " + baseUrl + node.key);
+      console.debug("load data for " + node.key + " from " + showUrl + node.key);
       data.result = {
-          url: baseUrl + node.key,
+          url: showUrl + node.key,
           cache: false
       };
   },
@@ -598,26 +601,28 @@ function openNodeHierarchy(treeId, lstIdsHierarchy) {
 
 function saveNode(newData, data) {
     var json = JSON.stringify({name: data.input.val()});
-    doUpdateNode(data.node, json);
+    var url = updateUrl + data.node.key;
+    doUpdateNode(data.node, url, json);
 }
 
 function moveNode(node, data) {
     var json = JSON.stringify({parentNode: node.key});
-    doUpdateNode(data.otherNode, json);
+    var url = moveUrl + data.otherNode.key + "/" + node.key;
+    doUpdateNode(data.otherNode, url, json);
 }
 
-function doUpdateNode(node, json) {
+function doUpdateNode(node, url, json) {
     console.log("update node:" + node.key + " with:" + json);
     $.ajax({
         headers : {
             'Accept' : 'application/json',
             'Content-Type' : 'application/json'
         },
-        url : baseUrl + node.key,
+        url : url,
         type : 'PATCH',
         data : json,
         success : function(response, textStatus, jqXhr) {
-            console.log("OK done!" + response.state + " " + response.node.name);
+            console.log("OK done!" + response.state);
             if (response.state == "OK") {
                 console.log("OK saved node:" + node.key + " load:" + response.parentIdHierarchy);
                 if (response.parentIdHierarchy && response.parentIdHierarchy.length > 0) {
