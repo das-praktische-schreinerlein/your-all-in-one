@@ -297,6 +297,7 @@ function FancytreeNode(parent, obj){
 	// TODO: handle obj.focus = true
 	// Create child nodes
 	this.children = null;
+    this.mapChildren = [];
 	cl = obj.children;
 	if(cl && cl.length){
 		this._setChildren(cl);
@@ -335,8 +336,12 @@ FancytreeNode.prototype = /** @lends FancytreeNode# */{
 	_setChildren: function(children){
 		_assert(children && (!this.children || this.children.length === 0), "only init supported");
 		this.children = [];
+        this.mapChildren = [];
 		for(var i=0, l=children.length; i<l; i++){
-			this.children.push(new FancytreeNode(this, children[i]));
+		    // add new child to list and map
+		    var newChild = new FancytreeNode(this, children[i]);
+            this.mapChildren[newChild.key] = newChild;
+			this.children.push(newChild);
 		}
 	},
 	/**
@@ -359,9 +364,13 @@ FancytreeNode.prototype = /** @lends FancytreeNode# */{
 		}
 		if(!this.children){
 			this.children = [];
+	        this.mapChildren = [];
 		}
 		for(i=0, l=children.length; i<l; i++){
-			nodeList.push(new FancytreeNode(this, children[i]));
+		    // add new child to list and map
+            var newChild = new FancytreeNode(this, children[i]);
+            this.mapChildren[newChild.key] = newChild;
+            nodeList.push(newChild);
 		}
 		firstNode = nodeList[0];
 		if(insertBefore == null){
@@ -3169,6 +3178,38 @@ $.extend(Fancytree.prototype,
 					ctx.tree._triggerNodeEvent(flag ? "expand" : "collapse", ctx);
 				}
 			}
+			
+			// check for option openHierarchy recursively
+            if (callOpts.openHierarchy) {
+                // openHierarchy recursively
+                if (callOpts.openHierarchy.length > 0) {
+                    // extract newNode from hierarchy
+                    console.log("start loading nextId for node:" + node.key 
+                            + " from hierarchy:" + callOpts.openHierarchy);
+                    var nextId = callOpts.openHierarchy.shift();
+                    console.log("got nextId " + nextId + " for node:" + node.key 
+                            + " and new hierarchy:" + callOpts.openHierarchy);
+                    var nextNode = node.mapChildren[nextId];
+                    if (nextNode) {
+                        // everything fine
+                        console.log("got nextNode:" + nextNode.key);
+                        console.log("start openHierarchy:" + nextNode.key);
+                        var newOpts = {};
+                        newOpts.openHierarchy = callOpts.openHierarchy;
+                        nextNode.setExpanded(true, newOpts);
+                        
+                    } else {
+                        // error: newNode not found
+                        console.error("error: didnt found nextNode:" + nextId 
+                                + " for: " + node.key + " openHierarchy:" + callOpts.openHierarchy);
+                    }
+                } else {
+                    // openHierarchy done
+                    console.log("hierarchy empty: openHierarchy done for all nodes:" + callOpts.openHierarchy);
+                }
+            } else {
+                // NOP
+            }
 		});
 		// vvv Code below is executed after loading finished:
 		_afterLoad = function(callback){
