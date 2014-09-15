@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import de.yaio.core.node.BaseNode;
+import de.yaio.core.nodeservice.BaseNodeService;
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -76,9 +77,6 @@ public class NodeController {
         
         // remove master
         parentIdHierarchy.remove(0);
-        
-        // read the childnodes only 1 level
-        node.initChildNodesFromDB(0);
         
         // set response
         NodeResponse response = new NodeResponse(
@@ -153,18 +151,70 @@ public class NodeController {
         BaseNode node = BaseNode.findBaseNode(sysUID);
         if (node != null) {
             // map the data
-            node.setName(newNode.getName());
-            
-            // save
-            node.merge();
-            BaseNode parent = node.getParentNode();
-            while (parent != null) {
-                parent.merge();
-                parent = parent.getParentNode();
+            boolean flgChange = false;
+            boolean flgChangedParent = false;
+
+            try {
+                // read children
+                BaseNode parent = null;
+                node.initChildNodesFromDB(0);
+
+                // check for new name
+                if (newNode.getName() != null) {
+                    node.setName(newNode.getName());
+                    flgChange = true;
+                }
+
+                // check for new parent
+                BaseNode oldParent = node.getParentNode();
+                if (newNode.getParentNode() !=  null) {
+                    // got parent
+                    if (newNode.getParentNode() != oldParent) {
+                        // set new parent
+                        flgChangedParent = true;
+                        node.setParentNode(newNode.getParentNode());
+                    }
+                }
+
+                // check for needed update
+                if (flgChange || flgChangedParent) {
+                    // recalc 
+                    // TODO recalcParents
+                    node.recalcData(BaseNodeService.CONST_RECURSE_DIRECTION_ONLYME);
+
+                    // save
+                    node.merge();
+                    parent = node.getParentNode();
+                    while (parent != null) {
+                        parent.merge();
+                        parent = parent.getParentNode();
+                    }
+                }
+
+                if (flgChangedParent) {
+                    // reinit Children (only 1 level
+                    oldParent.initChildNodesFromDB(0);
+
+                    // recalc old parent 
+                    // TODO recalcParents
+                    parent = oldParent;
+//                    parent.recalcData(BaseNodeService.CONST_RECURSE_DIRECTION_PARENT);
+                    while (parent != null) {
+                        parent.merge();
+                        parent = parent.getParentNode();
+                    }
+                }
+
+                // create response
+                response = createResponseObj(node, "node '" + sysUID + "' updated");
+
+            } catch (Throwable ex) {
+                // errorhandling
+                ex.printStackTrace();
+                response = new NodeResponse(
+                                "ERROR", "erro while updating node '" + sysUID + "':" + ex, 
+                                null, null);
             }
-            
-            // create response
-            response = createResponseObj(node, "node '" + sysUID + "' updated");
         }
         
         return response;
