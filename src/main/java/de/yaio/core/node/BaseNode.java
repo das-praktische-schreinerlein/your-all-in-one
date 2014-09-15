@@ -15,6 +15,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 package de.yaio.core.node;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -77,6 +78,10 @@ import de.yaio.core.nodeservice.NodeService;
 @RooJpaActiveRecord
 public class BaseNode implements BaseData, MetaData, SysData, 
     DescData, BaseWorkflowData {
+    
+    public BaseNode() {
+        super();
+    }
     
     // Logger
     private static final Logger LOGGER =
@@ -343,6 +348,8 @@ public class BaseNode implements BaseData, MetaData, SysData,
      */
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "parentNode", fetch = FetchType.LAZY)
     @Transient
+    @XmlTransient
+    @JsonIgnore
     private LinkedHashSet<BaseNode> childNodes = new LinkedHashSet<BaseNode>();
 
     /**
@@ -417,6 +424,27 @@ public class BaseNode implements BaseData, MetaData, SysData,
                 // recurse
                 childNode.initChildNodesFromDB(recursionLevel);
             }
+        }
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Persistence
+     * <h4>FeatureDescription:</h4>
+     *     initialize the Children from database (childNodes and childNodesByNameMapMap)
+     *     for all parents
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>updates memberfields childNodes otf the parents
+     *     <li>updates memberfields childNodesByNameMapMap of the parents
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Persistence
+     */
+    public void initChildNodesForParentsFromDB() {
+        List<BaseNode> parentHierarchy = this.getParentHierarchy();
+        for (BaseNode parent : parentHierarchy) {
+            parent.initChildNodesFromDB(0);
         }
     }
 
@@ -532,7 +560,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     }
 
     //####################
-    // Hirarchy-functions
+    // Hierarchy-functions
     //####################
     @Transient
     @XmlTransient
@@ -546,6 +574,51 @@ public class BaseNode implements BaseData, MetaData, SysData,
         }
     }
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Persistence
+     * <h4>FeatureDescription:</h4>
+     *     get a List of the parent-hierarchy
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue List<BaseNode> - list of the parents, start with my own parent (not me)
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Persistence
+     * @return list of the parents, start with my own parent (not me)
+     */
+    public List<BaseNode> getParentHierarchy() {
+        List<BaseNode> parentHierarchy = new ArrayList<BaseNode>();
+        BaseNode parent = this.getParentNode();
+        while (parent != null) {
+            parentHierarchy.add(parent);
+            parent = parent.getParentNode();
+        }
+        return parentHierarchy;
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Persistence
+     * <h4>FeatureDescription:</h4>
+     *     get a List of the Ids of parent-hierarchy 
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue List<String> - list of the parent-sysUIDs, start with my own parent (not me)
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Persistence
+     * @return list of the parent-sysUIDs, start with my own parent (not me)
+     */
+    public List<String> getParentIdHierarchy() {
+        List<String> parentIdHierarchy = new ArrayList<String>();
+        for (BaseNode parent: getParentHierarchy()) {
+            parentIdHierarchy.add(parent.getSysUID());
+        }
+        
+        return parentIdHierarchy;
+    }
+        
     @Override
     public void setParentNode(BaseNode parentNode) {
         getNodeService().setParentNode(this, parentNode, true);

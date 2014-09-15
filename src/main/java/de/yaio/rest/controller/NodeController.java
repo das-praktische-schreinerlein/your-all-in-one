@@ -49,39 +49,40 @@ public class NodeController {
     public class NodeResponse {
         
         public NodeResponse(String state, String stateMsg, BaseNode node,
-                               List<String> parentIdHierarchy) {
+                               List<String> parentIdHierarchy, List<BaseNode> childNodes) {
             super();
             this.state = state;
             this.stateMsg = stateMsg;
             this.node = node;
             this.parentIdHierarchy = parentIdHierarchy;
+            this.childNodes = childNodes;
         }
         public String state;
         public String stateMsg;
         public BaseNode node;
         public List<String> parentIdHierarchy;
+        public List<BaseNode> childNodes;
     }
     
     protected NodeResponse createResponseObj(BaseNode node, String okMsg) {
         // extract parents
-        List<String> parentIdHierarchy = new ArrayList<String>();
-        parentIdHierarchy.add(node.getSysUID());
-        BaseNode parent = node.getParentNode();
-        while (parent != null) {
-            parentIdHierarchy.add(parent.getSysUID());
-            parent = parent.getParentNode();
-        }
+        List<String> parentIdHierarchy = node.getParentIdHierarchy();
         
         // reverse
         Collections.reverse(parentIdHierarchy);
         
+        // add me
+        parentIdHierarchy.add(node.getSysUID());
+
         // remove master
-        parentIdHierarchy.remove(0);
+        if (parentIdHierarchy.size() > 0) {
+            parentIdHierarchy.remove(0);
+        }
         
         // set response
         NodeResponse response = new NodeResponse(
                         "OK", okMsg, 
-                        node, parentIdHierarchy);
+                        node, parentIdHierarchy, null);
         
         return response;
     }
@@ -106,7 +107,7 @@ public class NodeController {
         // create default response
         NodeResponse response = new NodeResponse(
                         "ERROR", "node '" + sysUID + "' doest exists", 
-                        null, null);
+                        null, null, null);
 
         // find a specific node
         BaseNode node = BaseNode.findBaseNode(sysUID);
@@ -116,6 +117,9 @@ public class NodeController {
             
             // create response
             response = createResponseObj(node, "node '" + sysUID + "' found");
+            
+            // add children
+            response.childNodes = new ArrayList<BaseNode>(node.getChildNodes());
         }
         
         return response;
@@ -145,7 +149,7 @@ public class NodeController {
         // create default response
         NodeResponse response = new NodeResponse(
                         "ERROR", "node '" + sysUID + "' doest exists", 
-                        null, null);
+                        null, null, null);
 
         // find a specific node
         BaseNode node = BaseNode.findBaseNode(sysUID);
@@ -158,6 +162,7 @@ public class NodeController {
                 // read children
                 BaseNode parent = null;
                 node.initChildNodesFromDB(0);
+                node.initChildNodesForParentsFromDB();
 
                 // check for new name
                 if (newNode.getName() != null) {
@@ -179,8 +184,7 @@ public class NodeController {
                 // check for needed update
                 if (flgChange || flgChangedParent) {
                     // recalc 
-                    // TODO recalcParents
-                    node.recalcData(BaseNodeService.CONST_RECURSE_DIRECTION_ONLYME);
+                    node.recalcData(BaseNodeService.CONST_RECURSE_DIRECTION_PARENT);
 
                     // save
                     node.merge();
@@ -194,11 +198,12 @@ public class NodeController {
                 if (flgChangedParent) {
                     // reinit Children (only 1 level
                     oldParent.initChildNodesFromDB(0);
+                    oldParent.initChildNodesForParentsFromDB();
 
                     // recalc old parent 
                     // TODO recalcParents
                     parent = oldParent;
-//                    parent.recalcData(BaseNodeService.CONST_RECURSE_DIRECTION_PARENT);
+                    parent.recalcData(BaseNodeService.CONST_RECURSE_DIRECTION_PARENT);
                     while (parent != null) {
                         parent.merge();
                         parent = parent.getParentNode();
@@ -212,8 +217,8 @@ public class NodeController {
                 // errorhandling
                 ex.printStackTrace();
                 response = new NodeResponse(
-                                "ERROR", "erro while updating node '" + sysUID + "':" + ex, 
-                                null, null);
+                                "ERROR", "error while updating node '" + sysUID + "':" + ex, 
+                                null, null, null);
             }
         }
         
