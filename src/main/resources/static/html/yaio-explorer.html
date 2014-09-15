@@ -635,11 +635,19 @@ function doUpdateNode(node, url, json) {
                         openNodeHierarchy("#tree", response.parentIdHierarchy);
                     });
                 } else {
-                    console.error("got no hierarchy for:" + node.key + " hierarchy:" + response.parentIdHierarchy);
+                    console.error("got no hierarchy for:" + node.key 
+                            + " hierarchy:" + response.parentIdHierarchy);
                 }
             } else {
                 console.error("cant save node:" + node.key + " error:" + response.stateMsg);
-                alert("cant save node:" + node.key + " error:" + response.stateMsg);
+                if (response.violations) {
+                    for (var idx in response.violations) {
+                        var violation = response.violations[idx];
+                        console.error("violations while save node:" + node.key 
+                                + " field:" + violation.path + " message:" + violation.message);
+                        alert("cant save node because: " + violation.path + " (" + violation.message + ")")
+                    }
+                }
             }
         },
         error : function(jqXHR, textStatus, errorThrown) {

@@ -19,6 +19,10 @@ package de.yaio.rest.controller;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,22 +50,38 @@ import de.yaio.core.nodeservice.BaseNodeService;
 @RequestMapping("/nodes")
 public class NodeController {
 
+    public class NodeViolation {
+        public String path;
+        public String message;
+        public String messageTemplate;
+        public NodeViolation(String path, String message, String messageTemplate) {
+            super();
+            this.path = path;
+            this.message = message;
+            this.messageTemplate = messageTemplate;
+        }
+    }
+    
     public class NodeResponse {
         
         public NodeResponse(String state, String stateMsg, BaseNode node,
-                               List<String> parentIdHierarchy, List<BaseNode> childNodes) {
+                               List<String> parentIdHierarchy, 
+                               List<BaseNode> childNodes,
+                               List<NodeViolation> violatons) {
             super();
             this.state = state;
             this.stateMsg = stateMsg;
             this.node = node;
             this.parentIdHierarchy = parentIdHierarchy;
             this.childNodes = childNodes;
+            this.violations = violatons;
         }
         public String state;
         public String stateMsg;
         public BaseNode node;
         public List<String> parentIdHierarchy;
         public List<BaseNode> childNodes;
+        public List<NodeViolation> violations;
     }
     
     protected NodeResponse createResponseObj(BaseNode node, String okMsg) {
@@ -82,7 +102,7 @@ public class NodeController {
         // set response
         NodeResponse response = new NodeResponse(
                         "OK", okMsg, 
-                        node, parentIdHierarchy, null);
+                        node, parentIdHierarchy, null, null);
         
         return response;
     }
@@ -107,7 +127,7 @@ public class NodeController {
         // create default response
         NodeResponse response = new NodeResponse(
                         "ERROR", "node '" + sysUID + "' doesnt exists", 
-                        null, null, null);
+                        null, null, null, null);
 
         // find a specific node
         BaseNode node = BaseNode.findBaseNode(sysUID);
@@ -149,7 +169,7 @@ public class NodeController {
         // create default response
         NodeResponse response = new NodeResponse(
                         "ERROR", "node '" + sysUID + "' doesnt exists", 
-                        null, null, null);
+                        null, null, null, null);
 
         // find a specific node
         BaseNode node = BaseNode.findBaseNode(sysUID);
@@ -190,12 +210,31 @@ public class NodeController {
             // create response
             response = createResponseObj(node, "node '" + sysUID + "' updated");
 
+        } catch (ConstraintViolationException ex) {
+            // validation errors
+            Set<ConstraintViolation<?>> cViolations = ex.getConstraintViolations();
+            
+            // convert to Violation
+            List<NodeViolation>violations = new ArrayList<NodeViolation>();
+            for (ConstraintViolation<?> cViolation : cViolations) {
+                violations.add(
+                      new NodeViolation(cViolation.getPropertyPath().toString(), 
+                                      cViolation.getMessage(),
+                                      cViolation.getMessageTemplate()));
+            }
+            
+            // create response
+            response = new NodeResponse(
+                            "ERROR", "violationerrors while updating node '" + sysUID + "':" + ex, 
+                            null, null, null, violations);
+            
+            
         } catch (Throwable ex) {
             // errorhandling
             ex.printStackTrace();
             response = new NodeResponse(
                             "ERROR", "error while updating node '" + sysUID + "':" + ex, 
-                            null, null, null);
+                            null, null, null, null);
         }
         
         return response;
@@ -224,7 +263,7 @@ public class NodeController {
         // create default response
         NodeResponse response = new NodeResponse(
                         "ERROR", "node '" + sysUID + "' doesnt exists", 
-                        null, null, null);
+                        null, null, null, null);
 
         // find a specific node
         BaseNode node = BaseNode.findBaseNode(sysUID);
@@ -238,7 +277,7 @@ public class NodeController {
             response = new NodeResponse(
                             "ERROR", "new parentNode '" + newParentSysUID 
                             + "' for node '" + sysUID + "' doesnt exists", 
-                            null, null, null);
+                            null, null, null, null);
             return response;
         }
         // map the data
@@ -299,7 +338,7 @@ public class NodeController {
             ex.printStackTrace();
             response = new NodeResponse(
                             "ERROR", "error while moving node '" + sysUID + "':" + ex, 
-                            null, null, null);
+                            null, null, null, null);
         }
         
         return response;
