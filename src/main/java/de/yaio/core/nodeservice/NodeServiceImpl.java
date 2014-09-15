@@ -77,6 +77,14 @@ public abstract class NodeServiceImpl implements NodeService {
             this.doRecalcChildren(node, recurceDirection);
         }
         this.doRecalcAfterChildren(node, recurceDirection);
+        
+        // Recalc parents
+        if (recurceDirection == CONST_RECURSE_DIRECTION_PARENT) {
+            DataDomain parent = node.getParentNode();
+            if (parent != null) {
+                this.doRecalc(parent, recurceDirection);
+            }
+        }
     }
 
 
