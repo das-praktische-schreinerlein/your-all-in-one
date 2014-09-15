@@ -695,6 +695,15 @@ public class BaseNode implements BaseData, MetaData, SysData,
     //####################
     // service-functions
     //####################
+    /** dummy classsname for JSON-Exporter**/
+    public String className;
+    public String getClassName() {
+        return this.getClass().getSimpleName();
+    }
+    
+    @Override
+    @XmlTransient
+    @JsonIgnore
     public String toString() {
         return "ProjektNode: " + this.getSrcName() + " ID: " + this.getWorkingId() + " SRC:" + this.getFullSrc();
     }

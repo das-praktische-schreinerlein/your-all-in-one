@@ -253,18 +253,34 @@ $(function(){
   // parse the nodedata
   postProcess: function(event, data) {
     var list = new Array();
-    for (var zaehler =0; zaehler < data.response.childNodes.length; zaehler++) {
-       var node = data.response.childNodes[zaehler];
-       var datanode = {
-          title: node.name,
-          key: node.sysUID, 
-          children: null,
-          lazy: true,
-          basenode: node
-       };
-       console.debug("add childnode for " + data.response.sysUID + " = " + node.name);
-       list.push(datanode);
+    
+    // check response
+    var state = data.response.state;
+    if (state == "OK") {
+        // all fine
+        console.log("OK loading nodes:" + data.response.stateMsg)
+        
+        var baseNode = data.response.node;
+        if (baseNode.childNodes) {
+             // iterate childnodes
+            for (var zaehler =0; zaehler < baseNode.childNodes.length; zaehler++) {
+                var node = baseNode.childNodes[zaehler];
+                var datanode = {
+                   title: node.name,
+                   key: node.sysUID, 
+                   children: null,
+                   lazy: true,
+                   basenode: node
+                };
+                console.debug("add childnode for " + baseNode.sysUID + " = " + node.sysUID + " " + node.name);
+                list.push(datanode);
+            }
+        }
+    } else {
+        // error
+        console.error("error loading nodes:" + data.response.stateMsg)
     }
+    
    data.result = list;
   },
 
@@ -473,11 +489,15 @@ $(function(){
 });
 
 
-/**
+
+
+
+
+/*****************************************
  *
  * Service-Funktions
  *
- */
+ *****************************************/
 function formatGermanDateTime(millis) {
     if (millis == null) {
        return "";
@@ -513,6 +533,43 @@ function formatNumbers(number, nachkomma, suffix) {
    
    return (number.toFixed(nachkomma)) + suffix;
 }
+
+function openNodeHierarchy(treeId, lstIdsHierarchy) {
+    // check for tree
+    var tree = $(treeId).fancytree("getTree");
+    if (! tree) {
+        console.error("openHierarchy: error tree:'" + treeId + "' not found.");
+        return;
+    }
+
+    // check for rootNode
+    var rootNode = tree.rootNode;
+    if (! rootNode) {
+        console.error("openHierarchy: error for tree:'" + treeId 
+                    + "' rootNode not found.");
+        return;
+    }
+    
+    // check for lstIdsHierarchy
+    if (! lstIdsHierarchy || lstIdsHierarchy.length <= 0) {
+        console.error("openHierarchy: error for tree:'" + treeId 
+                    + "' lstIdsHierarchy is empty.");
+        return;
+    }
+    var firstNodeId = lstIdsHierarchy.shift();
+    var firstNode = rootNode.mapChildren[firstNodeId];
+    if (! firstNode) {
+        console.error("openHierarchy: error for tree:'" + treeId 
+                    + "' firstNode:'" + firstNodeId + "' not found.");
+        return;
+    }
+
+    // open Hierarchy
+    var opts = {};
+    opts.openHierarchy = lstIdsHierarchy;
+    firstNode.setExpanded(true, opts);
+}
+
 
 
 </script>
@@ -629,6 +686,50 @@ function showAsPrintVersion() {
         divBlock.style.width = "750px";
     }
 }
+
+
+setTimeout(function(){
+    var lstHierarchy = new Array(
+            "DT201401231236052431", 
+            "DT2014012312360546542", 
+            "DT201409021950228312",
+            "DT201409021950228314",
+            "DT201406161117472041"
+//            "DT201404081141327671", 
+//            "DT201404081141327673"
+    );
+    //openNodeHierarchy("#tree", lstHierarchy);
+    
+    /**
+     * The plugin (derrived from <a href=" http://api.jqueryui.com/jQuery.widget/">jQuery.Widget</a>).<br>
+     * This constructor is not called directly. Use `$(selector).fancytree({})`
+     * to initialize the plugin instead.<br>
+     * <pre class="sh_javascript sunlight-highlight-javascript">// Access widget methods and members:
+     * var tree = $("#tree").fancytree("getTree");
+     * var node = $("#tree").fancytree("getActiveNode", "1234");
+     * </pre>
+     *
+     * @mixin Fancytree_Widget
+     */
+
+
+     
+    /** Return the parent keys separated by options.keyPathSeparator, e.g. "id_1/id_17/id_32".
+     * @param {boolean} [excludeSelf=false]
+     * @returns {string}
+     */
+//    getKeyPath: function(excludeSelf) {
+      /** Return an array of all parent nodes (top-down).
+       * @param {boolean} [includeRoot=false] Include the invisible system root node.
+       * @param {boolean} [includeSelf=false] Include the node itself.
+       * @returns {FancytreeNode[]}
+       */
+//      getParentList: function(includeRoot, includeSelf) {
+
+    
+    var xxx;
+  }, 1000);
+
 </script>
 
 </body>

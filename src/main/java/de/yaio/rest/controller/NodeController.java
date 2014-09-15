@@ -16,11 +16,15 @@
  */
 package de.yaio.rest.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import de.yaio.core.node.BaseNode;
 
@@ -40,6 +44,22 @@ import de.yaio.core.node.BaseNode;
 @RequestMapping("/nodes")
 public class NodeController {
 
+    public class NodeResponse {
+        
+        public NodeResponse(String state, String stateMsg, BaseNode node,
+                               List<String> parentIdHierarchy) {
+            super();
+            this.state = state;
+            this.stateMsg = stateMsg;
+            this.node = node;
+            this.parentIdHierarchy = parentIdHierarchy;
+        }
+        public String state;
+        public String stateMsg;
+        public BaseNode node;
+        public List<String> parentIdHierarchy;
+    }
+    
     /**
      * <h4>FeatureDomain:</h4>
      *     Webservice
@@ -47,22 +67,34 @@ public class NodeController {
      *     read the node for sysUID and return it with children as JSON
      * <h4>FeatureResult:</h4>
      *   <ul>
-     *     <li>BaseNode - the node for sysUID
+     *     <li>NodeControllerResponse (OK, ERROR) with the node for sysUID
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     Webservice Query
      * @param sysUID - sysUID to filter
-     * @return the node for sysUID
+     * @return NodeControllerResponse (OK, ERROR) with the node for sysUID
      */
     @RequestMapping(method=RequestMethod.GET, value = "/{sysUID}")
-    public @ResponseBody BaseNode sayHello(
+    public @ResponseBody NodeResponse getNodeWithChildren(
            @PathVariable(value="sysUID") String sysUID) {
+        // create default response
+        NodeResponse response = new NodeResponse(
+                        "ERROR", "node '" + sysUID + "' doest exists", 
+                        null, null);
+
         // find a specific node
         BaseNode node = BaseNode.findBaseNode(sysUID);
         if (node != null) {
             // read the childnodes only 1 level
             node.initChildNodesFromDB(0);
+            
+            // set response
+            response.state = "OK";
+            response.stateMsg = "node '" + sysUID + "' found";
+            response.node = node;
         }
-        return node;
+        
+        return response;
     }
+
 }
