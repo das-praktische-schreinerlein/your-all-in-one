@@ -1,0 +1,188 @@
+/**
+ * Base-Styles
+ **/
+body { 
+    background: white; 
+    color: black; 
+    font-family: Verdana, Arial, Helvetica, sans-serif; 
+    line-height: 1.3em; 
+    font-size: 11px;
+}
+
+.pageContent {
+    width: 95%;
+}
+.blockContent {
+    width: 100%;
+}
+.content {
+    width: 100%;
+    padding-left: 0px;
+}
+.blockPageFooter {
+    width: 100%;
+}
+.box-portdesc-data {
+    width: 100%;
+}
+
+/**
+ * Exploer-Tree-Styles
+ **/
+.field_name {
+   text-align: left;
+   min-width: 600px;
+}
+.field_type {
+   text-align: left;
+}
+.field_state {
+   text-align: left;
+}
+.field_istChildrenSumStand {
+   text-align: right;
+}
+.field_istChildrenSumAufwand {
+   text-align: right;
+}
+.field_istChildrenSum {
+   text-align: right;
+}
+.field_planChildrenSumAufwand {
+   text-align: right;
+}
+.field_planChildrenSum {
+   text-align: right;
+}
+
+
+/**
+ * Node-Stati
+ */
+.node-state-INFO {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-DOKU {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-IDEE {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-HOWTO {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-URLRES {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-FILERES {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-MAILRES {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-SYMLINK {
+    background-color: #FFC0CB; /*#33CCCC;*/
+}
+.node-state-OPEN {
+    background-color: #ADFF2F CFF9BB; /*#99FF66;*/
+}
+.node-state-OFFEN {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-RUNNING {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-LATE {
+    background-color: #FFD700; /*#F6F9AE; #FFFF66;*/
+}
+.node-state-VERSPAETET {
+    background-color: #FFD700; /*#F6F9AE; #FFFF66;*/
+}
+.node-state-SHORT {
+    background-color: #FF6347; /* #FCD2C9; /*#FF9966;*/
+}
+.node-state-UEBERFAELLIG {
+    background-color: #FF6347; /* #FCD2C9; /*#FF9966;*/
+}
+.node-state-WARNING {
+    background-color: #FF6347; /* #FCD2C9; /*#FF9966;*/
+}
+.node-state-DONE {
+    background-color: #E0F2FC; /*#B0E0E6;*/
+}
+.node-state-ERLEDIGT {
+    background-color: #E0F2FC; /*#B0E0E6;*/
+}
+.node-state-CANCELED {
+    background-color: #F5F5F5; /*#CCCCCC;*/
+}
+.node-state-VERWORFEN {
+    background-color: #F5F5F5; /*#CCCCCC;*/
+}
+.node-state-UNKNOWN {
+    background-color: #FFFFFF;
+}
+.node-state-UNBEKANNT {
+    background-color: #FFFFFF;
+}
+
+.node-state-EVENT_PLANED {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-EVENT_GEPLANT {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-EVENT_OPEN {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-EVENT_OFFEN {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-EVENT_RUNNING {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-EVENT_LATE {
+    background-color: #FFD700; /*#F6F9AE; #FFFF66;*/
+}
+.node-state-EVENT_VERSPAETET {
+    background-color: #FFD700; /*#F6F9AE; #FFFF66;*/
+}
+.node-state-EVENT_SHORT {
+    background-color: #FF6347; /* #FF6347; /* #FCD2C9; /*#FF9966;*/
+}
+.node-state-EVENT_UEBERFAELLIG {
+    background-color: #FF6347; /* #FCD2C9; /*#FF9966;*/
+}
+.node-state-EVENT_WARNING {
+    background-color: #FF6347; /* #FCD2C9; /*#FF9966;*/
+}
+.node-state-EVENT_DONE {
+    background-color: #E0F2FC; /*#B0E0E6;*/
+}
+.node-state-EVENT_ERLEDIGT {
+    background-color: #E0F2FC; /*#B0E0E6;*/
+}
+.node-state-EVENT_CANCELED {
+    background-color: #F5F5F5; /*#CCCCCC;*/
+}
+.node-state-EVENT_VERWORFEN {
+    background-color: #F5F5F5; /*#CCCCCC;*/
+}
+
+/** 
+ * fancytree
+ */
+.ui-menu {
+  width: 150px;
+  font-size: 63%;
+}
+.ui-menu kbd { /* Keyboard shortcuts for ui-contextmenu titles */
+  float: right;
+}
+/* custom alignment (set by 'renderColumns'' event) */
+td.alignRight {
+   text-align: right;
+}
+td input[type=input] {
+  width: 40px;
+}

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html ng-app="yaioExplorerApp">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+  <title>YAIO - D'Artagnan - Explorer</title>
+
+  <!-- jquery-ui -->
+  <!-- 
+  <link type="text/css" rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/smoothness/jquery-ui.css" />
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" type="text/javascript"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js" type="text/javascript"></script>
+  <script src="http://cdn.jsdelivr.net/jquery.ui-contextmenu/1/jquery.ui-contextmenu.min.js"></script>
+   -->
+  <link type="text/css" rel="stylesheet" href="../css/jqueryui//jquery-ui.css" />
+  <script src="../js/jquery/jquery.min.js" type="text/javascript"></script>
+  <script src="../js/jqueryui/jquery-ui.min.js" type="text/javascript"></script>
+  <script src="../js/jqueryui/jquery.ui-contextmenu.min.js"></script>
+
+  <!-- fancytree -->
+  <link href="../js/fancytree/skin-win8/ui.fancytree.css" rel="stylesheet" type="text/css">
+  <script src="../js/fancytree/jquery.fancytree.js" type="text/javascript"></script>
+  <script src="../js/fancytree/jquery.fancytree.dnd.js" type="text/javascript"></script>
+  <script src="../js/fancytree/jquery.fancytree.edit.js" type="text/javascript"></script>
+  <script src="../js/fancytree/jquery.fancytree.gridnav.js" type="text/javascript"></script>
+  <script src="../js/fancytree/jquery.fancytree.table.js" type="text/javascript"></script>
+  <!--
+  <script src="../js/fancytree/jquery.fancytree-all.min.js" type="text/javascript"></script>
+  -->
+
+  <!-- angularjs -->
+  <!--
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular-animate.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular-route.js"></script>
+  -->
+  <script src="../js/angularjs/angular.js"></script>
+  <script src="../js/angularjs/angular-animate.js"></script>
+  <script src="../js/angularjs/angular-route.js"></script>
+
+  <!-- yaio -->
+  <!-- 
+  <link rel="stylesheet" type="text/css" media="all" href="http://www.your-all-in-one.de/yaio//css/style.css" />
+  <link rel="stylesheet" type="text/css" media="all" href="http://www.your-all-in-one.de/yaio//css/main.css" />
+  <link rel="stylesheet" type="text/css" media="print" href="http://www.your-all-in-one.de/yaio/css/print.css" />
+   -->
+  <link rel="stylesheet" type="text/css" media="all" href="../css/yaio/style.css" />
+  <link rel="stylesheet" type="text/css" media="all" href="../css/yaio/main.css" />
+  <link rel="stylesheet" type="text/css" media="print" href="../css/yaio/print.css" />
+  <script src="http://localhost/michas/jsres/JMATAllIn.js?DUMMY=20131101_1" type="text/javascript"></script>
+
+  <!-- yaio-explorer -->
+  <link rel="stylesheet" type="text/css" media="all" href="./css/style.css" />
+
+</head>
+
+<body>
+<div align="center" class="page-div-center">
+    <!-- Hauptseite-->
+    <div class="pageContent" id="pageContent">
+
+        <!-- Content -->
+        <div class="blockContent" id="blockContent">
+            <div class="content" id="content">
+                <div class="txt-content" id="txt-content">
+
+
+                    <!-- Header -->
+                    <div class="menueTop" id="menueTop">
+                        <div class="">
+                           <div class="ue1MenueTop">D'Artagnan - Dein pers&ouml;nlicher Software-Musketier</div>
+                           <div class="ue2MenueTop">"Einer f&uuml;r Alles - Alles in Einem"</div>
+                           <div class="ue3MenueTop">
+                               <ul class="ulTopKontakt">
+                                   <li class="liTopKontakt liTopKontaktTwitter"><a 
+                                       target="_blank" 
+                                       title="D'Artagnan auf Twitter folgen" 
+                                       href="https://twitter.com/YourITFellow">Twitter</a></li>
+                                   <li class="liTopKontakt liTopKontaktEmail"><a 
+                                       title="D'Artagnan kontaktieren" 
+                                       href="http://www.your-all-in-one/yaio/contact/form">Kontakt</a></li>
+                               </ul>
+                           </div>
+                        </div>
+                    </div>
+                
+                    
+                    <!-- Context -->
+                    <div class="content">
+                        <!-- Page: Content -->
+
+
+<!-- 
+*****************************
+*****************************
+* Current Data
+*****************************
+*****************************
+ -->
+<div class='box box-portdesc add2toc-h1 box-portdesc-thatsit' toclabel='Explorer' id='box_YAIO801'>
+<div class='boxline boxline-ue2 h2-portdesc h2-portdesc-thatsit' id='ue_YAIO801'>YAIO - D'Artagnan - Explorer</div>
+<div class='togglecontainer togglecontainer-thatsit' id='detail_YAIO801'>
+
+    <div ng-view></div>
+
+</div></div>
+
+<div class='box box-portdesc add2toc-h1 box-portdesc-data' toclabel='Daten' id='box_YAIO801'>
+
+
+<!-- 
+*****************************
+*****************************
+* Current Tree
+*****************************
+*****************************
+-->
+  <table id="tree">
+    <colgroup>
+    <col ></col>
+    <col ></col>
+    <col class="name"></col>
+    <col class="dataBlock"></col>
+    <col class="togglerBlock"></col>
+<!-- 
+    <col class="type"></col>
+    <col class="state"></col>
+    <col class="stand"></col>
+    <col class="aufwand"></col>
+    <col class="date"></col>
+    <col class="aufwand"></col>
+    <col class="date"></col>
+-->
+    </colgroup>
+    <thead>
+      <tr> 
+        <th>O</th>
+        <th>Hirarchie</th>
+        <th>Name</th>
+        <th>Data</th>
+        <th></th>
+<!-- 
+        <th>Typ</th>
+        <th>Status</th>
+        <th>IST %</th>
+        <th>IST h</th>
+        <th>IST Zeit</th>
+        <th>Plan h</th>
+        <th>Plan Zeit</th>
+ -->        
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</div>
+
+                                            </div>
+                    
+                    
+                   <div class="blockPageFooter" id="blockPageFooter">
+                      <div class="blockQRCode" id="qrcode"></div>
+                      <div class="blockTxtFooter" id="blockTxtFooter">
+                        <div class="txt-lastupdate">2014 by <a href="mailto:michael.schreiner@your-it-fellow.de" class="a-lastupdate">Micha</a> -&gt; <a href="http://www.your-all-in-one.de/yaio/static/impressum" class="a-lastupdate">Impressum</a></div>
+                        <div class="txt-copyrights">Copyright 
+                            <a href="http://www.your-all-in-one.de/yaio/static/impressum" >www.your-all-in-one.de</a></div>
+                        <div class="txt-copyrights">
+                            Die Seite wurde mit <a href="https://github.com/mar10/fancytree/" target="_blank">FancyTree</a> implementiert.<br />
+                            F&uuml;r Layout+Effekte+Funktionen wird mein <a href="http://www.your-it-fellow.de/mybusiness/static/projects">MATWeb-Framework</a> benutzt.<br />
+                            Die Pflege und Transformation der Inhalte erfolgt mit <a href="/yaio/static/lepetit">"Le petit D'Artagnan"</a>.<br />
+                            F&uuml;r bestimmte Layoutfunktionen wurde auf frei Bibliotheken der Projekte
+                            <a href="http://jquery.com/" target="_blank">JQuery</a>,
+                            <a href="http://jqueryui.com/" target="_blank">JQuery-UI</a>,
+                            <a href="http://paulrobertlloyd.com/2009/06/social_media_icons/" target="_blank">paulrobertlloyd.com</a>
+                            zugegriffen.<br />
+                        </div>
+                      </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- yaio-explorer -->
+<script src="js/yaio-fancytree.js"></script>
+<script src="js/yaio-explorerapp.js"></script>
+</body>
+</html>

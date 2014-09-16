@@ -1,243 +1,20 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
-  <title>YAIO - D'Artagnan - Explorer</title>
-
-<!-- 
-  <link type="text/css" rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/smoothness/jquery-ui.css" />
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" type="text/javascript"></script>
-  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js" type="text/javascript"></script>
-
-  <link rel="stylesheet" type="text/css" media="all" href="http://www.your-all-in-one.de/yaio//css/style.css" />
-  <link rel="stylesheet" type="text/css" media="all" href="http://www.your-all-in-one.de/yaio//css/main.css" />
-  <link rel="stylesheet" type="text/css" media="print" href="http://www.your-all-in-one.de/yaio/css/print.css" />
- -->
-  <link type="text/css" rel="stylesheet" href="../css/jqueryui//jquery-ui.css" />
-  <script src="../js/jquery/jquery.min.js" type="text/javascript"></script>
-  <script src="../js/jqueryui/jquery-ui.min.js" type="text/javascript"></script>
-
-  <link rel="stylesheet" type="text/css" media="all" href="../css/yaio/style.css" />
-  <link rel="stylesheet" type="text/css" media="all" href="../css/yaio/main.css" />
-  <link rel="stylesheet" type="text/css" media="print" href="../css/yaio/print.css" />
-<style type="text/css">
-  .ui-menu kbd { /* Keyboard shortcuts for ui-contextmenu titles */
-    float: right;
-  }
-  /* custom alignment (set by 'renderColumns'' event) */
-  td.alignRight {
-     text-align: right;
-  }
-  td input[type=input] {
-    width: 40px;
-  }
-</style>
-  <!-- jquery-contextmenu (https://github.com/mar10/jquery-ui-contextmenu/) -->
-  <!-- 
-    <script src="http://cdn.jsdelivr.net/jquery.ui-contextmenu/1/jquery.ui-contextmenu.min.js"></script>
-  -->
-  <script src="../js/jqueryui/jquery.ui-contextmenu.min.js"></script>
-  <link href="../js/fancytree/skin-win8/ui.fancytree.css" rel="stylesheet" type="text/css">
-  <script src="../js/fancytree/jquery.fancytree.js" type="text/javascript"></script>
-  <script src="../js/fancytree/jquery.fancytree.dnd.js" type="text/javascript"></script>
-  <script src="../js/fancytree/jquery.fancytree.edit.js" type="text/javascript"></script>
-  <script src="../js/fancytree/jquery.fancytree.gridnav.js" type="text/javascript"></script>
-  <script src="../js/fancytree/jquery.fancytree.table.js" type="text/javascript"></script>
-<!--
-  <script src="../js/fancytree/jquery.fancytree-all.min.js" type="text/javascript"></script>
--->
-
-  <!-- (Irrelevant source removed.) -->
-
-<style type="text/css">
-  .ui-menu {
-    width: 150px;
-    font-size: 63%;
-  }
-
-body { 
-    background: white; 
-	color: black; 
-	font-family: Verdana, Arial, Helvetica, sans-serif; 
-	line-height: 1.3em; 
-	font-size: 11px;
-}
-
-.pageContent {
-    width: 95%;
-}
-.blockContent {
-    width: 100%;
-}
-.content {
-    width: 100%;
-    padding-left: 0px;
-}
-.blockPageFooter {
-    width: 100%;
-}
-.box-portdesc-data {
-    width: 100%;
-}
-
-.field_name {
-   text-align: left;
-   min-width: 600px;
-}
-.field_type {
-   text-align: left;
-}
-.field_state {
-   text-align: left;
-}
-.field_istChildrenSumStand {
-   text-align: right;
-}
-.field_istChildrenSumAufwand {
-   text-align: right;
-}
-.field_istChildrenSum {
-   text-align: right;
-}
-.field_planChildrenSumAufwand {
-   text-align: right;
-}
-.field_planChildrenSum {
-   text-align: right;
-}
-
-
-/**
- * Node-Stati
- */
-.node-state-INFO {
-    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
-}
-.node-state-DOKU {
-    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
-}
-.node-state-IDEE {
-    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
-}
-.node-state-HOWTO {
-    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
-}
-.node-state-URLRES {
-    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
-}
-.node-state-FILERES {
-    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
-}
-.node-state-MAILRES {
-    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
-}
-.node-state-SYMLINK {
-    background-color: #FFC0CB; /*#33CCCC;*/
-}
-.node-state-OPEN {
-    background-color: #ADFF2F CFF9BB; /*#99FF66;*/
-}
-.node-state-OFFEN {
-    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
-}
-.node-state-RUNNING {
-    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
-}
-.node-state-LATE {
-    background-color: #FFD700; /*#F6F9AE; #FFFF66;*/
-}
-.node-state-VERSPAETET {
-    background-color: #FFD700; /*#F6F9AE; #FFFF66;*/
-}
-.node-state-SHORT {
-    background-color: #FF6347; /* #FCD2C9; /*#FF9966;*/
-}
-.node-state-UEBERFAELLIG {
-    background-color: #FF6347; /* #FCD2C9; /*#FF9966;*/
-}
-.node-state-WARNING {
-    background-color: #FF6347; /* #FCD2C9; /*#FF9966;*/
-}
-.node-state-DONE {
-    background-color: #E0F2FC; /*#B0E0E6;*/
-}
-.node-state-ERLEDIGT {
-    background-color: #E0F2FC; /*#B0E0E6;*/
-}
-.node-state-CANCELED {
-    background-color: #F5F5F5; /*#CCCCCC;*/
-}
-.node-state-VERWORFEN {
-    background-color: #F5F5F5; /*#CCCCCC;*/
-}
-.node-state-UNKNOWN {
-    background-color: #FFFFFF;
-}
-.node-state-UNBEKANNT {
-    background-color: #FFFFFF;
-}
-
-.node-state-EVENT_PLANED {
-    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
-}
-.node-state-EVENT_GEPLANT {
-    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
-}
-.node-state-EVENT_OPEN {
-    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
-}
-.node-state-EVENT_OFFEN {
-    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
-}
-.node-state-EVENT_RUNNING {
-    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
-}
-.node-state-EVENT_LATE {
-    background-color: #FFD700; /*#F6F9AE; #FFFF66;*/
-}
-.node-state-EVENT_VERSPAETET {
-    background-color: #FFD700; /*#F6F9AE; #FFFF66;*/
-}
-.node-state-EVENT_SHORT {
-    background-color: #FF6347; /* #FF6347; /* #FCD2C9; /*#FF9966;*/
-}
-.node-state-EVENT_UEBERFAELLIG {
-    background-color: #FF6347; /* #FCD2C9; /*#FF9966;*/
-}
-.node-state-EVENT_WARNING {
-    background-color: #FF6347; /* #FCD2C9; /*#FF9966;*/
-}
-.node-state-EVENT_DONE {
-    background-color: #E0F2FC; /*#B0E0E6;*/
-}
-.node-state-EVENT_ERLEDIGT {
-    background-color: #E0F2FC; /*#B0E0E6;*/
-}
-.node-state-EVENT_CANCELED {
-    background-color: #F5F5F5; /*#CCCCCC;*/
-}
-.node-state-EVENT_VERWORFEN {
-    background-color: #F5F5F5; /*#CCCCCC;*/
-}
-
-</style>
-
-<script type="text/javascript">
 var CLIPBOARD = null;
 
 var baseUrl = "/nodes/";
 var showUrl = baseUrl + "show/";
 var updateUrl = baseUrl + "update/";
 var moveUrl = baseUrl + "move/";
-$(function(){
-    $("#tree").fancytree({
+
+function createYAIOFancyTree(treeId, masterNodeId){
+    $(treeId).flgYAIOFancyTreeLoaded = true;
+    $(treeId).fancytree({
         checkbox: true,
         titlesTabbable: true,     // Add all node titles to TAB chain
   
 //// MS Start
   // initial source is MasterplanMasternode1
         source: { 
-            url: showUrl + "MasterplanMasternode1", 
+            url: showUrl + masterNodeId, 
             cache: false 
         },
       
@@ -299,7 +76,7 @@ $(function(){
                 // Return false to prevent cancel/save (data.input is available)
             },
             save: function(event, data){
-                if (confirm("Wollen Sie den Titel wirklich ändern?")) {
+                if (confirm("Wollen Sie den Titel wirklich Ã¤ndern?")) {
                     // Save data.input.val() or return false to keep editor open
                     saveNode(this, data);
                     // We return true, so ext-edit will set the current user input
@@ -441,7 +218,7 @@ $(function(){
     /*
      * Context menu (https://github.com/mar10/jquery-ui-contextmenu)
      */
-    $("#tree").contextmenu({
+    $(treeId).contextmenu({
         delegate: "span.fancytree-node",
         menu: [
             {title: "Edit <kbd>[F2]</kbd>", cmd: "rename", uiIcon: "ui-icon-pencil" },
@@ -468,7 +245,7 @@ $(function(){
             }, 100);
         }
     });
-});
+}
 
 
 
@@ -633,19 +410,96 @@ function renderColumnsForNode(event, data) {
 
     var nodestate = basenodedata.state;
     var statestyle = "node-state-" + nodestate;
-    $tdList.eq(1).text(node.getIndexHier()).addClass("alignRight").addClass(statestyle);
+//    $tdList.eq(1).text(node.getIndexHier()).addClass("alignRight").addClass(statestyle);
+    $tdList.eq(1).html("<a href='#/show/" + basenodedata.sysUID + "'>OPEN</a>").addClass("alignRight").addClass(statestyle);
     // (index #2 is rendered by fancytree)
     $tdList.eq(2).addClass("field_name").addClass(statestyle);
-    $tdList.eq(3).html(basenodedata.type).addClass("field_type").addClass(statestyle);
-    $tdList.eq(4).html(basenodedata.state).addClass("field_state").addClass(statestyle);
-    $tdList.eq(5).html(formatNumbers(basenodedata.istChildrenSumStand, 2, "%")).addClass("field_istChildrenSumStand").addClass(statestyle); 
-    $tdList.eq(6).html(formatNumbers(basenodedata.istChildrenSumAufwand, 2, "h")).addClass("field_istChildrenSumAufwand").addClass(statestyle);
-    $tdList.eq(7).html(formatGermanDate(basenodedata.istChildrenSumStart)
-                     + "-" + formatGermanDate(basenodedata.istChildrenSumEnde)).addClass("field_istChildrenSum").addClass(statestyle);
-    $tdList.eq(8).html(formatNumbers(basenodedata.planChildrenSumAufwand, 2, "h")).addClass("field_planChildrenSumAufwand").addClass(statestyle);
-    $tdList.eq(9).html(formatGermanDate(basenodedata.planChildrenSumStart)
-                     + "-" + formatGermanDate(basenodedata.planChildrenSumEnde)).addClass("field_planChildrenSum").addClass(statestyle);
+
+    // currente datablock
+    var nodeDataBlock = "";
+    $table = $("<table />");
+    $row = $("<tr />");
+    $table.append($row);
+    
+    // default fields
+    $row.append($("<td />").html(basenodedata.className).addClass("field_type").addClass(statestyle));
+    $row.append($("<td />").html(basenodedata.state).addClass("field_state").addClass(statestyle));
+    
+    if (basenodedata.className == "TaskNode") {
+        // TaskNode
+        $row.append(
+                $("<td />").html(formatNumbers(basenodedata.istChildrenSumStand, 2, "%")).addClass("field_istChildrenSumStand").addClass(statestyle)); 
+        $row.append(
+                $("<td />").html(formatNumbers(basenodedata.istChildrenSumAufwand, 2, "h")).addClass("field_istChildrenSumAufwand").addClass(statestyle));
+        $row.append(
+                $("<td />").html(formatGermanDate(basenodedata.istChildrenSumStart)
+                         + "-" + formatGermanDate(basenodedata.istChildrenSumEnde)).addClass("field_istChildrenSum").addClass(statestyle));
+        $row.append(
+                $("<td />").html(formatNumbers(basenodedata.planChildrenSumAufwand, 2, "h")).addClass("field_planChildrenSumAufwand").addClass(statestyle));
+        $row.append(
+                $("<td />").html(formatGermanDate(basenodedata.planChildrenSumStart)
+                         + "-" + formatGermanDate(basenodedata.planChildrenSumEnde)).addClass("field_planChildrenSum").addClass(statestyle));
+    } else if (basenodedata.className == "UrlResNode") {
+        // url
+        $row.append(
+                $("<td />").html("<a href='" + basenodedata.resLocRef + "' target='_blank'>" + basenodedata.resLocRef).addClass("field_resLocRef").addClass(statestyle)); 
+    } else if (basenodedata.className == "InfoNode") {
+    } else if (basenodedata.className == "EventNode") {
+        $row.append(
+                $("<td />").html(formatNumbers(basenodedata.istChildrenSumStand, 2, "%")).addClass("field_istChildrenSumStand").addClass(statestyle)); 
+        $row.append($("<td />").html(formatNumbers(basenodedata.istChildrenSumAufwand, 2, "h")).addClass("field_istChildrenSumAufwand").addClass(statestyle));
+        $row.append(
+                $("<td />").html(formatGermanDate(basenodedata.istChildrenSumStart)
+                         + "-" + formatGermanDate(basenodedata.istChildrenSumEnde)).addClass("field_istChildrenSum").addClass(statestyle));
+        $row.append(
+                $("<td />").html(formatNumbers(basenodedata.planChildrenSumAufwand, 2, "h")).addClass("field_planChildrenSumAufwand").addClass(statestyle));
+        $row.append(
+                $("<td />").html(formatGermanDate(basenodedata.planChildrenSumStart)
+                         + "-" + formatGermanDate(basenodedata.planChildrenSumEnde)).addClass("field_planChildrenSum").addClass(statestyle));
+    }
+    $nodeDataBlock = $table;
+    
+    // add nodeDesc if set
+    $toggler = "";
+    if (basenodedata.nodeDesc != "" && basenodedata.nodeDesc != null) {
+        // columncount
+        var columnCount = $(">td", $row).length;
+        
+        $nodeDataBlock.append(
+                $("<br /><div class='togglecontainer' id='detail_desc_" + basenodedata.sysUID + "'><pre>" 
+                        + basenodedata.nodeDesc + "</pre></div>").addClass("field_nodeDesc"));
+        
+        // append toogler
+//        $toggler = $("<div id='toogler_desc_" + basenodedata.sysUID + "' />");
+    }
+    
+    // add nodeData
+    $tdList.eq(3).html($nodeDataBlock).addClass("block_nodedata");
+    $tdList.eq(4).html($toggler).addClass("toggler");
+
+    // append toggler
+    if ($toggler != "") {
+        jMATService.getPageLayoutService().appendBlockToggler(
+                'toogler_desc_' + basenodedata.sysUID, 'detail_desc_' + basenodedata.sysUID);
+        jMATService.getLayoutService().togglerBlockHide('detail_desc_' + basenodedata.sysUID, 'detail_desc_' + basenodedata.sysUID, {});
+    }
 };
+
+function createFancyDataFromNodeData(node) {
+    var datanode = {
+       title: node.name,
+       key: node.sysUID, 
+       children: null,
+       lazy: true,
+       basenode: node
+    };
+
+    if (node.className == "UrlResNode") {
+        datanode.title = node.resLocName;
+    }
+    
+    return datanode;
+} 
 
 function postProcessNodeData(event, data) {
     var list = new Array();
@@ -661,13 +515,7 @@ function postProcessNodeData(event, data) {
              // iterate childnodes
             for (var zaehler =0; zaehler < data.response.childNodes.length; zaehler++) {
                 var node = data.response.childNodes[zaehler];
-                var datanode = {
-                   title: node.name,
-                   key: node.sysUID, 
-                   children: null,
-                   lazy: true,
-                   basenode: node
-                };
+                var datanode = createFancyDataFromNodeData(node);
                 console.debug("add childnode for " + baseNode.sysUID + " = " + node.sysUID + " " + node.name);
                 list.push(datanode);
             }
@@ -679,165 +527,15 @@ function postProcessNodeData(event, data) {
     
     data.result = list;
 }
-</script>
-</head>
 
-<body>
-<div align="center" class="page-div-center">
-    <!-- Hauptseite-->
-    <div class="pageContent" id="pageContent">
-
-        <!-- Content -->
-        <div class="blockContent" id="blockContent">
-            <div class="content" id="content">
-                <div class="txt-content" id="txt-content">
-                    <div class="menueTop" id="menueTop">
-                        <!-- Hauptmenue -->
-                        <div class="">
-                           <div class="ue1MenueTop">D'Artagnan - Dein pers&ouml;nlicher Software-Musketier</div>
-                           <div class="ue2MenueTop">"Einer f&uuml;r Alles - Alles in Einem"</div>
-                           <div class="ue3MenueTop">
-                               <ul class="ulTopKontakt">
-                                   <li class="liTopKontakt liTopKontaktTwitter"><a 
-                                       target="_blank" 
-                                       title="D'Artagnan auf Twitter folgen" 
-                                       href="https://twitter.com/YourITFellow">Twitter</a></li>
-                                   <li class="liTopKontakt liTopKontaktEmail"><a 
-                                       title="D'Artagnan kontaktieren" 
-                                       href="http://www.your-all-in-one/yaio/contact/form">Kontakt</a></li>
-                               </ul>
-                           </div>
-                        </div>
-                    </div>
-                
-                    
-                    
-                    <div class="content">
-                        <!-- Page: Content -->
-
-<div class='box box-portdesc add2toc-h1 box-portdesc-thatsit' toclabel='Explorer' id='box_YAIO801'>
-<div class='boxline boxline-ue2 h2-portdesc h2-portdesc-thatsit' id='ue_YAIO801'>YAIO - D'Artagnan - Explorer</div>
-<div class='togglecontainer togglecontainer-thatsit' id='detail_YAIO801'>
-</div></div>
-
-<div class='box box-portdesc add2toc-h1 box-portdesc-data' toclabel='Daten' id='box_YAIO801'>
-  <table id="tree">
-    <colgroup>
-    <col ></col>
-    <col ></col>
-    <col class="name"></col>
-    <col class="type"></col>
-    <col class="state"></col>
-    <col class="stand"></col>
-    <col class="aufwand"></col>
-    <col class="date"></col>
-    <col class="aufwand"></col>
-    <col class="date"></col>
-    </colgroup>
-    <thead>
-      <tr> 
-        <th>O</th>
-        <th>Hirarchie</th>
-        <th>Name</th>
-        <th>Typ</th>
-        <th>Status</th>
-        <th>IST %</th>
-        <th>IST h</th>
-        <th>IST Zeit</th>
-        <th>Plan h</th>
-        <th>Plan Zeit</th>
-      </tr>
-    </thead>
-    <tbody>
-    </tbody>
-  </table>
-</div>
-
-                                            </div>
-                    
-                    
-                   <div class="blockPageFooter" id="blockPageFooter">
-                      <div class="blockQRCode" id="qrcode"></div>
-                      <div class="blockTxtFooter" id="blockTxtFooter">
-                        <div class="txt-lastupdate">2014 by <a href="mailto:michael.schreiner@your-it-fellow.de" class="a-lastupdate">Micha</a> -&gt; <a href="http://www.your-all-in-one.de/yaio/static/impressum" class="a-lastupdate">Impressum</a></div>
-                        <div class="txt-copyrights">Copyright 
-                            <a href="http://www.your-all-in-one.de/yaio/static/impressum" >www.your-all-in-one.de</a></div>
-                        <div class="txt-copyrights">
-                            Die Seite wurde mit <a href="https://github.com/mar10/fancytree/" target="_blank">FancyTree</a> implementiert.<br />
-                            F&uuml;r Layout+Effekte+Funktionen wird mein <a href="http://www.your-it-fellow.de/mybusiness/static/projects">MATWeb-Framework</a> benutzt.<br />
-                            Die Pflege und Transformation der Inhalte erfolgt mit <a href="/yaio/static/lepetit">"Le petit D'Artagnan"</a>.<br />
-                            F&uuml;r bestimmte Layoutfunktionen wurde auf frei Bibliotheken der Projekte
-                            <a href="http://jquery.com/" target="_blank">JQuery</a>,
-                            <a href="http://jqueryui.com/" target="_blank">JQuery-UI</a>,
-                            <a href="http://paulrobertlloyd.com/2009/06/social_media_icons/" target="_blank">paulrobertlloyd.com</a>
-                            zugegriffen.<br />
-                        </div>
-                      </div>
-                    </div>
-                    
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script type="text/javascript">
-// Druckversion ueberladen
-function showAsPrintVersion() {
-    // Default-Druckversion laden
-    jMATService.getPageLayoutService().showAsPrintVersion();
-
-    // Content begrenzen
-    divBlock = document.getElementById('pageContent');
-    if (divBlock) {
-        divBlock.style.width = "750px";
+function createOrReloadYAIOFancyTree(treeId, masterNodeId){
+    // check if already loaded
+    if ($(treeId).flgYAIOFancyTreeLoaded) {
+        console.log("createOrReloadYAIOFancyTree: flgYAIOFancyTreeLoaded is set: reload=" + showUrl + masterNodeId);
+        var tree = $(treeId).fancytree("getTree");
+        tree.reload(showUrl + masterNodeId);
+    } else {
+        console.log("createOrReloadYAIOFancyTree: flgYAIOFancyTreeLoaded not set: create=" + showUrl + masterNodeId);
+        createYAIOFancyTree(treeId, masterNodeId);
     }
 }
-
-
-setTimeout(function(){
-    var lstHierarchy = new Array(
-            "DT201401231236052431", 
-            "DT2014012312360546542", 
-            "DT201409021950228312",
-            "DT201409021950228314",
-            "DT201406161117472041"
-//            "DT201404081141327671", 
-//            "DT201404081141327673"
-    );
-    //openNodeHierarchy("#tree", lstHierarchy);
-    
-    /**
-     * The plugin (derrived from <a href=" http://api.jqueryui.com/jQuery.widget/">jQuery.Widget</a>).<br>
-     * This constructor is not called directly. Use `$(selector).fancytree({})`
-     * to initialize the plugin instead.<br>
-     * <pre class="sh_javascript sunlight-highlight-javascript">// Access widget methods and members:
-     * var tree = $("#tree").fancytree("getTree");
-     * var node = $("#tree").fancytree("getActiveNode", "1234");
-     * </pre>
-     *
-     * @mixin Fancytree_Widget
-     */
-
-
-     
-    /** Return the parent keys separated by options.keyPathSeparator, e.g. "id_1/id_17/id_32".
-     * @param {boolean} [excludeSelf=false]
-     * @returns {string}
-     */
-//    getKeyPath: function(excludeSelf) {
-      /** Return an array of all parent nodes (top-down).
-       * @param {boolean} [includeRoot=false] Include the invisible system root node.
-       * @param {boolean} [includeSelf=false] Include the node itself.
-       * @returns {FancytreeNode[]}
-       */
-//      getParentList: function(includeRoot, includeSelf) {
-
-    
-    var xxx;
-  }, 1000);
-
-</script>
-
-</body>
-</html>
