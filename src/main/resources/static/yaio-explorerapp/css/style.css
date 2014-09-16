@@ -26,6 +26,27 @@ body {
     width: 100%;
 }
 
+
+/**
+ * Exploer-Tree-Styles
+ **/
+.togglecontainer {
+    width: 100%;
+}
+.yaio-details {
+    width: 100%;
+}
+.yaio-tree {
+    width: 100%;
+}
+.verortung {
+   width: 100%;
+}
+.verortung .entry {
+   float: left;
+   padding: 3px;
+}
+
 /**
  * Exploer-Tree-Styles
  **/

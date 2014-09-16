@@ -1,17 +1,11 @@
-<table class="table" ng-controller="NodeShowCtrl">
-  <tr>
-    <td>
-      <span class="node-state-{{parentnode.state}}" ng-repeat="parentnode in nodeHierarchy">
-      <b>--&gt;</b> 
+<div class="verortung" ng-controller="NodeShowCtrl">
+    <div class="entry node-state-{{parentnode.state}}" ng-repeat="parentnode in nodeHierarchy">
+      <b> --&gt;</b> 
           <a href='#/show/{{parentnode.sysUID}}' class="btn btn-default btn-sm" >
               <state value="parentnode.state" /> 
               - {{parentnode.name}}
            </a>
-      </span>
-    </td>
-    <td>
-      <span class="node-state-{{node.state}}"><b>--&gt; <state value="node.state" /> - {{node.name}}</b></span>
-      </td>
-  </tr>
-</table>
+    </div>
+    <div class="entry node-state-{{node.state}}"><b> --&gt; <state value="node.state" /> - {{node.name}}</b></div>
+</div>
 
