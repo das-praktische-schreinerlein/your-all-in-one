@@ -5,7 +5,7 @@ var showUrl = baseUrl + "show/";
 var updateUrl = baseUrl + "update/";
 var moveUrl = baseUrl + "move/";
 
-function createYAIOFancyTree(treeId, masterNodeId){
+function createYAIOFancyTree(treeId, masterNodeId, doneHandler){
     $(treeId).flgYAIOFancyTreeLoaded = true;
     $(treeId).fancytree({
         checkbox: true,
@@ -21,7 +21,8 @@ function createYAIOFancyTree(treeId, masterNodeId){
         // lazy load the children
         lazyLoad: function(event, data) {
             var node = data.node;
-            console.debug("load data for " + node.key + " from " + showUrl + node.key);
+            console.debug("createYAIOFancyTree load data for " + node.key 
+                    + " from " + showUrl + node.key);
             data.result = {
                 url: showUrl + node.key,
                 cache: false
@@ -97,8 +98,8 @@ function createYAIOFancyTree(treeId, masterNodeId){
         },
         table: {
             indentation: 20,
-            nodeColumnIdx: 2,
-            checkboxColumnIdx: 0
+            nodeColumnIdx: 1,
+//            checkboxColumnIdx: 0
         },
         gridnav: {
             autofocusInput: false,
@@ -213,7 +214,17 @@ function createYAIOFancyTree(treeId, masterNodeId){
             $(this).trigger("nodeCommand", {cmd: cmd});
             return false;
         }
-    });
+    })
+    
+    setTimeout(function() {
+        console.log("load tree done:" + masterNodeId);
+
+        // openLoadHirarchy for activeNodeId when done
+        if (doneHandler) {
+            console.log("createYAIOFancyTree call doneHandler:");
+            doneHandler();
+        }
+    }, 1000);
 
     /*
      * Context menu (https://github.com/mar10/jquery-ui-contextmenu)
@@ -315,11 +326,18 @@ function openNodeHierarchy(treeId, lstIdsHierarchy) {
                     + "' lstIdsHierarchy is empty.");
         return;
     }
-    var firstNodeId = lstIdsHierarchy.shift();
-    var firstNode = rootNode.mapChildren[firstNodeId];
+    
+    // search for firstNode in rootTree, ignore if not found
+    var firstNodeId, firstNode;
+    var lstIdsHierarchySave = lstIdsHierarchy;
+    while (! firstNode && lstIdsHierarchy.length > 0) {
+        firstNodeId = lstIdsHierarchy.shift();
+        firstNode = rootNode.mapChildren[firstNodeId];
+    }
     if (! firstNode) {
         console.error("openHierarchy: error for tree:'" + treeId 
-                    + "' firstNode:'" + firstNodeId + "' not found.");
+                    + "' firstNode of:'" + lstIdsHierarchySave 
+                    + "' not found on rootNode.");
         return;
     }
 
@@ -329,6 +347,32 @@ function openNodeHierarchy(treeId, lstIdsHierarchy) {
     firstNode.setExpanded(true, opts);
 }
 
+function openNodeHierarchyForNodeId(treeId, activeNodeId) {
+    // check for tree
+    var tree = $(treeId).fancytree("getTree");
+    if (! tree) {
+        console.error("openNodeHierarchyForNodeId: error tree:'" + treeId + "' not found.");
+        return;
+    }
+    
+    // check for activeNodeId
+    var treeNode = tree.getNodeByKey(activeNodeId);
+    if (! treeNode) {
+        console.error("openNodeHierarchyForNodeId: error for tree:'" + treeId 
+                + "' activeNode " + activeNodeId + " not found.");
+        return null;
+    }
+
+    // Return the parent keys separated by options.keyPathSeparator, e.g. "id_1/id_17/id_32"
+    var keyPath = treeNode.getKeyPath(false);
+    // extract lstIdsHierarchy
+    var lstIdsHierarchy = keyPath.split("/");
+    console.log("openNodeHierarchyForNodeId: extracted lst:" 
+            + lstIdsHierarchy + " from keyPath:" + keyPath);
+    
+    // open Hierarchy
+    openNodeHierarchy(treeid, lstIdsHierarchy);
+}
 
 function saveNode(newData, data) {
     var json = JSON.stringify({name: data.input.val()});
@@ -395,67 +439,97 @@ function doUpdateNode(node, url, json) {
 }
 
 function renderColumnsForNode(event, data) {
-    var node = data.node,
-      $tdList = $(node.tr).find(">td");
-
-    // (index #0 is rendered by fancytree by adding the checkbox)
-    if( node.isFolder() ) {
-      // make the title cell span the remaining columns, if it is a folder:
-      $tdList.eq(2)
-        .prop("colspan", 6)
-        .nextAll().remove();
-    }
-    
+    // exract nodedata
+    var node = data.node;
     var basenodedata = node.data.basenode;
 
     var nodestate = basenodedata.state;
     var statestyle = "node-state-" + nodestate;
+    
+    // get tdlist
+    var $tdList = $(node.tr).find(">td");
+
+    // (index #0 is rendered by fancytree by adding the checkbox)
 //    $tdList.eq(1).text(node.getIndexHier()).addClass("alignRight").addClass(statestyle);
-    $tdList.eq(1).html("<a href='#/show/" + basenodedata.sysUID + "'>OPEN</a>").addClass("alignRight").addClass(statestyle);
+
+    // add stateclasss to tr
+    $(node.tr).addClass(statestyle).addClass("container_nodeline");
+    
+    // add fields
+    $tdList.eq(0).html(
+            "<a href='#/show/" + basenodedata.sysUID + "' class='button'>OPEN</a> "
+            + "<a onclick=\"javascript: openEditorForNode('" + basenodedata.sysUID + "'); return false;\" class='button'>EDIT</a>"
+            ).addClass("container_field")
+             .addClass("fieldtype_actions")
+             .addClass(statestyle);
     // (index #2 is rendered by fancytree)
-    $tdList.eq(2).addClass("field_name").addClass(statestyle);
+    $tdList.eq(1).addClass("container_field")
+                 .addClass("fieldtype_name")
+                 .addClass("field_name")
+                 .addClass(statestyle);
 
     // currente datablock
     var nodeDataBlock = "";
-    $table = $("<table />");
-    $row = $("<tr />");
+    $table = $("<div class='container_data_table' />");
+    $row = $("<div class='container_data_row'/>");
     $table.append($row);
     
     // default fields
-    $row.append($("<td />").html(basenodedata.className).addClass("field_type").addClass(statestyle));
-    $row.append($("<td />").html(basenodedata.state).addClass("field_state").addClass(statestyle));
+    $row.append($("<div />").html(basenodedata.className)
+           .addClass("container_field")
+           .addClass("fieldtype_type")
+           .addClass("field_type")
+           .addClass(statestyle));
+    $row.append($("<div />").html(basenodedata.state)
+            .addClass("container_field")
+            .addClass("fieldtype_state")
+            .addClass("field_state")
+            .addClass(statestyle));
     
-    if (basenodedata.className == "TaskNode") {
+    if (basenodedata.className == "TaskNode" || basenodedata.className == "EventNode") {
         // TaskNode
         $row.append(
-                $("<td />").html(formatNumbers(basenodedata.istChildrenSumStand, 2, "%")).addClass("field_istChildrenSumStand").addClass(statestyle)); 
+                $("<div />").html(formatNumbers(basenodedata.istChildrenSumStand, 2, "%"))
+                        .addClass("container_field")
+                        .addClass("fieldtype_stand")
+                        .addClass("field_istChildrenSumStand")
+                        .addClass(statestyle)); 
         $row.append(
-                $("<td />").html(formatNumbers(basenodedata.istChildrenSumAufwand, 2, "h")).addClass("field_istChildrenSumAufwand").addClass(statestyle));
+                $("<div />").html(formatNumbers(basenodedata.istChildrenSumAufwand, 2, "h"))
+                        .addClass("container_field")
+                        .addClass("fieldtype_aufwand")
+                        .addClass("field_istChildrenSumAufwand")
+                        .addClass(statestyle));
         $row.append(
-                $("<td />").html(formatGermanDate(basenodedata.istChildrenSumStart)
-                         + "-" + formatGermanDate(basenodedata.istChildrenSumEnde)).addClass("field_istChildrenSum").addClass(statestyle));
+                $("<div />").html(formatGermanDate(basenodedata.istChildrenSumStart)
+                        + "-" + formatGermanDate(basenodedata.istChildrenSumEnde))
+                         .addClass("container_field")
+                         .addClass("fieldtype_fromto")
+                         .addClass("field_istChildrenSum")
+                         .addClass(statestyle));
         $row.append(
-                $("<td />").html(formatNumbers(basenodedata.planChildrenSumAufwand, 2, "h")).addClass("field_planChildrenSumAufwand").addClass(statestyle));
+                $("<div />").html(formatNumbers(basenodedata.planChildrenSumAufwand, 2, "h"))
+                         .addClass("container_field")
+                         .addClass("fieldtype_aufwand")
+                         .addClass("field_planChildrenSumAufwand")
+                         .addClass(statestyle));
         $row.append(
-                $("<td />").html(formatGermanDate(basenodedata.planChildrenSumStart)
-                         + "-" + formatGermanDate(basenodedata.planChildrenSumEnde)).addClass("field_planChildrenSum").addClass(statestyle));
+                $("<div />").html(formatGermanDate(basenodedata.planChildrenSumStart)
+                         + "-" + formatGermanDate(basenodedata.planChildrenSumEnde))
+                         .addClass("container_field")
+                         .addClass("fieldtype_fromto")
+                         .addClass("field_planChildrenSum")
+                         .addClass(statestyle));
     } else if (basenodedata.className == "UrlResNode") {
         // url
         $row.append(
-                $("<td />").html("<a href='" + basenodedata.resLocRef + "' target='_blank'>" + basenodedata.resLocRef).addClass("field_resLocRef").addClass(statestyle)); 
+                $("<div />").html("<a href='" + basenodedata.resLocRef + "' target='_blank'>" 
+                                 + basenodedata.resLocRef + "</a>")
+                          .addClass("container_field")
+                          .addClass("fieldtype_url")
+                          .addClass("field_resLocRef")
+                          .addClass(statestyle)); 
     } else if (basenodedata.className == "InfoNode") {
-    } else if (basenodedata.className == "EventNode") {
-        $row.append(
-                $("<td />").html(formatNumbers(basenodedata.istChildrenSumStand, 2, "%")).addClass("field_istChildrenSumStand").addClass(statestyle)); 
-        $row.append($("<td />").html(formatNumbers(basenodedata.istChildrenSumAufwand, 2, "h")).addClass("field_istChildrenSumAufwand").addClass(statestyle));
-        $row.append(
-                $("<td />").html(formatGermanDate(basenodedata.istChildrenSumStart)
-                         + "-" + formatGermanDate(basenodedata.istChildrenSumEnde)).addClass("field_istChildrenSum").addClass(statestyle));
-        $row.append(
-                $("<td />").html(formatNumbers(basenodedata.planChildrenSumAufwand, 2, "h")).addClass("field_planChildrenSumAufwand").addClass(statestyle));
-        $row.append(
-                $("<td />").html(formatGermanDate(basenodedata.planChildrenSumStart)
-                         + "-" + formatGermanDate(basenodedata.planChildrenSumEnde)).addClass("field_planChildrenSum").addClass(statestyle));
     }
     $nodeDataBlock = $table;
     
@@ -466,23 +540,12 @@ function renderColumnsForNode(event, data) {
         var columnCount = $(">td", $row).length;
         
         $nodeDataBlock.append(
-                $("<br /><div class='togglecontainer' id='detail_desc_" + basenodedata.sysUID + "'><pre>" 
+                $("<br clear=all/><div class='togglecontainer' id='detail_desc_" + basenodedata.sysUID + "'><pre>" 
                         + basenodedata.nodeDesc + "</pre></div>").addClass("field_nodeDesc"));
-        
-        // append toogler
-//        $toggler = $("<div id='toogler_desc_" + basenodedata.sysUID + "' />");
     }
     
     // add nodeData
-    $tdList.eq(3).html($nodeDataBlock).addClass("block_nodedata");
-    $tdList.eq(4).html($toggler).addClass("toggler");
-
-    // append toggler
-    if ($toggler != "") {
-        jMATService.getPageLayoutService().appendBlockToggler(
-                'toogler_desc_' + basenodedata.sysUID, 'detail_desc_' + basenodedata.sysUID);
-        jMATService.getLayoutService().togglerBlockHide('detail_desc_' + basenodedata.sysUID, 'detail_desc_' + basenodedata.sysUID, {});
-    }
+    $tdList.eq(2).html($nodeDataBlock).addClass("block_nodedata");
 };
 
 function createFancyDataFromNodeData(node) {
@@ -528,14 +591,67 @@ function postProcessNodeData(event, data) {
     data.result = list;
 }
 
-function createOrReloadYAIOFancyTree(treeId, masterNodeId){
+function createOrReloadYAIOFancyTree(treeId, masterNodeId, doneHandler){
     // check if already loaded
     if ($(treeId).flgYAIOFancyTreeLoaded) {
-        console.log("createOrReloadYAIOFancyTree: flgYAIOFancyTreeLoaded is set: reload=" + showUrl + masterNodeId);
+        console.log("createOrReloadYAIOFancyTree: flgYAIOFancyTreeLoaded is set: reload=" 
+                + showUrl + masterNodeId);
         var tree = $(treeId).fancytree("getTree");
-        tree.reload(showUrl + masterNodeId);
+        tree.reload(showUrl + masterNodeId).done(function(){
+            console.log("createOrReloadYAIOFancyTree reload tree done:" + masterNodeId);
+
+            // check if doneHandler
+            if (doneHandler) {
+                console.log("createOrReloadYAIOFancyTree call doneHandler");
+                doneHandler();
+            }
+        });
     } else {
-        console.log("createOrReloadYAIOFancyTree: flgYAIOFancyTreeLoaded not set: create=" + showUrl + masterNodeId);
-        createYAIOFancyTree(treeId, masterNodeId);
+        console.log("createOrReloadYAIOFancyTree: flgYAIOFancyTreeLoaded not set:"
+                + " create=" + showUrl + masterNodeId);
+        createYAIOFancyTree(treeId, masterNodeId, doneHandler);
     }
+}
+
+
+
+function openEditorForNode(nodeId, caller) {
+    if (nodeId) {
+        // reset editor
+        console.log("reset editor");
+        $("#containerYaioTree").css("width", "100%");
+        // set top to ypos of calling node $("#containerYaioEditor").top("600");
+        $("#containerYaioEditor").css("width", "100%");
+        $("#containerYaioEditor").css("display", "node");
+
+        // load node
+        var tree = $("#tree").fancytree("getTree");
+        if (!tree) {
+            // tree not found
+            console.error("error openEditorForNode: cant load tree");
+            return null;
+        }
+        var treeNode = tree.getNodeByKey(nodeId);
+        if (! treeNode) {
+            console.error("error openEditorForNode: cant load node:" + nodeId);
+            return null;
+        }
+
+        // extract data
+        var node = treeNode.data.basenode;
+        
+        // set values and trigger
+        $("#inputName").val(node.name).trigger('input');
+        // trigger hidden elements
+        $("#inputSysUID").val(node.sysUID).trigger('input').triggerHandler("change");
+        console.log("set inputName" + node.name + " for " + node.sysUID);
+        
+        // show editor
+        var width = $("#box_data").width();
+        console.log("show editor");
+        $("#containerYaioEditor").css("width", "600px");
+        $("#containerYaioTree").css("width", (width - $("#containerYaioEditor").width() - 10) + "px");
+        // set top to ypos of calling node $("#containerYaioEditor").top("600");
+        $("#containerYaioEditor").css("display", "block");
+    } 
 }

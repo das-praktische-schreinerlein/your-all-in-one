@@ -25,21 +25,31 @@ body {
 .box-portdesc-data {
     width: 100%;
 }
+.hidden {
+    display: none;
+}
 
 
 /**
- * Exploer-Tree-Styles
+ * Explorer-Tree-Styles
  **/
 .togglecontainer {
     width: 100%;
 }
-.yaio-details {
+.container-yaio-details {
     width: 100%;
 }
-.yaio-tree {
+.container-yaio-tree {
+    float: left;
     width: 100%;
+    overflow-x:auto;
 }
-.verortung {
+.container-yaio-editor {
+    float: left;
+    display: none;
+    overflow-x:auto;
+}
+.container-verortung {
    width: 100%;
 }
 .verortung .entry {
@@ -50,9 +60,27 @@ body {
 /**
  * Exploer-Tree-Styles
  **/
+.container-yaio-tree-table {
+    width: 1200px;
+}
+.container_nodeline {
+    width: 1200px;
+}
+.container_data_table {
+    float: left;
+    width: 500px;
+}
+.container_data_row {
+    float: left;
+    clear: both;
+    width: 500px;
+}
+.container_field {
+    float: left;
+}
 .field_name {
    text-align: left;
-   min-width: 600px;
+   min-width: 500px;
 }
 .field_type {
    text-align: left;
@@ -61,21 +89,38 @@ body {
    text-align: left;
 }
 .field_istChildrenSumStand {
-   text-align: right;
 }
 .field_istChildrenSumAufwand {
-   text-align: right;
 }
 .field_istChildrenSum {
-   text-align: right;
 }
 .field_planChildrenSumAufwand {
-   text-align: right;
 }
 .field_planChildrenSum {
-   text-align: right;
 }
-
+.fieldtype_stand {
+   text-align: right;
+   width: 50px;
+}
+.fieldtype_stand {
+   text-align: right;
+   width: 50px;
+}
+.fieldtype_aufwand {
+   text-align: right;
+   width: 50px;
+}
+.fieldtype_fromto {
+   text-align: right;
+   width: 120px;
+}
+.fieldtype_url {
+   text-align: left;
+}
+.fieldtype_actions {
+   text-align: left;
+   width: 80px;
+}
 
 /**
  * Node-Stati
