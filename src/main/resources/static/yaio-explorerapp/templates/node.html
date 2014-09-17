@@ -62,13 +62,10 @@
     -->
     <div id="containerYaioEditor" class="container-yaio-editor" ng-controller="NodeShowCtrl">
 
-    Hier Edit-Formular, wenn abgesendet und alles Ok -> openHierarchy EditCtrl
-    definirt funktion save() die von Button aufgerunfen wird
-
-
     <form id="nodeForm" name="nodeForm">
       <!-- simulate hiddenfield -->
       <input class="hidden" type="text" name="sysUID" ng-model="nodeForEdit.sysUID" id="inputSysUID" required ng-change="">
+      <input class="hidden" type="text" name="className" ng-model="nodeForEdit.className" id="inputClassName" required ng-change="">
       
       <!-- show textfield -->
       <div class="control-group" ng-class="{error: nodeForm.name.$invalid && !nodeForm.name.$pristine}">

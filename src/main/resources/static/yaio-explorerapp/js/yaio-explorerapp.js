@@ -46,36 +46,38 @@ angular.module('yaioExplorerApp', ['ngAnimate', 'ngRoute'])
         $scope.nodeForEdit = {};
         
         // check activeNodeId
+        var activeNodeIdHandler;
         var activeNodeId = $routeParams.activeNodeId;
-        
-        // function to get NodeHierarchy fro activeNodeId
-        var activeNodeIdHandler = function() {
-            console.log("start loading activenodes:" + activeNodeId)
-            $http.get('/nodes/show/' + activeNodeId).then(function(nodeResponse) {
-                // check response
-                var state = nodeResponse.data.state;
-                if (state == "OK") {
-                    // all fine
-                    console.log("NodeShowCtrl - OK loading activenodes:" + nodeResponse.data.stateMsg)
-                    
-                    // create nodehierarchy
-                    var nodeIdHierarchy = new Array();
-                    var parentNode = nodeResponse.data.node.parentNode;
-                    while (parentNode != null && parentNode != "" && parentNode != "undefined") {
-                        nodeIdHierarchy.push(parentNode.sysUID);
-                        parentNode = parentNode.parentNode;
+        if (activeNodeId) {
+            // function to get NodeHierarchy fro activeNodeId
+            activeNodeIdHandler = function() {
+                console.log("start loading activenodes:" + activeNodeId)
+                $http.get('/nodes/show/' + activeNodeId).then(function(nodeResponse) {
+                    // check response
+                    var state = nodeResponse.data.state;
+                    if (state == "OK") {
+                        // all fine
+                        console.log("NodeShowCtrl - OK loading activenodes:" + nodeResponse.data.stateMsg)
+                        
+                        // create nodehierarchy
+                        var nodeIdHierarchy = new Array();
+                        var parentNode = nodeResponse.data.node.parentNode;
+                        while (parentNode != null && parentNode != "" && parentNode != "undefined") {
+                            nodeIdHierarchy.push(parentNode.sysUID);
+                            parentNode = parentNode.parentNode;
+                        }
+                        nodeIdHierarchy.reverse();
+                        
+                        // open Hierarchy
+                        openNodeHierarchy("#tree", nodeIdHierarchy);
+                    } else {
+                        // error
+                        console.error("error loading activenodes:" + nodeResponse.data.stateMsg 
+                                + " details:" + nodeResponse)
                     }
-                    nodeIdHierarchy.reverse();
                     
-                    // open Hierarchy
-                    openNodeHierarchy("#tree", nodeIdHierarchy);
-                } else {
-                    // error
-                    console.error("error loading activenodes:" + nodeResponse.data.stateMsg 
-                            + " details:" + nodeResponse)
-                }
-                
-            });
+                });
+            }
         }
     
         // load data
@@ -109,10 +111,25 @@ angular.module('yaioExplorerApp', ['ngAnimate', 'ngRoute'])
 
         // add save
         $scope.save = function() {
-            // get save
+            // define json for common fields
             var json = JSON.stringify({name: $scope.nodeForEdit.name});
-            var url = updateUrl + $scope.nodeForEdit.sysUID;
+            
+            // do extra for the different classNames
+            if ($scope.nodeForEdit.className == "TaskNode") {
+                
+            } else if ($scope.nodeForEdit.className == "EventNode") {
+                
+            } else if ($scope.nodeForEdit.className == "InfoNode") {
+                
+            } else if ($scope.nodeForEdit.className == "UrlResNode") {
+                
+            }
+            
+            // create url
+            var url = updateUrl + $scope.nodeForEdit.className + "/" + $scope.nodeForEdit.sysUID;
             console.log("NodeSave - url::" + url + " data:" + json);
+            
+            // do http
             $http({
                     method: 'PATCH',
                     url: url,
@@ -127,6 +144,8 @@ angular.module('yaioExplorerApp', ['ngAnimate', 'ngRoute'])
                     // reload
                     var newUrl = '/show/' + nodeId + '/activate/' + $scope.nodeForEdit.sysUID;
                     console.log("reaload:" + newUrl);
+                    
+                    // TODO: no cache!!!
                     $location.path(newUrl);
                 } else {
                     // error

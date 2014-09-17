@@ -32,6 +32,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import de.yaio.core.node.BaseNode;
+import de.yaio.core.node.EventNode;
+import de.yaio.core.node.InfoNode;
+import de.yaio.core.node.TaskNode;
+import de.yaio.core.node.UrlResNode;
 import de.yaio.core.nodeservice.BaseNodeService;
 
 /**
@@ -111,7 +115,7 @@ public class NodeController {
      * <h4>FeatureDomain:</h4>
      *     Webservice
      * <h4>FeatureDescription:</h4>
-     *     read the node for sysUID and return it with children as JSON
+     *     Request to read the node for sysUID and return it with children as JSON
      * <h4>FeatureResult:</h4>
      *   <ul>
      *     <li>NodeControllerResponse (OK, ERROR) with the node for sysUID
@@ -146,6 +150,40 @@ public class NodeController {
     }
     
     
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
+     *     map the nodeData from newNode to origNode
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>boolean flgChange - true if data changed
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice Query
+     * @param origNode - 
+     * @param newNode - the new node created from request-data
+     * @return true if data changed
+     * @throws IllegalAccessException - thrown if class of origNode!=newNode
+     */
+    public boolean mapNodeData(BaseNode origNode, BaseNode newNode) 
+                    throws IllegalAccessException {
+        boolean flgChange = false;
+        
+        // check class
+        if (! origNode.getClassName().equals(newNode.getClassName())) {
+            // class differ!!
+            throw new IllegalAccessException("cant map origNode (" + origNode.getClassName() + "):" 
+                            + origNode.getSysUID() + " with newNode:" + newNode.getClassName());
+        }
+        // check for new name
+        if (newNode.getName() != null) {
+            origNode.setName(newNode.getName());
+            flgChange = true;
+        }
+        
+        return flgChange;
+    }
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -162,11 +200,7 @@ public class NodeController {
      * @param newNode - the node created from request-data
      * @return NodeControllerResponse (OK, ERROR) with the node for sysUID
      */
-    @RequestMapping(method=RequestMethod.PATCH, value = "/update/{sysUID}")
-    public @ResponseBody NodeResponse updateNode(
-                @PathVariable(value="sysUID") String sysUID, 
-                @RequestBody BaseNode newNode) {
-        // create default response
+    public NodeResponse updateNode(String sysUID, BaseNode newNode) {
         NodeResponse response = new NodeResponse(
                         "ERROR", "node '" + sysUID + "' doesnt exists", 
                         null, null, null, null);
@@ -186,12 +220,9 @@ public class NodeController {
             BaseNode parent = null;
             node.initChildNodesFromDB(0);
             node.initChildNodesForParentsFromDB();
-
-            // check for new name
-            if (newNode.getName() != null) {
-                node.setName(newNode.getName());
-                flgChange = true;
-            }
+            
+            // map data
+            flgChange = mapNodeData(node, newNode);
 
             // check for needed update
             if (flgChange) {
@@ -239,12 +270,128 @@ public class NodeController {
         
         return response;
     }
+    
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
+     *     Request to update the BaseNode sysUID and return it with children as JSON
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>NodeControllerResponse (OK, ERROR) with the node for sysUID
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice Query
+     * @param sysUID - sysUID to filter
+     * @param newNode - the node created from request-data
+     * @return NodeControllerResponse (OK, ERROR) with the node for sysUID
+     */
+    @RequestMapping(method=RequestMethod.PATCH, value = "/update/BaseNode/{sysUID}")
+    public @ResponseBody NodeResponse updateBaseNode(
+                @PathVariable(value="sysUID") String sysUID, 
+                @RequestBody BaseNode newNode) {
+        // create default response
+        return this.updateNode(sysUID, newNode);
+    }
 
     /**
      * <h4>FeatureDomain:</h4>
      *     Webservice
      * <h4>FeatureDescription:</h4>
-     *     move the node sysUID to newParentSysUID and return it with children as JSON
+     *     Request to update the EventNode sysUID and return it with children as JSON
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>NodeControllerResponse (OK, ERROR) with the node for sysUID
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice Query
+     * @param sysUID - sysUID to filter
+     * @param newNode - the node created from request-data
+     * @return NodeControllerResponse (OK, ERROR) with the node for sysUID
+     */
+    @RequestMapping(method=RequestMethod.PATCH, value = "/update/TaskNode/{sysUID}")
+    public @ResponseBody NodeResponse updateTaskNode(
+                @PathVariable(value="sysUID") String sysUID, 
+                @RequestBody TaskNode newNode) {
+        // create default response
+        return this.updateNode(sysUID, newNode);
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
+     *     Request to update the TaskNode sysUID and return it with children as JSON
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>NodeControllerResponse (OK, ERROR) with the node for sysUID
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice Query
+     * @param sysUID - sysUID to filter
+     * @param newNode - the node created from request-data
+     * @return NodeControllerResponse (OK, ERROR) with the node for sysUID
+     */
+    @RequestMapping(method=RequestMethod.PATCH, value = "/update/EventNode/{sysUID}")
+    public @ResponseBody NodeResponse updateEventNode(
+                @PathVariable(value="sysUID") String sysUID, 
+                @RequestBody EventNode newNode) {
+        // create default response
+        return this.updateNode(sysUID, newNode);
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
+     *     Request to update the TaskNode sysUID and return it with children as JSON
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>NodeControllerResponse (OK, ERROR) with the node for sysUID
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice Query
+     * @param sysUID - sysUID to filter
+     * @param newNode - the node created from request-data
+     * @return NodeControllerResponse (OK, ERROR) with the node for sysUID
+     */
+    @RequestMapping(method=RequestMethod.PATCH, value = "/update/UrlResNode/{sysUID}")
+    public @ResponseBody NodeResponse updateEventNode(
+                @PathVariable(value="sysUID") String sysUID, 
+                @RequestBody UrlResNode newNode) {
+        // create default response
+        return this.updateNode(sysUID, newNode);
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
+     *     Request to update the InfoNode sysUID and return it with children as JSON
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>NodeControllerResponse (OK, ERROR) with the node for sysUID
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice Query
+     * @param sysUID - sysUID to filter
+     * @param newNode - the node created from request-data
+     * @return NodeControllerResponse (OK, ERROR) with the node for sysUID
+     */
+    @RequestMapping(method=RequestMethod.PATCH, value = "/update/InfoNode/{sysUID}")
+    public @ResponseBody NodeResponse updateEventNode(
+                @PathVariable(value="sysUID") String sysUID, 
+                @RequestBody InfoNode newNode) {
+        // create default response
+        return this.updateNode(sysUID, newNode);
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
+     *     Request to move the node sysUID to newParentSysUID and return it with children as JSON
      * <h4>FeatureResult:</h4>
      *   <ul>
      *     <li>NodeControllerResponse (OK, ERROR) with the node for sysUID
@@ -257,7 +404,7 @@ public class NodeController {
      * @return NodeControllerResponse (OK, ERROR) with the node for sysUID
      */
     @RequestMapping(method=RequestMethod.PATCH, value = "/move/{sysUID}/{newParentSysUID}")
-    public @ResponseBody NodeResponse updateNode(
+    public @ResponseBody NodeResponse moveNode(
                 @PathVariable(value="sysUID") String sysUID,
                 @PathVariable(value="newParentSysUID") String newParentSysUID) {
         // create default response

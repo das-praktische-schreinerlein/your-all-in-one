@@ -8,11 +8,13 @@ var moveUrl = baseUrl + "move/";
 function createYAIOFancyTree(treeId, masterNodeId, doneHandler){
     $(treeId).flgYAIOFancyTreeLoaded = true;
     $(treeId).fancytree({
+        
+        // save masterNodeId
+        masterNodeId: masterNodeId,
+        
         checkbox: true,
         titlesTabbable: true,     // Add all node titles to TAB chain
   
-//// MS Start
-  // initial source is MasterplanMasternode1
         source: { 
             url: showUrl + masterNodeId, 
             cache: false 
@@ -57,7 +59,7 @@ function createYAIOFancyTree(treeId, masterNodeId, doneHandler){
             dragDrop: function(node, data) {
                 if (confirm("Wollen Sie die Node wirklich verschieben?")) {
                     data.otherNode.moveTo(node, data.hitMode);
-                    moveNode(node, data);
+                    yaioMoveNode(data.otherNode, node.key);
                     return true;
                 } else {
                     // discard
@@ -68,18 +70,29 @@ function createYAIOFancyTree(treeId, masterNodeId, doneHandler){
         edit: {
             triggerStart: ["f2", "dblclick", "shift+click", "mac+enter"],
             beforeEdit: function(event, data){
+                // open yaio-editor
+                openEditorForNode(data.node.key);
+                
                 // Return false to prevent edit mode
+                // dont use fancyeditor
+                return false;
             },
             edit: function(event, data){
+                // unused because we use the yaioeditor
+                
                 // Editor was opened (available as data.input)
             },
             beforeClose: function(event, data){
+                // unused because we use the yaioeditor
+
                 // Return false to prevent cancel/save (data.input is available)
             },
             save: function(event, data){
+                // unused because we use the yaioeditor
+
                 if (confirm("Wollen Sie den Titel wirklich ändern?")) {
                     // Save data.input.val() or return false to keep editor open
-                    saveNode(this, data);
+                    yaioSaveNode(data);
                     // We return true, so ext-edit will set the current user input
                     // as title
                     return true;
@@ -89,6 +102,8 @@ function createYAIOFancyTree(treeId, masterNodeId, doneHandler){
                 }
             },
             close: function(event, data){
+                // unused because we use the yaioeditor
+
                 // Editor was removed
                 if( data.save ) {
                     // Since we started an async request, mark the node as preliminary
@@ -114,70 +129,94 @@ function createYAIOFancyTree(treeId, masterNodeId, doneHandler){
             node = tree.getActiveNode();
     
         switch( data.cmd ) {
-            case "moveUp":
-                node.moveTo(node.getPrevSibling(), "before");
-                node.setActive();
-                break;
-            case "moveDown":
-                node.moveTo(node.getNextSibling(), "after");
-                node.setActive();
-                break;
-            case "indent":
-                refNode = node.getPrevSibling();
-                node.moveTo(refNode, "child");
-                refNode.setExpanded();
-                node.setActive();
-                break;
-            case "outdent":
-                node.moveTo(node.getParent(), "after");
-                node.setActive();
-                break;
             case "rename":
                 node.editStart();
                 break;
-            case "remove":
-                node.remove();
+            case "indent":
+                if (confirm("Wollen Sie die Node wirklich verschieben?")) {
+                    // move fancynode
+                    refNode = node.getPrevSibling();
+                    node.moveTo(refNode, "child");
+                    refNode.setExpanded();
+                    node.setActive();
+                    
+                    // map rootnode to masterNodeId 
+                    var newParentKey = refNode.key;
+                    if (refNode.isRootNode()) {
+                        newParentKey = tree.options.masterNodeId;
+                    }
+                    
+                    // move yaioNode
+                    yaioMoveNode(node, newParentKey);
+                    return true;
+                } else {
+                    // discard
+                    return false;
+                }
+                
                 break;
-            case "addChild":
-                node.editCreateNode("child", "New node");
-                // refNode = node.addChildren({
-                //   title: "New node",
-                //   isNew: true
-                // });
-                // node.setExpanded();
-                // refNode.editStart();
-                break;
-            case "addSibling":
-                node.editCreateNode("after", "New node");
-                // refNode = node.getParent().addChildren({
-                //   title: "New node",
-                //   isNew: true
-                // }, node.getNextSibling());
-                // refNode.editStart();
-                break;
-            case "cut":
-                CLIPBOARD = {mode: data.cmd, data: node};
-                break;
-            case "copy":
-                CLIPBOARD = {
-                  mode: data.cmd,
-                  data: node.toDict(function(n){
-                    delete n.key;
-                  })
-                };
-                break;
-            case "clear":
-                CLIPBOARD = null;
-                break;
-            case "paste":
-                if( CLIPBOARD.mode === "cut" ) {
-                  // refNode = node.getPrevSibling();
-                  CLIPBOARD.data.moveTo(node, "child");
-                  CLIPBOARD.data.setActive();
-                } else if( CLIPBOARD.mode === "copy" ) {
-                  node.addChildren(CLIPBOARD.data).setActive();
+            case "outdent":
+                if (confirm("Wollen Sie die Node wirklich verschieben?")) {
+                    // move fancynode
+                    var newParent = node.getParent().getParent();
+                    node.moveTo(node.getParent(), "after");
+                    node.setActive();
+                    
+                    // map rootnode to masterNodeId 
+                    var newParentKey = newParent.key;
+                    if (newParent.isRootNode() || newParentKey == "undefined" || ! newParent) {
+                        newParentKey = tree.options.masterNodeId;
+                    }
+                    
+                    // move yaioNode
+                    yaioMoveNode(node, newParentKey);
+                    return true;
+                } else {
+                    // discard
+                    return false;
                 }
                 break;
+// TODO
+//            case "moveUp":
+//                node.moveTo(node.getPrevSibling(), "before");
+//                node.setActive();
+//                break;
+//            case "moveDown":
+//                node.moveTo(node.getNextSibling(), "after");
+//                node.setActive();
+//                break;
+//            case "remove":
+//                node.remove();
+//                break;
+//            case "addChild":
+//                node.editCreateNode("child", "New node");
+//                break;
+//            case "addSibling":
+//                node.editCreateNode("after", "New node");
+//                break;
+//            case "cut":
+//                CLIPBOARD = {mode: data.cmd, data: node};
+//                break;
+//            case "copy":
+//                CLIPBOARD = {
+//                  mode: data.cmd,
+//                  data: node.toDict(function(n){
+//                    delete n.key;
+//                  })
+//                };
+//                break;
+//            case "clear":
+//                CLIPBOARD = null;
+//                break;
+//            case "paste":
+//                if( CLIPBOARD.mode === "cut" ) {
+//                  // refNode = node.getPrevSibling();
+//                  CLIPBOARD.data.moveTo(node, "child");
+//                  CLIPBOARD.data.setActive();
+//                } else if( CLIPBOARD.mode === "copy" ) {
+//                  node.addChildren(CLIPBOARD.data).setActive();
+//                }
+//                break;
             default:
                 alert("Unhandled command: " + data.cmd);
                 return;
@@ -189,8 +228,8 @@ function createYAIOFancyTree(treeId, masterNodeId, doneHandler){
     
         if( c === "N" && e.ctrlKey && e.shiftKey) {
             cmd = "addChild";
-        } else if( c === "C" && e.ctrlKey ) {
-            cmd = "copy";
+//        } else if( c === "C" && e.ctrlKey ) {
+//            cmd = "copy";
         } else if( c === "V" && e.ctrlKey ) {
             cmd = "paste";
         } else if( c === "X" && e.ctrlKey ) {
@@ -201,11 +240,11 @@ function createYAIOFancyTree(treeId, masterNodeId, doneHandler){
             cmd = "remove";
         } else if( e.which === $.ui.keyCode.F2 ) {
             cmd = "rename";
-        } else if( e.which === $.ui.keyCode.UP && e.ctrlKey ) {
-            cmd = "moveUp";
-        } else if( e.which === $.ui.keyCode.DOWN && e.ctrlKey ) {
-            cmd = "moveDown";
-        } else if( e.which === $.ui.keyCode.RIGHT && e.ctrlKey ) {
+//        } else if( e.which === $.ui.keyCode.UP && e.ctrlKey ) {
+//            cmd = "moveUp";
+//        } else if( e.which === $.ui.keyCode.DOWN && e.ctrlKey ) {
+//            cmd = "moveDown";
+//        } else if( e.which === $.ui.keyCode.RIGHT && e.ctrlKey ) {
             cmd = "indent";
         } else if( e.which === $.ui.keyCode.LEFT && e.ctrlKey ) {
             cmd = "outdent";
@@ -238,9 +277,9 @@ function createYAIOFancyTree(treeId, masterNodeId, doneHandler){
             {title: "New sibling <kbd>[Ctrl+N]</kbd>", cmd: "addSibling", uiIcon: "ui-icon-plus" },
             {title: "New child <kbd>[Ctrl+Shift+N]</kbd>", cmd: "addChild", uiIcon: "ui-icon-arrowreturn-1-e" },
             {title: "----"},
-            {title: "Cut <kbd>Ctrl+X</kbd>", cmd: "cut", uiIcon: "ui-icon-scissors"},
-            {title: "Copy <kbd>Ctrl-C</kbd>", cmd: "copy", uiIcon: "ui-icon-copy"},
-            {title: "Paste as child<kbd>Ctrl+V</kbd>", cmd: "paste", uiIcon: "ui-icon-clipboard", disabled: true }
+//            {title: "Cut <kbd>Ctrl+X</kbd>", cmd: "cut", uiIcon: "ui-icon-scissors"},
+//            {title: "Copy <kbd>Ctrl-C</kbd>", cmd: "copy", uiIcon: "ui-icon-copy"},
+//            {title: "Paste as child<kbd>Ctrl+V</kbd>", cmd: "paste", uiIcon: "ui-icon-clipboard", disabled: true }
           ],
         beforeOpen: function(event, ui) {
             var node = $.ui.fancytree.getNode(ui.target);
@@ -374,19 +413,20 @@ function openNodeHierarchyForNodeId(treeId, activeNodeId) {
     openNodeHierarchy(treeid, lstIdsHierarchy);
 }
 
-function saveNode(newData, data) {
+function yaioSaveNode(data) {
     var json = JSON.stringify({name: data.input.val()});
     var url = updateUrl + data.node.key;
     doUpdateNode(data.node, url, json);
 }
 
-function moveNode(node, data) {
-    var json = JSON.stringify({parentNode: node.key});
-    var url = moveUrl + data.otherNode.key + "/" + node.key;
-    doUpdateNode(data.otherNode, url, json);
+function yaioMoveNode(node, newParentKey) {
+    console.log("move node:" + node.key + " to:" + newParentKey);
+    var json = JSON.stringify({parentNode: newParentKey});
+    var url = moveUrl + node.key + "/" + newParentKey;
+    yaioDoUpdateNode(node, url, json);
 }
 
-function doUpdateNode(node, url, json) {
+function yaioDoUpdateNode(node, url, json) {
     console.log("update node:" + node.key + " with:" + json);
     $.ajax({
         headers : {
@@ -644,6 +684,7 @@ function openEditorForNode(nodeId, caller) {
         $("#inputName").val(node.name).trigger('input');
         // trigger hidden elements
         $("#inputSysUID").val(node.sysUID).trigger('input').triggerHandler("change");
+        $("#inputClassName").val(node.className).trigger('input').triggerHandler("change");
         console.log("set inputName" + node.name + " for " + node.sysUID);
         
         // show editor
