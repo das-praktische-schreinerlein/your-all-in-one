@@ -1,11 +1,86 @@
-<div class="verortung" ng-controller="NodeShowCtrl">
-    <div class="entry node-state-{{parentnode.state}}" ng-repeat="parentnode in nodeHierarchy">
-      <b> --&gt;</b> 
-          <a href='#/show/{{parentnode.sysUID}}' class="btn btn-default btn-sm" >
-              <state value="parentnode.state" /> 
-              - {{parentnode.name}}
-           </a>
+<div class='box box-portdesc add2toc-h1 box-portdesc-thatsit' toclabel='Explorer' id='box_YAIO801'>
+<div class='boxline boxline-ue2 h2-portdesc h2-portdesc-thatsit' id='ue_YAIO801'>YAIO - D'Artagnan - Explorer</div>
+<div class='togglecontainer togglecontainer-thatsit' id='detail_YAIO801'>
+
+    <!-- 
+    *****************************
+    *****************************
+    * Current Data
+    *****************************
+    *****************************
+     -->
+    <div class="verortung" ng-controller="NodeShowCtrl">
+        <div class="entry node-state-{{parentnode.state}}" ng-repeat="parentnode in nodeHierarchy">
+          <b> --&gt;</b> 
+              <a href='#/show/{{parentnode.sysUID}}' class="btn btn-default btn-sm" >
+                  <state value="parentnode.state" /> 
+                  - {{parentnode.name}}
+               </a>
+        </div>
+        <div class="entry node-state-{{node.state}}"><b> --&gt; <state value="node.state" /> - {{node.name}}</b></div>
     </div>
-    <div class="entry node-state-{{node.state}}"><b> --&gt; <state value="node.state" /> - {{node.name}}</b></div>
+
+</div></div>
+
+<div class='box box-portdesc add2toc-h1 box-portdesc-data' toclabel='Daten' id='box_data'>
+
+    <!-- 
+    *****************************
+    *****************************
+    * Current Tree
+    *****************************
+    *****************************
+    -->
+    <div id="containerYaioTree" class="container-yaio-tree">
+
+        <div id="containerYaioTreeTable" class="container-yaio-tree-table">
+          <table id="tree">
+              <colgroup>
+              <col ></col>
+              <col class="name"></col>
+              <col class="dataBlock"></col>
+              </colgroup>
+              <thead>
+                <tr> 
+                  <th>O</th>
+                  <th>Name</th>
+                  <th>Data</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+          </table>
+        </div>
+    </div>
+
+    <!-- 
+    *****************************
+    *****************************
+    * Form
+    *****************************
+    *****************************
+    -->
+    <div id="containerYaioEditor" class="container-yaio-editor" ng-controller="NodeShowCtrl">
+
+    Hier Edit-Formular, wenn abgesendet und alles Ok -> openHierarchy EditCtrl
+    definirt funktion save() die von Button aufgerunfen wird
+
+
+    <form id="nodeForm" name="nodeForm">
+      <!-- simulate hiddenfield -->
+      <input class="hidden" type="text" name="sysUID" ng-model="nodeForEdit.sysUID" id="inputSysUID" required ng-change="">
+      
+      <!-- show textfield -->
+      <div class="control-group" ng-class="{error: nodeForm.name.$invalid && !nodeForm.name.$pristine}">
+        <label>Titel</label> 
+        <input type="text" name="name" ng-model="nodeForEdit.name" id="inputName" required ng-change=""> 
+        <span ng-show="nodeForm.name.$error.required && !nodeForm.name.$pristine" class="help-inline"> * {{nodeForm.name.$pristine}}</span>
+      </div>
+
+      <button ng-click="save()" ng-disabled="nodeForm.$invalid" class="btn btn-primary">Save</button>
+    </form>
+
+
+  </div>
 </div>
 
