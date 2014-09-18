@@ -662,7 +662,12 @@ function openEditorForNode(nodeId, caller) {
         $("#containerYaioTree").css("width", "100%");
         // set top to ypos of calling node $("#containerYaioEditor").top("600");
         $("#containerYaioEditor").css("width", "100%");
-        $("#containerYaioEditor").css("display", "node");
+        $("#containerYaioEditor").css("display", "none");
+        $("#containerYaioEditorTaskNode").css("display", "none");
+        $("#containerYaioEditorEventNode").css("display", "none");
+        $("#containerYaioEditorInfoNode").css("display", "none");
+        $("#containerYaioEditorUrlResNode").css("display", "none");
+        $("#containerYaioEditorSymLinkNode").css("display", "none");
 
         // load node
         var tree = $("#tree").fancytree("getTree");
@@ -681,11 +686,13 @@ function openEditorForNode(nodeId, caller) {
         var node = treeNode.data.basenode;
         
         // set values and trigger
-        $("#inputName").val(node.name).trigger('input');
+        $("#inputName" + node.className).val(node.name).trigger('input');
         // trigger hidden elements
-        $("#inputSysUID").val(node.sysUID).trigger('input').triggerHandler("change");
-        $("#inputClassName").val(node.className).trigger('input').triggerHandler("change");
+        $("#inputSysUID" + node.className).val(node.sysUID).trigger('input').triggerHandler("change");
+        $("#inputClassName" + node.className).val(node.className).trigger('input').triggerHandler("change");
         console.log("set inputName" + node.name + " for " + node.sysUID);
+        
+        // TODO: Mapping for the different nodetypes
         
         // show editor
         var width = $("#box_data").width();
@@ -694,5 +701,8 @@ function openEditorForNode(nodeId, caller) {
         $("#containerYaioTree").css("width", (width - $("#containerYaioEditor").width() - 10) + "px");
         // set top to ypos of calling node $("#containerYaioEditor").top("600");
         $("#containerYaioEditor").css("display", "block");
+        
+        // show form for the node-classname
+        $("#containerYaioEditor" + node.className).css("display", "block");
     } 
 }

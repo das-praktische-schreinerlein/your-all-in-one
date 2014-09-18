@@ -110,11 +110,12 @@ angular.module('yaioExplorerApp', ['ngAnimate', 'ngRoute'])
         });
 
         // add save
-        $scope.save = function() {
+        $scope.save = function(formName) {
             // define json for common fields
             var json = JSON.stringify({name: $scope.nodeForEdit.name});
-            
+
             // do extra for the different classNames
+            // TODO: Mapping
             if ($scope.nodeForEdit.className == "TaskNode") {
                 
             } else if ($scope.nodeForEdit.className == "EventNode") {

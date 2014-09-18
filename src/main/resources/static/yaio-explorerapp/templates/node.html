@@ -32,7 +32,6 @@
     *****************************
     -->
     <div id="containerYaioTree" class="container-yaio-tree">
-
         <div id="containerYaioTreeTable" class="container-yaio-tree-table">
           <table id="tree">
               <colgroup>
@@ -56,28 +55,84 @@
     <!-- 
     *****************************
     *****************************
-    * Form
+    * Forms
     *****************************
     *****************************
     -->
     <div id="containerYaioEditor" class="container-yaio-editor" ng-controller="NodeShowCtrl">
 
-    <form id="nodeForm" name="nodeForm">
-      <!-- simulate hiddenfield -->
-      <input class="hidden" type="text" name="sysUID" ng-model="nodeForEdit.sysUID" id="inputSysUID" required ng-change="">
-      <input class="hidden" type="text" name="className" ng-model="nodeForEdit.className" id="inputClassName" required ng-change="">
+        <!-- TODO: different fields for the nodetypes -->
+        <div class="hidden container-yaio-editor-tasknode" id="containerYaioEditorTaskNode">
+          <h2>Task bearbeiten:</h2>
+          <form class="hidden" id="nodeFormTaskNode" name="nodeFormTaskNode">
+            <!-- simulate hiddenfield -->
+            <input class="hidden" type="text" name="sysUID" ng-model="nodeForEdit.sysUID" id="inputSysUIDTaskNode" required ng-change="">
+            <input class="hidden" type="text" name="className" ng-model="nodeForEdit.className" id="inputClassNameTaskNode" required ng-change="">
+            
+            <!-- show textfield -->
+            <div class="control-group" ng-class="{error: nodeForm.name.$invalid && !nodeForm.name.$pristine}">
+              <label>Titel</label> 
+              <input type="text" name="name" ng-model="nodeForEdit.name" id="inputNameTaskNode" required ng-change=""> 
+              <span ng-show="nodeForm.name.$error.required && !nodeForm.name.$pristine" class="help-inline"> * {{nodeForm.name.$pristine}}</span>
+            </div>
       
-      <!-- show textfield -->
-      <div class="control-group" ng-class="{error: nodeForm.name.$invalid && !nodeForm.name.$pristine}">
-        <label>Titel</label> 
-        <input type="text" name="name" ng-model="nodeForEdit.name" id="inputName" required ng-change=""> 
-        <span ng-show="nodeForm.name.$error.required && !nodeForm.name.$pristine" class="help-inline"> * {{nodeForm.name.$pristine}}</span>
-      </div>
-
-      <button ng-click="save()" ng-disabled="nodeForm.$invalid" class="btn btn-primary">Save</button>
-    </form>
-
-
-  </div>
+            <button ng-click="save('TaskNode')" ng-disabled="nodeForm.$invalid" class="btn btn-primary">Save</button>
+          </form>
+        </div>
+        
+        <div class="hidden container-yaio-editor-eventnode" id="containerYaioEditorEventNode">
+          <h2>Event bearbeiten:</h2>
+          <form class="hidden" id="nodeFormEventNode" name="nodeFormEventNode">
+            <!-- simulate hiddenfield -->
+            <input class="hidden" type="text" name="sysUID" ng-model="nodeForEdit.sysUID" id="inputSysUIDEventNode" required ng-change="">
+            <input class="hidden" type="text" name="className" ng-model="nodeForEdit.className" id="inputClassNameEventNode" required ng-change="">
+            
+            <!-- show textfield -->
+            <div class="control-group" ng-class="{error: nodeForm.name.$invalid && !nodeForm.name.$pristine}">
+              <label>Titel</label> 
+              <input type="text" name="name" ng-model="nodeForEdit.name" id="inputNameEventNode" required ng-change=""> 
+              <span ng-show="nodeForm.name.$error.required && !nodeForm.name.$pristine" class="help-inline"> * {{nodeForm.name.$pristine}}</span>
+            </div>
+      
+            <button ng-click="save('EventNode')" ng-disabled="nodeForm.$invalid" class="btn btn-primary">Save</button>
+          </form>
+        </div>
+        
+        <div class="hidden container-yaio-editor-infonode" id="containerYaioEditorInfoNode">
+          <h2>Info bearbeiten:</h2>
+          <form class="hidden" id="nodeFormInfoNode" name="nodeFormInfoNode">
+            <!-- simulate hiddenfield -->
+            <input class="hidden" type="text" name="sysUID" ng-model="nodeForEdit.sysUID" id="inputSysUIDInfoNode" required ng-change="">
+            <input class="hidden" type="text" name="className" ng-model="nodeForEdit.className" id="inputClassNameInfoNode" required ng-change="">
+            
+            <!-- show textfield -->
+            <div class="control-group" ng-class="{error: nodeForm.name.$invalid && !nodeForm.name.$pristine}">
+              <label>Titel</label> 
+              <input type="text" name="name" ng-model="nodeForEdit.name" id="inputNameInfoNode" required ng-change=""> 
+              <span ng-show="nodeForm.name.$error.required && !nodeForm.name.$pristine" class="help-inline"> * {{nodeForm.name.$pristine}}</span>
+            </div>
+      
+            <button ng-click="save('InfoNode')" ng-disabled="nodeForm.$invalid" class="btn btn-primary">Save</button>
+          </form>
+        </div>
+        
+        <div class="hidden container-yaio-editor-urlresnode" id="containerYaioEditorUrlResNode">
+          <h2>Ressource bearbeiten:</h2>
+          <form class="hidden" id="nodeFormUrlResNode" name="nodeFormUrlResNode">
+            <!-- simulate hiddenfield -->
+            <input class="hidden" type="text" name="sysUID" ng-model="nodeForEdit.sysUID" id="inputSysUIDUrlResNode" required ng-change="">
+            <input class="hidden" type="text" name="className" ng-model="nodeForEdit.className" id="inputClassNameUrlResNode" required ng-change="">
+            
+            <!-- show textfield -->
+            <div class="control-group" ng-class="{error: nodeForm.name.$invalid && !nodeForm.name.$pristine}">
+              <label>Titel</label> 
+              <input type="text" name="name" ng-model="nodeForEdit.name" id="inputNameUrlResNode" required ng-change=""> 
+              <span ng-show="nodeForm.name.$error.required && !nodeForm.name.$pristine" class="help-inline"> * {{nodeForm.name.$pristine}}</span>
+            </div>
+      
+            <button ng-click="save('UrlResNode')" ng-disabled="nodeForm.$invalid" class="btn btn-primary">Save</button>
+          </form>
+        </div>
+    </div>
 </div>
 
