@@ -1,9 +1,48 @@
 var CLIPBOARD = null;
 
+// configure
 var baseUrl = "/nodes/";
 var showUrl = baseUrl + "show/";
 var updateUrl = baseUrl + "update/";
 var moveUrl = baseUrl + "move/";
+
+var treeInstances = {};
+var configNodeTypeFields = {
+    Common: {
+        fields: [
+            { fieldName: "className", type: "hidden"},
+            { fieldName: "sysUID", type: "hidden"},
+            { fieldName: "name", type: "input"},
+            { fieldName: "type", type: "select"},
+            { fieldName: "state", type: "select"},
+        ]
+    },
+    TaskNode: {
+        fields: [
+            { fieldName: "istAufwand", type: "input"},
+            { fieldName: "istStand", type: "input"},
+            { fieldName: "istStart", type: "input", datatype: "date"},
+            { fieldName: "istEnde", type: "input", datatype: "date"},
+            { fieldName: "planAufwand", type: "input"},
+            { fieldName: "planStart", type: "input", datatype: "date"},
+            { fieldName: "planEnde", type: "input", datatype: "date"},
+        ]
+    },
+    EventNode: {
+        fields: [
+            { fieldName: "istAufwand", type: "input"},
+            { fieldName: "istStand", type: "input"},
+            { fieldName: "istStart", type: "input", datatype: "datetime"},
+            { fieldName: "istEnde", type: "input", datatype: "datetime"},
+            { fieldName: "planAufwand", type: "input"},
+            { fieldName: "planStart", type: "input", datatype: "datetime"},
+            { fieldName: "planEnde", type: "input", datatype: "datetime"},
+        ]
+    }
+    
+};
+
+
 
 function createYAIOFancyTree(treeId, masterNodeId, doneHandler){
     $(treeId).flgYAIOFancyTreeLoaded = true;
@@ -313,7 +352,7 @@ function formatGermanDateTime(millis) {
     }
     var date = new Date(millis);
     return padNumber(date.getDate(), 2)
-        + "." + padNumber(date.getMonth(), 2)
+        + "." + padNumber(date.getMonth() + 1, 2)
         + "." + date.getFullYear()
         + " " + padNumber(date.getHours(), 2)
         + ":" + padNumber(date.getMinutes(), 2)
@@ -325,7 +364,7 @@ function formatGermanDate(millis) {
     }
     var date = new Date(millis);
     return padNumber(date.getDate(), 2)
-        + "." + padNumber(date.getMonth(), 2)
+        + "." + padNumber(date.getMonth() + 1, 2)
         + "." + date.getFullYear();
 }
 function padNumber(number, count) {
@@ -633,6 +672,7 @@ function postProcessNodeData(event, data) {
 
 function createOrReloadYAIOFancyTree(treeId, masterNodeId, doneHandler){
     // check if already loaded
+    console.log("createOrReloadYAIOFancyTree caller: " + createOrReloadYAIOFancyTree.caller);
     if ($(treeId).flgYAIOFancyTreeLoaded) {
         console.log("createOrReloadYAIOFancyTree: flgYAIOFancyTreeLoaded is set: reload=" 
                 + showUrl + masterNodeId);
@@ -685,14 +725,51 @@ function openEditorForNode(nodeId, caller) {
         // extract data
         var node = treeNode.data.basenode;
         
-        // set values and trigger
-        $("#inputName" + node.className).val(node.name).trigger('input');
-        // trigger hidden elements
-        $("#inputSysUID" + node.className).val(node.sysUID).trigger('input').triggerHandler("change");
-        $("#inputClassName" + node.className).val(node.className).trigger('input').triggerHandler("change");
-        console.log("set inputName" + node.name + " for " + node.sysUID);
+        // configure value mapping
+        var fields = new Array();
+        fields = fields.concat(configNodeTypeFields.Common.fields);
+        if (node.className == "TaskNode") {
+            fields = fields.concat(configNodeTypeFields.TaskNode.fields);
+        } else if (node.className == "EventNode") {
+            fields = fields.concat(configNodeTypeFields.EventNode.fields);
+        } else if (node.className == "InfoNode") {
+            fields = fields.concat(configNodeTypeFields.InfoNode.fields);
+        }  else if (node.className == "UrlResNode") {
+            fields = fields.concat(configNodeTypeFields.UrlResNode.fields);
+        }
         
-        // TODO: Mapping for the different nodetypes
+        // iterate fields
+        for (var idx in fields) {
+            var field = fields[idx];
+            var fieldName = field.fieldName;
+            var fieldNameId = "#input" + fieldName.charAt(0).toUpperCase() + fieldName.slice(1) + node.className;
+            var value = node[fieldName];
+            
+            // convert value
+            if (field.datatype == "integer" && (! value || value == "undefined" || value == null)) {
+                // specical int
+                value = 0
+            } else if (field.datatype == "date")  {
+                // date
+                value = formatGermanDate(value);
+            } else if (field.datatype == "datetime")  {
+                // date
+                value = formatGermanDateTime(value);
+            } else if (! value || value == "undefined" || value == null) {
+                // alle other
+                value = "";
+            } 
+            
+            if (field.type == "hidden") {
+                $(fieldNameId).val(value).trigger('input').triggerHandler("change");
+            } else if (field.type == "select") {
+                $(fieldNameId).val(value).trigger('select').triggerHandler("change");
+            }else {
+                // input
+                $(fieldNameId).val(value).trigger('input');
+            }
+            console.log("map nodefield:" + fieldName + " set:" + fieldNameId + "=" + value);
+        }
         
         // show editor
         var width = $("#box_data").width();

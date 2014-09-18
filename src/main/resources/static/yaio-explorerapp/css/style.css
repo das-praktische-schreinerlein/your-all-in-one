@@ -58,6 +58,28 @@ body {
 }
 
 /**
+ * Editor-Styles
+ **/
+label {
+    width: 100px;
+}
+.inputtype_name {
+    width: 500px;
+} 
+.inputtype_state {
+    width: 150px;
+} 
+.inputtype_type {
+    width: 150px;
+} 
+.inputtype_aufwand {
+    width: 50px;
+} 
+.inputtype_date {
+    width: 80px;
+} 
+
+/**
  * Exploer-Tree-Styles
  **/
 .container-yaio-tree-table {

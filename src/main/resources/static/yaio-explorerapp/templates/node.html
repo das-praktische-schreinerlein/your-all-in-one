@@ -64,37 +64,192 @@
         <!-- TODO: different fields for the nodetypes -->
         <div class="hidden container-yaio-editor-tasknode" id="containerYaioEditorTaskNode">
           <h2>Task bearbeiten:</h2>
-          <form class="hidden" id="nodeFormTaskNode" name="nodeFormTaskNode">
+          <form with-errors class="hidden" id="nodeFormTaskNode" name="nodeFormTaskNode">
             <!-- simulate hiddenfield -->
             <input class="hidden" type="text" name="sysUID" ng-model="nodeForEdit.sysUID" id="inputSysUIDTaskNode" required ng-change="">
             <input class="hidden" type="text" name="className" ng-model="nodeForEdit.className" id="inputClassNameTaskNode" required ng-change="">
-            
-            <!-- show textfield -->
-            <div class="control-group" ng-class="{error: nodeForm.name.$invalid && !nodeForm.name.$pristine}">
-              <label>Titel</label> 
-              <input type="text" name="name" ng-model="nodeForEdit.name" id="inputNameTaskNode" required ng-change=""> 
-              <span ng-show="nodeForm.name.$error.required && !nodeForm.name.$pristine" class="help-inline"> * {{nodeForm.name.$pristine}}</span>
-            </div>
-      
-            <button ng-click="save('TaskNode')" ng-disabled="nodeForm.$invalid" class="btn btn-primary">Save</button>
+
+            <fieldset>
+              <legend>Stammdaten</legend>
+              
+              <!-- show textfield -->
+              <label for="name">Titel</label> 
+              <input type="text" name="name" class="inputtype_name" ng-model="nodeForEdit.name" id="inputNameTaskNode" required ng-change=""> 
+              <fielderrors for="name"></fielderrors>
+
+              <br />
+              
+              <!-- show textfield -->
+              <label for="state">Status</label> 
+              <select type="text" name="state" class="inputtype_state" ng-model="nodeForEdit.state" id="inputStateTaskNode" required ng-change=""> 
+                  <option value="">Bitte wählen
+                  <option value="OFFEN">OFFEN
+                  <option value="LATE">LATE
+                  <option value="RUNNING">RUNNING
+                  <option value="WARNING">WARNING
+                  <option value="ERLEDIGT">ERLEDIGT
+                  <option value="VERWORFEN">VERWORFEN
+              </select> 
+              <fielderrors for="state"></fielderrors>
+
+              <!-- show select -->
+              <label for="type">Typ</label> 
+              <select type="text" name="type" class="inputtype_type" ng-model="nodeForEdit.type" id="inputTypeTaskNode" required ng-change="">
+                  <option value="">Bitte wählen
+                  <option value="OFFEN">OFFEN
+                  <option value="LATE">LATE
+                  <option value="RUNNING">RUNNING
+                  <option value="WARNING">WARNING
+                  <option value="ERLEDIGT">ERLEDIGT
+                  <option value="VERWORFEN">VERWORFEN
+              </select> 
+              <fielderrors for="type"></fielderrors>
+            </fieldset>
+
+            <fieldset>
+              <legend>Plan</legend>
+              
+              <!-- show textfield -->
+              <label for="planAufwand">Aufwand</label> 
+              <input type="number" name="planAufwand" class="inputtype_aufwand" ng-model="nodeForEdit.planAufwand" id="inputPlanAufwandTaskNode" ng-change=""> 
+              <fielderrors for="planAufwand"></fielderrors>
+
+              <!-- show textfield -->
+              <label for="planStart">Start</label> 
+              <input type="text" name="planStart" class="inputtype_date" ng-model="nodeForEdit.planStart" id="inputPlanStartTaskNode" ng-change=""> 
+              <fielderrors for="planStart"></fielderrors>
+
+              <!-- show textfield -->
+              <label for="planEnde">Ende</label> 
+              <input type="text" name="planEnde" class="inputtype_date" ng-model="nodeForEdit.planEnde" id="inputPlanEndeTaskNode" ng-change=""> 
+              <fielderrors for="planEnde"></fielderrors>
+            </fieldset>
+
+            <fieldset>
+              <legend>Ist</legend>
+              
+              <!-- show textfield -->
+              <label for="istAufwand">Aufwand</label> 
+              <input type="number" name="istAufwand" class="inputtype_aufwand" ng-model="nodeForEdit.istAufwand" id="inputIstAufwandTaskNode" ng-change=""> 
+              <fielderrors for="istAufwand"></fielderrors>
+
+              <!-- show textfield -->
+              <label for="istStart">Start</label> 
+              <input type="text" name="istStart" class="inputtype_date" ng-model="nodeForEdit.istStart" id="inputIstStartTaskNode" ngEventNode""> 
+              <fielderrors for="istStart"></fielderrors>
+
+              <!-- show textfield -->
+              <label for="istEnde">Ende</label> 
+              <input type="text" name="istEnde" class="inputtype_date" ng-model="nodeForEdit.istEnde" id="inputIstEndeTaskNode" ng-change=""> 
+              <fielderrors for="istEnde"></fielderrors>
+
+              <!-- show textfield -->
+              <label for="istStand">Stand</label> 
+              <input type="number" min="0" max="100" name="istStand" class="inputtype_stand" ng-model="nodeForEdit.istStand" id="inputIstStandTaskNode" ng-change=""> 
+              <fielderrors for="istStand"></fielderrors>
+
+            </fieldset>
+
+            <fieldset>
+              <button ng-click="save('nodeFormTaskNode')" ng-disabled="nodeFormTaskNode.$invalid" class="btn btn-primary">Save</button>
+            </fieldset>
           </form>
         </div>
         
         <div class="hidden container-yaio-editor-eventnode" id="containerYaioEditorEventNode">
           <h2>Event bearbeiten:</h2>
-          <form class="hidden" id="nodeFormEventNode" name="nodeFormEventNode">
+
+          <form with-errors class="hidden" id="nodeFormEventNode" name="nodeFormEventNode">
             <!-- simulate hiddenfield -->
             <input class="hidden" type="text" name="sysUID" ng-model="nodeForEdit.sysUID" id="inputSysUIDEventNode" required ng-change="">
             <input class="hidden" type="text" name="className" ng-model="nodeForEdit.className" id="inputClassNameEventNode" required ng-change="">
-            
-            <!-- show textfield -->
-            <div class="control-group" ng-class="{error: nodeForm.name.$invalid && !nodeForm.name.$pristine}">
-              <label>Titel</label> 
-              <input type="text" name="name" ng-model="nodeForEdit.name" id="inputNameEventNode" required ng-change=""> 
-              <span ng-show="nodeForm.name.$error.required && !nodeForm.name.$pristine" class="help-inline"> * {{nodeForm.name.$pristine}}</span>
-            </div>
-      
-            <button ng-click="save('EventNode')" ng-disabled="nodeForm.$invalid" class="btn btn-primary">Save</button>
+
+            <fieldset>
+              <legend>Stammdaten</legend>
+              
+              <!-- show textfield -->
+              <label for="name">Titel</label> 
+              <input type="text" name="name" class="inputtype_name" ng-model="nodeForEdit.name" id="inputNameEventNode" required ng-change=""> 
+              <fielderrors for="name"></fielderrors>
+
+              <br />
+              
+              <!-- show textfield -->
+              <label for="state">Status</label> 
+              <select type="text" name="state" class="inputtype_state" ng-model="nodeForEdit.state" id="inputStateEventNode" required ng-change=""> 
+                  <option value="">Bitte wählen
+                  <option value="EVENT_PLANED">PLANED
+                  <option value="EVENT_CONFIRMED">CONFIRMED
+                  <option value="EVENT_LATE">LATE
+                  <option value="EVENT_RUNNING">RUNNING
+                  <option value="EVENT_SHORT">SHORT
+                  <option value="EVENT_ERLEDIGT">ERLEDIGT
+                  <option value="EVENT_VERWORFEN">VERWORFEN
+              </select> 
+              <fielderrors for="state"></fielderrors>
+
+              <!-- show select -->
+              <label for="type">Typ</label> 
+              <select type="text" name="type" class="inputtype_type" ng-model="nodeForEdit.type" id="inputTypeEventNode" required ng-change="">
+                  <option value="">Bitte wählen
+                  <option value="EVENT_PLANED">PLANED
+                  <option value="EVENT_CONFIRMED">CONFIRMED
+                  <option value="EVENT_LATE">LATE
+                  <option value="EVENT_RUNNING">RUNNING
+                  <option value="EVENT_SHORT">SHORT
+                  <option value="EVENT_ERLEDIGT">ERLEDIGT
+                  <option value="EVENT_VERWORFEN">VERWORFEN
+              </select> 
+              <fielderrors for="type"></fielderrors>
+            </fieldset>
+
+            <fieldset>
+              <legend>Plan</legend>
+              
+              <!-- show textfield -->
+              <label for="planAufwand">Aufwand</label> 
+              <input type="number" name="planAufwand" class="inputtype_aufwand" ng-model="nodeForEdit.planAufwand" id="inputPlanAufwandEventNode" ng-change=""> 
+              <fielderrors for="planAufwand"></fielderrors>
+
+              <!-- show textfield -->
+              <label for="planStart">Start</label> 
+              <input type="text" name="planStart" class="inputtype_datetime" ng-model="nodeForEdit.planStart" id="inputPlanStartEventNode" ng-change=""> 
+              <fielderrors for="planStart"></fielderrors>
+
+              <!-- show textfield -->
+              <label for="planEnde">Ende</label> 
+              <input type="text" name="planEnde" class="inputtype_datetime" ng-model="nodeForEdit.planEnde" id="inputPlanEndeEventNode" ng-change=""> 
+              <fielderrors for="planEnde"></fielderrors>
+            </fieldset>
+
+            <fieldset>
+              <legend>Ist</legend>
+              
+              <!-- show textfield -->
+              <label for="istAufwand">Aufwand</label> 
+              <input type="number" name="istAufwand" class="inputtype_aufwand" ng-model="nodeForEdit.istAufwand" id="inputIstAufwandEventNode" ng-change=""> 
+              <fielderrors for="istAufwand"></fielderrors>
+
+              <!-- show textfield -->
+              <label for="istStart">Start</label> 
+              <input type="text" name="istStart" class="inputtype_datetime" ng-model="nodeForEdit.istStart" id="inputIstStartEventNode" ng-change=""> 
+              <fielderrors for="istStart"></fielderrors>
+
+              <!-- show textfield -->
+              <label for="istEnde">Ende</label> 
+              <input type="text" name="istEnde" class="inputtype_datetime" ng-model="nodeForEdit.istEnde" id="inputIstEndeEventNode" ng-change=""> 
+              <fielderrors for="istEnde"></fielderrors>
+
+              <!-- show textfield -->
+              <label for="istStand">Stand</label> 
+              <input type="number" min="0" max="100" name="istStand" class="inputtype_stand" ng-model="nodeForEdit.istStand" id="inputIstStandEventNode" ng-change=""> 
+              <fielderrors for="istStand"></fielderrors>
+
+            </fieldset>
+
+            <fieldset>
+              <button ng-click="save('nodeFormEventNode')" ng-disabled="nodeFormEventNode.$invalid" class="btn btn-primary">Save</button>
+            </fieldset>
           </form>
         </div>
         
