@@ -176,10 +176,117 @@ public class NodeController {
             throw new IllegalAccessException("cant map origNode (" + origNode.getClassName() + "):" 
                             + origNode.getSysUID() + " with newNode:" + newNode.getClassName());
         }
+        
+        // common-fields
+
         // check for new name
-        if (newNode.getName() != null) {
+        if (true || ! origNode.getName().equalsIgnoreCase(newNode.getName())) {
             origNode.setName(newNode.getName());
             flgChange = true;
+        }
+        // check for state
+        if (true || ! origNode.getState().equalsIgnoreCase(newNode.getState())) {
+            origNode.setState(newNode.getState());
+            flgChange = true;
+        }
+        // check for type
+        if (true || ! origNode.getType().equalsIgnoreCase(newNode.getType())) {
+            origNode.setType(newNode.getType());
+            flgChange = true;
+        }
+        
+        // check for special nodedata recursively
+        
+        // Task+EventNodes
+        if (   TaskNode.class.isInstance(origNode) 
+            || EventNode.class.isInstance(origNode)) {
+            TaskNode newTaskNode = (TaskNode)newNode;
+            TaskNode origTaskNode = (TaskNode)origNode;
+            
+            // check for Plan aufwand
+            if (true || origTaskNode.getPlanAufwand().compareTo(newTaskNode.getPlanAufwand()) != 0) {
+                origTaskNode.setPlanAufwand(newTaskNode.getPlanAufwand());
+                flgChange = true;
+            }
+            // check for Plan datestart
+            if (true || origTaskNode.getPlanStart().compareTo(newTaskNode.getPlanStart()) != 0) {
+                origTaskNode.setPlanStart(newTaskNode.getPlanStart());
+                flgChange = true;
+            }
+            // check for Plan dateend
+            if (true || origTaskNode.getPlanEnde().compareTo(newTaskNode.getPlanEnde()) != 0) {
+                origTaskNode.setPlanEnde(newTaskNode.getPlanEnde());
+                flgChange = true;
+            }
+            // check for Ist stand
+            if (true || origTaskNode.getIstStand().compareTo(newTaskNode.getIstStand()) != 0) {
+                origTaskNode.setIstStand(newTaskNode.getIstStand());
+                flgChange = true;
+            }
+            // check for Ist aufwand
+            if (true || origTaskNode.getIstAufwand().compareTo(newTaskNode.getIstAufwand()) != 0) {
+                origTaskNode.setIstAufwand(newTaskNode.getIstAufwand());
+                flgChange = true;
+            }
+            // check for Ist datestart
+            if (true || origTaskNode.getIstStart().compareTo(newTaskNode.getIstStart()) != 0) {
+                origTaskNode.setIstStart(newTaskNode.getIstStart());
+                flgChange = true;
+            }
+            // check for Ist dateend
+            if (true || origTaskNode.getIstEnde().compareTo(newTaskNode.getIstEnde()) != 0) {
+                origTaskNode.setIstEnde(newTaskNode.getIstEnde());
+                flgChange = true;
+            }
+        }
+        
+        // InfoNodes
+        if (InfoNode.class.isInstance(origNode)) {
+            InfoNode newInfoNode = (InfoNode)newNode;
+            InfoNode origInfoNode = (InfoNode)origNode;
+
+            // check for DocLayoutTagCommand
+            if (true || ! origInfoNode.getDocLayoutTagCommand().equalsIgnoreCase(newInfoNode.getDocLayoutTagCommand())) {
+                origInfoNode.setDocLayoutTagCommand(newInfoNode.getDocLayoutTagCommand());
+                flgChange = true;
+            }
+            // check for DocLayoutShortName
+            if (true || ! origInfoNode.getDocLayoutShortName().equalsIgnoreCase(newInfoNode.getDocLayoutShortName())) {
+                origInfoNode.setDocLayoutShortName(newInfoNode.getDocLayoutShortName());
+                flgChange = true;
+            }
+            // check for DocLayoutAddStyleClass
+            if (true || ! origInfoNode.getDocLayoutAddStyleClass().equalsIgnoreCase(newInfoNode.getDocLayoutAddStyleClass())) {
+                origInfoNode.setDocLayoutAddStyleClass(newInfoNode.getDocLayoutAddStyleClass());
+                flgChange = true;
+            }
+            // check for DocLayoutFlgCloseDiv
+            if (true || ! origInfoNode.getDocLayoutFlgCloseDiv().equalsIgnoreCase(newInfoNode.getDocLayoutFlgCloseDiv())) {
+                origInfoNode.setDocLayoutFlgCloseDiv(newInfoNode.getDocLayoutFlgCloseDiv());
+                flgChange = true;
+            }
+        }
+
+        // UrlResNode
+        if (UrlResNode.class.isInstance(origNode)) {
+            UrlResNode newUrlResNode = (UrlResNode)newNode;
+            UrlResNode origUrlResNode = (UrlResNode)origNode;
+
+            // check for ResLocRef
+            if (true || ! origUrlResNode.getResLocRef().equalsIgnoreCase(newUrlResNode.getResLocRef())) {
+                origUrlResNode.setResLocRef(newUrlResNode.getResLocRef());
+                flgChange = true;
+            }
+            // check for ResLocName
+            if (true || ! origUrlResNode.getResLocName().equalsIgnoreCase(newUrlResNode.getResLocName())) {
+                origUrlResNode.setResLocName(newUrlResNode.getResLocName());
+                flgChange = true;
+            }
+            // check for ResLocTags
+            if (true || ! origUrlResNode.getResLocTags().equalsIgnoreCase(newUrlResNode.getResLocTags())) {
+                origUrlResNode.setResLocTags(newUrlResNode.getResLocTags());
+                flgChange = true;
+            }
         }
         
         return flgChange;
