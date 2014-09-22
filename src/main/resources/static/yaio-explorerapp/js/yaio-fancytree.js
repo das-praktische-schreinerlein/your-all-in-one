@@ -1,13 +1,14 @@
 var CLIPBOARD = null;
 
 // configure
+var CONST_MasterId = "MasterplanMasternode1";
 var baseUrl = "/nodes/";
 var showUrl = baseUrl + "show/";
 var symLinkUrl = baseUrl + "showsymlink/";
 var updateUrl = baseUrl + "update/";
 var moveUrl = baseUrl + "move/";
 
-var treeInstances = {};
+var treeInstances = new Array();
 var configNodeTypeFields = {
     Common: {
         fields: [
@@ -66,10 +67,30 @@ var configNodeTypeFields = {
     }
 };
 
+function doOnYAIOFancyTreeState(treeId, state, waitTime, maxTries, doneHandler, name) {
+    // check if donehandler
+    if (doneHandler) {
+        // only postprocess after rendering
+        if (treeInstances[treeId].state != state && maxTries > 0) {
+            // wait if maxTries>0 or state is set to rendering_done
+            console.log("doOnYAIOFancyTreeState doneHandler:" + name + ") try=" + maxTries 
+                    + " wait=" + waitTime + "ms for " + treeId + "=" + state);
+            setTimeout(function() { 
+                doOnYAIOFancyTreeState(treeId, state, waitTime, maxTries-1, doneHandler);
+            }, waitTime);
+        } else {
+            // maxTries=0 or state is set to rendering_done
+            console.log("doOnYAIOFancyTreeState call doneHandler:" + name + " try=" + maxTries 
+                    + " for " + treeId + "=" + state);
+            doneHandler();
+        } 
+    }
+}
 
 
 function createYAIOFancyTree(treeId, masterNodeId, doneHandler){
-    $(treeId).flgYAIOFancyTreeLoaded = true;
+    treeInstances[treeId] = {};
+    treeInstances[treeId].state = "loading";
     $(treeId).fancytree({
         
         // save masterNodeId
@@ -86,7 +107,11 @@ function createYAIOFancyTree(treeId, masterNodeId, doneHandler){
             cache: false 
         },
       
-        // lazy load the children
+        loadChildren: function(event, data) {
+            treeInstances[treeId].state = "loading_done";
+        },    
+
+          // lazy load the children
         lazyLoad: function(event, data) {
             var node = data.node;
             console.debug("createYAIOFancyTree load data for " + node.key 
@@ -106,6 +131,7 @@ function createYAIOFancyTree(treeId, masterNodeId, doneHandler){
         // render the extra nodedata in grid
         renderColumns: function(event, data) {
             renderColumnsForNode(event, data);
+            treeInstances[treeId].state = "rendering_done";
         },
 
         // extensions: ["edit", "table", "gridnav"],
@@ -319,17 +345,13 @@ function createYAIOFancyTree(treeId, masterNodeId, doneHandler){
             $(this).trigger("nodeCommand", {cmd: cmd});
             return false;
         }
-    })
+    });
     
-    setTimeout(function() {
-        console.log("load tree done:" + masterNodeId);
-
-        // openLoadHirarchy for activeNodeId when done
-        if (doneHandler) {
-            console.log("createYAIOFancyTree call doneHandler:");
-            doneHandler();
-        }
-    }, 1000);
+    // check if donehandler
+    if (doneHandler) {
+        doOnYAIOFancyTreeState(treeId, "rendering_done", 1000, 5, doneHandler, 
+                "createYAIOFancyTree.doneHandler");
+    }
 
     /*
      * Context menu (https://github.com/mar10/jquery-ui-contextmenu)
@@ -434,7 +456,7 @@ function openNodeHierarchy(treeId, lstIdsHierarchy) {
     
     // search for firstNode in rootTree, ignore if not found
     var firstNodeId, firstNode;
-    var lstIdsHierarchySave = lstIdsHierarchy;
+    var lstIdsHierarchySave = new Array().concat(lstIdsHierarchy); 
     while (! firstNode && lstIdsHierarchy.length > 0) {
         firstNodeId = lstIdsHierarchy.shift();
         firstNode = rootNode.mapChildren[firstNodeId];
@@ -476,7 +498,7 @@ function openNodeHierarchyForNodeId(treeId, activeNodeId) {
             + lstIdsHierarchy + " from keyPath:" + keyPath);
     
     // open Hierarchy
-    openNodeHierarchy(treeid, lstIdsHierarchy);
+    openNodeHierarchy(treeId, lstIdsHierarchy);
 }
 
 function yaioSaveNode(data) {
@@ -571,15 +593,41 @@ function yaioLoadSymLinkData(basenode, fancynode) {
                         console.error("error yaioLoadSymLinkData: cant load tree - " + msg);
                         return null;
                     }
+                    var rootNode = tree.rootNode;
+                    if (! rootNode) {
+                        console.error("openHierarchy: error for tree" 
+                                    + " rootNode not found: " + msg);
+                        return;
+                    }
                     var treeNode = tree.getNodeByKey(basenode.sysUID);
                     if (! treeNode) {
                         console.error("error yaioLoadSymLinkData: cant load node - " + msg);
                         return null;
                     }
                     
-                    // append Link to referenced node
+                    // append Link in current hierarchy to referenced node
+                    var newUrl = '#/show/' + tree.options.masterNodeId 
+                        + '/activate/' + response.node.sysUID;
+                    
+                    // check if node-hiarchy exists (same tree)
+                    var firstNodeId, firstNode;
+                    var lstIdsHierarchy = new Array().concat(response.parentIdHierarchy);
+                    while (! firstNode && lstIdsHierarchy.length > 0) {
+                        firstNodeId = lstIdsHierarchy.shift();
+                        firstNode = rootNode.mapChildren[firstNodeId];
+                    }
+                    if (! firstNode) {
+                        // load page for referenced node with full hierarchy
+                        //firstNodeId = response.parentIdHierarchy.shift();
+                        // we set it constant
+                        firstNodeId = CONST_MasterId;
+                        
+                        newUrl = '#/show/' + firstNodeId 
+                            + '/activate/' + response.node.sysUID;
+                    }
+
                     $(treeNode.tr).find("div.container_data_row").append(
-                            "<a href='#/show/" + response.node.sysUID + "' class='button'>OPEN</a>");
+                            "<a href='" + newUrl + "' class='button'>OPEN</a>");
                     
                     // add datablock of referenced node
                     $(treeNode.tr).find("div.container_data_table").append($nodeDataBlock.html());
@@ -719,7 +767,7 @@ function renderColumnsForNode(event, data) {
     // add nodeDesc if set
     if (basenode.nodeDesc != "" && basenode.nodeDesc != null) {
         // columncount
-        var columnCount = $(">td", $row).length;
+        //var columnCount = $(">td", $nodedataBlock).length;
         
         $nodeDataBlock.append(
                 $("<br clear=all/><div class='togglecontainer' id='detail_desc_" + basenode.sysUID + "'><pre>" 
@@ -776,20 +824,29 @@ function postProcessNodeData(event, data) {
 
 function createOrReloadYAIOFancyTree(treeId, masterNodeId, doneHandler){
     // check if already loaded
-    console.log("createOrReloadYAIOFancyTree caller: " + createOrReloadYAIOFancyTree.caller);
-    if ($(treeId).flgYAIOFancyTreeLoaded) {
-        console.log("createOrReloadYAIOFancyTree: flgYAIOFancyTreeLoaded is set: reload=" 
+    var state = null;
+    if (treeInstances[treeId]) {
+        state = treeInstances[treeId].state;
+    }
+    console.log("createOrReloadYAIOFancyTree for id: " + treeId + " state=" + state + " caller: " + treeInstances[treeId]);
+    if (state) {
+        console.log("createOrReloadYAIOFancyTree: flgYAIOFancyTreeLoaded is set: prepare reload=" 
                 + showUrl + masterNodeId);
-        var tree = $(treeId).fancytree("getTree");
-        tree.reload(showUrl + masterNodeId).done(function(){
-            console.log("createOrReloadYAIOFancyTree reload tree done:" + masterNodeId);
+        doOnYAIOFancyTreeState(treeId, "rendering_done", 1000, 5, function () {
+            // do reload if rendering done
+            console.log("createOrReloadYAIOFancyTree: do reload=" 
+                    + showUrl + masterNodeId);
+            var tree = $(treeId).fancytree("getTree");
+            tree.reload(showUrl + masterNodeId).done(function(){
+                console.log("createOrReloadYAIOFancyTree reload tree done:" + masterNodeId);
 
-            // check if doneHandler
-            if (doneHandler) {
-                console.log("createOrReloadYAIOFancyTree call doneHandler");
-                doneHandler();
-            }
-        });
+                // check if doneHandler
+                if (doneHandler) {
+                    console.log("createOrReloadYAIOFancyTree call doneHandler");
+                    doneHandler();
+                }
+            });
+        }, "createOrReloadYAIOFancyTree.reloadHandler");
     } else {
         console.log("createOrReloadYAIOFancyTree: flgYAIOFancyTreeLoaded not set:"
                 + " create=" + showUrl + masterNodeId);

@@ -9,7 +9,7 @@
     *****************************
     *****************************
      -->
-    <div class="verortung" ng-controller="NodeShowCtrl">
+    <div class="verortung">
         <div class="entry node-state-{{parentnode.state}}" ng-repeat="parentnode in nodeHierarchy">
           <b> --&gt;</b> 
               <a href='#/show/{{parentnode.sysUID}}' class="btn btn-default btn-sm" >
@@ -60,7 +60,7 @@
     *****************************
     -->
     <div id="containerYaioEditor" class="container-yaio-editor">
-    <div id="containerBoxYaioEditor" class="box containerbox-yaio-editor" ng-controller="NodeShowCtrl">
+    <div id="containerBoxYaioEditor" class="box containerbox-yaio-editor">
 
         <!-- TODO: different fields for the nodetypes -->
         <div class="hidden container-yaio-editor-tasknode" id="containerFormYaioEditorTaskNode">

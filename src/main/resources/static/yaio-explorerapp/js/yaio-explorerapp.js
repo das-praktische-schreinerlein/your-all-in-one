@@ -6,13 +6,13 @@ var yaioM = angular.module('yaioExplorerApp', ['ngAnimate', 'ngRoute']);
 yaioM.config(function($routeProvider) {
     // configure routes
     $routeProvider
-        .when('/', { 
+        .when('/show/:nodeId/activate/:activeNodeId', { 
             controller:  'NodeShowCtrl',
             templateUrl: 'templates/node.html' })
         .when('/show/:nodeId', { 
             controller:  'NodeShowCtrl',
             templateUrl: 'templates/node.html' })
-        .when('/show/:nodeId/activate/:activeNodeId', { 
+        .when('/', { 
             controller:  'NodeShowCtrl',
             templateUrl: 'templates/node.html' })
         .otherwise({ redirectTo: '/'});
@@ -37,6 +37,7 @@ yaioM.directive('state', function(){
     
 // add own NodesController
 yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams, setFormErrors) {
+
     // check parameter - set default if empty
     var nodeId = $routeParams.nodeId;
     if (nodeId == null || nodeId == "" || ! nodeId) {
@@ -49,6 +50,9 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
     // check activeNodeId
     var activeNodeIdHandler;
     var activeNodeId = $routeParams.activeNodeId;
+
+    console.log("NodeShowCtrl - processing nodeId=" + nodeId + " activeNodeId=" + activeNodeId);
+
     if (activeNodeId) {
         // function to get NodeHierarchy fro activeNodeId
         activeNodeIdHandler = function() {
@@ -87,7 +91,7 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
         var state = nodeResponse.data.state;
         if (state == "OK") {
             // all fine
-            console.log("NodeShowCtrl - OK loading nodes:" + nodeResponse.data.stateMsg)
+            console.log("NodeShowCtrl - OK loading nodes:" + nodeResponse.data.stateMsg);
             $scope.node = nodeResponse.data.node;
             
             // create nodehierarchy
@@ -101,7 +105,7 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
             $scope.nodeHierarchy = nodeHierarchy;
 
             // load fencytree
-            createOrReloadYAIOFancyTree("#tree", $scope.node.sysUID, activeNodeIdHandler);
+            createYAIOFancyTree("#tree", $scope.node.sysUID, activeNodeIdHandler);
         } else {
             // error
             console.error("error loading nodes:" + nodeResponse.data.stateMsg 
@@ -115,7 +119,7 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
         closeEditorForNode();
     }
 
-        // add save
+    // add save
     $scope.save = function(formName) {
         // define json for common fields
         var nodeObj = {name: $scope.nodeForEdit.name};
