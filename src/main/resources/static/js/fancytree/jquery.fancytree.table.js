@@ -294,6 +294,13 @@ $.ui.fancytree.registerExtension({
 		// indent
 		indent = (node.getLevel() - 1) * opts.table.indentation;
 		$(node.span).css({marginLeft: indent + "px"});
+		if (opts.maxTitleWidth) {
+	        // Extension: get subelement with class fancytree-title and sub intend from max-width 
+		    var maxTitleWidth = opts.maxTitleWidth;
+		    maxTitleWidth = maxTitleWidth - indent;
+		    var element = $(node.span).find("span.fancytree-title");
+		    $(element).css({width: maxTitleWidth + "px"});
+		}
 	 },
 	/* Expand node, return Deferred.promise. */
 	nodeSetExpanded: function(ctx, flag, opts) {

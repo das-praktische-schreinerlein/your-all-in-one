@@ -473,6 +473,29 @@ public class BaseNode implements BaseData, MetaData, SysData,
      * <h4>FeatureDomain:</h4>
      *     Persistence
      * <h4>FeatureDescription:</h4>
+     *     read the matching nodes for the symLinkRef from database
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue List<BaseNode> - list of the the children
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Persistence JPA
+     * @param symLinkRef - symLinkRef for the filter on node
+     * @return List of machting nodes for symLinkRef
+     */
+    public static List<BaseNode> findSymLinkBaseNode(String symLinkRef) {
+        return entityManager().createQuery(
+                        "SELECT o FROM BaseNode o where sysUID = :symLinkRef"
+                        + " or CONCAT(metaNodePraefix, metaNodeNummer) = :symLinkRef"
+                        + " order by sort_pos asc", 
+                        BaseNode.class
+                        ).setParameter("symLinkRef", symLinkRef).getResultList();
+    }
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Persistence
+     * <h4>FeatureDescription:</h4>
      *     persists the children to database (childNodes)
      *     recursivly
      * <h4>FeatureResult:</h4>

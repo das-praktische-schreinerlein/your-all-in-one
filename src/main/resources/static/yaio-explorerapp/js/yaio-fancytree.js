@@ -3,6 +3,7 @@ var CLIPBOARD = null;
 // configure
 var baseUrl = "/nodes/";
 var showUrl = baseUrl + "show/";
+var symLinkUrl = baseUrl + "showsymlink/";
 var updateUrl = baseUrl + "update/";
 var moveUrl = baseUrl + "move/";
 
@@ -12,13 +13,14 @@ var configNodeTypeFields = {
         fields: [
             { fieldName: "className", type: "hidden"},
             { fieldName: "sysUID", type: "hidden"},
-            { fieldName: "name", type: "input"},
             { fieldName: "type", type: "select"},
             { fieldName: "state", type: "select"},
+            { fieldName: "nodeDesc", type: "textarea"},
         ]
     },
     TaskNode: {
         fields: [
+            { fieldName: "name", type: "input"},
             { fieldName: "istAufwand", type: "input"},
             { fieldName: "istStand", type: "input"},
             { fieldName: "istStart", type: "input", datatype: "date"},
@@ -30,6 +32,7 @@ var configNodeTypeFields = {
     },
     EventNode: {
         fields: [
+            { fieldName: "name", type: "input"},
             { fieldName: "istAufwand", type: "input"},
             { fieldName: "istStand", type: "input"},
             { fieldName: "istStart", type: "input", datatype: "datetime"},
@@ -38,8 +41,29 @@ var configNodeTypeFields = {
             { fieldName: "planStart", type: "input", datatype: "datetime"},
             { fieldName: "planEnde", type: "input", datatype: "datetime"},
         ]
+    },
+    InfoNode: {
+        fields: [
+            { fieldName: "name", type: "textarea"},
+        ]
+    },
+    UrlResNode: {
+        fields: [
+            { fieldName: "name", type: "input"},
+            { fieldName: "resLocRef", type: "input"},
+            { fieldName: "resLocName", type: "input"},
+            { fieldName: "resLocTags", type: "textarea"},
+        ]
+    },
+    SymLinkNode: {
+        fields: [
+            { fieldName: "name", type: "input"},
+            { fieldName: "type", type: "hidden"},
+            { fieldName: "symLinkRef", type: "input"},
+            { fieldName: "symLinkName", type: "input"},
+            { fieldName: "symLinkTags", type: "textarea"},
+        ]
     }
-    
 };
 
 
@@ -50,6 +74,9 @@ function createYAIOFancyTree(treeId, masterNodeId, doneHandler){
         
         // save masterNodeId
         masterNodeId: masterNodeId,
+        
+        // set layoutoptions
+        maxTitleWidth: 420,
         
         checkbox: true,
         titlesTabbable: true,     // Add all node titles to TAB chain
@@ -465,8 +492,10 @@ function yaioMoveNode(node, newParentKey) {
     yaioDoUpdateNode(node, url, json);
 }
 
+
 function yaioDoUpdateNode(node, url, json) {
-    console.log("update node:" + node.key + " with:" + json);
+    var msg = "update for node:" + node.key;
+    console.log("yaioDoUpdateNode START: " + msg + " with:" + json);
     $.ajax({
         headers : {
             'Accept' : 'application/json',
@@ -517,12 +546,149 @@ function yaioDoUpdateNode(node, url, json) {
     });
 }
 
-function renderColumnsForNode(event, data) {
-    // exract nodedata
-    var node = data.node;
-    var basenodedata = node.data.basenode;
+function yaioLoadSymLinkData(basenode, fancynode) {
+    var msg = "symlink for node:" + basenode.sysUID + " symlink:" + basenode.symLinkRef + " fancynode:" + fancynode.key;
+    url = symLinkUrl + basenode.symLinkRef;
+    console.log("load " + msg);
+    $.ajax({
+        headers : {
+            'Accept' : 'application/json',
+            'Content-Type' : 'application/json'
+        },
+        url : url,
+        type : 'GET',
+        success : function(response, textStatus, jqXhr) {
+            console.log("OK done!" + response.state);
+            if (response.state == "OK") {
+                console.log("OK got " + msg);
+                if (response.node) {
+                    var $nodeDataBlock = renderDataBlock(response.node, fancynode);
+                    
+                    // load referring node
+                    var tree = $("#tree").fancytree("getTree");
+                    if (!tree) {
+                        // tree not found
+                        console.error("error yaioLoadSymLinkData: cant load tree - " + msg);
+                        return null;
+                    }
+                    var treeNode = tree.getNodeByKey(basenode.sysUID);
+                    if (! treeNode) {
+                        console.error("error yaioLoadSymLinkData: cant load node - " + msg);
+                        return null;
+                    }
+                    
+                    // append Link to referenced node
+                    $(treeNode.tr).find("div.container_data_row").append(
+                            "<a href='#/show/" + response.node.sysUID + "' class='button'>OPEN</a>");
+                    
+                    // add datablock of referenced node
+                    $(treeNode.tr).find("div.container_data_table").append($nodeDataBlock.html());
 
-    var nodestate = basenodedata.state;
+                    console.log("renderSymLinkDataBLock done:" + msg);
+                } else {
+                    console.error("ERROR got no " + msg);
+                }
+            } else {
+                console.error("ERROR cant load  " + msg + " error:" + response.stateMsg);
+            }
+        },
+        error : function(jqXHR, textStatus, errorThrown) {
+            // log the error to the console
+            console.error("ERROR  " + msg + " The following error occured: " + textStatus, errorThrown);
+            alert("cant load " + msg + " error:" + textStatus, errorThrown)
+        },
+        complete : function() {
+            console.log("completed load " + msg);
+        }
+    });
+}
+
+function renderDataBlock(basenode, fancynode) {
+    // extract nodedata
+    var nodestate = basenode.state;
+    var statestyle = "node-state-" + nodestate;   
+
+    var msg = "datablock for node:" + basenode.sysUID;
+    console.log("renderDataBlock START: " + msg);
+
+    // current datablock
+    var nodeDataBlock = "";
+    var $table = $("<div class='container_data_table' />");
+    var $row = $("<div class='container_data_row'/>");
+    $table.append($row);
+    
+    // default fields
+    $row.append($("<div />").html(basenode.className)
+           .addClass("container_field")
+           .addClass("fieldtype_type")
+           .addClass("field_type")
+           .addClass(statestyle));
+    $row.append($("<div />").html(basenode.state)
+            .addClass("container_field")
+            .addClass("fieldtype_state")
+            .addClass("field_state")
+            .addClass(statestyle));
+    
+    if (basenode.className == "TaskNode" || basenode.className == "EventNode") {
+        // TaskNode
+        $row.append(
+                $("<div />").html(formatNumbers(basenode.istChildrenSumStand, 2, "%"))
+                        .addClass("container_field")
+                        .addClass("fieldtype_stand")
+                        .addClass("field_istChildrenSumStand")
+                        .addClass(statestyle)); 
+        $row.append(
+                $("<div />").html(formatNumbers(basenode.istChildrenSumAufwand, 2, "h"))
+                        .addClass("container_field")
+                        .addClass("fieldtype_aufwand")
+                        .addClass("field_istChildrenSumAufwand")
+                        .addClass(statestyle));
+        $row.append(
+                $("<div />").html(formatGermanDate(basenode.istChildrenSumStart)
+                        + "-" + formatGermanDate(basenode.istChildrenSumEnde))
+                         .addClass("container_field")
+                         .addClass("fieldtype_fromto")
+                         .addClass("field_istChildrenSum")
+                         .addClass(statestyle));
+        $row.append(
+                $("<div />").html(formatNumbers(basenode.planChildrenSumAufwand, 2, "h"))
+                         .addClass("container_field")
+                         .addClass("fieldtype_aufwand")
+                         .addClass("field_planChildrenSumAufwand")
+                         .addClass(statestyle));
+        $row.append(
+                $("<div />").html(formatGermanDate(basenode.planChildrenSumStart)
+                         + "-" + formatGermanDate(basenode.planChildrenSumEnde))
+                         .addClass("container_field")
+                         .addClass("fieldtype_fromto")
+                         .addClass("field_planChildrenSum")
+                         .addClass(statestyle));
+    } else if (basenode.className == "UrlResNode") {
+        // url
+        $row.append(
+                $("<div />").html("<a href='" + basenode.resLocRef + "' target='_blank'>" 
+                                 + basenode.resLocRef + "</a>")
+                          .addClass("container_field")
+                          .addClass("fieldtype_url")
+                          .addClass("field_resLocRef")
+                          .addClass(statestyle)); 
+    } else if (basenode.className == "InfoNode") {
+    } else if (basenode.className == "SymLinkNode") {
+        yaioLoadSymLinkData(basenode, fancynode);
+    } 
+    $nodeDataBlock = $table;
+    
+    console.log("renderDataBlock DONE: " + msg);
+
+    return $nodeDataBlock;
+}
+
+
+function renderColumnsForNode(event, data) {
+    // extract nodedata
+    var node = data.node;
+    var basenode = node.data.basenode;
+    var nodestate = basenode.state;
     var statestyle = "node-state-" + nodestate;
     
     // get tdlist
@@ -536,8 +702,8 @@ function renderColumnsForNode(event, data) {
     
     // add fields
     $tdList.eq(0).html(
-            "<a href='#/show/" + basenodedata.sysUID + "' class='button'>OPEN</a> "
-            + "<a onclick=\"javascript: openEditorForNode('" + basenodedata.sysUID + "'); return false;\" class='button'>EDIT</a>"
+            "<a href='#/show/" + basenode.sysUID + "' class='button'>OPEN</a> "
+            + "<a onclick=\"javascript: openEditorForNode('" + basenode.sysUID + "'); return false;\" class='button'>EDIT</a>"
             ).addClass("container_field")
              .addClass("fieldtype_actions")
              .addClass(statestyle);
@@ -546,98 +712,35 @@ function renderColumnsForNode(event, data) {
                  .addClass("fieldtype_name")
                  .addClass("field_name")
                  .addClass(statestyle);
+    
+    // render datablock
+    var $nodedataBlock = renderDataBlock(basenode, node);
 
-    // currente datablock
-    var nodeDataBlock = "";
-    $table = $("<div class='container_data_table' />");
-    $row = $("<div class='container_data_row'/>");
-    $table.append($row);
-    
-    // default fields
-    $row.append($("<div />").html(basenodedata.className)
-           .addClass("container_field")
-           .addClass("fieldtype_type")
-           .addClass("field_type")
-           .addClass(statestyle));
-    $row.append($("<div />").html(basenodedata.state)
-            .addClass("container_field")
-            .addClass("fieldtype_state")
-            .addClass("field_state")
-            .addClass(statestyle));
-    
-    if (basenodedata.className == "TaskNode" || basenodedata.className == "EventNode") {
-        // TaskNode
-        $row.append(
-                $("<div />").html(formatNumbers(basenodedata.istChildrenSumStand, 2, "%"))
-                        .addClass("container_field")
-                        .addClass("fieldtype_stand")
-                        .addClass("field_istChildrenSumStand")
-                        .addClass(statestyle)); 
-        $row.append(
-                $("<div />").html(formatNumbers(basenodedata.istChildrenSumAufwand, 2, "h"))
-                        .addClass("container_field")
-                        .addClass("fieldtype_aufwand")
-                        .addClass("field_istChildrenSumAufwand")
-                        .addClass(statestyle));
-        $row.append(
-                $("<div />").html(formatGermanDate(basenodedata.istChildrenSumStart)
-                        + "-" + formatGermanDate(basenodedata.istChildrenSumEnde))
-                         .addClass("container_field")
-                         .addClass("fieldtype_fromto")
-                         .addClass("field_istChildrenSum")
-                         .addClass(statestyle));
-        $row.append(
-                $("<div />").html(formatNumbers(basenodedata.planChildrenSumAufwand, 2, "h"))
-                         .addClass("container_field")
-                         .addClass("fieldtype_aufwand")
-                         .addClass("field_planChildrenSumAufwand")
-                         .addClass(statestyle));
-        $row.append(
-                $("<div />").html(formatGermanDate(basenodedata.planChildrenSumStart)
-                         + "-" + formatGermanDate(basenodedata.planChildrenSumEnde))
-                         .addClass("container_field")
-                         .addClass("fieldtype_fromto")
-                         .addClass("field_planChildrenSum")
-                         .addClass(statestyle));
-    } else if (basenodedata.className == "UrlResNode") {
-        // url
-        $row.append(
-                $("<div />").html("<a href='" + basenodedata.resLocRef + "' target='_blank'>" 
-                                 + basenodedata.resLocRef + "</a>")
-                          .addClass("container_field")
-                          .addClass("fieldtype_url")
-                          .addClass("field_resLocRef")
-                          .addClass(statestyle)); 
-    } else if (basenodedata.className == "InfoNode") {
-    }
-    $nodeDataBlock = $table;
-    
     // add nodeDesc if set
-    $toggler = "";
-    if (basenodedata.nodeDesc != "" && basenodedata.nodeDesc != null) {
+    if (basenode.nodeDesc != "" && basenode.nodeDesc != null) {
         // columncount
         var columnCount = $(">td", $row).length;
         
         $nodeDataBlock.append(
-                $("<br clear=all/><div class='togglecontainer' id='detail_desc_" + basenodedata.sysUID + "'><pre>" 
-                        + basenodedata.nodeDesc + "</pre></div>").addClass("field_nodeDesc"));
+                $("<br clear=all/><div class='togglecontainer' id='detail_desc_" + basenode.sysUID + "'><pre>" 
+                        + basenode.nodeDesc + "</pre></div>").addClass("field_nodeDesc"));
     }
     
     // add nodeData
     $tdList.eq(2).html($nodeDataBlock).addClass("block_nodedata");
 };
 
-function createFancyDataFromNodeData(node) {
+function createFancyDataFromNodeData(basenode) {
     var datanode = {
-       title: node.name,
-       key: node.sysUID, 
+       title: basenode.name,
+       key: basenode.sysUID, 
        children: null,
        lazy: true,
-       basenode: node
+       basenode: basenode
     };
 
-    if (node.className == "UrlResNode") {
-        datanode.title = node.resLocName;
+    if (basenode.className == "UrlResNode") {
+        datanode.title = basenode.resLocName;
     }
     
     return datanode;
@@ -656,9 +759,10 @@ function postProcessNodeData(event, data) {
         if (data.response.childNodes) {
              // iterate childnodes
             for (var zaehler =0; zaehler < data.response.childNodes.length; zaehler++) {
-                var node = data.response.childNodes[zaehler];
-                var datanode = createFancyDataFromNodeData(node);
-                console.debug("add childnode for " + baseNode.sysUID + " = " + node.sysUID + " " + node.name);
+                var childBaseNode = data.response.childNodes[zaehler];
+                var datanode = createFancyDataFromNodeData(childBaseNode);
+                console.debug("add childnode for " + baseNode.sysUID 
+                        + " = " + childBaseNode.sysUID + " " + childBaseNode.name);
                 list.push(datanode);
             }
         }
@@ -700,14 +804,15 @@ function openEditorForNode(nodeId, caller) {
         // reset editor
         console.log("reset editor");
         $("#containerYaioTree").css("width", "100%");
-        // set top to ypos of calling node $("#containerYaioEditor").top("600");
         $("#containerYaioEditor").css("width", "100%");
         $("#containerYaioEditor").css("display", "none");
-        $("#containerYaioEditorTaskNode").css("display", "none");
-        $("#containerYaioEditorEventNode").css("display", "none");
-        $("#containerYaioEditorInfoNode").css("display", "none");
-        $("#containerYaioEditorUrlResNode").css("display", "none");
-        $("#containerYaioEditorSymLinkNode").css("display", "none");
+        $("#containerBoxYaioEditor").css("width", "100%");
+        $("#containerBoxYaioEditor").css("display", "none");
+        $("#containerFormYaioEditorTaskNode").css("display", "none");
+        $("#containerFormYaioEditorEventNode").css("display", "none");
+        $("#containerFormYaioEditorInfoNode").css("display", "none");
+        $("#containerFormYaioEditorUrlResNode").css("display", "none");
+        $("#containerFormYaioEditorSymLinkNode").css("display", "none");
 
         // load node
         var tree = $("#tree").fancytree("getTree");
@@ -736,6 +841,8 @@ function openEditorForNode(nodeId, caller) {
             fields = fields.concat(configNodeTypeFields.InfoNode.fields);
         }  else if (node.className == "UrlResNode") {
             fields = fields.concat(configNodeTypeFields.UrlResNode.fields);
+        }  else if (node.className == "SymLinkNode") {
+            fields = fields.concat(configNodeTypeFields.SymLinkNode.fields);
         }
         
         // iterate fields
@@ -764,6 +871,8 @@ function openEditorForNode(nodeId, caller) {
                 $(fieldNameId).val(value).trigger('input').triggerHandler("change");
             } else if (field.type == "select") {
                 $(fieldNameId).val(value).trigger('select').triggerHandler("change");
+            } else if (field.type == "textarea") {
+                $(fieldNameId).val(value).trigger('select').triggerHandler("change");
             }else {
                 // input
                 $(fieldNameId).val(value).trigger('input');
@@ -774,12 +883,29 @@ function openEditorForNode(nodeId, caller) {
         // show editor
         var width = $("#box_data").width();
         console.log("show editor");
+
+        // set width
         $("#containerYaioEditor").css("width", "600px");
-        $("#containerYaioTree").css("width", (width - $("#containerYaioEditor").width() - 10) + "px");
-        // set top to ypos of calling node $("#containerYaioEditor").top("600");
-        $("#containerYaioEditor").css("display", "block");
+        $("#containerBoxYaioEditor").css("width", "600px");
+        $("#containerYaioTree").css("width", (width - $("#containerYaioEditor").width() - 30) + "px");
         
-        // show form for the node-classname
-        $("#containerYaioEditor" + node.className).css("display", "block");
+        // dislay editor and form for the node-classname
+        $("#containerBoxYaioEditor").css("display", "block");
+        $("#containerYaioEditor").css("display", "block");
+        $("#containerFormYaioEditor" + node.className).css("display", "block");
     } 
 }
+
+function closeEditorForNode() {
+    console.log("close editor");
+    $("#containerYaioTree").css("width", "100%");
+    $("#containerYaioEditor").css("display", "none");
+    $("#containerYaioEditor").css("width", "100%");
+    $("#containerBoxYaioEditor").css("display", "none");
+    $("#containerBoxYaioEditor").css("width", "100%");
+    $("#containerFormYaioEditorTaskNode").css("display", "none");
+    $("#containerFormYaioEditorEventNode").css("display", "none");
+    $("#containerFormYaioEditorInfoNode").css("display", "none");
+    $("#containerFormYaioEditorUrlResNode").css("display", "none");
+    $("#containerFormYaioEditorSymLinkNode").css("display", "none");
+} 

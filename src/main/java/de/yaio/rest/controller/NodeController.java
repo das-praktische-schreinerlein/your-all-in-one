@@ -34,6 +34,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import de.yaio.core.node.BaseNode;
 import de.yaio.core.node.EventNode;
 import de.yaio.core.node.InfoNode;
+import de.yaio.core.node.SymLinkNode;
 import de.yaio.core.node.TaskNode;
 import de.yaio.core.node.UrlResNode;
 import de.yaio.core.nodeservice.BaseNodeService;
@@ -154,6 +155,59 @@ public class NodeController {
      * <h4>FeatureDomain:</h4>
      *     Webservice
      * <h4>FeatureDescription:</h4>
+     *     Request to read the SymLinkRef-node for sysUID and return it with children as JSON
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>NodeControllerResponse (OK, ERROR) with the node for sysUID
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice Query
+     * @param symLinkRef - symLinkRef to filter
+     * @return NodeControllerResponse (OK, ERROR) with the node for sysUID
+     */
+    @RequestMapping(method=RequestMethod.GET, value = "/showsymlink/{symLinkRef}")
+    public @ResponseBody NodeResponse getSymLinkRefNodeWithChildren(
+           @PathVariable(value="symLinkRef") String symLinkRef) {
+        // create default response
+        NodeResponse response = new NodeResponse(
+                        "ERROR", "node '" + symLinkRef + "' doesnt exists", 
+                        null, null, null, null);
+
+        // find a specific node
+        List<BaseNode> nodes = BaseNode.findSymLinkBaseNode(symLinkRef);
+        if (nodes != null && nodes.size() > 0) {
+            // symLinkref found
+            
+            // check if it is unique
+            if (nodes.size() > 1) {
+                response = new NodeResponse(
+                                "ERROR", "node '" + symLinkRef + "' is not unique", 
+                                null, null, nodes, null);
+                return response;
+
+            }
+            
+            // use the first one
+            BaseNode node = nodes.get(0);
+            
+            // read the childnodes only 1 level
+            node.initChildNodesFromDB(0);
+            
+            // create response
+            response = createResponseObj(node, "node '" + symLinkRef + "' found");
+            
+            // add children
+            response.childNodes = new ArrayList<BaseNode>(node.getChildNodes());
+        }
+        
+        return response;
+    }
+    
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
      *     map the nodeData from newNode to origNode
      * <h4>FeatureResult:</h4>
      *   <ul>
@@ -184,14 +238,14 @@ public class NodeController {
             origNode.setName(newNode.getName());
             flgChange = true;
         }
-        // check for state
-        if (true || ! origNode.getState().equalsIgnoreCase(newNode.getState())) {
-            origNode.setState(newNode.getState());
-            flgChange = true;
-        }
         // check for type
         if (true || ! origNode.getType().equalsIgnoreCase(newNode.getType())) {
             origNode.setType(newNode.getType());
+            flgChange = true;
+        }
+        // check for nodeDesc
+        if (true || ! origNode.getNodeDesc().equalsIgnoreCase(newNode.getNodeDesc())) {
+            origNode.setNodeDesc(newNode.getNodeDesc());
             flgChange = true;
         }
         
@@ -203,6 +257,11 @@ public class NodeController {
             TaskNode newTaskNode = (TaskNode)newNode;
             TaskNode origTaskNode = (TaskNode)origNode;
             
+            // check for state
+            if (true || ! origNode.getState().equalsIgnoreCase(newNode.getState())) {
+                origNode.setState(newNode.getState());
+                flgChange = true;
+            }
             // check for Plan aufwand
             if (true || origTaskNode.getPlanAufwand().compareTo(newTaskNode.getPlanAufwand()) != 0) {
                 origTaskNode.setPlanAufwand(newTaskNode.getPlanAufwand());
@@ -245,6 +304,8 @@ public class NodeController {
             InfoNode newInfoNode = (InfoNode)newNode;
             InfoNode origInfoNode = (InfoNode)origNode;
 
+            // get state from type
+            origNode.setState(origNode.getType());
             // check for DocLayoutTagCommand
             if (true || ! origInfoNode.getDocLayoutTagCommand().equalsIgnoreCase(newInfoNode.getDocLayoutTagCommand())) {
                 origInfoNode.setDocLayoutTagCommand(newInfoNode.getDocLayoutTagCommand());
@@ -272,6 +333,9 @@ public class NodeController {
             UrlResNode newUrlResNode = (UrlResNode)newNode;
             UrlResNode origUrlResNode = (UrlResNode)origNode;
 
+            // get state from type
+            origNode.setState(origNode.getType());
+
             // check for ResLocRef
             if (true || ! origUrlResNode.getResLocRef().equalsIgnoreCase(newUrlResNode.getResLocRef())) {
                 origUrlResNode.setResLocRef(newUrlResNode.getResLocRef());
@@ -289,6 +353,31 @@ public class NodeController {
             }
         }
         
+        // SymLinkNode
+        if (SymLinkNode.class.isInstance(origNode)) {
+            SymLinkNode newUrlResNode = (SymLinkNode)newNode;
+            SymLinkNode origUrlResNode = (SymLinkNode)origNode;
+
+            // get state from type
+            origNode.setState(origNode.getType());
+
+            // check for ResLocRef
+            if (true || ! origUrlResNode.getSymLinkRef().equalsIgnoreCase(newUrlResNode.getSymLinkRef())) {
+                origUrlResNode.setSymLinkRef(newUrlResNode.getSymLinkRef());
+                flgChange = true;
+            }
+            // check for SymLinkName
+            if (true || ! origUrlResNode.getSymLinkName().equalsIgnoreCase(newUrlResNode.getSymLinkName())) {
+                origUrlResNode.setSymLinkName(newUrlResNode.getSymLinkName());
+                flgChange = true;
+            }
+            // check for SymLinkTags
+            if (true || ! origUrlResNode.getSymLinkTags().equalsIgnoreCase(newUrlResNode.getSymLinkTags())) {
+                origUrlResNode.setSymLinkTags(newUrlResNode.getSymLinkTags());
+                flgChange = true;
+            }
+        }
+
         return flgChange;
     }
     
@@ -326,7 +415,6 @@ public class NodeController {
             // read children
             BaseNode parent = null;
             node.initChildNodesFromDB(0);
-            node.initChildNodesForParentsFromDB();
             
             // map data
             flgChange = mapNodeData(node, newNode);
@@ -334,10 +422,15 @@ public class NodeController {
             // check for needed update
             if (flgChange) {
                 // recalc 
-                node.recalcData(BaseNodeService.CONST_RECURSE_DIRECTION_PARENT);
+                node.recalcData(BaseNodeService.CONST_RECURSE_DIRECTION_ONLYME);
 
                 // save
                 node.merge();
+
+                // recalc Parents 
+                // TODO: we get different objects :-( -> need to merge them
+                node.initChildNodesForParentsFromDB();
+                node.recalcData(BaseNodeService.CONST_RECURSE_DIRECTION_PARENT);
                 parent = node.getParentNode();
                 while (parent != null) {
                     parent.merge();
@@ -429,7 +522,7 @@ public class NodeController {
      * <h4>FeatureDomain:</h4>
      *     Webservice
      * <h4>FeatureDescription:</h4>
-     *     Request to update the TaskNode sysUID and return it with children as JSON
+     *     Request to update the EventNode sysUID and return it with children as JSON
      * <h4>FeatureResult:</h4>
      *   <ul>
      *     <li>NodeControllerResponse (OK, ERROR) with the node for sysUID
@@ -452,7 +545,7 @@ public class NodeController {
      * <h4>FeatureDomain:</h4>
      *     Webservice
      * <h4>FeatureDescription:</h4>
-     *     Request to update the TaskNode sysUID and return it with children as JSON
+     *     Request to update the UrlresNode sysUID and return it with children as JSON
      * <h4>FeatureResult:</h4>
      *   <ul>
      *     <li>NodeControllerResponse (OK, ERROR) with the node for sysUID
@@ -464,7 +557,7 @@ public class NodeController {
      * @return NodeControllerResponse (OK, ERROR) with the node for sysUID
      */
     @RequestMapping(method=RequestMethod.PATCH, value = "/update/UrlResNode/{sysUID}")
-    public @ResponseBody NodeResponse updateEventNode(
+    public @ResponseBody NodeResponse updateUrlResNode(
                 @PathVariable(value="sysUID") String sysUID, 
                 @RequestBody UrlResNode newNode) {
         // create default response
@@ -487,9 +580,32 @@ public class NodeController {
      * @return NodeControllerResponse (OK, ERROR) with the node for sysUID
      */
     @RequestMapping(method=RequestMethod.PATCH, value = "/update/InfoNode/{sysUID}")
-    public @ResponseBody NodeResponse updateEventNode(
+    public @ResponseBody NodeResponse updateInfoNode(
                 @PathVariable(value="sysUID") String sysUID, 
                 @RequestBody InfoNode newNode) {
+        // create default response
+        return this.updateNode(sysUID, newNode);
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
+     *     Request to update the SymLinkNode sysUID and return it with children as JSON
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>NodeControllerResponse (OK, ERROR) with the node for sysUID
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice Query
+     * @param sysUID - sysUID to filter
+     * @param newNode - the node created from request-data
+     * @return NodeControllerResponse (OK, ERROR) with the node for sysUID
+     */
+    @RequestMapping(method=RequestMethod.PATCH, value = "/update/SymLinkNode/{sysUID}")
+    public @ResponseBody NodeResponse updateSymLinkNode(
+                @PathVariable(value="sysUID") String sysUID, 
+                @RequestBody SymLinkNode newNode) {
         // create default response
         return this.updateNode(sysUID, newNode);
     }

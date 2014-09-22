@@ -110,7 +110,12 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
         
     });
 
-    // add save
+    // add discard
+    $scope.discard = function(formName) {
+        closeEditorForNode();
+    }
+
+        // add save
     $scope.save = function(formName) {
         // define json for common fields
         var nodeObj = {name: $scope.nodeForEdit.name};
@@ -127,6 +132,8 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
             fields = fields.concat(configNodeTypeFields.InfoNode.fields);
         } else if ($scope.nodeForEdit.className == "UrlResNode") {
             fields = fields.concat(configNodeTypeFields.UrlResNode.fields);
+        } else if ($scope.nodeForEdit.className == "SymLinkNode") {
+            fields = fields.concat(configNodeTypeFields.SymLinkNode.fields);
         }
         
         // iterate fields an map to nodeObj

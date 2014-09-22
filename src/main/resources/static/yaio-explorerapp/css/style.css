@@ -39,15 +39,26 @@ body {
 .container-yaio-details {
     width: 100%;
 }
+.container-yaio-current {
+    width: 100%;
+    float: left;
+}
 .container-yaio-tree {
     float: left;
     width: 100%;
     overflow-x:auto;
 }
-.container-yaio-editor {
-    float: left;
+.containerbox-yaio-editor {
+    float: right;
     display: none;
     overflow-x:auto;
+    clear: none;
+    position: fixed;
+}
+.container-yaio-editor {
+    float: right;
+    display: none;
+    clear: none;
 }
 .container-verortung {
    width: 100%;
@@ -61,11 +72,20 @@ body {
  * Editor-Styles
  **/
 label {
-    width: 100px;
+    display: inline-block;
+    vertical-align: top;
+    width: 50px;
 }
 .inputtype_name {
     width: 500px;
 } 
+.textareatype_name {
+    width: 500px;
+    height: 50px;
+} 
+.textareatype_name:active, .textareatype_name:focus {
+    height: 120px;
+}
 .inputtype_state {
     width: 150px;
 } 
@@ -78,6 +98,23 @@ label {
 .inputtype_date {
     width: 80px;
 } 
+.textareatype_resLocRef {
+    width: 500px;
+} 
+.textareatype_resLocName {
+    width: 500px;
+} 
+.textareatype_resLocTags {
+    width: 500px;
+    height: 30px;
+} 
+.textareatype_nodeDesc {
+    width: 500px;
+    height: 50px;
+} 
+.textareatype_nodeDesc:active, .textareatype_nodeDesc:focus {
+    height: 120px;
+}
 
 /**
  * Exploer-Tree-Styles
@@ -102,7 +139,7 @@ label {
 }
 .field_name {
    text-align: left;
-   min-width: 500px;
+   width: 500px;
 }
 .field_type {
    text-align: left;

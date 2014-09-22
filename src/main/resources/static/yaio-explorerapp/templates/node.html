@@ -22,7 +22,7 @@
 
 </div></div>
 
-<div class='box box-portdesc add2toc-h1 box-portdesc-data' toclabel='Daten' id='box_data'>
+<div class='container-yaio-current' toclabel='Daten' id='box_data'>
 
     <!-- 
     *****************************
@@ -31,7 +31,7 @@
     *****************************
     *****************************
     -->
-    <div id="containerYaioTree" class="container-yaio-tree">
+    <div id="containerYaioTree" class="box container-yaio-tree">
         <div id="containerYaioTreeTable" class="container-yaio-tree-table">
           <table id="tree">
               <colgroup>
@@ -59,10 +59,11 @@
     *****************************
     *****************************
     -->
-    <div id="containerYaioEditor" class="container-yaio-editor" ng-controller="NodeShowCtrl">
+    <div id="containerYaioEditor" class="container-yaio-editor">
+    <div id="containerBoxYaioEditor" class="box containerbox-yaio-editor" ng-controller="NodeShowCtrl">
 
         <!-- TODO: different fields for the nodetypes -->
-        <div class="hidden container-yaio-editor-tasknode" id="containerYaioEditorTaskNode">
+        <div class="hidden container-yaio-editor-tasknode" id="containerFormYaioEditorTaskNode">
           <h2>Task bearbeiten:</h2>
           <form with-errors class="hidden" id="nodeFormTaskNode" name="nodeFormTaskNode">
             <!-- simulate hiddenfield -->
@@ -151,12 +152,22 @@
             </fieldset>
 
             <fieldset>
+              <legend>Details</legend>
+              
+              <!-- show textfield -->
+              <label for="nodeDesc">Details</label> 
+              <textarea name="nodeDesc" class="textareatype_nodeDesc" ng-model="nodeForEdit.nodeDesc" id="inputNodeDescTaskNode" ng-change=""></textarea> 
+              <fielderrors for="nodeDesc"></fielderrors>
+            </fieldset>
+
+            <fieldset>
               <button ng-click="save('nodeFormTaskNode')" ng-disabled="nodeFormTaskNode.$invalid" class="btn btn-primary">Save</button>
+              <button ng-click="discard()" class="btn btn-primary">Discard</button>
             </fieldset>
           </form>
         </div>
         
-        <div class="hidden container-yaio-editor-eventnode" id="containerYaioEditorEventNode">
+        <div class="hidden container-yaio-editor-eventnode" id="containerFormYaioEditorEventNode">
           <h2>Event bearbeiten:</h2>
 
           <form with-errors class="hidden" id="nodeFormEventNode" name="nodeFormEventNode">
@@ -248,46 +259,198 @@
             </fieldset>
 
             <fieldset>
+              <legend>Details</legend>
+              
+              <!-- show textfield -->
+              <label for="nodeDesc">Details</label> 
+              <textarea name="nodeDesc" class="textareatype_nodeDesc" ng-model="nodeForEdit.nodeDesc" id="inputNodeDescEventNode" ng-change=""></textarea> 
+              <fielderrors for="nodeDesc"></fielderrors>
+            </fieldset>
+
+            <fieldset>
               <button ng-click="save('nodeFormEventNode')" ng-disabled="nodeFormEventNode.$invalid" class="btn btn-primary">Save</button>
+              <button ng-click="discard()" class="btn btn-primary">Discard</button>
             </fieldset>
           </form>
         </div>
         
-        <div class="hidden container-yaio-editor-infonode" id="containerYaioEditorInfoNode">
+        <div class="hidden container-yaio-editor-infonode" id="containerFormYaioEditorInfoNode">
           <h2>Info bearbeiten:</h2>
-          <form class="hidden" id="nodeFormInfoNode" name="nodeFormInfoNode">
+
+          <form with-errors class="hidden" id="nodeFormInfoNode" name="nodeFormInfoNode">
             <!-- simulate hiddenfield -->
             <input class="hidden" type="text" name="sysUID" ng-model="nodeForEdit.sysUID" id="inputSysUIDInfoNode" required ng-change="">
             <input class="hidden" type="text" name="className" ng-model="nodeForEdit.className" id="inputClassNameInfoNode" required ng-change="">
-            
-            <!-- show textfield -->
-            <div class="control-group" ng-class="{error: nodeForm.name.$invalid && !nodeForm.name.$pristine}">
-              <label>Titel</label> 
-              <input type="text" name="name" ng-model="nodeForEdit.name" id="inputNameInfoNode" required ng-change=""> 
-              <span ng-show="nodeForm.name.$error.required && !nodeForm.name.$pristine" class="help-inline"> * {{nodeForm.name.$pristine}}</span>
-            </div>
+
+            <fieldset>
+              <legend>Stammdaten</legend>
+              
+              <!-- show textfield -->
+              <label for="name">Titel</label> 
+              <textarea name="name" class="textareatype_name" ng-model="nodeForEdit.name" id="inputNameInfoNode" required ng-change=""></textarea> 
+              <fielderrors for="name"></fielderrors>
+
+              <br />
+              
+              <!-- show select -->
+              <label for="type">Typ</label> 
+              <select type="text" name="type" class="inputtype_type" ng-model="nodeForEdit.type" id="inputTypeInfoNode" required ng-change="">
+                  <option value="">Bitte wählen
+                  <option value="INFO">Information
+                  <option value="DOKU">Dokumentation
+                  <option value="IDEE">Idee
+                  <option value="HOWTO">Howto
+              </select> 
+              <fielderrors for="type"></fielderrors>
+            </fieldset>
       
-            <button ng-click="save('InfoNode')" ng-disabled="nodeForm.$invalid" class="btn btn-primary">Save</button>
+            <fieldset>
+              <legend>Details</legend>
+              
+              <!-- show textfield -->
+              <label for="nodeDesc">Details</label> 
+              <textarea name="nodeDesc" class="textareatype_nodeDesc" ng-model="nodeForEdit.nodeDesc" id="inputNodeDescInfoNode" ng-change=""></textarea> 
+              <fielderrors for="nodeDesc"></fielderrors>
+            </fieldset>
+
+            <fieldset>
+              <button ng-click="save('nodeFormInfoNode')" ng-disabled="nodeFormInfoNode.$invalid" class="btn btn-primary">Save</button>
+              <button ng-click="discard()" class="btn btn-primary">Discard</button>
+            </fieldset>
+
           </form>
         </div>
         
-        <div class="hidden container-yaio-editor-urlresnode" id="containerYaioEditorUrlResNode">
+        <div class="hidden container-yaio-editor-urlresnode" id="containerFormYaioEditorUrlResNode">
           <h2>Ressource bearbeiten:</h2>
-          <form class="hidden" id="nodeFormUrlResNode" name="nodeFormUrlResNode">
+
+          <form with-errors class="hidden" id="nodeFormUrlResNode" name="nodeFormUrlResNode">
             <!-- simulate hiddenfield -->
             <input class="hidden" type="text" name="sysUID" ng-model="nodeForEdit.sysUID" id="inputSysUIDUrlResNode" required ng-change="">
             <input class="hidden" type="text" name="className" ng-model="nodeForEdit.className" id="inputClassNameUrlResNode" required ng-change="">
-            
-            <!-- show textfield -->
-            <div class="control-group" ng-class="{error: nodeForm.name.$invalid && !nodeForm.name.$pristine}">
-              <label>Titel</label> 
-              <input type="text" name="name" ng-model="nodeForEdit.name" id="inputNameUrlResNode" required ng-change=""> 
-              <span ng-show="nodeForm.name.$error.required && !nodeForm.name.$pristine" class="help-inline"> * {{nodeForm.name.$pristine}}</span>
-            </div>
+
+            <fieldset>
+              <legend>Stammdaten</legend>
+              
+              <!-- show textfield -->
+              <label for="name">Titel</label> 
+              <input type="text" name="name" class="inputtype_name" ng-model="nodeForEdit.name" id="inputNameUrlResNode" required ng-change=""> 
+              <fielderrors for="name"></fielderrors>
+
+              <br />
+              
+              <!-- show select -->
+              <label for="type">Typ</label> 
+              <select type="text" name="type" class="inputtype_type" ng-model="nodeForEdit.type" id="inputTypeUrlResNode" required ng-change="">
+                  <option value="">Bitte wählen
+                  <option value="FILERES">Dateiverweis
+                  <option value="URLRES">Url
+                  <option value="IMAGERES">Bild-Verweis
+                  <option value="EMAILRES">Email-Verweis
+              </select> 
+              <fielderrors for="type"></fielderrors>
+            </fieldset>
       
-            <button ng-click="save('UrlResNode')" ng-disabled="nodeForm.$invalid" class="btn btn-primary">Save</button>
+            <fieldset>
+              <legend>Resource</legend>
+              
+              <!-- show textfield -->
+              <label for="resLocRef">URI</label> 
+              <input type="text" name="resLocRef" class="inputtype_resLocRef" ng-model="nodeForEdit.resLocRef" id="inputResLocRefUrlResNode" required ng-change=""> 
+              <fielderrors for="resLocRef"></fielderrors>
+
+              <br />
+
+              <!-- show textfield -->
+              <label for="resLocName">Label</label> 
+              <input type="text" name="resLocName" class="inputtype_resLocName" ng-model="nodeForEdit.resLocName" id="inputResLocNameUrlResNode" ng-change=""> 
+              <fielderrors for="resLocName"></fielderrors>
+
+              <br />
+
+              <!-- show textfield -->
+              <label for="resLocTags">Tags</label> 
+              <textarea name="resLocTags" class="textareatype_resLocTags" ng-model="nodeForEdit.resLocTags" id="inputResLocTagsUrlResNode" ng-change=""></textarea> 
+              <fielderrors for="resLocTags"></fielderrors>
+              
+            </fieldset>
+
+            <fieldset>
+              <legend>Details</legend>
+              
+              <!-- show textfield -->
+              <label for="nodeDesc">Details</label> 
+              <textarea name="nodeDesc" class="textareatype_nodeDesc" ng-model="nodeForEdit.nodeDesc" id="inputNodeDescUrlResNode" ng-change=""></textarea> 
+              <fielderrors for="nodeDesc"></fielderrors>
+            </fieldset>
+
+            <fieldset>
+              <button ng-click="save('nodeFormUrlResNode')" ng-disabled="nodeFormUrlResNode.$invalid" class="btn btn-primary">Save</button>
+              <button ng-click="discard()" class="btn btn-primary">Discard</button>
+            </fieldset>
+
           </form>
         </div>
+
+        <div class="hidden container-yaio-editor-urlresnode" id="containerFormYaioEditorSymLinkNode">
+          <h2>Ressource bearbeiten:</h2>
+
+          <form with-errors class="hidden" id="nodeFormSymLinkNode" name="nodeFormSymLinkNode">
+            <!-- simulate hiddenfield -->
+            <input class="hidden" type="text" name="sysUID" ng-model="nodeForEdit.sysUID" id="inputSysUIDSymLinkNode" required ng-change="">
+            <input class="hidden" type="text" name="className" ng-model="nodeForEdit.className" id="inputClassNameSymLinkNode" required ng-change="">
+            <input class="hidden" type="text" name="type" ng-model="nodeForEdit.type" id="inputTypeSymLinkNode" value="SYMLINK" required ng-change="">
+
+            <fieldset>
+              <legend>Stammdaten</legend>
+              
+              <!-- show textfield -->
+              <label for="name">Titel</label> 
+              <input type="text" name="name" class="inputtype_name" ng-model="nodeForEdit.name" id="inputNameSymLinkNode" required ng-change=""> 
+              <fielderrors for="name"></fielderrors>
+            </fieldset>
+      
+            <fieldset>
+              <legend>Resource</legend>
+              
+              <!-- show textfield -->
+              <label for="symLinkRef">Referenz</label> 
+              <input type="text" name="symLinkRef" class="inputtype_symLinkRef" ng-model="nodeForEdit.symLinkRef" id="inputSymLinkRefSymLinkNode" required ng-change=""> 
+              <fielderrors for="symLinkRef"></fielderrors>
+
+              <br />
+
+              <!-- show textfield -->
+              <label for="symLinkName">Label</label> 
+              <input type="text" name="symLinkName" class="inputtype_symLinkName" ng-model="nodeForEdit.symLinkName" id="inputSymLinkNameSymLinkNode" ng-change=""> 
+              <fielderrors for="symLinkName"></fielderrors>
+
+              <br />
+
+              <!-- show textfield -->
+              <label for="symLinkTags">Tags</label> 
+              <textarea name="symLinkTags" class="textareatype_symLinkTags" ng-model="nodeForEdit.symLinkTags" id="inputSymLinkTagsSymLinkNode" ng-change=""></textarea> 
+              <fielderrors for="symLinkTags"></fielderrors>
+              
+            </fieldset>
+
+            <fieldset>
+              <legend>Details</legend>
+              
+              <!-- show textfield -->
+              <label for="nodeDesc">Details</label> 
+              <textarea name="nodeDesc" class="textareatype_nodeDesc" ng-model="nodeForEdit.nodeDesc" id="inputNodeDescSymLinkNode" ng-change=""></textarea> 
+              <fielderrors for="nodeDesc"></fielderrors>
+            </fieldset>
+
+            <fieldset>
+              <button ng-click="save('nodeFormSymLinkNode')" ng-disabled="nodeFormSymLinkNode.$invalid" class="btn btn-primary">Save</button>
+              <button ng-click="discard()" class="btn btn-primary">Discard</button>
+            </fieldset>
+
+          </form>
+        </div>
+      </div>
     </div>
 </div>
 
