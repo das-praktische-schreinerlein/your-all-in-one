@@ -73,6 +73,9 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
                     }
                     nodeIdHierarchy.reverse();
                     
+                    // add me 
+                    nodeIdHierarchy.push(nodeResponse.data.node.sysUID);
+                    
                     // open Hierarchy
                     openNodeHierarchy("#tree", nodeIdHierarchy);
                 } else {

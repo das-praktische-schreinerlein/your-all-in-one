@@ -28,7 +28,46 @@ body {
 .hidden {
     display: none;
 }
+.button {
+     display: inline-block;
+     width: auto;
+     height: auto;
+     padding: 1px;
+}
 
+/*------------------------------------------------------------------------------
+ * Common icon definitions
+ *----------------------------------------------------------------------------*/
+a.yaio-icon-center,
+a.yaio-icon-edit,
+a.yaio-icon-create {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  vertical-align: top;
+  background-repeat: no-repeat;
+  background-position: left;
+  background-image: url("../../js/fancytree/skin-lion/icons.gif");
+  background-position: 0px 0px;
+}
+a.yaio-icon-center,
+a.yaio-icon-edit,
+a.yaio-icon-create {
+  margin-top: 1px;
+}
+
+a.yaio-icon-center {
+  margin-left: 3px;
+  background-position: -48px -48px;
+}
+a.yaio-icon-edit {
+  margin-left: 3px;
+  background-position: -48px -160px;
+}
+a.yaio-icon-create {
+  margin-left: 3px;
+  background-position: 0px -160px;
+}
 
 /**
  * Explorer-Tree-Styles
@@ -127,15 +166,17 @@ label {
 }
 .container_data_table {
     float: left;
-    width: 500px;
+    width: 570px;
 }
 .container_data_row {
     float: left;
     clear: both;
-    width: 500px;
+    width: 570px;
 }
 .container_field {
     float: left;
+    padding: 1px;
+    border-right: 1px solid grey;
 }
 .field_name {
    text-align: left;
@@ -157,9 +198,20 @@ label {
 }
 .field_planChildrenSum {
 }
-.fieldtype_stand {
+.field_nodeDesc {
+   text-align: left;
+   width: 550px;
+   overflow-x:auto;
+}
+
+
+.fieldtype_type {
    text-align: right;
    width: 50px;
+}
+.fieldtype_state {
+   text-align: right;
+   width: 80px;
 }
 .fieldtype_stand {
    text-align: right;
@@ -178,7 +230,15 @@ label {
 }
 .fieldtype_actions {
    text-align: left;
-   width: 80px;
+   width: 60px;
+}
+table.fancytree-ext-table tbody tr.fancytree-active, 
+table.fancytree-ext-table.fancytree-treefocus tbody tr.fancytree-active {
+    outline: 2px solid black;
+}
+
+table.fancytree-ext-table tbody tr td {
+    min-height: 20px;
 }
 
 /**

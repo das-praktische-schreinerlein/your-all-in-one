@@ -163,7 +163,7 @@ function createYAIOFancyTree(treeId, masterNodeId, doneHandler){
             triggerStart: ["f2", "dblclick", "shift+click", "mac+enter"],
             beforeEdit: function(event, data){
                 // open yaio-editor
-                openEditorForNode(data.node.key);
+                openEditorForNode(data.node.key, 'edit');
                 
                 // Return false to prevent edit mode
                 // dont use fancyeditor
@@ -471,6 +471,7 @@ function openNodeHierarchy(treeId, lstIdsHierarchy) {
     // open Hierarchy
     var opts = {};
     opts.openHierarchy = lstIdsHierarchy;
+    opts.activateLastNode = true;
     firstNode.setExpanded(true, opts);
 }
 
@@ -750,8 +751,9 @@ function renderColumnsForNode(event, data) {
     
     // add fields
     $tdList.eq(0).html(
-            "<a href='#/show/" + basenode.sysUID + "' class='button'>OPEN</a> "
-            + "<a onclick=\"javascript: openEditorForNode('" + basenode.sysUID + "'); return false;\" class='button'>EDIT</a>"
+            "<a href='#/show/" + basenode.sysUID + "' class='yaio-icon-center'></a>"
+            + "<a onclick=\"javascript: openEditorForNode('" + basenode.sysUID + "', 'edit'); return false;\" class='yaio-icon-edit'></a>"
+//            + "<a onclick=\"javascript: openEditorForNode('" + basenode.sysUID + "', 'create'); return false;\" class='yaio-icon-create'></a>"
             ).addClass("container_field")
              .addClass("fieldtype_actions")
              .addClass(statestyle);
@@ -769,13 +771,36 @@ function renderColumnsForNode(event, data) {
         // columncount
         //var columnCount = $(">td", $nodedataBlock).length;
         
+        // add toggler column
+        $($nodeDataBlock).find("div.container_data_row").append(
+                $("<div id='toggler_desc_" + basenode.sysUID + "'/>").html("")
+                        .addClass("container_field")
+                        .addClass("fieldtype_toggler")
+                        .addClass(statestyle));
+        
+        // add desc row
         $nodeDataBlock.append(
-                $("<br clear=all/><div class='togglecontainer' id='detail_desc_" + basenode.sysUID + "'><pre>" 
-                        + basenode.nodeDesc + "</pre></div>").addClass("field_nodeDesc"));
+                $("<div class='togglecontainer' id='detail_desc_" + basenode.sysUID + "'>"
+                        + "<pre>" + basenode.nodeDesc.replace(/<WLBR>/g, "\n") + "</pre>"
+                        + "</div>").addClass("field_nodeDesc"));
     }
     
     // add nodeData
     $tdList.eq(2).html($nodeDataBlock).addClass("block_nodedata");
+    
+    // append BlockToggler after jquery appends html to DOM
+    if (false && basenode.nodeDesc != "" && basenode.nodeDesc != null) {
+        // TODO: Toggler-Problem
+        jMATService.getPageLayoutService().appendBlockToggler(
+                'toggler_desc_' + basenode.sysUID, 
+                'detail_desc_' + basenode.sysUID);  
+        // hide block
+        var effect = function () { new ToggleEffect('detail_desc_' + basenode.sysUID).doEffect();};
+        jMATService.getLayoutService().togglerBlockHide(
+                   'toggler_desc_' + basenode.sysUID, 
+                   'detail_desc_' + basenode.sysUID, 
+                   effect);
+    }
 };
 
 function createFancyDataFromNodeData(basenode) {
@@ -856,7 +881,7 @@ function createOrReloadYAIOFancyTree(treeId, masterNodeId, doneHandler){
 
 
 
-function openEditorForNode(nodeId, caller) {
+function openEditorForNode(nodeId, modus) {
     if (nodeId) {
         // reset editor
         console.log("reset editor");
