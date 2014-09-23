@@ -18,6 +18,7 @@ package de.yaio.rest.controller;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -38,6 +39,7 @@ import de.yaio.core.node.SymLinkNode;
 import de.yaio.core.node.TaskNode;
 import de.yaio.core.node.UrlResNode;
 import de.yaio.core.nodeservice.BaseNodeService;
+import de.yaio.utils.Calculator;
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -200,17 +202,23 @@ public class NodeController {
         // common-fields
 
         // check for new name
-        if (true || ! origNode.getName().equalsIgnoreCase(newNode.getName())) {
+        if (Calculator.compareValues(
+                        origNode.getName(), newNode.getName()) 
+                        != Calculator.CONST_COMPARE_EQ) {
             origNode.setName(newNode.getName());
             flgChange = true;
         }
         // check for type
-        if (true || ! origNode.getType().equalsIgnoreCase(newNode.getType())) {
+        if (Calculator.compareValues(
+                        origNode.getType(), newNode.getType()) 
+                        != Calculator.CONST_COMPARE_EQ) {
             origNode.setType(newNode.getType());
             flgChange = true;
         }
         // check for nodeDesc
-        if (true || ! origNode.getNodeDesc().equalsIgnoreCase(newNode.getNodeDesc())) {
+        if (Calculator.compareValues(
+                        origNode.getNodeDesc(), newNode.getNodeDesc()) 
+                        != Calculator.CONST_COMPARE_EQ) {
             origNode.setNodeDesc(newNode.getNodeDesc());
             flgChange = true;
         }
@@ -224,42 +232,58 @@ public class NodeController {
             TaskNode origTaskNode = (TaskNode)origNode;
             
             // check for state
-            if (true || ! origNode.getState().equalsIgnoreCase(newNode.getState())) {
+            if (Calculator.compareValues(
+                            origNode.getState(), newNode.getState()) 
+                            != Calculator.CONST_COMPARE_EQ) {
                 origNode.setState(newNode.getState());
                 flgChange = true;
             }
             // check for Plan aufwand
-            if (true || origTaskNode.getPlanAufwand().compareTo(newTaskNode.getPlanAufwand()) != 0) {
+            if (Calculator.compareValues(
+                            origTaskNode.getPlanAufwand(), newTaskNode.getPlanAufwand()) 
+                            != Calculator.CONST_COMPARE_EQ) {
                 origTaskNode.setPlanAufwand(newTaskNode.getPlanAufwand());
                 flgChange = true;
             }
             // check for Plan datestart
-            if (true || origTaskNode.getPlanStart().compareTo(newTaskNode.getPlanStart()) != 0) {
+            if (Calculator.compareValues(
+                            origTaskNode.getPlanStart(), newTaskNode.getPlanStart()) 
+                            != Calculator.CONST_COMPARE_EQ) {
                 origTaskNode.setPlanStart(newTaskNode.getPlanStart());
                 flgChange = true;
             }
             // check for Plan dateend
-            if (true || origTaskNode.getPlanEnde().compareTo(newTaskNode.getPlanEnde()) != 0) {
+            if (Calculator.compareValues(
+                            origTaskNode.getPlanEnde(), newTaskNode.getPlanEnde()) 
+                            != Calculator.CONST_COMPARE_EQ) {
                 origTaskNode.setPlanEnde(newTaskNode.getPlanEnde());
                 flgChange = true;
             }
             // check for Ist stand
-            if (true || origTaskNode.getIstStand().compareTo(newTaskNode.getIstStand()) != 0) {
+            if (Calculator.compareValues(
+                            origTaskNode.getIstStand(), newTaskNode.getIstStand()) 
+                            != Calculator.CONST_COMPARE_EQ) {
                 origTaskNode.setIstStand(newTaskNode.getIstStand());
                 flgChange = true;
             }
             // check for Ist aufwand
-            if (true || origTaskNode.getIstAufwand().compareTo(newTaskNode.getIstAufwand()) != 0) {
+            if (Calculator.compareValues(
+                            origTaskNode.getIstAufwand(), newTaskNode.getIstAufwand()) 
+                            != Calculator.CONST_COMPARE_EQ) {
                 origTaskNode.setIstAufwand(newTaskNode.getIstAufwand());
                 flgChange = true;
             }
             // check for Ist datestart
-            if (true || origTaskNode.getIstStart().compareTo(newTaskNode.getIstStart()) != 0) {
+            if (Calculator.compareValues(
+                            origTaskNode.getIstStart(), newTaskNode.getIstStart()) 
+                            != Calculator.CONST_COMPARE_EQ) {
                 origTaskNode.setIstStart(newTaskNode.getIstStart());
                 flgChange = true;
             }
             // check for Ist dateend
-            if (true || origTaskNode.getIstEnde().compareTo(newTaskNode.getIstEnde()) != 0) {
+            if (Calculator.compareValues(
+                            origTaskNode.getIstEnde(), newTaskNode.getIstEnde()) 
+                            != Calculator.CONST_COMPARE_EQ) {
                 origTaskNode.setIstEnde(newTaskNode.getIstEnde());
                 flgChange = true;
             }
@@ -273,22 +297,30 @@ public class NodeController {
             // get state from type
             origNode.setState(origNode.getType());
             // check for DocLayoutTagCommand
-            if (true || ! origInfoNode.getDocLayoutTagCommand().equalsIgnoreCase(newInfoNode.getDocLayoutTagCommand())) {
+            if (Calculator.compareValues(
+                            origInfoNode.getDocLayoutTagCommand(), newInfoNode.getDocLayoutTagCommand()) 
+                            != Calculator.CONST_COMPARE_EQ) {
                 origInfoNode.setDocLayoutTagCommand(newInfoNode.getDocLayoutTagCommand());
                 flgChange = true;
             }
             // check for DocLayoutShortName
-            if (true || ! origInfoNode.getDocLayoutShortName().equalsIgnoreCase(newInfoNode.getDocLayoutShortName())) {
+            if (Calculator.compareValues(
+                            origInfoNode.getDocLayoutShortName(), newInfoNode.getDocLayoutShortName()) 
+                            != Calculator.CONST_COMPARE_EQ) {
                 origInfoNode.setDocLayoutShortName(newInfoNode.getDocLayoutShortName());
                 flgChange = true;
             }
             // check for DocLayoutAddStyleClass
-            if (true || ! origInfoNode.getDocLayoutAddStyleClass().equalsIgnoreCase(newInfoNode.getDocLayoutAddStyleClass())) {
+            if (Calculator.compareValues(
+                            origInfoNode.getDocLayoutAddStyleClass(), newInfoNode.getDocLayoutAddStyleClass()) 
+                            != Calculator.CONST_COMPARE_EQ) {
                 origInfoNode.setDocLayoutAddStyleClass(newInfoNode.getDocLayoutAddStyleClass());
                 flgChange = true;
             }
             // check for DocLayoutFlgCloseDiv
-            if (true || ! origInfoNode.getDocLayoutFlgCloseDiv().equalsIgnoreCase(newInfoNode.getDocLayoutFlgCloseDiv())) {
+            if (Calculator.compareValues(
+                            origInfoNode.getDocLayoutFlgCloseDiv(), newInfoNode.getDocLayoutFlgCloseDiv()) 
+                            != Calculator.CONST_COMPARE_EQ) {
                 origInfoNode.setDocLayoutFlgCloseDiv(newInfoNode.getDocLayoutFlgCloseDiv());
                 flgChange = true;
             }
@@ -303,17 +335,23 @@ public class NodeController {
             origNode.setState(origNode.getType());
 
             // check for ResLocRef
-            if (true || ! origUrlResNode.getResLocRef().equalsIgnoreCase(newUrlResNode.getResLocRef())) {
+            if (Calculator.compareValues(
+                            origUrlResNode.getResLocRef(), newUrlResNode.getResLocRef())
+                            != Calculator.CONST_COMPARE_EQ) {
                 origUrlResNode.setResLocRef(newUrlResNode.getResLocRef());
                 flgChange = true;
             }
             // check for ResLocName
-            if (true || ! origUrlResNode.getResLocName().equalsIgnoreCase(newUrlResNode.getResLocName())) {
+            if (Calculator.compareValues(
+                            origUrlResNode.getResLocName(), newUrlResNode.getResLocName()) 
+                            != Calculator.CONST_COMPARE_EQ) {
                 origUrlResNode.setResLocName(newUrlResNode.getResLocName());
                 flgChange = true;
             }
             // check for ResLocTags
-            if (true || ! origUrlResNode.getResLocTags().equalsIgnoreCase(newUrlResNode.getResLocTags())) {
+            if (Calculator.compareValues(
+                            origUrlResNode.getResLocTags(), newUrlResNode.getResLocTags()) 
+                            != Calculator.CONST_COMPARE_EQ) {
                 origUrlResNode.setResLocTags(newUrlResNode.getResLocTags());
                 flgChange = true;
             }
@@ -328,17 +366,23 @@ public class NodeController {
             origNode.setState(origNode.getType());
 
             // check for ResLocRef
-            if (true || ! origUrlResNode.getSymLinkRef().equalsIgnoreCase(newUrlResNode.getSymLinkRef())) {
+            if (Calculator.compareValues(
+                            origUrlResNode.getSymLinkRef(), newUrlResNode.getSymLinkRef()) 
+                            != Calculator.CONST_COMPARE_EQ) {
                 origUrlResNode.setSymLinkRef(newUrlResNode.getSymLinkRef());
                 flgChange = true;
             }
             // check for SymLinkName
-            if (true || ! origUrlResNode.getSymLinkName().equalsIgnoreCase(newUrlResNode.getSymLinkName())) {
+            if (Calculator.compareValues(
+                            origUrlResNode.getSymLinkName(), newUrlResNode.getSymLinkName()) 
+                            != Calculator.CONST_COMPARE_EQ) {
                 origUrlResNode.setSymLinkName(newUrlResNode.getSymLinkName());
                 flgChange = true;
             }
             // check for SymLinkTags
-            if (true || ! origUrlResNode.getSymLinkTags().equalsIgnoreCase(newUrlResNode.getSymLinkTags())) {
+            if (Calculator.compareValues(
+                            origUrlResNode.getSymLinkTags(), newUrlResNode.getSymLinkTags()) 
+                            != Calculator.CONST_COMPARE_EQ) {
                 origUrlResNode.setSymLinkTags(newUrlResNode.getSymLinkTags());
                 flgChange = true;
             }

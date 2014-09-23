@@ -16,6 +16,7 @@
  */
 package de.yaio.utils;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 import org.apache.log4j.Logger;
@@ -33,15 +34,29 @@ import org.apache.log4j.Logger;
  */
 
 public class Calculator {
+    /** comparison result arg1 is null or lower than arg2 **/
+    public static int CONST_COMPARE_LT = -1;
+    /** comparison result arg1 is greater than arg2 or arg2 is null **/
+    public static int CONST_COMPARE_GT = 1;
+    /** comparison result arg1=arg2 or both are null **/
+    public static int CONST_COMPARE_EQ = 0;
+    /** calculation result calculate the minimum of arg1 and arg2 **/
     public static int CONST_CALCULATE_ACTION_MIN = 1;
+    /** calculation result calculate the maxuimum of arg1 and arg2 **/
     public static int CONST_CALCULATE_ACTION_MAX = 2;
+    /** calculation result calculate the sum of arg1 and arg2 **/
     public static int CONST_CALCULATE_ACTION_SUM = 3;
+    /** calculation result calculate the state for arg1 and arg2 **/
     public static int CONST_CALCULATE_ACTION_STATE = 4;
+    /** calculation result calculate the multiplication of arg1 and arg2 **/
     public static int CONST_CALCULATE_ACTION_MUL = 5;
+    /** calculation result calculate the multiplication-state of arg1 and arg2 **/
     public static int CONST_CALCULATE_ACTION_MULSTATE = 6;
 
-    // einige Double-Vergleiche funktionieren wegen Double-Kommastelen nicht :-(
+    // einige Double-Vergleiche funktionieren wegen Double-Kommastellen nicht :-(
+    /** calculation constant for 0% **/
     public static double CONST_DOUBLE_NULL = 0.00001;
+    /** calculation constant for 100% **/
     public static double CONST_DOUBLE_100 = 99.99999;
     
     // Logger
@@ -65,7 +80,7 @@ public class Calculator {
      * @param arg2 - value1 for calculation
      * @param action - calculation action CONST_CALCULATE_ACTION_*
      * @return - result of the calculation
-     * @throws Exception
+     * @throws Exception - action not allowed possible
      */
     public static Object calculate(Object arg1, Object arg2, int action) throws Exception {
         Object res = null;
@@ -189,5 +204,67 @@ public class Calculator {
         return res;
     }
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Tools - Calculation
+     * <h4>FeatureDescription:</h4>
+     *     compare the values value1 and value2<br>
+     *     if one of these is null, this will LT than the other<br>
+     *     if both are null, they are equal<br>
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue -1/0/+1
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Calculator
+     * @param arg1 - value1 for comparison
+     * @param arg2 - value1 for comparison
+     * @return - result of the comparison (LT,EQU, GT - -1/0/+1)
+     * @throws IllegalAccessException - if Class unknown or classes differ
+     */
+    public static int compareValues(Object arg1, Object arg2) throws IllegalAccessException {
+        int result = CONST_COMPARE_EQ;
+        
+        // test ob beide belegt
+        if (arg1 != null && arg2 != null) {
+            if (Timestamp.class.isInstance(arg1)) {
+                arg1 = new Date(((Timestamp)arg1).getTime());
+            }
+            if (Timestamp.class.isInstance(arg2)) {
+                arg2 = new Date(((Timestamp)arg2).getTime());
+            }
+            // check classes
+            if (! arg1.getClass().isInstance(arg2)) {
+                // class differ!!
+                throw new IllegalAccessException("cant compare arg1 (" + arg1.getClass() + "):" 
+                                + " with arg2:" + arg2.getClass());
+            }
+            
+            // branch for classes
+            if (String.class.isInstance(arg1)) {
+                return ((String)arg1).compareTo((String)arg2);
+            } else if (Integer.class.isInstance(arg1)) {
+                return ((Integer)arg1).compareTo((Integer)arg2);
+            } else if (Float.class.isInstance(arg1)) {
+                return ((Float)arg1).compareTo((Float)arg2);
+            } else if (Double.class.isInstance(arg1)) {
+                return ((Double)arg1).compareTo((Double)arg2);
+            } else if (Date.class.isInstance(arg1)) {
+                return ((Date)arg1).compareTo((Date)arg2);
+            } else {
+                // unknown class
+                throw new IllegalAccessException("cant compare arg1 (" + arg1.getClass() + "):" 
+                                + " with arg2:" + arg2.getClass() + ": unknwon class");
+            }
 
+        } else if (arg1 == null) {
+            // arg1 is null
+            result = CONST_COMPARE_LT;
+        } else {
+            // arg2 is null
+            result = CONST_COMPARE_GT;
+        }
+
+        return result;
+    }
 }
