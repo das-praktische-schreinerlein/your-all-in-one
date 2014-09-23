@@ -55,40 +55,6 @@ import de.yaio.core.nodeservice.BaseNodeService;
 @RequestMapping("/nodes")
 public class NodeController {
 
-    public class NodeViolation {
-        public String path;
-        public String message;
-        public String messageTemplate;
-        public NodeViolation(String path, String message, String messageTemplate) {
-            super();
-            this.path = path;
-            this.message = message;
-            this.messageTemplate = messageTemplate;
-        }
-    }
-    
-    public class NodeResponse {
-        
-        public NodeResponse(String state, String stateMsg, BaseNode node,
-                               List<String> parentIdHierarchy, 
-                               List<BaseNode> childNodes,
-                               List<NodeViolation> violatons) {
-            super();
-            this.state = state;
-            this.stateMsg = stateMsg;
-            this.node = node;
-            this.parentIdHierarchy = parentIdHierarchy;
-            this.childNodes = childNodes;
-            this.violations = violatons;
-        }
-        public String state;
-        public String stateMsg;
-        public BaseNode node;
-        public List<String> parentIdHierarchy;
-        public List<BaseNode> childNodes;
-        public List<NodeViolation> violations;
-    }
-    
     protected NodeResponse createResponseObj(BaseNode node, String okMsg) {
         // extract parents
         List<String> parentIdHierarchy = node.getParentIdHierarchy();
