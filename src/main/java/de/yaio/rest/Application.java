@@ -16,6 +16,9 @@
  */
 package de.yaio.rest;
 
+import javax.annotation.PreDestroy;
+
+import org.apache.commons.cli.Option;
 import org.apache.log4j.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -23,6 +26,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
+import de.yaio.core.datadomainservice.NodeNumberService;
+import de.yaio.core.node.BaseNode;
 import de.yaio.utils.CmdLineJob;
 import de.yaio.utils.Configurator;
 
@@ -45,7 +50,9 @@ public class Application {
     protected static ApplicationContext springApplicationContext;
     
     private final static Logger LOGGER = Logger.getLogger(Application.class);
-
+    protected static NodeNumberService nodeNumberService;
+    protected static String strPathIdDB;
+    
     /**
      * <h4>FeatureDomain:</h4>
      *     CLI
@@ -63,6 +70,10 @@ public class Application {
         try {
             // parse cmdArgs
             LOGGER.info("initCommandLine");
+            Option pathIdDB = new Option("", "pathiddb", true,
+                            "Pfad zur ID-Datenbank");
+                    pathIdDB.setRequired(true);
+            Configurator.getInstance().getAvailiableCmdLineOptions().addOption(pathIdDB);
             Configurator.getInstance().setCmdLineArgs(args);
             Configurator.getInstance().getCommandLine();
 
@@ -83,27 +94,53 @@ public class Application {
             
             // initApplicationContext
             Configurator.getInstance().getSpringApplicationContext();
+            
+            // gets NodeNumberService
+            nodeNumberService = 
+                            BaseNode.getConfiguredMetaDataService().getNodeNumberService();
+            
+            // Id-Datei einlesen
+            strPathIdDB = Configurator.getInstance().getCommandLine().getOptionValue(
+                                            "pathiddb", null);
+            if (strPathIdDB != null) {
+                nodeNumberService.initNextNodeNumbersFromFile(strPathIdDB);
+            }
 
             // initApp
             LOGGER.info("start application");
             SpringApplication.run(Application.class, args);
             LOGGER.info("done application");
-            
-            // cleanupApp
-//            cleanUpAfterJob();
         } catch (Throwable ex) {
             // catch Exception
             System.out.println(ex);
             LOGGER.fatal(ex);
             LOGGER.info("Exit: 1");
+            try {
+                cleanUpAfterJob();
+            } catch (Throwable ex2) {
+                System.out.println(ex2);
+                LOGGER.fatal(ex2);
+                LOGGER.info("Exit: 1");
+            }
             System.exit(CmdLineJob.CONST_EXITCODE_FAILED_ARGS);
         }
     }
     
+    @PreDestroy
     protected static void cleanUpAfterJob() throws Throwable {
+        // Ids speichern
+        LOGGER.info("cleanUpAfterJob start");
+        if (strPathIdDB != null && nodeNumberService != null) {
+            // save to file
+            LOGGER.info("cleanUpAfterJob export nextNodeNumbers to " + strPathIdDB);
+            nodeNumberService.exportNextNodeNumbersToFile(strPathIdDB);
+        }
+
         // TODO: hack to close HSLDB-connection -> Hibernate doesn't close the 
         //       database and so the content is not written to file
+        LOGGER.info("hack: close hsqldb");
         org.hsqldb.DatabaseManager.closeDatabases(0);
+        LOGGER.info("cleanUpAfterJob done");
     }
     
 }

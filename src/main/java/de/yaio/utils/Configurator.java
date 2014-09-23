@@ -382,9 +382,8 @@ public class Configurator {
      * <h1>Nebenwirkungen:</h1>
      *     Rueckgabe als Options
      * @return Options
-     * @throws Throwable
      */
-    protected Options getAvailiableCmdLineOptions() throws Throwable {
+    public Options getAvailiableCmdLineOptions() {
         return this.availiableCmdLineOptions;
     }
 

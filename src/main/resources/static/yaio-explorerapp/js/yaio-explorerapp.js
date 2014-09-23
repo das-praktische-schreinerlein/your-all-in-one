@@ -119,8 +119,29 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
 
     // add discard
     $scope.discard = function(formName) {
-        closeEditorForNode();
+        closeYAIONodeEditor();
     }
+    
+    // add discard
+    $scope.selectNewNodeType = function(formName) {
+        // hide all forms
+        resetYAIONodeEditorForms();
+        
+        // display createform and select nodeform
+        $("#containerFormYaioEditorCreate").css("display", "block");
+        var className = $scope.nodeForEdit["className"];
+        $("#containerFormYaioEditor" + className).css("display", "block");
+        console.log("selectNewNodeType open form #containerFormYaioEditor" + className);
+
+        // special fields
+        if (className == "SymLinkNode") {
+            $scope.nodeForEdit["type"] = "SYMLINK";
+        }
+
+        // set mode
+        $scope.nodeForEdit.mode = "create";
+    }
+    
 
     // add save
     $scope.save = function(formName) {
@@ -149,6 +170,11 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
             var fieldName = field.fieldName;
             var value = $scope.nodeForEdit[fieldName];
             
+            if (field.intern) {
+                // ignore intern
+                continue;
+            }
+            
             // convert values
             if (field.datatype == "date" && value) {
                 var lstDate=value.split(".");
@@ -165,17 +191,37 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
             nodeObj[fieldName] = value;
             console.log("map nodefield:" + fieldName + "=" + value);
         }
+        
+        
+        // branch depending on mode
+        var method, url;
+        var mode =  $scope.nodeForEdit["mode"];
+        if (mode == "edit") {
+            // mode update 
+            method = "PATCH";
+            url = updateUrl + $scope.nodeForEdit.className + "/" + $scope.nodeForEdit.sysUID;
+        } else if (mode == "create") {
+            // mode create 
+            method = "POST";
+            url = createUrl + $scope.nodeForEdit.className + "/" + $scope.nodeForEdit.sysUID;
+            
+            // unset sysUID
+            nodeObj["sysUID"] = null;
+        } else {
+            // unknown mode
+            console.error("unknown mode=" + mode + " form formName=" + formName);
+            return null;
+        }
 
         // define json for common fields
         var json = JSON.stringify(nodeObj);
         
         // create url
-        var url = updateUrl + $scope.nodeForEdit.className + "/" + $scope.nodeForEdit.sysUID;
         console.log("NodeSave - url::" + url + " data:" + json);
         
         // do http
         $http({
-                method: 'PATCH',
+                method: method,
                 url: url,
                 data: json
         }).then(function(nodeResponse) {
@@ -183,17 +229,18 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
             var state = nodeResponse.data.state;
             if (state == "OK") {
                 // all fine
-                console.log("NodeSave - OK updated node:" + nodeResponse.data.stateMsg)
+                console.log("NodeSave - OK saved node:" + nodeResponse.data.stateMsg)
                 
                 // reload
-                var newUrl = '/show/' + nodeId + '/activate/' + $scope.nodeForEdit.sysUID;
+                var newUrl = '/show/' + nodeId 
+                    + '/activate/' + nodeResponse.data.node.sysUID; //$scope.nodeForEdit.sysUID
                 console.log("reload:" + newUrl);
                 
                 // no cache!!!
                 $location.path(newUrl + "?" + (new Date()).getTime());
             } else {
                 // error
-                console.error("error updating node:" + nodeResponse.data.stateMsg 
+                console.error("error saving node:" + nodeResponse.data.stateMsg 
                         + " details:" + nodeResponse);
                 
                 // map violations

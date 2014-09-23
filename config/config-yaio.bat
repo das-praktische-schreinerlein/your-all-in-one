@@ -27,7 +27,7 @@ rem new prod
 set YAIOAPP=%BASEPATH%..\target\yaio-0.1.0.BUILD-SNAPSHOT.jar
 set CP="%YAIOAPP%;"
 set CFG=--config %BASEPATH%..\config\application.properties
-set JAVAOPTIONS=-Xmx512m -Xms128m -Dlog4j.configuration=file:%BASEPATH%..\config\log4j.properties
+set JAVAOPTIONS=-Xmx768m -Xms128m -Dlog4j.configuration=file:%BASEPATH%..\config\log4j.properties
 
 
 rem change CodePage
@@ -52,8 +52,9 @@ set FILE_DELIM=-
 echo %CP%
 
 rem set Config
-set PARSER_OPTIONS=-pathiddb %YAIOVARPATH%\nodeids.properties %FLGWP%
-set PARSER_OPTIONS_EXCEL=-pathiddb %YAIOVARPATH%\\nodeids.properties
+set NEWID_OPTIONS=-pathiddb %YAIOVARPATH%\\nodeids.properties
+set PARSER_OPTIONS=%NEWID_OPTIONS% %FLGWP%
+set PARSER_OPTIONS_EXCEL=%NEWID_OPTIONS%
 set OUTPUT_OPTIONS=--calcsum -U 3 -p -i -s -d -t -intend 80 -intendli 2 -l 
 rem normal set OUTPUT_OPTIONS_WIKI=-U 3 -p -i -s -d -t -intend 80 -intendli 2 -l 
 set OUTPUT_OPTIONS_WIKI=--calcsum -U 3 -p -i -s -d -t -intend 80 -intendli 2 -l 

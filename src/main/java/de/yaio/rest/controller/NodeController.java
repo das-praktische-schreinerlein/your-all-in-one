@@ -476,6 +476,96 @@ public class NodeController {
      * <h4>FeatureDomain:</h4>
      *     Webservice
      * <h4>FeatureDescription:</h4>
+     *     create the node with parent parentSysUID and return it with children as JSON
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>NodeControllerResponse (OK, ERROR) with the new node for parentSysUID
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice Query
+     * @param parentSysUID - sysUID of the parent to filter
+     * @param newNode - the node created from request-data
+     * @return NodeControllerResponse (OK, ERROR) with the node for sysUID
+     */
+    public NodeResponse createNode(String parentSysUID, BaseNode newNode) {
+        NodeResponse response = new NodeResponse(
+                        "ERROR", "parentnode '" + parentSysUID + "' doesnt exists", 
+                        null, null, null, null);
+
+        // find a specific node
+        BaseNode parentNode = BaseNode.findBaseNode(parentSysUID);
+        if (parentNode == null) {
+            // node not found
+            return response;
+        }
+
+        try {
+            // read children for parent
+            parentNode.initChildNodesFromDB(0);
+            
+            // init some vars and map NodeData
+            newNode.setEbene(parentNode.getEbene()+1);
+            mapNodeData(newNode, newNode);
+            
+            // add new Node
+            newNode.setParentNode(parentNode);
+            
+            // recalc data
+            newNode.recalcData(BaseNodeService.CONST_RECURSE_DIRECTION_ONLYME);
+
+            // save
+            newNode.persist();
+
+            // recalc Parents 
+            // TODO: we get different objects :-( -> need to merge them
+            newNode.initChildNodesForParentsFromDB();
+            newNode.recalcData(BaseNodeService.CONST_RECURSE_DIRECTION_PARENT);
+            parentNode = newNode.getParentNode();
+            while (parentNode != null) {
+                parentNode.merge();
+                parentNode = parentNode.getParentNode();
+            }
+
+            // create response
+            response = createResponseObj(newNode, "node '" + newNode.getSysUID() 
+                            + "' created for parentNode=" + parentSysUID);
+
+        } catch (ConstraintViolationException ex) {
+            // validation errors
+            Set<ConstraintViolation<?>> cViolations = ex.getConstraintViolations();
+            
+            // convert to Violation
+            List<NodeViolation>violations = new ArrayList<NodeViolation>();
+            for (ConstraintViolation<?> cViolation : cViolations) {
+                violations.add(
+                      new NodeViolation(cViolation.getPropertyPath().toString(), 
+                                      cViolation.getMessage(),
+                                      cViolation.getMessageTemplate()));
+            }
+            
+            // create response
+            response = new NodeResponse(
+                            "ERROR", "violationerrors while creating node for parent '" 
+                            + parentSysUID + "':" + ex, 
+                            null, null, null, violations);
+            
+            
+        } catch (Throwable ex) {
+            // errorhandling
+            ex.printStackTrace();
+            response = new NodeResponse(
+                            "ERROR", "error while creating node for parent '" 
+                            + parentSysUID + "':" + ex, 
+                            null, null, null, null);
+        }
+        
+        return response;
+    }
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
      *     Request to update the BaseNode sysUID and return it with children as JSON
      * <h4>FeatureResult:</h4>
      *   <ul>
@@ -499,7 +589,7 @@ public class NodeController {
      * <h4>FeatureDomain:</h4>
      *     Webservice
      * <h4>FeatureDescription:</h4>
-     *     Request to update the EventNode sysUID and return it with children as JSON
+     *     Request to update the TaskNode sysUID and return it with children as JSON
      * <h4>FeatureResult:</h4>
      *   <ul>
      *     <li>NodeControllerResponse (OK, ERROR) with the node for sysUID
@@ -516,6 +606,29 @@ public class NodeController {
                 @RequestBody TaskNode newNode) {
         // create default response
         return this.updateNode(sysUID, newNode);
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
+     *     Request to create the new TaskNode with parentSysUID and return it with children as JSON
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>NodeControllerResponse (OK, ERROR) with the new node for parentSysUID
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice Query
+     * @param parentSysUID - parentSysUID to add the newNode
+     * @param newNode - the node created from request-data
+     * @return NodeControllerResponse (OK, ERROR) with the node for sysUID
+     */
+    @RequestMapping(method=RequestMethod.POST, value = "/create/TaskNode/{parentSysUID}")
+    public @ResponseBody NodeResponse createTaskNode(
+                @PathVariable(value="parentSysUID") String parentSysUID, 
+                @RequestBody TaskNode newNode) {
+        // create default response
+        return this.createNode(parentSysUID, newNode);
     }
 
     /**
@@ -545,6 +658,29 @@ public class NodeController {
      * <h4>FeatureDomain:</h4>
      *     Webservice
      * <h4>FeatureDescription:</h4>
+     *     Request to create the new EventNode with parentSysUID and return it with children as JSON
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>NodeControllerResponse (OK, ERROR) with the new node for parentSysUID
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice Query
+     * @param parentSysUID - parentSysUID to add the newNode
+     * @param newNode - the node created from request-data
+     * @return NodeControllerResponse (OK, ERROR) with the node for sysUID
+     */
+    @RequestMapping(method=RequestMethod.POST, value = "/create/EventNode/{parentSysUID}")
+    public @ResponseBody NodeResponse createEventNode(
+                @PathVariable(value="parentSysUID") String parentSysUID, 
+                @RequestBody EventNode newNode) {
+        // create default response
+        return this.createNode(parentSysUID, newNode);
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
      *     Request to update the UrlresNode sysUID and return it with children as JSON
      * <h4>FeatureResult:</h4>
      *   <ul>
@@ -562,6 +698,29 @@ public class NodeController {
                 @RequestBody UrlResNode newNode) {
         // create default response
         return this.updateNode(sysUID, newNode);
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
+     *     Request to create the new UrlResNode with parentSysUID and return it with children as JSON
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>NodeControllerResponse (OK, ERROR) with the new node for parentSysUID
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice Query
+     * @param parentSysUID - parentSysUID to add the newNode
+     * @param newNode - the node created from request-data
+     * @return NodeControllerResponse (OK, ERROR) with the node for sysUID
+     */
+    @RequestMapping(method=RequestMethod.POST, value = "/create/UrlResNode/{parentSysUID}")
+    public @ResponseBody NodeResponse createUrlResNode(
+                @PathVariable(value="parentSysUID") String parentSysUID, 
+                @RequestBody UrlResNode newNode) {
+        // create default response
+        return this.createNode(parentSysUID, newNode);
     }
 
     /**
@@ -591,6 +750,29 @@ public class NodeController {
      * <h4>FeatureDomain:</h4>
      *     Webservice
      * <h4>FeatureDescription:</h4>
+     *     Request to create the new InfoNode with parentSysUID and return it with children as JSON
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>NodeControllerResponse (OK, ERROR) with the new node for parentSysUID
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice Query
+     * @param parentSysUID - parentSysUID to add the newNode
+     * @param newNode - the node created from request-data
+     * @return NodeControllerResponse (OK, ERROR) with the node for sysUID
+     */
+    @RequestMapping(method=RequestMethod.POST, value = "/create/InfoNode/{parentSysUID}")
+    public @ResponseBody NodeResponse createInfoNode(
+                @PathVariable(value="parentSysUID") String parentSysUID, 
+                @RequestBody InfoNode newNode) {
+        // create default response
+        return this.createNode(parentSysUID, newNode);
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
      *     Request to update the SymLinkNode sysUID and return it with children as JSON
      * <h4>FeatureResult:</h4>
      *   <ul>
@@ -608,6 +790,29 @@ public class NodeController {
                 @RequestBody SymLinkNode newNode) {
         // create default response
         return this.updateNode(sysUID, newNode);
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
+     *     Request to create the new SymLinkNode with parentSysUID and return it with children as JSON
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>NodeControllerResponse (OK, ERROR) with the new node for parentSysUID
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice Query
+     * @param parentSysUID - parentSysUID to add the newNode
+     * @param newNode - the node created from request-data
+     * @return NodeControllerResponse (OK, ERROR) with the node for sysUID
+     */
+    @RequestMapping(method=RequestMethod.POST, value = "/create/SymLinkNode/{parentSysUID}")
+    public @ResponseBody NodeResponse createSymLinkNode(
+                @PathVariable(value="parentSysUID") String parentSysUID, 
+                @RequestBody SymLinkNode newNode) {
+        // create default response
+        return this.createNode(parentSysUID, newNode);
     }
 
     /**

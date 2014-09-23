@@ -60,15 +60,54 @@
     *****************************
     -->
     <div id="containerYaioEditor" class="container-yaio-editor">
-    <div id="containerBoxYaioEditor" class="box containerbox-yaio-editor">
+      <div id="containerBoxYaioEditor" class="box containerbox-yaio-editor">
 
-        <!-- TODO: different fields for the nodetypes -->
+        <!-- 
+        *************************
+            Form: Create new Node
+        ************************* 
+        -->
+        <div class="hidden container-yaio-editor-create" id="containerFormYaioEditorCreate">
+          <h2>Nodetyp auswählen:</h2>
+          <form with-errors class="hidden" id="nodeFormCreate" name="nodeFormCreate">
+            
+            <!-- simulate hiddenfield -->
+            <input class="hidden" type="text" name="sysUID" ng-model="nodeForEdit.sysUID" id="inputSysUIDCreate" required ng-change="">
+            <fieldset>
+              <legend>Stammdaten</legend>
+              
+              <!-- show textfield -->
+              <label for="state">Typ</label> 
+              <select type="text" name="className" ng-model="nodeForEdit.className" class="inputtype_type" id="inputCreateNodeType" required ng-change=""> 
+                  <option value="">Bitte wählen
+                  <option value="TaskNode">Task
+                  <option value="EventNode">Event
+                  <option value="InfoNode">Info
+                  <option value="UrlResNode">UrlUes
+                  <option value="SymLinkNode">Symlink
+              </select>
+              
+            </fieldset>
+
+            <fieldset>
+              <button ng-click="selectNewNodeType('nodeFormCreate')" ng-disabled="nodeFormCreate.$invalid" class="btn btn-primary">Select</button>
+              <button ng-click="discard()" class="btn btn-primary">Discard</button>
+            </fieldset>
+          </form> 
+        </div>
+
+        <!-- 
+        *************************
+            Form: edit/create TaskNode
+        ************************* 
+        -->
         <div class="hidden container-yaio-editor-tasknode" id="containerFormYaioEditorTaskNode">
           <h2>Task bearbeiten:</h2>
           <form with-errors class="hidden" id="nodeFormTaskNode" name="nodeFormTaskNode">
             <!-- simulate hiddenfield -->
             <input class="hidden" type="text" name="sysUID" ng-model="nodeForEdit.sysUID" id="inputSysUIDTaskNode" required ng-change="">
             <input class="hidden" type="text" name="className" ng-model="nodeForEdit.className" id="inputClassNameTaskNode" required ng-change="">
+            <input class="hidden" type="text" name="mode" ng-model="nodeForEdit.mode" id="inputModeTaskNode" required ng-change="">
 
             <fieldset>
               <legend>Stammdaten</legend>
@@ -167,6 +206,11 @@
           </form>
         </div>
         
+        <!-- 
+        *************************
+            Form: edit/create EventNode
+        ************************* 
+        -->
         <div class="hidden container-yaio-editor-eventnode" id="containerFormYaioEditorEventNode">
           <h2>Event bearbeiten:</h2>
 
@@ -174,6 +218,7 @@
             <!-- simulate hiddenfield -->
             <input class="hidden" type="text" name="sysUID" ng-model="nodeForEdit.sysUID" id="inputSysUIDEventNode" required ng-change="">
             <input class="hidden" type="text" name="className" ng-model="nodeForEdit.className" id="inputClassNameEventNode" required ng-change="">
+            <input class="hidden" type="text" name="mode" ng-model="nodeForEdit.mode" id="inputModeEventNode" required ng-change="">
 
             <fieldset>
               <legend>Stammdaten</legend>
@@ -274,6 +319,11 @@
           </form>
         </div>
         
+        <!-- 
+        *************************
+            Form: edit/create InfoNode
+        ************************* 
+        -->
         <div class="hidden container-yaio-editor-infonode" id="containerFormYaioEditorInfoNode">
           <h2>Info bearbeiten:</h2>
 
@@ -281,6 +331,7 @@
             <!-- simulate hiddenfield -->
             <input class="hidden" type="text" name="sysUID" ng-model="nodeForEdit.sysUID" id="inputSysUIDInfoNode" required ng-change="">
             <input class="hidden" type="text" name="className" ng-model="nodeForEdit.className" id="inputClassNameInfoNode" required ng-change="">
+            <input class="hidden" type="text" name="mode" ng-model="nodeForEdit.mode" id="inputModeInfoNode" required ng-change="">
 
             <fieldset>
               <legend>Stammdaten</legend>
@@ -321,6 +372,11 @@
           </form>
         </div>
         
+        <!-- 
+        *************************
+            Form: edit/create UrlResNode
+        ************************* 
+        -->
         <div class="hidden container-yaio-editor-urlresnode" id="containerFormYaioEditorUrlResNode">
           <h2>Ressource bearbeiten:</h2>
 
@@ -328,6 +384,7 @@
             <!-- simulate hiddenfield -->
             <input class="hidden" type="text" name="sysUID" ng-model="nodeForEdit.sysUID" id="inputSysUIDUrlResNode" required ng-change="">
             <input class="hidden" type="text" name="className" ng-model="nodeForEdit.className" id="inputClassNameUrlResNode" required ng-change="">
+            <input class="hidden" type="text" name="mode" ng-model="nodeForEdit.mode" id="inputModeUrlResNode" required ng-change="">
 
             <fieldset>
               <legend>Stammdaten</legend>
@@ -392,14 +449,20 @@
           </form>
         </div>
 
+        <!-- 
+        *************************
+            Form: edit/create SymLinkNode
+        ************************* 
+        -->
         <div class="hidden container-yaio-editor-urlresnode" id="containerFormYaioEditorSymLinkNode">
-          <h2>Ressource bearbeiten:</h2>
+          <h2>SymLink bearbeiten:</h2>
 
           <form with-errors class="hidden" id="nodeFormSymLinkNode" name="nodeFormSymLinkNode">
             <!-- simulate hiddenfield -->
             <input class="hidden" type="text" name="sysUID" ng-model="nodeForEdit.sysUID" id="inputSysUIDSymLinkNode" required ng-change="">
             <input class="hidden" type="text" name="className" ng-model="nodeForEdit.className" id="inputClassNameSymLinkNode" required ng-change="">
             <input class="hidden" type="text" name="type" ng-model="nodeForEdit.type" id="inputTypeSymLinkNode" value="SYMLINK" required ng-change="">
+            <input class="hidden" type="text" name="mode" ng-model="nodeForEdit.mode" id="inputModeSymLinkNode" required ng-change="">
 
             <fieldset>
               <legend>Stammdaten</legend>
@@ -411,7 +474,7 @@
             </fieldset>
       
             <fieldset>
-              <legend>Resource</legend>
+              <legend>SymLink</legend>
               
               <!-- show textfield -->
               <label for="symLinkRef">Referenz</label> 

@@ -6,14 +6,22 @@ var baseUrl = "/nodes/";
 var showUrl = baseUrl + "show/";
 var symLinkUrl = baseUrl + "showsymlink/";
 var updateUrl = baseUrl + "update/";
+var createUrl = baseUrl + "create/";
 var moveUrl = baseUrl + "move/";
 
 var treeInstances = new Array();
 var configNodeTypeFields = {
+    Create: {
+        fields: [
+            { fieldName: "className", type: "hidden"},
+            { fieldName: "sysUID", type: "hidden"},
+        ]
+    },
     Common: {
         fields: [
             { fieldName: "className", type: "hidden"},
             { fieldName: "sysUID", type: "hidden"},
+            { fieldName: "mode", type: "hidden", intern: true},
             { fieldName: "type", type: "select"},
             { fieldName: "state", type: "select"},
             { fieldName: "nodeDesc", type: "textarea"},
@@ -163,7 +171,7 @@ function createYAIOFancyTree(treeId, masterNodeId, doneHandler){
             triggerStart: ["f2", "dblclick", "shift+click", "mac+enter"],
             beforeEdit: function(event, data){
                 // open yaio-editor
-                openEditorForNode(data.node.key, 'edit');
+                openYAIONodeEditor(data.node.key, 'edit');
                 
                 // Return false to prevent edit mode
                 // dont use fancyeditor
@@ -752,8 +760,8 @@ function renderColumnsForNode(event, data) {
     // add fields
     $tdList.eq(0).html(
             "<a href='#/show/" + basenode.sysUID + "' class='yaio-icon-center'></a>"
-            + "<a onclick=\"javascript: openEditorForNode('" + basenode.sysUID + "', 'edit'); return false;\" class='yaio-icon-edit'></a>"
-//            + "<a onclick=\"javascript: openEditorForNode('" + basenode.sysUID + "', 'create'); return false;\" class='yaio-icon-create'></a>"
+            + "<a onclick=\"javascript: openYAIONodeEditor('" + basenode.sysUID + "', 'edit'); return false;\" class='yaio-icon-edit'></a>"
+            + "<a onclick=\"javascript: openYAIONodeEditor('" + basenode.sysUID + "', 'create'); return false;\" class='yaio-icon-create'></a>"
             ).addClass("container_field")
              .addClass("fieldtype_actions")
              .addClass(statestyle);
@@ -881,113 +889,156 @@ function createOrReloadYAIOFancyTree(treeId, masterNodeId, doneHandler){
 
 
 
-function openEditorForNode(nodeId, modus) {
-    if (nodeId) {
-        // reset editor
-        console.log("reset editor");
-        $("#containerYaioTree").css("width", "100%");
-        $("#containerYaioEditor").css("width", "100%");
-        $("#containerYaioEditor").css("display", "none");
-        $("#containerBoxYaioEditor").css("width", "100%");
-        $("#containerBoxYaioEditor").css("display", "none");
-        $("#containerFormYaioEditorTaskNode").css("display", "none");
-        $("#containerFormYaioEditorEventNode").css("display", "none");
-        $("#containerFormYaioEditorInfoNode").css("display", "none");
-        $("#containerFormYaioEditorUrlResNode").css("display", "none");
-        $("#containerFormYaioEditorSymLinkNode").css("display", "none");
-
-        // load node
-        var tree = $("#tree").fancytree("getTree");
-        if (!tree) {
-            // tree not found
-            console.error("error openEditorForNode: cant load tree");
-            return null;
-        }
-        var treeNode = tree.getNodeByKey(nodeId);
-        if (! treeNode) {
-            console.error("error openEditorForNode: cant load node:" + nodeId);
-            return null;
-        }
-
-        // extract data
-        var node = treeNode.data.basenode;
-        
-        // configure value mapping
-        var fields = new Array();
-        fields = fields.concat(configNodeTypeFields.Common.fields);
-        if (node.className == "TaskNode") {
-            fields = fields.concat(configNodeTypeFields.TaskNode.fields);
-        } else if (node.className == "EventNode") {
-            fields = fields.concat(configNodeTypeFields.EventNode.fields);
-        } else if (node.className == "InfoNode") {
-            fields = fields.concat(configNodeTypeFields.InfoNode.fields);
-        }  else if (node.className == "UrlResNode") {
-            fields = fields.concat(configNodeTypeFields.UrlResNode.fields);
-        }  else if (node.className == "SymLinkNode") {
-            fields = fields.concat(configNodeTypeFields.SymLinkNode.fields);
-        }
-        
-        // iterate fields
-        for (var idx in fields) {
-            var field = fields[idx];
-            var fieldName = field.fieldName;
-            var fieldNameId = "#input" + fieldName.charAt(0).toUpperCase() + fieldName.slice(1) + node.className;
-            var value = node[fieldName];
-            
-            // convert value
-            if (field.datatype == "integer" && (! value || value == "undefined" || value == null)) {
-                // specical int
-                value = 0
-            } else if (field.datatype == "date")  {
-                // date
-                value = formatGermanDate(value);
-            } else if (field.datatype == "datetime")  {
-                // date
-                value = formatGermanDateTime(value);
-            } else if (! value || value == "undefined" || value == null) {
-                // alle other
-                value = "";
-            } 
-            
-            if (field.type == "hidden") {
-                $(fieldNameId).val(value).trigger('input').triggerHandler("change");
-            } else if (field.type == "select") {
-                $(fieldNameId).val(value).trigger('select').triggerHandler("change");
-            } else if (field.type == "textarea") {
-                $(fieldNameId).val(value).trigger('select').triggerHandler("change");
-            }else {
-                // input
-                $(fieldNameId).val(value).trigger('input');
-            }
-            console.log("map nodefield:" + fieldName + " set:" + fieldNameId + "=" + value);
-        }
-        
-        // show editor
-        var width = $("#box_data").width();
-        console.log("show editor");
-
-        // set width
-        $("#containerYaioEditor").css("width", "600px");
-        $("#containerBoxYaioEditor").css("width", "600px");
-        $("#containerYaioTree").css("width", (width - $("#containerYaioEditor").width() - 30) + "px");
-        
-        // dislay editor and form for the node-classname
-        $("#containerBoxYaioEditor").css("display", "block");
-        $("#containerYaioEditor").css("display", "block");
-        $("#containerFormYaioEditor" + node.className).css("display", "block");
-    } 
+function resetYAIONodeEditor() {
+    // reset editor
+    console.log("resetYAIONodeEditor: show tree, hide editor");
+    
+    // show full tree
+    $("#containerYaioTree").css("width", "100%");
+    
+    // hide editor-container
+    $("#containerYaioEditor").css("width", "100%");
+    $("#containerYaioEditor").css("display", "none");
+    
+    // hide editor-box
+    $("#containerBoxYaioEditor").css("width", "100%");
+    $("#containerBoxYaioEditor").css("display", "none");
+    
+    // hide forms
+    resetYAIONodeEditorForms();
 }
 
-function closeEditorForNode() {
-    console.log("close editor");
-    $("#containerYaioTree").css("width", "100%");
-    $("#containerYaioEditor").css("display", "none");
-    $("#containerYaioEditor").css("width", "100%");
-    $("#containerBoxYaioEditor").css("display", "none");
-    $("#containerBoxYaioEditor").css("width", "100%");
+function resetYAIONodeEditorForms() {
+    // reset editor
+    console.log("resetYAIONodeEditorForms: hide forms");
+    // hide forms
+    $("#containerFormYaioEditorCreate").css("display", "none");
     $("#containerFormYaioEditorTaskNode").css("display", "none");
     $("#containerFormYaioEditorEventNode").css("display", "none");
     $("#containerFormYaioEditorInfoNode").css("display", "none");
     $("#containerFormYaioEditorUrlResNode").css("display", "none");
     $("#containerFormYaioEditorSymLinkNode").css("display", "none");
+}
+
+function openYAIONodeEditor(nodeId, mode) {
+    // reset editor
+    console.log("openYAIONodeEditor: reset editor");
+    resetYAIONodeEditor();
+    
+    // check vars
+    if (! nodeId) {
+        // tree not found
+        console.error("error openYAIONodeEditor: nodeId required");
+        return null;
+    }
+    // load node
+    var tree = $("#tree").fancytree("getTree");
+    if (!tree) {
+        // tree not found
+        console.error("error openYAIONodeEditor: cant load tree for node:" + nodeId);
+        return null;
+    }
+    var treeNode = tree.getNodeByKey(nodeId);
+    if (! treeNode) {
+        console.error("error openYAIONodeEditor: cant load node:" + nodeId);
+        return null;
+    }
+    
+    // extract nodedata
+    var basenode = treeNode.data.basenode;
+        
+    // check mode    
+    var fields = new Array();
+    var formSuffix, fieldSuffix;
+    if (mode == "edit") {
+        // mode edit
+        
+        // configure value mapping
+        fields = fields.concat(configNodeTypeFields.Common.fields);
+        if (basenode.className == "TaskNode") {
+            fields = fields.concat(configNodeTypeFields.TaskNode.fields);
+        } else if (basenode.className == "EventNode") {
+            fields = fields.concat(configNodeTypeFields.EventNode.fields);
+        } else if (basenode.className == "InfoNode") {
+            fields = fields.concat(configNodeTypeFields.InfoNode.fields);
+        }  else if (basenode.className == "UrlResNode") {
+            fields = fields.concat(configNodeTypeFields.UrlResNode.fields);
+        }  else if (basenode.className == "SymLinkNode") {
+            fields = fields.concat(configNodeTypeFields.SymLinkNode.fields);
+        }
+        
+        // set formSuffix
+        formSuffix = basenode.className;
+        fieldSuffix = basenode.className;
+        basenode.mode = "edit";
+        console.log("openYAIONodeEditor mode=edit for node:" + nodeId);
+    } else if (mode == "create") {
+        // mode create
+        formSuffix = "Create";
+        fieldSuffix = "Create";
+        fields = fields.concat(configNodeTypeFields.Create.fields);
+        basenode.mode = "create";
+        console.log("openYAIONodeEditor mode=create for node:" + nodeId);
+    } else {
+        console.error("error openYAIONodeEditor: unknown mode" + mode 
+                + " for nodeId:" + nodeId);
+        return null;
+    }
+        
+    // iterate fields
+    for (var idx in fields) {
+        var field = fields[idx];
+        var fieldName = field.fieldName;
+        var fieldNameId = "#input" + fieldName.charAt(0).toUpperCase() + fieldName.slice(1) + fieldSuffix;
+        var value = basenode[fieldName];
+        
+        // convert value
+        if (field.datatype == "integer" && (! value || value == "undefined" || value == null)) {
+            // specical int
+            value = 0
+        } else if (field.datatype == "date")  {
+            // date
+            value = formatGermanDate(value);
+        } else if (field.datatype == "datetime")  {
+            // date
+            value = formatGermanDateTime(value);
+        } else if (! value || value == "undefined" || value == null) {
+            // alle other
+            value = "";
+        } 
+        
+        // set depending on the fieldtype
+        if (field.type == "hidden") {
+            $(fieldNameId).val(value).trigger('input').triggerHandler("change");
+        } else if (field.type == "select") {
+            $(fieldNameId).val(value).trigger('select').triggerHandler("change");
+        } else if (field.type == "textarea") {
+            $(fieldNameId).val(value).trigger('select').triggerHandler("change");
+        }else {
+            // input
+            $(fieldNameId).val(value).trigger('input');
+        }
+        console.log("openYAIONodeEditor map nodefield:" + fieldName 
+                + " set:" + fieldNameId + "=" + value);
+    }
+    
+    // show editor
+    var width = $("#box_data").width();
+    console.log("openYAIONodeEditor show editor: " + formSuffix 
+            + " for node:" + nodeId);
+
+    // set width
+    $("#containerYaioEditor").css("width", "600px");
+    $("#containerBoxYaioEditor").css("width", "600px");
+    $("#containerYaioTree").css("width", (width - $("#containerYaioEditor").width() - 30) + "px");
+    
+    // display editor and form for the formSuffix
+    $("#containerBoxYaioEditor").css("display", "block");
+    $("#containerYaioEditor").css("display", "block");
+    $("#containerFormYaioEditor" + formSuffix).css("display", "block");
+}
+
+function closeYAIONodeEditor() {
+    console.log("close editor");
+    resetYAIONodeEditor();
 } 

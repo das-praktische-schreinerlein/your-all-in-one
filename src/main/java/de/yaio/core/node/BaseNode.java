@@ -158,7 +158,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     /**
      */
     @NotNull
-    @Size(min = 1, max = 2000)
+    @Size(min = 0, max = 2000)
     private String name;
 
     /**
