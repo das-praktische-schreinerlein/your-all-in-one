@@ -56,6 +56,22 @@ import de.yaio.utils.Calculator;
 @RequestMapping("/nodes")
 public class NodeController {
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
+     *     create an response.obj for the node with state OK and the corresponding message<br>
+     *     it will automaticaly set the parentHierarchy
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>NodeResponse (OK) with the node, hierarchy and OK-message
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice 
+     * @param node - the node for the response
+     * @param okMsg - the message
+     * @return NodeResponse (OK) with the node, hierarchy and OK-message
+     */
     protected NodeResponse createResponseObj(BaseNode node, String okMsg) {
         // extract parents
         List<String> parentIdHierarchy = node.getParentIdHierarchy();
@@ -86,12 +102,12 @@ public class NodeController {
      *     Request to read the node for sysUID and return it with children as JSON
      * <h4>FeatureResult:</h4>
      *   <ul>
-     *     <li>NodeControllerResponse (OK, ERROR) with the node for sysUID
+     *     <li>NodeResponse (OK, ERROR) with the node for sysUID
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     Webservice Query
      * @param sysUID - sysUID to filter
-     * @return NodeControllerResponse (OK, ERROR) with the node for sysUID
+     * @return NodeResponse (OK, ERROR) with the node for sysUID
      */
     @RequestMapping(method=RequestMethod.GET, value = "/show/{sysUID}")
     public @ResponseBody NodeResponse getNodeWithChildren(
@@ -125,12 +141,12 @@ public class NodeController {
      *     Request to read the SymLinkRef-node for sysUID and return it with children as JSON
      * <h4>FeatureResult:</h4>
      *   <ul>
-     *     <li>NodeControllerResponse (OK, ERROR) with the node for sysUID
+     *     <li>NodeResponse (OK, ERROR) with the node for sysUID
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     Webservice Query
      * @param symLinkRef - symLinkRef to filter
-     * @return NodeControllerResponse (OK, ERROR) with the node for sysUID
+     * @return NodeResponse (OK, ERROR) with the node for sysUID
      */
     @RequestMapping(method=RequestMethod.GET, value = "/showsymlink/{symLinkRef}")
     public @ResponseBody NodeResponse getSymLinkRefNodeWithChildren(
@@ -178,12 +194,12 @@ public class NodeController {
      *     Request to delete the node for sysUID and return its parent with children as JSON
      * <h4>FeatureResult:</h4>
      *   <ul>
-     *     <li>NodeControllerResponse (OK, ERROR) with the parentNode for sysUID
+     *     <li>NodeResponse (OK, ERROR) with the parentNode for sysUID
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     Webservice Query
      * @param sysUID - sysUID to delete
-     * @return NodeControllerResponse (OK, ERROR) with the node for sysUID
+     * @return NodeResponse (OK, ERROR) with the node for sysUID
      */
     @RequestMapping(method=RequestMethod.DELETE, value = "/delete/{sysUID}")
     public @ResponseBody NodeResponse deleteNodeWithChildren(
@@ -203,12 +219,9 @@ public class NodeController {
             node.removeChildNodesFromDB();
             node.remove();
             
-            // read the childnodes only 1 level
-            parent.initChildNodesFromDB(0);
-
-            // recalc parent
             try {
-                parent.recalcData(BaseNodeService.CONST_RECURSE_DIRECTION_PARENT);
+                // recalc parent
+                updateMeAndMyParents(parent);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -443,6 +456,48 @@ public class NodeController {
         return flgChange;
     }
     
+    
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
+     *     recalc and merge the node and its parents recursively
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>List - list of the recalced and saved parenthierarchy
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice 
+     * @param node - the node to recalc and merge
+     * @return List - list of the recalced and saved parenthierarchy
+     */
+    protected List<BaseNode> updateMeAndMyParents(BaseNode node) throws Exception {
+        List<BaseNode> parentHierarchy = null;
+        if (node != null) {
+            // init Cildren from DB
+            node.initChildNodesFromDB(0);
+            
+            // recalc me
+            node.recalcData(BaseNodeService.CONST_RECURSE_DIRECTION_ONLYME);
+            
+            // save me
+            node.merge();
+            
+            // update my parents
+            if (node.getParentNode() != null) {
+                parentHierarchy = updateMeAndMyParents(node.getParentNode());
+            } else {
+                // i am root -> create hierarchylist
+                parentHierarchy = new ArrayList<BaseNode>();
+            }
+            
+            // add me to hierarchylist
+            parentHierarchy.add(node);
+        }
+        return parentHierarchy;
+    }
+    
     /**
      * <h4>FeatureDomain:</h4>
      *     Webservice
@@ -450,13 +505,13 @@ public class NodeController {
      *     update the node sysUID and return it with children as JSON
      * <h4>FeatureResult:</h4>
      *   <ul>
-     *     <li>NodeControllerResponse (OK, ERROR) with the node for sysUID
+     *     <li>NodeResponse (OK, ERROR) with the node for sysUID
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     Webservice Query
      * @param sysUID - sysUID to filter
      * @param newNode - the node created from request-data
-     * @return NodeControllerResponse (OK, ERROR) with the node for sysUID
+     * @return NodeResponse (OK, ERROR) with the node for sysUID
      */
     public NodeResponse updateNode(String sysUID, BaseNode newNode) {
         NodeResponse response = new NodeResponse(
@@ -474,30 +529,16 @@ public class NodeController {
         boolean flgChange = false;
 
         try {
-            // read children
-            BaseNode parent = null;
-            node.initChildNodesFromDB(0);
-            
             // map data
             flgChange = mapNodeData(node, newNode);
 
             // check for needed update
             if (flgChange) {
                 // recalc 
-                node.recalcData(BaseNodeService.CONST_RECURSE_DIRECTION_ONLYME);
-
-                // save
-                node.merge();
-
-                // recalc Parents 
-                // TODO: we get different objects :-( -> need to merge them
-                node.initChildNodesForParentsFromDB();
-                node.recalcData(BaseNodeService.CONST_RECURSE_DIRECTION_PARENT);
-                parent = node.getParentNode();
-                while (parent != null) {
-                    parent.merge();
-                    parent = parent.getParentNode();
-                }
+                updateMeAndMyParents(node);
+            } else {
+                // read children
+                node.initChildNodesFromDB(0);
             }
 
             // create response
@@ -541,13 +582,13 @@ public class NodeController {
      *     create the node with parent parentSysUID and return it with children as JSON
      * <h4>FeatureResult:</h4>
      *   <ul>
-     *     <li>NodeControllerResponse (OK, ERROR) with the new node for parentSysUID
+     *     <li>NodeResponse (OK, ERROR) with the new node for parentSysUID
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     Webservice Query
      * @param parentSysUID - sysUID of the parent to filter
      * @param newNode - the node created from request-data
-     * @return NodeControllerResponse (OK, ERROR) with the node for sysUID
+     * @return NodeResponse (OK, ERROR) with the node for sysUID
      */
     public NodeResponse createNode(String parentSysUID, BaseNode newNode) {
         NodeResponse response = new NodeResponse(
@@ -578,15 +619,8 @@ public class NodeController {
             // save
             newNode.persist();
 
-            // recalc Parents 
-            // TODO: we get different objects :-( -> need to merge them
-            newNode.initChildNodesForParentsFromDB();
-            newNode.recalcData(BaseNodeService.CONST_RECURSE_DIRECTION_PARENT);
-            parentNode = newNode.getParentNode();
-            while (parentNode != null) {
-                parentNode.merge();
-                parentNode = parentNode.getParentNode();
-            }
+            // recalc 
+            updateMeAndMyParents(newNode);
 
             // create response
             response = createResponseObj(newNode, "node '" + newNode.getSysUID() 
@@ -631,13 +665,13 @@ public class NodeController {
      *     Request to update the BaseNode sysUID and return it with children as JSON
      * <h4>FeatureResult:</h4>
      *   <ul>
-     *     <li>NodeControllerResponse (OK, ERROR) with the node for sysUID
+     *     <li>NodeResponse (OK, ERROR) with the node for sysUID
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     Webservice Query
      * @param sysUID - sysUID to filter
      * @param newNode - the node created from request-data
-     * @return NodeControllerResponse (OK, ERROR) with the node for sysUID
+     * @return NodeResponse (OK, ERROR) with the node for sysUID
      */
     @RequestMapping(method=RequestMethod.PATCH, value = "/update/BaseNode/{sysUID}")
     public @ResponseBody NodeResponse updateBaseNode(
@@ -654,13 +688,13 @@ public class NodeController {
      *     Request to update the TaskNode sysUID and return it with children as JSON
      * <h4>FeatureResult:</h4>
      *   <ul>
-     *     <li>NodeControllerResponse (OK, ERROR) with the node for sysUID
+     *     <li>NodeResponse (OK, ERROR) with the node for sysUID
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     Webservice Query
      * @param sysUID - sysUID to filter
      * @param newNode - the node created from request-data
-     * @return NodeControllerResponse (OK, ERROR) with the node for sysUID
+     * @return NodeResponse (OK, ERROR) with the node for sysUID
      */
     @RequestMapping(method=RequestMethod.PATCH, value = "/update/TaskNode/{sysUID}")
     public @ResponseBody NodeResponse updateTaskNode(
@@ -677,13 +711,13 @@ public class NodeController {
      *     Request to create the new TaskNode with parentSysUID and return it with children as JSON
      * <h4>FeatureResult:</h4>
      *   <ul>
-     *     <li>NodeControllerResponse (OK, ERROR) with the new node for parentSysUID
+     *     <li>NodeResponse (OK, ERROR) with the new node for parentSysUID
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     Webservice Query
      * @param parentSysUID - parentSysUID to add the newNode
      * @param newNode - the node created from request-data
-     * @return NodeControllerResponse (OK, ERROR) with the node for sysUID
+     * @return NodeResponse (OK, ERROR) with the node for sysUID
      */
     @RequestMapping(method=RequestMethod.POST, value = "/create/TaskNode/{parentSysUID}")
     public @ResponseBody NodeResponse createTaskNode(
@@ -700,13 +734,13 @@ public class NodeController {
      *     Request to update the EventNode sysUID and return it with children as JSON
      * <h4>FeatureResult:</h4>
      *   <ul>
-     *     <li>NodeControllerResponse (OK, ERROR) with the node for sysUID
+     *     <li>NodeResponse (OK, ERROR) with the node for sysUID
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     Webservice Query
      * @param sysUID - sysUID to filter
      * @param newNode - the node created from request-data
-     * @return NodeControllerResponse (OK, ERROR) with the node for sysUID
+     * @return NodeResponse (OK, ERROR) with the node for sysUID
      */
     @RequestMapping(method=RequestMethod.PATCH, value = "/update/EventNode/{sysUID}")
     public @ResponseBody NodeResponse updateEventNode(
@@ -723,13 +757,13 @@ public class NodeController {
      *     Request to create the new EventNode with parentSysUID and return it with children as JSON
      * <h4>FeatureResult:</h4>
      *   <ul>
-     *     <li>NodeControllerResponse (OK, ERROR) with the new node for parentSysUID
+     *     <li>NodeResponse (OK, ERROR) with the new node for parentSysUID
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     Webservice Query
      * @param parentSysUID - parentSysUID to add the newNode
      * @param newNode - the node created from request-data
-     * @return NodeControllerResponse (OK, ERROR) with the node for sysUID
+     * @return NodeResponse (OK, ERROR) with the node for sysUID
      */
     @RequestMapping(method=RequestMethod.POST, value = "/create/EventNode/{parentSysUID}")
     public @ResponseBody NodeResponse createEventNode(
@@ -746,13 +780,13 @@ public class NodeController {
      *     Request to update the UrlresNode sysUID and return it with children as JSON
      * <h4>FeatureResult:</h4>
      *   <ul>
-     *     <li>NodeControllerResponse (OK, ERROR) with the node for sysUID
+     *     <li>NodeResponse (OK, ERROR) with the node for sysUID
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     Webservice Query
      * @param sysUID - sysUID to filter
      * @param newNode - the node created from request-data
-     * @return NodeControllerResponse (OK, ERROR) with the node for sysUID
+     * @return NodeResponse (OK, ERROR) with the node for sysUID
      */
     @RequestMapping(method=RequestMethod.PATCH, value = "/update/UrlResNode/{sysUID}")
     public @ResponseBody NodeResponse updateUrlResNode(
@@ -769,13 +803,13 @@ public class NodeController {
      *     Request to create the new UrlResNode with parentSysUID and return it with children as JSON
      * <h4>FeatureResult:</h4>
      *   <ul>
-     *     <li>NodeControllerResponse (OK, ERROR) with the new node for parentSysUID
+     *     <li>NodeResponse (OK, ERROR) with the new node for parentSysUID
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     Webservice Query
      * @param parentSysUID - parentSysUID to add the newNode
      * @param newNode - the node created from request-data
-     * @return NodeControllerResponse (OK, ERROR) with the node for sysUID
+     * @return NodeResponse (OK, ERROR) with the node for sysUID
      */
     @RequestMapping(method=RequestMethod.POST, value = "/create/UrlResNode/{parentSysUID}")
     public @ResponseBody NodeResponse createUrlResNode(
@@ -792,13 +826,13 @@ public class NodeController {
      *     Request to update the InfoNode sysUID and return it with children as JSON
      * <h4>FeatureResult:</h4>
      *   <ul>
-     *     <li>NodeControllerResponse (OK, ERROR) with the node for sysUID
+     *     <li>NodeResponse (OK, ERROR) with the node for sysUID
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     Webservice Query
      * @param sysUID - sysUID to filter
      * @param newNode - the node created from request-data
-     * @return NodeControllerResponse (OK, ERROR) with the node for sysUID
+     * @return NodeResponse (OK, ERROR) with the node for sysUID
      */
     @RequestMapping(method=RequestMethod.PATCH, value = "/update/InfoNode/{sysUID}")
     public @ResponseBody NodeResponse updateInfoNode(
@@ -815,13 +849,13 @@ public class NodeController {
      *     Request to create the new InfoNode with parentSysUID and return it with children as JSON
      * <h4>FeatureResult:</h4>
      *   <ul>
-     *     <li>NodeControllerResponse (OK, ERROR) with the new node for parentSysUID
+     *     <li>NodeResponse (OK, ERROR) with the new node for parentSysUID
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     Webservice Query
      * @param parentSysUID - parentSysUID to add the newNode
      * @param newNode - the node created from request-data
-     * @return NodeControllerResponse (OK, ERROR) with the node for sysUID
+     * @return NodeResponse (OK, ERROR) with the node for sysUID
      */
     @RequestMapping(method=RequestMethod.POST, value = "/create/InfoNode/{parentSysUID}")
     public @ResponseBody NodeResponse createInfoNode(
@@ -838,13 +872,13 @@ public class NodeController {
      *     Request to update the SymLinkNode sysUID and return it with children as JSON
      * <h4>FeatureResult:</h4>
      *   <ul>
-     *     <li>NodeControllerResponse (OK, ERROR) with the node for sysUID
+     *     <li>NodeResponse (OK, ERROR) with the node for sysUID
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     Webservice Query
      * @param sysUID - sysUID to filter
      * @param newNode - the node created from request-data
-     * @return NodeControllerResponse (OK, ERROR) with the node for sysUID
+     * @return NodeResponse (OK, ERROR) with the node for sysUID
      */
     @RequestMapping(method=RequestMethod.PATCH, value = "/update/SymLinkNode/{sysUID}")
     public @ResponseBody NodeResponse updateSymLinkNode(
@@ -861,13 +895,13 @@ public class NodeController {
      *     Request to create the new SymLinkNode with parentSysUID and return it with children as JSON
      * <h4>FeatureResult:</h4>
      *   <ul>
-     *     <li>NodeControllerResponse (OK, ERROR) with the new node for parentSysUID
+     *     <li>NodeResponse (OK, ERROR) with the new node for parentSysUID
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     Webservice Query
      * @param parentSysUID - parentSysUID to add the newNode
      * @param newNode - the node created from request-data
-     * @return NodeControllerResponse (OK, ERROR) with the node for sysUID
+     * @return NodeResponse (OK, ERROR) with the node for sysUID
      */
     @RequestMapping(method=RequestMethod.POST, value = "/create/SymLinkNode/{parentSysUID}")
     public @ResponseBody NodeResponse createSymLinkNode(
@@ -884,14 +918,14 @@ public class NodeController {
      *     Request to move the node sysUID to newParentSysUID and return it with children as JSON
      * <h4>FeatureResult:</h4>
      *   <ul>
-     *     <li>NodeControllerResponse (OK, ERROR) with the node for sysUID
+     *     <li>NodeResponse (OK, ERROR) with the node for sysUID
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     Webservice Query
      * @param sysUID - sysUID to filter
      * @param newParentSysUID - sysUID of the new parent
      * @param newNode - the node created from request-data
-     * @return NodeControllerResponse (OK, ERROR) with the node for sysUID
+     * @return NodeResponse (OK, ERROR) with the node for sysUID
      */
     @RequestMapping(method=RequestMethod.PATCH, value = "/move/{sysUID}/{newParentSysUID}")
     public @ResponseBody NodeResponse moveNode(
@@ -921,13 +955,11 @@ public class NodeController {
         boolean flgChangedParent = false;
 
         try {
-            // read children
-            BaseNode parent = null;
-            node.initChildNodesFromDB(0);
-            node.initChildNodesForParentsFromDB();
+            // read children for old parent
+            BaseNode oldParent = node.getParentNode();
+            oldParent.initChildNodesFromDB(0);
 
             // check for new parent
-            BaseNode oldParent = node.getParentNode();
             if (newParent !=  null) {
                 // got parent
                 if (newParent.getSysUID() != oldParent.getSysUID()) {
@@ -939,31 +971,17 @@ public class NodeController {
 
             // check for needed update
             if (flgChangedParent) {
-                // recalc 
-                node.recalcData(BaseNodeService.CONST_RECURSE_DIRECTION_PARENT);
-
-                // save
-                node.merge();
-                parent = node.getParentNode();
-                while (parent != null) {
-                    parent.merge();
-                    parent = parent.getParentNode();
-                }
+                // recalc and save
+                updateMeAndMyParents(node);
 
                 // renew oldParent
                 oldParent = BaseNode.findBaseNode(oldParent.getSysUID());
                 
-                // reinit Children (only 1 level
-                oldParent.initChildNodesFromDB(0);
-                oldParent.initChildNodesForParentsFromDB();
-
-                // recalc old parent 
-                parent = oldParent;
-                parent.recalcData(BaseNodeService.CONST_RECURSE_DIRECTION_PARENT);
-                while (parent != null) {
-                    parent.merge();
-                    parent = parent.getParentNode();
-                }
+                // recalc old parent
+                updateMeAndMyParents(oldParent);
+            } else {
+                // read children for node
+                node.initChildNodesFromDB(0);
             }
 
             // create response
