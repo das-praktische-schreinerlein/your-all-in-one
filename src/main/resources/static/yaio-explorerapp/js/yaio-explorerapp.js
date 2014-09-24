@@ -80,8 +80,8 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
                     openNodeHierarchy("#tree", nodeIdHierarchy);
                 } else {
                     // error
-                    console.error("error loading activenodes:" + nodeResponse.data.stateMsg 
-                            + " details:" + nodeResponse)
+                    logError("error loading activenodes:" + nodeResponse.data.stateMsg 
+                            + " details:" + nodeResponse, false)
                 }
                 
             });
@@ -111,8 +111,8 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
             createYAIOFancyTree("#tree", $scope.node.sysUID, activeNodeIdHandler);
         } else {
             // error
-            console.error("error loading nodes:" + nodeResponse.data.stateMsg 
-                    + " details:" + nodeResponse)
+            logError("error loading nodes:" + nodeResponse.data.stateMsg 
+                    + " details:" + nodeResponse, true)
         }
         
     });
@@ -209,7 +209,7 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
             nodeObj["sysUID"] = null;
         } else {
             // unknown mode
-            console.error("unknown mode=" + mode + " form formName=" + formName);
+            logError("unknown mode=" + mode + " form formName=" + formName, false);
             return null;
         }
 
@@ -240,19 +240,22 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
                 $location.path(newUrl + "?" + (new Date()).getTime());
             } else {
                 // error
-                console.error("error saving node:" + nodeResponse.data.stateMsg 
-                        + " details:" + nodeResponse);
+                var message = "error saving node:" + nodeResponse.data.stateMsg 
+                        + " details:" + nodeResponse;
                 
                 // map violations
                 var violations = nodeResponse.data.violations;
                 var fieldErrors = {};
                 if (violations && violations.length > 0) {
+                    message = message + " violations: ";
                     for (var idx in violations) {
                         var violation = violations[idx];
                         console.log("map violation " + violation + " = " + violation.path + ":" + violation.message);
                         fieldErrors[violation.path] = [violation.message];
+                        message = message + violation.path + ":" + violation.message + ", ";
                     }
                 }
+                logError(message, true);
                 
                 // Failed
                 setFormErrors({
@@ -316,7 +319,8 @@ yaioM.directive('withErrors', ['setFormErrors', function(setFormErrors) {
     }; 
 }]);
 
-yaioM.directive('input', function() {
+
+function directiveFieldsWithErrors () {
     return {
         restrict: 'E',
         require: ['?ngModel', '?^withErrors'],
@@ -354,7 +358,18 @@ yaioM.directive('input', function() {
             }
         }
     }  
+}
+
+
+yaioM.directive('input', function() {
+    return directiveFieldsWithErrors();
 });
+//yaioM.directive('select', function() {
+//    return directiveFieldsWithErrors();
+//});
+//yaioM.directive('textarea', function() {
+//    return directiveFieldsWithErrors();
+//});
 
 yaioM.directive('fielderrors', function() {
     return {

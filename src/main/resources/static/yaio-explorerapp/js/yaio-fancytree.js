@@ -458,22 +458,22 @@ function openNodeHierarchy(treeId, lstIdsHierarchy) {
     // check for tree
     var tree = $(treeId).fancytree("getTree");
     if (! tree) {
-        console.error("openHierarchy: error tree:'" + treeId + "' not found.");
+        logError("openHierarchy: error tree:'" + treeId + "' not found.", false);
         return;
     }
 
     // check for rootNode
     var rootNode = tree.rootNode;
     if (! rootNode) {
-        console.error("openHierarchy: error for tree:'" + treeId 
-                    + "' rootNode not found.");
+        logError("openHierarchy: error for tree:'" + treeId 
+                    + "' rootNode not found.", false);
         return;
     }
     
     // check for lstIdsHierarchy
     if (! lstIdsHierarchy || lstIdsHierarchy.length <= 0) {
-        console.error("openHierarchy: error for tree:'" + treeId 
-                    + "' lstIdsHierarchy is empty.");
+        logError("openHierarchy: error for tree:'" + treeId 
+                    + "' lstIdsHierarchy is empty.", false);
         return;
     }
     
@@ -485,9 +485,9 @@ function openNodeHierarchy(treeId, lstIdsHierarchy) {
         firstNode = rootNode.mapChildren[firstNodeId];
     }
     if (! firstNode) {
-        console.error("openHierarchy: error for tree:'" + treeId 
+        logError("openHierarchy: error for tree:'" + treeId 
                     + "' firstNode of:'" + lstIdsHierarchySave 
-                    + "' not found on rootNode.");
+                    + "' not found on rootNode.", false);
         return;
     }
 
@@ -502,15 +502,15 @@ function openNodeHierarchyForNodeId(treeId, activeNodeId) {
     // check for tree
     var tree = $(treeId).fancytree("getTree");
     if (! tree) {
-        console.error("openNodeHierarchyForNodeId: error tree:'" + treeId + "' not found.");
+        logError("openNodeHierarchyForNodeId: error tree:'" + treeId + "' not found.", false);
         return;
     }
     
     // check for activeNodeId
     var treeNode = tree.getNodeByKey(activeNodeId);
     if (! treeNode) {
-        console.error("openNodeHierarchyForNodeId: error for tree:'" + treeId 
-                + "' activeNode " + activeNodeId + " not found.");
+        logError("openNodeHierarchyForNodeId: error for tree:'" + treeId 
+                + "' activeNode " + activeNodeId + " not found.", false);
         return null;
     }
 
@@ -563,27 +563,29 @@ function yaioDoUpdateNode(node, url, json) {
                         openNodeHierarchy("#tree", response.parentIdHierarchy);
                     });
                 } else {
-                    console.error("got no hierarchy for:" + node.key 
-                            + " hierarchy:" + response.parentIdHierarchy);
+                    logError("got no hierarchy for:" + node.key 
+                            + " hierarchy:" + response.parentIdHierarchy, true);
                 }
             } else {
-                console.error("cant save node:" + node.key + " error:" + response.stateMsg);
+                var message = "cant save node:" + node.key + " error:" + response.stateMsg;
                 // check for violations
                 if (response.violations) {
                     // iterate violations
+                    message = message +  " violations: ";
                     for (var idx in response.violations) {
                         var violation = response.violations[idx];
-                        console.error("violations while save node:" + node.key 
-                                + " field:" + violation.path + " message:" + violation.message);
-                        alert("cant save node because: " + violation.path + " (" + violation.message + ")")
+                        logError("violations while save node:" + node.key 
+                                + " field:" + violation.path + " message:" + violation.message, false);
+                        message = message +  violation.path + " (" + violation.message + "),";
                     }
                 }
+                logError(message, true)
             }
         },
         error : function(jqXHR, textStatus, errorThrown) {
             // log the error to the console
-            console.error("The following error occured: " + textStatus, errorThrown);
-            alert("cant save node:" + node.key + " error:" + textStatus, errorThrown)
+            logError("The following error occured: " + textStatus + " " + errorThrown, true);
+            logError("cant save node:" + node.key + " error:" + textStatus)
         },
         complete : function() {
             console.log("update node:" + node.key + "' ran");
@@ -613,7 +615,7 @@ function yaioLoadSymLinkData(basenode, fancynode) {
                     var tree = $("#tree").fancytree("getTree");
                     if (!tree) {
                         // tree not found
-                        console.error("error yaioLoadSymLinkData: cant load tree - " + msg);
+                        logErrorerror("error yaioLoadSymLinkData: cant load tree - " + msg, false);
                         return null;
                     }
                     var rootNode = tree.rootNode;
@@ -624,7 +626,7 @@ function yaioLoadSymLinkData(basenode, fancynode) {
                     }
                     var treeNode = tree.getNodeByKey(basenode.sysUID);
                     if (! treeNode) {
-                        console.error("error yaioLoadSymLinkData: cant load node - " + msg);
+                        logError("error yaioLoadSymLinkData: cant load node - " + msg, false);
                         return null;
                     }
                     
@@ -657,16 +659,16 @@ function yaioLoadSymLinkData(basenode, fancynode) {
 
                     console.log("renderSymLinkDataBLock done:" + msg);
                 } else {
-                    console.error("ERROR got no " + msg);
+                    logError("ERROR got no " + msg, true);
                 }
             } else {
-                console.error("ERROR cant load  " + msg + " error:" + response.stateMsg);
+                logError("ERROR cant load  " + msg + " error:" + response.stateMsg, true);
             }
         },
         error : function(jqXHR, textStatus, errorThrown) {
             // log the error to the console
-            console.error("ERROR  " + msg + " The following error occured: " + textStatus, errorThrown);
-            alert("cant load " + msg + " error:" + textStatus, errorThrown)
+            logError("ERROR  " + msg + " The following error occured: " + textStatus + " " + errorThrown, false);
+            logError("cant load " + msg + " error:" + textStatus, true)
         },
         complete : function() {
             console.log("completed load " + msg);
@@ -682,15 +684,15 @@ function yaioRemoveNodeById(nodeId) {
         var treeId = "#tree";
         var tree = $(treeId).fancytree("getTree");
         if (! tree) {
-            console.error("yaioRemoveNode: error tree:'" + treeId + "' not found.");
+            logError("yaioRemoveNode: error tree:'" + treeId + "' not found.", false);
             return;
         }
         
         // check for activeNodeId
         var treeNode = tree.getNodeByKey(nodeId);
         if (! treeNode) {
-            console.error("yaioRemoveNode: error for tree:'" + treeId 
-                    + "' activeNode " + nodeId + " not found.");
+            logError("yaioRemoveNode: error for tree:'" + treeId 
+                    + "' activeNode " + nodeId + " not found.", false);
             return null;
         }
         var url = removeUrl + nodeId;
@@ -725,18 +727,18 @@ function yaioDoRemoveNode(node, url) {
                         openNodeHierarchy("#tree", response.parentIdHierarchy);
                     });
                 } else {
-                    console.error("got no hierarchy for:" + node.key 
-                            + " hierarchy:" + response.parentIdHierarchy);
+                    logError("got no hierarchy for:" + node.key 
+                            + " hierarchy:" + response.parentIdHierarchy, true);
                 }
             } else {
-                console.error("cant remove node:" + node.key + " error:" + response.stateMsg);
+                logError("cant remove node:" + node.key + " error:" + response.stateMsg, false);
                 // check for violations
                 if (response.violations) {
                     // iterate violations
                     for (var idx in response.violations) {
                         var violation = response.violations[idx];
-                        console.error("violations while remove node:" + node.key 
-                                + " field:" + violation.path + " message:" + violation.message);
+                        logError("violations while remove node:" + node.key 
+                                + " field:" + violation.path + " message:" + violation.message, false);
                         alert("cant remove node because: " + violation.path + " (" + violation.message + ")")
                     }
                 }
@@ -744,8 +746,8 @@ function yaioDoRemoveNode(node, url) {
         },
         error : function(jqXHR, textStatus, errorThrown) {
             // log the error to the console
-            console.error("The following error occured: " + textStatus, errorThrown);
-            alert("cant remove node:" + node.key + " error:" + textStatus, errorThrown)
+            logError("The following error occured: " + textStatus + " " + errorThrown, false);
+            logError("cant remove node:" + node.key + " error:" + textStatus, true)
         },
         complete : function() {
             console.log("remove node:" + node.key + "' ran");
@@ -945,7 +947,7 @@ function postProcessNodeData(event, data) {
         }
     } else {
         // error
-        console.error("error loading nodes:" + data.response.stateMsg)
+        logError("error loading nodes:" + data.response.stateMsg, true)
     }
     
     data.result = list;
@@ -1024,19 +1026,19 @@ function openYAIONodeEditor(nodeId, mode) {
     // check vars
     if (! nodeId) {
         // tree not found
-        console.error("error openYAIONodeEditor: nodeId required");
+        logError("error openYAIONodeEditor: nodeId required", false);
         return null;
     }
     // load node
     var tree = $("#tree").fancytree("getTree");
     if (!tree) {
         // tree not found
-        console.error("error openYAIONodeEditor: cant load tree for node:" + nodeId);
+        logError("error openYAIONodeEditor: cant load tree for node:" + nodeId, false);
         return null;
     }
     var treeNode = tree.getNodeByKey(nodeId);
     if (! treeNode) {
-        console.error("error openYAIONodeEditor: cant load node:" + nodeId);
+        logError("error openYAIONodeEditor: cant load node:" + nodeId, false);
         return null;
     }
     
@@ -1100,8 +1102,8 @@ function openYAIONodeEditor(nodeId, mode) {
         };
         console.log("openYAIONodeEditor mode=createsymlink for node:" + nodeId);
     } else {
-        console.error("error openYAIONodeEditor: unknown mode" + mode 
-                + " for nodeId:" + nodeId);
+        logError("error openYAIONodeEditor: unknown mode" + mode 
+                + " for nodeId:" + nodeId, false);
         return null;
     }
         
@@ -1162,3 +1164,53 @@ function closeYAIONodeEditor() {
     console.log("close editor");
     resetYAIONodeEditor();
 } 
+
+
+function logError(message, flgShowDialog) {
+    console.error(message);
+    if (flgShowDialog) {
+        showModalErrorMessage(message);
+    }
+}
+
+function showModalErrorMessage(message) {
+    // set messagetext
+    $( "#error-message-text" ).html(message);
+    
+    // show message
+    $( "#error-message" ).dialog({
+        modal: true,
+        buttons: {
+          Ok: function() {
+            $( this ).dialog( "close" );
+          }
+        }
+    });    
+}
+
+function showModalConfirmDialog(message, yesHandler, noHandler) {
+    // set messagetext
+    $( "#dialog-confirm-text" ).html(message);
+    
+    // show message
+    
+    $( "#dialog-confirm" ).dialog({
+        resizable: false,
+        height:140,
+        modal: true,
+        buttons: {
+          "Ja": function() {
+            $( this ).dialog( "close" );
+            if (yesHandler) {
+                yesHandler();
+            }
+          },
+          "Abbrechen": function() {
+            $( this ).dialog( "close" );
+            if (noHandler) {
+                noHandler();
+            }
+          }
+        }
+    });
+}
