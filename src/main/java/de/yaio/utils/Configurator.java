@@ -398,7 +398,7 @@ public class Configurator {
      */
     public void addAvailiableBaseCmdLineOptions(Options availiableCmdLineOptions) {
         // Config-File
-        Option configOption = new Option("c", "config", true,
+        Option configOption = new Option("", "config", true,
                 "comma separated list of JobConfig property files");
         configOption.setRequired(true);
         availiableCmdLineOptions.addOption(configOption);

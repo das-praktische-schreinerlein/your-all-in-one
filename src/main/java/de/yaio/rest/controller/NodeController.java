@@ -18,7 +18,6 @@ package de.yaio.rest.controller;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -166,6 +165,59 @@ public class NodeController {
             
             // add children
             response.childNodes = new ArrayList<BaseNode>(node.getChildNodes());
+        }
+        
+        return response;
+    }
+    
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
+     *     Request to delete the node for sysUID and return its parent with children as JSON
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>NodeControllerResponse (OK, ERROR) with the parentNode for sysUID
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice Query
+     * @param sysUID - sysUID to delete
+     * @return NodeControllerResponse (OK, ERROR) with the node for sysUID
+     */
+    @RequestMapping(method=RequestMethod.DELETE, value = "/delete/{sysUID}")
+    public @ResponseBody NodeResponse deleteNodeWithChildren(
+           @PathVariable(value="sysUID") String sysUID) {
+        // create default response
+        NodeResponse response = new NodeResponse(
+                        "ERROR", "node '" + sysUID + "' doesnt exists", 
+                        null, null, null, null);
+
+        // find a specific node
+        BaseNode node = BaseNode.findBaseNode(sysUID);
+        if (node != null) {
+            // read parent
+            BaseNode parent = node.getParentNode();
+            
+            // delete the node
+            node.removeChildNodesFromDB();
+            node.remove();
+            
+            // read the childnodes only 1 level
+            parent.initChildNodesFromDB(0);
+
+            // recalc parent
+            try {
+                parent.recalcData(BaseNodeService.CONST_RECURSE_DIRECTION_PARENT);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            
+            // create response
+            response = createResponseObj(parent, "node '" + sysUID + "' deleted");
+            
+            // add children
+            response.childNodes = new ArrayList<BaseNode>(parent.getChildNodes());
         }
         
         return response;

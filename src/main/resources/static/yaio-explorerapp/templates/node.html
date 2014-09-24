@@ -78,12 +78,12 @@
               
               <!-- show textfield -->
               <label for="state">Typ</label> 
-              <select type="text" name="className" ng-model="nodeForEdit.className" class="inputtype_type" id="inputCreateNodeType" required ng-change=""> 
+              <select type="text" name="className" ng-model="nodeForEdit.className" class="inputtype_type" id="inputCreateNodeType" required ng-change="selectNewNodeType('nodeFormCreate')"> 
                   <option value="">Bitte wählen
                   <option value="TaskNode">Task
                   <option value="EventNode">Event
                   <option value="InfoNode">Info
-                  <option value="UrlResNode">UrlUes
+                  <option value="UrlResNode">UrlRes
                   <option value="SymLinkNode">Symlink
               </select>
               

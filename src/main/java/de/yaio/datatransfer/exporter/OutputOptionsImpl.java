@@ -287,4 +287,36 @@ public class OutputOptionsImpl implements OutputOptions {
         setFlgShowSysData(value);
         setFlgShowDesc(value);
     }
+
+    @Override
+    public String toString() {
+        return "OutputOptionsImpl [flgDoIntend=" + this.flgDoIntend
+                        + ", flgShowBrackets=" + this.flgShowBrackets
+                        + ", intendFuncArea=" + this.intendFuncArea
+                        + ", flgIntendSum=" + this.flgIntendSum 
+                        + ", maxEbene=" + this.maxEbene 
+                        + ", maxUeEbene=" + this.maxUeEbene
+                        + ", intend=" + this.intend 
+                        + ", intendLi=" + this.intendLi 
+                        + ", intendSys=" + this.intendSys
+                        + ", flgTrimDesc=" + this.flgTrimDesc
+                        + ", flgReEscapeDesc=" + this.flgReEscapeDesc
+                        + ", flgShowState=" + this.flgShowState
+                        + ", flgShowType=" + this.flgShowType
+                        + ", flgShowName=" + this.flgShowName
+                        + ", flgShowResLoc=" + this.flgShowResLoc
+                        + ", flgShowSymLink=" + this.flgShowSymLink
+                        + ", flgShowDocLayout=" + this.flgShowDocLayout
+                        + ", flgShowIst=" + this.flgShowIst 
+                        + ", flgShowPlan=" + this.flgShowPlan 
+                        + ", flgShowChildrenSum=" + this.flgShowChildrenSum 
+                        + ", flgShowMetaData=" + this.flgShowMetaData 
+                        + ", flgShowSysData=" + this.flgShowSysData 
+                        + ", flgShowDesc=" + this.flgShowDesc 
+                        + ", flgShowDescWithUe=" + this.flgShowDescWithUe 
+                        + ", flgShowDescInNextLine=" + this.flgShowDescInNextLine 
+                        + ", flgChildrenSum=" + this.flgChildrenSum 
+                        + ", flgProcessDocLayout=" + this.flgProcessDocLayout
+                        + ", strReadIfStatusInListOnly=" + this.strReadIfStatusInListOnly + "]";
+    }
 }

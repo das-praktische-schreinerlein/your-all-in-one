@@ -46,7 +46,7 @@ import de.yaio.core.datadomain.ResLocData;
 @RooJavaBean
 @RooToString
 @RooJpaActiveRecord
-public class UrlResNode extends BaseNode implements ResLocData {
+public class UrlResNode extends InfoNode implements ResLocData {
     
     // Status-Konstanten
     /** nodetype-identifier for parser/formatter on UrlResnode URL */
@@ -94,5 +94,20 @@ public class UrlResNode extends BaseNode implements ResLocData {
     @JsonIgnore
     public Map<String, Object> getConfigState() {
         return CONST_MAP_NODETYPE_IDENTIFIER;
+    }
+
+    @Override
+    @XmlTransient
+    @JsonIgnore
+    public String getDataBlocks4CheckSum() throws Exception {
+        // Content erzeugen
+        StringBuffer data = new StringBuffer();
+        
+        data.append(super.getDataBlocks4CheckSum())
+            .append(" resLocRef=").append(getResLocRef())
+            .append(" resLocName=").append(getResLocName())
+            .append(" resLocTags=").append(getResLocTags())
+            ;
+        return data.toString();
     }
 }

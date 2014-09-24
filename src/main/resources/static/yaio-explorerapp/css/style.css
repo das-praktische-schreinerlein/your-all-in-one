@@ -40,7 +40,9 @@ body {
  *----------------------------------------------------------------------------*/
 a.yaio-icon-center,
 a.yaio-icon-edit,
-a.yaio-icon-create {
+a.yaio-icon-create,
+a.yaio-icon-createsymlink,
+a.yaio-icon-remove {
   width: 16px;
   height: 16px;
   display: inline-block;
@@ -52,7 +54,9 @@ a.yaio-icon-create {
 }
 a.yaio-icon-center,
 a.yaio-icon-edit,
-a.yaio-icon-create {
+a.yaio-icon-create,
+a.yaio-icon-createsymlink,
+a.yaio-icon-remove {
   margin-top: 1px;
 }
 
@@ -67,6 +71,14 @@ a.yaio-icon-edit {
 a.yaio-icon-create {
   margin-left: 3px;
   background-position: 0px -160px;
+}
+a.yaio-icon-createsymlink {
+  margin-left: 3px;
+  background-position: -64px -160px;
+}
+a.yaio-icon-remove {
+  margin-left: 3px;
+  background-position: -16px -112px;
 }
 
 /**
@@ -180,7 +192,7 @@ label {
 }
 .field_name {
    text-align: left;
-   width: 500px;
+   width: 480px;
 }
 .field_type {
    text-align: left;
@@ -230,7 +242,7 @@ label {
 }
 .fieldtype_actions {
    text-align: left;
-   width: 60px;
+   width: 100px;
 }
 table.fancytree-ext-table tbody tr.fancytree-active, 
 table.fancytree-ext-table.fancytree-treefocus tbody tr.fancytree-active {

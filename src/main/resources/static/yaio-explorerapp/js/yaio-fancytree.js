@@ -8,6 +8,7 @@ var symLinkUrl = baseUrl + "showsymlink/";
 var updateUrl = baseUrl + "update/";
 var createUrl = baseUrl + "create/";
 var moveUrl = baseUrl + "move/";
+var removeUrl = baseUrl + "delete/";
 
 var treeInstances = new Array();
 var configNodeTypeFields = {
@@ -15,6 +16,18 @@ var configNodeTypeFields = {
         fields: [
             { fieldName: "className", type: "hidden"},
             { fieldName: "sysUID", type: "hidden"},
+        ]
+    },
+    CreateSymlink: {
+        fields: [
+            { fieldName: "name", type: "input"},
+            { fieldName: "type", type: "hidden"},
+            { fieldName: "className", type: "hidden"},
+            { fieldName: "sysUID", type: "hidden"},
+            { fieldName: "symLinkRef", type: "input"},
+            { fieldName: "symLinkName", type: "input"},
+            { fieldName: "symLinkTags", type: "textarea"},
+            { fieldName: "mode", type: "hidden", intern: true},
         ]
     },
     Common: {
@@ -105,7 +118,7 @@ function createYAIOFancyTree(treeId, masterNodeId, doneHandler){
         masterNodeId: masterNodeId,
         
         // set layoutoptions
-        maxTitleWidth: 420,
+        maxTitleWidth: 400,
         
         checkbox: true,
         titlesTabbable: true,     // Add all node titles to TAB chain
@@ -285,12 +298,14 @@ function createYAIOFancyTree(treeId, masterNodeId, doneHandler){
 //                node.moveTo(node.getNextSibling(), "after");
 //                node.setActive();
 //                break;
-//            case "remove":
+            case "remove":
 //                node.remove();
-//                break;
-//            case "addChild":
+                yaioRemoveNodeById(node.key, 'create');
+                break;
+            case "addChild":
 //                node.editCreateNode("child", "New node");
-//                break;
+                openYAIONodeEditor(node.key, 'create');
+                break;
 //            case "addSibling":
 //                node.editCreateNode("after", "New node");
 //                break;
@@ -330,12 +345,12 @@ function createYAIOFancyTree(treeId, masterNodeId, doneHandler){
             cmd = "addChild";
 //        } else if( c === "C" && e.ctrlKey ) {
 //            cmd = "copy";
-        } else if( c === "V" && e.ctrlKey ) {
-            cmd = "paste";
-        } else if( c === "X" && e.ctrlKey ) {
-            cmd = "cut";
-        } else if( c === "N" && e.ctrlKey ) {
-            cmd = "addSibling";
+//        } else if( c === "V" && e.ctrlKey ) {
+//            cmd = "paste";
+//        } else if( c === "X" && e.ctrlKey ) {
+//            cmd = "cut";
+//        } else if( c === "N" && e.ctrlKey ) {
+//            cmd = "addSibling";
         } else if( e.which === $.ui.keyCode.DELETE ) {
             cmd = "remove";
         } else if( e.which === $.ui.keyCode.F2 ) {
@@ -370,7 +385,7 @@ function createYAIOFancyTree(treeId, masterNodeId, doneHandler){
             {title: "Edit <kbd>[F2]</kbd>", cmd: "rename", uiIcon: "ui-icon-pencil" },
             {title: "Delete <kbd>[Del]</kbd>", cmd: "remove", uiIcon: "ui-icon-trash" },
             {title: "----"},
-            {title: "New sibling <kbd>[Ctrl+N]</kbd>", cmd: "addSibling", uiIcon: "ui-icon-plus" },
+//            {title: "New sibling <kbd>[Ctrl+N]</kbd>", cmd: "addSibling", uiIcon: "ui-icon-plus" },
             {title: "New child <kbd>[Ctrl+Shift+N]</kbd>", cmd: "addChild", uiIcon: "ui-icon-arrowreturn-1-e" },
             {title: "----"},
 //            {title: "Cut <kbd>Ctrl+X</kbd>", cmd: "cut", uiIcon: "ui-icon-scissors"},
@@ -523,7 +538,6 @@ function yaioMoveNode(node, newParentKey) {
     yaioDoUpdateNode(node, url, json);
 }
 
-
 function yaioDoUpdateNode(node, url, json) {
     var msg = "update for node:" + node.key;
     console.log("yaioDoUpdateNode START: " + msg + " with:" + json);
@@ -660,6 +674,86 @@ function yaioLoadSymLinkData(basenode, fancynode) {
     });
 }
 
+
+function yaioRemoveNodeById(nodeId) {
+    if (confirm("Wollen Sie die Node wirklich löschen?")) {
+        console.log("remove node:" + nodeId);
+        // check for tree
+        var treeId = "#tree";
+        var tree = $(treeId).fancytree("getTree");
+        if (! tree) {
+            console.error("yaioRemoveNode: error tree:'" + treeId + "' not found.");
+            return;
+        }
+        
+        // check for activeNodeId
+        var treeNode = tree.getNodeByKey(nodeId);
+        if (! treeNode) {
+            console.error("yaioRemoveNode: error for tree:'" + treeId 
+                    + "' activeNode " + nodeId + " not found.");
+            return null;
+        }
+        var url = removeUrl + nodeId;
+        yaioDoRemoveNode(treeNode, url);
+    } else {
+        // discard
+        return false;
+    }
+}
+
+function yaioDoRemoveNode(node, url) {
+    var msg = "remove node:" + node.key;
+    console.log("yaioDoRemoveNode START: " + msg + " with:" + url);
+    $.ajax({
+        headers : {
+            'Accept' : 'application/json',
+            'Content-Type' : 'application/json'
+        },
+        url : url,
+        type : 'DELETE',
+        success : function(response, textStatus, jqXhr) {
+            console.log("OK done!" + response.state);
+            if (response.state == "OK") {
+                console.log("OK removed node:" + node.key + " load:" + response.parentIdHierarchy);
+                if (response.parentIdHierarchy && response.parentIdHierarchy.length > 0) {
+                    // reload tree
+                    var tree = $("#tree").fancytree("getTree");
+                    tree.reload().done(function(){
+                        // handler when done
+                        console.log("reload tree done:" + response.parentIdHierarchy);
+                        console.log("call openNodeHierarchy load hierarchy:" + response.parentIdHierarchy);
+                        openNodeHierarchy("#tree", response.parentIdHierarchy);
+                    });
+                } else {
+                    console.error("got no hierarchy for:" + node.key 
+                            + " hierarchy:" + response.parentIdHierarchy);
+                }
+            } else {
+                console.error("cant remove node:" + node.key + " error:" + response.stateMsg);
+                // check for violations
+                if (response.violations) {
+                    // iterate violations
+                    for (var idx in response.violations) {
+                        var violation = response.violations[idx];
+                        console.error("violations while remove node:" + node.key 
+                                + " field:" + violation.path + " message:" + violation.message);
+                        alert("cant remove node because: " + violation.path + " (" + violation.message + ")")
+                    }
+                }
+            }
+        },
+        error : function(jqXHR, textStatus, errorThrown) {
+            // log the error to the console
+            console.error("The following error occured: " + textStatus, errorThrown);
+            alert("cant remove node:" + node.key + " error:" + textStatus, errorThrown)
+        },
+        complete : function() {
+            console.log("remove node:" + node.key + "' ran");
+        }
+    });
+}
+
+
 function renderDataBlock(basenode, fancynode) {
     // extract nodedata
     var nodestate = basenode.state;
@@ -762,6 +856,8 @@ function renderColumnsForNode(event, data) {
             "<a href='#/show/" + basenode.sysUID + "' class='yaio-icon-center'></a>"
             + "<a onclick=\"javascript: openYAIONodeEditor('" + basenode.sysUID + "', 'edit'); return false;\" class='yaio-icon-edit'></a>"
             + "<a onclick=\"javascript: openYAIONodeEditor('" + basenode.sysUID + "', 'create'); return false;\" class='yaio-icon-create'></a>"
+            + "<a onclick=\"javascript: openYAIONodeEditor('" + basenode.sysUID + "', 'createsymlink'); return false;\" class='yaio-icon-createsymlink'></a>"
+            + "<a onclick=\"javascript: yaioRemoveNodeById('" + basenode.sysUID + "'); return false;\" class='yaio-icon-remove'></a>"
             ).addClass("container_field")
              .addClass("fieldtype_actions")
              .addClass(statestyle);
@@ -977,8 +1073,32 @@ function openYAIONodeEditor(nodeId, mode) {
         formSuffix = "Create";
         fieldSuffix = "Create";
         fields = fields.concat(configNodeTypeFields.Create.fields);
-        basenode.mode = "create";
+        
+        // new basenode
+        origBasenode = basenode;
+        basenode = {
+                mode: "create",
+                sysUID: origBasenode.sysUID
+        };
         console.log("openYAIONodeEditor mode=create for node:" + nodeId);
+    } else if (mode == "createsymlink") {
+        // mode create
+        formSuffix = "SymLinkNode";
+        fieldSuffix = "SymLinkNode";
+        fields = fields.concat(configNodeTypeFields.CreateSymlink.fields);
+
+        // new basenode
+        origBasenode = basenode;
+        basenode = {
+                mode: "create",
+                sysUID: origBasenode.sysUID,
+                name: "Symlink auf: '" + origBasenode.name + "'",
+                type: "SYMLINK",
+                state: "SYMLINK",
+                className: "SymLinkNode",
+                symLinkRef: origBasenode.metaNodePraefix + "" + origBasenode.metaNodeNummer
+        };
+        console.log("openYAIONodeEditor mode=createsymlink for node:" + nodeId);
     } else {
         console.error("error openYAIONodeEditor: unknown mode" + mode 
                 + " for nodeId:" + nodeId);
@@ -1014,7 +1134,7 @@ function openYAIONodeEditor(nodeId, mode) {
             $(fieldNameId).val(value).trigger('select').triggerHandler("change");
         } else if (field.type == "textarea") {
             $(fieldNameId).val(value).trigger('select').triggerHandler("change");
-        }else {
+        } else {
             // input
             $(fieldNameId).val(value).trigger('input');
         }

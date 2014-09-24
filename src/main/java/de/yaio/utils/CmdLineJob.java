@@ -17,6 +17,7 @@
 package de.yaio.utils;
 
 import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.log4j.Logger;
 
@@ -156,11 +157,24 @@ public abstract class CmdLineJob {
             Configurator.getInstance().getCommandLine();
 
             // check for unknown Args
+            String strCmdLineArgs = "";;
+            for (String arg : Configurator.getInstance().getCmdLineArgs()) {
+                strCmdLineArgs += ", " + arg;
+            }
             LOGGER.info("used CmdLineArgs: " 
-                            + Configurator.getInstance().getCmdLineArgs());
+                            + strCmdLineArgs);
             if (Configurator.getInstance().getCommandLine() != null) {
+                strCmdLineArgs = "";;
+                for (String arg : Configurator.getInstance().getCommandLine().getArgs()) {
+                    strCmdLineArgs += ", " + arg;
+                }
                 LOGGER.info("unknown CmdLineArgs: " 
-                            + Configurator.getInstance().getCommandLine().getArgs());
+                            + strCmdLineArgs);
+                strCmdLineArgs = "";;
+                for (Option option : Configurator.getInstance().getCommandLine().getOptions()) {
+                    strCmdLineArgs += ", " + option.toString();
+                }
+                LOGGER.info("used Options: " + strCmdLineArgs);
             }
 
             // validate cmdLine

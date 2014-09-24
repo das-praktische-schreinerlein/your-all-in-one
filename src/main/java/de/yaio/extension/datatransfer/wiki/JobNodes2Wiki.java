@@ -138,7 +138,7 @@ public class JobNodes2Wiki extends CmdLineJob {
     protected Options addAvailiableOutputCmdLineOptions(Options availiableCmdLineOptions) throws Throwable {
 
         // Show ChildrenSum
-        Option flgShowChildrenSumOption = new Option("c", "calcsum", false,
+        Option flgShowChildrenSumOption = new Option("", "calcsum", false,
                 "Show ChildrenSum (default false)");
         flgShowChildrenSumOption.setRequired(false);
         availiableCmdLineOptions.addOption(flgShowChildrenSumOption);
@@ -342,12 +342,14 @@ public class JobNodes2Wiki extends CmdLineJob {
         // Konfiguration
         CommandLine cmdLine = Configurator.getInstance().getCommandLine();
         OutputOptions oOptions = new OutputOptionsImpl();
+        if (LOGGER.isDebugEnabled())
+            LOGGER.debug("DefaultOutputOptions: " + oOptions);
         oOptions.setFlgShowPlan(cmdLine.hasOption("p"));
         oOptions.setFlgShowIst(cmdLine.hasOption("i"));
         oOptions.setFlgShowState(cmdLine.hasOption("s"));
         oOptions.setFlgShowType(cmdLine.hasOption("s"));
         oOptions.setFlgShowDesc(cmdLine.hasOption("d"));
-        oOptions.setFlgShowChildrenSum(cmdLine.hasOption("c"));
+        oOptions.setFlgShowChildrenSum(cmdLine.hasOption("calcsum"));
         oOptions.setFlgShowDocLayout(cmdLine.hasOption("l"));
         oOptions.setFlgShowSysData(cmdLine.hasOption("shownosysdata") == false);
         oOptions.setFlgShowMetaData(cmdLine.hasOption("shownometadata") == false);
@@ -370,7 +372,9 @@ public class JobNodes2Wiki extends CmdLineJob {
                         new Integer(oOptions.getIntendSys()).toString())));
         oOptions.setFlgProcessDocLayout(cmdLine.hasOption("processdoclayout"));
         oOptions.setStrReadIfStatusInListOnly(cmdLine.getOptionValue("onlyifstateinlist", null));
-
+        
+        if (LOGGER.isDebugEnabled())
+            LOGGER.debug("OutputOptions after parsing: " + oOptions);
         return oOptions;
     }
 

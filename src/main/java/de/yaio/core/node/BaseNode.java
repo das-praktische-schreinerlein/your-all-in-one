@@ -378,6 +378,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
      */
     @Transient
     protected int curSortIdx = 0;
+    protected static int CONST_CURSORTIDX_STEP = 5;
     
     
     //####################
@@ -665,7 +666,14 @@ public class BaseNode implements BaseData, MetaData, SysData,
         if (LOGGER.isDebugEnabled())
             LOGGER.debug("add child:" + childNode.getNameForLogger() + " to " + this.getNameForLogger());
         if (childNode != null) {
-            childNode.setSortPos(curSortIdx++);
+            if (childNode.getSortPos() != null && childNode.getSortPos() > curSortIdx) {
+                // preserve sortpos of the child
+                curSortIdx = childNode.getSortPos() + CONST_CURSORTIDX_STEP;
+            } else {
+                // set new sortpos for the child
+                childNode.setSortPos(curSortIdx);
+                curSortIdx = curSortIdx + CONST_CURSORTIDX_STEP;
+            }
             this.childNodesByNameMapMap.put(childNode.getIdForChildByNameMap(), childNode);
             this.childNodes.add((BaseNode)childNode);
         }
