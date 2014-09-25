@@ -16,9 +16,13 @@
  */
 package de.yaio.rest.controller;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -204,8 +208,22 @@ public class ExportController {
         Exporter exporter = new HtmlExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
 
-        // run export
-        String res = this.exportNode(sysUID, exporter, oOptions, ".html", response);
+        String res = null;
+        try {
+            // read header
+            InputStream in = this.getClass().getResourceAsStream("/static/html/projektplan-export-header.html");
+            res = IOUtils.toString(in);
+
+            // run export
+            res += this.exportNode(sysUID, exporter, oOptions, ".html", response);
+            
+            // add footer
+            in = this.getClass().getResourceAsStream("/static/html/projektplan-export-footer.html");
+            res = res + IOUtils.toString(in);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         
         // change headers to display html in browser
         response.setContentType("text/html");

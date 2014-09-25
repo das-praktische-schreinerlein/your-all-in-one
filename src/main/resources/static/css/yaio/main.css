@@ -455,4 +455,32 @@ ul.error_list li {
 .blockToggler {
    float: none;
    display: inline-block;
+   vertical-align: top;
+}
+
+
+
+
+img.icon-blocktogglerof,
+img.icon-blocktoggleron,
+img.icon-print {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  vertical-align: top;
+  background-repeat: no-repeat;
+  background-position: left;
+  background-image: url("../../js/fancytree/skin-lion/icons.gif");
+  background-position: 0px 0px;
+  border: none;
+}
+img.icon-blocktogglerof {
+  background-position: -32px -80px;
+}
+
+img.icon-blocktoggleron {
+    background-position: -64px -80px;
+}
+img.icon-print {
+    background-position: -64px -80px;
 }
