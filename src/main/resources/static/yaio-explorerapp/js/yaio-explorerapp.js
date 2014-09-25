@@ -1,8 +1,48 @@
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Collaboration
+ *
+ * <h4>FeatureDescription:</h4>
+ *     software for projectmanagement and documentation
+ * 
+ * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category collaboration
+ * @copyright Copyright (c) 2014, Michael Schreiner
+ * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
 'use strict';
 
+/**
+ * <h4>FeatureDomain:</h4>
+ *     WebGUI
+ * <h4>FeatureDescription:</h4>
+ *     controls the yaio-gui
+ *      
+ * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category collaboration
+ * @copyright Copyright (c) 2014, Michael Schreiner
+ * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ */
 var yaioM = angular.module('yaioExplorerApp', ['ngAnimate', 'ngRoute']);
 
-// configure Module
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Configuration
+ * <h4>FeatureDescription:</h4>
+ *     configures the routing for the app<br>
+ *     add new routes to the $routeProvider-instance
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>updates $routeProvider
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Routing Configuration
+ * @param $routeProvider - the $routeProvider-instance to add the new routes
+ */
 yaioM.config(function($routeProvider) {
     // configure routes
     $routeProvider
@@ -17,13 +57,38 @@ yaioM.config(function($routeProvider) {
             templateUrl: 'templates/node.html' })
         .otherwise({ redirectTo: '/'});
 });
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Configuration
+ * <h4>FeatureDescription:</h4>
+ *     configures $httpProvider - adds default-headers for patch-requests
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>updates $httpProvider
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Configuration
+ * @param $httpProvider - the $httpProvider to change the default-headers
+ */
 yaioM.config(['$httpProvider', function($httpProvider) {
     $httpProvider.defaults.headers.patch = {
         'Content-Type': 'application/json;charset=utf-8'
     }
 }]);
     
-// add own directives
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Configuration
+ * <h4>FeatureDescription:</h4>
+ *     adds the new tag-directive "state" to output formated node-state
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>returns new directive
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Configuration Taglibrary
+ */
 yaioM.directive('state', function(){
     return {
         restrict: 'E', // own tag
@@ -35,7 +100,18 @@ yaioM.directive('state', function(){
      };
 })
     
-// add own NodesController
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Configuration
+ * <h4>FeatureDescription:</h4>
+ *     the controller to load the nodes for url-params and register the yaio-functions
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>returns new controller
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Configuration BusinessLogic
+ */
 yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams, setFormErrors) {
 
     // check parameter - set default if empty
@@ -54,7 +130,18 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
     console.log("NodeShowCtrl - processing nodeId=" + nodeId + " activeNodeId=" + activeNodeId);
 
     if (activeNodeId) {
-        // function to get NodeHierarchy fro activeNodeId
+        /**
+         * <h4>FeatureDomain:</h4>
+         *     GUI
+         * <h4>FeatureDescription:</h4>
+         *     callbackhandler to load activeNodeId and open the nodehierarchy
+         * <h4>FeatureResult:</h4>
+         *   <ul>
+         *     <li>updates nodetree
+         *   </ul> 
+         * <h4>FeatureKeywords:</h4>
+         *     GUI Callback
+         */
         activeNodeIdHandler = function() {
             console.log("start loading activenodes:" + activeNodeId)
             $http.get('/nodes/show/' + activeNodeId).then(function(nodeResponse) {
@@ -117,12 +204,34 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
         
     });
 
-    // add discard
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Editor
+     * <h4>FeatureDescription:</h4>
+     *     callbackhandler to discard and close the editor
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>updates layout
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     GUI Callback
+     */
     $scope.discard = function(formName) {
         closeYAIONodeEditor();
     }
     
-    // add discard
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Callback
+     * <h4>FeatureDescription:</h4>
+     *     callbackhandler to validate the type of a newNode and open the corresponding form
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>updates layout
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     GUI Callback
+     */
     $scope.selectNewNodeType = function(formName) {
         // hide all forms
         resetYAIONodeEditorForms();
@@ -143,7 +252,19 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
     }
     
 
-    // add save
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Callback
+     * <h4>FeatureDescription:</h4>
+     *     callbackhandler to map the nodedata, create json,call webservice and 
+     *     relocate to the new nodeId
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>save node and updates layout
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     GUI Callback
+     */
     $scope.save = function(formName) {
         // define json for common fields
         var nodeObj = {name: $scope.nodeForEdit.name};
@@ -267,8 +388,25 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
     };
 });
 
+/***************************************
+ ***************************************
+ * errorhandling from https://nulogy.com/articles/designing-angularjs-directives#.VBp5gvnV-Po
+ ***************************************
+ ***************************************/
 
-// errorhandling from https://nulogy.com/articles/designing-angularjs-directives#.VBp5gvnV-Po
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Configuration
+ * <h4>FeatureDescription:</h4>
+ *     new function to set form-errors when using input-elements with attribute "witherrors" 
+ *     and element "fielderrors" to show the corresponding errors 
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>returns new function
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Configuration Taglibrary Errorhandling
+ */
 yaioM.factory('setFormErrors', function() {
     // Registered withErrors controllers
     var withErrorCtrls = [];
@@ -291,6 +429,20 @@ yaioM.factory('setFormErrors', function() {
     return setFormErrors;
 });
 
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Configuration
+ * <h4>FeatureDescription:</h4>
+ *     adds the new attribute-directive "witherrors" to set/show errors from
+ *     different sources (AngularJS, App, WebServices) for this element
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>returns new directive
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Configuration Taglibrary Errorhandling
+ */
 yaioM.directive('withErrors', ['setFormErrors', function(setFormErrors) {
     return {
         restrict: 'A',
@@ -320,6 +472,19 @@ yaioM.directive('withErrors', ['setFormErrors', function(setFormErrors) {
 }]);
 
 
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Configuration
+ * <h4>FeatureDescription:</h4>
+ *     extend the element with the new attribute-directive "witherrors" to 
+ *     set/show errors from different sources (AngularJS, App, WebServices) for this element
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>returns new callback
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Configuration Taglibrary Errorhandling
+ */
 function directiveFieldsWithErrors () {
     return {
         restrict: 'E',
@@ -360,7 +525,19 @@ function directiveFieldsWithErrors () {
     }  
 }
 
-
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Configuration
+ * <h4>FeatureDescription:</h4>
+ *     extend the element with the new attribute-directive "witherrors" to 
+ *     set/show errors from different sources (AngularJS, App, WebServices) for this element
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>returns updated directive
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Configuration Taglibrary Errorhandling
+ */
 yaioM.directive('input', function() {
     return directiveFieldsWithErrors();
 });
@@ -371,6 +548,19 @@ yaioM.directive('input', function() {
 //    return directiveFieldsWithErrors();
 //});
 
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Configuration
+ * <h4>FeatureDescription:</h4>
+ *     adds the new element-directive "fielderrors" to set/show errors from
+ *     different sources (AngularJS, App, WebServices) for this element
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>returns new directive
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Configuration Taglibrary Errorhandling
+ */
 yaioM.directive('fielderrors', function() {
     return {
         restrict: 'E',
