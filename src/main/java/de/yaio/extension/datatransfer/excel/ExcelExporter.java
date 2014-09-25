@@ -166,8 +166,9 @@ public class ExcelExporter extends WikiExporter {
 
         // alle SubNotes des Mastrs durchlaufen
         if (masterNode.getEbene() != 1) {
-            throw new IllegalArgumentException("Masternode ist not Master: "
-                    + masterNode.getEbene() + "'" + masterNode + "'");
+// TODO
+//            throw new IllegalArgumentException("Masternode ist not Master: "
+//                    + masterNode.getEbene() + "'" + masterNode + "'");
         }
 
         int startRownNum = ExcelNodeService.CONST_PLANUNG_ROUW_UE;
@@ -860,8 +861,9 @@ public class ExcelExporter extends WikiExporter {
 
         // alle SubNotes des Masters durchlaufen
         if (masterNode.getEbene() != 1) {
-            throw new IllegalArgumentException("Masternode ist not Master: "
-                    + masterNode.getEbene() + "'" + masterNode + "'");
+// TODO 
+//            throw new IllegalArgumentException("Masternode ist not Master: "
+//                    + masterNode.getEbene() + "'" + masterNode + "'");
         }
 
         int startRownNum = ExcelNodeService.CONST_GANT_ROUW_UE;

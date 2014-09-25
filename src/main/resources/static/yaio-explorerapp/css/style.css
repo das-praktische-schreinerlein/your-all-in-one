@@ -134,11 +134,25 @@ a.toggler_hidden {
     clear: none;
 }
 .container-verortung {
-   width: 100%;
+    width: 100%;
 }
 .verortung .entry {
-   float: left;
-   padding: 3px;
+    float: left;
+    padding: 3px;
+}
+.container-exporter {
+    clear: both;
+    float:left;
+    width: 100%;
+}
+ul.exporttypes {
+    float: left;
+    padding-left: 1px;
+    margin: 0px;   
+}
+ul.exporttypes li {
+    list-style: none;
+    float: left;   
 }
 
 /*****************************************
