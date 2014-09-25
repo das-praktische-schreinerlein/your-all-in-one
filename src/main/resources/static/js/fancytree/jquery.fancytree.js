@@ -3127,8 +3127,13 @@ $.extend(Fancytree.prototype,
 		flag = (flag !== false);
 
 		// node.debug("nodeSetExpanded(" + flag + ")");
+		
+		// save the nodeIds of all expanded nodes to reload the tree in that state
+		// if expanded: save nodeId to global map (nodeId: ParentPath)
+		// if collapse: remove nodeId 
+		// TODO
 
-		if((node.expanded && flag) || (!node.expanded && !flag)){
+		if(((node.expanded && flag) || (!node.expanded && !flag)) && ! callOpts.recursively ){
 			// Nothing to do
 			// node.debug("nodeSetExpanded(" + flag + "): nothing to do");
 			return _getResolvedPromise(node);
@@ -3180,7 +3185,33 @@ $.extend(Fancytree.prototype,
 			}
 			
 			// check for option openHierarchy recursively
-            if (callOpts.openHierarchy) {
+			console.log("iam here:" + node.key 
+			        + " level:" + node.getLevel() 
+			        + " min:" + callOpts.minExpandLevel 
+			        + " flg:" + flag);
+			if (callOpts.recursively) {
+			    if (flag && node.getLevel() < callOpts.minExpandLevel) {
+                    // recursively open while < minExpandLevel
+                    console.log("recursively do all children:" + node.key);
+                    for (var nodeId in node.children) {
+                        var nextNode = node.children[nodeId];
+                        console.log("recursively got nextNode:" + nextNode.key);
+                        console.log("recursively start setExpanded:" + nextNode.key);
+                        nextNode.setExpanded(flag, callOpts);
+                    }
+			    } else if (flag && node.getLevel() >= callOpts.minExpandLevel) {
+                    console.log("minExpandLevel reached - close all children:" + node.key);
+                    var newOpts = {};
+                    newOpts.recursively = false;
+                    newOpts.activateLastNode = callOpts.activateLastNode;
+                    for (var nodeId in node.children) {
+                        var nextNode = node.children[nodeId];
+                        console.log("got nextNode:" + nextNode.key);
+                        console.log("start setExpanded false:" + nextNode.key);
+                        nextNode.setExpanded(false, newOpts);
+                    }
+			    }
+            } else if (callOpts.openHierarchy) {
                 // openHierarchy recursively
                 if (callOpts.openHierarchy.length > 0) {
                     // extract newNode from hierarchy
@@ -3195,6 +3226,7 @@ $.extend(Fancytree.prototype,
                         console.log("got nextNode:" + nextNode.key);
                         console.log("start openHierarchy:" + nextNode.key);
                         var newOpts = {};
+                        newOpts.activateLastNode = callOpts.activateLastNode;
                         newOpts.openHierarchy = callOpts.openHierarchy;
                         nextNode.setExpanded(true, newOpts);
                         
@@ -3206,6 +3238,13 @@ $.extend(Fancytree.prototype,
                 } else {
                     // openHierarchy done
                     console.log("hierarchy empty: openHierarchy done for all nodes:" + callOpts.openHierarchy);
+                    
+                    // activate me
+                    if (callOpts.activateLastNode) {
+                        console.log("hierarchy empty: set me as focus&Active:" + callOpts.activateLastNode);
+                        node.setActive(true);
+                        node.setFocus(true);
+                    }
                 }
             } else {
                 // NOP

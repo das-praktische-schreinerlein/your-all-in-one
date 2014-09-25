@@ -157,7 +157,7 @@ a.toggler_hidden {
     float: left;
     padding: 3px;
 }
-.container-exporter {
+.container-commands {
     clear: both;
     float:left;
     width: 100%;
@@ -170,6 +170,24 @@ ul.exporttypes {
 ul.exporttypes li {
     list-style: none;
     float: left;   
+}
+ul.commands {
+    float: left;
+    padding-left: 1px;
+    margin: 0px;   
+}
+ul.commands li {
+    list-style: none;
+    float: left;   
+}
+.command_switchlevel {
+    vertical-align: top;
+}
+.command_switchlevel_input {
+    vertical-align: top;
+    height: 20px;
+    width: 60px;
+    padding: 0px;
 }
 
 /*****************************************

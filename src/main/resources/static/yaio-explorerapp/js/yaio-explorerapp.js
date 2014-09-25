@@ -122,6 +122,7 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
     // create node
     $scope.node = {};
     $scope.nodeForEdit = {};
+    $scope.config = {treeOpenLevel: 1};
     
     // check activeNodeId
     var activeNodeIdHandler;
@@ -203,6 +204,27 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
         }
         
     });
+    
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Editor
+     * <h4>FeatureDescription:</h4>
+     *     callbackhandler to open all subnodes<level in the treeview
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>open the subNodes till treeOpenLevel
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     GUI Callback
+     */
+    $scope.openSubNodes = function(flgOpen) {
+        console.log("openSubNodes:" + " level:" + $scope.config.treeOpenLevel);
+        yaioOpenSubNodesForTree("#tree", $scope.config.treeOpenLevel);
+        return false;
+    }
+
+
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -218,6 +240,7 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
      */
     $scope.discard = function(formName) {
         closeYAIONodeEditor();
+        return false;
     }
     
     /**
@@ -249,6 +272,7 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
 
         // set mode
         $scope.nodeForEdit.mode = "create";
+        return false;
     }
     
 

@@ -742,6 +742,29 @@ function openNodeHierarchyForNodeId(treeId, activeNodeId) {
     openNodeHierarchy(treeId, lstIdsHierarchy);
 }
 
+
+function yaioOpenSubNodesForTree(treeId, level) {
+    var tree = $(treeId).fancytree("getTree");
+    if (! tree) {
+        logError("yaioOpenSubNodesForTree: error tree:'" + treeId + "' not found.", false);
+        return;
+    }
+    
+    // check for activeNodeId
+    var treeNode = tree.rootNode;
+    if (! treeNode) {
+        logError("yaioOpenSubNodesForTree: error rootnode for tree:'" + treeId 
+                + " not found.", false);
+        return null;
+    }
+    
+    var opts = {};
+    opts.minExpandLevel = level;
+    opts.recursively = true;
+    console.log("yaioOpenSubNodesForTree setExpanded:" + " level:" + level);
+    treeNode.setExpanded(true, opts);
+}
+
 function yaioSaveNode(data) {
     var json = JSON.stringify({name: data.input.val()});
     var url = updateUrl + data.node.key;
