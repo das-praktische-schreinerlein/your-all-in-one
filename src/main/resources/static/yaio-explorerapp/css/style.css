@@ -46,7 +46,9 @@ a.yaio-icon-center,
 a.yaio-icon-edit,
 a.yaio-icon-create,
 a.yaio-icon-createsymlink,
-a.yaio-icon-remove {
+a.yaio-icon-remove,
+a.toggler_show,
+a.toggler_hidden {
   width: 16px;
   height: 16px;
   display: inline-block;
@@ -60,7 +62,9 @@ a.yaio-icon-center,
 a.yaio-icon-edit,
 a.yaio-icon-create,
 a.yaio-icon-createsymlink,
-a.yaio-icon-remove {
+a.yaio-icon-remove,
+a.toggler_show,
+a.toggler_hidden {
   margin-top: 1px;
 }
 
@@ -83,6 +87,14 @@ a.yaio-icon-createsymlink {
 a.yaio-icon-remove {
   margin-left: 3px;
   background-position: -16px -112px;
+}
+a.toggler_show {
+  margin-left: 3px;
+  background-position: -32px -32px;
+}
+a.toggler_hidden {
+  margin-left: 3px;
+  background-position: -64px -32px;
 }
 
 /**

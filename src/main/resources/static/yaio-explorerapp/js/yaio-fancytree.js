@@ -879,34 +879,25 @@ function renderColumnsForNode(event, data) {
         
         // add toggler column
         $($nodeDataBlock).find("div.container_data_row").append(
-                $("<div id='toggler_desc_" + basenode.sysUID + "'/>").html("")
+                $("<div />").html("<a href='#' onclick=\"toggleNodeDescContainer('" + basenode.sysUID 
+                        + "'); return false;\" id='toggler_desc_" + basenode.sysUID + "'></a>")
                         .addClass("container_field")
                         .addClass("fieldtype_toggler")
+                        .addClass("toggler_show")
                         .addClass(statestyle));
         
         // add desc row
         $nodeDataBlock.append(
                 $("<div class='togglecontainer' id='detail_desc_" + basenode.sysUID + "'>"
-                        + "<pre>" + basenode.nodeDesc.replace(/<WLBR>/g, "\n") + "</pre>"
+                        + "<pre>" + basenode.nodeDesc.replace(/\<WLBR\>/g, "\n") + "</pre>"
                         + "</div>").addClass("field_nodeDesc"));
     }
     
     // add nodeData
     $tdList.eq(2).html($nodeDataBlock).addClass("block_nodedata");
     
-    // append BlockToggler after jquery appends html to DOM
-    if (false && basenode.nodeDesc != "" && basenode.nodeDesc != null) {
-        // TODO: Toggler-Problem
-        jMATService.getPageLayoutService().appendBlockToggler(
-                'toggler_desc_' + basenode.sysUID, 
-                'detail_desc_' + basenode.sysUID);  
-        // hide block
-        var effect = function () { new ToggleEffect('detail_desc_' + basenode.sysUID).doEffect();};
-        jMATService.getLayoutService().togglerBlockHide(
-                   'toggler_desc_' + basenode.sysUID, 
-                   'detail_desc_' + basenode.sysUID, 
-                   effect);
-    }
+    // toogle
+    toggleNodeDescContainer(basenode.sysUID);
 };
 
 function createFancyDataFromNodeData(basenode) {
@@ -986,6 +977,16 @@ function createOrReloadYAIOFancyTree(treeId, masterNodeId, doneHandler){
 }
 
 
+
+function toggleNodeDescContainer(id) {
+    $("#detail_desc_" + id).slideToggle(1000,function() {
+        if ($("#detail_desc_" + id).css("display") == "block") {
+            $("#toggler_desc_" + id).addClass('toggler_show').removeClass('toggler_hidden');
+        } else {
+            $("#toggler_desc_" + id).addClass('toggler_hidden').removeClass('toggler_show');
+        }
+    });
+}
 
 function resetYAIONodeEditor() {
     // reset editor
@@ -1156,14 +1157,33 @@ function openYAIONodeEditor(nodeId, mode) {
     
     // display editor and form for the formSuffix
     $("#containerBoxYaioEditor").css("display", "block");
-    $("#containerYaioEditor").css("display", "block");
     $("#containerFormYaioEditor" + formSuffix).css("display", "block");
+    //$("#containerYaioEditor").css("display", "block");
+    toggleElement("#containerYaioEditor");
 }
 
 function closeYAIONodeEditor() {
     console.log("close editor");
+    toggleElement("#containerYaioEditor");
     resetYAIONodeEditor();
 } 
+
+function toggleElement(id) {
+    // get effect type from
+    var selectedEffect = "drop";
+
+    // most effect types need no options passed by default
+    var options = {};
+    // some effects have required parameters
+    if ( selectedEffect === "scale" ) {
+      options = { percent: 0 };
+    } else if ( selectedEffect === "size" ) {
+      options = { to: { width: 200, height: 60 } };
+    }
+
+    // run the effect
+    $( id ).toggle( selectedEffect, options, 500 );
+  };
 
 
 function logError(message, flgShowDialog) {
