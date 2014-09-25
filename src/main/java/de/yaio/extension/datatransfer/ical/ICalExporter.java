@@ -541,16 +541,31 @@ public class ICalExporter extends WikiExporter {
         icalRes += "END:VCALENDAR\n";
         
         // Hack wegen UFT8-Sonderzeichen
-        icalRes = icalRes.replaceAll("ü", "ue");
-        icalRes = icalRes.replaceAll("Ü", "Ue");
-        icalRes = icalRes.replaceAll("ä", "ae");
-        icalRes = icalRes.replaceAll("Ä", "Ae");
-        icalRes = icalRes.replaceAll("ö", "oe");
-        icalRes = icalRes.replaceAll("Ö", "Oe");
-        icalRes = icalRes.replaceAll("ß", "ss");
+        // escape non latin
+        StringBuilder sb = escapeNonLatin(icalRes, new StringBuilder());
+        icalRes = sb.toString();
         icalRes = icalRes.replaceAll("\n", "\r\n");
         
         
         return icalRes;
+    }
+    
+    public static <T extends Appendable> T escapeNonLatin(CharSequence sequence,
+                                                          T out) throws java.io.IOException {
+        for (int i = 0; i < sequence.length(); i++) {
+            char ch = sequence.charAt(i);
+            if (Character.UnicodeBlock.of(ch) == Character.UnicodeBlock.BASIC_LATIN) {
+                out.append(ch);
+            } else {
+                int codepoint = Character.codePointAt(sequence, i);
+                // handle supplementary range chars
+                i += Character.charCount(codepoint) - 1;
+                // emit entity
+                out.append("&#x");
+                out.append(Integer.toHexString(codepoint));
+                out.append(";");
+            }
+        }
+        return out;
     }
 }
