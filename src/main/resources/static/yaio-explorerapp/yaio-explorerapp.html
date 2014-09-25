@@ -139,5 +139,25 @@
 <!-- yaio-explorer -->
 <script src="js/yaio-fancytree.js"></script>
 <script src="js/yaio-explorerapp.js"></script>
+
+<!-- Tooltip -->
+<script type="text/javascript">
+
+    // overload tooltip from title as seen on http://stackoverflow.com/questions/15734105/jquery-ui-tooltip-does-not-support-html-content
+    $("[data-tooltip]").each(function(i, e) {
+        var tag = $(e);
+        if (tag.is("[title]") === false) {
+            tag.attr("title", "");
+        }
+    });
+
+    $(document).tooltip({
+        items: "[data-tooltip]",
+        content: function () {
+            return $(this).attr("data-tooltip");
+        }
+    });
+</script>
+
 </body>
 </html>
