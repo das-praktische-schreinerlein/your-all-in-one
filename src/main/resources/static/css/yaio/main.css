@@ -111,7 +111,7 @@ h1, h2, h3, h4, h5 {
  
 .box-portdesc-index {
 /**
-    background: url("/mybusiness/images/twitter-24x24.png") no-repeat scroll 0 0 #FFFFFF;
+    background: url("../../images/twitter-24x24.png") no-repeat scroll 0 0 #FFFFFF;
     background-position: 0px 80px;
 **/
 } 
@@ -180,13 +180,13 @@ h1, h2, h3, h4, h5 {
     width: 26px;
 }
 .liTopKontaktTwitter {
-    background: url("/mybusiness/images/twitter-24x24.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    background: url("../../images/twitter-24x24.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
 }
 .liTopKontaktXing {
-    background: url("/mybusiness/images/xing-24x24.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    background: url("../../images/xing-24x24.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
 }
 .liTopKontaktEmail {
-    background: url("/mybusiness/images/email-24x24.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    background: url("../../images/email-24x24.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
 }
 .liTopKontakt a {
     color: #333333;

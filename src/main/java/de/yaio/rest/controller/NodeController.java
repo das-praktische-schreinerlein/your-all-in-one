@@ -924,13 +924,14 @@ public class NodeController {
      *     Webservice Query
      * @param sysUID - sysUID to filter
      * @param newParentSysUID - sysUID of the new parent
-     * @param newNode - the node created from request-data
+     * @param newSortPos - the new position in the list
      * @return NodeResponse (OK, ERROR) with the node for sysUID
      */
-    @RequestMapping(method=RequestMethod.PATCH, value = "/move/{sysUID}/{newParentSysUID}")
+    @RequestMapping(method=RequestMethod.PATCH, value = "/move/{sysUID}/{newParentSysUID}/{newSortPos}")
     public @ResponseBody NodeResponse moveNode(
                 @PathVariable(value="sysUID") String sysUID,
-                @PathVariable(value="newParentSysUID") String newParentSysUID) {
+                @PathVariable(value="newParentSysUID") String newParentSysUID,
+                @PathVariable(value="newSortPos") Integer newSortPos) {
         // create default response
         NodeResponse response = new NodeResponse(
                         "ERROR", "node '" + sysUID + "' doesnt exists", 
@@ -963,6 +964,9 @@ public class NodeController {
             if (newParent !=  null) {
                 // got parent
                 if (newParent.getSysUID() != oldParent.getSysUID()) {
+                    // read children for both parents
+                    newParent.initChildNodesFromDB(0);
+
                     // set new parent
                     flgChangedParent = true;
                     node.setParentNode(newParent);
@@ -971,6 +975,9 @@ public class NodeController {
 
             // check for needed update
             if (flgChangedParent) {
+                // recalc the posotion
+                // TODO newSortPos
+                
                 // recalc and save
                 updateMeAndMyParents(node);
 

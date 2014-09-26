@@ -20,7 +20,7 @@
  * <h4>FeatureDomain:</h4>
  *     WebGUI
  * <h4>FeatureDescription:</h4>
- *     controls the yaio-gui
+ *     controller for the yaio-gui
  *      
  * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
  * @category collaboration
@@ -611,4 +611,6 @@ yaioM.directive('fielderrors', function() {
             }
     };
 });
+
+
   

@@ -3133,6 +3133,7 @@ $.extend(Fancytree.prototype,
 		// if collapse: remove nodeId 
 		// TODO
 
+		// if callOpts.recursively -> do it nevertheless everything seems done
 		if(((node.expanded && flag) || (!node.expanded && !flag)) && ! callOpts.recursively ){
 			// Nothing to do
 			// node.debug("nodeSetExpanded(" + flag + "): nothing to do");

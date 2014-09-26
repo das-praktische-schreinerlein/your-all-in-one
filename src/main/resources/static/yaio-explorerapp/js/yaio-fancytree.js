@@ -16,6 +16,20 @@
  */
 
 'use strict';
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     WebGUI
+ * <h4>FeatureDescription:</h4>
+ *     controller for the yaio-app and treeview
+ *      
+ * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category collaboration
+ * @copyright Copyright (c) 2014, Michael Schreiner
+ * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ */
+
+
 var CLIPBOARD = null;
 
 /*****************************************
@@ -115,6 +129,27 @@ var configNodeTypeFields = {
  * YAIO-Treefunctions
  *****************************************
  *****************************************/
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Initialisation
+ * <h4>FeatureDescription:</h4>
+ *     create an fancytree on the html-element treeId and inits it with the data
+ *     of masterNodeId<br>
+ *     if the tree already exists it will only reload the tree<br>
+ *     after init of the tree the doneHandler will be executed  
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>updates html-element treeId with a fancytree
+ *     <li>calls doneHandler
+ *     <li>updates global var treeInstances[treeId]
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Tree
+ * @param treeId - id of the html-element containing the tree
+ * @param masterNodeId - the node.sysUID to load
+ * @param doneHandler - 
+ */
 function createOrReloadYAIOFancyTree(treeId, masterNodeId, doneHandler){
     // check if already loaded
     var state = null;
@@ -147,6 +182,25 @@ function createOrReloadYAIOFancyTree(treeId, masterNodeId, doneHandler){
     }
 }
 
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Initialisation
+ * <h4>FeatureDescription:</h4>
+ *     creates an fancytree on the html-element treeId and inits it with the data
+ *     of masterNodeId<br>
+ *     after init of the tree the doneHandler will be executed  
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>updates html-element treeId with a fancytree
+ *     <li>calls doneHandler
+ *     <li>updates global var treeInstances[treeId]
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Tree
+ * @param treeId - id of the html-element containing the tree
+ * @param masterNodeId - the node.sysUID to load
+ * @param doneHandler - 
+ */
 function createYAIOFancyTree(treeId, masterNodeId, doneHandler){
     treeInstances[treeId] = {};
     treeInstances[treeId].state = "loading";
@@ -210,7 +264,8 @@ function createYAIOFancyTree(treeId, masterNodeId, doneHandler){
             dragDrop: function(node, data) {
                 if (confirm("Wollen Sie die Node wirklich verschieben?")) {
                     data.otherNode.moveTo(node, data.hitMode);
-                    yaioMoveNode(data.otherNode, node.key);
+                    // TODO extract pos
+                    yaioMoveNode(data.otherNode, node.key, 0);
                     return true;
                 } else {
                     // discard
@@ -297,6 +352,8 @@ function createYAIOFancyTree(treeId, masterNodeId, doneHandler){
                         newParentKey = tree.options.masterNodeId;
                     }
                     
+                    // TODO extract pos
+
                     // move yaioNode
                     yaioMoveNode(node, newParentKey);
                     return true;
@@ -318,7 +375,8 @@ function createYAIOFancyTree(treeId, masterNodeId, doneHandler){
                     if (newParent.isRootNode() || newParentKey == "undefined" || ! newParent) {
                         newParentKey = tree.options.masterNodeId;
                     }
-                    
+                    // TODO extract pos
+
                     // move yaioNode
                     yaioMoveNode(node, newParentKey);
                     return true;
@@ -327,7 +385,7 @@ function createYAIOFancyTree(treeId, masterNodeId, doneHandler){
                     return false;
                 }
                 break;
-// TODO
+// TODO 
 //            case "moveUp":
 //                node.moveTo(node.getPrevSibling(), "before");
 //                node.setActive();
@@ -344,32 +402,6 @@ function createYAIOFancyTree(treeId, masterNodeId, doneHandler){
 //                node.editCreateNode("child", "New node");
                 openYAIONodeEditor(node.key, 'create');
                 break;
-//            case "addSibling":
-//                node.editCreateNode("after", "New node");
-//                break;
-//            case "cut":
-//                CLIPBOARD = {mode: data.cmd, data: node};
-//                break;
-//            case "copy":
-//                CLIPBOARD = {
-//                  mode: data.cmd,
-//                  data: node.toDict(function(n){
-//                    delete n.key;
-//                  })
-//                };
-//                break;
-//            case "clear":
-//                CLIPBOARD = null;
-//                break;
-//            case "paste":
-//                if( CLIPBOARD.mode === "cut" ) {
-//                  // refNode = node.getPrevSibling();
-//                  CLIPBOARD.data.moveTo(node, "child");
-//                  CLIPBOARD.data.setActive();
-//                } else if( CLIPBOARD.mode === "copy" ) {
-//                  node.addChildren(CLIPBOARD.data).setActive();
-//                }
-//                break;
             default:
                 alert("Unhandled command: " + data.cmd);
                 return;
@@ -381,23 +413,15 @@ function createYAIOFancyTree(treeId, masterNodeId, doneHandler){
     
         if( c === "N" && e.ctrlKey && e.shiftKey) {
             cmd = "addChild";
-//        } else if( c === "C" && e.ctrlKey ) {
-//            cmd = "copy";
-//        } else if( c === "V" && e.ctrlKey ) {
-//            cmd = "paste";
-//        } else if( c === "X" && e.ctrlKey ) {
-//            cmd = "cut";
-//        } else if( c === "N" && e.ctrlKey ) {
-//            cmd = "addSibling";
         } else if( e.which === $.ui.keyCode.DELETE ) {
             cmd = "remove";
         } else if( e.which === $.ui.keyCode.F2 ) {
             cmd = "rename";
-//        } else if( e.which === $.ui.keyCode.UP && e.ctrlKey ) {
-//            cmd = "moveUp";
-//        } else if( e.which === $.ui.keyCode.DOWN && e.ctrlKey ) {
-//            cmd = "moveDown";
-//        } else if( e.which === $.ui.keyCode.RIGHT && e.ctrlKey ) {
+        } else if( e.which === $.ui.keyCode.UP && e.ctrlKey ) {
+            cmd = "moveUp";
+        } else if( e.which === $.ui.keyCode.DOWN && e.ctrlKey ) {
+            cmd = "moveDown";
+        } else if( e.which === $.ui.keyCode.RIGHT && e.ctrlKey ) {
             cmd = "indent";
         } else if( e.which === $.ui.keyCode.LEFT && e.ctrlKey ) {
             cmd = "outdent";
@@ -472,6 +496,20 @@ function doOnYAIOFancyTreeState(treeId, state, waitTime, maxTries, doneHandler, 
     }
 }
 
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Initialisation
+ * <h4>FeatureDescription:</h4>
+ *     create an fancytree-datanode from an yaio.basenode  
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>datanode - a datanode for FancyTree
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Tree
+ * @param basenode - a basenode from yaio
+ * @returns a datanode for FancyTree
+ */
 function createFancyDataFromNodeData(basenode) {
     var datanode = {
        title: basenode.name,
@@ -771,10 +809,11 @@ function yaioSaveNode(data) {
     doUpdateNode(data.node, url, json);
 }
 
-function yaioMoveNode(node, newParentKey) {
-    console.log("move node:" + node.key + " to:" + newParentKey);
+function yaioMoveNode(node, newParentKey, newPos) {
+    console.log("move node:" + node.key + " to:" + newParentKey + " Pos:" + newPos);
     var json = JSON.stringify({parentNode: newParentKey});
-    var url = moveUrl + node.key + "/" + newParentKey;
+    // TODO extract pos
+    var url = moveUrl + node.key + "/" + newParentKey + "/" + 0;
     yaioDoUpdateNode(node, url, json);
 }
 
@@ -1180,6 +1219,30 @@ function openYAIONodeEditor(nodeId, mode) {
     $("#containerFormYaioEditor" + formSuffix).css("display", "block");
     //$("#containerYaioEditor").css("display", "block");
     toggleElement("#containerYaioEditor");
+
+    // add datepicker to all dateinput
+    $('input.inputtype_date').datepicker({
+        prevText: '&lt;zur&uuml;ck', prevStatus: '',
+        prevJumpText: '&lt;&lt;', prevJumpStatus: '',
+        nextText: 'Vor&gt;', nextStatus: '',
+        nextJumpText: '&gt;&gt;', nextJumpStatus: '',
+        currentText: 'heute', currentStatus: '',
+        todayText: 'heute', todayStatus: '',
+        clearText: '-', clearStatus: '',
+        closeText: 'schließen', closeStatus: '',
+        monthNames: ['Januar','Februar','März','April','Mai','Juni',
+                     'Juli','August','September','Oktober','November','Dezember'],
+        monthNamesShort: ['Jan','Feb','Mär','Apr','Mai','Jun',
+                          'Jul','Aug','Sep','Okt','Nov','Dez'],
+        dayNames: ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'],
+        dayNamesShort: ['So','Mo','Di','Mi','Do','Fr','Sa'],
+        dayNamesMin: ['So','Mo','Di','Mi','Do','Fr','Sa'],
+        showMonthAfterYear: false,
+        showOn: 'both',
+        buttonImage: '../images/calendar.gif',
+        buttonImageOnly: true,
+        dateFormat:'dd.mm.yy'
+    });
 }
 
 function closeYAIONodeEditor() {
@@ -1321,4 +1384,3 @@ function formatNumbers(number, nachkomma, suffix) {
    
    return (number.toFixed(nachkomma)) + suffix;
 }
-
