@@ -194,6 +194,12 @@ public abstract class CmdLineJob {
                 System.exit(CONST_EXITCODE_OK);
             }
 
+            // set debug
+            if (Configurator.getInstance().getCommandLine().hasOption("debug")) {
+                LOGGER.info("activate debug");
+                Logger.getRootLogger().setLevel(org.apache.log4j.Level.ALL);
+            }
+
             LOGGER.info("start initJob");
             this.initJob();
             LOGGER.info("done initJob");

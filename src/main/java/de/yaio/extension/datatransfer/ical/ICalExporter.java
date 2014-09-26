@@ -550,7 +550,7 @@ public class ICalExporter extends WikiExporter {
         return icalRes;
     }
     
-    public static <T extends Appendable> T escapeNonLatin(CharSequence sequence,
+    protected static <T extends Appendable> T escapeNonLatin(CharSequence sequence,
                                                           T out) throws java.io.IOException {
         for (int i = 0; i < sequence.length(); i++) {
             char ch = sequence.charAt(i);

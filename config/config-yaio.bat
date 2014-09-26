@@ -4,12 +4,15 @@ rem set CONFIG
 set BASEPATH=%1%
 set FLGWP=%2%
 
+rem set appconfig
+set STARTURL=http://localhost:8083/yaio-explorerapp/yaio-explorerapp.html#/
+
 rem Gen Wiki-Only
 set PARSEONLY=
 rem parse ppl from wiki an generate 
 set FLG_PARSE_PPL_FROM_WIKI=
 rem import the ppl to db
-set FLG_IMPORT_PPL_TO_DB=1
+set FLG_IMPORT_PPL_TO_DB=
 rem the generate src: ppl or jpa
 set GEN_SRC=jpa
 rem the masternode
@@ -24,10 +27,11 @@ rem old set YAIOAPP=%BASEPATH%..\target\yaio-0.1.0.BUILD-SNAPSHOT-jar-with-depen
 rem fast set YAIOAPP=%BASEPATH%..\target\classes\;%BASEPATH%..\target\yaio-0.1.0.BUILD-SNAPSHOT-shaded.jar
 rem old prod set YAIOAPP=%BASEPATH%..\target\yaio-0.1.0.BUILD-SNAPSHOT-shaded.jar
 rem new prod
-set YAIOAPP=%BASEPATH%..\target\yaio-0.1.0.BUILD-SNAPSHOT.jar
+set YAIOAPP=%BASEPATH%..\target\yaio-0.1.0.BUILD-SNAPSHOT-shaded.jar
 set CP="%YAIOAPP%;"
-set CFG=--config %BASEPATH%..\config\application.properties
-set JAVAOPTIONS=-Xmx768m -Xms128m -Dlog4j.configuration=file:%BASEPATH%..\config\log4j.properties
+set CFGFILE=%BASEPATH%..\config\application.properties
+set CFG=--config %CFGFILE% 
+set JAVAOPTIONS=-Xmx768m -Xms128m -Dspring.config.location=file:%CFGFILE% -Dlog4j.configuration=file:%BASEPATH%..\config\log4j.properties
 
 
 rem change CodePage
@@ -56,7 +60,8 @@ set NEWID_OPTIONS=-pathiddb %YAIOVARPATH%\\nodeids.properties
 set PARSER_OPTIONS=%NEWID_OPTIONS% %FLGWP%
 set PARSER_OPTIONS_EXCEL=%NEWID_OPTIONS%
 set OUTPUT_OPTIONS=--calcsum -U 3 -p -i -s -d -t -intend 80 -intendli 2 -l 
-rem normal set OUTPUT_OPTIONS_WIKI=-U 3 -p -i -s -d -t -intend 80 -intendli 2 -l 
-set OUTPUT_OPTIONS_WIKI=--calcsum -U 3 -p -i -s -d -t -intend 80 -intendli 2 -l 
+rem normal (recalcsum)
+set OUTPUT_OPTIONS_WIKI= -U 3 -p -i -s -d -t -intend 80 -intendli 2 -l 
+rem with calcsum set OUTPUT_OPTIONS_WIKI=--calcsum -U 3 -p -i -s -d -t -intend 80 -intendli 2 -l 
 rem set OUTPUT_OPTIONS=--calcsum -U 3 -p -i -s -d -t -intend 80 -intendli 2 -l -shownometadata -shownosysdata
 

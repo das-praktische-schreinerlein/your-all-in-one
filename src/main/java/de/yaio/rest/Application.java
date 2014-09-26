@@ -16,6 +16,10 @@
  */
 package de.yaio.rest;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import javax.annotation.PreDestroy;
 
 import org.apache.commons.cli.Option;
@@ -106,19 +110,24 @@ public class Application {
                 nodeNumberService.initNextNodeNumbersFromFile(strPathIdDB);
             }
 
+            // inform spring about configfile
+            List<String> newArgs = new ArrayList<String>(Arrays.asList(args));
+            
             // initApp
-            LOGGER.info("start application");
-            SpringApplication.run(Application.class, args);
+            LOGGER.info("start application with args:" + newArgs);
+            SpringApplication.run(Application.class, newArgs.toArray(new String[0]));
             LOGGER.info("done application");
         } catch (Throwable ex) {
             // catch Exception
             System.out.println(ex);
             LOGGER.fatal(ex);
+            ex.printStackTrace();
             LOGGER.info("Exit: 1");
             try {
                 cleanUpAfterJob();
             } catch (Throwable ex2) {
                 System.out.println(ex2);
+                ex2.printStackTrace();
                 LOGGER.fatal(ex2);
                 LOGGER.info("Exit: 1");
             }

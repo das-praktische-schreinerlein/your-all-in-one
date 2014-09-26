@@ -248,20 +248,40 @@ public class Configurator {
         return applicationContext;
     }
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Tools - CLI-Handling
+     * <h4>FeatureDescription:</h4>
+     *     return the current configFile from option config
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue the current configFile
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     CLI-Handling
+     * @return the configFile from option config
+     * @throws Exception - parse/io-Exceptions possible
+     */
+    public String getConfigFile() throws Exception {
+        // check
+        if (commandLine == null) {
+            throw new IllegalStateException("initSpringApplicationContext: "
+                            + "cant instantiate SpringApplicationContext "
+                            + "because commandLine is not set");
+        }
+        String configPath = commandLine.getOptionValue("config");
+        return configPath;
+    }
+
     protected void initSpringApplicationContext() throws Exception {
         // check
         if (applicationContext != null) {
             throw new IllegalStateException("initSpringApplicationContext: "
                             + "applicationContext already set");
         }
-        if (commandLine == null) {
-            throw new IllegalStateException("initSpringApplicationContext: "
-                            + "cant instantiate SpringApplicationContext "
-                            + "because commandLine is not set");
-        }
         
         // get Configpath
-        String configPath = commandLine.getOptionValue("config");
+        String configPath = this.getConfigFile();
         
         // read properties
         Properties prop = readProperties(configPath);
@@ -277,7 +297,7 @@ public class Configurator {
             try {
                 applicationContext = new ClassPathXmlApplicationContext(applicationConfigPath);
             } catch (BeansException ex2) {
-                throw new Exception("cant instiate Application - "
+                throw new Exception("cant instantiate Application - "
                                 + "read applicationConfigPath: " + applicationConfigPath 
                                 + " Exception1:" + ex
                                 + " Exception2:" + ex2);
@@ -407,6 +427,11 @@ public class Configurator {
         Option helpOption = new Option("h", "help", false, "usage");
         helpOption.setRequired(false);
         availiableCmdLineOptions.addOption(helpOption);
+
+        // debug-Option
+        Option debugOption = new Option("", "debug", false, "debug");
+        debugOption.setRequired(false);
+        availiableCmdLineOptions.addOption(debugOption);
     }
 
     /**

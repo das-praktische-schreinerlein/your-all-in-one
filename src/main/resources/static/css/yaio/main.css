@@ -470,7 +470,7 @@ img.icon-print {
   vertical-align: top;
   background-repeat: no-repeat;
   background-position: left;
-  background-image: url("../../js/fancytree/skin-lion/icons.gif");
+  background-image: url("/js/fancytree/skin-lion/icons.gif");
   background-position: 0px 0px;
   border: none;
 }
