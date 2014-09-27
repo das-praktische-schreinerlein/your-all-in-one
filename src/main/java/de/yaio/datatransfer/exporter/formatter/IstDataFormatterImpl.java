@@ -132,9 +132,12 @@ public class IstDataFormatterImpl extends FormatterImpl implements IstDataFormat
                 nodeOutput.append("[");
             }
             nodeOutput.append("Ist: ")
-            .append(labelIntend)
-            .append(this.intendLeft(stand.intValue(), (oOptions.isFlgDoIntend() ? 3 : 0)) + "% ")
-            .append(this.intendLeft(this.formatNumber(aufwand, 0, 2), (oOptions.isFlgDoIntend() ? 2 : 0)) + "h");
+                .append(labelIntend)
+                .append(this.intendLeft(stand.intValue(), (oOptions.isFlgDoIntend() ? 3 : 0)) + "%");
+            if (aufwand != null) {
+                nodeOutput.append(" " + this.intendLeft(
+                   this.formatNumber(aufwand, 0, 2), (oOptions.isFlgDoIntend() ? 2 : 0)) + "h");
+            }
             if (start != null || ende != null) {
                 nodeOutput.append(" ");
                 if (start != null) {
@@ -148,7 +151,7 @@ public class IstDataFormatterImpl extends FormatterImpl implements IstDataFormat
                     nodeOutput.append("-          ");
                 }
             }
-            if (task != null) {
+            if (task != null && ! task.equals("") && ! task.equals(" ")) {
                 nodeOutput.append(" " + task);
             }
             if (oOptions.isFlgShowBrackets()) {

@@ -131,6 +131,12 @@ public class IstDataTest extends DataDomainTest {
         mytestObj.setName("Name [Ist:    30%     2h]");
         expected = "Name|30.0|2.0|null|null|";
         testParser(mytestObj, expected, importOptions);
+
+        // without aufwand
+        mytestObj = getNewIstDataTestObj();
+        mytestObj.setName("Name [Ist:    30%]");
+        expected = "Name|30.0|null|null|null|";
+        testParser(mytestObj, expected, importOptions);
     }
 
     @Override
@@ -138,11 +144,15 @@ public class IstDataTest extends DataDomainTest {
         IstDataTestObj mytestObj = null;
         String expected = null;
         
-        // without date
+        // without all
         mytestObj = getNewIstDataTestObj();
         mytestObj.setName("Name XX  ");
-        mytestObj.setIstAufwand(2.0);
         mytestObj.setIstStand(30.0);
+        expected = "                                                                                [Ist:  30%]";
+        testFormatter(mytestObj, expected, outputOptions);
+
+        // without date
+        mytestObj.setIstAufwand(2.0);
         expected = "                                                                                [Ist:  30%  2h]";
         testFormatter(mytestObj, expected, outputOptions);
 

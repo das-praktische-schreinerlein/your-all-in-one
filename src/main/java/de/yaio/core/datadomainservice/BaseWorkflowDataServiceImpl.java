@@ -188,6 +188,8 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
         // Standfaktor
         Double standFaktor = this.getMyStandFaktor(baseNode);
         Double tmpStandFaktor = null;
+        Double sumStandNullAufwand = 0.0;
+        Integer countStandNullAufwand = 0;
 
         // iterate children
         for (String nodeName : baseNode.getChildNodesByNameMap().keySet()) {
@@ -219,18 +221,47 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
                     Calculator.CONST_CALCULATE_ACTION_MULSTATE);
             standFaktor = (Double)Calculator.calculate(
                     standFaktor, tmpStandFaktor, Calculator.CONST_CALCULATE_ACTION_SUM);
+            
+            // update sumStandNullAufwand
+            if (    childNode.getIstChildrenSumStand() != null 
+                && (   childNode.getPlanChildrenSumAufwand() == null 
+                    || childNode.getPlanChildrenSumAufwand().doubleValue() <= Calculator.CONST_DOUBLE_NULL)) {
+                sumStandNullAufwand += childNode.getIstChildrenSumStand();
+                countStandNullAufwand++;
+            }
         }
 
         // calc Stand
+        // TODO: Bugfix wenn kein Aufwand definiert
+        // if me and children 
         if (baseNode.getPlanChildrenSumAufwand() == null 
                         || baseNode.getPlanChildrenSumAufwand() <= Calculator.CONST_DOUBLE_NULL) {
+            Double istStand = null;
             if (ExtendedWorkflowData.class.isInstance(baseNode)) {
                 // calc from own Workflowdata
                 IstData istData = (ExtendedWorkflowData)baseNode;
-                baseNode.setIstChildrenSumStand(istData.getIstStand());
+                PlanData planData = (ExtendedWorkflowData)baseNode;
+                istStand = istData.getIstStand();
+                
+                // but take a look if there is no planaufwand!!!
+                if (    istData.getIstStand() != null 
+                    && (   planData.getPlanAufwand() == null 
+                        || planData.getPlanAufwand().doubleValue() <= Calculator.CONST_DOUBLE_NULL)) {
+                    sumStandNullAufwand += istData.getIstStand();
+                    countStandNullAufwand++;
+                }
+                // calc the average of all children
+                if (countStandNullAufwand > 0) {
+                    istStand = sumStandNullAufwand / countStandNullAufwand;
+                }
+                baseNode.setIstChildrenSumStand(istStand);
             } else {
                 // no WF-DataDomain
-                baseNode.setIstChildrenSumStand(null);
+                // calc the average of all children
+                if (countStandNullAufwand > 0) {
+                    istStand = sumStandNullAufwand / countStandNullAufwand;
+                }
+                baseNode.setIstChildrenSumStand(istStand);
             }
         } else {
             baseNode.setIstChildrenSumStand((Double)Calculator.calculate(

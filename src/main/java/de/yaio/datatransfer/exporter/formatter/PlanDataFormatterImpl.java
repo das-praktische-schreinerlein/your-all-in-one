@@ -145,7 +145,7 @@ public class PlanDataFormatterImpl extends FormatterImpl implements PlanDataForm
                     nodeOutput.append("-          ");
                 }
             }
-            if (task != null) {
+            if (task != null && ! task.equals("") && ! task.equals(" ")) {
                 nodeOutput.append(" " + task);
             }
             if (oOptions.isFlgShowBrackets()) {

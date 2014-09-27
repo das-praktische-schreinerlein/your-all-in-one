@@ -174,5 +174,50 @@ public class BaseWorkflowDataServiceTest extends DataDomainServiceTest {
         expectedAfterDoAfterChildren = "null|RUNNING|null|null|null|null|13.5|10.0|null|null|50.0|null|null|100.0|Tue Oct 22 00:00:00 CEST 2013|null|";
         this.testServiceDoRecalc(myDataDomainObj, expectedAfterDoBeforeChildren, 
                         expectedAfterDoAfterChildren, recurseDirection);
+
+        // check if children data are calculated (no aufwand at all but children are done)
+        myDataDomainObj = getNewBaseWorkflowDataTestObj();
+        myDataDomainObj.setEbene(1);
+        myDataDomainObj.setState("OFFEN");
+        myDataDomainObj2 = getNewBaseWorkflowDataTestObj();
+        myDataDomainObj2.setSrcName("test2");
+        myDataDomainObj2.setEbene(2);
+        myDataDomainObj2.setIstStand(100.0);
+        myDataDomainObj2.setParentNode(myDataDomainObj);
+        expectedAfterDoBeforeChildren = "null|OFFEN|null|null|null|null|null|null|null|null|null|null|null|null|null|null|";
+        expectedAfterDoAfterChildren = "null|ERLEDIGT|null|null|null|null|100.0|null|null|null|null|null|null|null|null|null|";
+        this.testServiceDoRecalc(myDataDomainObj, expectedAfterDoBeforeChildren, 
+                        expectedAfterDoAfterChildren, recurseDirection);
+
+        // check if children data are calculated (no aufwand at all but me is note done and children are done)
+        myDataDomainObj = getNewBaseWorkflowDataTestObj();
+        myDataDomainObj.setEbene(1);
+        myDataDomainObj.setState("OFFEN");
+        myDataDomainObj.setIstStand(50.0);
+        myDataDomainObj2 = getNewBaseWorkflowDataTestObj();
+        myDataDomainObj2.setSrcName("test2");
+        myDataDomainObj2.setEbene(2);
+        myDataDomainObj2.setIstStand(100.0);
+        myDataDomainObj2.setParentNode(myDataDomainObj);
+        expectedAfterDoBeforeChildren = "null|OFFEN|50.0|null|null|null|null|null|null|null|null|null|null|null|null|null|";
+        expectedAfterDoAfterChildren = "null|RUNNING|50.0|null|null|null|75.0|null|null|null|null|null|null|null|null|null|";
+        this.testServiceDoRecalc(myDataDomainObj, expectedAfterDoBeforeChildren, 
+                        expectedAfterDoAfterChildren, recurseDirection);
+
+        // check if children data are calculated (no aufwand at all but me is note done and children are done)
+        myDataDomainObj = getNewBaseWorkflowDataTestObj();
+        myDataDomainObj.setEbene(1);
+        myDataDomainObj.setState("OFFEN");
+        myDataDomainObj.setPlanAufwand(20.0);
+        myDataDomainObj.setIstStand(50.0);
+        myDataDomainObj2 = getNewBaseWorkflowDataTestObj();
+        myDataDomainObj2.setSrcName("test2");
+        myDataDomainObj2.setEbene(2);
+        myDataDomainObj2.setIstStand(100.0);
+        myDataDomainObj2.setParentNode(myDataDomainObj);
+        expectedAfterDoBeforeChildren = "null|OFFEN|50.0|null|null|null|null|null|null|null|20.0|null|null|null|null|null|";
+        expectedAfterDoAfterChildren = "null|RUNNING|50.0|null|null|null|50.0|null|null|null|20.0|null|null|20.0|null|null|";
+        this.testServiceDoRecalc(myDataDomainObj, expectedAfterDoBeforeChildren, 
+                        expectedAfterDoAfterChildren, recurseDirection);
     }
 }
