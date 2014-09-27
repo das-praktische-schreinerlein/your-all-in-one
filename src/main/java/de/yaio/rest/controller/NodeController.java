@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import de.yaio.core.dbservice.BaseNodeDBServiceImpl;
 import de.yaio.core.node.BaseNode;
 import de.yaio.core.node.EventNode;
 import de.yaio.core.node.InfoNode;
@@ -473,29 +474,7 @@ public class NodeController {
      * @return List - list of the recalced and saved parenthierarchy
      */
     protected List<BaseNode> updateMeAndMyParents(BaseNode node) throws Exception {
-        List<BaseNode> parentHierarchy = null;
-        if (node != null) {
-            // init Cildren from DB
-            node.initChildNodesFromDB(0);
-            
-            // recalc me
-            node.recalcData(BaseNodeService.CONST_RECURSE_DIRECTION_ONLYME);
-            
-            // save me
-            node.merge();
-            
-            // update my parents
-            if (node.getParentNode() != null) {
-                parentHierarchy = updateMeAndMyParents(node.getParentNode());
-            } else {
-                // i am root -> create hierarchylist
-                parentHierarchy = new ArrayList<BaseNode>();
-            }
-            
-            // add me to hierarchylist
-            parentHierarchy.add(node);
-        }
-        return parentHierarchy;
+        return BaseNodeDBServiceImpl.getInstance().updateMeAndMyParents(node);
     }
     
     /**

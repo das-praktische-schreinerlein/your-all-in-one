@@ -79,12 +79,16 @@ public class JobNodes2JPA extends JobNodes2Wiki {
             if (LOGGER.isInfoEnabled()) {
                 LOGGER.info("read Masternode from JPA:" + sysUID);
             }
-            masterNode = (DataDomain)BaseNode.findBaseNode(sysUID);
+            masterNode = BaseNode.findBaseNode(sysUID);
             if (masterNode == null) {
                 throw new IllegalArgumentException("Masternode to add the new node with sysUID:" + sysUID + " not found!");
             }
+            
+            // create dummy masternode
+            masterNode = super.createMasternode(name);
+            ((BaseNode)masterNode).setSysUID(sysUID);
         } else {
-            // create masternOde with name
+            // create masterNode with name
             masterNode = super.createMasternode(name);
         }
         return masterNode;
