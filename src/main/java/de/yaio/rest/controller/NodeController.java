@@ -25,6 +25,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -906,6 +907,7 @@ public class NodeController {
      * @param newSortPos - the new position in the list
      * @return NodeResponse (OK, ERROR) with the node for sysUID
      */
+    @Transactional
     @RequestMapping(method=RequestMethod.PATCH, value = "/move/{sysUID}/{newParentSysUID}/{newSortPos}")
     public @ResponseBody NodeResponse moveNode(
                 @PathVariable(value="sysUID") String sysUID,
@@ -933,38 +935,51 @@ public class NodeController {
         }
         // map the data
         boolean flgChangedParent = false;
+        boolean flgChangedPosition = false;
 
         try {
             // read children for old parent
             BaseNode oldParent = node.getParentNode();
             oldParent.initChildNodesFromDB(0);
 
-            // check for new parent
-            if (newParent !=  null) {
-                // got parent
-                if (newParent.getSysUID() != oldParent.getSysUID()) {
-                    // read children for both parents
-                    newParent.initChildNodesFromDB(0);
+            // read children for both parents
+            newParent.initChildNodesFromDB(0);
 
-                    // set new parent
-                    flgChangedParent = true;
-                    node.setParentNode(newParent);
+            // check for new parent
+            if (newParent.getSysUID() != oldParent.getSysUID()) {
+                // reset sortpos
+                node.setSortPos(null);
+                flgChangedPosition = true;
+
+                // set new parent
+                flgChangedParent = true;
+                node.setParentNode(newParent);
+            } else {
+                // check if position changed
+                if (node.getSortPos().intValue() != newSortPos.intValue()) {
+                    flgChangedPosition = true;
                 }
             }
 
             // check for needed update
-            if (flgChangedParent) {
-                // recalc the posotion
-                // TODO newSortPos
+            if (flgChangedParent || flgChangedPosition) {
+                // recalc the position
+                newParent.moveChildToSortPos(node, newSortPos);
                 
+                // save children of newParent
+                newParent.saveChildNodesToDB(0, true);
+
                 // recalc and save
                 updateMeAndMyParents(node);
-
-                // renew oldParent
-                oldParent = BaseNode.findBaseNode(oldParent.getSysUID());
                 
-                // recalc old parent
-                updateMeAndMyParents(oldParent);
+                // renew old parent only if changed
+                if (flgChangedParent) {
+                    // renew oldParent
+                    oldParent = BaseNode.findBaseNode(oldParent.getSysUID());
+                    
+                    // recalc old parent
+                    updateMeAndMyParents(oldParent);
+                }
             } else {
                 // read children for node
                 node.initChildNodesFromDB(0);

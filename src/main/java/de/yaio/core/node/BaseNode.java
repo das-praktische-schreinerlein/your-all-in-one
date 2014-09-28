@@ -497,18 +497,21 @@ public class BaseNode implements BaseData, MetaData, SysData,
      * <h4>FeatureDomain:</h4>
      *     Persistence
      * <h4>FeatureDescription:</h4>
-     *     persists the children to database (childNodes)
-     *     recursivly
+     *     saves the children to database (childNodes) recursivly<br>
+     *     check if entityManger contains objects<br>
+     *     if not: do persist
+     *     if yes or flgForceMerge is set: do merge
      * <h4>FeatureResult:</h4>
      *   <ul>
      *     <li>saves memberfields childNodes to database
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     Persistence
-     * @param recursionLevel - how many recursion-level will be saved to DB
+     * @param recursionLevel - how many recursion-level will be saved to DB (0 = only my children)
+     * @param flgForceMerge - force merge not persists
      * @throws Exception - ioExceptions possible
      */
-    public void persistChildNodesToDB(int recursionLevel) throws Exception {
+    public void saveChildNodesToDB(int recursionLevel, boolean flgForceMerge) throws Exception {
         // set new level if it is not -1
         recursionLevel = (recursionLevel > 0 ? recursionLevel-- : recursionLevel);
 
@@ -526,8 +529,14 @@ public class BaseNode implements BaseData, MetaData, SysData,
             if (LOGGER.isDebugEnabled())
                 LOGGER.debug("persistChildNodesToDB from " + this.getNameForLogger() 
                            + " child:" + childNode.getNameForLogger());
-
-            childNode.persist();
+            if (LOGGER.isDebugEnabled())
+                LOGGER.debug("childNode:" + childNode.getName() + " pos: " +childNode.getSortPos());
+            // check if persist or merge
+            if (entityManager().contains(childNode) || flgForceMerge) {
+                childNode.merge();
+            } else {
+                childNode.persist();
+            }
 
 //            boolean flgOK = true;
 //            try {
@@ -551,7 +560,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
                  || (recursionLevel > 0)) {
                 // recurse
 //                if (flgOK)
-                childNode.persistChildNodesToDB(recursionLevel);
+                childNode.saveChildNodesToDB(recursionLevel, flgForceMerge);
             }
         }
     }
@@ -666,9 +675,12 @@ public class BaseNode implements BaseData, MetaData, SysData,
         if (LOGGER.isDebugEnabled())
             LOGGER.debug("add child:" + childNode.getNameForLogger() + " to " + this.getNameForLogger());
         if (childNode != null) {
-            if (childNode.getSortPos() != null && childNode.getSortPos() > curSortIdx) {
+            if (childNode.getSortPos() != null) {
                 // preserve sortpos of the child
-                curSortIdx = childNode.getSortPos() + CONST_CURSORTIDX_STEP;
+                if (childNode.getSortPos() > curSortIdx) {
+                    // update idx
+                    curSortIdx = childNode.getSortPos() + CONST_CURSORTIDX_STEP;
+                }
             } else {
                 // set new sortpos for the child
                 childNode.setSortPos(curSortIdx);
@@ -676,6 +688,81 @@ public class BaseNode implements BaseData, MetaData, SysData,
             }
             this.childNodesByNameMapMap.put(childNode.getIdForChildByNameMap(), childNode);
             this.childNodes.add((BaseNode)childNode);
+        }
+    }
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Persistence
+     * <h4>FeatureDescription:</h4>
+     *     move the child in childlist to the sortPos
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>reorder childNodes
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Persistence
+     * @param child - the child to move in list
+     * @param newSortPos - the new position
+     */
+    public void moveChildToSortPos(BaseNode child, Integer newSortPos) {
+        // check data
+        if (child == null) {
+            throw new IllegalArgumentException("child must not be null");
+        }
+        if (newSortPos == null) {
+            throw new IllegalArgumentException("newSortPos must not be null");
+        }
+        if (! this.childNodes.contains(child)) {
+            throw new IllegalArgumentException("child is no member of my childlist");
+        }
+        
+        // iterate childlist and look for child
+        boolean flgChildWaiting = true;
+        
+        // preserve the childnodes in order
+        LinkedHashSet<BaseNode> tmpChildNodes = new LinkedHashSet<BaseNode>();
+        for (BaseNode curChild : this.childNodes) {
+            // add the other child
+            tmpChildNodes.add(curChild);
+        }
+        
+        // clear the  orig list
+        this.childNodes.clear();
+        curSortIdx = 0;
+        
+        // if the child moves down, then we have to realize that it is no more in list: so we have to sub the idx 
+        int newPos = newSortPos.intValue();
+        
+        // add the childs to the list
+        if (LOGGER.isDebugEnabled())
+            LOGGER.debug("I " + child.getName() + " want newPos:" + newPos);
+        for (BaseNode curChild : tmpChildNodes) {
+            // if sortPos of curChild > newSortPos, then insert it here
+            if (flgChildWaiting && curChild.getSortPos().intValue() > newPos) {
+                this.addChildNode(child);
+                if (LOGGER.isDebugEnabled())
+                    LOGGER.debug("added me " + child.getName() + " and got " + child.getSortPos().intValue());
+                flgChildWaiting = false;
+            }
+            if (child.equals(curChild) || child.getSysUID().equalsIgnoreCase(curChild.getSysUID())) {
+                if (LOGGER.isDebugEnabled())
+                    LOGGER.debug("bullshit iam in List already " + curChild.getSortPos().intValue() + " at " + this.childNodes.size());
+                // hey i'm already here
+            } else {
+                // add the other child
+                this.addChildNode(curChild);
+                if (LOGGER.isDebugEnabled())
+                    LOGGER.debug("added other child:" + curChild.getName() + " new:" + curChild.getSortPos().intValue() + " at " + this.childNodes.size());
+            }
+            
+        }
+
+        // recalc the sortidx
+        curSortIdx = 0;
+        for (BaseNode curChild : this.getChildNodes()) {
+            curChild.setSortPos(curSortIdx);
+            curSortIdx = curSortIdx + CONST_CURSORTIDX_STEP;
         }
     }
     

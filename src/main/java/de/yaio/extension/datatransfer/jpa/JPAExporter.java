@@ -115,7 +115,7 @@ public class JPAExporter extends WikiExporter {
                 
                 // save newChildNode
                 newChildNode.persist();
-                newChildNode.persistChildNodesToDB(NodeService.CONST_DB_RECURSIONLEVEL_ALL_CHILDREN);
+                newChildNode.saveChildNodesToDB(NodeService.CONST_DB_RECURSIONLEVEL_ALL_CHILDREN, false);
             }
             
             // recalc+save masterNode and parents
@@ -132,7 +132,7 @@ public class JPAExporter extends WikiExporter {
             masterNode.persist();
             
             // save the children
-            masterNode.persistChildNodesToDB(NodeService.CONST_DB_RECURSIONLEVEL_ALL_CHILDREN);
+            masterNode.saveChildNodesToDB(NodeService.CONST_DB_RECURSIONLEVEL_ALL_CHILDREN, false);
         }
 
         // add it to masterDBNode

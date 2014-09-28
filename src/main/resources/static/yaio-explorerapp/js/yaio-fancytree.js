@@ -264,8 +264,27 @@ function createYAIOFancyTree(treeId, masterNodeId, doneHandler){
             dragDrop: function(node, data) {
                 if (confirm("Wollen Sie die Node wirklich verschieben?")) {
                     data.otherNode.moveTo(node, data.hitMode);
-                    // TODO extract pos
-                    yaioMoveNode(data.otherNode, node.key, 0);
+
+                    // check parent of the node
+                    var newPos = data.otherNode.data.basenode.sortPos;
+                    var newParent = node.getParent();
+                    var newParentKey = node.getParent().key;
+                    if (newParent.isRootNode() || newParentKey == "undefined" || ! newParent) {
+                        newParentKey = node.tree.options.masterNodeId;
+                    }
+                    switch( data.hitMode){
+                    case "before":
+                        newPos = node.data.basenode.sortPos - 2;
+                        break;
+                    case "after":
+                        newPos = node.data.basenode.sortPos + 2;
+                        break;
+                    default:
+                        // add it to the current node
+                        newParentKey = node.key;
+                        newPos = 9999;
+                    }
+                    yaioMoveNode(data.otherNode, newParentKey, newPos);
                     return true;
                 } else {
                     // discard
@@ -352,10 +371,8 @@ function createYAIOFancyTree(treeId, masterNodeId, doneHandler){
                         newParentKey = tree.options.masterNodeId;
                     }
                     
-                    // TODO extract pos
-
                     // move yaioNode
-                    yaioMoveNode(node, newParentKey);
+                    yaioMoveNode(node, newParentKey, 9999);
                     return true;
                 } else {
                     // discard
@@ -375,25 +392,50 @@ function createYAIOFancyTree(treeId, masterNodeId, doneHandler){
                     if (newParent.isRootNode() || newParentKey == "undefined" || ! newParent) {
                         newParentKey = tree.options.masterNodeId;
                     }
-                    // TODO extract pos
-
                     // move yaioNode
-                    yaioMoveNode(node, newParentKey);
+                    yaioMoveNode(node, newParentKey, 9999);
                     return true;
                 } else {
                     // discard
                     return false;
                 }
                 break;
-// TODO 
-//            case "moveUp":
-//                node.moveTo(node.getPrevSibling(), "before");
-//                node.setActive();
-//                break;
-//            case "moveDown":
-//                node.moveTo(node.getNextSibling(), "after");
-//                node.setActive();
-//                break;
+            case "moveUp":
+                // check parent
+                var newParent = node.getParent();
+                var newParentKey = node.getParent().key;
+                if (newParent.isRootNode() || newParentKey == "undefined" || ! newParent) {
+                    newParentKey = tree.options.masterNodeId;
+                }
+                // calc new position
+                var newPos = -2
+                if (node.getPrevSibling() != null) {
+                    newPos = node.getPrevSibling().data.basenode.sortPos - 2;
+                }
+
+                node.moveTo(node.getPrevSibling(), "before");
+                node.setActive();
+                
+                yaioMoveNode(node, newParentKey, newPos);
+                break;
+            case "moveDown":
+                // check parent
+                var newParent = node.getParent();
+                var newParentKey = node.getParent().key;
+                if (newParent.isRootNode() || newParentKey == "undefined" || ! newParent) {
+                    newParentKey = tree.options.masterNodeId;
+                }
+                // calc new position
+                var newPos = 9999;
+                if (node.getNextSibling() != null) {
+                    newPos = node.getNextSibling().data.basenode.sortPos + 2;
+                }
+
+                node.moveTo(node.getNextSibling(), "after");
+                node.setActive();
+
+                yaioMoveNode(node, newParentKey, newPos);
+                break;
             case "remove":
 //                node.remove();
                 yaioRemoveNodeById(node.key, 'create');
@@ -675,6 +717,8 @@ function renderColumnsForNode(event, data) {
                  .addClass("fieldtype_name")
                  .addClass("field_name")
                  .addClass(statestyle);
+    var $nameEle = $tdList.eq(1).find("span.fancytree-title");
+    $nameEle.append(" sortPos: " + basenode.sortPos);
     
     // render datablock
     var $nodeDataBlock = renderDataBlock(basenode, node);
@@ -812,8 +856,7 @@ function yaioSaveNode(data) {
 function yaioMoveNode(node, newParentKey, newPos) {
     console.log("move node:" + node.key + " to:" + newParentKey + " Pos:" + newPos);
     var json = JSON.stringify({parentNode: newParentKey});
-    // TODO extract pos
-    var url = moveUrl + node.key + "/" + newParentKey + "/" + 0;
+    var url = moveUrl + node.key + "/" + newParentKey + "/" + newPos;
     yaioDoUpdateNode(node, url, json);
 }
 
@@ -850,7 +893,7 @@ function yaioRemoveNodeById(nodeId) {
  *****************************************/
 function yaioDoUpdateNode(node, url, json) {
     var msg = "update for node:" + node.key;
-    console.log("yaioDoUpdateNode START: " + msg + " with:" + json);
+    console.log("yaioDoUpdateNode START: " + msg + "url: "+ url + " with:" + json);
     $.ajax({
         headers : {
             'Accept' : 'application/json',
