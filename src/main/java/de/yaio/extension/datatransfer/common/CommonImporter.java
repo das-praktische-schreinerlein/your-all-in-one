@@ -22,6 +22,7 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.log4j.Logger;
 
+import de.yaio.app.Configurator;
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.datadomainservice.NodeNumberService;
 import de.yaio.core.node.BaseNode;
@@ -33,7 +34,6 @@ import de.yaio.extension.datatransfer.ppl.PPLImporter;
 import de.yaio.extension.datatransfer.wiki.WikiImportOptions;
 import de.yaio.extension.datatransfer.wiki.WikiImporter;
 import de.yaio.extension.datatransfer.wiki.WikiImporter.WikiStructLine;
-import de.yaio.utils.Configurator;
 
 /**
  * <h4>FeatureDomain:</h4>

@@ -21,13 +21,13 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.log4j.Logger;
 
+import de.yaio.app.CmdLineJob;
+import de.yaio.app.Configurator;
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.datatransfer.exporter.Exporter;
 import de.yaio.datatransfer.exporter.OutputOptions;
 import de.yaio.datatransfer.exporter.OutputOptionsImpl;
 import de.yaio.extension.datatransfer.common.CommonImporter;
-import de.yaio.utils.CmdLineJob;
-import de.yaio.utils.Configurator;
 
 /**
  * <h4>FeatureDomain:</h4>

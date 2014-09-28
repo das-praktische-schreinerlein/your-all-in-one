@@ -18,9 +18,9 @@ package de.yaio.extension.datatransfer.excel;
 
 import org.apache.commons.cli.Options;
 
+import de.yaio.app.Configurator;
 import de.yaio.extension.datatransfer.common.CommonImporter;
 import de.yaio.extension.datatransfer.wiki.JobParseWiki;
-import de.yaio.utils.Configurator;
 
 /**
  * <h4>FeatureDomain:</h4>

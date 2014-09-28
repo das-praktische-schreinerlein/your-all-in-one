@@ -1,0 +1,21 @@
+
+= LATE - Urlaube                                                                                                                                                [NodeMeta: Urlaube,1,,] [NodeSys: DT201401021418343931,02.01.2014 14:18,5E382165A51772664B57629CE92D6C4F,02.01.2014 14:18,1]
+
+== LATE - 2014                                                                                                                                                  [NodeMeta: Urlaube,2,,] [NodeSys: DT201401021418344072,02.01.2014 14:18,764F5459BEE2D02F268F3B44CB8CB518,02.01.2014 14:18,1]
+
+=== LATE - Pfingsturlaub                                                                                                                                        [NodeMeta: Urlaube,3,,] [NodeSys: DT201401021418344083,02.01.2014 14:18,2E46A0D14D74E95DF36C8D063BE08A5B,02.01.2014 14:18,1]
+* LATE - Grobplanung                                                        [Ist: 100% 1h 02.01.2014-02.01.2014] [Plan:      1h 02.01.2014-05.01.2014]                                           [NodeMeta: Urlaube,4,,] [NodeSys: DT201401021418344114,02.01.2014 14:18,74CA5B2BA8DD0DE0C697C98D8A7D8967,02.01.2014 14:18,1]
+* **OFFEN - Konzept**
+  ** OFFEN - Recherchen                                                         [Plan: 2h 05.02.2014-28.02.2014]
+  ** OFFEN - Entscheidung                                                       [Plan: 1h]
+  ** OFFEN - Buchung                                                            [Plan: 2h 01.03.2014-30.05.2014]
+* **OFFEN - Urlaubsvorbereitung**
+  ** OFFEN - packen                                                             [Plan: 1h 06.06.2014-06.06.2014]
+  ** OFFEN - Infos drucken                                                      [Plan: 1h 06.06.2014-06.06.2014]
+* **OFFEN - Urlaub**
+  ** EVENT_PLANED - Anreise                                                     [Plan: 4h 07.06.2014-07.06.2014]
+  ** EVENT_PLANED - Urlaub                                                      [Plan: 1h 07.06.2014-10.06.2014]
+  ** EVENT_PLANED - Abreise                                                     [Plan: 4h 10.06.2014-10.06.2014]
+* **OFFEN - Nachschau**
+  ** OFFEN - Abrechnung                                                         [Plan: 1h]
+  ** OFFEN - Bilder sortieren + vertexten                                       [Plan: 5h]

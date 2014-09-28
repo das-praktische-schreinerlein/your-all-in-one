@@ -4,7 +4,7 @@
  *
  * <h4>FeatureDescription:</h4>
  *     software for projectmanagement and documentation<br>
- *     controller of the RESTfull webservices for nodes
+ *     controller for the webservices
  * 
  * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
  * @category collaboration

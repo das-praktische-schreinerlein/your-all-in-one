@@ -48,6 +48,7 @@ set PROG_ICalN=de.yaio.extension.datatransfer.ical.JobNodes2ICal
 set PROG_CSVN=de.yaio.extension.datatransfer.csv.JobNodes2CSV
 set PROG_JSONN=de.yaio.extension.datatransfer.json.JobNodes2JSON
 set PROG_JPAN=de.yaio.extension.datatransfer.jpa.JobNodes2JPA
+set PROG_APP=de.yaio.app.Application
 set PROG_DIFF=
 set PROG_WINMERGE="C:\ProgrammePortable\PortableApps\PortableApps\WinMergePortable\WinMergePortable.exe"
 

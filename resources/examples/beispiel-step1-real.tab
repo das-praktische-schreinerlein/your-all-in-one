@@ -1,0 +1,6 @@
+UId	Id	Parents	Name	State	PlanStart	PlanEnde	PlanAufwand	IstStand	IstAufwand	IstStart	IstEnde	PlanStartCalcSum	PlanEndeCalcSum	PlanAufwandCalcSum	IstStandCalcSum	IstAufwandCalcSum	IstStartCalcSum	IstEndeCalcSum	Desc
+DT201405051805384241	Urlaube85		Urlaube	LATE								02.01.2014	05.01.2014	1	0				
+DT201405051805384242	Urlaube86	 -> Urlaube	2014	LATE								02.01.2014	05.01.2014	1	0				
+DT201405051805384403	Urlaube87	 -> Urlaube -> 2014	Pfingsturlaub	LATE								02.01.2014	05.01.2014	1	0				
+DT201405051805384404	Urlaube88	 -> Urlaube -> 2014 -> Pfingsturlaub	Grobplanung	LATE	02.01.2014	05.01.2014	1					02.01.2014	05.01.2014	1	0				
+

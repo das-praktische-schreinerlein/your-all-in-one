@@ -255,6 +255,10 @@ public class WikiExporter extends ExporterImpl {
             // Einrueckung voranstellen
             res.insert(0, strIntendPraefix);
         }
+        
+        // TODO reescape name
+//        res = res.replaceAll("<WLESC>", "\\");
+//        res = res.replaceAll("<WLTAB>", "\t");
 
         // Daten ausgeben
         OutputOptions dataOOptions = genOutputOptionsForDataArea(oOptions);

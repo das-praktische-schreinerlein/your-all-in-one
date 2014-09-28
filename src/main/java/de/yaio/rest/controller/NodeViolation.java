@@ -26,7 +26,7 @@ package de.yaio.rest.controller;
  *     masquerading spring-violations which will cause exceptions because the 
  *     path is at response-time no more available..)
  *      
- * @package de.yaio.rest.controller
+ * @package de.yaio.webapp.controller
  * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
  * @category collaboration
  * @copyright Copyright (c) 2014, Michael Schreiner

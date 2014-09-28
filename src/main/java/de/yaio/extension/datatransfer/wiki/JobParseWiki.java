@@ -18,9 +18,9 @@ package de.yaio.extension.datatransfer.wiki;
 
 import org.apache.commons.cli.Options;
 
+import de.yaio.app.CmdLineJob;
+import de.yaio.app.Configurator;
 import de.yaio.extension.datatransfer.common.CommonImporter;
-import de.yaio.utils.CmdLineJob;
-import de.yaio.utils.Configurator;
 
 /**
  * <h4>FeatureDomain:</h4>

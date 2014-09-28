@@ -1,0 +1,1226 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+<!--     
+    <base href="http://www.michas-ausflugstipps.de/">
+-->
+    <base href="http://localhost/">
+    <link rel="stylesheet" type="text/css" media="all" href="/mybusiness/css/style.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="/mybusiness/css/main.css" />
+    <link rel="stylesheet" type="text/css" media="print" href="/mybusiness/css/print.css" />
+    <script type="text/javascript">var flgDetailFrameAllowed = false;</script>
+    <script type="text/javascript" src="/mybusiness/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/mybusiness/js/jquery-ui-1.10.3.custom.js"></script>
+    <script type="text/javascript" src="/mybusiness/js/JMATAllIn.js"></script>    
+    <style>
+body { 
+    background: white; 
+	color: black; 
+	font-family: Verdana, Arial, Helvetica, sans-serif; 
+	line-height: 1.3em; 
+	font-size: 11px;
+}
+
+.menueFooterDummy {
+   clear: both;
+}
+
+.node-block {
+    width: 100%;
+    clear: both;
+    float: left;
+}
+.node-block-leaf {
+}
+.node-block-leaf1 {
+}
+.node-block-twig {
+}
+.node-block-twig1 {
+    border: 2px solid #D3D3D3
+}
+.node-line-ue {
+    width: 100%;
+    clear: both;
+    float: left;
+}
+
+.node-style-ue {
+    font-weight: bold;
+    font-size: 12px;
+}
+
+
+/**
+ * Node-Styles
+ */
+.node-style-ue1 {
+}
+
+.node-style-list {
+}
+
+.node-style-list1 {
+}
+
+.node-line-trenner {
+    border: none;
+    height: 1px;
+    font-size: 1px;
+    line-height: 1px;
+}
+
+.node-trenner-area-state {
+}
+
+.node-trenner-area-name {
+}
+
+.node-trenner-area-intend {
+    background: lightgrey;
+    width: 100%;
+}
+
+
+/**
+ * Node-Elemente
+ */
+.node-area-stateshort {
+    vertical-align: top;
+    width: 30px;
+    float: left;
+}
+.node-area-name-container {
+    vertical-align: top;
+    width: 600px;
+    float: left;
+}
+.node-area-name-container2 {
+    border-left: 1px solid black;
+}
+.node-area-name {
+    vertical-align: top;
+    display: inline;
+    float: left;
+    width: 90%;
+}
+.node-area-state {
+    vertical-align: top;
+    width: 80px;
+    float: left;
+}
+
+.node-area-istplan {
+    vertical-align: top;
+    width: 620px;
+    float: left;
+}
+
+.node-block-ist {
+    vertical-align: top;
+    width: 330px;
+    float: left;
+}
+.node-block-istcalcsum {
+    vertical-align: top;
+    width: 330px;
+    float: left;
+}
+
+.node-block-plan {
+    vertical-align: top;
+    width: 290px;
+    float: left;
+}
+.node-block-plancalcsum {
+    vertical-align: top;
+    width: 290px;
+    float: left;
+}
+
+.node-container-desc {
+    width: 100%;
+    clear: both;
+    float: left;
+}
+
+.node-block-desc {
+    width: 100%;
+    clear: both;
+    float: left;
+    font-style: italic;
+}
+
+
+.node-container-children {
+    width: 100%;
+    clear: both;
+    float: left;
+}
+
+.node-block-children {
+    width: 100%;
+    clear: both;
+    float: left;
+}
+
+/**
+ * Node-Typ
+ */
+.node-type-leaf {
+    border-top: 1px dotted #D3D3D3
+}
+
+.node-type-leaf1 {
+}
+
+.node-type-twig {
+    font-weight: bold;
+    border-top: 2px solid #D3D3D3
+}
+
+.node-type-twig1 {
+}
+
+/**
+ * Node-Level
+ */
+.node-level1 {
+   margin-left: 30px;
+}
+.node-level2 {
+   margin-left: 60px;
+}
+.node-level3 {
+   margin-left: 90px;
+}
+.node-level4 {
+   margin-left: 120px;
+}
+.node-level5 {
+   margin-left: 150px;
+}
+.node-level6 {
+   margin-left: 180px;
+}
+.node-level7 {
+   margin-left: 210px;
+}
+.node-level8 {
+   margin-left: 240px;
+}
+.node-level9 {
+   margin-left: 270px;
+}
+.node-level10 {
+   margin-left: 300px;
+}
+.node-level11 {
+   margin-left: 330px;
+}
+.node-level12 {
+   margin-left: 360px;
+}
+
+
+/**
+ * Node-Stati
+ */
+.node-state-INFO {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-DOKU {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-IDEE {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-HOWTO {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-URLRES {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-FILERES {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-IMAGERES {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-EMAILRES {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-SYMLINK {
+    background-color: #FFC0CB; /*#33CCCC;*/
+}
+.node-state-OPEN {
+    background-color: #ADFF2F CFF9BB; /*#99FF66;*/
+}
+.node-state-OFFEN {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-RUNNING {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-LATE {
+    background-color: #FFD700; /*#F6F9AE; #FFFF66;*/
+}
+.node-state-VERSPAETET {
+    background-color: #FFD700; /*#F6F9AE; #FFFF66;*/
+}
+.node-state-SHORT {
+    background-color: #FF6347; /* #FCD2C9; /*#FF9966;*/
+}
+.node-state-UEBERFAELLIG {
+    background-color: #FF6347; /* #FCD2C9; /*#FF9966;*/
+}
+.node-state-WARNING {
+    background-color: #FF6347; /* #FCD2C9; /*#FF9966;*/
+}
+.node-state-DONE {
+    background-color: #E0F2FC; /*#B0E0E6;*/
+}
+.node-state-ERLEDIGT {
+    background-color: #E0F2FC; /*#B0E0E6;*/
+}
+.node-state-CANCELED {
+    background-color: #F5F5F5; /*#CCCCCC;*/
+}
+.node-state-VERWORFEN {
+    background-color: #F5F5F5; /*#CCCCCC;*/
+}
+.node-state-UNKNOWN {
+    background-color: #FFFFFF;
+}
+.node-state-UNBEKANNT {
+    background-color: #FFFFFF;
+}
+
+.node-state-EVENT_PLANED {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-EVENT_GEPLANT {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-EVENT_OPEN {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-EVENT_OFFEN {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-EVENT_RUNNING {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-EVENT_LATE {
+    background-color: #FFD700; /*#F6F9AE; #FFFF66;*/
+}
+.node-state-EVENT_VERSPAETET {
+    background-color: #FFD700; /*#F6F9AE; #FFFF66;*/
+}
+.node-state-EVENT_SHORT {
+    background-color: #FF6347; /* #FF6347; /* #FCD2C9; /*#FF9966;*/
+}
+.node-state-EVENT_UEBERFAELLIG {
+    background-color: #FF6347; /* #FCD2C9; /*#FF9966;*/
+}
+.node-state-EVENT_WARNING {
+    background-color: #FF6347; /* #FCD2C9; /*#FF9966;*/
+}
+.node-state-EVENT_DONE {
+    background-color: #E0F2FC; /*#B0E0E6;*/
+}
+.node-state-EVENT_ERLEDIGT {
+    background-color: #E0F2FC; /*#B0E0E6;*/
+}
+.node-state-EVENT_CANCELED {
+    background-color: #F5F5F5; /*#CCCCCC;*/
+}
+.node-state-EVENT_VERWORFEN {
+    background-color: #F5F5F5; /*#CCCCCC;*/
+}
+
+
+
+.box {
+    width: 712px;
+}
+
+h1, h2, h3, h4, h5, h6, h7, h8 {
+    padding-top: 5px;
+    border-top: 1px dotted green; 
+    clear: both;
+}
+
+.h1-portdesc {
+    
+}
+.h2-portdesc {
+    font-size: 15px;
+    font-weight: bold;
+}
+.h3-portdesc {
+    margin-left: 10px;
+    font-size: 13px;
+    font-weight: bold;
+}
+.h4-portdesc {
+    margin-left: 20px;
+    font-size: 11px;
+    font-weight: bold;
+}
+.h5-portdesc {
+    margin-left: 30px;
+    font-size: 10px;
+    font-weight: bold;
+}
+.h6-portdesc {
+    margin-left: 35px;
+    font-size: 9px;
+    font-weight: bold;
+}
+.p-portdesc {
+    margin-left: 20px;
+    line-height: 15px;
+    float: left;
+    clear: both;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+.p-portdesc-ue {
+    display: inline-block;
+    width: 150px;
+    text-align: left;
+    float: left;
+    clear: both;
+}
+.p-portdesc-desc {
+    display: inline-block;
+    width: 510px;
+    vertical-align: top;
+}
+.p-portdesc-descdetail {
+    clear: both;
+    display: inline-block;
+    width: 510px;
+    vertical-align: top;
+    font-style:italic;
+    float: left;
+    clear: both;
+    font-size: 9px;
+}
+.p-portdesc-desc-full {
+    display: inline-block;
+    margin-left: 30px;
+    width: 640px;
+    vertical-align: top;
+}
+.li-portdesc {
+    margin-left: 10px;
+    list-style: none outside none;
+}
+.li-portdesc-ue {
+    text-align: left;
+    display: inline-block;
+    width: 200px;
+    float: left;
+    clear: both;
+}
+.li-portdesc-desc {
+    display: inline-block;
+    width: 400px;
+    vertical-align: top;
+}
+.li-portdesc-descdetail {
+    display: inline-block;
+    width: 400px;
+    vertical-align: top;
+    font-style:italic;
+    float: left;
+    clear: both;
+    font-size: 9px;
+}
+
+
+/* Tabellen */
+.tr-portdesc-ue {
+    font-weight: bold;
+    background: #8CACD3;
+}
+.tr-portdesc-gesamt {
+    font-weight: bold;
+    background: #DEE9EF;
+}
+
+
+
+/* spezielle Abwandlungen fuer MyBusness*/
+.p-portdesc-ue {
+   display: none;+
+}
+.p-portdesc-desc {
+    margin-left: 30px;
+    width: 640px;
+}
+
+.li-portdesc-ue-faehigkeiten {
+    font-weight: bold;
+    width: 100px;
+}
+.li-portdesc-desc-faehigkeiten {
+    width: 550px;
+    line-height: 15px;
+}
+.li-portdesc-ue-ausgabeformate {
+    font-weight: bold;
+    width: 150px;
+}
+.li-portdesc-desc-ausgabeformate {
+    width: 500px;
+    line-height: 15px;
+}
+.li-portdesc-ue-helper {
+    font-weight: bold;
+    width: 100px;
+}
+.li-portdesc-desc-helper {
+    width: 550px;
+    line-height: 15px;
+}
+.li-portdesc-ue-knotenkenner {
+    font-weight: bold;
+    width: 150px;
+}
+.li-portdesc-desc-knotenkenner {
+    width: 500px;
+    line-height: 15px;
+}
+.li-portdesc-ue-knotentypen {
+    font-weight: bold;
+    width: 100px;
+}
+.li-portdesc-desc-knotentypen {
+    width: 550px;
+    line-height: 15px;
+}
+.li-portdesc-ue-strukturinfotypen {
+    font-weight: bold;
+    width: 200px;
+}
+.li-portdesc-desc-strukturinfotypen {
+    width: 450px;
+    line-height: 15px;
+}
+.li-portdesc-ue-exportexample {
+    font-weight: bold;
+    width: 150px;
+}
+.li-portdesc-desc-exportexample {
+    width: 500px;
+    line-height: 15px;
+}
+.img5-urlres {
+    width: 500px;
+}
+.img6-urlres {
+    width: 500px;
+}
+.img7-urlres {
+    width: 500px;
+}
+.img6-urlres-exportexample {
+    width: 500px;
+}
+.img7-urlres-exportexample {
+    width: 500px;
+}
+
+
+.a-node-symlink {
+    color: blue;
+    font-weight: bold;
+}
+.a-node-urlres {
+    color: blue;
+    font-weight: bold;
+}
+
+
+
+    </style>
+    
+	<script type="text/javascript">
+    
+    /*
+     * ###########################
+     * # Klakulation
+     * ###########################
+     */
+    const CONST_FUNCNAME_SUM = "SUM";
+    
+    function calcColumns(nodeTDId, functionName, praefix, suffix) {
+       // Variablen belegen
+       var errMsg = null;
+       var elemNodeTD = null;
+       var idxCol = null;
+       var elemNodeTABLE = null;
+        
+       // Parameter checken und Eelemente einlesen
+       
+       // TD-Element einlesen
+       if (! errMsg && ! functionName) { 
+           errMsg = "Parameter functionName required"; 
+       } else {
+           if (functionName != CONST_FUNCNAME_SUM) {
+              errMsg = "Parameter functionName must be [" + CONST_FUNCNAME_SUM + "]"; 
+           }
+       }
+       if (! errMsg && ! nodeTDId) { 
+           errMsg = "Parameter nodeTDId required"; 
+       } else {
+           elemNodeTD = $("#" + nodeTDId);
+       }
+       
+       // TABLE-Element einlesen
+       if (! errMsg && ! elemNodeTD) { 
+           errMsg = "HTMLElement nodeTDId not found"; 
+       } else {
+           idxCol = elemNodeTD.attr('cellIndex');
+           elemNodeTABLE = $(elemNodeTD).closest('table');
+       }
+
+       // IDX einlesen
+       if (! errMsg && ! elemNodeTABLE) { 
+           errMsg = "HTMLElement elemNodeTABLE not found"; 
+       } else {
+           idxCol = elemNodeTD[0].cellIndex;
+       }
+       if (! errMsg && ! idxCol) { 
+           errMsg = "idxCol not found"; 
+       }
+       
+       // abschließender Fehlercheck
+       if (errMsg) {
+          alert("Fehler aufgetreten: " + errMsg);
+          return null;
+       }
+       
+       // Funktionalitaet: alle x-Spalten iterieren und Zahlen extrahieren
+       var filterTD = "td:nth-child(" + (idxCol + 1) + ")";
+       var numbers = new Array();
+       $(elemNodeTABLE).children("tbody").children("tr").children(filterTD).each(function (i) {
+           var col = $(this);
+
+           // mich selbst herauslassen 
+           if (col.attr('id') == nodeTDId) {
+              // Jquery continue;
+              //alert("SKIP NODEID: Zeile:" + (i+1) + " ID:" + col.id + " Content:" + col.html() + " Number" + number);
+              return;
+           }
+
+           // normalisieren
+           var strNumber = col.html();
+           strNumber = strNumber.replace(".", "");
+           strNumber = strNumber.replace(",", ".");
+           
+           // auf Zahl testen
+           var number = parseFloat(strNumber, "10");
+           if (isNaN(number)) {
+              // Jquery continue;
+              //alert("SKIP NAN: Zeile:" + (i+1) + " ID:" + col.id + " Content:" + col.html() + " Number" + number);
+              return;
+           }
+           
+           // an Zahlen anhaengen
+           //alert("ADD NUMBER: Zeile:" + (i+1) + " ID:" + col.id + " Content:" + col.html() + " Number" + number);
+           numbers.push(number);
+       });       
+       
+       // Funktionalitaet: gewünsche Aktion auf alle Zahlen ausführen
+       var funcResult = 0;
+       for (index = 0; index < numbers.length; ++index) {
+           // alert("funcResult +" +  numbers[index]);
+           if (functionName == CONST_FUNCNAME_SUM) {
+              funcResult += numbers[index]; 
+           }
+       }
+       
+       // Inhalt des Elements setzen
+       //alert("funcResult:" + funcResult);
+       var text = (praefix ? praefix : "") + funcResult + (suffix ? suffix : "");
+       elemNodeTD.html(funcResult);
+    }
+    
+    /*
+     * ######################
+     * # Volltextsuche
+     * #######################
+     */
+    function doAllNodeToggler(flgShow, minEbene) {
+        try {
+            // Bloecke Oeffnen/Schließen
+            var toggleList = document.getElementsByClassName("blockToggler");
+            if (toggleList.length > 0) {
+                // Elemente vorhanden
+                for (var j = 0; j < toggleList.length; j++) {
+                    // Elemente iterieren
+                    var element = toggleList[j];
+                    var toggleId = element.getAttribute('toggleId');
+                    var togglerBaseId = element.getAttribute('togglerBaseId');
+
+                    // Pruefen ob Node-Toggler
+                    if (toggleId && toggleId.search("childrencontainer") > 0) {
+                        // Ebene einlesen
+                        var toggleBlock = document.getElementById(toggleId);
+                        var curEbene = 0;
+                        if (toggleBlock) {
+                            curEbene = toggleBlock.getAttribute('data-pjebene');
+                        }
+
+                        var effect = function(){
+                            // Leertoggler
+                            var togEf = new ToggleEffect(toggleId); 
+                            togEf.slideAniLen = 1; 
+                            togEf.doEffect();
+                        };
+                        if (flgShow) {
+                            // Block zeigen
+                            if (minEbene && curEbene && curEbene < minEbene) {
+                                jMATService.getLayoutService().togglerBlockShow(
+                                    togglerBaseId, toggleId, effect);
+                            } else {
+                                jMATService.getLayoutService().togglerBlockHide(
+                                    togglerBaseId, toggleId, effect);
+                            }
+                        }
+                        else {
+                            // Block verbergen
+                            if (minEbene && curEbene && curEbene > minEbene) {
+                                jMATService.getLayoutService().togglerBlockHide(
+                                    togglerBaseId, toggleId, effect);
+                            } else {
+                                jMATService.getLayoutService().togglerBlockShow(
+                                    togglerBaseId, toggleId, effect);
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (e) {
+            // anscheinend  nicht definiert
+            alert(e);
+        }
+    }
+    
+    function doParentNodeToggler(myId, flgShow) {
+        try {
+            // Parent-Container einlesen (Child)
+            var parents = $("#" + myId).parents();
+            if (parents) {
+                parents.map( 
+                    function () {
+                        // Toggler visible setzen, wenn gefunden
+                        var parentId = $(this).attr("id");
+                        if (parentId) {
+                            var nodeIdMatcher = parentId.match(/node_(.*)_childrencontainer/);
+                            if (nodeIdMatcher && nodeIdMatcher.length > 0) {
+                                // Toggler aktivieren
+                                var togglerId = parentId;
+                                if (! $(this).is(":visible")) {
+                                    jMATService.getLayoutService().togglerBlockShow(
+                                        togglerId, togglerId, function () { 
+                                            var togEf = new ToggleEffect(togglerId); 
+                                            togEf.slideAniLen = 1; 
+                                            togEf.doEffect();
+                                        }
+                                     );
+                                }
+
+                                // Element anzeigen
+                                var nodeId = nodeIdMatcher[1];
+                                var master = $("#node_" + nodeId + "_master");
+                                if (master && ! $(master).is(":visible") ) {
+                                    $(master).show();                                
+                                }
+                            }
+                        }
+                    }
+                );
+            }
+        } catch (e) {
+            // anscheinend  nicht definiert
+            alert(e);
+        }
+    }
+    
+
+    /* Um einen Volltext-Treffer zu haben, müssen alle Worte im durchsuchten Text vorkommen. */
+    function VolltextTreffer(inhalt, suchworte) {
+        // Wenn keine Suchzeichenkette als gefnden kennzeichnen
+        if ( suchworte.length == 0 )
+            return true;
+     
+        // alle Suchworte iterieren
+        for ( i = 0; i < suchworte.length; i++) {
+            if ( inhalt.indexOf(suchworte[i]) == -1) {
+                // Wort nicht gefunden
+                return false;
+            }
+        }
+     
+        // alle Worte gefunden
+        return true;
+    }
+    
+    function doSearch(suchworte) {
+        // Suche auf alle Node-Elemente ausführen
+        $(".node-block").each(
+            function(index, value) {
+                var flgFound = false;
+                
+                // Datenelemente konfigurieren
+                var searchElements = new Array();
+                searchElements.push($("#" + $(value).attr("id") + " > div:eq(1)").attr("id")); // Desc
+                searchElements.push($("#" + $(value).attr("id") + " > div:first > div:first > div:first > div:eq(1)").attr("id")); // Name
+                searchElements.push($("#" + $(value).attr("id") + " > div:first > div:eq(1)").attr("id")); // Status 
+
+                // alle Datenelemente iterieren
+                $.each(searchElements,
+                    function(subIndex, subId) {
+                        // Inhalt auslesen
+                        inhalt = $("#"+subId).text().toLowerCase();
+                        
+                        // Volltextsuche
+                        if (VolltextTreffer(inhalt, suchworte)) {
+                            // wenn geufndne: verlassen;
+                            flgFound = true;
+                            return;
+                        }
+                    }
+                 );
+                
+                // Elemente je nach Status der SubElemente ein/ausblenden
+                if (flgFound) {
+                    if ( !$(value).is(":visible") ) {
+                        // Element aktivieren
+                        $(value).show();
+                    }  
+
+                    // Eltern oeffnen
+                    doParentNodeToggler($(value).attr("id"), true);
+                } else {
+                    // Element deaktivieren
+                    $(value).hide();
+                }
+            }
+        );
+    }
+    
+    function startSearch() {
+        // Suchworte auslesen
+        suchworte = $(".volltextsuchfeld").val().toLowerCase().split(" ");
+
+        // alle Toggler schließen
+        doAllNodeToggler(false, 0);
+        
+        // Suche ausfuehren
+        doSearch(suchworte);
+    }
+
+    function resetSearch() {
+        // Suchworte leeren
+        $(".volltextsuchfeld").val('');
+        
+        // suche ausfuehren
+        startSearch();
+    }
+
+    function initSearch() {
+        // Volltextsuche
+        $(".volltextsuchfeld").keyup(
+            function(event) {
+                // nur ausfuehren wenn enter
+                if(event.keyCode != 13) {
+                   return;
+                }
+                
+                // Suche ausfuehren
+                startSearch();
+            }
+        );
+    }
+    
+    /*
+     * ######################
+     * # Symlink
+     * #######################
+     */
+    function openNode(nodeId) {
+        var masterId = "node_" + nodeId + "_master";
+        
+        // Node aktivieren
+        $("#" + masterId).show();
+        
+        // openParent-Nodes
+        doParentNodeToggler(masterId, true);
+        
+        // animated ScrollTo after intervall, because of time used for ToggleEffects
+        delayedFocus = window.setInterval(
+            function() {
+                // nach 0,1 Sekunden ausfuehren und Intervall loeschen
+                $('html, body').animate({
+                    scrollTop: $("#" + masterId).offset().top
+                    }, 
+                    1000);
+                window.clearInterval(delayedFocus);
+            }, 
+            100
+        );
+    }
+    
+    
+    </script>
+
+</head>
+<body>
+    <div id="div_full" style="width: 100%">
+
+<h1 class='h1-portdesc' id='h1_YAIO657'>Fachkonzept</h1>
+<div class='box box-portdesc add2toc-h1 box-portdesc-thatsit' toclabel='ThatsIt' id='box_YAIO658'><div class='boxline boxline-ue2 h2-portdesc h2-portdesc-thatsit' id='ue_YAIO658'>Das ist YAIO</div>
+<div class='togglecontainer togglecontainer-thatsit' id='detail_YAIO658'>
+<h3 class='h3-portdesc' id='h3_YAIO659'>Was ist YAIO?</h3>
+<p class='p-portdesc' id='p_YAIO660'><span class='p-portdesc-ue' id='pSpanUe_YAIO660'>In einem kurzen Satz:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO660'> YourAllInOne ist ein Planungs- und Dokumentationswerkzeug.</span></p>
+<p class='p-portdesc' id='p_YAIO661'><span class='p-portdesc-ue' id='pSpanUe_YAIO661'>Stand:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO661'> Der derzeitige Prototyp funktioniert noch dateibasiert und dient der Strukturierung, Planung, Verfolgung und Dokumentation von Projekten und Aufgaben.</span></p>
+<h3 class='h3-portdesc' id='h3_YAIO662'>Was kann es denn?</h3>
+<p class='p-portdesc' id='p_YAIO663'><span class='p-portdesc-ue' id='pSpanUe_YAIO663'>In einem langen Satz:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO663'> Es ist Kalender, Organizer, Notizzettel, Checkliste, Projektplanung, Projektdokumentation, Wiki, HowTo, Dokumentenmanagement in einem...</span></p>
+<p class='p-portdesc' id='p_YAIO664'><span class='p-portdesc-ue' id='pSpanUe_YAIO664'>Stand:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO664'> Derzeit lassen sich mit YAIO folgende Informationen strukturiert ablegen, planen und dokumentieren:</span></p>
+<ul class='ul-portdesc ul-portdesc-faehigkeiten' id='ul_YAIO665'>
+<li class='li-portdesc li-portdesc-faehigkeiten' id='li_YAIO665'><span class='li-portdesc-ue li-portdesc-ue-faehigkeiten' id='liSpanUe_YAIO665'>Projekte:</span><span class='li-portdesc-desc li-portdesc-desc-faehigkeiten' id='liSpanDesc_YAIO665'> Projekte lassen sich strukturieren. planen, verfolgen und in verschiedenen Exporten wie z.B. MindMap, Excel, Html visualisieren.</span></li>
+<li class='li-portdesc li-portdesc-faehigkeiten' id='li_YAIO666'><span class='li-portdesc-ue li-portdesc-ue-faehigkeiten' id='liSpanUe_YAIO666'>Aufgaben:</span><span class='li-portdesc-desc li-portdesc-desc-faehigkeiten' id='liSpanDesc_YAIO666'> Aufgaben lassen  sich planen, verfolgen, dokumentieren und auch an externe Kalender exportieren</span></li>
+<li class='li-portdesc li-portdesc-faehigkeiten' id='li_YAIO667'><span class='li-portdesc-ue li-portdesc-ue-faehigkeiten' id='liSpanUe_YAIO667'>Infos:</span><span class='li-portdesc-desc li-portdesc-desc-faehigkeiten' id='liSpanDesc_YAIO667'> Infos, Dokumentationen, Ideen, Howtos, Tabellen alles läßt sich ausführlich dokumentieren und formatiert exportieren</span></li>
+<li class='li-portdesc li-portdesc-faehigkeiten' id='li_YAIO668'><span class='li-portdesc-ue li-portdesc-ue-faehigkeiten' id='liSpanUe_YAIO668'>Termine:</span><span class='li-portdesc-desc li-portdesc-desc-faehigkeiten' id='liSpanDesc_YAIO668'> Termine lassen sich verwalten, verfolgen und an externe Kalender exportieren</span></li>
+<li class='li-portdesc li-portdesc-faehigkeiten' id='li_YAIO669'><span class='li-portdesc-ue li-portdesc-ue-faehigkeiten' id='liSpanUe_YAIO669'>Ressourcen:</span><span class='li-portdesc-desc li-portdesc-desc-faehigkeiten' id='liSpanDesc_YAIO669'> Ressourcen wie Urls, Dateien usw. lassen sich in YAIO zur Dokumentation ablegen</span></li>
+</ul>
+</div></div>
+
+
+<div class='box box-portdesc add2toc-h1 box-portdesc-formate' toclabel='Formate' id='box_YAIO702'><div class='boxline boxline-ue2 h2-portdesc h2-portdesc-formate' id='ue_YAIO702'>So arbeitet YAIO</div>
+<div class='togglecontainer togglecontainer-formate' id='detail_YAIO702'>
+<h3 class='h3-portdesc' id='h3_YAIO703'>Eingabeformate</h3>
+<p class='p-portdesc' id='p_YAIO704'><span class='p-portdesc-ue' id='pSpanUe_YAIO704'>Datenpflege:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO704'> Die Datenpflege erfolg derzeit noch dateibasiert in einer spezielle Wiki-Syntax.</span></p>
+<h3 class='h3-portdesc' id='h3_YAIO705'>Verarbeitung</h3>
+<p class='p-portdesc' id='p_YAIO706'><span class='p-portdesc-ue' id='pSpanUe_YAIO706'>Verarbeitung:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO706'> Nach der Datenpflege erfolgt die Verarbeitung der Wiki-Dateien durch das YAIO-System. Dazu werden die Wiki-Dateien geparst und daraus ein spezielles PPL-Format als Datenquelle für die Aufbereitung (Aktualisierung der Projekt-Stände, Warnungen, Datumsberechnungen) und die spätere Konvertierung in die verschiedenen Ausgabeformate erzeugt.</span></p>
+<h3 class='h3-portdesc' id='h3_YAIO707'>Ausgabeformate</h3>
+<p class='p-portdesc' id='p_YAIO708'><span class='p-portdesc-ue' id='pSpanUe_YAIO708'>passende Formate:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO708'> Die Daten können in verschiedene dem jeweiligen Zweck angepasste Ausgabeformate konvertiert und exportiert werden.</span></p>
+<ul class='ul-portdesc ul-portdesc-ausgabeformate' id='ul_YAIO709'>
+<li class='li-portdesc li-portdesc-ausgabeformate' id='li_YAIO709'><span class='li-portdesc-ue li-portdesc-ue-ausgabeformate' id='liSpanUe_YAIO709'>Wiki:</span><span class='li-portdesc-desc li-portdesc-desc-ausgabeformate' id='liSpanDesc_YAIO709'> Die spezielle Wiki-Version ist wie schon angesprochen derzeit der Dreh und Angelpunkt von YAIO. In diesem Format werden die Daten gepflegt und lassen sich nach der Aufbereitung von YAIO auch einheitlich formatiert wieder zurücklesen.</span></li>
+<li class='li-portdesc li-portdesc-ausgabeformate' id='li_YAIO710'><span class='li-portdesc-ue li-portdesc-ue-ausgabeformate' id='liSpanUe_YAIO710'>ICal:</span><span class='li-portdesc-desc li-portdesc-desc-ausgabeformate' id='liSpanDesc_YAIO710'> Termine und Aufgaben können als ICal-Dateien mit (Stand, Alarm usw.) exportiert und so in das Kalender-Tool der Wahl (Thunderbird, Outlook, GMail, Android...) eingebunden werden.</span></li>
+<li class='li-portdesc li-portdesc-ausgabeformate' id='li_YAIO711'><span class='li-portdesc-ue li-portdesc-ue-ausgabeformate' id='liSpanUe_YAIO711'>MindMap:</span><span class='li-portdesc-desc li-portdesc-desc-ausgabeformate' id='liSpanDesc_YAIO711'> Der Projektbaum kann zur besseren Übersicht als MindMap exportiert werden. Dabei werden Informationen wie Stand, Warnungen usw. über Farben und Icons visualisiert.</span></li>
+<li class='li-portdesc li-portdesc-ausgabeformate' id='li_YAIO712'><span class='li-portdesc-ue li-portdesc-ue-ausgabeformate' id='liSpanUe_YAIO712'>Html Projekt:</span><span class='li-portdesc-desc li-portdesc-desc-ausgabeformate' id='liSpanDesc_YAIO712'> Für die interaktive Arbeit mit den Daten liegt eine spezielle Html-Projektversion vor. Dabei werden die in einer auf/zu-klappbaren Baumansicht mit den wichtigen Spalten (Typ, Stand, Name, Ist, Plan) dargestellt. Ressourcen werden verlinkt und sind damit direkt aufrufbar und auf Wunsch lassen sich auch die erweiterten Knotenbeschreibungen einblenden. Im Fuß der Seite stehen desweiteren diverse Werkzeuge wir (Ein/Ausblenden alle Knoten bis Ebene X, Volltextsuche, Drucken usw.) zur Verfügung.</span></li>
+<li class='li-portdesc li-portdesc-ausgabeformate' id='li_YAIO713'><span class='li-portdesc-ue li-portdesc-ue-ausgabeformate' id='liSpanUe_YAIO713'>Html Dokumentation:</span><span class='li-portdesc-desc li-portdesc-desc-ausgabeformate' id='liSpanDesc_YAIO713'> Für die Verwendung als Dokumentations-Tool gibt es eine spezielle Html-Version in welcher die DocLayout-Daten interpretiert und ein speziell formatiertes Dokument erstellt wird.</span></li>
+<li class='li-portdesc li-portdesc-ausgabeformate' id='li_YAIO714'><span class='li-portdesc-ue li-portdesc-ue-ausgabeformate' id='liSpanUe_YAIO714'>JSON/CSV:</span><span class='li-portdesc-desc li-portdesc-desc-ausgabeformate' id='liSpanDesc_YAIO714'> Für die Auswertung der Daten in Excel oder eigenen Anwendungen können die Daten als CSV/JSON exportiert werden.</span></li>
+<li class='li-portdesc li-portdesc-ausgabeformate' id='li_YAIO715'><span class='li-portdesc-ue li-portdesc-ue-ausgabeformate' id='liSpanUe_YAIO715'>Excel:</span><span class='li-portdesc-desc li-portdesc-desc-ausgabeformate' id='liSpanDesc_YAIO715'> Für die Projektleitung gibt es auch spezielle an die Html-Version angelehnte Excel-Version, welche bei Änderungen in Excel auch in eingeschränktem Maße wieder zurückgelesen werden kann.</span></li>
+</ul>
+<h3 class='h3-portdesc' id='h3_YAIO716'>derzeitige Hilfmittel</h3>
+<p class='p-portdesc' id='p_YAIO717'><span class='p-portdesc-ue' id='pSpanUe_YAIO717'>Hilfe:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO717'> Für die bessere Unterstützung der Datenpflege wird derzeit auf folgende Hilfmittel zugegriffen.</span></p>
+<ul class='ul-portdesc ul-portdesc-helper' id='ul_YAIO718'>
+<li class='li-portdesc li-portdesc-helper' id='li_YAIO718'><span class='li-portdesc-ue li-portdesc-ue-helper' id='liSpanUe_YAIO718'>Notepad++:</span><span class='li-portdesc-desc li-portdesc-desc-helper' id='liSpanDesc_YAIO718'> Die Datenpflege erfolgt über Wiki-Dateien, welche komfortabel mit Notepad++ bearbeitet werden können. Verschiedene Projekte übersichtlich über den DocSwitcher ansteuerbar, die aktuelle Projektdatei über die DocumentMap im Überblick, bietet er neben der integrierten Rechtschreibkontrolle als wortwörtliches Highlight ein konfigurierbares Syntax-Highlighting welches die Knotentypen und Kenndaten der YAIO-Syntax übersichtlich in Farbe und Schriftgröße formatiert. So werden Verspätete Aufgaben z.B. vergrößert und rot hervorgehoben, während die technischen Strukturinformationen dezent in den Hintergrund geschoben werden.</span></li>
+<li class='li-portdesc li-portdesc-helper' id='li_YAIO719'><span class='li-portdesc-ue li-portdesc-ue-helper' id='liSpanUe_YAIO719'>Batchfiles:</span><span class='li-portdesc-desc li-portdesc-desc-helper' id='liSpanDesc_YAIO719'> Für die Generierung bietet YAIO ein Portfolio an einfach zu steuernden Batchfiles um die gewünschten Ausgabeformate in der gewünschten Formatierung zu erhalten.</span></li>
+<li class='li-portdesc li-portdesc-helper' id='li_YAIO720'><span class='li-portdesc-ue li-portdesc-ue-helper' id='liSpanUe_YAIO720'>WinMerge:</span><span class='li-portdesc-desc li-portdesc-desc-helper' id='liSpanDesc_YAIO720'> Um die YAIO-Quelldatei aktuell und einheitlich formatiert zu halten, erstellt YAIO eine Kopie und vergleicht diese mit dem Original. Sollten dabei Unterschiede festgestellt werden (z.B. Änderungen an den Verwaltungsdaten, Aktualisierung der Planungsdaten durch YAIO, Vereinheitlichung der Formatierungen usw.) startet YAIO automatisch WinMerge mit welchem die Ergebnis- und die Originaldatei sehr übersichtlich und schnell, manuell synchronisiert werden können. Das Ganze hat auch den Vorteil, dass eventuelle Pflege-Fehler spätestens hier erkannt werden.</span></li>
+</ul>
+</div></div>
+
+
+<div class='box box-portdesc add2toc-h1 box-portdesc-function' toclabel='Ablauf' id='box_YAIO671'><div class='boxline boxline-ue2 h2-portdesc h2-portdesc-function' id='ue_YAIO671'>So funktioniert Aufgabenmanagement mit YAIO</div>
+<div class='togglecontainer togglecontainer-function' id='detail_YAIO671'>
+<h3 class='h3-portdesc' id='h3_YAIO677'>Wie funktioniert es?</h3>
+<p class='p-portdesc' id='p_YAIO678'><span class='p-portdesc-ue' id='pSpanUe_YAIO678'>Projektbaum:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO678'> YAIO arbeitet mit einem Projektbaum welcher sich aus Projektknoten zusammensetzt, der mit Hilfe einer einfachen Wiki-Syntax, Einrückungen und Schlüsselworten aufgebaut und strukturiert wird.</span></p>
+<h3 class='h3-portdesc' id='h3_YAIO672'>Struktur</h3>
+<p class='p-portdesc' id='p_YAIO673'><span class='p-portdesc-ue' id='pSpanUe_YAIO673'>Knotenkenner:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO673'> Der Aufbau des Baumes erfolgt zeilenbasiert, anhand von 2 Arten von Projektknoten:</span></p>
+<ul class='ul-portdesc ul-portdesc-knotenkenner' id='ul_YAIO674'>
+<li class='li-portdesc li-portdesc-knotenkenner' id='li_YAIO674'><span class='li-portdesc-ue li-portdesc-ue-knotenkenner' id='liSpanUe_YAIO674'>Überschriftsknoten:</span><span class='li-portdesc-desc li-portdesc-desc-knotenkenner' id='liSpanDesc_YAIO674'> alle mit einem "=" beginnenden Zeilen sind Überschriftsknoten.</span></li>
+<li class='li-portdesc li-portdesc-knotenkenner' id='li_YAIO679'><span class='li-portdesc-ue li-portdesc-ue-knotenkenner' id='liSpanUe_YAIO679'>Unterpunktknoten:</span><span class='li-portdesc-desc li-portdesc-desc-knotenkenner' id='liSpanDesc_YAIO679'> alle mit einem "" beginnenden Zeilen sind Unterpunktknoten.</span></li>
+</ul>
+<p class='p-portdesc' id='p_YAIO680'><span class='p-portdesc-ue' id='pSpanUe_YAIO680'>Strukturierung:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO680'> Die Darstellung der Hierarchie der Projektknoten erfolgt über Mehrfachangabe der Projektkenner z.B. "=" 1. Ebene, "==" 2. Ebene</span></p>
+<p class='p-portdesc' id='p_YAIO681'><span class='p-portdesc-ue' id='pSpanUe_YAIO681'>Detailbeschreibung:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO681'> Alle Zeilen ohne Projektkenner werden als erweiterte Beschreibung des vorherigen Projektknoten interpretiert.</span></p>
+<h3 class='h3-portdesc' id='h3_YAIO689'>Knotentypen</h3>
+<p class='p-portdesc' id='p_YAIO690'><span class='p-portdesc-ue' id='pSpanUe_YAIO690'>Knotentypen:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO690'> Die verschiedenen Knoten des Projektbaumes werden über Schlüsselworte typisiert:</span></p>
+<ul class='ul-portdesc ul-portdesc-knotentypen' id='ul_YAIO691'>
+<li class='li-portdesc li-portdesc-knotentypen' id='li_YAIO691'><span class='li-portdesc-ue li-portdesc-ue-knotentypen' id='liSpanUe_YAIO691'>Aufgaben:</span><span class='li-portdesc-desc li-portdesc-desc-knotentypen' id='liSpanDesc_YAIO691'> alle mit einem der folgenden Schlüsselworte beginnenden Knoten werden als Aufgaben interpretiert (OFFEN, LATE, RUNNING, WARNING, ERLEDIGT, VERWORFEN).</span></li>
+<li class='li-portdesc li-portdesc-knotentypen' id='li_YAIO692'><span class='li-portdesc-ue li-portdesc-ue-knotentypen' id='liSpanUe_YAIO692'>Termine:</span><span class='li-portdesc-desc li-portdesc-desc-knotentypen' id='liSpanDesc_YAIO692'> alle mit einem der folgenden Schlüsselworte beginnenden Knoten werden als Termine interpretiert (EVENT_PLANED, EVENT_LATE, EVENT_RUNNING, EVENT_WARNING, EVENT_ERLEDIGT, EVENT_VERWORFEN).</span></li>
+<li class='li-portdesc li-portdesc-knotentypen' id='li_YAIO693'><span class='li-portdesc-ue li-portdesc-ue-knotentypen' id='liSpanUe_YAIO693'>Infos:</span><span class='li-portdesc-desc li-portdesc-desc-knotentypen' id='liSpanDesc_YAIO693'> alle mit einem der folgenden Schlüsselworte beginnenden Knoten werden als Informationen und Dokumentation interpretiert (INFO, HOWTO, DOKU, IDEE).</span></li>
+<li class='li-portdesc li-portdesc-knotentypen' id='li_YAIO694'><span class='li-portdesc-ue li-portdesc-ue-knotentypen' id='liSpanUe_YAIO694'>Ressourcen:</span><span class='li-portdesc-desc li-portdesc-desc-knotentypen' id='liSpanDesc_YAIO694'> für die Angabe von Ressourcen werden folgende Schlüsselworte verwendet (FILERES, URLRES).</span></li>
+<li class='li-portdesc li-portdesc-knotentypen' id='li_YAIO695'><span class='li-portdesc-ue li-portdesc-ue-knotentypen' id='liSpanUe_YAIO695'>Symlink:</span><span class='li-portdesc-desc li-portdesc-desc-knotentypen' id='liSpanDesc_YAIO695'> bei Verwendung des Schlüsselwortes SYMLINK, läßt sich auf andere Knoten verweisen.</span></li>
+</ul>
+<h3 class='h3-portdesc' id='h3_YAIO696'>Daten</h3>
+<p class='p-portdesc' id='p_YAIO697'><span class='p-portdesc-ue' id='pSpanUe_YAIO697'>Daten:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO697'> Auf den Typ des Knotens folgen dann die Detailinformationen zu dem Knoten. Diese setzen sich aus festgelegten Strukturinformationen und vom Nutzer frei zu vergebenen Fachinformationen zusammen.</span></p>
+<p class='p-portdesc' id='p_YAIO698'><span class='p-portdesc-ue' id='pSpanUe_YAIO698'>Strukturinformationen:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO698'> Bei den Strukturinformationen wird zwischen 2 Arten unterschieden:</span></p>
+<ul class='ul-portdesc ul-portdesc-strukturinfotypen' id='ul_YAIO699'>
+<li class='li-portdesc li-portdesc-strukturinfotypen' id='li_YAIO699'><span class='li-portdesc-ue li-portdesc-ue-strukturinfotypen' id='liSpanUe_YAIO699'>Verwaltungsinformationen:</span><span class='li-portdesc-desc li-portdesc-desc-strukturinfotypen' id='liSpanDesc_YAIO699'> dazu gehören die Elemente wie SysData und MetaData die vom YAIO-System mit Verwaltungsinformationen (Änderungsdatum, Id usw.) gepflegt werden.</span></li>
+<li class='li-portdesc li-portdesc-strukturinfotypen' id='li_YAIO700'><span class='li-portdesc-ue li-portdesc-ue-strukturinfotypen' id='liSpanUe_YAIO700'>fachl. Knoteninformationen:</span><span class='li-portdesc-desc li-portdesc-desc-strukturinfotypen' id='liSpanDesc_YAIO700'> je nach Knotentyp spezifischen Informationen wie Plan/Ist-Daten bei Aufgaben, DocLayout bei Infos oder ResLoc bei Ressourcen die vom Nutzer gepflegt werden.</span></li>
+</ul>
+<p class='p-portdesc' id='p_YAIO701'><span class='p-portdesc-ue' id='pSpanUe_YAIO701'>freie Fachinformationen:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO701'> Alles was nicht den Strukturinformation zugeordnet werden kann, wird vom System als freie Fachinformationen deklariert, wobei sich diese aus dem Namen (restlicher Text der Knotenzeile) und der Beschreibung (alle nachfolgenden NICHT-Knotenzeilen ohne Knotenkenner) zusammensetzt.</span></p>
+</div></div>
+
+
+<div class='box box-portdesc add2toc-h1 box-portdesc-beispiel' toclabel='Beispiel' id='box_YAIO721'><div class='boxline boxline-ue2 h2-portdesc h2-portdesc-beispiel' id='ue_YAIO721'>Ein Fallbeispiel</div>
+<div class='togglecontainer togglecontainer-beispiel' id='detail_YAIO721'>
+<h3 class='h3-portdesc' id='h3_YAIO722'>Die gute alte Urlaubsplanung ;-)</h3>
+<p class='p-portdesc' id='p_YAIO728'><span class='p-portdesc-ue' id='pSpanUe_YAIO728'>Praxis:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO728'> Grau ist alle Theorie und nichts ist so anschaulich wie ein Beispiel aus der Praxis. Und nichts ist verständlicher, für jeden nachvollziehbar und schöner als die gute alte "Planung eines Kurzurlaubs": alle Aspekte eines Projekts verbunden mit einem heeren Ziel</span></p>
+<h4 class='h4-portdesc' id='h4_YAIO767'>Die Vorgeschichte (Tag X-150) - Weihnachten</h4>
+<p class='p-portdesc' id='p_YAIO729'><span class='p-portdesc-ue' id='pSpanUe_YAIO729'>Weihnachten:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO729'> Also hinter jedem erfolgreichem Projekt steht ein Visionär. In unserem Fall hervorgerufen durch eine beim Weihnachtsessen quer in der Luftröhre steckende Gänsekeule. Durch Sauerstoffmangel dem Tode nah, war unser Visionär schon auf dem Weg ins Licht und wurde von den vereinten Kräften der Familie zurück ins Leben (auf den Wohnzimmerboden) geholt. Ob es nun Gott oder der Enkel war, jedenfalls schwört unser Visionär Stein auf Bein, dass jemand zu ihm sprach und sagte, er solle seine Familie erleuchten und mit ihr zu Pfingsten ins heilige Land ziehen.</span></p>
+<h4 class='h4-portdesc' id='h4_YAIO768'>Das Projekt aufsetzen (Tag X-145) - The Beginning</h4>
+<p class='p-portdesc' id='p_YAIO730'><span class='p-portdesc-ue' id='pSpanUe_YAIO730'>Start:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO730'> Bis Pfingsten ist es zwar noch lang hin, aber früher Wurm fängt den Vogel (oder so?) und so beginnen wir im neuen Jahr gleich mit der Grobplanung. Ein Projekt "Pfigsturlaub" wird angelegt und ein grober Rahmenplan erstellt. Mit YAIO alles kein Problem ;-)</span></p>
+<h5 class='h5-portdesc' id='h5_YAIO760'>Generierungsprogramme</h5>
+<p class='p-portdesc' id='p_YAIO738'><span class='p-portdesc-ue' id='pSpanUe_YAIO738'>Generierungsprogramme:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO738'> Zuerst legen wir eine Batchdatei für die Generierung an \Daten\Urlaube\gen-urlaubsplanung.bat.</span></p>
+<p class='p-portdesc p-portdesc-screen' id='p_YAIO754'><span class='p-portdesc-ue p-portdesc-ue-screen' id='pSpanUe_YAIO754'></span><span class='p-portdesc-desc p-portdesc-desc-screen' id='pSpanDesc_YAIO754'><a href='file:///S:/Daten/Projekte/yourallinone/buero/beispiel//gen-urlaubsplanung.png' target='_blank_'><img src='file:///S:/Daten/Projekte/yourallinone/buero/beispiel//gen-urlaubsplanung.png'  class='img7-urlres  img7-urlres-screen' id='img_YAIO754' alt='Show Generierungs-Btachfile' title='Show Generierungs-Btachfile'></a></span></p>
+<p class='p-portdesc' id='p_YAIO753'><span class='p-portdesc-ue' id='pSpanUe_YAIO753'>&nbsp;</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO753'><a href='file:///S:/Daten/Projekte/yourallinone/buero/beispiel/gen-urlaubsplanung.bat'  target='_blank'  class='a7-urlres ' id='a_YAIO753'>Download Generierungs-Batchfile</a> </span></p>
+<h5 class='h5-portdesc' id='h5_YAIO761'>Projektdatei</h5>
+<p class='p-portdesc' id='p_YAIO739'><span class='p-portdesc-ue' id='pSpanUe_YAIO739'>Projektdatei:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO739'> Anschließend legen wir die Projektdatei "urlaube.wiki" an, in welcher wir die Projektdaten pflegen.</span></p>
+<p class='p-portdesc' id='p_YAIO740'><span class='p-portdesc-ue' id='pSpanUe_YAIO740'>Strukturierung:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO740'> Den Projektbaum strukturieren wir durch Einrückung und Mehrfachangabe der Knotenkenner.</span></p>
+<p class='p-portdesc' id='p_YAIO741'><span class='p-portdesc-ue' id='pSpanUe_YAIO741'>Metadaten:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO741'> Durch Angabe der Strukturinformation "NodeMeta" für das Projekt geben wir den Namensraum für die Vergabe der Referenz-Nummer vor.</span></p>
+<p class='p-portdesc' id='p_YAIO742'><span class='p-portdesc-ue' id='pSpanUe_YAIO742'>Plandaten:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO742'> Über die Angabe der fachl. Knoteninformationen "Plan" definieren wir die "Offene Aufgabe" Grobplanung.</span></p>
+<p class='p-portdesc' id='p_YAIO743'><span class='p-portdesc-ue' id='pSpanUe_YAIO743'>Quelldatei:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO743'> Daraus ergibt sich dann folgende unformatiert Quelldatei urlaube.wiki.</span></p>
+<p class='p-portdesc p-portdesc-screen' id='p_YAIO754'><span class='p-portdesc-ue p-portdesc-ue-screen' id='pSpanUe_YAIO754'></span><span class='p-portdesc-desc p-portdesc-desc-screen' id='pSpanDesc_YAIO754'><a href='file:///S:/Daten/Projekte/yourallinone/buero/beispiel/beispiel-step1.png' target='_blank_'><img src='file:///S:/Daten/Projekte/yourallinone/buero/beispiel/beispiel-step1.png'  class='img7-urlres  img7-urlres-screen' id='img_YAIO754' alt='Show Quelldatei urlaube.wiki' title='Show Quelldatei urlaube.wiki'></a></span></p>
+<p class='p-portdesc' id='p_YAIO753'><span class='p-portdesc-ue' id='pSpanUe_YAIO753'>&nbsp;</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO753'><a href='file:///S:/Daten/Projekte/yourallinone/buero/beispiel/beispiel-step1.wiki'  target='_blank'  class='a7-urlres ' id='a_YAIO753'>Download Quelldatei urlaube.wiki</a> </span></p>
+<h5 class='h5-portdesc' id='h5_YAIO763'>Generierung</h5>
+<p class='p-portdesc' id='p_YAIO744'><span class='p-portdesc-ue' id='pSpanUe_YAIO744'>Generierung:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO744'> Im Zuge der Generierung durch YAIO werden die Daten geparst, Systeminformationen initialisiert und das Ergebnis formatiert in der Ergebnisdatei urlaube-real.new.wiki abgelegt. Diese muß über WinMerge mit der Quelldatei gemerged werden.</span></p>
+<p class='p-portdesc p-portdesc-screen' id='p_YAIO769'><span class='p-portdesc-ue p-portdesc-ue-screen' id='pSpanUe_YAIO769'></span><span class='p-portdesc-desc p-portdesc-desc-screen' id='pSpanDesc_YAIO769'><a href='file:///S:/Daten/Projekte/yourallinone/buero/beispiel/beispiel-step1-real.new.png' target='_blank_'><img src='file:///S:/Daten/Projekte/yourallinone/buero/beispiel/beispiel-step1-real.new.png'  class='img7-urlres  img7-urlres-screen' id='img_YAIO769' alt='Show Quelldatei urlaube-real.new.wiki' title='Show Quelldatei urlaube-real.new.wiki'></a></span></p>
+<p class='p-portdesc' id='p_YAIO770'><span class='p-portdesc-ue' id='pSpanUe_YAIO770'>&nbsp;</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO770'><a href='file:///S:/Daten/Projekte/yourallinone/buero/beispiel/beispiel-step1-real.new.wiki'  target='_blank'  class='a7-urlres ' id='a_YAIO770'>Download Quelldatei urlaube-real.new.wiki</a> </span></p>
+<p class='p-portdesc' id='p_YAIO737'><span class='p-portdesc-ue' id='pSpanUe_YAIO737'>Planungsergebnis:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO737'> So haben wir anschließend die Möglichkeit das Projekt grob zu strukturieren, feststehende Termine (wie die Feiertage) einzutragen, Aufgaben anzulegen und grob den Aufwand abzuschätzen. Und so sieht das Ergebnis nach dem letzten Generierungsdurchlauf am Ende des Tages dann folgendermaßen aus.</span></p>
+<p class='p-portdesc p-portdesc-screen' id='p_YAIO771'><span class='p-portdesc-ue p-portdesc-ue-screen' id='pSpanUe_YAIO771'></span><span class='p-portdesc-desc p-portdesc-desc-screen' id='pSpanDesc_YAIO771'><a href='file:///S:/Daten/Projekte/yourallinone/buero/beispiel/beispiel-step2-real.new.png' target='_blank_'><img src='file:///S:/Daten/Projekte/yourallinone/buero/beispiel/beispiel-step2-real.new.png'  class='img7-urlres  img7-urlres-screen' id='img_YAIO771' alt='Show Quelldatei urlaube-real.new.wiki' title='Show Quelldatei urlaube-real.new.wiki'></a></span></p>
+<p class='p-portdesc' id='p_YAIO772'><span class='p-portdesc-ue' id='pSpanUe_YAIO772'>&nbsp;</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO772'><a href='file:///S:/Daten/Projekte/yourallinone/buero/beispiel/beispiel-step2-real.new.wiki'  target='_blank'  class='a7-urlres ' id='a_YAIO772'>Download Quelldatei urlaube-real.new.wiki</a> </span></p>
+<h5 class='h5-portdesc' id='h5_YAIO762'>Sichten</h5>
+<p class='p-portdesc' id='p_YAIO755'><span class='p-portdesc-ue' id='pSpanUe_YAIO755'>verschiedene Sichten:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO755'> Als Ergebnis der Generierung werden die Daten automatisch in verschiedene Ausgabeformate exportiert, die wir uns nun ansehen können.</span></p>
+<ul class='ul-portdesc ul-portdesc-exportexample' id='ul_YAIO759'>
+<li class='li-portdesc li-portdesc-exportexample' id='li_YAIO759'><span class='li-portdesc-ue li-portdesc-ue-exportexample' id='liSpanUe_YAIO759'>als Html:</span><span class='li-portdesc-desc li-portdesc-desc-exportexample' id='liSpanDesc_YAIO759'><a href='file:///S:/Daten/Projekte/yourallinone/buero/beispiel/beispiel-step2-real-export.html.png' target='_blank_'><img src='file:///S:/Daten/Projekte/yourallinone/buero/beispiel/beispiel-step2-real-export.html.png'  class='img6-urlres  img6-urlres-exportexample' id='img_YAIO759' alt='Show urlaube-real-export.html' title='Show urlaube-real-export.html'></a></span></li>
+<li class='li-portdesc li-portdesc-exportexample' id='li_YAIO758'><span class='li-portdesc-ue li-portdesc-ue-exportexample' id='liSpanUe_YAIO758'>&nbsp;</span><span class='li-portdesc-desc li-portdesc-desc-exportexample' id='liSpanDesc_YAIO758'><a href='file:///S:/Daten/Projekte/yourallinone/buero/beispiel/beispiel-step2-real-export.html'  target='_blank'  class='a6-urlres  a6-urlres-exportexample' id='a_YAIO758'>Download urlaube-real-export.html</a> </span></li>
+<li class='li-portdesc li-portdesc-exportexample' id='li_YAIO757'><span class='li-portdesc-ue li-portdesc-ue-exportexample' id='liSpanUe_YAIO757'>als MindMap:</span><span class='li-portdesc-desc li-portdesc-desc-exportexample' id='liSpanDesc_YAIO757'><a href='file:///S:/Daten/Projekte/yourallinone/buero/beispiel/beispiel-step2-real.mm.png' target='_blank_'><img src='file:///S:/Daten/Projekte/yourallinone/buero/beispiel/beispiel-step2-real.mm.png'  class='img6-urlres  img6-urlres-exportexample' id='img_YAIO757' alt='Show urlaube-real.mm' title='Show urlaube-real.mm'></a></span></li>
+<li class='li-portdesc li-portdesc-exportexample' id='li_YAIO756'><span class='li-portdesc-ue li-portdesc-ue-exportexample' id='liSpanUe_YAIO756'>&nbsp;</span><span class='li-portdesc-desc li-portdesc-desc-exportexample' id='liSpanDesc_YAIO756'><a href='file:///S:/Daten/Projekte/yourallinone/buero/beispiel/beispiel-step2-real.mm'  target='_blank'  class='a6-urlres  a6-urlres-exportexample' id='a_YAIO756'>Download urlaube-real.mm</a> </span></li>
+<li class='li-portdesc li-portdesc-exportexample' id='li_YAIO773'><span class='li-portdesc-ue li-portdesc-ue-exportexample' id='liSpanUe_YAIO773'>als ICal-Kalender:</span><span class='li-portdesc-desc li-portdesc-desc-exportexample' id='liSpanDesc_YAIO773'><a href='file:///S:/Daten/Projekte/yourallinone/buero/beispiel/beispiel-step2-real.ical.png' target='_blank_'><img src='file:///S:/Daten/Projekte/yourallinone/buero/beispiel/beispiel-step2-real.ical.png'  class='img6-urlres  img6-urlres-exportexample' id='img_YAIO773' alt='Show urlaube-real.ical' title='Show urlaube-real.ical'></a></span></li>
+<li class='li-portdesc li-portdesc-exportexample' id='li_YAIO774'><span class='li-portdesc-ue li-portdesc-ue-exportexample' id='liSpanUe_YAIO774'>&nbsp;</span><span class='li-portdesc-desc li-portdesc-desc-exportexample' id='liSpanDesc_YAIO774'><a href='file:///S:/Daten/Projekte/yourallinone/buero/beispiel/beispiel-step2-real.ical'  target='_blank'  class='a6-urlres  a6-urlres-exportexample' id='a_YAIO774'>Download urlaube-real.ical</a> </span></li>
+</ul>
+<h4 class='h4-portdesc' id='h4_YAIO775'>Das Konzept  (Tag X-140) - Wo könnte es hingehen?</h4>
+<p class='p-portdesc' id='p_YAIO731'><span class='p-portdesc-ue' id='pSpanUe_YAIO731'>Dokumentation:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO731'> Für die Dokumentation von Ideen und Entscheidungen nutzen wir die Abwandlungen des Knotentyps INFO. Weitergehende Beschreibungen zu dem INFO-Knoten können dabei als Fliesstext in den Folgezeilen angegebenen werden.</span></p>
+<p class='p-portdesc' id='p_YAIO764'><span class='p-portdesc-ue' id='pSpanUe_YAIO764'>Ressourcen:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO764'> Sollen dagegen wichtige Urls (wie Suchportale), Dateien, Screens oder Bilder dokumentiert werden, arbeiten wir mit den Knotentypen URLRES, sowie den Abwandlungen FileRES, EMAILRES usw. Die zu dokumentierende Ressource wird dabei unter Angabe der fachl. Knoteninformationen "ResLoc" definiert. Vorteilhaft ist in der generierten Html-Sicht dabei die automatische Verlinkung im Kontext, so dass bei Präsentationen oder Entscheidungen schnell auf die Infos zugegriffen werden kann.</span></p>
+<p class='p-portdesc' id='p_YAIO766'><span class='p-portdesc-ue' id='pSpanUe_YAIO766'>Verlauf:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO766'> Zum Abschluß dokumentieren wir noch den aktuellen Arbeitsstand, benötigten Aufwand sowie Start/Endedatum bei den fachl. Knoteninformationen "Ist" der einzelnen Teilaufgaben, so dass nach im Zuge der Generierung durch YAIO auch der Projektstatus aktualisiert werden kann.</span></p>
+<p class='p-portdesc' id='p_YAIO765'><span class='p-portdesc-ue' id='pSpanUe_YAIO765'>Ergebnis:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO765'> Am Ende des "Urlaubs-Konzepts", haben wir damit unsere Vorgaben, Ideen, benutzte Ressourcen dokumentiert und die Aufgabe "Konzept" mit Ihren ToDos "Recherche", "Entscheidung" und "Buchung" abgeschlossen.</span></p>
+<ul class='ul-portdesc ul-portdesc-exportexample' id='ul_YAIO776'>
+<li class='li-portdesc li-portdesc-exportexample' id='li_YAIO776'><span class='li-portdesc-ue li-portdesc-ue-exportexample' id='liSpanUe_YAIO776'>als Wiki:</span><span class='li-portdesc-desc li-portdesc-desc-exportexample' id='liSpanDesc_YAIO776'><a href='file:///S:/Daten/Projekte/yourallinone/buero/beispiel/beispiel-step3-real.new.png' target='_blank_'><img src='file:///S:/Daten/Projekte/yourallinone/buero/beispiel/beispiel-step3-real.new.png'  class='img6-urlres  img6-urlres-exportexample' id='img_YAIO776' alt='Show Quelldatei urlaube.wiki' title='Show Quelldatei urlaube.wiki'></a></span></li>
+<li class='li-portdesc li-portdesc-exportexample' id='li_YAIO777'><span class='li-portdesc-ue li-portdesc-ue-exportexample' id='liSpanUe_YAIO777'>&nbsp;</span><span class='li-portdesc-desc li-portdesc-desc-exportexample' id='liSpanDesc_YAIO777'><a href='file:///S:/Daten/Projekte/yourallinone/buero/beispiel/beispiel-step3-real.new.wiki'  target='_blank'  class='a6-urlres  a6-urlres-exportexample' id='a_YAIO777'>Download Quelldatei urlaube.wiki</a> </span></li>
+<li class='li-portdesc li-portdesc-exportexample' id='li_YAIO778'><span class='li-portdesc-ue li-portdesc-ue-exportexample' id='liSpanUe_YAIO778'>als Html:</span><span class='li-portdesc-desc li-portdesc-desc-exportexample' id='liSpanDesc_YAIO778'><a href='file:///S:/Daten/Projekte/yourallinone/buero/beispiel/beispiel-step3-real-export.html.png' target='_blank_'><img src='file:///S:/Daten/Projekte/yourallinone/buero/beispiel/beispiel-step3-real-export.html.png'  class='img6-urlres  img6-urlres-exportexample' id='img_YAIO778' alt='Show urlaube-real-export.html' title='Show urlaube-real-export.html'></a></span></li>
+<li class='li-portdesc li-portdesc-exportexample' id='li_YAIO779'><span class='li-portdesc-ue li-portdesc-ue-exportexample' id='liSpanUe_YAIO779'>&nbsp;</span><span class='li-portdesc-desc li-portdesc-desc-exportexample' id='liSpanDesc_YAIO779'><a href='file:///S:/Daten/Projekte/yourallinone/buero/beispiel/beispiel-step3-real-export.html'  target='_blank'  class='a6-urlres  a6-urlres-exportexample' id='a_YAIO779'>Download urlaube-real-export.html</a> </span></li>
+</ul>
+<h4 class='h4-portdesc' id='h4_YAIO780'>Die Umsetzung  (Tag X-10) - Die Urlaubsvorbereitung</h4>
+<p class='p-portdesc' id='p_YAIO734'><span class='p-portdesc-ue' id='pSpanUe_YAIO734'>Überblick:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO734'>  Durch den Export der Urlaubsplanung ins ICal-Format und die Einbindung der Datei in das Kalenderprogramm der Wahl, haben wir auch kurz vor dem Urlaub die wichtigsten Aufgaben "Packen" und die anstehenden Termine "Anreise"  im Blick.</span></p>
+<p class='p-portdesc' id='p_YAIO781'><span class='p-portdesc-ue' id='pSpanUe_YAIO781'>Checklisten:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO781'> Um die doch sehr grobe Aufgabe des Packens nicht Unterzubewerten (jeder Kofferpacker wird hier zustimmen), detaillieren wir diese Aufgabe in weitere ToDos und teilen die eingeplante 1h auf die ToDos (Klamotten, Technik, Karten, Rest) auf. Zu jedem dieser ToDos definieren wir dann in der Beschreibung noch die Einzelheiten, so dass der HTML-Ausdruck auch gerne (ganz 1980) als Checkliste benutzt werden kann ;-)</span></p>
+<ul class='ul-portdesc ul-portdesc-exportexample' id='ul_YAIO782'>
+<li class='li-portdesc li-portdesc-exportexample' id='li_YAIO782'><span class='li-portdesc-ue li-portdesc-ue-exportexample' id='liSpanUe_YAIO782'>als Wiki:</span><span class='li-portdesc-desc li-portdesc-desc-exportexample' id='liSpanDesc_YAIO782'><a href='file:///S:/Daten/Projekte/yourallinone/buero/beispiel/beispiel-step4-real.new.png' target='_blank_'><img src='file:///S:/Daten/Projekte/yourallinone/buero/beispiel/beispiel-step4-real.new.png'  class='img6-urlres  img6-urlres-exportexample' id='img_YAIO782' alt='Show Quelldatei urlaube.wiki' title='Show Quelldatei urlaube.wiki'></a></span></li>
+<li class='li-portdesc li-portdesc-exportexample' id='li_YAIO783'><span class='li-portdesc-ue li-portdesc-ue-exportexample' id='liSpanUe_YAIO783'>&nbsp;</span><span class='li-portdesc-desc li-portdesc-desc-exportexample' id='liSpanDesc_YAIO783'><a href='file:///S:/Daten/Projekte/yourallinone/buero/beispiel/beispiel-step4-real.new.wiki'  target='_blank'  class='a6-urlres  a6-urlres-exportexample' id='a_YAIO783'>Download Quelldatei urlaube.wiki</a> </span></li>
+<li class='li-portdesc li-portdesc-exportexample' id='li_YAIO784'><span class='li-portdesc-ue li-portdesc-ue-exportexample' id='liSpanUe_YAIO784'>als Html:</span><span class='li-portdesc-desc li-portdesc-desc-exportexample' id='liSpanDesc_YAIO784'><a href='file:///S:/Daten/Projekte/yourallinone/buero/beispiel/beispiel-step4-real-export.html.png' target='_blank_'><img src='file:///S:/Daten/Projekte/yourallinone/buero/beispiel/beispiel-step4-real-export.html.png'  class='img6-urlres  img6-urlres-exportexample' id='img_YAIO784' alt='Show urlaube-real-export.html' title='Show urlaube-real-export.html'></a></span></li>
+<li class='li-portdesc li-portdesc-exportexample' id='li_YAIO785'><span class='li-portdesc-ue li-portdesc-ue-exportexample' id='liSpanUe_YAIO785'>&nbsp;</span><span class='li-portdesc-desc li-portdesc-desc-exportexample' id='liSpanDesc_YAIO785'><a href='file:///S:/Daten/Projekte/yourallinone/buero/beispiel/beispiel-step4-real-export.html'  target='_blank'  class='a6-urlres  a6-urlres-exportexample' id='a_YAIO785'>Download urlaube-real-export.html</a> </span></li>
+</ul>
+<h4 class='h4-portdesc' id='h4_YAIO786'>Der Rollout-Prozess  (Tag X) - Der Urlaub</h4>
+<p class='p-portdesc' id='p_YAIO735'><span class='p-portdesc-ue' id='pSpanUe_YAIO735'>Urlaub:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO735'>  Und dann ist der große Tag gekommen. Die ins ICal-Format exportierten und mit unserem Smartphone synchronisierten Termine, lassen morgens unser Smartphone aufjaulen und uns durch die Termin-Erinnerung "Anreise 08:00" aufwachen. Da laut Checkliste alles gepackt und und alle wichtigen Dokumente ausgedruckt sind, steht einem erholsamen Urlaub nichts mehr im Wege. Bis auf die Termin-Erinnerung durch unser Smartphone am Abreisetag, die uns aus dem Schlaf reißt...</span></p>
+<h4 class='h4-portdesc' id='h4_YAIO787'>Die Nacharbeiten  (Tag X+6) - Die Nachschau</h4>
+<p class='p-portdesc' id='p_YAIO788'><span class='p-portdesc-ue' id='pSpanUe_YAIO788'>Terminwarnugen:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO788'>  Wieder zu Hause angekommen, werden wir am Rechner beim ersten Start nach dem Urlaub erst einmal von den überfälligen Terminen empfangen. YAIO und unser Kalenderprogramm warnen uns bezüglich der vergangenen Termine ("Anreise", "Urlaub", "Abreise").</span></p>
+<ul class='ul-portdesc ul-portdesc-exportexample' id='ul_YAIO789'>
+<li class='li-portdesc li-portdesc-exportexample' id='li_YAIO789'><span class='li-portdesc-ue li-portdesc-ue-exportexample' id='liSpanUe_YAIO789'>als Wiki:</span><span class='li-portdesc-desc li-portdesc-desc-exportexample' id='liSpanDesc_YAIO789'><a href='file:///S:/Daten/Projekte/yourallinone/buero/beispiel/beispiel-step5-real.new.png' target='_blank_'><img src='file:///S:/Daten/Projekte/yourallinone/buero/beispiel/beispiel-step5-real.new.png'  class='img6-urlres  img6-urlres-exportexample' id='img_YAIO789' alt='Show Quelldatei urlaube.wiki' title='Show Quelldatei urlaube.wiki'></a></span></li>
+<li class='li-portdesc li-portdesc-exportexample' id='li_YAIO790'><span class='li-portdesc-ue li-portdesc-ue-exportexample' id='liSpanUe_YAIO790'>&nbsp;</span><span class='li-portdesc-desc li-portdesc-desc-exportexample' id='liSpanDesc_YAIO790'><a href='file:///S:/Daten/Projekte/yourallinone/buero/beispiel/beispiel-step5-real.new.wiki'  target='_blank'  class='a6-urlres  a6-urlres-exportexample' id='a_YAIO790'>Download Quelldatei urlaube.wiki</a> </span></li>
+<li class='li-portdesc li-portdesc-exportexample' id='li_YAIO791'><span class='li-portdesc-ue li-portdesc-ue-exportexample' id='liSpanUe_YAIO791'>als Html:</span><span class='li-portdesc-desc li-portdesc-desc-exportexample' id='liSpanDesc_YAIO791'><a href='file:///S:/Daten/Projekte/yourallinone/buero/beispiel/beispiel-step5-real-export.html.png' target='_blank_'><img src='file:///S:/Daten/Projekte/yourallinone/buero/beispiel/beispiel-step5-real-export.html.png'  class='img6-urlres  img6-urlres-exportexample' id='img_YAIO791' alt='Show urlaube-real-export.html' title='Show urlaube-real-export.html'></a></span></li>
+<li class='li-portdesc li-portdesc-exportexample' id='li_YAIO792'><span class='li-portdesc-ue li-portdesc-ue-exportexample' id='liSpanUe_YAIO792'>&nbsp;</span><span class='li-portdesc-desc li-portdesc-desc-exportexample' id='liSpanDesc_YAIO792'><a href='file:///S:/Daten/Projekte/yourallinone/buero/beispiel/beispiel-step5-real-export.html'  target='_blank'  class='a6-urlres  a6-urlres-exportexample' id='a_YAIO792'>Download urlaube-real-export.html</a> </span></li>
+</ul>
+<p class='p-portdesc' id='p_YAIO793'><span class='p-portdesc-ue' id='pSpanUe_YAIO793'>Nachschau:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO793'> Und nachdem wir dann die Termine in YAIO auf erledigt gesetzt und auch die letzten Aufgaben der Nachschau erledigt haben, beglückt uns unser Urlaubsprojekt in allen Sichten mit dem Status "ERLEDIGT"</span></p>
+<ul class='ul-portdesc ul-portdesc-exportexample' id='ul_YAIO794'>
+<li class='li-portdesc li-portdesc-exportexample' id='li_YAIO794'><span class='li-portdesc-ue li-portdesc-ue-exportexample' id='liSpanUe_YAIO794'>als Wiki:</span><span class='li-portdesc-desc li-portdesc-desc-exportexample' id='liSpanDesc_YAIO794'><a href='file:///S:/Daten/Projekte/yourallinone/buero/beispiel/beispiel-step6-real.new.png' target='_blank_'><img src='file:///S:/Daten/Projekte/yourallinone/buero/beispiel/beispiel-step6-real.new.png'  class='img6-urlres  img6-urlres-exportexample' id='img_YAIO794' alt='Show Quelldatei urlaube.wiki' title='Show Quelldatei urlaube.wiki'></a></span></li>
+<li class='li-portdesc li-portdesc-exportexample' id='li_YAIO795'><span class='li-portdesc-ue li-portdesc-ue-exportexample' id='liSpanUe_YAIO795'>&nbsp;</span><span class='li-portdesc-desc li-portdesc-desc-exportexample' id='liSpanDesc_YAIO795'><a href='file:///S:/Daten/Projekte/yourallinone/buero/beispiel/beispiel-step6-real.new.wiki'  target='_blank'  class='a6-urlres  a6-urlres-exportexample' id='a_YAIO795'>Download Quelldatei urlaube.wiki</a> </span></li>
+<li class='li-portdesc li-portdesc-exportexample' id='li_YAIO796'><span class='li-portdesc-ue li-portdesc-ue-exportexample' id='liSpanUe_YAIO796'>als Html:</span><span class='li-portdesc-desc li-portdesc-desc-exportexample' id='liSpanDesc_YAIO796'><a href='file:///S:/Daten/Projekte/yourallinone/buero/beispiel/beispiel-step6-real-export.html.png' target='_blank_'><img src='file:///S:/Daten/Projekte/yourallinone/buero/beispiel/beispiel-step6-real-export.html.png'  class='img6-urlres  img6-urlres-exportexample' id='img_YAIO796' alt='Show urlaube-real-export.html' title='Show urlaube-real-export.html'></a></span></li>
+<li class='li-portdesc li-portdesc-exportexample' id='li_YAIO797'><span class='li-portdesc-ue li-portdesc-ue-exportexample' id='liSpanUe_YAIO797'>&nbsp;</span><span class='li-portdesc-desc li-portdesc-desc-exportexample' id='liSpanDesc_YAIO797'><a href='file:///S:/Daten/Projekte/yourallinone/buero/beispiel/beispiel-step6-real-export.html'  target='_blank'  class='a6-urlres  a6-urlres-exportexample' id='a_YAIO797'>Download urlaube-real-export.html</a> </span></li>
+</ul>
+<h3 class='h3-portdesc' id='h3_YAIO798'>Mission complete" ;-)</h3>
+<p class='p-portdesc' id='p_YAIO675'><span class='p-portdesc-ue' id='pSpanUe_YAIO675'>Ende Fachkonzept</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO675'></span></p>
+</div></div>
+
+
+<div class='box box-portdesc add2toc-h1' toclabel='Businesscase' id='box_YAIO353'><div class='boxline boxline-ue1 h1-portdesc' id='ue_YAIO353'>Businesscase</div>
+<div class='togglecontainer' id='detail_YAIO353'>
+<h2 class='h2-portdesc' id='h2_YAIO312'>Was ist es?</h2>
+<p class='p-portdesc' id='p_YAIO313'><span class='p-portdesc-ue' id='pSpanUe_YAIO313'>In einem Satz:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO313'> YourAllInOne ist Kalender, Organizer, Notizzettel, Checkliste, Projektplanung, Projektdokumentation, Wiki, HowTo, Adressbuch, Dokumentenmanagement...</span></p>
+<p class='p-portdesc' id='p_YAIO314'><span class='p-portdesc-ue' id='pSpanUe_YAIO314'>Alles in Einem:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO314'> Es ist quasi Alles in Einem, da es alle deine Informationen miteinander verlinkt. Es ist der Würfel auf dem du dein gesamtes Leben von allen Seiten aus verschiedenen Sichten betrachten kannst.</span></p>
+<p class='p-portdesc' id='p_YAIO315'><span class='p-portdesc-ue' id='pSpanUe_YAIO315'>Dein Leben:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO315'> Es ist dein Leben. Alles was  schriftlich niedergelegt, geplant, dokumentiert, gespeichert wird, kannst du mit YAIO zentral abrufen und vernetzen.</span></p>
+<p class='p-portdesc' id='p_YAIO375'><span class='p-portdesc-ue' id='pSpanUe_YAIO375'>Mein digitales Leben:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO375'> YAIO ist "mein digitales Leben".</span></p>
+<p class='p-portdesc' id='p_YAIO376'><span class='p-portdesc-ue' id='pSpanUe_YAIO376'>AllInOne:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO376'> Alles was ich früher auf verschiedenen fliegenden Notizzetteln, Ordnern oder digital in verschiedenen Programmen (Email, Datei, Office, Organizer) gespeichert habe, stellt YAIO unter an einer Stelle einer Oberfläche zur Verfügung.</span></p>
+<h2 class='h2-portdesc' id='h2_YAIO316'>Was kann es?</h2>
+<p class='p-portdesc' id='p_YAIO377'><span class='p-portdesc-ue' id='pSpanUe_YAIO377'>Mittelpunkt:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO377'> Es ist der digitale Lebensmittelpunkt an den ich alles sende, dokumentiere, hochlade und speichere.</span></p>
+<p class='p-portdesc' id='p_YAIO378'><span class='p-portdesc-ue' id='pSpanUe_YAIO378'>Features:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO378'> Die Features und Programme die ich damit ersetze, sind in folgender Tabelle aufgezeigt.</span></p>
+<p class='p-portdesc' id='p_YAIO379'><span class='p-portdesc-ue' id='pSpanUe_YAIO379'>No Fear:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO379'> Aber keine Angst - YAIO hat nicht den Anspruch bestehende gute Lösungen (Kalender, Mindmapper) abzulösen.</span></p>
+<p class='p-portdesc' id='p_YAIO380'><span class='p-portdesc-ue' id='pSpanUe_YAIO380'>Integrieren statt ablösen:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO380'> Nein! Wer will KANN sie zur Ansicht + eingeschränkt auch zur Pflege weiterverwenden. Aber er muß nicht, denn YAIO bindet diese Programme und Daten ein, so dass sie die Daten z.B. in Outlook aber auch in YAIO speichern und ansehen könne.</span></p>
+<h2 class='h2-portdesc' id='h2_YAIO317'>Gibt es das nicht schon?</h2>
+<p class='p-portdesc' id='p_YAIO318'><span class='p-portdesc-ue' id='pSpanUe_YAIO318'>Gibt es schon:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO318'> Ja es gibt sehr gute Kalender, Organizer, Projektplanungssoftware. Das alles gibt es schon und an vielen Stellen auch viel besser. Aber es sind Insellösungen.</span></p>
+<p class='p-portdesc' id='p_YAIO319'><span class='p-portdesc-ue' id='pSpanUe_YAIO319'>Frei aber ohne Struktur:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO319'> Du kannst alles in einem Wiki ablegen, dann hast du alle Informationen an einer Stelle, aber es ist unstrukturiert und du hast keine Terminverfolgung, Übersichtslisten usw,.</span></p>
+<p class='p-portdesc' id='p_YAIO320'><span class='p-portdesc-ue' id='pSpanUe_YAIO320'>Struktur aber Dateninsel:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO320'> Du kannst es in Excel und MS-Projekt planen, dann hast du aber Dateninseln, die nicht mit den anderen Informationen wie Emails, Telefonaten, Dokumente, Kontakten verknüpft sind.</span></p>
+<p class='p-portdesc' id='p_YAIO321'><span class='p-portdesc-ue' id='pSpanUe_YAIO321'>Ohne Verknüpfung:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO321'> Es wird schwer werden, deine Checklisten und Notizen mit Kalender und Adressbuch zu verbinden.</span></p>
+<p class='p-portdesc' id='p_YAIO322'><span class='p-portdesc-ue' id='pSpanUe_YAIO322'>Moloch:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO322'> Und wenn es solche Lösungen  gibt, dann bilden sie oft nur einen Teil ab und sind mit einem Moloch an Software, Lizenzen und Verwaltu8ung die dich erschlagen.</span></p>
+<p class='p-portdesc' id='p_YAIO323'><span class='p-portdesc-ue' id='pSpanUe_YAIO323'>YAIO wie "einfach":</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO323'> Ich will eine einfache Lösung, die gut erweiterbar und bedienbar ist und das beste aus den bestehenden Systemen verbindet.</span></p>
+<p class='p-portdesc' id='p_YAIO324'><span class='p-portdesc-ue' id='pSpanUe_YAIO324'>Zentrum:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO324'> Es soll die zentrale Schaltstelle sein, die sich über Schnittstellen/Importe/Exporte in bestehende Systeme einbinden läßt, diese aber um eine zentrale intuitive Oberfläche erweitert.</span></p>
+<ul class='ul-portdesc' id='ul_YAIO325'>
+<li class='li-portdesc' id='li_YAIO325'><span class='li-portdesc-ue' id='liSpanUe_YAIO325'>bestehende Kalender:</span><span class='li-portdesc-desc' id='liSpanDesc_YAIO325'> Die bestehende Kalendersoftwasre (z.B. Thunderbird, Smartphone) kümmert sich um Termindarstellung+Erinnerung.</span></li>
+<li class='li-portdesc' id='li_YAIO326'><span class='li-portdesc-ue' id='liSpanUe_YAIO326'>bestehende Mindmap:</span><span class='li-portdesc-desc' id='liSpanDesc_YAIO326'> Freemind und andere Mindmapper diesen der Übersicht für Projekt-Sitzungen.</span></li>
+<li class='li-portdesc' id='li_YAIO327'><span class='li-portdesc-ue' id='liSpanUe_YAIO327'>bestehende Projektplanung:</span><span class='li-portdesc-desc' id='liSpanDesc_YAIO327'> MS-Projekt, jGantt dienen zur Visualisierung der Projektplanung</span></li>
+</ul>
+<p class='p-portdesc' id='p_YAIO328'><span class='p-portdesc-ue' id='pSpanUe_YAIO328'>Gutes verbinden:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO328'> Wichtig ist, die bestehenden guten und gebräuchliche Frontends für die Visualisierung mit den zentral gespeicherten Daten zu beschicken, während die Datenpflege über die neue Oberfläche gemacht wird.</span></p>
+<h2 class='h2-portdesc' id='h2_YAIO329'>Warum hab ich es geplant?</h2>
+<p class='p-portdesc' id='p_YAIO381'><span class='p-portdesc-ue' id='pSpanUe_YAIO381'>Mein Leben:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO381'> mein Leben richtet sich nicht nach Programmen. Die Sachen die anfallen will ich zentral an einer Stelle pflegen und einsehen können.</span></p>
+<h2 class='h2-portdesc' id='h2_YAIO330'>Wie ist der Ablauf ohne?</h2>
+<p class='p-portdesc' id='p_YAIO374'><span class='p-portdesc-ue' id='pSpanUe_YAIO374'>Verteilt:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO374'> Alles liegt verteilt</span></p>
+<p class='p-portdesc' id='p_YAIO331'><span class='p-portdesc-ue' id='pSpanUe_YAIO331'>Notizen:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO331'> Man hat seine Notizzettel oder Dokumente auf dem Rechner</span></p>
+<p class='p-portdesc' id='p_YAIO332'><span class='p-portdesc-ue' id='pSpanUe_YAIO332'>Aufgaben:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO332'> Todos und Termine werden im Thunderbird bzw. Outlook angelegt und gepflegt</span></p>
+<p class='p-portdesc' id='p_YAIO333'><span class='p-portdesc-ue' id='pSpanUe_YAIO333'>Unstrukturiert:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO333'> Aber es ist keine Gruppierung, Strukturierung wie mit einem Projektstrukturplan möglich. Man kann keine Abhängigkeiten, Abfolgen einbauen</span></p>
+<p class='p-portdesc' id='p_YAIO354'><span class='p-portdesc-ue' id='pSpanUe_YAIO354'>Sync-Problem:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO354'> Wenn man es auf dem Handy benötigt, muß man Handstände machen um es zu synchronisieren.</span></p>
+<p class='p-portdesc' id='p_YAIO360'><span class='p-portdesc-ue' id='pSpanUe_YAIO360'>Projektverzeichnis?:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO360'> Viele Leute arbeiten mit Projektverzeichnissen wo alles als Datei abgelegt ist, dann gehen aber die Metainfos verloren und alles wird doppelt abgelegt.</span></p>
+<p class='p-portdesc' id='p_YAIO356'><span class='p-portdesc-ue' id='pSpanUe_YAIO356'>Dateien:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO356'> Will man Dateien zuordnen, werden diese nicht verlinkt sondern lokal abgelegt (immer wieder und wieder). Habe ich 5 Projekte für die die Datei relevant ist, liegt sie 5 mal dort und muß jedesmal an 5 Orten geändert werden</span></p>
+<p class='p-portdesc' id='p_YAIO361'><span class='p-portdesc-ue' id='pSpanUe_YAIO361'>Multiprojekt:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO361'> Was wenn die Datei zu mehreren Projekten gehört? SymLink? Was wenn die Datei nur in einem der 5 Projekte geändert werden soll?</span></p>
+<p class='p-portdesc' id='p_YAIO358'><span class='p-portdesc-ue' id='pSpanUe_YAIO358'>einsame Telefonnotizen:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO358'> Telefonate speichere ich mir als Gesprächsnotizen oder Metainformationen und Verbindung zum Adressbuch.</span></p>
+<p class='p-portdesc' id='p_YAIO357'><span class='p-portdesc-ue' id='pSpanUe_YAIO357'>Emails/Telefonate verloren:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO357'> Will ich einem Projekt Emails/Telefonate zuordnen, kann ich diese ins Projektverzeichnis kopieren (nicht mehr mit Metainformationen versehen, durchsuchbar bzw. sortierbar), oder ich lege mir die gleiche Projektstruktur nochmal in meinem Email-Programm an (läuft auseinander, alles doppelt, schwer zu finden)</span></p>
+<p class='p-portdesc' id='p_YAIO359'><span class='p-portdesc-ue' id='pSpanUe_YAIO359'>Viele einzelne Baustellen:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO359'> Alles sind einzelne Baustellen, die nicht integriert sind.</span></p>
+<h2 class='h2-portdesc' id='h2_YAIO334'>Wie ist der neue Ablauf mit?</h2>
+<p class='p-portdesc' id='p_YAIO362'><span class='p-portdesc-ue' id='pSpanUe_YAIO362'>Zentrale Speicherung:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO362'> Es gibt ein zentrales System in welchem alles in DB und versioniert gespeichert wird.</span></p>
+<p class='p-portdesc' id='p_YAIO363'><span class='p-portdesc-ue' id='pSpanUe_YAIO363'>Knoten:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO363'> Alles ist ein Knoten der Unterknoten haben kann.</span></p>
+<p class='p-portdesc' id='p_YAIO364'><span class='p-portdesc-ue' id='pSpanUe_YAIO364'>Alles ist Knoten:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO364'> Ein solcher Knoten kann ein Projekt, Unterprojekt, Aufgabe, ToDo, Termin, Telefonat Dokumentation, Idee, Info... sein.</span></p>
+<p class='p-portdesc' id='p_YAIO365'><span class='p-portdesc-ue' id='pSpanUe_YAIO365'>Baum:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO365'> Alle Knoten lassen sich unterhalb der Wurzel anordnen wie Ast/Zweig/Batt am Stamm eines Baumes.</span></p>
+<p class='p-portdesc' id='p_YAIO366'><span class='p-portdesc-ue' id='pSpanUe_YAIO366'>Lebensbaum:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO366'> Initial baut man sich seinen Lebensbaum mit allen relevanten Punkten auf.</span></p>
+<ul class='ul-portdesc' id='ul_YAIO367'>
+<li class='li-portdesc' id='li_YAIO367'><span class='li-portdesc-ue' id='liSpanUe_YAIO367'>Arbeit:</span><span class='li-portdesc-desc' id='liSpanDesc_YAIO367'> Arbeit</span></li>
+<li class='li-portdesc' id='li_YAIO368'><span class='li-portdesc-ue' id='liSpanUe_YAIO368'>Finanzen:</span><span class='li-portdesc-desc' id='liSpanDesc_YAIO368'> Finanzen</span></li>
+<ul class='ul-portdesc' id='ul_YAIO369'>
+<li class='li-portdesc' id='li_YAIO369'><span class='li-portdesc-ue' id='liSpanUe_YAIO369'>Versicherung:</span><span class='li-portdesc-desc' id='liSpanDesc_YAIO369'> Versicherung</span></li>
+<li class='li-portdesc' id='li_YAIO370'><span class='li-portdesc-ue' id='liSpanUe_YAIO370'>Banken:</span><span class='li-portdesc-desc' id='liSpanDesc_YAIO370'> Banken</span></li>
+</ul>
+<li class='li-portdesc' id='li_YAIO371'><span class='li-portdesc-ue' id='liSpanUe_YAIO371'>Freunde:</span><span class='li-portdesc-desc' id='liSpanDesc_YAIO371'> Freunde</span></li>
+<li class='li-portdesc' id='li_YAIO372'><span class='li-portdesc-ue' id='liSpanUe_YAIO372'>Gesundheit:</span><span class='li-portdesc-desc' id='liSpanDesc_YAIO372'> Gesundheit</span></li>
+<li class='li-portdesc' id='li_YAIO373'><span class='li-portdesc-ue' id='liSpanUe_YAIO373'>Urlaub:</span><span class='li-portdesc-desc' id='liSpanDesc_YAIO373'> Urlaub</span></li>
+</ul>
+<p class='p-portdesc' id='p_YAIO382'><span class='p-portdesc-ue' id='pSpanUe_YAIO382'>Verfeinern:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO382'> Nun fängt man an die einzelnen Äste weiter zu strukturieren und durch feine Zweige (Unterprojekte) und Blätter (Aufgaben, Termine, Infos) zu verfeinern.</span></p>
+<p class='p-portdesc' id='p_YAIO383'><span class='p-portdesc-ue' id='pSpanUe_YAIO383'>Knieproblem:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO383'> Habe ich z.B. einen Arzttermin wg. eines Knieproblems, lege ich unter Gesundheit ein Unterprojekt "Knieproblem 2014" an.</span></p>
+<p class='p-portdesc' id='p_YAIO384'><span class='p-portdesc-ue' id='pSpanUe_YAIO384'>Arzttermin:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO384'> Und darunter einen Arzttermin</span></p>
+<p class='p-portdesc' id='p_YAIO385'><span class='p-portdesc-ue' id='pSpanUe_YAIO385'>Kontakt:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO385'> Unter dem Termin lege ich die Kontaktdaten ab, die direkt mit dem Adressbuch verknüpft sind.</span></p>
+<p class='p-portdesc' id='p_YAIO386'><span class='p-portdesc-ue' id='pSpanUe_YAIO386'>Dokumente:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO386'> Von meinem letzten Röntgen des Knies existieren noch Röntgenaufnahmen, die ich einscanne und direkt unter dem Termin als Dokument verlinke.</span></p>
+<p class='p-portdesc' id='p_YAIO387'><span class='p-portdesc-ue' id='pSpanUe_YAIO387'>Übersicht:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO387'> YAIO kümmert sich nun um die Terminverfolgung, Visualisierung, Erinnerung usw.</span></p>
+<p class='p-portdesc' id='p_YAIO388'><span class='p-portdesc-ue' id='pSpanUe_YAIO388'>Terminverfolgung:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO388'> YAIO exportiert meine Termine/Aufgaben automatisch an mein Kalender/Smartphone, so dass ich sie dort übersichtlich einsehen kann und dort erinnert werde.</span></p>
+<p class='p-portdesc' id='p_YAIO389'><span class='p-portdesc-ue' id='pSpanUe_YAIO389'>Übersicht:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO389'> YAIO zeigt mir Übersichtslisten, wo ich alle Informationen (Termine, Aufgaben, Infos...) zentral und zusammengehalten einsehen kann.</span></p>
+<p class='p-portdesc' id='p_YAIO390'><span class='p-portdesc-ue' id='pSpanUe_YAIO390'>Dokumentation:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO390'> Ich kann unter dem Terminknoten einen Dokumentationsknoten mit dem Ergebnis des Arztbesuches anhängen.</span></p>
+<p class='p-portdesc' id='p_YAIO391'><span class='p-portdesc-ue' id='pSpanUe_YAIO391'>Infos verlinken:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO391'> Werde ich an einen anderen Arzt überwiesen, lege ich einen neuen Termin an und verlinke auf die schon bestehenden Dokumente, alte Termine und Kontakte (nichts wird mehrmals gespeichert) sondenr zentral an einer Stelle abgelegt und verlinkt.</span></p>
+<p class='p-portdesc' id='p_YAIO392'><span class='p-portdesc-ue' id='pSpanUe_YAIO392'>Knotentypen</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO392'></span></p>
+<ul class='ul-portdesc' id='ul_YAIO393'>
+<li class='li-portdesc' id='li_YAIO393'><span class='li-portdesc-ue' id='liSpanUe_YAIO393'>Projekte:</span><span class='li-portdesc-desc' id='liSpanDesc_YAIO393'> Projekte als Sammelcontainer für Unterknoten</span></li>
+<li class='li-portdesc' id='li_YAIO394'><span class='li-portdesc-ue' id='liSpanUe_YAIO394'>Unter-Projekte:</span><span class='li-portdesc-desc' id='liSpanDesc_YAIO394'> Unter-Projekte als Sammelcontainer für Unterknoten</span></li>
+<ul class='ul-portdesc' id='ul_YAIO395'>
+<li class='li-portdesc' id='li_YAIO395'><span class='li-portdesc-ue' id='liSpanUe_YAIO395'>Termine:</span><span class='li-portdesc-desc' id='liSpanDesc_YAIO395'> Termine mit den Stati: geplant, laufend, erledigt, verworfen</span></li>
+<li class='li-portdesc' id='li_YAIO396'><span class='li-portdesc-ue' id='liSpanUe_YAIO396'>Aufgaben:</span><span class='li-portdesc-desc' id='liSpanDesc_YAIO396'> Aufgaben mit den Stati: offen, laufend, erledigt, verworfen</span></li>
+<ul class='ul-portdesc' id='ul_YAIO397'>
+<li class='li-portdesc' id='li_YAIO397'><span class='li-portdesc-ue' id='liSpanUe_YAIO397'>ToDos:</span><span class='li-portdesc-desc' id='liSpanDesc_YAIO397'> ToDos mit den Stati: offen, laufend, erledigt, verworfen</span></li>
+</ul>
+<li class='li-portdesc' id='li_YAIO398'><span class='li-portdesc-ue' id='liSpanUe_YAIO398'>Infos:</span><span class='li-portdesc-desc' id='liSpanDesc_YAIO398'> Infos</span></li>
+<li class='li-portdesc' id='li_YAIO399'><span class='li-portdesc-ue' id='liSpanUe_YAIO399'>Ideen:</span><span class='li-portdesc-desc' id='liSpanDesc_YAIO399'> Ideen</span></li>
+<li class='li-portdesc' id='li_YAIO400'><span class='li-portdesc-ue' id='liSpanUe_YAIO400'>Dokumentation:</span><span class='li-portdesc-desc' id='liSpanDesc_YAIO400'> Dokumentation</span></li>
+<li class='li-portdesc' id='li_YAIO401'><span class='li-portdesc-ue' id='liSpanUe_YAIO401'>Email:</span><span class='li-portdesc-desc' id='liSpanDesc_YAIO401'> Email</span></li>
+<li class='li-portdesc' id='li_YAIO402'><span class='li-portdesc-ue' id='liSpanUe_YAIO402'>Fax:</span><span class='li-portdesc-desc' id='liSpanDesc_YAIO402'> Fax</span></li>
+<li class='li-portdesc' id='li_YAIO403'><span class='li-portdesc-ue' id='liSpanUe_YAIO403'>Telefonat:</span><span class='li-portdesc-desc' id='liSpanDesc_YAIO403'> Telefonat</span></li>
+<li class='li-portdesc' id='li_YAIO404'><span class='li-portdesc-ue' id='liSpanUe_YAIO404'>Chat:</span><span class='li-portdesc-desc' id='liSpanDesc_YAIO404'> Chat</span></li>
+<li class='li-portdesc' id='li_YAIO405'><span class='li-portdesc-ue' id='liSpanUe_YAIO405'>Url:</span><span class='li-portdesc-desc' id='liSpanDesc_YAIO405'> Url</span></li>
+<li class='li-portdesc' id='li_YAIO406'><span class='li-portdesc-ue' id='liSpanUe_YAIO406'>File:</span><span class='li-portdesc-desc' id='liSpanDesc_YAIO406'> File</span></li>
+</ul>
+<li class='li-portdesc' id='li_YAIO407'><span class='li-portdesc-ue' id='liSpanUe_YAIO407'>Kontakt:</span><span class='li-portdesc-desc' id='liSpanDesc_YAIO407'> Kontakt</span></li>
+<li class='li-portdesc' id='li_YAIO408'><span class='li-portdesc-ue' id='liSpanUe_YAIO408'>Location:</span><span class='li-portdesc-desc' id='liSpanDesc_YAIO408'> Location</span></li>
+<li class='li-portdesc' id='li_YAIO409'><span class='li-portdesc-ue' id='liSpanUe_YAIO409'>SymLink:</span><span class='li-portdesc-desc' id='liSpanDesc_YAIO409'> SymLink auf einen anderen Knoten</span></li>
+</ul>
+<p class='p-portdesc' id='p_YAIO410'><span class='p-portdesc-ue' id='pSpanUe_YAIO410'>Sichten</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO410'></span></p>
+<ul class='ul-portdesc' id='ul_YAIO411'>
+<li class='li-portdesc' id='li_YAIO411'><span class='li-portdesc-ue' id='liSpanUe_YAIO411'>Struktur:</span><span class='li-portdesc-desc' id='liSpanDesc_YAIO411'> Strukturansicht (Projekt)</span></li>
+<li class='li-portdesc' id='li_YAIO412'><span class='li-portdesc-ue' id='liSpanUe_YAIO412'>Ressourcen:</span><span class='li-portdesc-desc' id='liSpanDesc_YAIO412'> Ressourcen (Dateien, Emails...)</span></li>
+<li class='li-portdesc' id='li_YAIO413'><span class='li-portdesc-ue' id='liSpanUe_YAIO413'>Events:</span><span class='li-portdesc-desc' id='liSpanDesc_YAIO413'> Events (Termine, Todos mit Termin)</span></li>
+<li class='li-portdesc' id='li_YAIO414'><span class='li-portdesc-ue' id='liSpanUe_YAIO414'>Kommunikation:</span><span class='li-portdesc-desc' id='liSpanDesc_YAIO414'> Kommunikation (Tel, Fax, Email, Chats usw.)</span></li>
+<li class='li-portdesc' id='li_YAIO415'><span class='li-portdesc-ue' id='liSpanUe_YAIO415'>ToDos:</span><span class='li-portdesc-desc' id='liSpanDesc_YAIO415'> ToDos (Termine, Aufgaben, Projekte usw.)</span></li>
+<li class='li-portdesc' id='li_YAIO416'><span class='li-portdesc-ue' id='liSpanUe_YAIO416'>Infos (Infos, Ideen, Dokumentation usw.)</span><span class='li-portdesc-desc' id='liSpanDesc_YAIO416'></span></li>
+<li class='li-portdesc' id='li_YAIO417'><span class='li-portdesc-ue' id='liSpanUe_YAIO417'>Kontakte:</span><span class='li-portdesc-desc' id='liSpanDesc_YAIO417'> Kontakte (gruppiert nach den beteiligten Kontakten)</span></li>
+</ul>
+<p class='p-portdesc' id='p_YAIO418'><span class='p-portdesc-ue' id='pSpanUe_YAIO418'>Ausgaben</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO418'></span></p>
+<ul class='ul-portdesc' id='ul_YAIO419'>
+<li class='li-portdesc' id='li_YAIO419'><span class='li-portdesc-ue' id='liSpanUe_YAIO419'>Browser:</span><span class='li-portdesc-desc' id='liSpanDesc_YAIO419'> Browser als Html</span></li>
+<li class='li-portdesc' id='li_YAIO420'><span class='li-portdesc-ue' id='liSpanUe_YAIO420'>Wiki:</span><span class='li-portdesc-desc' id='liSpanDesc_YAIO420'> Wiki-Syntax zur Dateipflege</span></li>
+<li class='li-portdesc' id='li_YAIO421'><span class='li-portdesc-ue' id='liSpanUe_YAIO421'>Gantt:</span><span class='li-portdesc-desc' id='liSpanDesc_YAIO421'> als Ganttdiagramm zur Projektplanungsübersicht</span></li>
+<li class='li-portdesc' id='li_YAIO422'><span class='li-portdesc-ue' id='liSpanUe_YAIO422'>JSON:</span><span class='li-portdesc-desc' id='liSpanDesc_YAIO422'> als JSON zur Weiterverarbeitung per JS</span></li>
+<li class='li-portdesc' id='li_YAIO423'><span class='li-portdesc-ue' id='liSpanUe_YAIO423'>ICal:</span><span class='li-portdesc-desc' id='liSpanDesc_YAIO423'> als ICal zur Synchronisierung mit Kalendern/Aufgabenverwaltung</span></li>
+<li class='li-portdesc' id='li_YAIO424'><span class='li-portdesc-ue' id='liSpanUe_YAIO424'>Mindmap:</span><span class='li-portdesc-desc' id='liSpanDesc_YAIO424'> als Mindmap zur Projektübersicht</span></li>
+<li class='li-portdesc' id='li_YAIO425'><span class='li-portdesc-ue' id='liSpanUe_YAIO425'>Excel:</span><span class='li-portdesc-desc' id='liSpanDesc_YAIO425'> als Excel zur Weiterverwendung</span></li>
+</ul>
+<p class='p-portdesc' id='p_YAIO426'><span class='p-portdesc-ue' id='pSpanUe_YAIO426'>Features</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO426'></span></p>
+<ul class='ul-portdesc' id='ul_YAIO427'>
+<li class='li-portdesc' id='li_YAIO427'><span class='li-portdesc-ue' id='liSpanUe_YAIO427'>Plandaten:</span><span class='li-portdesc-desc' id='liSpanDesc_YAIO427'> mit Plandaten (Aufwand, Zeitraum)</span></li>
+<li class='li-portdesc' id='li_YAIO428'><span class='li-portdesc-ue' id='liSpanUe_YAIO428'>Istdaten:</span><span class='li-portdesc-desc' id='liSpanDesc_YAIO428'> mit Istdaten (Stand, Aufwand, Zeitraum)</span></li>
+<li class='li-portdesc' id='li_YAIO429'><span class='li-portdesc-ue' id='liSpanUe_YAIO429'>Layout:</span><span class='li-portdesc-desc' id='liSpanDesc_YAIO429'> Layout zur besseren Visualisierung von Dokumentationen usw.</span></li>
+</ul>
+<h2 class='h2-portdesc' id='h2_YAIO335'>Welche Entwicklungsschritte wird es geben?</h2>
+<h2 class='h2-portdesc' id='h2_YAIO336'>Wie ist der derzeitige Stand?</h2>
+<h1 class='h1-portdesc' id='h1_YAIO522'>Implementierung</h1>
+<p class='p-portdesc' id='p_YAIO523'><span class='p-portdesc-ue' id='pSpanUe_YAIO523'>Software-Stack</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO523'></span></p>
+<h2 class='h2-portdesc' id='h2_YAIO524'>Beschreibung Architektur</h2>
+<h3 class='h3-portdesc' id='h3_YAIO525'>Übersicht:</h3>
+<p class='p-portdesc' id='p_YAIO525'><span class='p-portdesc-desc' id='pSpanDesc_YAIO525'> Das ganze wird als Spring-Projekt mit verschiedenen Domänen aufgesetzt.</span></p>
+<p class='p-portdesc' id='p_YAIO526'><span class='p-portdesc-ue' id='pSpanUe_YAIO526'>Core:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO526'> Die Core-Domäne setzte sich den Entity-Datenmodell, den Services und den DataDomains zusammen.</span></p>
+<p class='p-portdesc' id='p_YAIO527'><span class='p-portdesc-ue' id='pSpanUe_YAIO527'>Ports:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO527'> Die externe Ports werden Module zum Import der Daten, Export der Daten und formatspezifische Adapter beinhalten.</span></p>
+<h3 class='h3-portdesc' id='h3_YAIO528'>Core-Modell</h3>
+<p class='p-portdesc' id='p_YAIO529'><span class='p-portdesc-ue' id='pSpanUe_YAIO529'>Einführung:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO529'> Die Core-Domäne wird in der Package (~.core) und entsprechenden SubPackages definiert.</span></p>
+<p class='p-portdesc' id='p_YAIO530'><span class='p-portdesc-ue' id='pSpanUe_YAIO530'>DataDomains:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO530'> Die verschiedenen fachl. Eigenschaften (z.B. Plandaten, Sysdaten usw.) werden als Interfaces unter (~.core.datadomains) definiert.</span></p>
+<p class='p-portdesc' id='p_YAIO531'><span class='p-portdesc-ue' id='pSpanUe_YAIO531'>DataDomaiServices:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO531'> Die zu den DataDomains gehörenden fachlichen Services (z.B. zur Initialisierung der MetaDaten, Aktualisierung PlanCalcSum/Ist/Status usw. bzw. SysData-Kontrolle) werden manuell unter (~.core.datadomainservices) angelegt.</span></p>
+<p class='p-portdesc' id='p_YAIO532'><span class='p-portdesc-ue' id='pSpanUe_YAIO532'>Node:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO532'> Die Entitys der verschiedenen Nodetypen (Tasknode, Eventnode usw.) implementieren die DataDomain-Interfaces und werden als Beans und Spring-AJ/IDT-Files per Roo unter (~.core.node) erzeugt. Die JPA-Funktionen liegen in den entsprechenden AJ-Files.</span></p>
+<p class='p-portdesc' id='p_YAIO531'><span class='p-portdesc-ue' id='pSpanUe_YAIO531'>NodeServices:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO531'> Die zu den Nodes gehörenden fachlichen Services (z.B. Steuerung der DataDomain-Services) werden manuell unter (~.core.nodeservices) angelegt.</span></p>
+<p class='p-portdesc' id='p_YAIO533'><span class='p-portdesc-ue' id='pSpanUe_YAIO533'>Services:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO533'> Die zu den Nodetypen gehörenden Services (Select, Update usw.) werden per Roo unter (~.core.services) angelegt.</span></p>
+<h3 class='h3-portdesc' id='h3_YAIO534'>Port Import</h3>
+<p class='p-portdesc' id='p_YAIO535'><span class='p-portdesc-ue' id='pSpanUe_YAIO535'>Einführung:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO535'> Der Import-Port wird in der Package (~.import) und entsprechenden SubPackages definiert.</span></p>
+<p class='p-portdesc' id='p_YAIO536'><span class='p-portdesc-ue' id='pSpanUe_YAIO536'>Importer:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO536'> Es gibt ein Import-Interfaces welches per Default von ImporterImpl implementiert wird und die Basis-Implementierung des NodeFactory-Interfaces zum Anlegen einzelner Nodes aufruft.</span></p>
+<p class='p-portdesc' id='p_YAIO537'><span class='p-portdesc-ue' id='pSpanUe_YAIO537'>NodeFactory:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO537'> Das NodeFactory-Interface dient zum Anlegen der Node anhand der NodeTypeIdentifier und Extraction der DadaDomain-Daten aus dem Nodenamen. Dies erfolgt über die NodeIdentifierConfig und DataDomainParser.</span></p>
+<p class='p-portdesc' id='p_YAIO538'><span class='p-portdesc-ue' id='pSpanUe_YAIO538'>Node-Config:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO538'> Spezielle pro Nodetyp implementierte Configuratior-Klassen melden der NodeFactory welche NodeIdentifier (INFO, OFFEN) usw. für welche Node-Klasse verantwortlich sind. Anhand dieser Config erzeugt die Node-Factory dann das entsprechende Node-Object und startet anschließend die pasenden dataDomainParser für das Node-Object.</span></p>
+<p class='p-portdesc' id='p_YAIO539'><span class='p-portdesc-ue' id='pSpanUe_YAIO539'>Parser:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO539'> Im Package (~importer.parser) liegt das Interface Parser zur Extraktion der DataDomain-Daten aus dem Nodenamen und die Basis-Implementierung ParserImpl von der sich die einzelnen Parser ableiten müssen.</span></p>
+<p class='p-portdesc' id='p_YAIO540'><span class='p-portdesc-ue' id='pSpanUe_YAIO540'>Parser-Config:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO540'> Die Parser-Implementierungen werden bei der NodeFactory als DataDomainParser angemeldet und geben an, in welcher Reihenfolge sie für welche DataDomain aufrufen werden. Sie parsen und extrahieren dann die entsprechenden Daten aus dem Node-Namen, gesteuert über die InputOptions. Jeder Parser erwarten immer genau das Node-Object, welches das zum Parser gehörende DaraDomain-Interface implementiert.</span></p>
+<h3 class='h3-portdesc' id='h3_YAIO541'>Port Export</h3>
+<p class='p-portdesc' id='p_YAIO542'><span class='p-portdesc-ue' id='pSpanUe_YAIO542'>Einführung:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO542'> Der Export-Port wird in der Package (~.export) und entsprechenden SubPackages definiert.</span></p>
+<p class='p-portdesc' id='p_YAIO543'><span class='p-portdesc-ue' id='pSpanUe_YAIO543'>Exporter:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO543'> Es gibt ein Exporter-Interfaces welches per Default von ExporterImpl implementiert wird. Diese ruft rekursiv für jede Node die einzelnen Formatter auf und hängt das Ergebnis an den übergeben StringBuffer.</span></p>
+<p class='p-portdesc' id='p_YAIO544'><span class='p-portdesc-ue' id='pSpanUe_YAIO544'>Formatter:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO544'> Im Package (~exporter.formatter) liegt das Interface Formatter zum Formatieren der DataDomain-Daten und die Basis-Implementierung FormatterImpl von der sich die einzelnen Formatter ableiten müssen.</span></p>
+<p class='p-portdesc' id='p_YAIO545'><span class='p-portdesc-ue' id='pSpanUe_YAIO545'>Formatter-Config:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO545'> Die Formatter-Implementierungen werden beim Exporter als DataDomainFormatter angemeldet und geben an, in welcher Reihenfolge sie für welche DataDomain aufrufen werden. Sie geben die formatierten Nodedaten dann entsprechend der Implementierung und gesteuert über die OutputOptions (Flags ob Formatter aktiv, Einrückung usw.) aus. Jeder Formatter erwarten immer genau das Node-Object, welches das zum Formatter gehörende DaraDomain-Interface implementiert.</span></p>
+<h3 class='h3-portdesc' id='h3_YAIO546'>Adapter DataFormate</h3>
+<h4 class='h4-portdesc' id='h4_YAIO564'>Einführung:</h4>
+<p class='p-portdesc' id='p_YAIO564'><span class='p-portdesc-desc' id='pSpanDesc_YAIO564'> Für den Export/Import-Port gibt es verschiedene Adapter für spezielle Datenformate die unter (~adapater) liegen.</span></p>
+<p class='p-portdesc' id='p_YAIO565'><span class='p-portdesc-ue' id='pSpanUe_YAIO565'>Ableitung:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO565'> Diese leiten sich jeweils von ImporterImpl bzw ExporterImpl ab und überladen die jeweiligen Funktionen.</span></p>
+<p class='p-portdesc' id='p_YAIO566'><span class='p-portdesc-ue' id='pSpanUe_YAIO566'>Import:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO566'> Die von Importer abgeleitete Klasse benutzt ihren eigenen Formatparser erzegt die NModes mit createNodeObjFromText und benutzt somit die DataDomainParser.</span></p>
+<p class='p-portdesc' id='p_YAIO567'><span class='p-portdesc-ue' id='pSpanUe_YAIO567'>Export:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO567'> Die von Exporter abgeleitete Klasse überlädt dann jeweils  getNodeResult mit der formatspezifischen Funktionalität. Die vom Exporter implementierten DataDomainFormatter können aber weitergenutzt bzw. auch überladen werden.</span></p>
+<p class='p-portdesc' id='p_YAIO568'><span class='p-portdesc-ue' id='pSpanUe_YAIO568'>PPL:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO568'> Der Adapter für den Import/Export in PPL-Syntax liegt unter (~adapater.ppl).</span></p>
+<p class='p-portdesc' id='p_YAIO569'><span class='p-portdesc-ue' id='pSpanUe_YAIO569'>Wiki:</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO569'> Der Adapter für den Import/Export in Wiki-Syntax liegt unter (~adapater.wiki).</span></p>
+<p class='p-portdesc' id='p_YAIO547'><span class='p-portdesc-ue' id='pSpanUe_YAIO547'>Port Persistenz</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO547'></span></p>
+<p class='p-portdesc' id='p_YAIO430'><span class='p-portdesc-ue' id='pSpanUe_YAIO430'>Ende</span><span class='p-portdesc-desc' id='pSpanDesc_YAIO430'></span></p>
+</div></div>
+
+
+<script type="text/javascript">
+    // alle Bloecke toggeln
+    jMATService.getPageLayoutService().doAllBlockToggler(false);
+</script>
+<script type="text/javascript">
+    // verzoegerte Druckoptimierung
+    delayedOptimize = window.setInterval(
+            function() {
+                // nach 2 Sekunden ausfuehren und Intervall loeschen
+                /*
+                jMATService.getLayoutService().toggleBlock(
+                        'node_2_childrencontainer',
+                        'node_2_childrencontainer',
+                        function () {
+                            new ToggleEffect('node_2_childrencontainer').doEffect();
+                        }
+                );
+                */
+                doAllNodeToggler(true, 3);
+                initSearch();
+                window.clearInterval(delayedOptimize);
+            }, 2000);
+
+</script>
+</body></html>
