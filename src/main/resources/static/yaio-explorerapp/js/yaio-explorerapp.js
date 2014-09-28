@@ -224,7 +224,24 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
         return false;
     }
 
-
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Help
+     * <h4>FeatureDescription:</h4>
+     *     callbackhandler to open helpsite
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>open the helpsite
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     GUI Callback
+     * @param url - the url of the helpsite
+     */
+    $scope.showHelpSite = function(url) {
+        console.log("showHelpSite:" + " url:" + url);
+        yaioShowHelpSite(url);
+        return false;
+    }
 
     /**
      * <h4>FeatureDomain:</h4>

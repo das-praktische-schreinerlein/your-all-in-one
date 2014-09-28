@@ -1,0 +1,906 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+    <link rel="stylesheet" type="text/css" media="all" href="/css/yaio/style.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="/css/yaio/main.css" />
+    <link rel="stylesheet" type="text/css" media="print" href="/css/yaio/print.css" />
+    <script type="text/javascript">var flgDetailFrameAllowed = false;</script>
+    <script type="text/javascript" src="/js/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/jqueryui/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/js/yaio/JMATAllIn.js"></script>    
+    <style>
+body { 
+    background: white; 
+	color: black; 
+	font-family: Verdana, Arial, Helvetica, sans-serif; 
+	line-height: 1.3em; 
+	font-size: 11px;
+}
+
+.menueFooterDummy {
+   clear: both;
+}
+
+.node-block {
+    width: 100%;
+    clear: both;
+    float: left;
+}
+.node-block-leaf {
+}
+.node-block-leaf1 {
+}
+.node-block-twig {
+}
+.node-block-twig1 {
+    border: 2px solid #D3D3D3
+}
+.node-line-ue {
+    width: 100%;
+    clear: both;
+    float: left;
+}
+
+.node-style-ue {
+    font-weight: bold;
+    font-size: 12px;
+}
+
+
+/**
+ * Node-Styles
+ */
+.node-style-ue1 {
+}
+
+.node-style-list {
+}
+
+.node-style-list1 {
+}
+
+.node-line-trenner {
+    border: none;
+    height: 1px;
+    font-size: 1px;
+    line-height: 1px;
+}
+
+.node-trenner-area-state {
+}
+
+.node-trenner-area-name {
+}
+
+.node-trenner-area-intend {
+    background: lightgrey;
+    width: 100%;
+}
+
+
+/**
+ * Node-Elemente
+ */
+.node-area-stateshort {
+    vertical-align: top;
+    width: 30px;
+    float: left;
+}
+.node-area-name-container {
+    vertical-align: top;
+    width: 600px;
+    float: left;
+}
+.node-area-name-container2 {
+    border-left: 1px solid black;
+}
+.node-area-name {
+    vertical-align: top;
+    display: inline;
+    float: left;
+    width: 90%;
+}
+.node-area-state {
+    vertical-align: top;
+    width: 80px;
+    float: left;
+}
+
+.node-area-istplan {
+    vertical-align: top;
+    width: 620px;
+    float: left;
+}
+
+.node-block-ist {
+    vertical-align: top;
+    width: 330px;
+    float: left;
+}
+.node-block-istcalcsum {
+    vertical-align: top;
+    width: 330px;
+    float: left;
+}
+
+.node-block-plan {
+    vertical-align: top;
+    width: 290px;
+    float: left;
+}
+.node-block-plancalcsum {
+    vertical-align: top;
+    width: 290px;
+    float: left;
+}
+
+.node-container-desc {
+    width: 100%;
+    clear: both;
+    float: left;
+}
+
+.node-block-desc {
+    width: 100%;
+    clear: both;
+    float: left;
+    font-style: italic;
+}
+
+
+.node-container-children {
+    width: 100%;
+    clear: both;
+    float: left;
+}
+
+.node-block-children {
+    width: 100%;
+    clear: both;
+    float: left;
+}
+
+/**
+ * Node-Typ
+ */
+.node-type-leaf {
+    border-top: 1px dotted #D3D3D3
+}
+
+.node-type-leaf1 {
+}
+
+.node-type-twig {
+    font-weight: bold;
+    border-top: 2px solid #D3D3D3
+}
+
+.node-type-twig1 {
+}
+
+/**
+ * Node-Level
+ */
+.node-level1 {
+   margin-left: 30px;
+}
+.node-level2 {
+   margin-left: 60px;
+}
+.node-level3 {
+   margin-left: 90px;
+}
+.node-level4 {
+   margin-left: 120px;
+}
+.node-level5 {
+   margin-left: 150px;
+}
+.node-level6 {
+   margin-left: 180px;
+}
+.node-level7 {
+   margin-left: 210px;
+}
+.node-level8 {
+   margin-left: 240px;
+}
+.node-level9 {
+   margin-left: 270px;
+}
+.node-level10 {
+   margin-left: 300px;
+}
+.node-level11 {
+   margin-left: 330px;
+}
+.node-level12 {
+   margin-left: 360px;
+}
+
+
+/**
+ * Node-Stati
+ */
+.node-state-INFO {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-DOKU {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-IDEE {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-HOWTO {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-URLRES {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-FILERES {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-MAILRES {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-SYMLINK {
+    background-color: #FFC0CB; /*#33CCCC;*/
+}
+.node-state-OPEN {
+    background-color: #ADFF2F CFF9BB; /*#99FF66;*/
+}
+.node-state-OFFEN {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-RUNNING {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-LATE {
+    background-color: #FFD700; /*#F6F9AE; #FFFF66;*/
+}
+.node-state-VERSPAETET {
+    background-color: #FFD700; /*#F6F9AE; #FFFF66;*/
+}
+.node-state-SHORT {
+    background-color: #FF6347; /* #FCD2C9; /*#FF9966;*/
+}
+.node-state-UEBERFAELLIG {
+    background-color: #FF6347; /* #FCD2C9; /*#FF9966;*/
+}
+.node-state-WARNING {
+    background-color: #FF6347; /* #FCD2C9; /*#FF9966;*/
+}
+.node-state-DONE {
+    background-color: #E0F2FC; /*#B0E0E6;*/
+}
+.node-state-ERLEDIGT {
+    background-color: #E0F2FC; /*#B0E0E6;*/
+}
+.node-state-CANCELED {
+    background-color: #F5F5F5; /*#CCCCCC;*/
+}
+.node-state-VERWORFEN {
+    background-color: #F5F5F5; /*#CCCCCC;*/
+}
+.node-state-UNKNOWN {
+    background-color: #FFFFFF;
+}
+.node-state-UNBEKANNT {
+    background-color: #FFFFFF;
+}
+
+.node-state-EVENT_PLANED {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-EVENT_GEPLANT {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-EVENT_OPEN {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-EVENT_OFFEN {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-EVENT_RUNNING {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-EVENT_LATE {
+    background-color: #FFD700; /*#F6F9AE; #FFFF66;*/
+}
+.node-state-EVENT_VERSPAETET {
+    background-color: #FFD700; /*#F6F9AE; #FFFF66;*/
+}
+.node-state-EVENT_SHORT {
+    background-color: #FF6347; /* #FF6347; /* #FCD2C9; /*#FF9966;*/
+}
+.node-state-EVENT_UEBERFAELLIG {
+    background-color: #FF6347; /* #FCD2C9; /*#FF9966;*/
+}
+.node-state-EVENT_WARNING {
+    background-color: #FF6347; /* #FCD2C9; /*#FF9966;*/
+}
+.node-state-EVENT_DONE {
+    background-color: #E0F2FC; /*#B0E0E6;*/
+}
+.node-state-EVENT_ERLEDIGT {
+    background-color: #E0F2FC; /*#B0E0E6;*/
+}
+.node-state-EVENT_CANCELED {
+    background-color: #F5F5F5; /*#CCCCCC;*/
+}
+.node-state-EVENT_VERWORFEN {
+    background-color: #F5F5F5; /*#CCCCCC;*/
+}
+
+
+
+.box {
+    width: 712px;
+}
+
+h1, h2, h3, h4, h5, h6, h7, h8 {
+    padding-top: 5px;
+    border-top: 1px dotted green; 
+    clear: both;
+}
+
+.h1-portdesc {
+    
+}
+.h2-portdesc {
+    font-size: 15px;
+    font-weight: bold;
+}
+.h3-portdesc {
+    margin-left: 10px;
+    font-size: 13px;
+    font-weight: bold;
+}
+.h4-portdesc {
+    margin-left: 20px;
+    font-size: 11px;
+    font-weight: bold;
+}
+.h5-portdesc {
+    margin-left: 30px;
+    font-size: 10px;
+    font-weight: bold;
+}
+.h6-portdesc {
+    margin-left: 35px;
+    font-size: 9px;
+    font-weight: bold;
+}
+.p-portdesc {
+    margin-left: 20px;
+    line-height: 15px;
+    float: left;
+    clear: both;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+.p-portdesc-ue {
+    display: inline-block;
+    width: 150px;
+    text-align: left;
+    float: left;
+    clear: both;
+}
+.p-portdesc-desc {
+    display: inline-block;
+    width: 510px;
+    vertical-align: top;
+}
+.p-portdesc-descdetail {
+    clear: both;
+    display: inline-block;
+    width: 510px;
+    vertical-align: top;
+    font-style:italic;
+    float: left;
+    clear: both;
+    font-size: 9px;
+}
+.p-portdesc-desc-full {
+    display: inline-block;
+    margin-left: 30px;
+    width: 640px;
+    vertical-align: top;
+}
+.li-portdesc {
+    margin-left: 10px;
+    list-style: none outside none;
+}
+.li-portdesc-ue {
+    text-align: left;
+    display: inline-block;
+    width: 200px;
+    float: left;
+    clear: both;
+}
+.li-portdesc-desc {
+    display: inline-block;
+    width: 400px;
+    vertical-align: top;
+}
+.li-portdesc-descdetail {
+    display: inline-block;
+    width: 400px;
+    vertical-align: top;
+    font-style:italic;
+    float: left;
+    clear: both;
+    font-size: 9px;
+}
+
+
+/* Tabellen */
+.tr-portdesc-ue {
+    font-weight: bold;
+    background: #8CACD3;
+}
+.tr-portdesc-gesamt {
+    font-weight: bold;
+    background: #DEE9EF;
+}
+
+
+
+/* spezielle Abwandlungen fuer MyBusness*/
+.p-portdesc-ue {
+/**    display: none;**/
+}
+.p-portdesc-desc {
+    margin-left: 30px;
+    width: 640px;
+}
+
+.li-portdesc-ue-faehigkeiten {
+    font-weight: bold;
+    width: 150px;
+}
+.li-portdesc-desc-faehigkeiten {
+    width: 500px;
+    line-height: 15px;
+}
+
+
+
+.a-node-symlink {
+    color: blue;
+    font-weight: bold;
+}
+.a-node-urlres {
+    color: blue;
+    font-weight: bold;
+}
+
+
+
+/* Documentation */
+/** specials **/
+.a-biglink {
+   font-size: 15px;
+   font-weight: bold;
+}
+.p-portdesc-desc-biglink {
+   text-align: center;
+   margin-left: 0px;
+}
+
+/** Styles der Faehigkeiten **/
+.li-portdesc-faehigkeiten {
+    margin: 0;
+    list-style: none;
+    width: 30%;
+    float: left;
+    border-right: 1px dotted #008000;
+    border-top: 0px;
+    border-bottom: 0px;
+    height: 120px;
+}
+.li-portdesc-faehigkeiten:nth-of-type(1) {
+}
+.li-portdesc-faehigkeiten:last-child {
+    border-right:0px;
+}
+.li-portdesc-ue-faehigkeiten {
+    display: inline-block;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    vertical-align: top;
+    width: 100%;
+}
+.li-portdesc-ue-faehigkeiten a {
+    display: inline-block;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    vertical-align: top;
+    width: 100%;
+}
+.li-portdesc-desc-faehigkeiten {
+    display: inline-block;
+    text-align: center;
+    vertical-align: top;
+    width: 100%;
+}
+/** Styles fuer Management **/
+.box-portdesc-management {
+    background: #DEE9EF;
+}
+
+.li-portdesc-management {
+    list-style: none;
+    margin-left: 40px;
+}
+.li-portdesc-ue-management {
+    color: black;
+    display: inline-block;
+    text-align: left;
+    width: 150px;
+    font-weight: bold;
+}
+.li-portdesc-desc-management {
+    display: inline-block;
+    width: 450px;
+    vertical-align: top;
+    line-height: 15px;
+}
+
+/** Features **/
+.li-portdesc-ue-istohne {
+    font-weight: bold;
+}
+.li-portdesc-ue-bereiche {
+    font-weight: bold;
+}
+.li-portdesc-ue-features {
+    font-weight: bold;
+}
+.li-portdesc-ue-ausgabeformate {
+    font-weight: bold;
+}
+.li-portdesc-ue-sichten {
+    font-weight: bold;
+}
+
+
+
+    </style>
+    
+	<script type="text/javascript">
+    
+    /*
+     * ###########################
+     * # Klakulation
+     * ###########################
+     */
+    const CONST_FUNCNAME_SUM = "SUM";
+    
+    function calcColumns(nodeTDId, functionName, praefix, suffix) {
+       // Variablen belegen
+       var errMsg = null;
+       var elemNodeTD = null;
+       var idxCol = null;
+       var elemNodeTABLE = null;
+        
+       // Parameter checken und Eelemente einlesen
+       
+       // TD-Element einlesen
+       if (! errMsg && ! functionName) { 
+           errMsg = "Parameter functionName required"; 
+       } else {
+           if (functionName != CONST_FUNCNAME_SUM) {
+              errMsg = "Parameter functionName must be [" + CONST_FUNCNAME_SUM + "]"; 
+           }
+       }
+       if (! errMsg && ! nodeTDId) { 
+           errMsg = "Parameter nodeTDId required"; 
+       } else {
+           elemNodeTD = $("#" + nodeTDId);
+       }
+       
+       // TABLE-Element einlesen
+       if (! errMsg && ! elemNodeTD) { 
+           errMsg = "HTMLElement nodeTDId not found"; 
+       } else {
+           idxCol = elemNodeTD.attr('cellIndex');
+           elemNodeTABLE = $(elemNodeTD).closest('table');
+       }
+
+       // IDX einlesen
+       if (! errMsg && ! elemNodeTABLE) { 
+           errMsg = "HTMLElement elemNodeTABLE not found"; 
+       } else {
+           idxCol = elemNodeTD[0].cellIndex;
+       }
+       if (! errMsg && ! idxCol) { 
+           errMsg = "idxCol not found"; 
+       }
+       
+       // abschließender Fehlercheck
+       if (errMsg) {
+          alert("Fehler aufgetreten: " + errMsg);
+          return null;
+       }
+       
+       // Funktionalitaet: alle x-Spalten iterieren und Zahlen extrahieren
+       var filterTD = "td:nth-child(" + (idxCol + 1) + ")";
+       var numbers = new Array();
+       $(elemNodeTABLE).children("tbody").children("tr").children(filterTD).each(function (i) {
+           var col = $(this);
+
+           // mich selbst herauslassen 
+           if (col.attr('id') == nodeTDId) {
+              // Jquery continue;
+              //alert("SKIP NODEID: Zeile:" + (i+1) + " ID:" + col.id + " Content:" + col.html() + " Number" + number);
+              return;
+           }
+
+           // normalisieren
+           var strNumber = col.html();
+           strNumber = strNumber.replace(".", "");
+           strNumber = strNumber.replace(",", ".");
+           
+           // auf Zahl testen
+           var number = parseFloat(strNumber, "10");
+           if (isNaN(number)) {
+              // Jquery continue;
+              //alert("SKIP NAN: Zeile:" + (i+1) + " ID:" + col.id + " Content:" + col.html() + " Number" + number);
+              return;
+           }
+           
+           // an Zahlen anhaengen
+           //alert("ADD NUMBER: Zeile:" + (i+1) + " ID:" + col.id + " Content:" + col.html() + " Number" + number);
+           numbers.push(number);
+       });       
+       
+       // Funktionalitaet: gewünsche Aktion auf alle Zahlen ausführen
+       var funcResult = 0;
+       for (index = 0; index < numbers.length; ++index) {
+           // alert("funcResult +" +  numbers[index]);
+           if (functionName == CONST_FUNCNAME_SUM) {
+              funcResult += numbers[index]; 
+           }
+       }
+       
+       // Inhalt des Elements setzen
+       //alert("funcResult:" + funcResult);
+       var text = (praefix ? praefix : "") + funcResult + (suffix ? suffix : "");
+       elemNodeTD.html(funcResult);
+    }
+    
+    /*
+     * ######################
+     * # Volltextsuche
+     * #######################
+     */
+    function doAllNodeToggler(flgShow, minEbene) {
+        try {
+            // Bloecke Oeffnen/Schließen
+            var toggleList = document.getElementsByClassName("blockToggler");
+            if (toggleList.length > 0) {
+                // Elemente vorhanden
+                for (var j = 0; j < toggleList.length; j++) {
+                    // Elemente iterieren
+                    var element = toggleList[j];
+                    var toggleId = element.getAttribute('toggleId');
+                    var togglerBaseId = element.getAttribute('togglerBaseId');
+
+                    // Pruefen ob Node-Toggler
+                    if (toggleId && toggleId.search("childrencontainer") > 0) {
+                        // Ebene einlesen
+                        var toggleBlock = document.getElementById(toggleId);
+                        var curEbene = 0;
+                        if (toggleBlock) {
+                            curEbene = toggleBlock.getAttribute('data-pjebene');
+                        }
+
+                        var effect = function(){
+                            // Leertoggler
+                            var togEf = new ToggleEffect(toggleId); 
+                            togEf.slideAniLen = 1; 
+                            togEf.doEffect();
+                        };
+                        if (flgShow) {
+                            // Block zeigen
+                            if (minEbene && curEbene && curEbene < minEbene) {
+                                jMATService.getLayoutService().togglerBlockShow(
+                                    togglerBaseId, toggleId, effect);
+                            } else {
+                                jMATService.getLayoutService().togglerBlockHide(
+                                    togglerBaseId, toggleId, effect);
+                            }
+                        }
+                        else {
+                            // Block verbergen
+                            if (minEbene && curEbene && curEbene > minEbene) {
+                                jMATService.getLayoutService().togglerBlockHide(
+                                    togglerBaseId, toggleId, effect);
+                            } else {
+                                jMATService.getLayoutService().togglerBlockShow(
+                                    togglerBaseId, toggleId, effect);
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (e) {
+            // anscheinend  nicht definiert
+            alert(e);
+        }
+    }
+    
+    function doParentNodeToggler(myId, flgShow) {
+        try {
+            // Parent-Container einlesen (Child)
+            var parents = $("#" + myId).parents();
+            if (parents) {
+                parents.map( 
+                    function () {
+                        // Toggler visible setzen, wenn gefunden
+                        var parentId = $(this).attr("id");
+                        if (parentId) {
+                            var nodeIdMatcher = parentId.match(/node_(.*)_childrencontainer/);
+                            if (nodeIdMatcher && nodeIdMatcher.length > 0) {
+                                // Toggler aktivieren
+                                var togglerId = parentId;
+                                if (! $(this).is(":visible")) {
+                                    jMATService.getLayoutService().togglerBlockShow(
+                                        togglerId, togglerId, function () { 
+                                            var togEf = new ToggleEffect(togglerId); 
+                                            togEf.slideAniLen = 1; 
+                                            togEf.doEffect();
+                                        }
+                                     );
+                                }
+
+                                // Element anzeigen
+                                var nodeId = nodeIdMatcher[1];
+                                var master = $("#node_" + nodeId + "_master");
+                                if (master && ! $(master).is(":visible") ) {
+                                    $(master).show();                                
+                                }
+                            }
+                        }
+                    }
+                );
+            }
+        } catch (e) {
+            // anscheinend  nicht definiert
+            alert(e);
+        }
+    }
+    
+
+    /* Um einen Volltext-Treffer zu haben, müssen alle Worte im durchsuchten Text vorkommen. */
+    function VolltextTreffer(inhalt, suchworte) {
+        // Wenn keine Suchzeichenkette als gefnden kennzeichnen
+        if ( suchworte.length == 0 )
+            return true;
+     
+        // alle Suchworte iterieren
+        for ( i = 0; i < suchworte.length; i++) {
+            if ( inhalt.indexOf(suchworte[i]) == -1) {
+                // Wort nicht gefunden
+                return false;
+            }
+        }
+     
+        // alle Worte gefunden
+        return true;
+    }
+    
+    function doSearch(suchworte) {
+        // Suche auf alle Node-Elemente ausführen
+        $(".node-block").each(
+            function(index, value) {
+                var flgFound = false;
+                
+                // Datenelemente konfigurieren
+                var searchElements = new Array();
+                searchElements.push($("#" + $(value).attr("id") + " > div:eq(1)").attr("id")); // Desc
+                searchElements.push($("#" + $(value).attr("id") + " > div:first > div:first > div:first > div:eq(1)").attr("id")); // Name
+                searchElements.push($("#" + $(value).attr("id") + " > div:first > div:eq(1)").attr("id")); // Status 
+
+                // alle Datenelemente iterieren
+                $.each(searchElements,
+                    function(subIndex, subId) {
+                        // Inhalt auslesen
+                        inhalt = $("#"+subId).text().toLowerCase();
+                        
+                        // Volltextsuche
+                        if (VolltextTreffer(inhalt, suchworte)) {
+                            // wenn geufndne: verlassen;
+                            flgFound = true;
+                            return;
+                        }
+                    }
+                 );
+                
+                // Elemente je nach Status der SubElemente ein/ausblenden
+                if (flgFound) {
+                    if ( !$(value).is(":visible") ) {
+                        // Element aktivieren
+                        $(value).show();
+                    }  
+
+                    // Eltern oeffnen
+                    doParentNodeToggler($(value).attr("id"), true);
+                } else {
+                    // Element deaktivieren
+                    $(value).hide();
+                }
+            }
+        );
+    }
+    
+    function startSearch() {
+        // Suchworte auslesen
+        suchworte = $(".volltextsuchfeld").val().toLowerCase().split(" ");
+
+        // alle Toggler schließen
+        doAllNodeToggler(false, 0);
+        
+        // Suche ausfuehren
+        doSearch(suchworte);
+    }
+
+    function resetSearch() {
+        // Suchworte leeren
+        $(".volltextsuchfeld").val('');
+        
+        // suche ausfuehren
+        startSearch();
+    }
+
+    function initSearch() {
+        // Volltextsuche
+        $(".volltextsuchfeld").keyup(
+            function(event) {
+                // nur ausfuehren wenn enter
+                if(event.keyCode != 13) {
+                   return;
+                }
+                
+                // Suche ausfuehren
+                startSearch();
+            }
+        );
+    }
+    
+    /*
+     * ######################
+     * # Symlink
+     * #######################
+     */
+    function openNode(nodeId) {
+        var masterId = "node_" + nodeId + "_master";
+        
+        // Node aktivieren
+        $("#" + masterId).show();
+        
+        // openParent-Nodes
+        doParentNodeToggler(masterId, true);
+        
+        // animated ScrollTo after intervall, because of time used for ToggleEffects
+        delayedFocus = window.setInterval(
+            function() {
+                // nach 0,1 Sekunden ausfuehren und Intervall loeschen
+                $('html, body').animate({
+                    scrollTop: $("#" + masterId).offset().top
+                    }, 
+                    1000);
+                window.clearInterval(delayedFocus);
+            }, 
+            100
+        );
+    }
+    
+    
+    </script>
+
+</head>
+<body>
+    <div id="div_full" style="width: 100%">

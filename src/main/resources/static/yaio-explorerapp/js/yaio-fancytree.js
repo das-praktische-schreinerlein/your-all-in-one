@@ -718,7 +718,7 @@ function renderColumnsForNode(event, data) {
                  .addClass("field_name")
                  .addClass(statestyle);
     var $nameEle = $tdList.eq(1).find("span.fancytree-title");
-    $nameEle.append(" sortPos: " + basenode.sortPos);
+    //$nameEle.append(" sortPos: " + basenode.sortPos);
     
     // render datablock
     var $nodeDataBlock = renderDataBlock(basenode, node);
@@ -1343,6 +1343,29 @@ function showModalConfirmDialog(message, yesHandler, noHandler) {
         }
     });
 }
+
+function yaioShowHelpSite(url) {
+    // set messagetext
+    console.log("yaioShowHelpSite:" + url);
+    $("#help-iframe").attr('src',url);
+    
+    // show message
+    $( "#help-box" ).dialog({
+        modal: true,
+        width: "800px",
+        buttons: {
+          "Schliessen": function() {
+            $( this ).dialog( "close" );
+          },
+          "Eigenes Fenster": function() {
+              var helpFenster = window.open(url, "help", "width=750,height=500,scrollbars=yes,resizable=yes");
+              helpFenster.focus();
+              $( this ).dialog( "close" );
+            }
+        }
+    });    
+}
+
 
 function toggleNodeDescContainer(id) {
     $("#detail_desc_" + id).slideToggle(1000,function() {

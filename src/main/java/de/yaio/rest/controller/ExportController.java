@@ -235,6 +235,61 @@ public class ExportController {
      * <h4>FeatureDomain:</h4>
      *     Webservice
      * <h4>FeatureDescription:</h4>
+     *     Request to read the node for sysUID and return it in documentation-html-format with all children
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>String - documentation-html-format of the node
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice Query
+     * @param sysUID - sysUID to export
+     * @param response - the response-Obj to set contenttype and headers
+     * @return String - documentation-html-format of the node
+     */
+    @RequestMapping(method=RequestMethod.GET, value = "/documentation/{sysUID}", produces="text/html")
+    public @ResponseBody String exportDocumentationNodeAsHtml(
+           @PathVariable(value="sysUID") String sysUID, HttpServletResponse response) {
+        // configure
+        Exporter exporter = new HtmlExporter();
+        
+        // set Options
+        OutputOptions oOptions = new OutputOptionsImpl();
+        oOptions.setAllFlgShow(false);
+        oOptions.setFlgProcessDocLayout(true);
+        oOptions.setFlgReEscapeDesc(true);
+        oOptions.setFlgShowDesc(true);
+        oOptions.setFlgShowName(true);
+        
+        String res = null;
+        try {
+            // read header
+            InputStream in = this.getClass().getResourceAsStream("/static/html/documentation-export-header.html");
+            res = IOUtils.toString(in);
+
+            // run export
+            res += this.exportNode(sysUID, exporter, oOptions, ".html", response);
+            
+            // add footer
+            in = this.getClass().getResourceAsStream("/static/html/documentation-export-footer.html");
+            res = res + IOUtils.toString(in);
+            String pattern = "file:///S:/Daten/Projekte/yourallinone/buero/beispiel";
+            res = res.replace(pattern, "/examples/");
+            System.err.println("replace pattern:" + pattern);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        
+        // change headers to display html in browser
+        response.setContentType("text/html");
+        response.setHeader("Content-Disposition", "");
+        return res;
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
      *     Request to read the node for sysUID and return it in excel-format with all children
      * <h4>FeatureResult:</h4>
      *   <ul>
