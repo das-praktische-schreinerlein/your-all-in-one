@@ -596,8 +596,6 @@ public class NodeRestController {
             // recalc data
             newNode.recalcData(BaseNodeService.CONST_RECURSE_DIRECTION_ONLYME);
             
-            System.out.println("MyNewId:" + newNode.getSysUID() + " Data:" + newNode);
-
             // save
             newNode.persist();
 

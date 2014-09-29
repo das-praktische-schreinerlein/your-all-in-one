@@ -68,7 +68,7 @@ public class WikiExporterTest extends BaseTest {
      * <h4>FeatureKeywords:</h4>
      *     Test Configuration
      * @return Exporter
-     * @throws Exception
+     * @throws Exception - io-Exceptions possible
      */
     public Exporter setupNewExporter() throws Exception {
         return new WikiExporter();
@@ -86,7 +86,7 @@ public class WikiExporterTest extends BaseTest {
      * <h4>FeatureKeywords:</h4>
      *     Test Configuration
      * @return OutputOptions
-     * @throws Exception
+     * @throws Exception - io-Exceptions possible
      */
     public OutputOptions setupNewOutputOptions() throws Exception {
         return new OutputOptionsImpl();
@@ -109,7 +109,7 @@ public class WikiExporterTest extends BaseTest {
      *     do tests for Export
      * <h4>FeatureKeywords:</h4>
      *     Test
-     * @throws Exception
+     * @throws Exception - io-Exceptions possible
      */
     @Test
     public void testExport() throws Exception {
@@ -125,7 +125,7 @@ public class WikiExporterTest extends BaseTest {
      *     Test
      * @param srcFile - file with the source
      * @param expectedResultFile - file with the expected result
-     * @throws Exception
+     * @throws Exception - io-Exceptions possible
      */
     public void testExportFromFixture(String srcFile, String expectedResultFile) throws Exception {
         testExport(this.testService.readFixture(this.getClass(), srcFile).toString(), 
@@ -141,7 +141,7 @@ public class WikiExporterTest extends BaseTest {
      *     Test
      * @param source - the ppl-lines to parse and to convert
      * @param expectedResult - the expected lines from exporter
-     * @throws Exception
+     * @throws Exception - io-Exceptions possible
      */
     public synchronized void testExport(String source, String expectedResult) throws Exception {
         // format source

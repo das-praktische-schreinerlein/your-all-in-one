@@ -53,7 +53,7 @@ public class TestServices {
      *     Test Service
      * @param myTestObj - the dataobj to test
      * @param myExpectedResult - the expected result
-     * @throws Exception
+     * @throws Exception - io-Exceptions possible
      */
     public void checkToStringResult(TestObj myTestObj, 
                     String myExpectedResult) throws Exception {
@@ -74,7 +74,7 @@ public class TestServices {
      *     Test Service
      * @param result - the string to test
      * @param myExpectedResult - the expected result
-     * @throws Exception
+     * @throws Exception - io-Exceptions possible
      */
     public void checkStringLineByLine(String result, String myExpectedResult) 
                     throws Exception {
@@ -112,7 +112,7 @@ public class TestServices {
      * @param base - base to get the packagepath for srcFile
      * @param srcFile - file to load from package
      * @return - resulting filecontent
-     * @throws Exception
+     * @throws Exception - io-Exceptions possible
      */
     public StringBuffer readFixture(Class<?> base, String srcFile) throws Exception {
         // open resource

@@ -60,7 +60,7 @@ public class WikiImporterTest extends BaseTest {
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     Test Configuration
-     * @throws Exception
+     * @throws Exception - io-Exceptions possible
      */
     public Importer setupNewImporter() throws Exception {
         return new WikiImporter(setupNewImportOptions());
@@ -77,7 +77,7 @@ public class WikiImporterTest extends BaseTest {
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     Test Configuration
-     * @throws Exception
+     * @throws Exception - io-Exceptions possible
      */
     public ImportOptions setupNewImportOptions() throws Exception {
         return new WikiImportOptions();
@@ -90,7 +90,7 @@ public class WikiImporterTest extends BaseTest {
      *     do tests for import
      * <h4>FeatureKeywords:</h4>
      *     Test
-     * @throws Exception
+     * @throws Exception - io-Exceptions possible
      */
     @Test
     public void testImport() throws Exception {
@@ -106,7 +106,7 @@ public class WikiImporterTest extends BaseTest {
      *     Test
      * @param srcFile
      * @param expectedResultFile
-     * @throws Exception
+     * @throws Exception - io-Exceptions possible
      */
     public void testImportFromFixture(String srcFile, String expectedResultFile) throws Exception {
         testImport(this.testService.readFixture(this.getClass(), srcFile).toString(), 
@@ -122,7 +122,7 @@ public class WikiImporterTest extends BaseTest {
      *     Test
      * @param source - the lines to parse
      * @param expectedResult - the expected ppl-lines from parser
-     * @throws Exception
+     * @throws Exception - io-Exceptions possible
      */
     public void testImport(String source, String expectedResult) throws Exception {
         // configure Importer

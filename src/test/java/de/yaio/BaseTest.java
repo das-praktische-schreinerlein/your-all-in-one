@@ -68,7 +68,7 @@ public abstract class BaseTest {
      * <h4>FeatureKeywords:</h4>
      *     Test Config Initialisation
      * @return the dataobj for the test
-     * @throws Exception
+     * @throws Exception - io-Exceptions possible
      */
     public abstract TestObj setupNewTestObj() throws Exception;
 
@@ -79,7 +79,7 @@ public abstract class BaseTest {
      *     setup the test
      * <h4>FeatureKeywords:</h4>
      *     Test Config Initialisation
-     * @throws Exception
+     * @throws Exception - io-Exceptions possible
      */
     @Before
     public void setUp() throws Exception {
@@ -92,7 +92,7 @@ public abstract class BaseTest {
      *     teardown the test
      * <h4>FeatureKeywords:</h4>
      *     Test Config
-     * @throws Exception
+     * @throws Exception - io-Exceptions possible
      */
     @After
     public void tearDown() throws Exception {
