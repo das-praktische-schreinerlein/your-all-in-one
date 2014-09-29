@@ -103,6 +103,10 @@ var configNodeTypeFields = {
     InfoNode: {
         fields: [
             { fieldName: "name", type: "textarea"},
+            { fieldName: "docLayoutTagCommand", type: "select"},
+            { fieldName: "docLayoutAddStyleClass", type: "input"},
+            { fieldName: "docLayoutShortName", type: "input"},
+            { fieldName: "docLayoutFlgCloseDiv", type: "checkbox"},
         ]
     },
     UrlResNode: {
@@ -111,6 +115,10 @@ var configNodeTypeFields = {
             { fieldName: "resLocRef", type: "input"},
             { fieldName: "resLocName", type: "input"},
             { fieldName: "resLocTags", type: "textarea"},
+            { fieldName: "docLayoutTagCommand", type: "select"},
+            { fieldName: "docLayoutAddStyleClass", type: "input"},
+            { fieldName: "docLayoutShortName", type: "input"},
+            { fieldName: "docLayoutFlgCloseDiv", type: "checkbox"},
         ]
     },
     SymLinkNode: {
@@ -1046,7 +1054,7 @@ function yaioDoRemoveNode(node, url) {
             console.log("OK done!" + response.state);
             if (response.state == "OK") {
                 console.log("OK removed node:" + node.key + " load:" + response.parentIdHierarchy);
-                if (response.parentIdHierarchy && response.parentIdHierarchy.length > 0) {
+                if (response.parentIdHierarchy && response.parentIdHierarchy.length >= 0) {
                     // reload tree
                     var tree = $("#tree").fancytree("getTree");
                     tree.reload().done(function(){
@@ -1091,6 +1099,18 @@ function yaioDoRemoveNode(node, url) {
  *****************************************/
 
 
+/**
+ * <h4>FeatureDomain:</h4>
+ *     GUI
+ * <h4>FeatureDescription:</h4>
+ *     reset editor (hide all form, empty all formfields)
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>GUI-result: hide editor
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Editor
+ */
 function resetYAIONodeEditor() {
     // reset editor
     console.log("resetYAIONodeEditor: show tree, hide editor");
@@ -1107,12 +1127,25 @@ function resetYAIONodeEditor() {
     $("#containerBoxYaioEditor").css("display", "none");
     
     // hide forms
-    resetYAIONodeEditorForms();
+    hideAllYAIONodeEditorForms();
+    resetYAIONodeEditorFormFields();
 }
 
-function resetYAIONodeEditorForms() {
+/**
+ * <h4>FeatureDomain:</h4>
+ *     GUI
+ * <h4>FeatureDescription:</h4>
+ *     hide all editor-forms
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>GUI-result: hide all editor-forms 
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Editor
+ */
+function hideAllYAIONodeEditorForms() {
     // reset editor
-    console.log("resetYAIONodeEditorForms: hide forms");
+    console.log("hideAllYAIONodeEditorForms: hide forms");
     // hide forms
     $("#containerFormYaioEditorCreate").css("display", "none");
     $("#containerFormYaioEditorTaskNode").css("display", "none");
@@ -1122,6 +1155,105 @@ function resetYAIONodeEditorForms() {
     $("#containerFormYaioEditorSymLinkNode").css("display", "none");
 }
 
+/**
+ * <h4>FeatureDomain:</h4>
+ *     GUI
+ * <h4>FeatureDescription:</h4>
+ *     reset all formfields
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>GUI-result: empty all formfields 
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Editor
+ */
+function resetYAIONodeEditorFormFields() {
+    // reset data
+    // configure value mapping
+    var basenode = {};
+    for (var formName in configNodeTypeFields) {
+        var fields = new Array();
+        fields = fields.concat(configNodeTypeFields.Common.fields);
+        fields = fields.concat(configNodeTypeFields[formName].fields);
+        for (var idx in fields) {
+            var field = fields[idx];
+            yaioSetFormField(field, formName, basenode);
+        }
+    }
+}
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     GUI
+ * <h4>FeatureDescription:</h4>
+ *     updates the formfield with the nodedata
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>GUI-result: updates formfield 
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Editor
+ * @param field - fieldconfig from configNodeTypeFields
+ * @param fieldSuffix - sufix of the fieldName to identify the form (nodeclass of basenode)
+ * @param basenoe - the node to map the fieldvalue
+ */
+function yaioSetFormField(field, fieldSuffix, basenode) {
+    var fieldName = field.fieldName;
+    var fieldNameId = "#input" + fieldName.charAt(0).toUpperCase() + fieldName.slice(1) + fieldSuffix;
+    var value = basenode[fieldName];
+    
+    // convert value
+    if (field.datatype == "integer" && (! value || value == "undefined" || value == null)) {
+        // specical int
+        value = 0
+    } else if (field.datatype == "date")  {
+        // date
+        value = formatGermanDate(value);
+    } else if (field.datatype == "datetime")  {
+        // date
+        value = formatGermanDateTime(value);
+    } else if (! value || value == "undefined" || value == null) {
+        // alle other
+        value = "";
+    } 
+    
+    // set depending on the fieldtype
+    if (field.type == "hidden") {
+        $(fieldNameId).val(value).trigger('input').triggerHandler("change");
+    } else if (field.type == "select") {
+        $(fieldNameId).val(value).trigger('select').triggerHandler("change");
+    } else if (field.type == "checkbox") {
+        if (value) {
+            $(fieldNameId).prop("checked", true);
+        } else {
+            $(fieldNameId).prop("checked", false);
+        }
+        $(fieldNameId).trigger('input').triggerHandler("change");
+    } else if (field.type == "textarea") {
+        $(fieldNameId).val(value).trigger('select').triggerHandler("change");
+    } else {
+        // input
+        $(fieldNameId).val(value).trigger('input');
+    }
+    console.log("yaioSetFormField map nodefield:" + fieldName 
+            + " set:" + fieldNameId + "=" + value);
+    
+}
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     GUI
+ * <h4>FeatureDescription:</h4>
+ *     open the nodeeditor for the node (toggle it fromleft), transfer the data from node to the formfields  
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>GUI-result: reset forms+field, hide forms, open the spcific form for the nodeclass, updates fields
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Editor
+ * @param nodeId - id of the node
+ * @param mode - edit, create, createsymlink
+ */
 function openYAIONodeEditor(nodeId, mode) {
     // reset editor
     console.log("openYAIONodeEditor: reset editor");
@@ -1213,38 +1345,7 @@ function openYAIONodeEditor(nodeId, mode) {
     // iterate fields
     for (var idx in fields) {
         var field = fields[idx];
-        var fieldName = field.fieldName;
-        var fieldNameId = "#input" + fieldName.charAt(0).toUpperCase() + fieldName.slice(1) + fieldSuffix;
-        var value = basenode[fieldName];
-        
-        // convert value
-        if (field.datatype == "integer" && (! value || value == "undefined" || value == null)) {
-            // specical int
-            value = 0
-        } else if (field.datatype == "date")  {
-            // date
-            value = formatGermanDate(value);
-        } else if (field.datatype == "datetime")  {
-            // date
-            value = formatGermanDateTime(value);
-        } else if (! value || value == "undefined" || value == null) {
-            // alle other
-            value = "";
-        } 
-        
-        // set depending on the fieldtype
-        if (field.type == "hidden") {
-            $(fieldNameId).val(value).trigger('input').triggerHandler("change");
-        } else if (field.type == "select") {
-            $(fieldNameId).val(value).trigger('select').triggerHandler("change");
-        } else if (field.type == "textarea") {
-            $(fieldNameId).val(value).trigger('select').triggerHandler("change");
-        } else {
-            // input
-            $(fieldNameId).val(value).trigger('input');
-        }
-        console.log("openYAIONodeEditor map nodefield:" + fieldName 
-                + " set:" + fieldNameId + "=" + value);
+        yaioSetFormField(field, fieldSuffix, basenode);
     }
     
     // show editor
@@ -1263,31 +1364,60 @@ function openYAIONodeEditor(nodeId, mode) {
     //$("#containerYaioEditor").css("display", "block");
     toggleElement("#containerYaioEditor");
 
+//    $.datepicker.regional['de'].buttonImage = '../images/calendar.gif';
+//    $.datepicker.regional['de'].buttonImageOnly = true;
+//    $.datepicker.regional['de'].showOn = true;
+//    $.datepicker({
+//        prevText: '&lt;zur&uuml;ck', prevStatus: '',
+//        prevJumpText: '&lt;&lt;', prevJumpStatus: '',
+//        nextText: 'Vor&gt;', nextStatus: '',
+//        nextJumpText: '&gt;&gt;', nextJumpStatus: '',
+//        currentText: 'heute', currentStatus: '',
+//        todayText: 'heute', todayStatus: '',
+//        clearText: '-', clearStatus: '',
+//        closeText: 'schließen', closeStatus: '',
+//        monthNames: ['Januar','Februar','März','April','Mai','Juni',
+//                     'Juli','August','September','Oktober','November','Dezember'],
+//        monthNamesShort: ['Jan','Feb','Mär','Apr','Mai','Jun',
+//                          'Jul','Aug','Sep','Okt','Nov','Dez'],
+//        dayNames: ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'],
+//        dayNamesShort: ['So','Mo','Di','Mi','Do','Fr','Sa'],
+//        dayNamesMin: ['So','Mo','Di','Mi','Do','Fr','Sa'],
+//        showMonthAfterYear: false,
+//        showOn: 'both',
+//        buttonImage: '../images/calendar.gif',
+//        buttonImageOnly: true,
+//        dateFormat:'dd.mm.yy'
+//    });
     // add datepicker to all dateinput
-    $('input.inputtype_date').datepicker({
-        prevText: '&lt;zur&uuml;ck', prevStatus: '',
-        prevJumpText: '&lt;&lt;', prevJumpStatus: '',
-        nextText: 'Vor&gt;', nextStatus: '',
-        nextJumpText: '&gt;&gt;', nextJumpStatus: '',
-        currentText: 'heute', currentStatus: '',
-        todayText: 'heute', todayStatus: '',
-        clearText: '-', clearStatus: '',
-        closeText: 'schließen', closeStatus: '',
-        monthNames: ['Januar','Februar','März','April','Mai','Juni',
-                     'Juli','August','September','Oktober','November','Dezember'],
-        monthNamesShort: ['Jan','Feb','Mär','Apr','Mai','Jun',
-                          'Jul','Aug','Sep','Okt','Nov','Dez'],
-        dayNames: ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'],
-        dayNamesShort: ['So','Mo','Di','Mi','Do','Fr','Sa'],
-        dayNamesMin: ['So','Mo','Di','Mi','Do','Fr','Sa'],
-        showMonthAfterYear: false,
-        showOn: 'both',
-        buttonImage: '../images/calendar.gif',
-        buttonImageOnly: true,
-        dateFormat:'dd.mm.yy'
-    });
+    $.datepicker.setDefaults($.datepicker.regional['de']);
+    $.timepicker.regional['de'] = {
+            timeOnlyTitle: 'Uhrzeit auswählen',
+            timeText: 'Zeit',
+            hourText: 'Stunde',
+            minuteText: 'Minute',
+            secondText: 'Sekunde',
+            currentText: 'Jetzt',
+            closeText: 'Auswählen',
+            ampm: false
+          };
+    $.timepicker.setDefaults($.timepicker.regional['de']);    
+    $('input.inputtype_date').datepicker();
+    $('input.inputtype_datetime').datetimepicker();
 }
 
+/**
+ * <h4>FeatureDomain:</h4>
+ *     GUI
+ * <h4>FeatureDescription:</h4>
+ *     close the nodeditor, toggle it to the left
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>GUI-result: close the editor
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Tree Editor
+ */
 function closeYAIONodeEditor() {
     console.log("close editor");
     toggleElement("#containerYaioEditor");
@@ -1424,8 +1554,7 @@ function formatGermanDateTime(millis) {
         + "." + padNumber(date.getMonth() + 1, 2)
         + "." + date.getFullYear()
         + " " + padNumber(date.getHours(), 2)
-        + ":" + padNumber(date.getMinutes(), 2)
-        + ":" + padNumber(date.getSeconds(), 2);
+        + ":" + padNumber(date.getMinutes(), 2);
 }
 function formatGermanDate(millis) {
     if (millis == null) {

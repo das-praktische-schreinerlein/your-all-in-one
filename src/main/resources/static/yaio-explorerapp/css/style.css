@@ -27,6 +27,10 @@ body {
     line-height: 1.3em; 
     font-size: 11px;
 }
+h4 {
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
 
 .pageContent {
     width: 95%;
@@ -329,10 +333,10 @@ label {
 .inputtype_date {
     width: 80px;
 } 
-.textareatype_resLocRef {
+.inputtype_resLocRef {
     width: 500px;
 } 
-.textareatype_resLocName {
+.inputtype_resLocName {
     width: 500px;
 } 
 .textareatype_resLocTags {
@@ -516,4 +520,3 @@ td input[type=input] {
 body .ui-tooltip {
     border-width: 2px;
 }
- 

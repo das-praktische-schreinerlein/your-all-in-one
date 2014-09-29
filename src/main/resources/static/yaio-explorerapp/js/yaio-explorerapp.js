@@ -27,7 +27,7 @@
  * @copyright Copyright (c) 2014, Michael Schreiner
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-var yaioM = angular.module('yaioExplorerApp', ['ngAnimate', 'ngRoute']);
+var yaioM = angular.module('yaioExplorerApp', ['ngAnimate', 'ngRoute', 'pascalprecht.translate']);
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -76,6 +76,32 @@ yaioM.config(['$httpProvider', function($httpProvider) {
         'Content-Type': 'application/json;charset=utf-8'
     }
 }]);
+
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Configuration
+ * <h4>FeatureDescription:</h4>
+ *     configures $translateProvider - international app
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>updates $translateProvider
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Configuration
+ * @param $httpProvider - the $translateProvider to get text-resources
+ */
+yaioM.config(function ($translateProvider) {
+    $translateProvider.translations();
+    
+    $translateProvider.useStaticFilesLoader({
+        prefix: 'lang/lang-',
+        suffix: '.json'
+      });
+
+    // default-language
+   $translateProvider.preferredLanguage('de');
+});
     
 /**
  * <h4>FeatureDomain:</h4>
@@ -274,7 +300,7 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
      */
     $scope.selectNewNodeType = function(formName) {
         // hide all forms
-        resetYAIONodeEditorForms();
+        hideAllYAIONodeEditorForms();
         
         // display createform and select nodeform
         $("#containerFormYaioEditorCreate").css("display", "block");
@@ -292,7 +318,6 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
         return false;
     }
     
-
     /**
      * <h4>FeatureDomain:</h4>
      *     Callback
@@ -316,6 +341,7 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
         fields = fields.concat(configNodeTypeFields.Common.fields);
         if ($scope.nodeForEdit.className == "TaskNode") {
             fields = fields.concat(configNodeTypeFields.TaskNode.fields);
+            $scope.nodeForEdit.type = $scope.nodeForEdit.state;
         } else if ($scope.nodeForEdit.className == "EventNode") {
             fields = fields.concat(configNodeTypeFields.EventNode.fields);
         } else if ($scope.nodeForEdit.className == "InfoNode") {
@@ -335,19 +361,25 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
             if (field.intern) {
                 // ignore intern
                 continue;
+            } if (field.type == "checkbox" && ! value) {
+                value = "";
             }
             
             // convert values
             if (field.datatype == "date" && value) {
+                console.log("map nodefield date pre:" + fieldName + "=" + value);
                 var lstDate=value.split(".");
                 var newDate=new Date(lstDate[1]+"/"+lstDate[0]+"/"+lstDate[2]);
                 value = newDate.getTime();
+                console.log("map nodefield date post:" + fieldName + "=" + newDate + "->" + value);
             } if (field.datatype == "datetime" && value) {
+                console.log("map nodefield datetime pre:" + fieldName + "=" + value);
                 var lstDateTime=value.split(" ");
                 var lstDate = lstDateTime[0].split(".");
                 var lstTime = lstDateTime[1];
-                var newDate=new Date(lstDate[1]+"/"+lstDate[0]+"/"+lstDate[2] + " " + lstTime[1]);
+                var newDate=new Date(lstDate[1]+"/"+lstDate[0]+"/"+lstDate[2] + " " + lstTime[1] + ":00");
                 value = newDate.getTime();
+                console.log("map nodefield datetime post:" + fieldName + "=" + newDate + "->" + value);
             }
             
             nodeObj[fieldName] = value;

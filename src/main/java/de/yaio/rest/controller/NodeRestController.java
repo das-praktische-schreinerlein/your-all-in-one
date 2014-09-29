@@ -298,13 +298,8 @@ public class NodeRestController {
             TaskNode newTaskNode = (TaskNode)newNode;
             TaskNode origTaskNode = (TaskNode)origNode;
             
-            // check for state
-            if (Calculator.compareValues(
-                            origNode.getState(), newNode.getState()) 
-                            != Calculator.CONST_COMPARE_EQ) {
-                origNode.setState(newNode.getState());
-                flgChange = true;
-            }
+            // get state from type
+            origNode.setState(origNode.getType());
             // check for Plan aufwand
             if (Calculator.compareValues(
                             origTaskNode.getPlanAufwand(), newTaskNode.getPlanAufwand()) 

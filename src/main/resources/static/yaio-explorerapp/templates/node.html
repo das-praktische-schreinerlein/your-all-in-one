@@ -83,30 +83,32 @@
         ************************* 
         -->
         <div class="hidden container-yaio-editor-create" id="containerFormYaioEditorCreate">
-          <h2>Nodetyp auswählen:</h2>
+          <h4 translate="editor.formCreate.ue">Nodetyp auswählen:</h4>
+          <p translate="editor.formCreate.intro" class="msg-form-intro" id="nodeFormCreateIntro"></p>
+
           <form with-errors class="hidden" id="nodeFormCreate" name="nodeFormCreate">
-            
+
             <!-- simulate hiddenfield -->
             <input class="hidden" type="text" name="sysUID" ng-model="nodeForEdit.sysUID" id="inputSysUIDCreate" required ng-change="">
             <fieldset>
-              <legend>Stammdaten</legend>
+              <legend translate="editor.common.legend.Stammdaten">Stammdaten</legend>
               
               <!-- show textfield -->
-              <label for="state">Typ</label> 
+              <label for="state" translate="editor.common.label.state">Typ</label> 
               <select type="text" name="className" ng-model="nodeForEdit.className" class="inputtype_type" id="inputCreateNodeType" required ng-change="selectNewNodeType('nodeFormCreate')"> 
                   <option value="">Bitte wählen
-                  <option value="TaskNode">Task
-                  <option value="EventNode">Event
-                  <option value="InfoNode">Info
-                  <option value="UrlResNode">UrlRes
-                  <option value="SymLinkNode">Symlink
+                  <option translate="common.select.TaskNode" value="TaskNode">Task
+                  <option translate="common.select.EventNode" value="EventNode">Event
+                  <option translate="common.select.InfoNode" value="InfoNode">Info
+                  <option translate="common.select.UrlResNode" value="UrlResNode">UrlRes
+                  <option translate="common.select.SymLinkNode" value="SymLinkNode">Symlink
               </select>
               
             </fieldset>
 
             <fieldset>
-              <button ng-click="selectNewNodeType('nodeFormCreate')" ng-disabled="nodeFormCreate.$invalid" class="btn btn-primary">Select</button>
-              <button ng-click="discard()" class="btn btn-primary">Discard</button>
+              <button ng-click="selectNewNodeType('nodeFormCreate')" ng-disabled="nodeFormCreate.$invalid" class="btn btn-primary" translate="editor.formCreate.buttonSelect">Select</button>
+              <button ng-click="discard()" class="btn btn-primary" translate="common.buttonDiscard">Discard</button>
             </fieldset>
           </form> 
         </div>
@@ -117,7 +119,9 @@
         ************************* 
         -->
         <div class="hidden container-yaio-editor-tasknode" id="containerFormYaioEditorTaskNode">
-          <h2>Task bearbeiten:</h2>
+          <h4 translate="editor.formTaskNode.ue">Task bearbeiten:</h4>
+          <p translate="editor.formTaskNode.intro" class="msg-form-intro" id="nodeFormTaskNodeIntro"></p>
+
           <form with-errors class="hidden" id="nodeFormTaskNode" name="nodeFormTaskNode">
             <!-- simulate hiddenfield -->
             <input class="hidden" type="text" name="sysUID" ng-model="nodeForEdit.sysUID" id="inputSysUIDTaskNode" required ng-change="">
@@ -125,98 +129,86 @@
             <input class="hidden" type="text" name="mode" ng-model="nodeForEdit.mode" id="inputModeTaskNode" required ng-change="">
 
             <fieldset>
-              <legend>Stammdaten</legend>
+              <legend translate="editor.common.legend.Stammdaten">Stammdaten</legend>
               
               <!-- show textfield -->
-              <label for="name">Titel</label> 
+              <label for="name" translate="editor.common.label.name">Titel</label> 
               <input type="text" name="name" class="inputtype_name" ng-model="nodeForEdit.name" id="inputNameTaskNode" required ng-change=""> 
               <fielderrors for="name"></fielderrors>
 
               <br />
               
               <!-- show textfield -->
-              <label for="state">Status</label> 
-              <select type="text" name="state" class="inputtype_state" ng-model="nodeForEdit.state" id="inputStateTaskNode" required ng-change=""> 
+              <label for="type" translate="editor.formTaskNode.label.type">Status</label> 
+              <select type="text" name="type" class="inputtype_type" ng-model="nodeForEdit.type" id="inputTypeTaskNode" required ng-change=""> 
                   <option value="">Bitte wählen
-                  <option value="OFFEN">OFFEN
-                  <option value="LATE">LATE
-                  <option value="RUNNING">RUNNING
-                  <option value="WARNING">WARNING
-                  <option value="ERLEDIGT">ERLEDIGT
-                  <option value="VERWORFEN">VERWORFEN
-              </select> 
-              <fielderrors for="state"></fielderrors>
-
-              <!-- show select -->
-              <label for="type">Typ</label> 
-              <select type="text" name="type" class="inputtype_type" ng-model="nodeForEdit.type" id="inputTypeTaskNode" required ng-change="">
-                  <option value="">Bitte wählen
-                  <option value="OFFEN">OFFEN
-                  <option value="LATE">LATE
-                  <option value="RUNNING">RUNNING
-                  <option value="WARNING">WARNING
-                  <option value="ERLEDIGT">ERLEDIGT
-                  <option value="VERWORFEN">VERWORFEN
+                  <option value="UNKNOWN">Ungeplant
+                  <option value="OFFEN">Offen
+                  <option value="LATE">Start verspätet
+                  <option value="RUNNING">in Bearbeitung
+                  <option value="WARNING">Ende überschritten
+                  <option value="ERLEDIGT">Erledigt
+                  <option value="VERWORFEN">Verworfen
               </select> 
               <fielderrors for="type"></fielderrors>
             </fieldset>
 
             <fieldset>
-              <legend>Plan</legend>
+              <legend translate="editor.common.legend.Plan">Plan</legend>
               
               <!-- show textfield -->
-              <label for="planAufwand">Aufwand</label> 
+              <label for="planAufwand" translate="editor.common.label.planAufwand">Aufwand</label> 
               <input type="number" name="planAufwand" class="inputtype_aufwand" ng-model="nodeForEdit.planAufwand" id="inputPlanAufwandTaskNode" ng-change=""> 
               <fielderrors for="planAufwand"></fielderrors>
 
               <!-- show textfield -->
-              <label for="planStart">Start</label> 
-              <input type="text" name="planStart" class="inputtype_date" ng-model="nodeForEdit.planStart" id="inputPlanStartTaskNode" ng-change=""> 
+              <label for="planStart" translate="editor.common.label.planStart">Start</label> 
+              <input type="text" name="planStart" pattern="\d{2}\.\d{2}\.\d{4}"  maxsize="10" class="inputtype_date" ng-model="nodeForEdit.planStart" id="inputPlanStartTaskNode" ng-change=""> 
               <fielderrors for="planStart"></fielderrors>
 
               <!-- show textfield -->
-              <label for="planEnde">Ende</label> 
-              <input type="text" name="planEnde" class="inputtype_date" ng-model="nodeForEdit.planEnde" id="inputPlanEndeTaskNode" ng-change=""> 
+              <label for="planEnde" translate="editor.common.label.planEnde">Ende</label> 
+              <input type="text" name="planEnde" pattern="\d{2}\.\d{2}\.\d{4}"  maxsize="10" class="inputtype_date" ng-model="nodeForEdit.planEnde" id="inputPlanEndeTaskNode" ng-change=""> 
               <fielderrors for="planEnde"></fielderrors>
             </fieldset>
 
             <fieldset>
-              <legend>Ist</legend>
+              <legend translate="editor.common.legend.Ist">Ist</legend>
               
               <!-- show textfield -->
-              <label for="istAufwand">Aufwand</label> 
+              <label for="istAufwand" translate="editor.common.label.istAufwand">Aufwand</label> 
               <input type="number" name="istAufwand" class="inputtype_aufwand" ng-model="nodeForEdit.istAufwand" id="inputIstAufwandTaskNode" ng-change=""> 
               <fielderrors for="istAufwand"></fielderrors>
 
               <!-- show textfield -->
-              <label for="istStart">Start</label> 
-              <input type="text" name="istStart" class="inputtype_date" ng-model="nodeForEdit.istStart" id="inputIstStartTaskNode" ngEventNode""> 
+              <label for="istStart" translate="editor.common.label.istStart">Start</label> 
+              <input type="text" name="istStart" pattern="\d{2}\.\d{2}\.\d{4}"  maxsize="10" class="inputtype_date" ng-model="nodeForEdit.istStart" id="inputIstStartTaskNode" ngEventNode""> 
               <fielderrors for="istStart"></fielderrors>
 
               <!-- show textfield -->
-              <label for="istEnde">Ende</label> 
-              <input type="text" name="istEnde" class="inputtype_date" ng-model="nodeForEdit.istEnde" id="inputIstEndeTaskNode" ng-change=""> 
+              <label for="istEnde" translate="editor.common.label.istEnde">Ende</label> 
+              <input type="text" name="istEnde" pattern="\d{2}\.\d{2}\.\d{4}"  maxsize="10" class="inputtype_date" ng-model="nodeForEdit.istEnde" id="inputIstEndeTaskNode" ng-change=""> 
               <fielderrors for="istEnde"></fielderrors>
 
               <!-- show textfield -->
-              <label for="istStand">Stand</label> 
+              <label for="istStand" translate="editor.common.label.istStand">Stand</label> 
               <input type="number" min="0" max="100" name="istStand" class="inputtype_stand" ng-model="nodeForEdit.istStand" id="inputIstStandTaskNode" ng-change=""> 
               <fielderrors for="istStand"></fielderrors>
 
             </fieldset>
 
             <fieldset>
-              <legend>Details</legend>
+              <legend translate="editor.common.legend.Details">Details</legend>
               
               <!-- show textfield -->
-              <label for="nodeDesc">Details</label> 
+              <label for="nodeDesc" translate="editor.common.label.nodeDesc">Details</label> 
               <textarea name="nodeDesc" class="textareatype_nodeDesc" ng-model="nodeForEdit.nodeDesc" id="inputNodeDescTaskNode" ng-change=""></textarea> 
               <fielderrors for="nodeDesc"></fielderrors>
             </fieldset>
 
             <fieldset>
-              <button ng-click="save('nodeFormTaskNode')" ng-disabled="nodeFormTaskNode.$invalid" class="btn btn-primary">Save</button>
-              <button ng-click="discard()" class="btn btn-primary">Discard</button>
+              <button ng-click="save('nodeFormTaskNode')" ng-disabled="nodeFormTaskNode.$invalid" class="btn btn-primary"translate="common.buttonSave">Save</button>
+              <button ng-click="discard()" class="btn btn-primary" translate="common.buttonDiscard">Discard</button>
             </fieldset>
           </form>
         </div>
@@ -227,7 +219,8 @@
         ************************* 
         -->
         <div class="hidden container-yaio-editor-eventnode" id="containerFormYaioEditorEventNode">
-          <h2>Event bearbeiten:</h2>
+          <h4 translate="editor.formEventNode.ue">Event bearbeiten:</h4>
+          <p translate="editor.formEventNode.intro" class="msg-form-intro" id="nodeFormEventNodeIntro"></p>
 
           <form with-errors class="hidden" id="nodeFormEventNode" name="nodeFormEventNode">
             <!-- simulate hiddenfield -->
@@ -236,100 +229,87 @@
             <input class="hidden" type="text" name="mode" ng-model="nodeForEdit.mode" id="inputModeEventNode" required ng-change="">
 
             <fieldset>
-              <legend>Stammdaten</legend>
+              <legend translate="editor.common.legend.Stammdaten">Stammdaten</legend>
               
               <!-- show textfield -->
-              <label for="name">Titel</label> 
+              <label for="name" translate="editor.common.label.name">Titel</label> 
               <input type="text" name="name" class="inputtype_name" ng-model="nodeForEdit.name" id="inputNameEventNode" required ng-change=""> 
               <fielderrors for="name"></fielderrors>
 
               <br />
               
               <!-- show textfield -->
-              <label for="state">Status</label> 
-              <select type="text" name="state" class="inputtype_state" ng-model="nodeForEdit.state" id="inputStateEventNode" required ng-change=""> 
+              <label for="type" translate="editor.formEventNode.label.type">Status</label> 
+              <select type="text" name="type" class="inputtype_type" ng-model="nodeForEdit.type" id="inputTypeEventNode" required ng-change=""> 
                   <option value="">Bitte wählen
-                  <option value="EVENT_PLANED">PLANED
-                  <option value="EVENT_CONFIRMED">CONFIRMED
-                  <option value="EVENT_LATE">LATE
-                  <option value="EVENT_RUNNING">RUNNING
-                  <option value="EVENT_SHORT">SHORT
-                  <option value="EVENT_ERLEDIGT">ERLEDIGT
-                  <option value="EVENT_VERWORFEN">VERWORFEN
-              </select> 
-              <fielderrors for="state"></fielderrors>
-
-              <!-- show select -->
-              <label for="type">Typ</label> 
-              <select type="text" name="type" class="inputtype_type" ng-model="nodeForEdit.type" id="inputTypeEventNode" required ng-change="">
-                  <option value="">Bitte wählen
-                  <option value="EVENT_PLANED">PLANED
-                  <option value="EVENT_CONFIRMED">CONFIRMED
-                  <option value="EVENT_LATE">LATE
-                  <option value="EVENT_RUNNING">RUNNING
-                  <option value="EVENT_SHORT">SHORT
-                  <option value="EVENT_ERLEDIGT">ERLEDIGT
-                  <option value="EVENT_VERWORFEN">VERWORFEN
+                  <option value="EVENT_UNKNOWN">ungeplant
+                  <option value="EVENT_PLANED">Termin geplant
+                  <option value="EVENT_CONFIRMED">Termin bestätigt
+                  <option value="EVENT_LATE">geplanter Starttermin überschritten
+                  <option value="EVENT_RUNNING">Termin läuft
+                  <option value="EVENT_SHORT">geplanter Endetermin überschritten
+                  <option value="EVENT_ERLEDIGT">Erledigt
+                  <option value="EVENT_VERWORFEN">Verworfen
               </select> 
               <fielderrors for="type"></fielderrors>
             </fieldset>
 
             <fieldset>
-              <legend>Plan</legend>
+              <legend translate="editor.common.legend.Plan">Plan</legend>
               
               <!-- show textfield -->
-              <label for="planAufwand">Aufwand</label> 
+              <label for="planAufwand" translate="editor.common.label.planAufwand">Aufwand</label> 
               <input type="number" name="planAufwand" class="inputtype_aufwand" ng-model="nodeForEdit.planAufwand" id="inputPlanAufwandEventNode" ng-change=""> 
               <fielderrors for="planAufwand"></fielderrors>
 
               <!-- show textfield -->
-              <label for="planStart">Start</label> 
-              <input type="text" name="planStart" class="inputtype_datetime" ng-model="nodeForEdit.planStart" id="inputPlanStartEventNode" ng-change=""> 
+              <label for="planStart" translate="editor.common.label.planStart">Start</label> 
+              <input type="text" name="planStart" pattern="\d{2}\.\d{2}\.\d{4} \d{2}\:\d{2}" maxsize="16" class="inputtype_datetime" ng-model="nodeForEdit.planStart" id="inputPlanStartEventNode" required ng-change=""> 
               <fielderrors for="planStart"></fielderrors>
 
               <!-- show textfield -->
-              <label for="planEnde">Ende</label> 
-              <input type="text" name="planEnde" class="inputtype_datetime" ng-model="nodeForEdit.planEnde" id="inputPlanEndeEventNode" ng-change=""> 
+              <label for="planEnde" translate="editor.common.label.planEnde">Ende</label> 
+              <input type="text" name="planEnde" pattern="\d{2}\.\d{2}\.\d{4} \d{2}\:\d{2}" maxsize="16" class="inputtype_datetime" ng-model="nodeForEdit.planEnde" id="inputPlanEndeEventNode" ng-change=""> 
               <fielderrors for="planEnde"></fielderrors>
             </fieldset>
 
             <fieldset>
-              <legend>Ist</legend>
+              <legend translate="editor.common.legend.Ist">Ist</legend>
               
               <!-- show textfield -->
-              <label for="istAufwand">Aufwand</label> 
+              <label for="istAufwand" translate="editor.common.label.istAufwand">Aufwand</label> 
               <input type="number" name="istAufwand" class="inputtype_aufwand" ng-model="nodeForEdit.istAufwand" id="inputIstAufwandEventNode" ng-change=""> 
               <fielderrors for="istAufwand"></fielderrors>
 
               <!-- show textfield -->
-              <label for="istStart">Start</label> 
-              <input type="text" name="istStart" class="inputtype_datetime" ng-model="nodeForEdit.istStart" id="inputIstStartEventNode" ng-change=""> 
+              <label for="istStart" translate="editor.common.label.istStart">Start</label> 
+              <input type="text" name="istStart" pattern="\d{2}\.\d{2}\.\d{4} \d{2}\:\d{2}" maxsize="16" class="inputtype_datetime" ng-model="nodeForEdit.istStart" id="inputIstStartEventNode" ng-change=""> 
               <fielderrors for="istStart"></fielderrors>
 
               <!-- show textfield -->
-              <label for="istEnde">Ende</label> 
-              <input type="text" name="istEnde" class="inputtype_datetime" ng-model="nodeForEdit.istEnde" id="inputIstEndeEventNode" ng-change=""> 
+              <label for="istEnde" translate="editor.common.label.istEnde">Ende</label> 
+              <input type="text" name="istEnde" pattern="\d{2}\.\d{2}\.\d{4} \d{2}\:\d{2}" maxsize="16" class="inputtype_datetime" ng-model="nodeForEdit.istEnde" id="inputIstEndeEventNode" ng-change=""> 
               <fielderrors for="istEnde"></fielderrors>
 
               <!-- show textfield -->
-              <label for="istStand">Stand</label> 
+              <label for="istStand" translate="editor.common.label.istStand">Stand</label> 
               <input type="number" min="0" max="100" name="istStand" class="inputtype_stand" ng-model="nodeForEdit.istStand" id="inputIstStandEventNode" ng-change=""> 
               <fielderrors for="istStand"></fielderrors>
 
             </fieldset>
 
             <fieldset>
-              <legend>Details</legend>
+              <legend translate="editor.common.legend.Details">Details</legend>
               
               <!-- show textfield -->
-              <label for="nodeDesc">Details</label> 
+              <label for="nodeDesc" translate="editor.common.label.nodeDesc">Details</label> 
               <textarea name="nodeDesc" class="textareatype_nodeDesc" ng-model="nodeForEdit.nodeDesc" id="inputNodeDescEventNode" ng-change=""></textarea> 
               <fielderrors for="nodeDesc"></fielderrors>
             </fieldset>
 
             <fieldset>
-              <button ng-click="save('nodeFormEventNode')" ng-disabled="nodeFormEventNode.$invalid" class="btn btn-primary">Save</button>
-              <button ng-click="discard()" class="btn btn-primary">Discard</button>
+              <button ng-click="save('nodeFormEventNode')" ng-disabled="nodeFormEventNode.$invalid" class="btn btn-primary"translate="common.buttonSave">Save</button>
+              <button ng-click="discard()" class="btn btn-primary" translate="common.buttonDiscard">Discard</button>
             </fieldset>
           </form>
         </div>
@@ -340,7 +320,8 @@
         ************************* 
         -->
         <div class="hidden container-yaio-editor-infonode" id="containerFormYaioEditorInfoNode">
-          <h2>Info bearbeiten:</h2>
+          <h4 translate="editor.formInfoNode.ue">Info bearbeiten:</h4>
+          <p translate="editor.formInfoNode.intro" class="msg-form-intro" id="nodeFormInfoNodeIntro"></p>
 
           <form with-errors class="hidden" id="nodeFormInfoNode" name="nodeFormInfoNode">
             <!-- simulate hiddenfield -->
@@ -349,17 +330,17 @@
             <input class="hidden" type="text" name="mode" ng-model="nodeForEdit.mode" id="inputModeInfoNode" required ng-change="">
 
             <fieldset>
-              <legend>Stammdaten</legend>
+              <legend translate="editor.common.legend.Stammdaten">Stammdaten</legend>
               
               <!-- show textfield -->
-              <label for="name">Titel</label> 
+              <label for="name" translate="editor.common.label.name">Titel</label> 
               <textarea name="name" class="textareatype_name" ng-model="nodeForEdit.name" id="inputNameInfoNode" required ng-change=""></textarea> 
               <fielderrors for="name"></fielderrors>
 
               <br />
               
               <!-- show select -->
-              <label for="type">Typ</label> 
+              <label for="type" translate="editor.common.label.type">Typ</label> 
               <select type="text" name="type" class="inputtype_type" ng-model="nodeForEdit.type" id="inputTypeInfoNode" required ng-change="">
                   <option value="">Bitte wählen
                   <option value="INFO">Information
@@ -371,17 +352,49 @@
             </fieldset>
       
             <fieldset>
-              <legend>Details</legend>
+              <legend translate="editor.common.legend.Layout">Layout</legend>
+              
+              <!-- show select -->
+              <label for="docLayoutTagCommand" translate="editor.common.label.docLayoutTagCommand">Html-Tag</label> 
+              <select name="docLayoutTagCommand" class="inputtype_docLayoutTagCommand" ng-model="nodeForEdit.docLayoutTagCommand" id="inputDocLayoutTagCommandInfoNode" ng-change="">
+                  <option value="">Bitte wählen
+                  <option value="DIV">Block starten
+                  <option value="UE">Überschrift
+                  <option value="P">Textzeile
+                  <option value="LI">Aufzähungszeile
+                  <option value="TR">Tabellenzeile
+                  <option value="DIRECT">Direkte Ausgabe
+                  <option value="ENDDIV">Block beenden
+              </select> 
+              <fielderrors for="docLayoutTagCommand"></fielderrors>
+
+              <label for="docLayoutAddStyleClass" translate="editor.common.label.docLayoutAddStyleClass">CSS-Klasse</label> 
+              <input type="text" name="docLayoutAddStyleClass" class="inputtype_docLayoutAddStyleClass" ng-model="nodeForEdit.docLayoutAddStyleClass" id="inputDocLayoutAddStyleClassInfoNode" ng-change=""> 
+              <fielderrors for="docLayoutAddStyleClass"></fielderrors>
+
+              <br />
+              
+              <label for="docLayoutShortName" translate="editor.common.label.docLayoutShortName">Kurzname</label> 
+              <input type="text" name="docLayoutShortName" class="inputtype_docLayoutShortName" ng-model="nodeForEdit.docLayoutShortName" id="inputDocLayoutShortNameInfoNode" ng-change=""> 
+              <fielderrors for="docLayoutShortName"></fielderrors>
+
+              <label for="docLayoutFlgCloseDiv" translate="editor.common.label.docLayoutFlgCloseDiv">Block schließen?</label> 
+              <input type="checkbox" name="docLayoutFlgCloseDiv" class="inputtype_docLayoutFlgCloseDiv" ng-model="nodeForEdit.docLayoutFlgCloseDiv" id="inputDocLayoutFlgCloseDivInfoNode" ng-change=""> 
+              <fielderrors for="docLayoutFlgCloseDiv"></fielderrors>
+            </fieldset>
+
+            <fieldset>
+              <legend translate="editor.common.legend.Details">Details</legend>
               
               <!-- show textfield -->
-              <label for="nodeDesc">Details</label> 
+              <label for="nodeDesc" translate="editor.common.label.nodeDesc">Details</label> 
               <textarea name="nodeDesc" class="textareatype_nodeDesc" ng-model="nodeForEdit.nodeDesc" id="inputNodeDescInfoNode" ng-change=""></textarea> 
               <fielderrors for="nodeDesc"></fielderrors>
             </fieldset>
 
             <fieldset>
-              <button ng-click="save('nodeFormInfoNode')" ng-disabled="nodeFormInfoNode.$invalid" class="btn btn-primary">Save</button>
-              <button ng-click="discard()" class="btn btn-primary">Discard</button>
+              <button ng-click="save('nodeFormInfoNode')" ng-disabled="nodeFormInfoNode.$invalid" class="btn btn-primary"translate="common.buttonSave">Save</button>
+              <button ng-click="discard()" class="btn btn-primary" translate="common.buttonDiscard">Discard</button>
             </fieldset>
 
           </form>
@@ -393,7 +406,8 @@
         ************************* 
         -->
         <div class="hidden container-yaio-editor-urlresnode" id="containerFormYaioEditorUrlResNode">
-          <h2>Ressource bearbeiten:</h2>
+          <h4 translate="editor.formUrlResNode.ue">UrlRes bearbeiten:</h4>
+          <p translate="editor.formUrlResNode.intro" class="msg-form-intro" id="nodeFormUrlResNodeIntro"></p>
 
           <form with-errors class="hidden" id="nodeFormUrlResNode" name="nodeFormUrlResNode">
             <!-- simulate hiddenfield -->
@@ -402,17 +416,17 @@
             <input class="hidden" type="text" name="mode" ng-model="nodeForEdit.mode" id="inputModeUrlResNode" required ng-change="">
 
             <fieldset>
-              <legend>Stammdaten</legend>
+              <legend translate="editor.common.legend.Stammdaten">Stammdaten</legend>
               
               <!-- show textfield -->
-              <label for="name">Titel</label> 
+              <label for="name" translate="editor.common.label.name">Titel</label> 
               <input type="text" name="name" class="inputtype_name" ng-model="nodeForEdit.name" id="inputNameUrlResNode" required ng-change=""> 
               <fielderrors for="name"></fielderrors>
 
               <br />
               
               <!-- show select -->
-              <label for="type">Typ</label> 
+              <label for="type" translate="editor.common.label.type">Typ</label> 
               <select type="text" name="type" class="inputtype_type" ng-model="nodeForEdit.type" id="inputTypeUrlResNode" required ng-change="">
                   <option value="">Bitte wählen
                   <option value="FILERES">Dateiverweis
@@ -424,41 +438,70 @@
             </fieldset>
       
             <fieldset>
-              <legend>Resource</legend>
+              <legend translate="editor.common.legend.Resource">Resource</legend>
               
               <!-- show textfield -->
-              <label for="resLocRef">URI</label> 
+              <label for="resLocRef" translate="editor.common.label.resLocRef">URI</label> 
               <input type="text" name="resLocRef" class="inputtype_resLocRef" ng-model="nodeForEdit.resLocRef" id="inputResLocRefUrlResNode" required ng-change=""> 
               <fielderrors for="resLocRef"></fielderrors>
 
               <br />
 
               <!-- show textfield -->
-              <label for="resLocName">Label</label> 
+              <label for="resLocName" translate="editor.common.label.resLocName">Label</label> 
               <input type="text" name="resLocName" class="inputtype_resLocName" ng-model="nodeForEdit.resLocName" id="inputResLocNameUrlResNode" ng-change=""> 
               <fielderrors for="resLocName"></fielderrors>
 
               <br />
 
               <!-- show textfield -->
-              <label for="resLocTags">Tags</label> 
+              <label for="resLocTags" translate="editor.common.label.resLocTags">Tags</label> 
               <textarea name="resLocTags" class="textareatype_resLocTags" ng-model="nodeForEdit.resLocTags" id="inputResLocTagsUrlResNode" ng-change=""></textarea> 
               <fielderrors for="resLocTags"></fielderrors>
               
             </fieldset>
 
+            <fieldset id="layoutUrlResNode">
+              <legend translate="editor.common.legend.Layout">Layout für Bilder in Dokumentationen</legend>
+              
+              <!-- show select -->
+              <label for="docLayoutTagCommand" translate="editor.common.label.docLayoutTagCommand">Html-Tag</label> 
+              <select name="docLayoutTagCommand" class="inputtype_docLayoutTagCommand" ng-model="nodeForEdit.docLayoutTagCommand" id="inputDocLayoutTagCommandUrlResNode" ng-change="">
+                  <option value="">Bitte wählen
+                  <option value="P">Textzeile
+                  <option value="LI">Aufzähungszeile
+                  <option value="TR">Tabellenzeile
+                  <option value="DIRECT">Direkte Ausgabe
+              </select> 
+              <fielderrors for="docLayoutTagCommand"></fielderrors>
+
+              <label for="docLayoutAddStyleClass" translate="editor.common.label.docLayoutAddStyleClass">CSS-Klasse</label> 
+              <input type="text" name="docLayoutAddStyleClass" class="inputtype_docLayoutAddStyleClass" ng-model="nodeForEdit.docLayoutAddStyleClass" id="inputDocLayoutAddStyleClassUrlResNode" ng-change=""> 
+              <fielderrors for="docLayoutAddStyleClass"></fielderrors>
+
+              <br />
+              
+              <label for="docLayoutShortName" translate="editor.common.label.docLayoutShortName">Kurzname</label> 
+              <input type="text" name="docLayoutShortName" class="inputtype_docLayoutShortName" ng-model="nodeForEdit.docLayoutShortName" id="inputDocLayoutShortNameUrlResNode" ng-change=""> 
+              <fielderrors for="docLayoutShortName"></fielderrors>
+
+              <label for="docLayoutFlgCloseDiv" translate="editor.common.label.docLayoutFlgCloseDiv">Block schließen?</label> 
+              <input type="checkbox" name="docLayoutFlgCloseDiv" class="inputtype_docLayoutFlgCloseDiv" ng-model="nodeForEdit.docLayoutFlgCloseDiv" id="inputDocLayoutFlgCloseDivUrlResNode" ng-change=""> 
+              <fielderrors for="docLayoutFlgCloseDiv"></fielderrors>
+            </fieldset>
+
             <fieldset>
-              <legend>Details</legend>
+              <legend translate="editor.common.legend.Details">Details</legend>
               
               <!-- show textfield -->
-              <label for="nodeDesc">Details</label> 
+              <label for="nodeDesc" translate="editor.common.label.nodeDesc">Details</label> 
               <textarea name="nodeDesc" class="textareatype_nodeDesc" ng-model="nodeForEdit.nodeDesc" id="inputNodeDescUrlResNode" ng-change=""></textarea> 
               <fielderrors for="nodeDesc"></fielderrors>
             </fieldset>
 
             <fieldset>
-              <button ng-click="save('nodeFormUrlResNode')" ng-disabled="nodeFormUrlResNode.$invalid" class="btn btn-primary">Save</button>
-              <button ng-click="discard()" class="btn btn-primary">Discard</button>
+              <button ng-click="save('nodeFormUrlResNode')" ng-disabled="nodeFormUrlResNode.$invalid" class="btn btn-primary" translate="common.buttonSave">Save</button>
+              <button ng-click="discard()" class="btn btn-primary" translate="common.buttonDiscard">Discard</button>
             </fieldset>
 
           </form>
@@ -470,7 +513,8 @@
         ************************* 
         -->
         <div class="hidden container-yaio-editor-urlresnode" id="containerFormYaioEditorSymLinkNode">
-          <h2>SymLink bearbeiten:</h2>
+          <h4 translate="editor.formSymLinkNode.ue">SymLink bearbeiten:</h4>
+          <p translate="editor.formSymLinkNode.intro" class="msg-form-intro" id="nodeFormSymLinkNodeIntro"></p>
 
           <form with-errors class="hidden" id="nodeFormSymLinkNode" name="nodeFormSymLinkNode">
             <!-- simulate hiddenfield -->
@@ -480,50 +524,50 @@
             <input class="hidden" type="text" name="mode" ng-model="nodeForEdit.mode" id="inputModeSymLinkNode" required ng-change="">
 
             <fieldset>
-              <legend>Stammdaten</legend>
+              <legend translate="editor.common.legend.Stammdaten">Stammdaten</legend>
               
               <!-- show textfield -->
-              <label for="name">Titel</label> 
+              <label for="name" translate="editor.common.label.name">Titel</label> 
               <input type="text" name="name" class="inputtype_name" ng-model="nodeForEdit.name" id="inputNameSymLinkNode" required ng-change=""> 
               <fielderrors for="name"></fielderrors>
             </fieldset>
       
             <fieldset>
-              <legend>SymLink</legend>
+              <legend translate="editor.common.legend.SymLink">SymLink</legend>
               
               <!-- show textfield -->
-              <label for="symLinkRef">Referenz</label> 
+              <label for="symLinkRef" translate="editor.common.label.symLinkRef">Referenz</label> 
               <input type="text" name="symLinkRef" class="inputtype_symLinkRef" ng-model="nodeForEdit.symLinkRef" id="inputSymLinkRefSymLinkNode" required ng-change=""> 
               <fielderrors for="symLinkRef"></fielderrors>
 
               <br />
 
               <!-- show textfield -->
-              <label for="symLinkName">Label</label> 
+              <label for="symLinkName" translate="editor.common.label.symLinkName">Label</label> 
               <input type="text" name="symLinkName" class="inputtype_symLinkName" ng-model="nodeForEdit.symLinkName" id="inputSymLinkNameSymLinkNode" ng-change=""> 
               <fielderrors for="symLinkName"></fielderrors>
 
               <br />
 
               <!-- show textfield -->
-              <label for="symLinkTags">Tags</label> 
+              <label for="symLinkTags" translate="editor.common.label.symLinkTags">Tags</label> 
               <textarea name="symLinkTags" class="textareatype_symLinkTags" ng-model="nodeForEdit.symLinkTags" id="inputSymLinkTagsSymLinkNode" ng-change=""></textarea> 
               <fielderrors for="symLinkTags"></fielderrors>
               
             </fieldset>
 
             <fieldset>
-              <legend>Details</legend>
+              <legend translate="editor.common.legend.Details">Details</legend>
               
               <!-- show textfield -->
-              <label for="nodeDesc">Details</label> 
+              <label for="nodeDesc" translate="editor.common.label.nodeDesc">Details</label> 
               <textarea name="nodeDesc" class="textareatype_nodeDesc" ng-model="nodeForEdit.nodeDesc" id="inputNodeDescSymLinkNode" ng-change=""></textarea> 
               <fielderrors for="nodeDesc"></fielderrors>
             </fieldset>
 
             <fieldset>
-              <button ng-click="save('nodeFormSymLinkNode')" ng-disabled="nodeFormSymLinkNode.$invalid" class="btn btn-primary">Save</button>
-              <button ng-click="discard()" class="btn btn-primary">Discard</button>
+              <button ng-click="save('nodeFormSymLinkNode')" ng-disabled="nodeFormSymLinkNode.$invalid" class="btn btn-primary" translate="common.buttonSave">Save</button>
+              <button ng-click="discard()" class="btn btn-primary" translate="common.buttonDiscard">Discard</button>
             </fieldset>
 
           </form>
