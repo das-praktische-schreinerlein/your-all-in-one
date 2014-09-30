@@ -50,15 +50,25 @@
         <div id="containerYaioTreeTable" class="container-yaio-tree-table">
           <table id="tree">
               <colgroup>
-              <col ></col>
-              <col class="name"></col>
-              <col class="dataBlock"></col>
+              <col class="container_field fieldtype_name field_name"></col>
+              <col class="block_nodedata"></col>
+              <col class="container_field fieldtype_actions"></col>
               </colgroup>
               <thead>
                 <tr> 
-                  <th>O</th>
                   <th>Name</th>
-                  <th>Data</th>
+                  <th>
+                    <div class="container_data_row">
+                      <div class="container_field fieldtype_metanummer field_metanummer field_center" translate="fancytree.table.headline.metanummer">Nr.<br />&nbsp;</div>
+                      <div class="container_field fieldtype_type field_type field_center" translate="fancytree.table.headline.type">Typ<br />&nbsp;</div>
+                      <div class="container_field fieldtype_stand field_istChildrenSumStand field_center" translate="fancytree.table.headline.istChildrenSumStand">Ist<br />Stand</div>
+                      <div class="container_field fieldtype_aufwand field_istChildrenSumAufwand field_center" translate="fancytree.table.headline.istChildrenSumAufwand"> <br />Aufwand</div>
+                      <div class="container_field fieldtype_fromto field_istChildrenSum field_center" translate="fancytree.table.headline.istChildrenSum"> <br />Zeitraum</div>
+                      <div class="container_field fieldtype_aufwand field_planChildrenSumAufwand field_center" translate="fancytree.table.headline.planChildrenSumAufwand">Plan<br />Aufwand</div>
+                      <div class="container_field fieldtype_fromto field_planChildrenSum field_center" translate="fancytree.table.headline.planChildrenSum"> <br />Zeitraum</div>
+                    </div>
+                  </th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -96,12 +106,12 @@
               <!-- show textfield -->
               <label for="state" translate="editor.common.label.state">Typ</label> 
               <select type="text" name="className" ng-model="nodeForEdit.className" class="inputtype_type" id="inputCreateNodeType" required ng-change="selectNewNodeType('nodeFormCreate')"> 
-                  <option value="">Bitte wählen
-                  <option translate="common.select.TaskNode" value="TaskNode">Task
-                  <option translate="common.select.EventNode" value="EventNode">Event
-                  <option translate="common.select.InfoNode" value="InfoNode">Info
-                  <option translate="common.select.UrlResNode" value="UrlResNode">UrlRes
-                  <option translate="common.select.SymLinkNode" value="SymLinkNode">Symlink
+                  <option value="" translate="common.select.pleaseselect">Bitte wählen
+                  <option translate="common.select.className.TaskNode" value="TaskNode">Task
+                  <option translate="common.select.className.EventNode" value="EventNode">Event
+                  <option translate="common.select.className.InfoNode" value="InfoNode">Info
+                  <option translate="common.select.className.UrlResNode" value="UrlResNode">UrlRes
+                  <option translate="common.select.className.SymLinkNode" value="SymLinkNode">Symlink
               </select>
               
             </fieldset>
@@ -140,15 +150,15 @@
               
               <!-- show textfield -->
               <label for="type" translate="editor.formTaskNode.label.type">Status</label> 
-              <select type="text" name="type" class="inputtype_type" ng-model="nodeForEdit.type" id="inputTypeTaskNode" required ng-change=""> 
-                  <option value="">Bitte wählen
-                  <option value="UNKNOWN">Ungeplant
-                  <option value="OFFEN">Offen
-                  <option value="LATE">Start verspätet
-                  <option value="RUNNING">in Bearbeitung
-                  <option value="WARNING">Ende überschritten
-                  <option value="ERLEDIGT">Erledigt
-                  <option value="VERWORFEN">Verworfen
+              <select type="text" name="type" class="inputtype_type" ng-model="nodeForEdit.type" id="inputTypeTaskNode" required ng-change="doTypeChanged()"> 
+                  <option value="" translate="common.select.pleaseselect">Bitte wählen
+                  <option value="UNKNOWN" translate="common.select.TaskNodeType.UNKNOWN">Ungeplant
+                  <option value="OFFEN" translate="common.select.TaskNodeType.OFFEN">Offen
+                  <option value="LATE" translate="common.select.TaskNodeType.LATE">Start verspätet
+                  <option value="RUNNING" translate="common.select.TaskNodeType.RUNNING">in Bearbeitung
+                  <option value="WARNING" translate="common.select.TaskNodeType.WARNING">Ende überschritten
+                  <option value="ERLEDIGT" translate="common.select.TaskNodeType.ERLEDIGT">Erledigt
+                  <option value="VERWORFEN" translate="common.select.TaskNodeType.VERWORFEN">Verworfen
               </select> 
               <fielderrors for="type"></fielderrors>
             </fieldset>
@@ -158,17 +168,17 @@
               
               <!-- show textfield -->
               <label for="planAufwand" translate="editor.common.label.planAufwand">Aufwand</label> 
-              <input type="number" name="planAufwand" class="inputtype_aufwand" ng-model="nodeForEdit.planAufwand" id="inputPlanAufwandTaskNode" ng-change=""> 
+              <input type="number" placeholder="x.x"  planAufwand" class="inputtype_aufwand" ng-model="nodeForEdit.planAufwand" id="inputPlanAufwandTaskNode" ng-change=""> 
               <fielderrors for="planAufwand"></fielderrors>
 
               <!-- show textfield -->
               <label for="planStart" translate="editor.common.label.planStart">Start</label> 
-              <input type="text" name="planStart" pattern="\d{2}\.\d{2}\.\d{4}"  maxsize="10" class="inputtype_date" ng-model="nodeForEdit.planStart" id="inputPlanStartTaskNode" ng-change=""> 
+              <input type="text" placeholder="dd.mm.jjjj" name="planStart" pattern="\d{2}\.\d{2}\.\d{4}"  maxsize="10" class="inputtype_date" ng-model="nodeForEdit.planStart" id="inputPlanStartTaskNode" ng-change=""> 
               <fielderrors for="planStart"></fielderrors>
 
               <!-- show textfield -->
               <label for="planEnde" translate="editor.common.label.planEnde">Ende</label> 
-              <input type="text" name="planEnde" pattern="\d{2}\.\d{2}\.\d{4}"  maxsize="10" class="inputtype_date" ng-model="nodeForEdit.planEnde" id="inputPlanEndeTaskNode" ng-change=""> 
+              <input type="text" placeholder="dd.mm.jjjj" name="planEnde" pattern="\d{2}\.\d{2}\.\d{4}"  maxsize="10" class="inputtype_date" ng-model="nodeForEdit.planEnde" id="inputPlanEndeTaskNode" ng-change=""> 
               <fielderrors for="planEnde"></fielderrors>
             </fieldset>
 
@@ -177,22 +187,22 @@
               
               <!-- show textfield -->
               <label for="istAufwand" translate="editor.common.label.istAufwand">Aufwand</label> 
-              <input type="number" name="istAufwand" class="inputtype_aufwand" ng-model="nodeForEdit.istAufwand" id="inputIstAufwandTaskNode" ng-change=""> 
+              <input type="number" name="istAufwand" placeholder="x.x"  class="inputtype_aufwand" ng-model="nodeForEdit.istAufwand" id="inputIstAufwandTaskNode" ng-change=""> 
               <fielderrors for="istAufwand"></fielderrors>
 
               <!-- show textfield -->
               <label for="istStart" translate="editor.common.label.istStart">Start</label> 
-              <input type="text" name="istStart" pattern="\d{2}\.\d{2}\.\d{4}"  maxsize="10" class="inputtype_date" ng-model="nodeForEdit.istStart" id="inputIstStartTaskNode" ngEventNode""> 
+              <input type="text" name="istStart" placeholder="dd.mm.jjjj" pattern="\d{2}\.\d{2}\.\d{4}"  maxsize="10" class="inputtype_date" ng-model="nodeForEdit.istStart" id="inputIstStartTaskNode" ngEventNode""> 
               <fielderrors for="istStart"></fielderrors>
 
               <!-- show textfield -->
               <label for="istEnde" translate="editor.common.label.istEnde">Ende</label> 
-              <input type="text" name="istEnde" pattern="\d{2}\.\d{2}\.\d{4}"  maxsize="10" class="inputtype_date" ng-model="nodeForEdit.istEnde" id="inputIstEndeTaskNode" ng-change=""> 
+              <input type="text" name="istEnde" placeholder="dd.mm.jjjj" pattern="\d{2}\.\d{2}\.\d{4}"  maxsize="10" class="inputtype_date" ng-model="nodeForEdit.istEnde" id="inputIstEndeTaskNode" ng-change=""> 
               <fielderrors for="istEnde"></fielderrors>
 
               <!-- show textfield -->
               <label for="istStand" translate="editor.common.label.istStand">Stand</label> 
-              <input type="number" min="0" max="100" name="istStand" class="inputtype_stand" ng-model="nodeForEdit.istStand" id="inputIstStandTaskNode" ng-change=""> 
+              <input type="number" min="0" max="100" placeholder="x.x" name="istStand" class="inputtype_stand" ng-model="nodeForEdit.istStand" id="inputIstStandTaskNode" ng-change="doIstStandChanged()"> 
               <fielderrors for="istStand"></fielderrors>
 
             </fieldset>
@@ -202,7 +212,7 @@
               
               <!-- show textfield -->
               <label for="nodeDesc" translate="editor.common.label.nodeDesc">Details</label> 
-              <textarea name="nodeDesc" class="textareatype_nodeDesc" ng-model="nodeForEdit.nodeDesc" id="inputNodeDescTaskNode" ng-change=""></textarea> 
+              <textarea name="nodeDesc" class="textareatype_nodeDesc" ng-model="nodeForEdit.nodeDesc" id="inputNodeDescTaskNode" ng-change=""></textarea>
               <fielderrors for="nodeDesc"></fielderrors>
             </fieldset>
 
@@ -240,16 +250,16 @@
               
               <!-- show textfield -->
               <label for="type" translate="editor.formEventNode.label.type">Status</label> 
-              <select type="text" name="type" class="inputtype_type" ng-model="nodeForEdit.type" id="inputTypeEventNode" required ng-change=""> 
-                  <option value="">Bitte wählen
-                  <option value="EVENT_UNKNOWN">ungeplant
-                  <option value="EVENT_PLANED">Termin geplant
-                  <option value="EVENT_CONFIRMED">Termin bestätigt
-                  <option value="EVENT_LATE">geplanter Starttermin überschritten
-                  <option value="EVENT_RUNNING">Termin läuft
-                  <option value="EVENT_SHORT">geplanter Endetermin überschritten
-                  <option value="EVENT_ERLEDIGT">Erledigt
-                  <option value="EVENT_VERWORFEN">Verworfen
+              <select type="text" name="type" class="inputtype_type" ng-model="nodeForEdit.type" id="inputTypeEventNode" required ng-change="doTypeChanged()"> 
+                  <option value="" translate="common.select.pleaseselect">Bitte wählen
+                  <option value="EVENT_UNKNOWN" translate="common.select.EventNodeType.EVENT_UNKNOWN">ungeplant
+                  <option value="EVENT_PLANED" translate="common.select.EventNodeType.EVENT_PLANED">Termin geplant
+                  <option value="EVENT_CONFIRMED" translate="common.select.EventNodeType.EVENT_CONFIRMED">Termin bestätigt
+                  <option value="EVENT_LATE" translate="common.select.EventNodeType.EVENT_LATE">geplanter Starttermin überschritten
+                  <option value="EVENT_RUNNING" translate="common.select.EventNodeType.EVENT_RUNNING">Termin läuft
+                  <option value="EVENT_SHORT" translate="common.select.EventNodeType.EVENT_SHORT">geplanter Endetermin überschritten
+                  <option value="EVENT_ERLEDIGT" translate="common.select.EventNodeType.EVENT_ERLEDIGT">Erledigt
+                  <option value="EVENT_VERWORFEN" translate="common.select.EventNodeType.EVENT_VERWORFEN">Verworfen
               </select> 
               <fielderrors for="type"></fielderrors>
             </fieldset>
@@ -259,17 +269,17 @@
               
               <!-- show textfield -->
               <label for="planAufwand" translate="editor.common.label.planAufwand">Aufwand</label> 
-              <input type="number" name="planAufwand" class="inputtype_aufwand" ng-model="nodeForEdit.planAufwand" id="inputPlanAufwandEventNode" ng-change=""> 
+              <input type="number" name="planAufwand" placeholder="x.x"  class="inputtype_aufwand" ng-model="nodeForEdit.planAufwand" id="inputPlanAufwandEventNode" ng-change=""> 
               <fielderrors for="planAufwand"></fielderrors>
 
               <!-- show textfield -->
               <label for="planStart" translate="editor.common.label.planStart">Start</label> 
-              <input type="text" name="planStart" pattern="\d{2}\.\d{2}\.\d{4} \d{2}\:\d{2}" maxsize="16" class="inputtype_datetime" ng-model="nodeForEdit.planStart" id="inputPlanStartEventNode" required ng-change=""> 
+              <input type="text" name="planStart" placeholder="dd.mm.jjjj hh:mm" pattern="\d{2}\.\d{2}\.\d{4} \d{2}\:\d{2}" maxsize="16" class="inputtype_datetime" ng-model="nodeForEdit.planStart" id="inputPlanStartEventNode" required ng-change=""> 
               <fielderrors for="planStart"></fielderrors>
 
               <!-- show textfield -->
               <label for="planEnde" translate="editor.common.label.planEnde">Ende</label> 
-              <input type="text" name="planEnde" pattern="\d{2}\.\d{2}\.\d{4} \d{2}\:\d{2}" maxsize="16" class="inputtype_datetime" ng-model="nodeForEdit.planEnde" id="inputPlanEndeEventNode" ng-change=""> 
+              <input type="text" name="planEnde" placeholder="dd.mm.jjjj hh:mm" pattern="\d{2}\.\d{2}\.\d{4} \d{2}\:\d{2}" maxsize="16" class="inputtype_datetime" ng-model="nodeForEdit.planEnde" id="inputPlanEndeEventNode" ng-change=""> 
               <fielderrors for="planEnde"></fielderrors>
             </fieldset>
 
@@ -278,22 +288,22 @@
               
               <!-- show textfield -->
               <label for="istAufwand" translate="editor.common.label.istAufwand">Aufwand</label> 
-              <input type="number" name="istAufwand" class="inputtype_aufwand" ng-model="nodeForEdit.istAufwand" id="inputIstAufwandEventNode" ng-change=""> 
+              <input type="number" name="istAufwand" placeholder="x.x" class="inputtype_aufwand" ng-model="nodeForEdit.istAufwand" id="inputIstAufwandEventNode" ng-change=""> 
               <fielderrors for="istAufwand"></fielderrors>
 
               <!-- show textfield -->
               <label for="istStart" translate="editor.common.label.istStart">Start</label> 
-              <input type="text" name="istStart" pattern="\d{2}\.\d{2}\.\d{4} \d{2}\:\d{2}" maxsize="16" class="inputtype_datetime" ng-model="nodeForEdit.istStart" id="inputIstStartEventNode" ng-change=""> 
+              <input type="text" name="istStart" placeholder="dd.mm.jjjj hh:mm" pattern="\d{2}\.\d{2}\.\d{4} \d{2}\:\d{2}" maxsize="16" class="inputtype_datetime" ng-model="nodeForEdit.istStart" id="inputIstStartEventNode" ng-change=""> 
               <fielderrors for="istStart"></fielderrors>
 
               <!-- show textfield -->
               <label for="istEnde" translate="editor.common.label.istEnde">Ende</label> 
-              <input type="text" name="istEnde" pattern="\d{2}\.\d{2}\.\d{4} \d{2}\:\d{2}" maxsize="16" class="inputtype_datetime" ng-model="nodeForEdit.istEnde" id="inputIstEndeEventNode" ng-change=""> 
+              <input type="text" name="istEnde" placeholder="dd.mm.jjjj hh:mm" pattern="\d{2}\.\d{2}\.\d{4} \d{2}\:\d{2}" maxsize="16" class="inputtype_datetime" ng-model="nodeForEdit.istEnde" id="inputIstEndeEventNode" ng-change=""> 
               <fielderrors for="istEnde"></fielderrors>
 
               <!-- show textfield -->
               <label for="istStand" translate="editor.common.label.istStand">Stand</label> 
-              <input type="number" min="0" max="100" name="istStand" class="inputtype_stand" ng-model="nodeForEdit.istStand" id="inputIstStandEventNode" ng-change=""> 
+              <input type="number" min="0" max="100" placeholder="x.x"  name="istStand" class="inputtype_stand" ng-model="nodeForEdit.istStand" id="inputIstStandEventNode" ng-change="doIstStandChanged()"> 
               <fielderrors for="istStand"></fielderrors>
 
             </fieldset>
@@ -342,11 +352,11 @@
               <!-- show select -->
               <label for="type" translate="editor.common.label.type">Typ</label> 
               <select type="text" name="type" class="inputtype_type" ng-model="nodeForEdit.type" id="inputTypeInfoNode" required ng-change="">
-                  <option value="">Bitte wählen
-                  <option value="INFO">Information
-                  <option value="DOKU">Dokumentation
-                  <option value="IDEE">Idee
-                  <option value="HOWTO">Howto
+                  <option value="" translate="common.select.pleaseselect">Bitte wählen
+                  <option value="INFO" translate="common.select.InfoType.INFO">Information
+                  <option value="DOKU" translate="common.select.InfoType.DOKU">Dokumentation
+                  <option value="IDEE" translate="common.select.InfoType.IDEE">Idee
+                  <option value="HOWTO" translate="common.select.InfoType.HOWTO">Howto
               </select> 
               <fielderrors for="type"></fielderrors>
             </fieldset>
@@ -355,16 +365,16 @@
               <legend translate="editor.common.legend.Layout">Layout</legend>
               
               <!-- show select -->
-              <label for="docLayoutTagCommand" translate="editor.common.label.docLayoutTagCommand">Html-Tag</label> 
+              <label for="docLayoutTagCommand" translate="editor.common.label.docLayoutTagCommand">Befehl</label> 
               <select name="docLayoutTagCommand" class="inputtype_docLayoutTagCommand" ng-model="nodeForEdit.docLayoutTagCommand" id="inputDocLayoutTagCommandInfoNode" ng-change="">
-                  <option value="">Bitte wählen
-                  <option value="DIV">Block starten
-                  <option value="UE">Überschrift
-                  <option value="P">Textzeile
-                  <option value="LI">Aufzähungszeile
-                  <option value="TR">Tabellenzeile
-                  <option value="DIRECT">Direkte Ausgabe
-                  <option value="ENDDIV">Block beenden
+                  <option value="" translate="common.select.pleaseselect">Bitte wählen
+                  <option value="DIV" translate="common.select.docLayoutTagCommand.DIV">Block starten
+                  <option value="UE" translate="common.select.docLayoutTagCommand.UE">Überschrift
+                  <option value="P" translate="common.select.docLayoutTagCommand.P">Textzeile
+                  <option value="LI" translate="common.select.docLayoutTagCommand.LI">Aufzähungszeile
+                  <option value="TR" translate="common.select.docLayoutTagCommand.TR">Tabellenzeile
+                  <option value="DIRECT" translate="common.select.docLayoutTagCommand.DIRECT">Direkte Ausgabe
+                  <option value="ENDDIV" translate="common.select.docLayoutTagCommand.ENDDIV">Block beenden
               </select> 
               <fielderrors for="docLayoutTagCommand"></fielderrors>
 
@@ -428,11 +438,11 @@
               <!-- show select -->
               <label for="type" translate="editor.common.label.type">Typ</label> 
               <select type="text" name="type" class="inputtype_type" ng-model="nodeForEdit.type" id="inputTypeUrlResNode" required ng-change="">
-                  <option value="">Bitte wählen
-                  <option value="FILERES">Dateiverweis
-                  <option value="URLRES">Url
-                  <option value="IMAGERES">Bild-Verweis
-                  <option value="EMAILRES">Email-Verweis
+                  <option value="" translate="common.select.pleaseselect">Bitte wählen
+                  <option value="FILERES" translate="common.select.UrlRes.FILERES">Dateiverweis
+                  <option value="URLRES" translate="common.select.UrlRes.URLRES">Url
+                  <option value="IMAGERES" translate="common.select.UrlRes.IMAGERES">Bild-Verweis
+                  <option value="EMAILRES" translate="common.select.UrlRes.EMAILRES">Email-Verweis
               </select> 
               <fielderrors for="type"></fielderrors>
             </fieldset>
@@ -442,7 +452,7 @@
               
               <!-- show textfield -->
               <label for="resLocRef" translate="editor.common.label.resLocRef">URI</label> 
-              <input type="text" name="resLocRef" class="inputtype_resLocRef" ng-model="nodeForEdit.resLocRef" id="inputResLocRefUrlResNode" required ng-change=""> 
+              <input type="text" name="resLocRef" placeholder="http:// oder  file://" class="inputtype_resLocRef" ng-model="nodeForEdit.resLocRef" id="inputResLocRefUrlResNode" required ng-change=""> 
               <fielderrors for="resLocRef"></fielderrors>
 
               <br />
@@ -467,7 +477,7 @@
               <!-- show select -->
               <label for="docLayoutTagCommand" translate="editor.common.label.docLayoutTagCommand">Html-Tag</label> 
               <select name="docLayoutTagCommand" class="inputtype_docLayoutTagCommand" ng-model="nodeForEdit.docLayoutTagCommand" id="inputDocLayoutTagCommandUrlResNode" ng-change="">
-                  <option value="">Bitte wählen
+                  <option value="" translate="common.select.pleaseselect">Bitte wählen
                   <option value="P">Textzeile
                   <option value="LI">Aufzähungszeile
                   <option value="TR">Tabellenzeile
@@ -537,7 +547,7 @@
               
               <!-- show textfield -->
               <label for="symLinkRef" translate="editor.common.label.symLinkRef">Referenz</label> 
-              <input type="text" name="symLinkRef" class="inputtype_symLinkRef" ng-model="nodeForEdit.symLinkRef" id="inputSymLinkRefSymLinkNode" required ng-change=""> 
+              <input type="text" name="symLinkRef" placeholder="YAIO2311" class="inputtype_symLinkRef" ng-model="nodeForEdit.symLinkRef" id="inputSymLinkRefSymLinkNode" required ng-change=""> 
               <fielderrors for="symLinkRef"></fielderrors>
 
               <br />
@@ -576,3 +586,10 @@
     </div>
 </div>
 
+<script type="text/javascript">
+    // activate elements after 1 second
+    setTimeout(function() { 
+        // activate speech recognition
+        addSpeechRecognitionToElements();
+    }, 1000);
+</script>

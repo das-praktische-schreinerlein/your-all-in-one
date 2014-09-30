@@ -322,6 +322,71 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
      * <h4>FeatureDomain:</h4>
      *     Callback
      * <h4>FeatureDescription:</h4>
+     *     callbackhandler to perform actions when type has changed<br>
+     *     calls calcIstStandFromState() for the node
+     *     if ERLEDIGT || VERWORFEN || EVENT_ERLEDIGT || EVENT_VERWORFEN: update istStand=100
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>updates istStand
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     GUI Callback
+     */
+    $scope.doTypeChanged = function() {
+        $scope.nodeForEdit.istStand = calcIstStandFromState($scope.nodeForEdit);
+    }
+    
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Callback
+     * <h4>FeatureDescription:</h4>
+     *     callbackhandler to perform actions when istStand has changed<br>
+     *     recalcs the type/state depending on the istStand
+     *     <ul>
+     *       <li>if className=TaskNode && 0: update type=OFFEN
+     *       <li>if className=TaskNode && >0&&<100 && ! WARNING: update type=RUNNING
+     *       <li>if className=TaskNode && 100 && != VERWORFEN: update type=ERLEDIGT
+     *       <li>if className=EventNode && 0: update type=EVENT_PLANED
+     *       <li>if className=EventNode && >0&&<100 && ! EVENT_WARNING: update type=EVENT_RUNNING
+     *       <li>if className=EventNode && 100 && != EVENT_VERWORFEN: update type=EVENT_ERLEDIGT
+     *     </ul>
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>updates type
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     GUI Callback
+     */
+    $scope.doIstStandChanged = function() {
+        $scope.nodeForEdit.type = calcTypeFromIstStand($scope.nodeForEdit);
+    }
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Callback
+     * <h4>FeatureDescription:</h4>
+     *     callbackhandler to perform actions when type has changed<br>
+     *     if EVENT_ERLEDIGT || VERWORFEN: update stand=100;
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>updates stand
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     GUI Callback
+     */
+    $scope.doTaskNodeTypeChanged = function() {
+        if (   $scope.nodeForEdit.type =="ERLEDIGT"
+            || $scope.nodeForEdit.type =="VERWORFEN") {
+            $scope.nodeForEdit.stand ="100";
+        }
+    }
+    
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Callback
+     * <h4>FeatureDescription:</h4>
      *     callbackhandler to map the nodedata, create json,call webservice and 
      *     relocate to the new nodeId
      * <h4>FeatureResult:</h4>
@@ -641,7 +706,7 @@ yaioM.directive('fielderrors', function() {
         scope: true,
         require: ['fielderrors', '^withErrors'],
         template: 
-            '<div ng-repeat="error in errors">' +
+            '<div class="fielderror" ng-repeat="error in errors">' +
             '<small class="error">{{ error }}</small>' +
             '</div>',
             controller: ['$scope', function($scope) {

@@ -238,12 +238,20 @@ ul.commands li {
 .field_name {
    text-align: left;
    width: 480px;
+   font-size: 11px;
+   font-weight: bold;
 }
 .field_type {
    text-align: left;
+   font-size: 9px;
 }
 .field_state {
    text-align: left;
+   font-size: 9px;
+}
+.field_metanummer {
+   text-align: left;
+   font-size: 9px;
 }
 .field_istChildrenSumStand {
 }
@@ -260,16 +268,20 @@ ul.commands li {
    width: 550px;
    overflow-x:auto;
 }
-
+.field_center {
+   text-align: center; !IMPORTANT
+}
 
 .fieldtype_type {
-   text-align: right;
-   width: 50px;
-}
-.fieldtype_state {
-   text-align: right;
    width: 80px;
 }
+.fieldtype_state {
+   width: 80px;
+}
+.fieldtype_metanummer {
+   width: 50px;
+}
+
 .fieldtype_stand {
    text-align: right;
    width: 50px;
@@ -282,9 +294,22 @@ ul.commands li {
    text-align: right;
    width: 120px;
 }
+
+.fieldtype_ueDocLayout {
+   font-weight: bold;
+}
+.fieldtype_docLayoutTagCommand {
+   width: 100px;
+}
+.fieldtype_docLayoutAddStyleClass {
+   width: 100px;
+}
+
 .fieldtype_url {
    text-align: left;
 }
+
+
 .fieldtype_actions {
    text-align: left;
    width: 100px;
@@ -301,6 +326,12 @@ table.fancytree-ext-table tbody tr td {
     min-height: 20px;
 }
 
+span.fancytree-title-state {
+    font-weight: normal;
+}
+span.fancytree-checkbox {
+    display: none;
+}
 /*****************************************
  *****************************************
  * editor
@@ -332,6 +363,12 @@ label {
 } 
 .inputtype_date {
     width: 80px;
+} 
+.inputtype_datetime {
+    width: 120px;
+} 
+.inputtype_stand {
+    width: 50px;
 } 
 .inputtype_resLocRef {
     width: 500px;
@@ -373,6 +410,9 @@ label {
     background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
 }
 .node-state-FILERES {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-IMAGERES {
     background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
 }
 .node-state-MAILRES {

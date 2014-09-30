@@ -23,6 +23,7 @@
   <script src="../js/jqueryui/jquery-ui-i18n.min.js"></script>
   <script src="../js/jqueryui/jquery-ui-sliderAccess.js"></script>
   <script src="../js/jqueryui/jquery-ui-timepicker-addon.js"></script>
+  <script src="../js/jquery/jquery-lang.js" type="text/javascript"></script>
 
   <!-- fancytree -->
   <link href="../js/fancytree/skin-win8/ui.fancytree.css" rel="stylesheet" type="text/css">
@@ -56,6 +57,7 @@
   <link rel="stylesheet" type="text/css" media="all" href="../css/yaio/style.css" />
   <link rel="stylesheet" type="text/css" media="all" href="../css/yaio/main.css" />
   <link rel="stylesheet" type="text/css" media="print" href="../css/yaio/print.css" />
+  <script src="../js/yaio/JMATAllIn.js"></script>
 
   <!-- yaio-explorer -->
   <link rel="stylesheet" type="text/css" media="all" href="./css/style.css" />
@@ -76,8 +78,8 @@
                     <!-- Header -->
                     <div class="menueTop" id="menueTop">
                         <div class="">
-                           <div class="ue1MenueTop">D'Artagnan - Dein pers&ouml;nlicher Software-Musketier 
-                            <span class="ue2MenueTop">"Einer f&uuml;r Alles - Alles in Einem"</span>
+                           <div class="ue1MenueTop" lang="tech">D'Artagnan - Dein pers&ouml;nlicher Software-Musketier 
+                            <span class="ue2MenueTop" lang="tech">"Einer f&uuml;r Alles - Alles in Einem"</span>
                             <span class="ue3MenueTop">
                                <ul class="ulTopKontakt">
                                    <li class="liTopKontakt liTopKontaktTwitter"><a 
@@ -174,7 +176,12 @@
             return $(this).attr("data-tooltip");
         }
     });
+</script>
 
+<script type="text/javascript">
+$(document).ready(function () {
+    initLanguageSupport();
+});
 </script>
 
 </body>

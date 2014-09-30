@@ -1,0 +1,262 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Sprachsteuerung</title>
+  <script src="../js/jquery/jquery.min.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="../css/yaio/main.css">
+  <link rel="stylesheet" href="../css/yaio/style.css">
+
+<style>
+#info {
+    font-size: 16px;
+}
+
+#div_start {
+    float: right;
+}
+
+#results {
+    font-size: 14px;
+    font-weight: bold;
+    border: 1px solid #ddd;
+    padding: 15px;
+    text-align: left;
+    min-height: 150px;
+}
+
+#start_button {
+    border: 0;
+    background-color: transparent;
+    padding: 0;
+}
+
+.interim {
+    width: 100%;
+    color: gray;
+    clear: both;
+    padding-top: 3px;
+}
+
+.final {
+    width: 100%;
+    clear: both;
+    color: black;
+    padding-top: 3px;
+}
+
+.button {
+    display: none;
+}
+</style>
+<style>
+a.c1 {
+    font-weight: normal;
+}
+</style>
+
+</head>
+<body>
+    <div class="blockContent" id="blockContent">
+        <div class="content" id="content">
+            <div class="txt-content" id="txt-content">
+                <div class="box">
+                    <div id="info">
+                        <p id="info_start">Klicke auf das Microfon und spreche deinen Text.</p>
+                        <p id="info_speak_now" style="display: none">Und los: Sprich !!!</p>
+                        <p id="info_no_speech" style="display: none">
+                            Mmhh. Nichts erkannt. <a href="https://www.google.com/support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892">Mikrofon-Einstellungen</a>?
+                        </p>
+                        <p id="info_no_microphone" style="display: none">
+                            Mmhh. Kein Mikrofon gefunden. Sind die <a href="https://www.google.com/support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892">Einstellungen</a> korrekt?
+                        </p>
+                        <p id="info_allow" style="display: none">Klicke auf den "Erlauben"-Button im Seitenkopf.</p>
+                        <p id="info_denied" style="display: none">Wenn du die Erlaubnis nicht gibst, funktioniert das ganze nicht.</p>
+                        <p id="info_blocked" style="display: none">Zugriff auf das Mikrofon in gesperrt. Ändere dies in chrome://settings/contentExceptions#media-stream</p>
+                        <p id="info_upgrade" style="display: none">
+                            Oopps. Die Web Speech API wird von diesem Browser nicht unterstützt. Upgrade to <a
+                                href="//www.google.com/chrome">Chrome 25</a> oder höher.
+                        </p>
+                    </div>
+                    <div id="div_start">
+                        <button id="start_button"
+                            onclick="startButton(event)">
+                            <img alt="Start" id="start_img"
+                                src="https://www.google.com/intl/en/chrome/assets/common/images/content/mic.gif">
+                        </button>
+                    </div>
+                    <div id="results">
+                        <span class="interim" id="interim_span"></span>
+                        <textarea class="final" id="final_textarea"
+                            cols="30" rows="5"></textarea>
+                    </div>
+                    <input type="button" value="Übernehmen"
+                        onclick="addResult2Opener(true);">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    var final_transcript = '';
+    var recognizing = false;
+    var ignore_onend;
+    var start_timestamp;
+    if (!('webkitSpeechRecognition' in window)) {
+        alert("not supported");
+    } else {
+
+        // Erkennung aktivieren
+        var recognition = new webkitSpeechRecognition();
+
+        // Diktat aktivieren: fuehrt nach Pause fort
+        recognition.continuous = true;
+
+        // interim results aendern sich nachtraeglich
+        recognition.interimResults = true;
+
+        // Handler
+
+        // beim Start
+        recognition.onstart = function() {
+            recognizing = true;
+            showInfo('info_speak_now');
+            start_img.src = 'https://www.google.com/intl/en/chrome/assets/common/images/content/mic-animate.gif';
+        };
+
+        // Am Ende
+        recognition.onerror = function(event) {
+            if (event.error == 'no-speech') {
+                start_img.src = 'https://www.google.com/intl/en/chrome/assets/common/images/content/mic.gif';
+                showInfo('info_no_speech');
+                ignore_onend = true;
+            }
+            if (event.error == 'audio-capture') {
+                start_img.src = 'https://www.google.com/intl/en/chrome/assets/common/images/content/mic.gif';
+                showInfo('info_no_microphone');
+                ignore_onend = true;
+            }
+            if (event.error == 'not-allowed') {
+                if (event.timeStamp - start_timestamp < 100) {
+                    showInfo('info_blocked');
+                } else {
+                    showInfo('info_denied');
+                }
+                ignore_onend = true;
+            }
+        };
+
+        recognition.onend = function() {
+            recognizing = false;
+            if (ignore_onend) {
+                return;
+            }
+            start_img.src = 'https://www.google.com/intl/en/chrome/assets/common/images/content/mic.gif';
+            if (!final_transcript) {
+                showInfo('info_start');
+                return;
+            }
+            showInfo('');
+            if (window.getSelection) {
+                window.getSelection().removeAllRanges();
+                var range = document.createRange();
+                range.selectNode(document
+                        .getElementById('final_textarea'));
+                window.getSelection().addRange(range);
+            }
+        };
+
+        recognition.onresult = function(event) {
+            var interim_transcript = '';
+            final_transcript = final_textarea.value;
+            if (typeof (event.results) == 'undefined') {
+                recognition.onend = null;
+                recognition.stop();
+                upgrade();
+                return;
+            }
+
+            for ( var i = event.resultIndex; i < event.results.length; ++i) {
+                if (event.results[i].isFinal) {
+                    final_transcript += event.results[i][0].transcript;
+                } else {
+                    interim_transcript += event.results[i][0].transcript;
+                }
+            }
+            final_transcript = capitalize(final_transcript);
+            final_textarea.value = linebreak(final_transcript);
+            interim_span.innerHTML = linebreak(interim_transcript);
+        };
+    }
+
+    var two_line = /\n\n/g;
+    var one_line = /\n/g;
+    function linebreak(s) {
+        return s.replace(two_line, '<p></p>').replace(one_line, '<br>');
+    }
+
+    var first_char = /\S/;
+    function capitalize(s) {
+        return s.replace(first_char, function(m) {
+            return m.toUpperCase();
+        });
+    }
+
+    function startButton(event) {
+        if (recognizing) {
+            recognition.stop();
+            return;
+        }
+        final_transcript = final_textarea.value;
+        recognition.lang = "de-de";
+        recognition.start();
+        ignore_onend = false;
+        interim_span.innerHTML = '';
+        start_img.src = 'https://www.google.com/intl/en/chrome/assets/common/images/content/mic-slash.gif';
+        showInfo('info_allow');
+        start_timestamp = event.timeStamp;
+    }
+
+    function showInfo(s) {
+        if (s) {
+            for ( var child = info.firstChild; child; child = child.nextSibling) {
+                if (child.style) {
+                    child.style.display = child.id == s ? 'inline' : 'none';
+                }
+            }
+            info.style.visibility = 'visible';
+        } else {
+            info.style.visibility = 'hidden';
+        }
+    }
+
+    /////////////////////////////////
+
+    function addResult2Opener(forceClose) {
+        // Text vorbereiten
+        var str = final_textarea.value;
+        str = str.replace(/<\/?.*?\/?>/g, String.fromCharCode(13));
+
+        // text an Opener uebergeben
+        opener.targetElement.value = str;
+        opener.callUpdateTriggerForElement(opener.targetElement);
+
+        // Fenster schließen
+        if (forceClose) {
+            window.close();
+        }
+    }
+
+    function getSrcFromOpener() {
+        // Text vom Opener holen
+        if (opener && opener.targetElement) {
+            final_textarea.value = opener.targetElement.value + " ";
+        }
+    }
+
+    // init
+    getSrcFromOpener();
+</script>
+</body>
+</html>

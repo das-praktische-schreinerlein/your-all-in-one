@@ -620,6 +620,9 @@ public class BaseNode implements BaseData, MetaData, SysData,
      *     Persistence
      * @return list of the parents, start with my own parent (not me)
      */
+    @Transient
+    @XmlTransient
+    @JsonIgnore
     public List<BaseNode> getParentHierarchy() {
         List<BaseNode> parentHierarchy = new ArrayList<BaseNode>();
         BaseNode parent = this.getParentNode();
@@ -643,6 +646,9 @@ public class BaseNode implements BaseData, MetaData, SysData,
      *     Persistence
      * @return list of the parent-sysUIDs, start with my own parent (not me)
      */
+    @Transient
+    @XmlTransient
+    @JsonIgnore
     public List<String> getParentIdHierarchy() {
         List<String> parentIdHierarchy = new ArrayList<String>();
         for (BaseNode parent: getParentHierarchy()) {

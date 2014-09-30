@@ -346,7 +346,7 @@ function createYAIOFancyTree(treeId, masterNodeId, doneHandler){
         },
         table: {
             indentation: 20,
-            nodeColumnIdx: 1,
+            nodeColumnIdx: 0,
 //            checkboxColumnIdx: 0
         },
         gridnav: {
@@ -619,61 +619,129 @@ function renderDataBlock(basenode, fancynode) {
     $table.append($row);
     
     // default fields
-    $row.append($("<div />").html(basenode.className)
+    $row.append($("<div />").html(htmlEscapeText(basenode.metaNodePraefix + basenode.metaNodeNummer))
+            .addClass("container_field")
+            .addClass("fieldtype_metanummer")
+            .addClass("field_metanummer")
+            );
+        
+    $row.append($("<div lang='tech' />").html(basenode.className)
            .addClass("container_field")
            .addClass("fieldtype_type")
            .addClass("field_type")
            .addClass(statestyle));
-    $row.append($("<div />").html(basenode.state)
-            .addClass("container_field")
-            .addClass("fieldtype_state")
-            .addClass("field_state")
-            .addClass(statestyle));
-    
+//    $row.append($("<div lang='tech' />").html(basenode.state)
+//            .addClass("container_field")
+//            .addClass("fieldtype_state")
+//            .addClass("field_state")
+//            .addClass(statestyle));
     if (basenode.className == "TaskNode" || basenode.className == "EventNode") {
         // TaskNode
         $row.append(
-                $("<div />").html(formatNumbers(basenode.istChildrenSumStand, 2, "%"))
+                $("<div />").html("&nbsp;" + formatNumbers(basenode.istChildrenSumStand, 2, "%"))
                         .addClass("container_field")
                         .addClass("fieldtype_stand")
                         .addClass("field_istChildrenSumStand")
-                        .addClass(statestyle)); 
+                        .addClass(statestyle)
+                        ); 
         $row.append(
-                $("<div />").html(formatNumbers(basenode.istChildrenSumAufwand, 2, "h"))
+                $("<div />").html("&nbsp;" + formatNumbers(basenode.istChildrenSumAufwand, 2, "h"))
                         .addClass("container_field")
                         .addClass("fieldtype_aufwand")
                         .addClass("field_istChildrenSumAufwand")
-                        .addClass(statestyle));
+                        .addClass(statestyle)
+                        );
         $row.append(
-                $("<div />").html(formatGermanDate(basenode.istChildrenSumStart)
+                $("<div />").html("&nbsp;" + formatGermanDate(basenode.istChildrenSumStart)
                         + "-" + formatGermanDate(basenode.istChildrenSumEnde))
                          .addClass("container_field")
                          .addClass("fieldtype_fromto")
                          .addClass("field_istChildrenSum")
-                         .addClass(statestyle));
+                         .addClass(statestyle)
+                         );
         $row.append(
-                $("<div />").html(formatNumbers(basenode.planChildrenSumAufwand, 2, "h"))
+                $("<div />").html("&nbsp;" + formatNumbers(basenode.planChildrenSumAufwand, 2, "h"))
                          .addClass("container_field")
                          .addClass("fieldtype_aufwand")
                          .addClass("field_planChildrenSumAufwand")
-                         .addClass(statestyle));
+                         .addClass(statestyle)
+                         );
         $row.append(
-                $("<div />").html(formatGermanDate(basenode.planChildrenSumStart)
+                $("<div />").html("&nbsp;" + formatGermanDate(basenode.planChildrenSumStart)
                          + "-" + formatGermanDate(basenode.planChildrenSumEnde))
                          .addClass("container_field")
                          .addClass("fieldtype_fromto")
                          .addClass("field_planChildrenSum")
-                         .addClass(statestyle));
-    } else if (basenode.className == "UrlResNode") {
-        // url
-        $row.append(
-                $("<div />").html("<a href='" + basenode.resLocRef + "' target='_blank'>" 
-                                 + basenode.resLocRef + "</a>")
-                          .addClass("container_field")
-                          .addClass("fieldtype_url")
-                          .addClass("field_resLocRef")
-                          .addClass(statestyle)); 
-    } else if (basenode.className == "InfoNode") {
+                         .addClass(statestyle)
+                         );
+    } else if (basenode.className == "InfoNode" || basenode.className == "UrlResNode") {
+        // Info + urlRes
+        
+        // Url only
+        if (basenode.className == "UrlResNode") {
+            // url
+            $row.append(
+                    $("<div />").html("<a href='" + htmlEscapeText(basenode.resLocRef) + "' target='_blank'>" 
+                                     + htmlEscapeText(basenode.resLocRef) + "</a>")
+                              .addClass("container_field")
+                              .addClass("fieldtype_url")
+                              .addClass("field_resLocRef")
+    //                          .addClass(statestyle)
+                              ); 
+        }
+    
+        // both
+        if (   basenode.docLayoutTagCommand || basenode.docLayoutShortName
+            || basenode.docLayoutAddStyleClass || basenode.docLayoutFlgCloseDiv) {
+                $row.append(
+                        $("<div lang='tech' />").html("Layout ")
+                                .addClass("container_field")
+                                .addClass("fieldtype_ueDocLayout")
+                                .addClass("field_ueDocLayout")
+//                                    .addClass(statestyle)
+                                ); 
+            
+            // check which docLayout is set    
+            if (basenode.docLayoutTagCommand) {
+                $row.append(
+                        $("<div lang='tech' />").html("Tag: " 
+                                    + htmlEscapeText(basenode.docLayoutTagCommand))
+                                .addClass("container_field")
+                                .addClass("fieldtype_docLayoutTagCommand")
+                                .addClass("field_docLayoutTagCommand")
+//                                    .addClass(statestyle)
+                                ); 
+            }
+            if (basenode.docLayoutAddStyleClass) {
+                $row.append(
+                        $("<div lang='tech' />").html("Style: " 
+                                    + htmlEscapeText(basenode.docLayoutAddStyleClass))
+                                .addClass("container_field")
+                                .addClass("fieldtype_docLayoutAddStyleClass")
+                                .addClass("field_docLayoutAddStyleClass")
+//                                    .addClass(statestyle)
+                                ); 
+            }
+            if (basenode.docLayoutShortName) {
+                $row.append(
+                        $("<div lang='tech' />").html("Kurzname: " 
+                                    + htmlEscapeText(basenode.docLayoutShortName))
+                                .addClass("container_field")
+                                .addClass("fieldtype_docLayoutShortName")
+                                .addClass("field_docLayoutShortName")
+//                                    .addClass(statestyle)
+                                ); 
+            }
+            if (basenode.docLayoutFlgCloseDiv) {
+                $row.append(
+                        $("<div lang='tech' />").html("Block schlie&szligen!")
+                                .addClass("container_field")
+                                .addClass("fieldtype_docLayoutFlgCloseDiv")
+                                .addClass("field_docLayoutFlgCloseDiv")
+//                                    .addClass(statestyle)
+                                ); 
+            }
+        }
     } else if (basenode.className == "SymLinkNode") {
         yaioLoadSymLinkData(basenode, fancynode);
     } 
@@ -691,6 +759,11 @@ function renderColumnsForNode(event, data) {
     var statestyle = "node-state-" + nodestate;
     var nodeTypeName = basenode.className;
     
+    
+    var colName = 0;
+    var colData = 1;
+    var colActions = 2;
+    
     // get tdlist
     var $tdList = $(node.tr).find(">td");
 
@@ -698,10 +771,12 @@ function renderColumnsForNode(event, data) {
 //    $tdList.eq(1).text(node.getIndexHier()).addClass("alignRight").addClass(statestyle);
 
     // add stateclasss to tr
-    $(node.tr).addClass(statestyle).addClass("container_nodeline");
+    $(node.tr)
+       //.addClass(statestyle)
+       .addClass("container_nodeline");
     
     // add fields
-    $tdList.eq(0).html(
+    $tdList.eq(colActions).html(
             "<a href='#/show/" + basenode.sysUID + "'"
                     + " class='yaio-icon-center'"
                     + " data-tooltip='Zeige nur diesen Teilbaum mit allen Kindselementen'></a>"
@@ -719,14 +794,26 @@ function renderColumnsForNode(event, data) {
                     + " data-tooltip='L&ouml;sche dieses Element'></a>"
             ).addClass("container_field")
              .addClass("fieldtype_actions")
-             .addClass(statestyle);
-    // (index #2 is rendered by fancytree)
-    $tdList.eq(1).addClass("container_field")
+             //.addClass(statestyle)
+             ;
+
+    // manipulate name-column
+    $tdList.eq(colName).addClass("container_field")
                  .addClass("fieldtype_name")
                  .addClass("field_name")
-                 .addClass(statestyle);
-    var $nameEle = $tdList.eq(1).find("span.fancytree-title");
-    //$nameEle.append(" sortPos: " + basenode.sortPos);
+                 //.addClass(statestyle)
+                 ;
+    // insert state before name-span
+    var $nameEle = $tdList.eq(colName).find("span.fancytree-title");
+    var $div = $("<div style='disply: block-inline' />")
+        .append($("<span class='" + statestyle + " fancytree-title-state' lang='de' />")
+                    .html(basenode.state + " ")
+                    )
+        .append("&nbsp;")
+        .append($("<span class=''>" + htmlEscapeText(basenode.name) + "</span>"))
+        ;
+    $nameEle.html($div)
+    //$tdList.eq(colName).find("span.fancytree-expander").addClass(statestyle);
     
     // render datablock
     var $nodeDataBlock = renderDataBlock(basenode, node);
@@ -745,17 +832,18 @@ function renderColumnsForNode(event, data) {
                         .addClass("container_field")
                         .addClass("fieldtype_descToggler")
                         .addClass("toggler_show")
-                        .addClass(statestyle));
+                        //.addClass(statestyle)
+                        );
         
         // add desc row
         $nodeDataBlock.append(
                 $("<div class='togglecontainer' id='detail_desc_" + basenode.sysUID + "'>"
-                        + "<pre>" + basenode.nodeDesc.replace(/\<WLBR\>/g, "\n") + "</pre>"
+                        + "<pre>" + htmlEscapeText(basenode.nodeDesc).replace(/\<WLBR\>/g, "\n") + "</pre>"
                         + "</div>").addClass("field_nodeDesc"));
     }
     
     // add nodeData
-    $tdList.eq(2).html($nodeDataBlock).addClass("block_nodedata");
+    $tdList.eq(colData).html($nodeDataBlock).addClass("block_nodedata");
     
     // toogle
     toggleNodeDescContainer(basenode.sysUID);
@@ -1363,32 +1451,7 @@ function openYAIONodeEditor(nodeId, mode) {
     $("#containerFormYaioEditor" + formSuffix).css("display", "block");
     //$("#containerYaioEditor").css("display", "block");
     toggleElement("#containerYaioEditor");
-
-//    $.datepicker.regional['de'].buttonImage = '../images/calendar.gif';
-//    $.datepicker.regional['de'].buttonImageOnly = true;
-//    $.datepicker.regional['de'].showOn = true;
-//    $.datepicker({
-//        prevText: '&lt;zur&uuml;ck', prevStatus: '',
-//        prevJumpText: '&lt;&lt;', prevJumpStatus: '',
-//        nextText: 'Vor&gt;', nextStatus: '',
-//        nextJumpText: '&gt;&gt;', nextJumpStatus: '',
-//        currentText: 'heute', currentStatus: '',
-//        todayText: 'heute', todayStatus: '',
-//        clearText: '-', clearStatus: '',
-//        closeText: 'schließen', closeStatus: '',
-//        monthNames: ['Januar','Februar','März','April','Mai','Juni',
-//                     'Juli','August','September','Oktober','November','Dezember'],
-//        monthNamesShort: ['Jan','Feb','Mär','Apr','Mai','Jun',
-//                          'Jul','Aug','Sep','Okt','Nov','Dez'],
-//        dayNames: ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'],
-//        dayNamesShort: ['So','Mo','Di','Mi','Do','Fr','Sa'],
-//        dayNamesMin: ['So','Mo','Di','Mi','Do','Fr','Sa'],
-//        showMonthAfterYear: false,
-//        showOn: 'both',
-//        buttonImage: '../images/calendar.gif',
-//        buttonImageOnly: true,
-//        dateFormat:'dd.mm.yy'
-//    });
+    
     // add datepicker to all dateinput
     $.datepicker.setDefaults($.datepicker.regional['de']);
     $.timepicker.regional['de'] = {
@@ -1424,6 +1487,223 @@ function closeYAIONodeEditor() {
     resetYAIONodeEditor();
 } 
 
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     GUI
+ * <h4>FeatureDescription:</h4>
+ *     add speechRecognition to name+nodeDesc-Label if availiable<br>
+ *     set the flg webkitSpeechRecognitionAdded on the element, so that there is no doubling
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>GUI-result: add speechrecognition to elements
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Editor SpeechRecognition
+ */
+function addSpeechRecognitionToElements() {
+    // add speechrecognitionif availiable
+    if (('webkitSpeechRecognition' in window)) {
+        // add speechrecognition to nodeDesc+name
+        $("label[for='nodeDesc'], label[for='name']").append(function (idx) {
+            var link = "";
+            var label = this;
+            
+            // check if already set
+            if ($(label).attr("webkitSpeechRecognitionAdded")) {
+                console.error("addSpeechRecognitionToElements: SKIP because already added: " + $(label).attr("for"));
+                return link;
+            }
+
+            // get corresponding form
+            var forName = $(label).attr("for");
+            var form = $(label).closest("form");
+            
+            // get for-element byName from form
+            var forElement = form.find("[name="+ forName + "]").first();
+            if (forElement.length > 0) {
+                // define link to label
+                link = "<a href=\"\" class=\"\"" +
+                    " onClick=\"openSpeechRecognitionWindow(" +
+                        "document.getElementById('" + forElement.attr('id') + "')); return false;" +
+                    "\" data-tooltip='Spracherkennung nutzen'>" +
+                    "<img alt='Spracherkennung nutzen' style='width:25px'" +
+                        " src='https://www.google.com/intl/en/chrome/assets/common/images/content/mic.gif'></a>";
+                
+                // set flag
+                $(label).attr("webkitSpeechRecognitionAdded", "true")
+                console.log("addSpeechRecognitionToElements: add : " + forName + " for " + forElement.attr('id'));
+            }
+            return link;
+        });
+    }
+}
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     GUI
+ * <h4>FeatureDescription:</h4>
+ *     open speechrecognition for element
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>GUI-result: open speechrecognition for element
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Editor SpeechRecognition
+ * @param target - target-element to update (HTML-Element)
+ */
+function openSpeechRecognitionWindow(target) {
+    if (target == null) target = self;
+    target.focus();
+    var speechrecognitionWindow = window.open('speechrecognition.html', "speechrecognition", "width=690,height=350,resizable=yes,dependent=yes,scrollbars=yes");
+    speechrecognitionWindow.focus();
+    if (speechrecognitionWindow.opener == null) { speechrecognitionWindow.opener = self; }
+    speechrecognitionWindow.opener.targetElement = target;
+}
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     GUI
+ * <h4>FeatureDescription:</h4>
+ *     a hack to call updatetrigger for the element because for speechregognition the popup
+ *     cant call the trigger for another window (security)<br>
+ *     the function binds to the current document-window
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>GUI-result: calls updatetrigger for element
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Editor SpeechRecognition
+ * @param element - element (HTML-Element) to fire the trigger
+ */
+self.callUpdateTriggerForElement = function (element) {
+    if (element != null) {
+        $(element).trigger('input').triggerHandler("change");
+        $(element).trigger('select').triggerHandler("change");
+        $(element).trigger('input');
+        $(element).focus();
+    }
+}
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     GUI
+ * <h4>FeatureDescription:</h4>
+ *     init the multilanguage support for all tags wirth attribute <XX lang="de">
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>GUI-result: init multilanguage-support
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Editor Multilanguagesupport
+ */
+function initLanguageSupport() {
+    // Create language switcher instance and set default language to tech
+    window.lang = new Lang('tech');
+
+    //Define the de language pack as a dynamic pack to be loaded on demand
+    //if the user asks to change to that language. We pass the two-letter language
+    //code and the path to the language pack js file
+    window.lang.dynamic('de', 'lang/lang-tech-to-de.json');
+    window.lang.loadPack('de');
+
+    // change to de
+    window.lang.change('de');
+}
+
+
+/*****************************************
+ *****************************************
+ * Service-Funktions (busnesslogic)
+ *****************************************
+ *****************************************/
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     BusinessLogic
+ * <h4>FeatureDescription:</h4>
+ *     recalcs the istStand depending on the state/type
+ *     if ERLEDIGT || VERWORFEN || EVENT_ERLEDIGT || EVENT_VERWORFEN: update istStand=100
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>ReturnValue Integer - the recalced stand
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     BusinessLogic
+ * @param basenode - the node to recalc
+ * @return istStand in %
+ */
+function calcIstStandFromState(basenode) {
+    var istStand = basenode.istStand;
+    if (   basenode.type == "EVENT_ERLEDIGT"
+        || basenode.type == "EVENT_VERWORFEN"
+        || basenode.type == "ERLEDIGT"
+        || basenode.type == "VERWORFEN") {
+        istStand = 100;
+    }
+    console.log("calcIstStandFromState for node:" + basenode.sysUID + " state=" + basenode.type + " new istStand=" + istStand);
+    
+    return istStand;
+}
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     BusinessLogic
+ * <h4>FeatureDescription:</h4>
+ *     recalcs the type/state depending on the istStand
+ *     <ul>
+ *       <li>if className=TaskNode && 0: update type=OFFEN
+ *       <li>if className=TaskNode && >0&&<100 && ! WARNING: update type=RUNNING
+ *       <li>if className=TaskNode && 100 && != VERWORFEN: update type=ERLEDIGT
+ *       <li>if className=EventNode && 0: update type=EVENT_PLANED
+ *       <li>if className=EventNode && >0&&<100 && ! EVENT_WARNING: update type=EVENT_RUNNING
+ *       <li>if className=EventNode && 100 && != EVENT_VERWORFEN: update type=EVENT_ERLEDIGT
+ *     </ul>
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>ReturnValue String - the recalced type/state
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     BusinessLogic
+ * @param basenode - the node to recalc
+ * @return the recalced type
+ */
+function calcTypeFromIstStand(basenode) {
+    var type = basenode.type;
+
+    if (basenode.className == "TaskNode") {
+        // TaskNode
+        if (basenode.istStand == "0") {
+            // 0: OFFEN
+            type = "OFFEN"; 
+        } else if (basenode.istStand == 100 && basenode.type != "VERWORFEN") {
+            // 100: ERLEDIGT if not VERWORFEN already
+            type = "ERLEDIGT"; 
+        } else if (basenode.istStand < 100 && basenode.istStand > 0) {
+            // 0<istStand<100: RUNNING if not WARNING already
+            if (basenode.type != "WARNING") {
+                type = "RUNNING"; 
+            }
+        }
+    } else if (basenode.className == "EventNode") {
+        // EventNode
+        if (basenode.istStand == "0") {
+            // 0: EVENT_PLANED
+            type = "EVENT_PLANED"; 
+        } else if (basenode.istStand == 100 && basenode.type != "EVENT_VERWORFEN") {
+            // 100: EVENT_ERLEDIGT if not EVENT_VERWORFEN already
+            type = "EVENT_ERLEDIGT"; 
+        } else if (basenode.istStand < 100 && basenode.istStand > 0) {
+            // 0<istStand<100: EVENT_RUNNING if not EVENT_WARNING already
+            if (basenode.type != "EVENT_WARNING") {
+                type = "EVENT_RUNNING"; 
+            }
+        }
+    }
+    console.log("calcTypeFromIstStand for node:" + basenode.sysUID + " istStand=" + basenode.istStand + " newstate=" + type);
+    
+    return type;
+}
 
 /*****************************************
  *****************************************
@@ -1535,7 +1815,7 @@ function toggleElement(id) {
 function logError(message, flgShowDialog) {
     console.error(message);
     if (flgShowDialog) {
-        showModalErrorMessage(message);
+        showModalErrorMessage(htmlEscapeText(message));
     }
 }
 
@@ -1544,6 +1824,14 @@ function logError(message, flgShowDialog) {
  * Service-Funktions (data)
  *****************************************
  *****************************************/
+
+function htmlEscapeText(text) {
+    if (text && text != "undefined" && text != "" && text != null) {
+        text = text.replace("<", "&gt;");
+        text = text.replace(">", "&lt;");
+    }
+    return text;
+}
 
 function formatGermanDateTime(millis) {
     if (millis == null) {
