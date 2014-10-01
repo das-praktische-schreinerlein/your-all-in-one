@@ -1508,7 +1508,7 @@ function yaioCloseNodeEditor() {
 function yaioOpenOutputOptionsEditor(sysUID, url, target) {
     var formId = "#nodeFormOutputOptions";
     console.log("OutputOptionsEditor:" + " url:" + url);
-    $("#containerFormYaioEditorOutputOptions").css("display", "node");
+    $("#containerFormYaioEditorOutputOptions").css("display", "none");
     toggleElement("#containerFormYaioEditorOutputOptions");
     $(formId).attr("target", target);
     $(formId).attr("action", url);
@@ -1518,6 +1518,18 @@ function yaioOpenOutputOptionsEditor(sysUID, url, target) {
     return false;
 }
 
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Download
+ * <h4>FeatureDescription:</h4>
+ *     send outputOptionseditor-form
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>send request
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Callback
+ */
 function yaioSendOutputOptionsEditor() {
     var formId = "#nodeFormOutputOptions";
     $(formId).submit();
@@ -1544,6 +1556,70 @@ function yaioCloseOutputOptionsEditor() {
 } 
 
 
+/**
+ * <h4>FeatureDomain:</h4>
+ *     GUI Download
+ * <h4>FeatureDescription:</h4>
+ *     open the importEditor
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>open the importEditor
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI
+ * @param sysUID - the sysUID of the current node
+ * @param url - the url to send
+ * @param target - the target window-name
+ */
+function yaioOpenImportEditor(sysUID, url, target) {
+    var formId = "#nodeFormImport";
+    $(formId).attr("target", target);
+    $(formId).attr("action", url);
+    $(formId).trigger('form').triggerHandler("change");
+    $(formId).trigger('input');
+    console.log("ImportEditor:" + " url:" + url);
+    $("#containerFormYaioEditorImport").css("display", "none");
+    toggleElement("#containerFormYaioEditorImport");
+    
+    return false;
+}
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Download
+ * <h4>FeatureDescription:</h4>
+ *     send the importeditor-form
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>send request
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Callback
+ */
+function yaioSendImportEditor() {
+    var formId = "#nodeFormImport";
+    $(formId).submit();
+    
+    return false;
+}
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     GUI
+ * <h4>FeatureDescription:</h4>
+ *     close the importeditor, toggle it to the left
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>GUI-result: close the editor
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Tree Editor
+ */
+function yaioCloseImportEditor() {
+    console.log("close Importeditor");
+    toggleElement("#containerFormYaioEditorImport");
+    return false;
+} 
 
 
 /**

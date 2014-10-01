@@ -22,6 +22,11 @@
     <div class="container-commands">
       <!-- OutputController -->
       <div ng-controller="OutputOptionsCtrl">
+        <!-- 
+        *************************
+            Export Links
+        ************************* 
+        -->
         <ul class="exporttypes">
            <li class="exporttype"><a ng-click="outputOptionsEditor.showOutputOptionsEditor(node.sysUID, '/exports/wikiuseoptions/' + node.sysUID, '');" class="button exporttype_wiki" target="_blank">Wiki</a></li>
            <li class="exporttype"><a ng-click="outputOptionsEditor.showOutputOptionsEditor(node.sysUID, '/exports/mindmapuseoptions/' + node.sysUID, '_blank');" class="button exporttype_mindmap" target="_blank">Mindmap</a></li>
@@ -34,7 +39,7 @@
             Form: edit/create OutputOptions
         ************************* 
         -->
-        <div class="hidden container-yaio-editor-outputoptions" id="containerFormYaioEditorOutputOptions">
+        <div class="hidden box container-yaio-editor-outputoptions" id="containerFormYaioEditorOutputOptions">
           <h4 translate="editor.formOutputOptions.ue">OutputOptionen bearbeiten:</h4>
           <p translate="editor.formOutputOptions.intro" class="msg-form-intro" id="nodeFormOutputOptionsIntro"></p>
 
@@ -185,16 +190,46 @@
 
           </form>
         </div>
-      </div>
+     </div>
+
+      <!-- 
+      *************************
+          Commands
+      ************************* 
+      -->
       <ul class="commands">
-         <li class="commands">
+         <li class="command">
             <a href="" ng-click="openSubNodes()" class="button command_switchlevel">&Ouml;ffne bis Level</a>
             <input type="range" min="0" max="3" value="" id="treeOpenLevel" ng-model="config.treeOpenLevel" ng-change="openSubNodes()" class="command_switchlevel_input"> </li>
-         <li class="commands">
+         <li class="command">
             <a href="" ng-click="showHelpSite('/exports/documentation/DT201403171358546671')" target="help" class="button command_help">Hilfe</a></li>
+         <li class="command">
+            <a ng-click="showImportEditor(node.sysUID, '/imports/wiki/' + node.sysUID, '_blank');" class="button import" target="_blank">Import</a></li>
       </ul>
-   </div>
+      <!-- 
+      *************************
+          Form:   import
+      ************************* 
+      -->
+      <div class="hidden box container-yaio-editor-import" id="containerFormYaioEditorImport">
+        <h4 translate="editor.formImport.ue">Daten importieren {{node.sysUID}}:</h4>
+        <p translate="editor.formImport.intro" class="msg-form-intro" id="nodeFormImportIntro"></p>
 
+        <form with-errors class="" id="nodeFormImport" name="nodeFormImport" method="post" enctype="multipart/form-data" target="_blank">
+
+          <fieldset>
+            <label for="file" class="label_file" translate="editor.formImport.label.file" required>file</label>
+            <input type="file" name="file" class="inputtype_file" id="inputfileImort">
+            <fielderrors for="file"></fielderrors>
+          </fieldset>
+
+          <fieldset>
+            <button ng-click="sendImport()" ng-disabled="nodeFormImport.$invalid" class="btn btn-primary" translate="common.buttonSend">Send</button>
+            <button ng-click="discardImport()" class="btn btn-primary" translate="common.buttonDiscard">Discard</button>
+          </fieldset>
+        </form>
+      </div>
+    </div>
    
    
 </div></div>

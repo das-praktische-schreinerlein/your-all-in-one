@@ -157,7 +157,13 @@ a.toggler_hidden {
 }
 .container-yaio-editor-outputoptions {
     float: left;
-    width: 500px;
+    width: 600px;
+    clear: none;
+}
+.container-yaio-editor-import {
+    float: left;
+    width: 600px;
+    clear: none;
 }
 .container-verortung {
     width: 100%;

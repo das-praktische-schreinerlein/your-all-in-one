@@ -74,7 +74,7 @@ public class NodeRestController {
      * @param okMsg - the message
      * @return NodeResponse (OK) with the node, hierarchy and OK-message
      */
-    protected NodeActionResponse createResponseObj(BaseNode node, String okMsg) {
+    public static NodeActionResponse createResponseObj(BaseNode node, String okMsg) {
         // extract parents
         List<String> parentIdHierarchy = node.getParentIdHierarchy();
         

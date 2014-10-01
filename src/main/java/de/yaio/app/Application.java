@@ -21,12 +21,15 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.PreDestroy;
+import javax.servlet.MultipartConfigElement;
 
 import org.apache.commons.cli.Option;
 import org.apache.log4j.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.context.embedded.MultipartConfigFactory;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
@@ -132,6 +135,15 @@ public class Application {
             System.exit(CmdLineJob.CONST_EXITCODE_FAILED_ARGS);
         }
     }
+    
+    @Bean
+    MultipartConfigElement multipartConfigElement() {
+        MultipartConfigFactory factory = new MultipartConfigFactory();
+        factory.setMaxFileSize("128KB");
+        factory.setMaxRequestSize("128KB");
+        return factory.createMultipartConfig();
+    }
+    
     
     @PreDestroy
     protected static void cleanUpAfterJob() throws Throwable {
