@@ -20,7 +20,7 @@ package de.yaio.datatransfer.exporter;
  * <h4>FeatureDomain:</h4>
  *     DatenExport
  * <h4>FeatureDescription:</h4>
- *     options for export of Nodes
+ *     options for export of Nodes, initialized with default-values
  * 
  * @package de.yaio.datatransfer.exporter
  * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
@@ -31,14 +31,14 @@ package de.yaio.datatransfer.exporter;
 public class OutputOptionsImpl implements OutputOptions {
     public boolean flgDoIntend = true;
     public boolean flgShowBrackets = true;
-    public int intendFuncArea = 80;
+    public Integer intendFuncArea = 80;
     public boolean flgIntendSum = false;
 
-    public int maxEbene = 9999;
-    public int maxUeEbene = 3;
-    public int intend = 2;
-    public int intendLi = 2;
-    public int intendSys = 160;
+    public Integer maxEbene = 9999;
+    public Integer maxUeEbene = 3;
+    public Integer intend = 2;
+    public Integer intendLi = 2;
+    public Integer intendSys = 160;
     public boolean flgTrimDesc = true;
     public boolean flgReEscapeDesc = true;
 
@@ -117,9 +117,9 @@ public class OutputOptionsImpl implements OutputOptions {
         this.strReadIfStatusInListOnly = strReadIfStatusInListOnly;
     }
     public int getIntendFuncArea() {
-        return intendFuncArea;
+        return manageIntValues(intendFuncArea);
     }
-    public void setIntendFuncArea(int intendPlanToPos) {
+    public void setIntendFuncArea(Integer intendPlanToPos) {
         this.intendFuncArea = intendPlanToPos;
     }
     public boolean isFlgShowBrackets() {
@@ -212,33 +212,33 @@ public class OutputOptionsImpl implements OutputOptions {
         this.flgProcessDocLayout = flgProcessDocLayout;
     }
     public int getMaxEbene() {
-        return maxEbene;
+        return manageIntValues(maxEbene);
     }
-    public void setMaxEbene(int maxEbene) {
+    public void setMaxEbene(Integer maxEbene) {
         this.maxEbene = maxEbene;
     }
     public int getMaxUeEbene() {
-        return maxUeEbene;
+        return manageIntValues(maxUeEbene);
     }
-    public void setMaxUeEbene(int maxUeEbene) {
+    public void setMaxUeEbene(Integer maxUeEbene) {
         this.maxUeEbene = maxUeEbene;
     }
     public int getIntend() {
-        return intend;
+        return manageIntValues(intend);
     }
-    public void setIntend(int intend) {
+    public void setIntend(Integer intend) {
         this.intend = intend;
     }
     public int getIntendLi() {
-        return intendLi;
+        return manageIntValues(intendLi);
     }
-    public void setIntendLi(int intendLi) {
+    public void setIntendLi(Integer intendLi) {
         this.intendLi = intendLi;
     }
     public int getIntendSys() {
-        return intendSys;
+        return manageIntValues(intendSys);
     }
-    public void setIntendSys(int intendSys) {
+    public void setIntendSys(Integer intendSys) {
         this.intendSys = intendSys;
     }
 
@@ -272,6 +272,10 @@ public class OutputOptionsImpl implements OutputOptions {
     public void setFlgShowDescInNextLine(boolean flgShowDescInNextLine) {
         this.flgShowDescInNextLine = flgShowDescInNextLine;
     }
+    
+    public int manageIntValues(Integer value) {
+        return (value != null ? value : 0);
+    }
 
     public void setAllFlgShow(boolean value) {
         setFlgShowType(value);
@@ -286,6 +290,40 @@ public class OutputOptionsImpl implements OutputOptions {
         setFlgShowMetaData(value);
         setFlgShowSysData(value);
         setFlgShowDesc(value);
+    }
+    
+    public void resetDefaults() {
+        this.flgDoIntend = false;
+        this.flgShowBrackets = false;
+        this.intendFuncArea = 0;
+        this.flgIntendSum = false;
+
+        this.maxEbene = 0;
+        this.maxUeEbene = 0;
+        this.intend = 0;
+        this.intendLi = 0;
+        this.intendSys = 0;
+        this.flgTrimDesc = false;
+        this.flgReEscapeDesc = false;
+
+        this.flgShowState = false;
+        this.flgShowType = false;
+        this.flgShowName = false;
+        this.flgShowResLoc = false;
+        this.flgShowSymLink = false;
+        this.flgShowDocLayout = false;
+        this.flgShowIst = false;
+        this.flgShowPlan = false;
+        this.flgShowChildrenSum = false;
+        this.flgShowMetaData = false;
+        this.flgShowSysData = false;
+        this.flgShowDesc = false;
+        this.flgShowDescWithUe = false;
+        this.flgShowDescInNextLine = false;
+
+        this.flgChildrenSum = false;
+        this.flgProcessDocLayout = false;
+        strReadIfStatusInListOnly = "";
     }
 
     @Override

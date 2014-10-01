@@ -67,15 +67,15 @@ public interface OutputOptions {
     public void setFlgProcessDocLayout(boolean flgProcessDocLayout);
 
     public int getMaxEbene();
-    public void setMaxEbene(int maxEbene);
+    public void setMaxEbene(Integer maxEbene);
     public int getMaxUeEbene();
-    public void setMaxUeEbene(int maxUeEbene);
+    public void setMaxUeEbene(Integer maxUeEbene);
     public int getIntend();
-    public void setIntend(int intend);
+    public void setIntend(Integer intend);
     public int getIntendLi();
-    public void setIntendLi(int intendLi);
+    public void setIntendLi(Integer intendLi);
     public int getIntendSys();
-    public void setIntendSys(int intendSys);
+    public void setIntendSys(Integer intendSys);
     public boolean isFlgTrimDesc();
     public void setFlgTrimDesc(boolean flgTrimDesc);
 
@@ -83,7 +83,7 @@ public interface OutputOptions {
     public void setStrReadIfStatusInListOnly(String strReadIfStatusInListOnly);
 
     public int getIntendFuncArea();
-    public void setIntendFuncArea(int intendPlanToPos);
+    public void setIntendFuncArea(Integer intendPlanToPos);
 
     public boolean isFlgShowBrackets();
     public void setFlgShowBrackets(boolean flgShowBrackets);

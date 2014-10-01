@@ -158,35 +158,35 @@ var configNodeTypeFields = {
  * @param masterNodeId - the node.sysUID to load
  * @param doneHandler - 
  */
-function createOrReloadYAIOFancyTree(treeId, masterNodeId, doneHandler){
+function yaioCreateOrReloadFancyTree(treeId, masterNodeId, doneHandler){
     // check if already loaded
     var state = null;
     if (treeInstances[treeId]) {
         state = treeInstances[treeId].state;
     }
-    console.log("createOrReloadYAIOFancyTree for id: " + treeId + " state=" + state + " caller: " + treeInstances[treeId]);
+    console.log("yaioCreateOrReloadFancyTree for id: " + treeId + " state=" + state + " caller: " + treeInstances[treeId]);
     if (state) {
-        console.log("createOrReloadYAIOFancyTree: flgYAIOFancyTreeLoaded is set: prepare reload=" 
+        console.log("yaioCreateOrReloadFancyTree: flgYAIOFancyTreeLoaded is set: prepare reload=" 
                 + showUrl + masterNodeId);
-        doOnYAIOFancyTreeState(treeId, "rendering_done", 1000, 5, function () {
+        yaioDoOnFancyTreeState(treeId, "rendering_done", 1000, 5, function () {
             // do reload if rendering done
-            console.log("createOrReloadYAIOFancyTree: do reload=" 
+            console.log("yaioCreateOrReloadFancyTree: do reload=" 
                     + showUrl + masterNodeId);
             var tree = $(treeId).fancytree("getTree");
             tree.reload(showUrl + masterNodeId).done(function(){
-                console.log("createOrReloadYAIOFancyTree reload tree done:" + masterNodeId);
+                console.log("yaioCreateOrReloadFancyTree reload tree done:" + masterNodeId);
 
                 // check if doneHandler
                 if (doneHandler) {
-                    console.log("createOrReloadYAIOFancyTree call doneHandler");
+                    console.log("yaioCreateOrReloadFancyTree call doneHandler");
                     doneHandler();
                 }
             });
-        }, "createOrReloadYAIOFancyTree.reloadHandler");
+        }, "yaioCreateOrReloadFancyTree.reloadHandler");
     } else {
-        console.log("createOrReloadYAIOFancyTree: flgYAIOFancyTreeLoaded not set:"
+        console.log("yaioCreateOrReloadFancyTree: flgYAIOFancyTreeLoaded not set:"
                 + " create=" + showUrl + masterNodeId);
-        createYAIOFancyTree(treeId, masterNodeId, doneHandler);
+        yaioCreateFancyTree(treeId, masterNodeId, doneHandler);
     }
 }
 
@@ -209,7 +209,7 @@ function createOrReloadYAIOFancyTree(treeId, masterNodeId, doneHandler){
  * @param masterNodeId - the node.sysUID to load
  * @param doneHandler - 
  */
-function createYAIOFancyTree(treeId, masterNodeId, doneHandler){
+function yaioCreateFancyTree(treeId, masterNodeId, doneHandler){
     treeInstances[treeId] = {};
     treeInstances[treeId].state = "loading";
     $(treeId).fancytree({
@@ -235,7 +235,7 @@ function createYAIOFancyTree(treeId, masterNodeId, doneHandler){
           // lazy load the children
         lazyLoad: function(event, data) {
             var node = data.node;
-            console.debug("createYAIOFancyTree load data for " + node.key 
+            console.debug("yaioCreateFancyTree load data for " + node.key 
                     + " from " + showUrl + node.key);
             data.result = {
                 url: showUrl + node.key,
@@ -304,7 +304,7 @@ function createYAIOFancyTree(treeId, masterNodeId, doneHandler){
             triggerStart: ["f2", "dblclick", "shift+click", "mac+enter"],
             beforeEdit: function(event, data){
                 // open yaio-editor
-                openYAIONodeEditor(data.node.key, 'edit');
+                yaioOpenNodeEditor(data.node.key, 'edit');
                 
                 // Return false to prevent edit mode
                 // dont use fancyeditor
@@ -450,7 +450,7 @@ function createYAIOFancyTree(treeId, masterNodeId, doneHandler){
                 break;
             case "addChild":
 //                node.editCreateNode("child", "New node");
-                openYAIONodeEditor(node.key, 'create');
+                yaioOpenNodeEditor(node.key, 'create');
                 break;
             default:
                 alert("Unhandled command: " + data.cmd);
@@ -484,8 +484,8 @@ function createYAIOFancyTree(treeId, masterNodeId, doneHandler){
     
     // check if donehandler
     if (doneHandler) {
-        doOnYAIOFancyTreeState(treeId, "rendering_done", 1000, 5, doneHandler, 
-                "createYAIOFancyTree.doneHandler");
+        yaioDoOnFancyTreeState(treeId, "rendering_done", 1000, 5, doneHandler, 
+                "yaioCreateFancyTree.doneHandler");
     }
 
     /*
@@ -526,20 +526,20 @@ function createYAIOFancyTree(treeId, masterNodeId, doneHandler){
  *****************************************
  *****************************************/
 
-function doOnYAIOFancyTreeState(treeId, state, waitTime, maxTries, doneHandler, name) {
+function yaioDoOnFancyTreeState(treeId, state, waitTime, maxTries, doneHandler, name) {
     // check if donehandler
     if (doneHandler) {
         // only postprocess after rendering
         if (treeInstances[treeId].state != state && maxTries > 0) {
             // wait if maxTries>0 or state is set to rendering_done
-            console.log("doOnYAIOFancyTreeState doneHandler:" + name + ") try=" + maxTries 
+            console.log("yaioDoOnFancyTreeState doneHandler:" + name + ") try=" + maxTries 
                     + " wait=" + waitTime + "ms for " + treeId + "=" + state);
             setTimeout(function() { 
-                doOnYAIOFancyTreeState(treeId, state, waitTime, maxTries-1, doneHandler);
+                yaioDoOnFancyTreeState(treeId, state, waitTime, maxTries-1, doneHandler);
             }, waitTime);
         } else {
             // maxTries=0 or state is set to rendering_done
-            console.log("doOnYAIOFancyTreeState call doneHandler:" + name + " try=" + maxTries 
+            console.log("yaioDoOnFancyTreeState call doneHandler:" + name + " try=" + maxTries 
                     + " for " + treeId + "=" + state);
             doneHandler();
         } 
@@ -780,13 +780,13 @@ function renderColumnsForNode(event, data) {
             "<a href='#/show/" + basenode.sysUID + "'"
                     + " class='yaio-icon-center'"
                     + " data-tooltip='Zeige nur diesen Teilbaum mit allen Kindselementen'></a>"
-            + "<a onclick=\"javascript: openYAIONodeEditor('" + basenode.sysUID + "', 'edit'); return false;\""
+            + "<a onclick=\"javascript: yaioOpenNodeEditor('" + basenode.sysUID + "', 'edit'); return false;\""
                     + " class='yaio-icon-edit'"
                     + " data-tooltip='Bearbeite die Daten'></a>"
-            + "<a onclick=\"javascript: openYAIONodeEditor('" + basenode.sysUID + "', 'create'); return false;\""
+            + "<a onclick=\"javascript: yaioOpenNodeEditor('" + basenode.sysUID + "', 'create'); return false;\""
                     + " class='yaio-icon-create'"
                     + " data-tooltip='Erzeuge ein neues KindsElement'></a>"
-            + "<a onclick=\"javascript: openYAIONodeEditor('" + basenode.sysUID + "', 'createsymlink'); return false;\""
+            + "<a onclick=\"javascript: yaioOpenNodeEditor('" + basenode.sysUID + "', 'createsymlink'); return false;\""
                     + " class='yaio-icon-createsymlink'"
                     + " data-tooltip='Erzeuge einen SymLink der auf dieses Element verweist'></a>"
             + "<a onclick=\"javascript: yaioRemoveNodeById('" + basenode.sysUID + "'); return false;\""
@@ -1199,9 +1199,9 @@ function yaioDoRemoveNode(node, url) {
  * <h4>FeatureKeywords:</h4>
  *     GUI Editor
  */
-function resetYAIONodeEditor() {
+function yaioResetNodeEditor() {
     // reset editor
-    console.log("resetYAIONodeEditor: show tree, hide editor");
+    console.log("yaioResetNodeEditor: show tree, hide editor");
     
     // show full tree
     $("#containerYaioTree").css("width", "100%");
@@ -1215,8 +1215,8 @@ function resetYAIONodeEditor() {
     $("#containerBoxYaioEditor").css("display", "none");
     
     // hide forms
-    hideAllYAIONodeEditorForms();
-    resetYAIONodeEditorFormFields();
+    yaioHideAllNodeEditorForms();
+    yaioResetNodeEditorFormFields();
 }
 
 /**
@@ -1231,9 +1231,9 @@ function resetYAIONodeEditor() {
  * <h4>FeatureKeywords:</h4>
  *     GUI Editor
  */
-function hideAllYAIONodeEditorForms() {
+function yaioHideAllNodeEditorForms() {
     // reset editor
-    console.log("hideAllYAIONodeEditorForms: hide forms");
+    console.log("yaioHideAllNodeEditorForms: hide forms");
     // hide forms
     $("#containerFormYaioEditorCreate").css("display", "none");
     $("#containerFormYaioEditorTaskNode").css("display", "none");
@@ -1255,7 +1255,7 @@ function hideAllYAIONodeEditorForms() {
  * <h4>FeatureKeywords:</h4>
  *     GUI Editor
  */
-function resetYAIONodeEditorFormFields() {
+function yaioResetNodeEditorFormFields() {
     // reset data
     // configure value mapping
     var basenode = {};
@@ -1342,27 +1342,27 @@ function yaioSetFormField(field, fieldSuffix, basenode) {
  * @param nodeId - id of the node
  * @param mode - edit, create, createsymlink
  */
-function openYAIONodeEditor(nodeId, mode) {
+function yaioOpenNodeEditor(nodeId, mode) {
     // reset editor
-    console.log("openYAIONodeEditor: reset editor");
-    resetYAIONodeEditor();
+    console.log("yaioOpenNodeEditor: reset editor");
+    yaioResetNodeEditor();
     
     // check vars
     if (! nodeId) {
         // tree not found
-        logError("error openYAIONodeEditor: nodeId required", false);
+        logError("error yaioOpenNodeEditor: nodeId required", false);
         return null;
     }
     // load node
     var tree = $("#tree").fancytree("getTree");
     if (!tree) {
         // tree not found
-        logError("error openYAIONodeEditor: cant load tree for node:" + nodeId, false);
+        logError("error yaioOpenNodeEditor: cant load tree for node:" + nodeId, false);
         return null;
     }
     var treeNode = tree.getNodeByKey(nodeId);
     if (! treeNode) {
-        logError("error openYAIONodeEditor: cant load node:" + nodeId, false);
+        logError("error yaioOpenNodeEditor: cant load node:" + nodeId, false);
         return null;
     }
     
@@ -1394,7 +1394,7 @@ function openYAIONodeEditor(nodeId, mode) {
         formSuffix = basenode.className;
         fieldSuffix = basenode.className;
         basenode.mode = "edit";
-        console.log("openYAIONodeEditor mode=edit for node:" + nodeId);
+        console.log("yaioOpenNodeEditor mode=edit for node:" + nodeId);
     } else if (mode == "create") {
         // mode create
         formSuffix = "Create";
@@ -1406,7 +1406,7 @@ function openYAIONodeEditor(nodeId, mode) {
                 mode: "create",
                 sysUID: origBasenode.sysUID
         };
-        console.log("openYAIONodeEditor mode=create for node:" + nodeId);
+        console.log("yaioOpenNodeEditor mode=create for node:" + nodeId);
     } else if (mode == "createsymlink") {
         // mode create
         formSuffix = "SymLinkNode";
@@ -1423,9 +1423,9 @@ function openYAIONodeEditor(nodeId, mode) {
                 className: "SymLinkNode",
                 symLinkRef: origBasenode.metaNodePraefix + "" + origBasenode.metaNodeNummer
         };
-        console.log("openYAIONodeEditor mode=createsymlink for node:" + nodeId);
+        console.log("yaioOpenNodeEditor mode=createsymlink for node:" + nodeId);
     } else {
-        logError("error openYAIONodeEditor: unknown mode" + mode 
+        logError("error yaioOpenNodeEditor: unknown mode" + mode 
                 + " for nodeId:" + nodeId, false);
         return null;
     }
@@ -1438,7 +1438,7 @@ function openYAIONodeEditor(nodeId, mode) {
     
     // show editor
     var width = $("#box_data").width();
-    console.log("openYAIONodeEditor show editor: " + formSuffix 
+    console.log("yaioOpenNodeEditor show editor: " + formSuffix 
             + " for node:" + nodeId);
 
     // set width
@@ -1481,11 +1481,69 @@ function openYAIONodeEditor(nodeId, mode) {
  * <h4>FeatureKeywords:</h4>
  *     GUI Tree Editor
  */
-function closeYAIONodeEditor() {
+function yaioCloseNodeEditor() {
     console.log("close editor");
     toggleElement("#containerYaioEditor");
-    resetYAIONodeEditor();
+    yaioResetNodeEditor();
 } 
+
+
+
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     GUI Download
+ * <h4>FeatureDescription:</h4>
+ *     open the outputOptionsEditor
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>open the outputOptionsEditor
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI
+ * @param sysUID - the sysUID of the current node
+ * @param url - the url to send
+ * @param target - the target window-name
+ */
+function yaioOpenOutputOptionsEditor(sysUID, url, target) {
+    var formId = "#nodeFormOutputOptions";
+    console.log("OutputOptionsEditor:" + " url:" + url);
+    $("#containerFormYaioEditorOutputOptions").css("display", "node");
+    toggleElement("#containerFormYaioEditorOutputOptions");
+    $(formId).attr("target", target);
+    $(formId).attr("action", url);
+    $(formId).trigger('form').triggerHandler("change");
+    $(formId).trigger('input');
+    
+    return false;
+}
+
+function yaioSendOutputOptionsEditor() {
+    var formId = "#nodeFormOutputOptions";
+    $(formId).submit();
+    
+    return false;
+}
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     GUI
+ * <h4>FeatureDescription:</h4>
+ *     close the outüutoptionseditor, toggle it to the left
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>GUI-result: close the editor
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Tree Editor
+ */
+function yaioCloseOutputOptionsEditor() {
+    console.log("close OutputOptionseditor");
+    toggleElement("#containerFormYaioEditorOutputOptions");
+    return false;
+} 
+
+
 
 
 /**
@@ -1827,8 +1885,12 @@ function logError(message, flgShowDialog) {
 
 function htmlEscapeText(text) {
     if (text && text != "undefined" && text != "" && text != null) {
-        text = text.replace("<", "&gt;");
-        text = text.replace(">", "&lt;");
+        text = text.replace("&", "&amp;");
+        text = text.replace("<", "&lt;");
+        text = text.replace(">", "&gt;");
+        text = text.replace("\"", "&quot;");
+        text = text.replace("'", "&#x27;");
+        text = text.replace("/", "&#x2F;");
     }
     return text;
 }
@@ -1866,4 +1928,40 @@ function formatNumbers(number, nachkomma, suffix) {
    }
    
    return (number.toFixed(nachkomma)) + suffix;
+}
+
+function downloadAsFile($link, data, fileName, mime, encoding) {
+    if (mime == "undefind") {
+        mime = "application/text";
+    }
+    if (encoding == "undefind") {
+        mime = "uft-8";
+    }
+    // data URI
+    var dataURI = 'data:' + mime + ';charset=' + encoding + ','
+            + encodeURIComponent(data);
+
+    // set link
+    var flgSafeMode = 1;
+    if (   (navigator.userAgent.indexOf("Trident") >= 0) 
+        || (navigator.userAgent.indexOf("MSIE") >= 0)
+        || flgSafeMode) {
+       // IE or SafeMode
+       var popup = window.open("");
+       if (! popup) {
+           // warn message
+           logError("Leider kann der Download nicht angezeigt werden, da Ihr Popup-Blocker aktiv ist. Beachten Sie die Hinweise im Kopf des Browsers. ", true);
+       } else {
+           // set data to document
+           $(popup.document.body).html(data);
+       }
+       return false;
+   } else {
+        // all expect IE
+        $link.attr({
+            'download' : fileName,
+            'href' : dataURI,
+            'target' : '_blank'
+        });
+   }
 }

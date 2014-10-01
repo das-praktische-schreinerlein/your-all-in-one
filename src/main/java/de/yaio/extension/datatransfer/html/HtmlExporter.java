@@ -32,6 +32,7 @@ import de.yaio.datatransfer.exporter.formatter.IstDataFormatterImpl;
 import de.yaio.datatransfer.exporter.formatter.PlanChildrenSumDataFormatterImpl;
 import de.yaio.datatransfer.exporter.formatter.PlanDataFormatterImpl;
 import de.yaio.extension.datatransfer.wiki.WikiExporter;
+import de.yaio.utils.Calculator;
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -196,8 +197,10 @@ public class HtmlExporter extends WikiExporter {
         // Namen erzeugen
         String name = curNode.getName();
         //name = name.replaceAll("\"", "'");
+        // Html-Escapen
         name = name.replaceAll("<WLESC>", "\\");
         name = name.replaceAll("<WLTAB>", "\t");
+        name = Calculator.htmlEscapeText(name);
 
         // Desc
         StringBuffer tmpBuffer = new StringBuffer();
@@ -207,9 +210,7 @@ public class HtmlExporter extends WikiExporter {
         String descFull = tmpBuffer.toString();
         if (descFull != null && descFull.length() > 0 && oOptions.isFlgShowDesc()) {
             // Html-Escapen
-            descFull = descFull.replaceAll("&", "&amp;");
-            descFull = descFull.replaceAll("<", "&lt;");
-            descFull = descFull.replaceAll("<", "&gt;");
+            descFull = Calculator.htmlEscapeText(descFull);
             descFull = descFull.replaceAll("\n", "<br>");
         }
 
@@ -625,9 +626,9 @@ public class HtmlExporter extends WikiExporter {
 
         // Namen erzeugen
         String name = curNode.getName();
-        //name = name.replaceAll("\"", "'");
         name = name.replaceAll("<WLESC>", "\\");
         name = name.replaceAll("<WLTAB>", "\t");
+        name = Calculator.htmlEscapeText(name);
         blockName = name + " (" + curNode.getWorkingId() + ")";
         styleClassesNameContainer2 = " node-level" +  + curNode.getEbene();
         if (UrlResNode.class.isInstance(curNode)) {
@@ -674,9 +675,7 @@ public class HtmlExporter extends WikiExporter {
         
         if (descFull != null && descFull.length() > 0 && oOptions.isFlgShowDesc()) {
             // Html-Escapen
-            descFull = descFull.replaceAll("&", "&amp;");
-            descFull = descFull.replaceAll("<", "&lt;");
-            descFull = descFull.replaceAll("<", "&gt;");
+            descFull = Calculator.htmlEscapeText(descFull);
             descFull = descFull.replaceAll("\n", "<br>");
             blockDesc = this.genHtmlDataBlock(curNode, descFull, "desc", oOptions.isFlgShowDesc());
         }

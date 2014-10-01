@@ -267,4 +267,35 @@ public class Calculator {
 
         return result;
     }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Tools - Converter
+     * <h4>FeatureDescription:</h4>
+     *     escape html entities
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue html-escaped string
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Converter
+     * @param src - the string to escape all html
+     * @return the html-escaped string
+     * @throws IllegalAccessException - if Class unknown or classes differ
+     */
+    public static String htmlEscapeText(String src) throws IllegalAccessException {
+        String text = src;
+        
+        // test ob beide belegt
+        if (text != null) {
+            text = text.replace("&", "&amp;");
+            text = text.replace("<", "&lt;");
+            text = text.replace(">", "&gt;");
+            text = text.replace("\"", "&quot;");
+            text = text.replace("'", "&#x27;");
+            text = text.replace("/", "&#x2F;");
+        }
+
+        return text;
+    }
 }

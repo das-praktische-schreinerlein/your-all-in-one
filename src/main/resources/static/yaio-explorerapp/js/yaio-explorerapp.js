@@ -138,7 +138,10 @@ yaioM.directive('state', function(){
  * <h4>FeatureKeywords:</h4>
  *     GUI Configuration BusinessLogic
  */
-yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams, setFormErrors) {
+yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams, setFormErrors, OutputOptionsEditor) {
+
+    // register the editor
+    $scope.outputOptionsEditor = OutputOptionsEditor;
 
     // check parameter - set default if empty
     var nodeId = $routeParams.nodeId;
@@ -170,13 +173,16 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
          *     GUI Callback
          */
         activeNodeIdHandler = function() {
-            console.log("start loading activenodes:" + activeNodeId)
-            $http.get('/nodes/show/' + activeNodeId).then(function(nodeResponse) {
+            var activeNodeUrl = '/nodes/show/' + activeNodeId;
+            console.log("start loading activenode:" + activeNodeId);
+            $http.get(activeNodeUrl).then(function(nodeResponse) {
+                // success handler
+                
                 // check response
                 var state = nodeResponse.data.state;
                 if (state == "OK") {
                     // all fine
-                    console.log("NodeShowCtrl - OK loading activenodes:" + nodeResponse.data.stateMsg)
+                    console.log("NodeShowCtrl - OK loading activenode:" + nodeResponse.data.stateMsg)
                     
                     // create nodehierarchy
                     var nodeIdHierarchy = new Array();
@@ -194,16 +200,28 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
                     openNodeHierarchy("#tree", nodeIdHierarchy);
                 } else {
                     // error
-                    logError("error loading activenodes:" + nodeResponse.data.stateMsg 
+                    logError("error loading activenode:" + nodeResponse.data.stateMsg 
                             + " details:" + nodeResponse, false)
                 }
-                
+            }, function(response) {
+                // error handler
+                var data = response.data;
+                var status = response.status;
+                var header = response.header;
+                var config = response.config;
+                var message = "error loading activenode with url: " + activeNodeUrl;
+                logError(message, true);
+                message = "error data: " + data + " header:" + header + " config:" + config;
+                logError(message, false);
             });
         }
     }
 
     // load data
-    $http.get('/nodes/show/' + nodeId).then(function(nodeResponse) {
+    var curNodeUrl = '/nodes/show/' + nodeId;
+    $http.get(curNodeUrl).then(function(nodeResponse) {
+        // success handler
+        
         // check response
         var state = nodeResponse.data.state;
         if (state == "OK") {
@@ -222,13 +240,22 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
             $scope.nodeHierarchy = nodeHierarchy;
 
             // load fencytree
-            createYAIOFancyTree("#tree", $scope.node.sysUID, activeNodeIdHandler);
+            yaioCreateFancyTree("#tree", $scope.node.sysUID, activeNodeIdHandler);
         } else {
             // error
             logError("error loading nodes:" + nodeResponse.data.stateMsg 
                     + " details:" + nodeResponse, true)
         }
-        
+    }, function(response) {
+        // error handler
+        var data = response.data;
+        var status = response.status;
+        var header = response.header;
+        var config = response.config;
+        var message = "error loading node with url: " + curNodeUrl;
+        logError(message, true);
+        message = "error data: " + data + " header:" + header + " config:" + config;
+        logError(message, false);
     });
     
     
@@ -282,7 +309,7 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
      *     GUI Callback
      */
     $scope.discard = function(formName) {
-        closeYAIONodeEditor();
+        yaioCloseNodeEditor();
         return false;
     }
     
@@ -300,7 +327,7 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
      */
     $scope.selectNewNodeType = function(formName) {
         // hide all forms
-        hideAllYAIONodeEditorForms();
+        yaioHideAllNodeEditorForms();
         
         // display createform and select nodeform
         $("#containerFormYaioEditorCreate").css("display", "block");
@@ -484,6 +511,8 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
                 url: url,
                 data: json
         }).then(function(nodeResponse) {
+            // sucess handler
+            
             // check response
             var state = nodeResponse.data.state;
             if (state == "OK") {
@@ -522,8 +551,199 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
                     fieldErrors: fieldErrors
                 });
             }
+        }, function(response) {
+            // error handler
+            var data = response.data;
+            var status = response.status;
+            var header = response.header;
+            var config = response.config;
+            var message = "error saving node with url: " + url;
+            logError(message, true);
+            message = "error data: " + data + " header:" + header + " config:" + config;
+            logError(message, false);
         });
     };
+});
+
+
+/***************************************
+ ***************************************
+ * OutputOptions for ExportLinks
+ ***************************************
+ ***************************************/
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Configuration
+ * <h4>FeatureDescription:</h4>
+ *     new functions to control the outputoptions
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>returns new function
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Configuration
+ */
+yaioM.factory('OutputOptionsEditor', function($http) {
+    var node = {};
+    var oOptions =  {};
+    var url, target;
+
+    // default-values
+    oOptions.flgDoIntend = true;
+    oOptions.flgShowBrackets = true;
+    oOptions.intendFuncArea = 80;
+    oOptions.flgIntendSum = false;
+
+    oOptions.maxEbene = 9999;
+    oOptions.maxUeEbene = 3;
+    oOptions.intend = 2;
+    oOptions.intendLi = 2;
+    oOptions.intendSys = 160;
+    oOptions.flgTrimDesc = true;
+    oOptions.flgReEscapeDesc = true;
+
+    oOptions.flgShowState = true;
+    oOptions.flgShowType = true;
+    oOptions.flgShowName = true;
+    oOptions.flgShowResLoc = true;
+    oOptions.flgShowSymLink = true;
+    oOptions.flgShowDocLayout = true;
+    oOptions.flgShowIst = true;
+    oOptions.flgShowPlan = true;
+    oOptions.flgShowChildrenSum = false;
+    oOptions.flgShowMetaData = true;
+    oOptions.flgShowSysData = true;
+    oOptions.flgShowDesc = true;
+    oOptions.flgShowDescWithUe = false;
+    oOptions.flgShowDescInNextLine = false;
+
+    oOptions.flgChildrenSum = false;
+    oOptions.flgProcessDocLayout = false;
+    
+    // define the functions
+    return {
+        oOptions: oOptions,
+        
+        /**
+         * <h4>FeatureDomain:</h4>
+         *     Download
+         * <h4>FeatureDescription:</h4>
+         *     callbackhandler to discard and close the editor
+         * <h4>FeatureResult:</h4>
+         *   <ul>
+         *     <li>updates layout
+         *   </ul> 
+         * <h4>FeatureKeywords:</h4>
+         *     GUI Callback
+         */
+        discard: function() {
+            yaioCloseOutputOptionsEditor();
+            console.log("discard done");
+            return false;
+        },
+    
+        /**
+         * <h4>FeatureDomain:</h4>
+         *     Download
+         * <h4>FeatureDescription:</h4>
+         *     callbackhandler to send and close the editor
+         * <h4>FeatureResult:</h4>
+         *   <ul>
+         *     <li>send request and updates layout
+         *   </ul> 
+         * <h4>FeatureKeywords:</h4>
+         *     GUI Callback
+         */
+        send: function() {
+//            // branch depending on mode
+//            var method;
+//            method = "POST";
+//
+//            // define json for common fields
+//            var json = JSON.stringify(oOptions);
+//            
+//            // create url
+//            console.log("Send - url::" + url + " data:" + json);
+//            
+//            // do http
+//            $http({
+//                    method: method,
+//                    url: url,
+//                    data: json
+//            }).then(function(response) {
+//                // sucess handler
+//                yaioCloseOutputOptionsEditor();
+//                
+//                downloadAsFile(null, response.data, "test.xxx", "dummy", "dummy");
+//                
+//                console.log("send done");
+//            }, function(response) {
+//                // error handler
+//                var data = response.data;
+//                var status = response.status;
+//                var header = response.header;
+//                var config = response.config;
+//                var message = "error while do export with url: " + url;
+//                logError(message, true);
+//                message = "error data: " + data + " header:" + header + " config:" + config;
+//                logError(message, false);
+//            });
+
+            yaioSendOutputOptionsEditor();
+            yaioCloseOutputOptionsEditor();
+            console.log("send done");
+            return false;
+        },
+        
+        /**
+         * <h4>FeatureDomain:</h4>
+         *     GUI Download
+         * <h4>FeatureDescription:</h4>
+         *     callbackhandler to open the outputOptionsEditor
+         * <h4>FeatureResult:</h4>
+         *   <ul>
+         *     <li>open the outputOptionsEditor
+         *   </ul> 
+         * <h4>FeatureKeywords:</h4>
+         *     GUI Callback
+         * @param sysUID - the sysUID of the current node
+         * @param url - the url to send
+         * @param target - the target window-name
+         */
+        showOutputOptionsEditor: function(sysUID, newUrl, newTarget) {
+            url = newUrl;
+            target = newTarget;
+            yaioOpenOutputOptionsEditor(sysUID, url, target);
+            console.log("showOutputOptionsEditor done:" + " url:" + url);
+            return false;
+        }
+    }
+})
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Configuration
+ * <h4>FeatureDescription:</h4>
+ *     the controller to load the outputoptions register the yaio-functions
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>returns new controller
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Configuration BusinessLogic
+ */
+yaioM.controller('OutputOptionsCtrl', function($scope, $location, $http, $routeParams, setFormErrors, OutputOptionsEditor) {
+
+    
+    // register the editor
+    $scope.outputOptionsEditor = OutputOptionsEditor;
+    // create options
+    $scope.oOptions = $scope.outputOptionsEditor.oOptions;
+    
+    console.log("OutputOptionsCtrl - started");
+
+
 });
 
 /***************************************

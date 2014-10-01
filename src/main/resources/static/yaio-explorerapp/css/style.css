@@ -155,6 +155,10 @@ a.toggler_hidden {
     display: none;
     clear: none;
 }
+.container-yaio-editor-outputoptions {
+    float: left;
+    width: 500px;
+}
 .container-verortung {
     width: 100%;
 }
@@ -334,7 +338,7 @@ span.fancytree-checkbox {
 }
 /*****************************************
  *****************************************
- * editor
+ * node-editor
  *****************************************
  *****************************************/
 label {
@@ -388,6 +392,27 @@ label {
     height: 120px;
 }
 
+/*****************************************
+ *****************************************
+ * outputoptions-editor
+ *****************************************
+ *****************************************/
+.label_option {
+    display: inline-block;
+    vertical-align: top;
+    width: 200px;
+}
+.inputtype_option {
+    width: 20px;
+} 
+.label_number {
+    display: inline-block;
+    vertical-align: top;
+    width: 200px;
+}
+.inputtype_number {
+    width: 50px;
+} 
 
 /*****************************************
  *****************************************

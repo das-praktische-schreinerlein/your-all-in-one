@@ -27,12 +27,14 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.IOUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import de.yaio.core.node.BaseNode;
+import de.yaio.datatransfer.exporter.EmptyOutputOptionsImpl;
 import de.yaio.datatransfer.exporter.Exporter;
 import de.yaio.datatransfer.exporter.OutputOptions;
 import de.yaio.datatransfer.exporter.OutputOptionsImpl;
@@ -116,7 +118,8 @@ public class ExportController {
      * <h4>FeatureDomain:</h4>
      *     Webservice
      * <h4>FeatureDescription:</h4>
-     *     Request to read the node for sysUID and return it in wiki-format with all children
+     *     Request to read the node for sysUID and return it in wiki-format with all children<br>
+     *     use the settings of the default-output-options
      * <h4>FeatureResult:</h4>
      *   <ul>
      *     <li>String - wiki-format of the node
@@ -133,6 +136,40 @@ public class ExportController {
         // configure
         Exporter exporter = new WikiExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
+        
+        // run
+        String res = this.exportNode(sysUID, exporter, oOptions, ".wiki", response);
+        return res;
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
+     *     Request to read the node for sysUID and return it in wiki-format with all children<br>
+     *     use the setting of the output-options from request<br>
+     *     requires an post-form application/x-www-form-urlencoded
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>String - wiki-format of the node
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice Query
+     * @param sysUID - sysUID to export
+     * @param oOptions - the outputOptions 
+     * @param response - the response-Obj to set contenttype and headers
+     * @return String - wiki-format of the node
+     */
+    @RequestMapping(method= {RequestMethod.POST}, 
+                    value = "/wikiuseoptions/{sysUID}", 
+                    produces="application/wiki",
+                    consumes = "application/x-www-form-urlencoded")
+    public @ResponseBody String exportNodeAsWiki(
+           @PathVariable(value="sysUID") String sysUID,
+           @ModelAttribute EmptyOutputOptionsImpl oOptions,
+           HttpServletResponse response) {
+        // configure
+        Exporter exporter = new WikiExporter();
         
         // run
         String res = this.exportNode(sysUID, exporter, oOptions, ".wiki", response);
@@ -160,6 +197,39 @@ public class ExportController {
         // configure
         Exporter exporter = new MindMapExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
+        
+        // run
+        String res = this.exportNode(sysUID, exporter, oOptions, ".mm", response);
+        return res;
+    }
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
+     *     Request to read the node for sysUID and return it in mindmap-format with all children<br>
+     *     use the setting of the output-options from request<br>
+     *     requires an post-form application/x-www-form-urlencoded
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>String - mindmap-format of the node
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice Query
+     * @param sysUID - sysUID to export
+     * @param oOptions - the outputOptions 
+     * @param response - the response-Obj to set contenttype and headers
+     * @return String - mindmap-format of the node
+     */
+    @RequestMapping(method= {RequestMethod.POST}, 
+                    value = "/mindmapuseoptions/{sysUID}", 
+                    produces="application/mindmap",
+                    consumes = "application/x-www-form-urlencoded")
+    public @ResponseBody String exportNodeAsMindMap(
+           @PathVariable(value="sysUID") String sysUID,
+           @ModelAttribute EmptyOutputOptionsImpl oOptions,
+           HttpServletResponse response) {
+        // configure
+        Exporter exporter = new MindMapExporter();
         
         // run
         String res = this.exportNode(sysUID, exporter, oOptions, ".mm", response);
@@ -197,6 +267,98 @@ public class ExportController {
      * <h4>FeatureDomain:</h4>
      *     Webservice
      * <h4>FeatureDescription:</h4>
+     *     Request to read the node for sysUID and return it in ical-format with all children<br>
+     *     use the setting of the output-options from request<br>
+     *     requires an post-form application/x-www-form-urlencoded
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>String - ical-format of the node
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice Query
+     * @param sysUID - sysUID to export
+     * @param oOptions - the outputOptions 
+     * @param response - the response-Obj to set contenttype and headers
+     * @return String - ical-format of the node
+     */
+    @RequestMapping(method= {RequestMethod.POST}, 
+                    value = "/icaluseoptions/{sysUID}", 
+                    produces="application/ical",
+                    consumes = "application/x-www-form-urlencoded")
+    public @ResponseBody String exportNodeAsICal(
+           @PathVariable(value="sysUID") String sysUID,
+           @ModelAttribute EmptyOutputOptionsImpl oOptions,
+           HttpServletResponse response) {
+        // configure
+        Exporter exporter = new ICalExporter();
+        
+        // run
+        String res = this.exportNode(sysUID, exporter, oOptions, ".ics", response);
+        return res;
+    }
+    
+    
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
+     *     read the node for sysUID and return it in html-format with all children<br>
+     *     use the setting of the output-options and set contect-header on response-obj
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>String - html-format of the node
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice Query
+     * @param sysUID - sysUID to export
+     * @param oOptions - the outputOptions 
+     * @param response - the response-Obj to set contenttype and headers
+     * @param headerFile - path to headerFile-resource (if null=defaultfile will used; if empfty=ignored)
+     * @param footerFile - path to footerFile-resource (if null=defaultfile will used; if empfty=ignored)
+     * @return String - html-format of the node
+     */
+    public String commonExportNodeAsHtml(String sysUID,
+                                         OutputOptions oOptions,
+                                         HttpServletResponse response,
+                                         String headerFile,
+                                         String footerFile) {
+        Exporter exporter = new HtmlExporter();
+        String res = null;
+        
+        // check headerFile
+        if (headerFile == null) 
+            headerFile = "/static/html/projektplan-export-header.html";
+        if (footerFile == null) 
+            footerFile = "/static/html/projektplan-export-footer.html";
+        try {
+            // run export
+            res = this.exportNode(sysUID, exporter, oOptions, ".html", response);
+            
+            if (headerFile != "" && headerFile != "") {
+                // read header
+                InputStream in = this.getClass().getResourceAsStream(headerFile);
+                res = IOUtils.toString(in) + res;
+
+                // add footer
+                in = this.getClass().getResourceAsStream(footerFile);
+                res = res + IOUtils.toString(in);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // change headers to display html in browser
+        response.setContentType("text/html");
+        response.setHeader("Content-Disposition", "");
+        
+        return res;
+    }
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
      *     Request to read the node for sysUID and return it in html-format with all children
      * <h4>FeatureResult:</h4>
      *   <ul>
@@ -212,30 +374,37 @@ public class ExportController {
     public @ResponseBody String exportNodeAsHtml(
            @PathVariable(value="sysUID") String sysUID, HttpServletResponse response) {
         // configure
-        Exporter exporter = new HtmlExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
+        return this.commonExportNodeAsHtml(sysUID, oOptions, response, null, null);
+    }
 
-        String res = null;
-        try {
-            // read header
-            InputStream in = this.getClass().getResourceAsStream("/static/html/projektplan-export-header.html");
-            res = IOUtils.toString(in);
-
-            // run export
-            res += this.exportNode(sysUID, exporter, oOptions, ".html", response);
-            
-            // add footer
-            in = this.getClass().getResourceAsStream("/static/html/projektplan-export-footer.html");
-            res = res + IOUtils.toString(in);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        
-        // change headers to display html in browser
-        response.setContentType("text/html");
-        response.setHeader("Content-Disposition", "");
-        return res;
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
+     *     Request to read the node for sysUID and return it in html-format with all children<br>
+     *     use the setting of the output-options from request<br>
+     *     requires an post-form application/x-www-form-urlencoded
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>String - html-format of the node
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice Query
+     * @param sysUID - sysUID to export
+     * @param oOptions - the outputOptions 
+     * @param response - the response-Obj to set contenttype and headers
+     * @return String - html-format of the node
+     */
+    @RequestMapping(method= {RequestMethod.POST}, 
+                    value = "/htmluseoptions/{sysUID}", 
+                    produces="text/html",
+                    consumes = "application/x-www-form-urlencoded")
+    public @ResponseBody String exportNodeAsHtml(
+           @PathVariable(value="sysUID") String sysUID,
+           @ModelAttribute EmptyOutputOptionsImpl oOptions,
+           HttpServletResponse response) {
+        return this.commonExportNodeAsHtml(sysUID, oOptions, response, null, null);
     }
 
     /**
@@ -256,9 +425,6 @@ public class ExportController {
     @RequestMapping(method=RequestMethod.GET, value = "/documentation/{sysUID}", produces="text/html")
     public @ResponseBody String exportDocumentationNodeAsHtml(
            @PathVariable(value="sysUID") String sysUID, HttpServletResponse response) {
-        // configure
-        Exporter exporter = new HtmlExporter();
-        
         // set Options
         OutputOptions oOptions = new OutputOptionsImpl();
         oOptions.setAllFlgShow(false);
@@ -267,30 +433,14 @@ public class ExportController {
         oOptions.setFlgShowDesc(true);
         oOptions.setFlgShowName(true);
         
-        String res = null;
-        try {
-            // read header
-            InputStream in = this.getClass().getResourceAsStream("/static/html/documentation-export-header.html");
-            res = IOUtils.toString(in);
-
-            // run export
-            res += this.exportNode(sysUID, exporter, oOptions, ".html", response);
-            
-            // add footer
-            in = this.getClass().getResourceAsStream("/static/html/documentation-export-footer.html");
-            res = res + IOUtils.toString(in);
-            
-            // replace static pathes...
-            for (String pattern : PostProcessorReplacements_documentation.keySet()) {
-                res = res.replace(pattern, PostProcessorReplacements_documentation.get(pattern));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        // generate
+        String res = this.commonExportNodeAsHtml(sysUID, oOptions, response, 
+                        "/static/html/documentation-export-header.html", 
+                        "/static/html/documentation-export-footer.html");
+        // replace static pathes...
+        for (String pattern : PostProcessorReplacements_documentation.keySet()) {
+            res = res.replace(pattern, PostProcessorReplacements_documentation.get(pattern));
         }
-        
-        // change headers to display html in browser
-        response.setContentType("text/html");
-        response.setHeader("Content-Disposition", "");
         return res;
     }
 
@@ -306,18 +456,18 @@ public class ExportController {
      * <h4>FeatureKeywords:</h4>
      *     Webservice Query
      * @param sysUID - sysUID to export
+     * @param oOptions - the outputOptions
      * @param response - the response-Obj to set contenttype and headers
      * @return ByteArrayOutputStream - excel-format of the node
      */
-    @RequestMapping(method=RequestMethod.GET, value = "/excel/{sysUID}", produces="application/excel")
-    public @ResponseBody String exportNodeAsExcel(
-           @PathVariable(value="sysUID") String sysUID, HttpServletResponse response) {
+    public String commonExportNodeAsExcel(String sysUID, 
+                                          ExcelOutputOptions oOptions,
+                                          HttpServletResponse response) {
         ServletOutputStream out;
         HSSFWorkbook wb;
 
         // configure
         ExcelExporter exporter = new ExcelExporter();
-        ExcelOutputOptions oOptions = new ExcelOutputOptions(new OutputOptionsImpl());
 
         // find a specific node
         BaseNode node = BaseNode.findBaseNode(sysUID);
@@ -346,7 +496,58 @@ public class ExportController {
                 e.printStackTrace();
             } 
         }
-
+        
         return null;
+    }
+
+        /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
+     *     Request to read the node for sysUID and return it in excel-format with all children
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>String - excel-format of the node
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice Query
+     * @param sysUID - sysUID to export
+     * @param response - the response-Obj to set contenttype and headers
+     * @return ByteArrayOutputStream - excel-format of the node
+     */
+    @RequestMapping(method=RequestMethod.GET, value = "/excel/{sysUID}", produces="application/excel")
+    public @ResponseBody String exportNodeAsExcel(
+           @PathVariable(value="sysUID") String sysUID, HttpServletResponse response) {
+        ExcelOutputOptions oOptions = new ExcelOutputOptions(new OutputOptionsImpl());
+        return this.commonExportNodeAsExcel(sysUID, oOptions, response);
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
+     *     Request to read the node for sysUID and return it in html-format with all children<br>
+     *     use the setting of the output-options from request<br>
+     *     requires an post-form application/x-www-form-urlencoded
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>String - html-format of the node
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice Query
+     * @param sysUID - sysUID to export
+     * @param oOptions - the outputOptions 
+     * @param response - the response-Obj to set contenttype and headers
+     * @return String - html-format of the node
+     */
+    @RequestMapping(method= {RequestMethod.POST}, 
+                    value = "/exceluseoptions/{sysUID}", 
+                    produces="application/excel",
+                    consumes = "application/x-www-form-urlencoded")
+    public @ResponseBody String exportNodeAsExcel(
+           @PathVariable(value="sysUID") String sysUID,
+           @ModelAttribute ExcelOutputOptions oOptions,
+           HttpServletResponse response) {
+        return this.commonExportNodeAsExcel(sysUID, oOptions, response);
     }
 }

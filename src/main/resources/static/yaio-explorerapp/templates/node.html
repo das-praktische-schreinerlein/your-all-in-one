@@ -20,13 +20,172 @@
         <div class="entry node-state-{{node.state}}"><b> --&gt; <state value="node.state" /> - {{node.name}}</b></div>
     </div>
     <div class="container-commands">
-      <ul class="exporttypes">
-         <li class="exporttype"><a href="/exports/wiki/{{node.sysUID}}" class="button exporttype_wiki" target="_blank">Wiki</a></li>
-         <li class="exporttype"><a href="/exports/mindmap/{{node.sysUID}}" class="button exporttype_mindmap" target="_blank">Mindmap</a></li>
-         <li class="exporttype"><a href="/exports/ical/{{node.sysUID}}" class="button exporttype_ical" target="_blank">ICal/VCard</a></li>
-         <li class="exporttype"><a href="/exports/html/{{node.sysUID}}" class="button exporttype_html" target="_blank">Html</a></li>
-         <li class="exporttype"><a href="/exports/excel/{{node.sysUID}}" class="button exporttype_excel" target="_blank">Excel</a></li>
-      </ul>
+      <!-- OutputController -->
+      <div ng-controller="OutputOptionsCtrl">
+        <ul class="exporttypes">
+           <li class="exporttype"><a ng-click="outputOptionsEditor.showOutputOptionsEditor(node.sysUID, '/exports/wikiuseoptions/' + node.sysUID, '');" class="button exporttype_wiki" target="_blank">Wiki</a></li>
+           <li class="exporttype"><a ng-click="outputOptionsEditor.showOutputOptionsEditor(node.sysUID, '/exports/mindmapuseoptions/' + node.sysUID, '_blank');" class="button exporttype_mindmap" target="_blank">Mindmap</a></li>
+           <li class="exporttype"><a ng-click="outputOptionsEditor.showOutputOptionsEditor(node.sysUID, '/exports/icaluseoptions/' + node.sysUID, '_blank');" class="button exporttype_ical" target="_blank">ICal/VCard</a></li>
+           <li class="exporttype"><a ng-click="outputOptionsEditor.showOutputOptionsEditor(node.sysUID, '/exports/htmluseoptions/' + node.sysUID, '_blank');" class="button exporttype_html" target="_blank">Html</a></li>
+           <li class="exporttype"><a ng-click="outputOptionsEditor.showOutputOptionsEditor(node.sysUID, '/exports/exceluseoptions/' + node.sysUID, '_blank');" class="button exporttype_excel" target="_blank">Excel</a></li>
+        </ul>
+        <!-- 
+        *************************
+            Form: edit/create OutputOptions
+        ************************* 
+        -->
+        <div class="hidden container-yaio-editor-outputoptions" id="containerFormYaioEditorOutputOptions">
+          <h4 translate="editor.formOutputOptions.ue">OutputOptionen bearbeiten:</h4>
+          <p translate="editor.formOutputOptions.intro" class="msg-form-intro" id="nodeFormOutputOptionsIntro"></p>
+
+          <form with-errors class="" id="nodeFormOutputOptions" name="nodeFormOutputOptions" method="post" enctype="application/x-www-form-urlencoded">
+
+            <fieldset>
+              <legend translate="editor.formOutputOptions.legend.ShowOptions">Anzeige-Optionen</legend>
+
+                  <label for="flgShowState" class="label_option" translate="editor.formOutputOptions.label.flgShowState">flgShowState</label>
+              <input type="checkbox" name="flgShowState" class="inputtype_option" ng-model="oOptions.flgShowState" id="inputflgShowStateOutputOptions" ng-change="">
+              <fielderrors for="flgShowState"></fielderrors>
+
+                  <label for="flgShowType" class="label_option" translate="editor.formOutputOptions.label.flgShowType">flgShowType</label>
+              <input type="checkbox" name="flgShowType" class="inputtype_option" ng-model="oOptions.flgShowType" id="inputflgShowTypeOutputOptions" ng-change="">
+              <fielderrors for="flgShowType"></fielderrors>
+
+                  <label for="flgShowName" class="label_option" translate="editor.formOutputOptions.label.flgShowName">flgShowName</label>
+              <input type="checkbox" name="flgShowName" class="inputtype_option" ng-model="oOptions.flgShowName" id="inputflgShowNameOutputOptions" ng-change="">
+              <fielderrors for="flgShowName"></fielderrors>
+
+                  <label for="flgShowResLoc" class="label_option" translate="editor.formOutputOptions.label.flgShowResLoc">flgShowResLoc</label>
+              <input type="checkbox" name="flgShowResLoc" class="inputtype_option" ng-model="oOptions.flgShowResLoc" id="inputflgShowResLocOutputOptions" ng-change="">
+              <fielderrors for="flgShowResLoc"></fielderrors>
+
+                  <label for="flgShowSymLink" class="label_option" translate="editor.formOutputOptions.label.flgShowSymLink">flgShowSymLink</label>
+              <input type="checkbox" name="flgShowSymLink" class="inputtype_option" ng-model="oOptions.flgShowSymLink" id="inputflgShowSymLinkOutputOptions" ng-change="">
+              <fielderrors for="flgShowSymLink"></fielderrors>
+
+                  <label for="flgShowDocLayout" class="label_option" translate="editor.formOutputOptions.label.flgShowDocLayout">flgShowDocLayout</label>
+              <input type="checkbox" name="flgShowDocLayout" class="inputtype_option" ng-model="oOptions.flgShowDocLayout" id="inputflgShowDocLayoutOutputOptions" ng-change="">
+              <fielderrors for="flgShowDocLayout"></fielderrors>
+
+                  <label for="flgShowMetaData" class="label_option" translate="editor.formOutputOptions.label.flgShowMetaData">flgShowMetaData</label>
+              <input type="checkbox" name="flgShowMetaData" class="inputtype_option" ng-model="oOptions.flgShowMetaData" id="inputflgShowMetaDataOutputOptions" ng-change="">
+              <fielderrors for="flgShowMetaData"></fielderrors>
+
+                  <label for="flgShowSysData" class="label_option" translate="editor.formOutputOptions.label.flgShowSysData">flgShowSysData</label>
+              <input type="checkbox" name="flgShowSysData" class="inputtype_option" ng-model="oOptions.flgShowSysData" id="inputflgShowSysDataOutputOptions" ng-change="">
+              <fielderrors for="flgShowSysData"></fielderrors>
+            </fieldset>
+
+
+            <fieldset id="formOutputOptionsPlanIst">
+              <legend translate="editor.formOutputOptions.legend.ShowPlanIstOptions">Anzeige-Optionen Plan/Ist</legend>
+              
+                  <label for="flgShowIst" class="label_option" translate="editor.formOutputOptions.label.flgShowIst">flgShowIst</label>
+              <input type="checkbox" name="flgShowIst" class="inputtype_option" ng-model="oOptions.flgShowIst" id="inputflgShowIstOutputOptions" ng-change="">
+              <fielderrors for="flgShowIst"></fielderrors>
+
+                  <label for="flgShowPlan" class="label_option" translate="editor.formOutputOptions.label.flgShowPlan">flgShowPlan</label>
+              <input type="checkbox" name="flgShowPlan" class="inputtype_option" ng-model="oOptions.flgShowPlan" id="inputflgShowPlanOutputOptions" ng-change="">
+              <fielderrors for="flgShowPlan"></fielderrors>
+
+                  <label for="flgShowChildrenSum" class="label_option" translate="editor.formOutputOptions.label.flgShowChildrenSum">flgShowChildrenSum</label>
+              <input type="checkbox" name="flgShowChildrenSum" class="inputtype_option" ng-model="oOptions.flgShowChildrenSum" id="inputflgShowChildrenSumOutputOptions" ng-change="">
+              <fielderrors for="flgShowChildrenSum"></fielderrors>
+
+                  <label for="flgDoIntend" class="label_option" translate="editor.formOutputOptions.label.flgDoIntend">flgDoIntend</label>
+              <input type="checkbox" name="flgDoIntend" class="inputtype_option" ng-model="oOptions.flgDoIntend" id="inputflgDoIntendOutputOptions" ng-change="">
+              <fielderrors for="flgDoIntend"></fielderrors>
+
+                  <label for="flgChildrenSum" class="label_option" translate="editor.formOutputOptions.label.flgChildrenSum">flgChildrenSum</label>
+              <input type="checkbox" name="flgChildrenSum" class="inputtype_option" ng-model="oOptions.flgChildrenSum" id="inputflgChildrenSumOutputOptions" ng-change="">
+              <fielderrors for="flgChildrenSum"></fielderrors>
+
+                  <label for="flgIntendSum" class="label_option" translate="editor.formOutputOptions.label.flgIntendSum">flgIntendSum</label>
+              <input type="checkbox" name="flgIntendSum" class="inputtype_option" ng-model="oOptions.flgIntendSum" id="inputflgIntendSumOutputOptions" ng-change="">
+              <fielderrors for="flgIntendSum"></fielderrors>
+
+            </fieldset>
+
+
+            <fieldset id="formOutputOptionsDesc">
+              <legend translate="editor.formOutputOptions.legend.ShowDescOptions">Anzeige-Optionen Desc</legend>
+
+                  <label for="flgShowDesc" class="label_option" translate="editor.formOutputOptions.label.flgShowDesc">flgShowDesc</label>
+              <input type="checkbox" name="flgShowDesc" class="inputtype_option" ng-model="oOptions.flgShowDesc" id="inputflgShowDescOutputOptions" ng-change="">
+              <fielderrors for="flgShowDesc"></fielderrors>
+
+                  <label for="flgShowDescWithUe" class="label_option" translate="editor.formOutputOptions.label.flgShowDescWithUe">flgShowDescWithUe</label>
+              <input type="checkbox" name="flgShowDescWithUe" class="inputtype_option" ng-model="oOptions.flgShowDescWithUe" id="inputflgShowDescWithUeOutputOptions" ng-change="">
+              <fielderrors for="flgShowDescWithUe"></fielderrors>
+
+                  <label for="flgShowDescInNextLine" class="label_option" translate="editor.formOutputOptions.label.flgShowDescInNextLine">flgShowDescInNextLine</label>
+              <input type="checkbox" name="flgShowDescInNextLine" class="inputtype_option" ng-model="oOptions.flgShowDescInNextLine" id="inputflgShowDescInNextLineOutputOptions" ng-change="">
+              <fielderrors for="flgShowDescInNextLine"></fielderrors>
+
+                  <label for="flgTrimDesc" class="label_option" translate="editor.formOutputOptions.label.flgTrimDesc">flgTrimDesc</label>
+              <input type="checkbox" name="flgTrimDesc" class="inputtype_option" ng-model="oOptions.flgTrimDesc" id="inputflgTrimDescOutputOptions" ng-change="">
+              <fielderrors for="flgTrimDesc"></fielderrors>
+
+                  <label for="flgReEscapeDesc" class="label_option" translate="editor.formOutputOptions.label.flgReEscapeDesc">flgReEscapeDesc</label>
+              <input type="checkbox" name="flgReEscapeDesc" class="inputtype_option" ng-model="oOptions.flgReEscapeDesc" id="inputflgReEscapeDescOutputOptions" ng-change="">
+              <fielderrors for="flgReEscapeDesc"></fielderrors>
+
+            </fieldset>
+
+
+            <fieldset id="formOutputParams">
+              <legend translate="editor.formOutputOptions.legend.ShowParams">Anzeige-Parameter</legend>
+              
+              <label for="intendFuncArea" class="label_number" translate="editor.formOutputOptions.label.intendFuncArea">intendFuncArea</label>
+              <input type="number" name="intendFuncArea" class="inputtype_number" ng-model="oOptions.intendFuncArea" id="inputintendFuncAreaOutputOptions" default="80"  ng-change="">
+              <fielderrors for="intendFuncArea"></fielderrors>
+              
+              <br />
+              <label for="maxEbene" class="label_number" translate="editor.formOutputOptions.label.maxEbene">maxEbene</label>
+              <input type="number" name="maxEbene" class="inputtype_number" ng-model="oOptions.maxEbene" id="inputmaxEbeneOutputOptions" default="9999"  ng-change="">
+              <fielderrors for="maxEbene"></fielderrors>
+
+              <br />
+              <label for="maxUeEbene" class="label_number" translate="editor.formOutputOptions.label.maxUeEbene">maxUeEbene</label>
+              <input type="number" name="maxUeEbene" class="inputtype_number" ng-model="oOptions.maxUeEbene" id="inputmaxUeEbeneOutputOptions" default="3"  ng-change="">
+              <fielderrors for="maxUeEbene"></fielderrors>
+
+              <br />
+              <label for="intend" class="label_number" translate="editor.formOutputOptions.label.intend">intend</label>
+              <input type="number" name="intend" class="inputtype_number" ng-model="oOptions.intend" id="inputintendOutputOptions" default="2"  ng-change="">
+              <fielderrors for="intend"></fielderrors>
+
+              <br />
+              <label for="intendLi" class="label_number" translate="editor.formOutputOptions.label.intendLi">intendLi</label>
+              <input type="number" name="intendLi" class="inputtype_number" ng-model="oOptions.intendLi" id="inputintendLiOutputOptions" default="2"  ng-change="">
+              <fielderrors for="intendLi"></fielderrors>
+
+              <br />
+              <label for="intendSys" class="label_number" translate="editor.formOutputOptions.label.intendSys">intendSys</label>
+              <input type="number" name="intendSys" class="inputtype_number" ng-model="oOptions.intendSys" id="inputintendSysOutputOptions" default="160"  ng-change="">
+              <fielderrors for="intendSys"></fielderrors>
+
+              <br />
+
+              <label for="flgShowBrackets" class="label_option" translate="editor.formOutputOptions.label.flgShowBrackets">flgShowBrackets</label>
+              <input type="checkbox" name="flgShowBrackets" class="inputtype_option" ng-model="oOptions.flgShowBrackets" id="inputflgShowBracketsOutputOptions" ng-change="">
+              <fielderrors for="flgShowBrackets"></fielderrors>
+
+
+              <label for="flgProcessDocLayout" class="label_option" translate="editor.formOutputOptions.label.flgProcessDocLayout">flgProcessDocLayout</label>
+              <input type="checkbox" name="flgProcessDocLayout" class="inputtype_option" ng-model="oOptions.flgProcessDocLayout" id="inputflgProcessDocLayoutOutputOptions" ng-change="">
+              <fielderrors for="flgProcessDocLayout"></fielderrors>
+            </fieldset>
+
+      
+            <fieldset>
+              <button ng-click="outputOptionsEditor.send()" ng-disabled="nodeFormOutputOptions.$invalid" class="btn btn-primary" translate="common.buttonSend">Send</button>
+              <button ng-click="outputOptionsEditor.discard()" class="btn btn-primary" translate="common.buttonDiscard">Discard</button>
+            </fieldset>
+
+          </form>
+        </div>
+      </div>
       <ul class="commands">
          <li class="commands">
             <a href="" ng-click="openSubNodes()" class="button command_switchlevel">&Ouml;ffne bis Level</a>
@@ -35,6 +194,9 @@
             <a href="" ng-click="showHelpSite('/exports/documentation/DT201403171358546671')" target="help" class="button command_help">Hilfe</a></li>
       </ul>
    </div>
+
+   
+   
 </div></div>
 
 <div class='container-yaio-current' toclabel='Daten' id='box_data'>

@@ -14,42 +14,24 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package de.yaio.extension.datatransfer.excel;
-
-import de.yaio.datatransfer.exporter.OutputOptions;
-import de.yaio.datatransfer.exporter.OutputOptionsImpl;
-
+package de.yaio.datatransfer.exporter;
 
 /**
  * <h4>FeatureDomain:</h4>
-*     export
+ *     DatenExport
  * <h4>FeatureDescription:</h4>
- *    options for export of Nodes as Excel
+ *     options for export of Nodes (empty no default-values)
  * 
- * @package de.yaio.extension.datatransfer.excel
+ * @package de.yaio.datatransfer.exporter
  * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
  * @category collaboration
  * @copyright Copyright (c) 2014, Michael Schreiner
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-public class ExcelOutputOptions extends OutputOptionsImpl {
-
-    public boolean flgMergeExcelPlanungGantSheets = true;
-
-    public ExcelOutputOptions() {
+public class EmptyOutputOptionsImpl extends OutputOptionsImpl {
+    public EmptyOutputOptionsImpl() {
         super();
+        this.resetDefaults();
     }
 
-    public ExcelOutputOptions(OutputOptions oOptions) {
-        super(oOptions);
-    }
-
-    public boolean isFlgMergeExcelPlanungGantSheets() {
-        return flgMergeExcelPlanungGantSheets;
-    }
-
-    public void setFlgMergeExcelPlanungGantSheets(
-            boolean flgMergeExcelPlanungGantSheets) {
-        this.flgMergeExcelPlanungGantSheets = flgMergeExcelPlanungGantSheets;
-    }
 }
