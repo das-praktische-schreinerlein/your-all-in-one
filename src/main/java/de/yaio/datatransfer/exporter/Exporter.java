@@ -207,4 +207,24 @@ public interface Exporter {
     public DataDomain filterNodeByState(DataDomain node, OutputOptions oOptions,
             Map<String, Object> mpStates) throws Exception;
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     DataExport
+     *     Presentation
+     * <h4>FeatureDescription:</h4>
+     *     check if it the node passes the filter in oOptions
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue boolean - true/false = /matches/didnt match the filter
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Praesentation Filter
+     * @param node - node to check if it passes the filter
+     * @param oOptions - options with filter
+     * @return - true/false = /matches/didnt match the filter
+     * @throws Exception - parser/format-Exceptions possible
+     */
+    boolean isNodeMatchingFilter(DataDomain node, OutputOptions oOptions)
+                    throws Exception;
+
 }

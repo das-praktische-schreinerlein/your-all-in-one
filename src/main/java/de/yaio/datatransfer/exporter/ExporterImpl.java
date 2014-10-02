@@ -204,7 +204,8 @@ public class ExporterImpl implements Exporter {
 
         // Filter konfigurieren
         Map<String, Object> mpStates = null;
-        if (oOptions.getStrReadIfStatusInListOnly() != null) {
+        if (   oOptions.getStrReadIfStatusInListOnly() != null 
+            && oOptions.getStrReadIfStatusInListOnly().length() > 0) {
             mpStates = new HashMap<String, Object>();
             String [] arrStatusFilter =
                     oOptions.getStrReadIfStatusInListOnly().split(",");
@@ -314,4 +315,104 @@ public class ExporterImpl implements Exporter {
         return node;
     }
 
+    @Override
+    public boolean isNodeMatchingFilter(DataDomain node,
+            OutputOptions oOptions) throws Exception {
+        // check config
+        Map<String, String> mpStates = oOptions.getMapStateFilter();
+        Map<String, String> mpClasses = oOptions.getMapClassFilter();
+        Map<String, String> mpTypes = oOptions.getMapTypeFilter();
+        if (   ! (mpStates != null && mpStates.size() > 0)
+            && ! (mpClasses != null && mpClasses.size() > 0) 
+            && ! (mpTypes != null && mpTypes.size() > 0)) {
+            // no filter return true
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("no NodeFilterdefined oOptions=" + oOptions 
+                                + " for " + node.getNameForLogger());
+            }
+            return true;
+        }
+
+        // set flag to failed
+        boolean flgMatchesState = false;
+        boolean flgMatchesType = false;
+        boolean flgMatchesClass = false;
+
+        // if statefilter set: do it
+        if (mpStates != null && mpStates.size() > 0) {
+            // check if workflow node
+            if (! BaseWorkflowData.class.isInstance(node)) {
+                // no workflow -> not state
+                flgMatchesState = false;
+            } else {
+                // check state
+                String state = ((BaseWorkflowData)node).getState();
+                if (   (mpStates.get(state) == null)) {
+                    flgMatchesState = false;
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("NodeFilter-Status FAILED: state="
+                                + state + " not in list for " + node.getNameForLogger());
+                    }
+                } else {
+                    // i did it
+                    flgMatchesState = true;
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("NodeFilter-Status OK state=" + state 
+                                        + " for " + node.getNameForLogger());
+                    }
+                }
+            }
+        } else {
+            // if no filter set: true
+            flgMatchesState = true;
+        }
+
+        // if classfilter set: do it
+        if (mpClasses != null && mpClasses.size() > 0) {
+            // check class
+            String className = ((BaseNode)node).getClassName();
+            if (   (mpClasses.get(className) == null)) {
+                flgMatchesClass = false;
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("NodeFilter-Class FAILED: class="
+                                    + className + " not in list for " + node.getNameForLogger());
+                }
+            } else {
+                // i did it
+                flgMatchesClass = true;
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("NodeFilter-Class OK class=" + className 
+                                    + " for " + node.getNameForLogger());
+                }
+            }
+        } else {
+            // if no filter set: true
+            flgMatchesClass = true;
+        }
+
+        // if classfilter set: do it
+        if (mpTypes != null && mpTypes.size() > 0) {
+            // check class
+            String type = ((BaseNode)node).getType();
+            if (   (mpTypes.get(type) == null)) {
+                flgMatchesType = false;
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("NodeFilter-Type FAILED: type="
+                                    + type + " not in list for " + node.getNameForLogger());
+                }
+            } else {
+                // i did it
+                flgMatchesType = true;
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("NodeFilter-Type OK type=" + type 
+                                    + " for " + node.getNameForLogger());
+                }
+            }
+        } else {
+            // if no filter set: true
+            flgMatchesType = true;
+        }
+
+        return flgMatchesClass && flgMatchesState && flgMatchesType;
+    }
 }

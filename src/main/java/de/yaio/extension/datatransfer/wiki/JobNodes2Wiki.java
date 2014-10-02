@@ -143,11 +143,11 @@ public class JobNodes2Wiki extends CmdLineJob {
         flgShowChildrenSumOption.setRequired(false);
         availiableCmdLineOptions.addOption(flgShowChildrenSumOption);
 
-        // Calc+Show 
-        Option flgReChildrenSumOption = new Option("C", "recalcsum", false,
-                "Calc+Show ChildrenSum (default false)");
-        flgReChildrenSumOption.setRequired(false);
-        availiableCmdLineOptions.addOption(flgReChildrenSumOption);
+        // Recalc data 
+        Option flgRecalcOption = new Option("", "recalc", false,
+                "recalc data (default false)");
+        flgRecalcOption.setRequired(false);
+        availiableCmdLineOptions.addOption(flgRecalcOption);
 
         // Show DescData
         Option flgShowDescOption = new Option("d", "showdesc", false,
@@ -353,7 +353,7 @@ public class JobNodes2Wiki extends CmdLineJob {
         oOptions.setFlgShowDocLayout(cmdLine.hasOption("l"));
         oOptions.setFlgShowSysData(cmdLine.hasOption("shownosysdata") == false);
         oOptions.setFlgShowMetaData(cmdLine.hasOption("shownometadata") == false);
-        oOptions.setFlgChildrenSum(cmdLine.hasOption("C"));
+        oOptions.setFlgRecalc(cmdLine.hasOption("recalc"));
         oOptions.setFlgTrimDesc(cmdLine.hasOption("t"));
         oOptions.setMaxEbene(Integer.parseInt(
                 cmdLine.getOptionValue("e", 

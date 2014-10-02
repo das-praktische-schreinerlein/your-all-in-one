@@ -18,6 +18,8 @@ package de.yaio.utils;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 
@@ -281,9 +283,8 @@ public class Calculator {
      *     Converter
      * @param src - the string to escape all html
      * @return the html-escaped string
-     * @throws IllegalAccessException - if Class unknown or classes differ
      */
-    public static String htmlEscapeText(String src) throws IllegalAccessException {
+    public static String htmlEscapeText(String src) {
         String text = src;
         
         // test ob beide belegt
@@ -298,4 +299,34 @@ public class Calculator {
 
         return text;
     }
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Tools - Converter
+     * <h4>FeatureDescription:</h4>
+     *     convert commaseparated string to map
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue map
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Converter
+     * @param csvString - the string to split
+     * @return the map of string
+     */
+    public static Map<String, String> initMapFromCsvString(String csvString) {
+        Map<String, String> mpStates = null;
+        if (   csvString != null 
+            && csvString.length() > 0) {
+            mpStates = new HashMap<String, String>();
+            String [] arrStatusFilter =
+                            csvString.split(",");
+            for (int zaehler = 0; zaehler < arrStatusFilter.length; zaehler++) {
+                mpStates.put(arrStatusFilter[zaehler], arrStatusFilter[zaehler]);
+            }
+        }
+        
+        return mpStates;
+    }
+
 }

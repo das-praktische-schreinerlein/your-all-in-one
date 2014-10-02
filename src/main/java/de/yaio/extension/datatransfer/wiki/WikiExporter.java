@@ -21,6 +21,7 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import de.yaio.core.datadomain.DataDomain;
+import de.yaio.core.node.BaseNode;
 import de.yaio.core.nodeservice.NodeService;
 import de.yaio.datatransfer.exporter.ExporterImpl;
 import de.yaio.datatransfer.exporter.OutputOptions;
@@ -171,7 +172,11 @@ public class WikiExporter extends ExporterImpl {
         }
 
         // recalcData
-        masterNode.recalcData(NodeService.CONST_RECURSE_DIRECTION_CHILDREN);
+        if (oOptions.isFlgRecalc()) {
+            // if set do it for all
+            masterNode.recalcData(NodeService.CONST_RECURSE_DIRECTION_CHILDREN);
+        }
+        
 
         return this.getNodeResult(masterNode, "", oOptions).toString();
     }
@@ -196,7 +201,45 @@ public class WikiExporter extends ExporterImpl {
         
         // prepare for Export
         this.prepareNodeForExport(curNode, oOptions);
+        
+        // generate children 
+        StringBuffer childRes = new StringBuffer();
+        boolean flgChildMatched = false;
+        if (curNode.getEbene() < oOptions.getMaxEbene()) {
+            if (LOGGER.isDebugEnabled())
+                LOGGER.debug("Do Childs: Ebene " + curNode.getEbene() 
+                        + " >= MaxEbene " + oOptions.getMaxEbene() 
+                        + " Count:" + curNode.getChildNodesByNameMap().size() 
+                        + " for " + curNode.getNameForLogger());
+            for (String nodeName : curNode.getChildNodesByNameMap().keySet()) {
+                DataDomain childNode = curNode.getChildNodesByNameMap().get(nodeName);
+                childRes.append(this.getNodeResult(childNode, "", oOptions));
+            }
+        } else {
+            if (LOGGER.isDebugEnabled())
+                LOGGER.debug("SKIP Childs: Ebene " + curNode.getEbene() 
+                        + " >= MaxEbene " + oOptions.getMaxEbene()
+                        + " for " + curNode.getNameForLogger());
+        }
+        // check if children matches (childRes filled)
+        if (childRes.length() > 0) {
+            flgChildMatched = true;
+        }
+        // check if I'am matching
+        boolean flgMatchesFilter = this.isNodeMatchingFilter(curNode, oOptions);
+        if (! (flgMatchesFilter || flgChildMatched)) {
+            // sorry me and my children didnt match
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("sorry me and my children didnt match"
+                                + " - node:" + ((BaseNode)curNode).getWorkingId() 
+                                + " flgMatchesFilter=" + flgMatchesFilter
+                                + " flgChildMatched=" + flgChildMatched);
+            }
+            return res;
+        }
 
+        // Juhu we match
+        
         // Namen generieren
         OutputOptions nameOOptions = genOutputOptionsForNameArea(oOptions);
         this.formatNodeDataDomains(curNode, res, nameOOptions);
@@ -268,24 +311,9 @@ public class WikiExporter extends ExporterImpl {
         // bei Ue Zeilenumbruch voranstellen
         if (flgUe)
             res.insert(0, "\n");
-
-        // alle Kindselemente durchlaufen
-        if (curNode.getEbene() < oOptions.getMaxEbene()) {
-            if (LOGGER.isDebugEnabled())
-                LOGGER.debug("Do Childs: Ebene " + curNode.getEbene() 
-                        + " >= MaxEbene " + oOptions.getMaxEbene() 
-                        + " Count:" + curNode.getChildNodesByNameMap().size() 
-                        + " for " + curNode.getNameForLogger());
-            for (String nodeName : curNode.getChildNodesByNameMap().keySet()) {
-                DataDomain childNode = curNode.getChildNodesByNameMap().get(nodeName);
-                res.append(this.getNodeResult(childNode, "", oOptions));
-            }
-        } else {
-            if (LOGGER.isDebugEnabled())
-                LOGGER.debug("SKIP Childs: Ebene " + curNode.getEbene() 
-                        + " >= MaxEbene " + oOptions.getMaxEbene()
-                        + " for " + curNode.getNameForLogger());
-        }
+        
+        // append generated children
+        res.append(childRes);
 
         return res;
     }

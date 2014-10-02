@@ -116,6 +116,10 @@ public class HtmlExporter extends WikiExporter {
         options.setFlgShowBrackets(false);
         options.setIntendFuncArea(0);
         options.setIntendSys(0);
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("gen new oOptions for export=" + options);
+        }
+
 
         return options;
     }
@@ -145,6 +149,10 @@ public class HtmlExporter extends WikiExporter {
             return res;
         }
 
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("run export with oOptions=" + oOptions);
+        }
+        
 
         // Result erzeugen
         if ((InfoNode.class.isInstance(curNode) || UrlResNode.class.isInstance(curNode))
@@ -194,28 +202,9 @@ public class HtmlExporter extends WikiExporter {
             LOGGER.debug("node:" + curNode.getWorkingId() + " start processing");
         }
 
-        // Namen erzeugen
-        String name = curNode.getName();
-        //name = name.replaceAll("\"", "'");
-        // Html-Escapen
-        name = name.replaceAll("<WLESC>", "\\");
-        name = name.replaceAll("<WLTAB>", "\t");
-        name = Calculator.htmlEscapeText(name);
-
-        // Desc
-        StringBuffer tmpBuffer = new StringBuffer();
-        this.formatNodeDataDomain(curNode, 
-                this.getDataDomainFormatterByClassName(CONST_FORMATTER_DESC), 
-                tmpBuffer, oOptions);
-        String descFull = tmpBuffer.toString();
-        if (descFull != null && descFull.length() > 0 && oOptions.isFlgShowDesc()) {
-            // Html-Escapen
-            descFull = Calculator.htmlEscapeText(descFull);
-            descFull = descFull.replaceAll("\n", "<br>");
-        }
-
         // alle Kindselemente durchlaufen
         String blockChildren = "";
+        boolean flgChildMatched = false;
         if (curNode.getEbene() < oOptions.getMaxEbene() 
                 && curNode.getChildNodes().size() > 0) {
             // Elternblock: Zweig
@@ -309,6 +298,48 @@ public class HtmlExporter extends WikiExporter {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("node:" + curNode.getWorkingId() + " no subnodes");
             }
+        }
+        
+        // check if children matches (childRes filled)
+        if (blockChildren.length() > 0) {
+            flgChildMatched = true;
+        }
+        // check if I'am matching
+        boolean flgMatchesFilter = this.isNodeMatchingFilter(curNode, oOptions);
+        if (! (flgMatchesFilter || flgChildMatched)) {
+            // sorry me and my children didnt match
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("sorry me and my children didnt match"
+                                + " - node:" + curNode.getWorkingId() 
+                                + " flgMatchesFilter=" + flgMatchesFilter
+                                + " flgChildMatched=" + flgChildMatched);
+            }
+            return res;
+        }
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("node:" + curNode.getWorkingId() + " do processing"
+                            + " flgMatchesFilter=" + flgMatchesFilter
+                            + " flgChildMatched=" + flgChildMatched);
+        }
+
+        // Namen erzeugen
+        String name = curNode.getName();
+        //name = name.replaceAll("\"", "'");
+        // Html-Escapen
+        name = name.replaceAll("<WLESC>", "\\");
+        name = name.replaceAll("<WLTAB>", "\t");
+        name = Calculator.htmlEscapeText(name);
+
+        // Desc
+        StringBuffer tmpBuffer = new StringBuffer();
+        this.formatNodeDataDomain(curNode, 
+                this.getDataDomainFormatterByClassName(CONST_FORMATTER_DESC), 
+                tmpBuffer, oOptions);
+        String descFull = tmpBuffer.toString();
+        if (descFull != null && descFull.length() > 0 && oOptions.isFlgShowDesc()) {
+            // Html-Escapen
+            descFull = Calculator.htmlEscapeText(descFull);
+            descFull = descFull.replaceAll("\n", "<br>");
         }
 
         // Layout konfigurieren
@@ -604,10 +635,6 @@ public class HtmlExporter extends WikiExporter {
         String blockDesc = "";
         String blockChildren = "";
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("node:" + curNode.getWorkingId() + " start processing");
-        }
-
         // Status
         if (oOptions.isFlgShowState()) {
             labelState = curNode.getState();
@@ -622,6 +649,59 @@ public class HtmlExporter extends WikiExporter {
         } else {
             // als Aufzaehlung darstellen
             styleClassesUe = "node-style-list node-style-list" + curNode.getEbene();
+        }
+
+        // alle Kindselemente durchlaufen
+        // generate children 
+        boolean flgChildMatched = false;
+        if (curNode.getEbene() < oOptions.getMaxEbene() && curNode.getChildNodes().size() > 0) {
+            // Elternblock: Zweig
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("node:" + curNode.getWorkingId() 
+                        + " iterate subnodes:" + curNode.getChildNodes().size());
+            }
+            blockChildren = "";
+            for (String nodeName : curNode.getChildNodesByNameMap().keySet()) {
+                BaseNode node = (BaseNode) curNode.getChildNodesByNameMap().get(nodeName);
+                blockChildren += this.getNodeResult(node, "", oOptions);
+            }
+            if (blockChildren.length() > 0) {
+                blockChildren = "<div id='node_" + curNode.getWorkingId() +  "_cildren' class='node-block-children'>\n"
+                                + blockChildren
+                                + "</div>\n";
+            }
+
+            styleClassesUe += " node-type-twig node-type-twig" + curNode.getEbene();
+            styleClassesBlock += " node-block-twig node-block-twig" + curNode.getEbene();
+        } else {
+            // Blatt
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("node:" + curNode.getWorkingId() + " no subnodes");
+            }
+            styleClassesUe += " node-type-leaf node-type-leaf" + curNode.getEbene();
+            styleClassesBlock += " node-block-leaf node-block-leaf" + curNode.getEbene();
+        }
+        // check if children matches (childRes filled)
+        if (blockChildren.length() > 0) {
+            flgChildMatched = true;
+        }
+        // check if I'am matching
+        boolean flgMatchesFilter = this.isNodeMatchingFilter(curNode, oOptions);
+        if (! (flgMatchesFilter || flgChildMatched)) {
+            // sorry me and my children didnt match
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("sorry me and my children didnt match"
+                                + " - node:" + curNode.getWorkingId() 
+                                + " flgMatchesFilter=" + flgMatchesFilter
+                                + " flgChildMatched=" + flgChildMatched);
+            }
+            return res;
+        }
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("node:" + curNode.getWorkingId() + " start processing"
+                            + " flgMatchesFilter=" + flgMatchesFilter
+                            + " flgChildMatched=" + flgChildMatched);
         }
 
         // Namen erzeugen
@@ -732,31 +812,6 @@ public class HtmlExporter extends WikiExporter {
                 blockIstCalcSum = "";
                 blockPlanCalcSum = "";
             }
-        }
-
-        // alle Kindselemente durchlaufen
-        if (curNode.getEbene() < oOptions.getMaxEbene() && curNode.getChildNodes().size() > 0) {
-            // Elternblock: Zweig
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("node:" + curNode.getWorkingId() 
-                        + " iterate subnodes:" + curNode.getChildNodes().size());
-            }
-            blockChildren = "<div id='node_" + curNode.getWorkingId() +  "_cildren' class='node-block-children'>\n";
-            for (String nodeName : curNode.getChildNodesByNameMap().keySet()) {
-                BaseNode node = (BaseNode) curNode.getChildNodesByNameMap().get(nodeName);
-                blockChildren += this.getNodeResult(node, "", oOptions);
-            }
-            blockChildren += "</div>\n";
-
-            styleClassesUe += " node-type-twig node-type-twig" + curNode.getEbene();
-            styleClassesBlock += " node-block-twig node-block-twig" + curNode.getEbene();
-        } else {
-            // Blatt
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("node:" + curNode.getWorkingId() + " no subnodes");
-            }
-            styleClassesUe += " node-type-leaf node-type-leaf" + curNode.getEbene();
-            styleClassesBlock += " node-block-leaf node-block-leaf" + curNode.getEbene();
         }
 
         // Result erzeugen

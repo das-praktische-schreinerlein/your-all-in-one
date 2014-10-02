@@ -25,6 +25,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -62,6 +63,9 @@ import de.yaio.extension.datatransfer.wiki.WikiExporter;
 @RequestMapping("/exports")
 public class ExportController {
     
+    // Logger
+    private static final Logger LOGGER =
+            Logger.getLogger(ExportController.class);
     
     /** replaceent to do after processing a node in documentation-context **/
     public static Map<String, String> PostProcessorReplacements_documentation = 
@@ -100,6 +104,12 @@ public class ExportController {
             
             // export node with exporter
             try {
+                // renew oOptions
+                oOptions.initFilterMaps();
+                
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("run export with oOptions=" + oOptions);
+                }
                 res = exporter.getMasterNodeResult(node, oOptions);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -478,7 +488,10 @@ public class ExportController {
             
             // export node with exporter
             try {
-             // WorkBook erzeugen
+                // renew oOptions
+                oOptions.initFilterMaps();
+
+                // WorkBook erzeugen
                 wb = exporter.toExcel(node, oOptions);
                 
                 // set headers to force download

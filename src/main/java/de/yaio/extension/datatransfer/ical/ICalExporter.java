@@ -202,6 +202,15 @@ public class ICalExporter extends WikiExporter {
             return blockChildren;
         }
         
+        // check if I'am matching
+        boolean flgMatchesFilter = this.isNodeMatchingFilter(curNode, oOptions);
+        if (! flgMatchesFilter) {
+            // sorry I dont match
+            return blockChildren;
+        }
+
+        // Juhu we match
+        
         // Node-Daten generieren
         if (InfoNode.class.isInstance(paramCurNode)) {
             // SKIP
@@ -534,7 +543,9 @@ public class ICalExporter extends WikiExporter {
         icalRes += "END:VTIMEZONE\n";
 
         // Daten berechnen
-        masterNode.recalcData(NodeService.CONST_RECURSE_DIRECTION_CHILDREN);
+        if (oOptions.isFlgRecalc()) {
+            masterNode.recalcData(NodeService.CONST_RECURSE_DIRECTION_CHILDREN);
+        }
         icalRes += super.getMasterNodeResult(masterNode, oOptions);
         
         // Footer anhaengen

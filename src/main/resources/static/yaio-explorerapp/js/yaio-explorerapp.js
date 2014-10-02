@@ -681,6 +681,10 @@ yaioM.factory('OutputOptionsEditor', function($http) {
 
     oOptions.flgChildrenSum = false;
     oOptions.flgProcessDocLayout = false;
+    oOptions.flgRecalc= false;
+    oOptions.strClassFilter = "";
+    oOptions.strTypeFilter = "";
+    oOptions.strReadIfStatusInListOnly = "";
     
     // define the functions
     return {

@@ -130,6 +130,36 @@ public class CSVExporter extends WikiExporter {
             return res;
         }
 
+        // iterate all children
+        StringBuffer childRes = new StringBuffer();
+        boolean flgChildMatched = false;
+        if (curNode.getEbene() < oOptions.getMaxEbene()) {
+            if (LOGGER.isDebugEnabled())
+                LOGGER.debug("Do Childs: Ebene " + curNode.getEbene() 
+                        + " >= MaxEbene " + oOptions.getMaxEbene() 
+                        + " Count:" + curNode.getChildNodesByNameMap().size() 
+                        + " for " + curNode.getNameForLogger());
+            for (String nodeName : curNode.getChildNodesByNameMap().keySet()) {
+                DataDomain childNode = curNode.getChildNodesByNameMap().get(nodeName);
+                childRes.append(this.getNodeResult(childNode, "", oOptions));
+            }
+        }
+        // check if children matches (childRes filled)
+        if (childRes.length() > 0) {
+            flgChildMatched = true;
+        }
+        // check if I'am matching
+        boolean flgMatchesFilter = this.isNodeMatchingFilter(curNode, oOptions);
+        if (! (flgMatchesFilter || flgChildMatched)) {
+            // sorry me and my children didnt match
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("sorry me and my children didnt match"
+                                + " - node:" + curNode.getWorkingId() 
+                                + " flgMatchesFilter=" + flgMatchesFilter
+                                + " flgChildMatched=" + flgChildMatched);
+            }
+            return res;
+        }
 
         // ungültige Zeichen entfernen
         String name = curNode.getName();
@@ -194,13 +224,8 @@ public class CSVExporter extends WikiExporter {
             .append(this.getFieldDelimiter()).append(desc)
             .append(this.getLineEnd());
 
-        // alle Kindselemente durchlaufen
-        if (curNode.getEbene() < oOptions.getMaxEbene()) {
-            for (String nodeName : curNode.getChildNodesByNameMap().keySet()) {
-                DataDomain childNode = curNode.getChildNodesByNameMap().get(nodeName);
-                res.append(this.getNodeResult(childNode, "", oOptions));
-            }
-        }
+        // append generated children
+        res.append(childRes);
 
         return res;
     }

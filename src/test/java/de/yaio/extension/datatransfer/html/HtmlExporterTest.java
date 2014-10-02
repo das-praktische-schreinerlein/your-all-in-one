@@ -49,7 +49,7 @@ public class HtmlExporterTest extends WikiExporterTest {
     @Override
     public OutputOptions setupNewOutputOptions() throws Exception {
         OutputOptions oOptions = new OutputOptionsImpl();
-        oOptions.setFlgChildrenSum(true);
+        oOptions.setFlgRecalc(true);
         oOptions.setFlgShowChildrenSum(true);
         return oOptions;
     }

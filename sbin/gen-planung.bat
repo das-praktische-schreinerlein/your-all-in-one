@@ -43,6 +43,8 @@ set SRC_OPTIONS=--sourcetype ppl
 rem only if html-Src: 
 call %YAIOSCRIPTPATH%genPPLFromWiki.bat %MMPATH% %SRCFILE% %PROJNAME%
 rem only if Excel-Src: call %YAIOSCRIPTPATH%genPPLFromExcel.bat %MMPATH% %SRCFILE% %PROJNAME%
+rem gen wiki with initial recalc to get SysUID... for new items from ppl
+set OUTPUT_OPTIONS_WIKI=%OUTPUT_OPTIONS_WIKI% -recalc
 call %YAIOSCRIPTPATH%genWikiFromPPL.bat %MMPATH% %SRCFILE% %PROJNAME%
 :end_PARSE_PPL_FROM_WIKI
 

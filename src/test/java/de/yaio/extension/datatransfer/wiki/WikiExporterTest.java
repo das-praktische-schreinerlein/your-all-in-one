@@ -89,7 +89,9 @@ public class WikiExporterTest extends BaseTest {
      * @throws Exception - io-Exceptions possible
      */
     public OutputOptions setupNewOutputOptions() throws Exception {
-        return new OutputOptionsImpl();
+        OutputOptions oOptions = new OutputOptionsImpl();
+        oOptions.setFlgRecalc(true);
+        return oOptions;
     }
     
     

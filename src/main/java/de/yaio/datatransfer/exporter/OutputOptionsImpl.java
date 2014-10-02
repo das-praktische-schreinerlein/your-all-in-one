@@ -16,6 +16,11 @@
  */
 package de.yaio.datatransfer.exporter;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import de.yaio.utils.Calculator;
+
 /**
  * <h4>FeatureDomain:</h4>
  *     DatenExport
@@ -29,37 +34,43 @@ package de.yaio.datatransfer.exporter;
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class OutputOptionsImpl implements OutputOptions {
-    public boolean flgDoIntend = true;
-    public boolean flgShowBrackets = true;
-    public Integer intendFuncArea = 80;
-    public boolean flgIntendSum = false;
+    protected boolean flgDoIntend = true;
+    protected boolean flgShowBrackets = true;
+    protected Integer intendFuncArea = 80;
+    protected boolean flgIntendSum = false;
 
-    public Integer maxEbene = 9999;
-    public Integer maxUeEbene = 3;
-    public Integer intend = 2;
-    public Integer intendLi = 2;
-    public Integer intendSys = 160;
-    public boolean flgTrimDesc = true;
-    public boolean flgReEscapeDesc = true;
+    protected Integer maxEbene = 9999;
+    protected Integer maxUeEbene = 3;
+    protected Integer intend = 2;
+    protected Integer intendLi = 2;
+    protected Integer intendSys = 160;
+    protected boolean flgTrimDesc = true;
+    protected boolean flgReEscapeDesc = true;
 
-    public boolean flgShowState = true;
-    public boolean flgShowType = true;
-    public boolean flgShowName = true;
-    public boolean flgShowResLoc = true;
-    public boolean flgShowSymLink = true;
-    public boolean flgShowDocLayout = true;
-    public boolean flgShowIst = true;
-    public boolean flgShowPlan = true;
-    public boolean flgShowChildrenSum = false;
-    public boolean flgShowMetaData = true;
-    public boolean flgShowSysData = true;
-    public boolean flgShowDesc = true;
-    public boolean flgShowDescWithUe = false;
-    public boolean flgShowDescInNextLine = false;
+    protected boolean flgShowState = true;
+    protected boolean flgShowType = true;
+    protected boolean flgShowName = true;
+    protected boolean flgShowResLoc = true;
+    protected boolean flgShowSymLink = true;
+    protected boolean flgShowDocLayout = true;
+    protected boolean flgShowIst = true;
+    protected boolean flgShowPlan = true;
+    protected boolean flgShowChildrenSum = false;
+    protected boolean flgShowMetaData = true;
+    protected boolean flgShowSysData = true;
+    protected boolean flgShowDesc = true;
+    protected boolean flgShowDescWithUe = false;
+    protected boolean flgShowDescInNextLine = false;
 
-    public boolean flgChildrenSum = false;
-    public boolean flgProcessDocLayout = false;
-    public String strReadIfStatusInListOnly = "";
+    protected boolean flgRecalc = false;
+    protected boolean flgProcessDocLayout = false;
+    protected String strReadIfStatusInListOnly = "";
+    protected String strClassFilter = "";
+    protected String strTypeFilter = "";
+    
+    protected Map<String, String> mpClassFilter = null;
+    protected Map<String, String> mpTypeFilter = null;
+    protected Map<String, String> mpStateFilter = null;
 
     public OutputOptionsImpl() {
         super();
@@ -87,9 +98,13 @@ public class OutputOptionsImpl implements OutputOptions {
         this.flgShowMetaData = baseOptions.isFlgShowMetaData();
         this.flgShowSysData = baseOptions.isFlgShowSysData();
         this.flgShowDesc = baseOptions.isFlgShowDesc();
-        this.flgChildrenSum = baseOptions.isFlgChildrenSum();
+        this.flgRecalc = baseOptions.isFlgRecalc();
         this.flgProcessDocLayout = baseOptions.isFlgProcessDocLayout();
         this.strReadIfStatusInListOnly = baseOptions.getStrReadIfStatusInListOnly();
+        this.strClassFilter = baseOptions.getStrClassFilter();
+        this.strTypeFilter = baseOptions.getStrTypeFilter();
+        
+        this.initFilterMaps();
     }
 
     public boolean isFlgDoIntend() {
@@ -109,12 +124,6 @@ public class OutputOptionsImpl implements OutputOptions {
     }
     public void setFlgShowChildrenSum(boolean flgShowChildrenSum) {
         this.flgShowChildrenSum = flgShowChildrenSum;
-    }
-    public String getStrReadIfStatusInListOnly() {
-        return strReadIfStatusInListOnly;
-    }
-    public void setStrReadIfStatusInListOnly(String strReadIfStatusInListOnly) {
-        this.strReadIfStatusInListOnly = strReadIfStatusInListOnly;
     }
     public int getIntendFuncArea() {
         return manageIntValues(intendFuncArea);
@@ -199,11 +208,11 @@ public class OutputOptionsImpl implements OutputOptions {
     public void setFlgShowSysData(boolean flgShowSysData) {
         this.flgShowSysData = flgShowSysData;
     }
-    public boolean isFlgChildrenSum() {
-        return flgChildrenSum;
+    public boolean isFlgRecalc() {
+        return flgRecalc;
     }
-    public void setFlgChildrenSum(boolean flgChildrenSum) {
-        this.flgChildrenSum = flgChildrenSum;
+    public void setFlgRecalc(boolean flgRecalc) {
+        this.flgRecalc = flgRecalc;
     }
     public boolean isFlgProcessDocLayout() {
         return flgProcessDocLayout;
@@ -272,11 +281,49 @@ public class OutputOptionsImpl implements OutputOptions {
     public void setFlgShowDescInNextLine(boolean flgShowDescInNextLine) {
         this.flgShowDescInNextLine = flgShowDescInNextLine;
     }
+    public String getStrReadIfStatusInListOnly() {
+        return strReadIfStatusInListOnly;
+    }
+    public void setStrReadIfStatusInListOnly(String strReadIfStatusInListOnly) {
+        this.strReadIfStatusInListOnly = strReadIfStatusInListOnly;
+        this.mpStateFilter = Calculator.initMapFromCsvString(this.strReadIfStatusInListOnly);
+    }
+    public String getStrClassFilter() {
+        return strClassFilter;
+    }
+    public void setStrClassFilter(String strClassFilter) {
+        this.mpClassFilter = Calculator.initMapFromCsvString(this.strClassFilter);
+        this.strClassFilter = strClassFilter;
+    }
+    public String getStrTypeFilter() {
+        return strTypeFilter;
+    }
+    public void setStrTypeFilter(String strTypeFilter) {
+        this.mpTypeFilter = Calculator.initMapFromCsvString(this.strTypeFilter);
+        this.strTypeFilter = strTypeFilter;
+    }
     
     public int manageIntValues(Integer value) {
         return (value != null ? value : 0);
     }
-
+    
+    
+    public Map<String, String> getMapClassFilter() {
+        return this.mpClassFilter;
+    };
+    public Map<String, String> getMapTypeFilter() {
+        return this.mpTypeFilter;
+    };
+    public Map<String, String> getMapStateFilter() {
+        return this.mpStateFilter;
+    };
+    
+    public void initFilterMaps() {
+        this.setStrReadIfStatusInListOnly(this.getStrReadIfStatusInListOnly());
+        this.setStrClassFilter(this.getStrClassFilter());
+        this.setStrTypeFilter(this.getStrTypeFilter());
+    }
+    
     public void setAllFlgShow(boolean value) {
         setFlgShowType(value);
         setFlgShowState(value);
@@ -321,9 +368,11 @@ public class OutputOptionsImpl implements OutputOptions {
         this.flgShowDescWithUe = false;
         this.flgShowDescInNextLine = false;
 
-        this.flgChildrenSum = false;
+        this.flgRecalc = false;
         this.flgProcessDocLayout = false;
-        strReadIfStatusInListOnly = "";
+        this.setStrReadIfStatusInListOnly("");
+        this.setStrClassFilter("");
+        this.setStrTypeFilter("");
     }
 
     @Override
@@ -353,8 +402,11 @@ public class OutputOptionsImpl implements OutputOptions {
                         + ", flgShowDesc=" + this.flgShowDesc 
                         + ", flgShowDescWithUe=" + this.flgShowDescWithUe 
                         + ", flgShowDescInNextLine=" + this.flgShowDescInNextLine 
-                        + ", flgChildrenSum=" + this.flgChildrenSum 
+                        + ", flgRecalc=" + this.flgRecalc 
                         + ", flgProcessDocLayout=" + this.flgProcessDocLayout
-                        + ", strReadIfStatusInListOnly=" + this.strReadIfStatusInListOnly + "]";
+                        + ", strReadIfStatusInListOnly=" + this.strReadIfStatusInListOnly 
+                        + ", strClassFilter=" + this.strClassFilter 
+                        + ", strTypeFilter=" + this.strTypeFilter 
+                        + "]";
     }
 }

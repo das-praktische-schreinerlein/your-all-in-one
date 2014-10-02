@@ -362,6 +362,10 @@ label {
 .textareatype_name:active, .textareatype_name:focus {
     height: 120px;
 }
+.textareatype_filter {
+    width: 500px;
+    height: 30px;
+}
 .inputtype_state {
     width: 150px;
 } 

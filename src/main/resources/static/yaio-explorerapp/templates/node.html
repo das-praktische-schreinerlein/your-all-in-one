@@ -97,17 +97,83 @@
               <input type="checkbox" name="flgShowChildrenSum" class="inputtype_option" ng-model="oOptions.flgShowChildrenSum" id="inputflgShowChildrenSumOutputOptions" ng-change="">
               <fielderrors for="flgShowChildrenSum"></fielderrors>
 
+            </fieldset>
+
+            <fieldset id="formOutputFilter">
+              <legend translate="editor.formOutputOptions.legend.Filter">Filter</legend>
+                  <label for="strReadIfStatusInListOnly" class="label_filter" translate="editor.formOutputOptions.label.strReadIfStatusInListOnly">strReadIfStatusInListOnly</label>
+              <textarea type="text" placeholder="WARNING,RUNNING,ERLEDIGT,EVENT_PLANED" name="strReadIfStatusInListOnly" class="textareatype_filter" ng-model="oOptions.strReadIfStatusInListOnly" id="inputstrReadIfStatusInListOnlyOutputOptions" default=""  ng-change=""></textarea>
+              <fielderrors for="strReadIfStatusInListOnly"></fielderrors>
+
+                  <label for="strClassFilter" class="label_filter" translate="editor.formOutputOptions.label.strClassFilter">strClassFilter</label>
+              <textarea type="text" placeholder="EventNode,InfoNode,SymLinkNode,TaskNode,UrlResNode" name="strClassFilter" class="textareatype_filter" ng-model="oOptions.strClassFilter" id="inputstrClassFilterOutputOptions" default=""  ng-change=""></textarea>
+              <fielderrors for="strClassFilter"></fielderrors>
+
+                  <label for="strTypeFilter" class="label_filter" translate="editor.formOutputOptions.label.strTypeFilter">strTypeFilter</label>
+              <textarea type="text" placeholder="WARNING,RUNNING,ERLEDIGT,EVENT_PLANED,INFO,IDEE,URLRES,SYMLINK" name="strTypeFilter" class="textareatype_filter" ng-model="oOptions.strTypeFilter" id="inputstrTypeFilterOutputOptions" default=""  ng-change=""></textarea>
+              <fielderrors for="strTypeFilter"></fielderrors>
+
+            </fieldset>
+
+            <fieldset>
+              <button ng-click="outputOptionsEditor.send()" ng-disabled="nodeFormOutputOptions.$invalid" class="btn btn-primary" translate="common.buttonSend">Send</button>
+              <button ng-click="outputOptionsEditor.discard()" class="btn btn-primary" translate="common.buttonDiscard">Discard</button>
+            </fieldset>
+
+            <fieldset id="formOutputParams">
+              <legend translate="editor.formOutputOptions.legend.ShowParams">Anzeige-Parameter</legend>
+              
+                  <label for="flgRecalc" class="label_option" translate="editor.formOutputOptions.label.flgRecalc">flgRecalc</label>
+              <input type="checkbox" name="flgRecalc" class="inputtype_option" ng-model="oOptions.flgRecalc" id="inputflgRecalcOutputOptions" ng-change="">
+              <fielderrors for="flgRecalc"></fielderrors>
+
+              <label for="flgProcessDocLayout" class="label_option" translate="editor.formOutputOptions.label.flgProcessDocLayout">flgProcessDocLayout</label>
+              <input type="checkbox" name="flgProcessDocLayout" class="inputtype_option" ng-model="oOptions.flgProcessDocLayout" id="inputflgProcessDocLayoutOutputOptions" ng-change="">
+              <fielderrors for="flgProcessDocLayout"></fielderrors>
+
+              <br />
+              <label for="maxEbene" class="label_number" translate="editor.formOutputOptions.label.maxEbene">maxEbene</label>
+              <input type="number" name="maxEbene" class="inputtype_number" ng-model="oOptions.maxEbene" id="inputmaxEbeneOutputOptions" default="9999"  ng-change="">
+              <fielderrors for="maxEbene"></fielderrors>
+
+              <label for="maxUeEbene" class="label_number" translate="editor.formOutputOptions.label.maxUeEbene">maxUeEbene</label>
+              <input type="number" name="maxUeEbene" class="inputtype_number" ng-model="oOptions.maxUeEbene" id="inputmaxUeEbeneOutputOptions" default="3"  ng-change="">
+              <fielderrors for="maxUeEbene"></fielderrors>
+
+              <br />
+
+              <label for="intend" class="label_number" translate="editor.formOutputOptions.label.intend">intend</label>
+              <input type="number" name="intend" class="inputtype_number" ng-model="oOptions.intend" id="inputintendOutputOptions" default="2"  ng-change="">
+              <fielderrors for="intend"></fielderrors>
+
+              <label for="intendLi" class="label_number" translate="editor.formOutputOptions.label.intendLi">intendLi</label>
+              <input type="number" name="intendLi" class="inputtype_number" ng-model="oOptions.intendLi" id="inputintendLiOutputOptions" default="2"  ng-change="">
+              <fielderrors for="intendLi"></fielderrors>
+
+              <br />
+
+              <label for="intendFuncArea" class="label_number" translate="editor.formOutputOptions.label.intendFuncArea">intendFuncArea</label>
+              <input type="number" name="intendFuncArea" class="inputtype_number" ng-model="oOptions.intendFuncArea" id="inputintendFuncAreaOutputOptions" default="80"  ng-change="">
+              <fielderrors for="intendFuncArea"></fielderrors>
+              
+              <label for="intendSys" class="label_number" translate="editor.formOutputOptions.label.intendSys">intendSys</label>
+              <input type="number" name="intendSys" class="inputtype_number" ng-model="oOptions.intendSys" id="inputintendSysOutputOptions" default="160"  ng-change="">
+              <fielderrors for="intendSys"></fielderrors>
+
+              <br />
                   <label for="flgDoIntend" class="label_option" translate="editor.formOutputOptions.label.flgDoIntend">flgDoIntend</label>
               <input type="checkbox" name="flgDoIntend" class="inputtype_option" ng-model="oOptions.flgDoIntend" id="inputflgDoIntendOutputOptions" ng-change="">
               <fielderrors for="flgDoIntend"></fielderrors>
 
-                  <label for="flgChildrenSum" class="label_option" translate="editor.formOutputOptions.label.flgChildrenSum">flgChildrenSum</label>
-              <input type="checkbox" name="flgChildrenSum" class="inputtype_option" ng-model="oOptions.flgChildrenSum" id="inputflgChildrenSumOutputOptions" ng-change="">
-              <fielderrors for="flgChildrenSum"></fielderrors>
-
                   <label for="flgIntendSum" class="label_option" translate="editor.formOutputOptions.label.flgIntendSum">flgIntendSum</label>
               <input type="checkbox" name="flgIntendSum" class="inputtype_option" ng-model="oOptions.flgIntendSum" id="inputflgIntendSumOutputOptions" ng-change="">
               <fielderrors for="flgIntendSum"></fielderrors>
+
+              <br />
+
+              <label for="flgShowBrackets" class="label_option" translate="editor.formOutputOptions.label.flgShowBrackets">flgShowBrackets</label>
+              <input type="checkbox" name="flgShowBrackets" class="inputtype_option" ng-model="oOptions.flgShowBrackets" id="inputflgShowBracketsOutputOptions" ng-change="">
+              <fielderrors for="flgShowBrackets"></fielderrors>
 
             </fieldset>
 
@@ -137,52 +203,6 @@
 
             </fieldset>
 
-
-            <fieldset id="formOutputParams">
-              <legend translate="editor.formOutputOptions.legend.ShowParams">Anzeige-Parameter</legend>
-              
-              <label for="intendFuncArea" class="label_number" translate="editor.formOutputOptions.label.intendFuncArea">intendFuncArea</label>
-              <input type="number" name="intendFuncArea" class="inputtype_number" ng-model="oOptions.intendFuncArea" id="inputintendFuncAreaOutputOptions" default="80"  ng-change="">
-              <fielderrors for="intendFuncArea"></fielderrors>
-              
-              <br />
-              <label for="maxEbene" class="label_number" translate="editor.formOutputOptions.label.maxEbene">maxEbene</label>
-              <input type="number" name="maxEbene" class="inputtype_number" ng-model="oOptions.maxEbene" id="inputmaxEbeneOutputOptions" default="9999"  ng-change="">
-              <fielderrors for="maxEbene"></fielderrors>
-
-              <br />
-              <label for="maxUeEbene" class="label_number" translate="editor.formOutputOptions.label.maxUeEbene">maxUeEbene</label>
-              <input type="number" name="maxUeEbene" class="inputtype_number" ng-model="oOptions.maxUeEbene" id="inputmaxUeEbeneOutputOptions" default="3"  ng-change="">
-              <fielderrors for="maxUeEbene"></fielderrors>
-
-              <br />
-              <label for="intend" class="label_number" translate="editor.formOutputOptions.label.intend">intend</label>
-              <input type="number" name="intend" class="inputtype_number" ng-model="oOptions.intend" id="inputintendOutputOptions" default="2"  ng-change="">
-              <fielderrors for="intend"></fielderrors>
-
-              <br />
-              <label for="intendLi" class="label_number" translate="editor.formOutputOptions.label.intendLi">intendLi</label>
-              <input type="number" name="intendLi" class="inputtype_number" ng-model="oOptions.intendLi" id="inputintendLiOutputOptions" default="2"  ng-change="">
-              <fielderrors for="intendLi"></fielderrors>
-
-              <br />
-              <label for="intendSys" class="label_number" translate="editor.formOutputOptions.label.intendSys">intendSys</label>
-              <input type="number" name="intendSys" class="inputtype_number" ng-model="oOptions.intendSys" id="inputintendSysOutputOptions" default="160"  ng-change="">
-              <fielderrors for="intendSys"></fielderrors>
-
-              <br />
-
-              <label for="flgShowBrackets" class="label_option" translate="editor.formOutputOptions.label.flgShowBrackets">flgShowBrackets</label>
-              <input type="checkbox" name="flgShowBrackets" class="inputtype_option" ng-model="oOptions.flgShowBrackets" id="inputflgShowBracketsOutputOptions" ng-change="">
-              <fielderrors for="flgShowBrackets"></fielderrors>
-
-
-              <label for="flgProcessDocLayout" class="label_option" translate="editor.formOutputOptions.label.flgProcessDocLayout">flgProcessDocLayout</label>
-              <input type="checkbox" name="flgProcessDocLayout" class="inputtype_option" ng-model="oOptions.flgProcessDocLayout" id="inputflgProcessDocLayoutOutputOptions" ng-change="">
-              <fielderrors for="flgProcessDocLayout"></fielderrors>
-            </fieldset>
-
-      
             <fieldset>
               <button ng-click="outputOptionsEditor.send()" ng-disabled="nodeFormOutputOptions.$invalid" class="btn btn-primary" translate="common.buttonSend">Send</button>
               <button ng-click="outputOptionsEditor.discard()" class="btn btn-primary" translate="common.buttonDiscard">Discard</button>

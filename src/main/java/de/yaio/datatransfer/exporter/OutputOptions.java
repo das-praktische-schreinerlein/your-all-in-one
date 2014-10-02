@@ -16,6 +16,8 @@
  */
 package de.yaio.datatransfer.exporter;
 
+import java.util.Map;
+
 /**
  * <h4>FeatureDomain:</h4>
  *     DatenExport
@@ -61,8 +63,8 @@ public interface OutputOptions {
     public boolean isFlgShowDesc();
     public void setFlgShowDesc(boolean flgShowDesc);
     
-    public boolean isFlgChildrenSum();
-    public void setFlgChildrenSum(boolean flgChildrenSum);
+    public boolean isFlgRecalc();
+    public void setFlgRecalc(boolean flgRecalc);
     public boolean isFlgProcessDocLayout();
     public void setFlgProcessDocLayout(boolean flgProcessDocLayout);
 
@@ -82,6 +84,12 @@ public interface OutputOptions {
     public String getStrReadIfStatusInListOnly();
     public void setStrReadIfStatusInListOnly(String strReadIfStatusInListOnly);
 
+    public String getStrClassFilter();
+    public void setStrClassFilter(String strClassFilter);
+    
+    public String getStrTypeFilter();
+    public void setStrTypeFilter(String strTypeFilter);
+
     public int getIntendFuncArea();
     public void setIntendFuncArea(Integer intendPlanToPos);
 
@@ -96,4 +104,9 @@ public interface OutputOptions {
     public void setFlgShowDescWithUe(boolean flgShowDescWithUe);
     public boolean isFlgShowDescInNextLine();
     public void setFlgShowDescInNextLine(boolean flgShowDescInNextLine);
+    
+    public Map<String, String> getMapClassFilter();
+    public Map<String, String> getMapTypeFilter();
+    public Map<String, String> getMapStateFilter();
+    public void initFilterMaps();
 }

@@ -102,6 +102,7 @@ public class MindMapExporter extends WikiExporter {
         options.setFlgShowType(baseOOptions.isFlgShowType());
         options.setFlgShowPlan(baseOOptions.isFlgShowPlan());
         options.setFlgShowIst(baseOOptions.isFlgShowIst());
+        options.setFlgShowChildrenSum(baseOOptions.isFlgShowChildrenSum());
         options.setFlgShowDocLayout(baseOOptions.isFlgShowDocLayout());
 
         return options;
@@ -133,8 +134,47 @@ public class MindMapExporter extends WikiExporter {
             return res;
         }
 
-
+        // generate children 
+        StringBuffer childRes = new StringBuffer();
+        boolean flgChildMatched = false;
+        if (curNode.getEbene() < oOptions.getMaxEbene()) {
+            if (LOGGER.isDebugEnabled())
+                LOGGER.debug("Do Childs: Ebene " + curNode.getEbene() 
+                        + " >= MaxEbene " + oOptions.getMaxEbene() 
+                        + " Count:" + curNode.getChildNodesByNameMap().size() 
+                        + " for " + curNode.getNameForLogger());
+            for (String nodeName : curNode.getChildNodesByNameMap().keySet()) {
+                DataDomain childNode = curNode.getChildNodesByNameMap().get(nodeName);
+                childRes.append(this.getNodeResult(childNode, "", oOptions));
+            }
+        }
+        // check if children matches (childRes filled)
+        if (childRes.length() > 0) {
+            flgChildMatched = true;
+        }
+        // check if I'am matching
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("node: checking filter " + curNode.getWorkingId() + " oOption=" + oOptions + " name:" + curNode.getNameForLogger());
+        }
+        boolean flgMatchesFilter = this.isNodeMatchingFilter(curNode, oOptions);
+        if (! (flgMatchesFilter || flgChildMatched)) {
+            // sorry me and my children didnt match
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("sorry me and my children didnt match"
+                                + " - node:" + curNode.getWorkingId() 
+                                + " flgMatchesFilter=" + flgMatchesFilter
+                                + " flgChildMatched=" + flgChildMatched);
+            }
+            return res;
+        }
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("node: do processing " + curNode.getWorkingId() 
+                            + " flgMatchesFilter=" + flgMatchesFilter
+                            + " flgChildMatched=" + flgChildMatched 
+                            + " name:" + curNode.getNameForLogger());
+        }
         
+
         // generate text
         StringBuffer tmpName = new StringBuffer();
         this.formatNodeDataDomains(curNode, tmpName, genOutputOptionsForNameArea(oOptions));
@@ -160,18 +200,13 @@ public class MindMapExporter extends WikiExporter {
             res.append(icons + "\n");
         }
 
-
-        // iterate children
-        if (curNode.getEbene() < oOptions.getMaxEbene()) {
-            if (curNode.getChildNodes().size() >= CONST_MIN4CLOUD
-                    && curNode.getParentNode() != null) {
-                res.append("<cloud/>\n");
-            }
-            for (String nodeName : curNode.getChildNodesByNameMap().keySet()) {
-                DataDomain childNode = curNode.getChildNodesByNameMap().get(nodeName);
-                res.append(this.getNodeResult(childNode, "", oOptions));
-            }
+        // append generated children
+        if (curNode.getChildNodes().size() >= CONST_MIN4CLOUD
+                        && curNode.getParentNode() != null) {
+            res.append("<cloud/>\n");
         }
+        res.append(childRes);
+        
 
         // close node
         res.append("</node>\n");
