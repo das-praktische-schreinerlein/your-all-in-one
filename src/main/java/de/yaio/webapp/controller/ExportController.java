@@ -140,7 +140,9 @@ public class ExportController {
      * @param response - the response-Obj to set contenttype and headers
      * @return String - wiki-format of the node
      */
-    @RequestMapping(method=RequestMethod.GET, value = "/wiki/{sysUID}", produces="application/wiki")
+    @RequestMapping(method=RequestMethod.GET, 
+                    value = "/wiki/{sysUID}", 
+                    produces="application/wiki")
     public @ResponseBody String exportNodeAsWiki(
            @PathVariable(value="sysUID") String sysUID, HttpServletResponse response) {
         // configure
@@ -201,7 +203,9 @@ public class ExportController {
      * @param response - the response-Obj to set contenttype and headers
      * @return String - mindmap-format of the node
      */
-    @RequestMapping(method=RequestMethod.GET, value = "/mindmap/{sysUID}", produces="application/mindmap")
+    @RequestMapping(method=RequestMethod.GET, 
+                    value = "/mindmap/{sysUID}", 
+                    produces="application/mindmap")
     public @ResponseBody String exportNodeAsMindMap(
            @PathVariable(value="sysUID") String sysUID, HttpServletResponse response) {
         // configure
@@ -261,12 +265,146 @@ public class ExportController {
      * @param response - the response-Obj to set contenttype and headers
      * @return String - ical-format of the node
      */
-    @RequestMapping(method=RequestMethod.GET, value = "/ical/{sysUID}", produces="application/ical")
+    @RequestMapping(method=RequestMethod.GET, 
+                    value = "/ical/{sysUID}", 
+                    produces="application/ical")
     public @ResponseBody String exportNodeAsICal(
            @PathVariable(value="sysUID") String sysUID, HttpServletResponse response) {
         // configure
         Exporter exporter = new ICalExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
+        
+        // run
+        String res = this.exportNode(sysUID, exporter, oOptions, ".ics", response);
+        return res;
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
+     *     Request to read all Events after node=sysUID and return it and all 
+     *     children that matches className=EventNode in ICal-format 
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>String - ICal-format of the node
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice Query
+     * @param sysUID - sysUID to export
+     * @param response - the response-Obj to set contenttype and headers
+     * @return String - ical-format of the node
+     */
+    @RequestMapping(method=RequestMethod.GET, 
+                    value = "/icalevents/{sysUID}", 
+                    produces="application/ical")
+    public @ResponseBody String exportNodeAsICalOnlyEvents(
+           @PathVariable(value="sysUID") String sysUID, HttpServletResponse response) {
+        // configure
+        Exporter exporter = new ICalExporter();
+        OutputOptions oOptions = new OutputOptionsImpl();
+        
+        oOptions.setStrClassFilter("EventNode");;
+        
+        // run
+        String res = this.exportNode(sysUID, exporter, oOptions, ".ics", response);
+        return res;
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
+     *     Request to read all Tasks after node=sysUID and return it and all 
+     *     children that matches className=TaskNode in ICal-format 
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>String - ICal-format of the node
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice Query
+     * @param sysUID - sysUID to export
+     * @param response - the response-Obj to set contenttype and headers
+     * @return String - ical-format of the node
+     */
+    @RequestMapping(method=RequestMethod.GET, 
+                    value = "/icaltasks/{sysUID}", 
+                    produces="application/ical")
+    public @ResponseBody String exportNodeAsICalOnlyTasks(
+           @PathVariable(value="sysUID") String sysUID, HttpServletResponse response) {
+        // configure
+        Exporter exporter = new ICalExporter();
+        OutputOptions oOptions = new OutputOptionsImpl();
+        
+        oOptions.setStrClassFilter("TaskNode");;
+        
+        // run
+        String res = this.exportNode(sysUID, exporter, oOptions, ".ics", response);
+        return res;
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
+     *     Request to read all Open Tasks after node=sysUID and return it and 
+     *     all children that matches className=TaskNode and 
+     *     type=OFFEN,RUNNING,LATE,WARNING in ICal-format 
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>String - ICal-format of the node
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice Query
+     * @param sysUID - sysUID to export
+     * @param response - the response-Obj to set contenttype and headers
+     * @return String - ical-format of the node
+     */
+    @RequestMapping(method=RequestMethod.GET, 
+                    value = "/icaltaskstodo/{sysUID}", 
+                    produces="application/ical")
+    public @ResponseBody String exportNodeAsICalOnlyTasksTodo(
+           @PathVariable(value="sysUID") String sysUID, HttpServletResponse response) {
+        // configure
+        Exporter exporter = new ICalExporter();
+        OutputOptions oOptions = new OutputOptionsImpl();
+        
+        oOptions.setStrClassFilter("TaskNode");;
+        oOptions.setStrTypeFilter("OFFEN,RUNNING,LATE,WARNING");;
+        
+        // run
+        String res = this.exportNode(sysUID, exporter, oOptions, ".ics", response);
+        return res;
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
+     *     Request to read all Late Tasks after node=sysUID and return it and 
+     *     all children that matches className=TaskNode and type=LATE,WARNING 
+     *     in ICal-format 
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>String - ICal-format of the node
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice Query
+     * @param sysUID - sysUID to export
+     * @param response - the response-Obj to set contenttype and headers
+     * @return String - ical-format of the node
+     */
+    @RequestMapping(method=RequestMethod.GET, 
+                    value = "/icaltaskslate/{sysUID}", 
+                    produces="application/ical")
+    public @ResponseBody String exportNodeAsICalOnlyTasksLate(
+           @PathVariable(value="sysUID") String sysUID, HttpServletResponse response) {
+        // configure
+        Exporter exporter = new ICalExporter();
+        OutputOptions oOptions = new OutputOptionsImpl();
+        
+        oOptions.setStrClassFilter("TaskNode");;
+        oOptions.setStrTypeFilter("LATE,WARNING");;
         
         // run
         String res = this.exportNode(sysUID, exporter, oOptions, ".ics", response);
@@ -380,7 +518,9 @@ public class ExportController {
      * @param response - the response-Obj to set contenttype and headers
      * @return String - html-format of the node
      */
-    @RequestMapping(method=RequestMethod.GET, value = "/html/{sysUID}", produces="text/html")
+    @RequestMapping(method=RequestMethod.GET, 
+                    value = "/html/{sysUID}", 
+                    produces="text/html")
     public @ResponseBody String exportNodeAsHtml(
            @PathVariable(value="sysUID") String sysUID, HttpServletResponse response) {
         // configure
@@ -432,7 +572,9 @@ public class ExportController {
      * @param response - the response-Obj to set contenttype and headers
      * @return String - documentation-html-format of the node
      */
-    @RequestMapping(method=RequestMethod.GET, value = "/documentation/{sysUID}", produces="text/html")
+    @RequestMapping(method=RequestMethod.GET, 
+                    value = "/documentation/{sysUID}", 
+                    produces="text/html")
     public @ResponseBody String exportDocumentationNodeAsHtml(
            @PathVariable(value="sysUID") String sysUID, HttpServletResponse response) {
         // set Options
@@ -528,7 +670,9 @@ public class ExportController {
      * @param response - the response-Obj to set contenttype and headers
      * @return ByteArrayOutputStream - excel-format of the node
      */
-    @RequestMapping(method=RequestMethod.GET, value = "/excel/{sysUID}", produces="application/excel")
+    @RequestMapping(method=RequestMethod.GET, 
+                    value = "/excel/{sysUID}", 
+                    produces="application/excel")
     public @ResponseBody String exportNodeAsExcel(
            @PathVariable(value="sysUID") String sysUID, HttpServletResponse response) {
         ExcelOutputOptions oOptions = new ExcelOutputOptions(new OutputOptionsImpl());
