@@ -3185,6 +3185,12 @@ $.extend(Fancytree.prototype,
 				}
 			}
 			
+			
+			// do callback if defined
+			if (ctx.tree.options.onExpandCallBack) {
+			    ctx.tree.options.onExpandCallBack(node, flag);
+			}
+			
 			// check for option openHierarchy recursively
 			console.log("iam here:" + node.key 
 			        + " level:" + node.getLevel() 
@@ -3697,7 +3703,8 @@ $.widget("ui.fancytree",
 		},
 		// events
 		lazyLoad: null,
-		postProcess: null
+		postProcess: null,
+		onExpandCallBack: null
 	},
 	/* Set up the widget, Called on first $().fancytree() */
 	_create: function() {
