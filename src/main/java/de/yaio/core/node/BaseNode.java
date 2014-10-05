@@ -673,7 +673,13 @@ public class BaseNode implements BaseData, MetaData, SysData,
     @XmlTransient
     @JsonIgnore
     public String getIdForChildByNameMap() {
-        return getSrcName();
+        if(getSrcName() != null) {
+            return getSrcName();
+        }
+        if (getSysUID() != null) {
+            return sysUID;
+        }
+        return getName();
     }
 
     @Override
