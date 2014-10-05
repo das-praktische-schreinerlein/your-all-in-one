@@ -266,15 +266,25 @@
     <div id="containerYaioTree" class="box container-yaio-tree">
         <div id="containerYaioTreeTable" class="container-yaio-tree-table">
           <table id="tree">
+              <!-- define columngroups -->
               <colgroup>
               <col class="container_field fieldtype_name field_name"></col>
               <col class="block_nodedata"></col>
+              <col class="block_nodegantt"></col>
               <col class="container_field fieldtype_actions"></col>
               </colgroup>
               <thead>
                 <tr> 
-                  <th>Name</th>
-                  <th>
+                  <th id="tab_name_haeder">
+                    <!-- show name-header and data-toggler -->
+                    <span  translate="fancytree.table.headline.name">Name</span>
+                    <span style="display: inline-block; width: 300px;">
+                      <a onclick="yaioShowGanttBlock();return false;" id="tabTogglerGantt" class="button tabToggler" translate="fancytree.table.headline.tabTogglerGantt">Zeige Gantt</a>
+                      <a onclick="yaioShowDataBlock();return false;" id="tabTogglerData" class="button tabToggler"  translate="fancytree.table.headline.tabTogglerData" style="display: none" >Zeige Daten</a>
+                    </span>
+                    </th>
+                  <th class="block_nodedata">
+                    <!-- show workflow-header -->
                     <div class="container_data_row">
                       <div class="container_field fieldtype_metanummer field_metanummer field_center" translate="fancytree.table.headline.metanummer">Nr.<br />&nbsp;</div>
                       <div class="container_field fieldtype_type field_type field_center" translate="fancytree.table.headline.type">Typ<br />&nbsp;</div>
@@ -283,9 +293,21 @@
                       <div class="container_field fieldtype_fromto field_istChildrenSum field_center" translate="fancytree.table.headline.istChildrenSum"> <br />Zeitraum</div>
                       <div class="container_field fieldtype_aufwand field_planChildrenSumAufwand field_center" translate="fancytree.table.headline.planChildrenSumAufwand">Plan<br />Aufwand</div>
                       <div class="container_field fieldtype_fromto field_planChildrenSum field_center" translate="fancytree.table.headline.planChildrenSum"> <br />Zeitraum</div>
+                    </div></th>
+                  <th class="block_nodegantt">
+                    <!-- show gantt-header -->
+                    <div class="gantt_container"  id="gantt_container_head">
+                       <div class="gantt_aufwand" id="gantt_aufwand_head"  translate="fancytree.table.headline.ganttaufwand">Aufwand</div>
+                       <div class="gantt_bar"  id="gantt_bar_head">
+                        <input type="text" placeholder="dd.mm.jjjj" name="ganttRangeStart" pattern="\d{2}\.\d{2}\.\d{4}"  maxsize="10" value="01.01.2014" class="inputtype_date" id="inputGanttRangeStart" onchange="yaioRecalcGanttBlock()">
+                        <a onclick="yaioRecalcGanttBlock();return false;" class="button"  translate="fancytree.table.headline.ganttrange">Zeitbereich</a> 
+                        <input type="text" placeholder="dd.mm.jjjj" name="ganttRangeEnde" pattern="\d{2}\.\d{2}\.\d{4}"  maxsize="10" value="31.12.2014" class="inputtype_date" style="text-align: right" id="inputGanttRangeEnde" onchange="yaioRecalcGanttBlock()"></th>
+                       </div>
                     </div>
+                  <th  translate="fancytree.table.headline.actions">
+                    <!-- show actions-header -->
+                    Actions
                   </th>
-                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -808,5 +830,7 @@
     setTimeout(function() { 
         // activate speech recognition
         addSpeechRecognitionToElements();
+        addDatePickerToElements()
     }, 1000);
+    
 </script>
