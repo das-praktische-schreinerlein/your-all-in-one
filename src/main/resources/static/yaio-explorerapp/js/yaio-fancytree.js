@@ -156,7 +156,7 @@ var configNodeTypeFields = {
  *     GUI Tree
  * @param treeId - id of the html-element containing the tree
  * @param masterNodeId - the node.sysUID to load
- * @param doneHandler - 
+ * @param doneHandler - callback-function when tree is created
  */
 function yaioCreateOrReloadFancyTree(treeId, masterNodeId, doneHandler){
     // check if already loaded
@@ -207,9 +207,9 @@ function yaioCreateOrReloadFancyTree(treeId, masterNodeId, doneHandler){
  *     GUI Tree
  * @param treeId - id of the html-element containing the tree
  * @param masterNodeId - the node.sysUID to load
- * @param doneHandler - 
+ * @param doneHandler - callback-function when tree is created
  */
-function yaioCreateFancyTree(treeId, masterNodeId, doneHandler){
+function yaioCreateFancyTree(treeId, masterNodeId, doneHandler) {
     treeInstances[treeId] = {};
     treeInstances[treeId].state = "loading";
     $(treeId).fancytree({
@@ -228,11 +228,12 @@ function yaioCreateFancyTree(treeId, masterNodeId, doneHandler){
             cache: false 
         },
       
+        // set state of the tree for callback, when tree is created
         loadChildren: function(event, data) {
             treeInstances[treeId].state = "loading_done";
         },    
 
-          // lazy load the children
+        // lazy load the children
         lazyLoad: function(event, data) {
             var node = data.node;
             console.debug("yaioCreateFancyTree load data for " + node.key 
@@ -243,13 +244,32 @@ function yaioCreateFancyTree(treeId, masterNodeId, doneHandler){
             };
         },
   
-  
+        // callback if expanded-state of node changed, to show the matching gantt (only node or + childsum)
+        onExpandCallBack: function (node, flag) {
+            // activate/deactivate gantt for node
+            if (flag) {
+                console.debug("onExpandCallBack: activate gantt - only own data for " + node.key);
+                // I'm expanded: show only my own data
+                $("#gantt_istChildrenSum_container_" + node.key).css("display", "none");
+                $("#gantt_planChildrenSum_container_" + node.key).css("display", "none");
+                $("#gantt_ist_container_" + node.key).css("display", "block");
+                $("#gantt_plan_container_" + node.key).css("display", "block");
+            } else {
+                // I'm collapsed: show me and my childsum
+                console.debug("onExpandCallBack: activate gantt - sum data of me+children for " + node.key);
+                $("#gantt_ist_container_" + node.key).css("display", "none");
+                $("#gantt_plan_container_" + node.key).css("display", "none");
+                $("#gantt_istChildrenSum_container_" + node.key).css("display", "block");
+                $("#gantt_planChildrenSum_container_" + node.key).css("display", "block");
+            }
+        },
+        
         // parse the nodedata
         postProcess: function(event, data) {
             postProcessNodeData(event, data);
         },
 
-        // render the extra nodedata in grid
+        // render the extra nodedata in grid, sets state for callbaclfunction when tree is created
         renderColumns: function(event, data) {
             renderColumnsForNode(event, data);
             treeInstances[treeId].state = "rendering_done";
@@ -526,6 +546,26 @@ function yaioCreateFancyTree(treeId, masterNodeId, doneHandler){
  *****************************************
  *****************************************/
 
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Initialisation
+ * <h4>FeatureDescription:</h4>
+ *     Checks if the tree is in wished state and runs doneHandler.
+ *     If tree is not in state, it waits waitTime trys it till maxTries is reached.
+ *     If maxTries reached, doneHandler is done regardless of the state.
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>calls doneHandler if tree is in state
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Tree
+ * @param treeId - id of the html-element containing the tree
+ * @param state - the state the tree must reached to run doneHandler
+ * @param waitTime - millis to wait for next try if tree is not in state 
+ * @param maxTries - maximum of tries till donehandlder will run if tree is not in state 
+ * @param doneHandler - callback-function to run if tree is in state
+ * @param doneHandler - name of the callback-function fpr logging
+ */
 function yaioDoOnFancyTreeState(treeId, state, waitTime, maxTries, doneHandler, name) {
     // check if donehandler
     if (doneHandler) {
@@ -576,6 +616,23 @@ function createFancyDataFromNodeData(basenode) {
     return datanode;
 } 
 
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Initialisation
+ * <h4>FeatureDescription:</h4>
+ *     Callbackhandler for FancyTree to convert the presponse from server to fancytree-data. 
+ *     Fancytree runs it if nodedata is read from server.<br>
+ *     checks for data.response.state=OK, create FancydataNode from data.response.childNodes
+ *     and adds them to data.result.
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>updates data.result with the childlist of the node
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Tree
+ * @param event - fancytree-event
+ * @param data - the serverresponse (java de.yaio.rest.controller.NodeActionReponse)
+ */
 function postProcessNodeData(event, data) {
     var list = new Array();
     
@@ -604,6 +661,22 @@ function postProcessNodeData(event, data) {
     data.result = list;
 }
 
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Layout
+ *     Rendering
+ * <h4>FeatureDescription:</h4>
+ *     Renders the DataBlock for basenode and returns a JQuery-Html-Obj.
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>ReturnValue JQuery-Html-Object - the rendered datablock
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Tree Rendering
+ * @param basenode - the nodedata to render (java de.yaio.core.node.BaseNode)
+ * @param fancynode - the corresponding fancynode
+ * @returns JQuery-Html-Object - the rendered datablock
+ */
 function renderDataBlock(basenode, fancynode) {
     // extract nodedata
     var nodestate = basenode.state;
@@ -630,11 +703,6 @@ function renderDataBlock(basenode, fancynode) {
            .addClass("fieldtype_type")
            .addClass("field_type")
            .addClass(statestyle));
-//    $row.append($("<div lang='tech' />").html(basenode.state)
-//            .addClass("container_field")
-//            .addClass("fieldtype_state")
-//            .addClass("field_state")
-//            .addClass(statestyle));
     if (basenode.className == "TaskNode" || basenode.className == "EventNode") {
         // TaskNode
         $row.append(
@@ -686,7 +754,6 @@ function renderDataBlock(basenode, fancynode) {
                               .addClass("container_field")
                               .addClass("fieldtype_url")
                               .addClass("field_resLocRef")
-    //                          .addClass(statestyle)
                               ); 
         }
     
@@ -698,7 +765,6 @@ function renderDataBlock(basenode, fancynode) {
                                 .addClass("container_field")
                                 .addClass("fieldtype_ueDocLayout")
                                 .addClass("field_ueDocLayout")
-//                                    .addClass(statestyle)
                                 ); 
             
             // check which docLayout is set    
@@ -709,7 +775,6 @@ function renderDataBlock(basenode, fancynode) {
                                 .addClass("container_field")
                                 .addClass("fieldtype_docLayoutTagCommand")
                                 .addClass("field_docLayoutTagCommand")
-//                                    .addClass(statestyle)
                                 ); 
             }
             if (basenode.docLayoutAddStyleClass) {
@@ -719,7 +784,6 @@ function renderDataBlock(basenode, fancynode) {
                                 .addClass("container_field")
                                 .addClass("fieldtype_docLayoutAddStyleClass")
                                 .addClass("field_docLayoutAddStyleClass")
-//                                    .addClass(statestyle)
                                 ); 
             }
             if (basenode.docLayoutShortName) {
@@ -729,7 +793,6 @@ function renderDataBlock(basenode, fancynode) {
                                 .addClass("container_field")
                                 .addClass("fieldtype_docLayoutShortName")
                                 .addClass("field_docLayoutShortName")
-//                                    .addClass(statestyle)
                                 ); 
             }
             if (basenode.docLayoutFlgCloseDiv) {
@@ -738,7 +801,6 @@ function renderDataBlock(basenode, fancynode) {
                                 .addClass("container_field")
                                 .addClass("fieldtype_docLayoutFlgCloseDiv")
                                 .addClass("field_docLayoutFlgCloseDiv")
-//                                    .addClass(statestyle)
                                 ); 
             }
         }
@@ -751,6 +813,266 @@ function renderDataBlock(basenode, fancynode) {
     return $table;
 }
 
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Layout
+ *     Rendering
+ * <h4>FeatureDescription:</h4>
+ *     Calcs+renders the gantt-block of specified type: (ist, plan, planChildrenSum, 
+ *     istChildrenSum) for basenode. Updates this elements:
+ *     <ul>
+ *       <li> #gantt_" + type + "_container_" + basenode.sysUID
+ *       <li> #gantt_" + type + "_aufwand_" + basenode.sysUID
+ *       <li> #gantt_" + type + "_bar_" + basenode.sysUID
+ *     </ul>
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>Updates GUI: #gantt_" + type + "_container_" + basenode.sysUID
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Tree Rendering
+ * @param basenode - the nodedata to render (java de.yaio.core.node.BaseNode)
+ * @param type - the type of data to calc (ist, plan, planChildrenSum, istChildrenSum)
+ * @param label - the label to show if aufwand >0
+ * @param $divLine - optional ganttContainer to use - if not set #gantt_" + type + "_container_" + basenode.sysUID will be used
+ */
+function fillGanttBlock(basenode, type, label, $divLine) {
+    var msg = "ganttblock for node:" + basenode.sysUID;
+
+    // get divs
+    if (! $divLine) {
+        $divLine = $("#gantt_" + type + "_container_" + basenode.sysUID);
+    }
+    var $divLabel = $($divLine).find("#gantt_" + type + "_aufwand_" + basenode.sysUID);
+    var $div = $($divLine).find("#gantt_" + type + "_bar_" + basenode.sysUID);
+    
+    // reset
+    $divLabel.html("");
+    $div.html("&nbsp;");
+    $div.css("width", 0);
+    $div.css("margin-left", 0);
+
+    // set range
+    var dateRangeStartStr = $("#inputGanttRangeStart").val();
+    var dateRangeEndStr = $("#inputGanttRangeEnde").val();
+    if (dateRangeEndStr == null || dateRangeEndStr == null) {
+        console.err("fillGanttBlock range is not set correctly: " 
+                + dateRangeStartStr + "-" + dateRangeEndStr + " " + msg);
+        return;
+    }
+    
+    // calc dates...
+    var lstDate=dateRangeStartStr.split(".");
+    var dateRangeStart = new Date(lstDate[1]+"/"+lstDate[0]+"/"+lstDate[2]);
+    lstDate=dateRangeEndStr.split(".");
+    var dateRangeEnd = new Date(lstDate[1]+"/"+lstDate[0]+"/"+lstDate[2]);    
+    if (dateRangeStart == "NaN" || dateRangeEndStr == "NaN") {
+        console.err("fillGanttBlock range is not set correctly: " 
+                + dateRangeStartStr + "-" + dateRangeEndStr + " " + msg);
+        return;
+    }
+    var dateRangeStartMillis = dateRangeStart.getTime();
+    var dateRangeEndMillis = dateRangeEnd.getTime();
+    if (dateRangeStartMillis == "NaN" || dateRangeEndMillis == "NaN") {
+        console.err("fillGanttBlock range is not set correctly: " 
+                + dateRangeStartStr + "-" + dateRangeEndStr + " " + msg);
+        return;
+    }
+
+    var rangeWidth = 450;
+    var rangeDays = (dateRangeEndMillis-dateRangeStartMillis);
+    var rangeFactor = rangeWidth / rangeDays;
+
+    // check if dates are set
+    var startMillis = basenode[type + "Start"];
+    var endMillis = basenode[type + "Ende"];
+    var aufwand = basenode[type + "Aufwand"];
+    if (startMillis != null && endMillis != null) {
+
+        var startPos = 0;
+        var endPos = 0;
+        var rangeAufwand = 0;
+        var flgMatchesRange = false;
+        
+        // check if range matches
+        if (startMillis > dateRangeEndMillis) {
+            // sorry you start later
+            console.log("fillGanttBlock SKIP sorry you start later: " 
+                    + startMillis + ">" + dateRangeEndMillis + " " + msg);
+        } else if (endMillis < dateRangeStartMillis) {
+            // sorry you end before
+            console.log("fillGanttBlock SKIP sorry you start later: " 
+                    + endMillis + "<" + dateRangeStartMillis + " " + msg);
+        } else {
+            // we match
+            flgMatchesRange = true;
+            if (startMillis > dateRangeStartMillis) {
+                //
+                startPos = (startMillis - dateRangeStartMillis) * rangeFactor;
+            } else {
+                // we start on it
+                startPos = 0;
+            }
+            
+            if (endMillis < dateRangeEndMillis) {
+                //
+                endPos = (endMillis - dateRangeStartMillis) * rangeFactor;
+            } else {
+                // we start on it
+                endPos = rangeWidth;
+            }
+            
+            // calc aufwand in range
+            rangeAufwand = (endPos - startPos) * aufwand / ((endMillis - startMillis) * rangeFactor);
+        }
+        
+        if (flgMatchesRange) {
+            $div.html("&nbsp;");
+            $div.css("width", endPos-startPos);
+            $div.css("margin-left", startPos);
+            
+            // show aufwand
+            if (rangeAufwand > 0) {
+                $divLabel.html("<span class='gantt_aufwand_label'>" 
+                                 + label + ":" + "</span>"
+                             + "<span class='gantt_aufwand_value'>" 
+                                 + formatNumbers(rangeAufwand, 0, "h") + "</span");
+            }
+            
+            console.log("fillGanttBlock MATCHES width: " 
+                    + startPos + "-" + endPos + " " + msg);
+        } else {
+            console.log("fillGanttBlock SKIP dates not matched: " + msg);
+        }
+    } else {
+        console.log("fillGanttBlock SKIP no planDates: " + msg);
+    }
+}
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Layout
+ *     Rendering
+ * <h4>FeatureDescription:</h4>
+ *     Create the gantt-block of specified type: (ist, plan, planChildrenSum, 
+ *     istChildrenSum) for basenode. Creates this elements:
+ *     <ul>
+ *       <li> #gantt_" + type + "_container_" + basenode.sysUID
+ *       <li> #gantt_" + type + "_aufwand_" + basenode.sysUID
+ *       <li> #gantt_" + type + "_bar_" + basenode.sysUID
+ *     </ul>
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>Updates GUI: #gantt_" + type + "_container_" + basenode.sysUID
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Tree Rendering
+ * @param basenode - the nodedata to render (java de.yaio.core.node.BaseNode)
+ * @param type - the type of data to calc (ist, plan, planChildrenSum, istChildrenSum)
+ * @param addStyle - optional css-class to add to t-element
+ * @param label - the label to show if aufwand >0
+ * @returns JQuery-Html-Object - the rendered ganttblock
+ */
+function createGanttBlock(basenode, type, addStyle, label) {
+    var msg = "ganttblock for node:" + basenode.sysUID;
+
+    // create line
+    var $divLine = $("<div id='gantt_" + type + "_container_" + basenode.sysUID + "'" +
+    		" class ='gantt_container gantt_" + type + "_container' />");
+    
+    // create aufwand
+    var $divLabel = $("<div id='gantt_" + type + "_aufwand_" + basenode.sysUID + "'" +
+    		" class ='gantt_aufwand ganttblock_" + type + "_aufwand' />");
+    $divLabel.addClass(addStyle);
+    $divLine.append($divLabel);
+    
+    // create gantt
+    var $div = $("<div id='gantt_" +type + "_bar_" + basenode.sysUID + "'" +
+    		" class ='gantt_bar gantt_" +type + "_bar' />");
+    $div.addClass(addStyle);
+    $divLine.append($div);
+    
+    // fill gantt
+    fillGanttBlock(basenode, type, label, $divLine);
+    
+    return $divLine;
+}
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Layout
+ *     Rendering
+ * <h4>FeatureDescription:</h4>
+ *     renders the full GanttBlock (ist, plan, istChildrenSum, planChildrenSum) 
+ *     for basenode and returns a JQuery-Html-Obj.
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>ReturnValue JQuery-Html-Object - the rendered ganttblock
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Tree Rendering
+ * @param basenode - the nodedata to render (java de.yaio.core.node.BaseNode)
+ * @param fancynode - the corresponding fancynode
+ * @returns JQuery-Html-Object - the rendered ganttblock
+ */
+function renderGanttBlock(basenode, fancynode) {
+    // extract nodedata
+    var nodestate = basenode.state;
+    var statestyle = "node-state-" + nodestate;   
+
+    var msg = "ganttblock for node:" + basenode.sysUID;
+    console.log("renderGanttBlock START: " + msg);
+
+    // current ganttblock
+    var nodeDataBlock = "";
+    var $table = $("<div class='container_gantt_table' />");
+    var $row = $("<div class='container_gantt_row'/>");
+    $table.append($row);
+    
+    if (basenode.className == "TaskNode" || basenode.className == "EventNode") {
+        // TaskNode
+        var $div;
+        
+        // create plan
+        $div = createGanttBlock(basenode, "plan", statestyle, "Plan");
+        $row.append($div);
+        $div = createGanttBlock(basenode, "planChildrenSum", statestyle, "PlanSum");
+        $row.append($div);
+        
+        // create isst and add stytestyle
+        $div = createGanttBlock(basenode, "ist", statestyle, "Ist");
+        $row.append($div);
+        $div = createGanttBlock(basenode, "istChildrenSum", statestyle, "IstSum");
+        $row.append($div);
+    } else {
+        console.log("renderGanttBlock SKIP no task or event: " + msg);
+    }
+
+    console.log("renderGanttBlock DONE: " + msg);
+
+    return $table;
+}
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Layout
+ *     Rendering
+ * <h4>FeatureDescription:</h4>
+ *     Callback for fancyftree. Renders the full block for corresponding basenode.
+ *     Manipulates the default-fancytree-tablerow (replace+add+hide elements).<br>
+ *     <ul>
+ *       <li>data.node.tr: Html-Obj of the table-line
+ *       <li>data.node.data.basenode: the basenode (java de.yaio.core.node.BaseNode)
+ *     </ul>
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>Updates DOM
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Tree Rendering
+ * @param event - fancytree-event
+ * @param data - the fancytreenode-data (basenode = data.node.data.basenode, tr = data.node.tr)
+ */
 function renderColumnsForNode(event, data) {
     // extract nodedata
     var node = data.node;
@@ -762,25 +1084,18 @@ function renderColumnsForNode(event, data) {
     
     var colName = 0;
     var colData = 1;
-    var colActions = 2;
+    var colGantt = 2;
+    var colActions = 3;
     
     // get tdlist
     var $tdList = $(node.tr).find(">td");
 
-    // (index #0 is rendered by fancytree by adding the checkbox)
-//    $tdList.eq(1).text(node.getIndexHier()).addClass("alignRight").addClass(statestyle);
-
     // add stateclasss to tr
-    $(node.tr)
-       //.addClass(statestyle)
-       .addClass("container_nodeline");
+    $(node.tr).addClass("container_nodeline");
     
     // add fields
     $tdList.eq(colActions).html(
-            "<a href='#/show/" + basenode.sysUID + "'"
-                    + " class='yaio-icon-center'"
-                    + " data-tooltip='Zeige nur diesen Teilbaum mit allen Kindselementen'></a>"
-            + "<a onclick=\"javascript: yaioOpenNodeEditor('" + basenode.sysUID + "', 'edit'); return false;\""
+            "<a onclick=\"javascript: yaioOpenNodeEditor('" + basenode.sysUID + "', 'edit'); return false;\""
                     + " class='yaio-icon-edit'"
                     + " data-tooltip='Bearbeite die Daten'></a>"
             + "<a onclick=\"javascript: yaioOpenNodeEditor('" + basenode.sysUID + "', 'create'); return false;\""
@@ -796,6 +1111,17 @@ function renderColumnsForNode(event, data) {
              .addClass("fieldtype_actions")
              //.addClass(statestyle)
              ;
+
+    // replace checkbox by center-command
+    var $expanderEle = $tdList.eq(colName).find("span.fancytree-expander");
+    $expanderEle.attr('data-tooltip', '&Ouml;ffne Teilbaum mit Kindern');
+
+    // replace checkbox by center-command
+    var $checkEle = $tdList.eq(colName).find("span.fancytree-checkbox");
+    $checkEle.html("<a href='#/show/" + basenode.sysUID + "'"
+        + " class='yaio-icon-center'"
+        + " data-tooltip='Zeige nur diesen Teilbaum mit allen Kindselementen'></a>");
+    $checkEle.removeClass("fancytree-checkbox").addClass("command-center");
 
     // manipulate name-column
     $tdList.eq(colName).addClass("container_field")
@@ -823,7 +1149,7 @@ function renderColumnsForNode(event, data) {
         // columncount
         //var columnCount = $(">td", $nodedataBlock).length;
         
-        // add toggler column
+        // add  column
         $($nodeDataBlock).find("div.container_data_row").append(
                 $("<div />").html("<a href='#'" +
                         " onclick=\"toggleNodeDescContainer('" + basenode.sysUID + "'); return false;\"" +
@@ -845,9 +1171,93 @@ function renderColumnsForNode(event, data) {
     // add nodeData
     $tdList.eq(colData).html($nodeDataBlock).addClass("block_nodedata");
     
-    // toogle
+    // add gantt
+    var $nodeGanttBlock = renderGanttBlock(basenode, node);
+    $tdList.eq(colGantt).html($nodeGanttBlock).addClass("block_nodegantt");
+
+    // set visibility of data/gantt-block
+    if ($("#tabTogglerGantt").css("display") != "none") {
+        $tdList.eq(colData).css("display", "table-cell");
+        $tdList.eq(colGantt).css("display", "none");
+    } else {
+        $tdList.eq(colGantt).css("display", "table-cell");
+        $tdList.eq(colData).css("display", "none");
+    }
+    
+    // toogle desc
     toggleNodeDescContainer(basenode.sysUID);
 };
+
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Layout Toggler
+ * <h4>FeatureDescription:</h4>
+ *     Shows the DataBlock<br> 
+ *     Toggles DataBlock, GanttBlock and the links #tabTogglerData, #tabTogglerGantt.<br>
+ *     Show all: td.block_nodedata, th.block_nodedata + #tabTogglerGantt<br>
+ *     Hide all: td.block_nodegantt, th.block_nodegantt + #tabTogglerData<br>
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>Updates DOM
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Tree Rendering
+ */
+function yaioShowDataBlock() {
+    toggleTableBlock("#tabTogglerData");
+    toggleTableBlock("td.block_nodegantt, th.block_nodegantt");
+    setTimeout(function(){
+        toggleTableBlock("#tabTogglerGantt");
+        toggleTableBlock("td.block_nodedata, th.block_nodedata");
+    }, 400);
+    // set it to none: force
+    setTimeout(function(){
+        $("#tabTogglerData").css("display", "none");
+        $("td.block_nodegantt, th.block_nodegantt").css("display", "none");
+    }, 400);
+}
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Layout Toggler
+ * <h4>FeatureDescription:</h4>
+ *     Shows the GanttBlock<br> 
+ *     Toggles DataBlock, GanttBlock and the links #tabTogglerData, #tabTogglerGantt.<br>
+ *     Hide all: td.block_nodedata, th.block_nodedata + #tabTogglerGantt<br>
+ *     Show all: td.block_nodegantt, th.block_nodegantt + #tabTogglerData<br>
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>Updates DOM
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Tree Rendering
+ */
+function yaioShowGanttBlock() {
+    toggleTableBlock("#tabTogglerGantt");
+    toggleTableBlock("td.block_nodedata, th.block_nodedata");
+    setTimeout(function(){
+        toggleTableBlock("#tabTogglerData");
+        toggleTableBlock("td.block_nodegantt, th.block_nodegantt");
+    }, 400);
+    // set it to none: force
+    setTimeout(function(){
+        $("#tabTogglerGantt").css("display", "none");
+        $("td.block_nodedata, th.block_nodedata").css("display", "none");
+    }, 400);
+}
+
+
+function yaioRecalcGanttBlock() {
+    
+    $("#tree").fancytree("getRootNode").visit(function(node){
+        fillGanttBlock(node.data.basenode, "plan", "Plan", null);
+        fillGanttBlock(node.data.basenode, "planChildrenSum", "PlanSum", null);
+        fillGanttBlock(node.data.basenode, "ist", "Ist", null);
+        fillGanttBlock(node.data.basenode, "istChildrenSum", "IstSum", null);
+    });
+}
+
 
 function openNodeHierarchy(treeId, lstIdsHierarchy) {
     // check for tree
@@ -1451,22 +1861,6 @@ function yaioOpenNodeEditor(nodeId, mode) {
     $("#containerFormYaioEditor" + formSuffix).css("display", "block");
     //$("#containerYaioEditor").css("display", "block");
     toggleElement("#containerYaioEditor");
-    
-    // add datepicker to all dateinput
-    $.datepicker.setDefaults($.datepicker.regional['de']);
-    $.timepicker.regional['de'] = {
-            timeOnlyTitle: 'Uhrzeit auswählen',
-            timeText: 'Zeit',
-            hourText: 'Stunde',
-            minuteText: 'Minute',
-            secondText: 'Sekunde',
-            currentText: 'Jetzt',
-            closeText: 'Auswählen',
-            ampm: false
-          };
-    $.timepicker.setDefaults($.timepicker.regional['de']);    
-    $('input.inputtype_date').datepicker();
-    $('input.inputtype_datetime').datetimepicker();
 }
 
 /**
@@ -1677,6 +2071,36 @@ function addSpeechRecognitionToElements() {
  * <h4>FeatureDomain:</h4>
  *     GUI
  * <h4>FeatureDescription:</h4>
+ *     add datepicker to all input-elements with styleclass inputtype_date and inputtype_datetime
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>GUI-result: add datepicker
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Editor DatePicker
+ */
+function addDatePickerToElements() {
+    // add datepicker to all dateinput
+    $.datepicker.setDefaults($.datepicker.regional['de']);
+    $.timepicker.regional['de'] = {
+            timeOnlyTitle: 'Uhrzeit auswählen',
+            timeText: 'Zeit',
+            hourText: 'Stunde',
+            minuteText: 'Minute',
+            secondText: 'Sekunde',
+            currentText: 'Jetzt',
+            closeText: 'Auswählen',
+            ampm: false
+          };
+    $.timepicker.setDefaults($.timepicker.regional['de']);    
+    $('input.inputtype_date').datepicker();
+    $('input.inputtype_datetime').datetimepicker();
+}
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     GUI
+ * <h4>FeatureDescription:</h4>
  *     open speechrecognition for element
  * <h4>FeatureResult:</h4>
  *   <ul>
@@ -1748,7 +2172,7 @@ function initLanguageSupport() {
 
 /*****************************************
  *****************************************
- * Service-Funktions (busnesslogic)
+ * Service-Funktions (businesslogic)
  *****************************************
  *****************************************/
 
@@ -1911,6 +2335,49 @@ function yaioShowHelpSite(url) {
 }
 
 
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Layout Toggler
+ * <h4>FeatureDescription:</h4>
+ *     Toggle the specified ojects with a fade. 
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>Updates DOM
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Tree Rendering
+ * @param id - JQuery-Filter (html.id, style, objectlist...) 
+ */
+function toggleTableBlock(id) {
+    // get effect type from
+    var selectedEffect = "fade";
+
+    // most effect types need no options passed by default
+    var options = {};
+    // some effects have required parameters
+    if ( selectedEffect === "scale" ) {
+      options = { percent: 0 };
+    } else if ( selectedEffect === "size" ) {
+      options = { to: { width: 200, height: 60 } };
+    }
+
+    // run the effect
+    $( id ).toggle( selectedEffect, options, 500 );
+};
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Layout Toggler
+ * <h4>FeatureDescription:</h4>
+ *     Toggle the "#detail_desc_" for the specified id with a slide. 
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>Updates DOM
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Tree Rendering
+ * @param id - sysUID of the node 
+ */
 function toggleNodeDescContainer(id) {
     $("#detail_desc_" + id).slideToggle(1000,function() {
         if ($("#detail_desc_" + id).css("display") == "block") {
@@ -1921,6 +2388,19 @@ function toggleNodeDescContainer(id) {
     });
 }
 
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Layout Toggler
+ * <h4>FeatureDescription:</h4>
+ *     Toggle the specified ojects with a drop. 
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>Updates DOM
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Tree Rendering
+ * @param id - JQuery-Filter (html.id, style, objectlist...) 
+ */
 function toggleElement(id) {
     // get effect type from
     var selectedEffect = "drop";
