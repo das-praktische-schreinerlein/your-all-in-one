@@ -17,7 +17,13 @@
 
 package de.yaio.core.datadomain;
 
+import java.util.Date;
 import java.util.Map;
+
+import javax.persistence.Transient;
+import javax.xml.bind.annotation.XmlTransient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -33,6 +39,17 @@ import java.util.Map;
  */
 public interface BaseWorkflowData extends DataDomain, IstChildrenSumData, 
     PlanChildrenSumData {
+    
+    /** minimum of accepted dates 1970*/
+    @Transient
+    @XmlTransient
+    @JsonIgnore
+    public static Date CONST_MINDATE = new Date(0);
+    /** maximum of accepted dates: 2038*/
+    @Transient
+    @XmlTransient
+    @JsonIgnore
+    public static Date CONST_MAXDATE = new Date(2147483647000l);
 
     public Map<String, Object> getConfigState();
     public String getState();

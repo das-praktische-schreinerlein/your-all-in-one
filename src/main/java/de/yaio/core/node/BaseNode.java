@@ -32,6 +32,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -253,7 +254,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
     private Date planEnde;
-
+    
     /**
      * hours of planed work
      */
@@ -377,9 +378,111 @@ public class BaseNode implements BaseData, MetaData, SysData,
      * next position in list
      */
     @Transient
+    @XmlTransient
+    @JsonIgnore
     protected int curSortIdx = 0;
+    @Transient
+    @XmlTransient
+    @JsonIgnore
     protected static int CONST_CURSORTIDX_STEP = 5;
     
+    //
+    // checks 
+    //
+    //
+    /**
+     * checks if planStart <= planEnde
+     * @return true/false
+     */
+    @AssertTrue(message = "planStart must be <= planEnde") 
+    @Transient
+    @XmlTransient
+    @JsonIgnore
+    public boolean isPlanValidRange() {
+        if (getPlanStart() != null && getPlanEnde() != null) {
+            return getPlanEnde().compareTo(getPlanStart()) >= 0;
+        }
+        return true;
+    }    
+
+    /**
+     * checks if getPlanStart() <= CONST_MAXDATE && >= CONST_MINDATE
+     * @return true/false
+     */
+    @AssertTrue(message = "planStart is out of range") 
+    @Transient
+    @XmlTransient
+    @JsonIgnore
+    public boolean isPlanStartValid() {
+        if (getPlanStart() != null) {
+            return (    getPlanStart().compareTo(CONST_MINDATE) >= 0) 
+                    && (getPlanStart().compareTo(CONST_MAXDATE) <= 0);
+        }
+        return true;
+    }    
+    
+    /**
+     * checks if getPlanEnde() <= CONST_MAXDATE && >= CONST_MINDATE
+     * @return true/false
+     */
+    @AssertTrue(message = "planEnde is out of range") 
+    @Transient
+    @XmlTransient
+    @JsonIgnore
+    public boolean isPlanEndeValid() {
+        if (getPlanEnde() != null) {
+            return (    getPlanEnde().compareTo(CONST_MINDATE) >= 0) 
+                    && (getPlanEnde().compareTo(CONST_MAXDATE) <= 0);
+        }
+        return true;
+    }    
+
+    /**
+     * checks if istStart <= istEnde
+     * @return true/false
+     */
+    @AssertTrue(message = "istStart must be <= istEnde") 
+    @Transient
+    @XmlTransient
+    @JsonIgnore
+    public boolean isIstValidRange() {
+        if (getIstStart() != null && getIstEnde() != null) {
+            return getIstEnde().compareTo(getIstStart()) >= 0;
+        }
+        return true;
+    }    
+
+    /**
+     * checks if istStart <= CONST_MAXDATE && >= CONST_MINDATE
+     * @return true/false
+     */
+    @AssertTrue(message = "istStart is out of range") 
+    @Transient
+    @XmlTransient
+    @JsonIgnore
+    public boolean isIstStartValid() {
+        if (getIstStart() != null) {
+            return (    getIstStart().compareTo(CONST_MINDATE) >= 0) 
+                    && (getIstStart().compareTo(CONST_MAXDATE) <= 0);
+        }
+        return true;
+    }    
+    
+    /**
+     * checks if istEnde <= CONST_MAXDATE && >= CONST_MINDATE
+     * @return true/false
+     */
+    @AssertTrue(message = "istEnde is out of range")
+    @Transient
+    @XmlTransient
+    @JsonIgnore
+    public boolean isIstEndeValid() {
+        if (getIstEnde() != null) {
+            return (    getIstEnde().compareTo(CONST_MINDATE) >= 0) 
+                    && (getIstEnde().compareTo(CONST_MAXDATE) <= 0);
+        }
+        return true;
+    }    
     
     //####################
     // persistence-functions
