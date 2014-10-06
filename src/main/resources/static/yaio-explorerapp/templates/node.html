@@ -1,25 +1,15 @@
-<div class='box box-portdesc add2toc-h1 box-portdesc-thatsit' toclabel='Explorer' id='box_YAIO801'>
-<div class='boxline boxline-ue2 h2-portdesc h2-portdesc-thatsit' id='ue_YAIO801'>YAIO - D'Artagnan - Explorer</div>
-<div class='togglecontainer togglecontainer-thatsit' id='detail_YAIO801'>
+<div class='box box-portdesc add2toc-h1 box-portdesc-explorer' toclabel='Explorer' id='box_explorer'>
+<div class='boxline boxline-ue2 h2-portdesc h2-portdesc-explorer' id='ue_explorer'>YAIO - D'Artagnan - Explorer
+      <div id="containerInfoCommands">
+        <ul class="commands command-info">
+           <li class="command" data-tooltip='tooltip.command.Help' lang="tech">
+              <a href="" ng-click="showHelpSite('/exports/documentation/DT201403171358546671')" target="help" class="button command_help" translate="common.command.help">Hilfe</a></li>
+        </ul>
+      </div>
+</div>
+<div class='togglecontainer togglecontainer-exporer' id='details_explorer'>
 
-    <!-- 
-    *****************************
-    *****************************
-    * Current Data
-    *****************************
-    *****************************
-     -->
-    <div class="verortung">
-        <div class="entry node-state-{{parentnode.state}}" ng-repeat="parentnode in nodeHierarchy">
-          <b> --&gt;</b> 
-              <a href='#/show/{{parentnode.sysUID}}' class="btn btn-default btn-sm" >
-                  <state value="parentnode.state" /> 
-                  - {{parentnode.name}}
-               </a>
-        </div>
-        <div class="entry node-state-{{node.state}}"><b> --&gt; <state value="node.state" /> - {{node.name}}</b></div>
-    </div>
-    <div class="container-commands">
+    <div class="container-commands" id="containerNodeCommands">
       <!-- OutputController -->
       <div ng-controller="OutputOptionsCtrl">
         <!-- 
@@ -27,12 +17,12 @@
             Export Links
         ************************* 
         -->
-        <ul class="exporttypes">
-           <li class="exporttype"><a ng-click="outputOptionsEditor.showOutputOptionsEditor(node.sysUID, '/exports/wikiuseoptions/' + node.sysUID, '');" class="button exporttype_wiki" target="_blank">Wiki</a></li>
-           <li class="exporttype"><a ng-click="outputOptionsEditor.showOutputOptionsEditor(node.sysUID, '/exports/mindmapuseoptions/' + node.sysUID, '_blank');" class="button exporttype_mindmap" target="_blank">Mindmap</a></li>
-           <li class="exporttype"><a ng-click="outputOptionsEditor.showOutputOptionsEditor(node.sysUID, '/exports/icaluseoptions/' + node.sysUID, '_blank');" class="button exporttype_ical" target="_blank">ICal/VCard</a></li>
-           <li class="exporttype"><a ng-click="outputOptionsEditor.showOutputOptionsEditor(node.sysUID, '/exports/htmluseoptions/' + node.sysUID, '_blank');" class="button exporttype_html" target="_blank">Html</a></li>
-           <li class="exporttype"><a ng-click="outputOptionsEditor.showOutputOptionsEditor(node.sysUID, '/exports/exceluseoptions/' + node.sysUID, '_blank');" class="button exporttype_excel" target="_blank">Excel</a></li>
+        <ul class="commands exporttypes">
+           <li class="exporttype" data-tooltip='tooltip.command.ExportWiki' lang="tech"><a ng-click="outputOptionsEditor.showOutputOptionsEditor(node.sysUID, '/exports/wikiuseoptions/' + node.sysUID, '');" class="button exporttype_wiki" target="_blank" translate="common.command.ExportWiki">Wiki</a></li>
+           <li class="exporttype" data-tooltip='tooltip.command.ExportMindmap' lang="tech"><a ng-click="outputOptionsEditor.showOutputOptionsEditor(node.sysUID, '/exports/mindmapuseoptions/' + node.sysUID, '_blank');" class="button exporttype_mindmap" target="_blank" translate="common.command.ExportMindmap">Mindmap</a></li>
+           <li class="exporttype" data-tooltip='tooltip.command.ExportICal' lang="tech"><a ng-click="outputOptionsEditor.showOutputOptionsEditor(node.sysUID, '/exports/icaluseoptions/' + node.sysUID, '_blank');" class="button exporttype_ical" target="_blank" translate="common.command.ExportICal">ICal/VCard</a></li>
+           <li class="exporttype" data-tooltip='tooltip.command.ExportHtml' lang="tech"><a ng-click="outputOptionsEditor.showOutputOptionsEditor(node.sysUID, '/exports/htmluseoptions/' + node.sysUID, '_blank');" class="button exporttype_html" target="_blank" translate="common.command.ExportHtml">Html</a></li>
+           <li class="exporttype" data-tooltip='tooltip.command.ExportExcel' lang="tech"><a ng-click="outputOptionsEditor.showOutputOptionsEditor(node.sysUID, '/exports/exceluseoptions/' + node.sysUID, '_blank');" class="button exporttype_excel" target="_blank" translate="common.command.ExportExcel">Excel</a></li>
         </ul>
         <!-- 
         *************************
@@ -217,14 +207,9 @@
           Commands
       ************************* 
       -->
-      <ul class="commands">
-         <li class="command">
-            <a href="" ng-click="openSubNodes()" class="button command_switchlevel">&Ouml;ffne bis Level</a>
-            <input type="range" min="0" max="3" value="" id="treeOpenLevel" ng-model="config.treeOpenLevel" ng-change="openSubNodes()" class="command_switchlevel_input"> </li>
-         <li class="command">
-            <a href="" ng-click="showHelpSite('/exports/documentation/DT201403171358546671')" target="help" class="button command_help">Hilfe</a></li>
-         <li class="command">
-            <a ng-click="showImportEditor(node.sysUID, '/imports/wiki/' + node.sysUID, '_blank');" class="button import" target="_blank">Import</a></li>
+      <ul class="commands exporttypes">
+         <li class="command" data-tooltip='tooltip.command.Import' lang="tech">
+            <a ng-click="showImportEditor(node.sysUID, '/imports/wiki/' + node.sysUID, '_blank');" class="button import" target="_blank" translate="common.command.Import">Import</a></li>
       </ul>
       <!-- 
       *************************
@@ -249,23 +234,27 @@
           </fieldset>
         </form>
       </div>
-    </div>
-   
-   
-</div></div>
 
-<div class='container-yaio-current' toclabel='Daten' id='box_data'>
+    </div>
 
     <!-- 
     *****************************
     *****************************
-    * Current Tree
+    * Current Data
     *****************************
     *****************************
-    -->
-    <div id="containerYaioTree" class="box container-yaio-tree">
-        <div id="containerYaioTreeTable" class="container-yaio-tree-table">
-          <table id="tree">
+     -->
+    <div class="container-verortung">
+        <div class="entry node-state-{{parentnode.state}}" ng-repeat="parentnode in nodeHierarchy">
+          <b> --&gt;</b> 
+              <a href='#/show/{{parentnode.sysUID}}' class="btn btn-default btn-sm" >
+                  <state value="parentnode.state" /> 
+                  - {{parentnode.name}}
+               </a>
+        </div>
+    </div>
+    <div id="masterdata" class="container-masterdata">
+          <table id="masterTable">
               <!-- define columngroups -->
               <colgroup>
               <col class="container_field fieldtype_name field_name"></col>
@@ -274,13 +263,13 @@
               <col class="container_field fieldtype_actions"></col>
               </colgroup>
               <thead>
-                <tr> 
+                <tr id="tab_header"> 
                   <th id="tab_name_haeder">
                     <!-- show name-header and data-toggler -->
                     <span  translate="fancytree.table.headline.name">Name</span>
-                    <span style="display: inline-block; width: 300px;">
+                    <span style="display: inline-block; width: 300px;" data-tooltip='tooltip.command.ShowGanttData' lang="tech">
                       <a onclick="yaioShowGanttBlock();return false;" id="tabTogglerGantt" class="button tabToggler" translate="fancytree.table.headline.tabTogglerGantt">Zeige Gantt</a>
-                      <a onclick="yaioShowDataBlock();return false;" id="tabTogglerData" class="button tabToggler"  translate="fancytree.table.headline.tabTogglerData" style="display: none" >Zeige Daten</a>
+                      <a onclick="yaioShowDataBlock();return false;" id="tabTogglerData" class="button tabToggler"  translate="fancytree.table.headline.tabTogglerData" style="display: none">Zeige Daten</a>
                     </span>
                     </th>
                   <th class="block_nodedata">
@@ -298,15 +287,89 @@
                     <!-- show gantt-header -->
                     <div class="gantt_container"  id="gantt_container_head">
                        <div class="gantt_aufwand" id="gantt_aufwand_head"  translate="fancytree.table.headline.ganttaufwand">Aufwand</div>
-                       <div class="gantt_bar"  id="gantt_bar_head">
+                       <div class="gantt_bar"  id="gantt_bar_head" data-tooltip='tooltip.command.GanttRange' lang="tech">
                         <input type="text" placeholder="dd.mm.jjjj" name="ganttRangeStart" pattern="\d{2}\.\d{2}\.\d{4}"  maxsize="10" value="01.01.2014" class="inputtype_date" id="inputGanttRangeStart" onchange="yaioRecalcGanttBlock()">
-                        <a onclick="yaioRecalcGanttBlock();return false;" class="button"  translate="fancytree.table.headline.ganttrange">Zeitbereich</a> 
+                        <a onclick="yaioRecalcGanttBlock();return false;" class="button" translate="fancytree.table.headline.ganttrange">Zeitbereich</a> 
                         <input type="text" placeholder="dd.mm.jjjj" name="ganttRangeEnde" pattern="\d{2}\.\d{2}\.\d{4}"  maxsize="10" value="31.12.2014" class="inputtype_date" style="text-align: right" id="inputGanttRangeEnde" onchange="yaioRecalcGanttBlock()"></th>
                        </div>
                     </div>
                   <th  translate="fancytree.table.headline.actions">
                     <!-- show actions-header -->
-                    Actions
+                    
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr id="masterTr">
+                  <td><div class="entry node-state-{{node.state}}"><b><state value="node.state" /> - {{node.name}}</b></div></td>
+                  <td />
+                  <td />
+                  <td class="hidden" />
+                </tbody>
+          </table>
+          
+    </div>
+    
+   
+   
+</div></div>
+
+<div class='container-yaio-current' toclabel='Daten' id='box_data'>
+
+    <!-- 
+    *****************************
+    *****************************
+    * Current Tree
+    *****************************
+    *****************************
+    -->
+    <div id="containerYaioTree" class="box container-yaio-tree">
+    
+        <div id="containerTreeCommands">
+          <!-- 
+          *************************
+              Commands
+          ************************* 
+          -->
+          <ul class="commands nodecommands">
+             <li class="command" data-tooltip='tooltip.command.OpenLevel' lang="tech">
+                <a href="" ng-click="openSubNodes()" class="button command_switchlevel">&Ouml;ffne bis Level</a>
+                <input type="range" min="0" max="3" value="" id="treeOpenLevel" ng-model="config.treeOpenLevel" ng-change="openSubNodes()" class="command_switchlevel_input"> </li>
+          </ul>
+        </div>
+    
+        <div id="containerYaioTreeTable" class="container-yaio-tree-table">
+          <!-- 
+          *************************
+              Tree table
+          ************************* 
+          -->
+          <table id="tree">
+              <!-- define columngroups -->
+              <colgroup>
+              <col class="container_field fieldtype_name field_name"></col>
+              <col class="block_nodedata"></col>
+              <col class="block_nodegantt"></col>
+              <col class="container_field fieldtype_actions"></col>
+              </colgroup>
+              <thead>
+                <tr class="hidden"> 
+                  <th>
+                    <!-- show name-header and data-toggler -->
+                    &nbsp;
+                    </th>
+                  <th class="block_nodedata">
+                    <!-- show workflow-header -->
+                    <div class="container_data_row">
+                    &nbsp;
+                    </div></th>
+                  <th class="block_nodegantt">
+                    <!-- show gantt-header -->
+                    <div class="gantt_container"  id="gantt_container_head">
+                    &nbsp;
+                    </div>
+                  <th>
+                    &nbsp;
                   </th>
                 </tr>
               </thead>
@@ -830,7 +893,13 @@
     setTimeout(function() { 
         // activate speech recognition
         addSpeechRecognitionToElements();
-        addDatePickerToElements()
+        addDatePickerToElements();
+        
+        //add resize event
+        $( window ).resize(function() {
+                setupAppSize();
+        });    
+
     }, 1000);
     
 </script>

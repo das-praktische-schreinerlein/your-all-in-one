@@ -7,6 +7,17 @@
         "UrlResNode":"Ressource",
         "Dein pers&ouml;nlicher Software-Musketier": "Dein pers&ouml;nlicher Software-Musketier",
         "Einer f&uuml;r Alles - Alles in Einem": "Einer f&uuml;r Alles - Alles in Einem",
+        "tooltip.hint.Gantt": "<b>Achtung!!!</b> Die Gantt-Darstellung ist nur eine grobe Verteilung der Plan/Ist-Stunden auf den gesamten Plan/Ist-Zeitraum. Aufwende ohne Zeitraum werden nicht eingerechnet. Aufwende der Kindselemente werden über den gesamten Zeitraum des Elternelement verteilt und können sich somit völlig verschieben.",
+        "tooltip.command.Help": "Öffnen Sie das integrierte Hilfesystem.",
+        "tooltip.command.ExportWiki": "Exportieren Sie die aktuelle Node mit allen Kindselementen als Wiki zur Weiterbearbeitung und eventuellen Import in ein anderes D'Artagnan-System :-)", 
+        "tooltip.command.ExportMindmap": "Exportieren Sie die aktuelle Node mit allen Kindselementen als Mindmap für FreeMind 0.92.", 
+        "tooltip.command.ExportHtml": "Exportieren Sie die aktuelle Node mit allen Kindselementen als Html-Version zum browsen.", 
+        "tooltip.command.ExportICal": "Exportieren Sie die aktuelle Node mit allen Kindselementen als ICal-Version für Ihren Thunderbird/Outlook-Kalender.", 
+        "tooltip.command.ExportExcel": "<b>Achtung BETA!!!</b> Exportieren Sie die aktuelle Node mit allen Kindselementen als Excel-Version.",
+        "tooltip.command.GanttRange": "Wählen Sie hier den Zeitbereich aus, für welchen das Gantt-Diagramm dargstellt werden soll. <br /><br /><b>Achtung!!!</b> Die Gantt-Darstellung ist nur eine grobe Verteilung der Plan/Ist-Stunden auf den gesamten Plan/Ist-Zeitraum. Aufwende ohne Zeitraum werden nicht eingerechnet. Aufwende der Kindselemente werden über den gesamten Zeitraum des Elternelement verteilt und können sich somit völlig verschieben.", 
+        "tooltip.command.Import": "Einen Teilbaum aus einer Wiki-Datei importieren und an diese Node anhängen",
+        "tooltip.command.OpenLevel": "Zeige alle Kindelemente des Baumes bis zur im Schieber rechts eingestellten Ebene.",
+        "tooltip.command.ShowGanttData": "Wechseln Sie hier zwischen der Ansicht der Rohdaten und einer Darstellung als Gantt-Diagramm. <br /><br /><b>Achtung!!!</b> Die Gantt-Darstellung ist nur eine grobe Verteilung der Plan/Ist-Stunden auf den gesamten Plan/Ist-Zeitraum. Aufwende ohne Zeitraum werden nicht eingerechnet. Aufwende der Kindselemente werden über den gesamten Zeitraum des Elternelement verteilt und können sich somit völlig verschieben.", 
         "DUMMYXXXX": "DUMMYXXXX"
     },
     "regex": [

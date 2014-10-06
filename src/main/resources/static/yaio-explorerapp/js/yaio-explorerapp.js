@@ -241,6 +241,17 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
 
             // load fencytree
             yaioCreateFancyTree("#tree", $scope.node.sysUID, activeNodeIdHandler);
+            
+            // load me
+            var data = {
+                 node: {
+                     data: {
+                         basenode: nodeResponse.data.node,
+                     },
+                     tr: "#masterTr",
+                 } 
+            };
+            renderColumnsForNode(null, data);
         } else {
             // error
             logError("error loading nodes:" + nodeResponse.data.stateMsg 

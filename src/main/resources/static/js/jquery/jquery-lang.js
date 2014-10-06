@@ -98,7 +98,8 @@ var Lang = (function () {
 	Lang.prototype.attrList = [
 		'title',
 		'alt',
-		'placeholder'
+		'placeholder',
+		'data-tooltip'
 	];
 
 	/**

@@ -935,7 +935,8 @@ function fillGanttBlock(basenode, type, label, $divLine) {
             if (rangeAufwand > 0) {
                 $divLabel.html("<span class='gantt_aufwand_label'>" 
                                  + label + ":" + "</span>"
-                             + "<span class='gantt_aufwand_value'>" 
+                             + "<span class='gantt_aufwand_value'" +
+                             		" data-rangeaufwand='" + rangeAufwand + "'>" 
                                  + formatNumbers(rangeAufwand, 0, "h") + "</span");
             }
             
@@ -978,7 +979,8 @@ function createGanttBlock(basenode, type, addStyle, label) {
 
     // create line
     var $divLine = $("<div id='gantt_" + type + "_container_" + basenode.sysUID + "'" +
-    		" class ='gantt_container gantt_" + type + "_container' />");
+            " class ='gantt_container gantt_" + type + "_container'" +
+            " lang='tech' data-tooltip='tooltip.hint.Gantt'/>");
     
     // create aufwand
     var $divLabel = $("<div id='gantt_" + type + "_aufwand_" + basenode.sysUID + "'" +
@@ -1861,6 +1863,9 @@ function yaioOpenNodeEditor(nodeId, mode) {
     $("#containerFormYaioEditor" + formSuffix).css("display", "block");
     //$("#containerYaioEditor").css("display", "block");
     toggleElement("#containerYaioEditor");
+
+    // update appsize
+    setupAppSize();
 }
 
 /**
@@ -1909,6 +1914,9 @@ function yaioOpenOutputOptionsEditor(sysUID, url, target) {
     $(formId).trigger('form').triggerHandler("change");
     $(formId).trigger('input');
     
+    // update appsize
+    setupAppSize();
+
     return false;
 }
 
@@ -1974,6 +1982,9 @@ function yaioOpenImportEditor(sysUID, url, target) {
     console.log("ImportEditor:" + " url:" + url);
     $("#containerFormYaioEditorImport").css("display", "none");
     toggleElement("#containerFormYaioEditorImport");
+    
+    // update appsize
+    setupAppSize();
     
     return false;
 }
@@ -2269,6 +2280,23 @@ function calcTypeFromIstStand(basenode) {
  *****************************************
  *****************************************/
 
+
+function setupAppSize() {
+    var height = window.innerHeight;
+    var width = window.innerWidth;
+    
+    console.log("setup size width:" + window.innerWidth 
+            + " height:" + window.innerHeight + " max-height:" + (height-$("#containerBoxYaioEditor").offset().top));
+    
+    // YAIO-editor
+    $("#containerBoxYaioEditor").css("max-height", height-$("#containerBoxYaioEditor").offset().top);
+
+    // Export-editor
+    $("#containerFormYaioEditorOutputOptions").css("max-height", height-$("#containerFormYaioEditorOutputOptions").offset().top);
+
+    // Import-editor
+    $("#containerFormYaioEditorImport").css("max-height", height-$("#containerFormYaioEditorImport").offset().top);
+}
 
 function showModalErrorMessage(message) {
     // set messagetext
