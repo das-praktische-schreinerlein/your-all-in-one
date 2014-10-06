@@ -35,7 +35,7 @@ import de.yaio.extension.datatransfer.wiki.WikiExporter;
  * <h4>FeatureDescription:</h4>
  *     export of Nodes to JPA
  * 
- * @package de.yaio.extension.datatransfer.ical
+ * @package de.yaio.extension.datatransfer.jpa
  * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
  * @category collaboration
  * @copyright Copyright (c) 2014, Michael Schreiner

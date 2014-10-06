@@ -16,7 +16,8 @@ set FLG_IMPORT_PPL_TO_DB=
 rem the generate src: ppl or jpa
 set GEN_SRC=jpa
 rem the masternode
-set IMPORT_OPTIONS_JPA=--addnodestosysuid MasterplanMasternode1
+set MASTERNODEID=MasterplanMasternode1
+set IMPORT_OPTIONS_JPA=--addnodestosysuid %MASTERNODEID%
 
 rem set Path
 set YAIOCONFIGPATH=%BASEPATH%\..\config\
@@ -49,6 +50,7 @@ set PROG_CSVN=de.yaio.extension.datatransfer.csv.JobNodes2CSV
 set PROG_JSONN=de.yaio.extension.datatransfer.json.JobNodes2JSON
 set PROG_JPAN=de.yaio.extension.datatransfer.jpa.JobNodes2JPA
 set PROG_APP=de.yaio.app.Application
+set PROG_RECALC=de.yaio.jobs.JobRecalcNodes
 set PROG_DIFF=
 set PROG_WINMERGE="C:\ProgrammePortable\PortableApps\PortableApps\WinMergePortable\WinMergePortable.exe"
 
