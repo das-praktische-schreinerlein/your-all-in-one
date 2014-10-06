@@ -153,7 +153,7 @@ public class SysDataParserImpl  extends ParserImpl implements SysDataParser {
             if (LOGGER.isDebugEnabled())
                 LOGGER.debug("Pattern: " + pattern + " " 
                     + matcherindex + ":" + matcher.group(matcherindex));
-            if (matcher.group(matcherindex) != null) {
+            if (matcher.group(matcherindex) != null && matcher.group(matcherindex).length() > 0) {
                 node.setSysChangeCount(new Integer(matcher.group(matcherindex)).intValue());
             }
             found++;

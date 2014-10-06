@@ -150,5 +150,9 @@
     "fancytree.table.headline.planChildrenSum": " <br />Zeitraum",
     "fancytree.table.headline.planChildrenSumAufwand": "Plan<br />Aufwand",
     "fancytree.table.headline.type": "Typ<br />&nbsp;</div>",
+    "todonext.command.OpenHelp": "Zur Hilfseite",
+    "todonext.command.OpenInfo": "Detaillierte Informationen über diese Anwendung",
+    "todonext.command.OpenTreeView": "Zur Baumansicht der Daten",
+    "todonext.ue": "Was wollen Sie als nächstes tun?",
     "DUMMY": ""
 }

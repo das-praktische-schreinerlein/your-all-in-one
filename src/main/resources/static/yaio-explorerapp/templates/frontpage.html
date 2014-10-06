@@ -16,7 +16,26 @@
     </div>
 </div>
 
-<div ng-include="frontPageUrl"></div>
+<div id="front-content-left">
+  <div ng-include="frontPageUrl"></div>
+  
+  <div class='box box-portdesc add2toc-h1 box-portdesc-todonext' toclabel='ToDoNext' id='box_todonext'>
+      <div class='boxline boxline-ue2 h2-portdesc h2-portdesc-todonext' id='ue_todonext' translate="todonext.ue">ToDoNext</div>
+  
+      <div class='togglecontainer togglecontainer-todonext' id='details_todonext'>
+          <ul>
+             <li class="todonext" data-tooltip='tooltip.command.OpenTreeView' lang="tech">
+                <a href="#/show/MasterplanMasternode1" class="" translate="todonext.command.OpenTreeView">Open Treeview</a></li>
+             <li class="todonext" data-tooltip='tooltip.command.OpenHelp' lang="tech">
+                <a href="" ng-click="showHelpSite('/exports/documentation/SysHelp1')" target="help" class="" translate="todonext.command.OpenHelp">Hilfe</a></li>
+             <li class="todonext" data-tooltip='tooltip.command.OpenInfo' lang="tech">
+                <a href="" ng-click="showHelpSite('/exports/documentation/SysInfo1')" target="help" class="" translate="todonext.command.OpenInfo">Infos</a></li>
+          </ul>
+      </div>
+  </div>
+</div>
+<div id="front-content-right">
+</div>
 
 <script type="text/javascript">
     // activate elements after 1 second

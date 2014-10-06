@@ -145,6 +145,25 @@ yaioM.controller('FrontPageCtrl', function($scope, $location, $http, $routeParam
     // load data
     $scope.frontPageUrl = '/exports/htmllayoutfragment/' + nodeId;
     
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Help
+     * <h4>FeatureDescription:</h4>
+     *     callbackhandler to open helpsite
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>open the helpsite
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     GUI Callback
+     * @param url - the url of the helpsite
+     */
+    $scope.showHelpSite = function(url) {
+        console.log("showHelpSite:" + " url:" + url);
+        yaioShowHelpSite(url);
+        return false;
+    }
+
 })
     
 /**
