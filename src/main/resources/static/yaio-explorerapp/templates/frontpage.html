@@ -1,0 +1,35 @@
+<div class='box box-portdesc add2toc-h1 box-portdesc-explorer' toclabel='Explorer' id='box_explorer'>
+    <div class='boxline boxline-ue2 h2-portdesc h2-portdesc-explorer' id='ue_explorer'>YAIO - D'Artagnan - Explorer
+      <div id="containerInfoCommands">
+        <ul class="commands command-info">
+           <li class="command" data-tooltip='tooltip.command.OpenTreeView' lang="tech">
+              <a href="#/show/MasterplanMasternode1" class="button" translate="common.command.OpenTreeView">Open Treeview</a></li>
+           <li class="command" data-tooltip='tooltip.command.OpenHelp' lang="tech">
+              <a href="" ng-click="showHelpSite('/exports/documentation/SysHelp1')" target="help" class="button command_help" translate="common.command.OpenHelp">Hilfe</a></li>
+           <li class="command" data-tooltip='tooltip.command.OpenInfo' lang="tech">
+              <a href="" ng-click="showHelpSite('/exports/documentation/SysInfo1')" target="help" class="button" translate="common.command.OpenInfo">Hilfe</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class='togglecontainer togglecontainer-exporer' id='details_explorer'>
+    </div>
+</div>
+
+<div ng-include="frontPageUrl"></div>
+
+<script type="text/javascript">
+    // activate elements after 1 second
+    setTimeout(function() { 
+        // activate speech recognition
+        addSpeechRecognitionToElements();
+        addDatePickerToElements();
+        
+        //add resize event
+        $( window ).resize(function() {
+                setupAppSize();
+        });    
+
+    }, 1000);
+    
+</script>

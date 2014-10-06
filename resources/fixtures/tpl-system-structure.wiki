@@ -1,0 +1,67 @@
+
+= INFO - System                                                                                                                                                 [NodeMeta: Sys,1,,] [NodeSys: Sys1,,,,]
+
+
+== INFO - Default                                                                                                                                               [NodeMeta: Sys,10,,][NodeSys: Sys10,,,,]
+
+
+=== INFO - Startseite                                                                                                                                           [NodeMeta: SysStart,1,,][NodeSys: SysStart1,,,,]
+
+* **INFO - D'Artagnan sagt Guten Tag...**                           [DocLayout: DIV,thatsit,ThatsIt,]
+  ** **INFO - Ziel erreicht!**                                      [DocLayout: UE,intro,,]
+    *** INFO - Gesucht: Du bist es leid, dein Leben nach Programmen auszurichten - Nichts dort zu finden, wo du es suchst - Im Chaos von Nachrichten, Terminen und Notizen unterzugehen? [DocLayout: P,startmesg1,,]
+    *** INFO - Gesucht: Ich auch :-)                                [DocLayout: P,startmesg2,,]
+    *** INFO - Gesucht: Und deshalb habe ich D'Artagnan erfunden. Meinen persönlichen Helfer, der mich vor dem alltäglichen Informations-Overkill schützt. [DocLayout: P,startmesg3,,]
+    *** URLRES - [ResLoc: #/show/MasterplanMasternode1,Direkt weiter zur Baumansicht,] [DocLayout: P,internurl,,]
+    *** INFO - Ende: [DocLayout: P,startmesg3,,X]
+
+
+=== DOKU - Hilfesystem                                                                                                                                          [NodeMeta: SysHelp,1,,][NodeSys: SysHelp1,,,,]
+Hier finden Sie das Standardhilfesystem von D'Artagnan. Bitte nehmen Sie hier keine Änderungen vor, da dieser Bereich bei jedem neuen Update überschrieben wird. Für eigene Erweiterungen der Hilfe benutze Sie bitte den Punkt "Hilfesystem" unter "Eigene Erweiterungen".
+
+=== DOKU - Über D'Artagnan                                                                                                                                          [NodeMeta: SysInfo,1,,][NodeSys: SysInfo1,,,,]
+Hier finden Sie das Informationen und Hintergründe über D'Artagnan. Bitte nehmen Sie hier keine Änderungen vor, da dieser Bereich bei jedem neuen Update überschrieben wird.
+
+* **INFO - Was ist "D'Artagnan"?**                               [DocLayout: DIV,management,Management,]
+    ** INFO - In einem Satz: "D'Artagnan" ist Kalender, Organizer, Notizzettel, Checkliste, Projektplanung, Projektdokumentation, Wiki, HowTo, Adressbuch, Dokumentenmanagement... [DocLayout: LI,management,,]
+    ** INFO - Der Blick aufs Ganze: Er ist quasi Alles in Einem, da er alle deine Informationen miteinander verlinkt. Er ist der Würfel, auf dem du dein gesamtes Leben von allen Seiten aus verschiedenen Sichten betrachten kannst. [DocLayout: LI,management,,]
+    ** INFO - Dein digitales Leben: "D'Artagnan" ist "dein digitales Leben". Alles, was schriftlich niedergelegt, geplant, dokumentiert, gespeichert wird, kannst du mit "D'Artagnan" zentral abrufen und vernetzen. [DocLayout: LI,management,,]
+    ** INFO - Alles in Einem: Alles, was früher auf verschiedenen fliegenden Notizzetteln, Ordnern oder digital in verschiedenen Programmen (Email, Datei, Office, Organizer) gespeichert wurde, stellt "D'Artagnan" an einer Stelle, unter einer Oberfläche zur Verfügung. [DocLayout: LI,management,,]
+    ** INFO - Alles in Deiner Hand: In Zeiten, wo offenbar wird, dass deine Daten nur dann sicher sind, wenn sie lokal bei dir liegen, soll D'Artagnan dir die Kontrolle zurückgeben. Für Teamarbeit und Synchronisation braucht es keine Google-Calendar, Dropbox oder andere Web-Dienste, wo die NSA oder wer auch immer mithört. Mit Hilfe von D'Artagnan und anderen freien Tools bekommst DU die Kontrolle zurück. [DocLayout: LI,management,,X]
+  * **INFO - Was erwartet Euch hier?**                             [DocLayout: DIV,,Übersicht,]
+    ** **INFO - Überblick: Wer mehr über D'Artagnan wissen möchte, kann sich sich auf folgenden externen Seiten einen kleinen Überblick verschaffen.** [DocLayout: P,,,]
+      *** INFO - <a href="http://www.your-all-in-one.de/yaio/static/vision" target"_blank">Die Vision</a>: Die Vision hinter D'Artagnan [DocLayout: LI,faehigkeiten,,]
+      *** INFO - <a href="http://www.your-all-in-one.de/yaio/static/roadmap" target"_blank">Die Roadmap</a>: Die Roadmap der weiteren Entwicklung [DocLayout: LI,faehigkeiten,,]
+      *** INFO - <a href="http://www.your-it-fellow.de/" target"_blank">Die Person</a>: Die Person hinter D'Artagnan [DocLayout: LI,faehigkeiten,,]
+      *** INFO - <a href="http://www.your-all-in-one.de/yaio/static/lepetit" target"_blank">Der Prototyp - Le petit D'Artagnan</a>: Einige Informationen zum ersten Prototyp "Le petit D'Artagnan" [DocLayout: LI,faehigkeiten,,]
+      *** INFO - <a href="http://www.your-all-in-one.de/yaio/static/lepetithow" target"_blank">Die Arbeitsweise</a>: Die Arbeitsweise und Funktionen des Prototypen [DocLayout: LI,faehigkeiten,,]
+      *** INFO - <a href="http://www.your-all-in-one.de/yaio/static/lepetitexample">Das Fallbeispiel</a>: Ein Fallbeispiel zur Arbeitsweise mit dem Prototypen [DocLayout: LI,faehigkeiten,,X]
+  * **INFO - Interesse?**                                          [DocLayout: DIV,,Kontakt,]
+    ** INFO - Interesse?: Ich hoffe, die Informationen auf dieser Seite können euch einen kurzen Eindruck vom Projekt vermitteln. Sollte Interesse an einer Zusammenarbeit bestehen, freue ich mich <a href="<?php echo url_for('contact/form'); ?>">von euch zu hören :-)</a> [DocLayout: P,,,X]
+  * **INFO - Newsticker**                                          [DocLayout: DIV,shortnews,Newsticker,]
+    ** INFO - Juni 2014: Prototyp <a href='http://www.your-all-in-one.de/yaio/static/lepetit' target='_blank'>"Le petit D'Artagnan"</a> auf <a href="https://github.com/das-praktische-schreinerlein/your-all-in-one" target="_blank">GitHub</a> [DocLayout: LI,shortnews,,]
+    ** INFO - Mai 2014: <a href='http://your-all-in-one.de' target='_blank'>Projekt "D'Artagnan"</a> - goes public :-) [DocLayout: LI,shortnews,,]
+    ** INFO - April 2014: <a href='http://your-all-in-one.de' target='_blank'>Projekt "D'Artagnan"</a> - Neuimplementierung von <a href='http://your-all-in-one.de/yaio/static/lepetit' target='_blank_'>"Le petit D'Artagnan"</a> abgeschlossen. [DocLayout: LI,shortnews,,X]
+
+=== DOKU - Roadmap                                                                                                                                          [NodeMeta: SysRoadmap,1,,][NodeSys: SysRoadmap1,,,,]
+Hier finden Sie das Informationen und Hintergründe über die Roadmap der Entwicklung von D'Artagnan.
+
+* INFO - kurzfristige Erweiterungen [NodeMeta: SysRoadmap,10,,][NodeSys: SysRoadmap10,,,,]
+
+* INFO - mittelfristige Erweiterungen [NodeMeta: SysRoadmap,20,,][NodeSys: SysRoadmap20,,,,]
+
+* INFO - langfristige Erweiterungen [NodeMeta: SysRoadmap,30,,][NodeSys: SysRoadmap30,,,,]
+
+* INFO - umgesetzte Erweiterungen [NodeMeta: SysRoadmap,40,,][NodeSys: SysRoadmap40,,,,]
+
+== INFO - Eigene Anpassungen                                                                                                                                    [NodeMeta: Sys,20,,][NodeSys: Sys20,,,,]
+
+
+=== INFO - Startseite                                                                                                                                           [NodeMeta: MyStart,1,,][NodeSys: MyStart1,,,,]
+Sollen Sie eine eigene Startseite konfigurieren wollen, Können Sie dies hier tun. Die Standard-Startseite wird dann durch diese ersetzt.
+
+== INFO - Eigene Erweiterungen                                                                                                                                  [NodeMeta: Sys,30,,][NodeSys: Sys30,,,,]
+Hier können Sie eigene Erweiterungen der Standarddokumentation vornehmen, die bei einem Updates des Systems nicht überschreiben werden.
+
+=== DOKU - Hilfesystem                                                                                                                                          [NodeMeta: MyHelp,1,,][NodeSys: MyHelp1,,,,]
+Tragen Sie hier eigene Artikel für das Hilfesystem zusammen. Diese werden dann in der Online-Hilfe unter "Eigene Anmerkungen" eingeblendet

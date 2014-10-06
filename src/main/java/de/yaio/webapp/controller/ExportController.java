@@ -483,7 +483,7 @@ public class ExportController {
             // run export
             res = this.exportNode(sysUID, exporter, oOptions, ".html", response);
             
-            if (headerFile != "" && headerFile != "") {
+            if (headerFile != "" && footerFile != "") {
                 // read header
                 InputStream in = this.getClass().getResourceAsStream(headerFile);
                 res = IOUtils.toString(in) + res;
@@ -526,6 +526,34 @@ public class ExportController {
         // configure
         OutputOptions oOptions = new OutputOptionsImpl();
         return this.commonExportNodeAsHtml(sysUID, oOptions, response, null, null);
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
+     *     Request to read the node for sysUID and return it in layout-html-format 
+     *     with all children, but without header/footer-file.
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>String - html-format of the node
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice Query
+     * @param sysUID - sysUID to export
+     * @param response - the response-Obj to set contenttype and headers
+     * @return String - html-format of the node
+     */
+    @RequestMapping(method=RequestMethod.GET, 
+                    value = "/htmllayoutfragment/{sysUID}", 
+                    produces="text/html")
+    public @ResponseBody String exportNodeAsHtmlFragment(
+           @PathVariable(value="sysUID") String sysUID, HttpServletResponse response) {
+        // configure
+        OutputOptions oOptions = new OutputOptionsImpl();
+        oOptions.setFlgProcessDocLayout(true);
+        oOptions.setMaxUeEbene(-1);
+        return this.commonExportNodeAsHtml(sysUID, oOptions, response, "", "");
     }
 
     /**
@@ -584,6 +612,7 @@ public class ExportController {
         oOptions.setFlgReEscapeDesc(true);
         oOptions.setFlgShowDesc(true);
         oOptions.setFlgShowName(true);
+        oOptions.setMaxUeEbene(-1);
         
         // generate
         String res = this.commonExportNodeAsHtml(sysUID, oOptions, response, 

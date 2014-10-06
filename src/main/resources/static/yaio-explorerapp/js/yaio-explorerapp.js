@@ -53,8 +53,8 @@ yaioM.config(function($routeProvider) {
             controller:  'NodeShowCtrl',
             templateUrl: 'templates/node.html' })
         .when('/', { 
-            controller:  'NodeShowCtrl',
-            templateUrl: 'templates/node.html' })
+            controller:  'FrontPageCtrl',
+            templateUrl: 'templates/frontpage.html' })
         .otherwise({ redirectTo: '/'});
 });
 
@@ -124,6 +124,27 @@ yaioM.directive('state', function(){
         template: '<span ng-show="value == \'RUNNING\'">laufend</span>' +
                   '<span ng-show="value != \'RUNNING\'">{{value}}</span>'
      };
+})
+    
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Configuration
+ * <h4>FeatureDescription:</h4>
+ *     the controller to load the frontpage
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>returns new controller
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Configuration
+ */
+yaioM.controller('FrontPageCtrl', function($scope, $location, $http, $routeParams, setFormErrors, OutputOptionsEditor) {
+    var nodeId = 'SysStart1';
+    console.log("FrontPageCtrl - processing nodeId=" + nodeId);
+
+    // load data
+    $scope.frontPageUrl = '/exports/htmllayoutfragment/' + nodeId;
+    
 })
     
 /**
