@@ -17,7 +17,7 @@
         "tooltip.command.Import": "Einen Teilbaum aus einer Wiki-Datei importieren und an diese Node anhängen",
         "tooltip.command.OpenFrontpage": "Zurück zur Startseite.",
         "tooltip.command.OpenHelp": "Öffnen Sie das integrierte Hilfesystem.",
-        "tooltip.command.OpenInfo": "Öffnen Sie ein fenster mit erweiterten programminformationen zu D'artagnan.",
+        "tooltip.command.OpenInfo": "Öffnen Sie ein Fenster mit erweiterten Programminformationen zu DArtagnan.",
         "tooltip.command.OpenLevel": "Zeige alle Kindelemente des Baumes bis zur im Schieber rechts eingestellten Ebene.",
         "tooltip.command.OpenTreeView": "Wechseln Sie über diesen Link zur Baumansicht Ihrer Daten.", 
         "tooltip.command.ShowGanttData": "Wechseln Sie hier zwischen der Ansicht der Rohdaten und einer Darstellung als Gantt-Diagramm. <br /><br /><b>Achtung!!!</b> Die Gantt-Darstellung ist nur eine grobe Verteilung der Plan/Ist-Stunden auf den gesamten Plan/Ist-Zeitraum. Aufwende ohne Zeitraum werden nicht eingerechnet. Aufwende der Kindselemente werden über den gesamten Zeitraum des Elternelement verteilt und können sich somit völlig verschieben.", 

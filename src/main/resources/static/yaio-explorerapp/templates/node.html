@@ -682,8 +682,10 @@
               </select> 
               <fielderrors for="docLayoutTagCommand"></fielderrors>
 
+              <br />
+
               <label for="docLayoutAddStyleClass" translate="editor.common.label.docLayoutAddStyleClass">CSS-Klasse</label> 
-              <input type="text" name="docLayoutAddStyleClass" class="inputtype_docLayoutAddStyleClass" ng-model="nodeForEdit.docLayoutAddStyleClass" id="inputDocLayoutAddStyleClassInfoNode" ng-change=""> 
+              <input type="text" name="docLayoutAddStyleClass" class="inputtype_docLayoutAddStyleClass" ng-model="nodeForEdit.docLayoutAddStyleClass" id="inputDocLayoutAddStyleClassInfoNode" ng-change="">
               <fielderrors for="docLayoutAddStyleClass"></fielderrors>
 
               <br />
@@ -788,6 +790,8 @@
                   <option value="DIRECT">Direkte Ausgabe
               </select> 
               <fielderrors for="docLayoutTagCommand"></fielderrors>
+
+              <br />
 
               <label for="docLayoutAddStyleClass" translate="editor.common.label.docLayoutAddStyleClass">CSS-Klasse</label> 
               <input type="text" name="docLayoutAddStyleClass" class="inputtype_docLayoutAddStyleClass" ng-model="nodeForEdit.docLayoutAddStyleClass" id="inputDocLayoutAddStyleClassUrlResNode" ng-change=""> 
@@ -896,11 +900,15 @@
         // activate speech recognition
         addSpeechRecognitionToElements();
         addDatePickerToElements();
-        
+        addDocLayoutStyleSelectorToElements();
+
         //add resize event
         $( window ).resize(function() {
                 setupAppSize();
         });    
+        $( window ).scroll(function() {
+            setupAppSize();
+    });    
 
     }, 1000);
     

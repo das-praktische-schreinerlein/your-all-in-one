@@ -2082,6 +2082,28 @@ function addSpeechRecognitionToElements() {
  * <h4>FeatureDomain:</h4>
  *     GUI
  * <h4>FeatureDescription:</h4>
+ *     open speechrecognition for element
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>GUI-result: open speechrecognition for element
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Editor SpeechRecognition
+ * @param target - target-element to update (HTML-Element)
+ */
+function openSpeechRecognitionWindow(target) {
+    if (target == null) target = self;
+    target.focus();
+    var speechrecognitionWindow = window.open('speechrecognition.html', "speechrecognition", "width=690,height=350,resizable=yes,dependent=yes,scrollbars=yes");
+    speechrecognitionWindow.focus();
+    if (speechrecognitionWindow.opener == null) { speechrecognitionWindow.opener = self; }
+    speechrecognitionWindow.opener.targetElement = target;
+}
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     GUI
+ * <h4>FeatureDescription:</h4>
  *     add datepicker to all input-elements with styleclass inputtype_date and inputtype_datetime
  * <h4>FeatureResult:</h4>
  *   <ul>
@@ -2108,27 +2130,55 @@ function addDatePickerToElements() {
     $('input.inputtype_datetime').datetimepicker();
 }
 
+
 /**
  * <h4>FeatureDomain:</h4>
  *     GUI
  * <h4>FeatureDescription:</h4>
- *     open speechrecognition for element
+ *     add styleselectbox to all input-elements with styleclass inputtype_docLayoutAddStyleClass
  * <h4>FeatureResult:</h4>
  *   <ul>
- *     <li>GUI-result: open speechrecognition for element
+ *     <li>GUI-result: add styleselectbox after input
  *   </ul> 
  * <h4>FeatureKeywords:</h4>
- *     GUI Editor SpeechRecognition
- * @param target - target-element to update (HTML-Element)
+ *     GUI Editor
  */
-function openSpeechRecognitionWindow(target) {
-    if (target == null) target = self;
-    target.focus();
-    var speechrecognitionWindow = window.open('speechrecognition.html', "speechrecognition", "width=690,height=350,resizable=yes,dependent=yes,scrollbars=yes");
-    speechrecognitionWindow.focus();
-    if (speechrecognitionWindow.opener == null) { speechrecognitionWindow.opener = self; }
-    speechrecognitionWindow.opener.targetElement = target;
+function addDocLayoutStyleSelectorToElements() {
+    // iterate over docLayoutSDtyleClass-elements
+    $("input.inputtype_docLayoutAddStyleClass").each(function () {
+        // add select only if id id set
+        var ele = this;
+        var id = $(ele).attr("id");
+        if (id) {
+            // add select
+            var $select = $("<select id='" + id + "_select' lang='tech' />");
+            
+            // append values
+            $select.append($("<option value=''>Standardstyle</option>"));
+            $select.append($("<option value='row-label-value'>row-label-value</option>"));
+            $select.append($("<option value='row-label-value'>row-label-value</option>"));
+            $select.append($("<option value='row-boldlabel-value'>row-boldlabel-value</option>"));
+            $select.append($("<option value='row-value-only-full'>row-value-only-full</option>"));
+            $select.append($("<option value='row-label-only-full'>row-label-only-full</option>"));
+            
+            // add changehandler
+            $select.change(function() {
+                // set new value
+                var style = $(this).val();
+                $(ele).val(style);
+                
+                // call updatetrigger
+                window.callUpdateTriggerForElement(ele);
+            });
+            
+            // insert select after input
+            $(ele).after($select);
+        }
+        
+    });
 }
+
+
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -2285,17 +2335,45 @@ function setupAppSize() {
     var height = window.innerHeight;
     var width = window.innerWidth;
     
-    console.log("setup size width:" + window.innerWidth 
-            + " height:" + window.innerHeight + " max-height:" + (height-$("#containerBoxYaioEditor").offset().top));
-    
     // YAIO-editor
-    $("#containerBoxYaioEditor").css("max-height", height-$("#containerBoxYaioEditor").offset().top);
+    var ele = $("#containerBoxYaioEditor");
+    
+    // we are relative to the tree
+    var paddingToHead = $("#containerYaioTree").position().top;
+    var left = $("#containerYaioTree").position().left + $("#containerYaioTree").width + 2;
 
+    // set posTop as scrollTop burt never < paddingToHead
+    var posTop = $(window).scrollTop();
+    if (posTop < paddingToHead) {
+        posTop = paddingToHead;
+    }
+    
+    // calc maxHeight = windHeight - 20 (puffer)
+    var maxHeight = height - 20;
+    // sub topPos - Scollpos
+    maxHeight = maxHeight - (posTop - $(window).scrollTop());
+
+    // set values
+    $(ele).css("position", "absolute");
+    $(ele).css("max-height", maxHeight);
+    $(ele).css("top", posTop);
+    $(ele).css("left", left);
+    
+    console.log("setup size width:" + window.innerWidth 
+            + " height:" + window.innerHeight 
+            + " scrollTop:" + $(window).scrollTop()
+            + " offset.top" + $(ele).offset().top
+            + " top:" + posTop
+            + " max-height:" + $(ele).css("max-height")
+            );
+    
     // Export-editor
-    $("#containerFormYaioEditorOutputOptions").css("max-height", height-$("#containerFormYaioEditorOutputOptions").offset().top);
+    $("#containerFormYaioEditorOutputOptions").css("max-height", 
+            height-$("#containerFormYaioEditorOutputOptions").offset().top);
 
     // Import-editor
-    $("#containerFormYaioEditorImport").css("max-height", height-$("#containerFormYaioEditorImport").offset().top);
+    $("#containerFormYaioEditorImport").css("max-height", 
+            height-$("#containerFormYaioEditorImport").offset().top);
 }
 
 function showModalErrorMessage(message) {
