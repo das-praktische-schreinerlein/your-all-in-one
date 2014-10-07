@@ -16,6 +16,8 @@
  */
 package de.yaio.core.datadomainservice;
 
+import org.apache.log4j.Logger;
+
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.datadomain.MetaData;
 import de.yaio.core.nodeservice.NodeService;
@@ -34,6 +36,10 @@ import de.yaio.core.nodeservice.NodeService;
  */
 public class MetaDataServiceImpl extends DataDomainRecalcImpl implements MetaDataService {
     
+    /** Logger */ 
+    private static final Logger LOGGER =
+            Logger.getLogger(MetaDataServiceImpl.class);
+
     NodeNumberService nodeNumberService = new NodeNumberServiceImpl();
     
     @Override
@@ -85,6 +91,12 @@ public class MetaDataServiceImpl extends DataDomainRecalcImpl implements MetaDat
         // Daten einlesen
         String praefix = node.getMetaNodePraefix();
         String id = node.getMetaNodeNummer();
+        
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("initMetaData id=" + id 
+                            + " praefix=" + praefix 
+                            + " for:" + node.getNameForLogger());
+        }
 
         // Praefix initialisieren
         if (praefix == null || praefix.length() <= 0) {

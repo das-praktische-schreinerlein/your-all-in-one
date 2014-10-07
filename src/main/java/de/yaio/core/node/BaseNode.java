@@ -400,6 +400,11 @@ public class BaseNode implements BaseData, MetaData, SysData,
     @JsonIgnore
     public boolean isPlanValidRange() {
         if (getPlanStart() != null && getPlanEnde() != null) {
+            if (! (getPlanEnde().compareTo(getPlanStart()) >= 0)) {
+                LOGGER.error("planStart must be <= planEnde:" + this.getNameForLogger() 
+                                + " ist=" + getIstStart() 
+                                + " istEnde=" + getIstEnde());
+             }
             return getPlanEnde().compareTo(getPlanStart()) >= 0;
         }
         return true;
@@ -447,6 +452,11 @@ public class BaseNode implements BaseData, MetaData, SysData,
     @JsonIgnore
     public boolean isIstValidRange() {
         if (getIstStart() != null && getIstEnde() != null) {
+            if (! (getIstEnde().compareTo(getIstStart()) >= 0)) {
+               LOGGER.error("istStart must be <= istEnde:" + this.getNameForLogger() 
+                               + " ist=" + getIstStart() 
+                               + " istEnde=" + getIstEnde());
+            }
             return getIstEnde().compareTo(getIstStart()) >= 0;
         }
         return true;
@@ -1018,7 +1028,8 @@ public class BaseNode implements BaseData, MetaData, SysData,
     @XmlTransient
     @JsonIgnore
     public String getNameForLogger() {
-        return this.getSrcName();    
+        String nameForLogger = "sysUID_" + this.getSysUID() + "_name_" + this.getName() + "_srcName_" + this.getSrcName();
+        return nameForLogger;    
     }
     
     @Override
