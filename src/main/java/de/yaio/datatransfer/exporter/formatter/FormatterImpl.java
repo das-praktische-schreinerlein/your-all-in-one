@@ -184,4 +184,36 @@ public abstract class FormatterImpl implements Formatter {
         return res;
     }
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     DataExport
+     *     Presentation
+     * <h4>FeatureDescription:</h4>
+     *     escape nonlatin chars to html-unicode sequences
+     * <h4>FeatureKeywords:</h4>
+     *     Format
+     * @param src - the date to format
+     * @param out - the outputappender
+     * @return - the escaped string
+     * @throws java.io.IOException - io-exception on outputappender possible
+     */
+    public static <T extends Appendable> T escapeNonLatin(CharSequence src,
+                                                             T out) throws java.io.IOException {
+           for (int i = 0; i < src.length(); i++) {
+               char ch = src.charAt(i);
+               if (Character.UnicodeBlock.of(ch) == Character.UnicodeBlock.BASIC_LATIN) {
+                   out.append(ch);
+               } else {
+                   int codepoint = Character.codePointAt(src, i);
+                   // handle supplementary range chars
+                   i += Character.charCount(codepoint) - 1;
+                   // emit entity
+                   out.append("&#x");
+                   out.append(Integer.toHexString(codepoint));
+                   out.append(";");
+               }
+           }
+           return out;
+       }
+
 }

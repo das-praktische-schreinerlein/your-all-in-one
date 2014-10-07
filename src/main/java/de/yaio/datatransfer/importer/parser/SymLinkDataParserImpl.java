@@ -57,7 +57,7 @@ public class SymLinkDataParserImpl  extends ParserImpl implements SymLinkDataPar
                + "(" + CONST_PATTERN_SEG_STRING1 + "*)?,"
                + "(" + CONST_PATTERN_SEG_TAGS + "*)?";
     private static final Pattern CONST_PATTERN_SYMLINK =
-        Pattern.compile("(.*)" + CONST_PATTERN_SEG_SYMLINK + "(.*)");
+        Pattern.compile("(.*)" + CONST_PATTERN_SEG_SYMLINK + "(.*)", Pattern.UNICODE_CHARACTER_CLASS);
 
     @Override
     public Class<?> getTargetClass() {

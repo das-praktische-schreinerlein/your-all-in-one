@@ -16,9 +16,17 @@
  */
 package de.yaio.extension.datatransfer.ppl;
 
-import java.io.BufferedReader;
+import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.log4j.Logger;
+
+import com.ibm.icu.text.CharsetDetector;
+import com.ibm.icu.text.CharsetMatch;
 
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.datatransfer.importer.ImportOptions;
@@ -37,6 +45,12 @@ import de.yaio.datatransfer.importer.ImporterImpl;
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class PPLImporter extends ImporterImpl {
+
+    /** Logger */
+    private static final Logger LOGGER =
+            Logger.getLogger(PPLImporter.class);
+    /** identify UTF8-BOM */
+    public static final String UTF8_BOM = "\uFEFF";
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -91,11 +105,18 @@ public class PPLImporter extends ImporterImpl {
 
         // die verschiedenen Node durchlaufen
         if (lstNodeSrc != null) {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("extracted lstNodeSrc:" + lstNodeSrc.length + " from nodesrc:" + nodeSrc);
+            }
             DataDomain curParentNode = masterNode;
             String curNodeSrc = null;
             for (int zaehler = 0; zaehler < lstNodeSrc.length; zaehler++) {
                 // pruefen ob die Node schon am aktuellen Master existiert, wenn nicht neu anlegen
                 String curName = lstNodeSrc[zaehler];
+                
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("extracted name:" + curName + " from nodesrc:" + nodeSrc);
+                }
 
                 // CurNodeSrc belegen
                 if (curNodeSrc == null) {
@@ -175,9 +196,13 @@ public class PPLImporter extends ImporterImpl {
             throw new IllegalArgumentException("NodesSrc must not be empty: '" + nodesSrc + "'");
         }
 
-        // NodesSrc trennen
-        nodesSrc.replaceAll("\n\r", PPLService.LINE_DELIMITER);
-        nodesSrc.replaceAll("\r\n", PPLService.LINE_DELIMITER);
+        // extract cr + empty lines
+        nodesSrc = nodesSrc.replaceAll("\n\r", PPLService.LINE_DELIMITER);
+        nodesSrc = nodesSrc.replaceAll("\r\n", PPLService.LINE_DELIMITER);
+        nodesSrc = nodesSrc.replaceAll(PPLService.LINE_DELIMITER + PPLService.LINE_DELIMITER, 
+                        PPLService.LINE_DELIMITER);
+
+        // split NodesSrc
         String [] lstNodeSrc = nodesSrc.split(PPLService.LINE_DELIMITER);
 
         // die verschiedenen Zeilen durchlaufen
@@ -226,19 +251,159 @@ public class PPLImporter extends ImporterImpl {
         if (fileName == null || fileName.trim().length() <= 0) {
             throw new IllegalArgumentException("FileName must not be empty: '" + fileName + "'");
         }
-
-        // Datei einlesen
         File file = new File(fileName);
-        FileReader fileReader = new FileReader(file);
-        BufferedReader bReader = new BufferedReader(fileReader);
-        StringBuffer fileContent = new StringBuffer();
-        String line = null;
-        while((line = bReader.readLine()) != null){
-            fileContent.append(line).append("\n");
-        }
-        bReader.close();
+        return readFromInput(file);
+    }
 
-        return fileContent.toString();
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     import
+     * <h4>FeatureDescription:</h4>
+     *     Read filecontent, detect the best matching encoding from content 
+     *     and encode the file to that encoding.<br>
+     *     Maybe the file will read twice if encoding changes at the end of the file:<br>
+     *     1 run: to detect<br>
+     *     2 run: to read in the best matching encoding
+     * <h4>FeatureResult:</h4>
+     *     <li>returnValue String - filecontent
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Tools
+     * @param file - file to read
+     * @throws Exception - io-Exceptions possible
+     * @return filecontent - the file content as string in the best detcted encoding
+     */
+    public static String readFromInput(File file) throws Exception {
+
+        // init detector and converter
+        CharsetDetector detector;
+        detector = new CharsetDetector();
+
+        // open input
+        InputStream input = new FileInputStream(file);
+        BufferedInputStream fileStream = new BufferedInputStream(input);
+
+        // show detectable charsets
+        if (LOGGER.isDebugEnabled())
+            for (String match : CharsetDetector.getAllDetectableCharsets()) {
+                LOGGER.debug("detectable charset: " + match);
+            }
+
+        // we do it in little pieces, because CharsetDetector only checks the fist bytes :-(
+        CharsetMatch match;
+
+        // read bytes to buffer
+        StringBuffer fileContent = new StringBuffer();
+        byte [] readBuffer = new byte [1024];
+        int bytesRead;
+        String lastEncoding = null;
+        String bestEncoding = "";
+        int bestConfidence = 0;
+        int run = 1;
+        boolean flgEncodingChanged = false;
+        
+        String bufferStr = null;
+        while ((bytesRead = fileStream.read(readBuffer)) >= 0) {
+            // check only the bytesRead -> the buffer will have more !!!!
+            byte [] checkBuffer = new byte [bytesRead];
+            System.arraycopy(readBuffer, 0,checkBuffer, 0, bytesRead);
+            
+            // check the bytes
+            detector.setText(checkBuffer);
+            match = detector.detect();
+            if (lastEncoding == null || ! match.getName().equals(lastEncoding)) {
+                LOGGER.info("run " + run + " match charset: " + match.getName() 
+                                + " lang:" + match.getLanguage() 
+                                + " conf:" + match.getConfidence());
+                if (LOGGER.isDebugEnabled()) 
+                    for (CharsetMatch possibleMatch : detector.detectAll()) {
+                        LOGGER.debug("run " + run + " possible charset: " + possibleMatch.getName() 
+                                        + " lang:" + possibleMatch.getLanguage() 
+                                        + " conf:" + possibleMatch.getConfidence());
+                    }
+                
+                // check if we are better than before
+                if (match.getConfidence() > bestConfidence) {
+                    
+                    if (   match.getName().startsWith("ISO-8859") 
+                        && bestEncoding.startsWith("windows-12")) {
+                        // dirty hack but use windows-encoding: its 'better'!!!
+                    } else {
+                        // check if bestEncoding changed
+                        if (   run > 1 
+                            && ! match.getName().equals(bestEncoding)) {
+                            // if we are not on first run, set changed flag
+                            LOGGER.info("changed best charset from: " + bestEncoding 
+                                            + "=" + bestConfidence
+                                            + " to " + match.getName() + "=" + match.getConfidence());
+                            flgEncodingChanged = true;
+                        }
+                        bestConfidence = match.getConfidence();
+                        bestEncoding = match.getName();
+                    }
+                }
+                lastEncoding = match.getName();
+            }
+            
+            // do it only if encoding is fixed: if not we read the file in any case
+            if (! flgEncodingChanged) {
+                bufferStr = match.getString();
+
+                // check for UTF( with leading BOM in 1 run 
+                if (run == 1) {
+                    if (bufferStr.startsWith(UTF8_BOM)) {
+                        // UTF8 - delete leading BOM 
+                        bufferStr = bufferStr.substring(1);
+                        bestConfidence = 100;
+                        bestEncoding = StandardCharsets.UTF_8.name();
+                        if (LOGGER.isDebugEnabled())
+                            LOGGER.debug("detectet charset UTF8 with BOM: " + bestEncoding);
+                    }
+                }
+
+                // add to string
+                fileContent.append(bufferStr);
+            }
+            
+            run++;
+        }
+        fileStream.close();
+        
+        flgEncodingChanged = true;
+
+        String result;
+        if (flgEncodingChanged) {
+            // if Encoding changed, read new and use the best encoding
+            LOGGER.info("read file " + file.getAbsoluteFile() 
+                         + " a second time because of changed best charset: " 
+                         + bestEncoding + "=" + bestConfidence);
+            input = new FileInputStream(file);
+            fileStream = new BufferedInputStream(input);
+            result = IOUtils.toString(fileStream, bestEncoding);
+            
+            if (bestEncoding.equalsIgnoreCase(StandardCharsets.UTF_8.name()) && result.startsWith(UTF8_BOM)) {
+                result = result.substring(1);
+                if (LOGGER.isDebugEnabled())
+                    LOGGER.debug("delete BOM from : " + bestEncoding);
+            }
+        } else {
+            // we used the best encoding :-)
+            LOGGER.info("read file " + file.getAbsoluteFile() 
+                        + " with charset: " + bestEncoding + "=" + bestConfidence);
+            result = fileContent.toString();
+        }
+        
+//        // we want all in UTF8!
+//        if (! bestEncoding.equalsIgnoreCase(StandardCharsets.UTF_8.name())) {
+//            LOGGER.info("convert file " + file.getAbsoluteFile() 
+//                        + " with charset: " + bestEncoding 
+//                        + " to " + StandardCharsets.UTF_8.name());
+//            
+//            byte[] encoded = result.getBytes();
+//            result = new String(encoded, StandardCharsets.UTF_8);
+//        }
+        
+        return result;
     }
 
 }

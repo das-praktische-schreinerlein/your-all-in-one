@@ -16,7 +16,6 @@
  */
 package de.yaio.datatransfer.exporter;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import de.yaio.utils.Calculator;

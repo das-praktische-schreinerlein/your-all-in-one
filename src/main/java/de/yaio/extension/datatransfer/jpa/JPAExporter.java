@@ -126,7 +126,7 @@ public class JPAExporter extends WikiExporter {
             
         } else {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("save new master+ranets for:" + masterNode.getNameForLogger());
+                LOGGER.debug("save new master for:" + masterNode.getNameForLogger());
             }
             // create masterDBNode and persist children
             masterNode.persist();

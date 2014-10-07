@@ -58,7 +58,7 @@ public class ResLocDataParserImpl  extends ParserImpl implements ResLocDataParse
                + "(" + CONST_PATTERN_SEG_STRING1 + "*)?,"
                + "(" + CONST_PATTERN_SEG_TAGS + "*)?";
     private static final Pattern CONST_PATTERN_URLRES =
-        Pattern.compile("(.*)" + CONST_PATTERN_SEG_URLRES + "(.*)");
+        Pattern.compile("(.*)" + CONST_PATTERN_SEG_URLRES + "(.*)", Pattern.UNICODE_CHARACTER_CLASS);
 
     @Override
     public Class<?> getTargetClass() {

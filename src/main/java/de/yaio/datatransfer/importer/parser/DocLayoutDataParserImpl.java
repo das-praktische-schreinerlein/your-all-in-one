@@ -45,7 +45,7 @@ public class DocLayoutDataParserImpl  extends ParserImpl implements DocLayoutDat
     Calendar calDate = new GregorianCalendar();
     Calendar calTime = new GregorianCalendar();
 
-    // Logger
+    /** Logger */ 
     private static final Logger LOGGER =
             Logger.getLogger(DocLayoutDataParserImpl.class);
 
@@ -58,7 +58,7 @@ public class DocLayoutDataParserImpl  extends ParserImpl implements DocLayoutDat
                + "(" + CONST_PATTERN_SEG_STRING1 + "*)?,"
                + "(" + CONST_PATTERN_SEG_FLAG + "*)?";
     protected static final Pattern CONST_PATTERN_DOCLAYOUT =
-        Pattern.compile("(.*)" + CONST_PATTERN_SEG_DOCLAYOUT + "(.*)");
+        Pattern.compile("(.*)" + CONST_PATTERN_SEG_DOCLAYOUT + "(.*)", Pattern.UNICODE_CHARACTER_CLASS);
 
 
     @Override

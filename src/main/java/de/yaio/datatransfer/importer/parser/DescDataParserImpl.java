@@ -53,7 +53,8 @@ public class DescDataParserImpl  extends ParserImpl implements DescDataParser {
     protected static final String CONST_PATTERN_SEG_DESC =
         "ProjektDesc: *(.*)";
     protected static final Pattern CONST_PATTERN_DESC =
-        Pattern.compile("(.*)" + CONST_PATTERN_SEG_DESC + "(.*)");
+        Pattern.compile("(.*)" + CONST_PATTERN_SEG_DESC + "(.*)", 
+                        Pattern.UNICODE_CHARACTER_CLASS);
 
 
     @Override

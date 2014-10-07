@@ -65,7 +65,7 @@ public class PlanDataParserImpl  extends ParserImpl implements PlanDataParser {
                     + CONST_PATTERN_SEG_OPTIONAL_DATETIME
                     + "[ ]*("+ CONST_PATTERN_SEG_TASK + ")?";
     protected static final Pattern CONST_PATTERN_PLAN =
-            Pattern.compile("(.*)" + CONST_PATTERN_SEG_PLAN + "(.*)");
+            Pattern.compile("(.*)" + CONST_PATTERN_SEG_PLAN + "(.*)", Pattern.UNICODE_CHARACTER_CLASS);
 
     @Override
     public Class<?> getTargetClass() {

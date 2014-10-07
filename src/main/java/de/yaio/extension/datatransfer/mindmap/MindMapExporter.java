@@ -23,6 +23,7 @@ import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.node.BaseNode;
 import de.yaio.datatransfer.exporter.OutputOptions;
 import de.yaio.datatransfer.exporter.OutputOptionsImpl;
+import de.yaio.datatransfer.exporter.formatter.FormatterImpl;
 import de.yaio.extension.datatransfer.exporter.formatter.WorkflowFormatConfigurator;
 import de.yaio.extension.datatransfer.wiki.WikiExporter;
 
@@ -82,6 +83,9 @@ public class MindMapExporter extends WikiExporter {
         
         // show details
         res.append(super.getMasterNodeResult(masterNode, oOptions));
+        
+        // escape res
+        res = FormatterImpl.escapeNonLatin(res.toString(), new StringBuffer());
         
         // show footer
         res.append("</map>");

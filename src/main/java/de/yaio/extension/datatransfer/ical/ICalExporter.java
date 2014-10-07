@@ -1,5 +1,5 @@
 /**
- * <h4>FeatureDomain:</h4>
+# * <h4>FeatureDomain:</h4>
 
  *     Collaboration
  *
@@ -34,6 +34,7 @@ import de.yaio.core.nodeservice.NodeService;
 import de.yaio.datatransfer.exporter.OutputOptions;
 import de.yaio.datatransfer.exporter.formatter.DescDataFormatterImpl;
 import de.yaio.datatransfer.exporter.formatter.Formatter;
+import de.yaio.datatransfer.exporter.formatter.FormatterImpl;
 import de.yaio.extension.datatransfer.wiki.WikiExporter;
 
 /**
@@ -553,30 +554,11 @@ public class ICalExporter extends WikiExporter {
         
         // Hack wegen UFT8-Sonderzeichen
         // escape non latin
-        StringBuilder sb = escapeNonLatin(icalRes, new StringBuilder());
+        StringBuilder sb = FormatterImpl.escapeNonLatin(icalRes, new StringBuilder());
         icalRes = sb.toString();
         icalRes = icalRes.replaceAll("\n", "\r\n");
         
         
         return icalRes;
-    }
-    
-    protected static <T extends Appendable> T escapeNonLatin(CharSequence sequence,
-                                                          T out) throws java.io.IOException {
-        for (int i = 0; i < sequence.length(); i++) {
-            char ch = sequence.charAt(i);
-            if (Character.UnicodeBlock.of(ch) == Character.UnicodeBlock.BASIC_LATIN) {
-                out.append(ch);
-            } else {
-                int codepoint = Character.codePointAt(sequence, i);
-                // handle supplementary range chars
-                i += Character.charCount(codepoint) - 1;
-                // emit entity
-                out.append("&#x");
-                out.append(Integer.toHexString(codepoint));
-                out.append(";");
-            }
-        }
-        return out;
     }
 }

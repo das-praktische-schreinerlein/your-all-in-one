@@ -59,7 +59,7 @@ public class SysDataParserImpl  extends ParserImpl implements SysDataParser {
                + "("+ CONST_PATTERN_SEG_DATUM + " "+ CONST_PATTERN_SEG_TIME + ")?,"
                + "("+ CONST_PATTERN_SEG_INT + "*)?";
     protected static final Pattern CONST_PATTERN_NODESYS =
-        Pattern.compile("(.*)" + CONST_PATTERN_SEG_NODESYS + "(.*)");
+        Pattern.compile("(.*)" + CONST_PATTERN_SEG_NODESYS + "(.*)", Pattern.UNICODE_CHARACTER_CLASS);
 
     @Override
     public Class<?> getTargetClass() {

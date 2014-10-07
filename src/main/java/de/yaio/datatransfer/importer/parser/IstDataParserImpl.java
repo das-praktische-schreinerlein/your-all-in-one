@@ -66,7 +66,7 @@ public class IstDataParserImpl  extends ParserImpl implements IstDataParser {
                + CONST_PATTERN_SEG_OPTIONAL_DATETIME
                + "[ ]*("+ CONST_PATTERN_SEG_TASK + ")?";
     protected static final Pattern CONST_PATTERN_IST =
-        Pattern.compile("(.*)" + CONST_PATTERN_SEG_IST + "(.*)");
+        Pattern.compile("(.*)" + CONST_PATTERN_SEG_IST + "(.*)", Pattern.UNICODE_CHARACTER_CLASS);
 
     /**
      * <h4>FeatureDomain:</h4>

@@ -47,9 +47,9 @@ public interface Parser extends Comparable<Parser> {
     /** Pattern to parse Date-segments */
     public static final String CONST_PATTERN_SEG_DATUM = "\\d\\d\\.\\d\\d.\\d\\d\\d\\d";
     /** Pattern to parse common String-segments */
-    public static final String CONST_PATTERN_SEG_STRING = "[-0-9ÜÖÄüöäß/A-Za-z+_\\*\\. ]";
+    public static final String CONST_PATTERN_SEG_STRING = "[-0-9\\p{L}/+_\\*\\. ]";
     /** Pattern to parse Flag-segments */
-    public static final String CONST_PATTERN_SEG_FLAG = "[-0-9ÜÖÄüöäßA-Za-z+_]";
+    public static final String CONST_PATTERN_SEG_FLAG = "[-0-9\\p{L}+_]";
     /** Pattern to parse Integer-segments */
     public static final String CONST_PATTERN_SEG_INT = "[0-9]";
     /** Pattern to parse UID-segments */
@@ -57,7 +57,7 @@ public interface Parser extends Comparable<Parser> {
     /** Pattern to parse ID-segments */
     public static final String CONST_PATTERN_SEG_ID = "[0-9]";
     /** Pattern to parse Tag-segments */
-    public static final String CONST_PATTERN_SEG_TAGS = "[-0-9ÜÖÄüöäß/A-Za-z+_\\*\\.;]";
+    public static final String CONST_PATTERN_SEG_TAGS = "[-0-9\\p{L}+_\\*\\.;]";
     /** Pattern to parse ID-Praefix-segments */
     public static final String CONST_PATTERN_SEG_PRAEFIX = "[A-Za-z]";
     /** Pattern to parse Checksum-segments */

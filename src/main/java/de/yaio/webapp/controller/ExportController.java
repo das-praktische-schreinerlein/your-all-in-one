@@ -18,6 +18,7 @@ package de.yaio.webapp.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -70,8 +71,8 @@ public class ExportController {
     /** replaceent to do after processing a node in documentation-context **/
     public static Map<String, String> PostProcessorReplacements_documentation = 
                     new LinkedHashMap<String, String>();
-
-
+    
+    
     /**
      * <h4>FeatureDomain:</h4>
      *     Webservice
@@ -112,6 +113,8 @@ public class ExportController {
                 }
                 res = exporter.getMasterNodeResult(node, oOptions);
             } catch (Exception e) {
+                LOGGER.error("error while export of node:" + sysUID 
+                                + " with:" + exporter.getClass().getName());
                 e.printStackTrace();
             }
         }
@@ -120,6 +123,10 @@ public class ExportController {
         response.setContentType("application/force-download");
         response.setHeader("Content-Disposition", 
                         "attachment; filename=" + sysUID + extension);
+        
+        // TODO FIXME: a awful hack
+        response.setCharacterEncoding(StandardCharsets.ISO_8859_1.name());
+//        response.setCharacterEncoding(StandardCharsets.UTF_8.name());
         
         return res;
     }

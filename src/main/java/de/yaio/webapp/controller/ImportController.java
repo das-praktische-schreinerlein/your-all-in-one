@@ -16,6 +16,7 @@
  */
 package de.yaio.webapp.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,9 +89,14 @@ public class ImportController {
         // check file
         if (!file.isEmpty()) {
             try {
-                // read filecontent
-                byte[] bytes = file.getBytes();
-                String wikiSrc = new String(bytes);
+                // copy to tmpFile
+                File tmpFile = File.createTempFile("upload", "wiki");
+                tmpFile.deleteOnExit();
+                file.transferTo(tmpFile);
+                
+                // read filecontent + delete
+                String wikiSrc = PPLImporter.readFromInput(tmpFile);
+                tmpFile.delete();
 
                 // read the childnodes only 1 level
                 node.initChildNodesFromDB(0);

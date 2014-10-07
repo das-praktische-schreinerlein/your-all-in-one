@@ -58,7 +58,7 @@ public class MetaDataParserImpl  extends ParserImpl implements MetaDataParser {
                + "(" + CONST_PATTERN_SEG_TAGS + "*)?,"
                + "(" + CONST_PATTERN_SEG_TAGS + "*)? *";
     protected static final Pattern CONST_PATTERN_NODEMETA =
-        Pattern.compile("(.*)" + CONST_PATTERN_SEG_NODEMETA + "(.*)");
+        Pattern.compile("(.*)" + CONST_PATTERN_SEG_NODEMETA + "(.*)", Pattern.UNICODE_CHARACTER_CLASS);
 
     @Override
     public Class<?> getTargetClass() {
