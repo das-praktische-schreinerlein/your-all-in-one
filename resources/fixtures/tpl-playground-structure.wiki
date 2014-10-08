@@ -1,0 +1,8 @@
+
+= INFO - Spielwiese                                                                                                                                                 [NodeMeta: SysPlay,1,,] [NodeSys: SysPlay1,,,,]
+
+
+== OFFEN - SystemTests                                                                                                                                               [NodeMeta: SysTest,1,,][NodeSys: SysTest1,,,,]
+Diese Aufgabe bitte nicht löschen, da hier Systemtests ausgeführt werden.
+
+== OFFEN - Hier kannst du tun und lassen was DU willst                                                                                                                                               [NodeMeta: BlaBla,1,,][NodeSys: BlaBla1,,,,]

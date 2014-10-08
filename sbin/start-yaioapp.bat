@@ -27,7 +27,7 @@ call %YAIOCONFIGPATH%\config-yaio.bat %YAIOSCRIPTPATH%
 rem add --debug option to see the startprocess of spring-boot
 set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_APP% %CFG% %NEWID_OPTIONS%
 echo "start-yaioapp: %CMD%"
-%CMD%
+start %CMD%
 
 :openurl
 timeout /T 30 /nobreak

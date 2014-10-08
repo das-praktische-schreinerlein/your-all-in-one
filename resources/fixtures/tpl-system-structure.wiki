@@ -12,7 +12,6 @@
     *** INFO - Gesucht: Du bist es leid, dein Leben nach Programmen auszurichten - Nichts dort zu finden, wo du es suchst - Im Chaos von Nachrichten, Terminen und Notizen unterzugehen? [DocLayout: P,startmesg1,,]
     *** INFO - Gesucht: Ich auch :-)                                [DocLayout: P,startmesg2,,]
     *** INFO - Gesucht: Und deshalb habe ich D'Artagnan erfunden. Meinen persönlichen Helfer, der mich vor dem alltäglichen Informations-Overkill schützt. [DocLayout: P,startmesg3,,]
-    *** URLRES - [ResLoc: #/show/MasterplanMasternode1,Direkt weiter zur Baumansicht,] [DocLayout: P,internurl,,]
     *** INFO - Ende: [DocLayout: P,startmesg3,,X]
 
 
