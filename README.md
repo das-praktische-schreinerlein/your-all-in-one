@@ -8,7 +8,14 @@ collaboration-softwareproject: "D'Artagnan - Dein persönlicher Software-Musketi
 More information about the prototype at http://www.your-all-in-one.de/yaio/static/lepetit 
 
 # TODO for me
-- [ ] documentation
+- [ ] update the documentation on http://www.your-all-in-one.de/yaio/static/lepetit  (new features, howto...)
+- [ ] code-documentation
+- [ ] code review: configuration, minor layout-bugs
+- [ ] new feature: searchview
+- [ ] new feature: fulltextsearch with lucene and solr
+- [ ] new feature: new nodetypes (contact, call, bug, document..)
+- [ ] new feature: document-management
+- [ ] new feature: contact-management
 - [ ] use and optimize it :-)
 
 # History and milestones
@@ -54,18 +61,29 @@ d:\public_projects\yaio
 
 - import project to Eclipse
 
+# Configure
+- update config in 
+   - config/config-yaio.bat (pathes to external progs, port)
+   - config/applicationContext.xml
+   - config/application.properties
+   - src/test/java/de/yaio/rest/controller/BaseNodeRestControllerTest.java (its bullshit to configure it here, but be sure it ion my todo-list)
+
+# Generate
 - run maven 
 ```bat
 cd d:\public_projects\yaio
 mvn compile
-mvn org.apache.maven.plugins:maven-assembly-plugin:assembly
+mvn package
 ```
 
-# Configure
-- update pathes in 
-   - config/config-yaio.bat
+# Enyoy
+- run webview
+```bat
+cd d:\public_projects\yaio
+sbin\start-yaioapp.bat
+```
 
-# Example
+# Example for the batches
 - run example 
 ```bat
 cd d:\public_projects\yaio
@@ -74,6 +92,8 @@ src\test\testproject\gen-planung.bat
 Take a look at the Wiki, Mindmaps, Excel, html, ICal...
 
 # Thanks to
+- https://github.com/coolbloke1324/jquery-lang-js
+- https://github.com/angular-translate/
 - https://github.com/apache/maven
 - https://github.com/apache/poi
 - https://github.com/jquery/jquery
@@ -87,8 +107,8 @@ Take a look at the Wiki, Mindmaps, Excel, html, ICal...
 # License
 ```
 /**
- * @author Michael Schreiner <ich@michas-ausflugstipps.de>
- * @category publishing
+ * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category collaboration
  * @copyright Copyright (c) 2010-2014, Michael Schreiner
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
