@@ -116,6 +116,7 @@ public class WikiExporterTest extends BaseTest {
     @Test
     public void testExport() throws Exception {
         testExportFromFixture("FixtureWikiExportSource.ppl", "FixtureWikiExportResult.wiki"); 
+//        testExportFromFixture("FixtureWikiExportSourceISO.ppl", "FixtureWikiExportResultISO.wiki"); 
     }
 
     /**
@@ -152,6 +153,8 @@ public class WikiExporterTest extends BaseTest {
         importerObj.extractNodesFromLines(masterNode, source, delimiter);
         
         String res = exporter.getMasterNodeResult(masterNode, oOptions);
+        
+        //System.out.println("Erg:\n" + res);
         
         // check
         this.testService.checkStringLineByLine(res, expectedResult);

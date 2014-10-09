@@ -11,6 +11,7 @@ set PLANSYSUID=MasterplanMasternode1
 :gen-all
 rem gen all
 copy S:\Daten\gesamtplanung.ppl %PLANDIR%%PLANFILEBASE%.ppl
+copy S:\Daten\Projekte\yourallinone\tools\\var\nodeids.properties %YAIOVARPATH%\\nodeids.properties
 call %BASEPATH%gen-planung.bat %PLANDIR% %PLANFILEBASE% %PLANNAME% --onlyifstate %PLANSYSUID%
 :end
 

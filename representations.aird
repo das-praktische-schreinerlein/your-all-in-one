@@ -1,2 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<viewpoint:DAnalysis xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:viewpoint="http://www.obeo.fr/dsl/viewpoint/1.1.0" xmi:id="_f27yUMP4EeOxSKIjam8xgA" version="6.8.0.201307151200"/>
+<viewpoint:DAnalysis xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:viewpoint="http://www.obeo.fr/dsl/viewpoint/1.1.0" xmlns:xsd="http://www.eclipse.org/xsd/2002/XSD" xmi:id="_f27yUMP4EeOxSKIjam8xgA" version="6.8.0.201307151200">
+  <models xmi:type="xsd:XSDSchema" href="src/main/resources/META-INF/persistence_2_0.xsd#/"/>
+  <models xmi:type="xsd:XSDSchema" href="bundleentry://1305.fwk21113669/cache/www.w3.org/2001/XMLSchema-instance.xsd#/"/>
+  <models xmi:type="xsd:XSDSchema" href="bundleentry://1305.fwk21113669/cache/www.w3.org/2001/XMLSchema.xsd#/"/>
+</viewpoint:DAnalysis>

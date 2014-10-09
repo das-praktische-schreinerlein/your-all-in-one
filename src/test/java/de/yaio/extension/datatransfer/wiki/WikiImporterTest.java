@@ -95,6 +95,7 @@ public class WikiImporterTest extends BaseTest {
     @Test
     public void testImport() throws Exception {
         testImportFromFixture("FixtureWikiImportSource.wiki", "FixtureWikiImportResult.ppl"); 
+        //testImportFromFixture("FixtureWikiImportSourceISO.wiki", "FixtureWikiImportResultISO.ppl"); 
     }
 
     /**
@@ -104,8 +105,8 @@ public class WikiImporterTest extends BaseTest {
      *     parse the source and compare the result with expectedResult 
      * <h4>FeatureKeywords:</h4>
      *     Test
-     * @param srcFile
-     * @param expectedResultFile
+     * @param srcFile - file with the source
+     * @param expectedResultFile - file with the expected result
      * @throws Exception - io-Exceptions possible
      */
     public void testImportFromFixture(String srcFile, String expectedResultFile) throws Exception {
@@ -138,6 +139,8 @@ public class WikiImporterTest extends BaseTest {
         for (WikiStructLine wk : lstWikiLines) {
             resBuf.append(wk.hirarchy).append("\n");
         }
+        
+        //System.out.println("Erg:" + resBuf);
         
         // check
         this.testService.checkStringLineByLine(resBuf.toString(), expectedResult);
