@@ -92,7 +92,22 @@ public class TaskNode extends BaseNode implements ExtendedWorkflowData {
 
     // Status-Konstanten
     public static Map<String, Object> CONST_MAP_NODETYPE_IDENTIFIER = new HashMap<String, Object>();
+    public static Map<String, WorkflowState> CONST_MAP_STATE_WORKFLOWSTATE = new HashMap<String, WorkflowState>();
+    public static Map<WorkflowState, String> CONST_MAP_WORKFLOWSTATE_STATE = new HashMap<WorkflowState, String>();
     static {
+        // define WorkflowStates
+        CONST_MAP_STATE_WORKFLOWSTATE.put(CONST_NODETYPE_IDENTIFIER_UNKNOWN, WorkflowState.NOTPLANED);
+        CONST_MAP_STATE_WORKFLOWSTATE.put(CONST_NODETYPE_IDENTIFIER_OPEN, WorkflowState.OPEN);
+        CONST_MAP_STATE_WORKFLOWSTATE.put(CONST_NODETYPE_IDENTIFIER_RUNNNING, WorkflowState.RUNNING);
+        CONST_MAP_STATE_WORKFLOWSTATE.put(CONST_NODETYPE_IDENTIFIER_LATE, WorkflowState.LATE);
+        CONST_MAP_STATE_WORKFLOWSTATE.put(CONST_NODETYPE_IDENTIFIER_SHORT, WorkflowState.WARNING);
+        CONST_MAP_STATE_WORKFLOWSTATE.put(CONST_NODETYPE_IDENTIFIER_DONE, WorkflowState.DONE);
+        CONST_MAP_STATE_WORKFLOWSTATE.put(CONST_NODETYPE_IDENTIFIER_CANCELED, WorkflowState.CANCELED);
+        // backlink states
+        for (String state : CONST_MAP_STATE_WORKFLOWSTATE.keySet()) {
+            CONST_MAP_WORKFLOWSTATE_STATE.put(CONST_MAP_STATE_WORKFLOWSTATE.get(state), state);
+        }
+
         // Defaults
         CONST_MAP_NODETYPE_IDENTIFIER.put(CONST_NODETYPE_IDENTIFIER_OPEN, CONST_NODETYPE_IDENTIFIER_OPEN);
         CONST_MAP_NODETYPE_IDENTIFIER.put(CONST_NODETYPE_IDENTIFIER_RUNNNING, CONST_NODETYPE_IDENTIFIER_RUNNNING);
@@ -128,6 +143,62 @@ public class TaskNode extends BaseNode implements ExtendedWorkflowData {
         return CONST_MAP_NODETYPE_IDENTIFIER;
     }
     
+    @Override
+    @XmlTransient
+    @JsonIgnore
+    public Map<String, WorkflowState> getConfigWorkflowState() {
+        return CONST_MAP_STATE_WORKFLOWSTATE;
+    }
+    
+    @Override
+    public WorkflowState getWorkflowState() {
+        // default for 
+        if (super.getWorkflowState() == WorkflowState.NOWORKFLOW) {
+            return WorkflowState.NOTPLANED;
+        }
+        return super.getWorkflowState();
+    };
+
+    @Override
+    @XmlTransient
+    @JsonIgnore
+    public WorkflowState getWorkflowStateForState(String state)  throws IllegalStateException {
+        // get WorkflowState for state
+        WorkflowState wfState = getConfigWorkflowState().get(state);
+        
+        if (wfState == null) {
+            // if null: second try - normalize state
+            String newState = (String) getConfigState().get(state);
+            wfState = getConfigWorkflowState().get(newState);
+        }
+        
+        // unknown state
+        if (wfState == null) {
+            throw new IllegalStateException("No WorkflowState found for state=" + state 
+                            + " node=" + this.getNameForLogger());
+        }
+        return wfState;
+    };
+    
+    @Override
+    @XmlTransient
+    @JsonIgnore
+    public String getStateForWorkflowState(WorkflowState workflowState)  throws IllegalStateException {
+        // workflowState must be set
+        if (workflowState == null) {
+            throw new IllegalStateException("workflowState must be set node=" + this.getNameForLogger());
+        }
+        
+        // unknown state
+        String state = CONST_MAP_WORKFLOWSTATE_STATE.get(workflowState);
+        if (state == null) {
+            throw new IllegalStateException("No state found for workflowState=" + workflowState 
+                            + " node=" + this.getNameForLogger());
+        }
+        
+        return state;
+    };
+
     @Override
     @XmlTransient
     @JsonIgnore

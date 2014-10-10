@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -53,6 +54,7 @@ import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.datadomain.DescData;
 import de.yaio.core.datadomain.MetaData;
 import de.yaio.core.datadomain.SysData;
+import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
 import de.yaio.core.datadomainservice.MetaDataService;
 import de.yaio.core.datadomainservice.MetaDataServiceImpl;
 import de.yaio.core.datadomainservice.SysDataService;
@@ -90,12 +92,17 @@ public class BaseNode implements BaseData, MetaData, SysData,
 
     public static final String CONST_NODETYPE_IDENTIFIER_UNKNOWN = "UNKNOWN";
     public static Map<String, Object> CONST_MAP_NODETYPE_IDENTIFIER = new HashMap<String, Object>();
+    public static Map<String, WorkflowState> CONST_MAP_STATE_WORKFLOWSTATE = new HashMap<String, WorkflowState>();
     static {
+        // define WorkflowStates
+        CONST_MAP_STATE_WORKFLOWSTATE.put(CONST_NODETYPE_IDENTIFIER_UNKNOWN, WorkflowState.NOWORKFLOW);
+
         // Defaults
         CONST_MAP_NODETYPE_IDENTIFIER.put(CONST_NODETYPE_IDENTIFIER_UNKNOWN, CONST_NODETYPE_IDENTIFIER_UNKNOWN);
         // Abarten
         CONST_MAP_NODETYPE_IDENTIFIER.put("UNKNOWN", CONST_NODETYPE_IDENTIFIER_UNKNOWN);
         CONST_MAP_NODETYPE_IDENTIFIER.put("UNBEKANNT", CONST_NODETYPE_IDENTIFIER_UNKNOWN);
+        
     }
 
     protected static SysDataService sysDataService = new SysDataServiceImpl();
@@ -368,6 +375,23 @@ public class BaseNode implements BaseData, MetaData, SysData,
     @Size(max = 255)
     private String type;
     
+    
+    
+    /**
+     * summary of all children workflowstate with the highest priority
+     */
+    @Enumerated
+    private WorkflowState workflowState;
+    public WorkflowState getWorkflowState() {
+        if (workflowState == null) {
+            return WorkflowState.NOWORKFLOW;
+        }
+        return workflowState;
+    };
+    public void setWorkflowState(WorkflowState istState) {
+        workflowState = istState;
+    };
+
     /**
      * position in list
      */
@@ -984,6 +1008,8 @@ public class BaseNode implements BaseData, MetaData, SysData,
     }
 
     @Override
+    @XmlTransient
+    @JsonIgnore
     public Map<String, Object> getConfigState() {
         return CONST_MAP_NODETYPE_IDENTIFIER;
     }
@@ -1007,6 +1033,28 @@ public class BaseNode implements BaseData, MetaData, SysData,
     public boolean isWFStatusCanceled(String state) {
         return getNodeService().isWFStatusCanceled(state);
     }
+    
+    @Override
+    @XmlTransient
+    @JsonIgnore
+    public Map<String, WorkflowState> getConfigWorkflowState() {
+        return CONST_MAP_STATE_WORKFLOWSTATE;
+    }
+    
+    @Override
+    @XmlTransient
+    @JsonIgnore
+    public WorkflowState getWorkflowStateForState(String state)  throws IllegalStateException {
+        return WorkflowState.NOWORKFLOW;
+    };
+
+    @Override
+    @XmlTransient
+    @JsonIgnore
+    public String getStateForWorkflowState(WorkflowState workflowState)  throws IllegalStateException {
+        return this.getState();
+    };
+    
     
     //####################
     // service-functions

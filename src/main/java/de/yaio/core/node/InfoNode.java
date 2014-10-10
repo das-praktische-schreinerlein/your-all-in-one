@@ -79,3 +79,4 @@ public class InfoNode extends BaseNode implements DocLayoutData {
         return CONST_MAP_NODETYPE_IDENTIFIER;
     }
 }
+

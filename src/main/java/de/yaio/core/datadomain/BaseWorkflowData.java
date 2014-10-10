@@ -50,10 +50,27 @@ public interface BaseWorkflowData extends DataDomain, IstChildrenSumData,
     @XmlTransient
     @JsonIgnore
     public static Date CONST_MAXDATE = new Date(2147483647000l);
+    
+    @XmlTransient
+    public enum WorkflowState {
+        // the order is important for the calculation of workflow!!!!
+        NOWORKFLOW, 
+        NOTPLANED, CANCELED, DONE, 
+        OPEN, CONFIRMED, 
+        RUNNING, 
+        LATE, WARNING
+    }
 
     public Map<String, Object> getConfigState();
     public String getState();
     public void setState(String state);
+    
+    public Map<String, WorkflowState> getConfigWorkflowState();
+    public WorkflowState getWorkflowStateForState(String state) throws IllegalStateException;
+    public String getStateForWorkflowState(WorkflowState workflowState) throws IllegalStateException;
+
+    public WorkflowState getWorkflowState();
+    public void setWorkflowState(WorkflowState istState);
 
     /**
      * <h4>FeatureDomain:</h4>

@@ -23,6 +23,8 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
+
 /**
  * <h4>FeatureDomain:</h4>
  *     Utils
@@ -54,6 +56,8 @@ public class Calculator {
     public static int CONST_CALCULATE_ACTION_MUL = 5;
     /** calculation result calculate the multiplication-state of arg1 and arg2 **/
     public static int CONST_CALCULATE_ACTION_MULSTATE = 6;
+    /** calculation result calculate the workflow-state of arg1 and arg2 **/
+    public static int  CONST_CALCULATE_ACTION_WORKFLOWSTATE = 7;
 
     // einige Double-Vergleiche funktionieren wegen Double-Kommastellen nicht :-(
     /** calculation constant for 0% **/
@@ -90,7 +94,32 @@ public class Calculator {
         // test ob beide belegt
         if (arg1 != null && arg2 != null) {
             // anhand Typ vergleichen
-            if (Date.class.isInstance(arg1)) {
+            if (WorkflowState.class.isInstance(arg1)) {
+                //
+                // BaseWorkflow
+                //
+                if (action == CONST_CALCULATE_ACTION_WORKFLOWSTATE) {
+                    // compare workflowstate
+                    WorkflowState a1 = (WorkflowState)arg1;
+                    WorkflowState a2 = (WorkflowState)arg2;
+                    
+                    // compare the workflowstates by their order
+                    res = (a1.ordinal() >= a2.ordinal() ? a1 : a2);
+                    
+                    // special case: if DONE && OPEN -> RUNNING
+                    if (a1 == WorkflowState.DONE && a2 == WorkflowState.OPEN) {
+                        res = WorkflowState.RUNNING;
+                    } else if (a2 == WorkflowState.DONE && a1 == WorkflowState.OPEN) {
+                        res = WorkflowState.RUNNING;
+                    }
+                } else {
+                    // unbekannter Typ
+                    throw new Exception("Action for Datatype BaseWorkflow not allowed: " + action);
+                }
+            } else if (Date.class.isInstance(arg1)) {
+                //
+                // Date
+                //
                 // je nach Action
                 if (action == CONST_CALCULATE_ACTION_MIN) {
                     // Minimum
@@ -111,6 +140,9 @@ public class Calculator {
                     throw new Exception("Action for Datatype java.util.Date not allowed: " + action);
                 }
             } else if (Double.class.isInstance(arg1)) {
+                //
+                // Double
+                //
                 // je nach Action
                 if (action == CONST_CALCULATE_ACTION_MIN) {
                     // Minimum
@@ -172,7 +204,16 @@ public class Calculator {
                 throw new Exception("Unknown Datatype: arg1" + arg1.getClass());
             }
         } else {
-            if (action == CONST_CALCULATE_ACTION_MULSTATE) {
+            if (action == CONST_CALCULATE_ACTION_WORKFLOWSTATE) {
+                // workflowstatus without data
+                if (arg1 != null) {
+                    // arg1 belegt
+                    res = arg1;
+                } else {
+                    // arg2 belegt
+                    res = arg2;
+                }
+            } else if (action == CONST_CALCULATE_ACTION_MULSTATE) {
                 // MulStatus ohne Daten
                 res = new Double (0);
             } else if (action == CONST_CALCULATE_ACTION_STATE) {

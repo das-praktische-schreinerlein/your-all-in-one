@@ -171,7 +171,7 @@ public class BaseWorkflowDataServiceTest extends DataDomainServiceTest {
         myDataDomainObj3.setPlanStart(Parser.DF.parse("22.10.2013"));
         myDataDomainObj3.setParentNode(myDataDomainObj);
         expectedAfterDoBeforeChildren = "null|OFFEN|null|null|null|null|null|null|null|null|50.0|null|null|null|null|null|";
-        expectedAfterDoAfterChildren = "null|RUNNING|null|null|null|null|13.5|10.0|null|null|50.0|null|null|100.0|Tue Oct 22 00:00:00 CEST 2013|null|";
+        expectedAfterDoAfterChildren = "null|LATE|null|null|null|null|13.5|10.0|null|null|50.0|null|null|100.0|Tue Oct 22 00:00:00 CEST 2013|null|";
         this.testServiceDoRecalc(myDataDomainObj, expectedAfterDoBeforeChildren, 
                         expectedAfterDoAfterChildren, recurseDirection);
 

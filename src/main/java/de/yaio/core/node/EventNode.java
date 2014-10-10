@@ -85,7 +85,22 @@ public class EventNode extends TaskNode {
 
     // Status-Konstanten
     public static Map<String, Object> CONST_MAP_NODETYPE_IDENTIFIER = new HashMap<String, Object>();
+    public static Map<String, WorkflowState> CONST_MAP_STATE_WORKFLOWSTATE = new HashMap<String, WorkflowState>();
+    public static Map<WorkflowState, String> CONST_MAP_WORKFLOWSTATE_STATE = new HashMap<WorkflowState, String>();
     static {
+        // define WorkflowStates
+        CONST_MAP_STATE_WORKFLOWSTATE.put(CONST_NODETYPE_IDENTIFIER_UNKNOWN, WorkflowState.NOTPLANED);
+        CONST_MAP_STATE_WORKFLOWSTATE.put(CONST_NODETYPE_IDENTIFIER_EVENT_PLANED, WorkflowState.OPEN);
+        CONST_MAP_STATE_WORKFLOWSTATE.put(CONST_NODETYPE_IDENTIFIER_EVENT_RUNNNING, WorkflowState.RUNNING);
+        CONST_MAP_STATE_WORKFLOWSTATE.put(CONST_NODETYPE_IDENTIFIER_EVENT_LATE, WorkflowState.LATE);
+        CONST_MAP_STATE_WORKFLOWSTATE.put(CONST_NODETYPE_IDENTIFIER_EVENT_SHORT, WorkflowState.WARNING);
+        CONST_MAP_STATE_WORKFLOWSTATE.put(CONST_NODETYPE_IDENTIFIER_EVENT_DONE, WorkflowState.DONE);
+        CONST_MAP_STATE_WORKFLOWSTATE.put(CONST_NODETYPE_IDENTIFIER_EVENT_CANCELED, WorkflowState.CANCELED);
+        // backlink states
+        for (String state : CONST_MAP_STATE_WORKFLOWSTATE.keySet()) {
+            CONST_MAP_WORKFLOWSTATE_STATE.put(CONST_MAP_STATE_WORKFLOWSTATE.get(state), state);
+        }
+
         // Defaults
         CONST_MAP_NODETYPE_IDENTIFIER.put(CONST_NODETYPE_IDENTIFIER_EVENT_PLANED, CONST_NODETYPE_IDENTIFIER_EVENT_PLANED);
         CONST_MAP_NODETYPE_IDENTIFIER.put(CONST_NODETYPE_IDENTIFIER_EVENT_RUNNNING, CONST_NODETYPE_IDENTIFIER_EVENT_RUNNNING);
@@ -122,4 +137,18 @@ public class EventNode extends TaskNode {
     public Map<String, Object> getConfigState() {
         return CONST_MAP_NODETYPE_IDENTIFIER;
     }
+    
+    @Override
+    @XmlTransient
+    @JsonIgnore
+    public Map<String, WorkflowState> getConfigWorkflowState() {
+        return CONST_MAP_STATE_WORKFLOWSTATE;
+    }
+    
+    @Override
+    @XmlTransient
+    @JsonIgnore
+    public String getStateForWorkflowState(WorkflowState workflowState)  throws IllegalStateException {
+        return CONST_MAP_WORKFLOWSTATE_STATE.get(workflowState);
+    };
 }

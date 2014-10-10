@@ -27,6 +27,7 @@ import de.yaio.core.datadomain.IstChildrenSumData;
 import de.yaio.core.datadomain.IstData;
 import de.yaio.core.datadomain.PlanChildrenSumData;
 import de.yaio.core.datadomain.PlanData;
+import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
 import de.yaio.core.node.BaseNode;
 import de.yaio.core.node.EventNode;
 import de.yaio.core.node.TaskNode;
@@ -184,6 +185,9 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
     public void recalcWorkflowData(BaseWorkflowData baseNode) throws Exception {
         // init ChildSumData
         this.initChildSumData(baseNode);
+        
+        // init my workflowState
+        baseNode.setWorkflowState(calcMyWorkflowState(baseNode));
 
         // Standfaktor
         Double standFaktor = this.getMyStandFaktor(baseNode);
@@ -229,13 +233,19 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
                 sumStandNullAufwand += childNode.getIstChildrenSumStand();
                 countStandNullAufwand++;
             }
+            
+            // sync WorkflowState with childrens state
+            baseNode.setWorkflowState((WorkflowState)Calculator.calculate(
+                            childNode.getWorkflowState(), 
+                            baseNode.getWorkflowState(), 
+                            Calculator.CONST_CALCULATE_ACTION_WORKFLOWSTATE));
         }
 
         // calc Stand
         // TODO: Bugfix wenn kein Aufwand definiert
         // if me and children 
-        if (baseNode.getPlanChildrenSumAufwand() == null 
-                        || baseNode.getPlanChildrenSumAufwand() <= Calculator.CONST_DOUBLE_NULL) {
+        if (   baseNode.getPlanChildrenSumAufwand() == null 
+            || baseNode.getPlanChildrenSumAufwand() <= Calculator.CONST_DOUBLE_NULL) {
             Double istStand = null;
             if (ExtendedWorkflowData.class.isInstance(baseNode)) {
                 // calc from own Workflowdata
@@ -307,10 +317,12 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
            return baseNode.getState();
         } else if (EventNode.class.isInstance(baseNode)) {
            // Event
-           return this.getRecalcedEventState((ExtendedWorkflowData)baseNode);
+           return baseNode.getStateForWorkflowState(baseNode.getWorkflowState());
+//           return this.getRecalcedEventState((ExtendedWorkflowData)baseNode);
         } else if (TaskNode.class.isInstance(baseNode)) {
            // Task
-           return this.getRecalcedTaskState((ExtendedWorkflowData)baseNode);
+            return baseNode.getStateForWorkflowState(baseNode.getWorkflowState());
+//           return this.getRecalcedTaskState((ExtendedWorkflowData)baseNode);
         }
         
         return BaseNode.CONST_NODETYPE_IDENTIFIER_UNKNOWN;
@@ -480,6 +492,110 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
                     + " Stand:" + baseNode.getIstChildrenSumStand() 
                     + " Aufwand:" + baseNode.getPlanChildrenSumAufwand() 
                     +" state" + newState +  " for node:" + baseNode.getNameForLogger());
+        }
+        return newState;
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     BusinessLogic
+     * <h4>FeatureDescription:</h4>
+     *     return the recalced workflowstate for a BaseNode (uses Plan/Ist)
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue WorkflowState - recalced state
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     BusinessLogic
+     * @param node - node to process
+     * @return recalced state
+     * @throws Exception - parser/format-Exceptions possible
+     */
+    public WorkflowState calcMyWorkflowState(BaseWorkflowData node) {
+        WorkflowState newState = node.getWorkflowState();
+        LOGGER.debug("WFStatus: state = " + newState
+                        + " Class" + node.getClass().getName());
+
+        // alles außer Infos betrachten
+        if (   newState != WorkflowState.CANCELED 
+            && newState != WorkflowState.NOWORKFLOW) {
+            // check if node is extended
+            if (ExtendedWorkflowData.class.isInstance(node)) {
+                // Status aus den Plan/Istzahlen extrahieren
+                ExtendedWorkflowData baseNode = (ExtendedWorkflowData)node; 
+                
+                // Status zuruecksetzen
+                newState = WorkflowState.NOTPLANED;
+                
+                if (baseNode.getIstStand() != null 
+                        && (baseNode.getIstStand() >= Calculator.CONST_DOUBLE_100)) {
+                    // falls Stand=100 DONE
+                    newState = WorkflowState.DONE;
+                } else if (   (baseNode.getPlanAufwand() != null 
+                               && (baseNode.getPlanAufwand() >= Calculator.CONST_DOUBLE_NULL))
+                           || (baseNode.getPlanAufwand() != null 
+                               && (baseNode.getPlanAufwand() >= Calculator.CONST_DOUBLE_NULL))
+                           || (baseNode.getIstAufwand() != null 
+                               && (baseNode.getIstAufwand() >= Calculator.CONST_DOUBLE_NULL))
+                           || (baseNode.getIstAufwand() != null 
+                               && (baseNode.getIstAufwand() >= Calculator.CONST_DOUBLE_NULL))
+                           || (baseNode.getIstStand() != null 
+                               && (baseNode.getIstStand() >= Calculator.CONST_DOUBLE_NULL))
+                           || (baseNode.getPlanStart() != null)
+                           || (baseNode.getPlanEnde() != null)
+                           ){
+                    // noch nicht erledigt
+                    if (   (baseNode.getIstAufwand() != null 
+                            && (baseNode.getIstAufwand() >= Calculator.CONST_DOUBLE_NULL))
+                        || (baseNode.getIstAufwand() != null 
+                            && (baseNode.getIstAufwand() >= Calculator.CONST_DOUBLE_NULL))
+                        || (baseNode.getIstStand() != null 
+                            && (baseNode.getIstStand() >= Calculator.CONST_DOUBLE_NULL))
+                        ){
+                        // wurde schon begonnen
+                        newState = WorkflowState.RUNNING;
+    
+                    } else {
+                        // noch nicht begonnen:
+                        newState = WorkflowState.OPEN;
+    
+                        // Termin pruefen
+                        Date now = new Date();
+                        Date myPlanStart = baseNode.getPlanStart();
+                        // TODO parentPlanStart
+//                        if (myPlanStart == null) {
+//                            myPlanStart = baseNode.getPlanStart();
+//                        }
+                        if (myPlanStart != null && now.after(myPlanStart)) {
+                            // verspaetet: haette schon beginnen muessen
+                            newState = WorkflowState.LATE;
+                        }
+                    }
+                    
+                    // Termin pruefen
+                    Date now = new Date();
+                    Date myPlanEnde = baseNode.getPlanEnde();
+                    if (myPlanEnde != null && now.after(myPlanEnde)) {
+                        // verspaetet: haette schon beeendet sein muessen
+                        newState = WorkflowState.WARNING;
+                        if (LOGGER.isDebugEnabled()) {
+                            LOGGER.debug("Short node:" + baseNode.getNameForLogger()
+                                    + " Stand:" + baseNode.getIstStand() 
+                                    +" myPlanEnde:" + myPlanEnde);
+                        }
+                    }
+                    
+                }
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("new NodeState " 
+                            + " Stand:" + baseNode.getIstStand() 
+                            + " Aufwand:" + baseNode.getPlanAufwand() 
+                            +" state" + newState +  " for node:" + baseNode.getNameForLogger());
+                }
+            } else {
+                // its no WorkflowNode
+                newState = WorkflowState.NOWORKFLOW;
+            }
         }
         return newState;
     }
