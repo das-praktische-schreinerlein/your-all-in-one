@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost/" />
+<title>Test: test create/edit/remove of a project</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Test: test create/edit/remove a project</td></tr>
+</thead><tbody>
+
+
+<!-- 
+  #######################################################
+    open frontpage 
+  #######################################################
+-->
+<tr>
+	<td>open</td>
+	<td>/static/yaio-explorerapp/yaio-explorerapp.html</td>
+	<td></td>
+</tr>
+<!-- 
+  #######################################################
+    wait and click explorer 
+  #######################################################
+-->
+<tr>
+	<td>store</td>
+	<td>MasterplanMasternode1</td>
+	<td>nodeIdforShow</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>link=Zur Baumansicht der Daten</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Zur Baumansicht der Daten</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//tr[@data-value = '${nodeIdforShow}']</td>
+	<td></td>
+</tr>
+<!-- 
+  #######################################################
+    wait and expand SysPlay1 
+  #######################################################
+-->
+<tr>
+	<td>store</td>
+	<td>SysPlay1</td>
+	<td>nodeIdforExpand</td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>open expander for ${nodeIdforExpand}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>dom=document.getElementById(&quot;expander${nodeIdforExpand}&quot;)</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>dom=document.getElementById(&quot;expander${nodeIdforExpand}&quot;)</td>
+	<td></td>
+</tr>
+<!-- 
+  #######################################################
+    wait and open createEditor for SysTest1 
+  #######################################################
+-->
+<tr>
+	<td>store</td>
+	<td>SysTest1</td>
+	<td>nodeIdforCreate</td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>open createform for ${nodeIdforCreate}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>dom=document.getElementById(&quot;cmdCreate${nodeIdforCreate}&quot;)</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>dom=document.getElementById(&quot;cmdCreate${nodeIdforCreate}&quot;)</td>
+	<td></td>
+</tr>
+<!-- 
+  #######################################################
+    create Task with Testtask + date 
+  #######################################################
+-->
+<tr>
+	<td>store</td>
+	<td>javascript{ &quot;testask&quot; + new Date().getTime() }</td>
+	<td>taskname</td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>create task with taskname: ${taskname}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=inputCreateNodeType</td>
+	<td>label=Aufgabe</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=inputNameTaskNode</td>
+	<td>${taskname}</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=inputTypeTaskNode</td>
+	<td>label=+-- Offen</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=inputPlanAufwandTaskNode</td>
+	<td>1</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=inputPlanStartTaskNode</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=inputPlanEndeTaskNode</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=25</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=inputNodeDescTaskNode</td>
+	<td>fehlerhafte Tetsdaten</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//form[@id='nodeFormTaskNode']/fieldset[5]/button</td>
+	<td></td>
+</tr>
+<!-- 
+  #######################################################
+    wait for testTask 
+  #######################################################
+-->
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//span[text() = '${taskname}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeAttribute</td>
+	<td>//span[text() = '${taskname}']@id</td>
+	<td>tasknameid</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>javascript{ storedVars['tasknameid'].replace(&quot;title&quot;, &quot;&quot;); }</td>
+	<td>nodeIdCreated</td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>id=${nodeIdCreated} of new task with taskname: ${taskname}</td>
+	<td></td>
+</tr>
+<!-- 
+  #######################################################
+    wait and open editEditor for edit Task
+  #######################################################
+-->
+<tr>
+	<td>store</td>
+	<td>${nodeIdCreated}</td>
+	<td>nodeIdforEdit</td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>open editform for ${nodeIdforEdit}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>dom=document.getElementById(&quot;cmdEdit${nodeIdforEdit}&quot;)</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>dom=document.getElementById(&quot;cmdEdit${nodeIdforEdit}&quot;)</td>
+	<td></td>
+</tr>
+<!-- 
+  #######################################################
+    edit Task with new name, date, xdesc 
+  #######################################################
+-->
+<tr>
+	<td>echo</td>
+	<td>edit task with taskname: ${nodeIdforEdit}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=inputIstAufwandTaskNode</td>
+	<td>100</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=inputIstStartTaskNode</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=inputIstEndeTaskNode</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=25</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=inputNodeDescTaskNode</td>
+	<td>korrigierte Testdaten</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//form[@id='nodeFormTaskNode']/fieldset[5]/button</td>
+	<td></td>
+</tr>
+<!-- 
+  #######################################################
+    show SysPlay1 
+  #######################################################
+-->
+<tr>
+	<td>store</td>
+	<td>SysTest1</td>
+	<td>nodeIdforShow</td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>show for ${nodeIdforShow}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=a[href*='#/show/${nodeIdforShow}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=a[href*='#/show/${nodeIdforShow}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//tr[@data-value = '${nodeIdforShow}']</td>
+	<td></td>
+</tr>
+<!-- 
+  #######################################################
+    wait for testTask and remove 
+  #######################################################
+-->
+<tr>
+	<td>store</td>
+	<td>${nodeIdCreated}</td>
+	<td>nodeIdForDelete</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>dom=document.getElementById(&quot;cmdCreate${nodeIdForDelete}&quot;)</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>dom=document.getElementById(&quot;cmdRemove${nodeIdForDelete}&quot;)</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeConfirmation</td>
+	<td>Wollen Sie die Node wirklich löschen?</td>
+	<td></td>
+</tr>
+<!-- 
+  #######################################################
+    show SysPlay1
+  #######################################################
+-->
+<tr>
+	<td>store</td>
+	<td>SysPlay1</td>
+	<td>nodeIdforShow</td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>show for ${nodeIdforShow}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=a[href*='#/show/${nodeIdforShow}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=a[href*='#/show/${nodeIdforShow}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//tr[@data-value = '${nodeIdforShow}']</td>
+	<td></td>
+</tr>
+<!-- 
+  #######################################################
+    show MasterplanMasternode1 
+  #######################################################
+-->
+<tr>
+	<td>store</td>
+	<td>MasterplanMasternode1</td>
+	<td>nodeIdforShow</td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>show for ${nodeIdforShow}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=a[href*='#/show/${nodeIdforShow}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=a[href*='#/show/${nodeIdforShow}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//tr[@data-value = '${nodeIdforShow}']</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

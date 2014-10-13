@@ -49,6 +49,13 @@ public class YAIOStaticRessourceConfigurator extends WebMvcConfigurerAdapter {
             registry.addResourceHandler("/examples/**").addResourceLocations(
                             examplePath);
         }
+
+        // and add tests
+        if (!registry.hasMappingForPattern("/test/jstests/**")) {
+            String testsPath = "classpath:/jstests/";
+            registry.addResourceHandler("/test/jstests/**").addResourceLocations(
+                            testsPath);
+        }
     }
 }
 

@@ -687,7 +687,7 @@ function renderDataBlock(basenode, fancynode) {
 
     // current datablock
     var nodeDataBlock = "";
-    var $table = $("<div class='container_data_table' />");
+    var $table = $("<div class='container_data_table'/>");
     var $row = $("<div class='container_data_row'/>");
     $table.append($row);
     
@@ -1098,15 +1098,19 @@ function renderColumnsForNode(event, data) {
     // add fields
     $tdList.eq(colActions).html(
             "<a onclick=\"javascript: yaioOpenNodeEditor('" + basenode.sysUID + "', 'edit'); return false;\""
+                    + " id='cmdEdit" + basenode.sysUID + "'"
                     + " class='yaio-icon-edit'"
                     + " data-tooltip='Bearbeite die Daten'></a>"
             + "<a onclick=\"javascript: yaioOpenNodeEditor('" + basenode.sysUID + "', 'create'); return false;\""
+                    + " id='cmdCreate" + basenode.sysUID + "'"
                     + " class='yaio-icon-create'"
                     + " data-tooltip='Erzeuge ein neues KindsElement'></a>"
             + "<a onclick=\"javascript: yaioOpenNodeEditor('" + basenode.sysUID + "', 'createsymlink'); return false;\""
+                    + " id='cmdCreateSymLink" + basenode.sysUID + "'"
                     + " class='yaio-icon-createsymlink'"
                     + " data-tooltip='Erzeuge einen SymLink der auf dieses Element verweist'></a>"
             + "<a onclick=\"javascript: yaioRemoveNodeById('" + basenode.sysUID + "'); return false;\""
+                    + " id='cmdRemove" + basenode.sysUID + "'"
                     + " class='yaio-icon-remove'"
                     + " data-tooltip='L&ouml;sche dieses Element'></a>"
             ).addClass("container_field")
@@ -1117,6 +1121,7 @@ function renderColumnsForNode(event, data) {
     // replace checkbox by center-command
     var $expanderEle = $tdList.eq(colName).find("span.fancytree-expander");
     $expanderEle.attr('data-tooltip', '&Ouml;ffne Teilbaum mit Kindern');
+    $expanderEle.attr('id', 'expander' + basenode.sysUID);
 
     // replace checkbox by center-command
     var $checkEle = $tdList.eq(colName).find("span.fancytree-checkbox");
@@ -1134,11 +1139,12 @@ function renderColumnsForNode(event, data) {
     // insert state before name-span
     var $nameEle = $tdList.eq(colName).find("span.fancytree-title");
     var $div = $("<div style='disply: block-inline' />")
-        .append($("<span class='" + statestyle + " fancytree-title-state' lang='de' />")
+        .append($("<span class='" + statestyle + " fancytree-title-state' lang='de' id='titleState" + basenode.sysUID + "'/>")
                     .html(basenode.state + " ")
                     )
         .append("&nbsp;")
-        .append($("<span class=''>" + htmlEscapeText(basenode.name) + "</span>"))
+        .append($("<span class='fancytree-title2' id='title" + basenode.sysUID + "'>" 
+                + htmlEscapeText(basenode.name) + "</span>"))
         ;
     $nameEle.html($div)
     //$tdList.eq(colName).find("span.fancytree-expander").addClass(statestyle);
