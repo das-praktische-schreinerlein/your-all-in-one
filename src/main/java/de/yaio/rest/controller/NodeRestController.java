@@ -129,7 +129,7 @@ public class NodeRestController {
         if (node != null) {
             // search nodes
             List<BaseNode> resultList = baseNodeDBService.findFulltextBaseNodeEntries(fulltext,
-                            ((curPage.intValue()-1) * pageSize.intValue()) + 1, 
+                            ((curPage.intValue()-1) * pageSize.intValue()), 
                             pageSize.intValue());
 
             // create response
