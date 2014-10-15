@@ -52,4 +52,72 @@ public interface BaseNodeDBService {
      * @throws Exception - io/DB-Exceptions possible
      */
     public List<BaseNode> updateMeAndMyParents(BaseNode node) throws Exception;
+    
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Persistence
+     * <h4>FeatureDescription:</h4>
+     *     read the children for the sysUID from database
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue List<BaseNode> - list of the children
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Persistence JPA
+     * @param sysUID - sysUID for the filter on parent_node
+     * @return List of childnodes for basenode with sysUID
+     */
+    public List<BaseNode> findChildNodes(String sysUID);
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Persistence
+     * <h4>FeatureDescription:</h4>
+     *     count the basenodes which match fulltext
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue List<BaseNode> - list of the nodes
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Persistence JPA
+     * @param fulltext - fulltext to search in desc and name
+     * @return total of matching nodes
+     */
+    public long countFulltextBaseNodes(String fulltext);
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Persistence
+     * <h4>FeatureDescription:</h4>
+     *     read the basenodes which match fulltext
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue List<BaseNode> - list of the nodes
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Persistence JPA
+     * @param fulltext - fulltext to search in desc and name
+     * @param firstResult - resutrange for pagination
+     * @param maxResults - resutrange for pagination
+     * @return List of matching nodes
+     */
+    public List<BaseNode> findFulltextBaseNodeEntries(String fulltext, 
+                    int firstResult, int maxResults);
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Persistence
+     * <h4>FeatureDescription:</h4>
+     *     read the matching nodes for the symLinkRef from database
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue List<BaseNode> - list of the the children
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Persistence JPA
+     * @param symLinkRef - symLinkRef for the filter on node
+     * @return List of machting nodes for symLinkRef
+     */
+    public List<BaseNode> findSymLinkBaseNode(String symLinkRef);
 }
