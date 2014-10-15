@@ -24,7 +24,8 @@ import de.yaio.core.node.BaseNode;
  * <h4>FeatureDomain:</h4>
  *     Webservice
  * <h4>FeatureDescription:</h4>
- *     the responseobject for NodeController the RESTful Web Services for BaseNodes<br>
+ *     the responseobject for crud-functions (show, create, delete) of the 
+ *     NodeController for RESTfull-services<br>
  *      
  * @package de.yaio.webapp.controller
  * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>

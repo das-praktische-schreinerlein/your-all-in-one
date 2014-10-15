@@ -19,6 +19,8 @@ package de.yaio.core.dbservice;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.TypedQuery;
+
 import de.yaio.core.node.BaseNode;
 import de.yaio.core.nodeservice.BaseNodeService;
 
@@ -83,4 +85,143 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
         }
         return parentHierarchy;
     }
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Persistence
+     * <h4>FeatureDescription:</h4>
+     *     read the children for the sysUID from database
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue List<BaseNode> - list of the children
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Persistence JPA
+     * @param sysUID - sysUID for the filter on parent_node
+     * @return List of childnodes for basenode with sysUID
+     */
+    public List<BaseNode> findChildNodes(String sysUID) {
+        return BaseNode.entityManager().createQuery(
+                        "SELECT o FROM BaseNode o where parent_node = :sysUID order by sort_pos asc", 
+                        BaseNode.class
+                        ).setParameter("sysUID", sysUID).getResultList();
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    protected TypedQuery createFulltextQuery(boolean flgCount, String fulltext) {
+        // setup class
+        Class resClass = BaseNode.class;
+        if (flgCount)
+            resClass = Long.class;
+
+        // tokenize words
+        String filter = "";
+        String[] searchWords = null;
+        fulltext.replace("  ", " ");
+        if (fulltext != null && fulltext.length() > 0) {
+            searchWords = fulltext.split(" ");
+            if (searchWords.length > 0) {
+                int idx=0;
+                filter = " where (lower(name) like lower(:fulltext" + idx + ")"
+                                + " or lower(node_desc) like lower(:fulltext" + idx + "))";
+                for (; idx < searchWords.length; idx++) {
+                    filter += " and (lower(name) like lower(:fulltext" + idx + ")"
+                                    + " or lower(node_desc) like lower(:fulltext" + idx + "))";
+                }
+            }
+        }
+        // setup select
+        String select = "SELECT o FROM BaseNode o"
+                      + filter
+                      + " order by ebene asc, parent_node asc, sort_pos asc";
+        if (flgCount)
+            select = "SELECT COUNT(o) FROM BaseNode o"
+                   + filter;
+
+        // create query
+        TypedQuery query = BaseNode.entityManager().createQuery(
+                        select, resClass);
+        
+        // add parameters
+        if (searchWords.length > 0) {
+            int idx=0;
+            for (; idx < searchWords.length; idx++) {
+                query.setParameter("fulltext" + idx, "%" + searchWords[idx] + "%");
+            }
+        }
+        
+        return query;
+    }
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Persistence
+     * <h4>FeatureDescription:</h4>
+     *     count the basenodes which match fulltext
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue List<BaseNode> - list of the nodes
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Persistence JPA
+     * @param fulltext - fulltext to search in desc and name
+     * @return total of matching nodes
+     */
+    @SuppressWarnings("unchecked")
+    public long countFulltextBaseNodes(String fulltext) {
+        TypedQuery<Long> query = (TypedQuery<Long>)this.createFulltextQuery(true, fulltext);
+        return query.getSingleResult();
+    }
+    
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Persistence
+     * <h4>FeatureDescription:</h4>
+     *     read the basenodes which match fulltext
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue List<BaseNode> - list of the nodes
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Persistence JPA
+     * @param fulltext - fulltext to search in desc and name
+     * @param firstResult - resutrange for pagination
+     * @param maxResults - resutrange for pagination
+     * @return List of matching nodes
+     */
+    @SuppressWarnings("unchecked")
+    public List<BaseNode> findFulltextBaseNodeEntries(String fulltext, 
+                    int firstResult, int maxResults) {
+        TypedQuery<BaseNode> query = (TypedQuery<BaseNode>)this.createFulltextQuery(false, fulltext);
+        query.setFirstResult(firstResult);
+        query.setMaxResults(maxResults);
+        
+        return query.getResultList();
+    }
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Persistence
+     * <h4>FeatureDescription:</h4>
+     *     read the matching nodes for the symLinkRef from database
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue List<BaseNode> - list of the the children
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Persistence JPA
+     * @param symLinkRef - symLinkRef for the filter on node
+     * @return List of machting nodes for symLinkRef
+     */
+    public List<BaseNode> findSymLinkBaseNode(String symLinkRef) {
+        return BaseNode.entityManager().createQuery(
+                        "SELECT o FROM BaseNode o where sysUID = :symLinkRef"
+                        + " or CONCAT(metaNodePraefix, metaNodeNummer) = :symLinkRef"
+                        + " order by sort_pos asc", 
+                        BaseNode.class
+                        ).setParameter("symLinkRef", symLinkRef).getResultList();
+    }
+    
+    
 }
