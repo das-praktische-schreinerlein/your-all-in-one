@@ -4,6 +4,8 @@
         <ul class="commands command-info">
            <li class="command" data-tooltip='tooltip.command.OpenFrontpage' lang="tech">
               <a href="#/" class="button" translate="common.command.OpenFrontpage">Startseite</a></li>
+           <li class="command" data-tooltip='tooltip.command.OpenSearchView' lang="tech">
+              <a href="#/search/" class="button" translate="common.command.OpenSearchView">Open Searchview</a></li>
            <li class="command" data-tooltip='tooltip.command.OpenHelp' lang="tech">
               <a href="" ng-click="showHelpSite('/exports/documentation/SysHelp1')" target="help" class="button command_help" translate="common.command.OpenHelp">Hilfe</a></li>
            <li class="command" data-tooltip='tooltip.command.OpenInfo' lang="tech">
@@ -251,7 +253,7 @@
     <div class="container-verortung">
         <div class="entry node-state-{{parentnode.state}}" ng-repeat="parentnode in nodeHierarchy">
           <b> --&gt;</b> 
-              <a href='#/show/{{parentnode.sysUID}}' class="btn btn-default btn-sm" >
+              <a href='#/show/{{parentnode.sysUID}}' class="" >
                   <state value="parentnode.state" /> 
                   - {{parentnode.name}}
                </a>
@@ -292,9 +294,9 @@
                     <div class="gantt_container"  id="gantt_container_head">
                        <div class="gantt_aufwand" id="gantt_aufwand_head"  translate="fancytree.table.headline.ganttaufwand">Aufwand</div>
                        <div class="gantt_bar"  id="gantt_bar_head" data-tooltip='tooltip.command.GanttRange' lang="tech">
-                        <input type="text" placeholder="dd.mm.jjjj" name="ganttRangeStart" pattern="\d{2}\.\d{2}\.\d{4}"  maxsize="10" value="01.01.2014" class="inputtype_date" id="inputGanttRangeStart" onchange="yaioRecalcGanttBlock()">
-                        <a onclick="yaioRecalcGanttBlock();return false;" class="button" translate="fancytree.table.headline.ganttrange">Zeitbereich</a> 
-                        <input type="text" placeholder="dd.mm.jjjj" name="ganttRangeEnde" pattern="\d{2}\.\d{2}\.\d{4}"  maxsize="10" value="31.12.2014" class="inputtype_date" style="text-align: right" id="inputGanttRangeEnde" onchange="yaioRecalcGanttBlock()"></th>
+                        <input type="text" placeholder="dd.mm.jjjj" name="ganttRangeStart" pattern="\d{2}\.\d{2}\.\d{4}"  maxsize="10" value="01.01.2014" class="inputtype_date" id="inputGanttRangeStart" ng-model="ganttOptions.ganttRangeStart" ng-change="recalcGanttBlocks()">
+                        <a ng-click="recalcGanttBlocks();" class="button" translate="fancytree.table.headline.ganttrange">Zeitbereich</a> 
+                        <input type="text" placeholder="dd.mm.jjjj" name="ganttRangeEnde" pattern="\d{2}\.\d{2}\.\d{4}"  maxsize="10" value="31.12.2014" class="inputtype_date" style="text-align: right" id="inputGanttRangeEnde" ng-model="ganttOptions.ganttRangeEnd" ng-change="recalcGanttBlocks()"></th>
                        </div>
                     </div>
                   <th  translate="fancytree.table.headline.actions">

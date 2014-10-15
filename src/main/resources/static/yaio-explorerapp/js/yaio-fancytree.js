@@ -1256,16 +1256,24 @@ function yaioShowGanttBlock() {
 }
 
 
-function yaioRecalcGanttBlock() {
-    
-    $("#tree").fancytree("getRootNode").visit(function(node){
-        fillGanttBlock(node.data.basenode, "plan", "Plan", null);
-        fillGanttBlock(node.data.basenode, "planChildrenSum", "PlanSum", null);
-        fillGanttBlock(node.data.basenode, "ist", "Ist", null);
-        fillGanttBlock(node.data.basenode, "istChildrenSum", "IstSum", null);
-    });
+function yaioRecalcFancytreeGanttBlocks() {
+    if ($("#tree").length > 0) {
+        // tree exists
+        $("#tree").fancytree("getRootNode").visit(function(node){
+            fillGanttBlock(node.data.basenode, "plan", "Plan", null);
+            fillGanttBlock(node.data.basenode, "planChildrenSum", "PlanSum", null);
+            fillGanttBlock(node.data.basenode, "ist", "Ist", null);
+            fillGanttBlock(node.data.basenode, "istChildrenSum", "IstSum", null);
+        });
+    }
 }
 
+function yaioRecalcGanttBlock(basenode) {
+    fillGanttBlock(basenode, "plan", "Plan", null);
+    fillGanttBlock(basenode, "planChildrenSum", "PlanSum", null);
+    fillGanttBlock(basenode, "ist", "Ist", null);
+    fillGanttBlock(basenode, "istChildrenSum", "IstSum", null);
+}
 
 function openNodeHierarchy(treeId, lstIdsHierarchy) {
     // check for tree
