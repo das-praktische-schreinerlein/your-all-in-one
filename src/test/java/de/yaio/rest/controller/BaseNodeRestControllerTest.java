@@ -84,7 +84,7 @@ public abstract class BaseNodeRestControllerTest  extends BaseTest {
         // initApplicationContext
         String[] args = new String[2];
         args[0] = "--config";
-        args[1] = "D:\\Projekte\\yaio-playground\\config\\application.properties";
+        args[1] = "D:\\Projekte\\yaio-devel\\config\\application.properties";
         if (Configurator.getInstance().getCmdLineArgs() == null) {
             Configurator.getInstance().getAvailiableCmdLineOptions();
             Configurator.getInstance().setCmdLineArgs(args);

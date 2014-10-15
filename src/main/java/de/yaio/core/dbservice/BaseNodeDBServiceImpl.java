@@ -143,7 +143,7 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
                         select, resClass);
         
         // add parameters
-        if (searchWords.length > 0) {
+        if (searchWords != null && searchWords.length > 0) {
             int idx=0;
             for (; idx < searchWords.length; idx++) {
                 query.setParameter("fulltext" + idx, "%" + searchWords[idx] + "%");

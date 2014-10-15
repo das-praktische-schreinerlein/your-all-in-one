@@ -5,7 +5,7 @@ set BASEPATH=%1%
 set FLGWP=%2%
 
 rem set appconfig
-set STARTURL=http://localhost:8083/yaio-explorerapp/yaio-explorerapp.html#/
+set STARTURL=http://localhost:999/yaio-explorerapp/yaio-explorerapp.html#/
 
 rem Gen Wiki-Only
 set PARSEONLY=
