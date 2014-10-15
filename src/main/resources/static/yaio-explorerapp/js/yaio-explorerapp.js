@@ -52,6 +52,12 @@ yaioM.config(function($routeProvider) {
         .when('/show/:nodeId', { 
             controller:  'NodeShowCtrl',
             templateUrl: 'templates/node.html' })
+        .when('/search/:curPage?/:pageSize?/:baseSysUID?/:fulltext?/', { 
+            controller:  'NodeSearchCtrl',
+            templateUrl: 'templates/list-nodes.html' })
+        .when('/search/', { 
+            controller:  'NodeSearchCtrl',
+            templateUrl: 'templates/list-nodes.html' })
         .when('/', { 
             controller:  'FrontPageCtrl',
             templateUrl: 'templates/frontpage.html' })
@@ -170,6 +176,234 @@ yaioM.controller('FrontPageCtrl', function($scope, $location, $http, $routeParam
  * <h4>FeatureDomain:</h4>
  *     Configuration
  * <h4>FeatureDescription:</h4>
+ *     the controller to search nodes for url-params and register the yaio-functions
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>returns new controller
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Configuration BusinessLogic
+ */
+yaioM.controller('NodeSearchCtrl', function($scope, $location, $http, $routeParams, setFormErrors) {
+
+    // create search
+    $scope.nodes = new Array();
+    $scope.ganttOptions = { ganttRangeStart: "01.01.2014", ganttRangeEnd: "31.12.2014"};
+    
+    $scope.searchOptions = {
+            curPage: 1,
+            pageSize: 20,
+            baseSysUID: "MasterplanMasternode1",
+            fulltext: "",
+            total: 0
+    };
+    if ($routeParams.curPage)
+        $scope.searchOptions.curPage = decodeURI($routeParams.curPage); 
+    if ($routeParams.pageSize)
+        $scope.searchOptions.pageSize = decodeURI($routeParams.pageSize); 
+    if ($routeParams.baseSysUID)
+        $scope.searchOptions.baseSysUID = decodeURI($routeParams.baseSysUID); 
+    if ($routeParams.fulltext)
+        $scope.searchOptions.fulltext = decodeURI($routeParams.fulltext); 
+    console.log("NodeSearchCtrl - processing");
+    
+    // pagination has to wait for event
+    $scope.NodeListReady = false;
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     GUI
+     * <h4>FeatureDescription:</h4>
+     *     callbackhandler for pagination to load new page
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>changes $location
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     GUI Callback Pagination
+     * @param text - page text
+     * @param page - new pagenumber
+     */
+    $scope.nextPageAct = function(text, page){
+        console.log(text, page);
+        var newUrl = '/search'
+            + '/' + encodeURI(page)
+            + '/' + encodeURI($scope.searchOptions.pageSize)
+            + '/' + encodeURI($scope.searchOptions.baseSysUID)
+            + '/' + encodeURI($scope.searchOptions.fulltext)
+            + '/';
+        // no cache!!!
+        console.log("load new Url:" + newUrl);
+        $location.path(newUrl);
+    };
+    
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     GUI
+     * <h4>FeatureDescription:</h4>
+     *     callbackhandler for fulltextsearch if keyCode=13 (Enter) run doNewFulltextSearch
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>starts doNewFulltextSearch if keyCode=13
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     GUI Callback Fulltextsearch
+     * @param event - key-pressed event
+     */
+    $scope.checkEnterFulltextSearch = function(event) {
+        if (event.keyCode == 13) {
+            $scope.doNewFulltextSearch();
+        }
+        
+        return event;
+    }
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     GUI
+     * <h4>FeatureDescription:</h4>
+     *     callbackhandler for fulltextsearch set page=1 and start doFulltextSearch
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>starts doFulltextSearch with page=1
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     GUI Callback Fulltextsearch
+     */
+    $scope.doNewFulltextSearch = function() {
+        $scope.searchOptions.curPage = 1;
+        var newUrl = '/search'
+            + '/' + encodeURI($scope.searchOptions.curPage)
+            + '/' + encodeURI($scope.searchOptions.pageSize)
+            + '/' + encodeURI($scope.searchOptions.baseSysUID)
+            + '/' + encodeURI($scope.searchOptions.fulltext)
+            + '/';
+        // no cache!!!
+        console.log("load new Url:" + newUrl);
+        $location.path(newUrl);
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     GUI
+     * <h4>FeatureDescription:</h4>
+     *     send ajax-request for fulltextsearch to server and add reszult to scope<br>
+     *     sends broadcast NodeListReady when result is ready
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li> Updates scope.nodes
+     *     <li> sends broadcast NodeListReady when result is ready
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     GUI Callback Fulltextsearch
+     */
+    $scope.doFulltextSearch = function() {
+        // load data
+        var searchNodeUrl = '/nodes/search'
+            + '/' + encodeURI($scope.searchOptions.curPage)
+            + '/' + encodeURI($scope.searchOptions.pageSize)
+            + '/' + encodeURI($scope.searchOptions.baseSysUID)
+            + '/';
+        if ($scope.searchOptions.fulltext && $scope.searchOptions.fulltext.length > 0)
+            searchNodeUrl = searchNodeUrl + encodeURI($scope.searchOptions.fulltext)
+                          + '/';
+        $http.get(searchNodeUrl).then(function(nodeResponse) {
+            // success handler
+            
+            // check response
+            var state = nodeResponse.data.state;
+            if (state == "OK") {
+                // all fine
+                console.log("NodeSearchCtrl - OK loading nodes:" + nodeResponse.data.stateMsg + " searchNodeUrl=" + searchNodeUrl);
+                
+                // add nodes to scope
+                $scope.nodes = nodeResponse.data.nodes;
+                
+                // set count
+                $scope.searchOptions.total = nodeResponse.data.count;
+                
+                // set event for paginantion
+                $scope.NodeListReady = true;
+                $scope.$broadcast("NodeListReady");
+            } else {
+                // error
+                logError("error loading nodes:" + nodeResponse.data.stateMsg 
+                        + " details:" + nodeResponse, true)
+            }
+        }, function(response) {
+            // error handler
+            var data = response.data;
+            var status = response.status;
+            var header = response.header;
+            var config = response.config;
+            var message = "error loading nodes with url: " + searchNodeUrl;
+            logError(message, true);
+            message = "error data: " + data + " header:" + header + " config:" + config;
+            logError(message, false);
+        });
+    }
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     GUI
+     * <h4>FeatureDescription:</h4>
+     *     callbackhandler to rendernodeLine for node
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>renders nodeline
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     GUI Callback
+     */
+    $scope.renderNodeLine = function(node) {
+        // load me
+        var data = {
+             node: {
+                 data: {
+                     basenode: node,
+                 },
+                 tr: "#tr" + node.sysUID,
+             } 
+        };
+        
+        // we need a timeout to put the tr into DOM
+        setTimeout(function(){
+                console.log("renderNodeLine nodeId=" + node.sysUID + " tr=" + $("#tr" + node.sysUID).length);
+                renderColumnsForNode(null, data);
+            }, 10);
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     GUI
+     * <h4>FeatureDescription:</h4>
+     *     callbackhandler to recalc ganttblocks for nodes
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>recalc ganttblocks
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     GUI Callback
+     */
+    $scope.recalcGanttBlocks = function() {
+        for (var idx in $scope.nodes) {
+            var node = $scope.nodes[idx];
+            yaioRecalcGanttBlock(node);
+        }
+    }
+    
+    
+    // do Search
+    $scope.doFulltextSearch();
+
+});    
+    
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Configuration
+ * <h4>FeatureDescription:</h4>
  *     the controller to load the nodes for url-params and register the yaio-functions
  * <h4>FeatureResult:</h4>
  *   <ul>
@@ -192,6 +426,7 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
     $scope.node = {};
     $scope.nodeForEdit = {};
     $scope.config = {treeOpenLevel: 1};
+    $scope.ganttOptions = { ganttRangeStart: "01.01.2014", ganttRangeEnd: "31.12.2014"};
     
     // check activeNodeId
     var activeNodeIdHandler;
@@ -674,6 +909,23 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
         yaioOpenImportEditor(sysUID, url, target);
         console.log("showImportEditor done:" + " url:" + url);
         return false;
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     GUI
+     * <h4>FeatureDescription:</h4>
+     *     callbackhandler to recalc ganttblocks for nodes
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>recalc ganttblocks
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     GUI Callback
+     */
+    $scope.recalcGanttBlocks = function() {
+        yaioRecalcFancytreeGanttBlocks();
+        yaioRecalcGanttBlock($scope.node);
     }
 });
 

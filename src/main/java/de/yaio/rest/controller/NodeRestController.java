@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import de.yaio.core.dbservice.BaseNodeDBService;
 import de.yaio.core.dbservice.BaseNodeDBServiceImpl;
 import de.yaio.core.node.BaseNode;
 import de.yaio.core.node.EventNode;
@@ -96,6 +97,106 @@ public class NodeRestController {
         
         return response;
     }
+    
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
+     *     common function to search childnodes of sysUID and return them as JSON
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>NodeResponse (OK, ERROR) with matching nodes
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice Query
+     * @param curPage - current page in result to display
+     * @param pageSize - max items per page
+     * @param sysUID - sysUID to filter as perentNode
+     * @param fulltext - fulltext search string
+     * @return NodeSearchResponse (OK, FAILED, ERROR) with matching nodes
+     */
+    public NodeSearchResponse commonSearchNode(Long curPage,
+          Long pageSize, String sysUID, String fulltext) {
+        // create default response
+        NodeSearchResponse response = new NodeSearchResponse(
+                        "OK", "no node found", 
+                        null, curPage, pageSize, 0L);
+
+        // find the baseNode
+        BaseNodeDBService baseNodeDBService = BaseNodeDBServiceImpl.getInstance();
+        BaseNode node = BaseNode.findBaseNode(sysUID);
+        if (node != null) {
+            // search nodes
+            List<BaseNode> resultList = baseNodeDBService.findFulltextBaseNodeEntries(fulltext,
+                            ((curPage.intValue()-1) * pageSize.intValue()), 
+                            pageSize.intValue());
+
+            // create response
+            response.setCount(baseNodeDBService.countFulltextBaseNodes(fulltext));
+            
+            // add node
+            response.setNodes(resultList);
+            
+            // set state
+            response.setStateMsg("nosde found");
+        }
+        
+        return response;
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
+     *     Request to search childnodes of sysUID and return them as JSON
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>NodeResponse (OK, ERROR) with matching nodes
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice Query
+     * @param curPage - current page in result to display
+     * @param pageSize - max items per page
+     * @param sysUID - sysUID to filter as perentNode
+     * @param fulltext - fulltext search string
+     * @return NodeSearchResponse (OK, FAILED, ERROR) with matching nodes
+     */
+    @RequestMapping(method=RequestMethod.GET, value = "/search/{curPage}/{pageSize}/{sysUID}/{fulltext}/")
+    public @ResponseBody NodeSearchResponse searchNodeFulltext(
+           @PathVariable(value="curPage") Long curPage,
+           @PathVariable(value="pageSize") Long pageSize,
+           @PathVariable(value="sysUID") String sysUID,
+           @PathVariable(value="fulltext") String fulltext
+           ) {
+        return commonSearchNode(curPage, pageSize, sysUID, fulltext);
+    }
+    
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
+     *     Request to search childnodes of sysUID and return them as JSON
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>NodeResponse (OK, ERROR) with matching nodes
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice Query
+     * @param curPage - current page in result to display
+     * @param pageSize - max items per page
+     * @param sysUID - sysUID to filter as perentNode
+     * @return NodeSearchResponse (OK, FAILED, ERROR) with matching nodes
+     */
+    @RequestMapping(method=RequestMethod.GET, value = "/search/{curPage}/{pageSize}/{sysUID}/")
+    public @ResponseBody NodeSearchResponse searchNode(
+           @PathVariable(value="curPage") Long curPage,
+           @PathVariable(value="pageSize") Long pageSize,
+           @PathVariable(value="sysUID") String sysUID
+           ) {
+        return commonSearchNode(curPage, pageSize, sysUID, "");
+    }
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -159,7 +260,8 @@ public class NodeRestController {
                         null, null, null, null);
 
         // find a specific node
-        List<BaseNode> nodes = BaseNode.findSymLinkBaseNode(symLinkRef);
+        BaseNodeDBService baseNodeDBService = BaseNodeDBServiceImpl.getInstance();
+        List<BaseNode> nodes = baseNodeDBService.findSymLinkBaseNode(symLinkRef);
         if (nodes != null && nodes.size() > 0) {
             // symLinkref found
             

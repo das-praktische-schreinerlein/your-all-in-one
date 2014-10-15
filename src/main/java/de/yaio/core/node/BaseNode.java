@@ -54,11 +54,12 @@ import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.datadomain.DescData;
 import de.yaio.core.datadomain.MetaData;
 import de.yaio.core.datadomain.SysData;
-import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
 import de.yaio.core.datadomainservice.MetaDataService;
 import de.yaio.core.datadomainservice.MetaDataServiceImpl;
 import de.yaio.core.datadomainservice.SysDataService;
 import de.yaio.core.datadomainservice.SysDataServiceImpl;
+import de.yaio.core.dbservice.BaseNodeDBService;
+import de.yaio.core.dbservice.BaseNodeDBServiceImpl;
 import de.yaio.core.nodeservice.BaseNodeService;
 import de.yaio.core.nodeservice.NodeService;
 
@@ -108,6 +109,8 @@ public class BaseNode implements BaseData, MetaData, SysData,
     protected static SysDataService sysDataService = new SysDataServiceImpl();
     protected static MetaDataService metaDataService = new MetaDataServiceImpl();
     protected static NodeService nodeService = new BaseNodeService();
+    protected static BaseNodeDBService baseNodeDBService = BaseNodeDBServiceImpl.getInstance();
+    
     @XmlTransient
     @JsonIgnore
     public SysDataService getSysDataService() {
@@ -148,6 +151,23 @@ public class BaseNode implements BaseData, MetaData, SysData,
     @JsonIgnore
     public NodeService getNodeService() {
         return nodeService;
+    }
+
+    /**
+     * @return the {@link BaseNode#baseNodeDBService}
+     */
+    @XmlTransient
+    @JsonIgnore
+    public BaseNodeDBService getBaseNodeDBService() {
+        return baseNodeDBService;
+    }
+    /**
+     * @param newBaseNodeDBService the {@link BaseNode#baseNodeDBService} to set
+     */
+    @XmlTransient
+    @JsonIgnore
+    public void setBaseNodeDBService(BaseNodeDBService newBaseNodeDBService) {
+        baseNodeDBService = newBaseNodeDBService;
     }
 
     private Long importTmpId;
@@ -543,7 +563,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
         this.childNodesByNameMapMap.clear();
         
         // read my childNodes
-        List<BaseNode> tmpChildNodes = BaseNode.findChildNodes(this.getSysUID());
+        List<BaseNode> tmpChildNodes = getBaseNodeDBService().findChildNodes(this.getSysUID());
         
         // set new level if it is not -1
         recursionLevel = (recursionLevel > 0 ? recursionLevel-- : recursionLevel);
@@ -586,50 +606,6 @@ public class BaseNode implements BaseData, MetaData, SysData,
         }
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Persistence
-     * <h4>FeatureDescription:</h4>
-     *     read the children for the sysUID from database
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue List<BaseNode> - list of the the children
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Persistence JPA
-     * @param sysUID - sysUID for the filter on parent_node
-     * @return List of childnodes for basenode with sysUID
-     */
-    public static List<BaseNode> findChildNodes(String sysUID) {
-        return entityManager().createQuery(
-                        "SELECT o FROM BaseNode o where parent_node = :sysUID order by sort_pos asc", 
-                        BaseNode.class
-                        ).setParameter("sysUID", sysUID).getResultList();
-    }
-    
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Persistence
-     * <h4>FeatureDescription:</h4>
-     *     read the matching nodes for the symLinkRef from database
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue List<BaseNode> - list of the the children
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Persistence JPA
-     * @param symLinkRef - symLinkRef for the filter on node
-     * @return List of machting nodes for symLinkRef
-     */
-    public static List<BaseNode> findSymLinkBaseNode(String symLinkRef) {
-        return entityManager().createQuery(
-                        "SELECT o FROM BaseNode o where sysUID = :symLinkRef"
-                        + " or CONCAT(metaNodePraefix, metaNodeNummer) = :symLinkRef"
-                        + " order by sort_pos asc", 
-                        BaseNode.class
-                        ).setParameter("symLinkRef", symLinkRef).getResultList();
-    }
-    
     /**
      * <h4>FeatureDomain:</h4>
      *     Persistence
@@ -716,7 +692,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
      */
     public void removeChildNodesFromDB() {
         // interate children on db
-        for (BaseNode childNode : findChildNodes(this.getSysUID())) {
+        for (BaseNode childNode : getBaseNodeDBService().findChildNodes(this.getSysUID())) {
             // persist to DB
             if (LOGGER.isDebugEnabled())
                 LOGGER.debug("removeChildNodesFromDB from " + this.getNameForLogger() 
