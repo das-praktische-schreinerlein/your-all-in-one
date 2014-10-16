@@ -1162,18 +1162,32 @@ function renderColumnsForNode(event, data) {
                 $("<div />").html("<a href='#'" +
                         " onclick=\"toggleNodeDescContainer('" + basenode.sysUID + "'); return false;\"" +
                             " id='toggler_desc_" + basenode.sysUID + "'" +
-                            " data-tooltip='Zeige die detaillierte Beschreibung an'></a>")
+                            " data-tooltip='tooltip.command.ToggleDesc' lang='tech'></a>")
                         .addClass("container_field")
                         .addClass("fieldtype_descToggler")
                         .addClass("toggler_show")
                         //.addClass(statestyle)
                         );
         
-        // add desc row
-        $nodeDataBlock.append(
-                $("<div class='togglecontainer' id='detail_desc_" + basenode.sysUID + "'>"
-                        + "<pre>" + htmlEscapeText(basenode.nodeDesc).replace(/\<WLBR\>/g, "\n") + "</pre>"
-                        + "</div>").addClass("field_nodeDesc"));
+        // create desc row
+        var $divDesc = $("<div class='togglecontainer' id='detail_desc_" + basenode.sysUID + "' />");
+        $divDesc.addClass("field_nodeDesc");
+
+        $divDesc.append("<div class='container-commands-desc' id='commands_desc_" + basenode.sysUID + "'"
+                        + "data-tooltip='tooltip.command.TogglePreWrap' lang='tech' >" 
+                        + "<input type='checkbox' id='cmd_toggle_content_desc_" + basenode.sysUID + "' onclick=\"togglePreWrap('#content_desc_" + basenode.sysUID + "'); return true;\">"
+                        + "<span lang='tech'>im Originallayout anzeigen</span>"
+                        + "</div>"
+                        + "<br />");
+        
+        // append content
+        var descText = basenode.nodeDesc;
+        descText = descText.replace(/\<WLBR\>/g, "\n");
+        $divDesc.append("<pre class='content-desc pre-wrap' id='content_desc_" + basenode.sysUID + "'>" 
+                        + htmlEscapeText(descText) + "</pre>");
+        
+        // append to datablock
+        $nodeDataBlock.append($divDesc);
     }
     
     // add nodeData
@@ -2351,43 +2365,74 @@ function setupAppSize() {
     
     // YAIO-editor
     var ele = $("#containerBoxYaioEditor");
-    
-    // we are relative to the tree
-    var paddingToHead = $("#containerYaioTree").position().top;
-    var left = $("#containerYaioTree").position().left + $("#containerYaioTree").width + 2;
+    if (ele.length > 0) {
+        // we are relative to the tree
+        var paddingToHead = $("#containerYaioTree").position().top;
+        var left = $("#containerYaioTree").position().left + $("#containerYaioTree").width + 2;
 
-    // set posTop as scrollTop burt never < paddingToHead
-    var posTop = $(window).scrollTop();
-    if (posTop < paddingToHead) {
-        posTop = paddingToHead;
+        // set posTop as scrollTop burt never < paddingToHead
+        var posTop = $(window).scrollTop();
+        if (posTop < paddingToHead) {
+            posTop = paddingToHead;
+        }
+        
+        // calc maxHeight = windHeight - 20 (puffer)
+        var maxHeight = height - 20;
+        // sub topPos - Scollpos
+        maxHeight = maxHeight - (posTop - $(window).scrollTop());
+
+        // set values
+        $(ele).css("position", "absolute");
+        $(ele).css("max-height", maxHeight);
+        $(ele).css("top", posTop);
+        $(ele).css("left", left);
+        
+        console.log("setup size containerBoxYaioEditor width:" + window.innerWidth 
+                + " height:" + window.innerHeight 
+                + " scrollTop:" + $(window).scrollTop()
+                + " offset.top" + $(ele).offset().top
+                + " top:" + posTop
+                + " max-height:" + $(ele).css("max-height")
+                );
     }
     
-    // calc maxHeight = windHeight - 20 (puffer)
-    var maxHeight = height - 20;
-    // sub topPos - Scollpos
-    maxHeight = maxHeight - (posTop - $(window).scrollTop());
-
-    // set values
-    $(ele).css("position", "absolute");
-    $(ele).css("max-height", maxHeight);
-    $(ele).css("top", posTop);
-    $(ele).css("left", left);
-    
-    console.log("setup size width:" + window.innerWidth 
-            + " height:" + window.innerHeight 
-            + " scrollTop:" + $(window).scrollTop()
-            + " offset.top" + $(ele).offset().top
-            + " top:" + posTop
-            + " max-height:" + $(ele).css("max-height")
-            );
-    
     // Export-editor
-    $("#containerFormYaioEditorOutputOptions").css("max-height", 
-            height-$("#containerFormYaioEditorOutputOptions").offset().top);
-
+    ele = $("#containerFormYaioEditorOutputOptions");
+    if (ele.length > 0) {
+        $(ele).css("max-height", height-$(ele).offset().top);
+        console.log("setup size containerFormYaioEditorOutputOptions width:" + window.innerWidth 
+                + " height:" + window.innerHeight 
+                + " scrollTop:" + $(window).scrollTop()
+                + " offset.top" + $(ele).offset().top
+                + " max-height:" + $(ele).css("max-height")
+                );
+    }
     // Import-editor
-    $("#containerFormYaioEditorImport").css("max-height", 
-            height-$("#containerFormYaioEditorImport").offset().top);
+     ele = $("#containerFormYaioEditorImport");
+    if (ele.length > 0) {
+        $(ele).css("max-height", height-$(ele).offset().top);
+        console.log("setup size containerFormYaioEditorImport width:" + window.innerWidth 
+                + " height:" + window.innerHeight 
+                + " scrollTop:" + $(window).scrollTop()
+                + " offset.top" + $(ele).offset().top
+                + " max-height:" + $(ele).css("max-height")
+                );
+    }
+
+}
+
+function togglePreWrap(element) {
+   var classNoWrap = "pre-nowrap";
+   var classWrap = "pre-wrap";
+   
+   // remove/add class if element no has class
+   if ($(element).hasClass(classNoWrap)) {
+       $(element).removeClass(classNoWrap).addClass(classWrap);
+       console.log("togglePreWrap for id:" + element + " set " + classWrap);
+   } else {
+       $(element).removeClass(classWrap).addClass(classNoWrap);
+       console.log("togglePreWrap for id:" + element + " set " + classNoWrap);
+   }
 }
 
 function showModalErrorMessage(message) {
@@ -2560,13 +2605,13 @@ function logError(message, flgShowDialog) {
  *****************************************/
 
 function htmlEscapeText(text) {
-    if (text && text != "undefined" && text != "" && text != null) {
-        text = text.replace("&", "&amp;");
-        text = text.replace("<", "&lt;");
-        text = text.replace(">", "&gt;");
-        text = text.replace("\"", "&quot;");
-        text = text.replace("'", "&#x27;");
-        text = text.replace("/", "&#x2F;");
+    if ((text != "undefined") && (text != "") && (text != null)) {
+        text = text.replace(/&/g, "&amp;");
+        text = text.replace(/</g, "&lt;");
+        text = text.replace(/>/g, "&gt;");
+        text = text.replace(/"/g, "&quot;");
+        text = text.replace(/'/g, "&#x27;");
+        text = text.replace(/\//g, "&#x2F;");
     }
     return text;
 }

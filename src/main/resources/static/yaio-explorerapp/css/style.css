@@ -772,7 +772,74 @@ body .ui-tooltip {
 
 
 
+/*****************************************
+ *****************************************
+ * pre-formating from bootstrap
+ *****************************************
+ *****************************************/
+/*!
+ * Bootstrap v3.1.1 (http://getbootstrap.com)
+ * Copyright 2011-2014 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+pre {
+    overflow: auto
+}
 
+code,kbd,pre,samp {
+    font-family: monospace, monospace;
+    font-size: 1em
+}
+
+pre,blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid
+}
+
+code,kbd,pre,samp {
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace
+}
+
+pre {
+    display: block;
+    padding: 9.5px;
+    margin: 0 0 10px;
+    font-size: 13px;
+    line-height: 1.42857143;
+    word-break: break-all;
+    word-wrap: break-word;
+    color: #333;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 4px
+}
+
+pre code {
+    padding: 0;
+    font-size: inherit;
+    color: inherit;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
+    background-color: transparent;
+    border-radius: 0
+}
+
+
+.pre-wrap {
+    white-space: pre-line;
+    white-space: -moz-pre-line;
+    white-space: -o-pre-line;
+    word-wrap: break-word;
+}
+
+.pre-nowrap {
+    white-space: pre;
+    white-space: -moz-pre;
+    white-space: -o-pre;
+    word-wrap: normal;
+}
 
 /*****************************************
  *****************************************

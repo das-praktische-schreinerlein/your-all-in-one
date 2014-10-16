@@ -23,6 +23,9 @@
         "tooltip.command.OpenSearchView": "Wechseln Sie über diesen Link zur Suchseite.", 
         "tooltip.command.OpenTreeView": "Wechseln Sie über diesen Link zur Baumansicht Ihrer Daten.", 
         "tooltip.command.ShowGanttData": "Wechseln Sie hier zwischen der Ansicht der Rohdaten und einer Darstellung als Gantt-Diagramm. <br /><br /><b>Achtung!!!</b> Die Gantt-Darstellung ist nur eine grobe Verteilung der Plan/Ist-Stunden auf den gesamten Plan/Ist-Zeitraum. Aufwende ohne Zeitraum werden nicht eingerechnet. Aufwende der Kindselemente werden über den gesamten Zeitraum des Elternelement verteilt und können sich somit völlig verschieben.", 
+        "tooltip.command.ToggleDesc": "Zeige die detaillierte Beschreibung an.",
+        "tooltip.command.TogglePreWrap": "Hier können Sie wählen, ob die Beschreibung im Fenster umgebrochen (vorteilhaft bei Briefen und Fließtext) oder ob das Original bebehalten werden soll (empfehlenswert für Quelltexte, Logs usw.).",
+        "tooltip.command.Desc": "Zeige die detaillierte Beschreibung an.",
         "DUMMYXXXX": "DUMMYXXXX"
     },
     "regex": [
@@ -30,6 +33,7 @@
         ["^Style: $", "", "Style:"],
         ["^Kurzname: $", "", "Kurzname:"],
         ["^Block schlie&szligen!$", "", "Block schlie&szlig;en"],
+        ["^im Originallayout anzeigen$", "", "Originallayout anzeigen (ohne Anpassung an die Fensterbreite!)?"],
         ["^Tag: DIV$", "", "Block starten"],
         ["^Tag: UE$", "", "Überschrift"],
         ["^Tag: P$", "", "Textzeile"],
