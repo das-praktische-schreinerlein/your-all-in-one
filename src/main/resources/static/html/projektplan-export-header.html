@@ -552,8 +552,8 @@ h1, h2, h3, h4, h5, h6, h7, h8 {
 
            // normalisieren
            var strNumber = col.html();
-           strNumber = strNumber.replace(".", "");
-           strNumber = strNumber.replace(",", ".");
+           strNumber = strNumber.replace(/./g, "");
+           strNumber = strNumber.replace(/,/, ".");
            
            // auf Zahl testen
            var number = parseFloat(strNumber, "10");

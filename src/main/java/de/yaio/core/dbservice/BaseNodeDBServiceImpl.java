@@ -21,6 +21,8 @@ import java.util.List;
 
 import javax.persistence.TypedQuery;
 
+import org.apache.log4j.Logger;
+
 import de.yaio.core.node.BaseNode;
 import de.yaio.core.nodeservice.BaseNodeService;
 
@@ -38,6 +40,10 @@ import de.yaio.core.nodeservice.BaseNodeService;
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class BaseNodeDBServiceImpl implements BaseNodeDBService {
+    // Logger
+    private static final Logger LOGGER =
+        Logger.getLogger(BaseNodeDBServiceImpl.class);
+
     
     
     protected static BaseNodeDBService instance = new BaseNodeDBServiceImpl();
@@ -63,14 +69,22 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
     public List<BaseNode> updateMeAndMyParents(BaseNode node) throws Exception {
         List<BaseNode> parentHierarchy = null;
         if (node != null) {
-            // init Cildren from DB
-            node.initChildNodesFromDB(0);
-            
-            // recalc me
-            node.recalcData(BaseNodeService.CONST_RECURSE_DIRECTION_ONLYME);
-            
-            // save me
-            node.merge();
+            try {
+                // init Cildren from DB
+                node.initChildNodesFromDB(0);
+
+                // recalc me
+                node.recalcData(BaseNodeService.CONST_RECURSE_DIRECTION_ONLYME);
+
+                // save me
+                node.merge();
+            } catch (Exception ex) {
+                LOGGER.error("errors while updating node '" 
+                                + node.getNameForLogger() + "':" + ex);
+                LOGGER.error("error saving node '" 
+                                + node);
+                throw ex;
+            }            
             
             // update my parents
             if (node.getParentNode() != null) {
