@@ -24,6 +24,7 @@ import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -58,6 +59,11 @@ import de.yaio.utils.Calculator;
 @Controller
 @RequestMapping("/nodes")
 public class NodeRestController {
+    
+    // Logger
+    private static final Logger LOGGER =
+            Logger.getLogger(NodeRestController.class);
+    
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -139,7 +145,7 @@ public class NodeRestController {
             response.setNodes(resultList);
             
             // set state
-            response.setStateMsg("nosde found");
+            response.setStateMsg("node found");
         }
         
         return response;
@@ -327,6 +333,10 @@ public class NodeRestController {
                 // recalc parent
                 updateMeAndMyParents(parent);
             } catch (Exception e) {
+                LOGGER.error("violationerrors while deleting node '" 
+                                + sysUID + "':" + e);
+                LOGGER.error("error deleting node '" 
+                                + node);
                 e.printStackTrace();
             }
             
@@ -634,6 +644,11 @@ public class NodeRestController {
                                       cViolation.getMessageTemplate()));
             }
             
+            LOGGER.error("violationerrors while updating node '" 
+                            + sysUID + "':" + ex);
+            LOGGER.error("error updating node '" 
+                            + node);
+
             // create response
             response = new NodeActionResponse(
                             "ERROR", "violationerrors while updating node '" + sysUID + "':" + ex, 
@@ -643,6 +658,10 @@ public class NodeRestController {
         } catch (Throwable ex) {
             // errorhandling
             ex.printStackTrace();
+            LOGGER.error("error while updating node '" 
+                            + sysUID + "':" + ex);
+            LOGGER.error("error updating node '" 
+                            + node);
             response = new NodeActionResponse(
                             "ERROR", "error while updating node '" + sysUID + "':" + ex, 
                             null, null, null, null);
@@ -717,6 +736,10 @@ public class NodeRestController {
             }
             
             // create response
+            LOGGER.error("violationerrors while creating node for parent '" 
+                            + parentSysUID + "':" + ex);
+            LOGGER.error("error creating node '" 
+                            + newNode);
             response = new NodeActionResponse(
                             "ERROR", "violationerrors while creating node for parent '" 
                             + parentSysUID + "':" + ex, 
@@ -726,6 +749,10 @@ public class NodeRestController {
         } catch (Throwable ex) {
             // errorhandling
             ex.printStackTrace();
+            LOGGER.error("error while creating node for parent '" 
+                            + parentSysUID + "':" + ex);
+            LOGGER.error("error creating node '" 
+                            + newNode);
             response = new NodeActionResponse(
                             "ERROR", "error while creating node for parent '" 
                             + parentSysUID + "':" + ex, 
@@ -1089,6 +1116,10 @@ public class NodeRestController {
         } catch (Throwable ex) {
             // errorhandling
             ex.printStackTrace();
+            LOGGER.error("error while moving node  '" 
+                         + sysUID + "' to '" +newParentSysUID + "'-" + newSortPos 
+                         + ":" + ex);
+            LOGGER.error("error moving node '" + node);
             response = new NodeActionResponse(
                             "ERROR", "error while moving node '" + sysUID + "':" + ex, 
                             null, null, null, null);

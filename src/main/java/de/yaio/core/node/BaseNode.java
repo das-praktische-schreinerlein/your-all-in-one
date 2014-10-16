@@ -639,18 +639,26 @@ public class BaseNode implements BaseData, MetaData, SysData,
             }
 
             // persist to DB
-            if (LOGGER.isDebugEnabled())
-                LOGGER.debug("persistChildNodesToDB from " + this.getNameForLogger() 
-                           + " child:" + childNode.getNameForLogger());
-            if (LOGGER.isDebugEnabled())
-                LOGGER.debug("childNode:" + childNode.getName() + " pos: " +childNode.getSortPos());
-            // check if persist or merge
-            if (entityManager().contains(childNode) || flgForceMerge) {
-                childNode.merge();
-            } else {
-                childNode.persist();
-            }
-
+            try {
+                if (LOGGER.isDebugEnabled())
+                    LOGGER.debug("persistChildNodesToDB from " + this.getNameForLogger() 
+                               + " child:" + childNode.getNameForLogger());
+                if (LOGGER.isDebugEnabled())
+                    LOGGER.debug("childNode:" + childNode.getName() + " pos: " +childNode.getSortPos());
+                
+                // check if persist or merge
+                if (entityManager().contains(childNode) || flgForceMerge) {
+                    childNode.merge();
+                } else {
+                    childNode.persist();
+                }
+            } catch (Exception ex) {
+                LOGGER.error("errors while saving childnode for '" 
+                                + sysUID + "':" + ex);
+                LOGGER.error("error saving node '" 
+                                + childNode);
+                throw ex;
+            }            
 //            boolean flgOK = true;
 //            try {
 //                childNode.persist();
