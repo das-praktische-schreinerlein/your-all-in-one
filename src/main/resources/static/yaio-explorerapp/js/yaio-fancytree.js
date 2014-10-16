@@ -706,14 +706,14 @@ function renderDataBlock(basenode, fancynode) {
     if (basenode.className == "TaskNode" || basenode.className == "EventNode") {
         // TaskNode
         $row.append(
-                $("<div />").html("&nbsp;" + formatNumbers(basenode.istChildrenSumStand, 2, "%"))
+                $("<div />").html("&nbsp;" + formatNumbers(basenode.istChildrenSumStand, 0, "%"))
                         .addClass("container_field")
                         .addClass("fieldtype_stand")
                         .addClass("field_istChildrenSumStand")
                         .addClass(statestyle)
                         ); 
         $row.append(
-                $("<div />").html("&nbsp;" + formatNumbers(basenode.istChildrenSumAufwand, 2, "h"))
+                $("<div />").html("&nbsp;" + formatNumbers(basenode.istChildrenSumAufwand, 1, "h"))
                         .addClass("container_field")
                         .addClass("fieldtype_aufwand")
                         .addClass("field_istChildrenSumAufwand")
@@ -728,7 +728,7 @@ function renderDataBlock(basenode, fancynode) {
                          .addClass(statestyle)
                          );
         $row.append(
-                $("<div />").html("&nbsp;" + formatNumbers(basenode.planChildrenSumAufwand, 2, "h"))
+                $("<div />").html("&nbsp;" + formatNumbers(basenode.planChildrenSumAufwand, 1, "h"))
                          .addClass("container_field")
                          .addClass("fieldtype_aufwand")
                          .addClass("field_planChildrenSumAufwand")
@@ -894,6 +894,9 @@ function fillGanttBlock(basenode, type, label, $divLine) {
         var rangeAufwand = 0;
         var flgMatchesRange = false;
         
+        // add 8h to the end
+        endMillis = endMillis + 1000 * 60 * 60 * 8;
+        
         // check if range matches
         if (startMillis > dateRangeEndMillis) {
             // sorry you start later
@@ -941,7 +944,7 @@ function fillGanttBlock(basenode, type, label, $divLine) {
             }
             
             console.log("fillGanttBlock MATCHES width: " 
-                    + startPos + "-" + endPos + " " + msg);
+                    + startPos + "-" + endPos + " aufwand:" + rangeAufwand + " " + msg);
         } else {
             console.log("fillGanttBlock SKIP dates not matched: " + msg);
         }
