@@ -249,18 +249,11 @@ function yaioCreateFancyTree(treeId, masterNodeId, doneHandler) {
             // activate/deactivate gantt for node
             if (flag) {
                 console.debug("onExpandCallBack: activate gantt - only own data for " + node.key);
-                // I'm expanded: show only my own data
-                $("#gantt_istChildrenSum_container_" + node.key).css("display", "none");
-                $("#gantt_planChildrenSum_container_" + node.key).css("display", "none");
-                $("#gantt_ist_container_" + node.key).css("display", "block");
-                $("#gantt_plan_container_" + node.key).css("display", "block");
+                yaioActivateGanttBlock(node, true);
             } else {
                 // I'm collapsed: show me and my childsum
                 console.debug("onExpandCallBack: activate gantt - sum data of me+children for " + node.key);
-                $("#gantt_ist_container_" + node.key).css("display", "none");
-                $("#gantt_plan_container_" + node.key).css("display", "none");
-                $("#gantt_istChildrenSum_container_" + node.key).css("display", "block");
-                $("#gantt_planChildrenSum_container_" + node.key).css("display", "block");
+                yaioActivateGanttBlock(node, false);
             }
         },
         
@@ -851,6 +844,7 @@ function fillGanttBlock(basenode, type, label, $divLine) {
     $div.html("&nbsp;");
     $div.css("width", 0);
     $div.css("margin-left", 0);
+    $div.attr("data-rangeaufwand", 0);
 
     // set range
     var dateRangeStartStr = $("#inputGanttRangeStart").val();
@@ -938,9 +932,10 @@ function fillGanttBlock(basenode, type, label, $divLine) {
             if (rangeAufwand > 0) {
                 $divLabel.html("<span class='gantt_aufwand_label'>" 
                                  + label + ":" + "</span>"
-                             + "<span class='gantt_aufwand_value'" +
-                             		" data-rangeaufwand='" + rangeAufwand + "'>" 
+                               + "<span class='gantt_aufwand_value'" +
+                                     " data-rangeaufwand='" + rangeAufwand + "'>" 
                                  + formatNumbers(rangeAufwand, 0, "h") + "</span");
+                $div.attr("data-rangeaufwand", rangeAufwand);
             }
             
             console.log("fillGanttBlock MATCHES width: " 
@@ -1211,6 +1206,9 @@ function renderColumnsForNode(event, data) {
     
     // toogle desc
     toggleNodeDescContainer(basenode.sysUID);
+    
+    // calc nodeData
+    yaioRecalcMasterGanttBlockFromTree();
 };
 
 
@@ -1273,18 +1271,214 @@ function yaioShowGanttBlock() {
 }
 
 
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Gantt
+ * <h4>FeatureDescription:</h4>
+ *     activate one of the gantt-blocks for the element<br>
+ *     When flgMeOnly ist set: activate #gantt_ist_container_ + #gantt_plan_container 
+ *     to display only the gantt with the data of this node<br>
+ *     When flgMeOnly ist nmot set: activate #gantt_istChildrenSum_container_ + #gantt_planChildrenSum_container 
+ *     to display only the gantt with the data of this node and children<br>
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>Updates DOM
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     Gantt
+ * @param node - the FancytreeNode
+ * @param flgMeOnly - true - display only the gantt for the node / false - node+children
+ */
+function yaioActivateGanttBlock(node, flgMeOnly) {
+    if (flgMeOnly) {
+        console.debug("yaioActivateGanttBlock: activate gantt - only own data for " + node.key);
+        // I'm expanded: show only my own data
+        $("#gantt_istChildrenSum_container_" + node.key).css("display", "none");
+        $("#gantt_planChildrenSum_container_" + node.key).css("display", "none");
+        $("#gantt_ist_container_" + node.key).css("display", "block");
+        $("#gantt_plan_container_" + node.key).css("display", "block");
+    } else {
+        // I'm collapsed: show me and my childsum
+        console.debug("yaioActivateGanttBlock: activate gantt - sum data of me+children for " + node.key);
+        $("#gantt_ist_container_" + node.key).css("display", "none");
+        $("#gantt_plan_container_" + node.key).css("display", "none");
+        $("#gantt_istChildrenSum_container_" + node.key).css("display", "block");
+        $("#gantt_planChildrenSum_container_" + node.key).css("display", "block");
+    }
+
+    // recalc gantt tree
+    yaioRecalcMasterGanttBlockFromTree()
+}
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Gantt
+ * <h4>FeatureDescription:</h4>
+ *     recalc all gantt-blocks of the fancytree-nodes (iterates over getRooNode.visit()<br>
+ *     calls yaioRecalcGanttBlock for every node and afterwards yaioRecalcMasterGanttBlockFromTree()
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>Updates DOM
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     Gantt
+ */
 function yaioRecalcFancytreeGanttBlocks() {
     if ($("#tree").length > 0) {
         // tree exists
         $("#tree").fancytree("getRootNode").visit(function(node){
-            fillGanttBlock(node.data.basenode, "plan", "Plan", null);
-            fillGanttBlock(node.data.basenode, "planChildrenSum", "PlanSum", null);
-            fillGanttBlock(node.data.basenode, "ist", "Ist", null);
-            fillGanttBlock(node.data.basenode, "istChildrenSum", "IstSum", null);
+            yaioRecalcGanttBlock(node.data.basenode);
         });
+    }
+    yaioRecalcMasterGanttBlockFromTree()
+}
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Gantt
+ * <h4>FeatureDescription:</h4>
+ *     recalc mastergantt-block for the basenode on top of the page<br>
+ *     calls yaioRecalcGanttBlock and yaioRecalcMasterGanttBlockFromTree
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>Updates DOM
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     Gantt
+ * @param basenode - the basenode to recalc (java de.yaio.core.node.BaseNode)
+ */
+function yaioRecalcMasterGanttBlock(basenode) {
+    // default: set with own
+    yaioRecalcGanttBlock(basenode);
+
+    // calc from tree
+    yaioRecalcMasterGanttBlockFromTree()
+}
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Gantt
+ * <h4>FeatureDescription:</h4>
+ *     recalc mastergantt-block from the tree-data<br>
+ *     extract nodeid of the masternode from "#masterTr.data-value"<br>
+ *     calls yaioRecalcMasterGanttBlockLine for plan+ist
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>Updates DOM
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     Gantt
+ */
+function yaioRecalcMasterGanttBlockFromTree() {
+    // calc from children
+    var masterNodeId = $("#masterTr").attr('data-value');
+    yaioRecalcMasterGanttBlockLine(masterNodeId, "plan");
+    yaioRecalcMasterGanttBlockLine(masterNodeId, "ist");
+}
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Gantt
+ * <h4>FeatureDescription:</h4>
+ *     Recalcs mastergantt-line for praefix (plan, ist) with the tree-data<br>
+ *     It extracts the data-rangeaufwand from gantt_${praefix}ChildrenSum_bar_$masterNodeId<br>
+ *     It iterates over all visible div.gantt_$praefix_bar, div.gantt_${praefix}ChildrenSum_bar
+ *     and adds their data-rangeaufwand<br>
+ *     At the end the sumRangeAufwand will be placed on #gantt_${praefix}ChildrenSum_aufwand_{masterNodeId}
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>Updates DOM
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *    Gantt
+ * @param masterNodeId - id of the masterNode on top of the page
+ * @param praefix - datablock to racalc (plan, ist)
+ */
+function yaioRecalcMasterGanttBlockLine(masterNodeId, praefix) {
+    // calc rangeAufwand
+    var sumRangeAufwand = 0;
+
+    // init with aufwand of the masternode
+    var masterBarId = "#gantt_" + praefix + "_bar_" + masterNodeId;
+    var $masterBar = $(masterBarId);
+    if ($masterBar.length > 0) {
+        sumRangeAufwand = parseFloat($masterBar.attr("data-rangeaufwand"));
+        console.log("yaioRecalcMasterGanttBlock type=" + praefix + " found masterrangeaufwand :" + sumRangeAufwand + " for " + masterBarId);
+    } else {
+        console.log("yaioRecalcMasterGanttBlock type=" + praefix + " no masterrangeaufwand :" + sumRangeAufwand + " for " + masterBarId);
+    }
+    
+    // check for tree
+    var treeId = "#tree";
+    var tree = $(treeId).fancytree("getTree");
+    if (! tree) {
+        logError("yaioRecalcMasterGanttBlock: error tree:'" + treeId + "' not found.", false);
+        return;
+    }
+    
+    // filter ganttblocks
+    var filter = "div.gantt_" + praefix + "_bar, div.gantt_" + praefix + "ChildrenSum_bar";
+    var $ganttBars = $(filter).filter(function () { return $(this).parent().css('display') == 'block' })
+    console.log("yaioRecalcMasterGanttBlock type=" + praefix + " found:" + $ganttBars.length + " for filter:" + filter);
+    if ($ganttBars.length > 0) {
+        $($ganttBars).each( function () {
+            // check if node is visible
+            var nodeId = this.id;
+            nodeId = nodeId.replace(/gantt_(.*)bar_/, "");
+            var treeNode = tree.getNodeByKey(nodeId);
+            if (treeNode && treeNode.isVisible()) {
+                // node is visible: calc
+                var rangeAufwand = $(this).attr("data-rangeaufwand");
+                if (this.id.indexOf(masterNodeId) <= 0) {
+                    console.log("yaioRecalcMasterGanttBlock type=" + praefix + " found rangeaufwand :" + rangeAufwand + " for " + this.id);
+                    sumRangeAufwand += parseFloat(rangeAufwand);
+                    
+                } else {
+                    console.log("yaioRecalcMasterGanttBlock type=" + praefix + " ignore rangeaufwand from master:" + rangeAufwand + " for " + this.id);
+                }
+            } else if (! treeNode) {
+                // not found
+                console.log("yaioRecalcMasterGanttBlock type=" + praefix + " skip node not found nodeId:" + nodeId + " for " + this.id);
+            } else {
+                // not visble
+                console.log("yaioRecalcMasterGanttBlock type=" + praefix + " skip node not visble nodeId:" + nodeId + " for " + this.id);
+            }
+        });
+    }
+    console.log("yaioRecalcMasterGanttBlock type=" + praefix + " calced rangeaufwand :" + sumRangeAufwand + " for " + masterNodeId);
+
+    // update masterBlock
+    var type = praefix + "ChildrenSum";
+    var $divLine = $("#gantt_" + type + "_container_" + masterNodeId);
+    var $divLabel = $($divLine).find("#gantt_" + type + "_aufwand_" + masterNodeId);
+    var $div = $($divLine).find("#gantt_" + type + "_bar_" + masterNodeId);
+    $divLabel.html("");
+    if (sumRangeAufwand > 0)  {
+        console.log("yaioRecalcMasterGanttBlock type=" + praefix + " set gantt_aufwand_label with calced rangeaufwand :" + sumRangeAufwand + " for " + masterNodeId);
+        $divLabel.html("<span class='gantt_aufwand_label'>" 
+                + praefix + "Sum:" + "</span>"
+              + "<span class='gantt_aufwand_value'" +
+                    ">" 
+                + formatNumbers(sumRangeAufwand, 0, "h") + "</span");
+    } else {
+        console.log("yaioRecalcMasterGanttBlock type=" + praefix + " hide gantt_aufwand_label because no calced rangeaufwand :" + sumRangeAufwand + " for " + masterNodeId);
     }
 }
 
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Gantt
+ * <h4>FeatureDescription:</h4>
+ *     recalc gantt-block for the basenode<br>
+ *     calls fillGanttBlock for (plan, ist, planChildrenSum, istChildrenSum)
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>Updates DOM
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     Gantt
+ * @param basenode - the basenode to recalc (java de.yaio.core.node.BaseNode)
+ */
 function yaioRecalcGanttBlock(basenode) {
     fillGanttBlock(basenode, "plan", "Plan", null);
     fillGanttBlock(basenode, "planChildrenSum", "PlanSum", null);
