@@ -437,7 +437,7 @@ td, th {
     width: 570px;
 }
 .gantt_aufwand {
-    width: 80px;
+    width: 100px;
     float: left;
     margin-right: 10px;
     line-height: 1em;
