@@ -527,6 +527,7 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
                  } 
             };
             renderColumnsForNode(null, data);
+            yaioRecalcMasterGanttBlock($scope.node);
         } else {
             // error
             logError("error loading nodes:" + nodeResponse.data.stateMsg 
@@ -925,7 +926,7 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
      */
     $scope.recalcGanttBlocks = function() {
         yaioRecalcFancytreeGanttBlocks();
-        yaioRecalcGanttBlock($scope.node);
+        yaioRecalcMasterGanttBlock($scope.node);
     }
 });
 
