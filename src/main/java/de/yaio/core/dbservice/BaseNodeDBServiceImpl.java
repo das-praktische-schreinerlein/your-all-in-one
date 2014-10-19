@@ -80,7 +80,7 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
                 node.merge();
             } catch (Exception ex) {
                 LOGGER.error("errors while updating node '" 
-                                + node.getNameForLogger() + "':" + ex);
+                                + node.getNameForLogger() + "':", ex);
                 LOGGER.error("error saving node '" 
                                 + node);
                 throw ex;

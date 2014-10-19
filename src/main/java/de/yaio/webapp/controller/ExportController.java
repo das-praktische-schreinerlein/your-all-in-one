@@ -114,7 +114,7 @@ public class ExportController {
                 res = exporter.getMasterNodeResult(node, oOptions);
             } catch (Exception e) {
                 LOGGER.error("error while export of node:" + sysUID 
-                                + " with:" + exporter.getClass().getName());
+                                + " with:" + exporter.getClass().getName(), e);
                 e.printStackTrace();
             }
         }

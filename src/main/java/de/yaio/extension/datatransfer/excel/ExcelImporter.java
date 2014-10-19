@@ -22,9 +22,14 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFFormulaEvaluator;
@@ -307,6 +312,15 @@ public class ExcelImporter extends ImporterImpl {
             idesc = idesc.replaceAll("\t", "<WLTAB>");
         }
         node.setNodeDesc(idesc);
+        
+        // validate node
+        Set<ConstraintViolation<BaseNode>> violations = node.validateMe();
+        if (violations.size() > 0) {
+            ConstraintViolationException ex = new ConstraintViolationException(
+                            "error while validating newNode" + node.getNameForLogger(), 
+                            new HashSet<ConstraintViolation<?>>(violations));
+            throw ex;
+        }
 
         // Ausgabetext
         StringBuffer tmpBuffer = new StringBuffer();

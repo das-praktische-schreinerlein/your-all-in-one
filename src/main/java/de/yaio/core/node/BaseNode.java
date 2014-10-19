@@ -33,10 +33,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.ValidatorFactory;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -62,6 +66,7 @@ import de.yaio.core.dbservice.BaseNodeDBService;
 import de.yaio.core.dbservice.BaseNodeDBServiceImpl;
 import de.yaio.core.nodeservice.BaseNodeService;
 import de.yaio.core.nodeservice.NodeService;
+import de.yaio.datatransfer.importer.parser.Parser;
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -187,6 +192,8 @@ public class BaseNode implements BaseData, MetaData, SysData,
      */
     @NotNull
     @Size(min = 0, max = 2000)
+    @Pattern(regexp = "(" + Parser.CONST_PATTERN_SEG_NAME + "*)?", 
+             message = "name can only contain characters.")
     private String name;
 
     /**
@@ -198,37 +205,52 @@ public class BaseNode implements BaseData, MetaData, SysData,
     /**
      */
     @Size(max = 64000)
+//    @Pattern(regexp = "(" + Parser.CONST_PATTERN_SEG_DESC + "*)?", 
+    @Pattern(regexp = "(" + Parser.CONST_PATTERN_SEG_DESC + "*)?", 
+             message = "desc can only contain characters.")
     private String nodeDesc;
 
     /**
      */
     @Size(max = 5)
+    @Pattern(regexp = "(" + Parser.CONST_PATTERN_SEG_LAYOUTCOMMAND + "*)?", 
+             message = "docLayoutTagCommand can only contain characters.")
     private String docLayoutTagCommand;
 
     /**
      */
     @Size(max = 255)
+    @Pattern(regexp = "(" + Parser.CONST_PATTERN_SEG_STYLECLASS + "*)?", 
+             message = "docLayoutAddStyleClass can only contain characters.")
     private String docLayoutAddStyleClass;
 
     /**
      */
     @Size(max = 80)
+    @Pattern(regexp = "(" + Parser.CONST_PATTERN_SEG_SHORTNAME + "*)?", 
+             message = "docLayoutShortName can only contain characters.")
     private String docLayoutShortName;
 
     /**
      */
     @Size(max = 5)
+    @Pattern(regexp = "(" + Parser.CONST_PATTERN_SEG_FLAG + "*)?", 
+             message = "docLayoutFlgCloseDiv can only contain characters.")
     private String docLayoutFlgCloseDiv;
 
     /**
      */
     @Id
     @Size(max = 80)
+    @Pattern(regexp = "(" + Parser.CONST_PATTERN_SEG_UID + "*)?", 
+             message = "sysUID can only contain characters.")
     private String sysUID;
 
     /**
      */
     @Size(max = 50)
+    @Pattern(regexp = "(" + Parser.CONST_PATTERN_SEG_CHECKSUM + "*)?", 
+             message = "sysCurChecksum can only contain characters.")
     private String sysCurChecksum;
 
     /**
@@ -251,21 +273,29 @@ public class BaseNode implements BaseData, MetaData, SysData,
     /**
      */
     @Size(max = 10)
+    @Pattern(regexp = "(" + Parser.CONST_PATTERN_SEG_PRAEFIX + "*)?", 
+             message = "metaNodePraefix can only contain characters.")
     private String metaNodePraefix;
 
     /**
      */
     @Size(max = 10)
+    @Pattern(regexp = "(" + Parser.CONST_PATTERN_SEG_ID + "*)?", 
+             message = "metaNodeNummer can only contain digits.")
     private String metaNodeNummer;
 
     /**
      */
     @Size(max = 255)
+    @Pattern(regexp = "(" + Parser.CONST_PATTERN_SEG_TAGS + ")*?", 
+             message = "metaNodeTypeTags can only contain characters.")
     private String metaNodeTypeTags;
 
     /**
      */
     @Size(max = 255)
+    @Pattern(regexp = "(" + Parser.CONST_PATTERN_SEG_TAGS + ")*?", 
+             message = "metaNodeSubTypeTags can only contain characters.")
     private String metaNodeSubTypeTags;
 
     /**
@@ -291,6 +321,8 @@ public class BaseNode implements BaseData, MetaData, SysData,
     /**
      */
     @Size(max = 30)
+    @Pattern(regexp = "(" + Parser.CONST_PATTERN_SEG_TASK + ")*?", 
+             message = "planTask can only contain characters.")
     private String planTask;
 
     /**
@@ -343,6 +375,8 @@ public class BaseNode implements BaseData, MetaData, SysData,
     /**
      */
     @Size(max = 30)
+    @Pattern(regexp = "(" + Parser.CONST_PATTERN_SEG_TASK + ")*?", 
+             message = "istTask can only contain characters.")
     private String istTask;
 
     /**
@@ -388,11 +422,15 @@ public class BaseNode implements BaseData, MetaData, SysData,
     /**
      */
     @Size(max = 255)
+    @Pattern(regexp = "(" + Parser.CONST_PATTERN_SEG_STATE + "*)?", 
+             message = "state can only contain characters.")
     private String state;
 
     /**
      */
     @Size(max = 255)
+    @Pattern(regexp = "(" + Parser.CONST_PATTERN_SEG_TYPE + "*)?", 
+             message = "type can only contain characters.")
     private String type;
     
     
@@ -434,6 +472,17 @@ public class BaseNode implements BaseData, MetaData, SysData,
     // checks 
     //
     //
+    
+    @Override
+    public Set<ConstraintViolation<BaseNode>> validateMe() {
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        javax.validation.Validator validator = factory.getValidator();
+
+        Set<ConstraintViolation<BaseNode>> violations = validator.validate(this);
+        
+        return violations;
+    }
+
     /**
      * checks if planStart <= planEnde
      * @return true/false
@@ -444,11 +493,11 @@ public class BaseNode implements BaseData, MetaData, SysData,
     @JsonIgnore
     public boolean isPlanValidRange() {
         if (getPlanStart() != null && getPlanEnde() != null) {
-            if (! (getPlanEnde().compareTo(getPlanStart()) >= 0)) {
+            if (LOGGER.isDebugEnabled() && ! (getPlanEnde().compareTo(getPlanStart()) >= 0)) {
                 LOGGER.error("planStart must be <= planEnde:" + this.getNameForLogger() 
                                 + " ist=" + getIstStart() 
                                 + " istEnde=" + getIstEnde());
-             }
+            }
             return getPlanEnde().compareTo(getPlanStart()) >= 0;
         }
         return true;
@@ -496,7 +545,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     @JsonIgnore
     public boolean isIstValidRange() {
         if (getIstStart() != null && getIstEnde() != null) {
-            if (! (getIstEnde().compareTo(getIstStart()) >= 0)) {
+            if (LOGGER.isDebugEnabled() && ! (getIstEnde().compareTo(getIstStart()) >= 0)) {
                LOGGER.error("istStart must be <= istEnde:" + this.getNameForLogger() 
                                + " ist=" + getIstStart() 
                                + " istEnde=" + getIstEnde());
@@ -654,7 +703,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
                 }
             } catch (Exception ex) {
                 LOGGER.error("errors while saving childnode for '" 
-                                + sysUID + "':" + ex);
+                                + sysUID + "':", ex);
                 LOGGER.error("error saving node '" 
                                 + childNode);
                 throw ex;
