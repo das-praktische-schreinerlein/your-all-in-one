@@ -65,6 +65,21 @@ public interface Parser extends Comparable<Parser> {
     /** Pattern to parse Time-segments */
     public static final String CONST_PATTERN_SEG_TIME = "\\d\\d\\:\\d\\d";
 
+    /** Pattern to validate Layoutcommands */
+    public static final String CONST_PATTERN_SEG_LAYOUTCOMMAND = "[-0-9A-Za-z_\\.]";
+    /** Pattern to validate name */
+    public static final String CONST_PATTERN_SEG_NAME = "[^\\n]";
+    /** Pattern to validate desc */
+    public static final String CONST_PATTERN_SEG_DESC = ".";
+    /** Pattern to validate styleclass */
+    public static final String CONST_PATTERN_SEG_STYLECLASS = "[-0-9A-Za-z_\\.]";
+    /** Pattern to validate shortname */
+    public static final String CONST_PATTERN_SEG_SHORTNAME = "[-0-9\\p{L}+_\\*\\.,;' \\/\\?]";
+    /** Pattern to validate state */
+    public static final String CONST_PATTERN_SEG_STATE = "[-A-Za-z_]";
+    /** Pattern to validate type */
+    public static final String CONST_PATTERN_SEG_TYPE = "[-A-Za-z_]";;
+
     /** dateformat-instance for german date dd.MM.yyyy  */
     public static DateFormat DF = new SimpleDateFormat("dd.MM.yyyy");
     /** dateformat-instance for german time HH:mm */

@@ -29,6 +29,38 @@
  */
 var yaioM = angular.module('yaioExplorerApp', ['ngAnimate', 'ngRoute', 'pascalprecht.translate']);
 
+// define pattern
+yaioM.CONST_PATTERN_CSSCLASS = /^[ A-Za-z0-9\._-]+$/;
+yaioM.CONST_PATTERN_NUMBERS = /^\d+$/;
+yaioM.CONST_PATTERN_TEXTCONST = /^[A-Za-z0-9_]$/;
+yaioM.CONST_PATTERN_TITLE = /^[A-Za-z0-9_]$/;
+
+yaioM.CONST_PATTERN_SEG_TASK = /__[A-Za-z]+?[0-9]+?__/;
+/** Pattern to parse Aufwand-segments */
+yaioM.CONST_PATTERN_SEG_HOURS = /^[0-9]?\\.?[0-9.]+$/;
+/** Pattern to parse Stand-segments */
+yaioM.CONST_PATTERN_SEG_STAND = /^[0-9]?\\.?[0-9.]+$/;
+/** Pattern to parse Date-segments */
+yaioM.CONST_PATTERN_SEG_DATUM = /^\\d\\d\\.\\d\\d.\\d\\d\\d\\d$/;
+/** Pattern to parse common String-segments */
+yaioM.CONST_PATTERN_SEG_STRING = /^[-0-9\\p{L}/+_\\*\\. ]$/;
+/** Pattern to parse Flag-segments */
+yaioM.CONST_PATTERN_SEG_FLAG = /^[-0-9\\p{L}+_]$/;
+/** Pattern to parse Integer-segments */
+yaioM.CONST_PATTERN_SEG_INT = /^[0-9]$/;
+/** Pattern to parse UID-segments */
+yaioM.CONST_PATTERN_SEG_UID = /^[0-9A-Za-z]$/;
+/** Pattern to parse ID-segments */
+yaioM.CONST_PATTERN_SEG_ID = /^[0-9]$/;
+/** Pattern to parse Tag-segments */
+yaioM.CONST_PATTERN_SEG_TAGS = /^[-0-9\\p{L}+_\\*\\.;]$/;
+/** Pattern to parse ID-Praefix-segments */
+yaioM.CONST_PATTERN_SEG_PRAEFIX = /^[A-Za-z]$/;
+/** Pattern to parse Checksum-segments */
+yaioM.CONST_PATTERN_SEG_CHECKSUM = /^[0-9A-Za-z]$/;
+/** Pattern to parse Time-segments */
+yaioM.CONST_PATTERN_SEG_TIME = /^\\d\\d\\:\\d\\d$/;
+
 /**
  * <h4>FeatureDomain:</h4>
  *     Configuration
@@ -414,6 +446,25 @@ yaioM.controller('NodeSearchCtrl', function($scope, $location, $http, $routePara
  */
 yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams, setFormErrors, OutputOptionsEditor) {
 
+    // register pattern
+    $scope.CONST_PATTERN_CSSCLASS  = yaioM.CONST_PATTERN_CSSCLASS ;
+    $scope.CONST_PATTERN_NUMBERS  = yaioM.CONST_PATTERN_NUMBERS ;
+    $scope.CONST_PATTERN_TEXTCONST  = yaioM.CONST_PATTERN_TEXTCONST ;
+    $scope.CONST_PATTERN_TITLE  = yaioM.CONST_PATTERN_TITLE ;
+    $scope.CONST_PATTERN_SEG_TASK  = yaioM.CONST_PATTERN_SEG_TASK ;
+    $scope.CONST_PATTERN_SEG_HOURS  = yaioM.CONST_PATTERN_SEG_HOURS ;
+    $scope.CONST_PATTERN_SEG_STAND  = yaioM.CONST_PATTERN_SEG_STAND ;
+    $scope.CONST_PATTERN_SEG_DATUM  = yaioM.CONST_PATTERN_SEG_DATUM ;
+    $scope.CONST_PATTERN_SEG_STRING  = yaioM.CONST_PATTERN_SEG_STRING ;
+    $scope.CONST_PATTERN_SEG_FLAG  = yaioM.CONST_PATTERN_SEG_FLAG ;
+    $scope.CONST_PATTERN_SEG_INT  = yaioM.CONST_PATTERN_SEG_INT ;
+    $scope.CONST_PATTERN_SEG_UID  = yaioM.CONST_PATTERN_SEG_UID ;
+    $scope.CONST_PATTERN_SEG_ID  = yaioM.CONST_PATTERN_SEG_ID ;
+    $scope.CONST_PATTERN_SEG_TAGS  = yaioM.CONST_PATTERN_SEG_TAGS ;
+    $scope.CONST_PATTERN_SEG_PRAEFIX  = yaioM.CONST_PATTERN_SEG_PRAEFIX ;
+    $scope.CONST_PATTERN_SEG_CHECKSUM  = yaioM.CONST_PATTERN_SEG_CHECKSUM ;
+    $scope.CONST_PATTERN_SEG_TIME  = yaioM.CONST_PATTERN_SEG_TIME ;
+    
     // register the editor
     $scope.outputOptionsEditor = OutputOptionsEditor;
 
@@ -648,6 +699,7 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
      */
     $scope.doTypeChanged = function() {
         $scope.nodeForEdit.istStand = calcIstStandFromState($scope.nodeForEdit);
+        return false;
     }
     
     
@@ -674,6 +726,7 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
      */
     $scope.doIstStandChanged = function() {
         $scope.nodeForEdit.type = calcTypeFromIstStand($scope.nodeForEdit);
+        return false;
     }
     
     /**
@@ -694,6 +747,7 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
             || $scope.nodeForEdit.type =="VERWORFEN") {
             $scope.nodeForEdit.stand ="100";
         }
+        return false;
     }
     
     
@@ -817,6 +871,7 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
                 // error
                 var message = "error saving node:" + nodeResponse.data.stateMsg 
                         + " details:" + nodeResponse;
+                var userMessage = "";
                 
                 // map violations
                 var violations = nodeResponse.data.violations;
@@ -824,13 +879,43 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
                 if (violations && violations.length > 0) {
                     message = message + " violations: ";
                     for (var idx in violations) {
+                        // map violation errors
                         var violation = violations[idx];
-                        console.log("map violation " + violation + " = " + violation.path + ":" + violation.message);
+                        
+                        // TODO crud hack
+                        if (violation.path == "state") {
+                            violation.path = "type";
+                        } else if (violation.path == "planValidRange") {
+                            violation.path = "planStart";
+                        } else if (violation.path == "planStartValid") {
+                            violation.path = "planStart";
+                        } else if (violation.path == "planEndeValid") {
+                            violation.path = "planEnde";
+                        } else if (violation.path == "istValidRange") {
+                            violation.path = "istStart";
+                        } else if (violation.path == "istStartValid") {
+                            violation.path = "istStart";
+                        } else if (violation.path == "istEndeValid") {
+                            violation.path = "istEnde";
+                        }
                         fieldErrors[violation.path] = [violation.message];
                         message = message + violation.path + ":" + violation.message + ", ";
+
+                        // find formelement
+                        var $formField = $('#' + formName).find('*[name="' + violation.path + '"]');
+                        if (($formField.length > 0) && ($formField.is(':visible'))) {
+                            // formfield is shown by showErrors
+                            console.log("map violation " + violation + " = " + violation.path + ":" + violation.message + " to " + formName + " id=" + $($formField).attr('id'));
+                        } else {
+                            // another error: show userMessage
+                            userMessage += "<br>" + violation.path + ":" + violation.message;
+                        }
                     }
                 }
-                logError(message, true);
+                logError(message, false);
+                if (userMessage != "") {
+                    logError(userMessage, true);
+                }
                 
                 // Failed
                 setFormErrors({

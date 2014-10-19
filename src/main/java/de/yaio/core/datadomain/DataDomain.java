@@ -19,6 +19,8 @@ package de.yaio.core.datadomain;
 import java.util.Map;
 import java.util.Set;
 
+import javax.validation.ConstraintViolation;
+
 import de.yaio.core.node.BaseNode;
 import de.yaio.core.nodeservice.NodeService;
 
@@ -62,6 +64,21 @@ public interface DataDomain {
     public NodeService getNodeService();
 
     /**
+     * <h4>FeatureDomain:</h4>
+     *     Validation
+     * <h4>FeatureDescription:</h4>
+     *     validates the node against the declared validation rules
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>ReturnValue Set<ConstraintViolation<BaseNode>> - set of violations
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Validation
+     * @return - set of violations
+     */
+     public Set<ConstraintViolation<BaseNode>> validateMe();
+
+     /**
      * <h4>FeatureDomain:</h4>
      *     BusinessLogic
      * <h4>FeatureDescription:</h4>

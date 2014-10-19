@@ -18,6 +18,7 @@ package de.yaio.rest.controller;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -334,7 +335,7 @@ public class NodeRestController {
                 updateMeAndMyParents(parent);
             } catch (Exception e) {
                 LOGGER.error("violationerrors while deleting node '" 
-                                + sysUID + "':" + e);
+                                + sysUID + "':", e);
                 LOGGER.error("error deleting node '" 
                                 + node);
                 e.printStackTrace();
@@ -561,6 +562,15 @@ public class NodeRestController {
                 flgChange = true;
             }
         }
+        
+        // validate
+        Set<ConstraintViolation<BaseNode>> violations = newNode.validateMe();
+        if (violations.size() > 0) {
+            ConstraintViolationException ex = new ConstraintViolationException(
+                            "error while validating newNode" + newNode.getNameForLogger(), 
+                            new HashSet<ConstraintViolation<?>>(violations));
+            throw ex;
+        }
 
         return flgChange;
     }
@@ -643,11 +653,12 @@ public class NodeRestController {
                                       cViolation.getMessage(),
                                       cViolation.getMessageTemplate()));
             }
-            
-            LOGGER.error("violationerrors while updating node '" 
-                            + sysUID + "':" + ex);
-            LOGGER.error("error updating node '" 
-                            + node);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.error("violationerrors while updating node '" 
+                                + sysUID + "':", ex);
+                LOGGER.error("error updating node '" 
+                                + node);
+            }
 
             // create response
             response = new NodeActionResponse(
@@ -659,7 +670,7 @@ public class NodeRestController {
             // errorhandling
             ex.printStackTrace();
             LOGGER.error("error while updating node '" 
-                            + sysUID + "':" + ex);
+                            + sysUID + "':", ex);
             LOGGER.error("error updating node '" 
                             + node);
             response = new NodeActionResponse(
@@ -737,7 +748,7 @@ public class NodeRestController {
             
             // create response
             LOGGER.error("violationerrors while creating node for parent '" 
-                            + parentSysUID + "':" + ex);
+                            + parentSysUID + "':", ex);
             LOGGER.error("error creating node '" 
                             + newNode);
             response = new NodeActionResponse(
@@ -750,7 +761,7 @@ public class NodeRestController {
             // errorhandling
             ex.printStackTrace();
             LOGGER.error("error while creating node for parent '" 
-                            + parentSysUID + "':" + ex);
+                            + parentSysUID + "':" + ex, ex);
             LOGGER.error("error creating node '" 
                             + newNode);
             response = new NodeActionResponse(
@@ -1118,7 +1129,7 @@ public class NodeRestController {
             ex.printStackTrace();
             LOGGER.error("error while moving node  '" 
                          + sysUID + "' to '" +newParentSysUID + "'-" + newSortPos 
-                         + ":" + ex);
+                         + ":", ex);
             LOGGER.error("error moving node '" + node);
             response = new NodeActionResponse(
                             "ERROR", "error while moving node '" + sysUID + "':" + ex, 

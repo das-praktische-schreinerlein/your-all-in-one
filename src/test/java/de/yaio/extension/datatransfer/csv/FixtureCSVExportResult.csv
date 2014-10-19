@@ -1,13 +1,13 @@
 UId	Id	Parents	Name	State	PlanStart	PlanEnde	PlanAufwand	IstStand	IstAufwand	IstStart	IstEnde	PlanStartCalcSum	PlanEndeCalcSum	PlanAufwandCalcSum	IstStandCalcSum	IstAufwandCalcSum	IstStartCalcSum	IstEndeCalcSum	Ebene	Desc
-DT201401231236052431	Buis1		Projekt Meine Firma	RUNNING								12.12.2024	12.12.2014	25	8	4	01.04.2014	08.04.2014	1	
-DT2014012312360546542	Buis20	 -> Projekt Meine Firma	Laufende kurzfristige Projekte	RUNNING								12.12.2024	12.12.2014	25	8	4	01.04.2014	08.04.2014	2	
-DT201404081141327671	Buis1725	 -> Projekt Meine Firma -> Laufende kurzfristige Projekte	Networking 2014.04	RUNNING								12.12.2024	12.12.2014	25	8	4	01.04.2014	08.04.2014	3	
+DT201401231236052431	Buis1		Projekt Meine Firma	RUNNING								12.12.2014	12.12.2014	25	8	4	01.04.2014	08.04.2014	1	
+DT2014012312360546542	Buis20	 -> Projekt Meine Firma	Laufende kurzfristige Projekte	RUNNING								12.12.2014	12.12.2014	25	8	4	01.04.2014	08.04.2014	2	
+DT201404081141327671	Buis1725	 -> Projekt Meine Firma -> Laufende kurzfristige Projekte	Networking 2014.04	RUNNING								12.12.2014	12.12.2014	25	8	4	01.04.2014	08.04.2014	3	
 DT201404081141327672	Buis1726	 -> Projekt Meine Firma -> Laufende kurzfristige Projekte -> Networking 2014.04	Xing-Anfragen beantworten	RUNNING			10	10	2	01.04.2014	08.04.2014			10	10	2	01.04.2014	08.04.2014	4	Meine kleine Tasknotiz
 DT201404081141327673	Buis1727	 -> Projekt Meine Firma -> Laufende kurzfristige Projekte -> Networking 2014.04	Kontakte halten	RUNNING			10	10	2	01.04.2014	08.04.2014			10	10	2	01.04.2014	08.04.2014	4	
-DT201404081141327674	Buis1728	 -> Projekt Meine Firma -> Laufende kurzfristige Projekte -> Networking 2014.04	bisherige Xing-Anfrage als Kontakte anfragen	OFFEN								12.12.2024	12.12.2014	5	0				4	
+DT201404081141327674	Buis1728	 -> Projekt Meine Firma -> Laufende kurzfristige Projekte -> Networking 2014.04	bisherige Xing-Anfrage als Kontakte anfragen	OFFEN								12.12.2014	12.12.2014	5	0				4	
 DT201404081141327675	Buis1729	 -> Projekt Meine Firma -> Laufende kurzfristige Projekte -> Networking 2014.04 -> bisherige Xing-Anfrage als Kontakte anfragen	Anfragetext entwerfen	OFFEN			1							1	0				5	
 DT201404081141327826	Buis1730	 -> Projekt Meine Firma -> Laufende kurzfristige Projekte -> Networking 2014.04 -> bisherige Xing-Anfrage als Kontakte anfragen	Vermittler anfragen	OFFEN			2							2	0				5	
-DT201404101118349791	Buis2	 -> Projekt Meine Firma -> Laufende kurzfristige Projekte -> Networking 2014.04 -> bisherige Xing-Anfrage als Kontakte anfragen	Testevent	EVENT_PLANED	12.12.2024	12.12.2014	2					12.12.2024	12.12.2014	2	0				5	Meine kleine Eventnotiz<WLBR>
+DT201404101118349791	Buis2	 -> Projekt Meine Firma -> Laufende kurzfristige Projekte -> Networking 2014.04 -> bisherige Xing-Anfrage als Kontakte anfragen	Testevent	EVENT_PLANED	12.12.2014	12.12.2014	2					12.12.2014	12.12.2014	2	0				5	Meine kleine Eventnotiz<WLBR>
 DT20140123123605942470	Buis570	 -> Projekt Meine Firma -> Laufende kurzfristige Projekte	Lebenslauf bis 2013	INFO															3	
 DT20140123123605942471	Buis571	 -> Projekt Meine Firma -> Laufende kurzfristige Projekte -> Lebenslauf bis 2013	Bewerbung	INFO															4	
 DT20140123123605943472	Buis572	 -> Projekt Meine Firma -> Laufende kurzfristige Projekte -> Lebenslauf bis 2013 -> Bewerbung	Michael Schreiner - Your IT-Fellow	INFO															5	

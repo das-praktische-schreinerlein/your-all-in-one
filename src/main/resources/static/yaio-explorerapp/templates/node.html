@@ -474,17 +474,18 @@
               
               <!-- show textfield -->
               <label for="planAufwand" translate="editor.common.label.planAufwand">Aufwand</label> 
-              <input type="number" placeholder="x.x"  planAufwand" class="inputtype_aufwand" ng-model="nodeForEdit.planAufwand" id="inputPlanAufwandTaskNode" ng-change=""> 
-              <fielderrors for="planAufwand"></fielderrors>
+              <input type="text" placeholder="x.x"  planAufwand" class="inputtype_aufwand" ng-model="nodeForEdit.planAufwand" id="inputPlanAufwandTaskNode" ng-change=""> 
 
               <!-- show textfield -->
               <label for="planStart" translate="editor.common.label.planStart">Start</label> 
               <input type="text" placeholder="dd.mm.jjjj" name="planStart" pattern="\d{2}\.\d{2}\.\d{4}"  maxsize="10" class="inputtype_date" ng-model="nodeForEdit.planStart" id="inputPlanStartTaskNode" ng-change=""> 
-              <fielderrors for="planStart"></fielderrors>
 
               <!-- show textfield -->
               <label for="planEnde" translate="editor.common.label.planEnde">Ende</label> 
               <input type="text" placeholder="dd.mm.jjjj" name="planEnde" pattern="\d{2}\.\d{2}\.\d{4}"  maxsize="10" class="inputtype_date" ng-model="nodeForEdit.planEnde" id="inputPlanEndeTaskNode" ng-change=""> 
+
+              <fielderrors for="planAufwand"></fielderrors>
+              <fielderrors for="planStart"></fielderrors>
               <fielderrors for="planEnde"></fielderrors>
             </fieldset>
 
@@ -493,22 +494,23 @@
               
               <!-- show textfield -->
               <label for="istAufwand" translate="editor.common.label.istAufwand">Aufwand</label> 
-              <input type="number" name="istAufwand" placeholder="x.x"  class="inputtype_aufwand" ng-model="nodeForEdit.istAufwand" id="inputIstAufwandTaskNode" ng-change=""> 
-              <fielderrors for="istAufwand"></fielderrors>
+              <input type="text" name="istAufwand" placeholder="x.x"  class="inputtype_aufwand" ng-model="nodeForEdit.istAufwand" id="inputIstAufwandTaskNode" ng-change=""> 
 
               <!-- show textfield -->
               <label for="istStart" translate="editor.common.label.istStart">Start</label> 
               <input type="text" name="istStart" placeholder="dd.mm.jjjj" pattern="\d{2}\.\d{2}\.\d{4}"  maxsize="10" class="inputtype_date" ng-model="nodeForEdit.istStart" id="inputIstStartTaskNode" ngEventNode""> 
-              <fielderrors for="istStart"></fielderrors>
 
               <!-- show textfield -->
               <label for="istEnde" translate="editor.common.label.istEnde">Ende</label> 
               <input type="text" name="istEnde" placeholder="dd.mm.jjjj" pattern="\d{2}\.\d{2}\.\d{4}"  maxsize="10" class="inputtype_date" ng-model="nodeForEdit.istEnde" id="inputIstEndeTaskNode" ng-change=""> 
-              <fielderrors for="istEnde"></fielderrors>
 
               <!-- show textfield -->
               <label for="istStand" translate="editor.common.label.istStand">Stand</label> 
               <input type="number" min="0" max="100" placeholder="x.x" name="istStand" class="inputtype_stand" ng-model="nodeForEdit.istStand" id="inputIstStandTaskNode" ng-change="doIstStandChanged()"> 
+
+              <fielderrors for="istAufwand"></fielderrors>
+              <fielderrors for="istStart"></fielderrors>
+              <fielderrors for="istEnde"></fielderrors>
               <fielderrors for="istStand"></fielderrors>
 
             </fieldset>
@@ -575,17 +577,18 @@
               
               <!-- show textfield -->
               <label for="planAufwand" translate="editor.common.label.planAufwand">Aufwand</label> 
-              <input type="number" name="planAufwand" placeholder="x.x"  class="inputtype_aufwand" ng-model="nodeForEdit.planAufwand" id="inputPlanAufwandEventNode" ng-change=""> 
-              <fielderrors for="planAufwand"></fielderrors>
+              <input type="text" name="planAufwand" placeholder="x.x"  class="inputtype_aufwand" ng-model="nodeForEdit.planAufwand" id="inputPlanAufwandEventNode" ng-change=""> 
 
               <!-- show textfield -->
               <label for="planStart" translate="editor.common.label.planStart">Start</label> 
               <input type="text" name="planStart" placeholder="dd.mm.jjjj hh:mm" pattern="\d{2}\.\d{2}\.\d{4} \d{2}\:\d{2}" maxsize="16" class="inputtype_datetime" ng-model="nodeForEdit.planStart" id="inputPlanStartEventNode" required ng-change=""> 
-              <fielderrors for="planStart"></fielderrors>
 
               <!-- show textfield -->
               <label for="planEnde" translate="editor.common.label.planEnde">Ende</label> 
               <input type="text" name="planEnde" placeholder="dd.mm.jjjj hh:mm" pattern="\d{2}\.\d{2}\.\d{4} \d{2}\:\d{2}" maxsize="16" class="inputtype_datetime" ng-model="nodeForEdit.planEnde" id="inputPlanEndeEventNode" ng-change=""> 
+
+              <fielderrors for="planAufwand"></fielderrors>
+              <fielderrors for="planStart"></fielderrors>
               <fielderrors for="planEnde"></fielderrors>
             </fieldset>
 
@@ -594,22 +597,23 @@
               
               <!-- show textfield -->
               <label for="istAufwand" translate="editor.common.label.istAufwand">Aufwand</label> 
-              <input type="number" name="istAufwand" placeholder="x.x" class="inputtype_aufwand" ng-model="nodeForEdit.istAufwand" id="inputIstAufwandEventNode" ng-change=""> 
-              <fielderrors for="istAufwand"></fielderrors>
+              <input type="text" name="istAufwand" placeholder="x.x" class="inputtype_aufwand" ng-model="nodeForEdit.istAufwand" id="inputIstAufwandEventNode" ng-change=""> 
 
               <!-- show textfield -->
               <label for="istStart" translate="editor.common.label.istStart">Start</label> 
               <input type="text" name="istStart" placeholder="dd.mm.jjjj hh:mm" pattern="\d{2}\.\d{2}\.\d{4} \d{2}\:\d{2}" maxsize="16" class="inputtype_datetime" ng-model="nodeForEdit.istStart" id="inputIstStartEventNode" ng-change=""> 
-              <fielderrors for="istStart"></fielderrors>
 
               <!-- show textfield -->
               <label for="istEnde" translate="editor.common.label.istEnde">Ende</label> 
               <input type="text" name="istEnde" placeholder="dd.mm.jjjj hh:mm" pattern="\d{2}\.\d{2}\.\d{4} \d{2}\:\d{2}" maxsize="16" class="inputtype_datetime" ng-model="nodeForEdit.istEnde" id="inputIstEndeEventNode" ng-change=""> 
-              <fielderrors for="istEnde"></fielderrors>
 
               <!-- show textfield -->
               <label for="istStand" translate="editor.common.label.istStand">Stand</label> 
               <input type="number" min="0" max="100" placeholder="x.x"  name="istStand" class="inputtype_stand" ng-model="nodeForEdit.istStand" id="inputIstStandEventNode" ng-change="doIstStandChanged()"> 
+
+              <fielderrors for="istAufwand"></fielderrors>
+              <fielderrors for="istStart"></fielderrors>
+              <fielderrors for="istEnde"></fielderrors>
               <fielderrors for="istStand"></fielderrors>
 
             </fieldset>
@@ -672,7 +676,7 @@
               
               <!-- show select -->
               <label for="docLayoutTagCommand" translate="editor.common.label.docLayoutTagCommand">Befehl</label> 
-              <select name="docLayoutTagCommand" class="inputtype_docLayoutTagCommand" ng-model="nodeForEdit.docLayoutTagCommand" id="inputDocLayoutTagCommandInfoNode" ng-change="">
+              <select name="docLayoutTagCommand" class="inputtype_docLayoutTagCommand" ng-model="nodeForEdit.docLayoutTagCommand" id="inputDocLayoutTagCommandInfoNode" ng-change="" ng-pattern"">
                   <option value="" translate="common.select.pleaseselect">Bitte wählen
                   <option value="DIV" translate="common.select.docLayoutTagCommand.DIV">Block starten
                   <option value="UE" translate="common.select.docLayoutTagCommand.UE">Überschrift
@@ -694,10 +698,11 @@
               
               <label for="docLayoutShortName" translate="editor.common.label.docLayoutShortName">Kurzname</label> 
               <input type="text" name="docLayoutShortName" class="inputtype_docLayoutShortName" ng-model="nodeForEdit.docLayoutShortName" id="inputDocLayoutShortNameInfoNode" ng-change=""> 
-              <fielderrors for="docLayoutShortName"></fielderrors>
 
               <label for="docLayoutFlgCloseDiv" translate="editor.common.label.docLayoutFlgCloseDiv">Block schließen?</label> 
               <input type="checkbox" name="docLayoutFlgCloseDiv" class="inputtype_docLayoutFlgCloseDiv" ng-model="nodeForEdit.docLayoutFlgCloseDiv" id="inputDocLayoutFlgCloseDivInfoNode" ng-change=""> 
+
+              <fielderrors for="docLayoutShortName"></fielderrors>
               <fielderrors for="docLayoutFlgCloseDiv"></fielderrors>
             </fieldset>
 
@@ -803,10 +808,11 @@
               
               <label for="docLayoutShortName" translate="editor.common.label.docLayoutShortName">Kurzname</label> 
               <input type="text" name="docLayoutShortName" class="inputtype_docLayoutShortName" ng-model="nodeForEdit.docLayoutShortName" id="inputDocLayoutShortNameUrlResNode" ng-change=""> 
-              <fielderrors for="docLayoutShortName"></fielderrors>
 
               <label for="docLayoutFlgCloseDiv" translate="editor.common.label.docLayoutFlgCloseDiv">Block schließen?</label> 
               <input type="checkbox" name="docLayoutFlgCloseDiv" class="inputtype_docLayoutFlgCloseDiv" ng-model="nodeForEdit.docLayoutFlgCloseDiv" id="inputDocLayoutFlgCloseDivUrlResNode" ng-change=""> 
+
+              <fielderrors for="docLayoutShortName"></fielderrors>
               <fielderrors for="docLayoutFlgCloseDiv"></fielderrors>
             </fieldset>
 
