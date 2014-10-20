@@ -68,9 +68,9 @@ public interface Parser extends Comparable<Parser> {
     /** Pattern to validate Layoutcommands */
     public static final String CONST_PATTERN_SEG_LAYOUTCOMMAND = "[-0-9A-Za-z_\\.]";
     /** Pattern to validate name */
-    public static final String CONST_PATTERN_SEG_NAME = "[^\\n]";
+    public static final String CONST_PATTERN_SEG_NAME = "[\\p{L}\\p{M}\\{Z}\\p{S}\\p{N}\\p{P}\\p{Print}\\{Punct}\\p{Graph}\\p{Blank}]";
     /** Pattern to validate desc */
-    public static final String CONST_PATTERN_SEG_DESC = ".";
+    public static final String CONST_PATTERN_SEG_DESC = "[\\p{L}\\p{M}\\{Z}\\p{S}\\p{N}\\p{P}\\p{Print}\\{Punct}\\p{Graph}\\p{Blank}\\n\\r]";
     /** Pattern to validate styleclass */
     public static final String CONST_PATTERN_SEG_STYLECLASS = "[-0-9A-Za-z_\\.]";
     /** Pattern to validate shortname */

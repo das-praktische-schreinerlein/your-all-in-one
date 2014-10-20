@@ -205,7 +205,6 @@ public class BaseNode implements BaseData, MetaData, SysData,
     /**
      */
     @Size(max = 64000)
-//    @Pattern(regexp = "(" + Parser.CONST_PATTERN_SEG_DESC + "*)?", 
     @Pattern(regexp = "(" + Parser.CONST_PATTERN_SEG_DESC + "*)?", 
              message = "desc can only contain characters.")
     private String nodeDesc;
