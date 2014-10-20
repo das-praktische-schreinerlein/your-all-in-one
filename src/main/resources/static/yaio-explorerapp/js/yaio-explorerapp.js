@@ -871,13 +871,14 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
                 // error
                 var message = "error saving node:" + nodeResponse.data.stateMsg 
                         + " details:" + nodeResponse;
-                var userMessage = "";
+                var userMessage = "error saving node:" + nodeResponse.data.stateMsg;
                 
                 // map violations
                 var violations = nodeResponse.data.violations;
                 var fieldErrors = {};
                 if (violations && violations.length > 0) {
                     message = message + " violations: ";
+                    userMessage = "";
                     for (var idx in violations) {
                         // map violation errors
                         var violation = violations[idx];
