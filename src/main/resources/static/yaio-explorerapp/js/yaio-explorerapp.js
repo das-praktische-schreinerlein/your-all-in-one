@@ -676,6 +676,10 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
         // special fields
         if (className == "SymLinkNode") {
             $scope.nodeForEdit["type"] = "SYMLINK";
+        } else if (className == "InfoNode") {
+            $scope.nodeForEdit["type"] = "INFO";
+        } else if (className == "UrlResNode") {
+            $scope.nodeForEdit["type"] = "URLRES";
         }
 
         // set mode
@@ -744,7 +748,8 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
      */
     $scope.doTaskNodeTypeChanged = function() {
         if (   $scope.nodeForEdit.type =="ERLEDIGT"
-            || $scope.nodeForEdit.type =="VERWORFEN") {
+            || $scope.nodeForEdit.type =="VERWORFEN"
+            ) {
             $scope.nodeForEdit.stand ="100";
         }
         return false;
@@ -774,7 +779,7 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
         fields = fields.concat(configNodeTypeFields.Common.fields);
         if ($scope.nodeForEdit.className == "TaskNode") {
             fields = fields.concat(configNodeTypeFields.TaskNode.fields);
-            $scope.nodeForEdit.type = $scope.nodeForEdit.state;
+            $scope.nodeForEdit.state = $scope.nodeForEdit.type;
         } else if ($scope.nodeForEdit.className == "EventNode") {
             fields = fields.concat(configNodeTypeFields.EventNode.fields);
         } else if ($scope.nodeForEdit.className == "InfoNode") {
