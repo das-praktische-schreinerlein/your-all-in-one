@@ -89,7 +89,7 @@
         if (! lstInputRows || lstInputRows.length <= 0) {
            return null;
         }
-        state = false;
+        var state = false;
 
         // alle InputRows iterieren
         for (var i = 0; i < lstInputRows.length; ++i){
