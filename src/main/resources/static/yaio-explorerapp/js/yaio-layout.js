@@ -347,3 +347,18 @@ function togglePreWrap(element) {
          jMATService.getPageLayoutService().toggleFormrows(togglerId, className, state);
      }
  }
+ 
+ function createTogglerIfNotExists(parentId, toggleId, className) {
+     var $ele = $("#" + toggleId + "_On");
+     if ($ele.length <= 0) {
+         // create toggler
+         console.log("createTogglerIfNotExists link not exists: create new toggler parent=" + parentId 
+                 + " toggleEleId=" + toggleId
+                 + " className=" + className);
+         jMATService.getPageLayoutService().appendFormrowToggler(parentId, toggleId, className, "&nbsp;");
+     } else {
+         console.log("createTogglerIfNotExists link exists: skip new toggler parent=" + parentId 
+                 + " toggleEleId=" + toggleId
+                 + " className=" + className);
+     }
+ }
