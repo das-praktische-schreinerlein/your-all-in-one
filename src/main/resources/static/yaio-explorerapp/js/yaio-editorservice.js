@@ -302,6 +302,17 @@ function yaioOpenNodeEditor(nodeId, mode) {
     //$("#containerYaioEditor").css("display", "block");
     toggleElement("#containerYaioEditor");
 
+    // create Elements if not exists
+    createTogglerIfNotExists("legendIstTaskForm", "filterIstTaskForm", "filter_IstTaskNode");
+    createTogglerIfNotExists("legendDescTaskForm", "filterDescTaskForm", "filter_DescTaskNode");
+    createTogglerIfNotExists("legendIstEventForm", "filterIstEventForm", "filter_IstEventNode");
+    createTogglerIfNotExists("legendDescEventForm", "filterDescEventForm", "filter_DescEventNode");
+    createTogglerIfNotExists("legendLayoutInfoForm", "filterLayoutInfoForm", "filter_LayoutInfoNode");
+    createTogglerIfNotExists("legendDescInfoForm", "filterDescInfoForm", "filter_DescInfoNode");
+    createTogglerIfNotExists("legendLayoutUrlResForm", "filterLayoutUrlResForm", "filter_LayoutUrlResNode");
+    createTogglerIfNotExists("legendDescUrlResForm", "filterDescUrlResForm", "filter_DescUrlResNode");
+    createTogglerIfNotExists("legendDescSymLinkForm", "filterDescSymLinkForm", "filter_DescSymLinkNode");
+    
     // hide empty, optional elements
     hideFormRowTogglerIfSet("filterIstTaskForm", "filter_IstTaskNode", false);
     hideFormRowTogglerIfSet("filterDescTaskForm", "filter_DescTaskNode", false);

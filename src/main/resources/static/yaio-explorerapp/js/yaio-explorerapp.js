@@ -680,6 +680,10 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
             $scope.nodeForEdit["type"] = "INFO";
         } else if (className == "UrlResNode") {
             $scope.nodeForEdit["type"] = "URLRES";
+        } else if (className == "TaskNode") {
+            $scope.nodeForEdit["type"] = "OFFEN";
+        } else if (className == "EventNode") {
+            $scope.nodeForEdit["type"] = "EVENT_PLANED";
         }
 
         // set mode
