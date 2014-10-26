@@ -27,6 +27,9 @@ body {
     line-height: 1.3em; 
     font-size: 11px;
 }
+h1 {
+    color: black;
+}
 h4 {
     margin-top: 4px;
     margin-bottom: 4px;
@@ -578,9 +581,13 @@ label {
 .textareatype_nodeDesc {
     width: 500px;
     height: 50px;
+    display: none;
 } 
 .textareatype_nodeDesc:active, .textareatype_nodeDesc:focus {
     height: 120px;
+}
+.pre_nodeDesc_editor {
+    width: 540px; height: 400px;
 }
 
 /*****************************************

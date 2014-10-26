@@ -81,7 +81,7 @@ body {
  */
 .node-data-block {
     /* show all whitespaces */
-    white-space: nowrap;
+    white-space: pre;
     overflow: auto;
 }
 .node-area-stateshort {
@@ -479,6 +479,18 @@ h1, h2, h3, h4, h5, h6, h7, h8 {
 .a-node-urlres {
     color: blue;
     font-weight: bold;
+}
+
+
+/*  my own additional print.css  */
+@media print {
+    a[href^="http"]:after, a[href^="file"]:after {
+        content:" <"attr(href)">";
+        color:#888;
+        background-color:inherit;
+        font-style:italic;
+        size:80%;
+    } 
 }
     </style>
     <link rel="stylesheet" type="text/css" media="print" href="/css/yaio/print.css" />
