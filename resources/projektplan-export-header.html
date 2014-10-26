@@ -6,7 +6,6 @@
     <base href="http://localhost/">
     <link rel="stylesheet" type="text/css" media="all" href="/mybusiness/css/style.css" />
     <link rel="stylesheet" type="text/css" media="all" href="/mybusiness/css/main.css" />
-    <link rel="stylesheet" type="text/css" media="print" href="/mybusiness/css/print.css" />
     <script type="text/javascript">var flgDetailFrameAllowed = false;</script>
     <script type="text/javascript" src="/mybusiness/js/jquery.min.js"></script>
     <script type="text/javascript" src="/mybusiness/js/jquery-ui-1.10.3.custom.js"></script>
@@ -25,7 +24,7 @@ body {
 }
 
 .node-block {
-    width: 100%;
+    width: 1300px;
     clear: both;
     float: left;
 }
@@ -84,6 +83,11 @@ body {
 /**
  * Node-Elemente
  */
+.node-data-block {
+    /* show all whitespaces */
+    white-space: nowrap;
+    overflow: auto;
+}
 .node-area-stateshort {
     vertical-align: top;
     width: 30px;
@@ -484,6 +488,8 @@ h1, h2, h3, h4, h5, h6, h7, h8 {
 
 
     </style>
+    <link rel="stylesheet" type="text/css" media="print" href="/mybusiness/css/print.css" />
+    <link rel="stylesheet" type="text/css" media="print" href="/yaio-explorerapp/css/print.css" />
     
 	<script type="text/javascript">
     

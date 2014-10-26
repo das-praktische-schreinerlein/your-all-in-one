@@ -1,0 +1,107 @@
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Collaboration
+ *
+ * <h4>FeatureDescription:</h4>
+ *     software for projectmanagement and documentation
+ * 
+ * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category collaboration
+ * @copyright Copyright (c) 2014, Michael Schreiner
+ * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+/*****************************************
+ *****************************************
+ * base
+ *****************************************
+ *****************************************/
+body {
+    background: none;
+/**
+    -webkit-transform: scale(0.9);
+    -moz-transform: scale(0.9);
+    -ms-transform: scale(0.9);
+    -o-transform: scale(0.9);
+    transform: scale(0.9);    
+    transform-origin: -10% -10%;
+**/
+}
+
+@page { 
+    size:landscape; 
+}
+
+
+/*****************************************
+ *****************************************
+ * explorer-elements
+ *****************************************
+ *****************************************/
+#menueTop {
+    display: none;
+}
+.box-portdesc-todonext {
+    display: none;
+}
+
+#containerInfoCommands {
+    display: none;
+}
+#containerNodeCommands {
+    display: none;
+}
+#containerTreeCommands {
+    display: none;
+}
+.button {
+    display: none;
+}
+.tabToggler {
+    display: none;
+}
+
+table#tree tbody tr td.container_field.fieldtype_actions, 
+table#masterTable thead tr#tab_header th:first-child + th + th +th,
+table#masterTable tbody tr td:first-child + td + td + td {
+    display: none;
+}
+
+.fieldtype_descToggler {
+    display: none;
+}
+
+.command-center {
+    display: none;
+}
+
+.fancytree-icon {
+    display: none;
+}
+.container-commands-desc {
+    display: none;
+}
+
+
+#searchcommand {
+    display: none;
+}
+
+
+/*****************************************
+ *****************************************
+ * export-elements
+ *****************************************
+ *****************************************/
+#menueFooter {
+    display: none;
+}
+.node-data-block {
+    /* show all whitespaces */
+    white-space: pre-wrap;
+    overflow: visible;
+}

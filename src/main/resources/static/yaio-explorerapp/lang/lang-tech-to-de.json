@@ -22,6 +22,7 @@
         "tooltip.command.OpenLevel": "Zeige alle Kindelemente des Baumes bis zur im Schieber rechts eingestellten Ebene.",
         "tooltip.command.OpenSearchView": "Wechseln Sie über diesen Link zur Suchseite.", 
         "tooltip.command.OpenTreeView": "Wechseln Sie über diesen Link zur Baumansicht Ihrer Daten.", 
+        "tooltip.command.Print": "Drucken Sie die Seite in einer angepassten Druckversion. Stellen Sie am besten in der Druckvorschau Querformat und ein Zoom-Level von 90% ein.",
         "tooltip.command.ShowGanttData": "Wechseln Sie hier zwischen der Ansicht der Rohdaten und einer Darstellung als Gantt-Diagramm. <br /><br /><b>Achtung!!!</b> Die Gantt-Darstellung ist nur eine grobe Verteilung der Plan/Ist-Stunden auf den gesamten Plan/Ist-Zeitraum. Aufwende ohne Zeitraum werden erstmal den Eltern mit Plan/Ist-Datum zugerechnet bzw. wenn das Element ohne Datum sichtbar wird, überhaupt nicht eingerechnet! Aufwende der Kindselemente werden über den gesamten Zeitraum des Elternelement verteilt und können sich somit völlig verschieben! Also Plan+Ist am besten immer mit Datum pflegen, sonst gibt es in der Gantt-Sicht 'komische' Effekte ;-)", 
         "tooltip.command.ToggleDesc": "Zeige die detaillierte Beschreibung an.",
         "tooltip.command.TogglePreWrap": "Hier können Sie wählen, ob die Beschreibung im Fenster umgebrochen (vorteilhaft bei Briefen und Fließtext) oder ob das Original bebehalten werden soll (empfehlenswert für Quelltexte, Logs usw.).",

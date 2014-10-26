@@ -14,6 +14,7 @@
     "common.command.OpenInfo": "Infos?",
     "common.command.OpenSearchView": "Suche",
     "common.command.OpenTreeView": "Baumansicht",
+    "common.command.Print": "Drucken",
     "common.select.className.EventNode": "Termin",
     "common.select.className.InfoNode": "Information",
     "common.select.className.SymLinkNode": "Verknüpfung",
