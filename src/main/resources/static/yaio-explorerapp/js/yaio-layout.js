@@ -362,3 +362,27 @@ function togglePreWrap(element) {
                  + " className=" + className);
      }
  }
+ 
+ 
+ function createNodeDescEditorForNode(parentId, textAreaId) {
+     var editor = ace.edit(parentId);
+     
+     // configure
+     editor.setTheme("ace/theme/github");
+     editor.getSession().setTabSize(4);
+     editor.getSession().setUseSoftTabs(true);     
+     editor.getSession().setMode("ace/mode/markdown");
+     editor.setHighlightActiveLine(true);
+     editor.setShowPrintMargin(true); 
+     
+     // set value
+     editor.setValue($("#" + textAreaId).val());
+     
+     // set eventhandler toi update corresponding textarea
+     editor.getSession().on('change', function(e) {
+         // update textarea for angular
+         $("#" + textAreaId).val(editor.getValue()).trigger('select').triggerHandler("change");
+     }); 
+     
+     return editor;
+ }

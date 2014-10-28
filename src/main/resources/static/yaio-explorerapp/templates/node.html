@@ -10,6 +10,8 @@
               <a href="" ng-click="showHelpSite('/exports/documentation/SysHelp1')" target="help" class="button command_help" translate="common.command.OpenHelp">Hilfe</a></li>
            <li class="command" data-tooltip='tooltip.command.OpenInfo' lang="tech">
               <a href="" ng-click="showHelpSite('/exports/documentation/SysInfo1')" target="help" class="button" translate="common.command.OpenInfo">Hilfe</a></li>
+           <li class="command" data-tooltip='tooltip.command.Print' lang="tech">
+              <a onclick="window.print(); return true;" class="button" translate="common.command.Print">Print</a></li>
         </ul>
       </div>
   </div>
@@ -520,6 +522,11 @@
             </script>
 
             <fieldset>
+              <button ng-click="save('nodeFormTaskNode')" ng-disabled="nodeFormTaskNode.$invalid" class="btn btn-primary"translate="common.buttonSave">Save</button>
+              <button ng-click="discard()" class="btn btn-primary" translate="common.buttonDiscard">Discard</button>
+            </fieldset>
+
+            <fieldset>
               <legend id="legendDescTaskForm"><span translate="editor.common.legend.Details">Details</span></legend>
               <div class="formrow filter_DescTaskNode flg-hide-if-inputvalue-empty" id="formrow_inputDescTaskNode" inputids="inputNodeDescTaskNode">
               
@@ -527,17 +534,14 @@
                 <label for="nodeDesc" translate="editor.common.label.nodeDesc">Details</label> 
                 <textarea name="nodeDesc" class="textareatype_nodeDesc" ng-model="nodeForEdit.nodeDesc" id="inputNodeDescTaskNode" ng-change=""></textarea> 
                 <fielderrors for="nodeDesc"></fielderrors>
+                <fielderrors for="nodeDesc"></fielderrors>
+                <pre id="editorInputNodeDescTaskNode" class="pre_nodeDesc_editor"></pre> 
               </div>
             </fieldset>
             <script type="text/javascript">
             // toggler for optional, empty elements
              jMATService.getPageLayoutService().appendFormrowToggler("legendDescTaskForm", "filterDescTaskForm", "filter_DescTaskNode", "&nbsp;");
             </script>
-
-            <fieldset>
-              <button ng-click="save('nodeFormTaskNode')" ng-disabled="nodeFormTaskNode.$invalid" class="btn btn-primary"translate="common.buttonSave">Save</button>
-              <button ng-click="discard()" class="btn btn-primary" translate="common.buttonDiscard">Discard</button>
-            </fieldset>
           </form>
         </div>
         
@@ -634,6 +638,11 @@
             </script>
 
             <fieldset>
+              <button ng-click="save('nodeFormEventNode')" ng-disabled="nodeFormEventNode.$invalid" class="btn btn-primary"translate="common.buttonSave">Save</button>
+              <button ng-click="discard()" class="btn btn-primary" translate="common.buttonDiscard">Discard</button>
+            </fieldset>
+
+            <fieldset>
               <legend id="legendDescEventForm"><span translate="editor.common.legend.Details">Details</span></legend>
               <div class="formrow filter_DescEventNode flg-hide-if-inputvalue-empty" id="formrow_inputDescEventNode" inputids="inputNodeDescEventNode">
               
@@ -641,17 +650,13 @@
                 <label for="nodeDesc" translate="editor.common.label.nodeDesc">Details</label> 
                 <textarea name="nodeDesc" class="textareatype_nodeDesc" ng-model="nodeForEdit.nodeDesc" id="inputNodeDescEventNode" ng-change=""></textarea> 
                 <fielderrors for="nodeDesc"></fielderrors>
+                <pre id="editorInputNodeDescEventNode" class="pre_nodeDesc_editor"></pre> 
               </div>
             </fieldset>
             <script type="text/javascript">
             // toggler for optional, empty elements
              jMATService.getPageLayoutService().appendFormrowToggler("legendDescEventForm", "filterDescEventForm", "filter_DescEventNode", "&nbsp;");
             </script>
-
-            <fieldset>
-              <button ng-click="save('nodeFormEventNode')" ng-disabled="nodeFormEventNode.$invalid" class="btn btn-primary"translate="common.buttonSave">Save</button>
-              <button ng-click="discard()" class="btn btn-primary" translate="common.buttonDiscard">Discard</button>
-            </fieldset>
           </form>
         </div>
         
@@ -734,6 +739,11 @@
             </script>
 
             <fieldset>
+              <button ng-click="save('nodeFormInfoNode')" ng-disabled="nodeFormInfoNode.$invalid" class="btn btn-primary"translate="common.buttonSave">Save</button>
+              <button ng-click="discard()" class="btn btn-primary" translate="common.buttonDiscard">Discard</button>
+            </fieldset>
+
+            <fieldset>
               <legend id="legendDescInfoForm"><span translate="editor.common.legend.Details">Details</span></legend>
               <div class="formrow filter_DescInfoNode flg-hide-if-inputvalue-empty" id="formrow_inputDescInfoNode" inputids="inputNodeDescInfoNode">
               
@@ -741,17 +751,13 @@
                 <label for="nodeDesc" translate="editor.common.label.nodeDesc">Details</label> 
                 <textarea name="nodeDesc" class="textareatype_nodeDesc" ng-model="nodeForEdit.nodeDesc" id="inputNodeDescInfoNode" ng-change=""></textarea> 
                 <fielderrors for="nodeDesc"></fielderrors>
+                <pre id="editorInputNodeDescInfoNode" class="pre_nodeDesc_editor"></pre> 
               </div>
             </fieldset>
             <script type="text/javascript">
             // toggler for optional, empty elements
              jMATService.getPageLayoutService().appendFormrowToggler("legendDescInfoForm", "filterDescInfoForm", "filter_DescInfoNode", "&nbsp;");
             </script>
-
-            <fieldset>
-              <button ng-click="save('nodeFormInfoNode')" ng-disabled="nodeFormInfoNode.$invalid" class="btn btn-primary"translate="common.buttonSave">Save</button>
-              <button ng-click="discard()" class="btn btn-primary" translate="common.buttonDiscard">Discard</button>
-            </fieldset>
 
           </form>
         </div>
@@ -856,6 +862,11 @@
             </script>
 
             <fieldset>
+              <button ng-click="save('nodeFormUrlResNode')" ng-disabled="nodeFormUrlResNode.$invalid" class="btn btn-primary" translate="common.buttonSave">Save</button>
+              <button ng-click="discard()" class="btn btn-primary" translate="common.buttonDiscard">Discard</button>
+            </fieldset>
+
+            <fieldset>
               <legend id="legendDescUrlResForm"><span translate="editor.common.legend.Details">Details</span></legend>
               <div class="formrow filter_DescUrlResNode flg-hide-if-inputvalue-empty" id="formrow_inputDescUrlResNode" inputids="inputNodeDescUrlResNode">
               
@@ -863,17 +874,14 @@
                 <label for="nodeDesc" translate="editor.common.label.nodeDesc">Details</label> 
                 <textarea name="nodeDesc" class="textareatype_nodeDesc" ng-model="nodeForEdit.nodeDesc" id="inputNodeDescUrlResNode" ng-change=""></textarea> 
                 <fielderrors for="nodeDesc"></fielderrors>
+                <fielderrors for="nodeDesc"></fielderrors>
+                <pre id="editorInputNodeDescUrlResNode" class="pre_nodeDesc_editor"></pre> 
               </div>
             </fieldset>
             <script type="text/javascript">
             // toggler for optional, empty elements
              jMATService.getPageLayoutService().appendFormrowToggler("legendDescUrlResForm", "filterDescUrlResForm", "filter_DescUrlResNode", "&nbsp;");
             </script>
-
-            <fieldset>
-              <button ng-click="save('nodeFormUrlResNode')" ng-disabled="nodeFormUrlResNode.$invalid" class="btn btn-primary" translate="common.buttonSave">Save</button>
-              <button ng-click="discard()" class="btn btn-primary" translate="common.buttonDiscard">Discard</button>
-            </fieldset>
 
           </form>
         </div>
@@ -928,6 +936,11 @@
             </fieldset>
 
             <fieldset>
+              <button ng-click="save('nodeFormSymLinkNode')" ng-disabled="nodeFormSymLinkNode.$invalid" class="btn btn-primary" translate="common.buttonSave">Save</button>
+              <button ng-click="discard()" class="btn btn-primary" translate="common.buttonDiscard">Discard</button>
+            </fieldset>
+
+            <fieldset>
               <legend id="legendDescSymLinkForm"><span translate="editor.common.legend.Details">Details</span></legend>
               <div class="formrow filter_DescSymLinkNode flg-hide-if-inputvalue-empty" id="formrow_inputDescSymLinkNode" inputids="inputNodeDescSymLinkNode">
               
@@ -935,17 +948,14 @@
                 <label for="nodeDesc" translate="editor.common.label.nodeDesc">Details</label> 
                 <textarea name="nodeDesc" class="textareatype_nodeDesc" ng-model="nodeForEdit.nodeDesc" id="inputNodeDescSymLinkNode" ng-change=""></textarea> 
                 <fielderrors for="nodeDesc"></fielderrors>
+                <fielderrors for="nodeDesc"></fielderrors>
+                <pre id="editorInputNodeDescSymLinkNode" class="pre_nodeDesc_editor"></pre> 
               </div>
             </fieldset>
             <script type="text/javascript">
             // toggler for optional, empty elements
              jMATService.getPageLayoutService().appendFormrowToggler("legendDescSymLinkForm", "filterDescSymLinkForm", "filter_DescSymLinkNode", "&nbsp;");
             </script>
-
-            <fieldset>
-              <button ng-click="save('nodeFormSymLinkNode')" ng-disabled="nodeFormSymLinkNode.$invalid" class="btn btn-primary" translate="common.buttonSave">Save</button>
-              <button ng-click="discard()" class="btn btn-primary" translate="common.buttonDiscard">Discard</button>
-            </fieldset>
 
           </form>
         </div>

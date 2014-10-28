@@ -118,7 +118,16 @@ public class DescDataParserImpl  extends ParserImpl implements DescDataParser {
                 LOGGER.debug("Pattern: " + CONST_PATTERN_SEG_DESC + " " 
                     + matcherindex + ":" + matcher.group(matcherindex));
             if (matcher.group(matcherindex) != null) {
-                node.setNodeDesc(matcher.group(matcherindex));
+                // reescape desc
+                String dummyText = matcher.group(matcherindex);
+//                if (dummyText != null) {
+//                    dummyText = dummyText.replaceAll("<WLESC>", "\\");
+//                    dummyText = dummyText.replaceAll("<WLBR>", "\n");
+//                    dummyText = dummyText.replaceAll("<WLTAB>", "\t");
+//                }
+                
+                // set new desc
+                node.setNodeDesc(dummyText);
             }
 
             found++;

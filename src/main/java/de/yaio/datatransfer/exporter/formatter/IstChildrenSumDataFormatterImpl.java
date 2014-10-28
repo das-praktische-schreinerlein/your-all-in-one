@@ -128,10 +128,14 @@ public class IstChildrenSumDataFormatterImpl extends FormatterImpl
             if (oOptions.isFlgShowBrackets()) {
                 nodeOutput.append("[");
             }
+            int intStand = 0;
+            if (stand != null) {
+                intStand = stand.intValue();
+            }
             nodeOutput.append("IstSum: ")
-            .append(labelIntend)
-            .append(this.intendLeft(stand.intValue(), (oOptions.isFlgDoIntend() ? 3 : 0)) + "% ")
-            .append(this.intendLeft(this.formatNumber(aufwand, 0, 2), (oOptions.isFlgDoIntend() ? 2 : 0)) + "h");
+                .append(labelIntend)
+                .append(this.intendLeft(intStand, (oOptions.isFlgDoIntend() ? 3 : 0)) + "% ")
+                .append(this.intendLeft(this.formatNumber(aufwand, 0, 2), (oOptions.isFlgDoIntend() ? 2 : 0)) + "h");
             if (start != null || ende != null) {
                 nodeOutput.append(" ");
                 if (start != null) {

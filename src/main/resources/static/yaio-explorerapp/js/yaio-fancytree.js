@@ -1173,16 +1173,38 @@ function renderColumnsForNode(event, data) {
 
         $divDesc.append("<div class='container-commands-desc' id='commands_desc_" + basenode.sysUID + "'"
                         + "data-tooltip='tooltip.command.TogglePreWrap' lang='tech' >" 
-                        + "<input type='checkbox' id='cmd_toggle_content_desc_" + basenode.sysUID + "' onclick=\"togglePreWrap('#content_desc_" + basenode.sysUID + "'); return true;\">"
+                        + "<input type='checkbox' id='cmd_toggle_content_desc_" + basenode.sysUID + "' onclick=\"togglePreWrap('#content_desc_" + basenode.sysUID + "');togglePreWrap('#container_content_desc_" + basenode.sysUID + "'); return true;\">"
                         + "<span lang='tech'>im Originallayout anzeigen</span>"
+//                        + "<input type='checkbox' id='cmd_toggle_content_desc_markdown_" + basenode.sysUID + "' onclick=\"toggleDescMarkdown('#container_content_desc_" + basenode.sysUID + "'); return true;\">"
+//                        + "<span lang='tech'>Markdown</span>"
                         + "</div>"
                         + "<br />");
         
         // append content
         var descText = basenode.nodeDesc;
         descText = descText.replace(/\<WLBR\>/g, "\n");
-        $divDesc.append("<pre class='content-desc pre-wrap' id='content_desc_" + basenode.sysUID + "'>" 
-                        + htmlEscapeText(descText) + "</pre>");
+        descText = descText.replace(/\<WLESC\>/g, "\\");
+        descText = descText.replace(/\<WLTAB\>/g, "\t");
+
+        // Default Normal
+        var descHtmlPre = "<pre class='content-desc pre-wrap' id='content_desc_" + basenode.sysUID + "'>" 
+                        + htmlEscapeText(descText) + "</pre>";
+
+        // Marked
+        marked.setOptions({
+          renderer: new marked.Renderer(),
+          gfm: true,
+          tables: true,
+          breaks: false,
+          pedantic: false,
+          sanitize: true,
+          smartLists: true,
+          smartypants: false
+        });  
+        var descHtmlMarked = marked(descText);
+        
+        var descHtml = descHtmlMarked;
+        $divDesc.append("<div id='container_content_desc_" + basenode.sysUID + "'>" + descHtml + "</div>");
         
         // append to datablock
         $nodeDataBlock.append($divDesc);

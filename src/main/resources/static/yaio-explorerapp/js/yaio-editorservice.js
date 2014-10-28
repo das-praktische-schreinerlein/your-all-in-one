@@ -155,6 +155,13 @@ function yaioSetFormField(field, fieldSuffix, basenode) {
         value = "";
     } 
     
+    // reescape data for form
+    if (fieldName == "nodeDesc") {
+        value = value.replace(/\<WLBR\>/g, "\n");
+        value = value.replace(/\<WLESC\>/g, "\\");
+        value = value.replace(/\<WLTAB\>/g, "\t");
+    }
+    
     // set depending on the fieldtype
     if (field.type == "hidden") {
         $(fieldNameId).val(value).trigger('input').triggerHandler("change");
@@ -279,7 +286,7 @@ function yaioOpenNodeEditor(nodeId, mode) {
                 + " for nodeId:" + nodeId, false);
         return null;
     }
-        
+    
     // iterate fields
     for (var idx in fields) {
         var field = fields[idx];
@@ -323,6 +330,13 @@ function yaioOpenNodeEditor(nodeId, mode) {
     hideFormRowTogglerIfSet("filterLayoutUrlResForm", "filter_LayoutUrlResNode", false);
     hideFormRowTogglerIfSet("filterDescUrlResForm", "filter_DescUrlResNode", false);
     hideFormRowTogglerIfSet("filterDescSymLinkForm", "filter_DescSymLinkNode", false);
+
+    // create nodeDesc-editor
+    createNodeDescEditorForNode("editorInputNodeDescTaskNode", "inputNodeDescTaskNode");
+    createNodeDescEditorForNode("editorInputNodeDescEventNode", "inputNodeDescEventNode");
+    createNodeDescEditorForNode("editorInputNodeDescInfoNode", "inputNodeDescInfoNode");
+    createNodeDescEditorForNode("editorInputNodeDescUrlResNode", "inputNodeDescUrlResNode");
+    createNodeDescEditorForNode("editorInputNodeDescSymLinkNode", "inputNodeDescSymLinkNode");
     
     // update appsize
     setupAppSize();

@@ -131,9 +131,13 @@ public class IstDataFormatterImpl extends FormatterImpl implements IstDataFormat
             if (oOptions.isFlgShowBrackets()) {
                 nodeOutput.append("[");
             }
+            int intStand = 0;
+            if (stand != null) {
+                intStand = stand.intValue();
+            }
             nodeOutput.append("Ist: ")
                 .append(labelIntend)
-                .append(this.intendLeft(stand.intValue(), (oOptions.isFlgDoIntend() ? 3 : 0)) + "%");
+                .append(this.intendLeft(intStand, (oOptions.isFlgDoIntend() ? 3 : 0)) + "%");
             if (aufwand != null) {
                 nodeOutput.append(" " + this.intendLeft(
                    this.formatNumber(aufwand, 0, 2), (oOptions.isFlgDoIntend() ? 2 : 0)) + "h");

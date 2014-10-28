@@ -895,13 +895,13 @@ public class HtmlExporter extends WikiExporter {
             String styleClasses = "";
             if (data != null && data.length() > 0) {
                 styleClasses = "node-block-" + dataName + "-set";
-                data = data.replaceAll(" ", "&nbsp;");
+//                data = data.replaceAll(" ", "&nbsp;");
             } else {
                 styleClasses = "node-block-" + dataName + "-empty";
                 data = "&nbsp;";
             }
             res = "<div id='node_" + curNode.getWorkingId() +  "_" + dataName + "' "
-                + " class='node-block-" + dataName + " " + styleClasses + "'>"
+                + " class='node-data-block node-block-" + dataName + " " + styleClasses + "'>"
                 + data + "</div>";
         }
         return res;
