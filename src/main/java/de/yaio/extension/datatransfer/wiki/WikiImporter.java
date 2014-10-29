@@ -192,7 +192,7 @@ public class WikiImporter extends ImporterImpl {
     protected static final String CONST_LIST = "*";
 
     protected static final String CONST_PATTERN =
-            "^[ ]*?([-" + CONST_UE + "\\" + CONST_LIST + "]+)[ ]*(.*)";
+            "^[ ]*?([" + CONST_UE + "\\" + CONST_LIST + "]+)[ ]*(.*)";
     private static final Pattern CONST_WIKI =
             Pattern.compile(CONST_PATTERN, Pattern.UNICODE_CHARACTER_CLASS);
 
