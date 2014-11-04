@@ -196,15 +196,20 @@ function addDocLayoutStyleSelectorToElements() {
 function togglePreWrap(element) {
     var classNoWrap = "pre-nowrap";
     var classWrap = "pre-wrap";
+    var codeChilden = $(element).find("code");
     
     // remove/add class if element no has class
     if ($(element).hasClass(classNoWrap)) {
         $(element).removeClass(classNoWrap).addClass(classWrap);
         console.log("togglePreWrap for id:" + element + " set " + classWrap);
+        // wrap code-blocks too
+        $(codeChilden).removeClass(classNoWrap).addClass(classWrap);
     } else {
         $(element).removeClass(classWrap).addClass(classNoWrap);
         console.log("togglePreWrap for id:" + element + " set " + classNoWrap);
-    }
+        // wrap code-blocks too
+        $(codeChilden).removeClass(classWrap).addClass(classNoWrap);
+   }
  }
 
  function showModalErrorMessage(message) {
