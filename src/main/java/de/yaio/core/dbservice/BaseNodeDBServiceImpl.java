@@ -137,10 +137,22 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
             if (searchWords.length > 0) {
                 int idx=0;
                 filter = " where (lower(name) like lower(:fulltext" + idx + ")"
-                                + " or lower(node_desc) like lower(:fulltext" + idx + "))";
+                                + " or lower(node_desc) like lower(:fulltext" + idx + ")"
+                                + " or lower(sym_link_ref) like lower(:fulltext" + idx + ")"
+                                + " or lower(sym_link_name) like lower(:fulltext" + idx + ")"
+                                + " or lower(res_loc_name) like lower(:fulltext" + idx + ")"
+                                + " or lower(res_loc_ref) like lower(:fulltext" + idx + ")"
+                                + ")"
+                                ;
                 for (; idx < searchWords.length; idx++) {
                     filter += " and (lower(name) like lower(:fulltext" + idx + ")"
-                                    + " or lower(node_desc) like lower(:fulltext" + idx + "))";
+                                    + " or lower(node_desc) like lower(:fulltext" + idx + ")"
+                                    + " or lower(sym_link_ref) like lower(:fulltext" + idx + ")"
+                                    + " or lower(sym_link_name) like lower(:fulltext" + idx + ")"
+                                    + " or lower(res_loc_name) like lower(:fulltext" + idx + ")"
+                                    + " or lower(res_loc_ref) like lower(:fulltext" + idx + ")"
+                                    + ")"
+                                ;
                 }
             }
         }
