@@ -854,9 +854,13 @@ pre code {
     word-wrap: break-word;
 }
 
+div.container-content-desc > ul, div.container-content-desc > ol {
+    white-space: normal;
+    word-wrap: normal;
+}
 
 .pre-wrap {
-    white-space: pre-line;
+    white-space: normal;
     white-space: -moz-pre-line;
     white-space: -o-pre-line;
     word-wrap: break-word;

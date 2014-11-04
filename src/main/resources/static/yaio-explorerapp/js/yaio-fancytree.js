@@ -1215,7 +1215,7 @@ function renderColumnsForNode(event, data) {
         var descHtmlMarked = marked(descText);
         
         var descHtml = descHtmlMarked;
-        $divDesc.append("<div id='container_content_desc_" + basenode.sysUID + "'>" + descHtml + "</div>");
+        $divDesc.append("<div id='container_content_desc_" + basenode.sysUID + "' class='container-content-desc'>" + descHtml + "</div>");
         
         // append to datablock
         $nodeDataBlock.append($divDesc);
