@@ -1219,6 +1219,12 @@ function renderColumnsForNode(event, data) {
         
         // append to datablock
         $nodeDataBlock.append($divDesc);
+        
+        // disable draggable for td.block_nodedata
+        $( "#tree" ).draggable({ cancel: "td.block_nodedata" });
+        
+        // enable selction
+        $("td.block_nodedata").enableSelection();
     }
     
     // add nodeData
