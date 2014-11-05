@@ -347,9 +347,11 @@ ul.nodecommands {
 .field_planChildrenSum {
 }
 .field_nodeDesc {
-   text-align: left;
-   width: 550px;
-   overflow-x:auto;
+    text-align: left;
+    overflow-x:auto;
+    left: -420px;
+    position: relative;
+    width: 1000px; /*  orig: 550px; */
 }
 .field_center {
    text-align: center; !IMPORTANT
