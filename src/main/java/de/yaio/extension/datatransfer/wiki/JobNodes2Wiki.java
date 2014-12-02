@@ -215,6 +215,12 @@ public class JobNodes2Wiki extends CmdLineJob {
         flgProcessDocLayoutOption.setRequired(false);
         availiableCmdLineOptions.addOption(flgProcessDocLayoutOption);
 
+        // ProcessMarkdown-Option
+        Option flgProcessMarkdownOption = new Option("", "processmarkdown", 
+                false, "Process Markdown layout command");
+        flgProcessMarkdownOption.setRequired(false);
+        availiableCmdLineOptions.addOption(flgProcessMarkdownOption);
+
         // Dont Show Sysdata
         Option flgShowNoSysDataOption = new Option("", "shownosysdata", false,
                 "Dont Show SysData (default false)");
@@ -371,6 +377,7 @@ public class JobNodes2Wiki extends CmdLineJob {
                 cmdLine.getOptionValue("intendsys", 
                         new Integer(oOptions.getIntendSys()).toString())));
         oOptions.setFlgProcessDocLayout(cmdLine.hasOption("processdoclayout"));
+        oOptions.setFlgProcessMarkdown(cmdLine.hasOption("processmarkdown"));
         oOptions.setStrReadIfStatusInListOnly(cmdLine.getOptionValue("onlyifstateinlist", null));
         
         if (LOGGER.isDebugEnabled())
