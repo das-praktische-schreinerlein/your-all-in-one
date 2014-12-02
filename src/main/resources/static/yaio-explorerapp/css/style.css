@@ -72,6 +72,10 @@ h4 {
     color: red;
 }
 
+select, textarea, input {
+    vertical-align: top;
+}
+
 /*****************************************
  *****************************************
  * Common icon definitions
@@ -549,7 +553,7 @@ label {
     height: 120px;
 }
 .textareatype_filter {
-    width: 500px;
+    width: 800px;
     height: 30px;
 }
 .inputtype_state {
@@ -581,7 +585,7 @@ label {
     height: 30px;
 } 
 .textareatype_nodeDesc {
-    width: 500px;
+    width: 800px;
     height: 50px;
     display: none;
 } 
@@ -589,7 +593,7 @@ label {
     height: 120px;
 }
 .pre_nodeDesc_editor {
-    width: 540px; height: 400px;
+    width: 840px; height: 400px;
 }
 
 /*****************************************
@@ -836,7 +840,9 @@ pre {
     color: #333;
     background-color: #f5f5f5;
     border: 1px solid #ccc;
-    border-radius: 4px
+    border-radius: 4px;
+    max-height: 300px;
+    overflow-y: auto;
 }
 
 pre code {

@@ -204,11 +204,13 @@ function togglePreWrap(element) {
         console.log("togglePreWrap for id:" + element + " set " + classWrap);
         // wrap code-blocks too
         $(codeChilden).removeClass(classNoWrap).addClass(classWrap);
+        $(codeChilden).parent().removeClass(classNoWrap).addClass(classWrap);
     } else {
         $(element).removeClass(classWrap).addClass(classNoWrap);
         console.log("togglePreWrap for id:" + element + " set " + classNoWrap);
         // wrap code-blocks too
         $(codeChilden).removeClass(classWrap).addClass(classNoWrap);
+        $(codeChilden).parent().removeClass(classNoWrap).addClass(classWrap);
    }
  }
 
@@ -374,11 +376,28 @@ function togglePreWrap(element) {
      
      // configure
      editor.setTheme("ace/theme/github");
+
      editor.getSession().setTabSize(4);
      editor.getSession().setUseSoftTabs(true);     
      editor.getSession().setMode("ace/mode/markdown");
      editor.setHighlightActiveLine(true);
      editor.setShowPrintMargin(true); 
+
+     // options from http://ace.c9.io/build/kitchen-sink.html
+     // editor.setShowFoldWidgets(value !== "manual");
+     // editor.setOption("wrap", value);
+     // editor.setOption("selectionStyle", checked ? "line" : "text");
+     editor.setShowInvisibles(true);
+     editor.setDisplayIndentGuides(true);
+     editor.setPrintMarginColumn(80);
+     editor.setShowPrintMargin(true);
+     editor.setHighlightSelectedWord(true);
+     // editor.setOption("hScrollBarAlwaysVisible", checked);
+     // editor.setOption("vScrollBarAlwaysVisible", checked);
+     editor.setAnimatedScroll(true);
+     // editor.setBehavioursEnabled(checked);
+     // editor.setFadeFoldWidgets(true);
+     // editor.setOption("spellcheck", true);
      
      // set value
      editor.setValue($("#" + textAreaId).val());
