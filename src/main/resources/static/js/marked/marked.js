@@ -27,7 +27,7 @@ var block = {
   text: /^[^\n]+/
 };
 
-var fences = /^ *(`{3,}|~{3,}) *(\S+)? *\n([\s\S]+?)\s*\1 *(?:\n+|$)/;
+var fences = /^ *(`{3,}|~{3,}) *(\S+)? *\n([\s\S]+?)\s*\1\s*(?:\n+|$)/;
 
 block.bullet = /(?:[*+-]|\d+\.)/;
 block.item = /^( *)(bull) [^\n]*(?:\n(?!\1bull )[^\n]*)*/;
@@ -172,6 +172,18 @@ Lexer.prototype.token = function(src, top, bq) {
       }
     }
 
+    // fences (gfm)
+    if (cap = this.rules.fences.exec(src)) {
+      src = src.substring(cap[0].length);
+      this.tokens.push({
+        type: 'code',
+        lang: cap[2],
+        text: cap[3]
+      });
+      console.log('marked found fences from 0-' + cap[0].length + "code:" + cap[3]);
+      continue;
+    }
+
     // code
     if (cap = this.rules.code.exec(src)) {
       src = src.substring(cap[0].length);
@@ -181,17 +193,6 @@ Lexer.prototype.token = function(src, top, bq) {
         text: !this.options.pedantic
           ? cap.replace(/\n+$/, '')
           : cap
-      });
-      continue;
-    }
-
-    // fences (gfm)
-    if (cap = this.rules.fences.exec(src)) {
-      src = src.substring(cap[0].length);
-      this.tokens.push({
-        type: 'code',
-        lang: cap[2],
-        text: cap[3]
       });
       continue;
     }
@@ -304,11 +305,13 @@ Lexer.prototype.token = function(src, top, bq) {
 
         // check if code in list
         var codeStart = item.indexOf('```');
-        if (codeStart > 0) {
+        if (0 && codeStart >= 0) {
             // code found: 
-            src = item.substring(codeStart, item.length) + src;
+console.log("marked loop item " + codeStart +  " olditem: " + item);            
+            src = item.substring(codeStart, item.length) + '\n' + src;
             item = item.substring(0, codeStart);
-            
+console.log("marked loop item pos ```" + codeStart +  " newitem: " + item);            
+//console.log("marked loop  ```" + codeStart +  " newsrc: " + src);            
             // exit list after this item
             flgExitLoop = true;
         }
@@ -332,7 +335,9 @@ Lexer.prototype.token = function(src, top, bq) {
         if (this.options.smartLists && i !== l - 1) {
           b = block.bullet.exec(cap[i + 1])[0];
           if (bull !== b && !(bull.length > 1 && b.length > 1)) {
+            console.log("renew src old:" + src);
             src = cap.slice(i + 1).join('\n') + src;
+            console.log("renew src new:" + src);
             i = l - 1;
           }
         }

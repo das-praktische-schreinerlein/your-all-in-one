@@ -375,7 +375,7 @@ function togglePreWrap(element) {
      var editor = ace.edit(parentId);
      
      // configure
-     editor.setTheme("ace/theme/github");
+     editor.setTheme("ace/theme/textmate");
 
      editor.getSession().setTabSize(4);
      editor.getSession().setUseSoftTabs(true);     
