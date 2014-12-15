@@ -130,8 +130,10 @@ public class PlanDataFormatterImpl extends FormatterImpl implements PlanDataForm
                 nodeOutput.append("[");
             }
             nodeOutput.append("Plan: ")
-            .append(labelIntend)
-            .append(this.intendLeft(this.formatNumber(aufwand, 0, 2), (oOptions.isFlgDoIntend() ? 6 : 0)) + "h");
+                .append(labelIntend)
+                .append(this.intendLeft(
+                                this.formatNumber(aufwand, 0, 2), 
+                                (oOptions.isFlgDoIntend() ? 6 : 0)) + "h");
             if (start != null || ende != null) {
                 nodeOutput.append(" ");
                 if (start != null) {

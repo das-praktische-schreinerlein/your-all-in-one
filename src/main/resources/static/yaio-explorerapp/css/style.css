@@ -72,6 +72,10 @@ h4 {
     color: red;
 }
 
+select, textarea, input {
+    vertical-align: top;
+}
+
 /*****************************************
  *****************************************
  * Common icon definitions
@@ -347,9 +351,11 @@ ul.nodecommands {
 .field_planChildrenSum {
 }
 .field_nodeDesc {
-   text-align: left;
-   width: 550px;
-   overflow-x:auto;
+    text-align: left;
+    overflow-x:auto;
+    left: -420px;
+    position: relative;
+    width: 1000px; /*  orig: 550px; */
 }
 .field_center {
    text-align: center; !IMPORTANT
@@ -547,7 +553,7 @@ label {
     height: 120px;
 }
 .textareatype_filter {
-    width: 500px;
+    width: 800px;
     height: 30px;
 }
 .inputtype_state {
@@ -579,7 +585,7 @@ label {
     height: 30px;
 } 
 .textareatype_nodeDesc {
-    width: 500px;
+    width: 800px;
     height: 50px;
     display: none;
 } 
@@ -587,7 +593,7 @@ label {
     height: 120px;
 }
 .pre_nodeDesc_editor {
-    width: 540px; height: 400px;
+    width: 840px; height: 400px;
 }
 
 /*****************************************
@@ -834,7 +840,9 @@ pre {
     color: #333;
     background-color: #f5f5f5;
     border: 1px solid #ccc;
-    border-radius: 4px
+    border-radius: 4px;
+    max-height: 300px;
+    overflow-y: auto;
 }
 
 pre code {
@@ -846,12 +854,21 @@ pre code {
     white-space: -o-pre-wrap;
     word-wrap: break-word;
     background-color: transparent;
-    border-radius: 0
+    border-radius: 0;
+    white-space: pre-line;
+    white-space: -moz-pre-line;
+    white-space: -o-pre-line;
+    word-break: break-all;
+    word-wrap: break-word;
 }
 
+div.container-content-desc > ul, div.container-content-desc > ol {
+    white-space: normal;
+    word-wrap: normal;
+}
 
 .pre-wrap {
-    white-space: pre-line;
+    white-space: normal;
     white-space: -moz-pre-line;
     white-space: -o-pre-line;
     word-wrap: break-word;

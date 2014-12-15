@@ -452,11 +452,8 @@
               <!-- show textfield -->
               <label for="name" translate="editor.common.label.name">Titel</label> 
               <input type="text" name="name" class="inputtype_name" ng-model="nodeForEdit.name" id="inputNameTaskNode" required ng-change=""> 
-              <fielderrors for="name"></fielderrors>
 
-              <br />
-              
-              <!-- show textfield -->
+              <!-- show select -->
               <label for="type" translate="editor.formTaskNode.label.type">Status</label> 
               <select type="text" name="type" class="inputtype_type" ng-model="nodeForEdit.type" id="inputTypeTaskNode" required ng-change="doTypeChanged()"> 
                   <option value="" translate="common.select.pleaseselect">Bitte wählen
@@ -468,6 +465,8 @@
                   <option value="ERLEDIGT" translate="common.select.TaskNodeType.ERLEDIGT">Erledigt
                   <option value="VERWORFEN" translate="common.select.TaskNodeType.VERWORFEN">Verworfen
               </select> 
+
+              <fielderrors for="name"></fielderrors>
               <fielderrors for="type"></fielderrors>
             </fieldset>
 
@@ -566,11 +565,8 @@
               <!-- show textfield -->
               <label for="name" translate="editor.common.label.name">Titel</label> 
               <input type="text" name="name" class="inputtype_name" ng-model="nodeForEdit.name" id="inputNameEventNode" required ng-change=""> 
-              <fielderrors for="name"></fielderrors>
 
-              <br />
-              
-              <!-- show textfield -->
+              <!-- show select -->
               <label for="type" translate="editor.formEventNode.label.type">Status</label> 
               <select type="text" name="type" class="inputtype_type" ng-model="nodeForEdit.type" id="inputTypeEventNode" required ng-change="doTypeChanged()"> 
                   <option value="" translate="common.select.pleaseselect">Bitte wählen
@@ -583,6 +579,8 @@
                   <option value="EVENT_ERLEDIGT" translate="common.select.EventNodeType.EVENT_ERLEDIGT">Erledigt
                   <option value="EVENT_VERWORFEN" translate="common.select.EventNodeType.EVENT_VERWORFEN">Verworfen
               </select> 
+
+              <fielderrors for="name"></fielderrors>
               <fielderrors for="type"></fielderrors>
             </fieldset>
 
@@ -678,13 +676,6 @@
             <fieldset>
               <legend translate="editor.common.legend.Stammdaten">Stammdaten</legend>
               
-              <!-- show textfield -->
-              <label for="name" translate="editor.common.label.name">Titel</label> 
-              <textarea name="name" class="textareatype_name" ng-model="nodeForEdit.name" id="inputNameInfoNode" required ng-change=""></textarea> 
-              <fielderrors for="name"></fielderrors>
-
-              <br />
-              
               <!-- show select -->
               <label for="type" translate="editor.common.label.type">Typ</label> 
               <select type="text" name="type" class="inputtype_type" ng-model="nodeForEdit.type" id="inputTypeInfoNode" required ng-change="">
@@ -694,7 +685,13 @@
                   <option value="IDEE" translate="common.select.InfoType.IDEE">Idee
                   <option value="HOWTO" translate="common.select.InfoType.HOWTO">Howto
               </select> 
+
+              <!-- show textfield -->
+              <label for="name" translate="editor.common.label.name">Titel</label> 
+              <textarea name="name" class="textareatype_name" ng-model="nodeForEdit.name" id="inputNameInfoNode" required ng-change=""></textarea> 
+
               <fielderrors for="type"></fielderrors>
+              <fielderrors for="name"></fielderrors>
             </fieldset>
       
             <fieldset>
@@ -713,22 +710,18 @@
                     <option value="DIRECT" translate="common.select.docLayoutTagCommand.DIRECT">Direkte Ausgabe
                     <option value="ENDDIV" translate="common.select.docLayoutTagCommand.ENDDIV">Block beenden
                 </select> 
-                <fielderrors for="docLayoutTagCommand"></fielderrors>
-  
-                <br />
   
                 <label for="docLayoutAddStyleClass" translate="editor.common.label.docLayoutAddStyleClass">CSS-Klasse</label> 
                 <input type="text" name="docLayoutAddStyleClass" class="inputtype_docLayoutAddStyleClass" ng-model="nodeForEdit.docLayoutAddStyleClass" id="inputDocLayoutAddStyleClassInfoNode" ng-change="">
-                <fielderrors for="docLayoutAddStyleClass"></fielderrors>
   
-                <br />
-                
                 <label for="docLayoutShortName" translate="editor.common.label.docLayoutShortName">Kurzname</label> 
                 <input type="text" name="docLayoutShortName" class="inputtype_docLayoutShortName" ng-model="nodeForEdit.docLayoutShortName" id="inputDocLayoutShortNameInfoNode" ng-change=""> 
   
                 <label for="docLayoutFlgCloseDiv" translate="editor.common.label.docLayoutFlgCloseDiv">Block schließen?</label> 
                 <input type="checkbox" name="docLayoutFlgCloseDiv" class="inputtype_docLayoutFlgCloseDiv" ng-model="nodeForEdit.docLayoutFlgCloseDiv" id="inputDocLayoutFlgCloseDivInfoNode" ng-change=""> 
   
+                <fielderrors for="docLayoutTagCommand"></fielderrors>
+                <fielderrors for="docLayoutAddStyleClass"></fielderrors>
                 <fielderrors for="docLayoutShortName"></fielderrors>
                 <fielderrors for="docLayoutFlgCloseDiv"></fielderrors>
               </div>
@@ -780,13 +773,6 @@
             <fieldset>
               <legend translate="editor.common.legend.Stammdaten">Stammdaten</legend>
               
-              <!-- show textfield -->
-              <label for="name" translate="editor.common.label.name">Titel</label> 
-              <input type="text" name="name" class="inputtype_name" ng-model="nodeForEdit.name" id="inputNameUrlResNode" required ng-change=""> 
-              <fielderrors for="name"></fielderrors>
-
-              <br />
-              
               <!-- show select -->
               <label for="type" translate="editor.common.label.type">Typ</label> 
               <select type="text" name="type" class="inputtype_type" ng-model="nodeForEdit.type" id="inputTypeUrlResNode" required ng-change="">
@@ -796,7 +782,14 @@
                   <option value="IMAGERES" translate="common.select.UrlRes.IMAGERES">Bild-Verweis
                   <option value="EMAILRES" translate="common.select.UrlRes.EMAILRES">Email-Verweis
               </select> 
+
+              <!-- show textfield -->
+              <label for="name" translate="editor.common.label.name">Titel</label> 
+              <input type="text" name="name" class="inputtype_name" ng-model="nodeForEdit.name" id="inputNameUrlResNode" required ng-change=""> 
+
               <fielderrors for="type"></fielderrors>
+              <fielderrors for="name"></fielderrors>
+
             </fieldset>
       
             <fieldset>
@@ -836,22 +829,18 @@
                     <option value="TR">Tabellenzeile
                     <option value="DIRECT">Direkte Ausgabe
                 </select> 
-                <fielderrors for="docLayoutTagCommand"></fielderrors>
-  
-                <br />
   
                 <label for="docLayoutAddStyleClass" translate="editor.common.label.docLayoutAddStyleClass">CSS-Klasse</label> 
                 <input type="text" name="docLayoutAddStyleClass" class="inputtype_docLayoutAddStyleClass" ng-model="nodeForEdit.docLayoutAddStyleClass" id="inputDocLayoutAddStyleClassUrlResNode" ng-change=""> 
-                <fielderrors for="docLayoutAddStyleClass"></fielderrors>
   
-                <br />
-                
                 <label for="docLayoutShortName" translate="editor.common.label.docLayoutShortName">Kurzname</label> 
                 <input type="text" name="docLayoutShortName" class="inputtype_docLayoutShortName" ng-model="nodeForEdit.docLayoutShortName" id="inputDocLayoutShortNameUrlResNode" ng-change=""> 
   
                 <label for="docLayoutFlgCloseDiv" translate="editor.common.label.docLayoutFlgCloseDiv">Block schließen?</label> 
                 <input type="checkbox" name="docLayoutFlgCloseDiv" class="inputtype_docLayoutFlgCloseDiv" ng-model="nodeForEdit.docLayoutFlgCloseDiv" id="inputDocLayoutFlgCloseDivUrlResNode" ng-change=""> 
   
+                <fielderrors for="docLayoutTagCommand"></fielderrors>
+                <fielderrors for="docLayoutAddStyleClass"></fielderrors>
                 <fielderrors for="docLayoutShortName"></fielderrors>
                 <fielderrors for="docLayoutFlgCloseDiv"></fielderrors>
               </div>
@@ -873,7 +862,6 @@
                 <!-- show textfield -->
                 <label for="nodeDesc" translate="editor.common.label.nodeDesc">Details</label> 
                 <textarea name="nodeDesc" class="textareatype_nodeDesc" ng-model="nodeForEdit.nodeDesc" id="inputNodeDescUrlResNode" ng-change=""></textarea> 
-                <fielderrors for="nodeDesc"></fielderrors>
                 <fielderrors for="nodeDesc"></fielderrors>
                 <pre id="editorInputNodeDescUrlResNode" class="pre_nodeDesc_editor"></pre> 
               </div>
@@ -947,7 +935,7 @@
                 <!-- show textfield -->
                 <label for="nodeDesc" translate="editor.common.label.nodeDesc">Details</label> 
                 <textarea name="nodeDesc" class="textareatype_nodeDesc" ng-model="nodeForEdit.nodeDesc" id="inputNodeDescSymLinkNode" ng-change=""></textarea> 
-                <fielderrors for="nodeDesc"></fielderrors>
+
                 <fielderrors for="nodeDesc"></fielderrors>
                 <pre id="editorInputNodeDescSymLinkNode" class="pre_nodeDesc_editor"></pre> 
               </div>

@@ -299,8 +299,8 @@ function yaioOpenNodeEditor(nodeId, mode) {
             + " for node:" + nodeId);
 
     // set width
-    $("#containerYaioEditor").css("width", "600px");
-    $("#containerBoxYaioEditor").css("width", "600px");
+    $("#containerYaioEditor").css("width", "900px");
+    $("#containerBoxYaioEditor").css("width", "900px");
     $("#containerYaioTree").css("width", (width - $("#containerYaioEditor").width() - 30) + "px");
     
     // display editor and form for the formSuffix

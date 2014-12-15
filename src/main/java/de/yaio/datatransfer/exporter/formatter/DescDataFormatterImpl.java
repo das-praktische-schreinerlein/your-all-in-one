@@ -93,11 +93,6 @@ public class DescDataFormatterImpl extends FormatterImpl implements DescDataForm
 
         String dummyText = node.getNodeDesc();
         if (dummyText != null) {
-            // Zeilenumbruch
-            if (oOptions.isFlgShowDescInNextLine()) {
-                nodeOutput.append("\n");
-            }
-            
             // Sonderzeichen entfernen
             if (dummyText != null && oOptions.isFlgReEscapeDesc()) {
                 dummyText = dummyText.replaceAll("<WLESC>", "\\");
@@ -107,7 +102,8 @@ public class DescDataFormatterImpl extends FormatterImpl implements DescDataForm
     
             // Trimmen
             if (dummyText != null && oOptions.isFlgTrimDesc()) {
-                dummyText = dummyText.replaceAll("\n\n\n", "\n\n");
+                // delete all \r
+                dummyText = dummyText.replaceAll("\r", "");
                 dummyText = dummyText.replaceAll("\n\n\n", "\n\n");
                 dummyText = dummyText.replaceAll("\n\n\n", "\n\n");
                 dummyText = dummyText.replaceAll("\n\n\n", "\n\n");
@@ -115,8 +111,13 @@ public class DescDataFormatterImpl extends FormatterImpl implements DescDataForm
                 dummyText = dummyText.trim();
             }
     
-            // Ue voranstellen
             if (dummyText != null && dummyText.length() > 0) {
+                // Zeilenumbruch
+                if (oOptions.isFlgShowDescInNextLine()) {
+                    nodeOutput.append("\n");
+                }
+
+                // Ue voranstellen
                 if (oOptions.isFlgShowDescWithUe()) {
                     dummyText = "ProjektDesc: " + dummyText;
                 }

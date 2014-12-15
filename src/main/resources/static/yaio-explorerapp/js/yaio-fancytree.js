@@ -1134,6 +1134,17 @@ function renderColumnsForNode(event, data) {
                  .addClass("field_name")
                  //.addClass(statestyle)
                  ;
+    
+    // define name
+    var name = basenode.name;
+    if (name == null || name.length <= 0) {
+       if (basenode.className == "UrlResNode") {
+           name = basenode.resLocName;
+       } else if (basenode.className == "SymLinkNode") {
+           name = basenode.symLinkName;
+       }
+    }
+
     // insert state before name-span
     var $nameEle = $tdList.eq(colName).find("span.fancytree-title");
     var $div = $("<div style='disply: block-inline' />")
@@ -1142,7 +1153,7 @@ function renderColumnsForNode(event, data) {
                     )
         .append("&nbsp;")
         .append($("<span class='fancytree-title2' id='title" + basenode.sysUID + "'>" 
-                + htmlEscapeText(basenode.name) + "</span>"))
+                + htmlEscapeText(name) + "</span>"))
         ;
     $nameEle.html($div)
     //$tdList.eq(colName).find("span.fancytree-expander").addClass(statestyle);
@@ -1204,10 +1215,16 @@ function renderColumnsForNode(event, data) {
         var descHtmlMarked = marked(descText);
         
         var descHtml = descHtmlMarked;
-        $divDesc.append("<div id='container_content_desc_" + basenode.sysUID + "'>" + descHtml + "</div>");
+        $divDesc.append("<div id='container_content_desc_" + basenode.sysUID + "' class='container-content-desc'>" + descHtml + "</div>");
         
         // append to datablock
         $nodeDataBlock.append($divDesc);
+        
+        // disable draggable for td.block_nodedata
+        $( "#tree" ).draggable({ cancel: "td.block_nodedata" });
+        
+        // enable selction
+        $("td.block_nodedata").enableSelection();
     }
     
     // add nodeData

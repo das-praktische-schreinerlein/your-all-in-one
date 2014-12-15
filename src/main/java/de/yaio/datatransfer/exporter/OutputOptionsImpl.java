@@ -63,6 +63,7 @@ public class OutputOptionsImpl implements OutputOptions {
 
     protected boolean flgRecalc = false;
     protected boolean flgProcessDocLayout = false;
+    protected boolean flgProcessMarkdown = false;
     protected String strReadIfStatusInListOnly = "";
     protected String strClassFilter = "";
     protected String strTypeFilter = "";
@@ -99,6 +100,7 @@ public class OutputOptionsImpl implements OutputOptions {
         this.flgShowDesc = baseOptions.isFlgShowDesc();
         this.flgRecalc = baseOptions.isFlgRecalc();
         this.flgProcessDocLayout = baseOptions.isFlgProcessDocLayout();
+        this.flgProcessMarkdown = baseOptions.isFlgProcessMarkdown();
         this.strReadIfStatusInListOnly = baseOptions.getStrReadIfStatusInListOnly();
         this.strClassFilter = baseOptions.getStrClassFilter();
         this.strTypeFilter = baseOptions.getStrTypeFilter();
@@ -218,6 +220,12 @@ public class OutputOptionsImpl implements OutputOptions {
     }
     public void setFlgProcessDocLayout(boolean flgProcessDocLayout) {
         this.flgProcessDocLayout = flgProcessDocLayout;
+    }
+    public boolean isFlgProcessMarkdown() {
+        return flgProcessMarkdown;
+    }
+    public void setFlgProcessMarkdown(boolean flgProcessMarkdown) {
+        this.flgProcessMarkdown = flgProcessMarkdown;
     }
     public int getMaxEbene() {
         return manageIntValues(maxEbene);
@@ -369,6 +377,7 @@ public class OutputOptionsImpl implements OutputOptions {
 
         this.flgRecalc = false;
         this.flgProcessDocLayout = false;
+        this.flgProcessMarkdown = false;
         this.setStrReadIfStatusInListOnly("");
         this.setStrClassFilter("");
         this.setStrTypeFilter("");
@@ -403,6 +412,7 @@ public class OutputOptionsImpl implements OutputOptions {
                         + ", flgShowDescInNextLine=" + this.flgShowDescInNextLine 
                         + ", flgRecalc=" + this.flgRecalc 
                         + ", flgProcessDocLayout=" + this.flgProcessDocLayout
+                        + ", flgProcessMarkdown=" + this.flgProcessMarkdown
                         + ", strReadIfStatusInListOnly=" + this.strReadIfStatusInListOnly 
                         + ", strClassFilter=" + this.strClassFilter 
                         + ", strTypeFilter=" + this.strTypeFilter 

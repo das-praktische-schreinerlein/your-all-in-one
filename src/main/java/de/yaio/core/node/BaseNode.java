@@ -35,6 +35,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
+import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Max;
@@ -110,6 +111,9 @@ public class BaseNode implements BaseData, MetaData, SysData,
         CONST_MAP_NODETYPE_IDENTIFIER.put("UNBEKANNT", CONST_NODETYPE_IDENTIFIER_UNKNOWN);
         
     }
+    
+    // Validator
+    protected static ValidatorFactory validationFactory = Validation.buildDefaultValidatorFactory();
 
     protected static SysDataService sysDataService = new SysDataServiceImpl();
     protected static MetaDataService metaDataService = new MetaDataServiceImpl();
@@ -474,10 +478,15 @@ public class BaseNode implements BaseData, MetaData, SysData,
     
     @Override
     public Set<ConstraintViolation<BaseNode>> validateMe() {
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        javax.validation.Validator validator = factory.getValidator();
+        Validator validator = validationFactory.getValidator();
 
+        Date start = null;
+        if (LOGGER.isDebugEnabled())
+            start = new Date();
         Set<ConstraintViolation<BaseNode>> violations = validator.validate(this);
+        if (LOGGER.isDebugEnabled())
+            LOGGER.debug("validation duration=" + ((new Date()).getTime()-start.getTime()) 
+                            + "ms for" + this.getNameForLogger());
         
         return violations;
     }

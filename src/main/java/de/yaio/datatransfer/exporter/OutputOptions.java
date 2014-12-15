@@ -67,6 +67,8 @@ public interface OutputOptions {
     public void setFlgRecalc(boolean flgRecalc);
     public boolean isFlgProcessDocLayout();
     public void setFlgProcessDocLayout(boolean flgProcessDocLayout);
+    public boolean isFlgProcessMarkdown();
+    public void setFlgProcessMarkdown(boolean flgProcessMarkdown);
 
     public int getMaxEbene();
     public void setMaxEbene(Integer maxEbene);
