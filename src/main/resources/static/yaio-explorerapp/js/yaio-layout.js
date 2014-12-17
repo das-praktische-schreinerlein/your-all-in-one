@@ -402,11 +402,78 @@ function togglePreWrap(element) {
      // set value
      editor.setValue($("#" + textAreaId).val());
      
-     // set eventhandler toi update corresponding textarea
+     // set eventhandler to update corresponding textarea
      editor.getSession().on('change', function(e) {
          // update textarea for angular
          $("#" + textAreaId).val(editor.getValue()).trigger('select').triggerHandler("change");
-     }); 
+     });
      
      return editor;
  }
+ 
+ function addPreviewToElements() {
+     // add preview to nodeDesc
+     $("label[for='nodeDesc']").append(function (idx) {
+         var link = "";
+         var label = this;
+         
+         // check if already set
+         if ($(label).attr("previewAdded")) {
+             console.error("addPreviewElements: SKIP because already added: " + $(label).attr("for"));
+             return link;
+         }
+
+         // get corresponding form
+         var forName = $(label).attr("for");
+         var form = $(label).closest("form");
+         
+         // get for-element byName from form
+         var forElement = form.find("[name="+ forName + "]").first();
+         if (forElement.length > 0) {
+             // define link to label
+             link = "<a href=\"#\" " +
+                 " onClick=\"showPreviewForTextareaId('" +
+                     forElement.attr('id') + "'); return false;" +
+                 "\" data-tooltip='Vorschau' class='icon-preview'></a>";
+             
+             // set flag
+             $(label).attr("previewAdded", "true")
+             console.log("addPreviewToElements: add : " + forName + " for " + forElement.attr('id'));
+         }
+         return link;
+     });
+ }
+ 
+ function showPreviewForTextareaId(textAreaId) {
+     var descText = $("#" + textAreaId).val();
+     marked.setOptions({
+         renderer: new marked.Renderer(),
+         gfm: true,
+         tables: true,
+         breaks: false,
+         pedantic: false,
+         sanitize: true,
+         smartLists: true,
+         smartypants: false
+       });  
+     var descHtmlMarked = marked(descText);
+     showPreview(descHtmlMarked);
+ }
+
+     
+ function showPreview(content) {
+     // set preview-content
+     $( "#preview-content" ).html(content);
+     
+     // show message
+     $( "#preview-box" ).dialog({
+         modal: true,
+         width: "1050px",
+         buttons: {
+           Ok: function() {
+             $( this ).dialog( "close" );
+           }
+         }
+     });    
+ }
+
