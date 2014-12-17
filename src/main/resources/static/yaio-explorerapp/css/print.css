@@ -109,3 +109,14 @@ table#masterTable tbody tr td:first-child + td + td + td {
     white-space: pre-wrap;
     overflow: visible;
 }
+table.fancytree-ext-table tbody tr.fancytree-active, table.fancytree-ext-table.fancytree-treefocus tbody tr.fancytree-active {
+    outline: none;
+}
+table.fancytree-ext-table tbody tr.fancytree-active {
+    background-color: none;
+    outline: none;
+}
+table.fancytree-ext-table.fancytree-treefocus tbody tr.fancytree-active {
+    background-color: node;
+    outline: none;
+}

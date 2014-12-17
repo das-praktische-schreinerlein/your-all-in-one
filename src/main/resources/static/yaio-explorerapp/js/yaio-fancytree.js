@@ -687,12 +687,14 @@ function renderDataBlock(basenode, fancynode) {
     // default fields
     $row.append($("<div />").html(htmlEscapeText(basenode.metaNodePraefix + basenode.metaNodeNummer))
             .addClass("container_field")
+            .addClass("fieldtype_basedata")
             .addClass("fieldtype_metanummer")
             .addClass("field_metanummer")
             );
         
     $row.append($("<div lang='tech' />").html(basenode.className)
            .addClass("container_field")
+           .addClass("fieldtype_basedata")
            .addClass("fieldtype_type")
            .addClass("field_type")
            .addClass(statestyle));
@@ -701,6 +703,7 @@ function renderDataBlock(basenode, fancynode) {
         $row.append(
                 $("<div />").html("&nbsp;" + formatNumbers(basenode.istChildrenSumStand, 0, "%"))
                         .addClass("container_field")
+                        .addClass("fieldtype_additionaldata")
                         .addClass("fieldtype_stand")
                         .addClass("field_istChildrenSumStand")
                         .addClass(statestyle)
@@ -708,6 +711,7 @@ function renderDataBlock(basenode, fancynode) {
         $row.append(
                 $("<div />").html("&nbsp;" + formatNumbers(basenode.istChildrenSumAufwand, 1, "h"))
                         .addClass("container_field")
+                        .addClass("fieldtype_additionaldata")
                         .addClass("fieldtype_aufwand")
                         .addClass("field_istChildrenSumAufwand")
                         .addClass(statestyle)
@@ -716,6 +720,7 @@ function renderDataBlock(basenode, fancynode) {
                 $("<div />").html("&nbsp;" + formatGermanDate(basenode.istChildrenSumStart)
                         + "-" + formatGermanDate(basenode.istChildrenSumEnde))
                          .addClass("container_field")
+                         .addClass("fieldtype_additionaldata")
                          .addClass("fieldtype_fromto")
                          .addClass("field_istChildrenSum")
                          .addClass(statestyle)
@@ -723,6 +728,7 @@ function renderDataBlock(basenode, fancynode) {
         $row.append(
                 $("<div />").html("&nbsp;" + formatNumbers(basenode.planChildrenSumAufwand, 1, "h"))
                          .addClass("container_field")
+                         .addClass("fieldtype_additionaldata")
                          .addClass("fieldtype_aufwand")
                          .addClass("field_planChildrenSumAufwand")
                          .addClass(statestyle)
@@ -731,6 +737,7 @@ function renderDataBlock(basenode, fancynode) {
                 $("<div />").html("&nbsp;" + formatGermanDate(basenode.planChildrenSumStart)
                          + "-" + formatGermanDate(basenode.planChildrenSumEnde))
                          .addClass("container_field")
+                         .addClass("fieldtype_additionaldata")
                          .addClass("fieldtype_fromto")
                          .addClass("field_planChildrenSum")
                          .addClass(statestyle)
@@ -745,6 +752,7 @@ function renderDataBlock(basenode, fancynode) {
                     $("<div />").html("<a href='" + htmlEscapeText(basenode.resLocRef) + "' target='_blank'>" 
                                      + htmlEscapeText(basenode.resLocRef) + "</a>")
                               .addClass("container_field")
+                              .addClass("fieldtype_additionaldata")
                               .addClass("fieldtype_url")
                               .addClass("field_resLocRef")
                               ); 
@@ -756,6 +764,7 @@ function renderDataBlock(basenode, fancynode) {
                 $row.append(
                         $("<div lang='tech' />").html("Layout ")
                                 .addClass("container_field")
+                                .addClass("fieldtype_additionaldata")
                                 .addClass("fieldtype_ueDocLayout")
                                 .addClass("field_ueDocLayout")
                                 ); 
@@ -766,6 +775,7 @@ function renderDataBlock(basenode, fancynode) {
                         $("<div lang='tech' />").html("Tag: " 
                                     + htmlEscapeText(basenode.docLayoutTagCommand))
                                 .addClass("container_field")
+                                .addClass("fieldtype_additionaldata")
                                 .addClass("fieldtype_docLayoutTagCommand")
                                 .addClass("field_docLayoutTagCommand")
                                 ); 
@@ -775,6 +785,7 @@ function renderDataBlock(basenode, fancynode) {
                         $("<div lang='tech' />").html("Style: " 
                                     + htmlEscapeText(basenode.docLayoutAddStyleClass))
                                 .addClass("container_field")
+                                .addClass("fieldtype_additionaldata")
                                 .addClass("fieldtype_docLayoutAddStyleClass")
                                 .addClass("field_docLayoutAddStyleClass")
                                 ); 
@@ -784,6 +795,7 @@ function renderDataBlock(basenode, fancynode) {
                         $("<div lang='tech' />").html("Kurzname: " 
                                     + htmlEscapeText(basenode.docLayoutShortName))
                                 .addClass("container_field")
+                                .addClass("fieldtype_additionaldata")
                                 .addClass("fieldtype_docLayoutShortName")
                                 .addClass("field_docLayoutShortName")
                                 ); 
@@ -792,6 +804,7 @@ function renderDataBlock(basenode, fancynode) {
                 $row.append(
                         $("<div lang='tech' />").html("Block schlie&szligen!")
                                 .addClass("container_field")
+                                .addClass("fieldtype_additionaldata")
                                 .addClass("fieldtype_docLayoutFlgCloseDiv")
                                 .addClass("field_docLayoutFlgCloseDiv")
                                 ); 

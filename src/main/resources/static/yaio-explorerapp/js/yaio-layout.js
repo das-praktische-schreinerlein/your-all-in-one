@@ -286,6 +286,18 @@ function togglePreWrap(element) {
      $( id ).toggle( selectedEffect, options, 500 );
  };
 
+ function togglePrintLayout() {
+     if ($("#checkboxPrintAll").prop('checked')) {
+         // print all
+         $("#link_css_dataonly").attr("disabled", "disabled");
+         $("#link_css_dataonly").prop("disabled", true);
+     } else  {
+         // print data only
+         $("#link_css_dataonly").removeAttr("disabled");
+         $("#link_css_dataonly").prop("disabled", false);
+     }
+ }
+ 
  /**
   * <h4>FeatureDomain:</h4>
   *     Layout Toggler
