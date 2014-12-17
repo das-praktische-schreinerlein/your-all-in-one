@@ -309,6 +309,18 @@ function togglePreWrap(element) {
      });
  }
 
+ function toggleAllNodeDescContainer() {
+     if ($("#toggler_desc_all").hasClass('toggler_hidden')) {
+         // hide all desc
+         $("div.field_nodeDesc").slideDown(1000);
+         $("div.fieldtype_descToggler > a").addClass('toggler_show').removeClass('toggler_hidden');
+     } else {
+         // hide all desc
+         $("div.field_nodeDesc").slideUp(1000);
+         $("div.fieldtype_descToggler > a").addClass('toggler_hidden').removeClass('toggler_show');
+     }
+ }
+
  /**
   * <h4>FeatureDomain:</h4>
   *     Layout Toggler
