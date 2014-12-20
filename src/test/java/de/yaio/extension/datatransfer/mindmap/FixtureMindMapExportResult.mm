@@ -13,7 +13,7 @@
 </node>
 <node  id="Buis1730" text="OFFEN - Vermittler anfragen                                                     [Plan:      2h]" background_color="#daa520" >
 </node>
-<node  id="Buis2" text="EVENT_PLANED - Testevent                                                        [Plan:      2h 12.12.2014-12.12.2014]" background_color="#daa520" >
+<node  id="Buis2" text="EVENT_PLANED - Testevent                                                        [Plan:      2h 12.12.2034-12.12.2034]" background_color="#daa520" >
 <icon BUILTIN="bell"/>
 </node>
 </node>
