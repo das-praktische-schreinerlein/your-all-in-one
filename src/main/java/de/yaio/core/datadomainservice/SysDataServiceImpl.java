@@ -16,7 +16,6 @@
  */
 package de.yaio.core.datadomainservice;
 
-import java.security.MessageDigest;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -26,6 +25,7 @@ import org.apache.log4j.Logger;
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.datadomain.SysData;
 import de.yaio.core.nodeservice.NodeService;
+import de.yaio.utils.DataUtils;
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -47,15 +47,6 @@ public class SysDataServiceImpl extends DataDomainRecalcImpl implements SysDataS
 
     protected static DateFormat UIDF = new SimpleDateFormat("yyyyMMddHHmmssSSS");
     protected static int VAR_CUR_UID = 1;
-    protected static MessageDigest objMD5Coder;
-    static { 
-        try {
-            objMD5Coder = MessageDigest.getInstance("MD5");
-        } catch (Exception e) {
-            // TODO: handle exception
-        }
-    }
-    
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -129,6 +120,7 @@ public class SysDataServiceImpl extends DataDomainRecalcImpl implements SysDataS
             checksum = newChecksum;
             node.setSysCurChecksum(checksum);
             flgChanged = true;
+            node.setFlgForceUpdate(true);
         }
 
         // AenderungsDatum
@@ -155,23 +147,6 @@ public class SysDataServiceImpl extends DataDomainRecalcImpl implements SysDataS
             LOGGER.debug("getDataBlocks4CheckSum = " + data);
 
         // Checksumme
-        objMD5Coder.update(data.getBytes(), 0, data.length());
-        final byte[] digest = objMD5Coder.digest();
-
-        // menschenlesbar
-        StringBuffer strbuf = new StringBuffer();
-        String praefix = "";
-        int b = 0;
-        int value = 0;
-        for (int i = 0; i < digest.length; i++) {
-            // als Hex
-            b = digest[i];
-            value = (b & 0x7F) + (b < 0 ? 128 : 0);
-            praefix = (value < 16 ? "0" : "");
-            strbuf.append(praefix);
-            strbuf.append(Integer.toHexString(value).toUpperCase());
-        }        
-
-        return strbuf.toString();
+        return DataUtils.generateCheckSum(data);
     }
 }

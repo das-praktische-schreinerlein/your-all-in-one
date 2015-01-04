@@ -16,6 +16,7 @@
  */
 package de.yaio.utils;
 
+import java.security.MessageDigest;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashMap;
@@ -68,6 +69,14 @@ public class Calculator {
     // Logger
     private static final Logger LOGGER =
             Logger.getLogger(Calculator.class);
+    protected static MessageDigest objMD5Coder;
+    static { 
+        try {
+            objMD5Coder = MessageDigest.getInstance("MD5");
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+    }
     
 
     /**
@@ -309,64 +318,5 @@ public class Calculator {
         }
 
         return result;
-    }
-
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tools - Converter
-     * <h4>FeatureDescription:</h4>
-     *     escape html entities
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue html-escaped string
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Converter
-     * @param src - the string to escape all html
-     * @return the html-escaped string
-     */
-    public static String htmlEscapeText(String src) {
-        String text = src;
-        
-        // test ob beide belegt
-        if (text != null) {
-            text = text.replace("&", "&amp;");
-            text = text.replace("<", "&lt;");
-            text = text.replace(">", "&gt;");
-            text = text.replace("\"", "&quot;");
-            text = text.replace("'", "&#x27;");
-            text = text.replace("/", "&#x2F;");
-        }
-
-        return text;
-    }
-    
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tools - Converter
-     * <h4>FeatureDescription:</h4>
-     *     convert commaseparated string to map
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue map
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Converter
-     * @param csvString - the string to split
-     * @return the map of string
-     */
-    public static Map<String, String> initMapFromCsvString(String csvString) {
-        Map<String, String> mpStates = null;
-        if (   csvString != null 
-            && csvString.length() > 0) {
-            mpStates = new HashMap<String, String>();
-            String [] arrStatusFilter =
-                            csvString.split(",");
-            for (int zaehler = 0; zaehler < arrStatusFilter.length; zaehler++) {
-                mpStates.put(arrStatusFilter[zaehler], arrStatusFilter[zaehler]);
-            }
-        }
-        
-        return mpStates;
     }
 }

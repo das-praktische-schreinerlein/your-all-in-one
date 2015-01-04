@@ -70,7 +70,7 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
         List<BaseNode> parentHierarchy = null;
         if (node != null) {
             try {
-                // init Cildren from DB
+                // init Children from DB
                 node.initChildNodesFromDB(0);
 
                 // recalc me
