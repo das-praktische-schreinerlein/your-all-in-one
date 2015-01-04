@@ -1214,6 +1214,9 @@ function renderColumnsForNode(event, data) {
         var descHtmlPre = "<pre class='content-desc pre-wrap' id='content_desc_" + basenode.sysUID + "'>" 
                         + htmlEscapeText(descText) + "</pre>";
 
+        // prepare descText
+        descText = prepareTextForMarkdown(descText);
+        
         // Marked
         marked.setOptions({
           renderer: new marked.Renderer(),

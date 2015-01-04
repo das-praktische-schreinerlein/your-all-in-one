@@ -470,6 +470,10 @@ function togglePreWrap(element) {
  
  function showPreviewForTextareaId(textAreaId) {
      var descText = $("#" + textAreaId).val();
+
+     // prepare descText
+     descText = prepareTextForMarkdown(descText);
+
      marked.setOptions({
          renderer: new marked.Renderer(),
          gfm: true,

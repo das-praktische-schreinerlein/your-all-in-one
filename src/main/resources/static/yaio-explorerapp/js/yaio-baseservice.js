@@ -248,3 +248,37 @@ function downloadAsFile($link, data, fileName, mime, encoding) {
         });
    }
 }
+
+function prepareTextForMarkdown(descText) {
+    // prepare descText
+    var newDescText = '';
+    var newDescTextRest = descText;
+    var codeStart = newDescTextRest.indexOf("```");
+    while (codeStart >= 0) {
+        // splice start and add to newDescText
+        newDescText += newDescTextRest.slice(0, codeStart + 3);
+        newDescTextRest = newDescTextRest.slice(codeStart + 3);
+        
+        var codeEnd = newDescTextRest.indexOf("```");
+        if (codeEnd >= 0) {
+            // splice all before ending ```
+            var code = newDescTextRest.slice(0, codeEnd);
+            newDescTextRest = newDescTextRest.slice(codeEnd);
+            
+            // replace empty lines in code
+            code = code.replace(/\n +\n/g, "\n.\n");
+            
+            // add code to newDescText
+            newDescText += code;
+            
+            // extract ending ``` and add it to newDescText
+            newDescText += newDescTextRest.slice(0, 3);
+            newDescTextRest = newDescTextRest.slice(3);
+        }
+        codeStart = newDescTextRest.indexOf("```");
+    }
+    // add rest to newDescText
+    newDescText += newDescTextRest;
+    
+    return newDescText;
+}
