@@ -153,11 +153,22 @@ public class TaskNode extends BaseNode implements ExtendedWorkflowData {
     
     @Override
     public WorkflowState getWorkflowState() {
-        // default for 
-        if (super.getWorkflowState() == WorkflowState.NOWORKFLOW) {
+        WorkflowState masterState = super.getWorkflowState();
+        if (masterState == WorkflowState.NOWORKFLOW) {
+            // default if empty
+            
+            // calc from state
+            if (this.getState() != null) {
+                WorkflowState newState = this.getWorkflowStateForState(this.getState());
+                if (newState != null) {
+                    return newState;
+                }
+            }
+            
+            // return default
             return WorkflowState.NOTPLANED;
         }
-        return super.getWorkflowState();
+        return masterState;
     };
 
     @Override
