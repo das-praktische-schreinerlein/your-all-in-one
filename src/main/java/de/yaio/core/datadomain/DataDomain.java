@@ -62,7 +62,7 @@ public interface DataDomain {
 
     // servies
     public NodeService getNodeService();
-
+    
     /**
      * <h4>FeatureDomain:</h4>
      *     Validation
@@ -96,4 +96,13 @@ public interface DataDomain {
     public void recalcData(int recursionDirection) throws Exception;
 
     public String getNameForLogger();
+
+    /**
+     * @return the {@link BaseNode#flgForceUpdate}
+     */
+    public boolean isFlgForceUpdate();
+    /**
+     * @param flgForceUpdate the {@link BaseNode#flgForceUpdate} to set
+     */
+    public void setFlgForceUpdate(boolean flgForceUpdate);
 }

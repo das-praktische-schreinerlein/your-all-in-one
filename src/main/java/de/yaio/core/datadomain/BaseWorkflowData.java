@@ -38,7 +38,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public interface BaseWorkflowData extends DataDomain, IstChildrenSumData, 
-    PlanChildrenSumData {
+    PlanCalcData, PlanDependencieData, PlanChildrenSumData {
     
     /** minimum of accepted dates 1970*/
     @Transient
@@ -52,7 +52,7 @@ public interface BaseWorkflowData extends DataDomain, IstChildrenSumData,
     public static Date CONST_MAXDATE = new Date(2147483647000l);
     
     @XmlTransient
-    public enum WorkflowState {
+    public static enum WorkflowState {
         // the order is important for the calculation of workflow!!!!
         NOWORKFLOW, 
         NOTPLANED, CANCELED, DONE, 

@@ -18,21 +18,29 @@ package de.yaio.core.datadomainservice;
 
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlTransient;
+
 import org.apache.log4j.Logger;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import de.yaio.core.datadomain.BaseWorkflowData;
+import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.datadomain.ExtendedWorkflowData;
 import de.yaio.core.datadomain.IstChildrenSumData;
 import de.yaio.core.datadomain.IstData;
+import de.yaio.core.datadomain.PlanCalcData;
 import de.yaio.core.datadomain.PlanChildrenSumData;
 import de.yaio.core.datadomain.PlanData;
-import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
+import de.yaio.core.datadomain.PlanDependencieData.PredecessorDependencieType;
 import de.yaio.core.node.BaseNode;
 import de.yaio.core.node.EventNode;
 import de.yaio.core.node.TaskNode;
 import de.yaio.core.nodeservice.NodeService;
 import de.yaio.utils.Calculator;
+import de.yaio.utils.DataUtils;
+import de.yaio.utils.PredecessorCalculator;
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -81,7 +89,14 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
     
     @Override
     public void doRecalcBeforeChildren(DataDomain node, int recurceDirection) throws Exception {
-        // NOP
+        
+        // Check if node is compatibel
+        if (! BaseWorkflowData.class.isInstance(node)) {
+                throw new IllegalArgumentException();
+            }
+        
+        // Roll
+        // TODO this.calcPlanData((BaseWorkflowData)node);
     }
 
     @Override
@@ -181,6 +196,172 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
         }
     }
 
+    @Override
+    public void calcPlanData(BaseWorkflowData baseNode) throws Exception {
+        // init calcedData
+        if (ExtendedWorkflowData.class.isInstance(baseNode)) {
+            // init with own Workflowdata
+            PlanData planData = (ExtendedWorkflowData)baseNode;
+            baseNode.setPlanCalcStart(planData.getPlanStart());
+            baseNode.setPlanCalcEnde(planData.getPlanEnde());
+        }
+
+        // calc from predecessor
+        Date predecessorStart = getCalcedDateFromPredecessor(baseNode, true);
+        Date predecessorEnde = getCalcedDateFromPredecessor(baseNode, false);
+
+        // init with dependencies
+        if (baseNode.getPlanCalcStart() != null && baseNode.getPlanCalcEnde() != null) {
+            // we are set -> NOOP
+        } else if (baseNode.getPlanCalcStart() != null) {
+            // myStart is set -> calc myEnd
+            if (baseNode.getPlanDuration() != null) {
+                // calc myEnd from duration
+                Date newEndData = PredecessorCalculator.addDurationToDate(
+                                baseNode.getPlanCalcStart(), 
+                                true, 
+                                baseNode.getPlanDuration(), 
+                                baseNode.getPlanDurationMeasure());
+                baseNode.setPlanCalcEnde(newEndData);
+            } else if (predecessorEnde != null 
+                       && ! predecessorEnde.before(baseNode.getPlanCalcStart())) {
+                // get myEnde from valid predecessor
+                baseNode.setPlanCalcEnde(predecessorEnde);
+            }
+        } else if (baseNode.getPlanCalcEnde() != null) {
+            // myEnd is set -> calc myStart
+            if (baseNode.getPlanDuration() != null) {
+                // calc myStart from duration
+                Date newStartData = PredecessorCalculator.addDurationToDate(
+                                baseNode.getPlanCalcEnde(), 
+                                false, 
+                                baseNode.getPlanDuration(), 
+                                baseNode.getPlanDurationMeasure());
+                baseNode.setPlanCalcStart(newStartData);
+            } else if (predecessorStart != null 
+                       && ! predecessorStart.after(baseNode.getPlanCalcEnde())) {
+                // get myStart from valid predecessor
+                baseNode.setPlanCalcStart(predecessorStart);
+            }
+        } else {
+            // nothing set: get all from predecessor
+            baseNode.setPlanCalcStart(predecessorStart);
+            baseNode.setPlanCalcEnde(predecessorEnde);
+        }
+        
+        // calc planCalcCheckSum
+        String planCalcCheckSum = getPlanCalcCheckSum(baseNode);
+        if (baseNode.getPlanCalcCheckSum() == null) {
+            // planCalcChecksum empty -> set new
+            baseNode.setPlanCalcCheckSum(planCalcCheckSum);
+            baseNode.setFlgForceUpdate(true);
+        } else if (! planCalcCheckSum.equals(baseNode.getPlanCalcCheckSum())) {
+            // planCalcChecksum differs
+            baseNode.setPlanCalcCheckSum(planCalcCheckSum);
+            baseNode.setFlgForceUpdate(true);
+        }
+    }
+    
+    public String getPlanCalcCheckSum(PlanCalcData node) throws Exception {
+        // Daten holen
+        String data = getDataBlocks4PlanCalcCheckSum(node);
+        if (LOGGER.isDebugEnabled()) 
+            LOGGER.debug("getDataBlocks4PlanCalcCheckSum = " + data);
+
+        // Checksumme
+        return DataUtils.generateCheckSum(data);
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public String getDataBlocks4PlanCalcCheckSum(PlanCalcData node) throws Exception {
+        // Content erzeugen
+        StringBuffer data = new StringBuffer();
+        
+        data.append(" planCalcStart=").append(DataUtils.getNewDate(node.getPlanCalcStart()))
+            .append(" planCalcEnde=").append(DataUtils.getNewDate(node.getPlanCalcEnde()))
+            ;
+        return data.toString();
+    }
+    
+    
+    public Date getCalcedDateFromPredecessor(BaseWorkflowData baseNode, boolean flgStart) {
+        Date date = null;
+        
+        // get and check predecessor
+        BaseWorkflowData predecessor = getPredecessor(baseNode);
+        if (predecessor == null) {
+            return date;
+        }
+        if (baseNode.getPlanPredecessorDependencieType() == PredecessorDependencieType.NO) {
+            // no dependency
+            return null;
+        }
+        
+        // get date for dependencieType
+        if (baseNode.getPlanPredecessorDependencieType() == PredecessorDependencieType.inherit) {
+            // inherit the dates
+            if (flgStart) {
+                date = predecessor.getPlanCalcStart();
+            } else {
+                date = predecessor.getPlanCalcEnde();
+            }
+        } else if (baseNode.getPlanPredecessorDependencieType() == PredecessorDependencieType.EndEnd) {
+            // myEnd = yourEnd
+            if (flgStart) {
+                // start = yourEnd - myduration
+                date = PredecessorCalculator.addDurationToDate(
+                                predecessor.getPlanCalcEnde(), 
+                                false, 
+                                baseNode.getPlanDuration(), 
+                                baseNode.getPlanDurationMeasure());
+            } else {
+                date = predecessor.getPlanCalcEnde();
+            }
+        } else if (baseNode.getPlanPredecessorDependencieType() == PredecessorDependencieType.EndStart) {
+            // myStart = yourEnd
+            if (flgStart) {
+                // start = yourEnd
+                date = predecessor.getPlanCalcEnde();
+            } else {
+                // end = yourEnd + myduration
+                date = PredecessorCalculator.addDurationToDate(
+                                predecessor.getPlanCalcEnde(), 
+                                true, 
+                                baseNode.getPlanDuration(), 
+                                baseNode.getPlanDurationMeasure());
+            }
+        } else if (baseNode.getPlanPredecessorDependencieType() == PredecessorDependencieType.StartStart) {
+            // myStart = yourStart
+            if (flgStart) {
+                // start = yourStart
+                date = predecessor.getPlanCalcStart();
+            } else {
+                // end = yourStart + myduration
+                date = PredecessorCalculator.addDurationToDate(
+                                predecessor.getPlanCalcStart(), 
+                                true, 
+                                baseNode.getPlanDuration(), 
+                                baseNode.getPlanDurationMeasure());
+            }
+        }
+
+        // add potential shift
+        date = PredecessorCalculator.addDurationToDate(
+                        date, 
+                        true, 
+                        baseNode.getPlanPredecessorShift(), 
+                        baseNode.getPlanPredecessorShiftMeasure());
+        
+        return date;
+    }
+    
+    public BaseWorkflowData getPredecessor(BaseWorkflowData baseNode) {
+        BaseWorkflowData predecessor = null;
+        predecessor = baseNode.getPlanPredecessor();
+        return predecessor;
+    }
+    
     @Override
     public void recalcWorkflowData(BaseWorkflowData baseNode) throws Exception {
         // init ChildSumData

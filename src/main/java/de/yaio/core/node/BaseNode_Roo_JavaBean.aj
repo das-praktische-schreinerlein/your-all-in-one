@@ -196,6 +196,30 @@ privileged aspect BaseNode_Roo_JavaBean {
         this.planTask = planTask;
     }
     
+    public Date BaseNode.getPlanCalcStart() {
+        return this.planCalcStart;
+    }
+    
+    public void BaseNode.setPlanCalcStart(Date planCalcStart) {
+        this.planCalcStart = planCalcStart;
+    }
+    
+    public Date BaseNode.getPlanCalcEnde() {
+        return this.planCalcEnde;
+    }
+    
+    public void BaseNode.setPlanCalcEnde(Date planCalcEnde) {
+        this.planCalcEnde = planCalcEnde;
+    }
+    
+    public String BaseNode.getPlanCalcCheckSum() {
+        return this.planCalcCheckSum;
+    }
+    
+    public void BaseNode.setPlanCalcCheckSum(String planCalcCheckSum) {
+        this.planCalcCheckSum = planCalcCheckSum;
+    }
+
     public Date BaseNode.getPlanChildrenSumStart() {
         return this.planChildrenSumStart;
     }
@@ -219,6 +243,52 @@ privileged aspect BaseNode_Roo_JavaBean {
     public void BaseNode.setPlanChildrenSumAufwand(Double planChildrenSumAufwand) {
         this.planChildrenSumAufwand = planChildrenSumAufwand;
     }
+    
+    
+    public Integer BaseNode.getPlanDuration() {
+        return this.planDuration;
+    }
+    public void BaseNode.setPlanDuration(Integer planDuration) {
+        this.planDuration = planDuration;
+    }
+    public DurationMeasure BaseNode.getPlanDurationMeasure() {
+        return this.planDurationMeasure;
+    }
+    public void BaseNode.setPlanDurationMeasure(DurationMeasure planDurationMeasure) {
+        this.planDurationMeasure = planDurationMeasure;
+    }
+    public PredecessorType BaseNode.getPlanPredecessorType() {
+        return this.planPredecessorType;
+    }
+    public void BaseNode.setPlanPredecessorType(PredecessorType planPredecessorType) {
+        this.planPredecessorType = planPredecessorType;
+    }
+    public BaseNode BaseNode.getPlanPredecessor() {
+        return this.planPredecessor;
+    }
+    public void BaseNode.setPlanPredecessor(BaseNode planPredecessor) {
+        this.planPredecessor = planPredecessor;
+    }
+    public PredecessorDependencieType BaseNode.getPlanPredecessorDependencieType() {
+        return this.planPredecessorDependencieType;
+    }
+    public void BaseNode.setPlanPredecessorDependencieType(PredecessorDependencieType planPredecessorDependencieType) {
+        this.planPredecessorDependencieType = planPredecessorDependencieType;
+    }
+    public Integer BaseNode.getPlanPredecessorShift() {
+        return this.planPredecessorShift;
+    }
+    public void BaseNode.setPlanPredecessorShift(Integer planPredecessorShift) {
+        this.planPredecessorShift = planPredecessorShift;
+    }
+    public DurationMeasure BaseNode.getPlanPredecessorShiftMeasure() {
+        return this.planPredecessorShiftMeasure;
+    }
+    public void BaseNode.setPlanPredecessorShiftMeasure(DurationMeasure planPredecessorShiftMeasure) {
+        this.planPredecessorShiftMeasure = planPredecessorShiftMeasure;
+    }
+
+    
     
     public Double BaseNode.getIstStand() {
         return this.istStand;
