@@ -633,6 +633,7 @@ public class NodeRestController {
             if (flgChange) {
                 // recalc 
                 updateMeAndMyParents(node);
+                node.setFlgForceUpdate(true);
             } else {
                 // read children
                 node.initChildNodesFromDB(0);

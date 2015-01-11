@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -58,6 +59,9 @@ import de.yaio.core.datadomain.BaseWorkflowData;
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.datadomain.DescData;
 import de.yaio.core.datadomain.MetaData;
+import de.yaio.core.datadomain.PlanDependencieData.DurationMeasure;
+import de.yaio.core.datadomain.PlanDependencieData.PredecessorDependencieType;
+import de.yaio.core.datadomain.PlanDependencieData.PredecessorType;
 import de.yaio.core.datadomain.SysData;
 import de.yaio.core.datadomainservice.MetaDataService;
 import de.yaio.core.datadomainservice.MetaDataServiceImpl;
@@ -92,7 +96,6 @@ public class BaseNode implements BaseData, MetaData, SysData,
     public BaseNode() {
         super();
     }
-    
     // Logger
     private static final Logger LOGGER =
         Logger.getLogger(BaseNode.class);
@@ -179,6 +182,14 @@ public class BaseNode implements BaseData, MetaData, SysData,
         baseNodeDBService = newBaseNodeDBService;
     }
 
+    /**
+     * flag to indicate that item hat to be update
+     */
+    @Transient
+    @XmlTransient
+    @JsonIgnore
+    private boolean flgForceUpdate = false;
+    
     private Long importTmpId;
     
     /**
@@ -329,6 +340,26 @@ public class BaseNode implements BaseData, MetaData, SysData,
     private String planTask;
 
     /**
+     * first date of planed work calced from my data with planDependencies: planStart
+     */
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(style = "M-")
+    private Date planCalcStart;
+
+    /**
+     * last date of planed work calced from my data with planDependencies: planEnde
+     */
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(style = "M-")
+    private Date planCalcEnde;
+
+    /**
+     * checksum to cache planCalcs
+     */
+    @Size(max = 50)
+    private String planCalcCheckSum;
+    
+    /**
      * first date of planed work of me and all children: planStart
      */
     @Temporal(TemporalType.TIMESTAMP)
@@ -347,6 +378,48 @@ public class BaseNode implements BaseData, MetaData, SysData,
      */
     @Min(0L)
     private Double planChildrenSumAufwand;
+
+    /**
+     * planned duration of the task
+     */
+    @Min(0L)
+    private Integer planDuration;
+    
+    
+    /**
+     * measure for planDuration
+     */
+    @Enumerated(EnumType.STRING)
+    private DurationMeasure planDurationMeasure;
+
+    /**
+     * type of predecessor
+     */
+    @Enumerated(EnumType.STRING)
+    private PredecessorType planPredecessorType;
+
+    /**
+     * predecessor
+     */
+    @ManyToOne
+    private BaseNode planPredecessor;
+    
+    /**
+     * dependency to the predecessor
+     */
+    @Enumerated(EnumType.STRING)
+    private PredecessorDependencieType planPredecessorDependencieType;
+
+    /**
+     * shift to the predecessor
+     */
+    private Integer planPredecessorShift;
+
+    /**
+     * measure of predecessorShift
+     */
+    @Enumerated(EnumType.STRING)
+    private DurationMeasure planPredecessorShiftMeasure;
 
     /**
      * current stand of work
@@ -1179,5 +1252,14 @@ public class BaseNode implements BaseData, MetaData, SysData,
             }
         }
         return maxEbene;
+    }
+
+    @Override
+    public boolean isFlgForceUpdate() {
+        return this.flgForceUpdate;
+    }
+    @Override
+    public void setFlgForceUpdate(boolean flgForceUpdate) {
+        this.flgForceUpdate = flgForceUpdate;
     }
 }

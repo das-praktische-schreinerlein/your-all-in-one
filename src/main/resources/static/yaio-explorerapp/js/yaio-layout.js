@@ -286,6 +286,18 @@ function togglePreWrap(element) {
      $( id ).toggle( selectedEffect, options, 500 );
  };
 
+ function togglePrintLayout() {
+     if ($("#checkboxPrintAll").prop('checked')) {
+         // print all
+         $("#link_css_dataonly").attr("disabled", "disabled");
+         $("#link_css_dataonly").prop("disabled", true);
+     } else  {
+         // print data only
+         $("#link_css_dataonly").removeAttr("disabled");
+         $("#link_css_dataonly").prop("disabled", false);
+     }
+ }
+ 
  /**
   * <h4>FeatureDomain:</h4>
   *     Layout Toggler
@@ -301,12 +313,54 @@ function togglePreWrap(element) {
   */
  function toggleNodeDescContainer(id) {
      $("#detail_desc_" + id).slideToggle(1000,function() {
+         // show/hide toggler
          if ($("#detail_desc_" + id).css("display") == "block") {
+             // desc is now shown
              $("#toggler_desc_" + id).addClass('toggler_show').removeClass('toggler_hidden');
+
+             // check if syntaxhighlighting to do
+             if ($("#container_content_desc_" + id).hasClass('syntaxhighlighting-open')) {
+                 console.log("toggleNodeDescContainer highlight for: #container_content_desc_" + id);
+                 
+                 // remove trigger-flag
+                 $("#container_content_desc_" + id).removeClass('syntaxhighlighting-open');
+                 
+                 // higlight code-blocks
+                 $("#container_content_desc_" + id + " code").each(function(i, block) {
+                     console.log("toggleNodeDescContainer highlight for #container_content_desc_" + id + " block: " + block.id);
+                     hljs.highlightBlock(block);
+                 });
+             }
          } else {
+             // desc is now hidden
              $("#toggler_desc_" + id).addClass('toggler_hidden').removeClass('toggler_show');
          }
      });
+ }
+
+ function toggleAllNodeDescContainer() {
+     if ($("#toggler_desc_all").hasClass('toggler_hidden')) {
+         // show all desc
+         $("div.field_nodeDesc").slideDown(1000);
+         $("div.fieldtype_descToggler > a").addClass('toggler_show').removeClass('toggler_hidden');
+
+         // check if syntaxhighlighting to do
+         $("div.syntaxhighlighting-open").each(function (i, descBlock) {
+             console.log("toggleAllNodeDescContainer highlight for descBlock: " + descBlock.id);
+             // remove trigger-flag
+             $(descBlock).removeClass('syntaxhighlighting-open');
+             
+             // higlight code-blocks
+             $("#" + descBlock.id + " code").each(function(i, block) {
+                 console.log("toggleAllNodeDescContainer highlight descBlock: " + descBlock.id + " block: " + block.id);
+                 hljs.highlightBlock(block);
+             });
+         });
+     } else {
+         // hide all desc
+         $("div.field_nodeDesc").slideUp(1000);
+         $("div.fieldtype_descToggler > a").addClass('toggler_hidden').removeClass('toggler_show');
+     }
  }
 
  /**
@@ -402,11 +456,70 @@ function togglePreWrap(element) {
      // set value
      editor.setValue($("#" + textAreaId).val());
      
-     // set eventhandler toi update corresponding textarea
+     // set eventhandler to update corresponding textarea
      editor.getSession().on('change', function(e) {
          // update textarea for angular
          $("#" + textAreaId).val(editor.getValue()).trigger('select').triggerHandler("change");
-     }); 
+     });
      
      return editor;
  }
+ 
+ function addPreviewToElements() {
+     // add preview to nodeDesc
+     $("label[for='nodeDesc']").append(function (idx) {
+         var link = "";
+         var label = this;
+         
+         // check if already set
+         if ($(label).attr("previewAdded")) {
+             console.error("addPreviewElements: SKIP because already added: " + $(label).attr("for"));
+             return link;
+         }
+
+         // get corresponding form
+         var forName = $(label).attr("for");
+         var form = $(label).closest("form");
+         
+         // get for-element byName from form
+         var forElement = form.find("[name="+ forName + "]").first();
+         if (forElement.length > 0) {
+             // define link to label
+             link = "<a href=\"#\" " +
+                 " onClick=\"showPreviewForTextareaId('" +
+                     forElement.attr('id') + "'); return false;" +
+                 "\" data-tooltip='Vorschau' class='icon-preview'></a>";
+             
+             // set flag
+             $(label).attr("previewAdded", "true")
+             console.log("addPreviewToElements: add : " + forName + " for " + forElement.attr('id'));
+         }
+         return link;
+     });
+ }
+ 
+ function showPreviewForTextareaId(textAreaId) {
+     var descText = $("#" + textAreaId).val();
+
+     // prepare descText
+     var descHtmlMarked = formatMarkdown(descText, true);
+     showPreview(descHtmlMarked);
+ }
+
+     
+ function showPreview(content) {
+     // set preview-content
+     $( "#preview-content" ).html(content);
+     
+     // show message
+     $( "#preview-box" ).dialog({
+         modal: true,
+         width: "1050px",
+         buttons: {
+           Ok: function() {
+             $( this ).dialog( "close" );
+           }
+         }
+     });    
+ }
+

@@ -51,7 +51,7 @@
   <script src="../js/angularjs/angular-translate.js"></script>
   <script src="../js/angularjs/angular-translate-loader-static-files.js"></script>
   
-<!-- Markdown-Editor+Formatter -->
+  <!-- Markdown-Editor+Formatter -->
 <!-- 
   <script src="https://raw.githubusercontent.com/chjj/marked/master/lib/marked.js "type="text/javascript"></script>
   <script src="https://raw.githubusercontent.com/ajaxorg/ace-builds/master/src-min-noconflict/ace.js" type="text/javascript"></script>
@@ -60,6 +60,10 @@
   <script src="../js/ace/ace.js" type="text/javascript"></script>
 <!-- <script src="../js/ace/ext-spellcheck.js" type="text/javascript"></script>  -->
 
+  <!-- Syntaxhightlighter -->
+  <link rel="stylesheet" href="../css/highlightjs/default.css">
+  <script src="../js/highlightjs/highlight.pack.js"></script>
+ 
   <!-- yaio -->
   <!-- 
   <link rel="stylesheet" type="text/css" media="all" href="http://www.your-all-in-one.de/yaio//css/style.css" />
@@ -74,6 +78,7 @@
   <!-- yaio-explorer -->
   <link rel="stylesheet" type="text/css" media="all" href="./css/style.css" />
   <link rel="stylesheet" type="text/css" media="print" href="./css/print.css" />
+  <link rel="stylesheet" type="text/css" media="print" href="./css/print-dataonly.css" id="link_css_dataonly" disabled="true" />
 
 </head>
 
@@ -137,6 +142,14 @@
   <iframe id="help-iframe" src="" ></iframe>
 </div>                        
 
+<div id="preview-box" class="hidden">
+  <p>
+    <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>
+    
+  </p>
+  <div id="preview-content" calss="container-content-desc">
+  </div>
+</div>                        
 
 <div ng-view class="yaio-details"></div>
 
@@ -160,6 +173,8 @@
                             <a href="https://github.com/angular-translate/" target="_blank">Angular-Translate</a>,
                             <a href="https://github.com/chjj/marked" target="_blank">Marked</a>,
                             <a href="https://github.com/ajaxorg/ace-builds" target="_blank">Ace</a>,
+                            <a href="https://highlightjs.org/" target="_blank">highlight.js</a>,
+                            <a href="https://code.google.com/p/markdown4j/" target="_blank">markdown4j</a>,
                             <a href="http://paulrobertlloyd.com/2009/06/social_media_icons/" target="_blank">paulrobertlloyd.com</a>
                             zugegriffen.<br />
                         </div>
@@ -184,6 +199,9 @@
 
 <!-- Tooltip -->
 <script type="text/javascript">
+
+    // display css_dataonly-link
+    $("#link_css_dataonly").prop("disabled", true);
 
     // overload tooltip from title as seen on http://stackoverflow.com/questions/15734105/jquery-ui-tooltip-does-not-support-html-content
     $("[data-tooltip]").each(function(i, e) {

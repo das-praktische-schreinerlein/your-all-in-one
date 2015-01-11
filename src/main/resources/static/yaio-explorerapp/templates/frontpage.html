@@ -19,7 +19,7 @@
 </div>
 
 <div id="front-content-left">
-  <div ng-include="frontPageUrl"></div>
+  <div ng-include="frontPageUrl" id="front-content-intro"></div>
   
   <div class='box box-portdesc add2toc-h1 box-portdesc-todonext' toclabel='ToDoNext' id='box_todonext'>
       <div class='boxline boxline-ue2 h2-portdesc h2-portdesc-todonext' id='ue_todonext' translate="todonext.ue">ToDoNext</div>
@@ -47,11 +47,15 @@
         addDatePickerToElements();
         initLanguageSupport();
 
-        //add resize event
+        // add resize event
         $( window ).resize(function() {
                 setupAppSize();
         });    
 
     }, 1000);
     
+    // resize elements after 3 second
+    setTimeout(function() { 
+        setupAppSize();
+    }, 3000);
 </script>

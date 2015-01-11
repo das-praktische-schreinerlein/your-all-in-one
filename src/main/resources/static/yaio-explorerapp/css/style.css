@@ -89,6 +89,7 @@ a.yaio-icon-createsymlink,
 a.yaio-icon-remove,
 .icon-formrowtoggleroff,
 .icon-formrowtoggleron,
+a.icon-preview,
 a.toggler_show,
 a.toggler_hidden {
   width: 16px;
@@ -108,6 +109,7 @@ a.yaio-icon-createsymlink,
 a.yaio-icon-remove,
 .icon-formrowtoggleroff,
 .icon-formrowtoggleron,
+a.icon-preview,
 a.toggler_show,
 a.toggler_hidden {
   margin-top: 1px;
@@ -154,6 +156,9 @@ a.toggler_hidden {
   background-position: -32px -80px;
 }
 
+a.icon-preview {
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAPElEQVR42mP4//8/AyWYgWIDHjx48L+goIAsDNLLAGLYlm8hC4P0DkIDkMHAuwAbGAkuoL8BFOcFSnMjAF48oX6YfwDmAAAAAElFTkSuQmCC");
+}
 
 /*****************************************
  *****************************************
@@ -283,6 +288,22 @@ ul.nodecommands {
 
 /*****************************************
  *****************************************
+ * preview
+ *****************************************
+ *****************************************/
+#preview-content {
+    width: 1000px;
+    height: 600px;
+    overflow: auto;
+}
+#preview-box {
+    width: 1050px;
+    height: 650px;
+}
+
+
+/*****************************************
+ *****************************************
  * tree
  *****************************************
  *****************************************/
@@ -356,6 +377,8 @@ ul.nodecommands {
     left: -420px;
     position: relative;
     width: 1000px; /*  orig: 550px; */
+    font-size: 11px;
+    line-height: 1.42857;
 }
 .field_center {
    text-align: center; !IMPORTANT
@@ -540,7 +563,7 @@ td, th {
 label {
     display: inline-block;
     vertical-align: top;
-    width: 50px;
+    width: 70px;
 }
 .inputtype_name {
     width: 500px;
@@ -763,6 +786,23 @@ td.alignRight {
 }
 td input[type=input] {
   width: 40px;
+}
+
+
+/*****************************************
+ *****************************************
+ * frontpage
+ *****************************************
+ *****************************************/
+#front-content-intro {
+    overflow-y:auto;
+    overflow-x: hidden;
+    clear: both;
+    float: left;
+}
+
+#front-content-intro pre code  {
+    white-space: pre;
 }
 
 

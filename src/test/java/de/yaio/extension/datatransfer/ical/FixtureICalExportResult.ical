@@ -76,8 +76,8 @@ DTSTAMP:20140410T111800Z
 UID:DT201404101118349791
 SUMMARY:Buis2: bisherige Xing-Anfrage als Kontakte anfragen - Testevent (bisherige Xing-Anfrage als Kontakte anfragen <- Networking 2014.04 <- Laufende kurzfristige Projekte <- Projekt Meine Firma <- )
 CATEGORIES:Planung
-DTSTART;TZID=Europe/Berlin:20141212T080000
-DTEND;TZID=Europe/Berlin:20141212T170000
+DTSTART;TZID=Europe/Berlin:20341212T080000
+DTEND;TZID=Europe/Berlin:20341212T170000
 LOCATION:Berlin
 STATUS:CONFIRMED
 DESCRIPTION:Meine kleine Eventnotiz<WLBR>

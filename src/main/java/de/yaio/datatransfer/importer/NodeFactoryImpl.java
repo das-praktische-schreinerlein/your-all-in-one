@@ -35,6 +35,7 @@ import de.yaio.datatransfer.importer.parser.DocLayoutDataParserImpl;
 import de.yaio.datatransfer.importer.parser.IstDataParserImpl;
 import de.yaio.datatransfer.importer.parser.MetaDataParserImpl;
 import de.yaio.datatransfer.importer.parser.Parser;
+import de.yaio.datatransfer.importer.parser.PlanCalcDataParserImpl;
 import de.yaio.datatransfer.importer.parser.PlanDataParserImpl;
 import de.yaio.datatransfer.importer.parser.ResLocDataParserImpl;
 import de.yaio.datatransfer.importer.parser.SymLinkDataParserImpl;
@@ -125,6 +126,7 @@ public class NodeFactoryImpl implements NodeFactory {
         DocLayoutDataParserImpl.configureDataDomainParser(this);
         IstDataParserImpl.configureDataDomainParser(this);
         PlanDataParserImpl.configureDataDomainParser(this);
+        PlanCalcDataParserImpl.configureDataDomainParser(this);
         MetaDataParserImpl.configureDataDomainParser(this);
         SysDataParserImpl.configureDataDomainParser(this);
         DescDataParserImpl.configureDataDomainParser(this);
@@ -222,7 +224,6 @@ public class NodeFactoryImpl implements NodeFactory {
         node.setType(nodeTypeIdentifier);
         node.setParentNode(curParentNode);
 
-        
         // Node initialisieren (Parser)
         parseNodeDataDomains(node, options);
 

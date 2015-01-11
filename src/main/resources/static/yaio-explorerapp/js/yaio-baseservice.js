@@ -111,7 +111,7 @@ function setupAppSize() {
                 );
     }
     // Import-editor
-     ele = $("#containerFormYaioEditorImport");
+    ele = $("#containerFormYaioEditorImport");
     if (ele.length > 0) {
         $(ele).css("max-height", height-$(ele).offset().top);
         console.log("setup size containerFormYaioEditorImport width:" + window.innerWidth 
@@ -122,6 +122,28 @@ function setupAppSize() {
                 );
     }
 
+    // Frontpage
+    ele = $("#front-content-intro");
+    if (ele.length > 0) {
+        var maxHeight = height-$(ele).offset().top;
+        
+        // sub todonextbox
+        if ($('#box_todonext').length > 0 ) {
+            if ($('#box_todonext').height > 0) {
+                maxHeight = maxHeight - $('#box_todonext').height;
+            } else {
+                // sometime height is not set: then default
+                maxHeight = maxHeight - 100;
+            }
+        }
+        $(ele).css("max-height", maxHeight);
+        console.log("setup size front-content-intro width:" + window.innerWidth 
+                + " height:" + window.innerHeight 
+                + " scrollTop:" + $(window).scrollTop()
+                + " offset.top" + $(ele).offset().top
+                + " max-height:" + $(ele).css("max-height")
+                );
+    }
 }
 
 function yaioShowHelpSite(url) {
@@ -247,4 +269,98 @@ function downloadAsFile($link, data, fileName, mime, encoding) {
             'target' : '_blank'
         });
    }
+}
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     GUI
+ * <h4>FeatureDescription:</h4>
+ *     format the descText as Markdown
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>returnValue String - formatted markdown
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     Layout
+ * @param descText - the string to format
+ * @param flgHighlightNow - if isd set do syntax-highlighting while markdown-processing, if not set do it later
+ * @return - formatted markdown
+ */
+function formatMarkdown(descText, flgHighlightNow) {
+    // prepare descText
+    descText = prepareTextForMarkdown(descText);
+    
+    // Marked
+    marked.setOptions({
+      renderer: new marked.Renderer(),
+      gfm: true,
+      tables: true,
+      breaks: false,
+      pedantic: false,
+      sanitize: true,
+      smartLists: true,
+      smartypants: false
+    });
+    if (flgHighlightNow) {
+        marked.setOptions({
+            highlight: function (code) {
+                return hljs.highlightAuto(code).value;
+            }
+        });
+    }
+    var descHtmlMarked = marked(descText);
+    
+    return descHtmlMarked;
+}
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     GUI
+ * <h4>FeatureDescription:</h4>
+ *     prepare the text to format as markdown
+ *     prefix empty lines inline code-segs (```) so that they will interpreted as codeline by markdown-parser
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>returnValue String - prepared text
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     Layout
+ * @param descText - the string to prepare
+ * @return - prpeared text to format as markdown
+ */
+function prepareTextForMarkdown(descText) {
+    // prepare descText
+    var newDescText = '';
+    var newDescTextRest = descText;
+    var codeStart = newDescTextRest.indexOf("```");
+    while (codeStart >= 0) {
+        // splice start and add to newDescText
+        newDescText += newDescTextRest.slice(0, codeStart + 3);
+        newDescTextRest = newDescTextRest.slice(codeStart + 3);
+        
+        var codeEnd = newDescTextRest.indexOf("```");
+        if (codeEnd >= 0) {
+            // splice all before ending ```
+            var code = newDescTextRest.slice(0, codeEnd);
+            newDescTextRest = newDescTextRest.slice(codeEnd);
+            
+            // replace empty lines in code
+            code = code.replace(/\r\n/g, "\n");
+            code = code.replace(/\n\r/g, "\n");
+            code = code.replace(/\n[ \t]*\n/g, "\n.\n");
+            code = code.replace(/\n\n/g, "\n.\n");
+            
+            // add code to newDescText
+            newDescText += code;
+            
+            // extract ending ``` and add it to newDescText
+            newDescText += newDescTextRest.slice(0, 3);
+            newDescTextRest = newDescTextRest.slice(3);
+        }
+        codeStart = newDescTextRest.indexOf("```");
+    }
+    // add rest to newDescText
+    newDescText += newDescTextRest;
+    
+    return newDescText;
 }

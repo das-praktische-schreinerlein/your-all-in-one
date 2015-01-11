@@ -11,7 +11,8 @@
            <li class="command" data-tooltip='tooltip.command.OpenInfo' lang="tech">
               <a href="" ng-click="showHelpSite('/exports/documentation/SysInfo1')" target="help" class="button" translate="common.command.OpenInfo">Hilfe</a></li>
            <li class="command" data-tooltip='tooltip.command.Print' lang="tech">
-              <a onclick="window.print(); return true;" class="button" translate="common.command.Print">Print</a></li>
+              <a onclick="window.print(); return true;" class="button" translate="common.command.Print">Print</a>
+              <input type="checkbox" onclick="togglePrintLayout()" checked id="checkboxPrintAll"> All</li>
         </ul>
       </div>
   </div>
@@ -283,13 +284,17 @@
                   <th class="block_nodedata">
                     <!-- show workflow-header -->
                     <div class="container_data_row">
-                      <div class="container_field fieldtype_metanummer field_metanummer field_center" translate="fancytree.table.headline.metanummer">Nr.<br />&nbsp;</div>
-                      <div class="container_field fieldtype_type field_type field_center" translate="fancytree.table.headline.type">Typ<br />&nbsp;</div>
-                      <div class="container_field fieldtype_stand field_istChildrenSumStand field_center" translate="fancytree.table.headline.istChildrenSumStand">Ist<br />Stand</div>
-                      <div class="container_field fieldtype_aufwand field_istChildrenSumAufwand field_center" translate="fancytree.table.headline.istChildrenSumAufwand"> <br />Aufwand</div>
-                      <div class="container_field fieldtype_fromto field_istChildrenSum field_center" translate="fancytree.table.headline.istChildrenSum"> <br />Zeitraum</div>
-                      <div class="container_field fieldtype_aufwand field_planChildrenSumAufwand field_center" translate="fancytree.table.headline.planChildrenSumAufwand">Plan<br />Aufwand</div>
-                      <div class="container_field fieldtype_fromto field_planChildrenSum field_center" translate="fancytree.table.headline.planChildrenSum"> <br />Zeitraum</div>
+                      <div class="container_field fieldtype_basedata fieldtype_metanummer field_metanummer field_center" translate="fancytree.table.headline.metanummer">Nr.<br />&nbsp;</div>
+                      <div class="container_field fieldtype_basedata fieldtype_type field_type field_center" translate="fancytree.table.headline.type">Typ<br />&nbsp;</div>
+                      <div class="container_field fieldtype_additionaldata fieldtype_stand field_istChildrenSumStand field_center" translate="fancytree.table.headline.istChildrenSumStand">Ist<br />Stand</div>
+                      <div class="container_field fieldtype_additionaldata fieldtype_aufwand field_istChildrenSumAufwand field_center" translate="fancytree.table.headline.istChildrenSumAufwand"> <br />Aufwand</div>
+                      <div class="container_field fieldtype_additionaldata fieldtype_fromto field_istChildrenSum field_center" translate="fancytree.table.headline.istChildrenSum"> <br />Zeitraum</div>
+                      <div class="container_field fieldtype_additionaldata fieldtype_aufwand field_planChildrenSumAufwand field_center" translate="fancytree.table.headline.planChildrenSumAufwand">Plan<br />Aufwand</div>
+                      <div class="container_field fieldtype_additionaldata fieldtype_fromto field_planChildrenSum field_center" translate="fancytree.table.headline.planChildrenSum"> <br />Zeitraum</div>
+                      <div class="container_field fieldtype_additionaldata fieldtype_descToggler toggler_show">
+                         <br />
+                         <a lang="de" data-tooltip="Zeige die detaillierten Beschreibungen an." id="toggler_desc_all" onclick="toggleAllNodeDescContainer(); return false;" href="#" class="toggler_hidden"></a>
+                      </div>
                     </div></th>
                   <th class="block_nodegantt">
                     <!-- show gantt-header -->
@@ -301,9 +306,9 @@
                         <input type="text" placeholder="dd.mm.jjjj" name="ganttRangeEnde" pattern="\d{2}\.\d{2}\.\d{4}"  maxsize="10" value="31.12.2014" class="inputtype_date" style="text-align: right" id="inputGanttRangeEnde" ng-model="ganttOptions.ganttRangeEnd" ng-change="recalcGanttBlocks()"></th>
                        </div>
                     </div>
-                  <th  translate="fancytree.table.headline.actions">
+                  <th  >
                     <!-- show actions-header -->
-                    
+                    <span translate="fancytree.table.headline.actions"></span>
                   </th>
                 </tr>
               </thead>
@@ -954,8 +959,9 @@
 <script type="text/javascript">
     // activate elements after 1 second
     setTimeout(function() { 
-        // activate speech recognition
+        // activate speech recognition and others
         addSpeechRecognitionToElements();
+        addPreviewToElements();
         addDatePickerToElements();
         addDocLayoutStyleSelectorToElements();
         initLanguageSupport();

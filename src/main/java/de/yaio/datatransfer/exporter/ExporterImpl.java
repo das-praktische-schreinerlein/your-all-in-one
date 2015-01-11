@@ -34,6 +34,7 @@ import de.yaio.datatransfer.exporter.formatter.Formatter;
 import de.yaio.datatransfer.exporter.formatter.IstChildrenSumDataFormatterImpl;
 import de.yaio.datatransfer.exporter.formatter.IstDataFormatterImpl;
 import de.yaio.datatransfer.exporter.formatter.MetaDataFormatterImpl;
+import de.yaio.datatransfer.exporter.formatter.PlanCalcDataFormatterImpl;
 import de.yaio.datatransfer.exporter.formatter.PlanChildrenSumDataFormatterImpl;
 import de.yaio.datatransfer.exporter.formatter.PlanDataFormatterImpl;
 import de.yaio.datatransfer.exporter.formatter.ResLocDataFormatterImpl;
@@ -90,6 +91,7 @@ public class ExporterImpl implements Exporter {
         IstDataFormatterImpl.configureDataDomainFormatter(this);
         PlanDataFormatterImpl.configureDataDomainFormatter(this);
         IstChildrenSumDataFormatterImpl.configureDataDomainFormatter(this);
+        PlanCalcDataFormatterImpl.configureDataDomainFormatter(this);
         PlanChildrenSumDataFormatterImpl.configureDataDomainFormatter(this);
         MetaDataFormatterImpl.configureDataDomainFormatter(this);
         SysDataFormatterImpl.configureDataDomainFormatter(this);

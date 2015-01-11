@@ -17,7 +17,10 @@
  */
 package de.yaio.extension.datatransfer.html;
 
+import java.io.IOException;
+
 import org.apache.log4j.Logger;
+import org.markdown4j.Markdown4jProcessor;
 
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.node.BaseNode;
@@ -32,7 +35,7 @@ import de.yaio.datatransfer.exporter.formatter.IstDataFormatterImpl;
 import de.yaio.datatransfer.exporter.formatter.PlanChildrenSumDataFormatterImpl;
 import de.yaio.datatransfer.exporter.formatter.PlanDataFormatterImpl;
 import de.yaio.extension.datatransfer.wiki.WikiExporter;
-import de.yaio.utils.Calculator;
+import de.yaio.utils.DataUtils;
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -79,6 +82,7 @@ public class HtmlExporter extends WikiExporter {
     protected static String CONST_FORMATTER_ISTCHILDRENSUM = IstChildrenSumDataFormatterImpl.class.getName();
     protected static String CONST_FORMATTER_PLANCHILDRENSUM = PlanChildrenSumDataFormatterImpl.class.getName();
     
+    protected static Markdown4jProcessor markdownProcessor= new Markdown4jProcessor();
 
     // Logger
     private static final Logger LOGGER =
@@ -328,7 +332,7 @@ public class HtmlExporter extends WikiExporter {
         // Html-Escapen
         name = name.replaceAll("<WLESC>", "\\");
         name = name.replaceAll("<WLTAB>", "\t");
-        name = Calculator.htmlEscapeText(name);
+        name = DataUtils.htmlEscapeText(name);
 
         // Desc
         StringBuffer tmpBuffer = new StringBuffer();
@@ -338,8 +342,9 @@ public class HtmlExporter extends WikiExporter {
         String descFull = tmpBuffer.toString();
         if (descFull != null && descFull.length() > 0 && oOptions.isFlgShowDesc()) {
             // Html-Escapen
-            descFull = Calculator.htmlEscapeText(descFull);
-            descFull = descFull.replaceAll("\n", "<br>");
+            descFull = this.formatTextAsMarkdown(descFull);
+//            descFull = DataUtils.htmlEscapeText(descFull);
+//            descFull = descFull.replaceAll("\n", "<br>");
         }
 
         // Layout konfigurieren
@@ -433,30 +438,34 @@ public class HtmlExporter extends WikiExporter {
                     + "</" + tag + ">\n";
 
                 // optionaler Contentbereich
-                if (content.length() > 0) {
+                if (content.length() > 0 || (descFull != null && descFull.length() > 0)) {
                     tag = "p";
                     res += "<" + tag + " class='" + tag + "-portdesc"
                         + (addStyle.length() > 0
                             ? " " + tag + "-portdesc-" + addStyle : "") + "'"
-                        +   " id='" + tag + "_" + curNode.getWorkingId() + "'>"
-                        + "<span class='" + tag + "-portdesc-desc"
-                        + (addStyle.length() > 0
-                            ? " " + tag + "-portdesc-desc-" + addStyle : "") + "'"
-                        +   " id='pSpanDesc_" + curNode.getWorkingId() + "'>"
-                        + content
-                        + "</span>";
+                        +   " id='" + tag + "_" + curNode.getWorkingId() + "'>";
+                    
+                    // content
+                    if (content.length() > 0) {
+                        res += "<span class='" + tag + "-portdesc-desc"
+                                        + (addStyle.length() > 0
+                                            ? " " + tag + "-portdesc-desc-" + addStyle : "") + "'"
+                                        +   " id='pSpanDesc_" + curNode.getWorkingId() + "'>"
+                                        + content
+                                        + "</span>";
+                    }
 
-                        // eventuelles SPAN fuer Detailbeschreibung
-                        if (descFull != null && descFull.length() > 0) {
-                            res +=  "<span class='" + tag + "-portdesc-descdetail"
-                                + (addStyle.length() > 0
-                                    ? " " + tag + "-portdesc-descdetail-" + addStyle : "") + "'"
-                                +   " id='pSpanDescDetail_" + curNode.getWorkingId() + "'>"
-                                + descFull
-                                + "</span>";
+                    // eventuelles SPAN fuer Detailbeschreibung
+                    if (descFull != null && descFull.length() > 0) {
+                        res +=  "<span class='" + tag + "-portdesc-descdetail"
+                            + (addStyle.length() > 0
+                                ? " " + tag + "-portdesc-descdetail-" + addStyle : "") + "'"
+                            +   " id='pSpanDescDetail_" + curNode.getWorkingId() + "'>"
+                            + descFull
+                            + "</span>";
 
-                        }
-                        res +=  "</" + tag + ">\n";
+                    }
+                    res +=  "</" + tag + ">\n";
                 }
             } else if (CONST_LAYOUT_TAG_LI.equalsIgnoreCase(layoutCommand)) {
                 // Aufzaehlung
@@ -540,6 +549,37 @@ public class HtmlExporter extends WikiExporter {
                     + (addStyle.length() > 0 ? " togglecontainer-" + addStyle : "") + "'"
                     + " id='detail_"+ curNode.getWorkingId() + "'>\n"
                     ;
+                
+                // optionaler Contentbereich
+                if (content.length() > 0 || (descFull != null && descFull.length() > 0)) {
+                    String tag = "p";
+                    res += "<" + tag + " class='" + tag + "-portdesc"
+                        + (addStyle.length() > 0
+                            ? " " + tag + "-portdesc-" + addStyle : "") + "'"
+                        +   " id='" + tag + "_" + curNode.getWorkingId() + "'>";
+                    
+                    // content
+                    if (content.length() > 0) {
+                        res += "<span class='" + tag + "-portdesc-desc"
+                                        + (addStyle.length() > 0
+                                            ? " " + tag + "-portdesc-desc-" + addStyle : "") + "'"
+                                        +   " id='pSpanDesc_" + curNode.getWorkingId() + "'>"
+                                        + content
+                                        + "</span>";
+                    }
+
+                    // eventuelles SPAN fuer Detailbeschreibung
+                    if (descFull != null && descFull.length() > 0) {
+                        res +=  "<span class='" + tag + "-portdesc-descdetail"
+                            + (addStyle.length() > 0
+                                ? " " + tag + "-portdesc-descdetail-" + addStyle : "") + "'"
+                            +   " id='pSpanDescDetail_" + curNode.getWorkingId() + "'>"
+                            + descFull
+                            + "</span>";
+
+                    }
+                    res +=  "</" + tag + ">\n";
+                }
             } else if (CONST_LAYOUT_TAG_ENDDIV.equalsIgnoreCase(layoutCommand)) {
                 // ENDDIV
                 res += "</div></div>\n\n\n";
@@ -708,7 +748,7 @@ public class HtmlExporter extends WikiExporter {
         String name = curNode.getName();
         name = name.replaceAll("<WLESC>", "\\");
         name = name.replaceAll("<WLTAB>", "\t");
-        name = Calculator.htmlEscapeText(name);
+        name = DataUtils.htmlEscapeText(name);
         blockName = name + " (" + curNode.getWorkingId() + ")";
         styleClassesNameContainer2 = " node-level" +  + curNode.getEbene();
         if (UrlResNode.class.isInstance(curNode)) {
@@ -755,8 +795,9 @@ public class HtmlExporter extends WikiExporter {
         
         if (descFull != null && descFull.length() > 0 && oOptions.isFlgShowDesc()) {
             // Html-Escapen
-            descFull = Calculator.htmlEscapeText(descFull);
-            descFull = descFull.replaceAll("\n", "<br>");
+            descFull = this.formatTextAsMarkdown(descFull);
+//            descFull = DataUtils.htmlEscapeText(descFull);
+//            descFull = descFull.replaceAll("\n", "<br>");
             blockDesc = this.genHtmlDataBlock(curNode, descFull, "desc", oOptions.isFlgShowDesc());
         }
 
@@ -937,5 +978,86 @@ public class HtmlExporter extends WikiExporter {
         }
         return command;
     }
+    
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     DataExport
+     *     Presentation
+     * <h4>FeatureDescription:</h4>
+     *     format the descText as Markdown
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue String - formatted markdown
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Layout
+     * @param descText - the string to format
+     * @return - formatted markdown
+     * @throws IOException - IOException-Exceptions possible
+     */
+    public String formatTextAsMarkdown(String descText) throws IOException {
+        // prepare descText
+        descText = this.prepareTextForMarkdown(descText);
         
+        descText = descText.replaceAll("…", "...");
+        descText = markdownProcessor.process(descText);
+        descText = descText.replaceAll("…", "...");
+        descText = descText.replaceAll("<code>", "<code class=\"txt\">");
+        
+        return descText;
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     DataExport
+     *     Presentation
+     * <h4>FeatureDescription:</h4>
+     *     prepare the text to format as markdown
+     *     prefix empty lines inline code-segs (```) so that they will interprewted as codeline by markdown-parser
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue String - prepared text
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Layout
+     * @param descText - the string to prepare
+     * @return - prpeared text to format as markdown
+     */
+    public String prepareTextForMarkdown(String descText) {
+        // prepare descText
+        String newDescText = "";
+        String newDescTextRest = descText;
+        int codeStart = newDescTextRest.indexOf("```");
+        while (codeStart >= 0) {
+            // splice start and add to newDescText
+            newDescText += newDescTextRest.substring(0, codeStart + 3);
+            newDescTextRest = newDescTextRest.substring(codeStart + 3);
+            
+            int codeEnd = newDescTextRest.indexOf("```");
+            if (codeEnd >= 0) {
+                // splice all before ending ```
+                String code = newDescTextRest.substring(0, codeEnd);
+                newDescTextRest = newDescTextRest.substring(codeEnd);
+                
+                // replace empty lines in code
+                code = code.replaceAll("\r\n", "\n");
+                code = code.replaceAll("\n\r", "\n");
+                code = code.replaceAll("\n[ \t]*\n", "\n.\n");
+                code = code.replaceAll("\n\n", "\n.\n");
+                
+                // add code to newDescText
+                newDescText += code;
+                
+                // extract ending ``` and add it to newDescText
+                newDescText += newDescTextRest.substring(0, 3);
+                newDescTextRest = newDescTextRest.substring(3);
+            }
+            codeStart = newDescTextRest.indexOf("```");
+        }
+        // add rest to newDescText
+        newDescText += newDescTextRest;
+        
+        return newDescText;
+    }
 }

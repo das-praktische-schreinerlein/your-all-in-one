@@ -18,7 +18,7 @@ package de.yaio.datatransfer.exporter;
 
 import java.util.Map;
 
-import de.yaio.utils.Calculator;
+import de.yaio.utils.DataUtils;
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -54,6 +54,7 @@ public class OutputOptionsImpl implements OutputOptions {
     protected boolean flgShowDocLayout = true;
     protected boolean flgShowIst = true;
     protected boolean flgShowPlan = true;
+    protected boolean flgShowPlanCalc = false;
     protected boolean flgShowChildrenSum = false;
     protected boolean flgShowMetaData = true;
     protected boolean flgShowSysData = true;
@@ -93,6 +94,7 @@ public class OutputOptionsImpl implements OutputOptions {
         this.flgShowName = baseOptions.isFlgShowName();
         this.flgShowDocLayout = baseOptions.isFlgShowDocLayout();
         this.flgShowPlan = baseOptions.isFlgShowPlan();
+        this.flgShowPlanCalc = baseOptions.isFlgShowPlanCalc();
         this.flgShowIst = baseOptions.isFlgShowIst();
         this.flgShowChildrenSum = baseOptions.isFlgShowChildrenSum();
         this.flgShowMetaData = baseOptions.isFlgShowMetaData();
@@ -166,6 +168,12 @@ public class OutputOptionsImpl implements OutputOptions {
     }
     public void setFlgShowPlan(boolean flgShowPlan) {
         this.flgShowPlan = flgShowPlan;
+    }
+    public boolean isFlgShowPlanCalc() {
+        return flgShowPlanCalc;
+    }
+    public void setFlgShowPlanCalc(boolean flgShowPlanCalc) {
+        this.flgShowPlanCalc = flgShowPlanCalc;
     }
     public boolean isFlgShowIst() {
         return flgShowIst;
@@ -293,20 +301,20 @@ public class OutputOptionsImpl implements OutputOptions {
     }
     public void setStrReadIfStatusInListOnly(String strReadIfStatusInListOnly) {
         this.strReadIfStatusInListOnly = strReadIfStatusInListOnly;
-        this.mpStateFilter = Calculator.initMapFromCsvString(this.strReadIfStatusInListOnly);
+        this.mpStateFilter = DataUtils.initMapFromCsvString(this.strReadIfStatusInListOnly);
     }
     public String getStrClassFilter() {
         return strClassFilter;
     }
     public void setStrClassFilter(String strClassFilter) {
-        this.mpClassFilter = Calculator.initMapFromCsvString(this.strClassFilter);
+        this.mpClassFilter = DataUtils.initMapFromCsvString(this.strClassFilter);
         this.strClassFilter = strClassFilter;
     }
     public String getStrTypeFilter() {
         return strTypeFilter;
     }
     public void setStrTypeFilter(String strTypeFilter) {
-        this.mpTypeFilter = Calculator.initMapFromCsvString(this.strTypeFilter);
+        this.mpTypeFilter = DataUtils.initMapFromCsvString(this.strTypeFilter);
         this.strTypeFilter = strTypeFilter;
     }
     
@@ -340,6 +348,7 @@ public class OutputOptionsImpl implements OutputOptions {
         setFlgShowDocLayout(value);
         setFlgShowIst(value);
         setFlgShowPlan(value);
+        setFlgShowPlanCalc(value);
         setFlgShowChildrenSum(value);
         setFlgShowMetaData(value);
         setFlgShowSysData(value);
@@ -368,6 +377,7 @@ public class OutputOptionsImpl implements OutputOptions {
         this.flgShowDocLayout = false;
         this.flgShowIst = false;
         this.flgShowPlan = false;
+        this.flgShowPlanCalc = false;
         this.flgShowChildrenSum = false;
         this.flgShowMetaData = false;
         this.flgShowSysData = false;
@@ -404,6 +414,7 @@ public class OutputOptionsImpl implements OutputOptions {
                         + ", flgShowDocLayout=" + this.flgShowDocLayout
                         + ", flgShowIst=" + this.flgShowIst 
                         + ", flgShowPlan=" + this.flgShowPlan 
+                        + ", flgShowPlanCalc=" + this.flgShowPlanCalc 
                         + ", flgShowChildrenSum=" + this.flgShowChildrenSum 
                         + ", flgShowMetaData=" + this.flgShowMetaData 
                         + ", flgShowSysData=" + this.flgShowSysData 

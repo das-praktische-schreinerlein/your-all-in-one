@@ -30,8 +30,15 @@ body {
     transform: scale(0.9);    
     transform-origin: -10% -10%;
 **/
+    width: 1200px;
 }
 
+.page-div-center {
+    width: 100%;
+}
+.pageContent {
+    width: 100%;
+}
 @page { 
     size:landscape; 
 }
@@ -40,6 +47,7 @@ pre {
     max-height: none;
     overflow-y: auto;
 }
+
 
 /*****************************************
  *****************************************
@@ -108,4 +116,15 @@ table#masterTable tbody tr td:first-child + td + td + td {
     /* show all whitespaces */
     white-space: pre-wrap;
     overflow: visible;
+}
+table.fancytree-ext-table tbody tr.fancytree-active, table.fancytree-ext-table.fancytree-treefocus tbody tr.fancytree-active {
+    outline: none;
+}
+table.fancytree-ext-table tbody tr.fancytree-active {
+    background-color: none;
+    outline: none;
+}
+table.fancytree-ext-table.fancytree-treefocus tbody tr.fancytree-active {
+    background-color: node;
+    outline: none;
 }

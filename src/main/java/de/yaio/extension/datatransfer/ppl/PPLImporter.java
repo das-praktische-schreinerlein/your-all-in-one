@@ -141,11 +141,16 @@ public class PPLImporter extends ImporterImpl {
                 // validate node
                 Set<ConstraintViolation<BaseNode>> violations = myNode.validateMe();
                 if (violations.size() > 0) {
+                    for (ConstraintViolation<?> cViolation : violations) {
+                        LOGGER.error("error while validating newNode" + myNode.getNameForLogger() + " " 
+                                        + " Path: " + cViolation.getPropertyPath().toString() 
+                                        + " Message:" + cViolation.getMessage()
+                                        + " MessageTemplate:" + cViolation.getMessageTemplate());
+                    }
                     ConstraintViolationException ex = new ConstraintViolationException(
                                     "error while validating newNode" + myNode.getNameForLogger(), 
                                     new HashSet<ConstraintViolation<?>>(violations));
                     LOGGER.error("error while validating newNode" + myNode.getNameForLogger(), ex);
-                    LOGGER.error("error while validating newNode" + myNode.getNameForLogger() + " " + violations);
                     throw ex;
                 }
 

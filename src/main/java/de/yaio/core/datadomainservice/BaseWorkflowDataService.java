@@ -39,6 +39,22 @@ public interface BaseWorkflowDataService {
      * <h4>FeatureDomain:</h4>
      *     BusinessLogic
      * <h4>FeatureDescription:</h4>
+     *     calcs the initial plandata
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>updates membervars - 
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     BusinessLogic Workflow
+     * @param node - node
+     * @throws Exception - parser/format-Exceptions possible
+     */
+    public void calcPlanData(BaseWorkflowData node) throws Exception;
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     BusinessLogic
+     * <h4>FeatureDescription:</h4>
      *     recalcs the workflowdata
      * <h4>FeatureResult:</h4>
      *   <ul>

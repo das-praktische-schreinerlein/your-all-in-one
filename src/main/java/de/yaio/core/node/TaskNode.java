@@ -35,6 +35,7 @@ import de.yaio.core.datadomainservice.SysDataService;
 import de.yaio.core.datadomainservice.SysDataServiceImpl;
 import de.yaio.core.nodeservice.NodeService;
 import de.yaio.core.nodeservice.TaskNodeService;
+import de.yaio.utils.DataUtils;
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -152,11 +153,22 @@ public class TaskNode extends BaseNode implements ExtendedWorkflowData {
     
     @Override
     public WorkflowState getWorkflowState() {
-        // default for 
-        if (super.getWorkflowState() == WorkflowState.NOWORKFLOW) {
+        WorkflowState masterState = super.getWorkflowState();
+        if (masterState == WorkflowState.NOWORKFLOW) {
+            // default if empty
+            
+            // calc from state
+            if (this.getState() != null) {
+                WorkflowState newState = this.getWorkflowStateForState(this.getState());
+                if (newState != null) {
+                    return newState;
+                }
+            }
+            
+            // return default
             return WorkflowState.NOTPLANED;
         }
-        return super.getWorkflowState();
+        return masterState;
     };
 
     @Override
@@ -208,24 +220,18 @@ public class TaskNode extends BaseNode implements ExtendedWorkflowData {
         
         data.append(super.getDataBlocks4CheckSum())
             .append(" istStand=").append(getIstStand())
-            .append(" istStart=").append(getNewDate(getIstStart()))
-            .append(" istEnde=").append(getNewDate(getIstEnde()))
+            .append(" istStart=").append(DataUtils.getNewDate(getIstStart()))
+            .append(" istEnde=").append(DataUtils.getNewDate(getIstEnde()))
             .append(" istAufwand=").append(getIstAufwand())
             .append(" istTask=").append(getIstTask())
-            .append(" planStart=").append(getNewDate(getPlanStart()))
-            .append(" planEnde=").append(getNewDate(getPlanEnde()))
+            .append(" planStart=").append(DataUtils.getNewDate(getPlanStart()))
+            .append(" planEnde=").append(DataUtils.getNewDate(getPlanEnde()))
             .append(" planAufwand=").append(getPlanAufwand())
             .append(" planTask=").append(getPlanTask())
             ;
         return data.toString();
     }
     
-    
-    @XmlTransient
-    @JsonIgnore
-    protected Date getNewDate(Date oldDate) {
-        return (oldDate != null ? new Date(oldDate.getTime()) : null);
-    }
     
     @Override
     @XmlTransient

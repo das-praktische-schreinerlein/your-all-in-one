@@ -14,7 +14,7 @@
     <!-- settings-->
     <properties>
         <aspectj.version>1.7.2</aspectj.version>
-        <java.version>1.6</java.version>
+        <java.version>1.7</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <roo.version>1.2.4.RELEASE</roo.version>
         <slf4j.version>1.7.5</slf4j.version>
@@ -334,6 +334,12 @@
             <artifactId>icu4j</artifactId>
             <version>54.1</version>
         </dependency>
+        <!-- markdown -->
+        <dependency>
+            <groupId>org.commonjava.googlecode.markdown4j</groupId>
+            <artifactId>markdown4j</artifactId>
+            <version>2.2-cj-1.0</version>
+        </dependency>
     </dependencies>
 
     <!-- build options -->
@@ -520,6 +526,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${springboot.version}</version>
                     <configuration>
                         <addResources>false</addResources>
                     </configuration>

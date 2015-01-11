@@ -54,6 +54,8 @@ public interface OutputOptions {
     public void setFlgShowIst(boolean flgShowIst);
     public boolean isFlgShowPlan();
     public void setFlgShowPlan(boolean flgShowPlan);
+    public boolean isFlgShowPlanCalc();
+    public void setFlgShowPlanCalc(boolean flgShowPlanCalc);
     public boolean isFlgShowChildrenSum();
     public void setFlgShowChildrenSum(boolean flgShowChildrenSum);
     public boolean isFlgShowMetaData();
