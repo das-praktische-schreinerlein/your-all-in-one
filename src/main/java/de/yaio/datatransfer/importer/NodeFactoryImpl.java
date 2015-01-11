@@ -224,7 +224,6 @@ public class NodeFactoryImpl implements NodeFactory {
         node.setType(nodeTypeIdentifier);
         node.setParentNode(curParentNode);
 
-        
         // Node initialisieren (Parser)
         parseNodeDataDomains(node, options);
 
