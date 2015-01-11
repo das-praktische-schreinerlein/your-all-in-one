@@ -11,7 +11,6 @@ More information about the prototype at http://www.your-all-in-one.de/yaio/stati
 - [ ] update the documentation on http://www.your-all-in-one.de/yaio/static/lepetit  (new features, howto...)
 - [ ] code-documentation
 - [ ] code review: configuration, minor layout-bugs
-- [ ] new feature: searchview
 - [ ] new feature: fulltextsearch with lucene and solr
 - [ ] new feature: new nodetypes (contact, call, bug, document..)
 - [ ] new feature: document-management
@@ -20,6 +19,8 @@ More information about the prototype at http://www.your-all-in-one.de/yaio/stati
 
 # History and milestones
 - 2014
+   - added markdown to format desc with automatic synatx-hihglighting for code-blocks
+   - add searchview
    - added yaio-explorer as frontendview
    - added RESTfull-WS
    - added first persistence-functions and support for database as datasource (mysql, hsqldb)
@@ -92,16 +93,19 @@ src\test\testproject\gen-planung.bat
 Take a look at the Wiki, Mindmaps, Excel, html, ICal...
 
 # Thanks to
-- https://github.com/coolbloke1324/jquery-lang-js
+- https://code.google.com/p/markdown4j/
+- https://github.com/ajaxorg/ace-builds
 - https://github.com/angular-translate/
 - https://github.com/apache/maven
 - https://github.com/apache/poi
+- https://github.com/coolbloke1324/jquery-lang-js
 - https://github.com/jquery/jquery
 - https://github.com/jquery/jquery-ui
 - https://github.com/mar10/fancytree
 - https://github.com/spring-projects/spring-boot
 - https://github.com/spring-projects/spring-framework
 - https://github.com/spring-projects/spring-roo
+- https://highlightjs.org
  
 
 # License
