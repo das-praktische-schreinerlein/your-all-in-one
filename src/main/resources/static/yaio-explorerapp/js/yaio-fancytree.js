@@ -1215,23 +1215,8 @@ function renderColumnsForNode(event, data) {
                         + htmlEscapeText(descText) + "</pre>";
 
         // prepare descText
-        descText = prepareTextForMarkdown(descText);
-        
-        // Marked
-        marked.setOptions({
-          renderer: new marked.Renderer(),
-          gfm: true,
-          tables: true,
-          breaks: false,
-          pedantic: false,
-          sanitize: true,
-          smartLists: true,
-          smartypants: false
-        });  
-        var descHtmlMarked = marked(descText);
-        
-        var descHtml = descHtmlMarked;
-        $divDesc.append("<div id='container_content_desc_" + basenode.sysUID + "' class='container-content-desc'>" + descHtml + "</div>");
+        var descHtml = formatMarkdown(descText, false);
+        $divDesc.append("<div id='container_content_desc_" + basenode.sysUID + "' class='container-content-desc syntaxhighlighting-open'>" + descHtml + "</div>");
         
         // append to datablock
         $nodeDataBlock.append($divDesc);

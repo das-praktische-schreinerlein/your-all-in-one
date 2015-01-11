@@ -313,9 +313,26 @@ function togglePreWrap(element) {
   */
  function toggleNodeDescContainer(id) {
      $("#detail_desc_" + id).slideToggle(1000,function() {
+         // show/hide toggler
          if ($("#detail_desc_" + id).css("display") == "block") {
+             // desc is now shown
              $("#toggler_desc_" + id).addClass('toggler_show').removeClass('toggler_hidden');
+
+             // check if syntaxhighlighting to do
+             if ($("#container_content_desc_" + id).hasClass('syntaxhighlighting-open')) {
+                 console.log("toggleNodeDescContainer highlight for: #container_content_desc_" + id);
+                 
+                 // remove trigger-flag
+                 $("#container_content_desc_" + id).removeClass('syntaxhighlighting-open');
+                 
+                 // higlight code-blocks
+                 $("#container_content_desc_" + id + " code").each(function(i, block) {
+                     console.log("toggleNodeDescContainer highlight for #container_content_desc_" + id + " block: " + block.id);
+                     hljs.highlightBlock(block);
+                 });
+             }
          } else {
+             // desc is now hidden
              $("#toggler_desc_" + id).addClass('toggler_hidden').removeClass('toggler_show');
          }
      });
@@ -323,9 +340,22 @@ function togglePreWrap(element) {
 
  function toggleAllNodeDescContainer() {
      if ($("#toggler_desc_all").hasClass('toggler_hidden')) {
-         // hide all desc
+         // show all desc
          $("div.field_nodeDesc").slideDown(1000);
          $("div.fieldtype_descToggler > a").addClass('toggler_show').removeClass('toggler_hidden');
+
+         // check if syntaxhighlighting to do
+         $("div.syntaxhighlighting-open").each(function (i, descBlock) {
+             console.log("toggleAllNodeDescContainer highlight for descBlock: " + descBlock.id);
+             // remove trigger-flag
+             $(descBlock).removeClass('syntaxhighlighting-open');
+             
+             // higlight code-blocks
+             $("#" + descBlock.id + " code").each(function(i, block) {
+                 console.log("toggleAllNodeDescContainer highlight descBlock: " + descBlock.id + " block: " + block.id);
+                 hljs.highlightBlock(block);
+             });
+         });
      } else {
          // hide all desc
          $("div.field_nodeDesc").slideUp(1000);
@@ -472,19 +502,7 @@ function togglePreWrap(element) {
      var descText = $("#" + textAreaId).val();
 
      // prepare descText
-     descText = prepareTextForMarkdown(descText);
-
-     marked.setOptions({
-         renderer: new marked.Renderer(),
-         gfm: true,
-         tables: true,
-         breaks: false,
-         pedantic: false,
-         sanitize: true,
-         smartLists: true,
-         smartypants: false
-       });  
-     var descHtmlMarked = marked(descText);
+     var descHtmlMarked = formatMarkdown(descText, true);
      showPreview(descHtmlMarked);
  }
 

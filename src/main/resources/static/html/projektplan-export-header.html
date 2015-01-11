@@ -492,15 +492,53 @@ h1, h2, h3, h4, h5, h6, h7, h8 {
         size:80%;
     } 
 }
+
+/** markdowndesc-styles **/
+div.node-block-desc-set {
+    white-space: normal;
+    word-wrap: normal;
+}
+div.node-block-desc-set > h1, 
+div.node-block-desc-set > h2, 
+div.node-block-desc-set > h3, 
+div.node-block-desc-set > h4, 
+div.node-block-desc-set > h5, 
+div.node-block-desc-set > h6, 
+div.node-block-desc-set > h7, 
+div.node-block-desc-set > h8 {
+    color: black;
+}
+pre {
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: #333;
+    display: block;
+    font-size: 13px;
+    line-height: 1.42857;
+    margin: 0 0 10px;
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 9.5px;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+code, kbd, pre, samp {
+    font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
+}
     </style>
     <link rel="stylesheet" type="text/css" media="print" href="/css/yaio/print.css" />
     <link rel="stylesheet" type="text/css" media="print" href="/yaio-explorerapp/css/print.css" />
-    
-	<script type="text/javascript">
+
+    <!-- Syntaxhightlighter highlightjs -->
+    <link rel="stylesheet" href="/css/highlightjs/default.css">
+    <script src="/js/highlightjs/highlight.pack.js"></script>
+
+    <script type="text/javascript">
     
     /*
      * ###########################
-     * # Klakulation
+     * # Kalkulation
      * ###########################
      */
     const CONST_FUNCNAME_SUM = "SUM";
