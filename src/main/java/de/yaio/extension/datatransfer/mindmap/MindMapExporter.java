@@ -191,11 +191,15 @@ public class MindMapExporter extends WikiExporter {
         // aktuelle Node ausgeben
         res.append("<node "
                + " id=\"" + curNode.getWorkingId() + "\""
-               + " text=\"" + name + "\"");
+               + " text=\"" + name + "\""
+               + " ID=\"" + curNode.getWorkingId() + "\""
+               + " TEXT=\"" + name + "\""
+               );
 
         // Hintergrund-Farbe
         String color = workflowFormatConfigurator.getStateColor(curNode.getState());
         res.append(" background_color=\"" + color + "\"");
+        res.append(" BACKGROUND_COLOR=\"" + color + "\"");
         res.append(" >\n");
 
         // Icons
