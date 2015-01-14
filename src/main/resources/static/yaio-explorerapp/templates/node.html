@@ -345,7 +345,7 @@
           <ul class="commands nodecommands">
              <li class="command" data-tooltip='tooltip.command.OpenLevel' lang="tech">
                 <a href="" ng-click="openSubNodes()" class="button command_switchlevel">&Ouml;ffne bis Level</a>
-                <input type="range" min="0" max="3" value="" id="treeOpenLevel" ng-model="config.treeOpenLevel" ng-change="openSubNodes()" class="command_switchlevel_input"> </li>
+                <input type="range" min="0" max="10" value="" id="treeOpenLevel" ng-model="config.treeOpenLevel" ng-change="openSubNodes()" class="command_switchlevel_input"> </li>
           </ul>
         </div>
     
@@ -962,6 +962,7 @@
         // activate speech recognition and others
         addSpeechRecognitionToElements();
         addPreviewToElements();
+        addWysiwhgToElements();
         addDatePickerToElements();
         addDocLayoutStyleSelectorToElements();
         initLanguageSupport();

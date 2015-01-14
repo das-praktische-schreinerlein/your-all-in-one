@@ -462,6 +462,9 @@ function togglePreWrap(element) {
          $("#" + textAreaId).val(editor.getValue()).trigger('select').triggerHandler("change");
      });
      
+     // set editor as data-attr on parent
+     $("#" + parentId).data("aceEditor", editor);
+     
      return editor;
  }
  
@@ -522,4 +525,84 @@ function togglePreWrap(element) {
          }
      });    
  }
+ 
+ 
+ function addWysiwhgToElements() {
+     // add preview to nodeDesc
+     $("label[for='nodeDesc']").append(function (idx) {
+         var link = "";
+         var label = this;
+         
+         // check if already set
+         if ($(label).attr("wysiwhgAdded")) {
+             console.error("addWysiwhgElements: SKIP because already added: " + $(label).attr("for"));
+             return link;
+         }
+
+         // get corresponding form
+         var forName = $(label).attr("for");
+         var form = $(label).closest("form");
+         
+         // get for-element byName from form
+         var forElement = form.find("[name="+ forName + "]").first();
+         if (forElement.length > 0) {
+             // define link to label
+             link = "<a href=\"#\" " +
+                 " onClick=\"openWysiwhgForTextareaId('" +
+                     forElement.attr('id') + "'); return false;" +
+                 "\" data-tooltip='Wysiwhg' class='icon-wysiwyg'></a>";
+             
+             // set flag
+             $(label).attr("wysiwhgAdded", "true")
+             console.log("addWysiwhgToElements: add : " + forName + " for " + forElement.attr('id'));
+         }
+         return link;
+     });
+ }
+ 
+ function openWysiwhgForTextareaId(textAreaId) {
+     // get existing parentEditor
+     var parentEditorId = "editor" + textAreaId.charAt(0).toUpperCase() + textAreaId.substring(1);
+     var parentEditor = $("#" + parentEditorId).data("aceEditor");
+     console.log("found parentEditor on:" + parentEditorId);
+
+     // create  Editor
+     var editor = createNodeDescEditorForNode("wysiwhg-editor", textAreaId)
+     editor.getSession().on('change', function(e) {
+         // update textarea for angular
+         var value = editor.getValue();
+         $("#" + textAreaId).val(value).trigger('select').triggerHandler("change");
+
+         // update preview
+         showWyswhgPreviewForTextareaId(textAreaId);
+         
+         // update parent
+         if (parentEditor) {
+             parentEditor.setValue(value);
+         }
+     });
+     
+     // init preview
+     showWyswhgPreviewForTextareaId(textAreaId)
+
+     // show message
+     $( "#wysiwhg-box" ).dialog({
+         modal: true,
+         width: "1200px",
+         buttons: {
+           Ok: function() {
+             $( this ).dialog( "close" );
+           }
+         }
+     });    
+ }
+
+ function showWyswhgPreviewForTextareaId(textAreaId) {
+     // prepare descText
+     var descText = $("#" + textAreaId).val();
+     var descHtmlMarked = formatMarkdown(descText, true);
+
+     // set preview-content
+     $( "#wysiwhg-preview" ).html(descHtmlMarked);
+ } 
 

@@ -90,6 +90,7 @@ a.yaio-icon-remove,
 .icon-formrowtoggleroff,
 .icon-formrowtoggleron,
 a.icon-preview,
+a.icon-wysiwyg,
 a.toggler_show,
 a.toggler_hidden {
   width: 16px;
@@ -110,6 +111,7 @@ a.yaio-icon-remove,
 .icon-formrowtoggleroff,
 .icon-formrowtoggleron,
 a.icon-preview,
+a.icon-wysiwyg,
 a.toggler_show,
 a.toggler_hidden {
   margin-top: 1px;
@@ -157,6 +159,9 @@ a.toggler_hidden {
 }
 
 a.icon-preview {
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAPElEQVR42mP4//8/AyWYgWIDHjx48L+goIAsDNLLAGLYlm8hC4P0DkIDkMHAuwAbGAkuoL8BFOcFSnMjAF48oX6YfwDmAAAAAElFTkSuQmCC");
+}
+a.icon-wysiwyg{
     background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAPElEQVR42mP4//8/AyWYgWIDHjx48L+goIAsDNLLAGLYlm8hC4P0DkIDkMHAuwAbGAkuoL8BFOcFSnMjAF48oX6YfwDmAAAAAElFTkSuQmCC");
 }
 
@@ -298,6 +303,31 @@ ul.nodecommands {
 }
 #preview-box {
     width: 1050px;
+    height: 650px;
+}
+
+
+/*****************************************
+ *****************************************
+ * wysiwhg
+ *****************************************
+ *****************************************/
+#wysiwhg-preview {
+    float: left;
+    width: 560px;
+    height: 600px;
+    overflow: auto;
+    padding-left: 10px;
+}
+#wysiwhg-editor {
+    float: left;
+    width: 570px;
+    height: 600px;
+    max-height: 600px;
+    overflow: auto;
+}
+#wysiwhg-box {
+    width: 1200px;
     height: 650px;
 }
 
@@ -565,6 +595,10 @@ label {
     vertical-align: top;
     width: 70px;
 }
+/* extend width for nodeDesc */
+label[for="nodeDesc"] {
+    width: 170px;
+}
 .inputtype_name {
     width: 500px;
 } 
@@ -786,23 +820,6 @@ td.alignRight {
 }
 td input[type=input] {
   width: 40px;
-}
-
-
-/*****************************************
- *****************************************
- * frontpage
- *****************************************
- *****************************************/
-#front-content-intro {
-    overflow-y:auto;
-    overflow-x: hidden;
-    clear: both;
-    float: left;
-}
-
-#front-content-intro pre code  {
-    white-space: pre;
 }
 
 
@@ -1058,4 +1075,25 @@ div.container-content-desc > ul, div.container-content-desc > ol {
   color: #999;
   background-color: #fff;
   cursor: not-allowed
+}
+
+/*****************************************
+ *****************************************
+ * frontpage
+ *****************************************
+ *****************************************/
+#front-content-intro {
+    overflow-y:auto;
+    overflow-x: hidden;
+    clear: both;
+    float: left;
+}
+
+#front-content-intro pre code  {
+    white-space: pre;
+}
+
+/* Bilder ohne class mit 600px */
+#front-content-intro img:not([class]) {
+    width: 600px;
 }
