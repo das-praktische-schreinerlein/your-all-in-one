@@ -8,6 +8,7 @@
     "common.command.ExportICal": "WebKalender",
     "common.command.ExportExcel": "Excel",
     "common.command.ExportMindmap": "Mindmap",
+    "common.command.ExportCsv": "Csv",
     "common.command.Import": "Wiki-Import",
     "common.command.OpenFrontpage": "Zur Startseite",
     "common.command.OpenHelp": "Hilfe?",

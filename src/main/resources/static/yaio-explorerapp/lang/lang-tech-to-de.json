@@ -11,6 +11,7 @@
         "tooltip.command.DoSearch": "Benutzen Sie die Volltextsuche um einzelne Elemente unabhängig von der Position im Baum zu finden.<br>Das Suchergebnis ist nach der Position im Baum sortiert. Druck Klick auf die Icons in der 1. Spalte können Suie das gefundene Element direkt im Baum ansehen.",
         "tooltip.command.ExportWiki": "Exportieren Sie die aktuelle Node mit allen Kindselementen als Wiki zur Weiterbearbeitung und eventuellen Import in ein anderes D'Artagnan-System :-)", 
         "tooltip.command.ExportMindmap": "Exportieren Sie die aktuelle Node mit allen Kindselementen als Mindmap für FreeMind 0.92.", 
+        "tooltip.command.ExportCsv": "Exportieren Sie die aktuelle Node mit allen Kindselementen als Csv-Version.", 
         "tooltip.command.ExportHtml": "Exportieren Sie die aktuelle Node mit allen Kindselementen als Html-Version zum browsen.", 
         "tooltip.command.ExportICal": "Exportieren Sie die aktuelle Node mit allen Kindselementen als ICal-Version für Ihren Thunderbird/Outlook-Kalender.", 
         "tooltip.command.ExportExcel": "<b>Achtung BETA!!!</b> Exportieren Sie die aktuelle Node mit allen Kindselementen als Excel-Version.",

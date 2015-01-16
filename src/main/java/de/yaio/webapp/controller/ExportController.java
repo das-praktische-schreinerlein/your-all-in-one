@@ -40,6 +40,7 @@ import de.yaio.datatransfer.exporter.EmptyOutputOptionsImpl;
 import de.yaio.datatransfer.exporter.Exporter;
 import de.yaio.datatransfer.exporter.OutputOptions;
 import de.yaio.datatransfer.exporter.OutputOptionsImpl;
+import de.yaio.extension.datatransfer.csv.CSVExporter;
 import de.yaio.extension.datatransfer.excel.ExcelExporter;
 import de.yaio.extension.datatransfer.excel.ExcelOutputOptions;
 import de.yaio.extension.datatransfer.html.HtmlExporter;
@@ -254,6 +255,68 @@ public class ExportController {
         
         // run
         String res = this.exportNode(sysUID, exporter, oOptions, ".mm", response);
+        return res;
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
+     *     Request to read the node for sysUID and return it in csv-format with all children
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>String - csv-format of the node
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice Query
+     * @param sysUID - sysUID to export
+     * @param response - the response-Obj to set contenttype and headers
+     * @return String - csv-format of the node
+     */
+    @RequestMapping(method=RequestMethod.GET, 
+                    value = "/csv/{sysUID}", 
+                    produces="application/csv")
+    public @ResponseBody String exportNodeAsCsv(
+           @PathVariable(value="sysUID") String sysUID, HttpServletResponse response) {
+        // configure
+        Exporter exporter = new CSVExporter();
+        OutputOptions oOptions = new OutputOptionsImpl();
+        
+        // run
+        String res = this.exportNode(sysUID, exporter, oOptions, ".csv", response);
+        return res;
+    }
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
+     *     Request to read the node for sysUID and return it in csv-format with all children<br>
+     *     use the setting of the output-options from request<br>
+     *     requires an post-form application/x-www-form-urlencoded
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>String - csv-format of the node
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice Query
+     * @param sysUID - sysUID to export
+     * @param oOptions - the outputOptions 
+     * @param response - the response-Obj to set contenttype and headers
+     * @return String - csv-format of the node
+     */
+    @RequestMapping(method= {RequestMethod.POST}, 
+                    value = "/csvuseoptions/{sysUID}", 
+                    produces="application/csv",
+                    consumes = "application/x-www-form-urlencoded")
+    public @ResponseBody String exportNodeAsCsv(
+           @PathVariable(value="sysUID") String sysUID,
+           @ModelAttribute EmptyOutputOptionsImpl oOptions,
+           HttpServletResponse response) {
+        // configure
+        Exporter exporter = new CSVExporter();
+        
+        // run
+        String res = this.exportNode(sysUID, exporter, oOptions, ".csv", response);
         return res;
     }
 
