@@ -239,7 +239,7 @@ a.icon-wysiwyg{
 }
 #containerNodeCommands {
     float: right;
-    width: 450px;
+    width: 480px;
 }
 #containerInfoCommands {
     float: right;
@@ -923,6 +923,12 @@ div.container-content-desc > ul, div.container-content-desc > ol {
     white-space: normal;
     word-wrap: normal;
 }
+/* set img from markdown without class to 1000px */
+div.container-content-desc img:not([class]) {
+    max-width: 1000px;
+    width: auto;
+    height: auto;
+}
 
 .pre-wrap {
     white-space: normal;
@@ -1092,8 +1098,9 @@ div.container-content-desc > ul, div.container-content-desc > ol {
 #front-content-intro pre code  {
     white-space: pre;
 }
-
-/* Bilder ohne class mit 600px */
+/* set img from markdown without class to 600px */
 #front-content-intro img:not([class]) {
-    width: 600px;
+    max-width: 600px;
+    width: auto;
+    height: auto;
 }

@@ -60,3 +60,9 @@ body {
 .fieldtype_additionaldata {
     display: none;
 }
+/* set img from markdown without class to 500px */
+div.container-content-desc img:not([class]) {
+    max-width: 500px;
+    width: auto;
+    height: auto;
+}
