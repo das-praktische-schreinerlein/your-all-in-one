@@ -1,0 +1,127 @@
+= INFO - Startseite                                                                                                                                           [NodeMeta: SysStart,1,,] [NodeSys: SysStart1,,,,]
+* **INFO - D'Artagnan sagt Guten Tag...**                                       [DocLayout: DIV,thatsit,ThatsIt,]
+# Du bist es leid?
+- Ist das Projekt wieder völlig aus dem Ruder gelaufen?
+- Hat man bei der Urlaubsplanung wieder mal die Hälfte vergessen?
+- Sagt der Handyprovider deine Kündigung sei nicht fristgerecht eingegangen und du kannst nichts nachweisen (keinen Absendetermin, keinen Inhalt)?
+
+# Ich auch
+Und deshalb habe ich D'Artagnan erfunden.
+
+## D'Artagnan hilft
+
+### Unterstützung bei der Planung
+- Er unterstützt dich bei der Planung deines Projekts.
+- Strukturiere dein Projekt wie du es magst, erstelle deine Checklisten und terminiere wichtige Ergebnisse. D'Artagnan wird dir alles übersichtlich darstellen.
+
+```struct
+Projekt
+  Unterprojekt 1
+    Aufgabe 1: Aufwand 100h
+    Aufgabe 2: Aufwand 50h
+  Unterprojekt 2  
+    Aufgabe 1: Aufwand 10h
+    Aufgabe 2: Aufwand 70h
+  Termin Ende 22.12.2024 
+```
+
+![Planung](/examples/startseite-screen-planung.png "Planung")
+
+### Übersicht bei der Umsetzung
+- Setze dir Termine und D'Artagnan wird dich erinnern.
+- Dokumentiere den Stand und wie lange du gebraucht hast. Er zeigt dir wo du in deinem Projekt stehst, wie viel geplant war, was schon verbraucht und noch benötigt wird.
+- Mach dir Notizen und 
+- Kein Punkt wird vergessen. Ein Projekt ist erst beendet, wenn du auch die letzte Aufgabe aus deiner Checkliste beendet hast. 
+
+### Sammle Erfahrungen
+- Er liefert das AHA-Erlebnis, wenn er dir geplanten und real benötigten Aufwand, geplanten und nachher erreichten Termin gegenüberstellt.
+
+### Lerne aus Erfahrungen
+- Benutze Templates für wiederkehrende Aufgaben und wende deine einmal gemachten Erfahrungen (Checklisten, Aufwände, Zeiten) immer wieder an.
+
+### Hebe den Wissensschatz
+- Nichts wird vergessen. Die im Laufe des Projekts erstellten Dokumente, Notizen und Abläufe sind für Recherchezwecke immer schnell erreichbar. 
+  ** INFO - Ende:                                                               [DocLayout: P,startmesg3,,X]                                                    
+  ** INFO - Le petit D'Artagnan jetzt in 3D                                       [DocLayout: DIV,intro,Lepetit3D,]
+# Erwachsen
+Le petit D'Artagnan wird langsam erwachsen. Mit Version 2.0 hat er läuft er jetzt auch im Browser und kann seine Daten in einer Datenbank speichern.
+
+Die bestehenden Funktionen beherrscht er natürlich immer noch und sie wurden sogar verbessert, aber er hat auch unglaublich viel dazugelernt.
+
+## Details
+Aber schauen wir im Detail, was "Le petit D'Artagngan 3D" nun so alles bietet:
+
+### D'Artagnan unterstützt Dich derzeit bei folgenden Aufgaben 
+- Planung: Planung von Projekten, Terminen  
+- Verfolgung: Terminverfolgung, Aufwandsdokumentation und Erinnerungen
+- Dokumentation: Dokumentation von durchgeführten Arbeiten, Konzepten, Recherchen
+- Informationsmanagement: Informationsmanagement mit der Verlinkung von Webseiten, Bildern, Dateien
+
+### Eine Web-GUI die von jedem modernen Browser unterstützt wird
+- Startseite: Startseite mit kurzer Einführung
+- Projektexplorer: Einen Projektexplorer mit einer Baumansicht des gesamten Projekts und Termin/Informationsübersicht
+- Gantt-Ansicht: Einem Gantt-Diagramm des aktuellen Projekts mit Plan/Ist-Daten
+- Volltextsuche: Eine Suchseite mit der Möglichkeit der unstrukturierten Volltextsuche innerhalb des Projekts.
+- innerhalb der Listen an jedem Eintrag die Möglichkeit zur Bearbeitung, Anlegen von Kindsknoten, Anlegen eines Symlinks auf sich, Löschen des Knotens
+
+### Features: Was sind die Informationen die man derzeit in D'Artagnan speichern kann
+- Derzeit lassen sich so Aufgaben, Infos, Urls, Symlinks, Events und Dateiverweise speichern
+- Aufgaben+Events lassen sich mit Titel, Status, Plandaten (geplanter Aufwand, Starttermin, Endetermin) und Ist-Daten (benötigter Aufwand, realer Starttermin, realer Endetermin, Umsetzungsstand) versehen
+- Infos, Urls und Dateiressourcen stellen Titel, Ressource und Layoutbefehle für die Darstellung in Dokumentationen zur Verfügung
+- mit Hilfe von Symlinks kann man auf andere Knoten im Projektbaum verweisen
+- Alle Knote4n stellen ein Kommentarfeld zur Verfügung in welchem kurze Bemerkungen/Kommentare aber auch ganze Artikel mit `Markdown formatiert und bei Quelltexten mit Syntaxhighlighting versehen, dokumentiert werden können.
+
+### Aufbau
+- Die Kernanwendung mit Datenbank wird von der Kommandozeile aus gestartet
+- es öffnet sich automatisch der Browser mit der Startseite -> die Datenpflege kann beginnen
+- neben dem Explorerfenster und verschiedenen Masken zum Export und zur Datenpflege gibt es auch eine Volltextsuche
+- man hat die Möglichkeit im linken Bereich des Explorerfensters im Projektbaum zu navigieren, rechts die Aktionen für die Knoten auszuführen, sich den erweiterten Inhalt einblenden oder im Seitenkopf in den Gantt-Ansicht  mit Darstellung des zeitlichen Verlauf wechseln
+- Teilbäume des Projekts (oder das Ganze ;-) lassen sich in verschiedene Export-Formate wie Mindmap, Wiki, ICal, Html usw. exportieren
+- zusätzlich besteht die Möglichkeit mit Templates zu arbeiten. Dazu kann man sich entweder einen bestehenden Teilbaum als Wiki exportieren und bearbeiten, oder ein völlig neues Wiki-Dokument erstellen und eine Aufgabe strukturieren. Diese Datei kann dann als neuer Teilbaum ins System importiert werden. Passende Vorlagen für Projekte, Bugs, Backup und anderes liegen bei. Übrigens wurde auch die Dokumentation die Sie gerade lesen auf diesem Wege importiert ;-)
+
+  ** INFO - Ende                                                                [DocLayout: P,,,X]                                                              
+
+  ** INFO - Wofür ist er da?                                       [DocLayout: DIV,intro,Was,]
+# Ziele
+
+## Hilfe
+- Planung+Strukturierung von Aufgaben, Projekten + Terminen mit Aufwand, Start+Ende, Kontierung, Visualisierung+Export als Gantt, Mindmap, Kalender
+- Projektverfolgung mit Stand, Aufwand, Zeitraum, Visualisierung mit Farben, Statusverfolgung, Visualisierung+Export in verschiedene Formate
+- Dokumentation von Konzepten, Quellcodes, URLs, Dateien innerhalb der Planung+Umsetzung oder auch als Wiki
+
+## Unterstützung
+- Projektmanagement: Planung und Verfolgung von Aufgaben, Projekten und Terminen mit Aufwand, Zeitraum und Stand
+- Dokumentation: Dokumentation von Konzepten und Umsetzung innerhalb der Projekte
+- Wissenspeicher: Ablage von Notizen, Howtos Urls und Dateien in einem strukturierten Wiki
+
+## Alles in einer Oberfläche, alles in einem Baum
+
+  ** INFO - Ende                                                                [DocLayout: P,,,X]                                                              
+
+  ** INFO - Was ist D'Artagnan?                                       [DocLayout: DIV,intro,Was,]
+# Er ist dein zentrales Werkzeug.
+
+## Planung
+- du kannst Projekte und Aufgaben strukturieren und planen (Aufwand, Zeitraum)
+- den Stand dokumentieren (direkt an der Aufgabe angeben, in welchem Zeitraum du wie lange gearbeitet hast und wie viel % schon erledigt sind), im Bemerkungsfeld kannst du wichtige Informationen für und aus der Umsetzung dokumentieren
+- gibt es wichtige Hinweise/Howtos die bei der Aufgabe helfen können, oder dokumentiert werden sollen, kannst du eine InfoNode an der Aufgabe anlegen, wo diese Informationen dann gespeichert werden
+- liegt das ganze als Ressource im Internet, oder im lokalen Dateisystem, kannst du diese auch als Anhang an die Aufgabe/Infos anhängen
+- Solltest du längere Bemerkungen oder Quelltext-Ausschnitte haben, kannst du diese als Markdown formatiert im Bemerkungsfeld speichern
+- Sollte eine Aufgabe umfangreicher werden, dann unterteile sie doch einfach in Unteraufgaben die du im Baum als Kindsknoten anlegst. D'Artagnan zeigt die dann auch den aufsummierten Aufwand+Stand an und schließt die Elternaufgabe automatisch wenn alle Unteraufgaben erledigt sind.
+
+## Dokumentation/Howto/Infowiki
+- Ein weiteres Ziel von D'Artagnan ist der Gebrauch als Dokumentationssystem und DokuWiki
+- Dazu kann man über die Info+UrlResNodes einen Informationsbaum aufbauen.
+- Umfangreichere Artikel lassen sich mit Markdown und automatischem Syntaxhighlighting für Quellcodebereiche strukturieren und formatieren.
+- Unabhängig zur auf einen Knoten beschränkten Markdown-Formatierung, lassen sich die Knoten auch übergreifend im Baum mit zusätzlichen Layoutinformationen wie Rahmen usw. formatieren.
+- Diese Layoutinformationen wertet YAIO dann in der Darstellung im Explorer bzw. beim Export als Html-Seite aus und formatiert die Inhalte in ansprechender Weise.
+- Somit stellt das System 2 Layout-Formatierungsmechanismen zur Verfügung, die einzeln aber auch im Zusammenspiel die Erstellung umfangreicher Dokumentationen bzw. Webseiten ermöglichen. Die Startseite+Hilfe von YAIO bzw. die Portalinhalte von http://www.your-all-in-one.de und http://www.your-it-fellow.de werden zum Beispiel vollständig über diese Mechanismen gepflegt und layoutet.
+
+## Verlinkung
+- Neben der Verlinkung auf externe Ressourcen (Urls, Dateien) lassen sich über SymLinks, aber auch innerhalb von D'Artagnan Projekte oder Informationen verknüpfen. So macht es zum Beispiel Sinn von einer regelmäßigen Aufgabe (Backup) jeweils auf den Vorgänger zu verweisen oder auf das zentrale Howto in welchem die auszuführenden Befehle detailliert beschrieben sind.
+
+## AllInOne
+- Damit lässt sich in EINEM zentralen System neben der Planung, Umsetzung, Terminverfolgung auch noch die Dokumentation erstellen und recherchieren.
+
+
+  ** INFO - Ende                                                                [DocLayout: P,,,X]                                                              
