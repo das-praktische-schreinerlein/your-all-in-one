@@ -6,6 +6,7 @@
     <groupId>de.yaio</groupId>
     <artifactId>yaio</artifactId>
     <name>yaio</name>
+    <description>YourAllInOne D'Artagnan</description>
     
     <!-- packaging jar or war and version -->
     <packaging>jar</packaging>
@@ -340,10 +341,25 @@
             <artifactId>markdown4j</artifactId>
             <version>2.2-cj-1.0</version>
         </dependency>
+        <!--  security/crypto -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        
     </dependencies>
 
     <!-- build options -->
     <build>
+        <!-- set finalname for jar + context as war -->
+        <finalName>yaio</finalName>
+        <!-- for actuator-infos -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

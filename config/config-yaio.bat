@@ -24,11 +24,7 @@ set YAIOCONFIGPATH=%BASEPATH%\..\config\
 set YAIOSCRIPTPATH=%BASEPATH%\..\sbin\
 set YAIORESPATH=%BASEPATH%\..\ressources\
 set YAIOVARPATH=%BASEPATH%\..\var\
-rem old set YAIOAPP=%BASEPATH%..\target\yaio-0.1.0.BUILD-SNAPSHOT-jar-with-dependencies.jar
-rem fast set YAIOAPP=%BASEPATH%..\target\classes\;%BASEPATH%..\target\yaio-0.1.0.BUILD-SNAPSHOT-shaded.jar
-rem old prod set YAIOAPP=%BASEPATH%..\target\yaio-0.1.0.BUILD-SNAPSHOT-shaded.jar
-rem new prod
-set YAIOAPP=%BASEPATH%..\target\yaio-0.1.0.BUILD-SNAPSHOT-shaded.jar
+set YAIOAPP=%BASEPATH%..\target\yaio.jar
 set CP="%YAIOAPP%;"
 set CFGFILE=%BASEPATH%..\config\application.properties
 set CFG=--config %CFGFILE% 
