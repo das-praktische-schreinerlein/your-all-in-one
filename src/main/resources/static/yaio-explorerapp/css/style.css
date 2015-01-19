@@ -90,6 +90,7 @@ a.yaio-icon-remove,
 .icon-formrowtoggleroff,
 .icon-formrowtoggleron,
 a.icon-preview,
+a.icon-markdownhelp,
 a.icon-wysiwyg,
 a.toggler_show,
 a.toggler_hidden {
@@ -111,6 +112,7 @@ a.yaio-icon-remove,
 .icon-formrowtoggleroff,
 .icon-formrowtoggleron,
 a.icon-preview,
+a.icon-markdownhelp,
 a.icon-wysiwyg,
 a.toggler_show,
 a.toggler_hidden {
@@ -159,6 +161,9 @@ a.toggler_hidden {
 }
 
 a.icon-preview {
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAPElEQVR42mP4//8/AyWYgWIDHjx48L+goIAsDNLLAGLYlm8hC4P0DkIDkMHAuwAbGAkuoL8BFOcFSnMjAF48oX6YfwDmAAAAAElFTkSuQmCC");
+}
+a.icon-markdownhelp {
     background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAPElEQVR42mP4//8/AyWYgWIDHjx48L+goIAsDNLLAGLYlm8hC4P0DkIDkMHAuwAbGAkuoL8BFOcFSnMjAF48oX6YfwDmAAAAAElFTkSuQmCC");
 }
 a.icon-wysiwyg{
@@ -290,6 +295,22 @@ ul.nodecommands {
     width: 800px;
     height: 550px;
 }
+
+/*****************************************
+ *****************************************
+ * markdownhelp
+ *****************************************
+ *****************************************/
+#markdownhelp-iframe {
+    width: 1200px;
+    height: 500px;
+    overflow: auto;
+}
+#markdownhelp-box {
+    width: 1250px;
+    height: 550px;
+}
+
 
 /*****************************************
  *****************************************

@@ -68,7 +68,7 @@ function addSpeechRecognitionToElements() {
                 link = "<a href=\"\" class=\"\"" +
                     " onClick=\"openSpeechRecognitionWindow(" +
                         "document.getElementById('" + forElement.attr('id') + "')); return false;" +
-                    "\" data-tooltip='Spracherkennung nutzen'>" +
+                    "\" lang='tech' data-tooltip='tooltip.command.OpenSpeechRecognition'>" +
                     "<img alt='Spracherkennung nutzen' style='width:25px'" +
                         " src='https://www.google.com/intl/en/chrome/assets/common/images/content/mic.gif'></a>";
                 
@@ -491,7 +491,10 @@ function togglePreWrap(element) {
              link = "<a href=\"#\" " +
                  " onClick=\"showPreviewForTextareaId('" +
                      forElement.attr('id') + "'); return false;" +
-                 "\" data-tooltip='Vorschau' class='icon-preview'></a>";
+                 "\" lang='tech' data-tooltip='tooltip.command.OpenPreview' class='icon-preview'></a>";
+             link += "<a href=\"#\" " +
+             " onClick=\"showMarkdownHelp(); return false;" +
+             "\" lang='tech' data-tooltip='tooltip.command.OpenMarkdownHelp' class='icon-markdownhelp'></a>";
              
              // set flag
              $(label).attr("previewAdded", "true")
@@ -526,6 +529,27 @@ function togglePreWrap(element) {
      });    
  }
  
+ function showMarkdownHelp() {
+     // show message
+     var url = "/examples/markdownhelp/markdownhelp.html";
+     console.log("showMarkdownHelp:" + url);
+     $("#markdownhelp-iframe").attr('src',url);
+     $("#markdownhelp-box" ).dialog({
+         modal: true,
+         width: "1200px",
+         buttons: {
+             "Schliessen": function() {
+               $( this ).dialog( "close" );
+             },
+             "Eigenes Fenster": function() {
+                 var helpFenster = window.open(url, "markdownhelp", "width=1200,height=500,scrollbars=yes,resizable=yes");
+                 helpFenster.focus();
+                 $( this ).dialog( "close" );
+               }
+         }
+     });    
+ }
+ 
  
  function addWysiwhgToElements() {
      // add preview to nodeDesc
@@ -550,7 +574,7 @@ function togglePreWrap(element) {
              link = "<a href=\"#\" " +
                  " onClick=\"openWysiwhgForTextareaId('" +
                      forElement.attr('id') + "'); return false;" +
-                 "\" data-tooltip='Wysiwhg' class='icon-wysiwyg'></a>";
+                 "\" lang='tech' data-tooltip='tooltip.command.OpenWysiwygEditor' class='icon-wysiwyg'></a>";
              
              // set flag
              $(label).attr("wysiwhgAdded", "true")
@@ -567,8 +591,29 @@ function togglePreWrap(element) {
      console.log("found parentEditor on:" + parentEditorId);
 
      // create  Editor
-     var editor = createNodeDescEditorForNode("wysiwhg-editor", textAreaId)
-     editor.getSession().on('change', function(e) {
+     var myParentId = "wysiwhg-editor";
+     var editor = createNodeDescEditorForNode(myParentId, textAreaId)
+
+     // reset intervallHandler for this parent
+     var intervalHandler = $("#" + myParentId).data("aceEditor.intervalHandler");
+     if (intervalHandler != "undefined") {
+         console.log("openWysiwhgForTextareaId: clear old Interval : " + intervalHandler + " for " + myParentId);
+         clearInterval(intervalHandler)
+     }
+     // create new intervalHandler: check every 5 second if there is a change und update all
+     $("#" + myParentId).data("aceEditor.flgChanged", "false");
+     intervalHandler = setInterval(function(){ 
+         // check if something changed
+         if ($("#" + myParentId).data("aceEditor.flgChanged") != "true") {
+             // nothing changed
+             return;
+         }
+         
+         console.log("openWysiwhgForTextareaId: updateData : " + " for " + myParentId);
+
+         // reset flag
+         $("#" + myParentId).data("aceEditor.flgChanged", "false");
+
          // update textarea for angular
          var value = editor.getValue();
          $("#" + textAreaId).val(value).trigger('select').triggerHandler("change");
@@ -580,6 +625,13 @@ function togglePreWrap(element) {
          if (parentEditor) {
              parentEditor.setValue(value);
          }
+     }, 5000);
+     console.log("openWysiwhgForTextareaId: setIntervall : " + intervalHandler + " for " + myParentId);
+     $("#" + myParentId).data("aceEditor.intervalHandler", intervalHandler);
+     
+     // set update-event
+     editor.getSession().on('change', function(e) {
+         $("#" + myParentId).data("aceEditor.flgChanged", "true");
      });
      
      // init preview
@@ -592,6 +644,8 @@ function togglePreWrap(element) {
          buttons: {
            Ok: function() {
              $( this ).dialog( "close" );
+             console.log("openWysiwhgForTextareaId: clearMyInterval : " + intervallHandler + " for " + myParentId);
+             clearInterval(intervallHandler)
            }
          }
      });    
