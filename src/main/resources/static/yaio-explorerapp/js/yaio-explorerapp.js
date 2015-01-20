@@ -84,7 +84,7 @@ yaioM.config(function($routeProvider) {
         .when('/show/:nodeId', { 
             controller:  'NodeShowCtrl',
             templateUrl: 'templates/node.html' })
-        .when('/search/:curPage?/:pageSize?/:baseSysUID?/:fulltext?/', { 
+        .when('/search/:curPage?/:pageSize?/:searchSort?/:baseSysUID?/:fulltext?/', { 
             controller:  'NodeSearchCtrl',
             templateUrl: 'templates/list-nodes.html' })
         .when('/search/', { 
@@ -225,6 +225,7 @@ yaioM.controller('NodeSearchCtrl', function($scope, $location, $http, $routePara
     $scope.searchOptions = {
             curPage: 1,
             pageSize: 20,
+            searchSort: 'default',
             baseSysUID: "MasterplanMasternode1",
             fulltext: "",
             total: 0
@@ -233,6 +234,8 @@ yaioM.controller('NodeSearchCtrl', function($scope, $location, $http, $routePara
         $scope.searchOptions.curPage = decodeURI($routeParams.curPage); 
     if ($routeParams.pageSize)
         $scope.searchOptions.pageSize = decodeURI($routeParams.pageSize); 
+    if ($routeParams.searchSort)
+        $scope.searchOptions.searchSort = decodeURI($routeParams.searchSort); 
     if ($routeParams.baseSysUID)
         $scope.searchOptions.baseSysUID = decodeURI($routeParams.baseSysUID); 
     if ($routeParams.fulltext)
@@ -261,6 +264,7 @@ yaioM.controller('NodeSearchCtrl', function($scope, $location, $http, $routePara
         var newUrl = '/search'
             + '/' + encodeURI(page)
             + '/' + encodeURI($scope.searchOptions.pageSize)
+            + '/' + encodeURI($scope.searchOptions.searchSort)
             + '/' + encodeURI($scope.searchOptions.baseSysUID)
             + '/' + encodeURI($scope.searchOptions.fulltext)
             + '/';
@@ -308,6 +312,7 @@ yaioM.controller('NodeSearchCtrl', function($scope, $location, $http, $routePara
         var newUrl = '/search'
             + '/' + encodeURI($scope.searchOptions.curPage)
             + '/' + encodeURI($scope.searchOptions.pageSize)
+            + '/' + encodeURI($scope.searchOptions.searchSort)
             + '/' + encodeURI($scope.searchOptions.baseSysUID)
             + '/' + encodeURI($scope.searchOptions.fulltext)
             + '/';
@@ -335,6 +340,7 @@ yaioM.controller('NodeSearchCtrl', function($scope, $location, $http, $routePara
         var searchNodeUrl = '/nodes/search'
             + '/' + encodeURI($scope.searchOptions.curPage)
             + '/' + encodeURI($scope.searchOptions.pageSize)
+            + '/' + encodeURI($scope.searchOptions.searchSort)
             + '/' + encodeURI($scope.searchOptions.baseSysUID)
             + '/';
         if ($scope.searchOptions.fulltext && $scope.searchOptions.fulltext.length > 0)

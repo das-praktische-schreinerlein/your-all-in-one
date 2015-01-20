@@ -98,12 +98,13 @@ public interface BaseNodeDBService {
      * <h4>FeatureKeywords:</h4>
      *     Persistence JPA
      * @param fulltext - fulltext to search in desc and name
-     * @param firstResult - resutrange for pagination
-     * @param maxResults - resutrange for pagination
+     * @param sortConfig - use sort
+     * @param firstResult - resultrange for pagination
+     * @param maxResults - resultrange for pagination
      * @return List of matching nodes
      */
     public List<BaseNode> findFulltextBaseNodeEntries(String fulltext, 
-                    int firstResult, int maxResults);
+                    String sortConfig, int firstResult, int maxResults);
     
     /**
      * <h4>FeatureDomain:</h4>

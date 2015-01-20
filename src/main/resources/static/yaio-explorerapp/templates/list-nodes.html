@@ -32,6 +32,29 @@
         <div id="searchcommand" class="container-searchcommands"><!--
        --><div class="fulltextline" data-tooltip='tooltip.command.DoSearch' lang="tech">
              <input type="text" ng-keyup="checkEnterFulltextSearch($event);" placeholder="Suchtext" name="fulltext" maxsize="40" class="inputtype_text" id="inputSearchOptionsFulltext" ng-model="searchOptions.fulltext">
+             <select name="searchSort" class="inputtype_select" id="inputSearchOptionsSearchSortt" ng-model="searchOptions.searchSort">
+                  <option value="default" translate="common.select.searchSort.default">default</option>
+                  <option value="createdUp" translate="common.select.searchSort.createdUp">createdUp</option>
+                  <option value="createdDown" translate="common.select.searchSort.createdDown">createdDown</option>
+                  <option value="istEndeUp" translate="common.select.searchSort.istEndeUp">istEndeUp</option>
+                  <option value="istEndeDown" translate="common.select.searchSort.istEndeDown">istEndeDown</option>
+                  <option value="istStartUp" translate="common.select.searchSort.istStartUp">istStartUp</option>
+                  <option value="istStartDown" translate="common.select.searchSort.istStartDown">istStartDown</option>
+                  <option value="lastChangeUp" translate="common.select.searchSort.lastChangeUp">lastChangeUp</option>
+                  <option value="lastChangeDown" translate="common.select.searchSort.lastChangeDown">lastChangeDown</option>
+                  <option value="nameUp" translate="common.select.searchSort.nameUp">nameUp</option>
+                  <option value="nameDown" translate="common.select.searchSort.nameDown">nameDown</option>
+                  <option value="nodeNumberUp" translate="common.select.searchSort.nodeNumberUp">nodeNumberUp</option>
+                  <option value="nodeNumberDown" translate="common.select.searchSort.nodeNumberDown">nodeNumberDown</option>
+                  <option value="planEndeUp" translate="common.select.searchSort.planEndeUp">planEndeUp</option>
+                  <option value="planEndeDown" translate="common.select.searchSort.planEndeDown">planEndeDown</option>
+                  <option value="planStartUp" translate="common.select.searchSort.planStartUp">planStartUp</option>
+                  <option value="planStartDown" translate="common.select.searchSort.planStartDown">planStartDown</option>
+                  <option value="typeUp" translate="common.select.searchSort.typeUp">typeUp</option>
+                  <option value="typeDown" translate="common.select.searchSort.typeDown">typeDown</option>
+                  <option value="workflowStateUp" translate="common.select.searchSort.workflowStateUp">workflowStateUp</option>
+                  <option value="workflowStateDown" translate="common.select.searchSort.workflowStateDown">workflowStateDown</option>
+             </select>
              <a ng-click="doNewFulltextSearch();" class="button" translate="common.command.DoSearch">Search</a>
              {{ searchOptions.total }} Treffer  
           </div><!-- 

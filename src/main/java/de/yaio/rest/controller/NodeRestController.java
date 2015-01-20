@@ -119,12 +119,13 @@ public class NodeRestController {
      *     Webservice Query
      * @param curPage - current page in result to display
      * @param pageSize - max items per page
+     * @param sortConfig - use sort
      * @param sysUID - sysUID to filter as perentNode
      * @param fulltext - fulltext search string
      * @return NodeSearchResponse (OK, FAILED, ERROR) with matching nodes
      */
     public NodeSearchResponse commonSearchNode(Long curPage,
-          Long pageSize, String sysUID, String fulltext) {
+          Long pageSize, String sortConfig, String sysUID, String fulltext) {
         // create default response
         NodeSearchResponse response = new NodeSearchResponse(
                         "OK", "no node found", 
@@ -136,7 +137,7 @@ public class NodeRestController {
         if (node != null) {
             // search nodes
             List<BaseNode> resultList = baseNodeDBService.findFulltextBaseNodeEntries(fulltext,
-                            ((curPage.intValue()-1) * pageSize.intValue()), 
+                            sortConfig, ((curPage.intValue()-1) * pageSize.intValue()), 
                             pageSize.intValue());
 
             // create response
@@ -165,18 +166,20 @@ public class NodeRestController {
      *     Webservice Query
      * @param curPage - current page in result to display
      * @param pageSize - max items per page
+     * @param sortConfig - use sort
      * @param sysUID - sysUID to filter as perentNode
      * @param fulltext - fulltext search string
      * @return NodeSearchResponse (OK, FAILED, ERROR) with matching nodes
      */
-    @RequestMapping(method=RequestMethod.GET, value = "/search/{curPage}/{pageSize}/{sysUID}/{fulltext}/")
+    @RequestMapping(method=RequestMethod.GET, value = "/search/{curPage}/{pageSize}/{sortConfig}/{sysUID}/{fulltext}/")
     public @ResponseBody NodeSearchResponse searchNodeFulltext(
            @PathVariable(value="curPage") Long curPage,
            @PathVariable(value="pageSize") Long pageSize,
+           @PathVariable(value="sortConfig") String sortConfig,
            @PathVariable(value="sysUID") String sysUID,
            @PathVariable(value="fulltext") String fulltext
            ) {
-        return commonSearchNode(curPage, pageSize, sysUID, fulltext);
+        return commonSearchNode(curPage, pageSize, sortConfig, sysUID, fulltext);
     }
     
 
@@ -193,16 +196,18 @@ public class NodeRestController {
      *     Webservice Query
      * @param curPage - current page in result to display
      * @param pageSize - max items per page
+     * @param sortConfig - use sort
      * @param sysUID - sysUID to filter as perentNode
      * @return NodeSearchResponse (OK, FAILED, ERROR) with matching nodes
      */
-    @RequestMapping(method=RequestMethod.GET, value = "/search/{curPage}/{pageSize}/{sysUID}/")
+    @RequestMapping(method=RequestMethod.GET, value = "/search/{curPage}/{pageSize}/{sortConfig}/{sysUID}/")
     public @ResponseBody NodeSearchResponse searchNode(
            @PathVariable(value="curPage") Long curPage,
            @PathVariable(value="pageSize") Long pageSize,
+           @PathVariable(value="sortConfig") String sortConfig,
            @PathVariable(value="sysUID") String sysUID
            ) {
-        return commonSearchNode(curPage, pageSize, sysUID, "");
+        return commonSearchNode(curPage, pageSize, sortConfig, sysUID, "");
     }
 
     /**

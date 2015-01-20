@@ -17,7 +17,9 @@
 package de.yaio.core.dbservice;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.TypedQuery;
 
@@ -45,6 +47,30 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
         Logger.getLogger(BaseNodeDBServiceImpl.class);
 
     
+    protected static Map<String, String> CONST_AVAILIABLE_SORTS = new HashMap<String, String>();
+    static {
+        CONST_AVAILIABLE_SORTS.put("default", "");
+        CONST_AVAILIABLE_SORTS.put("createdUp", "sysCreateDate asc");
+        CONST_AVAILIABLE_SORTS.put("createdDown", "sysCreateDate desc");
+        CONST_AVAILIABLE_SORTS.put("istEndeUp", "istChildrenSumEnde asc");
+        CONST_AVAILIABLE_SORTS.put("istEndeDown", "istChildrenSumEnde desc");
+        CONST_AVAILIABLE_SORTS.put("istStartUp", "istChildrenSumStart asc");
+        CONST_AVAILIABLE_SORTS.put("istStartDown", "istChildrenSumStart desc");
+        CONST_AVAILIABLE_SORTS.put("lastChangeUp", "sysChangeDate asc");
+        CONST_AVAILIABLE_SORTS.put("lastChangeDown", "sysChangeDate desc");
+        CONST_AVAILIABLE_SORTS.put("nameUp", "name asc");
+        CONST_AVAILIABLE_SORTS.put("nameDown", "name desc");
+        CONST_AVAILIABLE_SORTS.put("nodeNumberUp", "metaNodePraefix asc, metaNodeNummer asc");
+        CONST_AVAILIABLE_SORTS.put("nodeNumberDown", "metaNodePraefix desc, metaNodeNummer desc");
+        CONST_AVAILIABLE_SORTS.put("planEndeUp", "planChildrenSumEnde asc");
+        CONST_AVAILIABLE_SORTS.put("planEndeDown", "planChildrenSumEnde desc");
+        CONST_AVAILIABLE_SORTS.put("planStartUp", "planChildrenSumStart asc");
+        CONST_AVAILIABLE_SORTS.put("planStartDown", "planChildrenSumStart desc");
+        CONST_AVAILIABLE_SORTS.put("typeUp", "type asc");
+        CONST_AVAILIABLE_SORTS.put("typeDown", "type desc");
+        CONST_AVAILIABLE_SORTS.put("workflowStateUp", "workflowState asc");
+        CONST_AVAILIABLE_SORTS.put("workflowStateDown", "workflowState desc");
+    }
     
     protected static BaseNodeDBService instance = new BaseNodeDBServiceImpl();
     
@@ -122,7 +148,7 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    protected TypedQuery createFulltextQuery(boolean flgCount, String fulltext) {
+    protected TypedQuery createFulltextQuery(boolean flgCount, String fulltext, String sortConfig) {
         // setup class
         Class resClass = BaseNode.class;
         if (flgCount)
@@ -156,14 +182,33 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
                 }
             }
         }
+
+        // setup sort
+        String sort = "";
+        if (sortConfig != null) {
+            sort = CONST_AVAILIABLE_SORTS.get(sortConfig);
+            if (sort != null) {
+                if (sort.length() > 0) {
+                    sort = sort + ", ";
+                }
+            } else {
+                throw new IllegalArgumentException("Unknown sort:" + sortConfig);
+            }
+        }
+        // setup order
+        String order = "asc";
+        
         // setup select
         String select = "SELECT o FROM BaseNode o"
                       + filter
-                      + " order by ebene asc, parent_node asc, sort_pos asc";
+                      + " order by " + sort 
+                      + " ebene " + order 
+                      + ", parent_node " + order 
+                      + ", sort_pos " + order;
         if (flgCount)
             select = "SELECT COUNT(o) FROM BaseNode o"
                    + filter;
-
+        
         // create query
         TypedQuery query = BaseNode.entityManager().createQuery(
                         select, resClass);
@@ -191,11 +236,12 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
      * <h4>FeatureKeywords:</h4>
      *     Persistence JPA
      * @param fulltext - fulltext to search in desc and name
+     * @param sortConfig - use sort
      * @return total of matching nodes
      */
     @SuppressWarnings("unchecked")
     public long countFulltextBaseNodes(String fulltext) {
-        TypedQuery<Long> query = (TypedQuery<Long>)this.createFulltextQuery(true, fulltext);
+        TypedQuery<Long> query = (TypedQuery<Long>)this.createFulltextQuery(true, fulltext, null);
         return query.getSingleResult();
     }
     
@@ -212,14 +258,15 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
      * <h4>FeatureKeywords:</h4>
      *     Persistence JPA
      * @param fulltext - fulltext to search in desc and name
-     * @param firstResult - resutrange for pagination
-     * @param maxResults - resutrange for pagination
+     * @param sortConfig - use sort
+     * @param firstResult - resultrange for pagination
+     * @param maxResults - resultrange for pagination
      * @return List of matching nodes
      */
     @SuppressWarnings("unchecked")
-    public List<BaseNode> findFulltextBaseNodeEntries(String fulltext, 
+    public List<BaseNode> findFulltextBaseNodeEntries(String fulltext, String sortConfig,
                     int firstResult, int maxResults) {
-        TypedQuery<BaseNode> query = (TypedQuery<BaseNode>)this.createFulltextQuery(false, fulltext);
+        TypedQuery<BaseNode> query = (TypedQuery<BaseNode>)this.createFulltextQuery(false, fulltext, sortConfig);
         query.setFirstResult(firstResult);
         query.setMaxResults(maxResults);
         
