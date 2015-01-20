@@ -348,7 +348,7 @@ ul.nodecommands {
     overflow: auto;
 }
 #wysiwhg-box {
-    width: 1200px;
+    width: 1180px;
     height: 650px;
 }
 
@@ -618,7 +618,7 @@ label {
 }
 /* extend width for nodeDesc */
 label[for="nodeDesc"] {
-    width: 170px;
+    width: 470px;
 }
 .inputtype_name {
     width: 500px;

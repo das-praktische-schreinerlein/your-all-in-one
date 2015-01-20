@@ -491,10 +491,10 @@ function togglePreWrap(element) {
              link = "<a href=\"#\" " +
                  " onClick=\"showPreviewForTextareaId('" +
                      forElement.attr('id') + "'); return false;" +
-                 "\" lang='tech' data-tooltip='tooltip.command.OpenPreview' class='icon-preview'></a>";
+                 "\" lang='tech' data-tooltip='tooltip.command.OpenPreview' class='button'>common.command.OpenPreview</a>";
              link += "<a href=\"#\" " +
              " onClick=\"showMarkdownHelp(); return false;" +
-             "\" lang='tech' data-tooltip='tooltip.command.OpenMarkdownHelp' class='icon-markdownhelp'></a>";
+             "\" lang='tech' data-tooltip='tooltip.command.OpenMarkdownHelp' class='button'>common.command.OpenMarkdownHelp</a>";
              
              // set flag
              $(label).attr("previewAdded", "true")
@@ -574,7 +574,7 @@ function togglePreWrap(element) {
              link = "<a href=\"#\" " +
                  " onClick=\"openWysiwhgForTextareaId('" +
                      forElement.attr('id') + "'); return false;" +
-                 "\" lang='tech' data-tooltip='tooltip.command.OpenWysiwygEditor' class='icon-wysiwyg'></a>";
+                 "\" lang='tech' data-tooltip='tooltip.command.OpenWysiwygEditor' class='button'>common.command.OpenWysiwygEditor</a>";
              
              // set flag
              $(label).attr("wysiwhgAdded", "true")

@@ -6,7 +6,7 @@ Hier finden Sie das Standardhilfesystem von D'Artagnan. Bitte nehmen Sie hier ke
 Damit Du nicht völlig von Funktionsumfang von D'Artagnan erschlagen wirst, gibt es auf den folgenden Seiten eine kleine Tour durch die Oberfläche und und D'Artagnans Fähigkeiten, Dich bei deiner Arbeit zu unterstützen.
 Wem es zu viel ist, der kann sich aber auch die kleinen Hilfstexte die sich hinter allen Links+Buttons in der Oberfläche verbergen informieren.
 
-![Hilfe](/examples/hilfe-screen-hilfe-tooltip.png "Hilfe")
+![Hilfe](/examples/help/hilfe-screen-hilfe-tooltip.png "Hilfe")
 
   ** INFO - Ende:                                                               [DocLayout: P,startmesg3,,X]                                                    
   ** **INFO - Grundaufbau**                                       [DocLayout: DIV,intro,Grundaufbau,]
@@ -49,7 +49,7 @@ Er setzt sich dabei aus folgenden 3 Bereichen zusammen.
 - **Daten/Aktionen am aktueller Knoten**
 - ** Baumansicht der Kindsknoten zum Navigieren und Bearbeiten**
 
-![Projektexplorer](/examples/hilfe-screen-projektexplorer-uebersicht.png "Übersicht Projektexplorer")
+![Projektexplorer](/examples/help/hilfe-screen-projektexplorer-uebersicht.png "Übersicht Projektexplorer")
 
 ### Aktueller Knoten - Daten/Aktionen
 In oberen Bereich des Fensters sehen Sie die Daten und verfügbaren Aktionen des aktuellen Knotens.
@@ -60,7 +60,7 @@ In oberen Bereich des Fensters sehen Sie die Daten und verfügbaren Aktionen des
 - falls eine Detailbeschreibung vorhanden ist, folgt ganz rechts das Icon um diese einzublenden (darüber übrigens das Icon um alle Detailbeschreibungen für alle Knoten auf der Seite ein/auszublenden)
 - darauf folgend rechts oben die verfügbaren Export/Import-Aktionen für den aktuellen Knoten - (diese werden später beschrieben)
 
-![Projektexplorer aktueller Knoten](/examples/hilfe-screen-aktueller-knoten.png "Projektexplorer aktueller Knoten")
+![Projektexplorer aktueller Knoten](/examples/help/hilfe-screen-aktueller-knoten.png "Projektexplorer aktueller Knoten")
 
 
 ### Projektexplorer Baumansicht Kindsknoten
@@ -79,14 +79,14 @@ Für jeden angezeigten Kindsknoten werden dabei folgende Daten+Aktionen zur Verf
   - Anlegen einer neuen Kindsknoten unter dieser Knoten
   - Anlegen eines Symlinks auf diese Knoten
   - Löschen dieser Knoten
-![Projektexplorer Kindsknoten Übersicht](/examples/hilfe-screen-kindsknoten-uebersicht.png "Projektexplorer Kindsknoten Übersicht")
+![Projektexplorer Kindsknoten Übersicht](/examples/help/hilfe-screen-kindsknoten-uebersicht.png "Projektexplorer Kindsknoten Übersicht")
 
 ## Suche
 Die Suche bietet ein einfaches Volltextsuchfeld über welches sich Titel, ID, Url und die Beschreibungsfelder durchsuchen lassen. Die Ergebnissliste wird mit 20 Knoten pro Seite dargestellt und lässt sich über die Seitennavigation durchlaufen.
 Wie beim Projektexplorer kann man sich eventuelle Detailbeschreibungen anshen und in die Gantt-Ansicht wechseln.
 Wurde der passende Knoten gefunden lässt sich dieser über den vorderen Navigationsbereich im Projektexplorer öffnen (mit dem Masterplan als Elternknoten) oder direkt fokussieren).
 
-![Suche Übersicht](/examples/hilfe-screen-suche-uebersicht.png "Suche Kindsknoten")
+![Suche Übersicht](/examples/help/hilfe-screen-suche-uebersicht.png "Suche Kindsknoten")
 
 ** INFO - Ende:                                                               [DocLayout: P,startmesg3,,X]                                                    
   ** **INFO - Funktionen**                                       [DocLayout: DIV,intro,Funktionen,]
@@ -106,11 +106,11 @@ Der Konten-Editor öffnet sich im rechten  Teil der Arbeitsfläche und schiebt d
 ### Anlegen
 Wurde der Knoten-Editor zum Anlegen eines neuen Knotens geöffnet, wählt man im oberen Teil den den Typ des neuen Knotens aus. Je nach Auswahl werden dann darunter die jeweiligen bearbeitbaren Eigenschaften des neuen Knotens angezeigt.
 
-![Knoten-Editor Knoten anlegen](/examples/hilfe-screen-knoteneditor-anlegen.png "Knoten-Editor Knoten anlegen")
+![Knoten-Editor Knoten anlegen](/examples/help/hilfe-screen-knoteneditor-anlegen.png "Knoten-Editor Knoten anlegen")
 
 ### Bearbeiten
 
-![Knoten-Editor Knoten bearbeiten](/examples/hilfe-screen-knoteneditor-bearbeiten.png "Knoten-Editor Knoten bearbeiten")
+![Knoten-Editor Knoten bearbeiten](/examples/help/hilfe-screen-knoteneditor-bearbeiten.png "Knoten-Editor Knoten bearbeiten")
 
 ## Knoten verschieben
 Möchte man einen Knoten im Baum verschieben, gibt es verschiedene Möglichkeiten
@@ -121,7 +121,7 @@ Möchte man einen Knoten im Baum verschieben, gibt es verschiedene Möglichkeite
   - den Knoten ziehen und über einem anderen Knoten loslassen
   - die Frage ob der Knoten verschoben werden soll mit ja beantworten
   - schon wird der Knoten als Kindsknoten an diesen Knoten verschoben
-![Knoten verschieben](/examples/hilfe-screen-verschieben-maus.png "Knoten verschieben")
+![Knoten verschieben](/examples/help/hilfe-screen-verschieben-maus.png "Knoten verschieben")
 - **mit der Maus verschieben**: hinter einen Knoten hängen
   - wie vorher, nur dass man kurz unterhalb des Knotens die Maus losläßt 
   - nun wird der Knoten hinter diesem Knoten in die Liste eingefügt
@@ -132,22 +132,22 @@ Möchte man einen Knoten im Baum verschieben, gibt es verschiedene Möglichkeite
 
 ## Drucken
 D'Artagnan bietet für den Druck 2 optimierte Druckversionen. Sie können sich z.B. den Projektexplorer so vorbereiten, dass alle Nodes die sie ausdrucken möchten geöffnet sind und auf Drucken klicken. 
-![Seite drucken](/examples/hilfe-screen-druck-form.png "Seite drucken")
+![Seite drucken](/examples/help/hilfe-screen-druck-form.png "Seite drucken")
 
 Wenn dabei die Checkbox "All" aktiviert ist, werden alle nicht relevanten Informationen ausgeblendet und der Druck für A4-Querformat optimiert.
-![Druckversion Querformat](/examples/hilfe-screen-druck-landscape.png "Druckversion Querformat")
+![Druckversion Querformat](/examples/help/hilfe-screen-druck-landscape.png "Druckversion Querformat")
 
 Wenn die Checkbox "All" nicht aktiviert ist, werden zusätzlich die Detailinformationen (Plan, Ist usw.) ausgeblendet und der Druck für A4-Hochformat optimiert.
-![Druckversion Hochformat](/examples/hilfe-screen-druck-portrait.png "Druckversion Hochformat")
+![Druckversion Hochformat](/examples/help/hilfe-screen-druck-portrait.png "Druckversion Hochformat")
 
 ## Gantt-Übersicht
 Wenn die Plan und Ist-Daten regelmäßig gepflegt sind, biete D'Artagnan eine vereinfachte Übersicht über die Projektzeitachse als Gantt-Diagramm. Dazu braucht man einfach nur den Button "Als Gantt-Diagramm anzeigen" betätigen.
 
-![Wechsel zur Gantt-Sicht](/examples/hilfe-screen-gantt-start.png "Wechsel zur Gantt-Sicht")
+![Wechsel zur Gantt-Sicht](/examples/help/hilfe-screen-gantt-start.png "Wechsel zur Gantt-Sicht")
 
 Nun wird die Projektzeitachse anhand von Balken visualisiert. Über die Navigation innerhalb der Kindsknoten lässt sich das Diagramm detaillieren. Im Seitenkopf kann zusätzlich der darzustellende Zeitbereich angepasst werden. Die Gantt-Sicht integriert sich natürlich vollständig in die Druckversion, so dass man die Diagramme auch ausdrucken kann.
 
-![Gantt-Sicht](/examples/hilfe-screen-gantt-sicht.png "Gantt-Sicht")
+![Gantt-Sicht](/examples/help/hilfe-screen-gantt-sicht.png "Gantt-Sicht")
 
 Aber **Achtung!!!** Die Gantt-Darstellung ist nur eine grobe Verteilung der Plan/Ist-Stunden auf den gesamten Plan/Ist-Zeitraum. Aufwende ohne Zeitraum werden erstmal den Eltern mit Plan/Ist-Datum zugerechnet bzw. wenn das Element ohne Datum sichtbar wird, überhaupt nicht eingerechnet! Aufwende der Kindsknoten werden über den gesamten Zeitraum des Elternknotens verteilt und können sich somit völlig verschieben! Also Plan+Ist am besten immer mit Datum pflegen, sonst gibt es in der Gantt-Sicht 'komische' Effekte ;-)
 
@@ -156,7 +156,7 @@ Die Suche bietet ein einfaches Volltextsuchfeld über welches sich Titel, ID, Ur
 Wie beim Projektexplorer kann man sich eventuelle Detailbeschreibungen ansehen und in die Gantt-Ansicht wechseln.
 Wurde der passende Knoten gefunden lässt sich dieser über den vorderen Navigationsbereich im Projektexplorer öffnen (mit dem Masterplan als Elternknoten) oder direkt fokussieren).
 
-![Suche Übersicht](/examples/hilfe-screen-suche-uebersicht.png "Suche Kindsknoten")
+![Suche Übersicht](/examples/help/hilfe-screen-suche-uebersicht.png "Suche Kindsknoten")
 
 ## Daten exportieren
 D'Artagnan bietet eine Vielzahl an Möglichkeiten die Daten in anderen Programmen weiterzubearbeiten bzw. in einer dem jeweiligen Zweck entsprechenden Form zu visualisieren.
@@ -169,23 +169,23 @@ D'Artagnan bietet eine Vielzahl an Möglichkeiten die Daten in anderen Programme
 - Csv: Export in eine Csv-Datei zur Weiterverarbeitung in Excel oder ähnlichem
 
 Dazu navigiert man bis zum Knoten dessen Projektbaum man exportieren möchte und klickt auf eine der Export-Funktionen. Nachdem man dann das Formular abgesendet hat, wird die Datei generiert und entweder zum Download angeboten oder in einem neuen Fenster geöffnet.
-![Export Formular](/examples/hilfe-screen-export-form.png "Export Formular")
+![Export Formular](/examples/help/hilfe-screen-export-form.png "Export Formular")
 
 Den Beispielexport eines Mindmaps welches dann mit Mindmapper, Freemind, Freeplane oder anderen geöffnet werden kann, sehen sie im folgenden Screenshot.
-![Export Formular](/examples/hilfe-screen-export-mindmap.png "Export Formular")
+![Export Formular](/examples/help/hilfe-screen-export-mindmap.png "Export Formular")
 
 ## Daten importieren
 Die mit dem D'Artagnan-Wiki-Export exportierten Daten kann man in einem beliebigen Editor bearbeiten und entweder im gleichen oder auch in anderen System wieder importieren. Dabei ist es wichtig bei den Export-Optionen auszuwählen, welche Daten erhalten bleiben und später wieder mit importiert werden sollen (z.B. Ist, Plan, Layout, Meta, System). Werden die Systemdaten mit exportiert, werden beim Import Datensätze mit gleichen IDS überschrieben (so funktioniert das Update der Startseite und des Hilfesystems). Dabei kann es aber zu Konflikten kommen, wenn diese Id's zu einem anderen Projekt gehören.
 
-![Import Wiki](/examples/hilfe-screen-import-wiki.png "Import Wiki")
+![Import Wiki](/examples/help/hilfe-screen-import-wiki.png "Import Wiki")
 
 Im Importformular wählt man die Datei aus, welche dann beim Import unterhalb des aktuellen Knotens als Kindsknoten eingefügt wird oder bei gleicher Id einen vorhanden Kindsknoten und dessen Projektbaum ersetzt .
 
-![Import Formular](/examples/hilfe-screen-import-form.png "Import Formular")
+![Import Formular](/examples/help/hilfe-screen-import-form.png "Import Formular")
 
 Bei erfolgreichem Import erfolgt nur eine kurze Meldung in einem neuen Browserfenster. Das aktuelle Fenster muss anschließend nur noch aktualisiert werden, um die importierten Knoten zu sehen.
 
-![Import Meldung](/examples/hilfe-screen-import-msg.png "Import Meldung")
+![Import Meldung](/examples/help/hilfe-screen-import-msg.png "Import Meldung")
 
 ## Templates benutzen
 Für regelmäßig wiederkehrende Aufgaben und Vorgänge (Backup, Urlaube, Projekte..) hat es sich bewährt ein abgeschlossenes Projekt nur mit Plan+Layout-Daten als Wiki-Datei zu exportieren und dieses dann etwas zu bearbeiten und verallgemeinern. Anschließend kann man diese Wiki-Datei als Projektvorlage einsetzen. Sie wird dann, wie oben beschrieben, importiert und innerhalb von D'Artagnan an die Gegebenheiten angepasst. So bleiben aber einmal erstellte Abläufe, Checklisten und Zeitaufwende erhalten. Man nutzt quasi seine Erfahrungen :-)

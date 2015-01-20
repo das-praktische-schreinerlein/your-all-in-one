@@ -9,31 +9,8 @@
   <link rel="stylesheet" type="text/css" media="all" href="css/reset.css" />
 
   <!-- jquery-ui -->
-  <link type="text/css" rel="stylesheet" href="../css/jqueryui//jquery-ui.css" />
-  <link rel="stylesheet" href="../css/jqueryui//jquery-ui-timepicker-addon.css">
   <script src="../js/jquery/jquery.min.js" type="text/javascript"></script>
-  <script src="../js/jqueryui/jquery-ui.min.js" type="text/javascript"></script>
-  <script src="../js/jqueryui/jquery.ui-contextmenu.min.js"></script>
-  <script src="../js/jqueryui/jquery-ui-i18n.min.js"></script>
-  <script src="../js/jqueryui/jquery-ui-sliderAccess.js"></script>
-  <script src="../js/jqueryui/jquery-ui-timepicker-addon.js"></script>
-  <script src="../js/jquery/jquery-lang.js" type="text/javascript"></script>
 
-  <!-- fancytree -->
-  <link href="../js/fancytree/skin-win8/ui.fancytree.css" rel="stylesheet" type="text/css">
-  <script src="../js/fancytree/jquery.fancytree.js" type="text/javascript"></script>
-  <script src="../js/fancytree/jquery.fancytree.dnd.js" type="text/javascript"></script>
-  <script src="../js/fancytree/jquery.fancytree.edit.js" type="text/javascript"></script>
-  <script src="../js/fancytree/jquery.fancytree.gridnav.js" type="text/javascript"></script>
-  <script src="../js/fancytree/jquery.fancytree.table.js" type="text/javascript"></script>
-
-  <!-- angularjs -->
-  <script src="../js/angularjs/angular.js"></script>
-  <script src="../js/angularjs/angular-animate.js"></script>
-  <script src="../js/angularjs/angular-route.js"></script>
-  <script src="../js/angularjs/angular-translate.js"></script>
-  <script src="../js/angularjs/angular-translate-loader-static-files.js"></script>
-  
   <!-- Markdown-Editor+Formatter -->
   <script src="../js/marked/marked.js "type="text/javascript"></script>
   <script src="../js/ace/ace.js" type="text/javascript"></script>
@@ -63,7 +40,7 @@
 <body>
     <div id="div_full" style="width: 100%">
                         
-    <div id="wysiwhg-box" class="hidden">
+    <div id="wysiwhg-box" class="">
       <pre id="wysiwhg-editor" class="container-wyswhg-editor"></pre>
       <div id="wysiwhg-preview" class="container-wysiwhg-preview"></div>
     </div>
@@ -75,7 +52,7 @@
 - Aufzählung Ebene 1
 
 ## Überschrift Ebene 2
-Das hier ist ganzt normaler Fließtext.
+Das hier ist ganz normaler Fließtext.
 
 ### Überschrift Ebene 3
 So kann man Code-Blöcke oder ähnliches einbinden.
@@ -86,7 +63,7 @@ Masterplan
         Startseite
 ```        
 
-Das schöne ist, dass ein automatiches Syntaxhighlighting erfolgt, wenn er die Sprache erkennt.
+Das schöne ist, dass ein automatisches Syntaxhighlighting erfolgt, wenn er die Sprache erkennt.
 ```
 <script type="text/javascript">
     // activate elements after 1 second
@@ -124,26 +101,15 @@ Und auch die Einbidung von Bildern ist ganz einfach möglich :-)
 <!-- Tooltip -->
 <script type="text/javascript">
 
-    // display css_dataonly-link
-    $("#link_css_dataonly").prop("disabled", true);
+     // create  Editor
+     var myParentId = "wysiwhg-editor";
+     var editor = createNodeDescEditorForNode(myParentId, "markdownExample")
 
-    // overload tooltip from title as seen on http://stackoverflow.com/questions/15734105/jquery-ui-tooltip-does-not-support-html-content
-    $("[data-tooltip]").each(function(i, e) {
-        var tag = $(e);
-        if (tag.is("[title]") === false) {
-            tag.attr("title", "");
-        }
-    });
+     var descText = $("#markdownExample").val();
+     var descHtmlMarked = formatMarkdown(descText, true);
 
-    $(document).tooltip({
-        items: "[data-tooltip]",
-        content: function () {
-            return $(this).attr("data-tooltip");
-        }
-    });
-    
-    
-    openWysiwhgForTextareaId('markdownExample');
+     // set preview-content
+     $( "#wysiwhg-preview" ).html(descHtmlMarked);
 </script>
 
 </body>
