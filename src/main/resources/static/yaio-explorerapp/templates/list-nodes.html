@@ -112,7 +112,7 @@
                       <div class="container_field fieldtype_additionaldata fieldtype_fromto field_planChildrenSum field_center" translate="fancytree.table.headline.planChildrenSum"> <br />Zeitraum</div>
                       <div class="container_field fieldtype_additionaldata fieldtype_descToggler toggler_show">
                          <br />
-                         <a lang="de" data-tooltip="Zeige die detaillierten Beschreibungen an." id="toggler_desc_all" onclick="toggleAllNodeDescContainer(); return false;" href="#" class="toggler_hidden"></a>
+                         <a lang="tech" data-tooltip='tooltip.command.ToggleDescAll' id="toggler_desc_all" onclick="toggleAllNodeDescContainer(); return false;" href="#" class="toggler_hidden"></a>
                       </div>
                     </div></th>
                   <th class="block_nodegantt">
@@ -128,6 +128,10 @@
                   <th>
                     <!-- show actions-header -->
                     <span translate="fancytree.table.headline.actions"></span>
+                    <br />
+                    <div class="fieldtype_sysToggler toggler_show">
+                      <a lang="tech" data-tooltip='tooltip.command.ToggleSysAll' id="toggler_sys_all" onclick="toggleAllNodeSysContainer(); return false;" href="#" class="toggler_hidden"></a>
+                    </div>
                   </th>
                 </tr>
               </thead>

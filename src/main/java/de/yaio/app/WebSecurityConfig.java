@@ -11,7 +11,12 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
+
+import de.yaio.rest.controller.CsrfHeaderFilter;
 
 /**
  * userservice-websecurity-config
@@ -25,79 +30,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public static String CONST_FILELOCATION_ADMINUSERS="yaio.security.adminusers.filelocation";
     
     /**
-     * configure Admin-Configuration
-     */
-    @EnableWebSecurity
-    @Configuration
-    @Order(1)
-    public static class AdminWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
-
-        @Autowired
-        public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-            Properties users = Configurator.readProperties(System.getProperty(CONST_FILELOCATION_ADMINUSERS));
-            InMemoryUserDetailsManager im = new InMemoryUserDetailsManager(users);
-            auth.userDetailsService(im);
-        }
-        
-        @Override
-        protected void configure(HttpSecurity http) throws Exception {
-            http
-                // authorize Requests
-                .authorizeRequests()
-                    // grant access to admin
-                    .antMatchers("/admin/**", "/manage/**")
-                        .authenticated()
-            .and()
-                // httpBasic-authentification
-                .httpBasic()
-             .and()
-               // disable csrf-protection
-               .csrf().disable()
-               // allow include as Frame for sameorigin
-               .headers().addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN));
-               ;
-            ;
-        }
-    }    
-
-    /**
-     * configure Static-Configuration
-     */
-    @EnableWebSecurity
-    @Configuration
-    @Order(2)
-    public static class StaticWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
-
-        @Override
-        protected void configure(HttpSecurity http) throws Exception {
-            http
-                // authorize Requests
-                .authorizeRequests()
-                    // free access to static data
-                    .antMatchers("/js/**", "/css/**", "/yaio-explorerapp/**", "/examples/**", "/tests/**")
-                        .permitAll()
-                 .and()
-                    .anonymous()
-                 .and()
-                    // httpBasic-authentification
-                    .httpBasic()
-                 .and()
-                   // disable csrf-protection
-                   .csrf().disable()
-                   // allow include as Frame for sameorigin
-                   .headers().addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN));
-                   ;
-            ;
-        }
-    }    
-
-    /**
      * configure API-Configuration
      */
     @EnableWebSecurity
     @Configuration
-    @Order(3)
+    @Order(1)
     public static class APIWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
+        private CsrfTokenRepository csrfTokenRepository() {
+          HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
+          repository.setHeaderName("X-XSRF-TOKEN");
+          return repository;
+        }        
 
         @Autowired
         public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -109,54 +52,33 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         @Override
         protected void configure(HttpSecurity http) throws Exception {
             http
-                // authorize Requests
-                .authorizeRequests()
-                    // grant access to api
-                    .antMatchers("/nodes/**", "/exports/**", "/imports/**")
-                        .permitAll()
+                    // authentification
+                    .formLogin()
+                        .defaultSuccessUrl("/yaio-explorerapp/yaio-explorerapp.html", true)
+                        // if set the defaultprocess doesnt match :-( loginPage(loginPage)
+                .and() 
+                    // authorize Requests
+                    .authorizeRequests()
+                        .antMatchers("/js/**", "/css/**", "/yaio-explorerapp/**", "/examples/**", "/tests/**", "/user/current", "/login", "/logout")
+                            .permitAll()
+                        .antMatchers("/admin/**", "/manage/**")
+                            .hasRole("SUPERUSER")
+                        .anyRequest()
+                            .permitAll()
+//                            .authenticated()
                  .and()
-                    .anonymous()
-                 .and()
-                    // httpBasic-authentification
-                    .httpBasic()
+                     // authentification
+                     .logout().permitAll()
                  .and()
                    // disable csrf-protection
                    .csrf().disable()
+                   //.csrf().csrfTokenRepository(csrfTokenRepository());
                    // allow include as Frame for sameorigin
-                   .headers().addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN));
+                   .headers().addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))
+//                 .and()
+//                   // add CsrfHeaderFilter because angular uses another Header
+//                   .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class);
             ;
         }
     }    
-
-    /**
-     * configure Default-Configuration
-     */
-    @EnableWebSecurity
-    @Configuration
-    @Order(4)
-    public static class DefaultWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
-
-        @Override
-        protected void configure(HttpSecurity http) throws Exception {
-            http
-                // authorize Requests
-                .authorizeRequests()
-                    // secure all other
-                    .anyRequest()
-//                        .authenticated()
-                        .permitAll()
-                 .and()
-                    .anonymous()
-                 .and()
-                    // httpBasic-authentification
-                    .httpBasic()
-                 .and()
-                   // disable csrf-protection
-                   .csrf().disable()
-                   // allow include as Frame for sameorigin
-                   .headers().addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN));
-                   ;
-        }
-    }    
-
 }

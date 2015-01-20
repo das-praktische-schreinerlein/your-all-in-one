@@ -367,6 +367,44 @@ function togglePreWrap(element) {
   * <h4>FeatureDomain:</h4>
   *     Layout Toggler
   * <h4>FeatureDescription:</h4>
+  *     Toggle the "#detail_sys_" for the specified id with a slide. 
+  * <h4>FeatureResult:</h4>
+  *   <ul>
+  *     <li>Updates DOM
+  *   </ul> 
+  * <h4>FeatureKeywords:</h4>
+  *     GUI Tree Rendering
+  * @param id - sysUID of the node 
+  */
+ function toggleNodeSysContainer(id) {
+     $("#detail_sys_" + id).slideToggle(1000,function() {
+         // show/hide toggler
+         if ($("#detail_sys_" + id).css("display") == "block") {
+             // desc is now shown
+             $("#toggler_sys_" + id).addClass('toggler_show').removeClass('toggler_hidden');
+         } else {
+             // desc is now hidden
+             $("#toggler_sys_" + id).addClass('toggler_hidden').removeClass('toggler_show');
+         }
+     });
+ }
+
+ function toggleAllNodeSysContainer() {
+     if ($("#toggler_sys_all").hasClass('toggler_hidden')) {
+         // show all sys
+         $("div.field_nodeSys").slideDown(1000);
+         $("div.fieldtype_sysToggler > a").addClass('toggler_show').removeClass('toggler_hidden');
+     } else {
+         // hide all desc
+         $("div.field_nodeSys").slideUp(1000);
+         $("div.fieldtype_sysToggler > a").addClass('toggler_hidden').removeClass('toggler_show');
+     }
+ }
+
+ /**
+  * <h4>FeatureDomain:</h4>
+  *     Layout Toggler
+  * <h4>FeatureDescription:</h4>
   *     Toggle the specified ojects with a drop. 
   * <h4>FeatureResult:</h4>
   *   <ul>

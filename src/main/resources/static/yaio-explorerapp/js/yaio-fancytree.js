@@ -814,6 +814,31 @@ function renderDataBlock(basenode, fancynode) {
         yaioLoadSymLinkData(basenode, fancynode);
     } 
 
+    // create sys row
+    var $row = $("<div class='togglecontainer field_nodeSys' id='detail_sys_" + basenode.sysUID + "' />");
+    $table.append($row);
+    $row.append(
+            $("<div lang='tech' />").html("Stand: " + formatGermanDateTime(basenode.sysChangeDate))
+                    .addClass("container_field")
+                    .addClass("fieldtype_basedata")
+                    .addClass("fieldtype_sysChangeDate")
+                    .addClass("field_sysChangeDate")
+                    );
+    $row.append(
+            $("<div lang='tech' />").html(" (V " + basenode.sysChangeCount + ")")
+                    .addClass("container_field")
+                    .addClass("fieldtype_basedata")
+                    .addClass("fieldtype_sysChangeCount")
+                    .addClass("field_sysChangeCount")
+                    );
+    $row.append(
+            $("<div lang='tech' />").html("angelegt: " + formatGermanDateTime(basenode.sysCreateDate))
+                    .addClass("container_field")
+                    .addClass("fieldtype_basedata")
+                    .addClass("fieldtype_sysCreateDate")
+                    .addClass("field_sysCreateDate")
+                    ); 
+    
     console.log("renderDataBlock DONE: " + msg);
 
     return $table;
@@ -1108,7 +1133,13 @@ function renderColumnsForNode(event, data) {
     
     // add fields
     $tdList.eq(colActions).html(
-            "<a onclick=\"javascript: yaioOpenNodeEditor('" + basenode.sysUID + "', 'edit'); return false;\""
+            "<div class='fieldtype_sysToggler toggler_show'>"
+                + "<a onclick=\"javascript: toggleNodeSysContainer('" + basenode.sysUID + "'); return false;\""
+                        + " id='toggler_sys_" + basenode.sysUID + "'"
+                        + " class='' "
+                        + " data-tooltip='tooltip.command.ToggleSys' lang='tech'></a>"
+                + "</div>"
+            + "<a onclick=\"javascript: yaioOpenNodeEditor('" + basenode.sysUID + "', 'edit'); return false;\""
                     + " id='cmdEdit" + basenode.sysUID + "'"
                     + " class='yaio-icon-edit'"
                     + " data-tooltip='Bearbeite die Daten'></a>"
@@ -1244,9 +1275,12 @@ function renderColumnsForNode(event, data) {
         $tdList.eq(colData).css("display", "none");
     }
     
+    // toogle sys
+    toggleNodeSysContainer(basenode.sysUID);
+    
     // toogle desc
     toggleNodeDescContainer(basenode.sysUID);
-    
+
     // calc nodeData
     yaioRecalcMasterGanttBlockFromTree();
 };

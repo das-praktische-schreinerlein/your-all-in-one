@@ -431,6 +431,15 @@ ul.nodecommands {
     font-size: 11px;
     line-height: 1.42857;
 }
+.field_nodeSys {
+    text-align: left;
+    overflow-x:auto;
+    left: -420px;
+    position: relative;
+    width: 1000px; /*  orig: 550px; */
+    font-size: 11px;
+    line-height: 1.42857;
+}
 .field_center {
    text-align: center; !IMPORTANT
 }
@@ -479,6 +488,9 @@ ul.nodecommands {
 }
 .fieldtype_descToggler {
    float: right;
+}
+.fieldtype_sysToggler {
+    display: inline-block;
 }
 table.fancytree-ext-table tbody tr.fancytree-active, 
 table.fancytree-ext-table.fancytree-treefocus tbody tr.fancytree-active {
