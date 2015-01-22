@@ -814,31 +814,6 @@ function renderDataBlock(basenode, fancynode) {
         yaioLoadSymLinkData(basenode, fancynode);
     } 
 
-    // create sys row
-    var $row = $("<div class='togglecontainer field_nodeSys' id='detail_sys_" + basenode.sysUID + "' />");
-    $table.append($row);
-    $row.append(
-            $("<div lang='tech' />").html("Stand: " + formatGermanDateTime(basenode.sysChangeDate))
-                    .addClass("container_field")
-                    .addClass("fieldtype_basedata")
-                    .addClass("fieldtype_sysChangeDate")
-                    .addClass("field_sysChangeDate")
-                    );
-    $row.append(
-            $("<div lang='tech' />").html(" (V " + basenode.sysChangeCount + ")")
-                    .addClass("container_field")
-                    .addClass("fieldtype_basedata")
-                    .addClass("fieldtype_sysChangeCount")
-                    .addClass("field_sysChangeCount")
-                    );
-    $row.append(
-            $("<div lang='tech' />").html("angelegt: " + formatGermanDateTime(basenode.sysCreateDate))
-                    .addClass("container_field")
-                    .addClass("fieldtype_basedata")
-                    .addClass("fieldtype_sysCreateDate")
-                    .addClass("field_sysCreateDate")
-                    ); 
-    
     console.log("renderDataBlock DONE: " + msg);
 
     return $table;
@@ -1204,6 +1179,32 @@ function renderColumnsForNode(event, data) {
     
     // render datablock
     var $nodeDataBlock = renderDataBlock(basenode, node);
+    
+    // add SysData
+    // create sys row
+    var $row = $("<div class='togglecontainer field_nodeSys' id='detail_sys_" + basenode.sysUID + "' />");
+    $nodeDataBlock.append($row);
+    $row.append(
+            $("<div lang='tech' />").html("Stand: " + formatGermanDateTime(basenode.sysChangeDate))
+                    .addClass("container_field")
+                    .addClass("fieldtype_basedata")
+                    .addClass("fieldtype_sysChangeDate")
+                    .addClass("field_sysChangeDate")
+                    );
+    $row.append(
+            $("<div lang='tech' />").html(" (V " + basenode.sysChangeCount + ")")
+                    .addClass("container_field")
+                    .addClass("fieldtype_basedata")
+                    .addClass("fieldtype_sysChangeCount")
+                    .addClass("field_sysChangeCount")
+                    );
+    $row.append(
+            $("<div lang='tech' />").html("angelegt: " + formatGermanDateTime(basenode.sysCreateDate))
+                    .addClass("container_field")
+                    .addClass("fieldtype_basedata")
+                    .addClass("fieldtype_sysCreateDate")
+                    .addClass("field_sysCreateDate")
+                    ); 
 
     // add nodeDesc if set
     if (basenode.nodeDesc != "" && basenode.nodeDesc != null) {
@@ -1226,14 +1227,23 @@ function renderColumnsForNode(event, data) {
         var $divDesc = $("<div class='togglecontainer' id='detail_desc_" + basenode.sysUID + "' />");
         $divDesc.addClass("field_nodeDesc");
 
-        $divDesc.append("<div class='container-commands-desc' id='commands_desc_" + basenode.sysUID + "'"
-                        + "data-tooltip='tooltip.command.TogglePreWrap' lang='tech' >" 
-                        + "<input type='checkbox' id='cmd_toggle_content_desc_" + basenode.sysUID + "' onclick=\"togglePreWrap('#content_desc_" + basenode.sysUID + "');togglePreWrap('#container_content_desc_" + basenode.sysUID + "'); return true;\">"
-                        + "<span lang='tech'>im Originallayout anzeigen</span>"
-//                        + "<input type='checkbox' id='cmd_toggle_content_desc_markdown_" + basenode.sysUID + "' onclick=\"toggleDescMarkdown('#container_content_desc_" + basenode.sysUID + "'); return true;\">"
-//                        + "<span lang='tech'>Markdown</span>"
-                        + "</div>"
-                        + "<br />");
+        // add commands
+        var commands = "<div class='container-commands-desc' id='commands_desc_" + basenode.sysUID + "'"
+            + "data-tooltip='tooltip.command.TogglePreWrap' lang='tech' >" 
+            + "<input type='checkbox' id='cmd_toggle_content_desc_" + basenode.sysUID + "' onclick=\"togglePreWrap('#content_desc_" + basenode.sysUID + "');togglePreWrap('#container_content_desc_" + basenode.sysUID + "'); return true;\">"
+            + "<span lang='tech'>im Originallayout anzeigen</span>"
+    //        + "<input type='checkbox' id='cmd_toggle_content_desc_markdown_" + basenode.sysUID + "' onclick=\"toggleDescMarkdown('#container_content_desc_" + basenode.sysUID + "'); return true;\">"
+    //        + "<span lang='tech'>Markdown</span>"
+            ;
+        if ('speechSynthesis' in window) {
+            // Synthesis support. Make your web apps talk!
+            commands += "<a class=\"button\" onClick=\"openSpeechSynthWindow(" 
+                +   "document.getElementById('container_content_desc_" + basenode.sysUID + "')); return false;" 
+                +   "\" lang='tech' data-tooltip='tooltip.command.OpenSpeechSynth'>common.command.OpenSpeechSynth</a>";
+ 
+           }        
+        commands += "</div>";
+        $divDesc.append(commands);
         
         // append content
         var descText = basenode.nodeDesc;

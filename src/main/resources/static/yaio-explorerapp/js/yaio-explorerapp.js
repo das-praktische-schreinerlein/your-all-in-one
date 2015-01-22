@@ -90,6 +90,9 @@ yaioM.config(function($routeProvider) {
         .when('/search/', { 
             controller:  'NodeSearchCtrl',
             templateUrl: 'templates/list-nodes.html' })
+        .when('/login', {
+            controller : 'AuthController',
+            templateUrl: 'templates/login.html' })
         .when('/', { 
             controller:  'FrontPageCtrl',
             templateUrl: 'templates/frontpage.html' })
@@ -176,13 +179,75 @@ yaioM.directive('state', function(){
  * <h4>FeatureKeywords:</h4>
  *     GUI Configuration
  */
-yaioM.controller('FrontPageCtrl', function($scope, $location, $http, $routeParams, setFormErrors, OutputOptionsEditor) {
+yaioM.controller('AuthController', function($rootScope, $scope, $location, $http, $routeParams, setFormErrors, OutputOptionsEditor) {
+    // define authentificate
+    var authenticate = function(callback) {
+        $http.get('/user/current').success(function(data) {
+            if (data.name) {
+                $rootScope.authenticated = true;
+            } else {
+                $rootScope.authenticated = false;
+            }
+            callback && callback();
+        }).error(function() {
+            $rootScope.authenticated = false;
+            callback && callback();
+        });
+
+    }
+
+    // call authentificate 
+    authenticate();
+    
+    $scope.credentials = {};
+    $scope.login = function() {
+        $http.post('/login', $.param($scope.credentials), {
+            headers : {
+                "content-type" : "application/x-www-form-urlencoded"
+            }
+        }).success(function(data) {
+            authenticate(function() {
+                if ($rootScope.authenticated) {
+                    $location.path("/");
+                    $scope.error = false;
+                } else {
+                    $location.path("/login");
+                    $scope.error = true;
+                }
+            });
+        }).error(function(data) {
+            $location.path("/login");
+            $scope.error = true;
+            $rootScope.authenticated = false;
+        })
+    };
+    
+    $scope.logout = function() {
+        $http.post('/logout', {}).success(function() {
+            $rootScope.authenticated = false;
+            $location.path("/");
+        }).error(function(data) {
+            $rootScope.authenticated = false;
+        });
+    }    
+})
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Configuration
+ * <h4>FeatureDescription:</h4>
+ *     the controller to load the frontpage
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>returns new controller
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Configuration
+ */
+yaioM.controller('FrontPageCtrl', function($rootScope, $scope, $location, $http, $routeParams, setFormErrors, OutputOptionsEditor) {
     var nodeId = 'SysStart1';
     console.log("FrontPageCtrl - processing nodeId=" + nodeId);
 
-    // load data
-    $scope.frontPageUrl = '/exports/htmllayoutfragment/' + nodeId;
-    
     /**
      * <h4>FeatureDomain:</h4>
      *     Help
@@ -202,6 +267,31 @@ yaioM.controller('FrontPageCtrl', function($scope, $location, $http, $routeParam
         return false;
     }
 
+    var authenticate = function(callback) {
+      $http.get('/user/current').success(function(data) {
+          if (data.name) {
+              $rootScope.authenticated = true;
+          } else {
+              $rootScope.authenticated = false;
+          }
+          callback && callback();
+      }).error(function() {
+          $rootScope.authenticated = false;
+          callback && callback();
+      });
+    }
+
+    // call authentificate 
+    authenticate(function () {
+        // check authentification
+        if (! $rootScope.authenticated) {
+            $location.path("/login");
+            $scope.error = false;
+        } else {
+            // load data
+            $scope.frontPageUrl = '/exports/htmllayoutfragment/' + nodeId;
+        }
+    });
 })
     
 /**
@@ -216,7 +306,7 @@ yaioM.controller('FrontPageCtrl', function($scope, $location, $http, $routeParam
  * <h4>FeatureKeywords:</h4>
  *     GUI Configuration BusinessLogic
  */
-yaioM.controller('NodeSearchCtrl', function($scope, $location, $http, $routeParams, setFormErrors) {
+yaioM.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $http, $routeParams, setFormErrors) {
 
     // create search
     $scope.nodes = new Array();
@@ -435,6 +525,11 @@ yaioM.controller('NodeSearchCtrl', function($scope, $location, $http, $routePara
     // do Search
     $scope.doFulltextSearch();
 
+    // check authentification
+    if (! $rootScope.authenticated) {
+        $location.path("/login");
+        $scope.error = false;
+    }
 });    
     
 
@@ -450,7 +545,7 @@ yaioM.controller('NodeSearchCtrl', function($scope, $location, $http, $routePara
  * <h4>FeatureKeywords:</h4>
  *     GUI Configuration BusinessLogic
  */
-yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams, setFormErrors, OutputOptionsEditor) {
+yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, $routeParams, setFormErrors, OutputOptionsEditor) {
 
     // register pattern
     $scope.CONST_PATTERN_CSSCLASS  = yaioM.CONST_PATTERN_CSSCLASS ;
@@ -1029,6 +1124,12 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
         yaioRecalcFancytreeGanttBlocks();
         yaioRecalcMasterGanttBlock($scope.node);
     }
+    
+    // check authentification
+    if (! $rootScope.authenticated) {
+        $location.path("/login");
+        $scope.error = false;
+    }
 });
 
 
@@ -1203,17 +1304,13 @@ yaioM.factory('OutputOptionsEditor', function($http) {
  * <h4>FeatureKeywords:</h4>
  *     GUI Configuration BusinessLogic
  */
-yaioM.controller('OutputOptionsCtrl', function($scope, $location, $http, $routeParams, setFormErrors, OutputOptionsEditor) {
-
-    
+yaioM.controller('OutputOptionsCtrl', function($rootScope, $scope, $location, $http, $routeParams, setFormErrors, OutputOptionsEditor) {
     // register the editor
     $scope.outputOptionsEditor = OutputOptionsEditor;
     // create options
     $scope.oOptions = $scope.outputOptionsEditor.oOptions;
     
     console.log("OutputOptionsCtrl - started");
-
-
 });
 
 /***************************************

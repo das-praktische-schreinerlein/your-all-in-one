@@ -13,6 +13,8 @@
            <li class="command" data-tooltip='tooltip.command.Print' lang="tech">
               <a onclick="window.print(); return true;" class="button" translate="common.command.Print">Print</a>
               <input type="checkbox" onclick="togglePrintLayout()" checked id="checkboxPrintAll"> All</li>
+           <li class="command" data-tooltip='tooltip.command.Logout' lang="tech" id="logout">
+              <a href="/logout" class="button" translate="common.command.Logout">Logout</a></li>
         </ul>
       </div>
   </div>
@@ -966,6 +968,7 @@
     setTimeout(function() { 
         // activate speech recognition and others
         addSpeechRecognitionToElements();
+        addSpeechSynthToElements();
         addPreviewToElements();
         addWysiwhgToElements();
         addDatePickerToElements();

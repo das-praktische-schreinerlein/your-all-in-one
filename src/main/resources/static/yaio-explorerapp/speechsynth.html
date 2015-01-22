@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Sprachsynthese</title>
+  <script src="../js/jquery/jquery.min.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="../css/yaio/main.css">
+  <link rel="stylesheet" href="../css/yaio/style.css">
+
+<style>
+#info {
+    font-size: 16px;
+}
+
+#div_start {
+    float: right;
+}
+
+#results {
+    font-size: 14px;
+    font-weight: bold;
+    border: 1px solid #ddd;
+    padding: 15px;
+    text-align: left;
+    min-height: 150px;
+}
+
+#start_button {
+    border: 0;
+    background-color: transparent;
+    padding: 0;
+}
+
+.interim {
+    width: 100%;
+    color: gray;
+    clear: both;
+    padding-top: 3px;
+}
+
+.final {
+    width: 100%;
+    clear: both;
+    color: black;
+    padding-top: 3px;
+}
+
+.button {
+    display: none;
+}
+</style>
+<style>
+a.c1 {
+    font-weight: normal;
+}
+</style>
+
+</head>
+<body>
+    <div class="blockContent" id="blockContent">
+        <div class="content" id="content">
+            <div class="txt-content" id="txt-content">
+                <div class="box">
+                    <div id="info">
+                    </div>
+                    <div id="results">
+                        <span class="interim" id="interim_span"></span>
+                        <textarea class="final" id="final_textarea"
+                            cols="30" rows="5"></textarea>
+                    </div>
+                    <input type="button" value="Start" onclick="startSpeech()">
+                    <input type="button" value="Schliessen" onclick="stopSpeech();window.close()">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    // inspired by http://stackoverflow.com/questions/21947730/chrome-speech-synthesis-with-longer-texts
+    var voices = window.speechSynthesis.getVoices();
+
+    var sayit = function () {
+        var msg = new SpeechSynthesisUtterance();
+
+        msg.voice = voices[10]; // Note: some voices don't support altering params
+        msg.voiceURI = 'native';
+        msg.volume = 1; // 0 to 1
+        msg.rate = 1; // 0.1 to 10
+        msg.pitch = 2; //0 to 2
+        msg.lang = 'de-DE';
+        msg.onstart = function (event) {
+            console.log("started:" + msg.text);
+        };
+        msg.onend = function(event) {
+            console.log('Finished in ' + event.elapsedTime + ' seconds.');
+        };
+        msg.onerror = function(event) {
+            console.log('Errored ' + event);
+        }
+        msg.onpause = function (event) {
+            console.log('paused ' + event);
+        }
+        msg.onboundary = function (event) {
+            console.log('onboundary ' + event);
+        }
+
+        return msg;
+    }
+
+    var speekResponse = function (text, splitterStr, ebene) {
+        // split sentectes
+        var sentences = text.split(splitterStr.substr(ebene,1));
+        for (var i=0;i< sentences.length;i++) {
+            var toSay = sayit();
+            if (sentences[i].length > 100) {
+                speekResponse(sentences[i], splitterStr, ebene+1);
+            } else {
+                toSay.text = sentences[i];
+                window.speechSynthesis.speak(toSay);
+            }
+        }
+    }
+
+    function getSrcFromOpener() {
+        // Text vom Opener holen
+        if (opener && opener.targetElement) {
+            final_textarea.value = $(opener.targetElement).text();
+            if (! final_textarea.value) {
+                final_textarea.value = $(opener.targetElement).val();
+            }
+        }
+    }
+    
+    function stopSpeech() {
+        for (var i=1; i < 100; i++) {
+            window.speechSynthesis.cancel(); // if it errors, this clears out the error.
+        }
+    }
+
+    function startSpeech() {
+        for (var i=1; i < 100; i++) {
+            window.speechSynthesis.cancel(); // if it errors, this clears out the error.
+        }
+        speekResponse(final_textarea.value, ".?!,:\n", 0);
+    }
+    window.onbeforeunload = function (e) {
+        stopSpeech();
+    };
+
+    // init
+    getSrcFromOpener();
+</script>
+</body>
+</html>

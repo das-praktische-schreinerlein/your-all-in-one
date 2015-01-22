@@ -44,7 +44,7 @@
  *     GUI Editor SpeechRecognition
  */
 function addSpeechRecognitionToElements() {
-    // add speechrecognitionif availiable
+    // add speechrecognition if availiable
     if (('webkitSpeechRecognition' in window)) {
         // add speechrecognition to nodeDesc+name
         $("label[for='nodeDesc'], label[for='name']").append(function (idx) {
@@ -102,6 +102,78 @@ function openSpeechRecognitionWindow(target) {
     if (speechrecognitionWindow.opener == null) { speechrecognitionWindow.opener = self; }
     speechrecognitionWindow.opener.targetElement = target;
 }
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     GUI
+ * <h4>FeatureDescription:</h4>
+ *     add speechSynth to nodeDesc-Label if availiable<br>
+ *     set the flg speechSynthAdded on the element, so that there is no doubling
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>GUI-result: add speechSynth to elements
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Editor SpeechSynth
+ */
+function addSpeechSynthToElements() {
+    // add speechSynth if availiable
+    if (('speechSynthesis' in window)) {
+        // add speechrecognition to nodeDesc+name
+        $("label[for='nodeDesc']").append(function (idx) {
+            var link = "";
+            var label = this;
+            
+            // check if already set
+            if ($(label).attr("speechSynthAdded")) {
+                console.error("addSpeechSynthToElements: SKIP because already added: " + $(label).attr("for"));
+                return link;
+            }
+
+            // get corresponding form
+            var forName = $(label).attr("for");
+            var form = $(label).closest("form");
+            
+            // get for-element byName from form
+            var forElement = form.find("[name="+ forName + "]").first();
+            if (forElement.length > 0) {
+                // define link to label
+                link = "<a href=\"\" class=\"button\"" +
+                       " onClick=\"openSpeechSynthWindow(" +
+                        "document.getElementById('" + forElement.attr('id') + "')); return false;" +
+                       "\" lang='tech' data-tooltip='tooltip.command.OpenSpeechSynth' class='button'>common.command.OpenSpeechSynth</a>";
+                
+                // set flag
+                $(label).attr("speechSynthAdded", "true")
+                console.log("addSpeechSynthToElements: add : " + forName + " for " + forElement.attr('id'));
+            }
+            return link;
+        });
+    }
+}
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     GUI
+ * <h4>FeatureDescription:</h4>
+ *     open speechsynth for element
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>GUI-result: open speechsynth for element
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Editor SpeechSynth
+ * @param target - target-element to update (HTML-Element)
+ */
+function openSpeechSynthWindow(target) {
+    if (target == null) target = self;
+    target.focus();
+    var speechsynthWindow = window.open('speechsynth.html', "speechsynth", "width=690,height=350,resizable=yes,dependent=yes,scrollbars=yes");
+    speechsynthWindow.focus();
+    if (speechsynthWindow.opener == null) { speechsynthWindow.opener = self; }
+    speechsynthWindow.opener.targetElement = target;
+}
+
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -527,12 +599,12 @@ function togglePreWrap(element) {
          if (forElement.length > 0) {
              // define link to label
              link = "<a href=\"#\" " +
-                 " onClick=\"showPreviewForTextareaId('" +
-                     forElement.attr('id') + "'); return false;" +
-                 "\" lang='tech' data-tooltip='tooltip.command.OpenPreview' class='button'>common.command.OpenPreview</a>";
+                    " onClick=\"showPreviewForTextareaId('" +
+                       forElement.attr('id') + "'); return false;" +
+                    "\" lang='tech' data-tooltip='tooltip.command.OpenPreview' class='button'>common.command.OpenPreview</a>";
              link += "<a href=\"#\" " +
-             " onClick=\"showMarkdownHelp(); return false;" +
-             "\" lang='tech' data-tooltip='tooltip.command.OpenMarkdownHelp' class='button'>common.command.OpenMarkdownHelp</a>";
+                     " onClick=\"showMarkdownHelp(); return false;" +
+                     "\" lang='tech' data-tooltip='tooltip.command.OpenMarkdownHelp' class='button'>common.command.OpenMarkdownHelp</a>";
              
              // set flag
              $(label).attr("previewAdded", "true")

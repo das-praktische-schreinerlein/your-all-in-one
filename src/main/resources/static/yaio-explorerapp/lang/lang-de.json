@@ -10,6 +10,7 @@
     "common.command.ExportMindmap": "Mindmap",
     "common.command.ExportCsv": "Csv",
     "common.command.Import": "Wiki-Import",
+    "common.command.Logout": "Logout",
     "common.command.OpenFrontpage": "Zur Startseite",
     "common.command.OpenHelp": "Hilfe?",
     "common.command.OpenInfo": "Infos?",
