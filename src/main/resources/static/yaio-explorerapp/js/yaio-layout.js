@@ -634,6 +634,9 @@ function togglePreWrap(element) {
          buttons: {
            Ok: function() {
              $( this ).dialog( "close" );
+           },
+           "Vorlesen": function () {
+               openSpeechSynthWindow(document.getElementById('preview-content'));
            }
          }
      });    
@@ -655,7 +658,7 @@ function togglePreWrap(element) {
                  var helpFenster = window.open(url, "markdownhelp", "width=1200,height=500,scrollbars=yes,resizable=yes");
                  helpFenster.focus();
                  $( this ).dialog( "close" );
-               }
+             } 
          }
      });    
  }
@@ -756,6 +759,9 @@ function togglePreWrap(element) {
              $( this ).dialog( "close" );
              console.log("openWysiwhgForTextareaId: clearMyInterval : " + intervallHandler + " for " + myParentId);
              clearInterval(intervallHandler)
+           },
+           "Vorlesen": function () {
+               openSpeechSynthWindow(document.getElementById('wysiwhg-preview'));
            }
          }
      });    

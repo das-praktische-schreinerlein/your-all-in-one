@@ -25,29 +25,17 @@
     text-align: left;
     min-height: 150px;
 }
-
-#start_button {
-    border: 0;
-    background-color: transparent;
-    padding: 0;
-}
-
-.interim {
-    width: 100%;
-    color: gray;
-    clear: both;
-    padding-top: 3px;
-}
-
 .final {
     width: 100%;
     clear: both;
     color: black;
     padding-top: 3px;
 }
-
 .button {
     display: none;
+}
+input[type="number"] {
+    width: 30px;
 }
 </style>
 <style>
@@ -69,26 +57,61 @@ a.c1 {
                         <textarea class="final" id="final_textarea"
                             cols="30" rows="5"></textarea>
                     </div>
-                    <input type="button" value="Start" onclick="startSpeech()">
-                    <input type="button" value="Schliessen" onclick="stopSpeech();window.close()">
+
+                      <label for="voice">Voice:</label>
+                      <select id="voice"> </select>
+                      <label for="rate">Rate (0.1 - 10):</label>
+                      <input type="number" id="rate" min="0.1" max="10" value="1" step="0.1" />
+                      <label for="pitch">Pitch (0.1 - 2):</label>
+                      <input type="number" id="pitch" min="0.1" max="2" value="1" step="0.1" />
+                      <br />
+                      <button id="button-speak-ss" class="" onclick="startSpeech()">Start</button>
+                      <button id="button-pause-ss" class="" onclick="pauseSpeech()">Pause</button>
+                      <button id="button-resume-ss" class="" onclick="resumeSpeech()">Fortfahren</button>
+                      <button id="button-stop-ss" class="" onclick="stopSpeech();window.close()">Schlieﬂen</button>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
+    // inspired by http://www.sitepoint.com/talking-web-pages-and-the-speech-synthesis-api/
+    // init voice config
+    var voices = document.getElementById('voice');
+    var rate = document.getElementById('rate');
+    var pitch = document.getElementById('pitch');
+    // Workaround for a Chrome issue (#340160 - https://code.google.com/p/chromium/issues/detail?id=340160)
+    var watch = setInterval(function() {
+        // Load all voices available
+        var voicesAvailable = speechSynthesis.getVoices();
+        if (voicesAvailable.length !== 0) {
+            for(var i = 0; i < voicesAvailable.length; i++) {
+                var selected = "";
+                if (voicesAvailable[i].lang == "de-DE") {
+                    selected = " selected ";
+                }
+                voices.innerHTML += '<option value="' + voicesAvailable[i].lang + '"' +
+                                    'data-voice-uri="' + voicesAvailable[i].voiceURI + '"' + selected + '>' +
+                                    voicesAvailable[i].name +
+                                    (voicesAvailable[i].default ? ' (default)' : '') + '</option>';
+            }
+          clearInterval(watch);
+        }
+    }, 1);
+    
     // inspired by http://stackoverflow.com/questions/21947730/chrome-speech-synthesis-with-longer-texts
-    var voices = window.speechSynthesis.getVoices();
+    var splitChars = "\n?!:;,.";
+    var splitWords = [" und ", " oder ", " aber ", " dabei ", " bis ", " "];
 
     var sayit = function () {
         var msg = new SpeechSynthesisUtterance();
-
-        msg.voice = voices[10]; // Note: some voices don't support altering params
+        var selectedVoice = voices.options[voices.selectedIndex];
+        msg.voice = selectedVoice.getAttribute('data-voice-uri'); // Note: some voices don't support altering params
         msg.voiceURI = 'native';
+        msg.lang = selectedVoice.value;
         msg.volume = 1; // 0 to 1
-        msg.rate = 1; // 0.1 to 10
-        msg.pitch = 2; //0 to 2
-        msg.lang = 'de-DE';
+        msg.rate = rate.value; // 0.1 to 10
+        msg.pitch = pitch.value; //0 to 2
         msg.onstart = function (event) {
             console.log("started:" + msg.text);
         };
@@ -108,15 +131,77 @@ a.c1 {
         return msg;
     }
 
-    var speekResponse = function (text, splitterStr, ebene) {
-        // split sentectes
-        var sentences = text.split(splitterStr.substr(ebene,1));
+    var speekResponse = function (text, splitterStr, ebene, maxLength) {
+        // set default maxLength if not set
+        if (! (maxLength > 100)) {
+            maxLength = 100;
+        }
+        
+        // split sentences
+        var splitter = splitterStr.substr(ebene,1);
+        var sentences = [];
+        
+        // if last splitChar rechaed, split by splitwords
+        if (ebene >= splitterStr.length) {
+            // split at last splitword before maxLength
+            var nextText = "";
+            var wordIndex = 0;
+            
+            // interate splitwords till text < maxLength
+            do {
+                var splitWord = splitWords[wordIndex];
+                var pos = text.lastIndexOf(splitWord);
+                while (pos > 0  && text.length > maxLength) {
+                    // iterate until splitword found before maxLength
+                    nextText = text.substr(pos) + nextText;
+                    text = text.substr(0, pos);
+                    pos = text.lastIndexOf(splitWord);
+                    console.log("split by word:'" + splitWord + "' text:''" + text + "' nextText:'" + nextText + "'");
+                }
+                wordIndex++;
+            } while (wordIndex < splitWords.length && text.length > maxLength)
+            
+            // fallback if text > maxLength
+            if (text.length > maxLength) {
+                // attempt to split a " " before maxLength
+                var posSpace = text.indexOf(" ");
+                if ((posSpace <= 0 || posSpace > maxLength)) {
+                    // not " " before maxLength -> do it hard
+                    var text1 = text.substr(0, maxLength);
+                    var text2 = text.substr(maxLength);
+                    console.log("split texthard text1:'" + text1 + "' text2:''" + text2 + "'");
+                    sentences = [text1, text2];
+                } else {
+                    // split at space   
+                    var text1 = text.substr(0, posSpace);
+                    var text2 = text.substr(posSpace);
+                    console.log("split space text1:'" + text1 + "' text2:''" + text2 + "'");
+                    sentences = [text1, text2];
+                }
+            } else {
+                // add text
+                sentences.push(text);
+            }
+            
+            // add nextText
+            sentences.push(nextText);
+        } else {
+            // plsit text by splitter
+            console.log("split by:'" + splitter + "' ebene:" + ebene);
+            sentences = text.split(splitter);
+        }
+        
+        // iterate sentences
         for (var i=0;i< sentences.length;i++) {
-            var toSay = sayit();
-            if (sentences[i].length > 100) {
+            if (sentences[i].length > maxLength) {
+                // sentence  > maxLength: split it with next splitChar
+                console.log("split new " +  i + " sentences[i]:" + sentences[i])
                 speekResponse(sentences[i], splitterStr, ebene+1);
             } else {
-                toSay.text = sentences[i];
+                // sentence ok: say it
+                console.log("say i: " + i + " sentences[i]:" + sentences[i])
+                var toSay = sayit();
+                toSay.text = sentences[i] + splitter;
                 window.speechSynthesis.speak(toSay);
             }
         }
@@ -132,23 +217,36 @@ a.c1 {
         }
     }
     
+    function startSpeech() {
+        stopSpeech();
+        document.getElementById('button-pause-ss').removeAttribute('disabled');
+        document.getElementById('button-resume-ss').setAttribute('disabled', 'disabled');
+        speekResponse(final_textarea.value, splitChars, 0, 150);
+    }
     function stopSpeech() {
         for (var i=1; i < 100; i++) {
             window.speechSynthesis.cancel(); // if it errors, this clears out the error.
         }
     }
-
-    function startSpeech() {
-        for (var i=1; i < 100; i++) {
-            window.speechSynthesis.cancel(); // if it errors, this clears out the error.
-        }
-        speekResponse(final_textarea.value, ".?!,:\n", 0);
+    function pauseSpeech() {
+        window.speechSynthesis.pause();
+        document.getElementById('button-pause-ss').setAttribute('disabled', 'disabled');
+        document.getElementById('button-resume-ss').removeAttribute('disabled');
     }
+    function resumeSpeech() {
+        window.speechSynthesis.resume();
+        document.getElementById('button-pause-ss').removeAttribute('disabled');
+        document.getElementById('button-resume-ss').setAttribute('disabled', 'disabled');
+    }
+
+
     window.onbeforeunload = function (e) {
         stopSpeech();
     };
 
     // init
+    document.getElementById('button-pause-ss').setAttribute('disabled', 'disabled');
+    document.getElementById('button-resume-ss').setAttribute('disabled', 'disabled');
     getSrcFromOpener();
 </script>
 </body>

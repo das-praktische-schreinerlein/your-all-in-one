@@ -863,7 +863,7 @@ function fillGanttBlock(basenode, type, label, $divLine) {
     var dateRangeStartStr = $("#inputGanttRangeStart").val();
     var dateRangeEndStr = $("#inputGanttRangeEnde").val();
     if (dateRangeEndStr == null || dateRangeEndStr == null) {
-        console.err("fillGanttBlock range is not set correctly: " 
+        console.error("fillGanttBlock range is not set correctly: " 
                 + dateRangeStartStr + "-" + dateRangeEndStr + " " + msg);
         return;
     }
@@ -874,14 +874,14 @@ function fillGanttBlock(basenode, type, label, $divLine) {
     lstDate=dateRangeEndStr.split(".");
     var dateRangeEnd = new Date(lstDate[1]+"/"+lstDate[0]+"/"+lstDate[2]);    
     if (dateRangeStart == "NaN" || dateRangeEndStr == "NaN") {
-        console.err("fillGanttBlock range is not set correctly: " 
+        console.error("fillGanttBlock range is not set correctly: " 
                 + dateRangeStartStr + "-" + dateRangeEndStr + " " + msg);
         return;
     }
     var dateRangeStartMillis = dateRangeStart.getTime();
     var dateRangeEndMillis = dateRangeEnd.getTime();
     if (dateRangeStartMillis == "NaN" || dateRangeEndMillis == "NaN") {
-        console.err("fillGanttBlock range is not set correctly: " 
+        console.error("fillGanttBlock range is not set correctly: " 
                 + dateRangeStartStr + "-" + dateRangeEndStr + " " + msg);
         return;
     }

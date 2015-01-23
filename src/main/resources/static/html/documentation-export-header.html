@@ -604,7 +604,22 @@ img:not([class]) {
     
     /*
      * ###########################
-     * # Klakulation
+     * # SpeechSynth
+     * ###########################
+     */
+     function openSpeechSynth() {
+         var target = document.getElementById('div_full');
+         if (target == null) target = self;
+         target.focus();
+         var speechsynthWindow = window.open('/yaio-explorerapp/speechsynth.html', "speechsynth", "width=690,height=350,resizable=yes,dependent=yes,scrollbars=yes");
+         speechsynthWindow.focus();
+         if (speechsynthWindow.opener == null) { speechsynthWindow.opener = self; }
+         speechsynthWindow.opener.targetElement = target;
+     }
+    
+    /*
+     * ###########################
+     * # Kalkulation
      * ###########################
      */
     const CONST_FUNCNAME_SUM = "SUM";
@@ -928,10 +943,9 @@ img:not([class]) {
             100
         );
     }
-    
-    
     </script>
 
 </head>
 <body>
+<a class="button hidden" id="speechSynthLink" onclick="javascript:openSpeechSynth();return false;">Vorlesen</a>
     <div id="div_full" style="width: 100%">

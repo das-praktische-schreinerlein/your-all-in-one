@@ -56,5 +56,9 @@
                 window.clearInterval(delayedOptimize);
             }, 2000);
 
+    // show speechSynthLink
+    if (('speechSynthesis' in window)) {
+        $("#speechSynthLink").show(0);
+    }
 </script>
 </body></html>
