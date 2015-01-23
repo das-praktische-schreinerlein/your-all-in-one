@@ -467,7 +467,7 @@ function togglePreWrap(element) {
          $("div.field_nodeSys").slideDown(1000);
          $("div.fieldtype_sysToggler > a").addClass('toggler_show').removeClass('toggler_hidden');
      } else {
-         // hide all desc
+         // hide all sys
          $("div.field_nodeSys").slideUp(1000);
          $("div.fieldtype_sysToggler > a").addClass('toggler_hidden').removeClass('toggler_show');
      }
