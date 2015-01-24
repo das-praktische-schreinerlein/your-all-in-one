@@ -186,7 +186,7 @@ public class MindMapExporter extends WikiExporter {
 
         // ungültige Zeichen entfernen
         name = name.replaceAll("\"", "'");
-        name = name.replaceAll("[&\\\"]", " ");
+        name = name.replaceAll("[&\\\"<>]", " ");
 
         // aktuelle Node ausgeben
         res.append("<node "
