@@ -457,11 +457,6 @@ h1, h2, h3, h4, h5, h6, h7, h8 {
 .p-portdesc-ue {
 /**    display: none;**/
 }
-.p-portdesc-desc {
-    margin-left: 30px;
-    width: 640px;
-}
-
 .li-portdesc-ue-faehigkeiten {
     font-weight: bold;
     width: 150px;
@@ -493,12 +488,6 @@ h1, h2, h3, h4, h5, h6, h7, h8 {
 .p-portdesc-desc-biglink {
    text-align: center;
    margin-left: 0px;
-}
-/* set img from markdown without class to 700px */
-img:not([class]) {
-    max-width: 700px;
-    width: auto;
-    height: auto;
 }
 
 
@@ -592,15 +581,70 @@ img:not([class]) {
         size:80%;
     } 
 }
+
+/****************
+ *
+ * YAIO
+ * 
+ ****************/
+.p-portdesc {
+    width: 670px;
+}
+.p-portdesc-desc {
+    margin-left: 30px;
+    width: 640px;
+}
+
+/* set img from markdown without class to 600px */
+img:not([class]) {
+    max-width: 600px;
+    width: auto;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.menueFooter {
+    color: #ff9933;
+    width: 710px;
+}
+ul.ulMenueFooter li {
+    float: right;
+}
+
     </style>
     <link rel="stylesheet" type="text/css" media="print" href="/css/yaio/print.css" />
     <link rel="stylesheet" type="text/css" media="print" href="/yaio-explorerapp/css/print.css" />
+    <link rel="stylesheet" type="text/css" media="print" href="/yaio-explorerapp/css/print-dataonly.css" id="link_css_dataonly" disabled="true" />
     
     <!-- Syntaxhightlighter highlightjs -->
     <link rel="stylesheet" href="/css/highlightjs/default.css">
     <script src="/js/highlightjs/highlight.pack.js"></script>
 
+    <!-- JQery-Slimbox2 (Lightbox) -->
+    <script type="text/javascript" src="/js/slimbox2/slimbox2.js"></script>
+    <script type="text/javascript" src="/js/slimbox2/autoload.js"></script>
+    <link rel="stylesheet" href="/css/slimbox2/slimbox2.css" type="text/css" media="screen" />
+
     <script type="text/javascript">
+    
+    /*
+     * ###########################
+     * # PrintLayout
+     * ###########################
+     */
+    function togglePrintLayout() {
+        if ($("#checkboxPrintAll").prop('checked')) {
+            // print all
+            $("#link_css_dataonly").attr("disabled", "disabled");
+            $("#link_css_dataonly").prop("disabled", true);
+        } else  {
+            // print data only
+            $("#link_css_dataonly").removeAttr("disabled");
+            $("#link_css_dataonly").prop("disabled", false);
+        }
+    }
     
     /*
      * ###########################
@@ -947,5 +991,4 @@ img:not([class]) {
 
 </head>
 <body>
-<a class="button hidden" id="speechSynthLink" onclick="javascript:openSpeechSynth();return false;">Vorlesen</a>
     <div id="div_full" style="width: 100%">
