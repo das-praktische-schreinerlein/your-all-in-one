@@ -9,18 +9,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/user")
 public class UserController {
     
-    public class YAIODummyUser implements Principal {
-
-        @Override
-        public String getName() {
-            return "YAIODummyUser";
-        }
-        
-    }
+//    public class YAIODummyUser implements Principal {
+//        @Override
+//        public String getName() {
+//            return "YAIODummyUser";
+//        }
+//        
+//    }
     
     @RequestMapping("current")
     public Principal user(Principal user) {
-        user = new YAIODummyUser();
+//        user = new YAIODummyUser();
         return user;
     }
 }
