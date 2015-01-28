@@ -1154,20 +1154,29 @@ div.container-content-desc img:not([class]) {
 }
 
 #front-content-intro .togglecontainer {
-    max-width: 700px;
+    max-width: 1000px;
 }
 
+.box-portdesc-nextactions {
+    background: none repeat scroll 0 0 #dee9ef;
+}
+.box-portdesc-nextactions .togglecontainer {
+    max-width: 100%;
+}
 .box-portdesc-nextactions li {
     margin: 0;
     list-style: none;
-    width: 30%;
+    width: 23%;
     float: left;
     border-right: 1px dotted #008000;
     border-top: 0px;
     border-bottom: 0px;
-    height: 125px;
-    font-weight: bold;
+    font-size: 13px;
+    text-align: center;
+} 
+.box-portdesc-nextactions li a {
     font-size: 15px;
+  font-weight: bold;
 } 
 
 #front-content-intro pre code  {
@@ -1178,4 +1187,10 @@ div.container-content-desc img:not([class]) {
     max-width: 600px;
     width: auto;
     height: auto;
+}
+#front-content-intro .boxline-ue3 {
+    color: #ff9933;
+    float: left;
+    font-size: 16px;
+    font-weight: bold;
 }
