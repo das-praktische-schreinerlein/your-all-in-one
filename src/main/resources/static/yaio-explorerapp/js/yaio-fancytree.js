@@ -458,12 +458,22 @@ function yaioCreateFancyTree(treeId, masterNodeId, doneHandler) {
                 yaioMoveNode(node, newParentKey, newPos);
                 break;
             case "remove":
-//                node.remove();
-                yaioRemoveNodeById(node.key, 'create');
+                yaioRemoveNodeById(node.key);
                 break;
             case "addChild":
-//                node.editCreateNode("child", "New node");
                 yaioOpenNodeEditor(node.key, 'create');
+                break;
+            case "asTxt":
+                openTxtExportWindow($('#container_content_desc_' + node.key).text());
+                break;
+            case "asJira":
+                openJiraExportWindow(node.key);
+                break;
+            case "focus":
+                window.location = '#/show/' + node.key;
+                break;
+            case "focusNewWindow":
+                window.open('#/show/' + node.key, '_blank');
                 break;
             default:
                 alert("Unhandled command: " + data.cmd);
@@ -507,11 +517,16 @@ function yaioCreateFancyTree(treeId, masterNodeId, doneHandler) {
     $(treeId).contextmenu({
         delegate: "span.fancytree-node",
         menu: [
-            {title: "Edit <kbd>[F2]</kbd>", cmd: "rename", uiIcon: "ui-icon-pencil" },
-            {title: "Delete <kbd>[Del]</kbd>", cmd: "remove", uiIcon: "ui-icon-trash" },
+            {title: "Bearbeiten <kbd>[F2]</kbd>", cmd: "rename", uiIcon: "ui-icon-pencil" },
+            {title: "Löschen <kbd>[Del]</kbd>", cmd: "remove", uiIcon: "ui-icon-trash" },
             {title: "----"},
 //            {title: "New sibling <kbd>[Ctrl+N]</kbd>", cmd: "addSibling", uiIcon: "ui-icon-plus" },
-            {title: "New child <kbd>[Ctrl+Shift+N]</kbd>", cmd: "addChild", uiIcon: "ui-icon-arrowreturn-1-e" },
+            {title: "Kind zeugen", cmd: "addChild", uiIcon: "ui-icon-plus" },
+            {title: "----"},
+            {title: "Focus", cmd: "focus", uiIcon: "ui-icon-arrowreturn-1-e" },
+            {title: "In neuem Fenster", cmd: "focusNewWindow", uiIcon: "ui-icon-arrowreturn-1-e" },
+            {title: "Export Jira", cmd: "asJira", uiIcon: "ui-icon-clipboard" },
+            {title: "Export Txt", cmd: "asTxt", uiIcon: "ui-icon-clipboard" },
             {title: "----"},
 //            {title: "Cut <kbd>Ctrl+X</kbd>", cmd: "cut", uiIcon: "ui-icon-scissors"},
 //            {title: "Copy <kbd>Ctrl-C</kbd>", cmd: "copy", uiIcon: "ui-icon-copy"},

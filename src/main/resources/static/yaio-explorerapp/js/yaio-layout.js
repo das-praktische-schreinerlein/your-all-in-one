@@ -814,6 +814,9 @@ function togglePreWrap(element) {
      // extract nodedata
      var basenode = treeNode.data.basenode;
      var descText = basenode.nodeDesc;
+     if (! descText) {
+         descText = "";
+     }
      descText = descText.replace(/\<WLBR\>/g, "\n");
      descText = descText.replace(/\<WLESC\>/g, "\\");
      descText = descText.replace(/\<WLTAB\>/g, "\t");

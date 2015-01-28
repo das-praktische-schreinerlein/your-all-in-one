@@ -864,7 +864,6 @@ label[for="nodeDesc"] {
  *****************************************/
 .ui-menu {
   width: 150px;
-  font-size: 63%;
 }
 .ui-menu kbd { /* Keyboard shortcuts for ui-contextmenu titles */
   float: right;
