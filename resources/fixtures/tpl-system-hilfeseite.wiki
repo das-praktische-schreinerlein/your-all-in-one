@@ -1,10 +1,10 @@
 = DOKU - Hilfesystem                                                                                                                                          [NodeMeta: SysHelp,1,,] [NodeSys: SysHelp1,,,,]
-Hier finden Sie das Standardhilfesystem von D'Artagnan. Bitte nehmen Sie hier keine Änderungen vor, da dieser Bereich bei jedem neuen Update überschrieben wird. Für eigene Erweiterungen der Hilfe benutze Sie bitte den Punkt “Hilfesystem” unter “Eigene Erweiterungen”.
+Hier finden Sie das Standardhilfesystem von D'Artagnan. Bitte nehmen Sie hier keine Änderungen vor, da dieser Bereich bei jedem neuen Update überschrieben wird. Für eigene Erweiterungen der Hilfe benutzen Sie bitte den Punkt “Hilfesystem” unter “Eigene Erweiterungen”.
 
 * **INFO - Hilfe!!!!**                                       [DocLayout: DIV,intro,Hilfe,]
 # Wie kann ich helfen??
-Damit Du nicht völlig von Funktionsumfang von D'Artagnan erschlagen wirst, gibt es auf den folgenden Seiten eine kleine Tour durch die Oberfläche und und D'Artagnans Fähigkeiten, Dich bei deiner Arbeit zu unterstützen.
-Wem es zu viel ist, der kann sich aber auch die kleinen Hilfstexte die sich hinter allen Links+Buttons in der Oberfläche verbergen informieren.
+Damit Du nicht völlig vom Funktionsumfang von D'Artagnan erschlagen wirst, gibt es auf den folgenden Seiten eine kleine Tour durch die Oberfläche und D'Artagnans Fähigkeiten, Dich bei deiner Arbeit zu unterstützen.
+Wem es zu viel ist, der kann sich aber auch über die kleinen Hilfstexte, die sich hinter allen Links+Buttons in der Oberfläche verbergen, informieren.
 
 ![Hilfe](/examples/help/hilfe-screen-hilfe-tooltip.png "Hilfe")
 
@@ -62,7 +62,6 @@ In oberen Bereich des Fensters sehen Sie die Daten und verfügbaren Aktionen des
 
 ![Projektexplorer aktueller Knoten](/examples/help/hilfe-screen-aktueller-knoten.png "Projektexplorer aktueller Knoten")
 
-
 ### Projektexplorer Baumansicht Kindsknoten
 Unter dem Bereich des aktuellen Knotens sehen wir alle seine Kindsknoten und können durch diesen Projektbaum navigieren, Details ansehen und die Kindsknoten bearbeiten oder auch neue anlegen.
 Im oberen Bereich haben wir die Möglichkeit über den Schieberegler den Projektbaum automatisch ein/auszuklappen.
@@ -75,6 +74,7 @@ Für jeden angezeigten Kindsknoten werden dabei folgende Daten+Aktionen zur Verf
 - je nach Knotentypen weiteren Details wie Plan/Ist-Daten, Url usw.
 - falls eine Detailbeschreibung vorhanden ist, folgt rechts das Icon um dies einzublenden
 - am rechten Rand befinden sich abschließend die verfügbaren Knoten-Aktionen
+  - Einblenden der Metainformationen wie "letzte Änderung", "aktuelle Version" usw.
   - Bearbeiten der Knoten (öffnet den Knoten-Editor)
   - Anlegen einer neuen Kindsknoten unter dieser Knoten
   - Anlegen eines Symlinks auf diese Knoten
@@ -87,6 +87,74 @@ Wie beim Projektexplorer kann man sich eventuelle Detailbeschreibungen anshen un
 Wurde der passende Knoten gefunden lässt sich dieser über den vorderen Navigationsbereich im Projektexplorer öffnen (mit dem Masterplan als Elternknoten) oder direkt fokussieren).
 
 ![Suche Übersicht](/examples/help/hilfe-screen-suche-uebersicht.png "Suche Kindsknoten")
+
+** INFO - Ende:                                                               [DocLayout: P,startmesg3,,X]                                                    
+  ** **INFO - Ziel**                                       [DocLayout: DIV,intro,Ziel,]
+# Was kann D'Artagnan?
+Was kann D'Artagnan eigentlich für mich tun?
+
+## Knotentypen
+Je nach Einsatzzweck stellt D'Artagnan verschiedenen Knotentypen zur Verfügung:
+
+- Planung+Ablaufverfolgung: Aufgaben-Knoten mit Plan/Ist,Beschreibung, Status, Stand usw.
+- Terminierung: Termin-Knoten mit Plan/Ist, Beschreibung
+- Dokumentation/Howtos/Infos: Info-Knoten mit Beschreibungen, sowie Ressourcen-Knoten
+
+![Knotentypen](/examples/help/hilfe-screen-knotentypen.png "Knotentypen")
+
+### Aufgaben-Knoten
+Aufgaben werden über den Titel, den aktuellen Status sowie Plan- und Ist-Daten definiert. Zusätzlich kann eine ausführliche Beschreibung für die eigentlich Aufgabe wie auch für die Umsetzungsdokumentation angegeben werden.
+
+![Knotentyp Aufgabe](/examples/help/hilfe-screen-knotentyp-aufgabe.png "Knotentyp Aufgabe")
+
+#### Plan-Daten
+Die Plan-Daten sind optional und geben den geplanten Umsetzungsaufwand in Stunden, sowie den Zeitraum als Start/Endedatum, in dem diese Aufgabe erfüllt werden soll, an. 
+
+Sollte die Aufgabe weitere Unteraufgaben bzw. Termine haben, werden diese im Projektbaum als Kindsknoten angelegt. Die dort angegebenen Plandaten der Kindsknoten, werden für die Anzeige im Projektbaum mit den eigenen Daten aufsummiert und bei Start/Endedatum das früheste und späteste Datum genommen. Somit sind die angezeigten Plandaten im Projektbaum und im Gantt-Diagramm immer die Summe diesen Knotens und aller Kindsknoten.
+
+![Knotentyp Aufgabe Plan-Daten](/examples/help/hilfe-screen-knotentyp-aufgabe-plan.png "Knotentyp Aufgabe Plan-Daten")
+
+#### Ist-Daten
+Zur Ablaufverfolgung einer Aufgabe besteht die Möglichkeit den Ist-Zustand zu dokumentieren. Dabei kann man den aktuellen Stand in %, die bisher benötigte Zeit in Stunden und das Startdatum, sowie das Datum der letzten Aktion die bisher getätigt wurde angeben. 
+
+Wie bei den Plan-Daten werden auch bei den Ist-Daten die eigenen Daten des Knotens mit denen der Kindsknoten aufsummiert. Deshalb kann ich die Aufgabe auch nicht schließen, wenn nicht alle Kindsknoten geschlossen (100%) sind. Aus dem Stand in %, dem benötigten Aufwand und den Plan-Aufwand des Knotens und der Kindsknoten errechnet D'Artagnan dann automatisch den kalkulierten Stand der im Projektbaum und im Gantt-Diagramm dargestellt wird. 
+
+Im Zusammenspiel mit den vorher gepflegten Plan-Daten lässt sich so sehr gut abschätzen:
+
+- wo man im Projekt steht
+- ob der Terminplan zu halten ist
+- wie viel Aufwand noch ansteht
+- außerdem lässt sich so jederzeit die Plan-Qualität messen, um aus Planungsfehlern zu lernen. 
+
+Die Angabe der benötigten Stunden und von Start/Endedatum ist zwar gerade für die Auswertung wünschenswert, aber nur trotzdem optional nötigt.
+Die Prozent-Angabe des Standes ist übrigens mit dem Auswahlfeld des Aufgabenstatus synchronisiert. Setze ich die Aufgabe auf erledigt, wird der Stand auf 100% gesetzt, während wenn ich den Stand auf 10% setze, der Status auf "laufend" gesetzt wird.
+
+![Knotentyp Aufgabe Ist-Daten](/examples/help/hilfe-screen-knotentyp-aufgabe-ist.png "Knotentyp Aufgabe Ist-Daten")
+
+### Termin-Knoten
+Die Termine verhalten sich analog den Aufgaben, wobei jedoch zusätzlich zum Datum noch eine Uhrzeit bei Plan+Ist-Daten angegeben werden kann. Außerdem werden Termine beim ICal-Export in einem speziellen Format exportiert, so dass sie direkt in Kalendersoftware wie Outlook und Thunderbird importiert oder als Web-Kalender verknüpft werden können.
+
+![Knotentyp Termin](/examples/help/hilfe-screen-knotentyp-termin.png "Knotentyp Termin")
+
+### Info-Knoten
+Längere Dokumentationen, Howtos auch jedwede Informationen die nicht mit einer konkreten Aufgabe verbunden sind, lassen sich in einem Info-Knoten ablegen. Neben dem Titelfeld, einem Info-Typ und dem Bemerkungsfeld bietet der Info-Knoten auch die Möglichkeit einer Layout-Steuerung im Projektbaum. Soll der Projektbaum als Dokumentation genutzt werden, kann man über diese Layoutelemente einzelne Knoten als Überschriften, Blöcke usw. definieren um längere Artikel beim Html-Export übergreifend zu formatieren. Dies bietet quasi zusätzlich zum Layout des einzelnen Knotens (Markdown), eine unabhängige Layoutmöglichkeit auf Baumebene. So wird z.B. die Hilfeseite die sie gerade lesen formatiert, aber auch ganze Webseiten wie http://www.your-it-fellow.de oder http://www.dartagnan.biz .
+
+![Knotentyp Info](/examples/help/hilfe-screen-knotentyp-info.png "Knotentyp Info")
+
+### Ressourcen-Knoten
+Für die Referenzierung anderer Webseiten, Bilder aber auch lokaler Dateien lassen sich die Ressourcen-Knoten verwenden. Neben der Angabe des Titels, Typs (wie Url, Datei, Bild-Datei...) Urls sowie etwaigen Bemerkungen zum Inhalt, lassen sich auch hier Layoutmöglichkeiten für den Html-Export einbinden. Somit kann man referenzierte Bilddateien im Html-Export dann auch besonders formatieren (links-/rechtsbündig usw.). Ein sehr schönes Beispiel wo diese Möglichkeiten genutzt worden sind, ist http://www.your-all-in-one.de/yaio/static/lepetitexample .
+
+![Knotentyp Ressource](/examples/help/hilfe-screen-knotentyp-ressource.png "Knotentyp Ressource")
+
+### Verknüpfungs-Knoten
+Hat man sich im D'Artagnan-System einen Wissenspool mit Howtos und Linklisten aufgebaut, möchte man aus den Projekten natürlich direkt auf die entsprechenden Informationen verweise, um nicht alles doppelt vorzuhalten. Dafür wurde die Möglichekit der Verknüpfungs-Knoten geschaffen. Neben der Angabe des Titels und eventueller Bemerkungen, gibt man einfach nur die Knoten-Nummer bzw. eindeutige Knoten-ID an und im Projektbaum wird eine Verknüpfung auf den Zielknoten mit dessen wichtigsten Informationen eingeblendet.
+
+![Knotentyp Verknüpfung](/examples/help/hilfe-screen-knotentyp-symlink.png "Knotentyp Verknüpfung")
+
+## Zusammenfassung
+D'Artagnan bietet Dir das Handwerkszeug um deine Projekte zu strukturieren, planen, verfolgen, dokumentieren und aus dem Projektverlauf zu lernen.
+
+Wie Dich die Oberfläche dabei unterstützt, erfährst Du im Folgenden Kapitel.
 
 ** INFO - Ende:                                                               [DocLayout: P,startmesg3,,X]                                                    
   ** **INFO - Funktionen**                                       [DocLayout: DIV,intro,Funktionen,]
@@ -104,13 +172,49 @@ Die Navigation innerhalb des Projektbaumes kann auf 3 verschiedene Arten erfolge
 Der Konten-Editor öffnet sich im rechten  Teil der Arbeitsfläche und schiebt den Explorer nach links (dieser ist aber immer noch erreichbar). Im Knoten-Editor können nun die Daten des Knotens bearbeitet werden. Nach Betätigen des Speichern-Buttons wird der Knoten gespeichert und der gesamte Projektbaum aktualisiert sich. Anschließend wird automatisch wieder zum bearbeiteten/neuen Knoten gesprungen.
 
 ### Anlegen
-Wurde der Knoten-Editor zum Anlegen eines neuen Knotens geöffnet, wählt man im oberen Teil den den Typ des neuen Knotens aus. Je nach Auswahl werden dann darunter die jeweiligen bearbeitbaren Eigenschaften des neuen Knotens angezeigt.
+Wurde der Knoten-Editor zum Anlegen eines neuen Knotens geöffnet, wählt man im oberen Teil den Typ des neuen Knotens aus. Je nach Auswahl werden dann darunter die jeweiligen bearbeitbaren Eigenschaften des neuen Knotens angezeigt.
 
 ![Knoten-Editor Knoten anlegen](/examples/help/hilfe-screen-knoteneditor-anlegen.png "Knoten-Editor Knoten anlegen")
 
 ### Bearbeiten
+Je nach Typ des Knotens wird der Knoten-Editor mit unterschiedlichen Feldern geöffnet. Allen gemeinsam sind die Felder zur Bearbeitung des Titels und Bemerkungen.
+Die Eingabefelder sind in funktionale Blöcke (z.B. Stammdaten) unterteilt, wobei optionale Blöcke die nicht gefüllt sind, eingeklappt sind. Durch Klick auf das Icon neben dem Blocknamen, lässt sich der Block aber öffnen und ggf. wieder schließen.
 
 ![Knoten-Editor Knoten bearbeiten](/examples/help/hilfe-screen-knoteneditor-bearbeiten.png "Knoten-Editor Knoten bearbeiten")
+
+#### Eingabefelder
+Sind für die Eingabefelder irgendwelche Restriktionen (z.B. Eingabeformat DD.MM.YYY) vorgeschrieben, werden diese als Beispiele bei leeren Feldern gräulich hinterlegt dargestellt. Für die Eingabe numerischer Daten besteht neben der direkten Eingabe auch die Möglichkeit die Zahl über Schieberegler zu steuern. Bei Datumsfeldern öffnet sich automatisch ein Kalender der benutzt werden kann (aber nicht muss) und bei kombinierten Datums-/Zeitfeldern lässt sich sich Uhrzeit im Kalender über Schieberegler einstellen. 
+Zusätzlich bietet der Editor auch ein großes Bemerkungsfeld an, für welches eine Spracherkennung, sowie erweiterte Formatierungsmöglichkeiten des Textes vorgesehen sind. Dazu im folgenden Abschnitt mehr.
+
+![Knoten-Editor Eingabefelder](/examples/help/hilfe-screen-knoteneditor-fields.png "Knoten-Editor Eingabefelder")
+
+
+#### Diktat/Spracherkennung
+Sollte der Browser Spracherkennung unterstützen (z.B. Google Chrome), wird neben den Textfeldern ein kleines Mikrofon eingeblendet, durch welches sich ein Fenster zur Spracherkennung öffnen lässt. Die Spracherkennung wird dabei durch Klick auf das Mikrofon aktiviert. Meistens muss man dem Fenster noch den Zugriff erlauben (man beachte dazu die Meldungen des Browsers). Wenn die Spracherkennung die Worte erkennt, schreibt sie diese in das Textfeld, wo man sie noch Nachbearbeiten kann. Durch Klick auf Schließen, wird der Text dann in de Knoten-Editor übernommen.
+
+![Knoten-Editor Spracherkennung](/examples/help/hilfe-screen-knoteneditor-spracherkennung.png "Knoten-Editor Spracherkennung")
+
+#### Markdown
+Möchten Sie zu dem Knoten noch detaillierte Informationen möglichst sogar noch formatiert hinterlegen, können Sie dazu das Bemerkungsfeld benutzen.
+Das Eingabefeld unterstützt sie dabei mit der Git-Flavored-Markdown-Syntax zur Formatierung des Textes. Neben Überschriften, Aufzählungen und Tabellen lassen sich auch Links+Bilder sowie Codeblöcke formatieren. Dabei erfolgt je nach Sprache auch automatisch ein Syntaxhighlighting.
+Eine kleine Übersicht über die Formatierungsmöglichkeiten gibt dabei die Markdown-Hilfe, die sich als kleines Fenster mit ein paar Beispielen öffnen lässt.
+
+![Knoten-Editor Markdown](/examples/help/hilfe-screen-knoteneditor-markdown.png "Knoten-Editor Markdown")
+
+#### Vorschau
+Um sich den Zwischenstand seines Meisterwerks betrachten zu können, gibt es ein Vorschaufenster, in welchem man sich das spätere Layout der aktuellen Ergüsse ansehen kann. 
+
+![Knoten-Editor Vorschau](/examples/help/hilfe-screen-knoteneditor-preview.png "Knoten-Editor Vorschau")
+
+#### Wysiwyg-Editor
+Wer lieber gleich sehen möchte, wie sein Text aussieht, kann aber auch den Wysiwyg-Editor (What-You-See-Is-What-You-Get) öffnen. Jegliche Änderungen im Editor werden dabei direkt in das Bemerkungsfeld zurückgeschrieben. Bei Klick auf OK wird das Fenster dabei nur geschlossen.  
+
+![Knoten-Editor Wysiwyg](/examples/help/hilfe-screen-knoteneditor-wysiwyg.png "Knoten-Editor Wysiwyg")
+
+#### Der Vorleser
+Da sich eventuelle Holperer in der Formulierung meistens erst beim lauten Vorlesen des Textes zeigen, bietet D'Artagnan in modernen Browsern (z.B. Google Chrome) die Möglichkeit die Texte im Eingabefeld (sowie Vorschau+Editor) vorlesen zu lassen. Dazu wird der Vorleser in einem kleinen Fenster geöffnet. Hier hat man nun Möglichkeit sich seine Texte auch mal von Fremdsprachlern vorlesen zu lassen (das Highlight jeder Party) oder auch nur zu merken, dass manche Formulierung nicht nur den Computer wahrlich stottern läßt.    
+
+![Knoten-Editor Der Vorleser](/examples/help/hilfe-screen-knoteneditor-speechsynth.png "Knoten-Editor Der Vorleser")
 
 ## Knoten verschieben
 Möchte man einen Knoten im Baum verschieben, gibt es verschiedene Möglichkeiten
@@ -130,8 +234,17 @@ Möchte man einen Knoten im Baum verschieben, gibt es verschiedene Möglichkeite
 - **mit den Links/Rechts-Cursortasten**: in der Hierarchie nach vorne/hinten
   - den Knoten in der Hierarchie mit gedrückter Strg-Taste nach links/rechts verschieben
 
+## Anzeige der Knotendetails
+Wurde die Anzeige der Metadaten aktiviert, werden unter dem Titel Informationen wie "letzte Änderung", "aktuelle Version" usw. eingeblendet.
+Sollten für einen Knoten Detaildaten im Bemerkungsfeld angegeben worden sein, lassen sich diese im Projektbaum und der Suche auf Knopfdruck für diesen oder auch für alle Knoten einblenden.
+Dabei werden die in Markdown gepflegten Daten formatiert und unterhalb der Knotenzeile eingeblendet. Für Code-Blöcke erfolgt dabei ein automatisches Syntaxhighlighting insofern die Sprache (z.B. html erkannt wird).
+Im Normalfall wird der Inhalt dabei auf die Seitengröße angepasst und Leerzeichen trimmt. Über die Auswahlbox im oberen Teil, lässt sich aber das Originallayout der Blöcke (kein automatischer Umbruch, alle Leerzeichen/Umbrüche) darstellen.
+Zusätzlich hat man die Möglichkeit sich den Text auch vorlesen zu lassen, um die von der langen Computer-Arbeit arg gestressten Augen zu schonen.
+
+![Knotendetails](/examples/help/hilfe-screen-knotendetails.png "Knotendetails")
+
 ## Drucken
-D'Artagnan bietet für den Druck 2 optimierte Druckversionen. Sie können sich z.B. den Projektexplorer so vorbereiten, dass alle Nodes die sie ausdrucken möchten geöffnet sind und auf Drucken klicken. 
+D'Artagnan bietet für den Druck 2 optimierte Druckversionen. Sie können sich z.B. den Projektexplorer so vorbereiten, dass alle Knoten die sie ausdrucken möchten geöffnet sind und auf Drucken klicken. 
 ![Seite drucken](/examples/help/hilfe-screen-druck-form.png "Seite drucken")
 
 Wenn dabei die Checkbox "All" aktiviert ist, werden alle nicht relevanten Informationen ausgeblendet und der Druck für A4-Querformat optimiert.
@@ -152,7 +265,7 @@ Nun wird die Projektzeitachse anhand von Balken visualisiert. Über die Navigati
 Aber **Achtung!!!** Die Gantt-Darstellung ist nur eine grobe Verteilung der Plan/Ist-Stunden auf den gesamten Plan/Ist-Zeitraum. Aufwende ohne Zeitraum werden erstmal den Eltern mit Plan/Ist-Datum zugerechnet bzw. wenn das Element ohne Datum sichtbar wird, überhaupt nicht eingerechnet! Aufwende der Kindsknoten werden über den gesamten Zeitraum des Elternknotens verteilt und können sich somit völlig verschieben! Also Plan+Ist am besten immer mit Datum pflegen, sonst gibt es in der Gantt-Sicht 'komische' Effekte ;-)
 
 ## Suchen
-Die Suche bietet ein einfaches Volltextsuchfeld über welches sich Titel, ID, Url und die Beschreibungsfelder durchsuchen lassen. Die Ergebnissliste wird mit 20 Knoten pro Seite dargestellt und lässt sich über die Seitennavigation durchlaufen.
+Die Suche bietet ein einfaches Volltextsuchfeld über welches sich Titel, ID, Url und die Beschreibungsfelder durchsuchen lassen. Die Ergebnissliste wird mit 20 Knoten pro Seite dargestellt, lässt sich über das Sortierfeld sortieren und über die Ergebnissnavigation durchforsten.
 Wie beim Projektexplorer kann man sich eventuelle Detailbeschreibungen ansehen und in die Gantt-Ansicht wechseln.
 Wurde der passende Knoten gefunden lässt sich dieser über den vorderen Navigationsbereich im Projektexplorer öffnen (mit dem Masterplan als Elternknoten) oder direkt fokussieren).
 
@@ -171,7 +284,7 @@ D'Artagnan bietet eine Vielzahl an Möglichkeiten die Daten in anderen Programme
 Dazu navigiert man bis zum Knoten dessen Projektbaum man exportieren möchte und klickt auf eine der Export-Funktionen. Nachdem man dann das Formular abgesendet hat, wird die Datei generiert und entweder zum Download angeboten oder in einem neuen Fenster geöffnet.
 ![Export Formular](/examples/help/hilfe-screen-export-form.png "Export Formular")
 
-Den Beispielexport eines Mindmaps welches dann mit Mindmapper, Freemind, Freeplane oder anderen geöffnet werden kann, sehen sie im folgenden Screenshot.
+Den Beispielexport einer Mindmap welche mit Mindmapper, Freemind, Freeplane oder anderen geöffnet werden kann, sehen sie im folgenden Screenshot.
 ![Export Formular](/examples/help/hilfe-screen-export-mindmap.png "Export Formular")
 
 ## Daten importieren
