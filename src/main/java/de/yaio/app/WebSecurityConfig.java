@@ -15,6 +15,7 @@ import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
+import org.springframework.security.web.util.AntPathRequestMatcher;
 
 import de.yaio.rest.controller.CsrfHeaderFilter;
 
@@ -27,7 +28,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private static final Logger logger = Logger.getLogger(WebSecurityConfig.class);
     
     public static String CONST_FILELOCATION_APIUSERS="yaio.security.apiusers.filelocation";
-    public static String CONST_FILELOCATION_ADMINUSERS="yaio.security.adminusers.filelocation";
     
     /**
      * configure API-Configuration
@@ -35,6 +35,31 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @EnableWebSecurity
     @Configuration
     @Order(1)
+    public static class APIICalWebSecurityConfigurerAdapter extends APIWebSecurityConfigurerAdapter {
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http
+                    // authentification
+                    .httpBasic()
+                .and()
+                    .requestMatcher(new AntPathRequestMatcher("/exports/ical*/**", "GET"))
+                        .authorizeRequests()
+                        // secure API webservice
+                        .anyRequest()
+                            .authenticated()
+                 .and()
+                   // disable csrf-protection
+                   .csrf().disable()
+            ;
+        }
+    }    
+
+    /**
+     * configure API-Configuration
+     */
+    @EnableWebSecurity
+    @Configuration
+    @Order(2)
     public static class APIWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
         private CsrfTokenRepository csrfTokenRepository() {
           HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
@@ -64,8 +89,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         .antMatchers("/admin/**", "/manage/**")
                             .hasRole("SUPERUSER")
                         .anyRequest()
-                            .permitAll()
-//                            .authenticated()
+//                            .permitAll()
+                            .authenticated()
                  .and()
                      // authentification
                      .logout().permitAll()
@@ -75,9 +100,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                    //.csrf().csrfTokenRepository(csrfTokenRepository());
                    // allow include as Frame for sameorigin
                    .headers().addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))
-//                 .and()
-//                   // add CsrfHeaderFilter because angular uses another Header
-//                   .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class);
+                 .and()
+                   // add CsrfHeaderFilter because angular uses another Header
+                   .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class);
             ;
         }
     }    
