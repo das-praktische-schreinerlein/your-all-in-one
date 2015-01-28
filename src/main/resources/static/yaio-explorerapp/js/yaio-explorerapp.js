@@ -93,6 +93,9 @@ yaioM.config(function($routeProvider) {
         .when('/login', {
             controller : 'AuthController',
             templateUrl: 'templates/login.html' })
+        .when('/frontpage/:nodeId', { 
+            controller:  'FrontPageCtrl',
+            templateUrl: 'templates/frontpage.html' })
         .when('/', { 
             controller:  'FrontPageCtrl',
             templateUrl: 'templates/frontpage.html' })
@@ -219,9 +222,13 @@ yaioM.controller('AuthController', function($rootScope, $scope, $location, $http
                 "content-type" : "application/x-www-form-urlencoded"
             }
         }).success(function(data) {
-            authorization.authenticate(function() {
+            authorization.authentificate(function() {
                 if ($rootScope.authenticated) {
-                    $location.path("/");
+                    if ($rootScope.lastLocation) {
+                        $location.path($rootScope.lastLocation);
+                    } else {
+                        $location.path("/");
+                    }
                     $scope.error = false;
                 } else {
                     $location.path("/login");
@@ -258,7 +265,10 @@ yaioM.controller('AuthController', function($rootScope, $scope, $location, $http
  *     GUI Configuration
  */
 yaioM.controller('FrontPageCtrl', function($rootScope, $scope, $location, $http, $routeParams, setFormErrors, OutputOptionsEditor, authorization) {
-    var nodeId = 'SysStart1';
+    var nodeId = $routeParams.nodeId;
+    if (nodeId == null || nodeId == "" || ! nodeId) {
+        nodeId = 'SysStart1';
+    }
     console.log("FrontPageCtrl - processing nodeId=" + nodeId);
 
     /**
@@ -357,6 +367,10 @@ yaioM.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $http
             + '/' + encodeURI($scope.searchOptions.baseSysUID)
             + '/' + encodeURI($scope.searchOptions.fulltext)
             + '/';
+        
+        // save lastLocation for login
+        $rootScope.lastLocation = newUrl;
+
         // no cache!!!
         console.log("load new Url:" + newUrl);
         $location.path(newUrl);
@@ -405,6 +419,9 @@ yaioM.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $http
             + '/' + encodeURI($scope.searchOptions.baseSysUID)
             + '/' + encodeURI($scope.searchOptions.fulltext)
             + '/';
+        // save lastLocation for login
+        $rootScope.lastLocation = newUrl;
+
         // no cache!!!
         console.log("load new Url:" + newUrl);
         $location.path(newUrl);
@@ -425,16 +442,22 @@ yaioM.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $http
      *     GUI Callback Fulltextsearch
      */
     $scope.doFulltextSearch = function() {
+        var uri = '/' + encodeURI($scope.searchOptions.curPage)
+                + '/' + encodeURI($scope.searchOptions.pageSize)
+                + '/' + encodeURI($scope.searchOptions.searchSort)
+                + '/' + encodeURI($scope.searchOptions.baseSysUID)
+                + '/';
+        // save lastLocation for login
+        $rootScope.lastLocation = '/search' + uri + encodeURI($scope.searchOptions.fulltext) + '/';
+
+        // no empty fulltext for webservice -> we use there another route 
+        if ($scope.searchOptions.fulltext && $scope.searchOptions.fulltext.length > 0)
+            uri = uri + encodeURI($scope.searchOptions.fulltext)
+                  + '/';
+
         // load data
         var searchNodeUrl = '/nodes/search'
-            + '/' + encodeURI($scope.searchOptions.curPage)
-            + '/' + encodeURI($scope.searchOptions.pageSize)
-            + '/' + encodeURI($scope.searchOptions.searchSort)
-            + '/' + encodeURI($scope.searchOptions.baseSysUID)
-            + '/';
-        if ($scope.searchOptions.fulltext && $scope.searchOptions.fulltext.length > 0)
-            searchNodeUrl = searchNodeUrl + encodeURI($scope.searchOptions.fulltext)
-                          + '/';
+                            + uri;
         $http.get(searchNodeUrl).then(function(nodeResponse) {
             // success handler
             
@@ -589,6 +612,9 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
 
     var curNodeUrl = '/nodes/show/' + nodeId;
 
+    // save lastLocation for login
+    $rootScope.lastLocation = '/show/' + nodeId;
+    
     // call authentificate 
     authorization.authentificate(function () {
         // check authentification
