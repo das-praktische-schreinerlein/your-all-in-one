@@ -9,12 +9,14 @@
   <link rel="stylesheet" href="../css/yaio/style.css">
 
 <style>
-#info {
-    font-size: 16px;
+
+.hidden {
+    display: none;
 }
 
-#div_start {
-    float: right;
+#info {
+
+    font-size: 16px;
 }
 
 #results {
@@ -53,17 +55,16 @@ a.c1 {
                     <div id="info">
                     </div>
                     <div id="results">
-                        <span class="interim" id="interim_span"></span>
                         <textarea class="final" id="final_textarea"
                             cols="30" rows="5"></textarea>
                     </div>
 
                       <label for="voice">Voice:</label>
                       <select id="voice"> </select>
-                      <label for="rate">Rate (0.1 - 10):</label>
-                      <input type="number" id="rate" min="0.1" max="10" value="1" step="0.1" />
-                      <label for="pitch">Pitch (0.1 - 2):</label>
-                      <input type="number" id="pitch" min="0.1" max="2" value="1" step="0.1" />
+                      <label class="hidden" for="rate">Rate (0.1 - 10):</label>
+                      <input class="hidden" type="number" id="rate" min="0.1" max="10" value="1" step="0.1" />
+                      <label class="hidden" for="pitch">Pitch (0.1 - 2):</label>
+                      <input class="hidden" type="number" id="pitch" min="0.1" max="2" value="1" step="0.1" />
                       <br />
                       <button id="button-speak-ss" class="" onclick="startSpeech()">Start</button>
                       <button id="button-pause-ss" class="" onclick="pauseSpeech()">Pause</button>
