@@ -1235,6 +1235,11 @@ function renderColumnsForNode(event, data) {
     //        + "<input type='checkbox' id='cmd_toggle_content_desc_markdown_" + basenode.sysUID + "' onclick=\"toggleDescMarkdown('#container_content_desc_" + basenode.sysUID + "'); return true;\">"
     //        + "<span lang='tech'>Markdown</span>"
             ;
+        commands += "<a class=\"button command-desc-jiraexport\" onClick=\"openJiraExportWindow('"+ basenode.sysUID + "'); return false;" 
+            +   "\" lang='tech' data-tooltip='tooltip.command.OpenJiraExportWindow'>common.command.OpenJiraExportWindow</a>";
+        commands += "<a class=\"button command-desc-txtexport\" onClick=\"openTxtExportWindow(" 
+            +   "$('#container_content_desc_" + basenode.sysUID + "').text()); return false;" 
+            +   "\" lang='tech' data-tooltip='tooltip.command.OpenTxtExportWindow'>common.command.OpenTxtExportWindow</a>";
         if ('speechSynthesis' in window) {
             // Synthesis support. Make your web apps talk!
             commands += "<a class=\"button\" onClick=\"openSpeechSynthWindow(" 

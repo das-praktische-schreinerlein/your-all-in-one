@@ -352,6 +352,23 @@ ul.nodecommands {
     height: 650px;
 }
 
+/*****************************************
+ *****************************************
+ * clipboard
+ *****************************************
+ *****************************************/
+#clipboard-content {
+    width: 670px;
+    height: 600px;
+    overflow: auto;
+}
+#clipboard-box {
+    width: 750px;
+    height: 650px;
+}
+
+
+
 
 /*****************************************
  *****************************************
@@ -513,6 +530,11 @@ table.fancytree-ext-table thead tr th {
     margin-top: 2px;
     padding-top: 2px;
     border: 1px solid #EDEDED;
+}
+
+/** hide jira-export for master/search because tree gets no data here **/
+#masterTr .command-desc-jiraexport, #containerYaioSearch .command-desc-jiraexport {
+    display: none;
 }
 
 span.fancytree-title-state {
@@ -1129,7 +1151,25 @@ div.container-content-desc img:not([class]) {
     overflow-x: hidden;
     clear: both;
     float: left;
+    padding-right: 20px;
 }
+
+#front-content-intro .togglecontainer {
+    max-width: 700px;
+}
+
+.box-portdesc-nextactions li {
+    margin: 0;
+    list-style: none;
+    width: 30%;
+    float: left;
+    border-right: 1px dotted #008000;
+    border-top: 0px;
+    border-bottom: 0px;
+    height: 125px;
+    font-weight: bold;
+    font-size: 15px;
+} 
 
 #front-content-intro pre code  {
     white-space: pre;

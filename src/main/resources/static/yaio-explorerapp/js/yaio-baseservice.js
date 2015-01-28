@@ -364,3 +364,55 @@ function prepareTextForMarkdown(descText) {
     
     return newDescText;
 }
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     GUI
+ * <h4>FeatureDescription:</h4>
+ *     convert the markdown-text to jira-format
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>returnValue String - jira-converted text
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     Convert
+ * @param descText - the string to prepare
+ * @return - markdown-text in jira-format
+ */
+function convertMarkdownToJira(descText) {
+    // prepare descText
+    var newDescText = '';
+    
+    var separatedBlocks = descText.split("```");
+    for (var i=0;i < separatedBlocks.length; i++) {
+        var tmpText = separatedBlocks[i];
+        if ((i % 2) == 0) {
+            // text-block: do convert
+            
+            // add dummy \n
+            tmpText = '\n' + tmpText;
+            
+            // lists
+            tmpText = tmpText.replace(/\n  - /g, "\n-- ");
+            tmpText = tmpText.replace(/\n    - /g, "\n--- ");
+            tmpText = tmpText.replace(/\n      - /g, "\n---- ");
+
+            // headings
+            tmpText = tmpText.replace(/\n##### /g, "\nh5. ");
+            tmpText = tmpText.replace(/\n#### /g, "\nh4. ");
+            tmpText = tmpText.replace(/\n### /g, "\nh3. ");
+            tmpText = tmpText.replace(/\n## /g, "\nh2. ");
+            tmpText = tmpText.replace(/\n# /g, "\nh1. ");
+            
+            // delete dummy \n
+            tmpText = tmpText.substr(1);;
+            
+            newDescText += tmpText;
+        } else {
+            // code-block
+            newDescText += '{code}' + tmpText + '{code}';
+        }
+    }
+    
+    return newDescText;
+}

@@ -776,3 +776,90 @@ function togglePreWrap(element) {
      $( "#wysiwhg-preview" ).html(descHtmlMarked);
  } 
 
+ 
+ 
+ /**
+  * <h4>FeatureDomain:</h4>
+  *     GUI
+  * <h4>FeatureDescription:</h4>
+  *     open the jirawindow for the node  
+  * <h4>FeatureResult:</h4>
+  *   <ul>
+  *     <li>GUI-result: opens jira window with jira-converted node-content
+  *   </ul> 
+  * <h4>FeatureKeywords:</h4>
+  *     GUI Convert
+  * @param nodeId - id of the node
+  */
+ function openJiraExportWindow(nodeId) {
+     // check vars
+     if (! nodeId) {
+         // tree not found
+         logError("error openJiraWindow: nodeId required", false);
+         return null;
+     }
+     // load node
+     var tree = $("#tree").fancytree("getTree");
+     if (!tree) {
+         // tree not found
+         logError("error openJiraWindow: cant load tree for node:" + nodeId, false);
+         return null;
+     }
+     var treeNode = tree.getNodeByKey(nodeId);
+     if (! treeNode) {
+         logError("error openJiraWindow: cant load node:" + nodeId, false);
+         return null;
+     }
+     
+     // extract nodedata
+     var basenode = treeNode.data.basenode;
+     var descText = basenode.nodeDesc;
+     descText = descText.replace(/\<WLBR\>/g, "\n");
+     descText = descText.replace(/\<WLESC\>/g, "\\");
+     descText = descText.replace(/\<WLTAB\>/g, "\t");
+     var nodeDesc = convertMarkdownToJira(descText);
+     
+     // set clipboard-content
+     $( "#clipboard-content" ).html(nodeDesc);
+     
+     // show message
+     $( "#clipboard-box" ).dialog({
+         modal: true,
+         width: "700px",
+         buttons: {
+           Ok: function() {
+             $( this ).dialog( "close" );
+           }
+         }
+     });    
+ }
+
+ /**
+  * <h4>FeatureDomain:</h4>
+  *     GUI
+  * <h4>FeatureDescription:</h4>
+  *     open the txtwindow for the node  
+  * <h4>FeatureResult:</h4>
+  *   <ul>
+  *     <li>GUI-result: opens txt-window with txt node-content
+  *   </ul> 
+  * <h4>FeatureKeywords:</h4>
+  *     GUI Convert
+  * @param content - txt content
+  */
+ function openTxtExportWindow(content) {
+     // set clipboard-content
+     $( "#clipboard-content" ).html(content);
+     
+     // show message
+     $( "#clipboard-box" ).dialog({
+         modal: true,
+         width: "700px",
+         buttons: {
+           Ok: function() {
+             $( this ).dialog( "close" );
+           }
+         }
+     });    
+ }
+ 
