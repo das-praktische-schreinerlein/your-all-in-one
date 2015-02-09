@@ -103,7 +103,6 @@ public class DataUtils {
         if (text != null) {
             text = text.replace("<", "&lt;");
             text = text.replace(">", "&gt;");
-            text = text.replace("'", "&#x27;");
         }
 
         return text;

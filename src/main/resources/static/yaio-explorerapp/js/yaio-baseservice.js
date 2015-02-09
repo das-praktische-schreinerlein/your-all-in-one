@@ -201,6 +201,14 @@ function htmlEscapeText(text) {
     return text;
 }
 
+function htmlEscapeTextLazy(text) {
+    if ((text != "undefined") && (text != "") && (text != null)) {
+        text = text.replace(/</g, "&lt;");
+        text = text.replace(/>/g, "&gt;");
+    }
+    return text;
+}
+
 function formatGermanDateTime(millis) {
     if (millis == null) {
        return "";
@@ -340,7 +348,7 @@ function prepareTextForMarkdown(descText) {
         noCode = newDescTextRest.slice(0, codeStart + 3);
         
         // replace <> but prevent <br> in noCode
-        noCode = htmlEscapeText(noCode);
+        noCode = htmlEscapeTextLazy(noCode);
         noCode = noCode.replace(/&lt;br&gt;/g, "<br>");
         newDescText += noCode;
         
@@ -370,7 +378,7 @@ function prepareTextForMarkdown(descText) {
 
     // replace <> but prevent <br> in noCode
     noCode = newDescTextRest;
-    noCode = htmlEscapeText(noCode);
+    noCode = htmlEscapeTextLazy(noCode);
     noCode = noCode.replace(/&lt;br&gt;/g, "<br>");
     
     // add rest to newDescText
