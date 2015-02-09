@@ -35,19 +35,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @EnableWebSecurity
     @Configuration
     @Order(1)
-    public static class APIICalWebSecurityConfigurerAdapter extends APIWebSecurityConfigurerAdapter {
+    public static class APIExportsSecurityConfigurerAdapter extends APIWebSecurityConfigurerAdapter {
         @Override
         protected void configure(HttpSecurity http) throws Exception {
             http
                     // authentification
                     .httpBasic()
                 .and()
-                    .requestMatcher(new AntPathRequestMatcher("/exports/ical*/**", "GET"))
+                    .requestMatcher(new AntPathRequestMatcher("/exports/**", "GET"))
                         .authorizeRequests()
                         // secure API webservice
                         .anyRequest()
                             .authenticated()
-                 .and()
+                .and()
                    // disable csrf-protection
                    .csrf().disable()
             ;
@@ -60,6 +60,56 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @EnableWebSecurity
     @Configuration
     @Order(2)
+    public static class APIImportsSecurityConfigurerAdapter extends APIWebSecurityConfigurerAdapter {
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http
+                    // authentification
+                    .httpBasic()
+                .and()
+                    .requestMatcher(new AntPathRequestMatcher("/imports/**", "POST"))
+                        .authorizeRequests()
+                        // secure API webservice
+                        .anyRequest()
+                            .authenticated()
+                .and()
+                   // disable csrf-protection
+                   .csrf().disable()
+            ;
+        }
+    }    
+
+    /**
+     * configure API-Configuration
+     */
+    @EnableWebSecurity
+    @Configuration
+    @Order(3)
+    public static class APIAdminWebSecurityConfigurerAdapter extends APIWebSecurityConfigurerAdapter {
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http
+                    // authentification
+                    .httpBasic()
+                .and()
+                    .requestMatcher(new AntPathRequestMatcher("/admin/**", "GET"))
+                        .authorizeRequests()
+                        // secure API webservice
+                        .anyRequest()
+                            .hasRole("ADMIN")
+                .and()
+                   // disable csrf-protection
+                   .csrf().disable()
+            ;
+        }
+    }    
+
+    /**
+     * configure API-Configuration
+     */
+    @EnableWebSecurity
+    @Configuration
+    @Order(4)
     public static class APIWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
         private CsrfTokenRepository csrfTokenRepository() {
           HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
@@ -86,7 +136,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .authorizeRequests()
                         .antMatchers("/js/**", "/css/**", "/yaio-explorerapp/**", "/examples/**", "/tests/**", "/user/current", "/login", "/logout")
                             .permitAll()
-                        .antMatchers("/admin/**", "/manage/**")
+//                        .antMatchers("/admin/**")
+//                            .hasRole("ADMIN")
+                        .antMatchers("/manage/**")
                             .hasRole("SUPERUSER")
                         .anyRequest()
 //                            .permitAll()
