@@ -138,6 +138,11 @@ public class IstDataFormatterImpl extends FormatterImpl implements IstDataFormat
             nodeOutput.append("Ist: ")
                 .append(labelIntend)
                 .append(this.intendLeft(intStand, (oOptions.isFlgDoIntend() ? 3 : 0)) + "%");
+            
+            // set aufwand=0 if null and if start or end is set
+            if (aufwand == null && (start != null || ende != null)) {
+                aufwand = 0.0; 
+            }
             if (aufwand != null) {
                 nodeOutput.append(" " + this.intendLeft(
                    this.formatNumber(aufwand, 0, 2), (oOptions.isFlgDoIntend() ? 2 : 0)) + "h");
