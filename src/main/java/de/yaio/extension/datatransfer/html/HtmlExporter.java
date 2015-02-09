@@ -1031,7 +1031,7 @@ public class HtmlExporter extends WikiExporter {
     public String prepareTextForMarkdown(String descText) {
         // prepare descText
         String newDescText = "";
-        String newDescTextRest = DataUtils.htmlEscapeText(descText);
+        String newDescTextRest = DataUtils.htmlEscapeTextLazy(descText);
         int codeStart = newDescTextRest.indexOf("```");
         while (codeStart >= 0) {
             // splice start and add to newDescText

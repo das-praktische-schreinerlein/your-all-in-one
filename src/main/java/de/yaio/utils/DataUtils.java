@@ -86,6 +86,33 @@ public class DataUtils {
      * <h4>FeatureDomain:</h4>
      *     Tools - Converter
      * <h4>FeatureDescription:</h4>
+     *     lazy escape html entities
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue html-escaped string
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Converter
+     * @param src - the string to escape all html
+     * @return the html-escaped string
+     */
+    public static String htmlEscapeTextLazy(String src) {
+        String text = src;
+        
+        // test ob beide belegt
+        if (text != null) {
+            text = text.replace("<", "&lt;");
+            text = text.replace(">", "&gt;");
+            text = text.replace("'", "&#x27;");
+        }
+
+        return text;
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Tools - Converter
+     * <h4>FeatureDescription:</h4>
      *     convert commaseparated string to map
      * <h4>FeatureResult:</h4>
      *   <ul>
