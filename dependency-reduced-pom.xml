@@ -296,12 +296,6 @@
       <artifactId>org.springframework.roo.annotations</artifactId>
       <version>1.2.4.RELEASE</version>
       <scope>provided</scope>
-      <exclusions>
-        <exclusion>
-          <artifactId>commons-codec</artifactId>
-          <groupId>commons-codec</groupId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
@@ -543,6 +537,24 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-security</artifactId>
       <version>1.1.6.RELEASE</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+      <version>4.3.6</version>
+      <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>commons-logging</artifactId>
+          <groupId>commons-logging</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpmime</artifactId>
+      <version>4.3.6</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>
