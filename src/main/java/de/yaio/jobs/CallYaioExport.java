@@ -45,7 +45,7 @@ public class CallYaioExport extends CallYaioInstance {
      * <h4>FeatureDomain:</h4>
      *     Constructor
      * <h4>FeatureDescription:</h4>
-     *     job to to export nodes from db
+     *     job to export nodes from db
      * <h4>FeatureResult:</h4>
      *   <ul>
      *     <li>initialize the application
