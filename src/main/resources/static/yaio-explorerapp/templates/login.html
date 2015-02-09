@@ -1,14 +1,26 @@
-<div class="alert alert-danger" ng-show="error">
-    There was a problem logging in. Please try again.
+<div class='box box-portdesc add2toc-h1 box-portdesc-explorer' toclabel='Explorer' id='box_login'>
+  <div class='boxline boxline-ue2 h2-portdesc h2-portdesc-explorer' id='ue_login'>YAIO - D'Artagnan - Explorer</div>
+
+  <div class='togglecontainer togglecontainer-exporer' id='details_login'>
+    <center>
+      <fieldset>
+        <legend translate="loginform.legend.Login">Login</legend>
+        
+        <p translate="loginform.hint.logindata"></p>
+        
+        <form role="form" ng-submit="login()">
+          <div class="alert alert-danger" ng-show="error">
+              There was a problem logging in. Please try again.
+          </div>
+          <div class="form-group" data-tooltip='tooltip.loginform.username' lang="tech">
+              <label for="username" translate="loginform.field.username">Nutzername:</label> <input type="text" class="form-control" id="username" name="username" ng-model="credentials.username"/>
+          </div>
+          <div class="form-group" data-tooltip='tooltip.loginform.password' lang="tech">
+              <label for="password" translate="loginform.field.password">Passwort:</label> <input type="password" class="form-control" id="password" name="password" ng-model="credentials.password"/>
+          </div>
+          <button type="submit" class="button" translate="loginform.button.login">Login</button>
+        </form>
+      </fieldset>
+    </center>
+  </div>
 </div>
-<form role="form" ng-submit="login()">
-    <div class="form-group">
-        <label for="username">Username:</label> <input type="text"
-            class="form-control" id="username" name="username" ng-model="credentials.username"/>
-    </div>
-    <div class="form-group">
-        <label for="password">Password:</label> <input type="password"
-            class="form-control" id="password" name="password" ng-model="credentials.password"/>
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>

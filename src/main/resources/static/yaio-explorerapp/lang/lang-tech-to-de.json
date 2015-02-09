@@ -46,6 +46,8 @@
         "tooltip.command.ToggleSysAll": "Zeige für alle Knoten die Metadaten an.",
         "tooltip.command.TogglePreWrap": "Hier können Sie wählen, ob die Beschreibung im Fenster umgebrochen (vorteilhaft bei Briefen und Fließtext) oder ob das Original bebehalten werden soll (empfehlenswert für Quelltexte, Logs usw.).",
         "tooltip.command.Desc": "Zeige die detaillierte Beschreibung an.",
+        "tooltip.loginform.username": "Der Ihnen zugesandte Nutzername.",
+        "tooltip.loginform.password": "Das unglaublich geheime Passwort.",
         "DUMMYXXXX": "DUMMYXXXX"
     },
     "regex": [
