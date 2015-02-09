@@ -16,11 +16,14 @@
  */
 package de.yaio.jobs;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.log4j.Logger;
 
-import de.yaio.app.CmdLineJob;
+import de.yaio.app.CallYaioInstance;
 import de.yaio.app.Configurator;
 
 /**
@@ -28,7 +31,7 @@ import de.yaio.app.Configurator;
  *     DatenExport
  *     Praesentation
  * <h4>FeatureDescription:</h4>
- *     job to recalc nodes in db
+ *     job to call yaio-instance to import nodes to db
  * 
  * @package de.yaio.jobs
  * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
@@ -36,16 +39,16 @@ import de.yaio.app.Configurator;
  * @copyright Copyright (c) 2014, Michael Schreiner
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-public class JobRecalcNodes extends CmdLineJob {
+public class CallYaioImport extends CallYaioInstance {
 
     private static final Logger LOGGER =
-        Logger.getLogger(JobRecalcNodes.class);
+        Logger.getLogger(CallYaioImport.class);
 
     /**
      * <h4>FeatureDomain:</h4>
      *     Constructor
      * <h4>FeatureDescription:</h4>
-     *     job to update the nodes in db
+     *     job to import nodes to db
      * <h4>FeatureResult:</h4>
      *   <ul>
      *     <li>initialize the application
@@ -54,24 +57,25 @@ public class JobRecalcNodes extends CmdLineJob {
      *     Constructor
      * @param args the command line arguments
      */
-    public JobRecalcNodes(String[] args) {
+    public CallYaioImport(String[] args) {
         super(args);
     }
 
     @Override
     protected Options addAvailiableCmdLineOptions() throws Throwable {
-        Options availiableCmdLineOptions = 
-                        Configurator.getNewOptionsInstance();
-
-        // add dfeault-Options
-        Configurator.getInstance().addAvailiableBaseCmdLineOptions(
-                        availiableCmdLineOptions);
+        Options availiableCmdLineOptions = super.addAvailiableCmdLineOptions();
         
-        // sysuid for export
-        Option sysuidOption = new Option(null, "sysuid", true,
-                "SysUID of Masternode to recalc");
-        sysuidOption.setRequired(true);
-        availiableCmdLineOptions.addOption(sysuidOption);
+        // file to import
+        Option formatOption = new Option(null, "importfile", true,
+                "file to import (in wikiformat)");
+        formatOption.setRequired(true);
+        availiableCmdLineOptions.addOption(formatOption);
+
+        // sysuid for import
+        Option parentsysuidOption = new Option(null, "parentsysuid", true,
+                "SysUID of Masternode to append importfile");
+        parentsysuidOption.setRequired(true);
+        availiableCmdLineOptions.addOption(parentsysuidOption);
 
         if (LOGGER.isDebugEnabled())
             LOGGER.debug("addAvailiableCmdLineOptions: " + availiableCmdLineOptions);
@@ -81,17 +85,16 @@ public class JobRecalcNodes extends CmdLineJob {
 
     @Override
     public void doJob() throws Throwable {
-        // initApplicationContext
-        Configurator.getInstance().getSpringApplicationContext();
+        // get options
+        String parentsysUID = Configurator.getInstance().getCommandLine().getOptionValue("parentsysuid");
+        String importfile = Configurator.getInstance().getCommandLine().getOptionValue("importfile");
         
-        // extract sysUID
-        String sysUID = Configurator.getInstance().getCommandLine().getOptionValue("sysuid");
-
-        // create recalcer
-        NodeRecalcer nodeRecalcer = new NodeRecalcer();
+        // call url
+        Map<String, String> files = new HashMap<String, String>();
+        files.put("file", importfile);
+        StringBuffer result = this.callPostUrl("/imports/wiki/"+ parentsysUID, null, files);
         
-        // recalc
-        System.out.println(nodeRecalcer.findAndRecalcMasternode(sysUID));
+        System.out.println(result);
     }
 
     // #############
@@ -129,7 +132,7 @@ public class JobRecalcNodes extends CmdLineJob {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        JobRecalcNodes me = new JobRecalcNodes(args);
+        CallYaioImport me = new CallYaioImport(args);
         me.startJobProcessing();
     }
 }

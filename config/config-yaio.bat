@@ -5,7 +5,9 @@ set BASEPATH=%1%
 set FLGWP=%2%
 
 rem set appconfig
-set STARTURL=http://localhost:8083/yaio-explorerapp/yaio-explorerapp.html#/
+set YAIOINSTANCE=yaio-playground.local
+set YAIOAPPURLCONFIG=-config dummy -yaioinstance %YAIOINSTANCE% -username admin -password secret
+set STARTURL=http://%YAIOINSTANCE%/yaio-explorerapp/yaio-explorerapp.html#/
 
 rem Gen Wiki-Only
 set PARSEONLY=
@@ -45,6 +47,8 @@ set PROG_ICalN=de.yaio.extension.datatransfer.ical.JobNodes2ICal
 set PROG_CSVN=de.yaio.extension.datatransfer.csv.JobNodes2CSV
 set PROG_JSONN=de.yaio.extension.datatransfer.json.JobNodes2JSON
 set PROG_JPAN=de.yaio.extension.datatransfer.jpa.JobNodes2JPA
+set PROG_CALLYAIOEXPORT=de.yaio.jobs.CallYaioExport
+set PROG_CALLYAIOIMPORT=de.yaio.jobs.CallYaioImport
 set PROG_APP=de.yaio.app.Application
 set PROG_RECALC=de.yaio.jobs.JobRecalcNodes
 set PROG_DIFF=
@@ -52,7 +56,7 @@ set PROG_WINMERGE="C:\ProgrammePortable\PortableApps\PortableApps\WinMergePortab
 
 set FILE_DELIM=-
 
-echo %CP%
+rem echo %CP%
 
 rem set Config
 set NEWID_OPTIONS=-pathiddb %YAIOVARPATH%\\nodeids.properties

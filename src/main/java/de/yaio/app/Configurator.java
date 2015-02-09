@@ -471,7 +471,7 @@ public class Configurator {
      */
     public void addAvailiableBaseCmdLineOptions(Options availiableCmdLineOptions) {
         // Config-File
-        Option configOption = new Option("", "config", true,
+        Option configOption = new Option(null, "config", true,
                 "comma separated list of JobConfig property files");
         configOption.setRequired(true);
         availiableCmdLineOptions.addOption(configOption);
@@ -482,7 +482,7 @@ public class Configurator {
         availiableCmdLineOptions.addOption(helpOption);
 
         // debug-Option
-        Option debugOption = new Option("", "debug", false, "debug");
+        Option debugOption = new Option(null, "debug", false, "debug");
         debugOption.setRequired(false);
         availiableCmdLineOptions.addOption(debugOption);
     }

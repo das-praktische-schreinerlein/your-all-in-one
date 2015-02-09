@@ -20,7 +20,7 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.log4j.Logger;
 
-import de.yaio.app.CmdLineJob;
+import de.yaio.app.CallYaioInstance;
 import de.yaio.app.Configurator;
 
 /**
@@ -28,7 +28,7 @@ import de.yaio.app.Configurator;
  *     DatenExport
  *     Praesentation
  * <h4>FeatureDescription:</h4>
- *     job to recalc nodes in db
+ *     job to call yaio-instance to export nodes from db
  * 
  * @package de.yaio.jobs
  * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
@@ -36,16 +36,16 @@ import de.yaio.app.Configurator;
  * @copyright Copyright (c) 2014, Michael Schreiner
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-public class JobRecalcNodes extends CmdLineJob {
+public class CallYaioExport extends CallYaioInstance {
 
     private static final Logger LOGGER =
-        Logger.getLogger(JobRecalcNodes.class);
+        Logger.getLogger(CallYaioExport.class);
 
     /**
      * <h4>FeatureDomain:</h4>
      *     Constructor
      * <h4>FeatureDescription:</h4>
-     *     job to update the nodes in db
+     *     job to to export nodes from db
      * <h4>FeatureResult:</h4>
      *   <ul>
      *     <li>initialize the application
@@ -54,22 +54,23 @@ public class JobRecalcNodes extends CmdLineJob {
      *     Constructor
      * @param args the command line arguments
      */
-    public JobRecalcNodes(String[] args) {
+    public CallYaioExport(String[] args) {
         super(args);
     }
 
     @Override
     protected Options addAvailiableCmdLineOptions() throws Throwable {
-        Options availiableCmdLineOptions = 
-                        Configurator.getNewOptionsInstance();
-
-        // add dfeault-Options
-        Configurator.getInstance().addAvailiableBaseCmdLineOptions(
-                        availiableCmdLineOptions);
+        Options availiableCmdLineOptions = super.addAvailiableCmdLineOptions();
         
+        // endpoint for export
+        Option formatOption = new Option(null, "format", true,
+                "exportformat (endpoint like wiki,csv,html ...)");
+        formatOption.setRequired(true);
+        availiableCmdLineOptions.addOption(formatOption);
+
         // sysuid for export
         Option sysuidOption = new Option(null, "sysuid", true,
-                "SysUID of Masternode to recalc");
+                "SysUID of Masternode to export");
         sysuidOption.setRequired(true);
         availiableCmdLineOptions.addOption(sysuidOption);
 
@@ -81,17 +82,14 @@ public class JobRecalcNodes extends CmdLineJob {
 
     @Override
     public void doJob() throws Throwable {
-        // initApplicationContext
-        Configurator.getInstance().getSpringApplicationContext();
-        
-        // extract sysUID
+        // get options
         String sysUID = Configurator.getInstance().getCommandLine().getOptionValue("sysuid");
-
-        // create recalcer
-        NodeRecalcer nodeRecalcer = new NodeRecalcer();
+        String format = Configurator.getInstance().getCommandLine().getOptionValue("format");
         
-        // recalc
-        System.out.println(nodeRecalcer.findAndRecalcMasternode(sysUID));
+        // call url
+        StringBuffer result = this.callGetUrl("/exports/" + format + "/"+ sysUID, null);
+        
+        System.out.println(result);
     }
 
     // #############
@@ -129,7 +127,7 @@ public class JobRecalcNodes extends CmdLineJob {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        JobRecalcNodes me = new JobRecalcNodes(args);
+        CallYaioExport me = new CallYaioExport(args);
         me.startJobProcessing();
     }
 }

@@ -20,7 +20,7 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.log4j.Logger;
 
-import de.yaio.app.CmdLineJob;
+import de.yaio.app.CallYaioInstance;
 import de.yaio.app.Configurator;
 
 /**
@@ -28,7 +28,7 @@ import de.yaio.app.Configurator;
  *     DatenExport
  *     Praesentation
  * <h4>FeatureDescription:</h4>
- *     job to recalc nodes in db
+ *     job to call yaio-instance to recalc nodes in db
  * 
  * @package de.yaio.jobs
  * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
@@ -36,10 +36,10 @@ import de.yaio.app.Configurator;
  * @copyright Copyright (c) 2014, Michael Schreiner
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-public class JobRecalcNodes extends CmdLineJob {
+public class CallYaioRecalcNodes extends CallYaioInstance {
 
     private static final Logger LOGGER =
-        Logger.getLogger(JobRecalcNodes.class);
+        Logger.getLogger(CallYaioRecalcNodes.class);
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -54,18 +54,13 @@ public class JobRecalcNodes extends CmdLineJob {
      *     Constructor
      * @param args the command line arguments
      */
-    public JobRecalcNodes(String[] args) {
+    public CallYaioRecalcNodes(String[] args) {
         super(args);
     }
 
     @Override
     protected Options addAvailiableCmdLineOptions() throws Throwable {
-        Options availiableCmdLineOptions = 
-                        Configurator.getNewOptionsInstance();
-
-        // add dfeault-Options
-        Configurator.getInstance().addAvailiableBaseCmdLineOptions(
-                        availiableCmdLineOptions);
+        Options availiableCmdLineOptions = super.addAvailiableCmdLineOptions();
         
         // sysuid for export
         Option sysuidOption = new Option(null, "sysuid", true,
@@ -81,17 +76,13 @@ public class JobRecalcNodes extends CmdLineJob {
 
     @Override
     public void doJob() throws Throwable {
-        // initApplicationContext
-        Configurator.getInstance().getSpringApplicationContext();
-        
-        // extract sysUID
+        // get options
         String sysUID = Configurator.getInstance().getCommandLine().getOptionValue("sysuid");
-
-        // create recalcer
-        NodeRecalcer nodeRecalcer = new NodeRecalcer();
         
-        // recalc
-        System.out.println(nodeRecalcer.findAndRecalcMasternode(sysUID));
+        // call url
+        StringBuffer result = this.callGetUrl("/admin/recalc/" + sysUID, null);
+        
+        System.out.println(result);
     }
 
     // #############
@@ -129,7 +120,7 @@ public class JobRecalcNodes extends CmdLineJob {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        JobRecalcNodes me = new JobRecalcNodes(args);
+        CallYaioRecalcNodes me = new CallYaioRecalcNodes(args);
         me.startJobProcessing();
     }
 }

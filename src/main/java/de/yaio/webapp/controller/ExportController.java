@@ -631,6 +631,42 @@ public class ExportController {
      * <h4>FeatureDomain:</h4>
      *     Webservice
      * <h4>FeatureDescription:</h4>
+     *     Request to read the node for sysUID and return it in layout-html-format 
+     *     with all children, but without header/footer-file.
+     *     replaces all /documentation/-urls to /yaio-explorerapp/yaio-explorerapp.html#/frontpage/
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>String - html-format of the node
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice Query
+     * @param sysUID - sysUID to export
+     * @param response - the response-Obj to set contenttype and headers
+     * @return String - html-format of the node
+     */
+    @RequestMapping(method=RequestMethod.GET, 
+                    value = "/htmlfrontpagefragment/{sysUID}", 
+                    produces="text/html")
+    public @ResponseBody String exportNodeAsHtmlFrontpageFragment(
+           @PathVariable(value="sysUID") String sysUID, HttpServletResponse response) {
+        // configure
+        OutputOptions oOptions = new OutputOptionsImpl();
+        oOptions.setFlgProcessDocLayout(true);
+        oOptions.setFlgProcessMarkdown(true);
+        oOptions.setMaxUeEbene(-1);
+        String res = this.commonExportNodeAsHtml(sysUID, oOptions, response, "", "");
+        
+        // replace urls to frontpage
+        res = res.replaceAll("\"/exports/documentation/", 
+                             "/yaio-explorerapp/yaio-explorerapp.html#/frontpage/");
+        
+        return res;
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
      *     Request to read the node for sysUID and return it in html-format with all children<br>
      *     use the setting of the output-options from request<br>
      *     requires an post-form application/x-www-form-urlencoded
