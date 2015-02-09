@@ -1,5 +1,7 @@
 package de.yaio.app;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
@@ -15,6 +17,7 @@ import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
+import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter.XFrameOptionsMode;
 import org.springframework.security.web.util.AntPathRequestMatcher;
 
 import de.yaio.rest.controller.CsrfHeaderFilter;
@@ -38,6 +41,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public static class APIExportsSecurityConfigurerAdapter extends APIWebSecurityConfigurerAdapter {
         @Override
         protected void configure(HttpSecurity http) throws Exception {
+            String xframeAllowedDomains = System.getProperty("yaio.my-domain", "dummy") 
+                            + "," + System.getProperty("yaio.security.xframe-allowed-domains", "");
+            List<String> xframeAllowedDomainsList = Arrays.asList(xframeAllowedDomains.split(","));
+            logger.info("APIExportsSecurityConfigurerAdapter xframeallowOptions:" + xframeAllowedDomainsList);
             http
                     // authentification
                     .httpBasic()
@@ -50,6 +57,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                    // disable csrf-protection
                    .csrf().disable()
+                   .headers()
+//                        .frameOptions().disable()
+//                        .addHeaderWriter(
+//                                   new XFrameOptionsHeaderWriter(
+//                                                   new WhiteListedAllowFromStrategy(
+//                                                                   xframeAllowedDomainsList)))
+                           .addHeaderWriter(
+                                           new XFrameOptionsHeaderWriter(
+                                                           XFrameOptionsMode.SAMEORIGIN))
             ;
         }
     }    
@@ -126,6 +142,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         
         @Override
         protected void configure(HttpSecurity http) throws Exception {
+            String xframeAllowedDomains = System.getProperty("yaio.my-domain", "dummy") 
+                            + "," + System.getProperty("yaio.security.xframe-allowed-domains", "");
+            List<String> xframeAllowedDomainsList = Arrays.asList(xframeAllowedDomains.split(","));
+            logger.info("APIExportsSecurityConfigurerAdapter xframeallowOptions:" + xframeAllowedDomainsList);
             http
                     // authentification
                     .formLogin()
@@ -151,7 +171,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                    .csrf().disable()
                    //.csrf().csrfTokenRepository(csrfTokenRepository());
                    // allow include as Frame for sameorigin
-                   .headers().addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))
+                   .headers()
+//                        .frameOptions().disable()
+//                         .addHeaderWriter(
+//                                   new XFrameOptionsHeaderWriter(
+//                                                   new WhiteListedAllowFromStrategy(
+//                                                                   xframeAllowedDomainsList)))
+                          .addHeaderWriter(
+                                           new XFrameOptionsHeaderWriter(
+                                                           XFrameOptionsMode.SAMEORIGIN))
                  .and()
                    // add CsrfHeaderFilter because angular uses another Header
                    .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class);

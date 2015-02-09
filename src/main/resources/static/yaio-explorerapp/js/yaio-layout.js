@@ -644,7 +644,7 @@ function togglePreWrap(element) {
  
  function showMarkdownHelp() {
      // show message
-     var url = "/examples/markdownhelp/markdownhelp.html";
+     var url = "/examples/markdownhelp/markdownhelp.html" + "?" + createXFrameAllowFrom();
      console.log("showMarkdownHelp:" + url);
      $("#markdownhelp-iframe").attr('src',url);
      $("#markdownhelp-box" ).dialog({

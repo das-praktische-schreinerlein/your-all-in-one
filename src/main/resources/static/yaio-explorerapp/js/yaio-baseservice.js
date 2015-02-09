@@ -148,6 +148,7 @@ function setupAppSize() {
 
 function yaioShowHelpSite(url) {
     // set messagetext
+    url += "?" + createXFrameAllowFrom();
     console.log("yaioShowHelpSite:" + url);
     $("#help-iframe").attr('src',url);
     
@@ -428,4 +429,8 @@ function convertMarkdownToJira(descText) {
     }
     
     return newDescText;
+}
+
+function createXFrameAllowFrom() {
+    return "x-frames-allow-from=" + window.location.hostname;
 }
