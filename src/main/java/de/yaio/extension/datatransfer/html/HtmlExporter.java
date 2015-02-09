@@ -1032,6 +1032,7 @@ public class HtmlExporter extends WikiExporter {
         // prepare descText
         String newDescText = "";
         String newDescTextRest = DataUtils.htmlEscapeTextLazy(descText);
+        newDescTextRest = newDescTextRest.replaceAll("\\&lt;br\\&gt;", "<br>");
         int codeStart = newDescTextRest.indexOf("```");
         while (codeStart >= 0) {
             // splice start and add to newDescText
