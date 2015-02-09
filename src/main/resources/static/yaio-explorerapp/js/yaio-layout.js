@@ -820,7 +820,10 @@ function togglePreWrap(element) {
      descText = descText.replace(/\<WLBR\>/g, "\n");
      descText = descText.replace(/\<WLESC\>/g, "\\");
      descText = descText.replace(/\<WLTAB\>/g, "\t");
+     
+     // convert and secure
      var nodeDesc = convertMarkdownToJira(descText);
+     nodeDesc = htmlEscapeText(descText);
      
      // set clipboard-content
      $( "#clipboard-content" ).html(nodeDesc);
@@ -851,6 +854,9 @@ function togglePreWrap(element) {
   * @param content - txt content
   */
  function openTxtExportWindow(content) {
+     // secure
+     content = htmlEscapeText(content);
+
      // set clipboard-content
      $( "#clipboard-content" ).html(content);
      

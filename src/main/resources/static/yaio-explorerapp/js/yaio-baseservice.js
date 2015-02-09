@@ -330,14 +330,21 @@ function formatMarkdown(descText, flgHighlightNow) {
  */
 function prepareTextForMarkdown(descText) {
     // prepare descText
+    var noCode = "";
     var newDescText = '';
     var newDescTextRest = descText;
     var codeStart = newDescTextRest.indexOf("```");
     while (codeStart >= 0) {
-        // splice start and add to newDescText
-        newDescText += newDescTextRest.slice(0, codeStart + 3);
-        newDescTextRest = newDescTextRest.slice(codeStart + 3);
+        // splice start before ```and add to newDescText
+        noCode = newDescTextRest.slice(0, codeStart + 3);
         
+        // replace <> but prevent <br> in noCode
+        noCode = htmlEscapeText(noCode);
+        noCode = noCode.replace(/&lt;br&gt;/g, "<br>");
+        newDescText += noCode;
+        
+        // extract code
+        newDescTextRest = newDescTextRest.slice(codeStart + 3);
         var codeEnd = newDescTextRest.indexOf("```");
         if (codeEnd >= 0) {
             // splice all before ending ```
@@ -359,8 +366,14 @@ function prepareTextForMarkdown(descText) {
         }
         codeStart = newDescTextRest.indexOf("```");
     }
+
+    // replace <> but prevent <br> in noCode
+    noCode = newDescTextRest;
+    noCode = htmlEscapeText(noCode);
+    noCode = noCode.replace(/&lt;br&gt;/g, "<br>");
+    
     // add rest to newDescText
-    newDescText += newDescTextRest;
+    newDescText += noCode;
     
     return newDescText;
 }

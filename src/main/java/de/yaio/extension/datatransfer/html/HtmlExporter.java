@@ -83,6 +83,10 @@ public class HtmlExporter extends WikiExporter {
     protected static String CONST_FORMATTER_PLANCHILDRENSUM = PlanChildrenSumDataFormatterImpl.class.getName();
     
     protected static Markdown4jProcessor markdownProcessor= new Markdown4jProcessor();
+    static {
+        //markdownProcessor.addHtmlAttribute("style", "color:red", "blockquote", "h1");
+        //markdownProcessor.addStyleClass("", "img");
+    }
 
     // Logger
     private static final Logger LOGGER =
@@ -1027,7 +1031,7 @@ public class HtmlExporter extends WikiExporter {
     public String prepareTextForMarkdown(String descText) {
         // prepare descText
         String newDescText = "";
-        String newDescTextRest = descText;
+        String newDescTextRest = DataUtils.htmlEscapeText(descText);
         int codeStart = newDescTextRest.indexOf("```");
         while (codeStart >= 0) {
             // splice start and add to newDescText

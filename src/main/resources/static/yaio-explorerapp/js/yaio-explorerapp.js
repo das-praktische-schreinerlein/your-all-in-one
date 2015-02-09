@@ -298,7 +298,7 @@ yaioM.controller('FrontPageCtrl', function($rootScope, $scope, $location, $http,
             $scope.error = false;
         } else {
             // load data
-            $scope.frontPageUrl = '/exports/htmllayoutfragment/' + nodeId;
+            $scope.frontPageUrl = '/exports/htmlfrontpagefragment/' + nodeId;
         }
     });
 })
