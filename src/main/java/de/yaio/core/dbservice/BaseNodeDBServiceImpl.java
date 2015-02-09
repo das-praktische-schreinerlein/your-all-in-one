@@ -26,6 +26,7 @@ import javax.persistence.TypedQuery;
 import org.apache.log4j.Logger;
 
 import de.yaio.core.node.BaseNode;
+import de.yaio.core.node.TaskNode;
 import de.yaio.core.nodeservice.BaseNodeService;
 
 
@@ -295,6 +296,24 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
                         BaseNode.class
                         ).setParameter("symLinkRef", symLinkRef).getResultList();
     }
-    
-    
+
+    @Override
+    public BaseNode resetYaio() {
+        // delete all nodes
+        BaseNode.entityManager().createNativeQuery("delete from BASE_NODE").executeUpdate();
+        
+        TaskNode masterNode = new TaskNode();
+        masterNode.setEbene(0);
+        masterNode.setMetaNodeNummer("1");
+        masterNode.setMetaNodePraefix("Masterplan");
+        masterNode.setName("Masterplan");
+        masterNode.setNodeDesc("Masternode of the Masterplan");
+        masterNode.setSrcName("Masterplan");
+        masterNode.setState(TaskNode.CONST_NODETYPE_IDENTIFIER_RUNNNING);
+        masterNode.setSysUID("MasterplanMasternode1");
+        masterNode.setType(TaskNode.CONST_NODETYPE_IDENTIFIER_RUNNNING);
+        
+        masterNode.persist();
+        return masterNode;
+    }
 }

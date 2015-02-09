@@ -121,4 +121,19 @@ public interface BaseNodeDBService {
      * @return List of machting nodes for symLinkRef
      */
     public List<BaseNode> findSymLinkBaseNode(String symLinkRef);
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Persistence
+     * <h4>FeatureDescription:</h4>
+     *     delete all nodes an create a new Masternode
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue BaseNode - the new BaseNode
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Persistence JPA
+     * @return new Masternode
+     */
+    public BaseNode resetYaio();
 }

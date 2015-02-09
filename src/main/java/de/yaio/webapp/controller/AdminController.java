@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import de.yaio.core.dbservice.BaseNodeDBService;
+import de.yaio.core.dbservice.BaseNodeDBServiceImpl;
 import de.yaio.core.node.BaseNode;
 import de.yaio.jobs.NodeRecalcer;
 import de.yaio.rest.controller.NodeActionResponse;
@@ -52,14 +54,14 @@ public class AdminController {
      *     
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
+     *     Webservice Admin
      * @param sysUID - sysUID to recalc
      * @return text-message
      */
     @RequestMapping(method=RequestMethod.GET, 
                     value = "/recalc/{sysUID}", 
                     produces="text/html")
-    public @ResponseBody String importNodeAsWiki(
+    public @ResponseBody String recalcNode(
            @PathVariable(value="sysUID") String sysUID) {
         NodeActionResponse response = new NodeActionResponse(
                         "ERROR", "node '" + sysUID + "' doesnt exists", 
@@ -87,6 +89,49 @@ public class AdminController {
                             "You failed to recalc node '" 
                                             + sysUID + "' => " + e, 
                                             null, null, null, null).getStateMsg();
+        }
+        
+        return response.getStateMsg();
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
+     *     reset the yaio-instance
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice Admin
+     * @return text-message
+     */
+    @RequestMapping(method=RequestMethod.GET, 
+                    value = "/reset", 
+                    produces="text/html")
+    public @ResponseBody String reset() {
+        NodeActionResponse response = new NodeActionResponse(
+                        "ERROR", "it is not allowed to reset this yaio-instance: change yaio.demo.allow-reset=true", 
+                        null, null, null, null);
+
+        if ("true".equalsIgnoreCase(System.getProperty("yaio.demo.allow-reset", "false"))) {
+            // reset if option allows it
+            try {
+                // reset
+                BaseNodeDBService dbService = new BaseNodeDBServiceImpl();
+                BaseNode masterNode = dbService.resetYaio();
+                
+                response = new NodeActionResponse(
+                                "OK", "yaio-instance resetet", 
+                                masterNode, null, null, null);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return new NodeActionResponse(
+                                "ERROR", 
+                                "You failed to reset yaio-instance" + e, 
+                                                null, null, null, null).getStateMsg();
+            }
         }
         
         return response.getStateMsg();
