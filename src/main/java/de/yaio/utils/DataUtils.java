@@ -17,14 +17,11 @@
 package de.yaio.utils;
 
 import java.security.MessageDigest;
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-
-import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
 
 /**
  * <h4>FeatureDomain:</h4>

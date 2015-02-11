@@ -25,7 +25,6 @@ import de.yaio.core.datadomain.PlanCalcData;
 import de.yaio.core.datadomain.PlanChildrenSumData;
 import de.yaio.datatransfer.exporter.Exporter;
 import de.yaio.datatransfer.exporter.OutputOptions;
-import de.yaio.utils.Calculator;
 
 /**
  * <h4>FeatureDomain:</h4>

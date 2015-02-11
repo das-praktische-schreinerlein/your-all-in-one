@@ -36,7 +36,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 public class YAIOStaticRessourceConfigurator extends WebMvcConfigurerAdapter {
     
     /** property: file location of the external examples-directory to map for tomcat**/
-    public static String CONST_PROPNAME_EXAMPLES_LOCATION = 
+    public static final String CONST_PROPNAME_EXAMPLES_LOCATION = 
                     "yaio.exportcontroller.examples.location";
     
     @Override

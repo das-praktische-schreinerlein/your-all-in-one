@@ -49,7 +49,7 @@ public interface BaseWorkflowData extends DataDomain, IstChildrenSumData,
     @Transient
     @XmlTransient
     @JsonIgnore
-    public static Date CONST_MAXDATE = new Date(2147483647000l);
+    public static Date CONST_MAXDATE = new Date(2147483647000L);
     
     @XmlTransient
     public static enum WorkflowState {

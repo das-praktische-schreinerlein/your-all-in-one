@@ -51,7 +51,7 @@ public class PlanDataParserImpl  extends ParserImpl implements PlanDataParser {
             Logger.getLogger(PlanDataParserImpl.class);
 
     // Patterns
-    protected static String CONST_PATTERN_SEG_OPTIONAL_DATETIME = 
+    protected static final String CONST_PATTERN_SEG_OPTIONAL_DATETIME = 
             //          "("+ CONST_PATTERN_SEG_DATUM + ")?\\s?("+ CONST_PATTERN_SEG_TIME + ")?" 
             //        + "-?("+ CONST_PATTERN_SEG_DATUM + ")?\\s?("+ CONST_PATTERN_SEG_TIME + ")?";
             // TODO: TASK aif TIME umsetzen und schauen was das Problem ist

@@ -50,7 +50,7 @@ public class ResLocDataParserImpl  extends ParserImpl implements ResLocDataParse
             Logger.getLogger(ResLocDataParserImpl.class);
 
     // Patterns
-    protected static String CONST_PATTERN_SEG_STRING1 = "[^,:\\[\\]]";
+    protected static final String CONST_PATTERN_SEG_STRING1 = "[^,:\\[\\]]";
     protected static final String CONST_PATTERN_SEG_URL =
         "[-a-zA-Z0-9\\.:%&=_?/#\\~\\\\+\\(\\)!]+";
     protected static final String CONST_PATTERN_SEG_URLRES =

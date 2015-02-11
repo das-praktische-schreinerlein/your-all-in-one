@@ -36,16 +36,16 @@ import org.apache.poi.ss.usermodel.CellValue;
 
 public class ExcelService {
 
-    public static String CONST_PARAM_DELIM = ",";
+    public static final String CONST_PARAM_DELIM = ",";
 
-    public static String CONST_CS_DATEFORM = "ddd dd.mm.yyyy";
-    public static String CONST_CS_GANT_DATEFORM = "dd.mm";
-    public static String CONST_CS_PERCENT = "0%";
-    public static String CONST_CS_AUFWAND = "0.0";
+    public static final String CONST_CS_DATEFORM = "ddd dd.mm.yyyy";
+    public static final String CONST_CS_GANT_DATEFORM = "dd.mm";
+    public static final String CONST_CS_PERCENT = "0%";
+    public static final String CONST_CS_AUFWAND = "0.0";
 
-    public static int CONST_COL_WIDTH_INT = 8 * 256;
-    public static int CONST_COL_WIDTH_DATE = 15 * 256;
-    public static int CONST_COL_WIDTH_DATE_SHORT = 6 * 256;
+    public static final int CONST_COL_WIDTH_INT = 8 * 256;
+    public static final int CONST_COL_WIDTH_DATE = 15 * 256;
+    public static final int CONST_COL_WIDTH_DATE_SHORT = 6 * 256;
 
 
     public ExcelService(final HSSFWorkbook workbook) {

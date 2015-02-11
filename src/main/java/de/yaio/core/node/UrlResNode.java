@@ -59,7 +59,7 @@ public class UrlResNode extends InfoNode implements ResLocData {
     public static final String CONST_NODETYPE_IDENTIFIER_EMAILRES = "EMAILRES";
     
     // Status-Konstanten
-    public static Map<String, Object> CONST_MAP_NODETYPE_IDENTIFIER = new HashMap<String, Object>();
+    public static final Map<String, Object> CONST_MAP_NODETYPE_IDENTIFIER = new HashMap<String, Object>();
     static {
         // Defaults
         CONST_MAP_NODETYPE_IDENTIFIER.put(CONST_NODETYPE_IDENTIFIER_URLRES, CONST_NODETYPE_IDENTIFIER_URLRES);

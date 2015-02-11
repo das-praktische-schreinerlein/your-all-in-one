@@ -42,7 +42,7 @@ import de.yaio.extension.datatransfer.wiki.WikiExporter;
  */
 public class MindMapExporter extends WikiExporter {
     
-    protected static int CONST_MIN4CLOUD = 2;
+    protected static final int CONST_MIN4CLOUD = 2;
     
     protected static WorkflowFormatConfigurator workflowFormatConfigurator = 
             WorkflowFormatConfigurator.getWorkflowFormatConfigurator();

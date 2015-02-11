@@ -59,9 +59,6 @@ import de.yaio.core.datadomain.BaseWorkflowData;
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.datadomain.DescData;
 import de.yaio.core.datadomain.MetaData;
-import de.yaio.core.datadomain.PlanDependencieData.DurationMeasure;
-import de.yaio.core.datadomain.PlanDependencieData.PredecessorDependencieType;
-import de.yaio.core.datadomain.PlanDependencieData.PredecessorType;
 import de.yaio.core.datadomain.SysData;
 import de.yaio.core.datadomainservice.MetaDataService;
 import de.yaio.core.datadomainservice.MetaDataServiceImpl;
@@ -98,8 +95,8 @@ public class BaseNode implements BaseData, MetaData, SysData,
         Logger.getLogger(BaseNode.class);
 
     public static final String CONST_NODETYPE_IDENTIFIER_UNKNOWN = "UNKNOWN";
-    public static Map<String, Object> CONST_MAP_NODETYPE_IDENTIFIER = new HashMap<String, Object>();
-    public static Map<String, WorkflowState> CONST_MAP_STATE_WORKFLOWSTATE = new HashMap<String, WorkflowState>();
+    public static final Map<String, Object> CONST_MAP_NODETYPE_IDENTIFIER = new HashMap<String, Object>();
+    public static final Map<String, WorkflowState> CONST_MAP_STATE_WORKFLOWSTATE = new HashMap<String, WorkflowState>();
     static {
         // define WorkflowStates
         CONST_MAP_STATE_WORKFLOWSTATE.put(CONST_NODETYPE_IDENTIFIER_UNKNOWN, WorkflowState.NOWORKFLOW);
@@ -543,7 +540,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     @Transient
     @XmlTransient
     @JsonIgnore
-    protected static int CONST_CURSORTIDX_STEP = 5;
+    protected static final int CONST_CURSORTIDX_STEP = 5;
     
     //
     // checks 

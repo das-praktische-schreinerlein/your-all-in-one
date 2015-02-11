@@ -31,7 +31,7 @@ public class TestNode extends BaseNode implements TestObj {
     }
 
     // Status-Konstanten
-    public static Map<String, Object> CONST_MAP_NODETYPE_IDENTIFIER = new HashMap<String, Object>();
+    public static final Map<String, Object> CONST_MAP_NODETYPE_IDENTIFIER = new HashMap<String, Object>();
     static {
         // Defaults
         CONST_MAP_NODETYPE_IDENTIFIER.put("TEST", "TEST");

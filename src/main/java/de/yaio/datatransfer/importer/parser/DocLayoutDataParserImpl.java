@@ -50,7 +50,7 @@ public class DocLayoutDataParserImpl  extends ParserImpl implements DocLayoutDat
             Logger.getLogger(DocLayoutDataParserImpl.class);
 
     // Pattern fuer das Doc-Layout (Type, Styleclass, ShortUe, FlagDivBeenden)
-    protected static String CONST_PATTERN_SEG_STRING1 = "[^,:\\[\\]]";
+    protected static final String CONST_PATTERN_SEG_STRING1 = "[^,:\\[\\]]";
     protected static final String CONST_PATTERN_SEG_DOCLAYOUT =
         "DocLayout:\\W*"
                + "(" + CONST_PATTERN_SEG_STRING1 + "*)?,"

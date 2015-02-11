@@ -241,8 +241,8 @@ public class NodeFactoryImpl implements NodeFactory {
         Map<String, Class<?>> hshCurNodeTypeIdentifier = this.hshNodeTypeIdentifier;
         String nodeTypeIdentifier = 
                 getNodeTypeIdentifierFromText(hshCurNodeTypeIdentifier, srcName);
-        if (nodeTypeIdentifier != null && 
-                hshCurNodeTypeIdentifier.get(nodeTypeIdentifier) != null) {
+        if (   nodeTypeIdentifier != null 
+            && hshCurNodeTypeIdentifier.get(nodeTypeIdentifier) != null) {
             classType = hshCurNodeTypeIdentifier.get(nodeTypeIdentifier);
         }
 

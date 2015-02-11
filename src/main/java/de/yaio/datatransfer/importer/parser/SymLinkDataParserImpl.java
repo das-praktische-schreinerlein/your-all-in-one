@@ -50,7 +50,7 @@ public class SymLinkDataParserImpl  extends ParserImpl implements SymLinkDataPar
             Logger.getLogger(SymLinkDataParserImpl.class);
 
     // Patterns
-    protected static String CONST_PATTERN_SEG_STRING1 = "[^,:\\[\\]]";
+    protected static final String CONST_PATTERN_SEG_STRING1 = "[^,:\\[\\]]";
     protected static final String CONST_PATTERN_SEG_SYMREF = "[A-Za-z]+[0-9]+";
     protected static final String CONST_PATTERN_SEG_SYMLINK =
         "SymLink: (" + CONST_PATTERN_SEG_SYMREF + ")?," 

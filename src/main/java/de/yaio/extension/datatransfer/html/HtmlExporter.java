@@ -68,19 +68,19 @@ public class HtmlExporter extends WikiExporter {
         super();
     }
     
-    protected static String CONST_LAYOUT_TAG_DIV = "DIV";
-    protected static String CONST_LAYOUT_TAG_UE = "UE";
-    protected static String CONST_LAYOUT_TAG_P = "P";
-    protected static String CONST_LAYOUT_TAG_LI = "LI";
-    protected static String CONST_LAYOUT_TAG_TR = "TR";
-    protected static String CONST_LAYOUT_TAG_DIRECT = "DIRECT";
-    protected static String CONST_LAYOUT_TAG_ENDDIV = "ENDDIV";
+    protected static final String CONST_LAYOUT_TAG_DIV = "DIV";
+    protected static final String CONST_LAYOUT_TAG_UE = "UE";
+    protected static final String CONST_LAYOUT_TAG_P = "P";
+    protected static final String CONST_LAYOUT_TAG_LI = "LI";
+    protected static final String CONST_LAYOUT_TAG_TR = "TR";
+    protected static final String CONST_LAYOUT_TAG_DIRECT = "DIRECT";
+    protected static final String CONST_LAYOUT_TAG_ENDDIV = "ENDDIV";
     
-    protected static String CONST_FORMATTER_DESC = DescDataFormatterImpl.class.getName();
-    protected static String CONST_FORMATTER_IST = IstDataFormatterImpl.class.getName();
-    protected static String CONST_FORMATTER_PLAN = PlanDataFormatterImpl.class.getName();
-    protected static String CONST_FORMATTER_ISTCHILDRENSUM = IstChildrenSumDataFormatterImpl.class.getName();
-    protected static String CONST_FORMATTER_PLANCHILDRENSUM = PlanChildrenSumDataFormatterImpl.class.getName();
+    protected static final String CONST_FORMATTER_DESC = DescDataFormatterImpl.class.getName();
+    protected static final String CONST_FORMATTER_IST = IstDataFormatterImpl.class.getName();
+    protected static final String CONST_FORMATTER_PLAN = PlanDataFormatterImpl.class.getName();
+    protected static final String CONST_FORMATTER_ISTCHILDRENSUM = IstChildrenSumDataFormatterImpl.class.getName();
+    protected static final String CONST_FORMATTER_PLANCHILDRENSUM = PlanChildrenSumDataFormatterImpl.class.getName();
     
     protected static Markdown4jProcessor markdownProcessor = new Markdown4jProcessor();
     static {
@@ -752,10 +752,10 @@ public class HtmlExporter extends WikiExporter {
         name = name.replaceAll("<WLTAB>", "\t");
         name = DataUtils.htmlEscapeText(name);
         blockName = name + " (" + curNode.getWorkingId() + ")";
-        styleClassesNameContainer2 = " node-level" +  + curNode.getEbene();
+        styleClassesNameContainer2 = " node-level" + curNode.getEbene();
         if (UrlResNode.class.isInstance(curNode)) {
             // URLRes
-            UrlResNode symlinkNode = ((UrlResNode) curNode);
+            UrlResNode symlinkNode = (UrlResNode) curNode;
             
             // Label belegen
             String suffix = name;

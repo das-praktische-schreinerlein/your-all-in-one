@@ -16,12 +16,10 @@
  */
 package de.yaio.jobs;
 
-import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.log4j.Logger;
 
 import de.yaio.app.CallYaioInstance;
-import de.yaio.app.Configurator;
 
 /**
  * <h4>FeatureDomain:</h4>

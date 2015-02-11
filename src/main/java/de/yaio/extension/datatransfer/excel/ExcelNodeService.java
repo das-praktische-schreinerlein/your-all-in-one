@@ -73,9 +73,9 @@ public class ExcelNodeService {
     public static final int CONST_PLANUNG_COL_REAL_DATE_ENDE =
         CONST_PLANUNG_COL_DESC + 18;
 
-    public static String CONST_SHEETNNAME_GANT = "Gant";
+    public static final String CONST_SHEETNNAME_GANT = "Gant";
     public static final int CONST_GANT_ROUW_UE = CONST_PLANUNG_ROUW_UE;
-    public static final int CONST_GANT_ROW_PLAN_MODUS = CONST_GANT_ROUW_UE -1;
+    public static final int CONST_GANT_ROW_PLAN_MODUS = CONST_GANT_ROUW_UE - 1;
     public static final int CONST_GANT_COL_ID = 0;
     public static final int CONST_GANT_COL_PROJEKT = 1;
     public static final int CONST_GANT_COL_MODUL = 2;
@@ -97,7 +97,7 @@ public class ExcelNodeService {
     public static final int CONST_GANT_COL_GANT_START =
         CONST_GANT_COL_SCHRITT5 + 5;
     public static final int CONST_GANT_COL_PLAN_MODUS = CONST_GANT_COL_PLAN_DATE_START;
-    public static final int CONST_GANT_COL_PLAN_MODUS_NAME = CONST_GANT_COL_PLAN_MODUS+1;
+    public static final int CONST_GANT_COL_PLAN_MODUS_NAME = CONST_GANT_COL_PLAN_MODUS + 1;
 
 
     public static final int CONST_GANT_VERSATZ =

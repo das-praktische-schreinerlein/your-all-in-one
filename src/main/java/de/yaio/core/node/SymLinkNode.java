@@ -53,7 +53,7 @@ public class SymLinkNode extends BaseNode implements SymLinkData {
     public static final String CONST_NODETYPE_IDENTIFIER_SYMLINK = "SYMLINK";
     
     // Status-Konstanten
-    public static Map<String, Object> CONST_MAP_NODETYPE_IDENTIFIER = new HashMap<String, Object>();
+    public static final Map<String, Object> CONST_MAP_NODETYPE_IDENTIFIER = new HashMap<String, Object>();
     static {
         // Defaults
         CONST_MAP_NODETYPE_IDENTIFIER.put("SYMLINK", CONST_NODETYPE_IDENTIFIER_SYMLINK);
