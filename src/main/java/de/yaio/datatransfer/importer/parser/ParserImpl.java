@@ -55,7 +55,7 @@ public abstract class ParserImpl implements Parser {
 
             // fuehrende ([ entfernen
             String newPraefix = name.replaceAll("[\\[\\(]$", ""); 
-            if (! name.equals(newPraefix)) {
+            if(!name.equals(newPraefix)) {
                 name = newPraefix;
                 flgBrackets = true;
             }

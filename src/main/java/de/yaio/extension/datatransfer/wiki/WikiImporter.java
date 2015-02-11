@@ -425,7 +425,7 @@ public class WikiImporter extends ImporterImpl {
                 if (BaseNode.CONST_NODETYPE_IDENTIFIER_UNKNOWN.equals(state)) {
                     // SKIP: UNKNOWN
                     continue;
-                } else if (flgWFStatesOnly && ! this.importer.isWFStatus(state)) {
+                } else if (flgWFStatesOnly && !this.importer.isWFStatus(state)) {
                     // SKIP: INFO
                     continue;
                 } else {

@@ -72,7 +72,7 @@ public class SysDataServiceImpl extends DataDomainRecalcImpl implements SysDataS
     public void doRecalcAfterChildren(final DataDomain node, final int recurceDirection) throws Exception {
         // Check if node is compatibel
         if (node != null) {
-            if (! SysData.class.isInstance(node)) {
+            if(!SysData.class.isInstance(node)) {
                 throw new IllegalArgumentException();
             }
         }
@@ -111,7 +111,7 @@ public class SysDataServiceImpl extends DataDomainRecalcImpl implements SysDataS
         String checksum = node.getSysCurChecksum();
         String newChecksum = this.getCheckSum(node);
         boolean flgChanged = false;
-        if ((checksum == null) || (! newChecksum.equals(checksum))) {
+        if ((checksum == null) ||(!newChecksum.equals(checksum))) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("initSysData checksum changed old:" + checksum 
                            + " new:" + newChecksum 

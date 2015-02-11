@@ -77,7 +77,7 @@ public class PlanChildrenSumDataFormatterImpl extends FormatterImpl
             final OutputOptions options) throws Exception {
         // Check if node is compatibel
         if (node != null) {
-            if (! PlanChildrenSumData.class.isInstance(node)) {
+            if(!PlanChildrenSumData.class.isInstance(node)) {
                 throw new IllegalArgumentException();
             }
         }
@@ -88,7 +88,7 @@ public class PlanChildrenSumDataFormatterImpl extends FormatterImpl
     public void formatPlanChildrenSumData(final PlanChildrenSumData node, 
             final StringBuffer nodeOutput, final OutputOptions oOptions) throws Exception {
         // exit if Flg not set
-        if (! oOptions.isFlgShowChildrenSum()) {
+        if(!oOptions.isFlgShowChildrenSum()) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("SKIP: isFlgShowChildrenSum not set for node:" + node.getNameForLogger());
             }

@@ -89,7 +89,7 @@ public class SysDataParserImpl  extends ParserImpl implements SysDataParser {
     public int parseFromName(final DataDomain node, final ImportOptions options) throws Exception {
         // Check if node is compatibel
         if (node != null) {
-            if (! SysData.class.isInstance(node)) {
+            if(!SysData.class.isInstance(node)) {
                 throw new IllegalArgumentException();
             }
         }

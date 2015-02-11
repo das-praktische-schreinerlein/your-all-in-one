@@ -1497,7 +1497,7 @@ public class ExcelExporter extends WikiExporter {
         this.fillPlanungSheet(wb, masterNode, oOptions);
 
         // GantSheet nur anfuegen, wenn nicht gemerged
-        if (! oOptions.isFlgMergeExcelPlanungGantSheets())
+        if(!oOptions.isFlgMergeExcelPlanungGantSheets())
             this.fillGantSheet(wb, masterNode, oOptions);
 
         return wb;

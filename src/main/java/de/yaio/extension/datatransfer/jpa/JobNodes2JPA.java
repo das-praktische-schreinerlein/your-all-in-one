@@ -74,7 +74,7 @@ public class JobNodes2JPA extends JobNodes2Wiki {
 
         // check for sysUID
         String sysUID = Configurator.getInstance().getCommandLine().getOptionValue("addnodestosysuid");
-        if (sysUID != null || ! "".equalsIgnoreCase(sysUID)) {
+        if (sysUID != null || !"".equalsIgnoreCase(sysUID)) {
             // if is set: read masternode from JPA
             if (LOGGER.isInfoEnabled()) {
                 LOGGER.info("read Masternode from JPA:" + sysUID);

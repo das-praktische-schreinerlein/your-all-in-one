@@ -75,7 +75,7 @@ public class PlanDataFormatterImpl extends FormatterImpl implements PlanDataForm
     public void format(final DataDomain node, final StringBuffer nodeOutput, final OutputOptions options) throws Exception {
         // Check if node is compatibel
         if (node != null) {
-            if (! PlanData.class.isInstance(node)) {
+            if(!PlanData.class.isInstance(node)) {
                 throw new IllegalArgumentException();
             }
         }
@@ -85,7 +85,7 @@ public class PlanDataFormatterImpl extends FormatterImpl implements PlanDataForm
     @Override
     public void formatPlanData(final PlanData node, final StringBuffer nodeOutput, final OutputOptions oOptions) throws Exception {
         // exit if Flg not set
-        if (! oOptions.isFlgShowPlan()) {
+        if(!oOptions.isFlgShowPlan()) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("SKIP: isFlgShowPlan not set for node:" + node.getNameForLogger());
             }
@@ -151,7 +151,7 @@ public class PlanDataFormatterImpl extends FormatterImpl implements PlanDataForm
                     nodeOutput.append("-          ");
                 }
             }
-            if (task != null && ! task.equals("") && ! task.equals(" ")) {
+            if (task != null && !task.equals("") && !task.equals(" ")) {
                 nodeOutput.append(" " + task);
             }
             if (oOptions.isFlgShowBrackets()) {

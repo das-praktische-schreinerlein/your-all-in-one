@@ -72,7 +72,7 @@ public class DescDataFormatterImpl extends FormatterImpl implements DescDataForm
     public void format(final DataDomain node, final StringBuffer nodeOutput, final OutputOptions options) throws Exception {
         // Check if node is compatibel
         if (node != null) {
-            if (! DescData.class.isInstance(node)) {
+            if(!DescData.class.isInstance(node)) {
                 throw new IllegalArgumentException();
             }
         }

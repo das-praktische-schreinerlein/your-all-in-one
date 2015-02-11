@@ -1106,8 +1106,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
             .append(" metaNodeNummer=").append(getMetaNodeNummer())
             .append(" metaNodeTypeTags=").append(getMetaNodeTypeTags())
             .append(" metaNodeSubTypeTags=").append(getMetaNodeSubTypeTags())
-            .append(" desc=").append(getNodeDesc())
-            ;
+            .append(" desc=").append(getNodeDesc());
         return data.toString();
     }
 

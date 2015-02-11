@@ -345,7 +345,7 @@ public class ExporterImpl implements Exporter {
         // if statefilter set: do it
         if (mpStates != null && mpStates.size() > 0) {
             // check if workflow node
-            if (! BaseWorkflowData.class.isInstance(node)) {
+            if(!BaseWorkflowData.class.isInstance(node)) {
                 // no workflow -> not state
                 flgMatchesState = false;
             } else {

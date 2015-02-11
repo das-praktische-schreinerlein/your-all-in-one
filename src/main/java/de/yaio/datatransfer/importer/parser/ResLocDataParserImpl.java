@@ -88,7 +88,7 @@ public class ResLocDataParserImpl  extends ParserImpl implements ResLocDataParse
     public int parseFromName(final DataDomain node, final ImportOptions options) throws Exception {
         // Check if node is compatibel
         if (node != null) {
-            if (! ResLocData.class.isInstance(node)) {
+            if(!ResLocData.class.isInstance(node)) {
                 throw new IllegalArgumentException();
             }
         }

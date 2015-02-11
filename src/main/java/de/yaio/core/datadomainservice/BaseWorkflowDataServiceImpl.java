@@ -493,7 +493,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
      * @throws Exception - parser/format-Exceptions possible
      */
     public String getRecalcedState(final BaseWorkflowData baseNode) throws Exception {
-        if (! ExtendedWorkflowData.class.isInstance(baseNode)) {
+        if(!ExtendedWorkflowData.class.isInstance(baseNode)) {
            // Normal Node
            return baseNode.getState();
         } else if (EventNode.class.isInstance(baseNode)) {

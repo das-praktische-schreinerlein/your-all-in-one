@@ -72,7 +72,7 @@ public class SymLinkDataFormatterImpl extends FormatterImpl implements SymLinkDa
     public void format(final DataDomain node, final StringBuffer nodeOutput, final OutputOptions options) throws Exception {
         // Check if node is compatibel
         if (node != null) {
-            if (! SymLinkData.class.isInstance(node)) {
+            if(!SymLinkData.class.isInstance(node)) {
                 throw new IllegalArgumentException();
             }
         }
@@ -82,7 +82,7 @@ public class SymLinkDataFormatterImpl extends FormatterImpl implements SymLinkDa
     @Override
     public void formatSymLinkData(final SymLinkData node, final StringBuffer nodeOutput, final OutputOptions oOptions) throws Exception {
         // exit if Flg not set
-        if (! oOptions.isFlgShowSymLink()) {
+        if(!oOptions.isFlgShowSymLink()) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("SKIP: isFlgShowSymLink not set for node:" + node.getNameForLogger());
             }

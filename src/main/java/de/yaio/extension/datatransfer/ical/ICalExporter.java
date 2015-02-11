@@ -156,7 +156,7 @@ public class ICalExporter extends WikiExporter {
             }
             for (String nodeName : paramCurNode.getChildNodesByNameMap().keySet()) {
                 DataDomain subNode = paramCurNode.getChildNodesByNameMap().get(nodeName);
-                if (! TaskNode.class.isInstance(subNode)) {
+                if(!TaskNode.class.isInstance(subNode)) {
                     if (LOGGER.isDebugEnabled()) {
                         LOGGER.debug("subnode:" + subNode.getNameForLogger() 
                             + " ignore: not TaskNode but " + subNode.getClass());
@@ -184,7 +184,7 @@ public class ICalExporter extends WikiExporter {
         }
         
         // nur Projektnodes zulassen
-        if (! TaskNode.class.isInstance(paramCurNode)) {
+        if(!TaskNode.class.isInstance(paramCurNode)) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("node:" + paramCurNode.getWorkingId() 
                     + " ignore: not TaskNode but " + paramCurNode.getClass());
@@ -195,7 +195,7 @@ public class ICalExporter extends WikiExporter {
 
         // Status ueberpruefen
         String state = curNode.getState();
-        if (! curNode.isWFStatus(state) || flgHasWFChildren) {
+        if(!curNode.isWFStatus(state) || flgHasWFChildren) {
             // kein eigener WFNode oder Kindelemente haben WF-State -> SKIP
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("SKIP - No WFNode - node:" + curNode.getWorkingId() + " return datalength:" + res.length());
@@ -205,7 +205,7 @@ public class ICalExporter extends WikiExporter {
         
         // check if I'am matching
         boolean flgMatchesFilter = this.isNodeMatchingFilter(curNode, oOptions);
-        if (! flgMatchesFilter) {
+        if(!flgMatchesFilter) {
             // sorry I dont match
             return blockChildren;
         }
@@ -266,7 +266,7 @@ public class ICalExporter extends WikiExporter {
         }
         
         // nur Projektnodes zulassen
-        if (! TaskNode.class.isInstance(paramCurNode)) {
+        if(!TaskNode.class.isInstance(paramCurNode)) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("node:" + paramCurNode.getWorkingId() 
                     + " ignore: not ProjektNode but " + paramCurNode.getClass());
@@ -277,7 +277,7 @@ public class ICalExporter extends WikiExporter {
 
         // Status ueberpruefen
         String state = curNode.getState();
-        if (! curNode.isWFStatus(state)) {
+        if(!curNode.isWFStatus(state)) {
             // kein eigener WFNode oder Kindelemente haben WF-State -> SKIP
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("SKIP - No WFNode - node:" + curNode.getWorkingId() + " return datalength:" + res.length());
@@ -396,7 +396,7 @@ public class ICalExporter extends WikiExporter {
         }
         
         // nur Projektnodes zulassen
-        if (! TaskNode.class.isInstance(paramCurNode)) {
+        if(!TaskNode.class.isInstance(paramCurNode)) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("node:" + paramCurNode.getWorkingId() 
                     + " ignore: not EventNode but " + paramCurNode.getClass());
@@ -407,7 +407,7 @@ public class ICalExporter extends WikiExporter {
 
         // Status ueberpruefen
         String state = curNode.getState();
-        if (! curNode.isWFStatus(state)) {
+        if(!curNode.isWFStatus(state)) {
             // kein eigener WFNode oder Kindelemente haben WF-State -> SKIP
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("SKIP - No WFNode - node:" + curNode.getWorkingId() + " return datalength:" + res.length());

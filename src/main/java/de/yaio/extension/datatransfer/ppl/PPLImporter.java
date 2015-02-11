@@ -335,7 +335,7 @@ public class PPLImporter extends ImporterImpl {
             // check the bytes
             detector.setText(checkBuffer);
             match = detector.detect();
-            if (lastEncoding == null || ! match.getName().equals(lastEncoding)) {
+            if (lastEncoding == null || !match.getName().equals(lastEncoding)) {
                 LOGGER.info("run " + run + " match charset: " + match.getName() 
                                 + " lang:" + match.getLanguage() 
                                 + " conf:" + match.getConfidence());
@@ -356,7 +356,7 @@ public class PPLImporter extends ImporterImpl {
                     } else {
                         // check if bestEncoding changed
                         if (   run > 1 
-                            && ! match.getName().equals(bestEncoding)) {
+                            && !match.getName().equals(bestEncoding)) {
                             // if we are not on first run, set changed flag
                             LOGGER.info("changed best charset from: " + bestEncoding 
                                             + "=" + bestConfidence
@@ -371,7 +371,7 @@ public class PPLImporter extends ImporterImpl {
             }
             
             // do it only if encoding is fixed: if not we read the file in any case
-            if (! flgEncodingChanged) {
+            if(!flgEncodingChanged) {
                 bufferStr = match.getString();
 
                 // check for UTF( with leading BOM in 1 run 
@@ -421,7 +421,7 @@ public class PPLImporter extends ImporterImpl {
         }
         
 //        // we want all in UTF8!
-//        if (! bestEncoding.equalsIgnoreCase(StandardCharsets.UTF_8.name())) {
+//        if(!bestEncoding.equalsIgnoreCase(StandardCharsets.UTF_8.name())) {
 //            LOGGER.info("convert file " + file.getAbsoluteFile() 
 //                        + " with charset: " + bestEncoding 
 //                        + " to " + StandardCharsets.UTF_8.name());
