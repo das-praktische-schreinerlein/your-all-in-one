@@ -54,7 +54,7 @@ public class MetaDataParserImpl  extends ParserImpl implements MetaDataParser {
     protected static final String CONST_PATTERN_SEG_NODEMETA =
         "NodeMeta:\\W*"
                + "(" + CONST_PATTERN_SEG_PRAEFIX + "*)?,"
-               + "("+ CONST_PATTERN_SEG_ID + "*)?,"
+               + "(" + CONST_PATTERN_SEG_ID + "*)?,"
                + "(" + CONST_PATTERN_SEG_TAGS + "*)?,"
                + "(" + CONST_PATTERN_SEG_TAGS + "*)? *";
     protected static final Pattern CONST_PATTERN_NODEMETA =

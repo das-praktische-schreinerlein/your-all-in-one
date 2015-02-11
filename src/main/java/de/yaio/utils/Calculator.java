@@ -191,7 +191,7 @@ public class Calculator {
                     } else {
                         // Aufwand und hochgerechneten Aufwand dividieren
                         // 100/2 = x/1
-                        res = 100/((Double) arg2).doubleValue() * ((Double) arg1).doubleValue();
+                        res = 100 / ((Double) arg2).doubleValue() * ((Double) arg1).doubleValue();
                     }
                 } else {
                     // unbekannter Typ

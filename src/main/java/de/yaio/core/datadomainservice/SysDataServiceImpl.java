@@ -45,7 +45,7 @@ public class SysDataServiceImpl extends DataDomainRecalcImpl implements SysDataS
     private static final Logger LOGGER =
             Logger.getLogger(SysDataServiceImpl.class);
 
-    protected static DateFormat UIDF = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+    protected static final DateFormat UIDF = new SimpleDateFormat("yyyyMMddHHmmssSSS");
     protected static int VAR_CUR_UID = 1;
 
     /**

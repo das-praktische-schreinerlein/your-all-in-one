@@ -560,7 +560,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
         }
         Set<ConstraintViolation<BaseNode>> violations = validator.validate(this);
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("validation duration=" + ((new Date()).getTime()-start.getTime()) 
+            LOGGER.debug("validation duration=" + ((new Date()).getTime() - start.getTime()) 
                             + "ms for" + this.getNameForLogger());
         }
         
@@ -776,11 +776,13 @@ public class BaseNode implements BaseData, MetaData, SysData,
 
             // persist to DB
             try {
-                if (LOGGER.isDebugEnabled())
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("persistChildNodesToDB from " + this.getNameForLogger() 
                                + " child:" + childNode.getNameForLogger());
-                if (LOGGER.isDebugEnabled())
-                    LOGGER.debug("childNode:" + childNode.getName() + " pos: " +childNode.getSortPos());
+                }
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("childNode:" + childNode.getName() + " pos: " + childNode.getSortPos());
+                }
                 
                 // check if persist or merge
                 if (entityManager().contains(childNode) || flgForceMerge) {
@@ -838,9 +840,10 @@ public class BaseNode implements BaseData, MetaData, SysData,
         // interate children on db
         for (BaseNode childNode : getBaseNodeDBService().findChildNodes(this.getSysUID())) {
             // persist to DB
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("removeChildNodesFromDB from " + this.getNameForLogger() 
                            + " child:" + childNode.getNameForLogger());
+            }
             // recurse
             childNode.removeChildNodesFromDB();
             
@@ -930,7 +933,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     @XmlTransient
     @JsonIgnore
     public String getIdForChildByNameMap() {
-        if(getSrcName() != null) {
+        if (getSrcName() != null) {
             return getSrcName();
         }
         if (getSysUID() != null) {

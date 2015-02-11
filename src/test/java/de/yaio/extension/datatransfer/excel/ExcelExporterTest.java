@@ -87,6 +87,6 @@ public class ExcelExporterTest extends WikiExporterTest {
 
         // check size only, because of binary Excel mismatch :-(
         assertEquals("Size: " + expectedResult.length(), 
-                     "Size: " + (res.length()+1));
+                     "Size: " + (res.length() + 1));
     }
 }

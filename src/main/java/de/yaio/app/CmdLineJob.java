@@ -212,13 +212,13 @@ public abstract class CmdLineJob {
             LOGGER.info("start cleanUpAfterJob");
             this.cleanUpAfterJob();
             LOGGER.info("done cleanUpAfterJob");
-        } catch(Throwable e) {
+        } catch (Throwable e) {
             // Catch Error
             try {
                 LOGGER.info("start cleanUpAfterJob when Error");
                 this.cleanUpAfterJob();
                 LOGGER.info("done cleanUpAfterJob when Error");
-            } catch (Throwable e2){
+            } catch (Throwable e2) {
                 // Log Error while cleanUp
                 this.handleThrowable(e2, false);
             }

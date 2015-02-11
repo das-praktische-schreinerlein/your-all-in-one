@@ -1545,6 +1545,3 @@ yaioM.directive('fielderrors', function() {
             }
     };
 });
-
-
-  

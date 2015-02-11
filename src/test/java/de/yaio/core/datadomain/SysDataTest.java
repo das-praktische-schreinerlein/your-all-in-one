@@ -49,7 +49,7 @@ public class SysDataTest extends DataDomainTest {
      * @copyright Copyright (c) 2014, Michael Schreiner
      * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
      */
-    public class SysDataTestObj extends InfoNode implements TestObj{
+    public class SysDataTestObj extends InfoNode implements TestObj {
         @Override
         public String toString() {
             StringBuffer resBuffer = new StringBuffer();

@@ -234,7 +234,7 @@ public class ExcelImporter extends ImporterImpl {
             .getRichStringCellValue().getString();
 
         cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_IST_STAND);
-        double istand =  ExcelService.getCellNummeric(cell)*100;
+        double istand =  ExcelService.getCellNummeric(cell) * 100;
 
         cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_IST_AUFWAND);
         double iaufwand = ExcelService.getCellNummeric(cell);
@@ -283,7 +283,7 @@ public class ExcelImporter extends ImporterImpl {
         }
 
         // letztes Element der Hirarchy extrahieren: den Namen
-        String curName = (String) ebenen.remove(ebenen.size()-1);
+        String curName = (String) ebenen.remove(ebenen.size() - 1);
         String fullName = status + " - " + curName;
 
         // create Hirarchy

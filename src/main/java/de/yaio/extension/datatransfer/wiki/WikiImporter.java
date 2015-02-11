@@ -87,7 +87,7 @@ public class WikiImporter extends ImporterImpl {
          * @param text - the text
          * @param desc - the optional desc
          */
-        public WikiStructLine (final String wiki, final String text, final String desc) {
+        public WikiStructLine(final String wiki, final String text, final String desc) {
             this.wiki = wiki;
             this.text = text;
             this.desc = desc;
@@ -504,7 +504,7 @@ public class WikiImporter extends ImporterImpl {
                             vorgaengerWk = (WikiStructLine) lastUl.get(idxVorgaenger);
                         }
                     } else if (lastUe.size() > 0) {
-                        vorgaengerWk = (WikiStructLine) lastUe.get(lastUe.size()-1);                    
+                        vorgaengerWk = (WikiStructLine) lastUe.get(lastUe.size() - 1);
                     }
                 }
                 if (vorgaengerWk != null) {
@@ -550,7 +550,7 @@ public class WikiImporter extends ImporterImpl {
                         // dann weiter auffuellen
                         if (lastUe.size() <= idxMe) {
                             // mit Dummy-WikiLines Auffuellen
-                            for (int zaehler = lastUe.size()-1; zaehler <= idxMe; zaehler++) {
+                            for (int zaehler = lastUe.size() - 1; zaehler <= idxMe; zaehler++) {
                                 vorgaengerWk = (WikiStructLine) lastUe.get(zaehler);
                                 WikiStructLine newWK = new WikiStructLine("=", "DEFAULT", null);
                                 newWK.hirarchy = vorgaengerWk.hirarchy
@@ -567,7 +567,7 @@ public class WikiImporter extends ImporterImpl {
                                 + cleanText;
 
                         // die Vorganeger kopieren
-                        List<WikiStructLine> tmpList = lastUe.subList(0, idxVorgaenger+1);
+                        List<WikiStructLine> tmpList = lastUe.subList(0, idxVorgaenger + 1);
                         lastUe = tmpList;
                     }
 
@@ -586,7 +586,7 @@ public class WikiImporter extends ImporterImpl {
 
                         String parent = "";
                         if (lastUe.size() > 0) {
-                            WikiStructLine curUe = (WikiStructLine) lastUe.get(lastUe.size()-1);
+                            WikiStructLine curUe = (WikiStructLine) lastUe.get(lastUe.size() - 1);
                             parent = curUe.hirarchy
                                     + PPLService.DEFAULT_ENTRY_DELIMITER;
                         }
@@ -603,7 +603,7 @@ public class WikiImporter extends ImporterImpl {
                             WikiStructLine newWK = new WikiStructLine("*", "DEFAULT", null);
                             String parent = "";
                             if (lastUe.size() > 0) {
-                                WikiStructLine curUe = (WikiStructLine) lastUe.get(lastUe.size()-1);
+                                WikiStructLine curUe = (WikiStructLine) lastUe.get(lastUe.size() - 1);
                                 parent = curUe.hirarchy
                                         + PPLService.DEFAULT_ENTRY_DELIMITER;
                             }
@@ -614,7 +614,7 @@ public class WikiImporter extends ImporterImpl {
                         // dann weiter auffuellen
                         if (lastUl.size() <= idxMe) {
                             // mit Dummy-WikiLines Auffuellen
-                            for (int zaehler = lastUl.size()-1; zaehler <= idxMe; zaehler++) {
+                            for (int zaehler = lastUl.size() - 1; zaehler <= idxMe; zaehler++) {
                                 vorgaengerWk = (WikiStructLine) lastUl.get(zaehler);
                                 WikiStructLine newWK = new WikiStructLine("=", "DEFAULT", null);
                                 newWK.hirarchy = vorgaengerWk.hirarchy
@@ -631,7 +631,7 @@ public class WikiImporter extends ImporterImpl {
                                 + cleanText;
 
                         // die Vorganeger kopieren
-                        List<WikiStructLine> tmpList = lastUl.subList(0, idxVorgaenger+1);
+                        List<WikiStructLine> tmpList = lastUl.subList(0, idxVorgaenger + 1);
                         lastUl = tmpList;
                     }
 

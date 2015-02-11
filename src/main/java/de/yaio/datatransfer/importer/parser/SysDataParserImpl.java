@@ -54,10 +54,10 @@ public class SysDataParserImpl  extends ParserImpl implements SysDataParser {
     protected static final String CONST_PATTERN_SEG_NODESYS =
         "NodeSys:\\W*"
                + "(" + CONST_PATTERN_SEG_UID + "*)?,"
-               + "("+ CONST_PATTERN_SEG_DATUM + " " + CONST_PATTERN_SEG_TIME + ")?,"
+               + "(" + CONST_PATTERN_SEG_DATUM + " " + CONST_PATTERN_SEG_TIME + ")?,"
                + "(" + CONST_PATTERN_SEG_CHECKSUM + "*)?,"
-               + "("+ CONST_PATTERN_SEG_DATUM + " "+ CONST_PATTERN_SEG_TIME + ")?,"
-               + "("+ CONST_PATTERN_SEG_INT + "*)?";
+               + "(" + CONST_PATTERN_SEG_DATUM + " " + CONST_PATTERN_SEG_TIME + ")?,"
+               + "(" + CONST_PATTERN_SEG_INT + "*)?";
     protected static final Pattern CONST_PATTERN_NODESYS =
         Pattern.compile("(.*)" + CONST_PATTERN_SEG_NODESYS + "(.*)", Pattern.UNICODE_CHARACTER_CLASS);
 

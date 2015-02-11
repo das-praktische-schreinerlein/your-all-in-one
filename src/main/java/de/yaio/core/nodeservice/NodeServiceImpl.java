@@ -132,17 +132,17 @@ public abstract class NodeServiceImpl implements NodeService {
     //////////////
     
     @Override
-    public boolean isWFStatus (final String state) {
+    public boolean isWFStatus(final String state) {
         return false;
     }
 
     @Override
-    public boolean isWFStatusDone (final String state) {
+    public boolean isWFStatusDone(final String state) {
         return false;
     }
 
     @Override
-    public boolean isWFStatusOpen (final String state) {
+    public boolean isWFStatusOpen(final String state) {
         return false;
     }
 

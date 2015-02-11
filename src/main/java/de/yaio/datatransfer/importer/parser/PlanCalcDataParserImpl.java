@@ -52,8 +52,8 @@ public class PlanCalcDataParserImpl  extends ParserImpl implements PlanCalcDataP
 
     // Patterns
     protected static String CONST_PATTERN_SEG_OPTIONAL_DATETIME = 
-            "("+ CONST_PATTERN_SEG_DATUM + ")?[ ]?("+ CONST_PATTERN_SEG_TIME + ")?" 
-            + "-("+ CONST_PATTERN_SEG_DATUM + ")?[ ]?("+ CONST_PATTERN_SEG_TIME + ")?";        
+            "(" + CONST_PATTERN_SEG_DATUM + ")?[ ]?(" + CONST_PATTERN_SEG_TIME + ")?" 
+            + "-(" + CONST_PATTERN_SEG_DATUM + ")?[ ]?(" + CONST_PATTERN_SEG_TIME + ")?";        
 
     // Plan: Stunden Start-Ende Task
     protected static final String CONST_PATTERN_SEG_PLANCALC =

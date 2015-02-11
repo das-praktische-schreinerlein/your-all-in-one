@@ -93,7 +93,7 @@ public class CallYaioImport extends CallYaioInstance {
         // call url
         Map<String, String> files = new HashMap<String, String>();
         files.put("file", importfile);
-        StringBuffer result = this.callPostUrl("/imports/wiki/"+ parentsysUID, null, files);
+        StringBuffer result = this.callPostUrl("/imports/wiki/" + parentsysUID, null, files);
         
         System.out.println(result);
     }

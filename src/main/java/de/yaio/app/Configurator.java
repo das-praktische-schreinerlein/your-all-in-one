@@ -306,7 +306,7 @@ public class Configurator {
         // add all properties to system
         for (String propName : props.stringPropertyNames()) {
             System.setProperty(propName, props.getProperty(propName));
-                LOGGER.info("set System.prop:" + propName +"=" + props.getProperty(propName));
+                LOGGER.info("set System.prop:" + propName + "=" + props.getProperty(propName));
         }
         
         // load PostProcessorReplacements
@@ -322,14 +322,14 @@ public class Configurator {
                     + count + " in file:" + replacerConfigPath + " props:" + replacerConfig);
             }
             for (int zaehler = 0; zaehler < count; zaehler++) {
-                String keyName = CONST_PROPNAME_EXPORTCONTROLLER_REPLACER_DOCUMENTATION_SRC + "." + (zaehler+1);
+                String keyName = CONST_PROPNAME_EXPORTCONTROLLER_REPLACER_DOCUMENTATION_SRC + "." + (zaehler + 1);
                 String pattern = replacerConfig.getProperty(keyName);
-                String valueName = CONST_PROPNAME_EXPORTCONTROLLER_REPLACER_DOCUMENTATION_TARGET + "." + (zaehler+1);
+                String valueName = CONST_PROPNAME_EXPORTCONTROLLER_REPLACER_DOCUMENTATION_TARGET + "." + (zaehler + 1);
                 String target = replacerConfig.getProperty(valueName);
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.info("check PostProcessorReplacements_documentation:" 
                         + zaehler + " " + keyName + "=" + valueName 
-                        + " / " +pattern + "=" + target);
+                        + " / " + pattern + "=" + target);
                 }
                 if (pattern != null) {
                     ExportController.PostProcessorReplacements_documentation.put(

@@ -82,7 +82,7 @@ public class HtmlExporter extends WikiExporter {
     protected static String CONST_FORMATTER_ISTCHILDRENSUM = IstChildrenSumDataFormatterImpl.class.getName();
     protected static String CONST_FORMATTER_PLANCHILDRENSUM = PlanChildrenSumDataFormatterImpl.class.getName();
     
-    protected static Markdown4jProcessor markdownProcessor= new Markdown4jProcessor();
+    protected static Markdown4jProcessor markdownProcessor = new Markdown4jProcessor();
     static {
         //markdownProcessor.addHtmlAttribute("style", "color:red", "blockquote", "h1");
         //markdownProcessor.addStyleClass("", "img");
@@ -378,7 +378,7 @@ public class HtmlExporter extends WikiExporter {
             String content = "";
             int pos = name.indexOf(":");
             if (pos > 0) {
-                ue = name.substring(0, pos+1);
+                ue = name.substring(0, pos + 1);
                 content = name.substring(pos + 1, name.length());
             }
             
@@ -515,7 +515,7 @@ public class HtmlExporter extends WikiExporter {
                 // TD Spalten einfuegen
                 tag = "td";
                 String[] lstContent = name.split("\\|");
-                for (int zaehler=0; zaehler < lstContent.length; zaehler++) {
+                for (int zaehler = 0; zaehler < lstContent.length; zaehler++) {
                     // Formeln parsen
                     String tdId = "td_" + curNode.getWorkingId() + "_" + zaehler;
                     String tdContent = lstContent[zaehler];
@@ -527,7 +527,7 @@ public class HtmlExporter extends WikiExporter {
                             + tag + "-portdesc " + tag + "-portdesc-" + zaehler
                             + (addStyle.length() > 0
                                 ? " " + tag + "-portdesc-" + addStyle + " "
-                                  + tag + "-portdesc-"+ zaehler + "-" + addStyle : "") + "'"
+                                  + tag + "-portdesc-" + zaehler + "-" + addStyle : "") + "'"
                         + " id='" + tdId + "'>"
                         + tdContent
                         + "</td>";
@@ -542,7 +542,7 @@ public class HtmlExporter extends WikiExporter {
                     + (addStyle.length() > 0
                         ? " box-portdesc-" + addStyle : "") + "'"
                     + (shortName.length() > 0 ? " toclabel='" + shortName + "'" : "")
-                    + " id='box_"+ curNode.getWorkingId() + "'>"
+                    + " id='box_" + curNode.getWorkingId() + "'>"
                     + "<div class='boxline boxline-ue" + tagEbene + " h" + tagEbene + "-portdesc"
                     + (addStyle.length() > 0
                         ? " h" + tagEbene + "-portdesc-" + addStyle : "") + "'"
@@ -551,7 +551,7 @@ public class HtmlExporter extends WikiExporter {
                     + "</div>\n"
                     + "<div class='togglecontainer"
                     + (addStyle.length() > 0 ? " togglecontainer-" + addStyle : "") + "'"
-                    + " id='detail_"+ curNode.getWorkingId() + "'>\n"
+                    + " id='detail_" + curNode.getWorkingId() + "'>\n"
                     ;
                 
                 // optionaler Contentbereich
@@ -852,8 +852,8 @@ public class HtmlExporter extends WikiExporter {
                 blockIst = "";
                 blockPlan = "";
             }
-            if (   (istCalcSum == null || istCalcSum.length() <=0) 
-                && (planCalcSum == null || planCalcSum.length() <=0)) {
+            if (   (istCalcSum == null || istCalcSum.length() <= 0) 
+                && (planCalcSum == null || planCalcSum.length() <= 0)) {
                 blockIstCalcSum = "";
                 blockPlanCalcSum = "";
             }

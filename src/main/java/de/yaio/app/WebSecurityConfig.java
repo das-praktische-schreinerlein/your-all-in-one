@@ -30,7 +30,7 @@ import de.yaio.rest.controller.CsrfHeaderFilter;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private static final Logger logger = Logger.getLogger(WebSecurityConfig.class);
     
-    public static String CONST_FILELOCATION_APIUSERS="yaio.security.apiusers.filelocation";
+    public static String CONST_FILELOCATION_APIUSERS = "yaio.security.apiusers.filelocation";
     
     /**
      * configure API-Configuration

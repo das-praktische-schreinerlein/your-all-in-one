@@ -55,16 +55,16 @@ public class IstDataParserImpl  extends ParserImpl implements IstDataParser {
             //          "("+ CONST_PATTERN_SEG_DATUM + ")?\\s?("+ CONST_PATTERN_SEG_TIME + ")?" 
             //        + "-?("+ CONST_PATTERN_SEG_DATUM + ")?\\s?("+ CONST_PATTERN_SEG_TIME + ")?";
             // TODO: TASK aif TIME umsetzen und schauen was das Problem ist
-            "("+ CONST_PATTERN_SEG_DATUM + ")?[ ]?("+ CONST_PATTERN_SEG_TIME + ")?" 
-            + "-?("+ CONST_PATTERN_SEG_DATUM + ")?[ ]?("+ CONST_PATTERN_SEG_TIME + ")?";        
+            "(" + CONST_PATTERN_SEG_DATUM + ")?[ ]?(" + CONST_PATTERN_SEG_TIME + ")?" 
+            + "-?(" + CONST_PATTERN_SEG_DATUM + ")?[ ]?(" + CONST_PATTERN_SEG_TIME + ")?";        
 
     // Ist: Stand% Stunden Start-Ende Task
     protected static final String CONST_PATTERN_SEG_IST =
         "Ist:\\W*"
-               +"(" + CONST_PATTERN_SEG_STAND + ")%[ ]*"
+               + "(" + CONST_PATTERN_SEG_STAND + ")%[ ]*"
                + "(" + CONST_PATTERN_SEG_HOURS + ")?h?[ ]*"
                + CONST_PATTERN_SEG_OPTIONAL_DATETIME
-               + "[ ]*("+ CONST_PATTERN_SEG_TASK + ")?";
+               + "[ ]*(" + CONST_PATTERN_SEG_TASK + ")?";
     protected static final Pattern CONST_PATTERN_IST =
         Pattern.compile("(.*)" + CONST_PATTERN_SEG_IST + "(.*)", Pattern.UNICODE_CHARACTER_CLASS);
 

@@ -68,8 +68,8 @@ public class ICalExporter extends WikiExporter {
         super();
     }
 
-    protected static DateFormat DF = new SimpleDateFormat("yyyyMMdd");
-    protected static DateFormat TF = new SimpleDateFormat("HHmmss");
+    protected static final DateFormat DF = new SimpleDateFormat("yyyyMMdd");
+    protected static final DateFormat TF = new SimpleDateFormat("HHmmss");
     
     // Logger
     private static final Logger LOGGER =

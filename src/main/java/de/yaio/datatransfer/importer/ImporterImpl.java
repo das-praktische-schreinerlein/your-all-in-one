@@ -133,7 +133,7 @@ public class ImporterImpl implements Importer {
         return hshWorkflowNodeTypeMapping;
     }
 
-    public boolean isWFStatus (final String state) {
+    public boolean isWFStatus(final String state) {
         if (this.hshWorkflowNodeTypeMapping.get(state) != null) {
             return true;
         }

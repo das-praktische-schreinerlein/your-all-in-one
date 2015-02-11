@@ -31,8 +31,8 @@ public class TestPPL {
     private static final Logger LOGGER =
             Logger.getLogger(TestPPL.class);
 
-    public static String DEFAULT_ENTRY_DELIMITER = PPLService.DEFAULT_ENTRY_DELIMITER;
-    public static String LINE_DELIMITER = PPLService.LINE_DELIMITER;
+    public static final String DEFAULT_ENTRY_DELIMITER = PPLService.DEFAULT_ENTRY_DELIMITER;
+    public static final String LINE_DELIMITER = PPLService.LINE_DELIMITER;
     
     //@Test
     public void testPPLParserAndExporter() {

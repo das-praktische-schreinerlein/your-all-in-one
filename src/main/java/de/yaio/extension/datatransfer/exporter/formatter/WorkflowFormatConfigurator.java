@@ -90,14 +90,18 @@ public class WorkflowFormatConfigurator {
         CONST_STATI_COLOR.put(UrlResNode.CONST_NODETYPE_IDENTIFIER_EMAILRES, "#AFEEEE");
         }
 
-    protected static Map<String, String> CONST_STATI_ICON = new HashMap<String, String>();
+    protected static final Map<String, String> CONST_STATI_ICON = new HashMap<String, String>();
     static {
         CONST_STATI_ICON.put(BaseNode.CONST_NODETYPE_IDENTIFIER_UNKNOWN, null);
 
-        CONST_STATI_ICON.put(EventNode.CONST_NODETYPE_IDENTIFIER_EVENT_PLANED, "<icon BUILTIN=\"bell\"/>");
-        CONST_STATI_ICON.put(EventNode.CONST_NODETYPE_IDENTIFIER_EVENT_LATE, "<icon BUILTIN=\"messagebox_warning\"/><icon BUILTIN=\"bell\"/>");
-        CONST_STATI_ICON.put(EventNode.CONST_NODETYPE_IDENTIFIER_EVENT_RUNNNING, "<icon BUILTIN=\"bell\"/>");
-        CONST_STATI_ICON.put(EventNode.CONST_NODETYPE_IDENTIFIER_EVENT_SHORT, "<icon BUILTIN=\"messagebox_warning\"/><icon BUILTIN=\"bell\"/>");
+        CONST_STATI_ICON.put(EventNode.CONST_NODETYPE_IDENTIFIER_EVENT_PLANED, 
+                        "<icon BUILTIN=\"bell\"/>");
+        CONST_STATI_ICON.put(EventNode.CONST_NODETYPE_IDENTIFIER_EVENT_LATE, 
+                        "<icon BUILTIN=\"messagebox_warning\"/><icon BUILTIN=\"bell\"/>");
+        CONST_STATI_ICON.put(EventNode.CONST_NODETYPE_IDENTIFIER_EVENT_RUNNNING, 
+                        "<icon BUILTIN=\"bell\"/>");
+        CONST_STATI_ICON.put(EventNode.CONST_NODETYPE_IDENTIFIER_EVENT_SHORT, 
+                        "<icon BUILTIN=\"messagebox_warning\"/><icon BUILTIN=\"bell\"/>");
         CONST_STATI_ICON.put(EventNode.CONST_NODETYPE_IDENTIFIER_EVENT_DONE, "");
         CONST_STATI_ICON.put(EventNode.CONST_NODETYPE_IDENTIFIER_EVENT_CANCELED, "");
         CONST_STATI_ICON.put(BaseNode.CONST_NODETYPE_IDENTIFIER_UNKNOWN, null);

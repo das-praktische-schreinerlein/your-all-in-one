@@ -124,7 +124,7 @@ public class TestServices {
         // read lines
         String zeile = "";
         StringBuffer sb = new StringBuffer();
-        while( (zeile = br.readLine()) != null ) {
+        while ((zeile = br.readLine()) != null) {
           sb.append(zeile).append("\n");
         }
         

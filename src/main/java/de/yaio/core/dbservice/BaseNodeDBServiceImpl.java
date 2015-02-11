@@ -163,7 +163,7 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
         if (fulltext != null && fulltext.length() > 0) {
             searchWords = fulltext.split(" ");
             if (searchWords.length > 0) {
-                int idx=0;
+                int idx = 0;
                 filter = " where (lower(name) like lower(:fulltext" + idx + ")"
                                 + " or lower(node_desc) like lower(:fulltext" + idx + ")"
                                 + " or lower(sym_link_ref) like lower(:fulltext" + idx + ")"
@@ -218,7 +218,7 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
         
         // add parameters
         if (searchWords != null && searchWords.length > 0) {
-            int idx=0;
+            int idx = 0;
             for (; idx < searchWords.length; idx++) {
                 query.setParameter("fulltext" + idx, "%" + searchWords[idx] + "%");
             }
@@ -244,7 +244,7 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
      */
     @SuppressWarnings("unchecked")
     public long countFulltextBaseNodes(final String fulltext) {
-        TypedQuery<Long> query = (TypedQuery<Long>)this.createFulltextQuery(true, fulltext, null);
+        TypedQuery<Long> query = (TypedQuery<Long>) this.createFulltextQuery(true, fulltext, null);
         return query.getSingleResult();
     }
     
@@ -269,7 +269,7 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
     @SuppressWarnings("unchecked")
     public List<BaseNode> findFulltextBaseNodeEntries(final String fulltext, final String sortConfig,
                     final int firstResult, final int maxResults) {
-        TypedQuery<BaseNode> query = (TypedQuery<BaseNode>)this.createFulltextQuery(false, fulltext, sortConfig);
+        TypedQuery<BaseNode> query = (TypedQuery<BaseNode>) this.createFulltextQuery(false, fulltext, sortConfig);
         query.setFirstResult(firstResult);
         query.setMaxResults(maxResults);
         

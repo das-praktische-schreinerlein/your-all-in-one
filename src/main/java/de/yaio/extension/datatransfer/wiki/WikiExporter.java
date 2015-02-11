@@ -277,7 +277,7 @@ public class WikiExporter extends ExporterImpl {
                         + " <= MaxUeEbene " + oOptions.getMaxUeEbene()
                         + " for " + curNode.getNameForLogger());
             }
-            for (int zaehler=1; zaehler <= curNode.getEbene(); zaehler++) {
+            for (int zaehler = 1; zaehler <= curNode.getEbene(); zaehler++) {
                 res.insert(0, "=");
                 // falls > 1 einruecken
                 if (zaehler > 1) {
@@ -293,11 +293,11 @@ public class WikiExporter extends ExporterImpl {
                         + " > MaxUeEbene " + oOptions.getMaxUeEbene()
                         + " for " + curNode.getNameForLogger());
             }
-            for (int zaehler=oOptions.getMaxUeEbene()+1; zaehler <= curNode.getEbene(); zaehler++) {
+            for (int zaehler = oOptions.getMaxUeEbene() + 1; zaehler <= curNode.getEbene(); zaehler++) {
                 res.insert(0, "*");
 
                 // falls > oOptions.maxUeEbene+1 einruecken
-                if (zaehler > oOptions.getMaxUeEbene()+1) {
+                if (zaehler > oOptions.getMaxUeEbene() + 1) {
                     strIntendPraefix = strItend + strIntendPraefix;
                 }
             }

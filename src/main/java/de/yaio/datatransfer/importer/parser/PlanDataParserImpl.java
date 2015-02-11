@@ -55,15 +55,15 @@ public class PlanDataParserImpl  extends ParserImpl implements PlanDataParser {
             //          "("+ CONST_PATTERN_SEG_DATUM + ")?\\s?("+ CONST_PATTERN_SEG_TIME + ")?" 
             //        + "-?("+ CONST_PATTERN_SEG_DATUM + ")?\\s?("+ CONST_PATTERN_SEG_TIME + ")?";
             // TODO: TASK aif TIME umsetzen und schauen was das Problem ist
-            "("+ CONST_PATTERN_SEG_DATUM + ")?[ ]?("+ CONST_PATTERN_SEG_TIME + ")?" 
-            + "-?("+ CONST_PATTERN_SEG_DATUM + ")?[ ]?("+ CONST_PATTERN_SEG_TIME + ")?";        
+            "(" + CONST_PATTERN_SEG_DATUM + ")?[ ]?(" + CONST_PATTERN_SEG_TIME + ")?" 
+            + "-?(" + CONST_PATTERN_SEG_DATUM + ")?[ ]?(" + CONST_PATTERN_SEG_TIME + ")?";        
 
     // Plan: Stunden Start-Ende Task
     protected static final String CONST_PATTERN_SEG_PLAN =
             "Plan:\\W*"
                     + "(" + CONST_PATTERN_SEG_HOURS + ")h[ ]*"
                     + CONST_PATTERN_SEG_OPTIONAL_DATETIME
-                    + "[ ]*("+ CONST_PATTERN_SEG_TASK + ")?";
+                    + "[ ]*(" + CONST_PATTERN_SEG_TASK + ")?";
     protected static final Pattern CONST_PATTERN_PLAN =
             Pattern.compile("(.*)" + CONST_PATTERN_SEG_PLAN + "(.*)", Pattern.UNICODE_CHARACTER_CLASS);
 

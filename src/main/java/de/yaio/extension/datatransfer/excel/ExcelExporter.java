@@ -201,7 +201,7 @@ public class ExcelExporter extends WikiExporter {
         }
 
         // alle Struktur-Spalten hinter MaxEbene ausblenden
-        for (int curCol = ExcelNodeService.CONST_PLANUNG_COL_PROJEKT+maxEbene; curCol <= ExcelNodeService.CONST_PLANUNG_COL_DESC; curCol++) {
+        for (int curCol = ExcelNodeService.CONST_PLANUNG_COL_PROJEKT + maxEbene; curCol <= ExcelNodeService.CONST_PLANUNG_COL_DESC; curCol++) {
             sheet.setColumnWidth(curCol, 0);
             sheet.setColumnHidden(curCol, true);
         }
@@ -452,7 +452,7 @@ public class ExcelExporter extends WikiExporter {
                 + "=\"\"" + ExcelService.CONST_PARAM_DELIM + "0"
                 + ExcelService.CONST_PARAM_DELIM 
                 + ExcelService.getColName(ExcelNodeService.CONST_PLANUNG_COL_IST_STANDFAKTOR)
-                + ExcelService.getRowNum(startRownNum)+ ")";
+                + ExcelService.getRowNum(startRownNum) + ")";
             formula = "IF(" + aufwand + " > 0" + ExcelService.CONST_PARAM_DELIM
                 + formula
                 + "/" + aufwand
@@ -594,14 +594,14 @@ public class ExcelExporter extends WikiExporter {
             String formula =
                 "IF(AND("
                 + pStart
-                + "  >0" + ExcelService.CONST_PARAM_DELIM + pStart +"<>\"\""
+                + "  >0" + ExcelService.CONST_PARAM_DELIM + pStart + "<>\"\""
                 + ExcelService.CONST_PARAM_DELIM + pAufwand + "  >0)" + ExcelService.CONST_PARAM_DELIM
 
 //                  + "  WORKDAY(" + ExcelService.getColName(ExcelNodeService.CONST_PLANUNG_COL_PLAN_DATE_START) + ExcelService.getRowNum(startRownNum)
 //                  + " ;" + ExcelService.getColName(ExcelNodeService.CONST_PLANUNG_COL_PLAN_AUFWAND) + ExcelService.getRowNum(startRownNum)
 //                  + " /" + ExcelNodeService.CONST_WORKHOURS_PERDAY + ") ;\"\")"
-                + " DATE(YEAR(" + pStart +")" + ExcelService.CONST_PARAM_DELIM
-                + "MONTH("+pStart+")" + ExcelService.CONST_PARAM_DELIM+ "DAY(" + pStart + "))"
+                + " DATE(YEAR(" + pStart + ")" + ExcelService.CONST_PARAM_DELIM
+                + "MONTH(" + pStart + ")" + ExcelService.CONST_PARAM_DELIM + "DAY(" + pStart + "))"
                 + " + TRUNC(" + pAufwand + " /" + ExcelNodeService.CONST_WORKHOURS_PERDAY + ")"
 
                 + " +(("
@@ -729,14 +729,14 @@ public class ExcelExporter extends WikiExporter {
                 "IF(" + pStart + " > 0" + ExcelService.CONST_PARAM_DELIM
                 + "IF(AND("
                 + iEnde
-                + "  >0" + ExcelService.CONST_PARAM_DELIM + iEnde +"<>\"\""
+                + "  >0" + ExcelService.CONST_PARAM_DELIM + iEnde + "<>\"\""
                 + ExcelService.CONST_PARAM_DELIM + pAufwand + "  >0)" + ExcelService.CONST_PARAM_DELIM
 
 //                  + "  WORKDAY(" + ExcelService.getColName(ExcelNodeService.CONST_PLANUNG_COL_PLAN_DATE_START) + ExcelService.getRowNum(startRownNum)
 //                  + " ;" + ExcelService.getColName(ExcelNodeService.CONST_PLANUNG_COL_PLAN_AUFWAND) + ExcelService.getRowNum(startRownNum)
 //                  + " /" + ExcelNodeService.CONST_WORKHOURS_PERDAY + ") ;\"\")"
-                + " DATE(YEAR(" + iEnde +")" + ExcelService.CONST_PARAM_DELIM
-                + "MONTH("+iEnde+")" + ExcelService.CONST_PARAM_DELIM+ "DAY(" + iEnde + "))"
+                + " DATE(YEAR(" + iEnde + ")" + ExcelService.CONST_PARAM_DELIM
+                + "MONTH(" + iEnde + ")" + ExcelService.CONST_PARAM_DELIM + "DAY(" + iEnde + "))"
                 + " + TRUNC(" + pAufwand + " /" + ExcelNodeService.CONST_WORKHOURS_PERDAY + ")"
 
                 + " +(("
@@ -754,7 +754,7 @@ public class ExcelExporter extends WikiExporter {
         // Von der aktuellen Position aus die Element einblenden
         BaseNode curNode = node;
         StringBuffer tmpBuffer = null;
-        for (int curEbene = node.getEbene(); curEbene > 0;curEbene--) {
+        for (int curEbene = node.getEbene(); curEbene > 0; curEbene--) {
             // aktuelles Element in die Spalte=Ebene schreiben
             if (curEbene <= ExcelNodeService.CONST_PLANUNG_COL_SCHRITT5) {
                 String name = curNode.getName();
@@ -791,7 +791,7 @@ public class ExcelExporter extends WikiExporter {
             getCellStyle4ModulOrEntry(lstChildRowNum,
                     this.exlSv.csFieldPlanungStruktur_Modul,
                     this.exlSv.csFieldPlanungStruktur_Entry);
-        for (int curCol = 1; curCol <= ExcelNodeService.CONST_PLANUNG_COL_PLAN_AUFWAND - 1;curCol++) {
+        for (int curCol = 1; curCol <= ExcelNodeService.CONST_PLANUNG_COL_PLAN_AUFWAND - 1; curCol++) {
             // aktuelles Element in die Spalte=Ebene schreiben
             cell = ExcelService.getCell(sheet, startRownNum, curCol);
             cell.setCellStyle(cellStyle);
@@ -886,7 +886,7 @@ public class ExcelExporter extends WikiExporter {
 
         // Gesamten Sheet formatieren
         HSSFSheet sheetPlanung = wb.getSheet(ExcelNodeService.CONST_SHEETNNAME_PLANUNG);
-        for (int curCol = 1; curCol < ExcelNodeService.CONST_GANT_COL_SCHRITT5;curCol++) {
+        for (int curCol = 1; curCol < ExcelNodeService.CONST_GANT_COL_SCHRITT5; curCol++) {
             if (sheetPlanung != null)
                 // Breite aus Planungssheet nehmen
                 sheet.setColumnWidth(curCol, sheetPlanung.getColumnWidth(curCol));
@@ -1438,7 +1438,7 @@ public class ExcelExporter extends WikiExporter {
                     + " )"
                     + ")";
 //                    if (zaehler == ExcelNodeService.CONST_GANT_PERIODS) {
-//                        formula = "IF(" + pEnde + ">=" + curStart + ExcelService.CONST_PARAM_DELIM + "1*" + pAufwandPerDay + ExcelService.CONST_PARAM_DELIM+ "\"\")";
+//                        formula = "IF(" + pEnde + ">=" + curStart + ExcelService.CONST_PARAM_DELIM + "1*" + pAufwandPerDay + ExcelService.CONST_PARAM_DELIM + "\"\")";
 //                    }
                 formula =
                     "IF(AND(" + pAufwand + ">0" + ExcelService.CONST_PARAM_DELIM + pAufwand  + "<>\"\"" + ExcelService.CONST_PARAM_DELIM

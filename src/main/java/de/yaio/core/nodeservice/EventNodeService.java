@@ -33,7 +33,7 @@ import de.yaio.core.node.EventNode;
 public class EventNodeService extends TaskNodeService {
 
     @Override
-    public boolean isWFStatus (final String state) {
+    public boolean isWFStatus(final String state) {
         if (EventNode.CONST_NODETYPE_IDENTIFIER_EVENT_PLANED.equalsIgnoreCase(state)) {
             return true;
         } else if (EventNode.CONST_NODETYPE_IDENTIFIER_EVENT_CONFIRMED.equalsIgnoreCase(state)) {
@@ -52,7 +52,7 @@ public class EventNodeService extends TaskNodeService {
     }
 
     @Override
-    public boolean isWFStatusDone (final String state) {
+    public boolean isWFStatusDone(final String state) {
         if (EventNode.CONST_NODETYPE_IDENTIFIER_EVENT_DONE.equalsIgnoreCase(state)) {
             return true;
         }
@@ -68,7 +68,7 @@ public class EventNodeService extends TaskNodeService {
     }
     
     @Override
-    public boolean isWFStatusOpen (final String state) {
+    public boolean isWFStatusOpen(final String state) {
         if (EventNode.CONST_NODETYPE_IDENTIFIER_EVENT_PLANED.equalsIgnoreCase(state)) {
             return true;
         } else if (EventNode.CONST_NODETYPE_IDENTIFIER_EVENT_CONFIRMED.equalsIgnoreCase(state)) {

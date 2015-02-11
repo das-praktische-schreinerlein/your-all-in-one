@@ -43,12 +43,12 @@ public class ExcelService {
     public static String CONST_CS_PERCENT = "0%";
     public static String CONST_CS_AUFWAND = "0.0";
 
-    public static int CONST_COL_WIDTH_INT = 8*256;
-    public static int CONST_COL_WIDTH_DATE = 15*256;
-    public static int CONST_COL_WIDTH_DATE_SHORT = 6*256;
+    public static int CONST_COL_WIDTH_INT = 8 * 256;
+    public static int CONST_COL_WIDTH_DATE = 15 * 256;
+    public static int CONST_COL_WIDTH_DATE_SHORT = 6 * 256;
 
 
-    public ExcelService (final HSSFWorkbook workbook) {
+    public ExcelService(final HSSFWorkbook workbook) {
 
     }
 
@@ -108,7 +108,7 @@ public class ExcelService {
     public static HSSFCell getCellEvaluated(
             final HSSFSheet sheet, final HSSFFormulaEvaluator formulaEval, final int rownum, final int cellnum) {
         HSSFCell cell = getCell(sheet, rownum, cellnum);
-        if(cell.getCellType() == HSSFCell.CELL_TYPE_FORMULA) {
+        if (cell.getCellType() == HSSFCell.CELL_TYPE_FORMULA) {
             // berechnen
             formulaEval.setCurrentRow(sheet.getRow(rownum));
             // System.err.println("Parse Zeile:" + rownum + " Col" + cellnum + " Form:" + cell.getCellFormula());
@@ -281,9 +281,9 @@ public class ExcelService {
 
     public static String getColName(int cellnum) {
         String res = "";
-        if (cellnum >= 26+26) {
+        if (cellnum >= 26 + 26) {
             //System.err.println(" value: " + cellnum + " statt " + (char)(65 + cellnum) + " -> A" + (char)(65 + cellnum-26));
-            cellnum = cellnum - 26+26;
+            cellnum = cellnum - 26 + 26;
             res = "B";
         } else if (cellnum >= 26) {
             //System.err.println(" value: " + cellnum + " statt " + (char)(65 + cellnum) + " -> A" + (char)(65 + cellnum-26));
@@ -307,7 +307,7 @@ public class ExcelService {
                     ExcelService.getColName(col) + ExcelService.getRowNum(rowNum)
                     + CONST_PARAM_DELIM;
         }
-        formula = formula.substring(0, formula.length()-1);
+        formula = formula.substring(0, formula.length() - 1);
         formula += ")";
         return formula;
     }
@@ -367,7 +367,7 @@ public class ExcelService {
      * @return
      * neues HSSFCellStyle-Objekt
      */
-    public HSSFCellStyle copyStyle(HSSFCellStyle style, HSSFWorkbook wb){
+    public HSSFCellStyle copyStyle(HSSFCellStyle style, HSSFWorkbook wb) {
         HSSFCellStyle style2 = wb.createCellStyle();
         style2.setDataFormat(style.getDataFormat());
         style2.setFont(wb.getFontAt(style.getFontIndex()));
@@ -383,7 +383,7 @@ public class ExcelService {
         return style2;
     }
 
-    public HSSFCellStyle convertCss2Modul(HSSFCellStyle style, HSSFWorkbook wb){
+    public HSSFCellStyle convertCss2Modul(HSSFCellStyle style, HSSFWorkbook wb) {
         HSSFCellStyle style2 = copyStyle(style, wb);
         style2.setBorderTop(HSSFCellStyle.BORDER_DOUBLE);
         style2.setLocked(true);

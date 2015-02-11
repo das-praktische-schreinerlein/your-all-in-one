@@ -543,7 +543,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
             } else if (   (baseNode.getPlanAufwand() != null 
                            && (baseNode.getPlanAufwand() >= Calculator.CONST_DOUBLE_NULL))
                     || (baseNode.getPlanChildrenSumAufwand() != null 
-                           && (baseNode.getPlanChildrenSumAufwand() >= Calculator.CONST_DOUBLE_NULL))){
+                           && (baseNode.getPlanChildrenSumAufwand() >= Calculator.CONST_DOUBLE_NULL))) {
                 // noch nicht erledigt
                 if (   (    baseNode.getIstAufwand() != null 
                             && (baseNode.getIstAufwand() >= Calculator.CONST_DOUBLE_NULL))
@@ -551,7 +551,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
                             && (baseNode.getIstChildrenSumAufwand() >= Calculator.CONST_DOUBLE_NULL))
                         || (baseNode.getIstChildrenSumStand() != null 
                             && (baseNode.getIstChildrenSumStand() >= Calculator.CONST_DOUBLE_NULL))
-                        ){
+                        ) {
                     // wurde schon begonnen
                     newState = EventNode.CONST_NODETYPE_IDENTIFIER_EVENT_RUNNNING;
 
@@ -564,7 +564,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
                         if (LOGGER.isDebugEnabled()) {
                             LOGGER.debug("Short node:" + baseNode.getNameForLogger() 
                                     + " Stand:" + baseNode.getIstChildrenSumStand() 
-                                    +" myPlanEnde:" + myPlanEnde);
+                                    + " myPlanEnde:" + myPlanEnde);
                         }
                     }
                 } else {
@@ -627,7 +627,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
                            && (baseNode.getIstChildrenSumAufwand() >= Calculator.CONST_DOUBLE_NULL))
                        || (baseNode.getIstChildrenSumStand() != null 
                            && (baseNode.getIstChildrenSumStand() >= Calculator.CONST_DOUBLE_NULL))
-                       ){
+                       ) {
                 // noch nicht erledigt
                 if (   (baseNode.getIstAufwand() != null 
                         && (baseNode.getIstAufwand() >= Calculator.CONST_DOUBLE_NULL))
@@ -635,7 +635,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
                         && (baseNode.getIstChildrenSumAufwand() >= Calculator.CONST_DOUBLE_NULL))
                     || (baseNode.getIstChildrenSumStand() != null 
                         && (baseNode.getIstChildrenSumStand() >= Calculator.CONST_DOUBLE_NULL))
-                    ){
+                    ) {
                     // wurde schon begonnen
                     newState = TaskNode.CONST_NODETYPE_IDENTIFIER_RUNNNING;
 
@@ -648,7 +648,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
                         if (LOGGER.isDebugEnabled()) {
                             LOGGER.debug("Short node:" + baseNode.getNameForLogger()
                                     + " Stand:" + baseNode.getIstChildrenSumStand() 
-                                    +" myPlanEnde:" + myPlanEnde);
+                                    + " myPlanEnde:" + myPlanEnde);
                         }
                     }
                 } else {
@@ -673,7 +673,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
             LOGGER.debug("new NodeState " 
                     + " Stand:" + baseNode.getIstChildrenSumStand() 
                     + " Aufwand:" + baseNode.getPlanChildrenSumAufwand() 
-                    +" state" + newState +  " for node:" + baseNode.getNameForLogger());
+                    + " state" + newState +  " for node:" + baseNode.getNameForLogger());
         }
         return newState;
     }
@@ -725,7 +725,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
                                && (baseNode.getIstStand() >= Calculator.CONST_DOUBLE_NULL))
                            || (baseNode.getPlanStart() != null)
                            || (baseNode.getPlanEnde() != null)
-                           ){
+                           ) {
                     // noch nicht erledigt
                     if (   (baseNode.getIstAufwand() != null 
                             && (baseNode.getIstAufwand() >= Calculator.CONST_DOUBLE_NULL))
@@ -733,7 +733,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
                             && (baseNode.getIstAufwand() >= Calculator.CONST_DOUBLE_NULL))
                         || (baseNode.getIstStand() != null 
                             && (baseNode.getIstStand() >= Calculator.CONST_DOUBLE_NULL))
-                        ){
+                        ) {
                         // wurde schon begonnen
                         newState = WorkflowState.RUNNING;
     
@@ -763,7 +763,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
                         if (LOGGER.isDebugEnabled()) {
                             LOGGER.debug("Short node:" + baseNode.getNameForLogger()
                                     + " Stand:" + baseNode.getIstStand() 
-                                    +" myPlanEnde:" + myPlanEnde);
+                                    + " myPlanEnde:" + myPlanEnde);
                         }
                     }
                     
@@ -772,7 +772,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
                     LOGGER.debug("new NodeState " 
                             + " Stand:" + baseNode.getIstStand() 
                             + " Aufwand:" + baseNode.getPlanAufwand() 
-                            +" state" + newState +  " for node:" + baseNode.getNameForLogger());
+                            + " state" + newState +  " for node:" + baseNode.getNameForLogger());
                 }
             } else {
                 // its no WorkflowNode

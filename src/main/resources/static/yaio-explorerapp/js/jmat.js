@@ -99,4 +99,5 @@
            console.log("state=" + state + " for " + eleInputRow.id);
         }
         return state;
-     }    
+     }
+    

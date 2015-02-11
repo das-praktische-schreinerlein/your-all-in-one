@@ -31,7 +31,7 @@ import de.yaio.datatransfer.exporter.OutputOptions;
  * @copyright Copyright (c) 2014, Michael Schreiner
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-public interface BaseDataFormatter extends Formatter{
+public interface BaseDataFormatter extends Formatter {
 
     /**
      * <h4>FeatureDomain:</h4>

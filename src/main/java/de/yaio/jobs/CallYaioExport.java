@@ -88,7 +88,7 @@ public class CallYaioExport extends CallYaioInstance {
         String format = Configurator.getInstance().getCommandLine().getOptionValue("format");
         
         // call url
-        StringBuffer result = this.callGetUrl("/exports/" + format + "/"+ sysUID, null);
+        StringBuffer result = this.callGetUrl("/exports/" + format + "/" + sysUID, null);
         
         System.out.println(result);
     }

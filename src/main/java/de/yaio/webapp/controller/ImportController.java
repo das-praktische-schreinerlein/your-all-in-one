@@ -70,11 +70,11 @@ public class ImportController {
      * @param file - the uploaded file stream with the data to import
      * @return text-message
      */
-    @RequestMapping(method=RequestMethod.POST, 
+    @RequestMapping(method = RequestMethod.POST, 
                     value = "/wiki/{parentSysUID}", 
-                    produces="text/html")
+                    produces = "text/html")
     public @ResponseBody String importNodeAsWiki(
-           @PathVariable(value="parentSysUID") final String parentSysUID,
+           @PathVariable(value = "parentSysUID") final String parentSysUID,
            @RequestParam("file") final MultipartFile file) {
         NodeActionResponse response = new NodeActionResponse(
                         "ERROR", "node '" + parentSysUID + "' doesnt exists", 

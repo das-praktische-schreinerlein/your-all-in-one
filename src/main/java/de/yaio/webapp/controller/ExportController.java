@@ -148,11 +148,11 @@ public class ExportController {
      * @param response - the response-Obj to set contenttype and headers
      * @return String - wiki-format of the node
      */
-    @RequestMapping(method=RequestMethod.GET, 
+    @RequestMapping(method = RequestMethod.GET, 
                     value = "/wiki/{sysUID}", 
-                    produces="application/wiki")
+                    produces = "application/wiki")
     public @ResponseBody String exportNodeAsWiki(
-           @PathVariable(value="sysUID") final String sysUID, final HttpServletResponse response) {
+           @PathVariable(value = "sysUID") final String sysUID, final HttpServletResponse response) {
         // configure
         Exporter exporter = new WikiExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
@@ -180,12 +180,12 @@ public class ExportController {
      * @param response - the response-Obj to set contenttype and headers
      * @return String - wiki-format of the node
      */
-    @RequestMapping(method= {RequestMethod.POST}, 
+    @RequestMapping(method = {RequestMethod.POST}, 
                     value = "/wikiuseoptions/{sysUID}", 
-                    produces="application/wiki",
+                    produces = "application/wiki",
                     consumes = "application/x-www-form-urlencoded")
     public @ResponseBody String exportNodeAsWiki(
-           @PathVariable(value="sysUID") final String sysUID,
+           @PathVariable(value = "sysUID") final String sysUID,
            @ModelAttribute final EmptyOutputOptionsImpl oOptions,
            final HttpServletResponse response) {
         // configure
@@ -211,11 +211,11 @@ public class ExportController {
      * @param response - the response-Obj to set contenttype and headers
      * @return String - mindmap-format of the node
      */
-    @RequestMapping(method=RequestMethod.GET, 
+    @RequestMapping(method = RequestMethod.GET, 
                     value = "/mindmap/{sysUID}", 
-                    produces="application/mindmap")
+                    produces = "application/mindmap")
     public @ResponseBody String exportNodeAsMindMap(
-           @PathVariable(value="sysUID") final String sysUID, final HttpServletResponse response) {
+           @PathVariable(value = "sysUID") final String sysUID, final HttpServletResponse response) {
         // configure
         Exporter exporter = new MindMapExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
@@ -242,12 +242,12 @@ public class ExportController {
      * @param response - the response-Obj to set contenttype and headers
      * @return String - mindmap-format of the node
      */
-    @RequestMapping(method= {RequestMethod.POST}, 
+    @RequestMapping(method = {RequestMethod.POST}, 
                     value = "/mindmapuseoptions/{sysUID}", 
-                    produces="application/mindmap",
+                    produces = "application/mindmap",
                     consumes = "application/x-www-form-urlencoded")
     public @ResponseBody String exportNodeAsMindMap(
-           @PathVariable(value="sysUID") final String sysUID,
+           @PathVariable(value = "sysUID") final String sysUID,
            @ModelAttribute final EmptyOutputOptionsImpl oOptions,
            final HttpServletResponse response) {
         // configure
@@ -273,11 +273,11 @@ public class ExportController {
      * @param response - the response-Obj to set contenttype and headers
      * @return String - csv-format of the node
      */
-    @RequestMapping(method=RequestMethod.GET, 
+    @RequestMapping(method = RequestMethod.GET, 
                     value = "/csv/{sysUID}", 
-                    produces="application/csv")
+                    produces = "application/csv")
     public @ResponseBody String exportNodeAsCsv(
-           @PathVariable(value="sysUID") final String sysUID, final HttpServletResponse response) {
+           @PathVariable(value = "sysUID") final String sysUID, final HttpServletResponse response) {
         // configure
         Exporter exporter = new CSVExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
@@ -304,12 +304,12 @@ public class ExportController {
      * @param response - the response-Obj to set contenttype and headers
      * @return String - csv-format of the node
      */
-    @RequestMapping(method= {RequestMethod.POST}, 
+    @RequestMapping(method = {RequestMethod.POST}, 
                     value = "/csvuseoptions/{sysUID}", 
-                    produces="application/csv",
+                    produces = "application/csv",
                     consumes = "application/x-www-form-urlencoded")
     public @ResponseBody String exportNodeAsCsv(
-           @PathVariable(value="sysUID") final String sysUID,
+           @PathVariable(value = "sysUID") final String sysUID,
            @ModelAttribute final EmptyOutputOptionsImpl oOptions,
            final HttpServletResponse response) {
         // configure
@@ -335,11 +335,11 @@ public class ExportController {
      * @param response - the response-Obj to set contenttype and headers
      * @return String - ical-format of the node
      */
-    @RequestMapping(method=RequestMethod.GET, 
+    @RequestMapping(method = RequestMethod.GET, 
                     value = "/ical/{sysUID}", 
-                    produces="application/ical")
+                    produces = "application/ical")
     public @ResponseBody String exportNodeAsICal(
-           @PathVariable(value="sysUID") final String sysUID, final HttpServletResponse response) {
+           @PathVariable(value = "sysUID") final String sysUID, final HttpServletResponse response) {
         // configure
         Exporter exporter = new ICalExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
@@ -365,11 +365,11 @@ public class ExportController {
      * @param response - the response-Obj to set contenttype and headers
      * @return String - ical-format of the node
      */
-    @RequestMapping(method=RequestMethod.GET, 
+    @RequestMapping(method = RequestMethod.GET, 
                     value = "/icalevents/{sysUID}", 
-                    produces="application/ical")
+                    produces = "application/ical")
     public @ResponseBody String exportNodeAsICalOnlyEvents(
-           @PathVariable(value="sysUID") final String sysUID, final HttpServletResponse response) {
+           @PathVariable(value = "sysUID") final String sysUID, final HttpServletResponse response) {
         // configure
         Exporter exporter = new ICalExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
@@ -397,11 +397,11 @@ public class ExportController {
      * @param response - the response-Obj to set contenttype and headers
      * @return String - ical-format of the node
      */
-    @RequestMapping(method=RequestMethod.GET, 
+    @RequestMapping(method = RequestMethod.GET, 
                     value = "/icaltasks/{sysUID}", 
-                    produces="application/ical")
+                    produces = "application/ical")
     public @ResponseBody String exportNodeAsICalOnlyTasks(
-           @PathVariable(value="sysUID") final String sysUID, final HttpServletResponse response) {
+           @PathVariable(value = "sysUID") final String sysUID, final HttpServletResponse response) {
         // configure
         Exporter exporter = new ICalExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
@@ -430,11 +430,11 @@ public class ExportController {
      * @param response - the response-Obj to set contenttype and headers
      * @return String - ical-format of the node
      */
-    @RequestMapping(method=RequestMethod.GET, 
+    @RequestMapping(method = RequestMethod.GET, 
                     value = "/icaltaskstodo/{sysUID}", 
-                    produces="application/ical")
+                    produces = "application/ical")
     public @ResponseBody String exportNodeAsICalOnlyTasksTodo(
-           @PathVariable(value="sysUID") final String sysUID, HttpServletResponse response) {
+           @PathVariable(value = "sysUID") final String sysUID, HttpServletResponse response) {
         // configure
         Exporter exporter = new ICalExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
@@ -464,11 +464,11 @@ public class ExportController {
      * @param response - the response-Obj to set contenttype and headers
      * @return String - ical-format of the node
      */
-    @RequestMapping(method=RequestMethod.GET, 
+    @RequestMapping(method = RequestMethod.GET, 
                     value = "/icaltaskslate/{sysUID}", 
-                    produces="application/ical")
+                    produces = "application/ical")
     public @ResponseBody String exportNodeAsICalOnlyTasksLate(
-           @PathVariable(value="sysUID") String sysUID, HttpServletResponse response) {
+           @PathVariable(value = "sysUID") String sysUID, HttpServletResponse response) {
         // configure
         Exporter exporter = new ICalExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
@@ -499,12 +499,12 @@ public class ExportController {
      * @param response - the response-Obj to set contenttype and headers
      * @return String - ical-format of the node
      */
-    @RequestMapping(method= {RequestMethod.POST}, 
+    @RequestMapping(method = {RequestMethod.POST}, 
                     value = "/icaluseoptions/{sysUID}", 
-                    produces="application/ical",
+                    produces = "application/ical",
                     consumes = "application/x-www-form-urlencoded")
     public @ResponseBody String exportNodeAsICal(
-           @PathVariable(value="sysUID") String sysUID,
+           @PathVariable(value = "sysUID") String sysUID,
            @ModelAttribute EmptyOutputOptionsImpl oOptions,
            HttpServletResponse response) {
         // configure
@@ -588,11 +588,11 @@ public class ExportController {
      * @param response - the response-Obj to set contenttype and headers
      * @return String - html-format of the node
      */
-    @RequestMapping(method=RequestMethod.GET, 
+    @RequestMapping(method = RequestMethod.GET, 
                     value = "/html/{sysUID}", 
-                    produces="text/html")
+                    produces = "text/html")
     public @ResponseBody String exportNodeAsHtml(
-           @PathVariable(value="sysUID") String sysUID, HttpServletResponse response) {
+           @PathVariable(value = "sysUID") String sysUID, HttpServletResponse response) {
         // configure
         OutputOptions oOptions = new OutputOptionsImpl();
         return this.commonExportNodeAsHtml(sysUID, oOptions, response, null, null);
@@ -614,11 +614,11 @@ public class ExportController {
      * @param response - the response-Obj to set contenttype and headers
      * @return String - html-format of the node
      */
-    @RequestMapping(method=RequestMethod.GET, 
+    @RequestMapping(method = RequestMethod.GET, 
                     value = "/htmllayoutfragment/{sysUID}", 
-                    produces="text/html")
+                    produces = "text/html")
     public @ResponseBody String exportNodeAsHtmlFragment(
-           @PathVariable(value="sysUID") String sysUID, HttpServletResponse response) {
+           @PathVariable(value = "sysUID") String sysUID, HttpServletResponse response) {
         // configure
         OutputOptions oOptions = new OutputOptionsImpl();
         oOptions.setFlgProcessDocLayout(true);
@@ -644,11 +644,11 @@ public class ExportController {
      * @param response - the response-Obj to set contenttype and headers
      * @return String - html-format of the node
      */
-    @RequestMapping(method=RequestMethod.GET, 
+    @RequestMapping(method = RequestMethod.GET, 
                     value = "/htmlfrontpagefragment/{sysUID}", 
-                    produces="text/html")
+                    produces = "text/html")
     public @ResponseBody String exportNodeAsHtmlFrontpageFragment(
-           @PathVariable(value="sysUID") String sysUID, HttpServletResponse response) {
+           @PathVariable(value = "sysUID") String sysUID, HttpServletResponse response) {
         // configure
         OutputOptions oOptions = new OutputOptionsImpl();
         oOptions.setFlgProcessDocLayout(true);
@@ -681,12 +681,12 @@ public class ExportController {
      * @param response - the response-Obj to set contenttype and headers
      * @return String - html-format of the node
      */
-    @RequestMapping(method= {RequestMethod.POST}, 
+    @RequestMapping(method = {RequestMethod.POST}, 
                     value = "/htmluseoptions/{sysUID}", 
-                    produces="text/html",
+                    produces = "text/html",
                     consumes = "application/x-www-form-urlencoded")
     public @ResponseBody String exportNodeAsHtml(
-           @PathVariable(value="sysUID") String sysUID,
+           @PathVariable(value = "sysUID") String sysUID,
            @ModelAttribute EmptyOutputOptionsImpl oOptions,
            HttpServletResponse response) {
         return this.commonExportNodeAsHtml(sysUID, oOptions, response, null, null);
@@ -707,11 +707,11 @@ public class ExportController {
      * @param response - the response-Obj to set contenttype and headers
      * @return String - documentation-html-format of the node
      */
-    @RequestMapping(method=RequestMethod.GET, 
+    @RequestMapping(method = RequestMethod.GET, 
                     value = "/documentation/{sysUID}", 
-                    produces="text/html")
+                    produces = "text/html")
     public @ResponseBody String exportDocumentationNodeAsHtml(
-           @PathVariable(value="sysUID") String sysUID, HttpServletResponse response) {
+           @PathVariable(value = "sysUID") String sysUID, HttpServletResponse response) {
         // set Options
         OutputOptions oOptions = new OutputOptionsImpl();
         oOptions.setAllFlgShow(false);
@@ -807,11 +807,11 @@ public class ExportController {
      * @param response - the response-Obj to set contenttype and headers
      * @return ByteArrayOutputStream - excel-format of the node
      */
-    @RequestMapping(method=RequestMethod.GET, 
+    @RequestMapping(method = RequestMethod.GET, 
                     value = "/excel/{sysUID}", 
-                    produces="application/excel")
+                    produces = "application/excel")
     public @ResponseBody String exportNodeAsExcel(
-           @PathVariable(value="sysUID") String sysUID, HttpServletResponse response) {
+           @PathVariable(value = "sysUID") String sysUID, HttpServletResponse response) {
         ExcelOutputOptions oOptions = new ExcelOutputOptions(new OutputOptionsImpl());
         return this.commonExportNodeAsExcel(sysUID, oOptions, response);
     }
@@ -834,12 +834,12 @@ public class ExportController {
      * @param response - the response-Obj to set contenttype and headers
      * @return String - html-format of the node
      */
-    @RequestMapping(method= {RequestMethod.POST}, 
+    @RequestMapping(method = {RequestMethod.POST}, 
                     value = "/exceluseoptions/{sysUID}", 
-                    produces="application/excel",
+                    produces = "application/excel",
                     consumes = "application/x-www-form-urlencoded")
     public @ResponseBody String exportNodeAsExcel(
-           @PathVariable(value="sysUID") String sysUID,
+           @PathVariable(value = "sysUID") String sysUID,
            @ModelAttribute ExcelOutputOptions oOptions,
            HttpServletResponse response) {
         return this.commonExportNodeAsExcel(sysUID, oOptions, response);

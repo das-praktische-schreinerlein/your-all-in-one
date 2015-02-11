@@ -871,4 +871,3 @@ function togglePreWrap(element) {
          }
      });    
  }
- 
