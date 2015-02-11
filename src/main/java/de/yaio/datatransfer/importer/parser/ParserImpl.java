@@ -36,15 +36,15 @@ import de.yaio.core.datadomain.DataDomain;
 public abstract class ParserImpl implements Parser {
 
     @Override
-    public int compareTo(Parser o) {
+    public int compareTo(final Parser o) {
         Integer myOrder = this.getTargetOrder();
         Integer oOrder = o.getTargetOrder();
         return myOrder.compareTo(oOrder);
     }
 
     @Override
-    public boolean trimNodeName(DataDomain node, Pattern pattern, 
-            Matcher matcher, int first, int last) {
+    public boolean trimNodeName(final DataDomain node, final Pattern pattern, 
+            final Matcher matcher, final int first, final int last) {
         boolean flgBrackets = false;
         String name = node.getName();
 

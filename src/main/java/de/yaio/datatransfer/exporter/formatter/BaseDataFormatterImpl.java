@@ -62,29 +62,31 @@ public class BaseDataFormatterImpl extends FormatterImpl implements BaseDataForm
      *     Config
      * @param exporter - instance of the Exporter which will use me
      */
-    public static void configureDataDomainFormatter(Exporter exporter) {
+    public static void configureDataDomainFormatter(final Exporter exporter) {
         Formatter formatter = new BaseDataFormatterImpl();
         exporter.addDataDomainFormatter(formatter);
     }
 
     @Override
-    public void format(DataDomain node, StringBuffer nodeOutput, OutputOptions options) throws Exception {
-        formatBaseData((BaseData)node, nodeOutput, options);
+    public void format(final DataDomain node, final StringBuffer nodeOutput, final OutputOptions options) throws Exception {
+        formatBaseData((BaseData) node, nodeOutput, options);
     }
 
     @Override
-    public void formatBaseData(BaseData node, StringBuffer nodeOutput, OutputOptions options) throws Exception {
+    public void formatBaseData(final BaseData node, final StringBuffer nodeOutput, final OutputOptions options) throws Exception {
         // exit if Flg not set
         if (! options.isFlgShowName() && ! options.isFlgShowType() && ! options.isFlgShowState()) {
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("SKIP: isFlgShowName and isFlgShowState not set for node:" 
                         + node.getNameForLogger());
+            }
             return;
         }
         
         // lets roll
-        if (LOGGER.isDebugEnabled())
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Do: BaseDataFormatter for Node:" + node.getNameForLogger());
+        }
         if (options.isFlgShowName() && options.isFlgShowType()) {
             nodeOutput.append(node.getType()).append(" - ").append(node.getName());
         } else if (options.isFlgShowName()) {

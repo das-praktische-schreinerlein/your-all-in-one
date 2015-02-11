@@ -86,12 +86,12 @@ public class SysDataServiceTest extends DataDomainServiceTest {
      * @throws Exception
      */
     protected SysDataTestObj getNewSysDataTestObj() throws Exception  {
-        return (SysDataTestObj)setupNewTestObj();
+        return (SysDataTestObj) setupNewTestObj();
     }
 
     @Override
     public void setupDataDomainService() throws Exception {
-        NodeServiceImpl nodeService = (NodeServiceImpl)TaskNode.getConfiguredNodeService();
+        NodeServiceImpl nodeService = (NodeServiceImpl) TaskNode.getConfiguredNodeService();
         dataDomainService = nodeService.hshDataDomainRecalcerByClass.get(SysDataServiceImpl.class);
     }
 

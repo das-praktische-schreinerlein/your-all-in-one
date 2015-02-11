@@ -62,13 +62,13 @@ public class MetaDataServiceImpl extends DataDomainRecalcImpl implements MetaDat
      *     Config
      * @param nodeService - instance of the nodeService which will call me as recalcer
      */
-    public static void configureDataDomainRecalcer(NodeService nodeService) {
+    public static void configureDataDomainRecalcer(final NodeService nodeService) {
         DataDomainRecalc baseDataDomainRecalc  = new MetaDataServiceImpl();
         nodeService.addDataDomainRecalcer(baseDataDomainRecalc);
     }
     
     @Override
-    public void doRecalcBeforeChildren(DataDomain node, int recurceDirection) throws Exception {
+    public void doRecalcBeforeChildren(final DataDomain node, final int recurceDirection) throws Exception {
         // Check if node is compatibel
         if (node != null) {
             if (! MetaData.class.isInstance(node)) {
@@ -77,17 +77,17 @@ public class MetaDataServiceImpl extends DataDomainRecalcImpl implements MetaDat
         }
         
         // Roll
-        this.initMetaData((MetaData)node);
+        this.initMetaData((MetaData) node);
     }
 
     @Override
-    public void doRecalcAfterChildren(DataDomain node, int recurceDirection) throws Exception {
+    public void doRecalcAfterChildren(final DataDomain node, final int recurceDirection) throws Exception {
         // NOP
     }
     
     
     @Override
-    public void initMetaData(MetaData node) throws Exception {
+    public void initMetaData(final MetaData node) throws Exception {
         // Daten einlesen
         String praefix = node.getMetaNodePraefix();
         String id = node.getMetaNodeNummer();
@@ -117,12 +117,12 @@ public class MetaDataServiceImpl extends DataDomainRecalcImpl implements MetaDat
     }
 
     @Override
-    public Object getNextNodeNumber(MetaData node) throws Exception {
+    public Object getNextNodeNumber(final MetaData node) throws Exception {
         return getNodeNumberService().getNextNodeNumber(node);
     }
 
     @Override
-    public void setNodeNumberService(NodeNumberService newNodeNumberService)
+    public void setNodeNumberService(final NodeNumberService newNodeNumberService)
             throws Exception {
         this.nodeNumberService = newNodeNumberService;
         

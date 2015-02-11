@@ -54,12 +54,12 @@ public class CallYaioRecalcNodes extends CallYaioInstance {
      *     Constructor
      * @param args the command line arguments
      */
-    public CallYaioRecalcNodes(String[] args) {
+    public CallYaioRecalcNodes(final String[] args) {
         super(args);
     }
 
     @Override
-    protected Options addAvailiableCmdLineOptions() throws Throwable {
+    protected Options addAvailiableCmdLineOptions() throws Exception {
         Options availiableCmdLineOptions = super.addAvailiableCmdLineOptions();
         
         // sysuid for export
@@ -68,14 +68,15 @@ public class CallYaioRecalcNodes extends CallYaioInstance {
         sysuidOption.setRequired(true);
         availiableCmdLineOptions.addOption(sysuidOption);
 
-        if (LOGGER.isDebugEnabled())
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("addAvailiableCmdLineOptions: " + availiableCmdLineOptions);
+        }
         
         return availiableCmdLineOptions;
     }
 
     @Override
-    public void doJob() throws Throwable {
+    public void doJob() throws Exception {
         // get options
         String sysUID = Configurator.getInstance().getCommandLine().getOptionValue("sysuid");
         
@@ -119,7 +120,7 @@ public class CallYaioRecalcNodes extends CallYaioInstance {
      *     CLI
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         CallYaioRecalcNodes me = new CallYaioRecalcNodes(args);
         me.startJobProcessing();
     }

@@ -52,5 +52,5 @@ public interface ResLocDataFormatter extends Formatter{
      * @param options - options for formatter
      * @throws Exception - parser/format-Exceptions possible
      */
-    public void formatResLocData(ResLocData node, StringBuffer nodeOutput, OutputOptions options) throws Exception;
+    void formatResLocData(ResLocData node, StringBuffer nodeOutput, OutputOptions options) throws Exception;
 }

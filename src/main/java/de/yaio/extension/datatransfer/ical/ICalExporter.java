@@ -81,8 +81,8 @@ public class ICalExporter extends WikiExporter {
     };
 
     @Override
-    public StringBuffer getNodeResult(DataDomain curNode,  String praefix,
-            OutputOptions oOptions) throws Exception {
+    public StringBuffer getNodeResult(final DataDomain curNode,  final String praefix,
+            final OutputOptions oOptions) throws Exception {
         StringBuffer res = new StringBuffer();
 
         // Template-Nodes ignorieren
@@ -99,7 +99,7 @@ public class ICalExporter extends WikiExporter {
         }
 
         // Projekt-Ausgabe aller 
-        res.append(this.genICalForNode((BaseNode)curNode, oOptions));
+        res.append(this.genICalForNode((BaseNode) curNode, oOptions));
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("node return datalength:" + res.length() 
@@ -126,8 +126,8 @@ public class ICalExporter extends WikiExporter {
      * @return - formatted output of node-hierarchy and DataDomains
      * @throws Exception - parser/format-Exceptions possible
      */
-    public String genICalForNode(BaseNode paramCurNode, 
-        OutputOptions oOptions) throws Exception {
+    public String genICalForNode(final BaseNode paramCurNode, 
+        final OutputOptions oOptions) throws Exception {
         String res = "";
 
         // max. Ebene pruefen
@@ -164,7 +164,7 @@ public class ICalExporter extends WikiExporter {
                     continue;
                 }
                 // nur ausfuehren, wenn Kindselement WF-Status hat
-                TaskNode subTaskNode = (TaskNode)subNode;
+                TaskNode subTaskNode = (TaskNode) subNode;
                 String subNodeStatus = subTaskNode.getState();
                 if (subTaskNode.isWFStatus(subNodeStatus)) {
                     blockChildren += this.getNodeResult(subTaskNode, "", oOptions);
@@ -191,7 +191,7 @@ public class ICalExporter extends WikiExporter {
             }
             return blockChildren;
         }
-        TaskNode curNode = (TaskNode)paramCurNode;
+        TaskNode curNode = (TaskNode) paramCurNode;
 
         // Status ueberpruefen
         String state = curNode.getState();
@@ -216,9 +216,9 @@ public class ICalExporter extends WikiExporter {
         if (InfoNode.class.isInstance(paramCurNode)) {
             // SKIP
         } else if (EventNode.class.isInstance(paramCurNode)) {
-            res += this.genICalForEventNode((EventNode)paramCurNode, oOptions);
+            res += this.genICalForEventNode((EventNode) paramCurNode, oOptions);
         } else if (TaskNode.class.isInstance(paramCurNode)) {
-            res += this.genICalForTaskNode((TaskNode)paramCurNode, oOptions);
+            res += this.genICalForTaskNode((TaskNode) paramCurNode, oOptions);
         }
         
         res += blockChildren;
@@ -247,8 +247,8 @@ public class ICalExporter extends WikiExporter {
      * @return - formatted output
      * @throws Exception - parser/format-Exceptions possible
      */
-    public String genICalForTaskNode(TaskNode paramCurNode, 
-        OutputOptions oOptions) throws Exception {
+    public String genICalForTaskNode(final TaskNode paramCurNode, 
+        final OutputOptions oOptions) throws Exception {
         String res = "";
 
         // max. Ebene pruefen
@@ -273,7 +273,7 @@ public class ICalExporter extends WikiExporter {
             }
             return "";
         }
-        TaskNode curNode = (TaskNode)paramCurNode;
+        TaskNode curNode = (TaskNode) paramCurNode;
 
         // Status ueberpruefen
         String state = curNode.getState();
@@ -377,8 +377,8 @@ public class ICalExporter extends WikiExporter {
      * @return - formatted output
      * @throws Exception - parser/format-Exceptions possible
      */
-    public String genICalForEventNode(EventNode paramCurNode, 
-        OutputOptions oOptions) throws Exception {
+    public String genICalForEventNode(final EventNode paramCurNode, 
+        final OutputOptions oOptions) throws Exception {
         String res = "";
 
         // max. Ebene pruefen
@@ -403,7 +403,7 @@ public class ICalExporter extends WikiExporter {
             }
             return "";
         }
-        TaskNode curNode = (TaskNode)paramCurNode;
+        TaskNode curNode = (TaskNode) paramCurNode;
 
         // Status ueberpruefen
         String state = curNode.getState();
@@ -517,8 +517,8 @@ public class ICalExporter extends WikiExporter {
 
 
     @Override
-    public String getMasterNodeResult(DataDomain masterNode, 
-            OutputOptions oOptions) throws Exception {
+    public String getMasterNodeResult(final DataDomain masterNode, 
+            final OutputOptions oOptions) throws Exception {
         String icalRes = "BEGIN:VCALENDAR\n";
         icalRes += "PRODID:-//Mozilla.org/NONSGML Mozilla Calendar V1.1//EN\n";
         icalRes += "VERSION:2.0\n";

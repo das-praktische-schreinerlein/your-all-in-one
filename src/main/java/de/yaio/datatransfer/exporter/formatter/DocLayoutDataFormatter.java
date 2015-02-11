@@ -53,5 +53,5 @@ public interface DocLayoutDataFormatter extends Formatter{
      * @param options - options for formatter
      * @throws Exception - parser/format-Exceptions possible
      */
-    public void formatDocLayoutData(DocLayoutData node, StringBuffer nodeOutput, OutputOptions options) throws Exception;
+    void formatDocLayoutData(DocLayoutData node, StringBuffer nodeOutput, OutputOptions options) throws Exception;
 }

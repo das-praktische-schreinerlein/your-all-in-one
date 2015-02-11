@@ -96,7 +96,7 @@ public class SysDataTest extends DataDomainTest {
      * @throws Exception
      */
     protected SysDataTestObj getNewSysDataTestObj() throws Exception  {
-        return (SysDataTestObj)setupNewTestObj();
+        return (SysDataTestObj) setupNewTestObj();
     }
 
     @Override

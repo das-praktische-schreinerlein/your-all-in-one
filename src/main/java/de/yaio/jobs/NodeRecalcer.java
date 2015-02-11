@@ -75,7 +75,7 @@ public class NodeRecalcer {
      * @throws Exception - possible io/db/recalc-Exceptions
      */
     @Transactional()
-    public String findAndRecalcMasternode(String sysUID)
+    public String findAndRecalcMasternode(final String sysUID)
             throws Exception {
         // look for this masternode in DB
         if (LOGGER.isDebugEnabled()) {

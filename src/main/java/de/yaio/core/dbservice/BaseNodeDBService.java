@@ -51,7 +51,7 @@ public interface BaseNodeDBService {
      * @return List - list of the recalced and saved parenthierarchy
      * @throws Exception - io/DB-Exceptions possible
      */
-    public List<BaseNode> updateMeAndMyParents(BaseNode node) throws Exception;
+    List<BaseNode> updateMeAndMyParents(BaseNode node) throws Exception;
     
     
     /**
@@ -68,7 +68,7 @@ public interface BaseNodeDBService {
      * @param sysUID - sysUID for the filter on parent_node
      * @return List of childnodes for basenode with sysUID
      */
-    public List<BaseNode> findChildNodes(String sysUID);
+    List<BaseNode> findChildNodes(String sysUID);
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -84,7 +84,7 @@ public interface BaseNodeDBService {
      * @param fulltext - fulltext to search in desc and name
      * @return total of matching nodes
      */
-    public long countFulltextBaseNodes(String fulltext);
+    long countFulltextBaseNodes(String fulltext);
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -103,7 +103,7 @@ public interface BaseNodeDBService {
      * @param maxResults - resultrange for pagination
      * @return List of matching nodes
      */
-    public List<BaseNode> findFulltextBaseNodeEntries(String fulltext, 
+    List<BaseNode> findFulltextBaseNodeEntries(String fulltext, 
                     String sortConfig, int firstResult, int maxResults);
     
     /**
@@ -120,7 +120,7 @@ public interface BaseNodeDBService {
      * @param symLinkRef - symLinkRef for the filter on node
      * @return List of machting nodes for symLinkRef
      */
-    public List<BaseNode> findSymLinkBaseNode(String symLinkRef);
+    List<BaseNode> findSymLinkBaseNode(String symLinkRef);
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -135,5 +135,5 @@ public interface BaseNodeDBService {
      *     Persistence JPA
      * @return new Masternode
      */
-    public BaseNode resetYaio();
+    BaseNode resetYaio();
 }

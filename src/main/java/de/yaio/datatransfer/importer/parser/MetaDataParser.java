@@ -51,5 +51,5 @@ public interface MetaDataParser extends Parser {
      * @return count elements found
      * @throws Exception - parser-Exceptions possible
      */
-    public int parseMetaDataFromName(MetaData node, ImportOptions options) throws Exception;
+    int parseMetaDataFromName(MetaData node, ImportOptions options) throws Exception;
 }

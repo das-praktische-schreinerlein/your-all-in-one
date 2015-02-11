@@ -40,7 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Order(1)
     public static class APIExportsSecurityConfigurerAdapter extends APIWebSecurityConfigurerAdapter {
         @Override
-        protected void configure(HttpSecurity http) throws Exception {
+        protected void configure(final HttpSecurity http) throws Exception {
             String xframeAllowedDomains = System.getProperty("yaio.my-domain", "dummy") 
                             + "," + System.getProperty("yaio.security.xframe-allowed-domains", "");
             List<String> xframeAllowedDomainsList = Arrays.asList(xframeAllowedDomains.split(","));
@@ -78,7 +78,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Order(2)
     public static class APIImportsSecurityConfigurerAdapter extends APIWebSecurityConfigurerAdapter {
         @Override
-        protected void configure(HttpSecurity http) throws Exception {
+        protected void configure(final HttpSecurity http) throws Exception {
             http
                     // authentification
                     .httpBasic()
@@ -103,7 +103,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Order(3)
     public static class APIAdminWebSecurityConfigurerAdapter extends APIWebSecurityConfigurerAdapter {
         @Override
-        protected void configure(HttpSecurity http) throws Exception {
+        protected void configure(final HttpSecurity http) throws Exception {
             http
                     // authentification
                     .httpBasic()
@@ -134,14 +134,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         }        
 
         @Autowired
-        public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        public void configureGlobal(final AuthenticationManagerBuilder auth) throws Exception {
             Properties users = Configurator.readProperties(System.getProperty(CONST_FILELOCATION_APIUSERS));
             InMemoryUserDetailsManager im = new InMemoryUserDetailsManager(users);
             auth.userDetailsService(im);
         }
         
         @Override
-        protected void configure(HttpSecurity http) throws Exception {
+        protected void configure(final HttpSecurity http) throws Exception {
             String xframeAllowedDomains = System.getProperty("yaio.my-domain", "dummy") 
                             + "," + System.getProperty("yaio.security.xframe-allowed-domains", "");
             List<String> xframeAllowedDomainsList = Arrays.asList(xframeAllowedDomains.split(","));
@@ -183,7 +183,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                  .and()
                    // add CsrfHeaderFilter because angular uses another Header
                    .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class);
-            ;
         }
     }    
 }

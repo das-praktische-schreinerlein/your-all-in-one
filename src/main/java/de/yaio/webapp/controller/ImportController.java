@@ -74,8 +74,8 @@ public class ImportController {
                     value = "/wiki/{parentSysUID}", 
                     produces="text/html")
     public @ResponseBody String importNodeAsWiki(
-           @PathVariable(value="parentSysUID") String parentSysUID,
-           @RequestParam("file") MultipartFile file) {
+           @PathVariable(value="parentSysUID") final String parentSysUID,
+           @RequestParam("file") final MultipartFile file) {
         NodeActionResponse response = new NodeActionResponse(
                         "ERROR", "node '" + parentSysUID + "' doesnt exists", 
                         null, null, null, null);

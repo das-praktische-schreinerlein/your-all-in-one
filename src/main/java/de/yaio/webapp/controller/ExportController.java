@@ -94,9 +94,9 @@ public class ExportController {
      * @param response - the response-Obj to set contenttype and headers
      * @return String - export-format of the node
      */
-    public String exportNode(String sysUID, Exporter exporter, 
-                             OutputOptions oOptions, String extension,
-                             HttpServletResponse response) {
+    public String exportNode(final String sysUID, final Exporter exporter, 
+                             final OutputOptions oOptions, final String extension,
+                             final HttpServletResponse response) {
         // find a specific node
         BaseNode node = BaseNode.findBaseNode(sysUID);
         String res = "";
@@ -152,7 +152,7 @@ public class ExportController {
                     value = "/wiki/{sysUID}", 
                     produces="application/wiki")
     public @ResponseBody String exportNodeAsWiki(
-           @PathVariable(value="sysUID") String sysUID, HttpServletResponse response) {
+           @PathVariable(value="sysUID") final String sysUID, final HttpServletResponse response) {
         // configure
         Exporter exporter = new WikiExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
@@ -185,9 +185,9 @@ public class ExportController {
                     produces="application/wiki",
                     consumes = "application/x-www-form-urlencoded")
     public @ResponseBody String exportNodeAsWiki(
-           @PathVariable(value="sysUID") String sysUID,
-           @ModelAttribute EmptyOutputOptionsImpl oOptions,
-           HttpServletResponse response) {
+           @PathVariable(value="sysUID") final String sysUID,
+           @ModelAttribute final EmptyOutputOptionsImpl oOptions,
+           final HttpServletResponse response) {
         // configure
         Exporter exporter = new WikiExporter();
         
@@ -215,7 +215,7 @@ public class ExportController {
                     value = "/mindmap/{sysUID}", 
                     produces="application/mindmap")
     public @ResponseBody String exportNodeAsMindMap(
-           @PathVariable(value="sysUID") String sysUID, HttpServletResponse response) {
+           @PathVariable(value="sysUID") final String sysUID, final HttpServletResponse response) {
         // configure
         Exporter exporter = new MindMapExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
@@ -247,9 +247,9 @@ public class ExportController {
                     produces="application/mindmap",
                     consumes = "application/x-www-form-urlencoded")
     public @ResponseBody String exportNodeAsMindMap(
-           @PathVariable(value="sysUID") String sysUID,
-           @ModelAttribute EmptyOutputOptionsImpl oOptions,
-           HttpServletResponse response) {
+           @PathVariable(value="sysUID") final String sysUID,
+           @ModelAttribute final EmptyOutputOptionsImpl oOptions,
+           final HttpServletResponse response) {
         // configure
         Exporter exporter = new MindMapExporter();
         
@@ -277,7 +277,7 @@ public class ExportController {
                     value = "/csv/{sysUID}", 
                     produces="application/csv")
     public @ResponseBody String exportNodeAsCsv(
-           @PathVariable(value="sysUID") String sysUID, HttpServletResponse response) {
+           @PathVariable(value="sysUID") final String sysUID, final HttpServletResponse response) {
         // configure
         Exporter exporter = new CSVExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
@@ -309,9 +309,9 @@ public class ExportController {
                     produces="application/csv",
                     consumes = "application/x-www-form-urlencoded")
     public @ResponseBody String exportNodeAsCsv(
-           @PathVariable(value="sysUID") String sysUID,
-           @ModelAttribute EmptyOutputOptionsImpl oOptions,
-           HttpServletResponse response) {
+           @PathVariable(value="sysUID") final String sysUID,
+           @ModelAttribute final EmptyOutputOptionsImpl oOptions,
+           final HttpServletResponse response) {
         // configure
         Exporter exporter = new CSVExporter();
         
@@ -339,7 +339,7 @@ public class ExportController {
                     value = "/ical/{sysUID}", 
                     produces="application/ical")
     public @ResponseBody String exportNodeAsICal(
-           @PathVariable(value="sysUID") String sysUID, HttpServletResponse response) {
+           @PathVariable(value="sysUID") final String sysUID, final HttpServletResponse response) {
         // configure
         Exporter exporter = new ICalExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
@@ -369,12 +369,12 @@ public class ExportController {
                     value = "/icalevents/{sysUID}", 
                     produces="application/ical")
     public @ResponseBody String exportNodeAsICalOnlyEvents(
-           @PathVariable(value="sysUID") String sysUID, HttpServletResponse response) {
+           @PathVariable(value="sysUID") final String sysUID, final HttpServletResponse response) {
         // configure
         Exporter exporter = new ICalExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
         
-        oOptions.setStrClassFilter("EventNode");;
+        oOptions.setStrClassFilter("EventNode");
         
         // run
         String res = this.exportNode(sysUID, exporter, oOptions, ".ics", response);
@@ -401,12 +401,12 @@ public class ExportController {
                     value = "/icaltasks/{sysUID}", 
                     produces="application/ical")
     public @ResponseBody String exportNodeAsICalOnlyTasks(
-           @PathVariable(value="sysUID") String sysUID, HttpServletResponse response) {
+           @PathVariable(value="sysUID") final String sysUID, final HttpServletResponse response) {
         // configure
         Exporter exporter = new ICalExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
         
-        oOptions.setStrClassFilter("TaskNode");;
+        oOptions.setStrClassFilter("TaskNode");
         
         // run
         String res = this.exportNode(sysUID, exporter, oOptions, ".ics", response);
@@ -434,7 +434,7 @@ public class ExportController {
                     value = "/icaltaskstodo/{sysUID}", 
                     produces="application/ical")
     public @ResponseBody String exportNodeAsICalOnlyTasksTodo(
-           @PathVariable(value="sysUID") String sysUID, HttpServletResponse response) {
+           @PathVariable(value="sysUID") final String sysUID, HttpServletResponse response) {
         // configure
         Exporter exporter = new ICalExporter();
         OutputOptions oOptions = new OutputOptionsImpl();

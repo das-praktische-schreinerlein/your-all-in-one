@@ -53,6 +53,6 @@ public interface PlanCalcDataFormatter extends Formatter{
      * @param options - options for formatter
      * @throws Exception - parser/format-Exceptions possible
      */
-    public void formatPlanCalcData(PlanCalcData node, 
+    void formatPlanCalcData(PlanCalcData node, 
             StringBuffer nodeOutput, OutputOptions options) throws Exception;
 }

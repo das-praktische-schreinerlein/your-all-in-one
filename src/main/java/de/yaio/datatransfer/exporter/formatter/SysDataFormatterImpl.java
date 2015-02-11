@@ -64,28 +64,29 @@ public class SysDataFormatterImpl extends FormatterImpl implements SysDataFormat
      *     Config
      * @param exporter - instance of the Exporter which will use me
      */
-    public static void configureDataDomainFormatter(Exporter exporter) {
+    public static void configureDataDomainFormatter(final Exporter exporter) {
         Formatter formatter = new SysDataFormatterImpl();
         exporter.addDataDomainFormatter(formatter);
     }
 
     @Override
-    public void format(DataDomain node, StringBuffer nodeOutput, OutputOptions options) throws Exception {
+    public void format(final DataDomain node, final StringBuffer nodeOutput, final OutputOptions options) throws Exception {
         // Check if node is compatibel
         if (node != null) {
             if (! SysData.class.isInstance(node)) {
                 throw new IllegalArgumentException();
             }
         }
-        formatSysData((SysData)node, nodeOutput, options);
+        formatSysData((SysData) node, nodeOutput, options);
     }
 
     @Override
-    public void formatSysData(SysData node, StringBuffer nodeOutput, OutputOptions oOptions) throws Exception {
+    public void formatSysData(final SysData node, final StringBuffer nodeOutput, final OutputOptions oOptions) throws Exception {
         // exit if Flg not set
         if (! oOptions.isFlgShowSysData()) {
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("SKIP: isFlgShowSysData not set for node:" + node.getNameForLogger());
+            }
             return;
         }
 
@@ -106,18 +107,21 @@ public class SysDataFormatterImpl extends FormatterImpl implements SysDataFormat
              || (changed != null)
              || flgEver
              ) {
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Do: SysDataFormatter for Node:" + node.getNameForLogger());
+            }
 
             // Abstand
-            if (nodeOutput.length() > 0)
+            if (nodeOutput.length() > 0) {
                 nodeOutput.append(" ");
+            }
 
             // Einrueckung
             if (oOptions.getIntendSys() > 0) {
-                if (LOGGER.isDebugEnabled())
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Do: IntendSys Output " + nodeOutput.toString() 
                             + " for Node:" + node.getNameForLogger());
+                }
                 while (nodeOutput.length() < oOptions.getIntendSys()) {
                     nodeOutput.append(" ");
                 }

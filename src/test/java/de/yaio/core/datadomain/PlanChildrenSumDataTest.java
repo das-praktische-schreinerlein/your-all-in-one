@@ -92,7 +92,7 @@ public class PlanChildrenSumDataTest extends DataDomainTest {
      * @throws Exception
      */
     protected PlanChildrenSumDataTestObj getNewPlanChildrenSumDataTestObj() throws Exception  {
-        return (PlanChildrenSumDataTestObj)setupNewTestObj();
+        return (PlanChildrenSumDataTestObj) setupNewTestObj();
     }
 
     @Override

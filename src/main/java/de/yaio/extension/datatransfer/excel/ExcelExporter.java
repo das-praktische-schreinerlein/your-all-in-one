@@ -81,14 +81,14 @@ public class ExcelExporter extends WikiExporter {
     public static String CONST_FORMATTER_PLAN = PlanDataFormatterImpl.class.getName();
     
     @Override
-    public String getMasterNodeResult(DataDomain masterNode,
-            OutputOptions oOptions) throws Exception {
+    public String getMasterNodeResult(final DataDomain masterNode,
+            final OutputOptions oOptions) throws Exception {
         throw new IllegalAccessException("This function must not be used!!!");
     }
 
     @Override
-    public StringBuffer getNodeResult(DataDomain node,  String praefix,
-            OutputOptions oOptions) throws Exception {
+    public StringBuffer getNodeResult(final DataDomain node,  final String praefix,
+            final OutputOptions oOptions) throws Exception {
         throw new IllegalAccessException("This function must not be used!!!");
     }
     
@@ -106,7 +106,7 @@ public class ExcelExporter extends WikiExporter {
      * @param baseOOptions - Default OutputOptions to override
      * @return OuputOptions for generatio
      */
-    public ExcelOutputOptions genOutputOptionsForExcel(OutputOptions baseOOptions) {
+    public ExcelOutputOptions genOutputOptionsForExcel(final OutputOptions baseOOptions) {
         ExcelOutputOptions options = new ExcelOutputOptions(baseOOptions);
 
         // activate desc
@@ -139,8 +139,8 @@ public class ExcelExporter extends WikiExporter {
      * @return - formatted output of node-hierarchy and DataDomains
      * @throws Exception
      */
-    public void fillPlanungSheet(HSSFWorkbook wb, BaseNode masterNode,
-                ExcelOutputOptions oOptions)
+    public void fillPlanungSheet(final HSSFWorkbook wb, final BaseNode masterNode,
+                final ExcelOutputOptions oOptions)
         throws Exception {
 
         // ExcelService anlegen
@@ -173,8 +173,9 @@ public class ExcelExporter extends WikiExporter {
 
         int startRownNum = ExcelNodeService.CONST_PLANUNG_ROUW_UE;
         this.createPlanungLineUe(sheet, startRownNum, oOptions);
-        if (oOptions.isFlgMergeExcelPlanungGantSheets())
+        if (oOptions.isFlgMergeExcelPlanungGantSheets()) {
             this.createGantLineDiagUe(sheet, startRownNum, oOptions, ExcelNodeService.CONST_GANT_VERSATZ);
+        }
         startRownNum++;
         int lastIndex = this.createPlanungLines4Node(sheet, masterNode,
                 startRownNum, -1, oOptions);
@@ -189,18 +190,18 @@ public class ExcelExporter extends WikiExporter {
         sheet.setColumnHidden(new Integer(ExcelNodeService.CONST_PLANUNG_COL_IST_STANDFAKTOR), true);
 
         // Gesamten Sheet formatieren
-        for (int curCol = 1; curCol < ExcelNodeService.CONST_PLANUNG_COL_PLAN_AUFWAND;curCol++) {
+        for (int curCol = 1; curCol < ExcelNodeService.CONST_PLANUNG_COL_PLAN_AUFWAND; curCol++) {
             // Spalte auf AutoSize
             sheet.autoSizeColumn(curCol);
         }
         // alle Struktur-Spalten vor MaxEbene verkleinern
         int maxEbene = masterNode.getMaxChildEbene();
-        for (int curCol = ExcelNodeService.CONST_PLANUNG_COL_PROJEKT; curCol < ExcelNodeService.CONST_PLANUNG_COL_PROJEKT + maxEbene - 1;curCol++) {
+        for (int curCol = ExcelNodeService.CONST_PLANUNG_COL_PROJEKT; curCol < ExcelNodeService.CONST_PLANUNG_COL_PROJEKT + maxEbene - 1; curCol++) {
             sheet.setColumnWidth(curCol, 150);
         }
 
         // alle Struktur-Spalten hinter MaxEbene ausblenden
-        for (int curCol = ExcelNodeService.CONST_PLANUNG_COL_PROJEKT+maxEbene; curCol <= ExcelNodeService.CONST_PLANUNG_COL_DESC;curCol++) {
+        for (int curCol = ExcelNodeService.CONST_PLANUNG_COL_PROJEKT+maxEbene; curCol <= ExcelNodeService.CONST_PLANUNG_COL_DESC; curCol++) {
             sheet.setColumnWidth(curCol, 0);
             sheet.setColumnHidden(curCol, true);
         }
@@ -220,8 +221,9 @@ public class ExcelExporter extends WikiExporter {
         sheet.setColumnWidth(ExcelNodeService.CONST_PLANUNG_COL_REAL_DATE_ENDE, ExcelService.CONST_COL_WIDTH_DATE);
 
         // Gant-Diagramm formatieren
-        if (oOptions.isFlgMergeExcelPlanungGantSheets())
+        if (oOptions.isFlgMergeExcelPlanungGantSheets()) {
             this.formatGantSheetDiag(sheet, lastIndex, oOptions, ExcelNodeService.CONST_GANT_VERSATZ);
+        }
 
         // Druckanpassung
         sheet.setFitToPage(true);
@@ -233,9 +235,9 @@ public class ExcelExporter extends WikiExporter {
     }
 
     // TODO Doku
-    public int createPlanungLines4Node(HSSFSheet sheet, BaseNode node,
-            int startRownNum, int vorgaengerRownNum,
-            ExcelOutputOptions oOptions)
+    public int createPlanungLines4Node(final HSSFSheet sheet, final BaseNode node,
+            final int startRownNum, final int vorgaengerRownNum,
+            final ExcelOutputOptions oOptions)
     throws Exception {
         // Parameter pruefen
         if (sheet == null) {
@@ -260,7 +262,7 @@ public class ExcelExporter extends WikiExporter {
         // nur Kindselemente einfuegen, wenn Ebene
         if (node.getEbene() <= oOptions.getMaxEbene()) {
             for (String nodeName : childNodes.keySet()) {
-                BaseNode childNode = (BaseNode)childNodes.get(nodeName);
+                BaseNode childNode = (BaseNode) childNodes.get(nodeName);
                 // naechste Zeile
                 curRowNum++;
                 lstChildRowNum.add(new Integer(curRowNum));
@@ -280,16 +282,17 @@ public class ExcelExporter extends WikiExporter {
         // meine eigene Zeile einfuegen
         this.createPlanungLine4Node(sheet, node, startRownNum,
                 lstChildRowNum, vorgaengerRownNum, oOptions);
-        if (oOptions.isFlgMergeExcelPlanungGantSheets())
+        if (oOptions.isFlgMergeExcelPlanungGantSheets()) {
             this.createGantLineDiag4Node(sheet, node, startRownNum,
                     lstChildRowNum, oOptions, ExcelNodeService.CONST_GANT_VERSATZ);
+        }
 
         return curRowNum;
     }
 
     // TODO Doku
-    public void createPlanungLineUe(HSSFSheet sheet, int startRownNum,
-            ExcelOutputOptions oOptions)
+    public void createPlanungLineUe(final HSSFSheet sheet, final int startRownNum,
+            final ExcelOutputOptions oOptions)
     throws Exception {
         // Parameter pruefen
         if (sheet == null) {
@@ -331,9 +334,9 @@ public class ExcelExporter extends WikiExporter {
     }
 
     // TODO Doku
-    public void createPlanungLine4Node(HSSFSheet sheet, BaseNode node,
-            int startRownNum, List<Integer> lstChildRowNum, int vorgaengerRownNum,
-            ExcelOutputOptions oOptions)
+    public void createPlanungLine4Node(final HSSFSheet sheet, final BaseNode node,
+            final int startRownNum, final List<Integer> lstChildRowNum, final int vorgaengerRownNum,
+            final ExcelOutputOptions oOptions)
     throws Exception {
         // Parameter pruefen
         if (sheet == null) {
@@ -355,7 +358,7 @@ public class ExcelExporter extends WikiExporter {
         // eventuelle Projektnode belegen
         TaskNode projektNode = null;
         if (TaskNode.class.isInstance(node)) {
-            projektNode = (TaskNode)node;
+            projektNode = (TaskNode) node;
         }
         
         HSSFCell cell = null;
@@ -716,9 +719,11 @@ public class ExcelExporter extends WikiExporter {
             // Real-Ende:
             // Maximum-MinEndDatum berechnen
             // WENN(UND(K30>0;K30<>"";J30>0);   ARBEITSTAG(K30;J30/8)   + ((STUNDE(K30)+MINUTE(K30)/60)/3 + REST(J30;8))/8;"")
-            String pEnde = ExcelService.getColName(ExcelNodeService.CONST_PLANUNG_COL_PLAN_DATE_ENDE) + ExcelService.getRowNum(startRownNum);
-            String iEnde = "today()";//ExcelService.getColName(ExcelNodeService.CONST_PLANUNG_COL_IST_DATE_ENDE) + ExcelService.getRowNum(startRownNum);
-            pAufwand = ExcelService.getColName(ExcelNodeService.CONST_PLANUNG_COL_REAL_OFFEN) + ExcelService.getRowNum(startRownNum);
+            String pEnde = ExcelService.getColName(ExcelNodeService.CONST_PLANUNG_COL_PLAN_DATE_ENDE) 
+                            + ExcelService.getRowNum(startRownNum);
+            String iEnde = "today()"; //ExcelService.getColName(ExcelNodeService.CONST_PLANUNG_COL_IST_DATE_ENDE) + ExcelService.getRowNum(startRownNum);
+            pAufwand = ExcelService.getColName(ExcelNodeService.CONST_PLANUNG_COL_REAL_OFFEN) 
+                            + ExcelService.getRowNum(startRownNum);
             faktor = 24 / ExcelNodeService.CONST_WORKHOURS_PERDAY;
             formula =
                 "IF(" + pStart + " > 0" + ExcelService.CONST_PARAM_DELIM
@@ -1023,7 +1028,7 @@ public class ExcelExporter extends WikiExporter {
         // nur Kindselemente einfuegen, wenn Ebene
         if (node.getEbene() <= oOptions.getMaxEbene()) {
             for (String nodeName : childNodes.keySet()) {
-                BaseNode childNode = (BaseNode)childNodes.get(nodeName);
+                BaseNode childNode = (BaseNode) childNodes.get(nodeName);
                 // naechste Zeile
                 curRowNum++;
                 lstChildRowNum.add(new Integer(curRowNum));
@@ -1215,8 +1220,8 @@ public class ExcelExporter extends WikiExporter {
         mpStructCols.put(ExcelNodeService.CONST_GANT_COL_SCHRITT4, ExcelNodeService.CONST_PLANUNG_COL_SCHRITT4);
         mpStructCols.put(ExcelNodeService.CONST_GANT_COL_SCHRITT5, ExcelNodeService.CONST_PLANUNG_COL_SCHRITT5);
         for (Iterator<Integer> iter = mpStructCols.keySet().iterator(); iter.hasNext();) {
-            int colGant = (Integer)iter.next();
-            int colPlanung = (Integer)mpStructCols.get(colGant);
+            int colGant = (Integer) iter.next();
+            int colPlanung = (Integer) mpStructCols.get(colGant);
             formula =
                 ExcelService.genIfNotEmpty(ExcelNodeService.CONST_SHEETNNAME_PLANUNG,
                         startRownNum, colPlanung);
@@ -1486,7 +1491,7 @@ public class ExcelExporter extends WikiExporter {
         // Mastenrode falls leer l�schen
         Set<BaseNode> masterChilds = masterNode.getChildNodes();
         while (masterChilds.size() == 1) {
-            masterNode = (BaseNode)masterChilds.toArray()[0];
+            masterNode = (BaseNode) masterChilds.toArray()[0];
             masterNode.setParentNode(null);
             masterChilds = masterNode.getChildNodes();
         }

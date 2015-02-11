@@ -92,7 +92,7 @@ public class SymLinkDataTest extends DataDomainTest {
      * @throws Exception
      */
     protected SymLinkDataTestObj getNewSymLinkDataTestObj() throws Exception  {
-        return (SymLinkDataTestObj)setupNewTestObj();
+        return (SymLinkDataTestObj) setupNewTestObj();
     }
 
     @Override

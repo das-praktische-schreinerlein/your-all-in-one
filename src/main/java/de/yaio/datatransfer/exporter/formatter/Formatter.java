@@ -36,13 +36,13 @@ import de.yaio.datatransfer.exporter.OutputOptions;
  */
 public interface Formatter extends Comparable<Formatter> {
     /** dateformat-instance for german date dd.MM.yyyy  */
-    public static DateFormat DF = new SimpleDateFormat("dd.MM.yyyy");
+    DateFormat DF = new SimpleDateFormat("dd.MM.yyyy");
     /** dateformat-instance for german time HH:mm */
-    public static DateFormat TF = new SimpleDateFormat("HH:mm");
+    DateFormat TF = new SimpleDateFormat("HH:mm");
     /** dateformat-instance for german datetime dd.MM.yyyy HH:mm */
-    public static DateFormat DTF = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+    DateFormat DTF = new SimpleDateFormat("dd.MM.yyyy HH:mm");
     /** if second of time are set to this value -> then ignore the seconds */
-    public static final int CONST_FLAG_NODATE_SECONDS = 59;
+    int CONST_FLAG_NODATE_SECONDS = 59;
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -57,7 +57,7 @@ public interface Formatter extends Comparable<Formatter> {
      *     Config
      * @return DataDomain for which the formatter runs
      */
-    public Class<?> getTargetClass();
+    Class<?> getTargetClass();
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -72,7 +72,7 @@ public interface Formatter extends Comparable<Formatter> {
      *     Config
      * @return position in the formatter-queue
      */
-    public int getTargetOrder();
+    int getTargetOrder();
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -93,5 +93,5 @@ public interface Formatter extends Comparable<Formatter> {
      * @param options - options for formatter
      * @throws Exception - parser/format-Exceptions possible
      */
-    public void format(DataDomain node, StringBuffer nodeOutput, OutputOptions options) throws Exception;
+    void format(DataDomain node, StringBuffer nodeOutput, OutputOptions options) throws Exception;
 }

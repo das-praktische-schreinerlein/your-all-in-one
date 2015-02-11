@@ -51,13 +51,13 @@ public class JobParseWiki extends CmdLineJob {
      *     Constructor
      * @param args the command line arguments
      */
-    public JobParseWiki(String[] args) {
+    public JobParseWiki(final String[] args) {
         super(args);
         createCommonImporter();
     }
     
     @Override
-    protected Options addAvailiableCmdLineOptions() throws Throwable {
+    protected Options addAvailiableCmdLineOptions() throws Exception {
         Options availiableCmdLineOptions = 
                         Configurator.getNewOptionsInstance();
         
@@ -70,7 +70,7 @@ public class JobParseWiki extends CmdLineJob {
     }
 
     @Override
-    public void doJob() throws Throwable {
+    public void doJob() throws Exception {
         // parse PPL-source
         String pplSource = commonImporter.extractDataFromWiki();
         System.out.println(pplSource);
@@ -107,7 +107,7 @@ public class JobParseWiki extends CmdLineJob {
      *     CLI
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         JobParseWiki me = new JobParseWiki(args);
         me.startJobProcessing();
     }

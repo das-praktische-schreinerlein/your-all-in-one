@@ -55,11 +55,12 @@ public class TestServices {
      * @param myExpectedResult - the expected result
      * @throws Exception - io-Exceptions possible
      */
-    public void checkToStringResult(TestObj myTestObj, 
-                    String myExpectedResult) throws Exception {
+    public void checkToStringResult(final TestObj myTestObj, 
+                    final String myExpectedResult) throws Exception {
         // Master ausgeben
-        if (LOGGER.isDebugEnabled())
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("got result of:" + myTestObj.toString());
+        }
 
         // Test
         assertEquals(myExpectedResult, myTestObj.toString());
@@ -76,11 +77,12 @@ public class TestServices {
      * @param myExpectedResult - the expected result
      * @throws Exception - io-Exceptions possible
      */
-    public void checkStringLineByLine(String result, String myExpectedResult) 
+    public void checkStringLineByLine(final String result, final String myExpectedResult) 
                     throws Exception {
         // Master ausgeben
-        if (LOGGER.isDebugEnabled())
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("got result of:" + result);
+        }
         
         // split Strings
         String[] resLines = result.split("\n");
@@ -90,7 +92,7 @@ public class TestServices {
         // compare line by line
         for (int lineNum = 0; lineNum < resLines.length && lineNum <= expectedResLines.length; lineNum++) {
             resLine = resLines[lineNum].replace("\r", "");
-            expectedResLine = expectedResLines[lineNum].replace("\r", "");;
+            expectedResLine = expectedResLines[lineNum].replace("\r", "");
             assertEquals("Line " + lineNum + ": " + expectedResLine, 
                          "Line " + lineNum + ": " + resLine);
         }
@@ -114,7 +116,7 @@ public class TestServices {
      * @return - resulting filecontent
      * @throws Exception - io-Exceptions possible
      */
-    public StringBuffer readFixture(Class<?> base, String srcFile) throws Exception {
+    public StringBuffer readFixture(final Class<?> base, final String srcFile) throws Exception {
         // open resource
         InputStream is = base.getResourceAsStream(srcFile);
         BufferedReader br = new BufferedReader(new InputStreamReader(is));

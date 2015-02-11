@@ -34,14 +34,14 @@ import de.yaio.core.datadomainservice.DataDomainRecalc;
 public interface NodeService {
     
     /** constants for recursion of recalc-functions: recurse all children */
-    public static final int CONST_RECURSE_DIRECTION_CHILDREN = -1;
+    int CONST_RECURSE_DIRECTION_CHILDREN = -1;
     /** constants for recursion of recalc-functions: recurse only me */
-    public static final int CONST_RECURSE_DIRECTION_ONLYME = 0;
+    int CONST_RECURSE_DIRECTION_ONLYME = 0;
     /** constants for recursion of recalc-functions: recurse parents */
-    public static final int CONST_RECURSE_DIRECTION_PARENT = 1;
+    int CONST_RECURSE_DIRECTION_PARENT = 1;
     
     /** constants for recursion of DB-functions: recurse all children */
-    public static final int CONST_DB_RECURSIONLEVEL_ALL_CHILDREN = -1;
+    int CONST_DB_RECURSIONLEVEL_ALL_CHILDREN = -1;
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -52,7 +52,7 @@ public interface NodeService {
      * <h4>FeatureKeywords:</h4>
      *     Config
      */
-    public void configureDataDomainRecalcer();
+    void configureDataDomainRecalcer();
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -64,7 +64,7 @@ public interface NodeService {
      *     Config
      * @param dataDomainRecalcer - instance of the dataDomainRecalcer
      */
-    public void addDataDomainRecalcer(DataDomainRecalc dataDomainRecalcer);
+    void addDataDomainRecalcer(DataDomainRecalc dataDomainRecalcer);
     
     
     /**
@@ -82,7 +82,7 @@ public interface NodeService {
      * @param recurseDirection - Type of recursion (parent, me, children) NodeService.CONST_RECURSE_DIRECTION_*
      * @throws Exception - parser/format-Exceptions possible
      */
-    public void doRecalc(DataDomain node, int recurseDirection) throws Exception;
+    void doRecalc(DataDomain node, int recurseDirection) throws Exception;
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -99,7 +99,7 @@ public interface NodeService {
      * @param recurceDirection - Type of recursion (parent, me, children) NodeService.CONST_RECURSE_DIRECTION_*
      * @throws Exception - parser/format-Exceptions possible
      */
-    public void doRecalcBeforeChildren(DataDomain node, int recurceDirection) throws Exception;
+    void doRecalcBeforeChildren(DataDomain node, int recurceDirection) throws Exception;
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -116,7 +116,7 @@ public interface NodeService {
      * @param recurceDirection - Type of recursion (parent, me, children) NodeService.CONST_RECURSE_DIRECTION_*
      * @throws Exception - parser/format-Exceptions possible
      */
-    public void doRecalcChildren(DataDomain node, int recurceDirection) throws Exception;
+    void doRecalcChildren(DataDomain node, int recurceDirection) throws Exception;
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -133,7 +133,7 @@ public interface NodeService {
      * @param recurceDirection - Type of recursion (parent, me, children) NodeService.CONST_RECURSE_DIRECTION_*
      * @throws Exception - parser/format-Exceptions possible
      */
-    public void doRecalcAfterChildren(DataDomain node, int recurceDirection) throws Exception;
+    void doRecalcAfterChildren(DataDomain node, int recurceDirection) throws Exception;
     
     
     /**
@@ -154,7 +154,7 @@ public interface NodeService {
      * @param parentNode - new parentNode
      * @param flgRenewParent - flag force Renew of the parent, if nothing changed too 
      */
-    public void setParentNode(DataDomain baseNode, DataDomain parentNode, boolean flgRenewParent);
+    void setParentNode(DataDomain baseNode, DataDomain parentNode, boolean flgRenewParent);
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -172,7 +172,7 @@ public interface NodeService {
      * @param recursionDirection - direction for recursivly recalc CONST_RECURSE_DIRECTION_* 
      * @throws Exception - parser/format-Exceptions possible
      */
-    public void recalcData(DataDomain baseNode, int recursionDirection) throws Exception;
+    void recalcData(DataDomain baseNode, int recursionDirection) throws Exception;
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -188,7 +188,7 @@ public interface NodeService {
      * @param state - state to check
      * @return workflow-state yes/no
      */
-    public boolean isWFStatus (String state);
+    boolean isWFStatus (String state);
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -204,7 +204,7 @@ public interface NodeService {
      * @param state - state to check
      * @return workflow-DONE yes/no
      */
-    public boolean isWFStatusDone (String state);
+    boolean isWFStatusDone (String state);
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -220,7 +220,7 @@ public interface NodeService {
      * @param state - state to check
      * @return workflow-OPEN yes/no
      */
-    public boolean isWFStatusOpen (String state);
+    boolean isWFStatusOpen (String state);
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -236,7 +236,7 @@ public interface NodeService {
      * @param state - state to check
      * @return workflow-CANCELED yes/no
      */
-    public boolean isWFStatusCanceled(String state);
+    boolean isWFStatusCanceled(String state);
     
 
 }

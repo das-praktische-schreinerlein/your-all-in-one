@@ -45,7 +45,7 @@ public class TaskNodeConfigurator {
      *     Config
      * @param nodeFactory - instance of the nodeFactory which will use the config 
      */
-    public static void configureNodeTypeIdentifier(NodeFactory nodeFactory) {
+    public static void configureNodeTypeIdentifier(final NodeFactory nodeFactory) {
         nodeFactory.addNodeTypeIdentifier(TaskNode.CONST_MAP_NODETYPE_IDENTIFIER, TaskNode.class);
     }
 
@@ -59,7 +59,7 @@ public class TaskNodeConfigurator {
      *     Config
      * @param importer - instance of the importer which will use the config 
      */
-    public static void configureNodeTypes(Importer importer) {
+    public static void configureNodeTypes(final Importer importer) {
         importer.addNodeTypeIdentifierVariantMapping(TaskNode.CONST_MAP_NODETYPE_IDENTIFIER);
     }
 
@@ -72,7 +72,7 @@ public class TaskNodeConfigurator {
      *     Config
      * @param importer - instance of the importer which will use the config 
      */
-    public static void configureWorkflowNodeTypeMapping(Importer importer) {
+    public static void configureWorkflowNodeTypeMapping(final Importer importer) {
         importer.addWorkflowNodeTypeMapping(TaskNode.CONST_MAP_NODETYPE_IDENTIFIER);
     }
 }

@@ -80,30 +80,31 @@ public class MetaDataParserImpl  extends ParserImpl implements MetaDataParser {
      *     Config
      * @param nodeFactory - instance of the nodeFactory which will use the parser 
      */
-    public static void configureDataDomainParser(NodeFactory nodeFactory) {
+    public static void configureDataDomainParser(final NodeFactory nodeFactory) {
         nodeFactory.addDataDomainParser(new MetaDataParserImpl());
     }
 
     @Override
-    public int parseFromName(DataDomain node, ImportOptions options) throws Exception {
+    public int parseFromName(final DataDomain node, final ImportOptions options) throws Exception {
         // Check if node is compatibel
         if (node != null) {
             if (! MetaData.class.isInstance(node)) {
                 throw new IllegalArgumentException();
             }
         }
-        return parseMetaDataFromName((MetaData)node, options);
+        return parseMetaDataFromName((MetaData) node, options);
     }
 
     @Override
-    public int parseMetaDataFromName(MetaData node, ImportOptions options) throws Exception {
+    public int parseMetaDataFromName(final MetaData node, final ImportOptions options) throws Exception {
         int found = 0;
 
         // Check for valid data
         if (node.getName() == null) {
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Pattern Meta dosnt match because node has no name for node:" 
                         + node.getNameForLogger());
+            }
             return found;
         }
 
@@ -117,33 +118,37 @@ public class MetaDataParserImpl  extends ParserImpl implements MetaDataParser {
 
             // Praefix
             matcherindex = 2;
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Pattern: " + pattern + " " 
                     + matcherindex + ":" + matcher.group(matcherindex));
+            }
             if (matcher.group(matcherindex) != null) {
                 node.setMetaNodePraefix(matcher.group(matcherindex));
             }
             // Id
             matcherindex = 3;
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Pattern: " + pattern + " " 
                     + matcherindex + ":" + matcher.group(matcherindex));
+            }
             if (matcher.group(matcherindex) != null) {
                 node.setMetaNodeNummer(matcher.group(matcherindex));
             }
             // Checksum
             matcherindex = 4;
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Pattern: " + pattern + " " 
                     + matcherindex + ":" + matcher.group(matcherindex));
+            }
             if (matcher.group(matcherindex) != null) {
                 node.setMetaNodeTypeTags(matcher.group(matcherindex));
             }
             // ChangeDate
             matcherindex = 5;
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Pattern: " + pattern + " " 
                     + matcherindex + ":" + matcher.group(matcherindex));
+            }
             if (matcher.group(matcherindex) != null) {
                 node.setMetaNodeSubTypeTags(matcher.group(matcherindex));
             }

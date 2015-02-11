@@ -94,7 +94,7 @@ public class IstDataTest extends DataDomainTest {
      * @throws Exception
      */
     protected IstDataTestObj getNewIstDataTestObj() throws Exception  {
-        return (IstDataTestObj)setupNewTestObj();
+        return (IstDataTestObj) setupNewTestObj();
     }
 
     @Override

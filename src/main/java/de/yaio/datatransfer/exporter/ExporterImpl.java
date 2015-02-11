@@ -99,7 +99,7 @@ public class ExporterImpl implements Exporter {
     }
 
     @Override
-    public void addDataDomainFormatter(Formatter formatter) {
+    public void addDataDomainFormatter(final Formatter formatter) {
         if (formatter.getTargetOrder() < 0 ) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("SKIP: Targetorder < 0 TargetOrder:" 
@@ -113,7 +113,7 @@ public class ExporterImpl implements Exporter {
                 formatter.getClass().getName(), formatter);
     }
 
-    protected Formatter getDataDomainFormatterByClassName(String className) {
+    protected Formatter getDataDomainFormatterByClassName(final String className) {
         return this.hshDataDomainFormatterByClassName.get(className);
     }
     
@@ -121,16 +121,16 @@ public class ExporterImpl implements Exporter {
     // service-functions for formatter-output
     //////////////
     @Override
-    public void formatNodeDataDomains(DataDomain node, 
-            StringBuffer nodeOutput, OutputOptions options)  throws Exception {
+    public void formatNodeDataDomains(final DataDomain node, 
+            final StringBuffer nodeOutput, final OutputOptions options)  throws Exception {
         for (Formatter formatter : this.hshDataDomainFormatter) {
             this.formatNodeDataDomain(node, formatter, nodeOutput, options);
         }
     }
 
     @Override
-    public void formatNodeDataDomain(DataDomain node, Formatter formatter, 
-            StringBuffer nodeOutput, OutputOptions options) throws Exception {
+    public void formatNodeDataDomain(final DataDomain node, final Formatter formatter, 
+            final StringBuffer nodeOutput, final OutputOptions options) throws Exception {
         // nur formatieren, wenn zustaendig
         if (formatter.getTargetClass().isInstance(node)) {
             formatter.format(node, nodeOutput, options);
@@ -146,8 +146,8 @@ public class ExporterImpl implements Exporter {
     // service-functions for node-output
     ////////////////
     @Override
-    public String getMasterNodeResult(DataDomain masterNode,
-            OutputOptions oOptions) throws Exception {
+    public String getMasterNodeResult(final DataDomain masterNode,
+            final OutputOptions oOptions) throws Exception {
         // Parameter pruefen
         if (masterNode == null) {
             throw new IllegalArgumentException("Masternode must not be null: '" + masterNode + "'");
@@ -157,8 +157,8 @@ public class ExporterImpl implements Exporter {
     }
 
     @Override
-    public void prepareNodeForExport(DataDomain node,
-            OutputOptions oOptions) throws Exception {
+    public void prepareNodeForExport(final DataDomain node,
+            final OutputOptions oOptions) throws Exception {
     }
 
     /**
@@ -179,8 +179,8 @@ public class ExporterImpl implements Exporter {
      * @return - formatted output of node-hierarchy and DataDomains
      * @throws Exception - parser/format/io-Exceptions possible
      */
-    public StringBuffer getNodeResult(DataDomain node, String praefix,
-            OutputOptions oOptions) throws Exception {
+    public StringBuffer getNodeResult(final DataDomain node, final String praefix,
+            final OutputOptions oOptions) throws Exception {
         // Parameter pruefen
         if (node == null) {
             throw new IllegalArgumentException("Node must not be null: '" + node + "'");
@@ -201,8 +201,9 @@ public class ExporterImpl implements Exporter {
 
 
     @Override
-    public DataDomain filterNodes(DataDomain masterNode,
-            OutputOptions oOptions) throws Exception {
+    public DataDomain filterNodes(final DataDomain pMasterNode,
+            final OutputOptions oOptions) throws Exception {
+        DataDomain masterNode = pMasterNode;
 
         // Filter konfigurieren
         Map<String, Object> mpStates = null;
@@ -234,8 +235,8 @@ public class ExporterImpl implements Exporter {
     }
 
     @Override
-    public DataDomain filterNodeByState(DataDomain node,
-            OutputOptions oOptions, Map<String, Object> mpStates) throws Exception {
+    public DataDomain filterNodeByState(final DataDomain node,
+            final OutputOptions oOptions, final Map<String, Object> mpStates) throws Exception {
 
         // wenn kein Workflow-Element loeschen
         if (! BaseWorkflowData.class.isInstance(node)) {
@@ -299,7 +300,7 @@ public class ExporterImpl implements Exporter {
 // TODO check it       node.recalcData(NodeService.CONST_RECURSE_DIRECTION_ONLYME);
         
         // Wenn Status nicht im Filter und keine Kindselemente vorhanden
-        String state = ((BaseWorkflowData)node).getState();
+        String state = ((BaseWorkflowData) node).getState();
         if (   (mpStates.get(state) == null)
                 && ! flgHasChilds) {
             if (LOGGER.isDebugEnabled()) {
@@ -318,8 +319,8 @@ public class ExporterImpl implements Exporter {
     }
 
     @Override
-    public boolean isNodeMatchingFilter(DataDomain node,
-            OutputOptions oOptions) throws Exception {
+    public boolean isNodeMatchingFilter(final DataDomain node,
+            final OutputOptions oOptions) throws Exception {
         // check config
         Map<String, String> mpStates = oOptions.getMapStateFilter();
         Map<String, String> mpClasses = oOptions.getMapClassFilter();
@@ -348,7 +349,7 @@ public class ExporterImpl implements Exporter {
                 flgMatchesState = false;
             } else {
                 // check state
-                String state = ((BaseWorkflowData)node).getState();
+                String state = ((BaseWorkflowData) node).getState();
                 if (   (mpStates.get(state) == null)) {
                     flgMatchesState = false;
                     if (LOGGER.isDebugEnabled()) {
@@ -372,7 +373,7 @@ public class ExporterImpl implements Exporter {
         // if classfilter set: do it
         if (mpClasses != null && mpClasses.size() > 0) {
             // check class
-            String className = ((BaseNode)node).getClassName();
+            String className = ((BaseNode) node).getClassName();
             if (   (mpClasses.get(className) == null)) {
                 flgMatchesClass = false;
                 if (LOGGER.isDebugEnabled()) {
@@ -395,7 +396,7 @@ public class ExporterImpl implements Exporter {
         // if classfilter set: do it
         if (mpTypes != null && mpTypes.size() > 0) {
             // check class
-            String type = ((BaseNode)node).getType();
+            String type = ((BaseNode) node).getType();
             if (   (mpTypes.get(type) == null)) {
                 flgMatchesType = false;
                 if (LOGGER.isDebugEnabled()) {

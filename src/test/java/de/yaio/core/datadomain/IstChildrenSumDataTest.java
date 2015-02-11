@@ -93,7 +93,7 @@ public class IstChildrenSumDataTest extends DataDomainTest {
      * @throws Exception
      */
     protected IstChildrenSumDataTestObj getNewIstChildrenSumDataTestObj() throws Exception  {
-        return (IstChildrenSumDataTestObj)setupNewTestObj();
+        return (IstChildrenSumDataTestObj) setupNewTestObj();
     }
 
     @Override

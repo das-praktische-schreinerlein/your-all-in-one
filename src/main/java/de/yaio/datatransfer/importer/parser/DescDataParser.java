@@ -51,5 +51,5 @@ public interface DescDataParser extends Parser {
      * @return count elements found
      * @throws Exception - parser-Exceptions possible
      */
-    public int parseDescDataFromName(DescData node, ImportOptions options) throws Exception;
+    int parseDescDataFromName(DescData node, ImportOptions options) throws Exception;
 }

@@ -31,18 +31,18 @@ package de.yaio.core.datadomain;
  */
 public interface BaseData extends DataDomain {
 
-    public String getFullSrc();
-    public void setFullSrc(String fullSrc);
-    public String getSrcName();    
-    public void setSrcName(String srcName);
+    String getFullSrc();
+    void setFullSrc(String fullSrc);
+    String getSrcName();    
+    void setSrcName(String srcName);
 
-    public Long getImportTmpId();
-    public void setImportTmpId(Long id);
-    public String getType();
-    public void setType(String type);
-    public String getName();
-    public void setName(String name);
-    public String getParentNameHirarchry(String delimiter, boolean directionForward);
+    Long getImportTmpId();
+    void setImportTmpId(Long id);
+    String getType();
+    void setType(String type);
+    String getName();
+    void setName(String name);
+    String getParentNameHirarchry(String delimiter, boolean directionForward);
 
-    public String getWorkingId();
+    String getWorkingId();
 }

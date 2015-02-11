@@ -30,12 +30,12 @@ package de.yaio.core.datadomain;
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public interface SymLinkData extends DataDomain {
-    public static final int CONST_ORDER = 20;
+    int CONST_ORDER = 20;
 
-    public String getSymLinkRef();
-    public void setSymLinkRef(String symLinkRef);
-    public String getSymLinkName();
-    public void setSymLinkName(String symLinkName);
-    public String getSymLinkTags();
-    public void setSymLinkTags(String symLinkTags);
+    String getSymLinkRef();
+    void setSymLinkRef(String symLinkRef);
+    String getSymLinkName();
+    void setSymLinkName(String symLinkName);
+    String getSymLinkTags();
+    void setSymLinkTags(String symLinkTags);
 }

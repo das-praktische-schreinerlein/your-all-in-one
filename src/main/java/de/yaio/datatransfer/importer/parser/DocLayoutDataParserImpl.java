@@ -81,30 +81,31 @@ public class DocLayoutDataParserImpl  extends ParserImpl implements DocLayoutDat
      *     Config
      * @param nodeFactory - instance of the nodeFactory which will use the parser 
      */
-    public static void configureDataDomainParser(NodeFactory nodeFactory) {
+    public static void configureDataDomainParser(final NodeFactory nodeFactory) {
         nodeFactory.addDataDomainParser(new DocLayoutDataParserImpl());
     }
 
     @Override
-    public int parseFromName(DataDomain node, ImportOptions options) throws Exception {
+    public int parseFromName(final DataDomain node, final ImportOptions options) throws Exception {
         // Check if node is compatibel
         if (node != null) {
             if (! DocLayoutData.class.isInstance(node)) {
                 throw new IllegalArgumentException();
             }
         }
-        return parseDocLayoutDataFromName((DocLayoutData)node, options);
+        return parseDocLayoutDataFromName((DocLayoutData) node, options);
     }
 
     @Override
-    public int parseDocLayoutDataFromName(DocLayoutData node, ImportOptions options) throws Exception {
+    public int parseDocLayoutDataFromName(final DocLayoutData node, final ImportOptions options) throws Exception {
         int found = 0;
 
         // Check for valid data
         if (node.getName() == null) {
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Pattern DocLayout dosnt match because node has no name for node:" 
                         + node.getNameForLogger());
+            }
             return found;
         }
 
@@ -118,33 +119,37 @@ public class DocLayoutDataParserImpl  extends ParserImpl implements DocLayoutDat
 
             // TagCommand
             matcherindex = 2;
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Pattern: " + pattern + " " 
                     + matcherindex + ":" + matcher.group(matcherindex));
+            }
             if (matcher.group(matcherindex) != null) {
                 node.setDocLayoutTagCommand(matcher.group(matcherindex));
             }
             // AddStyle
             matcherindex = 3;
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Pattern: " + pattern + " " 
                     + matcherindex + ":" + matcher.group(matcherindex));
+            }
             if (matcher.group(matcherindex) != null) {
                 node.setDocLayoutAddStyleClass(matcher.group(matcherindex));
             }
             // Shortname
             matcherindex = 4;
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Pattern: " + pattern + " " 
                     + matcherindex + ":" + matcher.group(matcherindex));
+            }
             if (matcher.group(4) != null) {
                 node.setDocLayoutShortName(matcher.group(4));
             }
             // FlagCloseDiv
             matcherindex = 5;
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Pattern: " + pattern + " " 
                     + matcherindex + ":" + matcher.group(matcherindex));
+            }
             if (matcher.group(matcherindex) != null) {
                 node.setDocLayoutFlgCloseDiv(matcher.group(matcherindex));
             }

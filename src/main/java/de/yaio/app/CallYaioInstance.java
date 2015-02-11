@@ -81,12 +81,12 @@ public abstract class CallYaioInstance extends CmdLineJob {
      *     Constructor
      * @param args the command line arguments
      */
-    public CallYaioInstance(String[] args) {
+    public CallYaioInstance(final String[] args) {
         super(args);
     }
 
     @Override
-    protected Options addAvailiableCmdLineOptions() throws Throwable {
+    protected Options addAvailiableCmdLineOptions() throws Exception {
         Options availiableCmdLineOptions = 
                         Configurator.getNewOptionsInstance();
 
@@ -106,8 +106,9 @@ public abstract class CallYaioInstance extends CmdLineJob {
         passwordOption.setRequired(true);
         availiableCmdLineOptions.addOption(passwordOption);
         
-        if (LOGGER.isDebugEnabled())
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("addAvailiableCmdLineOptions: " + availiableCmdLineOptions);
+        }
         
         return availiableCmdLineOptions;
     }
@@ -141,7 +142,8 @@ public abstract class CallYaioInstance extends CmdLineJob {
     }
     
     
-    protected HttpResponse execureRequest(HttpUriRequest request) throws ClientProtocolException, IOException {
+    protected HttpResponse execureRequest(final HttpUriRequest request) throws ClientProtocolException, IOException {
+        @SuppressWarnings("deprecation")
         HttpClient client = new DefaultHttpClient();
         HttpContext context = prepareHttpContext();
         HttpResponse response = null;
@@ -150,7 +152,7 @@ public abstract class CallYaioInstance extends CmdLineJob {
     }
     
     
-    protected StringBuffer callGetUrl(String baseUrl, Map<String, String> params) throws IOException {
+    protected StringBuffer callGetUrl(final String baseUrl, final Map<String, String> params) throws IOException {
         // map params
         String url = "http://" + yaioinstance + baseUrl;
         if (params != null && params.size() > 0) {
@@ -167,13 +169,15 @@ public abstract class CallYaioInstance extends CmdLineJob {
         request.addHeader("User-Agent", "YAIOCaller");
  
         // call url
-        if (LOGGER.isInfoEnabled())
+        if (LOGGER.isInfoEnabled()) {
             LOGGER.info("Sending 'GET' request to URL : " + url);
+        }
         HttpResponse response = execureRequest(request);
         
         // get response
-        if (LOGGER.isInfoEnabled())
+        if (LOGGER.isInfoEnabled()) {
             LOGGER.info("Response Code : " + response.getStatusLine().getStatusCode());
+        }
         BufferedReader rd = new BufferedReader(
                        new InputStreamReader(response.getEntity().getContent()));
         StringBuffer result = new StringBuffer();
@@ -187,7 +191,9 @@ public abstract class CallYaioInstance extends CmdLineJob {
 
     
     
-    protected StringBuffer callPostUrl(String baseUrl, Map<String, String> params, Map<String, String> fileParams) throws IOException {
+    protected StringBuffer callPostUrl(final String baseUrl, 
+                                       final Map<String, String> params, 
+                                       final Map<String, String> fileParams) throws IOException {
         // create request
         String url = "http://" + yaioinstance + baseUrl;
         HttpPost request = new HttpPost(url);
@@ -216,13 +222,15 @@ public abstract class CallYaioInstance extends CmdLineJob {
         request.addHeader("User-Agent", "YAIOCaller");
         
         // call url
-        if (LOGGER.isInfoEnabled())
+        if (LOGGER.isInfoEnabled()) {
             LOGGER.info("Sending 'POST' request to URL : " + url);
+        }
         HttpResponse response = execureRequest(request);
         
         // get response
-        if (LOGGER.isInfoEnabled())
+        if (LOGGER.isInfoEnabled()) {
             LOGGER.info("Response Code : " + response.getStatusLine().getStatusCode());
+        }
         BufferedReader rd = new BufferedReader(
                        new InputStreamReader(response.getEntity().getContent()));
         StringBuffer result = new StringBuffer();

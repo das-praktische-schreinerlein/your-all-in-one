@@ -53,5 +53,5 @@ public interface SysDataFormatter extends Formatter{
      * @param options - options for formatter
      * @throws Exception - parser/format-Exceptions possible
      */
-    public void formatSysData(SysData node, StringBuffer nodeOutput, OutputOptions options) throws Exception;
+    void formatSysData(SysData node, StringBuffer nodeOutput, OutputOptions options) throws Exception;
 }

@@ -71,7 +71,7 @@ public class PPLImporter extends ImporterImpl {
      *     Constructor
      *  @param options - the importoptions for the parser...
      */
-    public PPLImporter(ImportOptions options) {
+    public PPLImporter(final ImportOptions options) {
         super(options);
     }
 
@@ -94,7 +94,7 @@ public class PPLImporter extends ImporterImpl {
      * @param delimiter - delimiter of PPL node-hirarchy
      * @throws Exception - parser/format-Exceptions possible
      */
-    public void extractNodeFromSrcLine(DataDomain masterNode, String nodeSrc, String delimiter) throws Exception {
+    public void extractNodeFromSrcLine(final DataDomain masterNode, final String nodeSrc, final String delimiter) throws Exception {
         // Parameter pruefen
         if (masterNode == null) {
             throw new IllegalArgumentException("Masternode must not be null: '" + masterNode + "'");
@@ -184,7 +184,7 @@ public class PPLImporter extends ImporterImpl {
      * @param delimiter - delimiter of PPL node-hirarchy
      * @throws Exception - parser/format-Exceptions possible
      */
-    public void extractNodesFromLines(DataDomain masterNode, String [] lstNodeSrc, String delimiter) throws Exception {
+    public void extractNodesFromLines(final DataDomain masterNode, final String [] lstNodeSrc, final String delimiter) throws Exception {
         // Parameter pruefen
         if (lstNodeSrc == null || lstNodeSrc.length <= 0) {
             throw new IllegalArgumentException("LstNodeSrc must not be empty: '" + lstNodeSrc + "'");
@@ -209,11 +209,12 @@ public class PPLImporter extends ImporterImpl {
      * <h4>FeatureKeywords:</h4>
      *     Parser
      * @param masterNode - node to append extracted Nodes
-     * @param nodesSrc - PPL nodeSrc (several lines) to be parsed
-     * @param delimiter - delimiter of PPL node-hirarchy
+     * @param pNodesSrc  - PPL nodeSrc (several lines) to be parsed
+     * @param delimiter  - delimiter of PPL node-hirarchy
      * @throws Exception - parser/format-Exceptions possible
      */
-    public void extractNodesFromLines(DataDomain masterNode, String nodesSrc, String delimiter) throws Exception {
+    public void extractNodesFromLines(final DataDomain masterNode, final String pNodesSrc, final String delimiter) throws Exception {
+        String nodesSrc = pNodesSrc;
         if (nodesSrc == null || nodesSrc.trim().length() <= 0) {
             throw new IllegalArgumentException("NodesSrc must not be empty: '" + nodesSrc + "'");
         }
@@ -249,7 +250,7 @@ public class PPLImporter extends ImporterImpl {
      * @param delimiter - delimiter of PPL node-hirarchy
      * @throws Exception - parser/format/io-Exceptions possible
      */
-    public void extractNodesFromFile(DataDomain masterNode, String fileName, String delimiter) throws Exception {
+    public void extractNodesFromFile(final DataDomain masterNode, final String fileName, final String delimiter) throws Exception {
         String fileContent = readFromFile(fileName);
         this.extractNodesFromLines(masterNode, fileContent, delimiter);
     }
@@ -268,7 +269,7 @@ public class PPLImporter extends ImporterImpl {
      * @throws Exception - io-Exceptions possible
      * @return filecontent
      */
-    public static String readFromFile(String fileName) throws Exception {
+    public static String readFromFile(final String fileName) throws Exception {
         // Parameter pruefen
         if (fileName == null || fileName.trim().length() <= 0) {
             throw new IllegalArgumentException("FileName must not be empty: '" + fileName + "'");
@@ -295,7 +296,7 @@ public class PPLImporter extends ImporterImpl {
      * @throws Exception - io-Exceptions possible
      * @return filecontent - the file content as string in the best detcted encoding
      */
-    public static String readFromInput(File file) throws Exception {
+    public static String readFromInput(final File file) throws Exception {
 
         // init detector and converter
         CharsetDetector detector;
@@ -306,10 +307,11 @@ public class PPLImporter extends ImporterImpl {
         BufferedInputStream fileStream = new BufferedInputStream(input);
 
         // show detectable charsets
-        if (LOGGER.isDebugEnabled())
+        if (LOGGER.isDebugEnabled()) {
             for (String match : CharsetDetector.getAllDetectableCharsets()) {
                 LOGGER.debug("detectable charset: " + match);
             }
+        }
 
         // we do it in little pieces, because CharsetDetector only checks the fist bytes :-(
         CharsetMatch match;
@@ -328,7 +330,7 @@ public class PPLImporter extends ImporterImpl {
         while ((bytesRead = fileStream.read(readBuffer)) >= 0) {
             // check only the bytesRead -> the buffer will have more !!!!
             byte [] checkBuffer = new byte [bytesRead];
-            System.arraycopy(readBuffer, 0,checkBuffer, 0, bytesRead);
+            System.arraycopy(readBuffer, 0, checkBuffer, 0, bytesRead);
             
             // check the bytes
             detector.setText(checkBuffer);
@@ -337,12 +339,13 @@ public class PPLImporter extends ImporterImpl {
                 LOGGER.info("run " + run + " match charset: " + match.getName() 
                                 + " lang:" + match.getLanguage() 
                                 + " conf:" + match.getConfidence());
-                if (LOGGER.isDebugEnabled()) 
+                if (LOGGER.isDebugEnabled()) {
                     for (CharsetMatch possibleMatch : detector.detectAll()) {
                         LOGGER.debug("run " + run + " possible charset: " + possibleMatch.getName() 
                                         + " lang:" + possibleMatch.getLanguage() 
                                         + " conf:" + possibleMatch.getConfidence());
                     }
+                }
                 
                 // check if we are better than before
                 if (match.getConfidence() > bestConfidence) {
@@ -378,8 +381,9 @@ public class PPLImporter extends ImporterImpl {
                         bufferStr = bufferStr.substring(1);
                         bestConfidence = 100;
                         bestEncoding = StandardCharsets.UTF_8.name();
-                        if (LOGGER.isDebugEnabled())
+                        if (LOGGER.isDebugEnabled()) {
                             LOGGER.debug("detectet charset UTF8 with BOM: " + bestEncoding);
+                        }
                     }
                 }
 
@@ -405,8 +409,9 @@ public class PPLImporter extends ImporterImpl {
             
             if (bestEncoding.equalsIgnoreCase(StandardCharsets.UTF_8.name()) && result.startsWith(UTF8_BOM)) {
                 result = result.substring(1);
-                if (LOGGER.isDebugEnabled())
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("delete BOM from : " + bestEncoding);
+                }
             }
         } else {
             // we used the best encoding :-)

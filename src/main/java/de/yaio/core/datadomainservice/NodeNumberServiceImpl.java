@@ -42,7 +42,7 @@ public class NodeNumberServiceImpl implements NodeNumberService {
     public static Map<String, Integer>  MAP_CUR_NEXTNODEID = null;
     
     @Override
-    public synchronized Object getNextNodeNumber(MetaData node) throws Exception {
+    public synchronized Object getNextNodeNumber(final MetaData node) throws Exception {
         String praefix = node.getMetaNodePraefix();
 
         // pruefen ob VAR_VUR_UD initialisiert ist
@@ -50,7 +50,7 @@ public class NodeNumberServiceImpl implements NodeNumberService {
             throw new Exception("Error: CurId not initialized");
         }
         // aktuellen Wert abfragen
-        Integer curId = (Integer)MAP_CUR_NEXTNODEID.get(praefix);
+        Integer curId = (Integer) MAP_CUR_NEXTNODEID.get(praefix);
         
         // setzen und und inkrementieren
         if (curId == null) {
@@ -65,7 +65,7 @@ public class NodeNumberServiceImpl implements NodeNumberService {
     }
     
     @Override
-    public synchronized void initNextNodeNumber(String praefix, Integer number) throws Exception {
+    public synchronized void initNextNodeNumber(final String praefix, final Integer number) throws Exception {
         // falls nicht belegt: Map anlegen
         if (MAP_CUR_NEXTNODEID == null) {
             MAP_CUR_NEXTNODEID = new HashMap<String, Integer>();
@@ -79,7 +79,7 @@ public class NodeNumberServiceImpl implements NodeNumberService {
     }
 
     @Override
-    public void exportNextNodeNumbersToFile(String strPathIdDB)
+    public void exportNextNodeNumbersToFile(final String strPathIdDB)
             throws Exception {
         Properties props = new Properties();
         Map<String, Integer> nodeIds = this.getNextNodeNumberMap();  
@@ -96,7 +96,7 @@ public class NodeNumberServiceImpl implements NodeNumberService {
     
 
     @Override
-    public void initNextNodeNumbersFromFile(String strPathIdDB) throws Exception {
+    public void initNextNodeNumbersFromFile(final String strPathIdDB) throws Exception {
         // ID-DB einlesen
         Properties props = new Properties();
         FileInputStream in = new FileInputStream(strPathIdDB);

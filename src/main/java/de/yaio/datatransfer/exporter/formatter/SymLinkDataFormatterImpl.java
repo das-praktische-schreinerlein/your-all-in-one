@@ -63,28 +63,29 @@ public class SymLinkDataFormatterImpl extends FormatterImpl implements SymLinkDa
      *     Config
      * @param exporter - instance of the Exporter which will use me
      */
-    public static void configureDataDomainFormatter(Exporter exporter) {
+    public static void configureDataDomainFormatter(final Exporter exporter) {
         Formatter formatter = new SymLinkDataFormatterImpl();
         exporter.addDataDomainFormatter(formatter);
     }
 
     @Override
-    public void format(DataDomain node, StringBuffer nodeOutput, OutputOptions options) throws Exception {
+    public void format(final DataDomain node, final StringBuffer nodeOutput, final OutputOptions options) throws Exception {
         // Check if node is compatibel
         if (node != null) {
             if (! SymLinkData.class.isInstance(node)) {
                 throw new IllegalArgumentException();
             }
         }
-        formatSymLinkData((SymLinkData)node, nodeOutput, options);
+        formatSymLinkData((SymLinkData) node, nodeOutput, options);
     }
 
     @Override
-    public void formatSymLinkData(SymLinkData node, StringBuffer nodeOutput, OutputOptions oOptions) throws Exception {
+    public void formatSymLinkData(final SymLinkData node, final StringBuffer nodeOutput, final OutputOptions oOptions) throws Exception {
         // exit if Flg not set
         if (! oOptions.isFlgShowSymLink()) {
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("SKIP: isFlgShowSymLink not set for node:" + node.getNameForLogger());
+            }
             return;
         }
 
@@ -100,12 +101,14 @@ public class SymLinkDataFormatterImpl extends FormatterImpl implements SymLinkDa
                 || (symLinkName != null && symLinkName.length() > 0)
                 || (symLinkTags != null && symLinkTags.length() > 0)
                 ) {
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Do: SymLinkDataFormatter for Node:" + node.getNameForLogger());
+            }
 
             // Abstand
-            if (nodeOutput.length() > 0)
+            if (nodeOutput.length() > 0) {
                 nodeOutput.append(" ");
+            }
 
             // Einrueckung
             if (oOptions.isFlgShowBrackets()) {

@@ -30,14 +30,14 @@ package de.yaio.core.datadomain;
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public interface DocLayoutData extends DataDomain {
-    public static final int CONST_ORDER = 30;
+    int CONST_ORDER = 30;
 
-    public String getDocLayoutTagCommand();
-    public void setDocLayoutTagCommand(String docLayoutTagCommand);
-    public String getDocLayoutAddStyleClass();
-    public void setDocLayoutAddStyleClass(String docLayoutAddStyleClass);
-    public String getDocLayoutShortName() ;
-    public void setDocLayoutShortName(String docLayoutShortName);
-    public String getDocLayoutFlgCloseDiv();    
-    public void setDocLayoutFlgCloseDiv(String docLayoutFlgCloseDiv);
+    String getDocLayoutTagCommand();
+    void setDocLayoutTagCommand(String docLayoutTagCommand);
+    String getDocLayoutAddStyleClass();
+    void setDocLayoutAddStyleClass(String docLayoutAddStyleClass);
+    String getDocLayoutShortName() ;
+    void setDocLayoutShortName(String docLayoutShortName);
+    String getDocLayoutFlgCloseDiv();    
+    void setDocLayoutFlgCloseDiv(String docLayoutFlgCloseDiv);
 }

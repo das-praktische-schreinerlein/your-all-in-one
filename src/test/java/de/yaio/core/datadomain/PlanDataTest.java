@@ -93,7 +93,7 @@ public class PlanDataTest extends DataDomainTest {
      * @throws Exception
      */
     protected PlanDataTestObj getNewPlanDataTestObj() throws Exception  {
-        return (PlanDataTestObj)setupNewTestObj();
+        return (PlanDataTestObj) setupNewTestObj();
     }
 
     @Override

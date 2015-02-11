@@ -55,7 +55,7 @@ public interface NodeFactory {
      * <h4>FeatureKeywords:</h4>
      *     Config
      */
-    public void initNodeTypeIdentifier();
+    void initNodeTypeIdentifier();
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -69,7 +69,7 @@ public interface NodeFactory {
      * @param stateMap - Liste der Schlagworte (Typ, Status usw.)
      * @param classType - Klasse (Node) die bei Auffinden des Schlagwortes instanziiert wird
      */
-    public void addNodeTypeIdentifier(Map<String, Object> stateMap,
+    void addNodeTypeIdentifier(Map<String, Object> stateMap,
             Class<?> classType);
 
     /**
@@ -86,7 +86,7 @@ public interface NodeFactory {
      *     Config
      * @return - Map der konfigurierten NodeTypeIdentifier
      */
-    public Map<String, Class<?>> getHshNodeTypeIdentifier();
+    Map<String, Class<?>> getHshNodeTypeIdentifier();
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -100,7 +100,7 @@ public interface NodeFactory {
      * <h4>FeatureKeywords:</h4>
      *     Config
      */
-    public void initDataDomainParser();
+    void initDataDomainParser();
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -112,7 +112,7 @@ public interface NodeFactory {
      *     Config
      * @param parser - Instanz des Parsers
      */
-    public void addDataDomainParser(Parser parser);
+    void addDataDomainParser(Parser parser);
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -127,7 +127,7 @@ public interface NodeFactory {
      *     Config
      * @return - Liste der konfigurierten parser
      */
-    public Collection<Parser> getDataDomainParser();
+    Collection<Parser> getDataDomainParser();
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -143,7 +143,7 @@ public interface NodeFactory {
      *     Config
      * @return - Map der konfigurierten Parser
      */
-    public Set<Parser> getHshDataDomainParser();
+    Set<Parser> getHshDataDomainParser();
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -154,7 +154,7 @@ public interface NodeFactory {
      *     Config
      * @param metaDataService to use for generating NodeNumbers
      */
-    public void setMetaDataService (MetaDataService metaDataService);
+    void setMetaDataService (MetaDataService metaDataService);
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -168,7 +168,7 @@ public interface NodeFactory {
      *     Config
      * @return MetaDataService to use for generating NodeNumbers
      */
-    public MetaDataService getMetaDataService ();
+    MetaDataService getMetaDataService ();
     
 
     ////////////////
@@ -197,7 +197,7 @@ public interface NodeFactory {
      * @return - Anzahl der gefundenen Fragmente
      * @throws Exception - parser/format-Exceptions possible
      */
-    public int parseNodeDataDomains(DataDomain node, ImportOptions options) throws Exception;
+    int parseNodeDataDomains(DataDomain node, ImportOptions options) throws Exception;
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -221,7 +221,7 @@ public interface NodeFactory {
      * @return - Anzahl der gefundenen Fragmente
      * @throws Exception - parser/format-Exceptions possible
      */
-    public int parseNodeDataDomain(DataDomain node, Parser parser, ImportOptions options) throws Exception;
+    int parseNodeDataDomain(DataDomain node, Parser parser, ImportOptions options) throws Exception;
 
     ////////////////
     // Generierungs-Funktionen
@@ -249,7 +249,7 @@ public interface NodeFactory {
      * @return - erzeugte Node-Instanz
      * @throws Exception - parser/format-Exceptions possible
      */
-    public DataDomain createNodeObjFromText(Class<?> classType, int id,
+    DataDomain createNodeObjFromText(Class<?> classType, int id,
             String strFullSrc, String srcName, DataDomain curParentNode)
                     throws Exception;
 
@@ -271,6 +271,6 @@ public interface NodeFactory {
      * @return - Klasse die anhand des Namens zugeordnet wurde (anhand der Daten aus NodeFactory.initNodeTypeIdentifier)
      * @throws Exception - parser/format-Exceptions possible
      */
-    public Class<?> getNodeTypeFromText(String strFullSrc, String srcName)
+    Class<?> getNodeTypeFromText(String strFullSrc, String srcName)
             throws Exception;
 }

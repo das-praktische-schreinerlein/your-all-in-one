@@ -52,5 +52,5 @@ public interface SymLinkDataFormatter extends Formatter{
      * @param options - options for formatter
      * @throws Exception - parser/format-Exceptions possible
      */
-    public void formatSymLinkData(SymLinkData node, StringBuffer nodeOutput, OutputOptions options) throws Exception;
+    void formatSymLinkData(SymLinkData node, StringBuffer nodeOutput, OutputOptions options) throws Exception;
 }

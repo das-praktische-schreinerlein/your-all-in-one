@@ -48,7 +48,7 @@ public class ExcelService {
     public static int CONST_COL_WIDTH_DATE_SHORT = 6*256;
 
 
-    public ExcelService (HSSFWorkbook workbook) {
+    public ExcelService (final HSSFWorkbook workbook) {
 
     }
 
@@ -63,7 +63,7 @@ public class ExcelService {
      *
      * @throws IOException
      */
-    public static void writeWorkbookToFile(File file, HSSFWorkbook wb)
+    public static void writeWorkbookToFile(final File file, final HSSFWorkbook wb)
             throws IOException {
         FileOutputStream out = new FileOutputStream(file);
         try {
@@ -92,7 +92,7 @@ public class ExcelService {
      */
     @SuppressWarnings("deprecation")
     public static HSSFCell getCell(
-            HSSFSheet sheet, int rownum, int cellnum) {
+            final HSSFSheet sheet, final int rownum, final int cellnum) {
         HSSFRow row = sheet.getRow(rownum);
         if (row == null) {
             row = sheet.createRow(rownum);
@@ -106,7 +106,7 @@ public class ExcelService {
 
     @SuppressWarnings("deprecation")
     public static HSSFCell getCellEvaluated(
-            HSSFSheet sheet, HSSFFormulaEvaluator formulaEval, int rownum, int cellnum) {
+            final HSSFSheet sheet, final HSSFFormulaEvaluator formulaEval, final int rownum, final int cellnum) {
         HSSFCell cell = getCell(sheet, rownum, cellnum);
         if(cell.getCellType() == HSSFCell.CELL_TYPE_FORMULA) {
             // berechnen
@@ -133,7 +133,7 @@ public class ExcelService {
 
 
     public static HSSFCell setCellNumeric(
-            HSSFSheet sheet, int rownum, int cellnum, Double value) {
+            final HSSFSheet sheet, final int rownum, final int cellnum, final Double value) {
 
         final HSSFCell cell = getCell(sheet, rownum, cellnum);
 
@@ -148,7 +148,7 @@ public class ExcelService {
     }
 
     public static HSSFCell setCellNumeric(
-            HSSFSheet sheet, int rownum, int cellnum, Double value, HSSFCellStyle style) {
+            final HSSFSheet sheet, final int rownum, final int cellnum, final Double value, final HSSFCellStyle style) {
 
         final HSSFCell cell = setCellNumeric(sheet, rownum, cellnum, value);
         cell.setCellStyle(style);
@@ -156,7 +156,7 @@ public class ExcelService {
         return cell;
     }
 
-    public static Double getCellNummeric(HSSFCell cell) {
+    public static Double getCellNummeric(final HSSFCell cell) {
 
         if (cell.getCellType() != HSSFCell.CELL_TYPE_NUMERIC) {
             return new Double(0);
@@ -167,7 +167,7 @@ public class ExcelService {
 
 
     public static HSSFCell setCellEmpty(
-            HSSFSheet sheet, int rownum, int cellnum) {
+            final HSSFSheet sheet, final int rownum, final int cellnum) {
 
         final HSSFCell cell = getCell(sheet, rownum, cellnum);
         cell.setCellType(HSSFCell.CELL_TYPE_BLANK);
@@ -176,7 +176,7 @@ public class ExcelService {
     }
 
     public static HSSFCell setCellEmpty(
-            HSSFSheet sheet, int rownum, int cellnum    , HSSFCellStyle style) {
+            final HSSFSheet sheet, final int rownum, final int cellnum    , final HSSFCellStyle style) {
 
         final HSSFCell cell = setCellEmpty(sheet, rownum, cellnum);
         cell.setCellStyle(style);
@@ -186,7 +186,7 @@ public class ExcelService {
 
 
     public static HSSFCell setCellDate(
-            HSSFSheet sheet, int rownum, int cellnum, Date value) {
+            final HSSFSheet sheet, final int rownum, final int cellnum, final Date value) {
 
         final HSSFCell cell = getCell(sheet, rownum, cellnum);
 
@@ -201,7 +201,7 @@ public class ExcelService {
     }
 
     public static HSSFCell setCellDate(
-            HSSFSheet sheet, int rownum, int cellnum, Date value, HSSFCellStyle style) {
+            final HSSFSheet sheet, final int rownum, final int cellnum, final Date value, final HSSFCellStyle style) {
 
         final HSSFCell cell = setCellDate(sheet, rownum, cellnum, value);
         cell.setCellStyle(style);
@@ -210,7 +210,7 @@ public class ExcelService {
     }
 
 
-    public static Date getCellDate(HSSFCell cell) {
+    public static Date getCellDate(final HSSFCell cell) {
 
         if (cell.getCellType() != HSSFCell.CELL_TYPE_NUMERIC) {
             return null;
@@ -235,7 +235,7 @@ public class ExcelService {
      * String-Wert, der gesetzt werden soll
      */
     public static HSSFCell setCellString(
-            HSSFSheet sheet, int rownum, int cellnum, String value) {
+            final HSSFSheet sheet, final int rownum, final int cellnum, final String value) {
 
         final HSSFCell cell = getCell(sheet, rownum, cellnum);
 
@@ -250,7 +250,7 @@ public class ExcelService {
     }
 
     public static HSSFCell setCellString(
-            HSSFSheet sheet, int rownum, int cellnum, String value, HSSFCellStyle style) {
+            final HSSFSheet sheet, final int rownum, final int cellnum, final String value, final HSSFCellStyle style) {
 
         final HSSFCell cell = setCellString(sheet, rownum, cellnum, value);
         cell.setCellStyle(style);
@@ -259,7 +259,7 @@ public class ExcelService {
     }
 
     public static HSSFCell setCellFormula(
-            HSSFSheet sheet, int rownum, int cellnum, String value) {
+            final HSSFSheet sheet, final int rownum, final int cellnum, final String value) {
 
         final HSSFCell cell = getCell(sheet, rownum, cellnum);
         // Typ setzen, falls Formel �berschrieben wird
@@ -270,7 +270,7 @@ public class ExcelService {
     }
 
     public static HSSFCell setCellFormula(
-            HSSFSheet sheet, int rownum, int cellnum, String value, HSSFCellStyle style) {
+            final HSSFSheet sheet, final int rownum, int cellnum, String value, HSSFCellStyle style) {
 
         final HSSFCell cell = setCellFormula(sheet, rownum, cellnum, value);
         cell.setCellStyle(style);
@@ -302,7 +302,7 @@ public class ExcelService {
     public static String genFormula(String funcName, List<?> rowNums, Integer col) {
         String formula = funcName + "(";
         for (Iterator<?> iter = rowNums.iterator(); iter.hasNext();) {
-            Integer rowNum = (Integer)iter.next();
+            Integer rowNum = (Integer) iter.next();
             formula +=
                     ExcelService.getColName(col) + ExcelService.getRowNum(rowNum)
                     + CONST_PARAM_DELIM;
@@ -339,7 +339,7 @@ public class ExcelService {
         String formula = "\"\"";
         for (Iterator<?> iter = values.keySet().iterator(); iter.hasNext();) {
             String key = iter.next().toString();
-            String value = (String)values.get(key);
+            String value = (String) values.get(key);
             formula = "IF(" + element + "=" + key + CONST_PARAM_DELIM + value + CONST_PARAM_DELIM + formula + ")";
         }
 

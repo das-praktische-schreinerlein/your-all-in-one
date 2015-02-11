@@ -77,7 +77,7 @@ public class OutputOptionsImpl implements OutputOptions {
         super();
     }
 
-    public OutputOptionsImpl(OutputOptions baseOptions) {
+    public OutputOptionsImpl(final OutputOptions baseOptions) {
         super();
         this.flgDoIntend = baseOptions.isFlgDoIntend();
         this.flgShowBrackets = baseOptions.isFlgShowBrackets();
@@ -113,45 +113,45 @@ public class OutputOptionsImpl implements OutputOptions {
     public boolean isFlgDoIntend() {
         return flgDoIntend;
     }
-    public void setFlgDoIntend(boolean flgDoIntend) {
+    public void setFlgDoIntend(final boolean flgDoIntend) {
         this.flgDoIntend = flgDoIntend;
     }
     public boolean isFlgIntendSum() {
         return flgIntendSum;
     }
-    public void setFlgIntendSum(boolean flgIntendSum) {
+    public void setFlgIntendSum(final boolean flgIntendSum) {
         this.flgIntendSum = flgIntendSum;
     }
     public boolean isFlgShowChildrenSum() {
         return flgShowChildrenSum;
     }
-    public void setFlgShowChildrenSum(boolean flgShowChildrenSum) {
+    public void setFlgShowChildrenSum(final boolean flgShowChildrenSum) {
         this.flgShowChildrenSum = flgShowChildrenSum;
     }
     public int getIntendFuncArea() {
         return manageIntValues(intendFuncArea);
     }
-    public void setIntendFuncArea(Integer intendPlanToPos) {
+    public void setIntendFuncArea(final Integer intendPlanToPos) {
         this.intendFuncArea = intendPlanToPos;
     }
     public boolean isFlgShowBrackets() {
         return flgShowBrackets;
     }
-    public void setFlgShowBrackets(boolean flgShowBrackets) {
+    public void setFlgShowBrackets(final boolean flgShowBrackets) {
         this.flgShowBrackets = flgShowBrackets;
     }
 
     public boolean isFlgShowName() {
         return flgShowName;
     }
-    public void setFlgShowName(boolean flgShowName) {
+    public void setFlgShowName(final boolean flgShowName) {
         this.flgShowName = flgShowName;
     }
     public boolean isFlgShowResLoc() {
         return flgShowResLoc;
     }
 
-    public void setFlgShowResLoc(boolean flgShowResLoc) {
+    public void setFlgShowResLoc(final boolean flgShowResLoc) {
         this.flgShowResLoc = flgShowResLoc;
     }
 
@@ -159,117 +159,117 @@ public class OutputOptionsImpl implements OutputOptions {
         return flgShowSymLink;
     }
 
-    public void setFlgShowSymLink(boolean flgShowSymLink) {
+    public void setFlgShowSymLink(final boolean flgShowSymLink) {
         this.flgShowSymLink = flgShowSymLink;
     }
 
     public boolean isFlgShowPlan() {
         return flgShowPlan;
     }
-    public void setFlgShowPlan(boolean flgShowPlan) {
+    public void setFlgShowPlan(final boolean flgShowPlan) {
         this.flgShowPlan = flgShowPlan;
     }
     public boolean isFlgShowPlanCalc() {
         return flgShowPlanCalc;
     }
-    public void setFlgShowPlanCalc(boolean flgShowPlanCalc) {
+    public void setFlgShowPlanCalc(final boolean flgShowPlanCalc) {
         this.flgShowPlanCalc = flgShowPlanCalc;
     }
     public boolean isFlgShowIst() {
         return flgShowIst;
     }
-    public void setFlgShowIst(boolean flgShowIst) {
+    public void setFlgShowIst(final boolean flgShowIst) {
         this.flgShowIst = flgShowIst;
     }
     public boolean isFlgShowDesc() {
         return flgShowDesc;
     }
-    public void setFlgShowDesc(boolean flgShowDesc) {
+    public void setFlgShowDesc(final boolean flgShowDesc) {
         this.flgShowDesc = flgShowDesc;
     }
     public boolean isFlgShowType() {
         return flgShowType;
     }
-    public void setFlgShowType(boolean flgShowType) {
+    public void setFlgShowType(final boolean flgShowType) {
         this.flgShowType = flgShowType;
     }
     public boolean isFlgShowState() {
         return flgShowState;
     }
-    public void setFlgShowState(boolean flgShowState) {
+    public void setFlgShowState(final boolean flgShowState) {
         this.flgShowState = flgShowState;
     }
     public boolean isFlgShowDocLayout() {
         return flgShowDocLayout;
     }
-    public void setFlgShowDocLayout(boolean flgShowDocLayout) {
+    public void setFlgShowDocLayout(final boolean flgShowDocLayout) {
         this.flgShowDocLayout = flgShowDocLayout;
     }
     public boolean isFlgShowMetaData() {
         return flgShowMetaData;
     }
-    public void setFlgShowMetaData(boolean flgShowMetaData) {
+    public void setFlgShowMetaData(final boolean flgShowMetaData) {
         this.flgShowMetaData = flgShowMetaData;
     }
     public boolean isFlgShowSysData() {
         return flgShowSysData;
     }
-    public void setFlgShowSysData(boolean flgShowSysData) {
+    public void setFlgShowSysData(final boolean flgShowSysData) {
         this.flgShowSysData = flgShowSysData;
     }
     public boolean isFlgRecalc() {
         return flgRecalc;
     }
-    public void setFlgRecalc(boolean flgRecalc) {
+    public void setFlgRecalc(final boolean flgRecalc) {
         this.flgRecalc = flgRecalc;
     }
     public boolean isFlgProcessDocLayout() {
         return flgProcessDocLayout;
     }
-    public void setFlgProcessDocLayout(boolean flgProcessDocLayout) {
+    public void setFlgProcessDocLayout(final boolean flgProcessDocLayout) {
         this.flgProcessDocLayout = flgProcessDocLayout;
     }
     public boolean isFlgProcessMarkdown() {
         return flgProcessMarkdown;
     }
-    public void setFlgProcessMarkdown(boolean flgProcessMarkdown) {
+    public void setFlgProcessMarkdown(final boolean flgProcessMarkdown) {
         this.flgProcessMarkdown = flgProcessMarkdown;
     }
     public int getMaxEbene() {
         return manageIntValues(maxEbene);
     }
-    public void setMaxEbene(Integer maxEbene) {
+    public void setMaxEbene(final Integer maxEbene) {
         this.maxEbene = maxEbene;
     }
     public int getMaxUeEbene() {
         return manageIntValues(maxUeEbene);
     }
-    public void setMaxUeEbene(Integer maxUeEbene) {
+    public void setMaxUeEbene(final Integer maxUeEbene) {
         this.maxUeEbene = maxUeEbene;
     }
     public int getIntend() {
         return manageIntValues(intend);
     }
-    public void setIntend(Integer intend) {
+    public void setIntend(final Integer intend) {
         this.intend = intend;
     }
     public int getIntendLi() {
         return manageIntValues(intendLi);
     }
-    public void setIntendLi(Integer intendLi) {
+    public void setIntendLi(final Integer intendLi) {
         this.intendLi = intendLi;
     }
     public int getIntendSys() {
         return manageIntValues(intendSys);
     }
-    public void setIntendSys(Integer intendSys) {
+    public void setIntendSys(final Integer intendSys) {
         this.intendSys = intendSys;
     }
 
     public boolean isFlgTrimDesc() {
         return flgTrimDesc;
     }
-    public void setFlgTrimDesc(boolean flgTrimDesc) {
+    public void setFlgTrimDesc(final boolean flgTrimDesc) {
         this.flgTrimDesc = flgTrimDesc;
     }
 
@@ -277,7 +277,7 @@ public class OutputOptionsImpl implements OutputOptions {
         return flgReEscapeDesc;
     }
 
-    public void setFlgReEscapeDesc(boolean flgReEscapeDesc) {
+    public void setFlgReEscapeDesc(final boolean flgReEscapeDesc) {
         this.flgReEscapeDesc = flgReEscapeDesc;
     }
 
@@ -285,7 +285,7 @@ public class OutputOptionsImpl implements OutputOptions {
         return flgShowDescWithUe;
     }
 
-    public void setFlgShowDescWithUe(boolean flgShowDescWithUe) {
+    public void setFlgShowDescWithUe(final boolean flgShowDescWithUe) {
         this.flgShowDescWithUe = flgShowDescWithUe;
     }
 
@@ -293,32 +293,32 @@ public class OutputOptionsImpl implements OutputOptions {
         return flgShowDescInNextLine;
     }
 
-    public void setFlgShowDescInNextLine(boolean flgShowDescInNextLine) {
+    public void setFlgShowDescInNextLine(final boolean flgShowDescInNextLine) {
         this.flgShowDescInNextLine = flgShowDescInNextLine;
     }
     public String getStrReadIfStatusInListOnly() {
         return strReadIfStatusInListOnly;
     }
-    public void setStrReadIfStatusInListOnly(String strReadIfStatusInListOnly) {
+    public void setStrReadIfStatusInListOnly(final String strReadIfStatusInListOnly) {
         this.strReadIfStatusInListOnly = strReadIfStatusInListOnly;
         this.mpStateFilter = DataUtils.initMapFromCsvString(this.strReadIfStatusInListOnly);
     }
     public String getStrClassFilter() {
         return strClassFilter;
     }
-    public void setStrClassFilter(String strClassFilter) {
+    public void setStrClassFilter(final String strClassFilter) {
         this.mpClassFilter = DataUtils.initMapFromCsvString(this.strClassFilter);
         this.strClassFilter = strClassFilter;
     }
     public String getStrTypeFilter() {
         return strTypeFilter;
     }
-    public void setStrTypeFilter(String strTypeFilter) {
+    public void setStrTypeFilter(final String strTypeFilter) {
         this.mpTypeFilter = DataUtils.initMapFromCsvString(this.strTypeFilter);
         this.strTypeFilter = strTypeFilter;
     }
     
-    public int manageIntValues(Integer value) {
+    public int manageIntValues(final Integer value) {
         return (value != null ? value : 0);
     }
     
@@ -339,7 +339,7 @@ public class OutputOptionsImpl implements OutputOptions {
         this.setStrTypeFilter(this.getStrTypeFilter());
     }
     
-    public void setAllFlgShow(boolean value) {
+    public void setAllFlgShow(final boolean value) {
         setFlgShowType(value);
         setFlgShowState(value);
         setFlgShowName(value);

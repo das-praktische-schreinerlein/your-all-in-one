@@ -61,7 +61,7 @@ public class JSONExporter extends CSVExporter {
     }
 
     @Override
-    public String getMasterNodeResult(DataDomain masterNode, OutputOptions oOptions)
+    public String getMasterNodeResult(final DataDomain masterNode, final OutputOptions oOptions)
             throws Exception {
         
 //        // Parameter pruefen
@@ -73,7 +73,7 @@ public class JSONExporter extends CSVExporter {
 //        // Mastennode falls leer löschen
 //        Map<String, DataDomain> masterChilds = masterNode.getChildNodesByNameMap();
 //        if (masterChilds.size() == 1) {
-//            masterNode = (DataDomain)masterChilds.values().toArray()[0];
+//            masterNode = (DataDomain) masterChilds.values().toArray()[0];
 //            if (LOGGER.isDebugEnabled()) {
 //                LOGGER.debug("set ParentNode empty for new Masternode " 
 //                        + masterNode.getNameForLogger());
@@ -109,14 +109,14 @@ public class JSONExporter extends CSVExporter {
         return "\"],\n";
     }
     
-    public String formatNodeDate(BaseNode curNode, Date src) {
+    public String formatNodeDate(final BaseNode curNode, final Date src) {
         String res = "";
         if (src != null) {
             res = DF.format(src) + "T" + TF.format(src) + "Z";
         }
         return res;
     }
-    public String formatNodeNumber(BaseNode curNode, Double src, int minStellen, int maxStellen) {
+    public String formatNodeNumber(final BaseNode curNode, final Double src, final int minStellen, final int maxStellen) {
         return baseFormatter.formatNumber(src, minStellen, maxStellen).replace(".", ",");
     }
 

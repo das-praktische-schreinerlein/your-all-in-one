@@ -61,8 +61,8 @@ public class NodeFactoryTest extends BaseTest {
         
         BaseNode dataObj = null;
         
-        public NodeFactoryTestObj(DataDomain dataDomain) {
-            this.dataObj = (BaseNode)dataDomain;            
+        public NodeFactoryTestObj(final DataDomain dataDomain) {
+            this.dataObj = (BaseNode) dataDomain;            
         }
         
         @Override

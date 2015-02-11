@@ -74,7 +74,7 @@ public class MindMapExporter extends WikiExporter {
     };
 
     @Override
-    public String getMasterNodeResult(DataDomain masterNode, OutputOptions oOptions)
+    public String getMasterNodeResult(final DataDomain masterNode, final OutputOptions oOptions)
             throws Exception {
         StringBuffer res = new StringBuffer();
         
@@ -94,7 +94,7 @@ public class MindMapExporter extends WikiExporter {
     }
     
     @Override
-    public OutputOptions genOutputOptionsForNameArea(OutputOptions baseOOptions) {
+    public OutputOptions genOutputOptionsForNameArea(final OutputOptions baseOOptions) {
         OutputOptions options = new OutputOptionsImpl(baseOOptions);
 
         // alle Show ausschalten
@@ -114,8 +114,8 @@ public class MindMapExporter extends WikiExporter {
     
 
     @Override
-    public StringBuffer getNodeResult(DataDomain node,  String praefix,
-            OutputOptions oOptions) throws Exception {
+    public StringBuffer getNodeResult(final DataDomain node,  final String praefix,
+            final OutputOptions oOptions) throws Exception {
         StringBuffer res = new StringBuffer();
 
         // Template-Nodes ignorieren
@@ -126,7 +126,7 @@ public class MindMapExporter extends WikiExporter {
 //            return res;
 //        }
         
-        BaseNode curNode = (BaseNode)node;
+        BaseNode curNode = (BaseNode) node;
 
         // Anfang
         if (LOGGER.isDebugEnabled()) {
@@ -142,11 +142,12 @@ public class MindMapExporter extends WikiExporter {
         StringBuffer childRes = new StringBuffer();
         boolean flgChildMatched = false;
         if (curNode.getEbene() < oOptions.getMaxEbene()) {
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Do Childs: Ebene " + curNode.getEbene() 
                         + " >= MaxEbene " + oOptions.getMaxEbene() 
                         + " Count:" + curNode.getChildNodesByNameMap().size() 
                         + " for " + curNode.getNameForLogger());
+            }
             for (String nodeName : curNode.getChildNodesByNameMap().keySet()) {
                 DataDomain childNode = curNode.getChildNodesByNameMap().get(nodeName);
                 childRes.append(this.getNodeResult(childNode, "", oOptions));

@@ -93,7 +93,7 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
     }
     
     @Override
-    public List<BaseNode> updateMeAndMyParents(BaseNode node) throws Exception {
+    public List<BaseNode> updateMeAndMyParents(final BaseNode node) throws Exception {
         List<BaseNode> parentHierarchy = null;
         if (node != null) {
             try {
@@ -141,7 +141,7 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
      * @param sysUID - sysUID for the filter on parent_node
      * @return List of childnodes for basenode with sysUID
      */
-    public List<BaseNode> findChildNodes(String sysUID) {
+    public List<BaseNode> findChildNodes(final String sysUID) {
         return BaseNode.entityManager().createQuery(
                         "SELECT o FROM BaseNode o where parent_node = :sysUID order by sort_pos asc", 
                         BaseNode.class
@@ -149,11 +149,12 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    protected TypedQuery createFulltextQuery(boolean flgCount, String fulltext, String sortConfig) {
+    protected TypedQuery createFulltextQuery(final boolean flgCount, final String fulltext, final String sortConfig) {
         // setup class
         Class resClass = BaseNode.class;
-        if (flgCount)
+        if (flgCount) {
             resClass = Long.class;
+        }
 
         // tokenize words
         String filter = "";
@@ -206,9 +207,10 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
                       + " ebene " + order 
                       + ", parent_node " + order 
                       + ", sort_pos " + order;
-        if (flgCount)
+        if (flgCount) {
             select = "SELECT COUNT(o) FROM BaseNode o"
                    + filter;
+        }
         
         // create query
         TypedQuery query = BaseNode.entityManager().createQuery(
@@ -241,7 +243,7 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
      * @return total of matching nodes
      */
     @SuppressWarnings("unchecked")
-    public long countFulltextBaseNodes(String fulltext) {
+    public long countFulltextBaseNodes(final String fulltext) {
         TypedQuery<Long> query = (TypedQuery<Long>)this.createFulltextQuery(true, fulltext, null);
         return query.getSingleResult();
     }
@@ -265,8 +267,8 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
      * @return List of matching nodes
      */
     @SuppressWarnings("unchecked")
-    public List<BaseNode> findFulltextBaseNodeEntries(String fulltext, String sortConfig,
-                    int firstResult, int maxResults) {
+    public List<BaseNode> findFulltextBaseNodeEntries(final String fulltext, final String sortConfig,
+                    final int firstResult, final int maxResults) {
         TypedQuery<BaseNode> query = (TypedQuery<BaseNode>)this.createFulltextQuery(false, fulltext, sortConfig);
         query.setFirstResult(firstResult);
         query.setMaxResults(maxResults);
@@ -288,7 +290,7 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
      * @param symLinkRef - symLinkRef for the filter on node
      * @return List of machting nodes for symLinkRef
      */
-    public List<BaseNode> findSymLinkBaseNode(String symLinkRef) {
+    public List<BaseNode> findSymLinkBaseNode(final String symLinkRef) {
         return BaseNode.entityManager().createQuery(
                         "SELECT o FROM BaseNode o where sysUID = :symLinkRef"
                         + " or CONCAT(metaNodePraefix, metaNodeNummer) = :symLinkRef"

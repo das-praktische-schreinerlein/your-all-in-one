@@ -93,7 +93,7 @@ public class MetaDataTest extends DataDomainTest {
      * @throws Exception
      */
     protected MetaDataTestObj getNewMetaDataTestObj() throws Exception  {
-        return (MetaDataTestObj)setupNewTestObj();
+        return (MetaDataTestObj) setupNewTestObj();
     }
 
     @Override

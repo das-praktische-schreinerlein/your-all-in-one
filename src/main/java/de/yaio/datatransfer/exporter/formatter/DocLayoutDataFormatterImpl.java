@@ -63,28 +63,29 @@ public class DocLayoutDataFormatterImpl extends FormatterImpl implements DocLayo
      *     Config
      * @param exporter - instance of the Exporter which will use me
      */
-    public static void configureDataDomainFormatter(Exporter exporter) {
+    public static void configureDataDomainFormatter(final Exporter exporter) {
         Formatter formatter = new DocLayoutDataFormatterImpl();
         exporter.addDataDomainFormatter(formatter);
     }
 
     @Override
-    public void format(DataDomain node, StringBuffer nodeOutput, OutputOptions options) throws Exception {
+    public void format(final DataDomain node, final StringBuffer nodeOutput, final OutputOptions options) throws Exception {
         // Check if node is compatibel
         if (node != null) {
             if (! DocLayoutData.class.isInstance(node)) {
                 throw new IllegalArgumentException();
             }
         }
-        formatDocLayoutData((DocLayoutData)node, nodeOutput, options);
+        formatDocLayoutData((DocLayoutData) node, nodeOutput, options);
     }
 
     @Override
-    public void formatDocLayoutData(DocLayoutData node, StringBuffer nodeOutput, OutputOptions oOptions) throws Exception {
+    public void formatDocLayoutData(final DocLayoutData node, final StringBuffer nodeOutput, final OutputOptions oOptions) throws Exception {
         // exit if Flg not set
         if (! oOptions.isFlgShowDocLayout()) {
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("SKIP: isFlgShowDocLayout not set for node:" + node.getNameForLogger());
+            }
             return;
         }
 
@@ -102,18 +103,21 @@ public class DocLayoutDataFormatterImpl extends FormatterImpl implements DocLayo
                 || (docLayoutShortName != null && docLayoutShortName.length() > 0)
                 || (docLayoutFlgCloseDiv != null && docLayoutFlgCloseDiv.length() > 0)
                 ) {
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Do: DocLayoutDataFormatter for Node:" + node.getNameForLogger());
+            }
 
             // Abstand
-            if (nodeOutput.length() > 0)
+            if (nodeOutput.length() > 0) {
                 nodeOutput.append(" ");
+            }
 
             // Einrueckung
             if (oOptions.getIntendFuncArea() > 0) {
-                if (LOGGER.isDebugEnabled())
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Do: IntendDocLayoutPos Output " + nodeOutput.toString() 
                             + " for Node:" + node.getNameForLogger());
+                }
                 while (nodeOutput.length() < oOptions.getIntendFuncArea()) {
                     nodeOutput.append(" ");
                 }

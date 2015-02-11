@@ -73,19 +73,23 @@ public class TestPPL {
             impFactory.extractNodesFromLines(masterNode, src, delimiter);
 
             // Master ausgeben
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Masternode.toString:" + masterNode);
+            }
 
             // formatiert ausgeben
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("ExportFactory Start:");
+            }
             OutputOptions oOptions = new OutputOptionsImpl();
             PPLExporter expFactory = new PPLExporter();
             String res = expFactory.getMasterNodeResult(masterNode, oOptions);
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug(res);
-            if (LOGGER.isDebugEnabled())
+            }
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("ExportFactory End");
+            }
 
             // Test
             assertEquals(expected, res.toString());

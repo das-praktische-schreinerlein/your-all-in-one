@@ -92,7 +92,7 @@ public class ResLocDataTest extends DataDomainTest {
      * @throws Exception
      */
     protected ResLocDataTestObj getNewResLocDataTestObj() throws Exception  {
-        return (ResLocDataTestObj)setupNewTestObj();
+        return (ResLocDataTestObj) setupNewTestObj();
     }
 
     @Override

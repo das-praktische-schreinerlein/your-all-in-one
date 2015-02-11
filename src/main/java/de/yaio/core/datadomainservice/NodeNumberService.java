@@ -49,7 +49,7 @@ public interface NodeNumberService {
      * @return next available Node-number for this node-hierarchy (praefix)
      * @throws Exception - io-Exceptions possible
      */
-    public Object getNextNodeNumber(MetaData node) throws Exception;
+    Object getNextNodeNumber(MetaData node) throws Exception;
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -66,7 +66,7 @@ public interface NodeNumberService {
      * @param number - next available Node-number for this node-hierarchy (praefix)
      * @throws Exception - io-Exceptions possible
      */
-    public void initNextNodeNumber(String praefix, Integer number) throws Exception;
+    void initNextNodeNumber(String praefix, Integer number) throws Exception;
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -82,7 +82,7 @@ public interface NodeNumberService {
      * @return map <praefix, nextId>
      * @throws Exception - io-Exceptions possible
      */
-    public Map<String, Integer> getNextNodeNumberMap() throws Exception;
+    Map<String, Integer> getNextNodeNumberMap() throws Exception;
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -94,7 +94,7 @@ public interface NodeNumberService {
      * @param strPathIdDB - filename
      * @throws Exception - io-Exceptions possible
      */
-    public void exportNextNodeNumbersToFile(String strPathIdDB) throws Exception;
+    void exportNextNodeNumbersToFile(String strPathIdDB) throws Exception;
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -110,6 +110,6 @@ public interface NodeNumberService {
      * @param strPathIdDB - parth to the idFile
      * @throws Exception - parser/format/io-Exceptions possible
      */
-    public void initNextNodeNumbersFromFile(String strPathIdDB) throws Exception;
+    void initNextNodeNumbersFromFile(String strPathIdDB) throws Exception;
 }
 

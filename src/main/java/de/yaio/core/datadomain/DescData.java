@@ -29,8 +29,8 @@ package de.yaio.core.datadomain;
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public interface DescData extends DataDomain {
-    public static final int CONST_ORDER = 999;
+    int CONST_ORDER = 999;
     
-    public String getNodeDesc();
-    public void setNodeDesc(String nodedesc);
+    String getNodeDesc();
+    void setNodeDesc(String nodedesc);
 }

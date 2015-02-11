@@ -66,13 +66,13 @@ public class JobNodes2Wiki extends CmdLineJob {
      *     Constructor
      * @param args the command line arguments
      */
-    public JobNodes2Wiki(String[] args) {
+    public JobNodes2Wiki(final String[] args) {
         super(args);
         createCommonImporter();
     }
 
     @Override
-    protected Options addAvailiableCmdLineOptions() throws Throwable {
+    protected Options addAvailiableCmdLineOptions() throws Exception {
         Options availiableCmdLineOptions = 
                         Configurator.getNewOptionsInstance();
 
@@ -87,8 +87,9 @@ public class JobNodes2Wiki extends CmdLineJob {
         this.addAvailiableCommonOutputCmdLineOptions(availiableCmdLineOptions);
         this.addAvailiableOutputCmdLineOptions(availiableCmdLineOptions);
         
-        if (LOGGER.isDebugEnabled())
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("addAvailiableCmdLineOptions: " + availiableCmdLineOptions);
+        }
         
         return availiableCmdLineOptions;
     }
@@ -106,7 +107,7 @@ public class JobNodes2Wiki extends CmdLineJob {
      *     CLI
      * @param availiableCmdLineOptions - the container with the availiableCmdLineOptions
      */
-    protected Options addAvailiableCommonOutputCmdLineOptions(Options availiableCmdLineOptions) throws Throwable {
+    protected Options addAvailiableCommonOutputCmdLineOptions(final Options availiableCmdLineOptions) throws Exception {
         // Mastername
         Option masternameOption = new Option("m", "mastername", true,
                 "Name of Masternode (default Master)");
@@ -135,7 +136,7 @@ public class JobNodes2Wiki extends CmdLineJob {
      *     CLI
      * @param availiableCmdLineOptions - the container with the availiableCmdLineOptions
      */
-    protected Options addAvailiableOutputCmdLineOptions(Options availiableCmdLineOptions) throws Throwable {
+    protected Options addAvailiableOutputCmdLineOptions(final Options availiableCmdLineOptions) throws Exception {
 
         // Show ChildrenSum
         Option flgShowChildrenSumOption = new Option("", "calcsum", false,
@@ -243,7 +244,7 @@ public class JobNodes2Wiki extends CmdLineJob {
     }
 
     @Override
-    public void doJob() throws Throwable {
+    public void doJob() throws Exception {
         // init
         createExporter();
         
@@ -256,7 +257,7 @@ public class JobNodes2Wiki extends CmdLineJob {
                 this.getOutputOptions();
 
         // Daten parsen
-        importDataToMasterNode(masterNode);;
+        importDataToMasterNode(masterNode);
 
         // Masternode filtern
         masterNode = exporter.filterNodes(masterNode, oOptions);
@@ -282,9 +283,9 @@ public class JobNodes2Wiki extends CmdLineJob {
      *     BusinessLogic
      * @param name - name of the masternode
      * @return masternode - the masternode on which all other nodes are added
-     * @throws Throwable - parse/io-Exceptions possible
+     * @throws Exception - parse/io-Exceptions possible
      */
-    public DataDomain createMasternode(String name) throws Throwable {
+    public DataDomain createMasternode(final String name) throws Exception {
         DataDomain masterNode  = commonImporter.getPPLImporter().createNodeObjFromText(1, name, name, null);
         return masterNode;
     }
@@ -304,7 +305,7 @@ public class JobNodes2Wiki extends CmdLineJob {
      * @param masterNode - the masternode on which all other nodes are added
      * @throws Exception - parse/io-Exceptions possible
      */
-    public void importDataToMasterNode(DataDomain masterNode) throws Exception {
+    public void importDataToMasterNode(final DataDomain masterNode) throws Exception {
         commonImporter.importDataToMasterNode(masterNode);
     }
 
@@ -324,8 +325,8 @@ public class JobNodes2Wiki extends CmdLineJob {
      * @param oOptions - Outputoptions
      * @throws Exception - parse/io-Exceptions possible
      */
-    public void publishResult(Exporter exporter, DataDomain masterNode, 
-            OutputOptions oOptions) throws Exception {
+    public void publishResult(final Exporter exporter, final DataDomain masterNode, 
+            final OutputOptions oOptions) throws Exception {
         System.out.println(
                 exporter.getMasterNodeResult(masterNode, oOptions));
     }
@@ -348,8 +349,9 @@ public class JobNodes2Wiki extends CmdLineJob {
         // Konfiguration
         CommandLine cmdLine = Configurator.getInstance().getCommandLine();
         OutputOptions oOptions = new OutputOptionsImpl();
-        if (LOGGER.isDebugEnabled())
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("DefaultOutputOptions: " + oOptions);
+        }
         oOptions.setFlgShowPlan(cmdLine.hasOption("p"));
         oOptions.setFlgShowIst(cmdLine.hasOption("i"));
         oOptions.setFlgShowState(cmdLine.hasOption("s"));
@@ -380,8 +382,9 @@ public class JobNodes2Wiki extends CmdLineJob {
         oOptions.setFlgProcessMarkdown(cmdLine.hasOption("processmarkdown"));
         oOptions.setStrReadIfStatusInListOnly(cmdLine.getOptionValue("onlyifstateinlist", null));
         
-        if (LOGGER.isDebugEnabled())
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("OutputOptions after parsing: " + oOptions);
+        }
         return oOptions;
     }
 
@@ -453,7 +456,7 @@ public class JobNodes2Wiki extends CmdLineJob {
      *     CLI
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         JobNodes2Wiki me = new JobNodes2Wiki(args);
         me.startJobProcessing();
     }

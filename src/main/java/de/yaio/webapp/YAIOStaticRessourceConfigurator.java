@@ -40,7 +40,7 @@ public class YAIOStaticRessourceConfigurator extends WebMvcConfigurerAdapter {
                     "yaio.exportcontroller.examples.location";
     
     @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+    public void addResourceHandlers(final ResourceHandlerRegistry registry) {
         super.addResourceHandlers(registry);
         
         // and add me

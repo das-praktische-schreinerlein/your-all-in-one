@@ -87,30 +87,31 @@ public class PlanDataParserImpl  extends ParserImpl implements PlanDataParser {
      *     Config
      * @param nodeFactory - instance of the nodeFactory which will use the parser 
      */
-    public static void configureDataDomainParser(NodeFactory nodeFactory) {
+    public static void configureDataDomainParser(final NodeFactory nodeFactory) {
         nodeFactory.addDataDomainParser(new PlanDataParserImpl());
     }
 
     @Override
-    public int parseFromName(DataDomain node, ImportOptions options) throws Exception {
+    public int parseFromName(final DataDomain node, final ImportOptions options) throws Exception {
         // Check if node is compatibel
         if (node != null) {
             if (! PlanData.class.isInstance(node)) {
                 throw new IllegalArgumentException();
             }
         }
-        return parsePlanDataFromName((PlanData)node, options);
+        return parsePlanDataFromName((PlanData) node, options);
     }
 
     @Override
-    public int parsePlanDataFromName(PlanData node, ImportOptions options) throws Exception {
+    public int parsePlanDataFromName(final PlanData node, final ImportOptions options) throws Exception {
         int found = 0;
 
         // Check for valid data
         if (node.getName() == null) {
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Pattern Plan dosnt match because node has no name for node:" 
                         + node.getNameForLogger());
+            }
             return found;
         }
 
@@ -122,28 +123,31 @@ public class PlanDataParserImpl  extends ParserImpl implements PlanDataParser {
         Matcher matcher = pattern.matcher(node.getName());
         int matcherindex = 0;
         if (matcher.matches()) {
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("found Plan in: " + node.getName()
                         + " for node:" + node.getNameForLogger());
+            }
 
             // Bereich davor/dahinter
             this.trimNodeName(node, pattern, matcher, 1, 8);
 
             // Plan-h
             matcherindex = 2;
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Pattern: " + CONST_PATTERN_PLAN + " " 
                         + matcherindex + ":" + matcher.group(matcherindex)
                         + " for node:" + node.getNameForLogger());
+            }
             if (matcher.group(matcherindex) != null) {
                 node.setPlanAufwand(new Double(matcher.group(matcherindex)));
             }
             // Plan-Startdatum
             matcherindex = 3;
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Pattern: " + CONST_PATTERN_PLAN + " " 
                         + matcherindex + ":" + matcher.group(matcherindex)
                         + " for node:" + node.getNameForLogger());
+            }
             if (matcher.group(matcherindex) != null) {
                 calDate.setTime(DF.parse(matcher.group(matcherindex)));
                 calDate.set(Calendar.SECOND, CONST_FLAG_NODATE_SECONDS);
@@ -151,10 +155,11 @@ public class PlanDataParserImpl  extends ParserImpl implements PlanDataParser {
             }
             // Plan-Startzeit
             matcherindex = 4;
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Pattern: " + CONST_PATTERN_PLAN + " " 
                         + matcherindex + ":" + matcher.group(matcherindex)
                         + " for node:" + node.getNameForLogger());
+            }
             if (matcher.group(matcherindex) != null && node.getPlanStart() != null) {
                 calDate.setTime(node.getPlanStart());
                 timeOffsett = TF.parse(matcher.group(matcherindex));
@@ -168,10 +173,11 @@ public class PlanDataParserImpl  extends ParserImpl implements PlanDataParser {
             }
             // Plan-Enddatum
             matcherindex = 5;
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Pattern: " + CONST_PATTERN_PLAN + " " 
                         + matcherindex + ":" + matcher.group(matcherindex)
                         + " for node:" + node.getNameForLogger());
+            }
             if (matcher.group(matcherindex) != null) {
                 calDate.setTime(DF.parse(matcher.group(matcherindex)));
                 calDate.set(Calendar.SECOND, CONST_FLAG_NODATE_SECONDS);
@@ -179,10 +185,11 @@ public class PlanDataParserImpl  extends ParserImpl implements PlanDataParser {
             }
             // Plan-Endzeit
             matcherindex = 6;
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Pattern: " + CONST_PATTERN_PLAN + " " 
                         + matcherindex + ":" + matcher.group(matcherindex)
                         + " for node:" + node.getNameForLogger());
+            }
             if (matcher.group(matcherindex) != null && node.getPlanEnde() != null) {
                 calDate.setTime(node.getPlanEnde());
                 timeOffsett = TF.parse(matcher.group(matcherindex));
@@ -196,19 +203,21 @@ public class PlanDataParserImpl  extends ParserImpl implements PlanDataParser {
             }
             // Plan-Task
             matcherindex = 7;
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Pattern: " + CONST_PATTERN_PLAN + " " 
                         + matcherindex + ":" + matcher.group(matcherindex)
                         + " for node:" + node.getNameForLogger());
+            }
             if (matcher.group(matcherindex) != null) {
                 node.setPlanTask(matcher.group(matcherindex));
             }
 
             found++;
 
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("NewName: " + node.getName()
                         + " for node:" + node.getNameForLogger());
+            }
         } else if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Pattern Plan dosnt match: " + CONST_PATTERN_SEG_PLAN 
                     + " for node:" + node.getNameForLogger());

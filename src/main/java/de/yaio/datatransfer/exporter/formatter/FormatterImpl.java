@@ -47,7 +47,7 @@ public abstract class FormatterImpl implements Formatter {
     Calendar calTime = new GregorianCalendar();
 
     @Override
-    public int compareTo(Formatter o) {
+    public int compareTo(final Formatter o) {
         Integer myOrder = this.getTargetOrder();
         Integer oOrder = o.getTargetOrder();
         return myOrder.compareTo(oOrder);
@@ -69,7 +69,7 @@ public abstract class FormatterImpl implements Formatter {
      * @param newLength - max places behind comma
      * @return - the formated string
      */
-    public StringBuffer intendLeft(Object src, int newLength) {
+    public StringBuffer intendLeft(final Object src, final int newLength) {
 
         // Parameter pruefen
         if (src == null) {
@@ -98,7 +98,7 @@ public abstract class FormatterImpl implements Formatter {
      * @param maxStellen - max places behind comma
      * @return - the formated numberstring
      */
-    public String formatNumber(Double src, int minStellen, int maxStellen) {
+    public String formatNumber(final Double src, final int minStellen, final int maxStellen) {
         String res = "";
 
         // Parameter pruefen
@@ -166,7 +166,7 @@ public abstract class FormatterImpl implements Formatter {
      * @param src - the date to format
      * @return - the formated datestring
      */
-    public String formatDate(Date src) {
+    public String formatDate(final Date src) {
         String res = "";
         if (src != null) {
             res += DF.format(src);
@@ -197,8 +197,8 @@ public abstract class FormatterImpl implements Formatter {
      * @return - the escaped string
      * @throws java.io.IOException - io-exception on outputappender possible
      */
-    public static <T extends Appendable> T escapeNonLatin(CharSequence src,
-                                                             T out) throws java.io.IOException {
+    public static <T extends Appendable> T escapeNonLatin(final CharSequence src,
+                                                             final T out) throws java.io.IOException {
            for (int i = 0; i < src.length(); i++) {
                char ch = src.charAt(i);
                if (Character.UnicodeBlock.of(ch) == Character.UnicodeBlock.BASIC_LATIN) {

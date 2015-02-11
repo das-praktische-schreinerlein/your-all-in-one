@@ -94,18 +94,19 @@ public abstract class DataDomainServiceTest extends BaseTest {
      * @param recurseDirection - direction of recalc
      * @throws Exception
      */
-    public void testServiceDoRecalc(TestObj testObj, 
-                    String expectedAfterDoBeforeChildren,
-                    String expectedAfterDoAfterChildren,
-                    int recurseDirection) throws Exception {
+    public void testServiceDoRecalc(final TestObj testObj, 
+                    final String expectedAfterDoBeforeChildren,
+                    final String expectedAfterDoAfterChildren,
+                    final int recurseDirection) throws Exception {
         
-        DataDomain myDataDomainObj = (DataDomain)testObj;
+        DataDomain myDataDomainObj = (DataDomain) testObj;
         
         // run doRecalcBeforeChildren
-        if (LOGGER.isDebugEnabled())
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("src before doRecalcBeforeChildren:" 
                          + myDataDomainObj.toString());
-        dataDomainService.doRecalcBeforeChildren((DataDomain)myDataDomainObj, recurseDirection);
+        }
+        dataDomainService.doRecalcBeforeChildren((DataDomain) myDataDomainObj, recurseDirection);
         testService.checkToStringResult(testObj, expectedAfterDoBeforeChildren);
         
         // recalc children
@@ -116,9 +117,10 @@ public abstract class DataDomainServiceTest extends BaseTest {
         }
 
         // run doRecalcBeforeChildren
-        if (LOGGER.isDebugEnabled())
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("src before doRecalcAfterChildren:" 
                          + myDataDomainObj.toString());
+        }
         dataDomainService.doRecalcAfterChildren(myDataDomainObj, recurseDirection);
         testService.checkToStringResult(testObj, expectedAfterDoAfterChildren);
     };

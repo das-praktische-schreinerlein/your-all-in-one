@@ -79,7 +79,7 @@ public class WikiExporter extends ExporterImpl {
      * @param baseOOptions - Default OutputOptions to override
      * @return OuputOptions for generation of the Wiki-namearea
      */
-    public OutputOptions genOutputOptionsForNameArea(OutputOptions baseOOptions) {
+    public OutputOptions genOutputOptionsForNameArea(final OutputOptions baseOOptions) {
         OutputOptions options = new OutputOptionsImpl(baseOOptions);
 
         // alle Show ausschalten
@@ -107,7 +107,7 @@ public class WikiExporter extends ExporterImpl {
      * @param baseOOptions - Default OutputOptions to override
      * @return OuputOptions for generation of the Wiki-dataarea
      */
-    public OutputOptions genOutputOptionsForDataArea(OutputOptions baseOOptions) {
+    public OutputOptions genOutputOptionsForDataArea(final OutputOptions baseOOptions) {
         OutputOptions options = new OutputOptionsImpl(baseOOptions);
 
         // Name+Status ausschalten
@@ -133,7 +133,7 @@ public class WikiExporter extends ExporterImpl {
      * @param baseOOptions - Default OutputOptions to override
      * @return OuputOptions for generation of the Wiki-descarea
      */
-    public OutputOptions genOutputOptionsForDescArea(OutputOptions baseOOptions) {
+    public OutputOptions genOutputOptionsForDescArea(final OutputOptions baseOOptions) {
         OutputOptions options = new OutputOptionsImpl(baseOOptions);
 
         // alle Show einschalten
@@ -152,8 +152,9 @@ public class WikiExporter extends ExporterImpl {
     // common export-functions
     ////////////////
     @Override
-    public String getMasterNodeResult(DataDomain masterNode,
-            OutputOptions oOptions) throws Exception {
+    public String getMasterNodeResult(final DataDomain pMasterNode,
+            final OutputOptions oOptions) throws Exception {
+        DataDomain masterNode = pMasterNode;
         // Parameter pruefen
         if (masterNode == null) {
             throw new IllegalArgumentException("Masternode must not be null: '" 
@@ -163,7 +164,7 @@ public class WikiExporter extends ExporterImpl {
         // Mastennode falls leer löschen
         Map<String, DataDomain> masterChilds = masterNode.getChildNodesByNameMap();
         if (masterChilds.size() == 1) {
-            masterNode = (DataDomain)masterChilds.values().toArray()[0];
+            masterNode = (DataDomain) masterChilds.values().toArray()[0];
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("set ParentNode empty for new Masternode " 
                         + masterNode.getNameForLogger());
@@ -186,16 +187,17 @@ public class WikiExporter extends ExporterImpl {
     // service-functions to generate Wiki from node
     ////////////////
     @Override
-    public StringBuffer getNodeResult(DataDomain curNode,  String praefix,
-            OutputOptions oOptions) throws Exception {
+    public StringBuffer getNodeResult(final DataDomain curNode,  final String praefix,
+            final OutputOptions oOptions) throws Exception {
         StringBuffer res = new StringBuffer();
 
         // max. Ebene pruefen
         if (curNode.getEbene() > oOptions.getMaxEbene()) {
-            if (LOGGER.isDebugEnabled())
-                    LOGGER.debug("SKIP: Ebene " + curNode.getEbene() 
-                            + " > MaxEbene " + oOptions.getMaxEbene()
-                            + " for " + curNode.getNameForLogger());
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("SKIP: Ebene " + curNode.getEbene() 
+                        + " > MaxEbene " + oOptions.getMaxEbene()
+                        + " for " + curNode.getNameForLogger());
+            }
             return res;
         }
         
@@ -206,20 +208,22 @@ public class WikiExporter extends ExporterImpl {
         StringBuffer childRes = new StringBuffer();
         boolean flgChildMatched = false;
         if (curNode.getEbene() < oOptions.getMaxEbene()) {
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Do Childs: Ebene " + curNode.getEbene() 
                         + " >= MaxEbene " + oOptions.getMaxEbene() 
                         + " Count:" + curNode.getChildNodesByNameMap().size() 
                         + " for " + curNode.getNameForLogger());
+            }
             for (String nodeName : curNode.getChildNodesByNameMap().keySet()) {
                 DataDomain childNode = curNode.getChildNodesByNameMap().get(nodeName);
                 childRes.append(this.getNodeResult(childNode, "", oOptions));
             }
         } else {
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("SKIP Childs: Ebene " + curNode.getEbene() 
                         + " >= MaxEbene " + oOptions.getMaxEbene()
                         + " for " + curNode.getNameForLogger());
+            }
         }
         // check if children matches (childRes filled)
         if (childRes.length() > 0) {
@@ -231,7 +235,7 @@ public class WikiExporter extends ExporterImpl {
             // sorry me and my children didnt match
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("sorry me and my children didnt match"
-                                + " - node:" + ((BaseNode)curNode).getWorkingId() 
+                                + " - node:" + ((BaseNode) curNode).getWorkingId() 
                                 + " flgMatchesFilter=" + flgMatchesFilter
                                 + " flgChildMatched=" + flgChildMatched);
             }
@@ -268,10 +272,11 @@ public class WikiExporter extends ExporterImpl {
         if (curNode.getEbene() <= oOptions.getMaxUeEbene()) {
             // als Ue darstellen
             flgUe = true;
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Do UE: Ebene " + curNode.getEbene() 
                         + " <= MaxUeEbene " + oOptions.getMaxUeEbene()
                         + " for " + curNode.getNameForLogger());
+            }
             for (int zaehler=1; zaehler <= curNode.getEbene(); zaehler++) {
                 res.insert(0, "=");
                 // falls > 1 einruecken
@@ -283,10 +288,11 @@ public class WikiExporter extends ExporterImpl {
             res.insert(0, strIntendPraefix);
         } else {
             // als Aufzaehlung darstellen
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Do LI: Ebene " + curNode.getEbene() 
                         + " > MaxUeEbene " + oOptions.getMaxUeEbene()
                         + " for " + curNode.getNameForLogger());
+            }
             for (int zaehler=oOptions.getMaxUeEbene()+1; zaehler <= curNode.getEbene(); zaehler++) {
                 res.insert(0, "*");
 
@@ -309,8 +315,9 @@ public class WikiExporter extends ExporterImpl {
         res.append("\n");
         
         // bei Ue Zeilenumbruch voranstellen
-        if (flgUe)
+        if (flgUe) {
             res.insert(0, "\n");
+        }
         
         // append generated children
         res.append(childRes);

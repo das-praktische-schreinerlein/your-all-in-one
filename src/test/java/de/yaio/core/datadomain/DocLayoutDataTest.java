@@ -93,7 +93,7 @@ public class DocLayoutDataTest extends DataDomainTest {
      * @throws Exception
      */
     protected DocLayoutDataTestObj getNewDocLayoutDataTestObj() throws Exception  {
-        return (DocLayoutDataTestObj)setupNewTestObj();
+        return (DocLayoutDataTestObj) setupNewTestObj();
     }
 
     @Override

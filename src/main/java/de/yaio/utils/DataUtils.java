@@ -66,7 +66,7 @@ public class DataUtils {
      * @param src - the string to escape all html
      * @return the html-escaped string
      */
-    public static String htmlEscapeText(String src) {
+    public static String htmlEscapeText(final String src) {
         String text = src;
         
         // test ob beide belegt
@@ -96,7 +96,7 @@ public class DataUtils {
      * @param src - the string to escape all html
      * @return the html-escaped string
      */
-    public static String htmlEscapeTextLazy(String src) {
+    public static String htmlEscapeTextLazy(final String src) {
         String text = src;
         
         // test ob beide belegt
@@ -122,7 +122,7 @@ public class DataUtils {
      * @param csvString - the string to split
      * @return the map of string
      */
-    public static Map<String, String> initMapFromCsvString(String csvString) {
+    public static Map<String, String> initMapFromCsvString(final String csvString) {
         Map<String, String> mpStates = null;
         if (   csvString != null 
             && csvString.length() > 0) {
@@ -152,7 +152,7 @@ public class DataUtils {
      * @return the checksum
      * @throws Exception - parser/format/io-Exceptions possible
      */
-    public static String generateCheckSum(String data) {
+    public static String generateCheckSum(final String data) {
         // Checksumme
         objMD5Coder.update(data.getBytes(), 0, data.length());
         final byte[] digest = objMD5Coder.digest();
@@ -174,7 +174,7 @@ public class DataUtils {
         return strbuf.toString();
     }
     
-    public static Date getNewDate(Date oldDate) {
+    public static Date getNewDate(final Date oldDate) {
         return (oldDate != null ? new Date(oldDate.getTime()) : null);
     }
 }

@@ -95,13 +95,13 @@ public class BaseWorkflowDataServiceTest extends DataDomainServiceTest {
      * @throws Exception
      */
     protected BaseWorkflowDataTestObj getNewBaseWorkflowDataTestObj() throws Exception  {
-        return (BaseWorkflowDataTestObj)setupNewTestObj();
+        return (BaseWorkflowDataTestObj) setupNewTestObj();
     }
 
 
     @Override
     public void setupDataDomainService() throws Exception {
-        NodeServiceImpl nodeService = (NodeServiceImpl)TaskNode.getConfiguredNodeService();
+        NodeServiceImpl nodeService = (NodeServiceImpl) TaskNode.getConfiguredNodeService();
         dataDomainService = nodeService.hshDataDomainRecalcerByClass.get(BaseWorkflowDataServiceImpl.class);
 
 //        dataDomainService = new BaseWorkflowDataServiceImpl(); 

@@ -54,22 +54,23 @@ public class CallYaioReset extends CallYaioInstance {
      *     Constructor
      * @param args the command line arguments
      */
-    public CallYaioReset(String[] args) {
+    public CallYaioReset(final String[] args) {
         super(args);
     }
 
     @Override
-    protected Options addAvailiableCmdLineOptions() throws Throwable {
+    protected Options addAvailiableCmdLineOptions() throws Exception {
         Options availiableCmdLineOptions = super.addAvailiableCmdLineOptions();
         
-        if (LOGGER.isDebugEnabled())
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("addAvailiableCmdLineOptions: " + availiableCmdLineOptions);
+        }
         
         return availiableCmdLineOptions;
     }
 
     @Override
-    public void doJob() throws Throwable {
+    public void doJob() throws Exception {
         // call url
         StringBuffer result = this.callGetUrl("/admin/reset", null);
         
@@ -110,7 +111,7 @@ public class CallYaioReset extends CallYaioInstance {
      *     CLI
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         CallYaioReset me = new CallYaioReset(args);
         me.startJobProcessing();
     }

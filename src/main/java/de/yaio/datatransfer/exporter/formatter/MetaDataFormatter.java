@@ -53,5 +53,5 @@ public interface MetaDataFormatter extends Formatter{
      * @param options - options for formatter
      * @throws Exception - parser/format-Exceptions possible
      */
-    public void formatMetaData(MetaData node, StringBuffer nodeOutput, OutputOptions options) throws Exception;
+    void formatMetaData(MetaData node, StringBuffer nodeOutput, OutputOptions options) throws Exception;
 }

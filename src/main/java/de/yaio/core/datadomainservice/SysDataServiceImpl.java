@@ -58,18 +58,18 @@ public class SysDataServiceImpl extends DataDomainRecalcImpl implements SysDataS
      *     Config
      * @param nodeService - instance of the nodeService which will call me as recalcer
      */
-    public static void configureDataDomainRecalcer(NodeService nodeService) {
+    public static void configureDataDomainRecalcer(final NodeService nodeService) {
         DataDomainRecalc baseDataDomainRecalc  = new SysDataServiceImpl();
         nodeService.addDataDomainRecalcer(baseDataDomainRecalc);
     }
     
     @Override
-    public void doRecalcBeforeChildren(DataDomain node, int recurceDirection) throws Exception {
+    public void doRecalcBeforeChildren(final DataDomain node, final int recurceDirection) throws Exception {
         // NOP
     }
 
     @Override
-    public void doRecalcAfterChildren(DataDomain node, int recurceDirection) throws Exception {
+    public void doRecalcAfterChildren(final DataDomain node, final int recurceDirection) throws Exception {
         // Check if node is compatibel
         if (node != null) {
             if (! SysData.class.isInstance(node)) {
@@ -78,7 +78,7 @@ public class SysDataServiceImpl extends DataDomainRecalcImpl implements SysDataS
         }
         
         // Roll
-        this.initSysData((SysData)node);
+        this.initSysData((SysData) node);
     }
     
     @Override
@@ -93,7 +93,7 @@ public class SysDataServiceImpl extends DataDomainRecalcImpl implements SysDataS
     
     
     @Override
-    public void initSysData(SysData node) throws Exception {
+    public void initSysData(final SysData node) throws Exception {
         // UID generieren, wenn noch nicht belegt
         String uid = node.getSysUID();
         if (uid == null || uid.length() < 1) {
@@ -112,11 +112,12 @@ public class SysDataServiceImpl extends DataDomainRecalcImpl implements SysDataS
         String newChecksum = this.getCheckSum(node);
         boolean flgChanged = false;
         if ((checksum == null) || (! newChecksum.equals(checksum))) {
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("initSysData checksum changed old:" + checksum 
                            + " new:" + newChecksum 
                            + " cmp=" + newChecksum.equals(checksum)
                            + " nullchecksum=" + (checksum == null));
+            }
             checksum = newChecksum;
             node.setSysCurChecksum(checksum);
             flgChanged = true;
@@ -140,11 +141,12 @@ public class SysDataServiceImpl extends DataDomainRecalcImpl implements SysDataS
     }
 
     @Override
-    public String getCheckSum(SysData node) throws Exception {
+    public String getCheckSum(final SysData node) throws Exception {
         // Daten holen
         String data = node.getDataBlocks4CheckSum();
-        if (LOGGER.isDebugEnabled()) 
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("getDataBlocks4CheckSum = " + data);
+        }
 
         // Checksumme
         return DataUtils.generateCheckSum(data);

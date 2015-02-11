@@ -82,13 +82,13 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
      *     Config
      * @param nodeService - instance of the nodeService which will call me as recalcer
      */
-    public static void configureDataDomainRecalcer(NodeService nodeService) {
+    public static void configureDataDomainRecalcer(final NodeService nodeService) {
         DataDomainRecalc baseDataDomainRecalc  = new BaseWorkflowDataServiceImpl();
         nodeService.addDataDomainRecalcer(baseDataDomainRecalc);
     }
     
     @Override
-    public void doRecalcBeforeChildren(DataDomain node, int recurceDirection) throws Exception {
+    public void doRecalcBeforeChildren(final DataDomain node, final int recurceDirection) throws Exception {
         
         // Check if node is compatibel
         if (! BaseWorkflowData.class.isInstance(node)) {
@@ -96,19 +96,19 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
             }
         
         // Roll
-        // TODO this.calcPlanData((BaseWorkflowData)node);
+        // TODO this.calcPlanData((BaseWorkflowData) node);
     }
 
     @Override
-    public void doRecalcAfterChildren(DataDomain node, int recurceDirection) throws Exception {
+    public void doRecalcAfterChildren(final DataDomain node, final int recurceDirection) throws Exception {
         // Check if node is compatibel
         if (! BaseWorkflowData.class.isInstance(node)) {
                 throw new IllegalArgumentException();
             }
         
         // Roll
-        this.recalcWorkflowData((BaseWorkflowData)node);
-        this.recalcStateData((BaseWorkflowData)node);
+        this.recalcWorkflowData((BaseWorkflowData) node);
+        this.recalcStateData((BaseWorkflowData) node);
     }
     
     
@@ -130,15 +130,15 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
      * @return standFaktor of the node
      * @throws Exception - parser/format-Exceptions possible
      */
-    public Double getMyStandFaktor(BaseWorkflowData node) throws Exception {
+    public Double getMyStandFaktor(final BaseWorkflowData node) throws Exception {
         Double standFaktor = 0.0;
         
         // check if node is extended
         if (ExtendedWorkflowData.class.isInstance(node)) {
             // calc from own Workflowdata
-            PlanData planData = (ExtendedWorkflowData)node;
-            IstData istData = (ExtendedWorkflowData)node;
-            standFaktor = (Double)Calculator.calculate(
+            PlanData planData = (ExtendedWorkflowData) node;
+            IstData istData = (ExtendedWorkflowData) node;
+            standFaktor = (Double) Calculator.calculate(
                     istData.getIstStand(), planData.getPlanAufwand(), 
                     Calculator.CONST_CALCULATE_ACTION_MULSTATE);
             if (LOGGER.isDebugEnabled()) {
@@ -167,15 +167,15 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
      * @param node - node to process
      * @throws Exception - parser/format-Exceptions possible
      */
-    public void initChildSumData(BaseWorkflowData node) throws Exception {
+    public void initChildSumData(final BaseWorkflowData node) throws Exception {
         PlanChildrenSumData planChildrenSumData = node;
         IstChildrenSumData istChildrenSumData = node;
 
         // check if node is extended
         if (ExtendedWorkflowData.class.isInstance(node)) {
             // init with own Workflowdata
-            PlanData planData = (ExtendedWorkflowData)node;
-            IstData istData = (ExtendedWorkflowData)node;
+            PlanData planData = (ExtendedWorkflowData) node;
+            IstData istData = (ExtendedWorkflowData) node;
 
             planChildrenSumData.setPlanChildrenSumAufwand(planData.getPlanAufwand());
             planChildrenSumData.setPlanChildrenSumStart(planData.getPlanStart());
@@ -197,11 +197,11 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
     }
 
     @Override
-    public void calcPlanData(BaseWorkflowData baseNode) throws Exception {
+    public void calcPlanData(final BaseWorkflowData baseNode) throws Exception {
         // init calcedData
         if (ExtendedWorkflowData.class.isInstance(baseNode)) {
             // init with own Workflowdata
-            PlanData planData = (ExtendedWorkflowData)baseNode;
+            PlanData planData = (ExtendedWorkflowData) baseNode;
             baseNode.setPlanCalcStart(planData.getPlanStart());
             baseNode.setPlanCalcEnde(planData.getPlanEnde());
         }
@@ -262,11 +262,12 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
         }
     }
     
-    public String getPlanCalcCheckSum(PlanCalcData node) throws Exception {
+    public String getPlanCalcCheckSum(final PlanCalcData node) throws Exception {
         // Daten holen
         String data = getDataBlocks4PlanCalcCheckSum(node);
-        if (LOGGER.isDebugEnabled()) 
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("getDataBlocks4PlanCalcCheckSum = " + data);
+        }
 
         // Checksumme
         return DataUtils.generateCheckSum(data);
@@ -274,7 +275,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
 
     @XmlTransient
     @JsonIgnore
-    public String getDataBlocks4PlanCalcCheckSum(PlanCalcData node) throws Exception {
+    public String getDataBlocks4PlanCalcCheckSum(final PlanCalcData node) throws Exception {
         // Content erzeugen
         StringBuffer data = new StringBuffer();
         
@@ -285,7 +286,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
     }
     
     
-    public Date getCalcedDateFromPredecessor(BaseWorkflowData baseNode, boolean flgStart) {
+    public Date getCalcedDateFromPredecessor(final BaseWorkflowData baseNode, final boolean flgStart) {
         Date date = null;
         
         // get and check predecessor
@@ -356,14 +357,14 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
         return date;
     }
     
-    public BaseWorkflowData getPredecessor(BaseWorkflowData baseNode) {
+    public BaseWorkflowData getPredecessor(final BaseWorkflowData baseNode) {
         BaseWorkflowData predecessor = null;
         predecessor = baseNode.getPlanPredecessor();
         return predecessor;
     }
     
     @Override
-    public void recalcWorkflowData(BaseWorkflowData baseNode) throws Exception {
+    public void recalcWorkflowData(final BaseWorkflowData baseNode) throws Exception {
         // init ChildSumData
         this.initChildSumData(baseNode);
         
@@ -381,30 +382,30 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
             BaseWorkflowData childNode = (BaseWorkflowData) baseNode.getChildNodesByNameMap().get(nodeName);
             
             // update ChildrenSum
-            baseNode.setPlanChildrenSumAufwand((Double)Calculator.calculate(
+            baseNode.setPlanChildrenSumAufwand((Double) Calculator.calculate(
                     baseNode.getPlanChildrenSumAufwand(), childNode.getPlanChildrenSumAufwand(), 
                     Calculator.CONST_CALCULATE_ACTION_SUM));
-            baseNode.setPlanChildrenSumStart((Date)Calculator.calculate(
+            baseNode.setPlanChildrenSumStart((Date) Calculator.calculate(
                     baseNode.getPlanChildrenSumStart(), childNode.getPlanChildrenSumStart(), 
                     Calculator.CONST_CALCULATE_ACTION_MIN));
-            baseNode.setPlanChildrenSumEnde((Date)Calculator.calculate(
+            baseNode.setPlanChildrenSumEnde((Date) Calculator.calculate(
                     baseNode.getPlanChildrenSumEnde(), childNode.getPlanChildrenSumEnde(), 
                     Calculator.CONST_CALCULATE_ACTION_MAX));
-            baseNode.setIstChildrenSumAufwand((Double)Calculator.calculate(
+            baseNode.setIstChildrenSumAufwand((Double) Calculator.calculate(
                     baseNode.getIstChildrenSumAufwand(), childNode.getIstChildrenSumAufwand(), 
                     Calculator.CONST_CALCULATE_ACTION_SUM));
-            baseNode.setIstChildrenSumStart((Date)Calculator.calculate(
+            baseNode.setIstChildrenSumStart((Date) Calculator.calculate(
                     baseNode.getIstChildrenSumStart(), childNode.getIstChildrenSumStart(), 
                     Calculator.CONST_CALCULATE_ACTION_MIN));
-            baseNode.setIstChildrenSumEnde((Date)Calculator.calculate(
+            baseNode.setIstChildrenSumEnde((Date) Calculator.calculate(
                     baseNode.getIstChildrenSumEnde(), childNode.getIstChildrenSumEnde(), 
                     Calculator.CONST_CALCULATE_ACTION_MAX));
 
             // update Standfaktor
-            tmpStandFaktor = (Double)Calculator.calculate(
+            tmpStandFaktor = (Double) Calculator.calculate(
                     childNode.getIstChildrenSumStand(), childNode.getPlanChildrenSumAufwand(), 
                     Calculator.CONST_CALCULATE_ACTION_MULSTATE);
-            standFaktor = (Double)Calculator.calculate(
+            standFaktor = (Double) Calculator.calculate(
                     standFaktor, tmpStandFaktor, Calculator.CONST_CALCULATE_ACTION_SUM);
             
             // update sumStandNullAufwand
@@ -416,7 +417,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
             }
             
             // sync WorkflowState with childrens state
-            baseNode.setWorkflowState((WorkflowState)Calculator.calculate(
+            baseNode.setWorkflowState((WorkflowState) Calculator.calculate(
                             childNode.getWorkflowState(), 
                             baseNode.getWorkflowState(), 
                             Calculator.CONST_CALCULATE_ACTION_WORKFLOWSTATE));
@@ -430,8 +431,8 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
             Double istStand = null;
             if (ExtendedWorkflowData.class.isInstance(baseNode)) {
                 // calc from own Workflowdata
-                IstData istData = (ExtendedWorkflowData)baseNode;
-                PlanData planData = (ExtendedWorkflowData)baseNode;
+                IstData istData = (ExtendedWorkflowData) baseNode;
+                PlanData planData = (ExtendedWorkflowData) baseNode;
                 istStand = istData.getIstStand();
                 
                 // but take a look if there is no planaufwand!!!
@@ -455,7 +456,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
                 baseNode.setIstChildrenSumStand(istStand);
             }
         } else {
-            baseNode.setIstChildrenSumStand((Double)Calculator.calculate(
+            baseNode.setIstChildrenSumStand((Double) Calculator.calculate(
                             standFaktor, baseNode.getPlanChildrenSumAufwand(), 
                             Calculator.CONST_CALCULATE_ACTION_STATE));
         }
@@ -469,7 +470,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
     }
 
     @Override
-    public void recalcStateData(BaseWorkflowData baseNode) throws Exception {
+    public void recalcStateData(final BaseWorkflowData baseNode) throws Exception {
         if (baseNode == null) {
             return;
         }
@@ -492,18 +493,18 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
      * @return recalced state
      * @throws Exception - parser/format-Exceptions possible
      */
-    public String getRecalcedState(BaseWorkflowData baseNode) throws Exception {
+    public String getRecalcedState(final BaseWorkflowData baseNode) throws Exception {
         if (! ExtendedWorkflowData.class.isInstance(baseNode)) {
            // Normal Node
            return baseNode.getState();
         } else if (EventNode.class.isInstance(baseNode)) {
            // Event
            return baseNode.getStateForWorkflowState(baseNode.getWorkflowState());
-//           return this.getRecalcedEventState((ExtendedWorkflowData)baseNode);
+//           return this.getRecalcedEventState((ExtendedWorkflowData) baseNode);
         } else if (TaskNode.class.isInstance(baseNode)) {
            // Task
             return baseNode.getStateForWorkflowState(baseNode.getWorkflowState());
-//           return this.getRecalcedTaskState((ExtendedWorkflowData)baseNode);
+//           return this.getRecalcedTaskState((ExtendedWorkflowData) baseNode);
         }
         
         return BaseNode.CONST_NODETYPE_IDENTIFIER_UNKNOWN;
@@ -524,7 +525,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
      * @return recalced state
      * @throws Exception - parser/format-Exceptions possible
      */
-    public String getRecalcedEventState(ExtendedWorkflowData baseNode) {
+    public String getRecalcedEventState(final ExtendedWorkflowData baseNode) {
         // Status aus den Plan/Istzahlen extrahieren
         String newState = baseNode.getState();
 
@@ -598,7 +599,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
      * @return recalced state
      * @throws Exception - parser/format-Exceptions possible
      */
-    public String getRecalcedTaskState(ExtendedWorkflowData baseNode) {
+    public String getRecalcedTaskState(final ExtendedWorkflowData baseNode) {
         // Status aus den Plan/Istzahlen extrahieren
         String newState = baseNode.getState();
         
@@ -692,7 +693,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
      * @return recalced state
      * @throws Exception - parser/format-Exceptions possible
      */
-    public WorkflowState calcMyWorkflowState(BaseWorkflowData node) {
+    public WorkflowState calcMyWorkflowState(final BaseWorkflowData node) {
         WorkflowState newState = node.getWorkflowState();
         LOGGER.debug("WFStatus: state = " + newState
                         + " Class" + node.getClass().getName());
@@ -703,7 +704,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
             // check if node is extended
             if (ExtendedWorkflowData.class.isInstance(node)) {
                 // Status aus den Plan/Istzahlen extrahieren
-                ExtendedWorkflowData baseNode = (ExtendedWorkflowData)node; 
+                ExtendedWorkflowData baseNode = (ExtendedWorkflowData) node; 
                 
                 // Status zuruecksetzen
                 newState = WorkflowState.NOTPLANED;

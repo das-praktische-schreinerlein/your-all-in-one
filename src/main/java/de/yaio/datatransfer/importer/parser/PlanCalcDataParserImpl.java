@@ -82,30 +82,31 @@ public class PlanCalcDataParserImpl  extends ParserImpl implements PlanCalcDataP
      *     Config
      * @param nodeFactory - instance of the nodeFactory which will use the parser 
      */
-    public static void configureDataDomainParser(NodeFactory nodeFactory) {
+    public static void configureDataDomainParser(final NodeFactory nodeFactory) {
         nodeFactory.addDataDomainParser(new PlanCalcDataParserImpl());
     }
 
     @Override
-    public int parseFromName(DataDomain node, ImportOptions options) throws Exception {
+    public int parseFromName(final DataDomain node, final ImportOptions options) throws Exception {
         // Check if node is compatibel
         if (node != null) {
             if (! PlanCalcData.class.isInstance(node)) {
                 throw new IllegalArgumentException();
             }
         }
-        return parsePlanCalcDataFromName((PlanCalcData)node, options);
+        return parsePlanCalcDataFromName((PlanCalcData) node, options);
     }
 
     @Override
-    public int parsePlanCalcDataFromName(PlanCalcData node, ImportOptions options) throws Exception {
+    public int parsePlanCalcDataFromName(final PlanCalcData node, final ImportOptions options) throws Exception {
         int found = 0;
 
         // Check for valid data
         if (node.getName() == null) {
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Pattern PlanCalc dosnt match because node has no name for node:" 
                         + node.getNameForLogger());
+            }
             return found;
         }
 
@@ -117,19 +118,21 @@ public class PlanCalcDataParserImpl  extends ParserImpl implements PlanCalcDataP
         Matcher matcher = pattern.matcher(node.getName());
         int matcherindex = 0;
         if (matcher.matches()) {
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("found PlanCalc in: " + node.getName()
                         + " for node:" + node.getNameForLogger());
+            }
 
             // Bereich davor/dahinter
             this.trimNodeName(node, pattern, matcher, 1, 6);
 
             // PlanCalc-Startdatum
             matcherindex = 2;
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Pattern: " + CONST_PATTERN_PLANCALC + " " 
                         + matcherindex + ":" + matcher.group(matcherindex)
                         + " for node:" + node.getNameForLogger());
+            }
             if (matcher.group(matcherindex) != null) {
                 calDate.setTime(DF.parse(matcher.group(matcherindex)));
                 calDate.set(Calendar.SECOND, CONST_FLAG_NODATE_SECONDS);
@@ -137,10 +140,11 @@ public class PlanCalcDataParserImpl  extends ParserImpl implements PlanCalcDataP
             }
             // PlanCalc-Startzeit
             matcherindex = 3;
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Pattern: " + CONST_PATTERN_PLANCALC + " " 
                         + matcherindex + ":" + matcher.group(matcherindex)
                         + " for node:" + node.getNameForLogger());
+            }
             if (matcher.group(matcherindex) != null && node.getPlanCalcStart() != null) {
                 calDate.setTime(node.getPlanCalcStart());
                 timeOffsett = TF.parse(matcher.group(matcherindex));
@@ -154,10 +158,11 @@ public class PlanCalcDataParserImpl  extends ParserImpl implements PlanCalcDataP
             }
             // PlanCalc-Enddatum
             matcherindex = 4;
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Pattern: " + CONST_PATTERN_PLANCALC + " " 
                         + matcherindex + ":" + matcher.group(matcherindex)
                         + " for node:" + node.getNameForLogger());
+            }
             if (matcher.group(matcherindex) != null) {
                 calDate.setTime(DF.parse(matcher.group(matcherindex)));
                 calDate.set(Calendar.SECOND, CONST_FLAG_NODATE_SECONDS);
@@ -165,10 +170,11 @@ public class PlanCalcDataParserImpl  extends ParserImpl implements PlanCalcDataP
             }
             // PlanCalc-Endzeit
             matcherindex = 5;
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Pattern: " + CONST_PATTERN_PLANCALC + " " 
                         + matcherindex + ":" + matcher.group(matcherindex)
                         + " for node:" + node.getNameForLogger());
+            }
             if (matcher.group(matcherindex) != null && node.getPlanCalcEnde() != null) {
                 calDate.setTime(node.getPlanCalcEnde());
                 timeOffsett = TF.parse(matcher.group(matcherindex));
@@ -183,9 +189,10 @@ public class PlanCalcDataParserImpl  extends ParserImpl implements PlanCalcDataP
 
             found++;
 
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("NewName: " + node.getName()
                         + " for node:" + node.getNameForLogger());
+            }
         } else if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Pattern PlanCalc dosnt match: " + CONST_PATTERN_SEG_PLANCALC 
                     + " for node:" + node.getNameForLogger());

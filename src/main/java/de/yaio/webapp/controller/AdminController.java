@@ -62,7 +62,7 @@ public class AdminController {
                     value = "/recalc/{sysUID}", 
                     produces="text/html")
     public @ResponseBody String recalcNode(
-           @PathVariable(value="sysUID") String sysUID) {
+           @PathVariable(value="sysUID") final String sysUID) {
         NodeActionResponse response = new NodeActionResponse(
                         "ERROR", "node '" + sysUID + "' doesnt exists", 
                         null, null, null, null);

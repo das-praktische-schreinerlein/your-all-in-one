@@ -79,7 +79,7 @@ public class EventNode extends TaskNode {
     }
     @XmlTransient
     @JsonIgnore
-    public static void setNodeDataService(NodeService newNodeDataService) {
+    public static void setNodeDataService(final NodeService newNodeDataService) {
         nodeDataService = newNodeDataService;
     }
 
@@ -148,7 +148,7 @@ public class EventNode extends TaskNode {
     @Override
     @XmlTransient
     @JsonIgnore
-    public String getStateForWorkflowState(WorkflowState workflowState)  throws IllegalStateException {
+    public String getStateForWorkflowState(final WorkflowState workflowState)  throws IllegalStateException {
         return CONST_MAP_WORKFLOWSTATE_STATE.get(workflowState);
     };
 }

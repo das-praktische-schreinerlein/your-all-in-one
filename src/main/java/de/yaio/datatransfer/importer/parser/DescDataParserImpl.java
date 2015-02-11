@@ -42,9 +42,6 @@ import de.yaio.datatransfer.importer.NodeFactory;
  */
 public class DescDataParserImpl  extends ParserImpl implements DescDataParser {
 
-    Calendar calDate = new GregorianCalendar();
-    Calendar calTime = new GregorianCalendar();
-
     // Logger
     private static final Logger LOGGER =
             Logger.getLogger(DescDataParserImpl.class);
@@ -77,30 +74,31 @@ public class DescDataParserImpl  extends ParserImpl implements DescDataParser {
      *     Config
      * @param nodeFactory - instance of the nodeFactory which will use the parser 
      */
-    public static void configureDataDomainParser(NodeFactory nodeFactory) {
+    public static void configureDataDomainParser(final NodeFactory nodeFactory) {
         nodeFactory.addDataDomainParser(new DescDataParserImpl());
     }
 
     @Override
-    public int parseFromName(DataDomain node, ImportOptions options) throws Exception {
+    public int parseFromName(final DataDomain node, final ImportOptions options) throws Exception {
         // Check if node is compatibel
         if (node != null) {
             if (! DescData.class.isInstance(node)) {
                 throw new IllegalArgumentException();
             }
         }
-        return parseDescDataFromName((DescData)node, options);
+        return parseDescDataFromName((DescData) node, options);
     }
 
     @Override
-    public int parseDescDataFromName(DescData node, ImportOptions options) throws Exception {
+    public int parseDescDataFromName(final DescData node, final ImportOptions options) throws Exception {
         int found = 0;
 
         // Check for valid data
         if (node.getName() == null) {
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Pattern Desc dosnt match because node has no name for node:" 
                         + node.getNameForLogger());
+            }
             return found;
         }
 
@@ -114,9 +112,10 @@ public class DescDataParserImpl  extends ParserImpl implements DescDataParser {
 
             // Desc
             matcherindex = 2;
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Pattern: " + CONST_PATTERN_SEG_DESC + " " 
                     + matcherindex + ":" + matcher.group(matcherindex));
+            }
             if (matcher.group(matcherindex) != null) {
                 // reescape desc
                 String dummyText = matcher.group(matcherindex);

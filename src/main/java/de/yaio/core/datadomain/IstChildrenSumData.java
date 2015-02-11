@@ -32,14 +32,14 @@ import java.util.Date;
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public interface IstChildrenSumData extends DataDomain {
-    public static final int CONST_ORDER = 80;
+    int CONST_ORDER = 80;
 
-    public Double getIstChildrenSumStand();
-    public void setIstChildrenSumStand(Double istStand);
-    public Date getIstChildrenSumStart();
-    public void setIstChildrenSumStart(Date istStart);
-    public Date getIstChildrenSumEnde();
-    public void setIstChildrenSumEnde(Date istEnde);
-    public Double getIstChildrenSumAufwand();
-    public void setIstChildrenSumAufwand(Double istAufwand);
+    Double getIstChildrenSumStand();
+    void setIstChildrenSumStand(Double istStand);
+    Date getIstChildrenSumStart();
+    void setIstChildrenSumStart(Date istStart);
+    Date getIstChildrenSumEnde();
+    void setIstChildrenSumEnde(Date istEnde);
+    Double getIstChildrenSumAufwand();
+    void setIstChildrenSumAufwand(Double istAufwand);
 }

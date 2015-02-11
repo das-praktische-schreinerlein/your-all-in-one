@@ -57,12 +57,12 @@ public class CallYaioImport extends CallYaioInstance {
      *     Constructor
      * @param args the command line arguments
      */
-    public CallYaioImport(String[] args) {
+    public CallYaioImport(final String[] args) {
         super(args);
     }
 
     @Override
-    protected Options addAvailiableCmdLineOptions() throws Throwable {
+    protected Options addAvailiableCmdLineOptions() throws Exception {
         Options availiableCmdLineOptions = super.addAvailiableCmdLineOptions();
         
         // file to import
@@ -77,14 +77,15 @@ public class CallYaioImport extends CallYaioInstance {
         parentsysuidOption.setRequired(true);
         availiableCmdLineOptions.addOption(parentsysuidOption);
 
-        if (LOGGER.isDebugEnabled())
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("addAvailiableCmdLineOptions: " + availiableCmdLineOptions);
+        }
         
         return availiableCmdLineOptions;
     }
 
     @Override
-    public void doJob() throws Throwable {
+    public void doJob() throws Exception {
         // get options
         String parentsysUID = Configurator.getInstance().getCommandLine().getOptionValue("parentsysuid");
         String importfile = Configurator.getInstance().getCommandLine().getOptionValue("importfile");
@@ -131,7 +132,7 @@ public class CallYaioImport extends CallYaioInstance {
      *     CLI
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         CallYaioImport me = new CallYaioImport(args);
         me.startJobProcessing();
     }

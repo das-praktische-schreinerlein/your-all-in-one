@@ -39,58 +39,58 @@ import de.yaio.datatransfer.importer.ImportOptions;
 public interface Parser extends Comparable<Parser> {
     
     /** Pattern to parse Task-segments */
-    public static final String CONST_PATTERN_SEG_TASK = "__[A-Za-z]+?[0-9]+?__";
+    String CONST_PATTERN_SEG_TASK = "__[A-Za-z]+?[0-9]+?__";
     /** Pattern to parse Aufwand-segments */
-    public static final String CONST_PATTERN_SEG_HOURS = "[0-9]?\\.?[0-9.]+";
+    String CONST_PATTERN_SEG_HOURS = "[0-9]?\\.?[0-9.]+";
     /** Pattern to parse Stand-segments */
-    public static final String CONST_PATTERN_SEG_STAND = "[0-9]?\\.?[0-9.]+";
+    String CONST_PATTERN_SEG_STAND = "[0-9]?\\.?[0-9.]+";
     /** Pattern to parse Date-segments */
-    public static final String CONST_PATTERN_SEG_DATUM = "\\d\\d\\.\\d\\d.\\d\\d\\d\\d";
+    String CONST_PATTERN_SEG_DATUM = "\\d\\d\\.\\d\\d.\\d\\d\\d\\d";
     /** Pattern to parse common String-segments */
-    public static final String CONST_PATTERN_SEG_STRING = "[-0-9\\p{L}/+_\\*\\. ]";
+    String CONST_PATTERN_SEG_STRING = "[-0-9\\p{L}/+_\\*\\. ]";
     /** Pattern to parse Flag-segments */
-    public static final String CONST_PATTERN_SEG_FLAG = "[-0-9\\p{L}+_]";
+    String CONST_PATTERN_SEG_FLAG = "[-0-9\\p{L}+_]";
     /** Pattern to parse Integer-segments */
-    public static final String CONST_PATTERN_SEG_INT = "[0-9]";
+    String CONST_PATTERN_SEG_INT = "[0-9]";
     /** Pattern to parse UID-segments */
-    public static final String CONST_PATTERN_SEG_UID = "[0-9A-Za-z]";
+    String CONST_PATTERN_SEG_UID = "[0-9A-Za-z]";
     /** Pattern to parse ID-segments */
-    public static final String CONST_PATTERN_SEG_ID = "[0-9]";
+    String CONST_PATTERN_SEG_ID = "[0-9]";
     /** Pattern to parse Tag-segments */
-    public static final String CONST_PATTERN_SEG_TAGS = "[-0-9\\p{L}+_\\*\\.;]";
+    String CONST_PATTERN_SEG_TAGS = "[-0-9\\p{L}+_\\*\\.;]";
     /** Pattern to parse ID-Praefix-segments */
-    public static final String CONST_PATTERN_SEG_PRAEFIX = "[A-Za-z]";
+    String CONST_PATTERN_SEG_PRAEFIX = "[A-Za-z]";
     /** Pattern to parse Checksum-segments */
-    public static final String CONST_PATTERN_SEG_CHECKSUM = "[0-9A-Za-z]";
+    String CONST_PATTERN_SEG_CHECKSUM = "[0-9A-Za-z]";
     /** Pattern to parse Time-segments */
-    public static final String CONST_PATTERN_SEG_TIME = "\\d\\d\\:\\d\\d";
+    String CONST_PATTERN_SEG_TIME = "\\d\\d\\:\\d\\d";
 
     /** Pattern to validate Layoutcommands */
-    public static final String CONST_PATTERN_SEG_LAYOUTCOMMAND = "[-0-9A-Za-z_\\.]";
+    String CONST_PATTERN_SEG_LAYOUTCOMMAND = "[-0-9A-Za-z_\\.]";
     /** Pattern to validate name */
-    public static final String CONST_PATTERN_SEG_NAME = "[\\p{L}\\p{M}\\{Z}\\p{S}\\p{N}\\p{P}\\p{Print}\\{Punct}\\p{Graph}\\p{Blank}]";
+    String CONST_PATTERN_SEG_NAME = "[\\p{L}\\p{M}\\{Z}\\p{S}\\p{N}\\p{P}\\p{Print}\\{Punct}\\p{Graph}\\p{Blank}]";
     /** Pattern to validate desc */
-    public static final String CONST_PATTERN_SEG_DESC = "[\\p{L}\\p{M}\\{Z}\\p{S}\\p{N}\\p{P}\\p{Print}\\{Punct}\\p{Graph}\\p{Blank}\\n\\r]";
+    String CONST_PATTERN_SEG_DESC = "[\\p{L}\\p{M}\\{Z}\\p{S}\\p{N}\\p{P}\\p{Print}\\{Punct}\\p{Graph}\\p{Blank}\\n\\r]";
     /** Pattern to validate styleclass */
-    public static final String CONST_PATTERN_SEG_STYLECLASS = "[-0-9A-Za-z_\\.]";
+    String CONST_PATTERN_SEG_STYLECLASS = "[-0-9A-Za-z_\\.]";
     /** Pattern to validate shortname */
-    public static final String CONST_PATTERN_SEG_SHORTNAME = "[-0-9\\p{L}+_\\*\\.,;' \\/\\?]";
+    String CONST_PATTERN_SEG_SHORTNAME = "[-0-9\\p{L}+_\\*\\.,;' \\/\\?]";
     /** Pattern to validate state */
-    public static final String CONST_PATTERN_SEG_STATE = "[-A-Za-z_]";
+    String CONST_PATTERN_SEG_STATE = "[-A-Za-z_]";
     /** Pattern to validate type */
-    public static final String CONST_PATTERN_SEG_TYPE = "[-A-Za-z_]";;
+    String CONST_PATTERN_SEG_TYPE = "[-A-Za-z_]";;
 
     /** dateformat-instance for german date dd.MM.yyyy  */
-    public static DateFormat DF = new SimpleDateFormat("dd.MM.yyyy");
+    DateFormat DF = new SimpleDateFormat("dd.MM.yyyy");
     /** dateformat-instance for german time HH:mm */
-    public static DateFormat TF = new SimpleDateFormat("HH:mm");
+    DateFormat TF = new SimpleDateFormat("HH:mm");
     /** dateformat-instance for german datetime dd.MM.yyyy HH:mm */
-    public static DateFormat DTF = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+    DateFormat DTF = new SimpleDateFormat("dd.MM.yyyy HH:mm");
     /** dateformat-instance for UID yyyyMMddHHmmssSSS */
-    public static DateFormat UIDF = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+    DateFormat UIDF = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 
     /** if second of time are set to this value -> then ignore the seconds */
-    public static final int CONST_FLAG_NODATE_SECONDS = 59;
+    int CONST_FLAG_NODATE_SECONDS = 59;
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -105,7 +105,7 @@ public interface Parser extends Comparable<Parser> {
      *     Config
      * @return DataDomain for which the parser runs
      */
-    public Class<?> getTargetClass();
+    Class<?> getTargetClass();
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -120,7 +120,7 @@ public interface Parser extends Comparable<Parser> {
      *     Config
      * @return position in the parser-queue
      */
-    public int getTargetOrder();
+    int getTargetOrder();
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -142,7 +142,7 @@ public interface Parser extends Comparable<Parser> {
      * @return count elements found
      * @throws Exception - parser-Exceptions possible
      */
-    public int parseFromName(DataDomain node, ImportOptions options) throws Exception;
+    int parseFromName(DataDomain node, ImportOptions options) throws Exception;
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -165,6 +165,6 @@ public interface Parser extends Comparable<Parser> {
      * @return brackets found ?
      * @throws Exception - parser-Exceptions possible
      */
-    public boolean trimNodeName(DataDomain node, Pattern pattern, 
+    boolean trimNodeName(DataDomain node, Pattern pattern, 
             Matcher matcher, int first, int last) throws Exception;
 }

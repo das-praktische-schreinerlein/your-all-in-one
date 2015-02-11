@@ -82,7 +82,7 @@ public class NodeRestController {
      * @param okMsg - the message
      * @return NodeResponse (OK) with the node, hierarchy and OK-message
      */
-    public static NodeActionResponse createResponseObj(BaseNode node, String okMsg) {
+    public static NodeActionResponse createResponseObj(final BaseNode node, final String okMsg) {
         // extract parents
         List<String> parentIdHierarchy = node.getParentIdHierarchy();
         
@@ -124,8 +124,8 @@ public class NodeRestController {
      * @param fulltext - fulltext search string
      * @return NodeSearchResponse (OK, FAILED, ERROR) with matching nodes
      */
-    public NodeSearchResponse commonSearchNode(Long curPage,
-          Long pageSize, String sortConfig, String sysUID, String fulltext) {
+    public NodeSearchResponse commonSearchNode(final Long curPage,
+          final Long pageSize, final String sortConfig, final String sysUID, final String fulltext) {
         // create default response
         NodeSearchResponse response = new NodeSearchResponse(
                         "OK", "no node found", 
@@ -173,11 +173,11 @@ public class NodeRestController {
      */
     @RequestMapping(method=RequestMethod.GET, value = "/search/{curPage}/{pageSize}/{sortConfig}/{sysUID}/{fulltext}/")
     public @ResponseBody NodeSearchResponse searchNodeFulltext(
-           @PathVariable(value="curPage") Long curPage,
-           @PathVariable(value="pageSize") Long pageSize,
-           @PathVariable(value="sortConfig") String sortConfig,
-           @PathVariable(value="sysUID") String sysUID,
-           @PathVariable(value="fulltext") String fulltext
+           @PathVariable(value="curPage") final Long curPage,
+           @PathVariable(value="pageSize") final Long pageSize,
+           @PathVariable(value="sortConfig") final String sortConfig,
+           @PathVariable(value="sysUID") final String sysUID,
+           @PathVariable(value="fulltext") final String fulltext
            ) {
         return commonSearchNode(curPage, pageSize, sortConfig, sysUID, fulltext);
     }
@@ -202,10 +202,10 @@ public class NodeRestController {
      */
     @RequestMapping(method=RequestMethod.GET, value = "/search/{curPage}/{pageSize}/{sortConfig}/{sysUID}/")
     public @ResponseBody NodeSearchResponse searchNode(
-           @PathVariable(value="curPage") Long curPage,
-           @PathVariable(value="pageSize") Long pageSize,
-           @PathVariable(value="sortConfig") String sortConfig,
-           @PathVariable(value="sysUID") String sysUID
+           @PathVariable(value="curPage") final Long curPage,
+           @PathVariable(value="pageSize") final Long pageSize,
+           @PathVariable(value="sortConfig") final String sortConfig,
+           @PathVariable(value="sysUID") final String sysUID
            ) {
         return commonSearchNode(curPage, pageSize, sortConfig, sysUID, "");
     }
@@ -226,7 +226,7 @@ public class NodeRestController {
      */
     @RequestMapping(method=RequestMethod.GET, value = "/show/{sysUID}")
     public @ResponseBody NodeActionResponse getNodeWithChildren(
-           @PathVariable(value="sysUID") String sysUID) {
+           @PathVariable(value="sysUID") final String sysUID) {
         // create default response
         NodeActionResponse response = new NodeActionResponse(
                         "ERROR", "node '" + sysUID + "' doesnt exists", 
@@ -265,7 +265,7 @@ public class NodeRestController {
      */
     @RequestMapping(method=RequestMethod.GET, value = "/showsymlink/{symLinkRef}")
     public @ResponseBody NodeActionResponse getSymLinkRefNodeWithChildren(
-           @PathVariable(value="symLinkRef") String symLinkRef) {
+           @PathVariable(value="symLinkRef") final String symLinkRef) {
         // create default response
         NodeActionResponse response = new NodeActionResponse(
                         "ERROR", "node '" + symLinkRef + "' doesnt exists", 
@@ -319,7 +319,7 @@ public class NodeRestController {
      */
     @RequestMapping(method=RequestMethod.DELETE, value = "/delete/{sysUID}")
     public @ResponseBody NodeActionResponse deleteNodeWithChildren(
-           @PathVariable(value="sysUID") String sysUID) {
+           @PathVariable(value="sysUID") final String sysUID) {
         // create default response
         NodeActionResponse response = new NodeActionResponse(
                         "ERROR", "node '" + sysUID + "' doesnt exists", 
@@ -373,7 +373,7 @@ public class NodeRestController {
      * @return true if data changed
      * @throws IllegalAccessException - thrown if class of origNode!=newNode
      */
-    public boolean mapNodeData(BaseNode origNode, BaseNode newNode) 
+    public boolean mapNodeData(final BaseNode origNode, final BaseNode newNode) 
                     throws IllegalAccessException {
         boolean flgChange = false;
         
@@ -413,8 +413,8 @@ public class NodeRestController {
         // Task+EventNodes
         if (   TaskNode.class.isInstance(origNode) 
             || EventNode.class.isInstance(origNode)) {
-            TaskNode newTaskNode = (TaskNode)newNode;
-            TaskNode origTaskNode = (TaskNode)origNode;
+            TaskNode newTaskNode = (TaskNode) newNode;
+            TaskNode origTaskNode = (TaskNode) origNode;
             
             // get state from type
             origNode.setState(origNode.getType());
@@ -471,8 +471,8 @@ public class NodeRestController {
         
         // InfoNodes
         if (InfoNode.class.isInstance(origNode)) {
-            InfoNode newInfoNode = (InfoNode)newNode;
-            InfoNode origInfoNode = (InfoNode)origNode;
+            InfoNode newInfoNode = (InfoNode) newNode;
+            InfoNode origInfoNode = (InfoNode) origNode;
 
             // get state from type
             origNode.setState(origNode.getType());
@@ -508,8 +508,8 @@ public class NodeRestController {
 
         // UrlResNode
         if (UrlResNode.class.isInstance(origNode)) {
-            UrlResNode newUrlResNode = (UrlResNode)newNode;
-            UrlResNode origUrlResNode = (UrlResNode)origNode;
+            UrlResNode newUrlResNode = (UrlResNode) newNode;
+            UrlResNode origUrlResNode = (UrlResNode) origNode;
 
             // get state from type
             origNode.setState(origNode.getType());
@@ -539,8 +539,8 @@ public class NodeRestController {
         
         // SymLinkNode
         if (SymLinkNode.class.isInstance(origNode)) {
-            SymLinkNode newUrlResNode = (SymLinkNode)newNode;
-            SymLinkNode origUrlResNode = (SymLinkNode)origNode;
+            SymLinkNode newUrlResNode = (SymLinkNode) newNode;
+            SymLinkNode origUrlResNode = (SymLinkNode) origNode;
 
             // get state from type
             origNode.setState(origNode.getType());
@@ -596,7 +596,7 @@ public class NodeRestController {
      * @param node - the node to recalc and merge
      * @return List - list of the recalced and saved parenthierarchy
      */
-    protected List<BaseNode> updateMeAndMyParents(BaseNode node) throws Exception {
+    protected List<BaseNode> updateMeAndMyParents(final BaseNode node) throws Exception {
         return BaseNodeDBServiceImpl.getInstance().updateMeAndMyParents(node);
     }
     
@@ -615,7 +615,7 @@ public class NodeRestController {
      * @param newNode - the node created from request-data
      * @return NodeResponse (OK, ERROR) with the node for sysUID
      */
-    public NodeActionResponse updateNode(String sysUID, BaseNode newNode) {
+    public NodeActionResponse updateNode(final String sysUID, final BaseNode newNode) {
         NodeActionResponse response = new NodeActionResponse(
                         "ERROR", "node '" + sysUID + "' doesnt exists", 
                         null, null, null, null);
@@ -703,7 +703,7 @@ public class NodeRestController {
      * @param newNode - the node created from request-data
      * @return NodeResponse (OK, ERROR) with the node for sysUID
      */
-    public NodeActionResponse createNode(String parentSysUID, BaseNode newNode) {
+    public NodeActionResponse createNode(final String parentSysUID, final BaseNode newNode) {
         NodeActionResponse response = new NodeActionResponse(
                         "ERROR", "parentnode '" + parentSysUID + "' doesnt exists", 
                         null, null, null, null);
@@ -796,8 +796,8 @@ public class NodeRestController {
      */
     @RequestMapping(method=RequestMethod.PATCH, value = "/update/BaseNode/{sysUID}")
     public @ResponseBody NodeActionResponse updateBaseNode(
-                @PathVariable(value="sysUID") String sysUID, 
-                @RequestBody BaseNode newNode) {
+                @PathVariable(value="sysUID") final String sysUID, 
+                @RequestBody final BaseNode newNode) {
         // create default response
         return this.updateNode(sysUID, newNode);
     }

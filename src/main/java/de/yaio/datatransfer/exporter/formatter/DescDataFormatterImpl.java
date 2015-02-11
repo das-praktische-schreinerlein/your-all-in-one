@@ -63,29 +63,30 @@ public class DescDataFormatterImpl extends FormatterImpl implements DescDataForm
      *     Config
      * @param exporter - instance of the Exporter which will use me
      */
-    public static void configureDataDomainFormatter(Exporter exporter) {
+    public static void configureDataDomainFormatter(final Exporter exporter) {
         Formatter formatter = new DescDataFormatterImpl();
         exporter.addDataDomainFormatter(formatter);
     }
 
     @Override
-    public void format(DataDomain node, StringBuffer nodeOutput, OutputOptions options) throws Exception {
+    public void format(final DataDomain node, final StringBuffer nodeOutput, final OutputOptions options) throws Exception {
         // Check if node is compatibel
         if (node != null) {
             if (! DescData.class.isInstance(node)) {
                 throw new IllegalArgumentException();
             }
         }
-        formatDescData((DescData)node, nodeOutput, options);
+        formatDescData((DescData) node, nodeOutput, options);
     }
 
     @Override
-    public void formatDescData(DescData node, StringBuffer nodeOutput, 
-            OutputOptions oOptions) throws Exception {
+    public void formatDescData(final DescData node, final StringBuffer nodeOutput, 
+            final OutputOptions oOptions) throws Exception {
         // exit if Flg not set
         if (! oOptions.isFlgShowDesc()) {
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("SKIP: isFlgShowDesc not set for node:" + node.getNameForLogger());
+            }
             return;
         }
 

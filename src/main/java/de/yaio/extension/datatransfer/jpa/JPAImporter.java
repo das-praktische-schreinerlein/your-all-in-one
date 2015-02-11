@@ -48,7 +48,7 @@ public class JPAImporter extends ImporterImpl {
      *     Constructor
      *  @param options - the importoptions for the parser...
      */
-    public JPAImporter(ImportOptions options) {
+    public JPAImporter(final ImportOptions options) {
         super(options);
     }
     
@@ -67,7 +67,7 @@ public class JPAImporter extends ImporterImpl {
      *  @param sysUID - the sysUID for the basenode to read from JPA
      *  @return - the basenode with sysUID
      */
-    public DataDomain getBaseNodeBySysUID(String sysUID) {
+    public DataDomain getBaseNodeBySysUID(final String sysUID) {
         // look for this Basenode in DB
         BaseNode dbNode = BaseNode.findBaseNode(sysUID);
         

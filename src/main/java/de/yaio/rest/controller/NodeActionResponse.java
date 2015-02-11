@@ -66,10 +66,10 @@ public class NodeActionResponse {
      * @param childNodes - the list of the childNodes from the resulting {@link NodeActionResponse#node}
      * @param violatons - a list {@link NodeViolation} while updating/creating/moving the resulting {@link NodeActionResponse#node}
      */
-    public NodeActionResponse(String state, String stateMsg, BaseNode node,
-                           List<String> parentIdHierarchy, 
-                           List<BaseNode> childNodes,
-                           List<NodeViolation> violatons) {
+    public NodeActionResponse(final String state, final String stateMsg, final BaseNode node,
+                           final List<String> parentIdHierarchy, 
+                           final List<BaseNode> childNodes,
+                           final List<NodeViolation> violatons) {
         super();
         this.state = state;
         this.stateMsg = stateMsg;
@@ -89,7 +89,7 @@ public class NodeActionResponse {
     /**
      * @param state the {@link NodeActionResponse#state} to set
      */
-    public void setState(String state) {
+    public void setState(final String state) {
         this.state = state;
     }
 
@@ -103,7 +103,7 @@ public class NodeActionResponse {
     /**
      * @param stateMsg the {@link NodeActionResponse#stateMsg} to set
      */
-    public void setStateMsg(String stateMsg) {
+    public void setStateMsg(final String stateMsg) {
         this.stateMsg = stateMsg;
     }
 
@@ -117,7 +117,7 @@ public class NodeActionResponse {
     /**
      * @param node the {@link NodeActionResponse#node} to set
      */
-    public void setNode(BaseNode node) {
+    public void setNode(final BaseNode node) {
         this.node = node;
     }
 
@@ -131,7 +131,7 @@ public class NodeActionResponse {
     /**
      * @param parentIdHierarchy the {@link NodeActionResponse#parentIdHierarchy} to set
      */
-    public void setParentIdHierarchy(List<String> parentIdHierarchy) {
+    public void setParentIdHierarchy(final List<String> parentIdHierarchy) {
         this.parentIdHierarchy = parentIdHierarchy;
     }
 
@@ -145,7 +145,7 @@ public class NodeActionResponse {
     /**
      * @param violations the {@link NodeActionResponse#violations} to set
      */
-    public void setViolations(List<NodeViolation> violations) {
+    public void setViolations(final List<NodeViolation> violations) {
         this.violations = violations;
     }
 
@@ -159,7 +159,7 @@ public class NodeActionResponse {
     /**
      * @param childNodes the {@link NodeActionResponse#childNodes} to set
      */
-    public void setChildNodes(List<BaseNode> childNodes) {
+    public void setChildNodes(final List<BaseNode> childNodes) {
         this.childNodes = childNodes;
     }
 }

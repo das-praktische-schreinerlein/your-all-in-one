@@ -52,5 +52,5 @@ public interface BaseDataFormatter extends Formatter{
      * @param options - options for formatter
      * @throws Exception - parser/format-Exceptions possible
      */
-    public void formatBaseData(BaseData node, StringBuffer nodeOutput, OutputOptions options) throws Exception;
+    void formatBaseData(BaseData node, StringBuffer nodeOutput, OutputOptions options) throws Exception;
 }

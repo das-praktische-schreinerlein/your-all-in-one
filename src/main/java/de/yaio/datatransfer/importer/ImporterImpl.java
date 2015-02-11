@@ -60,7 +60,7 @@ public class ImporterImpl implements Importer {
      *     Constructor
      *  @param options - the importoptions for the parser...
      */
-    public ImporterImpl(ImportOptions options) {
+    public ImporterImpl(final ImportOptions options) {
         this.options = options;
         
         // NodeFactory anlegen
@@ -85,13 +85,13 @@ public class ImporterImpl implements Importer {
     }
 
     @Override
-    public void addNodeTypeIdentifierVariantMapping(Map<String, Object> stateMap) {
+    public void addNodeTypeIdentifierVariantMapping(final Map<String, Object> stateMap) {
         for (String stateDef : stateMap.keySet()) {
-            this.addNodeTypeIdentifierVariantMapping(stateDef, (String)stateMap.get(stateDef));
+            this.addNodeTypeIdentifierVariantMapping(stateDef, (String) stateMap.get(stateDef));
         }
     }
 
-    protected void addNodeTypeIdentifierVariantMapping(String type, String masterType) {
+    protected void addNodeTypeIdentifierVariantMapping(final String type, final String masterType) {
         this.hshNodeTypeIdentifierVariantMapping.put(type, masterType);
     }
 
@@ -100,7 +100,7 @@ public class ImporterImpl implements Importer {
         return hshNodeTypeIdentifierVariantMapping;
     }
     
-    protected void initNodeFactory(ImportOptions iOptions) {
+    protected void initNodeFactory(final ImportOptions iOptions) {
         this.nodeFactory = new NodeFactoryImpl(iOptions);
     }
     
@@ -119,13 +119,13 @@ public class ImporterImpl implements Importer {
     }
 
     @Override
-    public void addWorkflowNodeTypeMapping(Map<String, Object> stateMap) {
+    public void addWorkflowNodeTypeMapping(final Map<String, Object> stateMap) {
         for (String stateDef : stateMap.keySet()) {
-            this.addWorkflowNodeTypeMapping(stateDef, (String)stateMap.get(stateDef));
+            this.addWorkflowNodeTypeMapping(stateDef, (String) stateMap.get(stateDef));
         }
     }
 
-    protected void addWorkflowNodeTypeMapping(String type, String masterType) {
+    protected void addWorkflowNodeTypeMapping(final String type, final String masterType) {
         this.hshWorkflowNodeTypeMapping.put(type, masterType);
     }
 
@@ -133,7 +133,7 @@ public class ImporterImpl implements Importer {
         return hshWorkflowNodeTypeMapping;
     }
 
-    public boolean isWFStatus (String state) {
+    public boolean isWFStatus (final String state) {
         if (this.hshWorkflowNodeTypeMapping.get(state) != null) {
             return true;
         }
@@ -142,8 +142,8 @@ public class ImporterImpl implements Importer {
     }
 
     @Override
-    public DataDomain createNodeObjFromText(int id, String strFullSrc,
-            String srcName, DataDomain curParentNode) throws Exception {
+    public DataDomain createNodeObjFromText(final int id, final String strFullSrc,
+            final String srcName, final DataDomain curParentNode) throws Exception {
         NodeFactory nodeFactory = this.getNodeFactory();
 
         Class<?> classType = nodeFactory.getNodeTypeFromText(strFullSrc, srcName);

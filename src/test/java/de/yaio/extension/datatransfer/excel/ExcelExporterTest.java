@@ -68,7 +68,7 @@ public class ExcelExporterTest extends WikiExporterTest {
      * @param expectedResult - the expected lines from exporter
      * @throws Exception
      */
-    public synchronized void testExport(String source, String expectedResult) throws Exception {
+    public synchronized void testExport(final String source, final String expectedResult) throws Exception {
         // parse
         DataDomain masterNode  = importerObj.createNodeObjFromText(1, "Test", "Test", null);
         String delimiter = "\t";
@@ -77,8 +77,8 @@ public class ExcelExporterTest extends WikiExporterTest {
         // create WorkBook
         ExcelOutputOptions excelOptions = new ExcelOutputOptions(oOptions);
         excelOptions.flgMergeExcelPlanungGantSheets = true;
-        ExcelExporter excelExporter = (ExcelExporter)exporter;
-        HSSFWorkbook wb = excelExporter.toExcel((BaseNode)masterNode, excelOptions);
+        ExcelExporter excelExporter = (ExcelExporter) exporter;
+        HSSFWorkbook wb = excelExporter.toExcel((BaseNode) masterNode, excelOptions);
         
         // to String
         OutputStream os = new ByteArrayOutputStream();

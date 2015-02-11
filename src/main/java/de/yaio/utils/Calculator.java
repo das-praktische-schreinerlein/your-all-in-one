@@ -16,12 +16,8 @@
  */
 package de.yaio.utils;
 
-import java.security.MessageDigest;
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.log4j.Logger;
 
 import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
@@ -40,23 +36,23 @@ import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
 
 public class Calculator {
     /** comparison result arg1 is null or lower than arg2 **/
-    public static int CONST_COMPARE_LT = -1;
+    public static final int CONST_COMPARE_LT = -1;
     /** comparison result arg1 is greater than arg2 or arg2 is null **/
-    public static int CONST_COMPARE_GT = 1;
+    public static final int CONST_COMPARE_GT = 1;
     /** comparison result arg1=arg2 or both are null **/
-    public static int CONST_COMPARE_EQ = 0;
+    public static final int CONST_COMPARE_EQ = 0;
     /** calculation result calculate the minimum of arg1 and arg2 **/
-    public static int CONST_CALCULATE_ACTION_MIN = 1;
+    public static final int CONST_CALCULATE_ACTION_MIN = 1;
     /** calculation result calculate the maxuimum of arg1 and arg2 **/
-    public static int CONST_CALCULATE_ACTION_MAX = 2;
+    public static final int CONST_CALCULATE_ACTION_MAX = 2;
     /** calculation result calculate the sum of arg1 and arg2 **/
-    public static int CONST_CALCULATE_ACTION_SUM = 3;
+    public static final int CONST_CALCULATE_ACTION_SUM = 3;
     /** calculation result calculate the state for arg1 and arg2 **/
-    public static int CONST_CALCULATE_ACTION_STATE = 4;
+    public static final int CONST_CALCULATE_ACTION_STATE = 4;
     /** calculation result calculate the multiplication of arg1 and arg2 **/
-    public static int CONST_CALCULATE_ACTION_MUL = 5;
+    public static final int CONST_CALCULATE_ACTION_MUL = 5;
     /** calculation result calculate the multiplication-state of arg1 and arg2 **/
-    public static int CONST_CALCULATE_ACTION_MULSTATE = 6;
+    public static final int CONST_CALCULATE_ACTION_MULSTATE = 6;
     /** calculation result calculate the workflow-state of arg1 and arg2 **/
     public static int  CONST_CALCULATE_ACTION_WORKFLOWSTATE = 7;
 
@@ -69,14 +65,6 @@ public class Calculator {
     // Logger
     private static final Logger LOGGER =
             Logger.getLogger(Calculator.class);
-    protected static MessageDigest objMD5Coder;
-    static { 
-        try {
-            objMD5Coder = MessageDigest.getInstance("MD5");
-        } catch (Exception e) {
-            // TODO: handle exception
-        }
-    }
     
 
     /**
@@ -97,7 +85,8 @@ public class Calculator {
      * @return - result of the calculation
      * @throws Exception - action not allowed possible
      */
-    public static Object calculate(Object arg1, Object arg2, int action) throws Exception {
+    public static Object calculate(final Object arg1, final Object arg2, 
+                                   final int action) throws Exception {
         Object res = null;
 
         // test ob beide belegt
@@ -109,8 +98,8 @@ public class Calculator {
                 //
                 if (action == CONST_CALCULATE_ACTION_WORKFLOWSTATE) {
                     // compare workflowstate
-                    WorkflowState a1 = (WorkflowState)arg1;
-                    WorkflowState a2 = (WorkflowState)arg2;
+                    WorkflowState a1 = (WorkflowState) arg1;
+                    WorkflowState a2 = (WorkflowState) arg2;
                     
                     // compare the workflowstates by their order
                     res = (a1.ordinal() >= a2.ordinal() ? a1 : a2);
@@ -132,14 +121,14 @@ public class Calculator {
                 // je nach Action
                 if (action == CONST_CALCULATE_ACTION_MIN) {
                     // Minimum
-                    if (((Date)arg1).before((Date)arg2)) {
+                    if (((Date) arg1).before((Date) arg2)) {
                         res = arg1;
                     } else {
                         res = arg2;
                     }
                 } else if (action == CONST_CALCULATE_ACTION_MAX) {
                     // Maximum
-                    if (((Date)arg1).after((Date)arg2)) {
+                    if (((Date) arg1).after((Date) arg2)) {
                         res = arg1;
                     } else {
                         res = arg2;
@@ -155,33 +144,33 @@ public class Calculator {
                 // je nach Action
                 if (action == CONST_CALCULATE_ACTION_MIN) {
                     // Minimum
-                    if (((Double)arg1).doubleValue() < ((Double)arg2).doubleValue()) {
+                    if (((Double) arg1).doubleValue() < ((Double) arg2).doubleValue()) {
                         res = arg1;
                     } else {
                         res = arg2;
                     }
                 } else if (action == CONST_CALCULATE_ACTION_MAX) {
                     // Maximum
-                    if (((Double)arg1).doubleValue() > ((Double)arg2).doubleValue()) {
+                    if (((Double) arg1).doubleValue() > ((Double) arg2).doubleValue()) {
                         res = arg1;
                     } else {
                         res = arg2;
                     }
                 } else if (action == CONST_CALCULATE_ACTION_SUM) {
                     // Sum
-                    res = ((Double)arg1).doubleValue() + ((Double)arg2).doubleValue();
+                    res = ((Double) arg1).doubleValue() + ((Double) arg2).doubleValue();
                 } else if (action == CONST_CALCULATE_ACTION_MUL) {
                     // Mul
-                    res = ((Double)arg1).doubleValue() * ((Double)arg2).doubleValue();
+                    res = ((Double) arg1).doubleValue() * ((Double) arg2).doubleValue();
                 } else if (action == CONST_CALCULATE_ACTION_MULSTATE) {
                     // Mul
-                    if (((Double)arg1).doubleValue() <= CONST_DOUBLE_NULL) {
+                    if (((Double) arg1).doubleValue() <= CONST_DOUBLE_NULL) {
                         // wenn IstStand leer, dann Aufwand nehmen
                         res = new Double(0);
                         if (LOGGER.isDebugEnabled()) {
                             LOGGER.debug("calc set arg1=null: " + action + " arg1:" + arg1 + " arg2:" + arg2 + " =" + res);
                         }
-                    } else if (((Double)arg2).doubleValue() <= CONST_DOUBLE_NULL) {
+                    } else if (((Double) arg2).doubleValue() <= CONST_DOUBLE_NULL) {
                         // wenn Aufwand leer, dann nichts
                         res = new Double(0);
                         if (LOGGER.isDebugEnabled()) {
@@ -189,20 +178,20 @@ public class Calculator {
                         }
                     } else {
                         // Stand und Aufwand mulitplizieren
-                        res = ((Double)arg1).doubleValue() * ((Double)arg2).doubleValue() / 100;
+                        res = ((Double) arg1).doubleValue() * ((Double) arg2).doubleValue() / 100;
                         if (LOGGER.isDebugEnabled()) {
                             LOGGER.debug("calc MUL: " + action + " arg1:" + arg1 + " arg2:" + arg2 + " =" + res);
                         }
                     }
                 } else if (action == CONST_CALCULATE_ACTION_STATE) {
                     // State
-                    if (((Double)arg1).doubleValue() <= CONST_DOUBLE_NULL) {
+                    if (((Double) arg1).doubleValue() <= CONST_DOUBLE_NULL) {
                         // wenn Aufwand leer, dann nichts
                         res = new Double(0);
                     } else {
                         // Aufwand und hochgerechneten Aufwand dividieren
                         // 100/2 = x/1
-                        res = 100/((Double)arg2).doubleValue() * ((Double)arg1).doubleValue();
+                        res = 100/((Double) arg2).doubleValue() * ((Double) arg1).doubleValue();
                     }
                 } else {
                     // unbekannter Typ
@@ -280,10 +269,10 @@ public class Calculator {
         // test ob beide belegt
         if (arg1 != null && arg2 != null) {
             if (Timestamp.class.isInstance(arg1)) {
-                arg1 = new Date(((Timestamp)arg1).getTime());
+                arg1 = new Date(((Timestamp) arg1).getTime());
             }
             if (Timestamp.class.isInstance(arg2)) {
-                arg2 = new Date(((Timestamp)arg2).getTime());
+                arg2 = new Date(((Timestamp) arg2).getTime());
             }
             // check classes
             if (! arg1.getClass().isInstance(arg2)) {
@@ -294,15 +283,15 @@ public class Calculator {
             
             // branch for classes
             if (String.class.isInstance(arg1)) {
-                return ((String)arg1).compareTo((String)arg2);
+                return ((String) arg1).compareTo((String) arg2);
             } else if (Integer.class.isInstance(arg1)) {
-                return ((Integer)arg1).compareTo((Integer)arg2);
+                return ((Integer) arg1).compareTo((Integer) arg2);
             } else if (Float.class.isInstance(arg1)) {
-                return ((Float)arg1).compareTo((Float)arg2);
+                return ((Float) arg1).compareTo((Float) arg2);
             } else if (Double.class.isInstance(arg1)) {
-                return ((Double)arg1).compareTo((Double)arg2);
+                return ((Double) arg1).compareTo((Double) arg2);
             } else if (Date.class.isInstance(arg1)) {
-                return ((Date)arg1).compareTo((Date)arg2);
+                return ((Date) arg1).compareTo((Date) arg2);
             } else {
                 // unknown class
                 throw new IllegalAccessException("cant compare arg1 (" + arg1.getClass() + "):" 

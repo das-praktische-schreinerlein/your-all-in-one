@@ -82,7 +82,7 @@ public class TaskNode extends BaseNode implements ExtendedWorkflowData {
     public NodeService getNodeService() {
         return nodeDataService;
     }
-    public static void setNodeDataService(NodeService newNodeDataService) {
+    public static void setNodeDataService(final NodeService newNodeDataService) {
         nodeDataService = newNodeDataService;
     }
     @XmlTransient
@@ -174,7 +174,7 @@ public class TaskNode extends BaseNode implements ExtendedWorkflowData {
     @Override
     @XmlTransient
     @JsonIgnore
-    public WorkflowState getWorkflowStateForState(String state)  throws IllegalStateException {
+    public WorkflowState getWorkflowStateForState(final String state)  throws IllegalStateException {
         // get WorkflowState for state
         WorkflowState wfState = getConfigWorkflowState().get(state);
         
@@ -195,7 +195,7 @@ public class TaskNode extends BaseNode implements ExtendedWorkflowData {
     @Override
     @XmlTransient
     @JsonIgnore
-    public String getStateForWorkflowState(WorkflowState workflowState)  throws IllegalStateException {
+    public String getStateForWorkflowState(final WorkflowState workflowState)  throws IllegalStateException {
         // workflowState must be set
         if (workflowState == null) {
             throw new IllegalStateException("workflowState must be set node=" + this.getNameForLogger());

@@ -53,10 +53,9 @@ import de.yaio.core.node.BaseNode;
 @ComponentScan("de.yaio")
 public class Application {
     protected static ApplicationContext springApplicationContext;
-    
-    private final static Logger LOGGER = Logger.getLogger(Application.class);
     protected static NodeNumberService nodeNumberService;
     protected static String strPathIdDB;
+    private static final Logger LOGGER = Logger.getLogger(Application.class);
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -71,7 +70,7 @@ public class Application {
      *     CLI
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         try {
             // parse cmdArgs
             LOGGER.info("initCommandLine");
@@ -92,7 +91,7 @@ public class Application {
 
             // validate cmdLine
             LOGGER.info("validate CmdLine");
-            if (! Configurator.getInstance().validateCmdLine()) {
+            if (!Configurator.getInstance().validateCmdLine()) {
                 LOGGER.info("Illegal CmdArgs Exit: 1");
                 System.exit(CmdLineJob.CONST_EXITCODE_FAILED_ARGS);
             }
@@ -118,7 +117,9 @@ public class Application {
             LOGGER.info("start application with args:" + newArgs);
             SpringApplication.run(Application.class, newArgs.toArray(new String[0]));
             LOGGER.info("done application");
+        //CHECKSTYLE.OFF:
         } catch (Throwable ex) {
+        //CHECKSTYLE.ON: 
             // catch Exception
             System.out.println(ex);
             LOGGER.fatal(ex);
@@ -126,7 +127,9 @@ public class Application {
             LOGGER.info("Exit: 1");
             try {
                 cleanUpAfterJob();
+            //CHECKSTYLE.OFF:
             } catch (Throwable ex2) {
+            //CHECKSTYLE.ON: 
                 System.out.println(ex2);
                 ex2.printStackTrace();
                 LOGGER.fatal(ex2);
@@ -146,7 +149,7 @@ public class Application {
     
     
     @PreDestroy
-    protected static void cleanUpAfterJob() throws Throwable {
+    protected static void cleanUpAfterJob() throws Exception {
         // Ids speichern
         LOGGER.info("cleanUpAfterJob start");
         if (strPathIdDB != null && nodeNumberService != null) {

@@ -18,7 +18,7 @@ public class UserController {
 //    }
     
     @RequestMapping("current")
-    public Principal user(Principal user) {
+    public Principal user(final Principal user) {
 //        user = new YAIODummyUser();
         return user;
     }

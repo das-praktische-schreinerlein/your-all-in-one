@@ -109,7 +109,7 @@ public class WikiImporterTest extends BaseTest {
      * @param expectedResultFile - file with the expected result
      * @throws Exception - io-Exceptions possible
      */
-    public void testImportFromFixture(String srcFile, String expectedResultFile) throws Exception {
+    public void testImportFromFixture(final String srcFile, final String expectedResultFile) throws Exception {
         testImport(this.testService.readFixture(this.getClass(), srcFile).toString(), 
                    this.testService.readFixture(this.getClass(), expectedResultFile).toString()); 
     }
@@ -125,10 +125,10 @@ public class WikiImporterTest extends BaseTest {
      * @param expectedResult - the expected ppl-lines from parser
      * @throws Exception - io-Exceptions possible
      */
-    public void testImport(String source, String expectedResult) throws Exception {
+    public void testImport(final String source, final String expectedResult) throws Exception {
         // configure Importer
-        WikiImporter importerObj = (WikiImporter)setupNewImporter();
-        WikiImportOptions importoptions = (WikiImportOptions)setupNewImportOptions();
+        WikiImporter importerObj = (WikiImporter) setupNewImporter();
+        WikiImportOptions importoptions = (WikiImportOptions) setupNewImportOptions();
         
         // parse source
         List<WikiStructLine> lstWikiLines;

@@ -56,7 +56,7 @@ public class NodeViolation {
      * @param message - the userfriendly error-message
      * @param messageTemplate -the technical messagetemplate
      */
-    public NodeViolation(String path, String message, String messageTemplate) {
+    public NodeViolation(final String path, final String message, final String messageTemplate) {
         super();
         this.path = path;
         this.message = message;
@@ -74,7 +74,7 @@ public class NodeViolation {
     /**
      * @param path the {@link NodeViolation#path} to set
      */
-    public void setPath(String path) {
+    public void setPath(final String path) {
         this.path = path;
     }
 
@@ -90,7 +90,7 @@ public class NodeViolation {
     /**
      * @param message the {@link NodeViolation#message} to set
      */
-    public void setMessage(String message) {
+    public void setMessage(final String message) {
         this.message = message;
     }
 
@@ -106,7 +106,7 @@ public class NodeViolation {
     /**
      * @param messageTemplate the {@link NodeViolation#messageTemplate} to set
      */
-    public void setMessageTemplate(String messageTemplate) {
+    public void setMessageTemplate(final String messageTemplate) {
         this.messageTemplate = messageTemplate;
     }
 

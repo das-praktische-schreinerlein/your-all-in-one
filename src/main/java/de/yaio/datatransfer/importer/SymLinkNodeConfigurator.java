@@ -45,7 +45,7 @@ public class SymLinkNodeConfigurator {
      *     Config
      * @param nodeFactory - instance of the nodeFactory which will use the config 
      */
-    public static void configureNodeTypeIdentifier(NodeFactory nodeFactory) {
+    public static void configureNodeTypeIdentifier(final NodeFactory nodeFactory) {
         nodeFactory.addNodeTypeIdentifier(SymLinkNode.CONST_MAP_NODETYPE_IDENTIFIER, SymLinkNode.class);
     }
 
@@ -59,7 +59,7 @@ public class SymLinkNodeConfigurator {
      *     Config
      * @param importer - instance of the importer which will use the config 
      */
-    public static void configureNodeTypes(Importer importer) {
+    public static void configureNodeTypes(final Importer importer) {
         importer.addNodeTypeIdentifierVariantMapping(SymLinkNode.CONST_MAP_NODETYPE_IDENTIFIER);
     }
 
@@ -72,7 +72,7 @@ public class SymLinkNodeConfigurator {
      *     Config
      * @param importer - instance of the importer which will use the config 
      */
-    public static void configureWorkflowNodeTypeMapping(Importer importer) {
+    public static void configureWorkflowNodeTypeMapping(final Importer importer) {
         // NOP 
     }
 

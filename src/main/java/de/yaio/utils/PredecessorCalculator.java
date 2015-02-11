@@ -41,7 +41,7 @@ public class PredecessorCalculator {
             Logger.getLogger(PredecessorCalculator.class);
     
 
-    public static int mapDurationMatureToCalendarCodes(DurationMeasure myDurationMeasure) {
+    public static int mapDurationMatureToCalendarCodes(final DurationMeasure myDurationMeasure) {
         int measure = Calendar.DAY_OF_MONTH;
         if (myDurationMeasure == null) {
             // default
@@ -66,7 +66,7 @@ public class PredecessorCalculator {
         return measure;
     }
     
-    public static Date addDurationToDate(Date baseDate, boolean flgAdd, Integer duration, DurationMeasure myDurationMeasure) {
+    public static Date addDurationToDate(final Date baseDate, final boolean flgAdd, final Integer duration, final DurationMeasure myDurationMeasure) {
         Date date = baseDate;
         if (baseDate != null && duration != null && duration.intValue() > 0) {
             Calendar calendar = Calendar.getInstance();

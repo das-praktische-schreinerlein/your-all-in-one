@@ -60,8 +60,8 @@ public class ImporterTest extends BaseTest {
         
         BaseNode dataObj = null;
         
-        public ImporterTestObj(DataDomain dataDomain) {
-            this.dataObj = (BaseNode)dataDomain;            
+        public ImporterTestObj(final DataDomain dataDomain) {
+            this.dataObj = (BaseNode) dataDomain;            
         }
         
         @Override
@@ -81,7 +81,7 @@ public class ImporterTest extends BaseTest {
         return null;
     }
     
-    public static void configureNodeTypes(Importer importer) {
+    public static void configureNodeTypes(final Importer importer) {
         importer.addNodeTypeIdentifierVariantMapping(TestNode.CONST_MAP_NODETYPE_IDENTIFIER);
     }
     

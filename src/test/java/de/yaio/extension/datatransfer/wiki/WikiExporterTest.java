@@ -130,7 +130,7 @@ public class WikiExporterTest extends BaseTest {
      * @param expectedResultFile - file with the expected result
      * @throws Exception - io-Exceptions possible
      */
-    public void testExportFromFixture(String srcFile, String expectedResultFile) throws Exception {
+    public void testExportFromFixture(final String srcFile, final String expectedResultFile) throws Exception {
         testExport(this.testService.readFixture(this.getClass(), srcFile).toString(), 
                    this.testService.readFixture(this.getClass(), expectedResultFile).toString()); 
     }
@@ -146,7 +146,7 @@ public class WikiExporterTest extends BaseTest {
      * @param expectedResult - the expected lines from exporter
      * @throws Exception - io-Exceptions possible
      */
-    public synchronized void testExport(String source, String expectedResult) throws Exception {
+    public synchronized void testExport(final String source, final String expectedResult) throws Exception {
         // format source
         DataDomain masterNode  = importerObj.createNodeObjFromText(1, "Test", "Test", null);
         String delimiter = "\t";

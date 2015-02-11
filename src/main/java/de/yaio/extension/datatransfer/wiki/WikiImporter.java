@@ -87,7 +87,7 @@ public class WikiImporter extends ImporterImpl {
          * @param text - the text
          * @param desc - the optional desc
          */
-        public WikiStructLine (String wiki, String text, String desc) {
+        public WikiStructLine (final String wiki, final String text, final String desc) {
             this.wiki = wiki;
             this.text = text;
             this.desc = desc;
@@ -148,7 +148,7 @@ public class WikiImporter extends ImporterImpl {
          *     helper
          * @param desc - desc to append
          */
-        public void addDesc(String desc) {
+        public void addDesc(final String desc) {
             // an bestehende desc anfuegen
             if (this.desc == null) {
                 this.desc = desc;
@@ -171,7 +171,7 @@ public class WikiImporter extends ImporterImpl {
          * @param praefix - to set in front of the desc
          * @return escaped desc
          */
-        public String getEscapedDesc(String praefix) {
+        public String getEscapedDesc(final String praefix) {
             String dummyText = "";
 
             // falls belegt, mit Praefix versehen
@@ -235,7 +235,7 @@ public class WikiImporter extends ImporterImpl {
      *     Constructor
      *  @param options - the importoptions for the parser...
      */
-    public WikiImporter(ImportOptions options) {
+    public WikiImporter(final ImportOptions options) {
         super(options);
     }
 
@@ -278,12 +278,13 @@ public class WikiImporter extends ImporterImpl {
      * @param haystack - haystack
      * @return - list of matching results
      */
-    public static List<MatchResult> findMatches( Pattern pattern, CharSequence haystack ) {
+    public static List<MatchResult> findMatches( final Pattern pattern, final CharSequence haystack ) {
         List<MatchResult> results = null;
 
-        for ( Matcher m = pattern.matcher(haystack); m.find(); ) {
-            if (results == null)
+        for ( Matcher m = pattern.matcher(haystack); m.find();) {
+            if (results == null) {
                 results = new ArrayList<MatchResult>();
+            }
             results.add( m.toMatchResult() );
         }
 
@@ -306,8 +307,8 @@ public class WikiImporter extends ImporterImpl {
      * @return list of extracted WikiStructLine
      * @throws Exception - parser/format-Exceptions possible
      */
-    public List<WikiStructLine> extractWikiStructLines(String nodeSrc,
-            WikiImportOptions inputOptions) throws Exception {
+    public List<WikiStructLine> extractWikiStructLines(final String nodeSrc,
+            final WikiImportOptions inputOptions) throws Exception {
         List<WikiStructLine> wikiLines = new ArrayList<WikiStructLine>();
 
         if (nodeSrc == null) {
@@ -382,8 +383,8 @@ public class WikiImporter extends ImporterImpl {
      * @throws Exception - parser/format-Exceptions possible
      */
     public List<WikiStructLine> filterOnlyKnownNodeTypesFromWikiStructLines(
-            List<WikiStructLine> lstWikiLines, 
-            boolean flgWFStatesOnly, WikiImportOptions inputOptions) {
+            final List<WikiStructLine> lstWikiLines, 
+            final boolean flgWFStatesOnly, final WikiImportOptions inputOptions) {
         List<WikiStructLine> lstWikiTab = new ArrayList<WikiStructLine>();
         if (lstWikiLines != null) {
 
@@ -411,7 +412,7 @@ public class WikiImporter extends ImporterImpl {
                 // Statusdefinition durchlaufen unn pruefen ob Name so beginnt
                 for (String stateDef : hshNodeTypeIdentifier.keySet()) {
                     if (ue.startsWith(stateDef)) {
-                        state = (String)hshNodeTypes.get(stateDef);
+                        state = (String) hshNodeTypes.get(stateDef);
                     }
                 }
 
@@ -454,8 +455,8 @@ public class WikiImporter extends ImporterImpl {
      * @return list of sorted and normalized WikiStructLine
      * @throws Exception - parser/format-Exceptions possible
      */
-    public List<WikiStructLine> normalizeWikiStructLines(List<WikiStructLine> lstWikiLines, 
-            WikiImportOptions inputOptions) throws Exception {
+    public List<WikiStructLine> normalizeWikiStructLines(final List<WikiStructLine> lstWikiLines, 
+            final WikiImportOptions inputOptions) throws Exception {
         // temporaere Arbeitslisten
         List<WikiStructLine> lstWikiTab = new ArrayList<WikiStructLine>();
         List<WikiStructLine> lastUe = new ArrayList<WikiStructLine>();
@@ -463,7 +464,7 @@ public class WikiImporter extends ImporterImpl {
 
         if (lstWikiLines != null) {
             // Dummy-Masternode
-            BaseNode masterNode = (BaseNode)importer.createNodeObjFromText(1, "Master", "Master", null);
+            BaseNode masterNode = (BaseNode) importer.createNodeObjFromText(1, "Master", "Master", null);
             OutputOptions oOptions = new OutputOptionsImpl();
 
             // alle Wikilines iterieren
@@ -474,14 +475,16 @@ public class WikiImporter extends ImporterImpl {
                 String cleanText = curWk.getCleanText();
 
                 // Node anlegen
-                if (LOGGER.isDebugEnabled()) 
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("gen new Node for:" + cleanText);
+                }
                 importer.extractNodeFromSrcLine(masterNode, cleanText, "\t");
                 Object key = masterNode.getChildNodesByNameMap().keySet().toArray()[0];
-                BaseNode curNode = (BaseNode)masterNode.getChildNodesByNameMap().get(key);
-                if (LOGGER.isDebugEnabled()) 
+                BaseNode curNode = (BaseNode) masterNode.getChildNodesByNameMap().get(key);
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("got new Node:" + key + " Node:" + curNode.getClass() 
                             + " for " + cleanText);
+                }
 
                 // Id-Praefix des Vorgaengers extrahieren und an Masternode setzen
                 String idPraefixVorgaenger = "UNKNOWN";
@@ -490,7 +493,7 @@ public class WikiImporter extends ImporterImpl {
                     // Vorgaenger-UE vorhanden
                     int idxVorgaenger = ebene - 2;
                     if (lastUe.size() > idxVorgaenger) {
-                        vorgaengerWk = (WikiStructLine)lastUe.get(idxVorgaenger);
+                        vorgaengerWk = (WikiStructLine) lastUe.get(idxVorgaenger);
                     }
                 } else if (wiki.startsWith(CONST_LIST)) {
 
@@ -498,10 +501,10 @@ public class WikiImporter extends ImporterImpl {
                         // Nachfolger
                         int idxVorgaenger = ebene - 2;
                         if (lastUl.size() > idxVorgaenger) {
-                            vorgaengerWk = (WikiStructLine)lastUl.get(idxVorgaenger);
+                            vorgaengerWk = (WikiStructLine) lastUl.get(idxVorgaenger);
                         }
                     } else if (lastUe.size() > 0) {
-                        vorgaengerWk = (WikiStructLine)lastUe.get(lastUe.size()-1);                    
+                        vorgaengerWk = (WikiStructLine) lastUe.get(lastUe.size()-1);                    
                     }
                 }
                 if (vorgaengerWk != null) {
@@ -548,7 +551,7 @@ public class WikiImporter extends ImporterImpl {
                         if (lastUe.size() <= idxMe) {
                             // mit Dummy-WikiLines Auffuellen
                             for (int zaehler = lastUe.size()-1; zaehler <= idxMe; zaehler++) {
-                                vorgaengerWk = (WikiStructLine)lastUe.get(zaehler);
+                                vorgaengerWk = (WikiStructLine) lastUe.get(zaehler);
                                 WikiStructLine newWK = new WikiStructLine("=", "DEFAULT", null);
                                 newWK.hirarchy = vorgaengerWk.hirarchy
                                         + PPLService.DEFAULT_ENTRY_DELIMITER
@@ -558,7 +561,7 @@ public class WikiImporter extends ImporterImpl {
                         }
 
                         // Hirarchy des Vorgaengers kopieren
-                        vorgaengerWk = (WikiStructLine)lastUe.get(idxVorgaenger);
+                        vorgaengerWk = (WikiStructLine) lastUe.get(idxVorgaenger);
                         curWk.hirarchy = vorgaengerWk.hirarchy
                                 + PPLService.DEFAULT_ENTRY_DELIMITER
                                 + cleanText;
@@ -583,7 +586,7 @@ public class WikiImporter extends ImporterImpl {
 
                         String parent = "";
                         if (lastUe.size() > 0) {
-                            WikiStructLine curUe = (WikiStructLine)lastUe.get(lastUe.size()-1);
+                            WikiStructLine curUe = (WikiStructLine) lastUe.get(lastUe.size()-1);
                             parent = curUe.hirarchy
                                     + PPLService.DEFAULT_ENTRY_DELIMITER;
                         }
@@ -600,7 +603,7 @@ public class WikiImporter extends ImporterImpl {
                             WikiStructLine newWK = new WikiStructLine("*", "DEFAULT", null);
                             String parent = "";
                             if (lastUe.size() > 0) {
-                                WikiStructLine curUe = (WikiStructLine)lastUe.get(lastUe.size()-1);
+                                WikiStructLine curUe = (WikiStructLine) lastUe.get(lastUe.size()-1);
                                 parent = curUe.hirarchy
                                         + PPLService.DEFAULT_ENTRY_DELIMITER;
                             }
@@ -612,7 +615,7 @@ public class WikiImporter extends ImporterImpl {
                         if (lastUl.size() <= idxMe) {
                             // mit Dummy-WikiLines Auffuellen
                             for (int zaehler = lastUl.size()-1; zaehler <= idxMe; zaehler++) {
-                                vorgaengerWk = (WikiStructLine)lastUl.get(zaehler);
+                                vorgaengerWk = (WikiStructLine) lastUl.get(zaehler);
                                 WikiStructLine newWK = new WikiStructLine("=", "DEFAULT", null);
                                 newWK.hirarchy = vorgaengerWk.hirarchy
                                         + PPLService.DEFAULT_ENTRY_DELIMITER
@@ -622,7 +625,7 @@ public class WikiImporter extends ImporterImpl {
                         }
 
                         // Hirarchy des Vorgaengers kopieren
-                        vorgaengerWk = (WikiStructLine)lastUl.get(idxVorgaenger);
+                        vorgaengerWk = (WikiStructLine) lastUl.get(idxVorgaenger);
                         curWk.hirarchy = vorgaengerWk.hirarchy
                                 + PPLService.DEFAULT_ENTRY_DELIMITER
                                 + cleanText;
@@ -671,8 +674,8 @@ public class WikiImporter extends ImporterImpl {
      * @return list of extracted WikiStructLine
      * @throws Exception - parser/format-Exceptions possible
      */
-    public List<WikiStructLine> extractWikiStructLinesFromSrc(String src,
-            WikiImportOptions inputOptions) throws Exception {
+    public List<WikiStructLine> extractWikiStructLinesFromSrc(final String src,
+            final WikiImportOptions inputOptions) throws Exception {
         // Parameter pruefen
         if (src == null || src.trim().length() <= 0) {
             throw new IllegalArgumentException("Src must not be empty: '" + src + "'");
@@ -683,11 +686,12 @@ public class WikiImporter extends ImporterImpl {
         List<WikiStructLine> projektWikiLines = wikiLines;
 
         // Falls Filter gesetzt: nur zeilen mit Status filtern
-        if (   inputOptions.flgReadWithStatusOnly 
+        if (inputOptions.flgReadWithStatusOnly
                 || inputOptions.flgReadWithWFStatusOnly
-                || inputOptions.strReadIfStatusInListOnly != null)
+                || inputOptions.strReadIfStatusInListOnly != null) {
             projektWikiLines = filterOnlyKnownNodeTypesFromWikiStructLines(wikiLines, 
                     inputOptions.flgReadWithWFStatusOnly, inputOptions);
+        }
 
         // Zeilen sortieren
         List<WikiStructLine> projektWikiEntries = normalizeWikiStructLines(projektWikiLines, inputOptions);
@@ -711,8 +715,8 @@ public class WikiImporter extends ImporterImpl {
      * @return list of extracted WikiStructLine
      * @throws Exception - parser/format/io-Exceptions possible
      */
-    public List<WikiStructLine> extractWikiStructLinesFromFile(String fileName,
-            WikiImportOptions inputOptions) throws Exception {
+    public List<WikiStructLine> extractWikiStructLinesFromFile(final String fileName,
+            final WikiImportOptions inputOptions) throws Exception {
         String fileContent = PPLImporter.readFromFile(fileName);
         List<WikiStructLine> wikiLines = extractWikiStructLinesFromSrc(fileContent, inputOptions);
 
@@ -722,14 +726,14 @@ public class WikiImporter extends ImporterImpl {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         WikiImporter importer = new WikiImporter(new WikiImportOptions());
         try {
 
             // nur Statusnodes filtern
             boolean flgFilterStatusNotes = false;
             if (args.length > 1) {
-                if (args[1].equalsIgnoreCase("1") || args[1].equalsIgnoreCase("true")) {
+                if ("1".equalsIgnoreCase(args[1]) || "true".equalsIgnoreCase(args[1])) {
                     flgFilterStatusNotes = true;
                 }
             }

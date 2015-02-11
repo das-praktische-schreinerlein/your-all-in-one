@@ -61,16 +61,16 @@ public interface BaseWorkflowData extends DataDomain, IstChildrenSumData,
         LATE, WARNING
     }
 
-    public Map<String, Object> getConfigState();
-    public String getState();
-    public void setState(String state);
+    Map<String, Object> getConfigState();
+    String getState();
+    void setState(String state);
     
-    public Map<String, WorkflowState> getConfigWorkflowState();
-    public WorkflowState getWorkflowStateForState(String state) throws IllegalStateException;
-    public String getStateForWorkflowState(WorkflowState workflowState) throws IllegalStateException;
+    Map<String, WorkflowState> getConfigWorkflowState();
+    WorkflowState getWorkflowStateForState(String state) throws IllegalStateException;
+    String getStateForWorkflowState(WorkflowState workflowState) throws IllegalStateException;
 
-    public WorkflowState getWorkflowState();
-    public void setWorkflowState(WorkflowState istState);
+    WorkflowState getWorkflowState();
+    void setWorkflowState(WorkflowState istState);
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -86,7 +86,7 @@ public interface BaseWorkflowData extends DataDomain, IstChildrenSumData,
      * @param state - state to check
      * @return workflow-state yes/no
      */
-    public boolean isWFStatus (String state);
+    boolean isWFStatus (String state);
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -102,7 +102,7 @@ public interface BaseWorkflowData extends DataDomain, IstChildrenSumData,
      * @param state - state to check
      * @return workflow-DONE yes/no
      */
-    public boolean isWFStatusDone (String state);
+    boolean isWFStatusDone (String state);
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -118,7 +118,7 @@ public interface BaseWorkflowData extends DataDomain, IstChildrenSumData,
      * @param state - state to check
      * @return workflow-OPEN yes/no
      */
-    public boolean isWFStatusOpen (String state);
+    boolean isWFStatusOpen (String state);
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -134,5 +134,5 @@ public interface BaseWorkflowData extends DataDomain, IstChildrenSumData,
      * @param state - state to check
      * @return workflow-CANCELED yes/no
      */
-    public boolean isWFStatusCanceled(String state);
+    boolean isWFStatusCanceled(String state);
 }

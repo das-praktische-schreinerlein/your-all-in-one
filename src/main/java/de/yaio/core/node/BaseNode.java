@@ -93,9 +93,6 @@ import de.yaio.datatransfer.importer.parser.Parser;
 public class BaseNode implements BaseData, MetaData, SysData, 
     DescData, BaseWorkflowData {
     
-    public BaseNode() {
-        super();
-    }
     // Logger
     private static final Logger LOGGER =
         Logger.getLogger(BaseNode.class);
@@ -123,6 +120,10 @@ public class BaseNode implements BaseData, MetaData, SysData,
     protected static NodeService nodeService = new BaseNodeService();
     protected static BaseNodeDBService baseNodeDBService = BaseNodeDBServiceImpl.getInstance();
     
+    public BaseNode() {
+        super();
+    }
+
     @XmlTransient
     @JsonIgnore
     public SysDataService getSysDataService() {
@@ -135,7 +136,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     }
     @XmlTransient
     @JsonIgnore
-    public static final void setSysDataService(SysDataService newSysDataService) {
+    public static final void setSysDataService(final SysDataService newSysDataService) {
         sysDataService = newSysDataService;
     }
     @XmlTransient
@@ -151,7 +152,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
 
     @XmlTransient
     @JsonIgnore
-    public static final void setMetaDataService(MetaDataService newMetaDataService) {
+    public static final void setMetaDataService(final MetaDataService newMetaDataService) {
         metaDataService = newMetaDataService;
     }
     @XmlTransient
@@ -178,7 +179,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
      */
     @XmlTransient
     @JsonIgnore
-    public void setBaseNodeDBService(BaseNodeDBService newBaseNodeDBService) {
+    public void setBaseNodeDBService(final BaseNodeDBService newBaseNodeDBService) {
         baseNodeDBService = newBaseNodeDBService;
     }
 
@@ -522,7 +523,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
         }
         return workflowState;
     };
-    public void setWorkflowState(WorkflowState istState) {
+    public void setWorkflowState(final WorkflowState istState) {
         workflowState = istState;
     };
 
@@ -554,12 +555,14 @@ public class BaseNode implements BaseData, MetaData, SysData,
         Validator validator = validationFactory.getValidator();
 
         Date start = null;
-        if (LOGGER.isDebugEnabled())
+        if (LOGGER.isDebugEnabled()) {
             start = new Date();
+        }
         Set<ConstraintViolation<BaseNode>> violations = validator.validate(this);
-        if (LOGGER.isDebugEnabled())
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("validation duration=" + ((new Date()).getTime()-start.getTime()) 
                             + "ms for" + this.getNameForLogger());
+        }
         
         return violations;
     }
@@ -685,9 +688,10 @@ public class BaseNode implements BaseData, MetaData, SysData,
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     Persistence
-     * @param recursionLevel - how many recursion-level will be read from DB
+     * @param pRecursionLevel - how many recursion-level will be read from DB
      */
-    public void initChildNodesFromDB(int recursionLevel) {
+    public void initChildNodesFromDB(final int pRecursionLevel) {
+        int recursionLevel = pRecursionLevel;
         // clear the children
         this.childNodes.clear();
         this.childNodesByNameMapMap.clear();
@@ -701,9 +705,10 @@ public class BaseNode implements BaseData, MetaData, SysData,
         // interate children
         for (BaseNode childNode : tmpChildNodes) {
             // add to childrenMaps
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("initChildNodesFromDB add to " + this.getNameForLogger() 
                            + " child:" + childNode.getNameForLogger());
+            }
             this.addChildNode(childNode);
             
             // check recursionLevel
@@ -750,12 +755,13 @@ public class BaseNode implements BaseData, MetaData, SysData,
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     Persistence
-     * @param recursionLevel - how many recursion-level will be saved to DB (0 = only my children)
+     * @param pRecursionLevel - how many recursion-level will be saved to DB (0 = only my children)
      * @param flgForceMerge - force merge not persists
      * @throws Exception - ioExceptions possible
      */
-    public void saveChildNodesToDB(int recursionLevel, boolean flgForceMerge) throws Exception {
+    public void saveChildNodesToDB(final int pRecursionLevel, final boolean flgForceMerge) throws Exception {
         // set new level if it is not -1
+        int recursionLevel = pRecursionLevel;
         recursionLevel = (recursionLevel > 0 ? recursionLevel-- : recursionLevel);
 
         // interate children
@@ -917,7 +923,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     @XmlTransient
     @JsonIgnore
     public void setParentNodeOnly(DataDomain parentNode) {
-        this.parentNode = (BaseNode)parentNode;
+        this.parentNode = (BaseNode) parentNode;
     }
 
     @Override
@@ -950,7 +956,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
                 curSortIdx = curSortIdx + CONST_CURSORTIDX_STEP;
             }
             this.childNodesByNameMapMap.put(childNode.getIdForChildByNameMap(), childNode);
-            this.childNodes.add((BaseNode)childNode);
+            this.childNodes.add((BaseNode) childNode);
         }
     }
     
@@ -1031,7 +1037,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     
     @Override
     public void setParentNode(DataDomain parentNode) {
-        setParentNode((BaseNode)parentNode);
+        setParentNode((BaseNode) parentNode);
     }
 
     @Override

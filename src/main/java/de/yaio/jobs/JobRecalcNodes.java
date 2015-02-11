@@ -54,12 +54,12 @@ public class JobRecalcNodes extends CmdLineJob {
      *     Constructor
      * @param args the command line arguments
      */
-    public JobRecalcNodes(String[] args) {
+    public JobRecalcNodes(final String[] args) {
         super(args);
     }
 
     @Override
-    protected Options addAvailiableCmdLineOptions() throws Throwable {
+    protected Options addAvailiableCmdLineOptions() throws Exception {
         Options availiableCmdLineOptions = 
                         Configurator.getNewOptionsInstance();
 
@@ -73,14 +73,15 @@ public class JobRecalcNodes extends CmdLineJob {
         sysuidOption.setRequired(true);
         availiableCmdLineOptions.addOption(sysuidOption);
 
-        if (LOGGER.isDebugEnabled())
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("addAvailiableCmdLineOptions: " + availiableCmdLineOptions);
+        }
         
         return availiableCmdLineOptions;
     }
 
     @Override
-    public void doJob() throws Throwable {
+    public void doJob() throws Exception {
         // initApplicationContext
         Configurator.getInstance().getSpringApplicationContext();
         
@@ -128,7 +129,7 @@ public class JobRecalcNodes extends CmdLineJob {
      *     CLI
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         JobRecalcNodes me = new JobRecalcNodes(args);
         me.startJobProcessing();
     }

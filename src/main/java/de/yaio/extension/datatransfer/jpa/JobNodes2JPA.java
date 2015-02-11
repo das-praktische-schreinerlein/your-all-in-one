@@ -56,7 +56,7 @@ public class JobNodes2JPA extends JobNodes2Wiki {
      *     Constructor
      * @param args the command line arguments
      */
-    public JobNodes2JPA(String[] args) {
+    public JobNodes2JPA(final String[] args) {
         super(args);
     }
 
@@ -66,7 +66,7 @@ public class JobNodes2JPA extends JobNodes2Wiki {
     }
     
     @Override
-    public DataDomain createMasternode(String name) throws Throwable {
+    public DataDomain createMasternode(final String name) throws Exception {
         DataDomain masterNode = null;
 
         // initApplicationContext
@@ -86,7 +86,7 @@ public class JobNodes2JPA extends JobNodes2Wiki {
             
             // create dummy masternode
             masterNode = super.createMasternode(name);
-            ((BaseNode)masterNode).setSysUID(sysUID);
+            ((BaseNode) masterNode).setSysUID(sysUID);
         } else {
             // create masterNode with name
             masterNode = super.createMasternode(name);
@@ -95,7 +95,7 @@ public class JobNodes2JPA extends JobNodes2Wiki {
     }
     
     @Override
-    protected Options addAvailiableOutputCmdLineOptions(Options availiableCmdLineOptions) throws Throwable {
+    protected Options addAvailiableOutputCmdLineOptions(final Options availiableCmdLineOptions) throws Exception {
         // sysuid for export
         Option addnodestosysuidOption = new Option("", "addnodestosysuid", true,
                 "SysUID of Masternode to add the new nodes");
@@ -135,7 +135,7 @@ public class JobNodes2JPA extends JobNodes2Wiki {
      *     CLI
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         JobNodes2JPA me = new JobNodes2JPA(args);
         
         // start processing

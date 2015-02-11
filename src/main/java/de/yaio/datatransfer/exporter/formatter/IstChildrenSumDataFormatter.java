@@ -53,6 +53,6 @@ public interface IstChildrenSumDataFormatter extends Formatter{
      * @param options - options for formatter
      * @throws Exception - parser/format-Exceptions possible
      */
-    public void formatIstChildrenSumData(IstChildrenSumData node, 
+    void formatIstChildrenSumData(IstChildrenSumData node, 
             StringBuffer nodeOutput, OutputOptions options) throws Exception;
 }

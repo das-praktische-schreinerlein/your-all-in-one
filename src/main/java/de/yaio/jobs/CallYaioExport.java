@@ -54,12 +54,12 @@ public class CallYaioExport extends CallYaioInstance {
      *     Constructor
      * @param args the command line arguments
      */
-    public CallYaioExport(String[] args) {
+    public CallYaioExport(final String[] args) {
         super(args);
     }
 
     @Override
-    protected Options addAvailiableCmdLineOptions() throws Throwable {
+    protected Options addAvailiableCmdLineOptions() throws Exception {
         Options availiableCmdLineOptions = super.addAvailiableCmdLineOptions();
         
         // endpoint for export
@@ -74,14 +74,15 @@ public class CallYaioExport extends CallYaioInstance {
         sysuidOption.setRequired(true);
         availiableCmdLineOptions.addOption(sysuidOption);
 
-        if (LOGGER.isDebugEnabled())
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("addAvailiableCmdLineOptions: " + availiableCmdLineOptions);
+        }
         
         return availiableCmdLineOptions;
     }
 
     @Override
-    public void doJob() throws Throwable {
+    public void doJob() throws Exception {
         // get options
         String sysUID = Configurator.getInstance().getCommandLine().getOptionValue("sysuid");
         String format = Configurator.getInstance().getCommandLine().getOptionValue("format");
@@ -126,7 +127,7 @@ public class CallYaioExport extends CallYaioInstance {
      *     CLI
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         CallYaioExport me = new CallYaioExport(args);
         me.startJobProcessing();
     }
