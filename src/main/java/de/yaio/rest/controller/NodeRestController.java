@@ -378,7 +378,7 @@ public class NodeRestController {
         boolean flgChange = false;
         
         // check class
-        if(!origNode.getClassName().equals(newNode.getClassName())) {
+        if (!origNode.getClassName().equals(newNode.getClassName())) {
             // class differ!!
             throw new IllegalAccessException("cant map origNode (" + origNode.getClassName() + "):" 
                             + origNode.getSysUID() + " with newNode:" + newNode.getClassName());

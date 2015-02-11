@@ -188,7 +188,7 @@ public interface NodeService {
      * @param state - state to check
      * @return workflow-state yes/no
      */
-    boolean isWFStatus (String state);
+    boolean isWFStatus(String state);
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -204,7 +204,7 @@ public interface NodeService {
      * @param state - state to check
      * @return workflow-DONE yes/no
      */
-    boolean isWFStatusDone (String state);
+    boolean isWFStatusDone(String state);
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -220,7 +220,7 @@ public interface NodeService {
      * @param state - state to check
      * @return workflow-OPEN yes/no
      */
-    boolean isWFStatusOpen (String state);
+    boolean isWFStatusOpen(String state);
 
     /**
      * <h4>FeatureDomain:</h4>

@@ -77,7 +77,7 @@ public class PlanCalcDataFormatterImpl extends FormatterImpl
             final OutputOptions options) throws Exception {
         // Check if node is compatibel
         if (node != null) {
-            if(!PlanCalcData.class.isInstance(node)) {
+            if (!PlanCalcData.class.isInstance(node)) {
                 throw new IllegalArgumentException();
             }
         }
@@ -88,7 +88,7 @@ public class PlanCalcDataFormatterImpl extends FormatterImpl
     public void formatPlanCalcData(final PlanCalcData node, 
             final StringBuffer nodeOutput, final OutputOptions oOptions) throws Exception {
         // exit if Flg not set
-        if(!oOptions.isFlgShowPlanCalc()) {
+        if (!oOptions.isFlgShowPlanCalc()) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("SKIP: isFlgShowPlanCalc not set for node:" + node.getNameForLogger());
             }

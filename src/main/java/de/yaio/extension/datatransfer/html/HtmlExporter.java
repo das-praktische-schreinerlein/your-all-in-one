@@ -242,7 +242,7 @@ public class HtmlExporter extends WikiExporter {
                 //eventuelle Tabelle starten
                 if (CONST_LAYOUT_TAG_TR.equalsIgnoreCase(command)) {
                     // aktuelle ChildNode ist Table
-                    if(!flgTableStarted) {
+                    if (!flgTableStarted) {
                         // Liste starten
                         String addStyle = node.getDocLayoutAddStyleClass();
                         blockChildren += "<table class='table-portdesc"
@@ -260,7 +260,7 @@ public class HtmlExporter extends WikiExporter {
                 // eventuell Liste starten
                 if (CONST_LAYOUT_TAG_LI.equalsIgnoreCase(command)) {
                     // aktuelle ChildNode ist Liste
-                    if(!flgListStarted) {
+                    if (!flgListStarted) {
                         // Liste starten
                         String addStyle = node.getDocLayoutAddStyleClass();
                         blockChildren += "<ul class='ul-portdesc"
@@ -314,7 +314,7 @@ public class HtmlExporter extends WikiExporter {
         }
         // check if I'am matching
         boolean flgMatchesFilter = this.isNodeMatchingFilter(curNode, oOptions);
-        if(!(flgMatchesFilter || flgChildMatched)) {
+        if (!(flgMatchesFilter || flgChildMatched)) {
             // sorry me and my children didnt match
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("sorry me and my children didnt match"
@@ -729,7 +729,7 @@ public class HtmlExporter extends WikiExporter {
         }
         // check if I'am matching
         boolean flgMatchesFilter = this.isNodeMatchingFilter(curNode, oOptions);
-        if(!(flgMatchesFilter || flgChildMatched)) {
+        if (!(flgMatchesFilter || flgChildMatched)) {
             // sorry me and my children didnt match
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("sorry me and my children didnt match"
@@ -972,7 +972,7 @@ public class HtmlExporter extends WikiExporter {
      */
     public String getDocLayoutTagCommand(final BaseNode curNode) {
         String command = curNode.getDocLayoutTagCommand();
-        if (command == null ||(!(command.length() > 0))) {
+        if (command == null || (!(command.length() > 0))) {
             // kein Tag definiert (Standard-Tags)
             command = CONST_LAYOUT_TAG_P;
             if (curNode.getChildNodes().size() > 0) {

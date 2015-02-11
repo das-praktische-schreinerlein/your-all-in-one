@@ -76,7 +76,7 @@ public class IstDataFormatterImpl extends FormatterImpl implements IstDataFormat
                        final OutputOptions options) throws Exception {
         // Check if node is compatibel
         if (node != null) {
-            if(!IstData.class.isInstance(node)) {
+            if (!IstData.class.isInstance(node)) {
                 throw new IllegalArgumentException();
             }
         }
@@ -87,7 +87,7 @@ public class IstDataFormatterImpl extends FormatterImpl implements IstDataFormat
     public void formatIstData(final IstData node, final StringBuffer nodeOutput, 
                               final OutputOptions oOptions) throws Exception {
         // exit if Flg not set
-        if(!oOptions.isFlgShowIst()) {
+        if (!oOptions.isFlgShowIst()) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("SKIP: isFlgShowIst not set for node:" 
                            + node.getNameForLogger());

@@ -1019,13 +1019,16 @@ public class BaseNode implements BaseData, MetaData, SysData,
             }
             if (child.equals(curChild) || child.getSysUID().equalsIgnoreCase(curChild.getSysUID())) {
                 if (LOGGER.isDebugEnabled())
+                 {
                     LOGGER.debug("bullshit iam in List already " + curChild.getSortPos().intValue() + " at " + this.childNodes.size());
                 // hey i'm already here
+                }
             } else {
                 // add the other child
                 this.addChildNode(curChild);
-                if (LOGGER.isDebugEnabled())
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("added other child:" + curChild.getName() + " new:" + curChild.getSortPos().intValue() + " at " + this.childNodes.size());
+                }
             }
             
         }
@@ -1137,7 +1140,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     }
     
     @Override
-    public boolean isWFStatus (String state) {
+    public boolean isWFStatus(String state) {
         return getNodeService().isWFStatus(state);
     }
 

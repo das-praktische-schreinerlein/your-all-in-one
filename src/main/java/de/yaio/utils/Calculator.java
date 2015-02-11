@@ -214,19 +214,19 @@ public class Calculator {
                 }
             } else if (action == CONST_CALCULATE_ACTION_MULSTATE) {
                 // MulStatus ohne Daten
-                res = new Double (0);
+                res = new Double(0);
             } else if (action == CONST_CALCULATE_ACTION_STATE) {
                 // MulStatus ohne Daten
                 if (arg1 != null) {
                     // arg1 belegt
-                    res = new Double (0);
+                    res = new Double(0);
                 } else {
                     // arg2 belegt
-                    res = new Double (100);
+                    res = new Double(100);
                 }
             } else if (action == CONST_CALCULATE_ACTION_MUL) {
                 // Status ohne Daten ist 0
-                res = new Double (0);
+                res = new Double(0);
             } else if (arg1 != null) {
                 // arg1 belegt
                 res = arg1;

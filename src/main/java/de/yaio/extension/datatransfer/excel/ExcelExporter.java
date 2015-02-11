@@ -1117,10 +1117,10 @@ public class ExcelExporter extends WikiExporter {
         HSSFCell cell = null;
 
         //Modus
-        cell = ExcelService.setCellNumeric(sheet, startRownNum-1,
+        cell = ExcelService.setCellNumeric(sheet, startRownNum - 1,
                 versatz + ExcelNodeService.CONST_GANT_COL_PLAN_MODUS, new Double(1),
                 this.exlSv.csFieldGantBaseUe);
-        cell = ExcelService.setCellString(sheet, startRownNum-1,
+        cell = ExcelService.setCellString(sheet, startRownNum - 1,
                 versatz + ExcelNodeService.CONST_GANT_COL_PLAN_MODUS_NAME, "Modus (1=Plan, 2=Ist, 3=Offen, 4=Real)",
                 this.exlSv.csFieldGantBaseUe);
 
@@ -1141,15 +1141,15 @@ public class ExcelExporter extends WikiExporter {
         // Gant-Datumsgrenzen
         String formula =
             ExcelService.getColName(versatz + ExcelNodeService.CONST_GANT_COL_PLAN_DATE_START)
-            + ExcelService.getRowNum(startRownNum+1);
+            + ExcelService.getRowNum(startRownNum + 1);
         cell = ExcelService.setCellFormula(sheet, startRownNum,
                 versatz + ExcelNodeService.CONST_GANT_COL_GANT_START, formula,
                 this.exlSv.csFieldGantNormDate_Ue);
         formula =
             ExcelService.getColName(versatz + ExcelNodeService.CONST_GANT_COL_PLAN_DATE_ENDE)
-            + ExcelService.getRowNum(startRownNum+1);
+            + ExcelService.getRowNum(startRownNum + 1);
         cell = ExcelService.setCellFormula(sheet, startRownNum,
-                versatz + ExcelNodeService.CONST_GANT_COL_GANT_START+ExcelNodeService.CONST_GANT_PERIODS, formula,
+                versatz + ExcelNodeService.CONST_GANT_COL_GANT_START + ExcelNodeService.CONST_GANT_PERIODS, formula,
                 this.exlSv.csFieldGantNormDate_Ue);
 
         for (int zaehler = 1; zaehler < ExcelNodeService.CONST_GANT_PERIODS; zaehler++) {
@@ -1157,7 +1157,7 @@ public class ExcelExporter extends WikiExporter {
             formula =
                 "$" + ExcelService.getColName(versatz + ExcelNodeService.CONST_GANT_COL_GANT_START)
                 + "$" + ExcelService.getRowNum(startRownNum)
-                + "+($" + ExcelService.getColName(versatz + ExcelNodeService.CONST_GANT_COL_GANT_START+ExcelNodeService.CONST_GANT_PERIODS)
+                + "+($" + ExcelService.getColName(versatz + ExcelNodeService.CONST_GANT_COL_GANT_START + ExcelNodeService.CONST_GANT_PERIODS)
                 + "$" + ExcelService.getRowNum(startRownNum)
                 + "-" + "$" + ExcelService.getColName(versatz + ExcelNodeService.CONST_GANT_COL_GANT_START)
                 + "$" + ExcelService.getRowNum(startRownNum)
@@ -1497,7 +1497,7 @@ public class ExcelExporter extends WikiExporter {
         this.fillPlanungSheet(wb, masterNode, oOptions);
 
         // GantSheet nur anfuegen, wenn nicht gemerged
-        if(!oOptions.isFlgMergeExcelPlanungGantSheets())
+        if (!oOptions.isFlgMergeExcelPlanungGantSheets())
             this.fillGantSheet(wb, masterNode, oOptions);
 
         return wb;

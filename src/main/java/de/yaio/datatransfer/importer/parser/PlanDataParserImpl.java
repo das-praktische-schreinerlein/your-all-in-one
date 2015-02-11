@@ -95,7 +95,7 @@ public class PlanDataParserImpl  extends ParserImpl implements PlanDataParser {
     public int parseFromName(final DataDomain node, final ImportOptions options) throws Exception {
         // Check if node is compatibel
         if (node != null) {
-            if(!PlanData.class.isInstance(node)) {
+            if (!PlanData.class.isInstance(node)) {
                 throw new IllegalArgumentException();
             }
         }

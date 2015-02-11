@@ -119,7 +119,6 @@ public abstract class BaseNodeRestControllerTest  extends BaseTest {
      *     test the node-life-cycle (create, show, update, delete) of a TaskNode
      * <h4>FeatureKeywords:</h4>
      *     Test
-     * @param node - the node to create, show, update, delete
      * @throws Exception - io-Exceptions possible
      */
     @Test

@@ -96,7 +96,7 @@ public class IstDataParserImpl  extends ParserImpl implements IstDataParser {
     public int parseFromName(final DataDomain node, final ImportOptions options) throws Exception {
         // Check if node is compatibel
         if (node != null) {
-            if(!IstData.class.isInstance(node)) {
+            if (!IstData.class.isInstance(node)) {
                 throw new IllegalArgumentException();
             }
         }

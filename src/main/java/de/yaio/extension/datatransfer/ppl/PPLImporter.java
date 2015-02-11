@@ -371,7 +371,7 @@ public class PPLImporter extends ImporterImpl {
             }
             
             // do it only if encoding is fixed: if not we read the file in any case
-            if(!flgEncodingChanged) {
+            if (!flgEncodingChanged) {
                 bufferStr = match.getString();
 
                 // check for UTF( with leading BOM in 1 run 
@@ -421,7 +421,7 @@ public class PPLImporter extends ImporterImpl {
         }
         
 //        // we want all in UTF8!
-//        if(!bestEncoding.equalsIgnoreCase(StandardCharsets.UTF_8.name())) {
+//        if (!bestEncoding.equalsIgnoreCase(StandardCharsets.UTF_8.name())) {
 //            LOGGER.info("convert file " + file.getAbsoluteFile() 
 //                        + " with charset: " + bestEncoding 
 //                        + " to " + StandardCharsets.UTF_8.name());

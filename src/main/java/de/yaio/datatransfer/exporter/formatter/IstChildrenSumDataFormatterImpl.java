@@ -76,7 +76,7 @@ public class IstChildrenSumDataFormatterImpl extends FormatterImpl
     public void format(final DataDomain node, final StringBuffer nodeOutput, final OutputOptions options) throws Exception {
         // Check if node is compatibel
         if (node != null) {
-            if(!IstChildrenSumData.class.isInstance(node)) {
+            if (!IstChildrenSumData.class.isInstance(node)) {
                 throw new IllegalArgumentException();
             }
         }
@@ -87,7 +87,7 @@ public class IstChildrenSumDataFormatterImpl extends FormatterImpl
     public void formatIstChildrenSumData(final IstChildrenSumData node, 
             final StringBuffer nodeOutput, final OutputOptions oOptions) throws Exception {
         // exit if Flg not set
-        if(!oOptions.isFlgShowChildrenSum()) {
+        if (!oOptions.isFlgShowChildrenSum()) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("SKIP: isFlgShowChildrenSum not set for node:" + node.getNameForLogger());
             }

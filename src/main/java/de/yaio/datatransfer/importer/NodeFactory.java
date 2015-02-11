@@ -154,7 +154,7 @@ public interface NodeFactory {
      *     Config
      * @param metaDataService to use for generating NodeNumbers
      */
-    void setMetaDataService (MetaDataService metaDataService);
+    void setMetaDataService(MetaDataService metaDataService);
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -168,7 +168,7 @@ public interface NodeFactory {
      *     Config
      * @return MetaDataService to use for generating NodeNumbers
      */
-    MetaDataService getMetaDataService ();
+    MetaDataService getMetaDataService();
     
 
     ////////////////

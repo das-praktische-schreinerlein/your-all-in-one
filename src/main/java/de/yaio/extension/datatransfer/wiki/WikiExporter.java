@@ -231,7 +231,7 @@ public class WikiExporter extends ExporterImpl {
         }
         // check if I'am matching
         boolean flgMatchesFilter = this.isNodeMatchingFilter(curNode, oOptions);
-        if(!(flgMatchesFilter || flgChildMatched)) {
+        if (!(flgMatchesFilter || flgChildMatched)) {
             // sorry me and my children didnt match
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("sorry me and my children didnt match"

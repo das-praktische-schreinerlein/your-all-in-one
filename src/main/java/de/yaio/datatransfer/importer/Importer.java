@@ -179,5 +179,5 @@ public interface Importer {
      * @param state - the state to check
      * @return true/false Workflow-state from getHshWorkflowNodeTypeMapping
      */
-    boolean isWFStatus (String state);
+    boolean isWFStatus(String state);
 }
