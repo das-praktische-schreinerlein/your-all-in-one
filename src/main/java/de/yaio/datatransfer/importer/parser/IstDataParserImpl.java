@@ -43,15 +43,15 @@ import de.yaio.datatransfer.importer.NodeFactory;
  */
 public class IstDataParserImpl  extends ParserImpl implements IstDataParser {
 
-    Calendar calDate = new GregorianCalendar();
-    Calendar calTime = new GregorianCalendar();
+    static Calendar calDate = new GregorianCalendar();
+    static Calendar calTime = new GregorianCalendar();
 
     // Logger
     private static final Logger LOGGER =
             Logger.getLogger(IstDataParserImpl.class);
 
     // Patterns
-    protected static String CONST_PATTERN_SEG_OPTIONAL_DATETIME = 
+    protected static final String CONST_PATTERN_SEG_OPTIONAL_DATETIME = 
             //          "("+ CONST_PATTERN_SEG_DATUM + ")?\\s?("+ CONST_PATTERN_SEG_TIME + ")?" 
             //        + "-?("+ CONST_PATTERN_SEG_DATUM + ")?\\s?("+ CONST_PATTERN_SEG_TIME + ")?";
             // TODO: TASK aif TIME umsetzen und schauen was das Problem ist

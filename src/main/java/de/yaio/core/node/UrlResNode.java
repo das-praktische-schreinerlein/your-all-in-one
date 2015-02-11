@@ -106,8 +106,7 @@ public class UrlResNode extends InfoNode implements ResLocData {
         data.append(super.getDataBlocks4CheckSum())
             .append(" resLocRef=").append(getResLocRef())
             .append(" resLocName=").append(getResLocName())
-            .append(" resLocTags=").append(getResLocTags())
-            ;
+            .append(" resLocTags=").append(getResLocTags());
         return data.toString();
     }
 }

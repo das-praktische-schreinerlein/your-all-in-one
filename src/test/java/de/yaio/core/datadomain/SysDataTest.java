@@ -58,8 +58,7 @@ public class SysDataTest extends DataDomainTest {
                      .append(this.getSysCreateDate()).append("|")
                      .append(this.getSysCurChecksum()).append("|")
                      .append(this.getSysChangeDate()).append("|")
-                     .append(this.getSysChangeCount()).append("|")
-                     ;
+                     .append(this.getSysChangeCount()).append("|");
             return resBuffer.toString();
             
         }

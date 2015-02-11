@@ -61,7 +61,7 @@ import de.yaio.core.node.BaseNode;
 @ContextConfiguration("/META-INF/spring/defaultApplicationContext.xml")
 public abstract class BaseNodeRestControllerTest  extends BaseTest {
     /** masternodeId **/
-    public static String CONST_MASTERNODE_ID = "MasterplanMasternode1";
+    public static final String CONST_MASTERNODE_ID = "MasterplanMasternode1";
                     
     /** Logger **/
     private static final Logger LOGGER =

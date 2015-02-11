@@ -839,8 +839,8 @@ public class ExcelExporter extends WikiExporter {
      * @return - formatted output of node-hierarchy and DataDomains
      * @throws Exception
      */
-    public void fillGantSheet(HSSFWorkbook wb, BaseNode masterNode,
-            ExcelOutputOptions oOptions)
+    public void fillGantSheet(final HSSFWorkbook wb, final BaseNode masterNode,
+            final ExcelOutputOptions oOptions)
     throws Exception {
 
         // ExcelService anlegen
@@ -909,8 +909,8 @@ public class ExcelExporter extends WikiExporter {
 
 
     // TODO Doku
-    public void formatGantSheetDiag(HSSFSheet sheet, int lastRownNum,
-            ExcelOutputOptions oOptions, int versatz) throws Exception {
+    public void formatGantSheetDiag(final HSSFSheet sheet, final int lastRownNum,
+            final ExcelOutputOptions oOptions, final int versatz) throws Exception {
         // Parameter pruefen
         if (sheet == null) {
             throw new IllegalArgumentException("Sheet must not be null: '"

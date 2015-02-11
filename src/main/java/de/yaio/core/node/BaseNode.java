@@ -489,7 +489,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     @Transient
     @XmlTransient
     @JsonIgnore
-    private LinkedHashSet<BaseNode> childNodes = new LinkedHashSet<BaseNode>();
+    private Set<BaseNode> childNodes = new LinkedHashSet<BaseNode>();
 
     /**
      */
@@ -919,13 +919,13 @@ public class BaseNode implements BaseData, MetaData, SysData,
     }
         
     @Override
-    public void setParentNode(BaseNode parentNode) {
+    public void setParentNode(final BaseNode parentNode) {
         getNodeService().setParentNode(this, parentNode, true);
     }
     @Override
     @XmlTransient
     @JsonIgnore
-    public void setParentNodeOnly(DataDomain parentNode) {
+    public void setParentNodeOnly(final DataDomain parentNode) {
         this.parentNode = (BaseNode) parentNode;
     }
 
@@ -943,7 +943,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     }
 
     @Override
-    public void addChildNode(DataDomain childNode) {
+    public void addChildNode(final DataDomain childNode) {
         if (LOGGER.isDebugEnabled())
             LOGGER.debug("add child:" + childNode.getNameForLogger() + " to " + this.getNameForLogger());
         if (childNode != null) {
@@ -977,7 +977,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
      * @param child - the child to move in list
      * @param newSortPos - the new position
      */
-    public void moveChildToSortPos(BaseNode child, Integer newSortPos) {
+    public void moveChildToSortPos(final BaseNode child, final Integer newSortPos) {
         // check data
         if (child == null) {
             throw new IllegalArgumentException("child must not be null");
@@ -993,7 +993,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
         boolean flgChildWaiting = true;
         
         // preserve the childnodes in order
-        LinkedHashSet<BaseNode> tmpChildNodes = new LinkedHashSet<BaseNode>();
+        Set<BaseNode> tmpChildNodes = new LinkedHashSet<BaseNode>();
         for (BaseNode curChild : this.childNodes) {
             // add the other child
             tmpChildNodes.add(curChild);

@@ -44,8 +44,7 @@ public class WikiImportOptions extends ImportOptionsImpl {
                 + " flgReadUe:" + flgReadUe
                 + " flgReadList:" + flgReadList
                 + " flgReadWithStatusOnly:" + flgReadWithStatusOnly
-                + " strReadIfStatusInListOnly:" + strReadIfStatusInListOnly
-                ;
+                + " strReadIfStatusInListOnly:" + strReadIfStatusInListOnly;
 
     }
 

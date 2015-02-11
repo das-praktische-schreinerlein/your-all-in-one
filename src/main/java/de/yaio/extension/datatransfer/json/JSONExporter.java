@@ -41,8 +41,8 @@ import de.yaio.extension.datatransfer.csv.CSVExporter;
  */
 public class JSONExporter extends CSVExporter {
     
-    protected static DateFormat DF = new SimpleDateFormat("yyyy-MM-dd");
-    protected static DateFormat TF = new SimpleDateFormat("HH-mm-ss");
+    protected static final DateFormat DF = new SimpleDateFormat("yyyy-MM-dd");
+    protected static final DateFormat TF = new SimpleDateFormat("HH-mm-ss");
 
     /**
      * <h4>FeatureDomain:</h4>

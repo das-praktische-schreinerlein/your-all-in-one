@@ -84,9 +84,9 @@ public class EventNode extends TaskNode {
     }
 
     // Status-Konstanten
-    public static Map<String, Object> CONST_MAP_NODETYPE_IDENTIFIER = new HashMap<String, Object>();
-    public static Map<String, WorkflowState> CONST_MAP_STATE_WORKFLOWSTATE = new HashMap<String, WorkflowState>();
-    public static Map<WorkflowState, String> CONST_MAP_WORKFLOWSTATE_STATE = new HashMap<WorkflowState, String>();
+    public static final Map<String, Object> CONST_MAP_NODETYPE_IDENTIFIER = new HashMap<String, Object>();
+    public static final Map<String, WorkflowState> CONST_MAP_STATE_WORKFLOWSTATE = new HashMap<String, WorkflowState>();
+    public static final Map<WorkflowState, String> CONST_MAP_WORKFLOWSTATE_STATE = new HashMap<WorkflowState, String>();
     static {
         // define WorkflowStates
         CONST_MAP_STATE_WORKFLOWSTATE.put(CONST_NODETYPE_IDENTIFIER_UNKNOWN, WorkflowState.NOTPLANED);

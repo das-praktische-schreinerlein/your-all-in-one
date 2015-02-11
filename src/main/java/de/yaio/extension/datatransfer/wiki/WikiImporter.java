@@ -216,8 +216,7 @@ public class WikiImporter extends ImporterImpl {
             + "* RUNNING - Punkt1 [Plan: 10h 22.03.2014-23.05.2014]" + PPLService.LINE_DELIMITER
             + "  adejigwtiojboiaqrjiqoajbhiaqrbn" + PPLService.LINE_DELIMITER
             + "** LATE - Punkt1.1" + PPLService.LINE_DELIMITER
-            + "** DONE - Punkt1.2" + PPLService.LINE_DELIMITER
-            ;
+            + "** DONE - Punkt1.2" + PPLService.LINE_DELIMITER;
 
     protected PPLImporter importer = new PPLImporter(new ImportOptionsImpl());
     protected PPLExporter exporter = new PPLExporter();
@@ -278,14 +277,14 @@ public class WikiImporter extends ImporterImpl {
      * @param haystack - haystack
      * @return - list of matching results
      */
-    public static List<MatchResult> findMatches( final Pattern pattern, final CharSequence haystack ) {
+    public static List<MatchResult> findMatches( final Pattern pattern, final CharSequence haystack) {
         List<MatchResult> results = null;
 
         for ( Matcher m = pattern.matcher(haystack); m.find();) {
             if (results == null) {
                 results = new ArrayList<MatchResult>();
             }
-            results.add( m.toMatchResult() );
+            results.add( m.toMatchResult());
         }
 
         return results;

@@ -17,6 +17,8 @@
 package de.yaio.core.nodeservice;
 
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import java.util.TreeSet;
 
 import org.apache.log4j.Logger;
@@ -40,10 +42,10 @@ import de.yaio.core.datadomainservice.DataDomainRecalc;
 public abstract class NodeServiceImpl implements NodeService {
 
     /** sorted Treeset of the configured DadaDomainRecacler */
-    protected TreeSet<DataDomainRecalc> hshDataDomainRecalcer = 
+    protected Set<DataDomainRecalc> hshDataDomainRecalcer = 
                     new TreeSet<DataDomainRecalc>();
     /** Hashmap of the configured DadaDomainRecacler by ClassName */
-    public HashMap<Class<?>, DataDomainRecalc> hshDataDomainRecalcerByClass = 
+    public Map<Class<?>, DataDomainRecalc> hshDataDomainRecalcerByClass = 
                     new HashMap<Class<?>, DataDomainRecalc>();
     
     // Logger
@@ -55,7 +57,7 @@ public abstract class NodeServiceImpl implements NodeService {
     //////////////
     @Override
     public void addDataDomainRecalcer(final DataDomainRecalc dataDomainRecalcer) {
-        if (dataDomainRecalcer.getRecalcTargetOrder() < 0 ) {
+        if (dataDomainRecalcer.getRecalcTargetOrder() < 0) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("SKIP: Targetorder < 0 TargetOrder:" 
                         + dataDomainRecalcer.getRecalcTargetOrder()

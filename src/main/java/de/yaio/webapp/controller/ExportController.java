@@ -70,7 +70,7 @@ public class ExportController {
             Logger.getLogger(ExportController.class);
     
     /** replaceent to do after processing a node in documentation-context **/
-    public static Map<String, String> PostProcessorReplacements_documentation = 
+    public static final Map<String, String> PostProcessorReplacements_documentation = 
                     new LinkedHashMap<String, String>();
     
     
@@ -434,7 +434,7 @@ public class ExportController {
                     value = "/icaltaskstodo/{sysUID}", 
                     produces = "application/ical")
     public @ResponseBody String exportNodeAsICalOnlyTasksTodo(
-           @PathVariable(value = "sysUID") final String sysUID, HttpServletResponse response) {
+           @PathVariable(value = "sysUID") final String sysUID, final HttpServletResponse response) {
         // configure
         Exporter exporter = new ICalExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
@@ -468,7 +468,7 @@ public class ExportController {
                     value = "/icaltaskslate/{sysUID}", 
                     produces = "application/ical")
     public @ResponseBody String exportNodeAsICalOnlyTasksLate(
-           @PathVariable(value = "sysUID") String sysUID, HttpServletResponse response) {
+           @PathVariable(value = "sysUID") final String sysUID, final HttpServletResponse response) {
         // configure
         Exporter exporter = new ICalExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
@@ -504,9 +504,9 @@ public class ExportController {
                     produces = "application/ical",
                     consumes = "application/x-www-form-urlencoded")
     public @ResponseBody String exportNodeAsICal(
-           @PathVariable(value = "sysUID") String sysUID,
-           @ModelAttribute EmptyOutputOptionsImpl oOptions,
-           HttpServletResponse response) {
+           @PathVariable(value = "sysUID") final String sysUID,
+           @ModelAttribute final EmptyOutputOptionsImpl oOptions,
+           final HttpServletResponse response) {
         // configure
         Exporter exporter = new ICalExporter();
         
@@ -532,17 +532,19 @@ public class ExportController {
      * @param sysUID - sysUID to export
      * @param oOptions - the outputOptions 
      * @param response - the response-Obj to set contenttype and headers
-     * @param headerFile - path to headerFile-resource (if null=defaultfile will used; if empfty=ignored)
-     * @param footerFile - path to footerFile-resource (if null=defaultfile will used; if empfty=ignored)
+     * @param pHeaderFile - path to headerFile-resource (if null=defaultfile will used; if empfty=ignored)
+     * @param pFooterFile - path to footerFile-resource (if null=defaultfile will used; if empfty=ignored)
      * @return String - html-format of the node
      */
-    public String commonExportNodeAsHtml(String sysUID,
-                                         OutputOptions oOptions,
-                                         HttpServletResponse response,
-                                         String headerFile,
-                                         String footerFile) {
+    public String commonExportNodeAsHtml(final String sysUID,
+                                         final OutputOptions oOptions,
+                                         final HttpServletResponse response,
+                                         final String pHeaderFile,
+                                         final String pFooterFile) {
         Exporter exporter = new HtmlExporter();
         String res = null;
+        String headerFile = pHeaderFile;
+        String footerFile = pFooterFile;
         
         // check headerFile
         if (headerFile == null) 
@@ -592,7 +594,7 @@ public class ExportController {
                     value = "/html/{sysUID}", 
                     produces = "text/html")
     public @ResponseBody String exportNodeAsHtml(
-           @PathVariable(value = "sysUID") String sysUID, HttpServletResponse response) {
+           @PathVariable(value = "sysUID") final String sysUID, final HttpServletResponse response) {
         // configure
         OutputOptions oOptions = new OutputOptionsImpl();
         return this.commonExportNodeAsHtml(sysUID, oOptions, response, null, null);
@@ -618,7 +620,7 @@ public class ExportController {
                     value = "/htmllayoutfragment/{sysUID}", 
                     produces = "text/html")
     public @ResponseBody String exportNodeAsHtmlFragment(
-           @PathVariable(value = "sysUID") String sysUID, HttpServletResponse response) {
+           @PathVariable(value = "sysUID") final String sysUID, final HttpServletResponse response) {
         // configure
         OutputOptions oOptions = new OutputOptionsImpl();
         oOptions.setFlgProcessDocLayout(true);
@@ -648,7 +650,7 @@ public class ExportController {
                     value = "/htmlfrontpagefragment/{sysUID}", 
                     produces = "text/html")
     public @ResponseBody String exportNodeAsHtmlFrontpageFragment(
-           @PathVariable(value = "sysUID") String sysUID, HttpServletResponse response) {
+           @PathVariable(value = "sysUID") final String sysUID, final HttpServletResponse response) {
         // configure
         OutputOptions oOptions = new OutputOptionsImpl();
         oOptions.setFlgProcessDocLayout(true);
@@ -686,9 +688,9 @@ public class ExportController {
                     produces = "text/html",
                     consumes = "application/x-www-form-urlencoded")
     public @ResponseBody String exportNodeAsHtml(
-           @PathVariable(value = "sysUID") String sysUID,
-           @ModelAttribute EmptyOutputOptionsImpl oOptions,
-           HttpServletResponse response) {
+           @PathVariable(value = "sysUID") final String sysUID,
+           @ModelAttribute final EmptyOutputOptionsImpl oOptions,
+           final HttpServletResponse response) {
         return this.commonExportNodeAsHtml(sysUID, oOptions, response, null, null);
     }
 
@@ -711,7 +713,7 @@ public class ExportController {
                     value = "/documentation/{sysUID}", 
                     produces = "text/html")
     public @ResponseBody String exportDocumentationNodeAsHtml(
-           @PathVariable(value = "sysUID") String sysUID, HttpServletResponse response) {
+           @PathVariable(value = "sysUID") final String sysUID, final HttpServletResponse response) {
         // set Options
         OutputOptions oOptions = new OutputOptionsImpl();
         oOptions.setAllFlgShow(false);
@@ -749,9 +751,9 @@ public class ExportController {
      * @param response - the response-Obj to set contenttype and headers
      * @return ByteArrayOutputStream - excel-format of the node
      */
-    public String commonExportNodeAsExcel(String sysUID, 
-                                          ExcelOutputOptions oOptions,
-                                          HttpServletResponse response) {
+    public String commonExportNodeAsExcel(final String sysUID, 
+                                          final ExcelOutputOptions oOptions,
+                                          final HttpServletResponse response) {
         ServletOutputStream out;
         HSSFWorkbook wb;
 
@@ -811,7 +813,7 @@ public class ExportController {
                     value = "/excel/{sysUID}", 
                     produces = "application/excel")
     public @ResponseBody String exportNodeAsExcel(
-           @PathVariable(value = "sysUID") String sysUID, HttpServletResponse response) {
+           @PathVariable(value = "sysUID") final String sysUID, final HttpServletResponse response) {
         ExcelOutputOptions oOptions = new ExcelOutputOptions(new OutputOptionsImpl());
         return this.commonExportNodeAsExcel(sysUID, oOptions, response);
     }
@@ -839,9 +841,9 @@ public class ExportController {
                     produces = "application/excel",
                     consumes = "application/x-www-form-urlencoded")
     public @ResponseBody String exportNodeAsExcel(
-           @PathVariable(value = "sysUID") String sysUID,
-           @ModelAttribute ExcelOutputOptions oOptions,
-           HttpServletResponse response) {
+           @PathVariable(value = "sysUID") final String sysUID,
+           @ModelAttribute final ExcelOutputOptions oOptions,
+           final HttpServletResponse response) {
         return this.commonExportNodeAsExcel(sysUID, oOptions, response);
     }
 }

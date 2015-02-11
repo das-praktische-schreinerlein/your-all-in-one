@@ -54,13 +54,13 @@ public class Calculator {
     /** calculation result calculate the multiplication-state of arg1 and arg2 **/
     public static final int CONST_CALCULATE_ACTION_MULSTATE = 6;
     /** calculation result calculate the workflow-state of arg1 and arg2 **/
-    public static int  CONST_CALCULATE_ACTION_WORKFLOWSTATE = 7;
+    public static final int CONST_CALCULATE_ACTION_WORKFLOWSTATE = 7;
 
     // einige Double-Vergleiche funktionieren wegen Double-Kommastellen nicht :-(
     /** calculation constant for 0% **/
-    public static double CONST_DOUBLE_NULL = 0.00001;
+    public static final double CONST_DOUBLE_NULL = 0.00001;
     /** calculation constant for 100% **/
-    public static double CONST_DOUBLE_100 = 99.99999;
+    public static final double CONST_DOUBLE_100 = 99.99999;
     
     // Logger
     private static final Logger LOGGER =

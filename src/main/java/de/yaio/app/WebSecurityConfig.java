@@ -65,8 +65,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                                                                   xframeAllowedDomainsList)))
                            .addHeaderWriter(
                                            new XFrameOptionsHeaderWriter(
-                                                           XFrameOptionsMode.SAMEORIGIN))
-            ;
+                                                           XFrameOptionsMode.SAMEORIGIN));
         }
     }    
 
@@ -90,8 +89,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                             .authenticated()
                 .and()
                    // disable csrf-protection
-                   .csrf().disable()
-            ;
+                   .csrf().disable();
         }
     }    
 
@@ -115,8 +113,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                             .hasRole("ADMIN")
                 .and()
                    // disable csrf-protection
-                   .csrf().disable()
-            ;
+                   .csrf().disable();
         }
     }    
 

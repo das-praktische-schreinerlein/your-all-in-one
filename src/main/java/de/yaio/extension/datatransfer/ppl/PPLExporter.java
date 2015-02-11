@@ -90,7 +90,7 @@ public class PPLExporter extends ExporterImpl {
         }
 
         // Praefix voranstellen
-        if (praefix.length() > 0 ) {
+        if (praefix.length() > 0) {
             res.insert(0, praefix + PPLService.DEFAULT_ENTRY_DELIMITER);
         }
 

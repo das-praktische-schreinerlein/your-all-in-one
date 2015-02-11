@@ -57,7 +57,7 @@ public class WorkflowFormatConfigurator {
         return me;
     }
 
-    protected static Map<String, String> CONST_STATI_COLOR = new HashMap<String, String>();
+    protected static final Map<String, String> CONST_STATI_COLOR = new HashMap<String, String>();
     static {
         CONST_STATI_COLOR.put(BaseNode.CONST_NODETYPE_IDENTIFIER_UNKNOWN, "#fffafa");
 

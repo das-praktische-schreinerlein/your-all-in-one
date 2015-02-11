@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeSet;
 
 import org.apache.log4j.Logger;
@@ -61,7 +62,7 @@ public class NodeFactoryImpl implements NodeFactory {
 
     // Map mit den Identifier-String un der entprechenden Node-Klase
     protected Map<String, Class<?>> hshNodeTypeIdentifier = new HashMap<String, Class<?>>();
-    protected TreeSet<Parser> hshDataDomainParser = new TreeSet<Parser>();
+    protected Set<Parser> hshDataDomainParser = new TreeSet<Parser>();
 
     // Parameter des Standard-Node-Konstruktors
     private static final Class<?>[] CONST_NODE_CONSTRUCTOR = {};
@@ -134,7 +135,7 @@ public class NodeFactoryImpl implements NodeFactory {
 
     @Override
     public void addDataDomainParser(final Parser parser) {
-        if (parser.getTargetOrder() < 0 ) {
+        if (parser.getTargetOrder() < 0) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("SKIP: Targetorder < 0 TargetOrder:" 
                         + parser.getTargetOrder()
@@ -152,7 +153,7 @@ public class NodeFactoryImpl implements NodeFactory {
     }
 
 
-    public TreeSet<Parser> getHshDataDomainParser() {
+    public Set<Parser> getHshDataDomainParser() {
         return hshDataDomainParser;
     }
 

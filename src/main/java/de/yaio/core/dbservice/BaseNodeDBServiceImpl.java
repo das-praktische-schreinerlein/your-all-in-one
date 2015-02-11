@@ -48,7 +48,7 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
         Logger.getLogger(BaseNodeDBServiceImpl.class);
 
     
-    protected static Map<String, String> CONST_AVAILIABLE_SORTS = new HashMap<String, String>();
+    protected static final Map<String, String> CONST_AVAILIABLE_SORTS = new HashMap<String, String>();
     static {
         CONST_AVAILIABLE_SORTS.put("default", "");
         CONST_AVAILIABLE_SORTS.put("createdUp", "sysCreateDate asc");

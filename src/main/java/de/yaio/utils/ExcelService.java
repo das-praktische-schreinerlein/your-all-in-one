@@ -270,7 +270,7 @@ public class ExcelService {
     }
 
     public static HSSFCell setCellFormula(
-            final HSSFSheet sheet, final int rownum, int cellnum, String value, HSSFCellStyle style) {
+            final HSSFSheet sheet, final int rownum, final int cellnum, final String value, final HSSFCellStyle style) {
 
         final HSSFCell cell = setCellFormula(sheet, rownum, cellnum, value);
         cell.setCellStyle(style);
@@ -279,8 +279,9 @@ public class ExcelService {
     }
 
 
-    public static String getColName(int cellnum) {
+    public static String getColName(final int pCellnum) {
         String res = "";
+        int cellnum = pCellnum;
         if (cellnum >= 26 + 26) {
             //System.err.println(" value: " + cellnum + " statt " + (char)(65 + cellnum) + " -> A" + (char)(65 + cellnum-26));
             cellnum = cellnum - 26 + 26;
@@ -295,11 +296,11 @@ public class ExcelService {
         return res + c;
     }
 
-    public static String getRowNum(Integer cellnum) {
+    public static String getRowNum(final Integer cellnum) {
         return new Integer(cellnum.intValue() + 1).toString();
     }
 
-    public static String genFormula(String funcName, List<?> rowNums, Integer col) {
+    public static String genFormula(final String funcName, final List<?> rowNums, final Integer col) {
         String formula = funcName + "(";
         for (Iterator<?> iter = rowNums.iterator(); iter.hasNext();) {
             Integer rowNum = (Integer) iter.next();
@@ -312,8 +313,9 @@ public class ExcelService {
         return formula;
     }
 
-    public static String genIfNotEmpty(String sheetName, Integer row, Integer col) {
+    public static String genIfNotEmpty(final String pSheetName, final Integer row, final Integer col) {
         // Sheetbname vorbereiten
+        String sheetName = pSheetName;
         if (sheetName != null && sheetName.length() > 0) {
             sheetName += "!";
         } else {
@@ -325,8 +327,9 @@ public class ExcelService {
         return formula;
     }
 
-    public static String genCase4Values(String sheetName, Integer baseRow, Integer baseCol, Map<?, ?> values) {
+    public static String genCase4Values(final String pSheetName, final Integer baseRow, final Integer baseCol, final Map<?, ?> values) {
         // Sheetbname vorbereiten
+        String sheetName = pSheetName;
         if (sheetName != null && sheetName.length() > 0) {
             sheetName += "!";
         } else {
@@ -346,7 +349,7 @@ public class ExcelService {
         return formula;
     }
 
-    public static void evaluateAllFormula(HSSFSheet sheet, HSSFFormulaEvaluator formulaEval) {
+    public static void evaluateAllFormula(final HSSFSheet sheet, final HSSFFormulaEvaluator formulaEval) {
         for (int rowNum = 0; rowNum <= sheet.getLastRowNum(); rowNum++) {
             for (int colNum = 0; colNum <= sheet.getRow(rowNum).getLastCellNum(); colNum++) {
                 getCellEvaluated(sheet, formulaEval, rowNum, colNum);
@@ -367,7 +370,7 @@ public class ExcelService {
      * @return
      * neues HSSFCellStyle-Objekt
      */
-    public HSSFCellStyle copyStyle(HSSFCellStyle style, HSSFWorkbook wb) {
+    public HSSFCellStyle copyStyle(final HSSFCellStyle style, final HSSFWorkbook wb) {
         HSSFCellStyle style2 = wb.createCellStyle();
         style2.setDataFormat(style.getDataFormat());
         style2.setFont(wb.getFontAt(style.getFontIndex()));
@@ -383,7 +386,7 @@ public class ExcelService {
         return style2;
     }
 
-    public HSSFCellStyle convertCss2Modul(HSSFCellStyle style, HSSFWorkbook wb) {
+    public HSSFCellStyle convertCss2Modul(final HSSFCellStyle style, final HSSFWorkbook wb) {
         HSSFCellStyle style2 = copyStyle(style, wb);
         style2.setBorderTop(HSSFCellStyle.BORDER_DOUBLE);
         style2.setLocked(true);

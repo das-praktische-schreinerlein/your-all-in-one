@@ -49,8 +49,7 @@ public class TaskNodeRestControllerTest extends BaseNodeRestControllerTest {
         public String toString() {
             StringBuffer resBuffer = new StringBuffer();
             resBuffer.append(this.getName()).append("|")
-                     .append(this.getNameForLogger()).append("|")
-                     ;
+                     .append(this.getNameForLogger()).append("|");
             return resBuffer.toString();
         }
         

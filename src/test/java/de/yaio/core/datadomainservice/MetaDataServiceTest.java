@@ -56,8 +56,7 @@ public class MetaDataServiceTest extends DataDomainServiceTest {
                      .append(this.getMetaNodePraefix()).append("|")
                      .append(this.getMetaNodeNummer()).append("|")
                      .append(this.getMetaNodeTypeTags()).append("|")
-                     .append(this.getMetaNodeSubTypeTags()).append("|")
-                     ;
+                     .append(this.getMetaNodeSubTypeTags()).append("|");
             return resBuffer.toString();
             
         }

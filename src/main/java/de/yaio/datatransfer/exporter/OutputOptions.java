@@ -88,29 +88,29 @@ public interface OutputOptions {
     String getStrReadIfStatusInListOnly();
     void setStrReadIfStatusInListOnly(String strReadIfStatusInListOnly);
 
-    public String getStrClassFilter();
-    public void setStrClassFilter(String strClassFilter);
+    String getStrClassFilter();
+    void setStrClassFilter(String strClassFilter);
     
-    public String getStrTypeFilter();
-    public void setStrTypeFilter(String strTypeFilter);
+    String getStrTypeFilter();
+    void setStrTypeFilter(String strTypeFilter);
 
-    public int getIntendFuncArea();
-    public void setIntendFuncArea(Integer intendPlanToPos);
+    int getIntendFuncArea();
+    void setIntendFuncArea(Integer intendPlanToPos);
 
-    public boolean isFlgShowBrackets();
-    public void setFlgShowBrackets(boolean flgShowBrackets);
+    boolean isFlgShowBrackets();
+    void setFlgShowBrackets(boolean flgShowBrackets);
 
-    public void setAllFlgShow(boolean value);
+    void setAllFlgShow(boolean value);
 
-    public boolean isFlgReEscapeDesc();
-    public void setFlgReEscapeDesc(boolean flgReEscapeDesc);
-    public boolean isFlgShowDescWithUe();
-    public void setFlgShowDescWithUe(boolean flgShowDescWithUe);
-    public boolean isFlgShowDescInNextLine();
-    public void setFlgShowDescInNextLine(boolean flgShowDescInNextLine);
+    boolean isFlgReEscapeDesc();
+    void setFlgReEscapeDesc(boolean flgReEscapeDesc);
+    boolean isFlgShowDescWithUe();
+    void setFlgShowDescWithUe(boolean flgShowDescWithUe);
+    boolean isFlgShowDescInNextLine();
+    void setFlgShowDescInNextLine(boolean flgShowDescInNextLine);
     
-    public Map<String, String> getMapClassFilter();
-    public Map<String, String> getMapTypeFilter();
-    public Map<String, String> getMapStateFilter();
-    public void initFilterMaps();
+    Map<String, String> getMapClassFilter();
+    Map<String, String> getMapTypeFilter();
+    Map<String, String> getMapStateFilter();
+    void initFilterMaps();
 }

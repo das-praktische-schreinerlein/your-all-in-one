@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeSet;
 
 import org.apache.log4j.Logger;
@@ -58,7 +59,7 @@ public class ExporterImpl implements Exporter {
     private static final Logger LOGGER =
             Logger.getLogger(ExporterImpl.class);
 
-    protected TreeSet<Formatter> hshDataDomainFormatter = new TreeSet<Formatter>();
+    protected Set<Formatter> hshDataDomainFormatter = new TreeSet<Formatter>();
     protected Map<String, Formatter> hshDataDomainFormatterByClassName = 
             new HashMap<String, Formatter>();
 
@@ -100,7 +101,7 @@ public class ExporterImpl implements Exporter {
 
     @Override
     public void addDataDomainFormatter(final Formatter formatter) {
-        if (formatter.getTargetOrder() < 0 ) {
+        if (formatter.getTargetOrder() < 0) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("SKIP: Targetorder < 0 TargetOrder:" 
                         + formatter.getTargetOrder()

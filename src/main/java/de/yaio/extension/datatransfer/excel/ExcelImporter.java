@@ -89,7 +89,7 @@ public class ExcelImporter extends ImporterImpl {
     }
 
     public List<String> parsePlanungSheet(final HSSFWorkbook wb)
-    throws Exception {
+                    throws Exception {
 
         // ExcelService anlegen
         this.exlSv = new ExcelOutputService(wb);
@@ -100,7 +100,7 @@ public class ExcelImporter extends ImporterImpl {
                     + wb + "'");
         }
 
-        ArrayList<String> lines = new ArrayList<String>();
+        List<String> lines = new ArrayList<String>();
 
         // Betreffendes Sheet anhand des Indexes ermitteln (funkt. auch noch
         // wenn mal das Tabellenblatt umbenannt wird)
@@ -171,7 +171,7 @@ public class ExcelImporter extends ImporterImpl {
             .getRichStringCellValue().getString();
 
         // Namen extrahieren
-        ArrayList<Object> ebenen = new ArrayList<Object>();
+       List<Object> ebenen = new ArrayList<Object>();
         if (projekt == null || projekt.length() == 0) {
             // kein Projekt: nichts zu tun
             return null;

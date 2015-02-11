@@ -57,8 +57,7 @@ public class IstDataTest extends DataDomainTest {
                      .append(this.getIstStand()).append("|")
                      .append(this.getIstAufwand()).append("|")
                      .append(this.getIstStart()).append("|")
-                     .append(this.getIstEnde()).append("|")
-                     ;
+                     .append(this.getIstEnde()).append("|");
             return resBuffer.toString();
             
         }

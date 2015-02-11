@@ -25,8 +25,7 @@ public class TestNode extends BaseNode implements TestObj {
         StringBuffer resBuffer = new StringBuffer();
         resBuffer.append(this.getName()).append("|")
                  .append(this.getState()).append("|")
-                 .append(this.getClass().getName()).append("|")
-                 ;
+                 .append(this.getClass().getName()).append("|");
         return resBuffer.toString();
         
     }
