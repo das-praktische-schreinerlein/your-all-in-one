@@ -45,7 +45,7 @@
     <module name="RedundantImport"/>
     <module name="UnusedImports"/>
     <module name="MethodLength">
-      <property name="max" value="60"/>
+      <property name="max" value="150"/>
     </module>
     <module name="ParameterNumber"/>
     <module name="LineLength">
@@ -123,7 +123,7 @@
   </module>
   <module name="Translation"/>
   <module name="FileLength">
-    <property name="max" value="1000"/>
+    <property name="max" value="1200"/>
   </module>
   <module name="FileTabCharacter"/>
   <module name="SuppressionCommentFilter">
