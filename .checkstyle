@@ -8,4 +8,12 @@
     <file-match-pattern match-pattern="." include-pattern="true"/>
   </fileset>
   <filter name="DerivedFiles" enabled="true"/>
+  <filter name="FilesFromPackage" enabled="true">
+    <filter-data value="src/main/resources/META-INF"/>
+    <filter-data value="src/main/resources/static/css/highlightjs"/>
+    <filter-data value="src/main/resources/static/css/jqueryui"/>
+    <filter-data value="src/main/resources/static/css/slimbox2"/>
+    <filter-data value="src/main/resources/static/images"/>
+    <filter-data value="src/main/resources/static/js"/>
+  </filter>
 </fileset-config>
