@@ -61,8 +61,7 @@ public abstract class DataDomainServiceTest extends BaseTest {
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     Test Config Initialisation
-     * @throws Exception
-     */
+     * @throws Exception - possible Exception     */
     @Before
     public abstract void setupDataDomainService() throws Exception;
     
@@ -74,8 +73,7 @@ public abstract class DataDomainServiceTest extends BaseTest {
      *     do the ServiceRecalc-tests
      * <h4>FeatureKeywords:</h4>
      *     Test
-     * @throws Exception
-     */
+     * @throws Exception - possible Exception     */
     public abstract void testServiceDoRecalc() throws Exception;
 
     /**
@@ -88,12 +86,11 @@ public abstract class DataDomainServiceTest extends BaseTest {
      *     calls dataDomainService.doRecalcAfterChildren and checks the result with checkServiceResult()<br>  
      * <h4>FeatureKeywords:</h4>
      *     Test
-     * @param myDataDomainObj - the dataobj to test
+     * @param testObj - the dataobj to test
      * @param expectedAfterDoBeforeChildren - the expected result after call doRecalcBeforeChildren
      * @param expectedAfterDoAfterChildren - the expected result after call doRecalcAfterChildren
      * @param recurseDirection - direction of recalc
-     * @throws Exception
-     */
+     * @throws Exception - possible Exception     */
     public void testServiceDoRecalc(final TestObj testObj, 
                     final String expectedAfterDoBeforeChildren,
                     final String expectedAfterDoAfterChildren,

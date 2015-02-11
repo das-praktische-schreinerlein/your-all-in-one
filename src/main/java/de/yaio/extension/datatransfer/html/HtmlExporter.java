@@ -551,8 +551,7 @@ public class HtmlExporter extends WikiExporter {
                     + "</div>\n"
                     + "<div class='togglecontainer"
                     + (addStyle.length() > 0 ? " togglecontainer-" + addStyle : "") + "'"
-                    + " id='detail_" + curNode.getWorkingId() + "'>\n"
-                    ;
+                    + " id='detail_" + curNode.getWorkingId() + "'>\n";
                 
                 // optionaler Contentbereich
                 if (content.length() > 0 || (descFull != null && descFull.length() > 0)) {
@@ -606,8 +605,7 @@ public class HtmlExporter extends WikiExporter {
                         ? " " + tag + "-portdesc-desc-" + addStyle : "") + "'"
                     +   " id='pSpanDesc_" + curNode.getWorkingId() + "'>"
                     + content
-                    + "</span>"
-                    ;
+                    + "</span>";
 
                 // eventuelles SPAN fuer Detailbeschreibung
                 if (descFull != null && descFull.length() > 0) {

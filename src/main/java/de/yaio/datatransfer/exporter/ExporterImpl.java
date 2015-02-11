@@ -240,7 +240,7 @@ public class ExporterImpl implements Exporter {
             final OutputOptions oOptions, final Map<String, Object> mpStates) throws Exception {
 
         // wenn kein Workflow-Element loeschen
-        if (! BaseWorkflowData.class.isInstance(node)) {
+        if (!BaseWorkflowData.class.isInstance(node)) {
             return null;
         }
 
@@ -303,7 +303,7 @@ public class ExporterImpl implements Exporter {
         // Wenn Status nicht im Filter und keine Kindselemente vorhanden
         String state = ((BaseWorkflowData) node).getState();
         if (   (mpStates.get(state) == null)
-                && ! flgHasChilds) {
+                && !flgHasChilds) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("NodeFilter-Status delete: no Children and state="
                         + state + " not in list for " + node.getNameForLogger());
@@ -326,9 +326,9 @@ public class ExporterImpl implements Exporter {
         Map<String, String> mpStates = oOptions.getMapStateFilter();
         Map<String, String> mpClasses = oOptions.getMapClassFilter();
         Map<String, String> mpTypes = oOptions.getMapTypeFilter();
-        if (   ! (mpStates != null && mpStates.size() > 0)
-            && ! (mpClasses != null && mpClasses.size() > 0) 
-            && ! (mpTypes != null && mpTypes.size() > 0)) {
+        if (   !(mpStates != null && mpStates.size() > 0)
+            && !(mpClasses != null && mpClasses.size() > 0) 
+            && !(mpTypes != null && mpTypes.size() > 0)) {
             // no filter return true
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("no NodeFilterdefined oOptions=" + oOptions 

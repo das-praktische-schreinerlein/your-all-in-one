@@ -82,7 +82,7 @@ public class DescDataParserImpl  extends ParserImpl implements DescDataParser {
     public int parseFromName(final DataDomain node, final ImportOptions options) throws Exception {
         // Check if node is compatibel
         if (node != null) {
-            if (! DescData.class.isInstance(node)) {
+            if (!DescData.class.isInstance(node)) {
                 throw new IllegalArgumentException();
             }
         }

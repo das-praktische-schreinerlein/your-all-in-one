@@ -170,8 +170,7 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
                                 + " or lower(sym_link_name) like lower(:fulltext" + idx + ")"
                                 + " or lower(res_loc_name) like lower(:fulltext" + idx + ")"
                                 + " or lower(res_loc_ref) like lower(:fulltext" + idx + ")"
-                                + ")"
-                                ;
+                                + ")";
                 for (; idx < searchWords.length; idx++) {
                     filter += " and (lower(name) like lower(:fulltext" + idx + ")"
                                     + " or lower(node_desc) like lower(:fulltext" + idx + ")"
@@ -179,8 +178,7 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
                                     + " or lower(sym_link_name) like lower(:fulltext" + idx + ")"
                                     + " or lower(res_loc_name) like lower(:fulltext" + idx + ")"
                                     + " or lower(res_loc_ref) like lower(:fulltext" + idx + ")"
-                                    + ")"
-                                ;
+                                    + ")";
                 }
             }
         }
@@ -239,7 +237,6 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
      * <h4>FeatureKeywords:</h4>
      *     Persistence JPA
      * @param fulltext - fulltext to search in desc and name
-     * @param sortConfig - use sort
      * @return total of matching nodes
      */
     @SuppressWarnings("unchecked")

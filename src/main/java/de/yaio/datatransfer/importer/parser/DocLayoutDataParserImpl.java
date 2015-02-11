@@ -89,7 +89,7 @@ public class DocLayoutDataParserImpl  extends ParserImpl implements DocLayoutDat
     public int parseFromName(final DataDomain node, final ImportOptions options) throws Exception {
         // Check if node is compatibel
         if (node != null) {
-            if (! DocLayoutData.class.isInstance(node)) {
+            if (!DocLayoutData.class.isInstance(node)) {
                 throw new IllegalArgumentException();
             }
         }

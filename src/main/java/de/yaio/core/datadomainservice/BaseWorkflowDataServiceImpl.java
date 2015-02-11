@@ -91,7 +91,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
     public void doRecalcBeforeChildren(final DataDomain node, final int recurceDirection) throws Exception {
         
         // Check if node is compatibel
-        if (! BaseWorkflowData.class.isInstance(node)) {
+        if (!BaseWorkflowData.class.isInstance(node)) {
                 throw new IllegalArgumentException();
             }
         
@@ -102,7 +102,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
     @Override
     public void doRecalcAfterChildren(final DataDomain node, final int recurceDirection) throws Exception {
         // Check if node is compatibel
-        if (! BaseWorkflowData.class.isInstance(node)) {
+        if (!BaseWorkflowData.class.isInstance(node)) {
                 throw new IllegalArgumentException();
             }
         
@@ -224,7 +224,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
                                 baseNode.getPlanDurationMeasure());
                 baseNode.setPlanCalcEnde(newEndData);
             } else if (predecessorEnde != null 
-                       && ! predecessorEnde.before(baseNode.getPlanCalcStart())) {
+                       && !predecessorEnde.before(baseNode.getPlanCalcStart())) {
                 // get myEnde from valid predecessor
                 baseNode.setPlanCalcEnde(predecessorEnde);
             }
@@ -239,7 +239,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
                                 baseNode.getPlanDurationMeasure());
                 baseNode.setPlanCalcStart(newStartData);
             } else if (predecessorStart != null 
-                       && ! predecessorStart.after(baseNode.getPlanCalcEnde())) {
+                       && !predecessorStart.after(baseNode.getPlanCalcEnde())) {
                 // get myStart from valid predecessor
                 baseNode.setPlanCalcStart(predecessorStart);
             }
@@ -255,7 +255,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
             // planCalcChecksum empty -> set new
             baseNode.setPlanCalcCheckSum(planCalcCheckSum);
             baseNode.setFlgForceUpdate(true);
-        } else if (! planCalcCheckSum.equals(baseNode.getPlanCalcCheckSum())) {
+        } else if (!planCalcCheckSum.equals(baseNode.getPlanCalcCheckSum())) {
             // planCalcChecksum differs
             baseNode.setPlanCalcCheckSum(planCalcCheckSum);
             baseNode.setFlgForceUpdate(true);
@@ -280,8 +280,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
         StringBuffer data = new StringBuffer();
         
         data.append(" planCalcStart=").append(DataUtils.getNewDate(node.getPlanCalcStart()))
-            .append(" planCalcEnde=").append(DataUtils.getNewDate(node.getPlanCalcEnde()))
-            ;
+            .append(" planCalcEnde=").append(DataUtils.getNewDate(node.getPlanCalcEnde()));
         return data.toString();
     }
     

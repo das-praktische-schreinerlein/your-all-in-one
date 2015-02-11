@@ -577,7 +577,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     @JsonIgnore
     public boolean isPlanValidRange() {
         if (getPlanStart() != null && getPlanEnde() != null) {
-            if (LOGGER.isDebugEnabled() && ! (getPlanEnde().compareTo(getPlanStart()) >= 0)) {
+            if (LOGGER.isDebugEnabled() && !(getPlanEnde().compareTo(getPlanStart()) >= 0)) {
                 LOGGER.error("planStart must be <= planEnde:" + this.getNameForLogger() 
                                 + " ist=" + getIstStart() 
                                 + " istEnde=" + getIstEnde());
@@ -629,7 +629,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     @JsonIgnore
     public boolean isIstValidRange() {
         if (getIstStart() != null && getIstEnde() != null) {
-            if (LOGGER.isDebugEnabled() && ! (getIstEnde().compareTo(getIstStart()) >= 0)) {
+            if (LOGGER.isDebugEnabled() && !(getIstEnde().compareTo(getIstStart()) >= 0)) {
                LOGGER.error("istStart must be <= istEnde:" + this.getNameForLogger() 
                                + " ist=" + getIstStart() 
                                + " istEnde=" + getIstEnde());
@@ -944,8 +944,9 @@ public class BaseNode implements BaseData, MetaData, SysData,
 
     @Override
     public void addChildNode(final DataDomain childNode) {
-        if (LOGGER.isDebugEnabled())
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("add child:" + childNode.getNameForLogger() + " to " + this.getNameForLogger());
+        }
         if (childNode != null) {
             if (childNode.getSortPos() != null) {
                 // preserve sortpos of the child
@@ -985,7 +986,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
         if (newSortPos == null) {
             throw new IllegalArgumentException("newSortPos must not be null");
         }
-        if (! this.childNodes.contains(child)) {
+        if (!this.childNodes.contains(child)) {
             throw new IllegalArgumentException("child is no member of my childlist");
         }
         
@@ -1007,14 +1008,16 @@ public class BaseNode implements BaseData, MetaData, SysData,
         int newPos = newSortPos.intValue();
         
         // add the childs to the list
-        if (LOGGER.isDebugEnabled())
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("I " + child.getName() + " want newPos:" + newPos);
+        }
         for (BaseNode curChild : tmpChildNodes) {
             // if sortPos of curChild > newSortPos, then insert it here
             if (flgChildWaiting && curChild.getSortPos().intValue() > newPos) {
                 this.addChildNode(child);
-                if (LOGGER.isDebugEnabled())
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("added me " + child.getName() + " and got " + child.getSortPos().intValue());
+                }
                 flgChildWaiting = false;
             }
             if (child.equals(curChild) || child.getSysUID().equalsIgnoreCase(curChild.getSysUID())) {

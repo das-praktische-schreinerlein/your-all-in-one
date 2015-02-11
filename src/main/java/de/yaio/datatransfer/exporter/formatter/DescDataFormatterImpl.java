@@ -83,7 +83,7 @@ public class DescDataFormatterImpl extends FormatterImpl implements DescDataForm
     public void formatDescData(final DescData node, final StringBuffer nodeOutput, 
             final OutputOptions oOptions) throws Exception {
         // exit if Flg not set
-        if (! oOptions.isFlgShowDesc()) {
+        if (!oOptions.isFlgShowDesc()) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("SKIP: isFlgShowDesc not set for node:" + node.getNameForLogger());
             }

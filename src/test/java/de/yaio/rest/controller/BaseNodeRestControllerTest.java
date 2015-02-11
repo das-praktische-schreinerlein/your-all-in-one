@@ -341,7 +341,7 @@ public abstract class BaseNodeRestControllerTest  extends BaseTest {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("info state:" + state + " msg:" + stateMsg);
         }
-        if (! state.equalsIgnoreCase("OK1")) {
+        if (!state.equalsIgnoreCase("OK1")) {
             LOGGER.error("error state:" + state + " msg:" + stateMsg);
         }
         res.andExpect(jsonPath("$.state", is("OK")));

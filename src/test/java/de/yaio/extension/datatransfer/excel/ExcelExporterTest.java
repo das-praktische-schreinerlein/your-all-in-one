@@ -66,8 +66,7 @@ public class ExcelExporterTest extends WikiExporterTest {
      *     Test
      * @param source - the ppl-lines to parse and to convert
      * @param expectedResult - the expected lines from exporter
-     * @throws Exception
-     */
+     * @throws Exception - possible Exception     */
     public synchronized void testExport(final String source, final String expectedResult) throws Exception {
         // parse
         DataDomain masterNode  = importerObj.createNodeObjFromText(1, "Test", "Test", null);

@@ -79,8 +79,7 @@ public class MetaDataServiceTest extends DataDomainServiceTest {
      * <h4>FeatureKeywords:</h4>
      *     Test Config Initialisation
      * @return - a new dataobj for the test
-     * @throws Exception
-     */
+     * @throws Exception - possible Exception     */
     protected MetaDataTestObj getNewMetaDataTestObj() throws Exception  {
         return (MetaDataTestObj) setupNewTestObj();
     }

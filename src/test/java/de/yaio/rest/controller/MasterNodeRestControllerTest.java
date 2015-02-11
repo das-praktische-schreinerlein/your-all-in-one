@@ -38,7 +38,6 @@ public class MasterNodeRestControllerTest extends BaseNodeRestControllerTest {
      *     test the masternode
      * <h4>FeatureKeywords:</h4>
      *     Test
-     * @param node - the node to create, show, update, delete
      * @throws Exception - io-Exceptions possible
      */
     @Test

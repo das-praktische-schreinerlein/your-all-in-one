@@ -94,8 +94,7 @@ public class SymLinkNode extends BaseNode implements SymLinkData {
         data.append(super.getDataBlocks4CheckSum())
             .append(" symLinkRef=").append(getSymLinkRef())
             .append(" symLinkName=").append(getSymLinkName())
-            .append(" symLinkTags=").append(getSymLinkTags())
-            ;
+            .append(" symLinkTags=").append(getSymLinkTags());
         return data.toString();
     }
 }

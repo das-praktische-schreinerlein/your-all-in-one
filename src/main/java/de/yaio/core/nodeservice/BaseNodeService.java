@@ -83,7 +83,7 @@ public class BaseNodeService extends NodeServiceImpl {
         if (flgParentChanged || flgRenewParent) {
             int newEbene = baseNode.getEbene();
             if (parentNode != null) {
-                if (! flgRenewParent) {
+                if (!flgRenewParent) {
                     // SKIP
                 } else if (baseNode.hasChildNode(parentNode)) {
                     // SKIP gehoere schon zur Liste

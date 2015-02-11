@@ -92,8 +92,7 @@ public class SysDataTest extends DataDomainTest {
      * <h4>FeatureKeywords:</h4>
      *     Test Config Initialisation
      * @return - a new dataobj for the test
-     * @throws Exception
-     */
+     * @throws Exception - possible Exception     */
     protected SysDataTestObj getNewSysDataTestObj() throws Exception  {
         return (SysDataTestObj) setupNewTestObj();
     }

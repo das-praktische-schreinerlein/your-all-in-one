@@ -56,8 +56,7 @@ public class PlanDataTest extends DataDomainTest {
             resBuffer.append(this.getName()).append("|")
                      .append(this.getPlanAufwand()).append("|")
                      .append(this.getPlanStart()).append("|")
-                     .append(this.getPlanEnde()).append("|")
-                     ;
+                     .append(this.getPlanEnde()).append("|");
             return resBuffer.toString();
             
         }
@@ -90,8 +89,7 @@ public class PlanDataTest extends DataDomainTest {
      * <h4>FeatureKeywords:</h4>
      *     Test Config Initialisation
      * @return - a new dataobj for the test
-     * @throws Exception
-     */
+     * @throws Exception - possible Exception     */
     protected PlanDataTestObj getNewPlanDataTestObj() throws Exception  {
         return (PlanDataTestObj) setupNewTestObj();
     }

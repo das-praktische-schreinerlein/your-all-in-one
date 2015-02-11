@@ -55,8 +55,7 @@ public class PlanChildrenSumDataTest extends DataDomainTest {
             resBuffer.append(this.getName()).append("|")
                      .append(this.getPlanChildrenSumAufwand()).append("|")
                      .append(this.getPlanChildrenSumStart()).append("|")
-                     .append(this.getPlanChildrenSumEnde()).append("|")
-                     ;
+                     .append(this.getPlanChildrenSumEnde()).append("|");
             return resBuffer.toString();
             
         }
@@ -89,8 +88,7 @@ public class PlanChildrenSumDataTest extends DataDomainTest {
      * <h4>FeatureKeywords:</h4>
      *     Test Config Initialisation
      * @return - a new dataobj for the test
-     * @throws Exception
-     */
+     * @throws Exception - possible Exception     */
     protected PlanChildrenSumDataTestObj getNewPlanChildrenSumDataTestObj() throws Exception  {
         return (PlanChildrenSumDataTestObj) setupNewTestObj();
     }

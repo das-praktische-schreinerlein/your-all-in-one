@@ -275,7 +275,7 @@ public class Calculator {
                 arg2 = new Date(((Timestamp) arg2).getTime());
             }
             // check classes
-            if (! arg1.getClass().isInstance(arg2)) {
+            if (!arg1.getClass().isInstance(arg2)) {
                 // class differ!!
                 throw new IllegalAccessException("cant compare arg1 (" + arg1.getClass() + "):" 
                                 + " with arg2:" + arg2.getClass());

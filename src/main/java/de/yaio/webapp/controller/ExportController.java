@@ -547,10 +547,12 @@ public class ExportController {
         String footerFile = pFooterFile;
         
         // check headerFile
-        if (headerFile == null) 
+        if (headerFile == null) {
             headerFile = "/static/html/projektplan-export-header.html";
-        if (footerFile == null) 
+        }
+        if (footerFile == null) {
             footerFile = "/static/html/projektplan-export-footer.html";
+        }
         try {
             // run export
             res = this.exportNode(sysUID, exporter, oOptions, ".html", response);

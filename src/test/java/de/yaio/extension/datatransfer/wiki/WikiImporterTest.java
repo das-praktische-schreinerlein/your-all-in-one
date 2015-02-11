@@ -60,6 +60,7 @@ public class WikiImporterTest extends BaseTest {
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     Test Configuration
+     * @return - optionsObj
      * @throws Exception - io-Exceptions possible
      */
     public Importer setupNewImporter() throws Exception {
@@ -77,6 +78,7 @@ public class WikiImporterTest extends BaseTest {
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     Test Configuration
+     * @return - optionsObj
      * @throws Exception - io-Exceptions possible
      */
     public ImportOptions setupNewImportOptions() throws Exception {

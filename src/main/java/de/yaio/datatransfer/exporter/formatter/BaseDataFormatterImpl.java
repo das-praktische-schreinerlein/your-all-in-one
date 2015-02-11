@@ -75,7 +75,7 @@ public class BaseDataFormatterImpl extends FormatterImpl implements BaseDataForm
     @Override
     public void formatBaseData(final BaseData node, final StringBuffer nodeOutput, final OutputOptions options) throws Exception {
         // exit if Flg not set
-        if (! options.isFlgShowName() && ! options.isFlgShowType() && ! options.isFlgShowState()) {
+        if (!options.isFlgShowName() && !options.isFlgShowType() && !options.isFlgShowState()) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("SKIP: isFlgShowName and isFlgShowState not set for node:" 
                         + node.getNameForLogger());

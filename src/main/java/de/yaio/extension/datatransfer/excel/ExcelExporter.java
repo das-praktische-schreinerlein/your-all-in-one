@@ -136,9 +136,7 @@ public class ExcelExporter extends WikiExporter {
      * @param wb - Workbook to fill
      * @param masterNode - node for output recursively
      * @param oOptions - options for output (formatter)
-     * @return - formatted output of node-hierarchy and DataDomains
-     * @throws Exception
-     */
+     * @throws Exception - possible Exception     */
     public void fillPlanungSheet(final HSSFWorkbook wb, final BaseNode masterNode,
                 final ExcelOutputOptions oOptions)
         throws Exception {
@@ -836,9 +834,7 @@ public class ExcelExporter extends WikiExporter {
      * @param wb - Workbook to fill
      * @param masterNode - node for output recursively
      * @param oOptions - options for output (formatter)
-     * @return - formatted output of node-hierarchy and DataDomains
-     * @throws Exception
-     */
+     * @throws Exception - possible Exception     */
     public void fillGantSheet(final HSSFWorkbook wb, final BaseNode masterNode,
             final ExcelOutputOptions oOptions)
     throws Exception {
@@ -887,12 +883,13 @@ public class ExcelExporter extends WikiExporter {
         // Gesamten Sheet formatieren
         HSSFSheet sheetPlanung = wb.getSheet(ExcelNodeService.CONST_SHEETNNAME_PLANUNG);
         for (int curCol = 1; curCol < ExcelNodeService.CONST_GANT_COL_SCHRITT5; curCol++) {
-            if (sheetPlanung != null)
+            if (sheetPlanung != null) {
                 // Breite aus Planungssheet nehmen
                 sheet.setColumnWidth(curCol, sheetPlanung.getColumnWidth(curCol));
-            else
+            } else {
                 // Autosize
                 sheet.autoSizeColumn(curCol);
+            }
         }
 
         // Gant-Diagramm formatieren

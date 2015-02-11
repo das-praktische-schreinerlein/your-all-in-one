@@ -63,8 +63,7 @@ public class ExcelImporterTest extends WikiImporterTest {
      *     Test
      * @param srcFile - the excelfile to parse
      * @param expectedResultFile - the file with the expected ppl-lines from parser
-     * @throws Exception
-     */
+     * @throws Exception - possible Exception     */
     public void testImportExcelFile(final String srcFile, final String expectedResultFile) throws Exception {
         // configure Importer
         ExcelImporter importerObj = (ExcelImporter) setupNewImporter();

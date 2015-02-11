@@ -233,6 +233,7 @@ public class ExcelService {
      *
      * @param value
      * String-Wert, der gesetzt werden soll
+     * @return - the new cell
      */
     public static HSSFCell setCellString(
             final HSSFSheet sheet, final int rownum, final int cellnum, final String value) {

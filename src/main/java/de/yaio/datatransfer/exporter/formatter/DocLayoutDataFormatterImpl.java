@@ -72,7 +72,7 @@ public class DocLayoutDataFormatterImpl extends FormatterImpl implements DocLayo
     public void format(final DataDomain node, final StringBuffer nodeOutput, final OutputOptions options) throws Exception {
         // Check if node is compatibel
         if (node != null) {
-            if (! DocLayoutData.class.isInstance(node)) {
+            if (!DocLayoutData.class.isInstance(node)) {
                 throw new IllegalArgumentException();
             }
         }
@@ -82,7 +82,7 @@ public class DocLayoutDataFormatterImpl extends FormatterImpl implements DocLayo
     @Override
     public void formatDocLayoutData(final DocLayoutData node, final StringBuffer nodeOutput, final OutputOptions oOptions) throws Exception {
         // exit if Flg not set
-        if (! oOptions.isFlgShowDocLayout()) {
+        if (!oOptions.isFlgShowDocLayout()) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("SKIP: isFlgShowDocLayout not set for node:" + node.getNameForLogger());
             }

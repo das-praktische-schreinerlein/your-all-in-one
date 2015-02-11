@@ -91,7 +91,7 @@ public interface DataDomain {
      * <h4>FeatureKeywords:</h4>
      *     BusinessLogic
      * @param recursionDirection - direction for recursivly recalc CONST_RECURSE_DIRECTION_* 
-     * @throws Exception
+     * @throws Exception - possible Exception
      */
     void recalcData(int recursionDirection) throws Exception;
 

@@ -70,8 +70,7 @@ public class NodeFactoryTest extends BaseTest {
             StringBuffer resBuffer = new StringBuffer();
             resBuffer.append(this.dataObj.getName()).append("|")
                      .append(this.dataObj.getState()).append("|")
-                     .append(this.dataObj.getClass().getName()).append("|")
-                     ;
+                     .append(this.dataObj.getClass().getName()).append("|");
             return resBuffer.toString();
             
         }
@@ -93,8 +92,7 @@ public class NodeFactoryTest extends BaseTest {
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     Test Configuration
-     * @throws Exception
-     */
+     * @throws Exception - possible Exception     */
     @Before
     public void setupNodeFactory() throws Exception {
         nodeFactoryObj = new NodeFactoryImpl(null);
@@ -108,8 +106,7 @@ public class NodeFactoryTest extends BaseTest {
      *     do tests for creation of nodes from text
      * <h4>FeatureKeywords:</h4>
      *     Test
-     * @throws Exception
-     */
+     * @throws Exception - possible Exception     */
     @Test
     public void testCreateNode() throws Exception {
         String expected = null;

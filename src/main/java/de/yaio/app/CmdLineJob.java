@@ -90,8 +90,7 @@ public abstract class CmdLineJob {
      * <h4>FeatureKeywords:</h4>
      *     CLI-Handling
      * @return String - jobname (Classname without package)
-     * @throws Exception
-     */
+     * @throws Exception - possible Exception     */
     protected String getJobName() throws Exception  {
         return this.getClass().getName();
     }
@@ -107,8 +106,7 @@ public abstract class CmdLineJob {
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     CLI-Handling
-     * @throws Exception
-     */
+     * @throws Exception - possible Exception     */
     protected void printUsage() throws Exception  {
         HelpFormatter formatter = new HelpFormatter();
         formatter.printHelp(this.getJobName(), 
@@ -123,8 +121,7 @@ public abstract class CmdLineJob {
      * <h1>Nebenwirkungen:</h1>
      *     Rueckgabe als Options
      * @return Options
-     * @throws Exception
-     */
+     * @throws Exception - possible Exception     */
     protected abstract Options addAvailiableCmdLineOptions() throws Exception;
 
     /**
@@ -180,7 +177,7 @@ public abstract class CmdLineJob {
 
             // validate cmdLine
             LOGGER.info("validate CmdLine");
-            if (! Configurator.getInstance().validateCmdLine()) {
+            if (!Configurator.getInstance().validateCmdLine()) {
                 logErrorMsg("Illegal CmdArgs: print Usage");
                 this.printUsage();
                 LOGGER.info("Exit: 1");
