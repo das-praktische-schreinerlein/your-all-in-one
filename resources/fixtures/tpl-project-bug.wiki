@@ -1,0 +1,10 @@
+= OFFEN - Bug: XY
+== URLRES - [ResLoc: http://jira/XY,Beschreibung im JIRA als XY,]
+== OFFEN - Gemeldet von XY [Plan: 0.25h]
+== OFFEN - Beschreibung durch XY [Plan: 0.25h]
+== OFFEN - Konzept von XY [Plan: 0.25h]
+== OFFEN - Umsetzung durch XY [Plan: 0.25h]
+== OFFEN - Kontrolle durch XY [Plan: 0.25h]
+== OFFEN - Versionsverwaltung durch XY [Plan: 0.25h]
+== OFFEN - Dokumentation durch XY [Plan: 0.25h]
+== OFFEN - Rollout durch XY [Plan: 0.25h]
