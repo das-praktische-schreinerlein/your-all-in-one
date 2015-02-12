@@ -82,12 +82,32 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>2.12</version>
         <configuration>
-          <printSummary>false</printSummary>
+          <printSummary>true</printSummary>
           <redirectTestOutputToFile>true</redirectTestOutputToFile>
           <excludes>
             <exclude>**/*_Roo_*</exclude>
           </excludes>
         </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-surefire-report-plugin</artifactId>
+        <version>${maven.surefire.report.plugin.version}</version>
+        <executions>
+          <execution>
+            <id>generate-test-report</id>
+            <phase>test</phase>
+            <goals>
+              <goal>report-only</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>generate-integration-test-report</id>
+            <phase>integration-test</phase>
+            <goals>
+              <goal>failsafe-report-only</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
@@ -177,6 +197,27 @@
         <configuration>
           <addResources>false</addResources>
         </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>${maven.checkstyle.plugin.version}</version>
+        <configuration>
+          <configLocation>checkstyle.xml</configLocation>
+          <consoleOutput>true</consoleOutput>
+          <violationSeverity>info</violationSeverity>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>findbugs-maven-plugin</artifactId>
+        <version>${maven.findbugs.plugin.version}</version>
+        <configuration>
+          <failOnError>false</failOnError>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-pmd-plugin</artifactId>
+        <version>${maven.pmd.plugin.version}</version>
       </plugin>
     </plugins>
   </build>
@@ -558,15 +599,63 @@
       <scope>provided</scope>
     </dependency>
   </dependencies>
+  <reporting>
+    <plugins>
+      <plugin>
+        <artifactId>maven-surefire-report-plugin</artifactId>
+        <version>${maven.surefire.report.plugin.version}</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>${maven.javadoc.plugin.version}</version>
+        <configuration>
+          <aggregate>true</aggregate>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>${maven.checkstyle.plugin.version}</version>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>checkstyle</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>findbugs-maven-plugin</artifactId>
+        <version>${maven.findbugs.plugin.version}</version>
+        <configuration>
+          <failOnError>false</failOnError>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-pmd-plugin</artifactId>
+        <version>${maven.pmd.plugin.version}</version>
+        <configuration>
+          <targetJdk>${java.version}</targetJdk>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
   <properties>
-    <aspectj.version>1.7.2</aspectj.version>
-    <spring.version>4.0.7.RELEASE</spring.version>
-    <slf4j.version>1.7.5</slf4j.version>
+    <maven.checkstyle.plugin.version>2.12.1</maven.checkstyle.plugin.version>
+    <maven.surefire.plugin.version>2.14</maven.surefire.plugin.version>
     <roo.version>1.2.4.RELEASE</roo.version>
+    <maven.surefire.report.plugin.version>2.14</maven.surefire.report.plugin.version>
+    <slf4j.version>1.7.5</slf4j.version>
     <java.version>1.7</java.version>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <start-class>de.yaio.rest.Application</start-class>
+    <aspectj.version>1.7.2</aspectj.version>
     <springboot.version>1.1.6.RELEASE</springboot.version>
+    <maven.failsafe.plugin.version>2.14</maven.failsafe.plugin.version>
+    <maven.findbugs.plugin.version>2.5.5</maven.findbugs.plugin.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.javadoc.plugin.version>2.9.1</maven.javadoc.plugin.version>
+    <maven.pmd.plugin.version>3.1</maven.pmd.plugin.version>
+    <start-class>de.yaio.rest.Application</start-class>
+    <spring.version>4.0.7.RELEASE</spring.version>
   </properties>
 </project>
 
