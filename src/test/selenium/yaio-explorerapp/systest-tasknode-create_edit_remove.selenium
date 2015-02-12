@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="selenium.base" href="http://localhost/" />
+<link rel="selenium.base" href="http://yaio-playground.local" />
 <title>Test: test create/edit/remove of a project</title>
 </head>
 <body>
@@ -12,7 +12,31 @@
 <tr><td rowspan="1" colspan="3">Test: test create/edit/remove a project</td></tr>
 </thead><tbody>
 
-
+<!-- 
+  #######################################################
+    login
+  #######################################################
+-->
+<tr>
+    <td>open</td>
+    <td>/yaio-explorerapp/yaio-explorerapp.html#/login</td>
+    <td></td>
+</tr>
+<tr>
+    <td>type</td>
+    <td>id=username</td>
+    <td>admin</td>
+</tr>
+<tr>
+    <td>type</td>
+    <td>id=password</td>
+    <td>secret</td>
+</tr>
+<tr>
+    <td>click</td>
+    <td>css=button.button.ng-scope</td>
+    <td></td>
+</tr>
 <!-- 
   #######################################################
     open frontpage 
@@ -20,7 +44,7 @@
 -->
 <tr>
 	<td>open</td>
-	<td>/static/yaio-explorerapp/yaio-explorerapp.html</td>
+	<td>/yaio-explorerapp/yaio-explorerapp.html</td>
 	<td></td>
 </tr>
 <!-- 
@@ -160,7 +184,7 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>//form[@id='nodeFormTaskNode']/fieldset[5]/button</td>
+	<td>//form[@id='nodeFormTaskNode']/fieldset[4]/button</td>
 	<td></td>
 </tr>
 <!-- 
@@ -255,7 +279,7 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>//form[@id='nodeFormTaskNode']/fieldset[5]/button</td>
+	<td>//form[@id='nodeFormTaskNode']/fieldset[4]/button</td>
 	<td></td>
 </tr>
 <!-- 
@@ -372,6 +396,16 @@
 	<td>waitForElementPresent</td>
 	<td>//tr[@data-value = '${nodeIdforShow}']</td>
 	<td></td>
+</tr>
+<!-- 
+  #######################################################
+    logout
+  #######################################################
+-->
+<tr>
+    <td>open</td>
+    <td>/logout</td>
+    <td></td>
 </tr>
 </tbody></table>
 </body>
