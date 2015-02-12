@@ -144,7 +144,15 @@ yaioM.config(function ($translateProvider) {
       });
 
     // default-language
-   $translateProvider.preferredLanguage('de');
+    var langKey = 'de';
+    
+    // init
+    $translateProvider.preferredLanguage(langKey);
+    initLanguageSupport(langKey);
+
+    // change icons
+    $(".button-lang").removeClass("button-lang-active").addClass("button-lang-inactive");
+    $("#button_lang_" + langKey).removeClass("button-lang-inactive").addClass("button-lang-active");
 });
     
 /**
@@ -303,6 +311,33 @@ yaioM.controller('FrontPageCtrl', function($rootScope, $scope, $location, $http,
     });
 })
     
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Configuration
+ * <h4>FeatureDescription:</h4>
+ *     the controller to change language
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>returns new controller
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Configuration
+ */
+yaioM.controller('LanguageCtrl', ['$translate', '$scope', function ($translate, $scope) {
+    $scope.changeLanguage = function (langKey) {
+        // change angularTranslate
+        $translate.use(langKey);
+        
+        // change other languagetranslator
+        window.lang.change(langKey);
+        
+        // change icons
+        $(".button-lang").removeClass("button-lang-active").addClass("button-lang-inactive");
+        $("#button_lang_" + langKey).removeClass("button-lang-inactive").addClass("button-lang-active");
+    };
+}]);
+
+
 /**
  * <h4>FeatureDomain:</h4>
  *     Configuration

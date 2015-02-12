@@ -99,7 +99,13 @@
                            <div class="ue1MenueTop" lang="tech">D'Artagnan - Dein pers&ouml;nlicher Software-Musketier 
                             <span class="ue2MenueTop" lang="tech">"Einer f&uuml;r Alles - Alles in Einem"</span>
                             <span class="ue3MenueTop">
-                               <ul class="ulTopKontakt">
+                               <ul class="ulTopKontakt" ng-controller="LanguageCtrl">
+                                   <li class="liTopKontakt liTopKontaktLanguage">
+                                       <button ng-click="changeLanguage('de')" translate="common.button.lang.de" class="button button-lang" id="button_lang_de">DE</button>
+                                   </li>
+                                   <li class="liTopKontakt liTopKontaktLanguage">
+                                        <button ng-click="changeLanguage('en')" translate="common.button.lang.en" class="button button-lang" id="button_lang_en">EN</button>
+                                   </li>
                                    <li class="liTopKontakt liTopKontaktTwitter"><a 
                                        target="_blank" 
                                        title="D'Artagnan auf Twitter folgen" 
