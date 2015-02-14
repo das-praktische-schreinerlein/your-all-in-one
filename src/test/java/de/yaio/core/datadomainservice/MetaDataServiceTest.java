@@ -48,7 +48,7 @@ public class MetaDataServiceTest extends DataDomainServiceTest {
      * @copyright Copyright (c) 2014, Michael Schreiner
      * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
      */
-    public class MetaDataTestObj extends TaskNode implements TestObj{
+    public class MetaDataTestObj extends TaskNode implements TestObj {
         @Override
         public String toString() {
             StringBuffer resBuffer = new StringBuffer();
@@ -56,8 +56,7 @@ public class MetaDataServiceTest extends DataDomainServiceTest {
                      .append(this.getMetaNodePraefix()).append("|")
                      .append(this.getMetaNodeNummer()).append("|")
                      .append(this.getMetaNodeTypeTags()).append("|")
-                     .append(this.getMetaNodeSubTypeTags()).append("|")
-                     ;
+                     .append(this.getMetaNodeSubTypeTags()).append("|");
             return resBuffer.toString();
             
         }
@@ -80,16 +79,15 @@ public class MetaDataServiceTest extends DataDomainServiceTest {
      * <h4>FeatureKeywords:</h4>
      *     Test Config Initialisation
      * @return - a new dataobj for the test
-     * @throws Exception
-     */
+     * @throws Exception - possible Exception     */
     protected MetaDataTestObj getNewMetaDataTestObj() throws Exception  {
-        return (MetaDataTestObj)setupNewTestObj();
+        return (MetaDataTestObj) setupNewTestObj();
     }
 
 
     @Override
     public void setupDataDomainService() throws Exception {
-        NodeServiceImpl nodeService = (NodeServiceImpl)TaskNode.getConfiguredNodeService();
+        NodeServiceImpl nodeService = (NodeServiceImpl) TaskNode.getConfiguredNodeService();
         dataDomainService = nodeService.hshDataDomainRecalcerByClass.get(MetaDataServiceImpl.class);
     }
 
@@ -110,7 +108,7 @@ public class MetaDataServiceTest extends DataDomainServiceTest {
                         expectedAfterDoAfterChildren, recurseDirection);
 
         // init nodenumberervice and check with prefix
-        ((MetaDataService)dataDomainService).getNodeNumberService().initNextNodeNumber("Test", 100);
+        ((MetaDataService) dataDomainService).getNodeNumberService().initNextNodeNumber("Test", 100);
         expectedAfterDoBeforeChildren = "null|Test|101|null|null|";
         expectedAfterDoAfterChildren = "null|Test|101|null|null|";
         myDataDomainObj.setMetaNodePraefix("Test");
@@ -118,7 +116,7 @@ public class MetaDataServiceTest extends DataDomainServiceTest {
                         expectedAfterDoAfterChildren, recurseDirection);
 
         // check if parent-prefix is set
-        ((MetaDataService)dataDomainService).getNodeNumberService().initNextNodeNumber("Test2", null);
+        ((MetaDataService) dataDomainService).getNodeNumberService().initNextNodeNumber("Test2", null);
         myDataDomainObj = getNewMetaDataTestObj();
         myDataDomainObj.setEbene(2);
         myDataDomainObj2 = getNewMetaDataTestObj();

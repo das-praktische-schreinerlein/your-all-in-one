@@ -51,5 +51,5 @@ public interface IstDataParser extends Parser {
      * @return count elements found
      * @throws Exception - parser-Exceptions possible
      */
-    public int parseIstDataFromName(IstData node, ImportOptions options) throws Exception;
+    int parseIstDataFromName(IstData node, ImportOptions options) throws Exception;
 }

@@ -31,16 +31,16 @@ import java.util.Date;
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public interface IstData extends DataDomain {
-    public static final int CONST_ORDER = 40;
+    int CONST_ORDER = 40;
 
-    public Double getIstStand();
-    public void setIstStand(Double istStand);
-    public Date getIstStart();
-    public void setIstStart(Date istStart);
-    public Date getIstEnde();
-    public void setIstEnde(Date istEnde);
-    public Double getIstAufwand();
-    public void setIstAufwand(Double istAufwand);
-    public String getIstTask();
-    public void setIstTask(String istTask);
+    Double getIstStand();
+    void setIstStand(Double istStand);
+    Date getIstStart();
+    void setIstStart(Date istStart);
+    Date getIstEnde();
+    void setIstEnde(Date istEnde);
+    Double getIstAufwand();
+    void setIstAufwand(Double istAufwand);
+    String getIstTask();
+    void setIstTask(String istTask);
 }

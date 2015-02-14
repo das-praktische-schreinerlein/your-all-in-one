@@ -51,5 +51,5 @@ public interface SysDataParser extends Parser {
      * @return count elements found
      * @throws Exception - parser-Exceptions possible
      */
-    public int parseSysDataFromName(SysData node, ImportOptions options) throws Exception;
+    int parseSysDataFromName(SysData node, ImportOptions options) throws Exception;
 }

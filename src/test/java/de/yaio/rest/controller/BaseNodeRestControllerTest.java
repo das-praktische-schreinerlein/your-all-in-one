@@ -61,7 +61,7 @@ import de.yaio.core.node.BaseNode;
 @ContextConfiguration("/META-INF/spring/defaultApplicationContext.xml")
 public abstract class BaseNodeRestControllerTest  extends BaseTest {
     /** masternodeId **/
-    public static String CONST_MASTERNODE_ID = "MasterplanMasternode1";
+    public static final String CONST_MASTERNODE_ID = "MasterplanMasternode1";
                     
     /** Logger **/
     private static final Logger LOGGER =
@@ -84,7 +84,7 @@ public abstract class BaseNodeRestControllerTest  extends BaseTest {
         // initApplicationContext
         String[] args = new String[2];
         args[0] = "--config";
-        args[1] = "D:\\Projekte\\yaio-devel\\config\\application.properties";
+        args[1] = "D:\\Projekte\\yaio-playground\\config\\application.properties";
         if (Configurator.getInstance().getCmdLineArgs() == null) {
             Configurator.getInstance().getAvailiableCmdLineOptions();
             Configurator.getInstance().setCmdLineArgs(args);
@@ -119,13 +119,12 @@ public abstract class BaseNodeRestControllerTest  extends BaseTest {
      *     test the node-life-cycle (create, show, update, delete) of a TaskNode
      * <h4>FeatureKeywords:</h4>
      *     Test
-     * @param node - the node to create, show, update, delete
      * @throws Exception - io-Exceptions possible
      */
     @Test
     public void doTestNodeLifeCycle() throws Exception {
         // create TestObj
-        BaseNode node = (BaseNode)setupNewTestObj();
+        BaseNode node = (BaseNode) setupNewTestObj();
         node.setMetaNodePraefix("WEBTEST");
         
         // test the common lifecycle
@@ -150,7 +149,7 @@ public abstract class BaseNodeRestControllerTest  extends BaseTest {
      * @param node - the node to create, show, update, delete
      * @throws Exception - io-Exceptions possible
      */
-    public void testNodeLifeCycle(BaseNode node) throws Exception {
+    public void testNodeLifeCycle(final BaseNode node) throws Exception {
         // create node
         String newSysUID = testCreateNode(CONST_MASTERNODE_ID, node);
         node.setSysUID(newSysUID);
@@ -181,7 +180,7 @@ public abstract class BaseNodeRestControllerTest  extends BaseTest {
      * @param name - name of the requested node
      * @throws Exception - io-Exceptions possible
      */
-    public void testShowNode(String id, String name) throws Exception {
+    public void testShowNode(final String id, final String name) throws Exception {
         // request
         MockHttpServletRequestBuilder req = 
                         MockMvcRequestBuilders.get("/nodes/show/" + id);
@@ -218,7 +217,7 @@ public abstract class BaseNodeRestControllerTest  extends BaseTest {
      * @return - the sysUID of the new node
      * @throws Exception - io-Exceptions possible
      */
-    public String testCreateNode(String parentId, BaseNode node) throws Exception {
+    public String testCreateNode(final String parentId, final BaseNode node) throws Exception {
         // request
         MockHttpServletRequestBuilder req = 
                         MockMvcRequestBuilders.post("/nodes/create/" 
@@ -234,7 +233,7 @@ public abstract class BaseNodeRestControllerTest  extends BaseTest {
         
         // check data
         res.andExpect(jsonPath("$.node.name", is(node.getName())))
-           .andExpect(jsonPath("$.node.sysUID",IsNull.notNullValue()));
+           .andExpect(jsonPath("$.node.sysUID", IsNull.notNullValue()));
         
         // create JSON from String
         String response = res.andReturn().getResponse().getContentAsString();
@@ -254,7 +253,7 @@ public abstract class BaseNodeRestControllerTest  extends BaseTest {
      * @return the ResultActions for more checks
      * @throws Exception - io-Exceptions possible
      */
-    public ResultActions testUpdateNode(BaseNode node) throws Exception {
+    public ResultActions testUpdateNode(final BaseNode node) throws Exception {
         // request
         MockHttpServletRequestBuilder req = 
                         MockMvcRequestBuilders.patch("/nodes/update/" 
@@ -270,7 +269,7 @@ public abstract class BaseNodeRestControllerTest  extends BaseTest {
         
         // check data
         res.andExpect(jsonPath("$.node.name", is(node.getName())))
-           .andExpect(jsonPath("$.node.sysUID",is(node.getSysUID())));
+           .andExpect(jsonPath("$.node.sysUID", is(node.getSysUID())));
            
         return res;
     }
@@ -286,7 +285,7 @@ public abstract class BaseNodeRestControllerTest  extends BaseTest {
      * @return the ResultActions for more checks
      * @throws Exception - io-Exceptions possible
      */
-    public ResultActions testDeleteNode(String sysuID) throws Exception {
+    public ResultActions testDeleteNode(final String sysuID) throws Exception {
         // request
         MockHttpServletRequestBuilder req = 
                         MockMvcRequestBuilders.delete("/nodes/delete/" + sysuID);
@@ -315,17 +314,18 @@ public abstract class BaseNodeRestControllerTest  extends BaseTest {
      * @return - the response for more checks
      * @throws Exception - io-Exception possible
      */
-    public ResultActions testBaseRequest(MockHttpServletRequestBuilder rb) throws Exception {
+    public ResultActions testBaseRequest(final MockHttpServletRequestBuilder rb) throws Exception {
         // ask
         ResultActions res = mockMvc.perform(rb);
 
         // extract response
         MockHttpServletResponse response = res.andReturn().getResponse();
-        if (response.getStatus() != 200) 
+        if (response.getStatus() != 200) {
             LOGGER.error("result response-err:" + response.getStatus() 
                             + " content:" + response.getContentAsString()
                             + " errmsg:" + response.getErrorMessage()
                             );
+        }
 
         // check status
         res.andExpect(status().isOk());
@@ -337,10 +337,12 @@ public abstract class BaseNodeRestControllerTest  extends BaseTest {
         String content = response.getContentAsString();
         String state = JsonPath.read(content, "$.state");
         String stateMsg = JsonPath.read(content, "$.stateMsg");
-        if (LOGGER.isDebugEnabled())
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("info state:" + state + " msg:" + stateMsg);
-        if (! state.equalsIgnoreCase("OK1"))
+        }
+        if (!state.equalsIgnoreCase("OK1")) {
             LOGGER.error("error state:" + state + " msg:" + stateMsg);
+        }
         res.andExpect(jsonPath("$.state", is("OK")));
         
         return res;
@@ -357,7 +359,7 @@ public abstract class BaseNodeRestControllerTest  extends BaseTest {
      * @return json for the request
      * @throws IOException - io-Exceptions possible
      */
-    public static byte[] convertObjectToJsonBytes(Object object) throws IOException {
+    public static byte[] convertObjectToJsonBytes(final Object object) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.setSerializationInclusion(Include.NON_NULL);
         return mapper.writeValueAsBytes(object);

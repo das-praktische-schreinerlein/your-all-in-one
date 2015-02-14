@@ -66,28 +66,29 @@ public class PlanDataFormatterImpl extends FormatterImpl implements PlanDataForm
      *     Config
      * @param exporter - instance of the Exporter which will use me
      */
-    public static void configureDataDomainFormatter(Exporter exporter) {
+    public static void configureDataDomainFormatter(final Exporter exporter) {
         Formatter formatter = new PlanDataFormatterImpl();
         exporter.addDataDomainFormatter(formatter);
     }
 
     @Override
-    public void format(DataDomain node, StringBuffer nodeOutput, OutputOptions options) throws Exception {
+    public void format(final DataDomain node, final StringBuffer nodeOutput, final OutputOptions options) throws Exception {
         // Check if node is compatibel
         if (node != null) {
-            if (! PlanData.class.isInstance(node)) {
+            if (!PlanData.class.isInstance(node)) {
                 throw new IllegalArgumentException();
             }
         }
-        formatPlanData((PlanData)node, nodeOutput, options);
+        formatPlanData((PlanData) node, nodeOutput, options);
     }
 
     @Override
-    public void formatPlanData(PlanData node, StringBuffer nodeOutput, OutputOptions oOptions) throws Exception {
+    public void formatPlanData(final PlanData node, final StringBuffer nodeOutput, final OutputOptions oOptions) throws Exception {
         // exit if Flg not set
-        if (! oOptions.isFlgShowPlan()) {
-            if (LOGGER.isDebugEnabled())
+        if (!oOptions.isFlgShowPlan()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("SKIP: isFlgShowPlan not set for node:" + node.getNameForLogger());
+            }
             return;
         }
 
@@ -110,18 +111,21 @@ public class PlanDataFormatterImpl extends FormatterImpl implements PlanDataForm
                 || start != null
                 || ende != null
                 || task != null) {
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Do: PlanDataFormatter for Node:" + node.getNameForLogger());
+            }
 
             // Abstand
-            if (nodeOutput.length() > 0)
+            if (nodeOutput.length() > 0) {
                 nodeOutput.append(" ");
+            }
 
             // Einrueckung
             if (oOptions.getIntendFuncArea() > 0) {
-                if (LOGGER.isDebugEnabled())
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Do: IntendPlanPos Output " + nodeOutput.toString() 
                             + " for Node:" + node.getNameForLogger());
+                }
                 while (nodeOutput.length() < oOptions.getIntendFuncArea()) {
                     nodeOutput.append(" ");
                 }
@@ -147,7 +151,7 @@ public class PlanDataFormatterImpl extends FormatterImpl implements PlanDataForm
                     nodeOutput.append("-          ");
                 }
             }
-            if (task != null && ! task.equals("") && ! task.equals(" ")) {
+            if (task != null && !task.equals("") && !task.equals(" ")) {
                 nodeOutput.append(" " + task);
             }
             if (oOptions.isFlgShowBrackets()) {

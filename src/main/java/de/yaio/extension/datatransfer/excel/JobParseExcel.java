@@ -49,7 +49,7 @@ public class JobParseExcel extends JobParseWiki {
      *     Constructor
      * @param args the command line arguments
      */
-    public JobParseExcel(String[] args) {
+    public JobParseExcel(final String[] args) {
         super(args);
     }
     
@@ -60,7 +60,7 @@ public class JobParseExcel extends JobParseWiki {
     }
 
     @Override
-    protected Options addAvailiableCmdLineOptions() throws Throwable {
+    protected Options addAvailiableCmdLineOptions() throws Exception {
         Options availiableCmdLineOptions = 
                         Configurator.getNewOptionsInstance();
         
@@ -73,7 +73,7 @@ public class JobParseExcel extends JobParseWiki {
     }
 
     @Override
-    public void doJob() throws Throwable {
+    public void doJob() throws Exception {
         // parse PPL-source
         String pplSource = commonImporter.extractDataFromExcel();
         System.out.println(pplSource);
@@ -92,7 +92,7 @@ public class JobParseExcel extends JobParseWiki {
      *     CLI
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         JobParseExcel me = new JobParseExcel(args);
         me.startJobProcessing();
     }

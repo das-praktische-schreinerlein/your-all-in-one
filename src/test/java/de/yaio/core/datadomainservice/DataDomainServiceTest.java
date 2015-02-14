@@ -61,8 +61,7 @@ public abstract class DataDomainServiceTest extends BaseTest {
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     Test Config Initialisation
-     * @throws Exception
-     */
+     * @throws Exception - possible Exception     */
     @Before
     public abstract void setupDataDomainService() throws Exception;
     
@@ -74,8 +73,7 @@ public abstract class DataDomainServiceTest extends BaseTest {
      *     do the ServiceRecalc-tests
      * <h4>FeatureKeywords:</h4>
      *     Test
-     * @throws Exception
-     */
+     * @throws Exception - possible Exception     */
     public abstract void testServiceDoRecalc() throws Exception;
 
     /**
@@ -88,24 +86,24 @@ public abstract class DataDomainServiceTest extends BaseTest {
      *     calls dataDomainService.doRecalcAfterChildren and checks the result with checkServiceResult()<br>  
      * <h4>FeatureKeywords:</h4>
      *     Test
-     * @param myDataDomainObj - the dataobj to test
+     * @param testObj - the dataobj to test
      * @param expectedAfterDoBeforeChildren - the expected result after call doRecalcBeforeChildren
      * @param expectedAfterDoAfterChildren - the expected result after call doRecalcAfterChildren
      * @param recurseDirection - direction of recalc
-     * @throws Exception
-     */
-    public void testServiceDoRecalc(TestObj testObj, 
-                    String expectedAfterDoBeforeChildren,
-                    String expectedAfterDoAfterChildren,
-                    int recurseDirection) throws Exception {
+     * @throws Exception - possible Exception     */
+    public void testServiceDoRecalc(final TestObj testObj, 
+                    final String expectedAfterDoBeforeChildren,
+                    final String expectedAfterDoAfterChildren,
+                    final int recurseDirection) throws Exception {
         
-        DataDomain myDataDomainObj = (DataDomain)testObj;
+        DataDomain myDataDomainObj = (DataDomain) testObj;
         
         // run doRecalcBeforeChildren
-        if (LOGGER.isDebugEnabled())
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("src before doRecalcBeforeChildren:" 
                          + myDataDomainObj.toString());
-        dataDomainService.doRecalcBeforeChildren((DataDomain)myDataDomainObj, recurseDirection);
+        }
+        dataDomainService.doRecalcBeforeChildren((DataDomain) myDataDomainObj, recurseDirection);
         testService.checkToStringResult(testObj, expectedAfterDoBeforeChildren);
         
         // recalc children
@@ -116,9 +114,10 @@ public abstract class DataDomainServiceTest extends BaseTest {
         }
 
         // run doRecalcBeforeChildren
-        if (LOGGER.isDebugEnabled())
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("src before doRecalcAfterChildren:" 
                          + myDataDomainObj.toString());
+        }
         dataDomainService.doRecalcAfterChildren(myDataDomainObj, recurseDirection);
         testService.checkToStringResult(testObj, expectedAfterDoAfterChildren);
     };

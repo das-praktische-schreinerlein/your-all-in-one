@@ -51,5 +51,5 @@ public interface SymLinkDataParser extends Parser {
      * @return count elements found
      * @throws Exception - parser-Exceptions possible
      */
-    public int parseSymLinkDataFromName(SymLinkData node, ImportOptions options) throws Exception;
+    int parseSymLinkDataFromName(SymLinkData node, ImportOptions options) throws Exception;
 }

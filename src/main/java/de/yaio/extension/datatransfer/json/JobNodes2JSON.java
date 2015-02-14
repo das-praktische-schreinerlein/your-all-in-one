@@ -47,7 +47,7 @@ public class JobNodes2JSON extends JobNodes2Wiki {
      *     Constructor
      * @param args the command line arguments
      */
-    public JobNodes2JSON(String[] args) {
+    public JobNodes2JSON(final String[] args) {
         super(args);
     }
 
@@ -69,7 +69,7 @@ public class JobNodes2JSON extends JobNodes2Wiki {
      *     CLI
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         JobNodes2JSON me = new JobNodes2JSON(args);
         me.startJobProcessing();
     }

@@ -31,7 +31,7 @@ import de.yaio.datatransfer.exporter.OutputOptions;
  * @copyright Copyright (c) 2014, Michael Schreiner
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-public interface SysDataFormatter extends Formatter{
+public interface SysDataFormatter extends Formatter {
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -53,5 +53,5 @@ public interface SysDataFormatter extends Formatter{
      * @param options - options for formatter
      * @throws Exception - parser/format-Exceptions possible
      */
-    public void formatSysData(SysData node, StringBuffer nodeOutput, OutputOptions options) throws Exception;
+    void formatSysData(SysData node, StringBuffer nodeOutput, OutputOptions options) throws Exception;
 }

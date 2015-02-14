@@ -53,7 +53,7 @@ public abstract class BaseTest {
      * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
      */
     public interface TestObj  {
-        public String toString();
+        String toString();
     }
 
     /**

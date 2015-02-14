@@ -43,28 +43,28 @@ import de.yaio.datatransfer.importer.NodeFactory;
  */
 public class IstDataParserImpl  extends ParserImpl implements IstDataParser {
 
-    Calendar calDate = new GregorianCalendar();
-    Calendar calTime = new GregorianCalendar();
+    static Calendar calDate = new GregorianCalendar();
+    static Calendar calTime = new GregorianCalendar();
 
     // Logger
     private static final Logger LOGGER =
             Logger.getLogger(IstDataParserImpl.class);
 
     // Patterns
-    protected static String CONST_PATTERN_SEG_OPTIONAL_DATETIME = 
+    protected static final String CONST_PATTERN_SEG_OPTIONAL_DATETIME = 
             //          "("+ CONST_PATTERN_SEG_DATUM + ")?\\s?("+ CONST_PATTERN_SEG_TIME + ")?" 
             //        + "-?("+ CONST_PATTERN_SEG_DATUM + ")?\\s?("+ CONST_PATTERN_SEG_TIME + ")?";
             // TODO: TASK aif TIME umsetzen und schauen was das Problem ist
-            "("+ CONST_PATTERN_SEG_DATUM + ")?[ ]?("+ CONST_PATTERN_SEG_TIME + ")?" 
-            + "-?("+ CONST_PATTERN_SEG_DATUM + ")?[ ]?("+ CONST_PATTERN_SEG_TIME + ")?";        
+            "(" + CONST_PATTERN_SEG_DATUM + ")?[ ]?(" + CONST_PATTERN_SEG_TIME + ")?" 
+            + "-?(" + CONST_PATTERN_SEG_DATUM + ")?[ ]?(" + CONST_PATTERN_SEG_TIME + ")?";        
 
     // Ist: Stand% Stunden Start-Ende Task
     protected static final String CONST_PATTERN_SEG_IST =
         "Ist:\\W*"
-               +"(" + CONST_PATTERN_SEG_STAND + ")%[ ]*"
+               + "(" + CONST_PATTERN_SEG_STAND + ")%[ ]*"
                + "(" + CONST_PATTERN_SEG_HOURS + ")?h?[ ]*"
                + CONST_PATTERN_SEG_OPTIONAL_DATETIME
-               + "[ ]*("+ CONST_PATTERN_SEG_TASK + ")?";
+               + "[ ]*(" + CONST_PATTERN_SEG_TASK + ")?";
     protected static final Pattern CONST_PATTERN_IST =
         Pattern.compile("(.*)" + CONST_PATTERN_SEG_IST + "(.*)", Pattern.UNICODE_CHARACTER_CLASS);
 
@@ -78,7 +78,7 @@ public class IstDataParserImpl  extends ParserImpl implements IstDataParser {
      *     Config
      * @param nodeFactory - instance of the nodeFactory which will use the parser 
      */
-    public static void configureDataDomainParser(NodeFactory nodeFactory) {
+    public static void configureDataDomainParser(final NodeFactory nodeFactory) {
         nodeFactory.addDataDomainParser(new IstDataParserImpl());
     }
 
@@ -93,25 +93,26 @@ public class IstDataParserImpl  extends ParserImpl implements IstDataParser {
     }
 
     @Override
-    public int parseFromName(DataDomain node, ImportOptions options) throws Exception {
+    public int parseFromName(final DataDomain node, final ImportOptions options) throws Exception {
         // Check if node is compatibel
         if (node != null) {
-            if (! IstData.class.isInstance(node)) {
+            if (!IstData.class.isInstance(node)) {
                 throw new IllegalArgumentException();
             }
         }
-        return parseIstDataFromName((IstData)node, options);
+        return parseIstDataFromName((IstData) node, options);
     }
 
     @Override
-    public int parseIstDataFromName(IstData node, ImportOptions options) throws Exception {
+    public int parseIstDataFromName(final IstData node, final ImportOptions options) throws Exception {
         int found = 0;
 
         // Check for valid data
         if (node.getName() == null) {
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Pattern Ist dosnt match because node has no name for node:" 
                         + node.getNameForLogger());
+            }
             return found;
         }
 
@@ -128,28 +129,31 @@ public class IstDataParserImpl  extends ParserImpl implements IstDataParser {
 
             // Ist-Prozent
             matcherindex = 2;
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Pattern: " + CONST_PATTERN_IST + " " 
                     + matcherindex + ":" + matcher.group(matcherindex));
+            }
             if (matcher.group(matcherindex) != null) {
                 node.setIstStand(new Double(matcher.group(matcherindex)));
             }
 
             // Ist-h
             matcherindex = 3;
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Pattern: " + CONST_PATTERN_IST + " " 
                         + matcherindex + ":" + matcher.group(matcherindex)
                         + " for node:" + node.getNameForLogger());
+            }
             if (matcher.group(matcherindex) != null) {
                 node.setIstAufwand(new Double(matcher.group(matcherindex)));
             }
             // Ist-Startdatum
             matcherindex = 4;
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Pattern: " + CONST_PATTERN_IST + " " 
                         + matcherindex + ":" + matcher.group(matcherindex)
                         + " for node:" + node.getNameForLogger());
+            }
             if (matcher.group(matcherindex) != null) {
                 calDate.setTime(DF.parse(matcher.group(matcherindex)));
                 calDate.set(Calendar.SECOND, CONST_FLAG_NODATE_SECONDS);
@@ -157,10 +161,11 @@ public class IstDataParserImpl  extends ParserImpl implements IstDataParser {
             }
             // Ist-Startzeit
             matcherindex = 5;
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Pattern: " + CONST_PATTERN_IST + " " 
                         + matcherindex + ":" + matcher.group(matcherindex)
                         + " for node:" + node.getNameForLogger());
+            }
             if (matcher.group(matcherindex) != null && node.getIstStart() != null) {
                 calDate.setTime(node.getIstStart());
                 timeOffsett = TF.parse(matcher.group(matcherindex));
@@ -174,10 +179,11 @@ public class IstDataParserImpl  extends ParserImpl implements IstDataParser {
             }
             // Ist-Enddatum
             matcherindex = 6;
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Pattern: " + CONST_PATTERN_IST + " " 
                         + matcherindex + ":" + matcher.group(matcherindex)
                         + " for node:" + node.getNameForLogger());
+            }
             if (matcher.group(matcherindex) != null) {
                 calDate.setTime(DF.parse(matcher.group(matcherindex)));
                 calDate.set(Calendar.SECOND, CONST_FLAG_NODATE_SECONDS);
@@ -185,10 +191,11 @@ public class IstDataParserImpl  extends ParserImpl implements IstDataParser {
             }
             // Ist-Endzeit
             matcherindex = 7;
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Pattern: " + CONST_PATTERN_IST + " " 
                         + matcherindex + ":" + matcher.group(matcherindex)
                         + " for node:" + node.getNameForLogger());
+            }
             if (matcher.group(matcherindex) != null && node.getIstEnde() != null) {
                 calDate.setTime(node.getIstEnde());
                 timeOffsett = TF.parse(matcher.group(matcherindex));
@@ -202,10 +209,11 @@ public class IstDataParserImpl  extends ParserImpl implements IstDataParser {
             }
             // Ist-Task
             matcherindex = 8;
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Pattern: " + CONST_PATTERN_IST + " " 
                         + matcherindex + ":" + matcher.group(matcherindex)
                         + " for node:" + node.getNameForLogger());
+            }
             if (matcher.group(matcherindex) != null) {
                 node.setIstTask(matcher.group(matcherindex));
             }

@@ -1,0 +1,172 @@
+= INFO - Einführung                                                                                                                                           [NodeMeta: SysIntro,1,,] [NodeSys: SysIntro1,,,,]
+* INFO - Du willst mehr erfahren?                                       [DocLayout: DIV,thatsit,ThatsIt,]
+# Du bist es leid?
+- Ist das Projekt wieder völlig aus dem Ruder gelaufen?
+- Hat man bei der Urlaubsplanung wieder mal die Hälfte vergessen?
+- Sagt der Handyprovider deine Kündigung sei nicht fristgerecht eingegangen und du kannst nichts nachweisen (keinen Absendetermin, keinen Inhalt)?
+
+# Ich auch
+Und deshalb habe ich D'Artagnan erfunden.
+
+## D'Artagnan hilft
+
+### Unterstützung bei der Planung
+- Er unterstützt dich bei der Planung deines Projekts.
+- Strukturiere dein Projekt wie du es magst, erstelle deine Checklisten und terminiere wichtige Ergebnisse. D'Artagnan wird dir alles übersichtlich darstellen.
+
+```struct
+Projekt
+  Unterprojekt 1
+    Aufgabe 1: Aufwand 100h
+    Aufgabe 2: Aufwand 50h
+  Unterprojekt 2  
+    Aufgabe 1: Aufwand 10h
+    Aufgabe 2: Aufwand 70h
+  Termin Ende 22.12.2024 
+```
+
+![Planung](/examples/startseite-screen-planung.png "Planung")
+
+### Übersicht bei der Umsetzung
+- Setze dir Termine und D'Artagnan wird dich erinnern.
+- Dokumentiere den Stand und wie lange du gebraucht hast. Er zeigt dir wo du in deinem Projekt stehst, wie viel geplant war, was schon verbraucht und noch benötigt wird.
+- Mach dir Notizen und 
+- Kein Punkt wird vergessen. Ein Projekt ist erst beendet, wenn du auch die letzte Aufgabe aus deiner Checkliste beendet hast. 
+
+### Sammle Erfahrungen
+- Er liefert das AHA-Erlebnis, wenn er dir geplanten und real benötigten Aufwand, geplanten und nachher erreichten Termin gegenüberstellt.
+
+### Lerne aus Erfahrungen
+- Benutze Templates für wiederkehrende Aufgaben und wende deine einmal gemachten Erfahrungen (Checklisten, Aufwände, Zeiten) immer wieder an.
+
+### Hebe den Wissensschatz
+- Nichts wird vergessen. Die im Laufe des Projekts erstellten Dokumente, Notizen und Abläufe sind für Recherchezwecke immer schnell erreichbar. 
+  ** INFO - Ende:                                                               [DocLayout: P,startmesg3,,X]                                                    
+
+  ** INFO - Wofür ist er da?                                       [DocLayout: DIV,intro,Was,]
+# Ziele
+
+## Hilfe
+- Planung+Strukturierung von Aufgaben, Projekten + Terminen mit Aufwand, Start+Ende, Kontierung, Visualisierung+Export als Gantt, Mindmap, Kalender
+- Projektverfolgung mit Stand, Aufwand, Zeitraum, Visualisierung mit Farben, Statusverfolgung, Visualisierung+Export in verschiedene Formate
+- Dokumentation von Konzepten, Quellcodes, URLs, Dateien innerhalb der Planung+Umsetzung oder auch als Wiki
+
+## Unterstützung
+- Projektmanagement: Planung und Verfolgung von Aufgaben, Projekten und Terminen mit Aufwand, Zeitraum und Stand
+- Dokumentation: Dokumentation von Konzepten und Umsetzung innerhalb der Projekte
+- Wissenspeicher: Ablage von Notizen, Howtos Urls und Dateien in einem strukturierten Wiki
+
+## Alles in einer Oberfläche, alles in einem Baum
+
+  ** INFO - Ende                                                                [DocLayout: P,,,X]                                                              
+
+  ** INFO - Was ist D'Artagnan?                                       [DocLayout: DIV,intro,Was,]
+# Er ist dein zentrales Werkzeug.
+
+## Planung
+- du kannst Projekte und Aufgaben strukturieren und planen (Aufwand, Zeitraum)
+- den Stand dokumentieren (direkt an der Aufgabe angeben, in welchem Zeitraum du wie lange gearbeitet hast und wie viel % schon erledigt sind), im Bemerkungsfeld kannst du wichtige Informationen für und aus der Umsetzung dokumentieren
+- gibt es wichtige Hinweise/Howtos die bei der Aufgabe helfen können, oder dokumentiert werden sollen, kannst du eine InfoNode an der Aufgabe anlegen, wo diese Informationen dann gespeichert werden
+- liegt das ganze als Ressource im Internet, oder im lokalen Dateisystem, kannst du diese auch als Anhang an die Aufgabe/Infos anhängen
+- Solltest du längere Bemerkungen oder Quelltext-Ausschnitte haben, kannst du diese als Markdown formatiert im Bemerkungsfeld speichern
+- Sollte eine Aufgabe umfangreicher werden, dann unterteile sie doch einfach in Unteraufgaben die du im Baum als Kindsknoten anlegst. D'Artagnan zeigt die dann auch den aufsummierten Aufwand+Stand an und schließt die Elternaufgabe automatisch wenn alle Unteraufgaben erledigt sind.
+
+## Dokumentation/Howto/Infowiki
+- Ein weiteres Ziel von D'Artagnan ist der Gebrauch als Dokumentationssystem und DokuWiki
+- Dazu kann man über die Info+UrlResNodes einen Informationsbaum aufbauen.
+- Umfangreichere Artikel lassen sich mit Markdown und automatischem Syntaxhighlighting für Quellcodebereiche strukturieren und formatieren.
+- Unabhängig zur auf einen Knoten beschränkten Markdown-Formatierung, lassen sich die Knoten auch übergreifend im Baum mit zusätzlichen Layoutinformationen wie Rahmen usw. formatieren.
+- Diese Layoutinformationen wertet YAIO dann in der Darstellung im Explorer bzw. beim Export als Html-Seite aus und formatiert die Inhalte in ansprechender Weise.
+- Somit stellt das System 2 Layout-Formatierungsmechanismen zur Verfügung, die einzeln aber auch im Zusammenspiel die Erstellung umfangreicher Dokumentationen bzw. Webseiten ermöglichen. Die Startseite+Hilfe von YAIO bzw. die Portalinhalte von http://www.your-all-in-one.de und http://www.your-it-fellow.de werden zum Beispiel vollständig über diese Mechanismen gepflegt und layoutet.
+
+## Verlinkung
+- Neben der Verlinkung auf externe Ressourcen (Urls, Dateien) lassen sich über SymLinks, aber auch innerhalb von D'Artagnan Projekte oder Informationen verknüpfen. So macht es zum Beispiel Sinn von einer regelmäßigen Aufgabe (Backup) jeweils auf den Vorgänger zu verweisen oder auf das zentrale Howto in welchem die auszuführenden Befehle detailliert beschrieben sind.
+
+## AllInOne
+- Damit lässt sich in EINEM zentralen System neben der Planung, Umsetzung, Terminverfolgung auch noch die Dokumentation erstellen und recherchieren.
+
+
+  ** INFO - Ende                                                                [DocLayout: P,,,X]                                                              
+
+    ** **INFO - Ziel erreicht!**                                                [DocLayout: DIV,intro,,]                                                          
+      *** INFO - Gesucht: Du bist es leid, dein Leben nach Programmen auszurichten - Nichts dort zu finden, wo du es suchst - Im Chaos von Nachrichten, Terminen und Notizen unterzugehen? [DocLayout: P,startmesg1,,]  
+      *** INFO - Gesucht: Ich auch :-)                                          [DocLayout: P,startmesg2,,]                                                      
+      *** INFO - Gesucht: Und deshalb habe ich D'Artagnan erfunden. Meinen persönlichen Helfer, der mich vor dem alltäglichen Informations-Overkill schützt. [DocLayout: P,startmesg3,,X]  
+    ** **INFO - Was ist "D'Artagnan"?**                                         [DocLayout: DIV,management,Management,]                                          
+      *** INFO - In einem Satz: "D'Artagnan" ist Kalender, Organizer, Notizzettel, Checkliste, Projektplanung, Projektdokumentation, Wiki, HowTo, Adressbuch, Dokumentenmanagement... [DocLayout: LI,management,,]  
+      *** INFO - Der Blick aufs Ganze: Er ist quasi Alles in Einem, da er alle deine Informationen miteinander verlinkt. Er ist der Würfel, auf dem du dein gesamtes Leben von allen Seiten aus verschiedenen Sichten betrachten kannst. [DocLayout: LI,management,,]  
+      *** INFO - Dein digitales Leben: "D'Artagnan" ist "dein digitales Leben". Alles, was schriftlich niedergelegt, geplant, dokumentiert, gespeichert wird, kannst du mit "D'Artagnan" zentral abrufen und vernetzen. [DocLayout: LI,management,,]  
+      *** INFO - Alles in Einem: Alles, was früher auf verschiedenen fliegenden Notizzetteln, Ordnern oder digital in verschiedenen Programmen (Email, Datei, Office, Organizer) gespeichert wurde, stellt "D'Artagnan" an einer Stelle, unter einer Oberfläche zur Verfügung. [DocLayout: LI,management,,]  
+      *** INFO - Alles in Deiner Hand: In Zeiten, wo offenbar wird, dass deine Daten nur dann sicher sind, wenn sie lokal bei dir liegen, soll D'Artagnan dir die Kontrolle zurückgeben. Für Teamarbeit und Synchronisation braucht es keine Google-Calendar, Dropbox oder andere Web-Dienste, wo die NSA oder wer auch immer mithört. Mit Hilfe von D'Artagnan und anderen freien Tools bekommst DU die Kontrolle zurück. [DocLayout: LI,management,,X]  
+    ** **INFO - Was kann "D'Artagnan"?**                                        [DocLayout: DIV,was,Was kann er?,]                                               
+      *** INFO - Mittelpunkt: Er ist der digitale Lebensmittelpunkt, an den ich alles sende, dokumentiere, hochlade und speichere. [DocLayout: P,,,]             
+      *** INFO - No Fear: Aber keine Angst - "D'Artagnan" hat nicht den Anspruch, bestehende gute Lösungen (Kalender, Mindmapper) abzulösen. [DocLayout: P,,,]   
+      *** INFO - Integrieren statt ablösen: Nein! Wer will KANN sie zur Ansicht und eingeschränkt auch zur Pflege weiterverwenden. Aber er muss nicht, denn "D'Artagnan" bindet diese Programme und Daten ein, so dass man sich die Daten z.B. in Outlook, aber auch in "D'Artagnan" ansehen kann. [DocLayout: P,,,X]  
+    ** **INFO - Gibt es das nicht schon?**                                      [DocLayout: DIV,priorart,Prio art?,]                                             
+      *** INFO - Gibt es schon: Ja es gibt sehr gute Kalender, Organizer, Projektplanungssoftware. Das alles gibt es schon und an vielen Stellen auch viel besser. Aber es sind Insellösungen. [DocLayout: P,,,]  
+      *** INFO - Frei aber ohne Struktur: Du kannst alles in einem Wiki ablegen, dann hast du alle Informationen an einer Stelle, aber es ist unstrukturiert und du hast keine Terminverfolgung, Übersichtslisten usw. [DocLayout: P,,,]  
+      *** INFO - Struktur aber Dateninsel: Du kannst in Excel und MS-Projekt planen, dann hast du aber Dateninseln, die nicht mit den anderen Informationen wie Emails, Telefonaten, Dokumenten und Kontakten verknüpft sind. [DocLayout: P,,,]  
+      *** INFO - Ohne Verknüpfung: Es wird schwer werden, deine Checklisten und Notizen mit Kalender und Adressbuch zu verbinden. [DocLayout: P,,,]              
+      *** INFO - Moloch: Und wenn es solche Lösungen  gibt, dann bilden sie oft nur einen Teil ab und sind mit einem Moloch an Software, Lizenzen und Verwaltung verbunden, die dich erschlagen. [DocLayout: P,,,]  
+      *** **INFO - "D'Artagnan" wie "einfach"**                                 [DocLayout: UE,,,]                                                               
+        **** INFO - Einfach: Ich will eine einfache Lösung, die gut erweiterbar und bedienbar ist und das beste aus den bestehenden Systemen verbindet. [DocLayout: P,,,]  
+        **** INFO - Zentral: Wenn ich eine Aufgabe bearbeite, möchte ich alle Informationen (Planung, aktueller Stand, Dokumentation, Ressourcen, Kommunikation...) an einer Stelle pflegen und nicht wild in verschiedenen System suchen. [DocLayout: P,,,]  
+        **** **INFO - Zentrum: Er soll die zentrale Schaltstelle sein, die sich über Schnittstellen/Importe/Exporte in bestehende Systeme einbinden lässt, diese aber um eine zentrale intuitive Oberfläche erweitert.** [DocLayout: P,,,]  
+          ***** INFO - bestehende Kalender: Die bestehende Kalendersoftware (z.B. Thunderbird, Smartphone) kümmert sich um Termindarstellung+Erinnerung. [DocLayout: LI,continuance,,]  
+          ***** INFO - bestehende Mindmap: Freemind und andere MindMapper dienen der Übersicht für Projekt-Sitzungen. [DocLayout: LI,continuance,,]              
+          ***** INFO - bestehende Projektplanung: MS-Projekt, jGantt dienen zur Visualisierung der Projektplanung [DocLayout: LI,continuance,,]                  
+        **** INFO - Gutes verbinden: Wichtig ist, die bestehenden guten und gebräuchliche Frontends für die Visualisierung mit den zentral gespeicherten Daten zu beschicken, während die Datenpflege über die neue Oberfläche gemacht wird. [DocLayout: P,,,X]  
+    ** **INFO - Warum hab ich ihn geplant?**                                    [DocLayout: DIV,warum,Warum,]                                                    
+      *** INFO - Mein Leben: Mein Leben richtet sich nicht nach Programmen. Die Sachen, die anfallen, will ich zentral an einer Stelle pflegen und einsehen können. [DocLayout: P,,,X]  
+    ** **INFO - Wie ist der Ablauf ohne "D'Artagnan"?**                         [DocLayout: DIV,old,Oldschool,]                                                  
+      *** **INFO - Verteilt: Alles liegt verteilt**                             [DocLayout: P,,,]                                                                
+        **** INFO - Notizen: Man hat seine Notizzettel oder Dokumente auf dem Rechner [DocLayout: P,,,]                                                          
+        **** INFO - Aufgaben: Todos und Termine werden im Thunderbird bzw. Outlook angelegt und gepflegt [DocLayout: P,,,]                                       
+      *** INFO - Unstrukturiert: Aber es ist keine Gruppierung, Strukturierung wie mit einem Projektstrukturplan möglich. Man kann keine Abhängigkeiten, Abfolgen einbauen [DocLayout: P,,,]  
+      *** INFO - Sync-Problem: Wenn man die Daten auf dem Handy benötigt, muss man Handstände machen um es zu synchronisieren. [DocLayout: P,,,]                 
+      *** **INFO - Projektverzeichnis?: Viele Leute arbeiten mit Projektverzeichnissen, wo alles als Datei abgelegt ist, dann gehen aber die Metainfos verloren und alles wird doppelt abgelegt.** [DocLayout: P,,,]  
+        **** INFO - Dateien: Will man Dateien zuordnen, werden diese nicht verlinkt, sondern lokal abgelegt (immer wieder und wieder). Habe ich 5 Projekte, für die die Datei relevant ist, liegt sie 5 mal dort und muss jedes mal an 5 Orten geändert werden. [DocLayout: P,,,]  
+        **** INFO - Multiprojekt: Was, wenn die Datei zu mehreren Projekten gehört? SymLink? Was, wenn die Datei nur in einem der 5 Projekte geändert werden soll? [DocLayout: P,,,]  
+        **** INFO - einsame Telefonnotizen: Telefonate speichere ich mir als Gesprächsnotizen, ohne Metainformationen und Verbindung zum Adressbuch. [DocLayout: P,,,]  
+        **** INFO - Emails/Telefonate verloren: Will ich einem Projekt Emails/Telefonate zuordnen, kann ich diese ins Projektverzeichnis kopieren (nicht mehr mit Metainformationen versehen, durchsuchbar bzw. sortierbar), oder ich lege mir die gleiche Projektstruktur noch einmal in meinem Email-Programm an (läuft auseinander, alles doppelt, schwer zu finden). [DocLayout: P,,,]  
+      *** **INFO - Ein einziges Chaos ;-(**                                     [DocLayout: UE,,,]                                                               
+        **** INFO - Planung: Die Projektplanung und Strukturierung erfolgt in "Tool 1" (z.B. MS-Projekt). [DocLayout: LI,istohne,,]                              
+        **** INFO - Aufgaben-Dokumentation: Die Aufgaben-Dokumentation erfolgt in "Tool 2" (Wiki, Bugzilla usw.). [DocLayout: LI,istohne,,]                      
+        **** INFO - Ressourcen: Ressourcen werden im Dateisystem abgelegt, ohne direkte Zordnung zu einer Aufgabe, TODO usw. [DocLayout: LI,istohne,,]           
+        **** INFO - IST-Zustand: Die Ist-Stundenerfassung erfolgt in "Tool 3".  [DocLayout: LI,istohne,,]                                                        
+        **** INFO - Kommunikation: Die Kommunikation erfolgt in "Tool 4-XX" (Exchange, Mail-Server...). [DocLayout: LI,istohne,,]                                
+        **** INFO - Viele einzelne Baustellen: Alles sind einzelne Baustellen, die nicht integriert sind. [DocLayout: P,,,]                                      
+        **** INFO - Chaos: Es sind eigentlich chaotische Zustände. Planung, Umsetzung, Dokumentation und Kommunikation werden in getrennten Tools gepflegt. Informationen sind redundant und/oder laufen auseinander. [DocLayout: P,,,X]  
+    ** **INFO - Wie ist der neue Ablauf mit "D'Artagnan"?**                     [DocLayout: DIV,ablauf,ablauf,]                                                  
+      *** **INFO - Der Projektbaum**                                            [DocLayout: UE,,,]                                                               
+        **** INFO - Knoten: Alles basiert auf einem Knoten, der weitere verschiedenen Unterknoten haben kann. [DocLayout: P,,,]                                  
+        **** INFO - Alles ist Knoten: Ein solcher Knoten kann ein Projekt, Unterprojekt, Aufgabe, ToDo, Termin, Telefonat, Dokumentation, Idee, Info... sein. [DocLayout: P,,,]  
+        **** INFO - Baum: Alle Knoten lassen sich unterhalb der Wurzel des Projektbaumes anordnen und kombinieren, wie Ast/Zweig/Batt beim Baum. [DocLayout: P,,,]  
+        **** INFO - Flexibel: Alle Knoten lassen sich untereinander kombinieren. Eine Projekthierarchie kann in beliebig viele Ebenen unterteilt werden. Auch Aufgaben/ToDos/Termine/Infos können beliebig tief verschachtelt und kombiniert werden. So können unterhalb von Terminen Aufgaben/Infos usw. angelegt werden, aber das ganze auch andersherum. [DocLayout: P,,,]  
+        **** INFO - Variabel: Stellt man fest, dass eine geplante Aufgabe komplexer wird als gedacht - Kein Problem! Man unterteilt sie einfach und legt unterhalb der Aufgabe im Projektbaum weitere Unteraufgaben an. Ob nun im Rahmen der Planung oder später bei der Umsetzung, nichts ist in Stein gemeißelt. Die Plandaten und Stunden teilt man dann einfach auf die Unteraufgaben auf. [DocLayout: P,,,]  
+      *** **INFO - Integration**                                                [DocLayout: UE,,,]                                                               
+        **** INFO - Planung: Die Projektplanung und Strukturierung des Projekts erfolgt über die GUI. Dabei werden geplanter Aufwand, Zeitraum, benötigte Ressourcen usw. für Projekte, Aufgaben und ToDos direkt im Projektbaum geplant. [DocLayout: LI,bereiche,,]  
+        **** INFO - Zustand-Dokumentation: Die Zustands-Dokumentation (Projektstand, benötigter Aufwand, IST-Stundenerfassung) erfolgt ebenso im Projektbaum direkt in der geplanten Struktur. [DocLayout: LI,bereiche,,]  
+        **** INFO - Kontrolle: Termine, Meilensteine, Stände, kritischer Pfad lassen sich direkt aus den Projektdaten und den kumulierten Plan/Ist-Daten herauslesen. [DocLayout: LI,bereiche,,]  
+        **** INFO - Umsetzungs-Dokumentation: Die Umsetzungs-Dokumentation (Kommentare, Logs, Hinweise) erfolgt ebenso im Projektbaum direkt in der geplanten Struktur bei den Aufgabe, ToDos usw. [DocLayout: LI,bereiche,,]  
+        **** INFO - Ressourcen: Dokumente usw. können, egal wo sie physisch liegen, in den Projektbaum bei den spezifischen Aufgaben/Infos eingebunden werden. [DocLayout: LI,bereiche,,]  
+        **** INFO - Kommunikation-Dokumentation: Die Dokumentation der im Verlauf des Projekts durchgeführten Kommunikation (Telefonate, Emails, Chats, Sitzungsprotokolle) wird ebenso direkt im Projektbaum der jeweiligen Aufgabe zugeordnet. [DocLayout: LI,bereiche,,]  
+        **** INFO - Alles an einem Platz: Alles in einem Tool vereint, die verschiedenen Projektsichten zentral ansteuerbar. [DocLayout: P,,,]                   
+        **** INFO - Volle Integration: Planung, Umsetzung, Dokumentation und Kommunikation liegen an einer Stelle, in einer Struktur und stehen zueinander direkt im Bezug. [DocLayout: P,,,]  
+      *** **INFO - moderne Visualierung/einfache Handhabung**                   [DocLayout: UE,,,]                                                               
+        **** INFO - Visualisierung-Features: Für eine moderne Visualisierung und einfache Handhabung sollen möglichst basierend auf Webtechnologien eine Vielzahl von Features implementiert werden. [DocLayout: P,,,]  
+        **** INFO - Explorer: Man kann im Projektbaum browsen und sich für jede einzelne Aufgabe/ToDo usw. im Detail ansehen, wie sich die für "Aufgabe X" geplanten "5h im Zeitraum 01.02.2014-05.02.2014" zu benötigten "3h am 03.02.2014", ca. 5 verknüpften Urls, Dateien, Telefonaten, Emails und INFO-Einträgen, zur Dokumentation der Umsetzung entwickelt haben. [DocLayout: LI,features,,]  
+        **** INFO - Zustände: Zustände (Offen, Erledigt, usw.), Warnungen (Verspätet, Termin Überschritten usw. ), Hinweise (Terminankündigung, Wiedervorlagen usw.) werden vom System anhand der Daten automatisch berechnet, an externe Tools (Kalender usw.) exportiert. [DocLayout: LI,features,,]  
+        **** INFO - Visualisierung: Für die Visualisierung und Unterscheidung von Wichtigen/Unwichtigem werden spezielle Farbgebungen, Hervorhebungen, Icons genutzt. [DocLayout: LI,features,,]  
+      *** **INFO - Ausgabeformate**                                             [DocLayout: UE,,,]                                                               
+        **** INFO - Ausgabeformate: Neben der GUI zur Datenpflege soll die Möglichkeit des Ex/Imports in diverse Ausgabeformate möglich sein. [DocLayout: P,,,]  
+        **** INFO - Browser: Browser als Html                                   [DocLayout: LI,ausgabeformate,,]                                                 
+        **** INFO - Wiki: Wiki-Syntax zur Dateipflege/Anzeige                   [DocLayout: LI,ausgabeformate,,]                                                 
+        **** INFO - Gantt: als Ganttdiagramm zur Projektplanungsübersicht       [DocLayout: LI,ausgabeformate,,]                                                 
+        **** INFO - CSV/JSON: als CSV/JSON zur Weiterverarbeitung in externen Tool [DocLayout: LI,ausgabeformate,,]                                              
+        **** INFO - ICal: als ICal zur Synchronisierung mit Kalendern/Aufgabenverwaltung [DocLayout: LI,ausgabeformate,,]                                        
+        **** INFO - Mindmap: als Mindmap zur Projektübersicht                   [DocLayout: LI,ausgabeformate,,]                                                 
+        **** INFO - Excel: als Excel zur Weiterverwendung                       [DocLayout: LI,ausgabeformate,,]                                                 
+        **** INFO - ...                                                         [DocLayout: LI,ausgabeformate,,]                                                 
+    ** INFO - [DocLayout: P,,,X]    
+  

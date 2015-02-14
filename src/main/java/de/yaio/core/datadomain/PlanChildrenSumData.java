@@ -32,12 +32,12 @@ import java.util.Date;
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public interface PlanChildrenSumData extends DataDomain {
-    public static final int CONST_ORDER = 85;
+    int CONST_ORDER = 85;
 
-    public Date getPlanChildrenSumStart();
-    public void setPlanChildrenSumStart(Date planStart);
-    public Date getPlanChildrenSumEnde();
-    public void setPlanChildrenSumEnde(Date planEnde);
-    public Double getPlanChildrenSumAufwand();
-    public void setPlanChildrenSumAufwand(Double planAufwand);
+    Date getPlanChildrenSumStart();
+    void setPlanChildrenSumStart(Date planStart);
+    Date getPlanChildrenSumEnde();
+    void setPlanChildrenSumEnde(Date planEnde);
+    Double getPlanChildrenSumAufwand();
+    void setPlanChildrenSumAufwand(Double planAufwand);
 }

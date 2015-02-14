@@ -33,7 +33,7 @@ import de.yaio.core.node.TaskNode;
 public class TaskNodeService extends BaseNodeService {
 
     @Override
-    public boolean isWFStatus (String state) {
+    public boolean isWFStatus(final String state) {
         if (TaskNode.CONST_NODETYPE_IDENTIFIER_OPEN.equalsIgnoreCase(state)) {
             return true;
         } else if (TaskNode.CONST_NODETYPE_IDENTIFIER_RUNNNING.equalsIgnoreCase(state)) {
@@ -51,7 +51,7 @@ public class TaskNodeService extends BaseNodeService {
     }
 
     @Override
-    public boolean isWFStatusDone (String state) {
+    public boolean isWFStatusDone(final String state) {
         if (TaskNode.CONST_NODETYPE_IDENTIFIER_DONE.equalsIgnoreCase(state)) {
             return true;
         }
@@ -59,7 +59,7 @@ public class TaskNodeService extends BaseNodeService {
     }
     
     @Override
-    public boolean isWFStatusCanceled(String state) {
+    public boolean isWFStatusCanceled(final String state) {
         if (TaskNode.CONST_NODETYPE_IDENTIFIER_CANCELED.equalsIgnoreCase(state)) {
             return true;
         }
@@ -67,7 +67,7 @@ public class TaskNodeService extends BaseNodeService {
     }
     
     @Override
-    public boolean isWFStatusOpen (String state) {
+    public boolean isWFStatusOpen(final String state) {
         if (TaskNode.CONST_NODETYPE_IDENTIFIER_OPEN.equalsIgnoreCase(state)) {
             return true;
         } else if (TaskNode.CONST_NODETYPE_IDENTIFIER_RUNNNING.equalsIgnoreCase(state)) {

@@ -57,47 +57,51 @@ public class WorkflowFormatConfigurator {
         return me;
     }
 
-    protected static Map<String, String> CONST_STATI_COLOR = new HashMap<String, String>();
+    protected static final Map<String, String> CONST_STATI_COLOR = new HashMap<String, String>();
     static {
         CONST_STATI_COLOR.put(BaseNode.CONST_NODETYPE_IDENTIFIER_UNKNOWN, "#fffafa");
 
-        CONST_STATI_COLOR.put(EventNode.CONST_NODETYPE_IDENTIFIER_EVENT_PLANED, "#daa520");
-        CONST_STATI_COLOR.put(EventNode.CONST_NODETYPE_IDENTIFIER_EVENT_LATE, "#ff0000");
-        CONST_STATI_COLOR.put(EventNode.CONST_NODETYPE_IDENTIFIER_EVENT_RUNNNING, "#6b8e23");
-        CONST_STATI_COLOR.put(EventNode.CONST_NODETYPE_IDENTIFIER_EVENT_SHORT, "#ff0000");
-        CONST_STATI_COLOR.put(EventNode.CONST_NODETYPE_IDENTIFIER_EVENT_DONE, "#4682b4");
-        CONST_STATI_COLOR.put(EventNode.CONST_NODETYPE_IDENTIFIER_EVENT_CANCELED, "#dcdcdc");
+        CONST_STATI_COLOR.put(EventNode.CONST_NODETYPE_IDENTIFIER_EVENT_PLANED, "#ADFF2F");
+        CONST_STATI_COLOR.put(EventNode.CONST_NODETYPE_IDENTIFIER_EVENT_LATE, "#FFD700");
+        CONST_STATI_COLOR.put(EventNode.CONST_NODETYPE_IDENTIFIER_EVENT_RUNNNING, "#ADFF2F");
+        CONST_STATI_COLOR.put(EventNode.CONST_NODETYPE_IDENTIFIER_EVENT_SHORT, "#FF6347");
+        CONST_STATI_COLOR.put(EventNode.CONST_NODETYPE_IDENTIFIER_EVENT_DONE, "#E0F2FC");
+        CONST_STATI_COLOR.put(EventNode.CONST_NODETYPE_IDENTIFIER_EVENT_CANCELED, "#F5F5F5");
+        CONST_STATI_COLOR.put(BaseNode.CONST_NODETYPE_IDENTIFIER_UNKNOWN, "#FFFFFF");
+
+        CONST_STATI_COLOR.put(InfoNode.CONST_NODETYPE_IDENTIFIER_INFO, "#AFEEEE");
+        CONST_STATI_COLOR.put(InfoNode.CONST_NODETYPE_IDENTIFIER_IDEE, "#AFEEEE");
+        CONST_STATI_COLOR.put(InfoNode.CONST_NODETYPE_IDENTIFIER_DOKU, "#AFEEEE");
+        CONST_STATI_COLOR.put(InfoNode.CONST_NODETYPE_IDENTIFIER_HOWTO, "#AFEEEE");
         CONST_STATI_COLOR.put(BaseNode.CONST_NODETYPE_IDENTIFIER_UNKNOWN, "#fffafa");
 
-        CONST_STATI_COLOR.put(InfoNode.CONST_NODETYPE_IDENTIFIER_INFO, "#FFFFFF");
-        CONST_STATI_COLOR.put(InfoNode.CONST_NODETYPE_IDENTIFIER_IDEE, "#FFFFFF");
-        CONST_STATI_COLOR.put(InfoNode.CONST_NODETYPE_IDENTIFIER_DOKU, "#FFFFFF");
-        CONST_STATI_COLOR.put(InfoNode.CONST_NODETYPE_IDENTIFIER_HOWTO, "#FFFFFF");
-        CONST_STATI_COLOR.put(BaseNode.CONST_NODETYPE_IDENTIFIER_UNKNOWN, "#fffafa");
+        CONST_STATI_COLOR.put(SymLinkNode.CONST_NODETYPE_IDENTIFIER_SYMLINK, "#AFEEEE");
 
-        CONST_STATI_COLOR.put(SymLinkNode.CONST_NODETYPE_IDENTIFIER_SYMLINK, "#FFFFFF");
+        CONST_STATI_COLOR.put(TaskNode.CONST_NODETYPE_IDENTIFIER_OPEN, "#ADFF2F");
+        CONST_STATI_COLOR.put(TaskNode.CONST_NODETYPE_IDENTIFIER_LATE, "#FFD700");
+        CONST_STATI_COLOR.put(TaskNode.CONST_NODETYPE_IDENTIFIER_RUNNNING, "#ADFF2F");
+        CONST_STATI_COLOR.put(TaskNode.CONST_NODETYPE_IDENTIFIER_SHORT, "#FF6347");
+        CONST_STATI_COLOR.put(TaskNode.CONST_NODETYPE_IDENTIFIER_DONE, "#E0F2FC");
+        CONST_STATI_COLOR.put(TaskNode.CONST_NODETYPE_IDENTIFIER_CANCELED, "#F5F5F5");
+        CONST_STATI_COLOR.put(BaseNode.CONST_NODETYPE_IDENTIFIER_UNKNOWN, "#FFFFFF");
 
-        CONST_STATI_COLOR.put(TaskNode.CONST_NODETYPE_IDENTIFIER_OPEN, "#daa520");
-        CONST_STATI_COLOR.put(TaskNode.CONST_NODETYPE_IDENTIFIER_LATE, "#ff0000");
-        CONST_STATI_COLOR.put(TaskNode.CONST_NODETYPE_IDENTIFIER_RUNNNING, "#6b8e23");
-        CONST_STATI_COLOR.put(TaskNode.CONST_NODETYPE_IDENTIFIER_SHORT, "#ff0000");
-        CONST_STATI_COLOR.put(TaskNode.CONST_NODETYPE_IDENTIFIER_DONE, "#4682b4");
-        CONST_STATI_COLOR.put(TaskNode.CONST_NODETYPE_IDENTIFIER_CANCELED, "#dcdcdc");
-        CONST_STATI_COLOR.put(BaseNode.CONST_NODETYPE_IDENTIFIER_UNKNOWN, "#fffafa");
-
-        CONST_STATI_COLOR.put(UrlResNode.CONST_NODETYPE_IDENTIFIER_URLRES, "#FFFFFF");
-        CONST_STATI_COLOR.put(UrlResNode.CONST_NODETYPE_IDENTIFIER_FILERES, "#FFFFFF");
-        CONST_STATI_COLOR.put(UrlResNode.CONST_NODETYPE_IDENTIFIER_EMAILRES, "#FFFFFF");
+        CONST_STATI_COLOR.put(UrlResNode.CONST_NODETYPE_IDENTIFIER_URLRES, "#AFEEEE");
+        CONST_STATI_COLOR.put(UrlResNode.CONST_NODETYPE_IDENTIFIER_FILERES, "#AFEEEE");
+        CONST_STATI_COLOR.put(UrlResNode.CONST_NODETYPE_IDENTIFIER_EMAILRES, "#AFEEEE");
         }
 
-    protected static Map<String, String> CONST_STATI_ICON = new HashMap<String, String>();
+    protected static final Map<String, String> CONST_STATI_ICON = new HashMap<String, String>();
     static {
         CONST_STATI_ICON.put(BaseNode.CONST_NODETYPE_IDENTIFIER_UNKNOWN, null);
 
-        CONST_STATI_ICON.put(EventNode.CONST_NODETYPE_IDENTIFIER_EVENT_PLANED, "<icon BUILTIN=\"bell\"/>");
-        CONST_STATI_ICON.put(EventNode.CONST_NODETYPE_IDENTIFIER_EVENT_LATE, "<icon BUILTIN=\"messagebox_warning\"/><icon BUILTIN=\"bell\"/>");
-        CONST_STATI_ICON.put(EventNode.CONST_NODETYPE_IDENTIFIER_EVENT_RUNNNING, "<icon BUILTIN=\"bell\"/>");
-        CONST_STATI_ICON.put(EventNode.CONST_NODETYPE_IDENTIFIER_EVENT_SHORT, "<icon BUILTIN=\"messagebox_warning\"/><icon BUILTIN=\"bell\"/>");
+        CONST_STATI_ICON.put(EventNode.CONST_NODETYPE_IDENTIFIER_EVENT_PLANED, 
+                        "<icon BUILTIN=\"bell\"/>");
+        CONST_STATI_ICON.put(EventNode.CONST_NODETYPE_IDENTIFIER_EVENT_LATE, 
+                        "<icon BUILTIN=\"messagebox_warning\"/><icon BUILTIN=\"bell\"/>");
+        CONST_STATI_ICON.put(EventNode.CONST_NODETYPE_IDENTIFIER_EVENT_RUNNNING, 
+                        "<icon BUILTIN=\"bell\"/>");
+        CONST_STATI_ICON.put(EventNode.CONST_NODETYPE_IDENTIFIER_EVENT_SHORT, 
+                        "<icon BUILTIN=\"messagebox_warning\"/><icon BUILTIN=\"bell\"/>");
         CONST_STATI_ICON.put(EventNode.CONST_NODETYPE_IDENTIFIER_EVENT_DONE, "");
         CONST_STATI_ICON.put(EventNode.CONST_NODETYPE_IDENTIFIER_EVENT_CANCELED, "");
         CONST_STATI_ICON.put(BaseNode.CONST_NODETYPE_IDENTIFIER_UNKNOWN, null);
@@ -165,8 +169,8 @@ public class WorkflowFormatConfigurator {
      * @param state - the state to get the mapped color
      * @return the mapped color
      */
-    public String getStateColor(String state) {
-        String color = (String)this.getConfigStateColor().get(state);
+    public String getStateColor(final String state) {
+        String color = (String) this.getConfigStateColor().get(state);
         return color;
     }
 
@@ -182,8 +186,8 @@ public class WorkflowFormatConfigurator {
      * @param state - the state to get the mapped icon
      * @return the mapped icon
      */
-    public String getStateIcon(String state) {
-        String color = (String)this.getConfigStateIcon().get(state);
+    public String getStateIcon(final String state) {
+        String color = (String) this.getConfigStateIcon().get(state);
         return color;
     }
 

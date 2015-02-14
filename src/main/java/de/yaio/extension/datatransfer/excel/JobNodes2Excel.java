@@ -55,12 +55,12 @@ public class JobNodes2Excel extends JobNodes2Wiki {
      *     Constructor
      * @param args the command line arguments
      */
-    public JobNodes2Excel(String[] args) {
+    public JobNodes2Excel(final String[] args) {
         super(args);
     }
     
     @Override
-    protected Options addAvailiableCmdLineOptions() throws Throwable {
+    protected Options addAvailiableCmdLineOptions() throws Exception {
         Options availiableCmdLineOptions = super.addAvailiableCmdLineOptions();
         
         // Excel-Option
@@ -73,8 +73,8 @@ public class JobNodes2Excel extends JobNodes2Wiki {
     }
     
     @Override
-    public void publishResult(Exporter exporter, DataDomain masterNode, 
-            OutputOptions oOptions) throws Exception {
+    public void publishResult(final Exporter exporter, final DataDomain masterNode, 
+            final OutputOptions oOptions) throws Exception {
         String outFile = "test.xls";
         if (Configurator.getInstance().getCommandLine().getArgs().length > 1) {
             // aus Datei
@@ -86,7 +86,7 @@ public class JobNodes2Excel extends JobNodes2Wiki {
                         Configurator.getInstance().getCommandLine().hasOption("mergeexcelplanunggantsheets");
 
         // Masternode ausgeben
-        ((ExcelExporter)exporter).toExcel((BaseNode)masterNode, outFile, excelOptions);
+        ((ExcelExporter) exporter).toExcel((BaseNode) masterNode, outFile, excelOptions);
     }
     
     @Override
@@ -107,7 +107,7 @@ public class JobNodes2Excel extends JobNodes2Wiki {
      *     CLI
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         JobNodes2Excel me = new JobNodes2Excel(args);
         me.startJobProcessing();
     }

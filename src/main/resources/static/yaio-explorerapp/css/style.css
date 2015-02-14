@@ -90,6 +90,8 @@ a.yaio-icon-remove,
 .icon-formrowtoggleroff,
 .icon-formrowtoggleron,
 a.icon-preview,
+a.icon-markdownhelp,
+a.icon-wysiwyg,
 a.toggler_show,
 a.toggler_hidden {
   width: 16px;
@@ -110,6 +112,8 @@ a.yaio-icon-remove,
 .icon-formrowtoggleroff,
 .icon-formrowtoggleron,
 a.icon-preview,
+a.icon-markdownhelp,
+a.icon-wysiwyg,
 a.toggler_show,
 a.toggler_hidden {
   margin-top: 1px;
@@ -157,6 +161,12 @@ a.toggler_hidden {
 }
 
 a.icon-preview {
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAPElEQVR42mP4//8/AyWYgWIDHjx48L+goIAsDNLLAGLYlm8hC4P0DkIDkMHAuwAbGAkuoL8BFOcFSnMjAF48oX6YfwDmAAAAAElFTkSuQmCC");
+}
+a.icon-markdownhelp {
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAPElEQVR42mP4//8/AyWYgWIDHjx48L+goIAsDNLLAGLYlm8hC4P0DkIDkMHAuwAbGAkuoL8BFOcFSnMjAF48oX6YfwDmAAAAAElFTkSuQmCC");
+}
+a.icon-wysiwyg{
     background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAPElEQVR42mP4//8/AyWYgWIDHjx48L+goIAsDNLLAGLYlm8hC4P0DkIDkMHAuwAbGAkuoL8BFOcFSnMjAF48oX6YfwDmAAAAAElFTkSuQmCC");
 }
 
@@ -234,11 +244,11 @@ a.icon-preview {
 }
 #containerNodeCommands {
     float: right;
-    width: 450px;
+    width: 480px;
 }
 #containerInfoCommands {
     float: right;
-    width: 350px;
+    width: 420px;
 }
 #containerTreeCommands {
     float: left;
@@ -285,6 +295,80 @@ ul.nodecommands {
     width: 800px;
     height: 550px;
 }
+
+/*****************************************
+ *****************************************
+ * markdownhelp
+ *****************************************
+ *****************************************/
+#markdownhelp-iframe {
+    width: 1200px;
+    height: 500px;
+    overflow: auto;
+}
+#markdownhelp-box {
+    width: 1250px;
+    height: 550px;
+}
+
+
+/*****************************************
+ *****************************************
+ * preview
+ *****************************************
+ *****************************************/
+#preview-content {
+    width: 1000px;
+    height: 600px;
+    overflow: auto;
+}
+#preview-box {
+    width: 1050px;
+    height: 650px;
+}
+
+
+/*****************************************
+ *****************************************
+ * wysiwhg
+ *****************************************
+ *****************************************/
+#wysiwhg-preview {
+    float: left;
+    width: 560px;
+    height: 600px;
+    overflow: auto;
+    padding-left: 10px;
+}
+#wysiwhg-editor {
+    float: left;
+    width: 570px;
+    height: 600px;
+    max-height: 600px;
+    overflow: auto;
+}
+#wysiwhg-box {
+    width: 1180px;
+    height: 650px;
+}
+
+/*****************************************
+ *****************************************
+ * clipboard
+ *****************************************
+ *****************************************/
+#clipboard-content {
+    width: 670px;
+    height: 600px;
+    overflow: auto;
+}
+#clipboard-box {
+    width: 750px;
+    height: 650px;
+}
+
+
+
 
 /*****************************************
  *****************************************
@@ -380,6 +464,15 @@ ul.nodecommands {
     font-size: 11px;
     line-height: 1.42857;
 }
+.field_nodeSys {
+    text-align: left;
+    overflow-x:auto;
+    left: -420px;
+    position: relative;
+    width: 1000px; /*  orig: 550px; */
+    font-size: 11px;
+    line-height: 1.42857;
+}
 .field_center {
    text-align: center; !IMPORTANT
 }
@@ -429,6 +522,9 @@ ul.nodecommands {
 .fieldtype_descToggler {
    float: right;
 }
+.fieldtype_sysToggler {
+    display: inline-block;
+}
 table.fancytree-ext-table tbody tr.fancytree-active, 
 table.fancytree-ext-table.fancytree-treefocus tbody tr.fancytree-active {
     outline: 2px solid black;
@@ -450,6 +546,11 @@ table.fancytree-ext-table thead tr th {
     margin-top: 2px;
     padding-top: 2px;
     border: 1px solid #EDEDED;
+}
+
+/** hide jira-export for master/search because tree gets no data here **/
+#masterTr .command-desc-jiraexport, #containerYaioSearch .command-desc-jiraexport {
+    display: none;
 }
 
 span.fancytree-title-state {
@@ -565,6 +666,10 @@ label {
     vertical-align: top;
     width: 70px;
 }
+/* extend width for nodeDesc */
+label[for="nodeDesc"] {
+    width: 470px;
+}
 .inputtype_name {
     width: 500px;
 } 
@@ -674,7 +779,7 @@ label {
     background-color: #FFC0CB; /*#33CCCC;*/
 }
 .node-state-OPEN {
-    background-color: #ADFF2F CFF9BB; /*#99FF66;*/
+    background-color: #ADFF2F; /*#99FF66;*/
 }
 .node-state-OFFEN {
     background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
@@ -775,7 +880,6 @@ label {
  *****************************************/
 .ui-menu {
   width: 150px;
-  font-size: 63%;
 }
 .ui-menu kbd { /* Keyboard shortcuts for ui-contextmenu titles */
   float: right;
@@ -905,6 +1009,15 @@ pre code {
 div.container-content-desc > ul, div.container-content-desc > ol {
     white-space: normal;
     word-wrap: normal;
+}
+/* set img from markdown without class to 1000px */
+div.container-content-desc img:not([class]) {
+    max-width: 1000px;
+    width: auto;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .pre-wrap {
@@ -1058,4 +1171,90 @@ div.container-content-desc > ul, div.container-content-desc > ol {
   color: #999;
   background-color: #fff;
   cursor: not-allowed
+}
+
+/*****************************************
+ *****************************************
+ * frontpage
+ *****************************************
+ *****************************************/
+#front-content-intro {
+    overflow-y:auto;
+    overflow-x: hidden;
+    clear: both;
+    float: left;
+    padding-right: 20px;
+}
+
+#front-content-intro .togglecontainer {
+    max-width: 1000px;
+}
+
+.box-portdesc-nextactions {
+    background: none repeat scroll 0 0 #dee9ef;
+}
+.box-portdesc-nextactions .togglecontainer {
+    max-width: 100%;
+}
+.box-portdesc-nextactions li {
+    margin: 0;
+    list-style: none;
+    width: 23%;
+    float: left;
+    border-right: 1px dotted #008000;
+    border-top: 0px;
+    border-bottom: 0px;
+    font-size: 13px;
+    text-align: center;
+} 
+.box-portdesc-nextactions li a {
+    font-size: 15px;
+  font-weight: bold;
+} 
+
+#front-content-intro pre code  {
+    white-space: pre;
+}
+/* set img from markdown without class to 600px */
+#front-content-intro img:not([class]) {
+    max-width: 600px;
+    width: auto;
+    height: auto;
+}
+#front-content-intro .boxline-ue3 {
+    color: #ff9933;
+    float: left;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/*****************************************
+ *****************************************
+ * login
+ *****************************************
+ *****************************************/
+#details_login fieldset {
+    width: 600px
+}
+
+/*****************************************
+ *****************************************
+ * language
+ *****************************************
+ *****************************************/
+.ue3MenueTop {
+    float: right;
+    margin: 0;
+    padding: 0;
+    width: 110px;
+}
+.button-lang {
+}
+.button-lang-active {
+    font-size: 9px;
+    font-weight: bold;
+}
+.button-lang-inactive {
+    font-size: 8px;
+    font-weight: lighter;
 }

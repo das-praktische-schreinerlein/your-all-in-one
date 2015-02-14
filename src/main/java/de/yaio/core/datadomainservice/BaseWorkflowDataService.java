@@ -33,7 +33,7 @@ import de.yaio.core.datadomain.BaseWorkflowData;
 public interface BaseWorkflowDataService {
 
     /** the position in the recalc-order at which the recalcer will run */
-    public static final int CONST_RECALC_ORDER = 10;
+    int CONST_RECALC_ORDER = 10;
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -49,7 +49,7 @@ public interface BaseWorkflowDataService {
      * @param node - node
      * @throws Exception - parser/format-Exceptions possible
      */
-    public void calcPlanData(BaseWorkflowData node) throws Exception;
+    void calcPlanData(BaseWorkflowData node) throws Exception;
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -65,7 +65,7 @@ public interface BaseWorkflowDataService {
      * @param node - node
      * @throws Exception - parser/format-Exceptions possible
      */
-    public void recalcWorkflowData(BaseWorkflowData node) throws Exception;
+    void recalcWorkflowData(BaseWorkflowData node) throws Exception;
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -81,5 +81,5 @@ public interface BaseWorkflowDataService {
      * @param node - node
      * @throws Exception - parser/format-Exceptions possible
      */
-    public void recalcStateData(BaseWorkflowData node) throws Exception;
+    void recalcStateData(BaseWorkflowData node) throws Exception;
 }

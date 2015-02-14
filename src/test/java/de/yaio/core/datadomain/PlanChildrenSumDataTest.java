@@ -48,15 +48,14 @@ public class PlanChildrenSumDataTest extends DataDomainTest {
      * @copyright Copyright (c) 2014, Michael Schreiner
      * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
      */
-    public class PlanChildrenSumDataTestObj extends TaskNode implements TestObj{
+    public class PlanChildrenSumDataTestObj extends TaskNode implements TestObj {
         @Override
         public String toString() {
             StringBuffer resBuffer = new StringBuffer();
             resBuffer.append(this.getName()).append("|")
                      .append(this.getPlanChildrenSumAufwand()).append("|")
                      .append(this.getPlanChildrenSumStart()).append("|")
-                     .append(this.getPlanChildrenSumEnde()).append("|")
-                     ;
+                     .append(this.getPlanChildrenSumEnde()).append("|");
             return resBuffer.toString();
             
         }
@@ -89,10 +88,9 @@ public class PlanChildrenSumDataTest extends DataDomainTest {
      * <h4>FeatureKeywords:</h4>
      *     Test Config Initialisation
      * @return - a new dataobj for the test
-     * @throws Exception
-     */
+     * @throws Exception - possible Exception     */
     protected PlanChildrenSumDataTestObj getNewPlanChildrenSumDataTestObj() throws Exception  {
-        return (PlanChildrenSumDataTestObj)setupNewTestObj();
+        return (PlanChildrenSumDataTestObj) setupNewTestObj();
     }
 
     @Override

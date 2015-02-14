@@ -68,8 +68,7 @@ public class BaseWorkflowDataServiceTest extends DataDomainServiceTest {
                      .append(this.getPlanEnde()).append("|")
                      .append(this.getPlanChildrenSumAufwand()).append("|")
                      .append(this.getPlanChildrenSumStart()).append("|")
-                     .append(this.getPlanChildrenSumEnde()).append("|")
-                     ;
+                     .append(this.getPlanChildrenSumEnde()).append("|");
             return resBuffer.toString();
             
         }
@@ -92,16 +91,15 @@ public class BaseWorkflowDataServiceTest extends DataDomainServiceTest {
      * <h4>FeatureKeywords:</h4>
      *     Test Config Initialisation
      * @return - a new dataobj for the test
-     * @throws Exception
-     */
+     * @throws Exception - possible Exception     */
     protected BaseWorkflowDataTestObj getNewBaseWorkflowDataTestObj() throws Exception  {
-        return (BaseWorkflowDataTestObj)setupNewTestObj();
+        return (BaseWorkflowDataTestObj) setupNewTestObj();
     }
 
 
     @Override
     public void setupDataDomainService() throws Exception {
-        NodeServiceImpl nodeService = (NodeServiceImpl)TaskNode.getConfiguredNodeService();
+        NodeServiceImpl nodeService = (NodeServiceImpl) TaskNode.getConfiguredNodeService();
         dataDomainService = nodeService.hshDataDomainRecalcerByClass.get(BaseWorkflowDataServiceImpl.class);
 
 //        dataDomainService = new BaseWorkflowDataServiceImpl(); 

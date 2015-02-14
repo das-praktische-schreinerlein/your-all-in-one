@@ -56,8 +56,7 @@ public class DocLayoutDataTest extends DataDomainTest {
                      .append(this.getDocLayoutTagCommand()).append("|")
                      .append(this.getDocLayoutAddStyleClass()).append("|")
                      .append(this.getDocLayoutShortName()).append("|")
-                     .append(this.getDocLayoutFlgCloseDiv()).append("|")
-                     ;
+                     .append(this.getDocLayoutFlgCloseDiv()).append("|");
             return resBuffer.toString();
             
         }
@@ -90,10 +89,9 @@ public class DocLayoutDataTest extends DataDomainTest {
      * <h4>FeatureKeywords:</h4>
      *     Test Config Initialisation
      * @return - a new dataobj for the test
-     * @throws Exception
-     */
+     * @throws Exception - possible Exception     */
     protected DocLayoutDataTestObj getNewDocLayoutDataTestObj() throws Exception  {
-        return (DocLayoutDataTestObj)setupNewTestObj();
+        return (DocLayoutDataTestObj) setupNewTestObj();
     }
 
     @Override

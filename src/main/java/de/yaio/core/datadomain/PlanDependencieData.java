@@ -34,7 +34,7 @@ import de.yaio.core.node.BaseNode;
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public interface PlanDependencieData extends DataDomain {
-    public static final int CONST_ORDER = 55;
+    int CONST_ORDER = 55;
 
     @XmlTransient
     public static enum DurationMeasure {
@@ -60,20 +60,20 @@ public interface PlanDependencieData extends DataDomain {
         inherit
     }
 
-    public Integer getPlanDuration();
-    public void setPlanDuration(Integer planDuration);
-    public DurationMeasure getPlanDurationMeasure();
-    public void setPlanDurationMeasure(DurationMeasure planDurationMeasure);
+    Integer getPlanDuration();
+    void setPlanDuration(Integer planDuration);
+    DurationMeasure getPlanDurationMeasure();
+    void setPlanDurationMeasure(DurationMeasure planDurationMeasure);
     
-    public PredecessorType getPlanPredecessorType();
-    public void setPlanPredecessorType(PredecessorType predecessorType);
-    public BaseNode getPlanPredecessor();
-    public void setPlanPredecessor(BaseNode predecessor);
-    public PredecessorDependencieType getPlanPredecessorDependencieType();
-    public void setPlanPredecessorDependencieType(PredecessorDependencieType predecessorDependencieType);
+    PredecessorType getPlanPredecessorType();
+    void setPlanPredecessorType(PredecessorType predecessorType);
+    BaseNode getPlanPredecessor();
+    void setPlanPredecessor(BaseNode predecessor);
+    PredecessorDependencieType getPlanPredecessorDependencieType();
+    void setPlanPredecessorDependencieType(PredecessorDependencieType predecessorDependencieType);
     
-    public Integer getPlanPredecessorShift();
-    public void setPlanPredecessorShift(Integer predecessorShift);
-    public DurationMeasure getPlanPredecessorShiftMeasure();
-    public void setPlanPredecessorShiftMeasure(DurationMeasure planPredecessorShiftMeasure);
+    Integer getPlanPredecessorShift();
+    void setPlanPredecessorShift(Integer predecessorShift);
+    DurationMeasure getPlanPredecessorShiftMeasure();
+    void setPlanPredecessorShiftMeasure(DurationMeasure planPredecessorShiftMeasure);
 }

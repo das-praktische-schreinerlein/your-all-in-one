@@ -82,7 +82,7 @@ public class TaskNode extends BaseNode implements ExtendedWorkflowData {
     public NodeService getNodeService() {
         return nodeDataService;
     }
-    public static void setNodeDataService(NodeService newNodeDataService) {
+    public static void setNodeDataService(final NodeService newNodeDataService) {
         nodeDataService = newNodeDataService;
     }
     @XmlTransient
@@ -92,9 +92,9 @@ public class TaskNode extends BaseNode implements ExtendedWorkflowData {
     }
 
     // Status-Konstanten
-    public static Map<String, Object> CONST_MAP_NODETYPE_IDENTIFIER = new HashMap<String, Object>();
-    public static Map<String, WorkflowState> CONST_MAP_STATE_WORKFLOWSTATE = new HashMap<String, WorkflowState>();
-    public static Map<WorkflowState, String> CONST_MAP_WORKFLOWSTATE_STATE = new HashMap<WorkflowState, String>();
+    public static final Map<String, Object> CONST_MAP_NODETYPE_IDENTIFIER = new HashMap<String, Object>();
+    public static final Map<String, WorkflowState> CONST_MAP_STATE_WORKFLOWSTATE = new HashMap<String, WorkflowState>();
+    public static final Map<WorkflowState, String> CONST_MAP_WORKFLOWSTATE_STATE = new HashMap<WorkflowState, String>();
     static {
         // define WorkflowStates
         CONST_MAP_STATE_WORKFLOWSTATE.put(CONST_NODETYPE_IDENTIFIER_UNKNOWN, WorkflowState.NOTPLANED);
@@ -174,7 +174,7 @@ public class TaskNode extends BaseNode implements ExtendedWorkflowData {
     @Override
     @XmlTransient
     @JsonIgnore
-    public WorkflowState getWorkflowStateForState(String state)  throws IllegalStateException {
+    public WorkflowState getWorkflowStateForState(final String state)  throws IllegalStateException {
         // get WorkflowState for state
         WorkflowState wfState = getConfigWorkflowState().get(state);
         
@@ -195,7 +195,7 @@ public class TaskNode extends BaseNode implements ExtendedWorkflowData {
     @Override
     @XmlTransient
     @JsonIgnore
-    public String getStateForWorkflowState(WorkflowState workflowState)  throws IllegalStateException {
+    public String getStateForWorkflowState(final WorkflowState workflowState)  throws IllegalStateException {
         // workflowState must be set
         if (workflowState == null) {
             throw new IllegalStateException("workflowState must be set node=" + this.getNameForLogger());
@@ -227,8 +227,7 @@ public class TaskNode extends BaseNode implements ExtendedWorkflowData {
             .append(" planStart=").append(DataUtils.getNewDate(getPlanStart()))
             .append(" planEnde=").append(DataUtils.getNewDate(getPlanEnde()))
             .append(" planAufwand=").append(getPlanAufwand())
-            .append(" planTask=").append(getPlanTask())
-            ;
+            .append(" planTask=").append(getPlanTask());
         return data.toString();
     }
     
@@ -256,7 +255,7 @@ public class TaskNode extends BaseNode implements ExtendedWorkflowData {
         Date curIstStart = getIstStart();
         Date curIstEnde = getIstEnde();
         Double curIstStan = getIstStand();
-        if (curEnde != null ) {
+        if (curEnde != null) {
             if (curPlanEnde != null && curIstStart != null) {
                 // wenn Istdaten vor Plandaten und noch nicht fertig, dann Plandaten
                 if (curIstEnde.before(curPlanEnde) && curIstStan < 100) {

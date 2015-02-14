@@ -51,5 +51,5 @@ public interface PlanDataParser extends Parser {
      * @return count elements found
      * @throws Exception - parser-Exceptions possible
      */
-    public int parsePlanDataFromName(PlanData node, ImportOptions options) throws Exception;
+    int parsePlanDataFromName(PlanData node, ImportOptions options) throws Exception;
 }

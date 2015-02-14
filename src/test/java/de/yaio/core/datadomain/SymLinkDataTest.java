@@ -55,8 +55,7 @@ public class SymLinkDataTest extends DataDomainTest {
             resBuffer.append(this.getName()).append("|")
                      .append(this.getSymLinkRef()).append("|")
                      .append(this.getSymLinkName()).append("|")
-                     .append(this.getSymLinkTags()).append("|")
-                     ;
+                     .append(this.getSymLinkTags()).append("|");
             return resBuffer.toString();
             
         }
@@ -89,10 +88,9 @@ public class SymLinkDataTest extends DataDomainTest {
      * <h4>FeatureKeywords:</h4>
      *     Test Config Initialisation
      * @return - a new dataobj for the test
-     * @throws Exception
-     */
+     * @throws Exception - possible Exception     */
     protected SymLinkDataTestObj getNewSymLinkDataTestObj() throws Exception  {
-        return (SymLinkDataTestObj)setupNewTestObj();
+        return (SymLinkDataTestObj) setupNewTestObj();
     }
 
     @Override

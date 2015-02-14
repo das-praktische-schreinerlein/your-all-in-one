@@ -2,6 +2,8 @@
     <div class='boxline boxline-ue2 h2-portdesc h2-portdesc-explorer' id='ue_explorer'>YAIO - D'Artagnan - Explorer
       <div id="containerInfoCommands">
         <ul class="commands command-info">
+           <li class="command" data-tooltip='tooltip.command.OpenFrontpage' lang="tech">
+              <a href="#/" class="button" translate="common.command.OpenFrontpage">Startseite</a></li>
            <li class="command" data-tooltip='tooltip.command.OpenTreeView' lang="tech">
               <a href="#/show/MasterplanMasternode1" class="button" translate="common.command.OpenTreeView">Open Treeview</a></li>
            <li class="command" data-tooltip='tooltip.command.OpenSearchView' lang="tech">
@@ -10,6 +12,8 @@
               <a href="" ng-click="showHelpSite('/exports/documentation/SysHelp1')" target="help" class="button command_help" translate="common.command.OpenHelp">Hilfe</a></li>
            <li class="command" data-tooltip='tooltip.command.OpenInfo' lang="tech">
               <a href="" ng-click="showHelpSite('/exports/documentation/SysInfo1')" target="help" class="button" translate="common.command.OpenInfo">Hilfe</a></li>
+           <li class="command" data-tooltip='tooltip.command.Logout' lang="tech" id="logout">
+              <a href="/logout" class="button" translate="common.command.Logout">Logout</a></li>
         </ul>
       </div>
     </div>
@@ -26,12 +30,16 @@
   
       <div class='togglecontainer togglecontainer-todonext' id='details_todonext'>
           <ul>
+             <li class="todonext" data-tooltip='tooltip.command.OpenFrontpage' lang="tech">
+                <a href="#/" translate="common.command.OpenFrontpage">Startseite</a></li>
              <li class="todonext" data-tooltip='tooltip.command.OpenTreeView' lang="tech">
                 <a href="#/show/MasterplanMasternode1" class="" translate="todonext.command.OpenTreeView">Open Treeview</a></li>
              <li class="todonext" data-tooltip='tooltip.command.OpenHelp' lang="tech">
                 <a href="" ng-click="showHelpSite('/exports/documentation/SysHelp1')" target="help" class="" translate="todonext.command.OpenHelp">Hilfe</a></li>
+<!-- 
              <li class="todonext" data-tooltip='tooltip.command.OpenInfo' lang="tech">
                 <a href="" ng-click="showHelpSite('/exports/documentation/SysInfo1')" target="help" class="" translate="todonext.command.OpenInfo">Infos</a></li>
+ -->
           </ul>
       </div>
   </div>
@@ -45,7 +53,6 @@
         // activate speech recognition
         addSpeechRecognitionToElements();
         addDatePickerToElements();
-        initLanguageSupport();
 
         // add resize event
         $( window ).resize(function() {

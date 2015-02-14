@@ -56,8 +56,7 @@ public class IstChildrenSumDataTest extends DataDomainTest {
                      .append(this.getIstChildrenSumStand()).append("|")
                      .append(this.getIstChildrenSumAufwand()).append("|")
                      .append(this.getIstChildrenSumStart()).append("|")
-                     .append(this.getIstChildrenSumEnde()).append("|")
-                     ;
+                     .append(this.getIstChildrenSumEnde()).append("|");
             return resBuffer.toString();
             
         }
@@ -90,10 +89,9 @@ public class IstChildrenSumDataTest extends DataDomainTest {
      * <h4>FeatureKeywords:</h4>
      *     Test Config Initialisation
      * @return - a new dataobj for the test
-     * @throws Exception
-     */
+     * @throws Exception - possible Exception     */
     protected IstChildrenSumDataTestObj getNewIstChildrenSumDataTestObj() throws Exception  {
-        return (IstChildrenSumDataTestObj)setupNewTestObj();
+        return (IstChildrenSumDataTestObj) setupNewTestObj();
     }
 
     @Override

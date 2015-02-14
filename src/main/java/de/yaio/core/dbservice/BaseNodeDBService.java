@@ -51,7 +51,7 @@ public interface BaseNodeDBService {
      * @return List - list of the recalced and saved parenthierarchy
      * @throws Exception - io/DB-Exceptions possible
      */
-    public List<BaseNode> updateMeAndMyParents(BaseNode node) throws Exception;
+    List<BaseNode> updateMeAndMyParents(BaseNode node) throws Exception;
     
     
     /**
@@ -68,7 +68,7 @@ public interface BaseNodeDBService {
      * @param sysUID - sysUID for the filter on parent_node
      * @return List of childnodes for basenode with sysUID
      */
-    public List<BaseNode> findChildNodes(String sysUID);
+    List<BaseNode> findChildNodes(String sysUID);
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -84,7 +84,7 @@ public interface BaseNodeDBService {
      * @param fulltext - fulltext to search in desc and name
      * @return total of matching nodes
      */
-    public long countFulltextBaseNodes(String fulltext);
+    long countFulltextBaseNodes(String fulltext);
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -98,12 +98,13 @@ public interface BaseNodeDBService {
      * <h4>FeatureKeywords:</h4>
      *     Persistence JPA
      * @param fulltext - fulltext to search in desc and name
-     * @param firstResult - resutrange for pagination
-     * @param maxResults - resutrange for pagination
+     * @param sortConfig - use sort
+     * @param firstResult - resultrange for pagination
+     * @param maxResults - resultrange for pagination
      * @return List of matching nodes
      */
-    public List<BaseNode> findFulltextBaseNodeEntries(String fulltext, 
-                    int firstResult, int maxResults);
+    List<BaseNode> findFulltextBaseNodeEntries(String fulltext, 
+                    String sortConfig, int firstResult, int maxResults);
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -119,5 +120,20 @@ public interface BaseNodeDBService {
      * @param symLinkRef - symLinkRef for the filter on node
      * @return List of machting nodes for symLinkRef
      */
-    public List<BaseNode> findSymLinkBaseNode(String symLinkRef);
+    List<BaseNode> findSymLinkBaseNode(String symLinkRef);
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Persistence
+     * <h4>FeatureDescription:</h4>
+     *     delete all nodes an create a new Masternode
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue BaseNode - the new BaseNode
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Persistence JPA
+     * @return new Masternode
+     */
+    BaseNode resetYaio();
 }

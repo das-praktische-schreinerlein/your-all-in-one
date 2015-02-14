@@ -13,6 +13,8 @@
            <li class="command" data-tooltip='tooltip.command.Print' lang="tech">
               <a onclick="window.print(); return true;" class="button" translate="common.command.Print">Print</a>
               <input type="checkbox" onclick="togglePrintLayout()" checked id="checkboxPrintAll"> All</li>
+           <li class="command" data-tooltip='tooltip.command.Logout' lang="tech" id="logout">
+              <a href="/logout" class="button" translate="common.command.Logout">Logout</a></li>
         </ul>
       </div>
   </div>
@@ -32,6 +34,7 @@
            <li class="exporttype" data-tooltip='tooltip.command.ExportICal' lang="tech"><a ng-click="outputOptionsEditor.showOutputOptionsEditor(node.sysUID, '/exports/icaluseoptions/' + node.sysUID, '_blank');" class="button exporttype_ical" target="_blank" translate="common.command.ExportICal">ICal/VCard</a></li>
            <li class="exporttype" data-tooltip='tooltip.command.ExportHtml' lang="tech"><a ng-click="outputOptionsEditor.showOutputOptionsEditor(node.sysUID, '/exports/htmluseoptions/' + node.sysUID, '_blank');" class="button exporttype_html" target="_blank" translate="common.command.ExportHtml">Html</a></li>
            <li class="exporttype" data-tooltip='tooltip.command.ExportExcel' lang="tech"><a ng-click="outputOptionsEditor.showOutputOptionsEditor(node.sysUID, '/exports/exceluseoptions/' + node.sysUID, '_blank');" class="button exporttype_excel" target="_blank" translate="common.command.ExportExcel">Excel</a></li>
+           <li class="exporttype" data-tooltip='tooltip.command.ExportCsv' lang="tech"><a ng-click="outputOptionsEditor.showOutputOptionsEditor(node.sysUID, '/exports/csvuseoptions/' + node.sysUID, '_blank');" class="button exporttype_csv" target="_blank" translate="common.command.ExportCsv">Csv</a></li>
         </ul>
         <!-- 
         *************************
@@ -293,7 +296,7 @@
                       <div class="container_field fieldtype_additionaldata fieldtype_fromto field_planChildrenSum field_center" translate="fancytree.table.headline.planChildrenSum"> <br />Zeitraum</div>
                       <div class="container_field fieldtype_additionaldata fieldtype_descToggler toggler_show">
                          <br />
-                         <a lang="de" data-tooltip="Zeige die detaillierten Beschreibungen an." id="toggler_desc_all" onclick="toggleAllNodeDescContainer(); return false;" href="#" class="toggler_hidden"></a>
+                         <a lang="tech" data-tooltip='tooltip.command.ToggleDescAll' id="toggler_desc_all" onclick="toggleAllNodeDescContainer(); return false;" href="#" class="toggler_hidden"></a>
                       </div>
                     </div></th>
                   <th class="block_nodegantt">
@@ -309,6 +312,10 @@
                   <th  >
                     <!-- show actions-header -->
                     <span translate="fancytree.table.headline.actions"></span>
+                    <br />
+                    <div class="fieldtype_sysToggler toggler_show">
+                      <a lang="tech" data-tooltip='tooltip.command.ToggleSysAll' id="toggler_sys_all" onclick="toggleAllNodeSysContainer(); return false;" href="#" class="toggler_hidden"></a>
+                    </div>
                   </th>
                 </tr>
               </thead>
@@ -345,7 +352,7 @@
           <ul class="commands nodecommands">
              <li class="command" data-tooltip='tooltip.command.OpenLevel' lang="tech">
                 <a href="" ng-click="openSubNodes()" class="button command_switchlevel">&Ouml;ffne bis Level</a>
-                <input type="range" min="0" max="3" value="" id="treeOpenLevel" ng-model="config.treeOpenLevel" ng-change="openSubNodes()" class="command_switchlevel_input"> </li>
+                <input type="range" min="0" max="10" value="" id="treeOpenLevel" ng-model="config.treeOpenLevel" ng-change="openSubNodes()" class="command_switchlevel_input"> </li>
           </ul>
         </div>
     
@@ -961,10 +968,11 @@
     setTimeout(function() { 
         // activate speech recognition and others
         addSpeechRecognitionToElements();
+        addSpeechSynthToElements();
         addPreviewToElements();
+        addWysiwhgToElements();
         addDatePickerToElements();
         addDocLayoutStyleSelectorToElements();
-        initLanguageSupport();
 
         //add resize event
         $( window ).resize(function() {

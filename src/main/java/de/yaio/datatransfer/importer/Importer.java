@@ -49,7 +49,7 @@ public interface Importer {
      * <h4>FeatureKeywords:</h4>
      *     Config
      */
-    public void initNodeTypeIdentifierVariantMapping();
+    void initNodeTypeIdentifierVariantMapping();
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -61,7 +61,7 @@ public interface Importer {
      *     Config
      * @param stateMap - Map der Schlagwortvarianten (Variante = NodeTypeIdentifier)
      */
-    public void addNodeTypeIdentifierVariantMapping(Map<String, Object> stateMap);
+    void addNodeTypeIdentifierVariantMapping(Map<String, Object> stateMap);
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -77,7 +77,7 @@ public interface Importer {
      *     Config
      * @return - variants for NodeTypeIdentifier
      */
-    public Map<String, Object> getHshNodeTypeIdentifierVariantMapping();
+    Map<String, Object> getHshNodeTypeIdentifierVariantMapping();
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -89,7 +89,7 @@ public interface Importer {
      * <h4>FeatureKeywords:</h4>
      *     Config
      */
-    public void initWorkflowNodeTypeMapping();
+    void initWorkflowNodeTypeMapping();
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -100,7 +100,7 @@ public interface Importer {
      *     Config
      * @param stateMap - Map der Schlagwortvarianten (Variante = NodeTypeIdentifier)
      */
-    public void addWorkflowNodeTypeMapping(Map<String, Object> stateMap);
+    void addWorkflowNodeTypeMapping(Map<String, Object> stateMap);
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -116,7 +116,7 @@ public interface Importer {
      *     Config
      * @return - Map of Workflow-NodeTypeIdentifier
      */
-    public Map<String, Object> getHshWorkflowNodeTypeMapping();
+    Map<String, Object> getHshWorkflowNodeTypeMapping();
     
     
     /**
@@ -132,7 +132,7 @@ public interface Importer {
      *     Config
      * @return - current NodeFactory for creation of Nodes
      */
-    public NodeFactory getNodeFactory();
+    NodeFactory getNodeFactory();
 
     ////////////////
     // Generierungs-Funktionen
@@ -157,7 +157,7 @@ public interface Importer {
      * @return - new Node-instance
      * @throws Exception - parser/format-Exceptions possible
      */
-    public DataDomain createNodeObjFromText(int id, String strFullSrc, String srcName, 
+    DataDomain createNodeObjFromText(int id, String strFullSrc, String srcName, 
             DataDomain curParentNode)
                     throws Exception;
 
@@ -179,5 +179,5 @@ public interface Importer {
      * @param state - the state to check
      * @return true/false Workflow-state from getHshWorkflowNodeTypeMapping
      */
-    public boolean isWFStatus (String state);
+    boolean isWFStatus(String state);
 }

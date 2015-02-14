@@ -58,7 +58,7 @@ public class InfoNode extends BaseNode implements DocLayoutData {
     public static final String CONST_NODETYPE_IDENTIFIER_HOWTO = "HOWTO";
     
     // Status-Konstanten
-    public static Map<String, Object> CONST_MAP_NODETYPE_IDENTIFIER = new HashMap<String, Object>();
+    public static final Map<String, Object> CONST_MAP_NODETYPE_IDENTIFIER = new HashMap<String, Object>();
     static {
         // Defaults
         CONST_MAP_NODETYPE_IDENTIFIER.put(CONST_NODETYPE_IDENTIFIER_INFO, CONST_NODETYPE_IDENTIFIER_INFO);

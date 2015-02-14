@@ -60,8 +60,7 @@ public class SysDataServiceTest extends DataDomainServiceTest {
             .append(this.getSysCreateDate()).append("|")
             .append(this.getSysCurChecksum()).append("|")
             .append(this.getSysChangeDate()).append("|")
-            .append(this.getSysChangeCount()).append("|")
-            ;
+            .append(this.getSysChangeCount()).append("|");
             return resBuffer.toString();
         }
     }
@@ -83,15 +82,14 @@ public class SysDataServiceTest extends DataDomainServiceTest {
      * <h4>FeatureKeywords:</h4>
      *     Test Config Initialisation
      * @return - a new dataobj for the test
-     * @throws Exception
-     */
+     * @throws Exception - possible Exception     */
     protected SysDataTestObj getNewSysDataTestObj() throws Exception  {
-        return (SysDataTestObj)setupNewTestObj();
+        return (SysDataTestObj) setupNewTestObj();
     }
 
     @Override
     public void setupDataDomainService() throws Exception {
-        NodeServiceImpl nodeService = (NodeServiceImpl)TaskNode.getConfiguredNodeService();
+        NodeServiceImpl nodeService = (NodeServiceImpl) TaskNode.getConfiguredNodeService();
         dataDomainService = nodeService.hshDataDomainRecalcerByClass.get(SysDataServiceImpl.class);
     }
 

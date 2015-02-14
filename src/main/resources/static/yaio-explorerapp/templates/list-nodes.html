@@ -13,6 +13,8 @@
            <li class="command" data-tooltip='tooltip.command.Print' lang="tech">
               <a onclick="window.print(); return true;" class="button" translate="common.command.Print">Print</a>
               <input type="checkbox" onclick="togglePrintLayout()" checked id="checkboxPrintAll"> All</li>
+           <li class="command" data-tooltip='tooltip.command.Logout' lang="tech" id="logout">
+              <a href="/logout" class="button" translate="common.command.Logout">Logout</a></li>
         </ul>
       </div>
   </div>
@@ -32,6 +34,29 @@
         <div id="searchcommand" class="container-searchcommands"><!--
        --><div class="fulltextline" data-tooltip='tooltip.command.DoSearch' lang="tech">
              <input type="text" ng-keyup="checkEnterFulltextSearch($event);" placeholder="Suchtext" name="fulltext" maxsize="40" class="inputtype_text" id="inputSearchOptionsFulltext" ng-model="searchOptions.fulltext">
+             <select name="searchSort" class="inputtype_select" id="inputSearchOptionsSearchSortt" ng-model="searchOptions.searchSort">
+                  <option value="default" translate="common.select.searchSort.default">default</option>
+                  <option value="createdUp" translate="common.select.searchSort.createdUp">createdUp</option>
+                  <option value="createdDown" translate="common.select.searchSort.createdDown">createdDown</option>
+                  <option value="istEndeUp" translate="common.select.searchSort.istEndeUp">istEndeUp</option>
+                  <option value="istEndeDown" translate="common.select.searchSort.istEndeDown">istEndeDown</option>
+                  <option value="istStartUp" translate="common.select.searchSort.istStartUp">istStartUp</option>
+                  <option value="istStartDown" translate="common.select.searchSort.istStartDown">istStartDown</option>
+                  <option value="lastChangeUp" translate="common.select.searchSort.lastChangeUp">lastChangeUp</option>
+                  <option value="lastChangeDown" translate="common.select.searchSort.lastChangeDown">lastChangeDown</option>
+                  <option value="nameUp" translate="common.select.searchSort.nameUp">nameUp</option>
+                  <option value="nameDown" translate="common.select.searchSort.nameDown">nameDown</option>
+                  <option value="nodeNumberUp" translate="common.select.searchSort.nodeNumberUp">nodeNumberUp</option>
+                  <option value="nodeNumberDown" translate="common.select.searchSort.nodeNumberDown">nodeNumberDown</option>
+                  <option value="planEndeUp" translate="common.select.searchSort.planEndeUp">planEndeUp</option>
+                  <option value="planEndeDown" translate="common.select.searchSort.planEndeDown">planEndeDown</option>
+                  <option value="planStartUp" translate="common.select.searchSort.planStartUp">planStartUp</option>
+                  <option value="planStartDown" translate="common.select.searchSort.planStartDown">planStartDown</option>
+                  <option value="typeUp" translate="common.select.searchSort.typeUp">typeUp</option>
+                  <option value="typeDown" translate="common.select.searchSort.typeDown">typeDown</option>
+                  <option value="workflowStateUp" translate="common.select.searchSort.workflowStateUp">workflowStateUp</option>
+                  <option value="workflowStateDown" translate="common.select.searchSort.workflowStateDown">workflowStateDown</option>
+             </select>
              <a ng-click="doNewFulltextSearch();" class="button" translate="common.command.DoSearch">Search</a>
              {{ searchOptions.total }} Treffer  
           </div><!-- 
@@ -89,7 +114,7 @@
                       <div class="container_field fieldtype_additionaldata fieldtype_fromto field_planChildrenSum field_center" translate="fancytree.table.headline.planChildrenSum"> <br />Zeitraum</div>
                       <div class="container_field fieldtype_additionaldata fieldtype_descToggler toggler_show">
                          <br />
-                         <a lang="de" data-tooltip="Zeige die detaillierten Beschreibungen an." id="toggler_desc_all" onclick="toggleAllNodeDescContainer(); return false;" href="#" class="toggler_hidden"></a>
+                         <a lang="tech" data-tooltip='tooltip.command.ToggleDescAll' id="toggler_desc_all" onclick="toggleAllNodeDescContainer(); return false;" href="#" class="toggler_hidden"></a>
                       </div>
                     </div></th>
                   <th class="block_nodegantt">
@@ -105,6 +130,10 @@
                   <th>
                     <!-- show actions-header -->
                     <span translate="fancytree.table.headline.actions"></span>
+                    <br />
+                    <div class="fieldtype_sysToggler toggler_show">
+                      <a lang="tech" data-tooltip='tooltip.command.ToggleSysAll' id="toggler_sys_all" onclick="toggleAllNodeSysContainer(); return false;" href="#" class="toggler_hidden"></a>
+                    </div>
                   </th>
                 </tr>
               </thead>
@@ -131,7 +160,6 @@
         addSpeechRecognitionToElements();
         addDatePickerToElements();
         addDocLayoutStyleSelectorToElements();
-        initLanguageSupport();
 
 
         //add resize event

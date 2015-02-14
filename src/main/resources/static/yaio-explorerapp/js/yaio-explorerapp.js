@@ -84,12 +84,18 @@ yaioM.config(function($routeProvider) {
         .when('/show/:nodeId', { 
             controller:  'NodeShowCtrl',
             templateUrl: 'templates/node.html' })
-        .when('/search/:curPage?/:pageSize?/:baseSysUID?/:fulltext?/', { 
+        .when('/search/:curPage?/:pageSize?/:searchSort?/:baseSysUID?/:fulltext?/', { 
             controller:  'NodeSearchCtrl',
             templateUrl: 'templates/list-nodes.html' })
         .when('/search/', { 
             controller:  'NodeSearchCtrl',
             templateUrl: 'templates/list-nodes.html' })
+        .when('/login', {
+            controller : 'AuthController',
+            templateUrl: 'templates/login.html' })
+        .when('/frontpage/:nodeId', { 
+            controller:  'FrontPageCtrl',
+            templateUrl: 'templates/frontpage.html' })
         .when('/', { 
             controller:  'FrontPageCtrl',
             templateUrl: 'templates/frontpage.html' })
@@ -138,7 +144,15 @@ yaioM.config(function ($translateProvider) {
       });
 
     // default-language
-   $translateProvider.preferredLanguage('de');
+    var langKey = 'de';
+    
+    // init
+    $translateProvider.preferredLanguage(langKey);
+    initLanguageSupport(langKey);
+
+    // change icons
+    $(".button-lang").removeClass("button-lang-active").addClass("button-lang-inactive");
+    $("#button_lang_" + langKey).removeClass("button-lang-inactive").addClass("button-lang-active");
 });
     
 /**
@@ -168,6 +182,88 @@ yaioM.directive('state', function(){
  * <h4>FeatureDomain:</h4>
  *     Configuration
  * <h4>FeatureDescription:</h4>
+ *     the factory to check the authorization
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>returns new authorisation-obj
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Configuration
+ */
+yaioM.factory('authorization', function ($rootScope, $http) {
+    return {
+        authentificate: function(callback) {
+            $http.get('/user/current').success(function(data) {
+                console.log("authentificate: success " + data);
+                if (data) {
+                    $rootScope.authenticated = true;
+                } else {
+                    $rootScope.authenticated = false;
+                }
+                callback && callback();
+            }).error(function(data) {
+                console.log("authentificate: error " + data);
+                $rootScope.authenticated = false;
+                callback && callback();
+            });
+        }
+    };
+});
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Configuration
+ * <h4>FeatureDescription:</h4>
+ *     the controller to load login-page
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>returns new controller
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Configuration
+ */
+yaioM.controller('AuthController', function($rootScope, $scope, $location, $http, $routeParams, setFormErrors, OutputOptionsEditor, authorization) {
+    $scope.credentials = {};
+    $scope.login = function() {
+        $http.post('/login', $.param($scope.credentials), {
+            headers : {
+                "content-type" : "application/x-www-form-urlencoded"
+            }
+        }).success(function(data) {
+            authorization.authentificate(function() {
+                if ($rootScope.authenticated) {
+                    if ($rootScope.lastLocation) {
+                        $location.path($rootScope.lastLocation);
+                    } else {
+                        $location.path("/");
+                    }
+                    $scope.error = false;
+                } else {
+                    $location.path("/login");
+                    $scope.error = true;
+                }
+            });
+        }).error(function(data) {
+            $location.path("/login");
+            $scope.error = true;
+            $rootScope.authenticated = false;
+        })
+    };
+    
+    $scope.logout = function() {
+        $http.post('/logout', {}).success(function() {
+            $rootScope.authenticated = false;
+            $location.path("/");
+        }).error(function(data) {
+            $rootScope.authenticated = false;
+        });
+    }    
+})
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Configuration
+ * <h4>FeatureDescription:</h4>
  *     the controller to load the frontpage
  * <h4>FeatureResult:</h4>
  *   <ul>
@@ -176,13 +272,13 @@ yaioM.directive('state', function(){
  * <h4>FeatureKeywords:</h4>
  *     GUI Configuration
  */
-yaioM.controller('FrontPageCtrl', function($scope, $location, $http, $routeParams, setFormErrors, OutputOptionsEditor) {
-    var nodeId = 'SysStart1';
+yaioM.controller('FrontPageCtrl', function($rootScope, $scope, $location, $http, $routeParams, setFormErrors, OutputOptionsEditor, authorization) {
+    var nodeId = $routeParams.nodeId;
+    if (nodeId == null || nodeId == "" || ! nodeId) {
+        nodeId = 'SysStart1';
+    }
     console.log("FrontPageCtrl - processing nodeId=" + nodeId);
 
-    // load data
-    $scope.frontPageUrl = '/exports/htmllayoutfragment/' + nodeId;
-    
     /**
      * <h4>FeatureDomain:</h4>
      *     Help
@@ -202,8 +298,46 @@ yaioM.controller('FrontPageCtrl', function($scope, $location, $http, $routeParam
         return false;
     }
 
+    // call authentificate 
+    authorization.authentificate(function () {
+        // check authentification
+        if (! $rootScope.authenticated) {
+            $location.path("/login");
+            $scope.error = false;
+        } else {
+            // load data
+            $scope.frontPageUrl = '/exports/htmlfrontpagefragment/' + nodeId;
+        }
+    });
 })
     
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Configuration
+ * <h4>FeatureDescription:</h4>
+ *     the controller to change language
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>returns new controller
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Configuration
+ */
+yaioM.controller('LanguageCtrl', ['$translate', '$scope', function ($translate, $scope) {
+    $scope.changeLanguage = function (langKey) {
+        // change angularTranslate
+        $translate.use(langKey);
+        
+        // change other languagetranslator
+        window.lang.change(langKey);
+        
+        // change icons
+        $(".button-lang").removeClass("button-lang-active").addClass("button-lang-inactive");
+        $("#button_lang_" + langKey).removeClass("button-lang-inactive").addClass("button-lang-active");
+    };
+}]);
+
+
 /**
  * <h4>FeatureDomain:</h4>
  *     Configuration
@@ -216,7 +350,7 @@ yaioM.controller('FrontPageCtrl', function($scope, $location, $http, $routeParam
  * <h4>FeatureKeywords:</h4>
  *     GUI Configuration BusinessLogic
  */
-yaioM.controller('NodeSearchCtrl', function($scope, $location, $http, $routeParams, setFormErrors) {
+yaioM.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $http, $routeParams, setFormErrors, authorization) {
 
     // create search
     $scope.nodes = new Array();
@@ -225,6 +359,7 @@ yaioM.controller('NodeSearchCtrl', function($scope, $location, $http, $routePara
     $scope.searchOptions = {
             curPage: 1,
             pageSize: 20,
+            searchSort: 'default',
             baseSysUID: "MasterplanMasternode1",
             fulltext: "",
             total: 0
@@ -233,6 +368,8 @@ yaioM.controller('NodeSearchCtrl', function($scope, $location, $http, $routePara
         $scope.searchOptions.curPage = decodeURI($routeParams.curPage); 
     if ($routeParams.pageSize)
         $scope.searchOptions.pageSize = decodeURI($routeParams.pageSize); 
+    if ($routeParams.searchSort)
+        $scope.searchOptions.searchSort = decodeURI($routeParams.searchSort); 
     if ($routeParams.baseSysUID)
         $scope.searchOptions.baseSysUID = decodeURI($routeParams.baseSysUID); 
     if ($routeParams.fulltext)
@@ -261,9 +398,14 @@ yaioM.controller('NodeSearchCtrl', function($scope, $location, $http, $routePara
         var newUrl = '/search'
             + '/' + encodeURI(page)
             + '/' + encodeURI($scope.searchOptions.pageSize)
+            + '/' + encodeURI($scope.searchOptions.searchSort)
             + '/' + encodeURI($scope.searchOptions.baseSysUID)
             + '/' + encodeURI($scope.searchOptions.fulltext)
             + '/';
+        
+        // save lastLocation for login
+        $rootScope.lastLocation = newUrl;
+
         // no cache!!!
         console.log("load new Url:" + newUrl);
         $location.path(newUrl);
@@ -308,9 +450,13 @@ yaioM.controller('NodeSearchCtrl', function($scope, $location, $http, $routePara
         var newUrl = '/search'
             + '/' + encodeURI($scope.searchOptions.curPage)
             + '/' + encodeURI($scope.searchOptions.pageSize)
+            + '/' + encodeURI($scope.searchOptions.searchSort)
             + '/' + encodeURI($scope.searchOptions.baseSysUID)
             + '/' + encodeURI($scope.searchOptions.fulltext)
             + '/';
+        // save lastLocation for login
+        $rootScope.lastLocation = newUrl;
+
         // no cache!!!
         console.log("load new Url:" + newUrl);
         $location.path(newUrl);
@@ -331,15 +477,22 @@ yaioM.controller('NodeSearchCtrl', function($scope, $location, $http, $routePara
      *     GUI Callback Fulltextsearch
      */
     $scope.doFulltextSearch = function() {
+        var uri = '/' + encodeURI($scope.searchOptions.curPage)
+                + '/' + encodeURI($scope.searchOptions.pageSize)
+                + '/' + encodeURI($scope.searchOptions.searchSort)
+                + '/' + encodeURI($scope.searchOptions.baseSysUID)
+                + '/';
+        // save lastLocation for login
+        $rootScope.lastLocation = '/search' + uri + encodeURI($scope.searchOptions.fulltext) + '/';
+
+        // no empty fulltext for webservice -> we use there another route 
+        if ($scope.searchOptions.fulltext && $scope.searchOptions.fulltext.length > 0)
+            uri = uri + encodeURI($scope.searchOptions.fulltext)
+                  + '/';
+
         // load data
         var searchNodeUrl = '/nodes/search'
-            + '/' + encodeURI($scope.searchOptions.curPage)
-            + '/' + encodeURI($scope.searchOptions.pageSize)
-            + '/' + encodeURI($scope.searchOptions.baseSysUID)
-            + '/';
-        if ($scope.searchOptions.fulltext && $scope.searchOptions.fulltext.length > 0)
-            searchNodeUrl = searchNodeUrl + encodeURI($scope.searchOptions.fulltext)
-                          + '/';
+                            + uri;
         $http.get(searchNodeUrl).then(function(nodeResponse) {
             // success handler
             
@@ -425,10 +578,17 @@ yaioM.controller('NodeSearchCtrl', function($scope, $location, $http, $routePara
         }
     }
     
-    
-    // do Search
-    $scope.doFulltextSearch();
-
+    // call authentificate 
+    authorization.authentificate(function () {
+        // check authentification
+        if (! $rootScope.authenticated) {
+            $location.path("/login");
+            $scope.error = false;
+        } else {
+            // do Search
+            $scope.doFulltextSearch();
+        }
+    });
 });    
     
 
@@ -444,7 +604,7 @@ yaioM.controller('NodeSearchCtrl', function($scope, $location, $http, $routePara
  * <h4>FeatureKeywords:</h4>
  *     GUI Configuration BusinessLogic
  */
-yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams, setFormErrors, OutputOptionsEditor) {
+yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, $routeParams, setFormErrors, OutputOptionsEditor, authorization) {
 
     // register pattern
     $scope.CONST_PATTERN_CSSCLASS  = yaioM.CONST_PATTERN_CSSCLASS ;
@@ -485,49 +645,117 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
 
     console.log("NodeShowCtrl - processing nodeId=" + nodeId + " activeNodeId=" + activeNodeId);
 
-    if (activeNodeId) {
-        /**
-         * <h4>FeatureDomain:</h4>
-         *     GUI
-         * <h4>FeatureDescription:</h4>
-         *     callbackhandler to load activeNodeId and open the nodehierarchy
-         * <h4>FeatureResult:</h4>
-         *   <ul>
-         *     <li>updates nodetree
-         *   </ul> 
-         * <h4>FeatureKeywords:</h4>
-         *     GUI Callback
-         */
-        activeNodeIdHandler = function() {
-            var activeNodeUrl = '/nodes/show/' + activeNodeId;
-            console.log("start loading activenode:" + activeNodeId);
-            $http.get(activeNodeUrl).then(function(nodeResponse) {
+    var curNodeUrl = '/nodes/show/' + nodeId;
+
+    // save lastLocation for login
+    $rootScope.lastLocation = '/show/' + nodeId;
+    
+    // call authentificate 
+    authorization.authentificate(function () {
+        // check authentification
+        if (! $rootScope.authenticated) {
+            console.log("showControl: not authentification: " + $rootScope.authenticated);
+            $location.path("/login");
+            $scope.error = false;
+        } else {
+            // do Search
+            if (activeNodeId) {
+                /**
+                 * <h4>FeatureDomain:</h4>
+                 *     GUI
+                 * <h4>FeatureDescription:</h4>
+                 *     callbackhandler to load activeNodeId and open the nodehierarchy
+                 * <h4>FeatureResult:</h4>
+                 *   <ul>
+                 *     <li>updates nodetree
+                 *   </ul> 
+                 * <h4>FeatureKeywords:</h4>
+                 *     GUI Callback
+                 */
+                activeNodeIdHandler = function() {
+                    var activeNodeUrl = '/nodes/show/' + activeNodeId;
+                    console.log("start loading activenode:" + activeNodeId);
+                    $http.get(activeNodeUrl).then(function(nodeResponse) {
+                        // success handler
+                        
+                        // check response
+                        var state = nodeResponse.data.state;
+                        if (state == "OK") {
+                            // all fine
+                            console.log("NodeShowCtrl - OK loading activenode:" + nodeResponse.data.stateMsg)
+                            
+                            // create nodehierarchy
+                            var nodeIdHierarchy = new Array();
+                            var parentNode = nodeResponse.data.node.parentNode;
+                            while (parentNode != null && parentNode != "" && parentNode != "undefined") {
+                                nodeIdHierarchy.push(parentNode.sysUID);
+                                parentNode = parentNode.parentNode;
+                            }
+                            nodeIdHierarchy.reverse();
+                            
+                            // add me 
+                            nodeIdHierarchy.push(nodeResponse.data.node.sysUID);
+                            
+                            // open Hierarchy
+                            openNodeHierarchy("#tree", nodeIdHierarchy);
+                        } else {
+                            // error
+                            logError("error loading activenode:" + nodeResponse.data.stateMsg 
+                                    + " details:" + nodeResponse, false)
+                        }
+                    }, function(response) {
+                        // error handler
+                        var data = response.data;
+                        var status = response.status;
+                        var header = response.header;
+                        var config = response.config;
+                        var message = "error loading activenode with url: " + activeNodeUrl;
+                        logError(message, true);
+                        message = "error data: " + data + " header:" + header + " config:" + config;
+                        logError(message, false);
+                    });
+                }
+            }
+
+            // load data
+            $http.get(curNodeUrl).then(function(nodeResponse) {
                 // success handler
                 
                 // check response
                 var state = nodeResponse.data.state;
                 if (state == "OK") {
                     // all fine
-                    console.log("NodeShowCtrl - OK loading activenode:" + nodeResponse.data.stateMsg)
+                    console.log("NodeShowCtrl - OK loading nodes:" + nodeResponse.data.stateMsg);
+                    $scope.node = nodeResponse.data.node;
                     
                     // create nodehierarchy
-                    var nodeIdHierarchy = new Array();
+                    var nodeHierarchy = new Array();
                     var parentNode = nodeResponse.data.node.parentNode;
                     while (parentNode != null && parentNode != "" && parentNode != "undefined") {
-                        nodeIdHierarchy.push(parentNode.sysUID);
+                        nodeHierarchy.push(parentNode);
                         parentNode = parentNode.parentNode;
                     }
-                    nodeIdHierarchy.reverse();
+                    nodeHierarchy.reverse();
+                    $scope.nodeHierarchy = nodeHierarchy;
+
+                    // load fencytree
+                    yaioCreateFancyTree("#tree", $scope.node.sysUID, activeNodeIdHandler);
                     
-                    // add me 
-                    nodeIdHierarchy.push(nodeResponse.data.node.sysUID);
-                    
-                    // open Hierarchy
-                    openNodeHierarchy("#tree", nodeIdHierarchy);
+                    // load me
+                    var data = {
+                         node: {
+                             data: {
+                                 basenode: nodeResponse.data.node,
+                             },
+                             tr: "#masterTr",
+                         } 
+                    };
+                    renderColumnsForNode(null, data);
+                    yaioRecalcMasterGanttBlock($scope.node);
                 } else {
                     // error
-                    logError("error loading activenode:" + nodeResponse.data.stateMsg 
-                            + " details:" + nodeResponse, false)
+                    logError("error loading nodes:" + nodeResponse.data.stateMsg 
+                            + " details:" + nodeResponse, true)
                 }
             }, function(response) {
                 // error handler
@@ -535,65 +763,12 @@ yaioM.controller('NodeShowCtrl', function($scope, $location, $http, $routeParams
                 var status = response.status;
                 var header = response.header;
                 var config = response.config;
-                var message = "error loading activenode with url: " + activeNodeUrl;
+                var message = "error loading node with url: " + curNodeUrl;
                 logError(message, true);
                 message = "error data: " + data + " header:" + header + " config:" + config;
                 logError(message, false);
             });
         }
-    }
-
-    // load data
-    var curNodeUrl = '/nodes/show/' + nodeId;
-    $http.get(curNodeUrl).then(function(nodeResponse) {
-        // success handler
-        
-        // check response
-        var state = nodeResponse.data.state;
-        if (state == "OK") {
-            // all fine
-            console.log("NodeShowCtrl - OK loading nodes:" + nodeResponse.data.stateMsg);
-            $scope.node = nodeResponse.data.node;
-            
-            // create nodehierarchy
-            var nodeHierarchy = new Array();
-            var parentNode = nodeResponse.data.node.parentNode;
-            while (parentNode != null && parentNode != "" && parentNode != "undefined") {
-                nodeHierarchy.push(parentNode);
-                parentNode = parentNode.parentNode;
-            }
-            nodeHierarchy.reverse();
-            $scope.nodeHierarchy = nodeHierarchy;
-
-            // load fencytree
-            yaioCreateFancyTree("#tree", $scope.node.sysUID, activeNodeIdHandler);
-            
-            // load me
-            var data = {
-                 node: {
-                     data: {
-                         basenode: nodeResponse.data.node,
-                     },
-                     tr: "#masterTr",
-                 } 
-            };
-            renderColumnsForNode(null, data);
-            yaioRecalcMasterGanttBlock($scope.node);
-        } else {
-            // error
-            logError("error loading nodes:" + nodeResponse.data.stateMsg 
-                    + " details:" + nodeResponse, true)
-        }
-    }, function(response) {
-        // error handler
-        var data = response.data;
-        var status = response.status;
-        var header = response.header;
-        var config = response.config;
-        var message = "error loading node with url: " + curNodeUrl;
-        logError(message, true);
-        message = "error data: " + data + " header:" + header + " config:" + config;
-        logError(message, false);
     });
     
     
@@ -1197,17 +1372,13 @@ yaioM.factory('OutputOptionsEditor', function($http) {
  * <h4>FeatureKeywords:</h4>
  *     GUI Configuration BusinessLogic
  */
-yaioM.controller('OutputOptionsCtrl', function($scope, $location, $http, $routeParams, setFormErrors, OutputOptionsEditor) {
-
-    
+yaioM.controller('OutputOptionsCtrl', function($rootScope, $scope, $location, $http, $routeParams, setFormErrors, OutputOptionsEditor) {
     // register the editor
     $scope.outputOptionsEditor = OutputOptionsEditor;
     // create options
     $scope.oOptions = $scope.outputOptionsEditor.oOptions;
     
     console.log("OutputOptionsCtrl - started");
-
-
 });
 
 /***************************************
@@ -1409,6 +1580,3 @@ yaioM.directive('fielderrors', function() {
             }
     };
 });
-
-
-  

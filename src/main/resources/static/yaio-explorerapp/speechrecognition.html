@@ -91,7 +91,7 @@ a.c1 {
                         <textarea class="final" id="final_textarea"
                             cols="30" rows="5"></textarea>
                     </div>
-                    <input type="button" value="Übernehmen"
+                    <input type="button" value="&Uuml;bernehmen"
                         onclick="addResult2Opener(true);">
                 </div>
             </div>
@@ -115,6 +115,9 @@ a.c1 {
 
         // interim results aendern sich nachtraeglich
         recognition.interimResults = true;
+        
+        // add language
+        recognition.lang = "de-DE";
 
         // Handler
 

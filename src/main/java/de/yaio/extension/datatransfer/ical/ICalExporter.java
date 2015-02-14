@@ -68,8 +68,8 @@ public class ICalExporter extends WikiExporter {
         super();
     }
 
-    protected static DateFormat DF = new SimpleDateFormat("yyyyMMdd");
-    protected static DateFormat TF = new SimpleDateFormat("HHmmss");
+    protected static final DateFormat DF = new SimpleDateFormat("yyyyMMdd");
+    protected static final DateFormat TF = new SimpleDateFormat("HHmmss");
     
     // Logger
     private static final Logger LOGGER =
@@ -81,8 +81,8 @@ public class ICalExporter extends WikiExporter {
     };
 
     @Override
-    public StringBuffer getNodeResult(DataDomain curNode,  String praefix,
-            OutputOptions oOptions) throws Exception {
+    public StringBuffer getNodeResult(final DataDomain curNode,  final String praefix,
+            final OutputOptions oOptions) throws Exception {
         StringBuffer res = new StringBuffer();
 
         // Template-Nodes ignorieren
@@ -99,7 +99,7 @@ public class ICalExporter extends WikiExporter {
         }
 
         // Projekt-Ausgabe aller 
-        res.append(this.genICalForNode((BaseNode)curNode, oOptions));
+        res.append(this.genICalForNode((BaseNode) curNode, oOptions));
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("node return datalength:" + res.length() 
@@ -126,8 +126,8 @@ public class ICalExporter extends WikiExporter {
      * @return - formatted output of node-hierarchy and DataDomains
      * @throws Exception - parser/format-Exceptions possible
      */
-    public String genICalForNode(BaseNode paramCurNode, 
-        OutputOptions oOptions) throws Exception {
+    public String genICalForNode(final BaseNode paramCurNode, 
+        final OutputOptions oOptions) throws Exception {
         String res = "";
 
         // max. Ebene pruefen
@@ -156,7 +156,7 @@ public class ICalExporter extends WikiExporter {
             }
             for (String nodeName : paramCurNode.getChildNodesByNameMap().keySet()) {
                 DataDomain subNode = paramCurNode.getChildNodesByNameMap().get(nodeName);
-                if (! TaskNode.class.isInstance(subNode)) {
+                if (!TaskNode.class.isInstance(subNode)) {
                     if (LOGGER.isDebugEnabled()) {
                         LOGGER.debug("subnode:" + subNode.getNameForLogger() 
                             + " ignore: not TaskNode but " + subNode.getClass());
@@ -164,7 +164,7 @@ public class ICalExporter extends WikiExporter {
                     continue;
                 }
                 // nur ausfuehren, wenn Kindselement WF-Status hat
-                TaskNode subTaskNode = (TaskNode)subNode;
+                TaskNode subTaskNode = (TaskNode) subNode;
                 String subNodeStatus = subTaskNode.getState();
                 if (subTaskNode.isWFStatus(subNodeStatus)) {
                     blockChildren += this.getNodeResult(subTaskNode, "", oOptions);
@@ -184,18 +184,18 @@ public class ICalExporter extends WikiExporter {
         }
         
         // nur Projektnodes zulassen
-        if (! TaskNode.class.isInstance(paramCurNode)) {
+        if (!TaskNode.class.isInstance(paramCurNode)) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("node:" + paramCurNode.getWorkingId() 
                     + " ignore: not TaskNode but " + paramCurNode.getClass());
             }
             return blockChildren;
         }
-        TaskNode curNode = (TaskNode)paramCurNode;
+        TaskNode curNode = (TaskNode) paramCurNode;
 
         // Status ueberpruefen
         String state = curNode.getState();
-        if (! curNode.isWFStatus(state) || flgHasWFChildren) {
+        if (!curNode.isWFStatus(state) || flgHasWFChildren) {
             // kein eigener WFNode oder Kindelemente haben WF-State -> SKIP
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("SKIP - No WFNode - node:" + curNode.getWorkingId() + " return datalength:" + res.length());
@@ -205,7 +205,7 @@ public class ICalExporter extends WikiExporter {
         
         // check if I'am matching
         boolean flgMatchesFilter = this.isNodeMatchingFilter(curNode, oOptions);
-        if (! flgMatchesFilter) {
+        if (!flgMatchesFilter) {
             // sorry I dont match
             return blockChildren;
         }
@@ -216,9 +216,9 @@ public class ICalExporter extends WikiExporter {
         if (InfoNode.class.isInstance(paramCurNode)) {
             // SKIP
         } else if (EventNode.class.isInstance(paramCurNode)) {
-            res += this.genICalForEventNode((EventNode)paramCurNode, oOptions);
+            res += this.genICalForEventNode((EventNode) paramCurNode, oOptions);
         } else if (TaskNode.class.isInstance(paramCurNode)) {
-            res += this.genICalForTaskNode((TaskNode)paramCurNode, oOptions);
+            res += this.genICalForTaskNode((TaskNode) paramCurNode, oOptions);
         }
         
         res += blockChildren;
@@ -247,8 +247,8 @@ public class ICalExporter extends WikiExporter {
      * @return - formatted output
      * @throws Exception - parser/format-Exceptions possible
      */
-    public String genICalForTaskNode(TaskNode paramCurNode, 
-        OutputOptions oOptions) throws Exception {
+    public String genICalForTaskNode(final TaskNode paramCurNode, 
+        final OutputOptions oOptions) throws Exception {
         String res = "";
 
         // max. Ebene pruefen
@@ -266,18 +266,18 @@ public class ICalExporter extends WikiExporter {
         }
         
         // nur Projektnodes zulassen
-        if (! TaskNode.class.isInstance(paramCurNode)) {
+        if (!TaskNode.class.isInstance(paramCurNode)) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("node:" + paramCurNode.getWorkingId() 
                     + " ignore: not ProjektNode but " + paramCurNode.getClass());
             }
             return "";
         }
-        TaskNode curNode = (TaskNode)paramCurNode;
+        TaskNode curNode = (TaskNode) paramCurNode;
 
         // Status ueberpruefen
         String state = curNode.getState();
-        if (! curNode.isWFStatus(state)) {
+        if (!curNode.isWFStatus(state)) {
             // kein eigener WFNode oder Kindelemente haben WF-State -> SKIP
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("SKIP - No WFNode - node:" + curNode.getWorkingId() + " return datalength:" + res.length());
@@ -377,8 +377,8 @@ public class ICalExporter extends WikiExporter {
      * @return - formatted output
      * @throws Exception - parser/format-Exceptions possible
      */
-    public String genICalForEventNode(EventNode paramCurNode, 
-        OutputOptions oOptions) throws Exception {
+    public String genICalForEventNode(final EventNode paramCurNode, 
+        final OutputOptions oOptions) throws Exception {
         String res = "";
 
         // max. Ebene pruefen
@@ -396,18 +396,18 @@ public class ICalExporter extends WikiExporter {
         }
         
         // nur Projektnodes zulassen
-        if (! TaskNode.class.isInstance(paramCurNode)) {
+        if (!TaskNode.class.isInstance(paramCurNode)) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("node:" + paramCurNode.getWorkingId() 
                     + " ignore: not EventNode but " + paramCurNode.getClass());
             }
             return "";
         }
-        TaskNode curNode = (TaskNode)paramCurNode;
+        TaskNode curNode = (TaskNode) paramCurNode;
 
         // Status ueberpruefen
         String state = curNode.getState();
-        if (! curNode.isWFStatus(state)) {
+        if (!curNode.isWFStatus(state)) {
             // kein eigener WFNode oder Kindelemente haben WF-State -> SKIP
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("SKIP - No WFNode - node:" + curNode.getWorkingId() + " return datalength:" + res.length());
@@ -517,8 +517,8 @@ public class ICalExporter extends WikiExporter {
 
 
     @Override
-    public String getMasterNodeResult(DataDomain masterNode, 
-            OutputOptions oOptions) throws Exception {
+    public String getMasterNodeResult(final DataDomain masterNode, 
+            final OutputOptions oOptions) throws Exception {
         String icalRes = "BEGIN:VCALENDAR\n";
         icalRes += "PRODID:-//Mozilla.org/NONSGML Mozilla Calendar V1.1//EN\n";
         icalRes += "VERSION:2.0\n";

@@ -55,8 +55,7 @@ public class PlanCalcDataTest extends DataDomainTest {
             StringBuffer resBuffer = new StringBuffer();
             resBuffer.append(this.getName()).append("|")
                      .append(this.getPlanCalcStart()).append("|")
-                     .append(this.getPlanCalcEnde()).append("|")
-                     ;
+                     .append(this.getPlanCalcEnde()).append("|");
             return resBuffer.toString();
             
         }
@@ -89,10 +88,9 @@ public class PlanCalcDataTest extends DataDomainTest {
      * <h4>FeatureKeywords:</h4>
      *     Test Config Initialisation
      * @return - a new dataobj for the test
-     * @throws Exception
-     */
+     * @throws Exception - possible Exception     */
     protected PlanCalcDataTestObj getNewPlanCalcDataTestObj() throws Exception  {
-        return (PlanCalcDataTestObj)setupNewTestObj();
+        return (PlanCalcDataTestObj) setupNewTestObj();
     }
 
     @Override

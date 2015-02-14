@@ -60,8 +60,8 @@ public class ImporterTest extends BaseTest {
         
         BaseNode dataObj = null;
         
-        public ImporterTestObj(DataDomain dataDomain) {
-            this.dataObj = (BaseNode)dataDomain;            
+        public ImporterTestObj(final DataDomain dataDomain) {
+            this.dataObj = (BaseNode) dataDomain;            
         }
         
         @Override
@@ -69,8 +69,7 @@ public class ImporterTest extends BaseTest {
             StringBuffer resBuffer = new StringBuffer();
             resBuffer.append(this.dataObj.getName()).append("|")
                      .append(this.dataObj.getState()).append("|")
-                     .append(this.dataObj.getClass().getName()).append("|")
-                     ;
+                     .append(this.dataObj.getClass().getName()).append("|");
             return resBuffer.toString();
             
         }
@@ -81,7 +80,7 @@ public class ImporterTest extends BaseTest {
         return null;
     }
     
-    public static void configureNodeTypes(Importer importer) {
+    public static void configureNodeTypes(final Importer importer) {
         importer.addNodeTypeIdentifierVariantMapping(TestNode.CONST_MAP_NODETYPE_IDENTIFIER);
     }
     
@@ -96,8 +95,7 @@ public class ImporterTest extends BaseTest {
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     Test Configuration
-     * @throws Exception
-     */
+     * @throws Exception - possible Exception     */
     @Before
     public void setupImporter() throws Exception {
         importerObj = new ImporterImpl(null);
@@ -115,8 +113,7 @@ public class ImporterTest extends BaseTest {
      *     do tests for creation of nodes from text
      * <h4>FeatureKeywords:</h4>
      *     Test
-     * @throws Exception
-     */
+     * @throws Exception - possible Exception     */
     @Test
     public void testCreateNode() throws Exception {
         String expected = null;

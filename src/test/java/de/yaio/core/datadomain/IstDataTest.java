@@ -57,8 +57,7 @@ public class IstDataTest extends DataDomainTest {
                      .append(this.getIstStand()).append("|")
                      .append(this.getIstAufwand()).append("|")
                      .append(this.getIstStart()).append("|")
-                     .append(this.getIstEnde()).append("|")
-                     ;
+                     .append(this.getIstEnde()).append("|");
             return resBuffer.toString();
             
         }
@@ -91,10 +90,9 @@ public class IstDataTest extends DataDomainTest {
      * <h4>FeatureKeywords:</h4>
      *     Test Config Initialisation
      * @return - a new dataobj for the test
-     * @throws Exception
-     */
+     * @throws Exception - possible Exception     */
     protected IstDataTestObj getNewIstDataTestObj() throws Exception  {
-        return (IstDataTestObj)setupNewTestObj();
+        return (IstDataTestObj) setupNewTestObj();
     }
 
     @Override

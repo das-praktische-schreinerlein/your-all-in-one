@@ -56,8 +56,7 @@ public class MetaDataTest extends DataDomainTest {
                      .append(this.getMetaNodePraefix()).append("|")
                      .append(this.getMetaNodeNummer()).append("|")
                      .append(this.getMetaNodeTypeTags()).append("|")
-                     .append(this.getMetaNodeSubTypeTags()).append("|")
-                     ;
+                     .append(this.getMetaNodeSubTypeTags()).append("|");
             return resBuffer.toString();
             
         }
@@ -90,10 +89,9 @@ public class MetaDataTest extends DataDomainTest {
      * <h4>FeatureKeywords:</h4>
      *     Test Config Initialisation
      * @return - a new dataobj for the test
-     * @throws Exception
-     */
+     * @throws Exception - possible Exception     */
     protected MetaDataTestObj getNewMetaDataTestObj() throws Exception  {
-        return (MetaDataTestObj)setupNewTestObj();
+        return (MetaDataTestObj) setupNewTestObj();
     }
 
     @Override

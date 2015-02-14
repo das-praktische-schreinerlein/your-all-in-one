@@ -44,7 +44,7 @@
  *     GUI Editor SpeechRecognition
  */
 function addSpeechRecognitionToElements() {
-    // add speechrecognitionif availiable
+    // add speechrecognition if availiable
     if (('webkitSpeechRecognition' in window)) {
         // add speechrecognition to nodeDesc+name
         $("label[for='nodeDesc'], label[for='name']").append(function (idx) {
@@ -68,7 +68,7 @@ function addSpeechRecognitionToElements() {
                 link = "<a href=\"\" class=\"\"" +
                     " onClick=\"openSpeechRecognitionWindow(" +
                         "document.getElementById('" + forElement.attr('id') + "')); return false;" +
-                    "\" data-tooltip='Spracherkennung nutzen'>" +
+                    "\" lang='tech' data-tooltip='tooltip.command.OpenSpeechRecognition'>" +
                     "<img alt='Spracherkennung nutzen' style='width:25px'" +
                         " src='https://www.google.com/intl/en/chrome/assets/common/images/content/mic.gif'></a>";
                 
@@ -102,6 +102,78 @@ function openSpeechRecognitionWindow(target) {
     if (speechrecognitionWindow.opener == null) { speechrecognitionWindow.opener = self; }
     speechrecognitionWindow.opener.targetElement = target;
 }
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     GUI
+ * <h4>FeatureDescription:</h4>
+ *     add speechSynth to nodeDesc-Label if availiable<br>
+ *     set the flg speechSynthAdded on the element, so that there is no doubling
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>GUI-result: add speechSynth to elements
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Editor SpeechSynth
+ */
+function addSpeechSynthToElements() {
+    // add speechSynth if availiable
+    if (('speechSynthesis' in window)) {
+        // add speechrecognition to nodeDesc+name
+        $("label[for='nodeDesc']").append(function (idx) {
+            var link = "";
+            var label = this;
+            
+            // check if already set
+            if ($(label).attr("speechSynthAdded")) {
+                console.error("addSpeechSynthToElements: SKIP because already added: " + $(label).attr("for"));
+                return link;
+            }
+
+            // get corresponding form
+            var forName = $(label).attr("for");
+            var form = $(label).closest("form");
+            
+            // get for-element byName from form
+            var forElement = form.find("[name="+ forName + "]").first();
+            if (forElement.length > 0) {
+                // define link to label
+                link = "<a href=\"\" class=\"button\"" +
+                       " onClick=\"openSpeechSynthWindow(" +
+                        "document.getElementById('" + forElement.attr('id') + "')); return false;" +
+                       "\" lang='tech' data-tooltip='tooltip.command.OpenSpeechSynth' class='button'>common.command.OpenSpeechSynth</a>";
+                
+                // set flag
+                $(label).attr("speechSynthAdded", "true")
+                console.log("addSpeechSynthToElements: add : " + forName + " for " + forElement.attr('id'));
+            }
+            return link;
+        });
+    }
+}
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     GUI
+ * <h4>FeatureDescription:</h4>
+ *     open speechsynth for element
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>GUI-result: open speechsynth for element
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Editor SpeechSynth
+ * @param target - target-element to update (HTML-Element)
+ */
+function openSpeechSynthWindow(target) {
+    if (target == null) target = self;
+    target.focus();
+    var speechsynthWindow = window.open('speechsynth.html', "speechsynth", "width=690,height=350,resizable=yes,dependent=yes,scrollbars=yes");
+    speechsynthWindow.focus();
+    if (speechsynthWindow.opener == null) { speechsynthWindow.opener = self; }
+    speechsynthWindow.opener.targetElement = target;
+}
+
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -367,6 +439,44 @@ function togglePreWrap(element) {
   * <h4>FeatureDomain:</h4>
   *     Layout Toggler
   * <h4>FeatureDescription:</h4>
+  *     Toggle the "#detail_sys_" for the specified id with a slide. 
+  * <h4>FeatureResult:</h4>
+  *   <ul>
+  *     <li>Updates DOM
+  *   </ul> 
+  * <h4>FeatureKeywords:</h4>
+  *     GUI Tree Rendering
+  * @param id - sysUID of the node 
+  */
+ function toggleNodeSysContainer(id) {
+     $("#detail_sys_" + id).slideToggle(1000,function() {
+         // show/hide toggler
+         if ($("#detail_sys_" + id).css("display") == "block") {
+             // desc is now shown
+             $("#toggler_sys_" + id).addClass('toggler_show').removeClass('toggler_hidden');
+         } else {
+             // desc is now hidden
+             $("#toggler_sys_" + id).addClass('toggler_hidden').removeClass('toggler_show');
+         }
+     });
+ }
+
+ function toggleAllNodeSysContainer() {
+     if ($("#toggler_sys_all").hasClass('toggler_hidden')) {
+         // show all sys
+         $("div.field_nodeSys").slideDown(1000);
+         $("div.fieldtype_sysToggler > a").addClass('toggler_show').removeClass('toggler_hidden');
+     } else {
+         // hide all sys
+         $("div.field_nodeSys").slideUp(1000);
+         $("div.fieldtype_sysToggler > a").addClass('toggler_hidden').removeClass('toggler_show');
+     }
+ }
+
+ /**
+  * <h4>FeatureDomain:</h4>
+  *     Layout Toggler
+  * <h4>FeatureDescription:</h4>
   *     Toggle the specified ojects with a drop. 
   * <h4>FeatureResult:</h4>
   *   <ul>
@@ -462,6 +572,9 @@ function togglePreWrap(element) {
          $("#" + textAreaId).val(editor.getValue()).trigger('select').triggerHandler("change");
      });
      
+     // set editor as data-attr on parent
+     $("#" + parentId).data("aceEditor", editor);
+     
      return editor;
  }
  
@@ -486,9 +599,12 @@ function togglePreWrap(element) {
          if (forElement.length > 0) {
              // define link to label
              link = "<a href=\"#\" " +
-                 " onClick=\"showPreviewForTextareaId('" +
-                     forElement.attr('id') + "'); return false;" +
-                 "\" data-tooltip='Vorschau' class='icon-preview'></a>";
+                    " onClick=\"showPreviewForTextareaId('" +
+                       forElement.attr('id') + "'); return false;" +
+                    "\" lang='tech' data-tooltip='tooltip.command.OpenPreview' class='button'>common.command.OpenPreview</a>";
+             link += "<a href=\"#\" " +
+                     " onClick=\"showMarkdownHelp(); return false;" +
+                     "\" lang='tech' data-tooltip='tooltip.command.OpenMarkdownHelp' class='button'>common.command.OpenMarkdownHelp</a>";
              
              // set flag
              $(label).attr("previewAdded", "true")
@@ -518,8 +634,240 @@ function togglePreWrap(element) {
          buttons: {
            Ok: function() {
              $( this ).dialog( "close" );
+           },
+           "Vorlesen": function () {
+               openSpeechSynthWindow(document.getElementById('preview-content'));
+           }
+         }
+     });    
+ }
+ 
+ function showMarkdownHelp() {
+     // show message
+     var url = "/examples/markdownhelp/markdownhelp.html" + "?" + createXFrameAllowFrom();
+     console.log("showMarkdownHelp:" + url);
+     $("#markdownhelp-iframe").attr('src',url);
+     $("#markdownhelp-box" ).dialog({
+         modal: true,
+         width: "1200px",
+         buttons: {
+             "Schliessen": function() {
+               $( this ).dialog( "close" );
+             },
+             "Eigenes Fenster": function() {
+                 var helpFenster = window.open(url, "markdownhelp", "width=1200,height=500,scrollbars=yes,resizable=yes");
+                 helpFenster.focus();
+                 $( this ).dialog( "close" );
+             } 
+         }
+     });    
+ }
+ 
+ 
+ function addWysiwhgToElements() {
+     // add preview to nodeDesc
+     $("label[for='nodeDesc']").append(function (idx) {
+         var link = "";
+         var label = this;
+         
+         // check if already set
+         if ($(label).attr("wysiwhgAdded")) {
+             console.error("addWysiwhgElements: SKIP because already added: " + $(label).attr("for"));
+             return link;
+         }
+
+         // get corresponding form
+         var forName = $(label).attr("for");
+         var form = $(label).closest("form");
+         
+         // get for-element byName from form
+         var forElement = form.find("[name="+ forName + "]").first();
+         if (forElement.length > 0) {
+             // define link to label
+             link = "<a href=\"#\" " +
+                 " onClick=\"openWysiwhgForTextareaId('" +
+                     forElement.attr('id') + "'); return false;" +
+                 "\" lang='tech' data-tooltip='tooltip.command.OpenWysiwygEditor' class='button'>common.command.OpenWysiwygEditor</a>";
+             
+             // set flag
+             $(label).attr("wysiwhgAdded", "true")
+             console.log("addWysiwhgToElements: add : " + forName + " for " + forElement.attr('id'));
+         }
+         return link;
+     });
+ }
+ 
+ function openWysiwhgForTextareaId(textAreaId) {
+     // get existing parentEditor
+     var parentEditorId = "editor" + textAreaId.charAt(0).toUpperCase() + textAreaId.substring(1);
+     var parentEditor = $("#" + parentEditorId).data("aceEditor");
+     console.log("found parentEditor on:" + parentEditorId);
+
+     // create  Editor
+     var myParentId = "wysiwhg-editor";
+     var editor = createNodeDescEditorForNode(myParentId, textAreaId)
+
+     // reset intervallHandler for this parent
+     var intervalHandler = $("#" + myParentId).data("aceEditor.intervalHandler");
+     if (intervalHandler != "undefined") {
+         console.log("openWysiwhgForTextareaId: clear old Interval : " + intervalHandler + " for " + myParentId);
+         clearInterval(intervalHandler)
+     }
+     // create new intervalHandler: check every 5 second if there is a change und update all
+     $("#" + myParentId).data("aceEditor.flgChanged", "false");
+     intervalHandler = setInterval(function(){ 
+         // check if something changed
+         if ($("#" + myParentId).data("aceEditor.flgChanged") != "true") {
+             // nothing changed
+             return;
+         }
+         
+         console.log("openWysiwhgForTextareaId: updateData : " + " for " + myParentId);
+
+         // reset flag
+         $("#" + myParentId).data("aceEditor.flgChanged", "false");
+
+         // update textarea for angular
+         var value = editor.getValue();
+         $("#" + textAreaId).val(value).trigger('select').triggerHandler("change");
+
+         // update preview
+         showWyswhgPreviewForTextareaId(textAreaId);
+         
+         // update parent
+         if (parentEditor) {
+             parentEditor.setValue(value);
+         }
+     }, 5000);
+     console.log("openWysiwhgForTextareaId: setIntervall : " + intervalHandler + " for " + myParentId);
+     $("#" + myParentId).data("aceEditor.intervalHandler", intervalHandler);
+     
+     // set update-event
+     editor.getSession().on('change', function(e) {
+         $("#" + myParentId).data("aceEditor.flgChanged", "true");
+     });
+     
+     // init preview
+     showWyswhgPreviewForTextareaId(textAreaId)
+
+     // show message
+     $( "#wysiwhg-box" ).dialog({
+         modal: true,
+         width: "1200px",
+         buttons: {
+           Ok: function() {
+             $( this ).dialog( "close" );
+             console.log("openWysiwhgForTextareaId: clearMyInterval : " + intervallHandler + " for " + myParentId);
+             clearInterval(intervallHandler)
+           },
+           "Vorlesen": function () {
+               openSpeechSynthWindow(document.getElementById('wysiwhg-preview'));
            }
          }
      });    
  }
 
+ function showWyswhgPreviewForTextareaId(textAreaId) {
+     // prepare descText
+     var descText = $("#" + textAreaId).val();
+     var descHtmlMarked = formatMarkdown(descText, true);
+
+     // set preview-content
+     $( "#wysiwhg-preview" ).html(descHtmlMarked);
+ } 
+
+ 
+ 
+ /**
+  * <h4>FeatureDomain:</h4>
+  *     GUI
+  * <h4>FeatureDescription:</h4>
+  *     open the jirawindow for the node  
+  * <h4>FeatureResult:</h4>
+  *   <ul>
+  *     <li>GUI-result: opens jira window with jira-converted node-content
+  *   </ul> 
+  * <h4>FeatureKeywords:</h4>
+  *     GUI Convert
+  * @param nodeId - id of the node
+  */
+ function openJiraExportWindow(nodeId) {
+     // check vars
+     if (! nodeId) {
+         // tree not found
+         logError("error openJiraWindow: nodeId required", false);
+         return null;
+     }
+     // load node
+     var tree = $("#tree").fancytree("getTree");
+     if (!tree) {
+         // tree not found
+         logError("error openJiraWindow: cant load tree for node:" + nodeId, false);
+         return null;
+     }
+     var treeNode = tree.getNodeByKey(nodeId);
+     if (! treeNode) {
+         logError("error openJiraWindow: cant load node:" + nodeId, false);
+         return null;
+     }
+     
+     // extract nodedata
+     var basenode = treeNode.data.basenode;
+     var descText = basenode.nodeDesc;
+     if (! descText) {
+         descText = "";
+     }
+     descText = descText.replace(/\<WLBR\>/g, "\n");
+     descText = descText.replace(/\<WLESC\>/g, "\\");
+     descText = descText.replace(/\<WLTAB\>/g, "\t");
+     
+     // convert and secure
+     var nodeDesc = convertMarkdownToJira(descText);
+     nodeDesc = htmlEscapeText(descText);
+     
+     // set clipboard-content
+     $( "#clipboard-content" ).html(nodeDesc);
+     
+     // show message
+     $( "#clipboard-box" ).dialog({
+         modal: true,
+         width: "700px",
+         buttons: {
+           Ok: function() {
+             $( this ).dialog( "close" );
+           }
+         }
+     });    
+ }
+
+ /**
+  * <h4>FeatureDomain:</h4>
+  *     GUI
+  * <h4>FeatureDescription:</h4>
+  *     open the txtwindow for the node  
+  * <h4>FeatureResult:</h4>
+  *   <ul>
+  *     <li>GUI-result: opens txt-window with txt node-content
+  *   </ul> 
+  * <h4>FeatureKeywords:</h4>
+  *     GUI Convert
+  * @param content - txt content
+  */
+ function openTxtExportWindow(content) {
+     // secure
+     content = htmlEscapeText(content);
+
+     // set clipboard-content
+     $( "#clipboard-content" ).html(content);
+     
+     // show message
+     $( "#clipboard-box" ).dialog({
+         modal: true,
+         width: "700px",
+         buttons: {
+           Ok: function() {
+             $( this ).dialog( "close" );
+           }
+         }
+     });    
+ }

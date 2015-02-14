@@ -34,7 +34,7 @@ import de.yaio.core.datadomain.DataDomain;
 public interface DataDomainRecalc extends Comparable<DataDomainRecalc> {
     
     /** the position in the recalc-order at which the recalcer will run */
-    public static final int CONST_ORDER_NOOP = -1;
+    int CONST_ORDER_NOOP = -1;
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -52,7 +52,7 @@ public interface DataDomainRecalc extends Comparable<DataDomainRecalc> {
      * @param recurceDirection - Type of recursion (parent, me, children) NodeService.CONST_RECURSE_DIRECTION_*
      * @throws Exception - parser/format-Exceptions possible
      */
-    public void doRecalcBeforeChildren(DataDomain node, int recurceDirection) throws Exception;
+    void doRecalcBeforeChildren(DataDomain node, int recurceDirection) throws Exception;
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -70,7 +70,7 @@ public interface DataDomainRecalc extends Comparable<DataDomainRecalc> {
      * @param recurceDirection - Type of recursion (parent, me, children) NodeService.CONST_RECURSE_DIRECTION_*
      * @throws Exception - parser/format-Exceptions possible
      */
-    public void doRecalcAfterChildren(DataDomain node, int recurceDirection) throws Exception;
+    void doRecalcAfterChildren(DataDomain node, int recurceDirection) throws Exception;
     
     
     /**
@@ -86,7 +86,7 @@ public interface DataDomainRecalc extends Comparable<DataDomainRecalc> {
      *     Config
      * @return DataDomain for which the service runs
      */
-    public Class<?> getRecalcTargetClass();
+    Class<?> getRecalcTargetClass();
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -101,7 +101,7 @@ public interface DataDomainRecalc extends Comparable<DataDomainRecalc> {
      *     Config
      * @return position in the service-queue
      */
-    public int getRecalcTargetOrder();
+    int getRecalcTargetOrder();
     
     
 }

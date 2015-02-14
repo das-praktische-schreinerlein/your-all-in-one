@@ -9,6 +9,9 @@ import java.util.Map;
 import java.util.Set;
 
 import de.yaio.core.datadomain.DataDomain;
+import de.yaio.core.datadomain.PlanDependencieData.DurationMeasure;
+import de.yaio.core.datadomain.PlanDependencieData.PredecessorDependencieType;
+import de.yaio.core.datadomain.PlanDependencieData.PredecessorType;
 
 privileged aspect BaseNode_Roo_JavaBean {
     

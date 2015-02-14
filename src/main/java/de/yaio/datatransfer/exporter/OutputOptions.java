@@ -31,86 +31,86 @@ import java.util.Map;
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public interface OutputOptions {
-    public boolean isFlgDoIntend();
-    public void setFlgDoIntend(boolean flgDoIntend);
+    boolean isFlgDoIntend();
+    void setFlgDoIntend(boolean flgDoIntend);
 
-    public boolean isFlgIntendSum();
-    public void setFlgIntendSum(boolean flgIntendSum);
+    boolean isFlgIntendSum();
+    void setFlgIntendSum(boolean flgIntendSum);
 
 
-    public boolean isFlgShowState();
-    public void setFlgShowState(boolean flgShowState);
-    public boolean isFlgShowType();
-    public void setFlgShowType(boolean flgShowType);
-    public boolean isFlgShowName();
-    public void setFlgShowName(boolean flgShowName);
-    public boolean isFlgShowResLoc();
-    public void setFlgShowResLoc(boolean flgShowResLoc);
-    public boolean isFlgShowSymLink();
-    public void setFlgShowSymLink(boolean flgShowSymLink);
-    public boolean isFlgShowDocLayout();
-    public void setFlgShowDocLayout(boolean flgShowDocLayout);
-    public boolean isFlgShowIst();
-    public void setFlgShowIst(boolean flgShowIst);
-    public boolean isFlgShowPlan();
-    public void setFlgShowPlan(boolean flgShowPlan);
-    public boolean isFlgShowPlanCalc();
-    public void setFlgShowPlanCalc(boolean flgShowPlanCalc);
-    public boolean isFlgShowChildrenSum();
-    public void setFlgShowChildrenSum(boolean flgShowChildrenSum);
-    public boolean isFlgShowMetaData();
-    public void setFlgShowMetaData(boolean flgShowNoMetaData);
-    public boolean isFlgShowSysData();
-    public void setFlgShowSysData(boolean flgShowNoSysData);
-    public boolean isFlgShowDesc();
-    public void setFlgShowDesc(boolean flgShowDesc);
+    boolean isFlgShowState();
+    void setFlgShowState(boolean flgShowState);
+    boolean isFlgShowType();
+    void setFlgShowType(boolean flgShowType);
+    boolean isFlgShowName();
+    void setFlgShowName(boolean flgShowName);
+    boolean isFlgShowResLoc();
+    void setFlgShowResLoc(boolean flgShowResLoc);
+    boolean isFlgShowSymLink();
+    void setFlgShowSymLink(boolean flgShowSymLink);
+    boolean isFlgShowDocLayout();
+    void setFlgShowDocLayout(boolean flgShowDocLayout);
+    boolean isFlgShowIst();
+    void setFlgShowIst(boolean flgShowIst);
+    boolean isFlgShowPlan();
+    void setFlgShowPlan(boolean flgShowPlan);
+    boolean isFlgShowPlanCalc();
+    void setFlgShowPlanCalc(boolean flgShowPlanCalc);
+    boolean isFlgShowChildrenSum();
+    void setFlgShowChildrenSum(boolean flgShowChildrenSum);
+    boolean isFlgShowMetaData();
+    void setFlgShowMetaData(boolean flgShowNoMetaData);
+    boolean isFlgShowSysData();
+    void setFlgShowSysData(boolean flgShowNoSysData);
+    boolean isFlgShowDesc();
+    void setFlgShowDesc(boolean flgShowDesc);
     
-    public boolean isFlgRecalc();
-    public void setFlgRecalc(boolean flgRecalc);
-    public boolean isFlgProcessDocLayout();
-    public void setFlgProcessDocLayout(boolean flgProcessDocLayout);
-    public boolean isFlgProcessMarkdown();
-    public void setFlgProcessMarkdown(boolean flgProcessMarkdown);
+    boolean isFlgRecalc();
+    void setFlgRecalc(boolean flgRecalc);
+    boolean isFlgProcessDocLayout();
+    void setFlgProcessDocLayout(boolean flgProcessDocLayout);
+    boolean isFlgProcessMarkdown();
+    void setFlgProcessMarkdown(boolean flgProcessMarkdown);
 
-    public int getMaxEbene();
-    public void setMaxEbene(Integer maxEbene);
-    public int getMaxUeEbene();
-    public void setMaxUeEbene(Integer maxUeEbene);
-    public int getIntend();
-    public void setIntend(Integer intend);
-    public int getIntendLi();
-    public void setIntendLi(Integer intendLi);
-    public int getIntendSys();
-    public void setIntendSys(Integer intendSys);
-    public boolean isFlgTrimDesc();
-    public void setFlgTrimDesc(boolean flgTrimDesc);
+    int getMaxEbene();
+    void setMaxEbene(Integer maxEbene);
+    int getMaxUeEbene();
+    void setMaxUeEbene(Integer maxUeEbene);
+    int getIntend();
+    void setIntend(Integer intend);
+    int getIntendLi();
+    void setIntendLi(Integer intendLi);
+    int getIntendSys();
+    void setIntendSys(Integer intendSys);
+    boolean isFlgTrimDesc();
+    void setFlgTrimDesc(boolean flgTrimDesc);
 
-    public String getStrReadIfStatusInListOnly();
-    public void setStrReadIfStatusInListOnly(String strReadIfStatusInListOnly);
+    String getStrReadIfStatusInListOnly();
+    void setStrReadIfStatusInListOnly(String strReadIfStatusInListOnly);
 
-    public String getStrClassFilter();
-    public void setStrClassFilter(String strClassFilter);
+    String getStrClassFilter();
+    void setStrClassFilter(String strClassFilter);
     
-    public String getStrTypeFilter();
-    public void setStrTypeFilter(String strTypeFilter);
+    String getStrTypeFilter();
+    void setStrTypeFilter(String strTypeFilter);
 
-    public int getIntendFuncArea();
-    public void setIntendFuncArea(Integer intendPlanToPos);
+    int getIntendFuncArea();
+    void setIntendFuncArea(Integer intendPlanToPos);
 
-    public boolean isFlgShowBrackets();
-    public void setFlgShowBrackets(boolean flgShowBrackets);
+    boolean isFlgShowBrackets();
+    void setFlgShowBrackets(boolean flgShowBrackets);
 
-    public void setAllFlgShow(boolean value);
+    void setAllFlgShow(boolean value);
 
-    public boolean isFlgReEscapeDesc();
-    public void setFlgReEscapeDesc(boolean flgReEscapeDesc);
-    public boolean isFlgShowDescWithUe();
-    public void setFlgShowDescWithUe(boolean flgShowDescWithUe);
-    public boolean isFlgShowDescInNextLine();
-    public void setFlgShowDescInNextLine(boolean flgShowDescInNextLine);
+    boolean isFlgReEscapeDesc();
+    void setFlgReEscapeDesc(boolean flgReEscapeDesc);
+    boolean isFlgShowDescWithUe();
+    void setFlgShowDescWithUe(boolean flgShowDescWithUe);
+    boolean isFlgShowDescInNextLine();
+    void setFlgShowDescInNextLine(boolean flgShowDescInNextLine);
     
-    public Map<String, String> getMapClassFilter();
-    public Map<String, String> getMapTypeFilter();
-    public Map<String, String> getMapStateFilter();
-    public void initFilterMaps();
+    Map<String, String> getMapClassFilter();
+    Map<String, String> getMapTypeFilter();
+    Map<String, String> getMapStateFilter();
+    void initFilterMaps();
 }

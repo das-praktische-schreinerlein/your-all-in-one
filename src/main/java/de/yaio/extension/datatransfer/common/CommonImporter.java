@@ -71,7 +71,7 @@ public class CommonImporter {
      *     Constructor
      * @param defaultSourceType - the default sourcetype if commandline-option not set
      */
-    public CommonImporter(String defaultSourceType) {
+    public CommonImporter(final String defaultSourceType) {
         this.defaultSourceType = defaultSourceType;
         createPPLImporter();
     }
@@ -97,7 +97,7 @@ public class CommonImporter {
      *     CLI
      * @param availiableCmdLineOptions - the container with the availiableCmdLineOptions
      */
-    public void addAvailiableCommonCmdLineOptions(Options availiableCmdLineOptions) {
+    public void addAvailiableCommonCmdLineOptions(final Options availiableCmdLineOptions) {
         // sourceType
         Option sourceType = new Option("", "sourcetype", true,
                 "Source to read from (jpa,ppl,wiki,excel).");
@@ -125,7 +125,7 @@ public class CommonImporter {
      *     CLI
      * @param availiableCmdLineOptions - the container with the availiableCmdLineOptions
      */
-    public void addAvailiableWikiCmdLineOptions(Options availiableCmdLineOptions) {
+    public void addAvailiableWikiCmdLineOptions(final Options availiableCmdLineOptions) {
         // Show State
         Option flgShowState = new Option("", "onlyifstate", false,
                 "Show Only if State/Type set (default false)");
@@ -170,7 +170,7 @@ public class CommonImporter {
      *     CLI
      * @param availiableCmdLineOptions - the container with the availiableCmdLineOptions
      */
-    public void addAvailiableExcelCmdLineOptions(Options availiableCmdLineOptions) {
+    public void addAvailiableExcelCmdLineOptions(final Options availiableCmdLineOptions) {
     }
 
     /**
@@ -186,7 +186,7 @@ public class CommonImporter {
      *     CLI
      * @param availiableCmdLineOptions - the container with the availiableCmdLineOptions
      */
-    public void addAvailiablePPLCmdLineOptions(Options availiableCmdLineOptions) {
+    public void addAvailiablePPLCmdLineOptions(final Options availiableCmdLineOptions) {
     }
 
     /**
@@ -202,7 +202,7 @@ public class CommonImporter {
      *     CLI
      * @param availiableCmdLineOptions - the container with the availiableCmdLineOptions
      */
-    public void addAvailiableJPACmdLineOptions(Options availiableCmdLineOptions) {
+    public void addAvailiableJPACmdLineOptions(final Options availiableCmdLineOptions) {
         // exportsysuid
         Option exportSysUid = new Option("", "exportsysuid", true,
                 "SysUId of the masterNode to export.");
@@ -223,7 +223,7 @@ public class CommonImporter {
      *     CLI
      * @param availiableCmdLineOptions - the container with the availiableCmdLineOptions
      */
-    public void addAvailiableProductiveImportCmdLineOptions(Options availiableCmdLineOptions) {
+    public void addAvailiableProductiveImportCmdLineOptions(final Options availiableCmdLineOptions) {
         // Id-File
         Option pathIdDB = new Option("", "pathiddb", true,
                 "Pfad zur ID-Datenbank");
@@ -252,7 +252,7 @@ public class CommonImporter {
      * @param masterNode - the masternode on which all other nodes are added
      * @throws Exception - parse/io-Exceptions possible
      */
-    public void importDataToMasterNodeFromPPLFile(DataDomain masterNode) throws Exception {
+    public void importDataToMasterNodeFromPPLFile(final DataDomain masterNode) throws Exception {
         // check srcFile
         if (Configurator.getInstance().getCommandLine().getArgs().length <= 0) {
             throw new IllegalArgumentException("Import from PPL-File requires filename.");
@@ -286,7 +286,7 @@ public class CommonImporter {
      * @param masterNode - the masternode on which all other nodes are added
      * @throws Exception - parse/io-Exceptions possible
      */
-    public void importDataToMasterNodeFromJPA(DataDomain masterNode) throws Exception {
+    public void importDataToMasterNodeFromJPA(final DataDomain masterNode) throws Exception {
         if (LOGGER.isInfoEnabled()) {
             LOGGER.info("read from JPA");
         }
@@ -311,7 +311,7 @@ public class CommonImporter {
         // read data
         DataDomain jpaNode = 
                         jpaImporter.getBaseNodeBySysUID(exportSysUID);
-        BaseNode baseNode = ((BaseNode)jpaNode);
+        BaseNode baseNode = ((BaseNode) jpaNode);
         if (baseNode == null) {
             throw new IllegalArgumentException("node not found sysUID=" + exportSysUID);
         }
@@ -339,7 +339,7 @@ public class CommonImporter {
      * @param masterNode - the masternode on which all other nodes are added
      * @throws Exception - parse/io-Exceptions possible
      */
-    public void importDataToMasterNodeFromExcel(DataDomain masterNode) throws Exception {
+    public void importDataToMasterNodeFromExcel(final DataDomain masterNode) throws Exception {
         // config
         String delimiter = 
                         Configurator.getInstance().getCommandLine().getOptionValue(
@@ -428,7 +428,7 @@ public class CommonImporter {
      * @param masterNode - the masternode on which all other nodes are added
      * @throws Exception - parse/io-Exceptions possible
      */
-    public void importDataToMasterNodeFromWiki(DataDomain masterNode) throws Exception {
+    public void importDataToMasterNodeFromWiki(final DataDomain masterNode) throws Exception {
         // config
         String delimiter = 
                         Configurator.getInstance().getCommandLine().getOptionValue(
@@ -531,7 +531,7 @@ public class CommonImporter {
      * @param masterNode - the masternode on which all other nodes are added
      * @throws Exception - parse/io-Exceptions possible
      */
-    public void importDataToMasterNode(DataDomain masterNode) throws Exception {
+    public void importDataToMasterNode(final DataDomain masterNode) throws Exception {
         // check datasource
         String sourceType = 
                         Configurator.getInstance().getCommandLine().getOptionValue(

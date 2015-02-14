@@ -69,14 +69,14 @@ public class JPAExporter extends WikiExporter {
 
     @Override
     @Transactional()
-    public String getMasterNodeResult(DataDomain tmpMasterNode, OutputOptions oOptions)
+    public String getMasterNodeResult(final DataDomain tmpMasterNode, final OutputOptions oOptions)
             throws Exception {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("save node:" + tmpMasterNode.getNameForLogger());
         }
         
         //map masternode
-        BaseNode masterNode = (BaseNode)tmpMasterNode;
+        BaseNode masterNode = (BaseNode) tmpMasterNode;
 
         // initial recalc data
         if (LOGGER.isDebugEnabled()) {
@@ -140,8 +140,8 @@ public class JPAExporter extends WikiExporter {
     }
 
     @Override
-    public StringBuffer getNodeResult(DataDomain node,  String praefix,
-            OutputOptions oOptions) throws Exception {
+    public StringBuffer getNodeResult(final DataDomain node,  final String praefix,
+            final OutputOptions oOptions) throws Exception {
         throw new IllegalStateException("This function should not be used, but you used it for " + node);
     }
 }

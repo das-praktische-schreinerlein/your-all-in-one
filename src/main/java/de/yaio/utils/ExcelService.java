@@ -36,19 +36,19 @@ import org.apache.poi.ss.usermodel.CellValue;
 
 public class ExcelService {
 
-    public static String CONST_PARAM_DELIM = ",";
+    public static final String CONST_PARAM_DELIM = ",";
 
-    public static String CONST_CS_DATEFORM = "ddd dd.mm.yyyy";
-    public static String CONST_CS_GANT_DATEFORM = "dd.mm";
-    public static String CONST_CS_PERCENT = "0%";
-    public static String CONST_CS_AUFWAND = "0.0";
+    public static final String CONST_CS_DATEFORM = "ddd dd.mm.yyyy";
+    public static final String CONST_CS_GANT_DATEFORM = "dd.mm";
+    public static final String CONST_CS_PERCENT = "0%";
+    public static final String CONST_CS_AUFWAND = "0.0";
 
-    public static int CONST_COL_WIDTH_INT = 8*256;
-    public static int CONST_COL_WIDTH_DATE = 15*256;
-    public static int CONST_COL_WIDTH_DATE_SHORT = 6*256;
+    public static final int CONST_COL_WIDTH_INT = 8 * 256;
+    public static final int CONST_COL_WIDTH_DATE = 15 * 256;
+    public static final int CONST_COL_WIDTH_DATE_SHORT = 6 * 256;
 
 
-    public ExcelService (HSSFWorkbook workbook) {
+    public ExcelService(final HSSFWorkbook workbook) {
 
     }
 
@@ -63,7 +63,7 @@ public class ExcelService {
      *
      * @throws IOException
      */
-    public static void writeWorkbookToFile(File file, HSSFWorkbook wb)
+    public static void writeWorkbookToFile(final File file, final HSSFWorkbook wb)
             throws IOException {
         FileOutputStream out = new FileOutputStream(file);
         try {
@@ -92,7 +92,7 @@ public class ExcelService {
      */
     @SuppressWarnings("deprecation")
     public static HSSFCell getCell(
-            HSSFSheet sheet, int rownum, int cellnum) {
+            final HSSFSheet sheet, final int rownum, final int cellnum) {
         HSSFRow row = sheet.getRow(rownum);
         if (row == null) {
             row = sheet.createRow(rownum);
@@ -106,9 +106,9 @@ public class ExcelService {
 
     @SuppressWarnings("deprecation")
     public static HSSFCell getCellEvaluated(
-            HSSFSheet sheet, HSSFFormulaEvaluator formulaEval, int rownum, int cellnum) {
+            final HSSFSheet sheet, final HSSFFormulaEvaluator formulaEval, final int rownum, final int cellnum) {
         HSSFCell cell = getCell(sheet, rownum, cellnum);
-        if(cell.getCellType() == HSSFCell.CELL_TYPE_FORMULA) {
+        if (cell.getCellType() == HSSFCell.CELL_TYPE_FORMULA) {
             // berechnen
             formulaEval.setCurrentRow(sheet.getRow(rownum));
             // System.err.println("Parse Zeile:" + rownum + " Col" + cellnum + " Form:" + cell.getCellFormula());
@@ -133,7 +133,7 @@ public class ExcelService {
 
 
     public static HSSFCell setCellNumeric(
-            HSSFSheet sheet, int rownum, int cellnum, Double value) {
+            final HSSFSheet sheet, final int rownum, final int cellnum, final Double value) {
 
         final HSSFCell cell = getCell(sheet, rownum, cellnum);
 
@@ -148,7 +148,7 @@ public class ExcelService {
     }
 
     public static HSSFCell setCellNumeric(
-            HSSFSheet sheet, int rownum, int cellnum, Double value, HSSFCellStyle style) {
+            final HSSFSheet sheet, final int rownum, final int cellnum, final Double value, final HSSFCellStyle style) {
 
         final HSSFCell cell = setCellNumeric(sheet, rownum, cellnum, value);
         cell.setCellStyle(style);
@@ -156,7 +156,7 @@ public class ExcelService {
         return cell;
     }
 
-    public static Double getCellNummeric(HSSFCell cell) {
+    public static Double getCellNummeric(final HSSFCell cell) {
 
         if (cell.getCellType() != HSSFCell.CELL_TYPE_NUMERIC) {
             return new Double(0);
@@ -167,7 +167,7 @@ public class ExcelService {
 
 
     public static HSSFCell setCellEmpty(
-            HSSFSheet sheet, int rownum, int cellnum) {
+            final HSSFSheet sheet, final int rownum, final int cellnum) {
 
         final HSSFCell cell = getCell(sheet, rownum, cellnum);
         cell.setCellType(HSSFCell.CELL_TYPE_BLANK);
@@ -176,7 +176,7 @@ public class ExcelService {
     }
 
     public static HSSFCell setCellEmpty(
-            HSSFSheet sheet, int rownum, int cellnum    , HSSFCellStyle style) {
+            final HSSFSheet sheet, final int rownum, final int cellnum    , final HSSFCellStyle style) {
 
         final HSSFCell cell = setCellEmpty(sheet, rownum, cellnum);
         cell.setCellStyle(style);
@@ -186,7 +186,7 @@ public class ExcelService {
 
 
     public static HSSFCell setCellDate(
-            HSSFSheet sheet, int rownum, int cellnum, Date value) {
+            final HSSFSheet sheet, final int rownum, final int cellnum, final Date value) {
 
         final HSSFCell cell = getCell(sheet, rownum, cellnum);
 
@@ -201,7 +201,7 @@ public class ExcelService {
     }
 
     public static HSSFCell setCellDate(
-            HSSFSheet sheet, int rownum, int cellnum, Date value, HSSFCellStyle style) {
+            final HSSFSheet sheet, final int rownum, final int cellnum, final Date value, final HSSFCellStyle style) {
 
         final HSSFCell cell = setCellDate(sheet, rownum, cellnum, value);
         cell.setCellStyle(style);
@@ -210,7 +210,7 @@ public class ExcelService {
     }
 
 
-    public static Date getCellDate(HSSFCell cell) {
+    public static Date getCellDate(final HSSFCell cell) {
 
         if (cell.getCellType() != HSSFCell.CELL_TYPE_NUMERIC) {
             return null;
@@ -233,9 +233,10 @@ public class ExcelService {
      *
      * @param value
      * String-Wert, der gesetzt werden soll
+     * @return - the new cell
      */
     public static HSSFCell setCellString(
-            HSSFSheet sheet, int rownum, int cellnum, String value) {
+            final HSSFSheet sheet, final int rownum, final int cellnum, final String value) {
 
         final HSSFCell cell = getCell(sheet, rownum, cellnum);
 
@@ -250,7 +251,7 @@ public class ExcelService {
     }
 
     public static HSSFCell setCellString(
-            HSSFSheet sheet, int rownum, int cellnum, String value, HSSFCellStyle style) {
+            final HSSFSheet sheet, final int rownum, final int cellnum, final String value, final HSSFCellStyle style) {
 
         final HSSFCell cell = setCellString(sheet, rownum, cellnum, value);
         cell.setCellStyle(style);
@@ -259,7 +260,7 @@ public class ExcelService {
     }
 
     public static HSSFCell setCellFormula(
-            HSSFSheet sheet, int rownum, int cellnum, String value) {
+            final HSSFSheet sheet, final int rownum, final int cellnum, final String value) {
 
         final HSSFCell cell = getCell(sheet, rownum, cellnum);
         // Typ setzen, falls Formel �berschrieben wird
@@ -270,7 +271,7 @@ public class ExcelService {
     }
 
     public static HSSFCell setCellFormula(
-            HSSFSheet sheet, int rownum, int cellnum, String value, HSSFCellStyle style) {
+            final HSSFSheet sheet, final int rownum, final int cellnum, final String value, final HSSFCellStyle style) {
 
         final HSSFCell cell = setCellFormula(sheet, rownum, cellnum, value);
         cell.setCellStyle(style);
@@ -279,11 +280,12 @@ public class ExcelService {
     }
 
 
-    public static String getColName(int cellnum) {
+    public static String getColName(final int pCellnum) {
         String res = "";
-        if (cellnum >= 26+26) {
+        int cellnum = pCellnum;
+        if (cellnum >= 26 + 26) {
             //System.err.println(" value: " + cellnum + " statt " + (char)(65 + cellnum) + " -> A" + (char)(65 + cellnum-26));
-            cellnum = cellnum - 26+26;
+            cellnum = cellnum - 26 + 26;
             res = "B";
         } else if (cellnum >= 26) {
             //System.err.println(" value: " + cellnum + " statt " + (char)(65 + cellnum) + " -> A" + (char)(65 + cellnum-26));
@@ -295,25 +297,26 @@ public class ExcelService {
         return res + c;
     }
 
-    public static String getRowNum(Integer cellnum) {
+    public static String getRowNum(final Integer cellnum) {
         return new Integer(cellnum.intValue() + 1).toString();
     }
 
-    public static String genFormula(String funcName, List<?> rowNums, Integer col) {
+    public static String genFormula(final String funcName, final List<?> rowNums, final Integer col) {
         String formula = funcName + "(";
         for (Iterator<?> iter = rowNums.iterator(); iter.hasNext();) {
-            Integer rowNum = (Integer)iter.next();
+            Integer rowNum = (Integer) iter.next();
             formula +=
                     ExcelService.getColName(col) + ExcelService.getRowNum(rowNum)
                     + CONST_PARAM_DELIM;
         }
-        formula = formula.substring(0, formula.length()-1);
+        formula = formula.substring(0, formula.length() - 1);
         formula += ")";
         return formula;
     }
 
-    public static String genIfNotEmpty(String sheetName, Integer row, Integer col) {
+    public static String genIfNotEmpty(final String pSheetName, final Integer row, final Integer col) {
         // Sheetbname vorbereiten
+        String sheetName = pSheetName;
         if (sheetName != null && sheetName.length() > 0) {
             sheetName += "!";
         } else {
@@ -325,8 +328,9 @@ public class ExcelService {
         return formula;
     }
 
-    public static String genCase4Values(String sheetName, Integer baseRow, Integer baseCol, Map<?, ?> values) {
+    public static String genCase4Values(final String pSheetName, final Integer baseRow, final Integer baseCol, final Map<?, ?> values) {
         // Sheetbname vorbereiten
+        String sheetName = pSheetName;
         if (sheetName != null && sheetName.length() > 0) {
             sheetName += "!";
         } else {
@@ -339,14 +343,14 @@ public class ExcelService {
         String formula = "\"\"";
         for (Iterator<?> iter = values.keySet().iterator(); iter.hasNext();) {
             String key = iter.next().toString();
-            String value = (String)values.get(key);
+            String value = (String) values.get(key);
             formula = "IF(" + element + "=" + key + CONST_PARAM_DELIM + value + CONST_PARAM_DELIM + formula + ")";
         }
 
         return formula;
     }
 
-    public static void evaluateAllFormula(HSSFSheet sheet, HSSFFormulaEvaluator formulaEval) {
+    public static void evaluateAllFormula(final HSSFSheet sheet, final HSSFFormulaEvaluator formulaEval) {
         for (int rowNum = 0; rowNum <= sheet.getLastRowNum(); rowNum++) {
             for (int colNum = 0; colNum <= sheet.getRow(rowNum).getLastCellNum(); colNum++) {
                 getCellEvaluated(sheet, formulaEval, rowNum, colNum);
@@ -367,7 +371,7 @@ public class ExcelService {
      * @return
      * neues HSSFCellStyle-Objekt
      */
-    public HSSFCellStyle copyStyle(HSSFCellStyle style, HSSFWorkbook wb){
+    public HSSFCellStyle copyStyle(final HSSFCellStyle style, final HSSFWorkbook wb) {
         HSSFCellStyle style2 = wb.createCellStyle();
         style2.setDataFormat(style.getDataFormat());
         style2.setFont(wb.getFontAt(style.getFontIndex()));
@@ -383,7 +387,7 @@ public class ExcelService {
         return style2;
     }
 
-    public HSSFCellStyle convertCss2Modul(HSSFCellStyle style, HSSFWorkbook wb){
+    public HSSFCellStyle convertCss2Modul(final HSSFCellStyle style, final HSSFWorkbook wb) {
         HSSFCellStyle style2 = copyStyle(style, wb);
         style2.setBorderTop(HSSFCellStyle.BORDER_DOUBLE);
         style2.setLocked(true);

@@ -66,11 +66,11 @@ public class NodeSearchResponse {
      * @param pageSize - max items per page
      * @param count - total of all items found
      */
-    public NodeSearchResponse(String state, String stateMsg,
-                           List<BaseNode> nodes,
-                           Long curPage,
-                           Long pageSize,
-                           Long count) {
+    public NodeSearchResponse(final String state, final String stateMsg,
+                           final List<BaseNode> nodes,
+                           final Long curPage,
+                           final Long pageSize,
+                           final Long count) {
         super();
         this.state = state;
         this.stateMsg = stateMsg;
@@ -90,7 +90,7 @@ public class NodeSearchResponse {
     /**
      * @param state the {@link NodeSearchResponse#state} to set
      */
-    public void setState(String state) {
+    public void setState(final String state) {
         this.state = state;
     }
 
@@ -104,7 +104,7 @@ public class NodeSearchResponse {
     /**
      * @param stateMsg the {@link NodeSearchResponse#stateMsg} to set
      */
-    public void setStateMsg(String stateMsg) {
+    public void setStateMsg(final String stateMsg) {
         this.stateMsg = stateMsg;
     }
 
@@ -118,7 +118,7 @@ public class NodeSearchResponse {
     /**
      * @param nodes the {@link NodeSearchResponse#nodes} to set
      */
-    public void setNodes(List<BaseNode> nodes) {
+    public void setNodes(final List<BaseNode> nodes) {
         this.nodes = nodes;
     }
 
@@ -132,7 +132,7 @@ public class NodeSearchResponse {
     /**
      * @param curPage the {@link NodeSearchResponse#curPage} to set
      */
-    public void setCurPage(Long curPage) {
+    public void setCurPage(final Long curPage) {
         this.curPage = curPage;
     }
 
@@ -146,7 +146,7 @@ public class NodeSearchResponse {
     /**
      * @param pageSize the {@link NodeSearchResponse#pageSize} to set
      */
-    public void setPageSize(Long pageSize) {
+    public void setPageSize(final Long pageSize) {
         this.pageSize = pageSize;
     }
 
@@ -160,7 +160,7 @@ public class NodeSearchResponse {
     /**
      * @param count the {@link NodeSearchResponse#count} to set
      */
-    public void setCount(Long count) {
+    public void setCount(final Long count) {
         this.count = count;
     }
 }

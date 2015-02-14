@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeSet;
 
 import org.apache.log4j.Logger;
@@ -61,7 +62,7 @@ public class NodeFactoryImpl implements NodeFactory {
 
     // Map mit den Identifier-String un der entprechenden Node-Klase
     protected Map<String, Class<?>> hshNodeTypeIdentifier = new HashMap<String, Class<?>>();
-    protected TreeSet<Parser> hshDataDomainParser = new TreeSet<Parser>();
+    protected Set<Parser> hshDataDomainParser = new TreeSet<Parser>();
 
     // Parameter des Standard-Node-Konstruktors
     private static final Class<?>[] CONST_NODE_CONSTRUCTOR = {};
@@ -82,7 +83,7 @@ public class NodeFactoryImpl implements NodeFactory {
      *     Constructor
      *  @param options - the importoptions for the parser...
      */
-    public NodeFactoryImpl(ImportOptions options) {
+    public NodeFactoryImpl(final ImportOptions options) {
         this.options = options;
 
         // NodeTypes konfigurieren
@@ -104,13 +105,13 @@ public class NodeFactoryImpl implements NodeFactory {
     }
 
     @Override
-    public void addNodeTypeIdentifier(Map<String, Object> stateMap, Class<?> classType) {
+    public void addNodeTypeIdentifier(final Map<String, Object> stateMap, final Class<?> classType) {
         for (String stateDef : stateMap.keySet()) {
             this.putNodeTypeIdentifier(stateDef, classType);
         }
     }
 
-    protected void putNodeTypeIdentifier(String type, Class<?> classType) {
+    protected void putNodeTypeIdentifier(final String type, final Class<?> classType) {
         this.hshNodeTypeIdentifier.put(type, classType);
     }
 
@@ -133,8 +134,8 @@ public class NodeFactoryImpl implements NodeFactory {
     }
 
     @Override
-    public void addDataDomainParser(Parser parser) {
-        if (parser.getTargetOrder() < 0 ) {
+    public void addDataDomainParser(final Parser parser) {
+        if (parser.getTargetOrder() < 0) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("SKIP: Targetorder < 0 TargetOrder:" 
                         + parser.getTargetOrder()
@@ -152,7 +153,7 @@ public class NodeFactoryImpl implements NodeFactory {
     }
 
 
-    public TreeSet<Parser> getHshDataDomainParser() {
+    public Set<Parser> getHshDataDomainParser() {
         return hshDataDomainParser;
     }
 
@@ -160,7 +161,7 @@ public class NodeFactoryImpl implements NodeFactory {
     // Parser-Funktionen
     ////////////////
     @Override
-    public int parseNodeDataDomains(DataDomain node, ImportOptions options)  throws Exception {
+    public int parseNodeDataDomains(final DataDomain node, final ImportOptions options)  throws Exception {
         int found = 0;
         for (Parser parser : getDataDomainParser()) {
             found += this.parseNodeDataDomain(node, parser, options);
@@ -169,7 +170,7 @@ public class NodeFactoryImpl implements NodeFactory {
     }
 
     @Override
-    public int parseNodeDataDomain(DataDomain node, Parser parser, ImportOptions options) throws Exception {
+    public int parseNodeDataDomain(final DataDomain node, final Parser parser, final ImportOptions options) throws Exception {
         // nur parsen, wenn zustaendig
         if (parser.getTargetClass().isInstance(node)) {
             return parser.parseFromName(node, options);
@@ -185,15 +186,18 @@ public class NodeFactoryImpl implements NodeFactory {
     // Generierungs-Funktionen
     ////////////////
     @Override
-    public DataDomain createNodeObjFromText(Class<?> classType, int id, String strFullSrc, String srcName,
-            DataDomain curParentNode) throws Exception {
+    public DataDomain createNodeObjFromText(final Class<?> classType, final int id, 
+                                            final String strFullSrc, final String pSrcName,
+            final DataDomain curParentNode) throws Exception {
+        String srcName = pSrcName;
 
         // Node anlegen
-        if (LOGGER.isDebugEnabled())
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("create Node: " 
                     + classType.getName() 
                     + " id=" + id 
                     + " strFullSrc=" + strFullSrc);
+        }
 
         // Node anhand des Konstruktors anlegen
         Constructor<?> constr = classType.getDeclaredConstructor(
@@ -231,14 +235,14 @@ public class NodeFactoryImpl implements NodeFactory {
     }
 
     @Override
-    public Class<?> getNodeTypeFromText(String strFullSrc, String srcName) throws Exception {
+    public Class<?> getNodeTypeFromText(final String strFullSrc, final String srcName) throws Exception {
         // Node-Klasse festlegen
         Class<?> classType = BaseNode.class;
         Map<String, Class<?>> hshCurNodeTypeIdentifier = this.hshNodeTypeIdentifier;
         String nodeTypeIdentifier = 
                 getNodeTypeIdentifierFromText(hshCurNodeTypeIdentifier, srcName);
-        if (nodeTypeIdentifier != null && 
-                hshCurNodeTypeIdentifier.get(nodeTypeIdentifier) != null) {
+        if (   nodeTypeIdentifier != null 
+            && hshCurNodeTypeIdentifier.get(nodeTypeIdentifier) != null) {
             classType = hshCurNodeTypeIdentifier.get(nodeTypeIdentifier);
         }
 
@@ -250,7 +254,7 @@ public class NodeFactoryImpl implements NodeFactory {
     }
 
     protected String getNodeTypeIdentifierFromText(
-            Map<String, Class<?>>hshCurNodeTypeIdentifier, String srcName) throws Exception {
+            final Map<String, Class<?>>hshCurNodeTypeIdentifier, final String srcName) throws Exception {
         // TODO - change implementation: extract first word an check if key exists in hash
         for (Iterator<String> iter = hshCurNodeTypeIdentifier.keySet().iterator();
                 iter.hasNext();) {
@@ -270,7 +274,7 @@ public class NodeFactoryImpl implements NodeFactory {
     }
 
     @Override
-    public void setMetaDataService(MetaDataService metaDataService) {
+    public void setMetaDataService(final MetaDataService metaDataService) {
         BaseNode.setMetaDataService(metaDataService);
     }
 

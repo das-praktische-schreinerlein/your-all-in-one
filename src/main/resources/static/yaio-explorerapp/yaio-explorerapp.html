@@ -99,14 +99,20 @@
                            <div class="ue1MenueTop" lang="tech">D'Artagnan - Dein pers&ouml;nlicher Software-Musketier 
                             <span class="ue2MenueTop" lang="tech">"Einer f&uuml;r Alles - Alles in Einem"</span>
                             <span class="ue3MenueTop">
-                               <ul class="ulTopKontakt">
+                               <ul class="ulTopKontakt" ng-controller="LanguageCtrl">
+                                   <li class="liTopKontakt liTopKontaktLanguage">
+                                       <button ng-click="changeLanguage('de')" translate="common.button.lang.de" class="button button-lang" id="button_lang_de">DE</button>
+                                   </li>
+                                   <li class="liTopKontakt liTopKontaktLanguage">
+                                        <button ng-click="changeLanguage('en')" translate="common.button.lang.en" class="button button-lang" id="button_lang_en">EN</button>
+                                   </li>
                                    <li class="liTopKontakt liTopKontaktTwitter"><a 
                                        target="_blank" 
                                        title="D'Artagnan auf Twitter folgen" 
                                        href="https://twitter.com/YourITFellow">Twitter</a></li>
                                    <li class="liTopKontakt liTopKontaktEmail"><a 
                                        title="D'Artagnan kontaktieren" 
-                                       href="http://www.your-all-in-one/yaio/contact/form">Kontakt</a></li>
+                                       href="http://www.your-all-in-one.de/yaio/contact/form">Kontakt</a></li>
                                </ul>
                            </span></div>
                            
@@ -143,13 +149,23 @@
 </div>                        
 
 <div id="preview-box" class="hidden">
-  <p>
-    <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>
-    
-  </p>
-  <div id="preview-content" calss="container-content-desc">
+  <div id="preview-content" class="container-content-desc">
   </div>
 </div>                        
+
+<div id="wysiwhg-box" class="hidden">
+  <pre id="wysiwhg-editor" class="container-wyswhg-editor"></pre>
+  <div id="wysiwhg-preview" class="container-wysiwhg-preview"></div>
+</div>                        
+
+<div id="markdownhelp-box" class="hidden">
+  <iframe id="markdownhelp-iframe" src="" ></iframe>
+</div>                        
+
+<div id="clipboard-box" class="hidden">
+  <textarea id="clipboard-content" class="clipboard-content-desc"></textarea>
+</div>                        
+
 
 <div ng-view class="yaio-details"></div>
 
@@ -163,7 +179,7 @@
                         <div class="txt-copyrights">Copyright 
                             <a href="http://www.your-all-in-one.de/yaio/static/impressum" >www.your-all-in-one.de</a></div>
                         <div class="txt-copyrights">
-                            Die Applikation wurde unter Verwendung des <a href="https://github.com/spring-projects/spring-framework" target="_blank">Spring-Frameworks sowie der Unterprojekte Spring Boot, Spring-Roo</a> implementiert.<br />
+                            Die Applikation wurde unter Verwendung des <a href="https://github.com/spring-projects/spring-framework" target="_blank">Spring-Frameworks sowie der Unterprojekte Spring Boot, Spring-Roo, Spring-Security</a> implementiert.<br />
                             F&uuml;r bestimmte Funktionen des Frontends wurde auf freie Bibliotheken der Projekte:
                             <a href="https://github.com/mar10/fancytree" target="_blank">FancyTree</a>,
                             <a href="http://jquery.com/" target="_blank">JQuery</a>,
@@ -175,7 +191,8 @@
                             <a href="https://github.com/ajaxorg/ace-builds" target="_blank">Ace</a>,
                             <a href="https://highlightjs.org/" target="_blank">highlight.js</a>,
                             <a href="https://code.google.com/p/markdown4j/" target="_blank">markdown4j</a>,
-                            <a href="http://paulrobertlloyd.com/2009/06/social_media_icons/" target="_blank">paulrobertlloyd.com</a>
+                            <a href="http://paulrobertlloyd.com/2009/06/social_media_icons/" target="_blank">paulrobertlloyd.com</a>,
+                            <a href="http://www.digitalia.be/software/slimbox2" target="_blank">Slimbox2</a>
                             zugegriffen.<br />
                         </div>
                       </div>

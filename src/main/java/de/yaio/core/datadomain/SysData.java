@@ -31,19 +31,19 @@ import java.util.Date;
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public interface SysData extends DataDomain {
-    public static final int CONST_ORDER = 100;
+    int CONST_ORDER = 100;
 
-    public String getSysUID();
-    public void setSysUID(String sysUID);
-    public String getSysCurChecksum();
-    public void setSysCurChecksum(String sysCurChecksum);
-    public Integer getSysChangeCount();
-    public void setSysChangeCount(Integer sysChangeCount);
-    public Date getSysCreateDate();
-    public void setSysCreateDate(Date sysCreateDate);
-    public Date getSysChangeDate();
-    public void setSysChangeDate(Date sysChangeDate);
+    String getSysUID();
+    void setSysUID(String sysUID);
+    String getSysCurChecksum();
+    void setSysCurChecksum(String sysCurChecksum);
+    Integer getSysChangeCount();
+    void setSysChangeCount(Integer sysChangeCount);
+    Date getSysCreateDate();
+    void setSysCreateDate(Date sysCreateDate);
+    Date getSysChangeDate();
+    void setSysChangeDate(Date sysChangeDate);
 
-    public String getDataBlocks4CheckSum() throws Exception;
-    public void initSysData() throws Exception;
+    String getDataBlocks4CheckSum() throws Exception;
+    void initSysData() throws Exception;
 }

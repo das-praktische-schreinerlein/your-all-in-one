@@ -40,7 +40,7 @@ public class ExcelOutputOptions extends OutputOptionsImpl {
         super();
     }
 
-    public ExcelOutputOptions(OutputOptions oOptions) {
+    public ExcelOutputOptions(final OutputOptions oOptions) {
         super(oOptions);
     }
 
@@ -49,7 +49,7 @@ public class ExcelOutputOptions extends OutputOptionsImpl {
     }
 
     public void setFlgMergeExcelPlanungGantSheets(
-            boolean flgMergeExcelPlanungGantSheets) {
+            final boolean flgMergeExcelPlanungGantSheets) {
         this.flgMergeExcelPlanungGantSheets = flgMergeExcelPlanungGantSheets;
     }
 }

@@ -29,16 +29,16 @@ import de.yaio.utils.ExcelService;
 
 public class ExcelOutputService extends ExcelService {
 
-    public static short CONST_CS_BGCOLOR_PLANUNG =
+    public static final short CONST_CS_BGCOLOR_PLANUNG =
         new HSSFColor.LIGHT_TURQUOISE().getIndex();
-    public static short CONST_CS_BGCOLOR_IST =
+    public static final short CONST_CS_BGCOLOR_IST =
         new HSSFColor.LIGHT_YELLOW().getIndex();
-    public static short CONST_CS_BGCOLOR_REALT =
+    public static final short CONST_CS_BGCOLOR_REALT =
         new HSSFColor.LIGHT_ORANGE().getIndex();
 
-    public static int CONST_COL_WIDTH_INT = 8*256;
-    public static int CONST_COL_WIDTH_DATE = 15*256;
-    public static int CONST_COL_WIDTH_DATE_SHORT = 6*256;
+    public static final int CONST_COL_WIDTH_INT = 8 * 256;
+    public static final int CONST_COL_WIDTH_DATE = 15 * 256;
+    public static final int CONST_COL_WIDTH_DATE_SHORT = 6 * 256;
 
 
     public HSSFFont fsFieldPlanungBase_Entry;

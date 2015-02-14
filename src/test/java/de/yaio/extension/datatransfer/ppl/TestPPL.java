@@ -31,8 +31,8 @@ public class TestPPL {
     private static final Logger LOGGER =
             Logger.getLogger(TestPPL.class);
 
-    public static String DEFAULT_ENTRY_DELIMITER = PPLService.DEFAULT_ENTRY_DELIMITER;
-    public static String LINE_DELIMITER = PPLService.LINE_DELIMITER;
+    public static final String DEFAULT_ENTRY_DELIMITER = PPLService.DEFAULT_ENTRY_DELIMITER;
+    public static final String LINE_DELIMITER = PPLService.LINE_DELIMITER;
     
     //@Test
     public void testPPLParserAndExporter() {
@@ -57,8 +57,7 @@ public class TestPPL {
                 + "DONE - Projekt4" + DEFAULT_ENTRY_DELIMITER + "DONE - Unterprojekt1" + DEFAULT_ENTRY_DELIMITER + "DONE - Punkt1" + LINE_DELIMITER
                 + "DONE - Projekt4" + DEFAULT_ENTRY_DELIMITER + "DONE - Unterprojekt1" + DEFAULT_ENTRY_DELIMITER + "DONE - Punkt2" + LINE_DELIMITER
                 + "DONE - Projekt4" + DEFAULT_ENTRY_DELIMITER + "DONE - Unterprojekt2" + DEFAULT_ENTRY_DELIMITER + "DONE - Punkt1" + LINE_DELIMITER
-                + "DONE - Projekt4" + DEFAULT_ENTRY_DELIMITER + "DONE - Unterprojekt2" + DEFAULT_ENTRY_DELIMITER + "DONE - Punkt2 Ist: 10% 2h 29.01.2011-30.04.2012 __t2123__ Plan: 3h 30.01.2011-30.03.2012" + LINE_DELIMITER
-                ;
+                + "DONE - Projekt4" + DEFAULT_ENTRY_DELIMITER + "DONE - Unterprojekt2" + DEFAULT_ENTRY_DELIMITER + "DONE - Punkt2 Ist: 10% 2h 29.01.2011-30.04.2012 __t2123__ Plan: 3h 30.01.2011-30.03.2012" + LINE_DELIMITER;
         String expected = "Master\nMaster	OFFEN - Projekt1\nMaster	OFFEN - Projekt1	OFFEN - Unterprojekt2\nMaster	OFFEN - Projekt1	OFFEN - Unterprojekt2	OFFEN - Punkt2\nMaster	OFFEN - Projekt1	OFFEN - Unterprojekt1\nMaster	OFFEN - Projekt1	OFFEN - Unterprojekt1	OFFEN - Punkt2\nMaster	OFFEN - Projekt1	OFFEN - Unterprojekt1\nMaster	OFFEN - Projekt1	OFFEN - Unterprojekt1	OFFEN - Punkt1\nMaster	OFFEN - Projekt1	OFFEN - Unterprojekt2\nMaster	OFFEN - Projekt1	OFFEN - Unterprojekt2	OFFEN - Punkt1\nMaster	RUNNING - Projekt2\nMaster	RUNNING - Projekt2	RUNNING - Unterprojekt2\nMaster	RUNNING - Projekt2	RUNNING - Unterprojekt2	OFFEN - Punkt1\nMaster	RUNNING - Projekt2	OFFEN - Unterprojekt1\nMaster	RUNNING - Projekt2	OFFEN - Unterprojekt1	OFFEN - Punkt1\nMaster	RUNNING - Projekt2	RUNNING - Unterprojekt2\nMaster	RUNNING - Projekt2	RUNNING - Unterprojekt2	RUNNING - Punkt2\nMaster	RUNNING - Projekt2	OFFEN - Unterprojekt1\nMaster	RUNNING - Projekt2	OFFEN - Unterprojekt1	OFFEN - Punkt2\nMaster	DONE - Projekt4\nMaster	DONE - Projekt4	DONE - Unterprojekt1\nMaster	DONE - Projekt4	DONE - Unterprojekt1	DONE - Punkt1\nMaster	DONE - Projekt4	DONE - Unterprojekt1\nMaster	DONE - Projekt4	DONE - Unterprojekt1	DONE - Punkt2\nMaster	DONE - Projekt4	DONE - Unterprojekt2\nMaster	DONE - Projekt4	DONE - Unterprojekt2	DONE - Punkt2 Ist: 10% 2h 29.01.2011-30.04.2012 __t2123__                                           [Plan:      3h 30.01.2011-30.03.2012]\nMaster	DONE - Projekt4	DONE - Unterprojekt2\nMaster	DONE - Projekt4	DONE - Unterprojekt2	DONE - Punkt1\nMaster	LATE - Projekt3\nMaster	LATE - Projekt3	LATE - Unterprojekt3\nMaster	LATE - Projekt3	LATE - Unterprojekt3	RUNNING - Punkt2\nMaster	LATE - Projekt3	LATE - Unterprojekt3\nMaster	LATE - Projekt3	LATE - Unterprojekt3	OFFEN - Punkt1\nMaster	LATE - Projekt3	RUNNING - Unterprojekt2\nMaster	LATE - Projekt3	RUNNING - Unterprojekt2	RUNNING - Punkt2\nMaster	LATE - Projekt3	LATE - Unterprojekt3\nMaster	LATE - Projekt3	LATE - Unterprojekt3	LATE - Punkt3\nMaster	LATE - Projekt3	OFFEN - Unterprojekt1\nMaster	LATE - Projekt3	OFFEN - Unterprojekt1	OFFEN - Punkt1\nMaster	LATE - Projekt3	LATE - Unterprojekt3\nMaster	LATE - Projekt3	LATE - Unterprojekt3	DONE - Punkt4\nMaster	LATE - Projekt3	RUNNING - Unterprojekt2\nMaster	LATE - Projekt3	RUNNING - Unterprojekt2	OFFEN - Punkt1\nMaster	LATE - Projekt3	OFFEN - Unterprojekt1\nMaster	LATE - Projekt3	OFFEN - Unterprojekt1	OFFEN - Punkt2\nMaster	LATE - Projekt3	DONE - Unterprojekt3\nMaster	LATE - Projekt3	DONE - Unterprojekt3	DONE - Punkt1\n";
         String delimiter = DEFAULT_ENTRY_DELIMITER;
 
@@ -73,19 +72,23 @@ public class TestPPL {
             impFactory.extractNodesFromLines(masterNode, src, delimiter);
 
             // Master ausgeben
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Masternode.toString:" + masterNode);
+            }
 
             // formatiert ausgeben
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("ExportFactory Start:");
+            }
             OutputOptions oOptions = new OutputOptionsImpl();
             PPLExporter expFactory = new PPLExporter();
             String res = expFactory.getMasterNodeResult(masterNode, oOptions);
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug(res);
-            if (LOGGER.isDebugEnabled())
+            }
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("ExportFactory End");
+            }
 
             // Test
             assertEquals(expected, res.toString());

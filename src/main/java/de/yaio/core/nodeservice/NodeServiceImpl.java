@@ -17,6 +17,8 @@
 package de.yaio.core.nodeservice;
 
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import java.util.TreeSet;
 
 import org.apache.log4j.Logger;
@@ -40,10 +42,10 @@ import de.yaio.core.datadomainservice.DataDomainRecalc;
 public abstract class NodeServiceImpl implements NodeService {
 
     /** sorted Treeset of the configured DadaDomainRecacler */
-    protected TreeSet<DataDomainRecalc> hshDataDomainRecalcer = 
+    protected Set<DataDomainRecalc> hshDataDomainRecalcer = 
                     new TreeSet<DataDomainRecalc>();
     /** Hashmap of the configured DadaDomainRecacler by ClassName */
-    public HashMap<Class<?>, DataDomainRecalc> hshDataDomainRecalcerByClass = 
+    public Map<Class<?>, DataDomainRecalc> hshDataDomainRecalcerByClass = 
                     new HashMap<Class<?>, DataDomainRecalc>();
     
     // Logger
@@ -54,8 +56,8 @@ public abstract class NodeServiceImpl implements NodeService {
     // service-functions for configuration
     //////////////
     @Override
-    public void addDataDomainRecalcer(DataDomainRecalc dataDomainRecalcer) {
-        if (dataDomainRecalcer.getRecalcTargetOrder() < 0 ) {
+    public void addDataDomainRecalcer(final DataDomainRecalc dataDomainRecalcer) {
+        if (dataDomainRecalcer.getRecalcTargetOrder() < 0) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("SKIP: Targetorder < 0 TargetOrder:" 
                         + dataDomainRecalcer.getRecalcTargetOrder()
@@ -71,7 +73,7 @@ public abstract class NodeServiceImpl implements NodeService {
     // service-functions for recalc
     //////////////
     @Override
-    public void doRecalc(DataDomain node, int recurceDirection) throws Exception {
+    public void doRecalc(final DataDomain node, final int recurceDirection) throws Exception {
         this.doRecalcBeforeChildren(node, recurceDirection);
         if (recurceDirection == CONST_RECURSE_DIRECTION_CHILDREN) {
             this.doRecalcChildren(node, recurceDirection);
@@ -89,7 +91,7 @@ public abstract class NodeServiceImpl implements NodeService {
 
 
     @Override
-    public void doRecalcBeforeChildren(DataDomain node, int recurceDirection) throws Exception {
+    public void doRecalcBeforeChildren(final DataDomain node, final int recurceDirection) throws Exception {
         for (DataDomainRecalc recalcer : this.hshDataDomainRecalcer) {
             if (recalcer.getRecalcTargetClass().isInstance(node)) {
                 LOGGER.debug("doRecalcBeforeChildren " + recalcer.getClass().getName());
@@ -104,7 +106,7 @@ public abstract class NodeServiceImpl implements NodeService {
 
 
     @Override
-    public void doRecalcChildren(DataDomain node, int recurceDirection) throws Exception {
+    public void doRecalcChildren(final DataDomain node, final int recurceDirection) throws Exception {
         if (recurceDirection == CONST_RECURSE_DIRECTION_CHILDREN) {
             for (String name : node.getChildNodesByNameMap().keySet()) {
                 node.getChildNodesByNameMap().get(name).recalcData(recurceDirection);
@@ -113,7 +115,7 @@ public abstract class NodeServiceImpl implements NodeService {
     }
 
     @Override
-    public void doRecalcAfterChildren(DataDomain node, int recurceDirection) throws Exception {
+    public void doRecalcAfterChildren(final DataDomain node, final int recurceDirection) throws Exception {
         for (DataDomainRecalc recalcer : this.hshDataDomainRecalcer) {
             if (recalcer.getRecalcTargetClass().isInstance(node)) {
                 LOGGER.debug("doRecalcAfterChildren " + recalcer.getClass().getName());
@@ -132,22 +134,22 @@ public abstract class NodeServiceImpl implements NodeService {
     //////////////
     
     @Override
-    public boolean isWFStatus (String state) {
+    public boolean isWFStatus(final String state) {
         return false;
     }
 
     @Override
-    public boolean isWFStatusDone (String state) {
+    public boolean isWFStatusDone(final String state) {
         return false;
     }
 
     @Override
-    public boolean isWFStatusOpen (String state) {
+    public boolean isWFStatusOpen(final String state) {
         return false;
     }
 
     @Override
-    public boolean isWFStatusCanceled(String state) {
+    public boolean isWFStatusCanceled(final String state) {
         return false;
     }
 }

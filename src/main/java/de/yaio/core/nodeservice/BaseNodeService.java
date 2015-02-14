@@ -69,8 +69,8 @@ public class BaseNodeService extends NodeServiceImpl {
 
 
     @Override
-    public void setParentNode(DataDomain baseNode, DataDomain parentNode, 
-            boolean flgRenewParent) {
+    public void setParentNode(final DataDomain baseNode, final DataDomain parentNode, 
+            final boolean flgRenewParent) {
         // Parentnode setzen, falls geaendert
         boolean flgParentChanged = false;
         if (baseNode.getParentNode() != parentNode) {
@@ -83,20 +83,22 @@ public class BaseNodeService extends NodeServiceImpl {
         if (flgParentChanged || flgRenewParent) {
             int newEbene = baseNode.getEbene();
             if (parentNode != null) {
-                if (! flgRenewParent) {
+                if (!flgRenewParent) {
                     // SKIP
                 } else if (baseNode.hasChildNode(parentNode)) {
                     // SKIP gehoere schon zur Liste
-                    if (LOGGER.isDebugEnabled())
+                    if (LOGGER.isDebugEnabled()) {
                         LOGGER.debug("SKIP: Gehoere schon zur Liste: Me=" 
                             + baseNode.getNameForLogger() 
                             + " Parent=" + parentNode.getNameForLogger());
+                    }
                 } else {
                     // nur anhaengen, wenn renew-Flag gesetzt und noch nicht vorhanden
-                    if (LOGGER.isDebugEnabled())
+                    if (LOGGER.isDebugEnabled()) {
                         LOGGER.debug("add2AsChild Me=" 
                                 + baseNode.getNameForLogger() 
                                 + " Parent=" + parentNode.getNameForLogger());
+                    }
                     parentNode.addChildNode(baseNode);
                 }
                 newEbene = parentNode.getEbene() + 1;
@@ -106,9 +108,10 @@ public class BaseNodeService extends NodeServiceImpl {
             
             // Ebene nur setzen, wenn geaendert
             if (baseNode.getEbene().intValue() != newEbene) {
-                if (LOGGER.isDebugEnabled())
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Ebene change to " + newEbene + "Me=" 
                                 + baseNode.getNameForLogger());
+                }
                 baseNode.setEbene(newEbene);
                 flgEbeneChanged = true;
 
@@ -121,15 +124,15 @@ public class BaseNodeService extends NodeServiceImpl {
             if (lstChidNodes != null) {
                 for (String nodeName : lstChidNodes.keySet()) {
                     DataDomain node =
-                        (DataDomain)lstChidNodes.get(nodeName);
-                    node.setParentNode((BaseNode)baseNode);
+                        (DataDomain) lstChidNodes.get(nodeName);
+                    node.setParentNode((BaseNode) baseNode);
                 }
             }
         }
     }
 
     @Override
-    public void recalcData(DataDomain baseNode, int recursionDirection) throws Exception {
+    public void recalcData(final DataDomain baseNode, final int recursionDirection) throws Exception {
         this.doRecalc(baseNode, recursionDirection);
     }
 }

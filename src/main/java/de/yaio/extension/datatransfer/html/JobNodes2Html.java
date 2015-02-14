@@ -47,7 +47,7 @@ public class JobNodes2Html extends JobNodes2Wiki {
      *     Constructor
      * @param args the command line arguments
      */
-    public JobNodes2Html(String[] args) {
+    public JobNodes2Html(final String[] args) {
         super(args);
     }
 
@@ -69,7 +69,7 @@ public class JobNodes2Html extends JobNodes2Wiki {
      *     CLI
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         JobNodes2Html me = new JobNodes2Html(args);
         me.startJobProcessing();
     }

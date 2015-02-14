@@ -458,12 +458,22 @@ function yaioCreateFancyTree(treeId, masterNodeId, doneHandler) {
                 yaioMoveNode(node, newParentKey, newPos);
                 break;
             case "remove":
-//                node.remove();
-                yaioRemoveNodeById(node.key, 'create');
+                yaioRemoveNodeById(node.key);
                 break;
             case "addChild":
-//                node.editCreateNode("child", "New node");
                 yaioOpenNodeEditor(node.key, 'create');
+                break;
+            case "asTxt":
+                openTxtExportWindow($('#container_content_desc_' + node.key).text());
+                break;
+            case "asJira":
+                openJiraExportWindow(node.key);
+                break;
+            case "focus":
+                window.location = '#/show/' + node.key;
+                break;
+            case "focusNewWindow":
+                window.open('#/show/' + node.key, '_blank');
                 break;
             default:
                 alert("Unhandled command: " + data.cmd);
@@ -507,11 +517,16 @@ function yaioCreateFancyTree(treeId, masterNodeId, doneHandler) {
     $(treeId).contextmenu({
         delegate: "span.fancytree-node",
         menu: [
-            {title: "Edit <kbd>[F2]</kbd>", cmd: "rename", uiIcon: "ui-icon-pencil" },
-            {title: "Delete <kbd>[Del]</kbd>", cmd: "remove", uiIcon: "ui-icon-trash" },
+            {title: "Bearbeiten <kbd>[F2]</kbd>", cmd: "rename", uiIcon: "ui-icon-pencil" },
+            {title: "Löschen <kbd>[Del]</kbd>", cmd: "remove", uiIcon: "ui-icon-trash" },
             {title: "----"},
 //            {title: "New sibling <kbd>[Ctrl+N]</kbd>", cmd: "addSibling", uiIcon: "ui-icon-plus" },
-            {title: "New child <kbd>[Ctrl+Shift+N]</kbd>", cmd: "addChild", uiIcon: "ui-icon-arrowreturn-1-e" },
+            {title: "Kind zeugen", cmd: "addChild", uiIcon: "ui-icon-plus" },
+            {title: "----"},
+            {title: "Focus", cmd: "focus", uiIcon: "ui-icon-arrowreturn-1-e" },
+            {title: "In neuem Fenster", cmd: "focusNewWindow", uiIcon: "ui-icon-arrowreturn-1-e" },
+            {title: "Export Jira", cmd: "asJira", uiIcon: "ui-icon-clipboard" },
+            {title: "Export Txt", cmd: "asTxt", uiIcon: "ui-icon-clipboard" },
             {title: "----"},
 //            {title: "Cut <kbd>Ctrl+X</kbd>", cmd: "cut", uiIcon: "ui-icon-scissors"},
 //            {title: "Copy <kbd>Ctrl-C</kbd>", cmd: "copy", uiIcon: "ui-icon-copy"},
@@ -863,7 +878,7 @@ function fillGanttBlock(basenode, type, label, $divLine) {
     var dateRangeStartStr = $("#inputGanttRangeStart").val();
     var dateRangeEndStr = $("#inputGanttRangeEnde").val();
     if (dateRangeEndStr == null || dateRangeEndStr == null) {
-        console.err("fillGanttBlock range is not set correctly: " 
+        console.error("fillGanttBlock range is not set correctly: " 
                 + dateRangeStartStr + "-" + dateRangeEndStr + " " + msg);
         return;
     }
@@ -874,14 +889,14 @@ function fillGanttBlock(basenode, type, label, $divLine) {
     lstDate=dateRangeEndStr.split(".");
     var dateRangeEnd = new Date(lstDate[1]+"/"+lstDate[0]+"/"+lstDate[2]);    
     if (dateRangeStart == "NaN" || dateRangeEndStr == "NaN") {
-        console.err("fillGanttBlock range is not set correctly: " 
+        console.error("fillGanttBlock range is not set correctly: " 
                 + dateRangeStartStr + "-" + dateRangeEndStr + " " + msg);
         return;
     }
     var dateRangeStartMillis = dateRangeStart.getTime();
     var dateRangeEndMillis = dateRangeEnd.getTime();
     if (dateRangeStartMillis == "NaN" || dateRangeEndMillis == "NaN") {
-        console.err("fillGanttBlock range is not set correctly: " 
+        console.error("fillGanttBlock range is not set correctly: " 
                 + dateRangeStartStr + "-" + dateRangeEndStr + " " + msg);
         return;
     }
@@ -1108,7 +1123,13 @@ function renderColumnsForNode(event, data) {
     
     // add fields
     $tdList.eq(colActions).html(
-            "<a onclick=\"javascript: yaioOpenNodeEditor('" + basenode.sysUID + "', 'edit'); return false;\""
+            "<div class='fieldtype_sysToggler toggler_show'>"
+                + "<a onclick=\"javascript: toggleNodeSysContainer('" + basenode.sysUID + "'); return false;\""
+                        + " id='toggler_sys_" + basenode.sysUID + "'"
+                        + " class='' "
+                        + " data-tooltip='tooltip.command.ToggleSys' lang='tech'></a>"
+                + "</div>"
+            + "<a onclick=\"javascript: yaioOpenNodeEditor('" + basenode.sysUID + "', 'edit'); return false;\""
                     + " id='cmdEdit" + basenode.sysUID + "'"
                     + " class='yaio-icon-edit'"
                     + " data-tooltip='Bearbeite die Daten'></a>"
@@ -1173,6 +1194,32 @@ function renderColumnsForNode(event, data) {
     
     // render datablock
     var $nodeDataBlock = renderDataBlock(basenode, node);
+    
+    // add SysData
+    // create sys row
+    var $row = $("<div class='togglecontainer field_nodeSys' id='detail_sys_" + basenode.sysUID + "' />");
+    $nodeDataBlock.append($row);
+    $row.append(
+            $("<div lang='tech' />").html("Stand: " + formatGermanDateTime(basenode.sysChangeDate))
+                    .addClass("container_field")
+                    .addClass("fieldtype_basedata")
+                    .addClass("fieldtype_sysChangeDate")
+                    .addClass("field_sysChangeDate")
+                    );
+    $row.append(
+            $("<div lang='tech' />").html(" (V " + basenode.sysChangeCount + ")")
+                    .addClass("container_field")
+                    .addClass("fieldtype_basedata")
+                    .addClass("fieldtype_sysChangeCount")
+                    .addClass("field_sysChangeCount")
+                    );
+    $row.append(
+            $("<div lang='tech' />").html("angelegt: " + formatGermanDateTime(basenode.sysCreateDate))
+                    .addClass("container_field")
+                    .addClass("fieldtype_basedata")
+                    .addClass("fieldtype_sysCreateDate")
+                    .addClass("field_sysCreateDate")
+                    ); 
 
     // add nodeDesc if set
     if (basenode.nodeDesc != "" && basenode.nodeDesc != null) {
@@ -1195,14 +1242,28 @@ function renderColumnsForNode(event, data) {
         var $divDesc = $("<div class='togglecontainer' id='detail_desc_" + basenode.sysUID + "' />");
         $divDesc.addClass("field_nodeDesc");
 
-        $divDesc.append("<div class='container-commands-desc' id='commands_desc_" + basenode.sysUID + "'"
-                        + "data-tooltip='tooltip.command.TogglePreWrap' lang='tech' >" 
-                        + "<input type='checkbox' id='cmd_toggle_content_desc_" + basenode.sysUID + "' onclick=\"togglePreWrap('#content_desc_" + basenode.sysUID + "');togglePreWrap('#container_content_desc_" + basenode.sysUID + "'); return true;\">"
-                        + "<span lang='tech'>im Originallayout anzeigen</span>"
-//                        + "<input type='checkbox' id='cmd_toggle_content_desc_markdown_" + basenode.sysUID + "' onclick=\"toggleDescMarkdown('#container_content_desc_" + basenode.sysUID + "'); return true;\">"
-//                        + "<span lang='tech'>Markdown</span>"
-                        + "</div>"
-                        + "<br />");
+        // add commands
+        var commands = "<div class='container-commands-desc' id='commands_desc_" + basenode.sysUID + "'"
+            + "data-tooltip='tooltip.command.TogglePreWrap' lang='tech' >" 
+            + "<input type='checkbox' id='cmd_toggle_content_desc_" + basenode.sysUID + "' onclick=\"togglePreWrap('#content_desc_" + basenode.sysUID + "');togglePreWrap('#container_content_desc_" + basenode.sysUID + "'); return true;\">"
+            + "<span lang='tech'>im Originallayout anzeigen</span>"
+    //        + "<input type='checkbox' id='cmd_toggle_content_desc_markdown_" + basenode.sysUID + "' onclick=\"toggleDescMarkdown('#container_content_desc_" + basenode.sysUID + "'); return true;\">"
+    //        + "<span lang='tech'>Markdown</span>"
+            ;
+        commands += "<a class=\"button command-desc-jiraexport\" onClick=\"openJiraExportWindow('"+ basenode.sysUID + "'); return false;" 
+            +   "\" lang='tech' data-tooltip='tooltip.command.OpenJiraExportWindow'>common.command.OpenJiraExportWindow</a>";
+        commands += "<a class=\"button command-desc-txtexport\" onClick=\"openTxtExportWindow(" 
+            +   "$('#container_content_desc_" + basenode.sysUID + "').text()); return false;" 
+            +   "\" lang='tech' data-tooltip='tooltip.command.OpenTxtExportWindow'>common.command.OpenTxtExportWindow</a>";
+        if ('speechSynthesis' in window) {
+            // Synthesis support. Make your web apps talk!
+            commands += "<a class=\"button\" onClick=\"openSpeechSynthWindow(" 
+                +   "document.getElementById('container_content_desc_" + basenode.sysUID + "')); return false;" 
+                +   "\" lang='tech' data-tooltip='tooltip.command.OpenSpeechSynth'>common.command.OpenSpeechSynth</a>";
+ 
+           }        
+        commands += "</div>";
+        $divDesc.append(commands);
         
         // append content
         var descText = basenode.nodeDesc;
@@ -1244,9 +1305,12 @@ function renderColumnsForNode(event, data) {
         $tdList.eq(colData).css("display", "none");
     }
     
+    // toogle sys
+    toggleNodeSysContainer(basenode.sysUID);
+    
     // toogle desc
     toggleNodeDescContainer(basenode.sysUID);
-    
+
     // calc nodeData
     yaioRecalcMasterGanttBlockFromTree();
 };

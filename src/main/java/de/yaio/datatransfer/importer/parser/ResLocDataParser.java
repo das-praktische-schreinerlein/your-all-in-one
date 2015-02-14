@@ -51,5 +51,5 @@ public interface ResLocDataParser extends Parser {
      * @return count elements found
      * @throws Exception - parser-Exceptions possible
      */
-    public int parseResLocDataFromName(ResLocData node, ImportOptions options) throws Exception;
+    int parseResLocDataFromName(ResLocData node, ImportOptions options) throws Exception;
 }

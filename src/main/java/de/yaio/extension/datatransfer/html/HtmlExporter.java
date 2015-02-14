@@ -68,30 +68,34 @@ public class HtmlExporter extends WikiExporter {
         super();
     }
     
-    protected static String CONST_LAYOUT_TAG_DIV = "DIV";
-    protected static String CONST_LAYOUT_TAG_UE = "UE";
-    protected static String CONST_LAYOUT_TAG_P = "P";
-    protected static String CONST_LAYOUT_TAG_LI = "LI";
-    protected static String CONST_LAYOUT_TAG_TR = "TR";
-    protected static String CONST_LAYOUT_TAG_DIRECT = "DIRECT";
-    protected static String CONST_LAYOUT_TAG_ENDDIV = "ENDDIV";
+    protected static final String CONST_LAYOUT_TAG_DIV = "DIV";
+    protected static final String CONST_LAYOUT_TAG_UE = "UE";
+    protected static final String CONST_LAYOUT_TAG_P = "P";
+    protected static final String CONST_LAYOUT_TAG_LI = "LI";
+    protected static final String CONST_LAYOUT_TAG_TR = "TR";
+    protected static final String CONST_LAYOUT_TAG_DIRECT = "DIRECT";
+    protected static final String CONST_LAYOUT_TAG_ENDDIV = "ENDDIV";
     
-    protected static String CONST_FORMATTER_DESC = DescDataFormatterImpl.class.getName();
-    protected static String CONST_FORMATTER_IST = IstDataFormatterImpl.class.getName();
-    protected static String CONST_FORMATTER_PLAN = PlanDataFormatterImpl.class.getName();
-    protected static String CONST_FORMATTER_ISTCHILDRENSUM = IstChildrenSumDataFormatterImpl.class.getName();
-    protected static String CONST_FORMATTER_PLANCHILDRENSUM = PlanChildrenSumDataFormatterImpl.class.getName();
+    protected static final String CONST_FORMATTER_DESC = DescDataFormatterImpl.class.getName();
+    protected static final String CONST_FORMATTER_IST = IstDataFormatterImpl.class.getName();
+    protected static final String CONST_FORMATTER_PLAN = PlanDataFormatterImpl.class.getName();
+    protected static final String CONST_FORMATTER_ISTCHILDRENSUM = IstChildrenSumDataFormatterImpl.class.getName();
+    protected static final String CONST_FORMATTER_PLANCHILDRENSUM = PlanChildrenSumDataFormatterImpl.class.getName();
     
-    protected static Markdown4jProcessor markdownProcessor= new Markdown4jProcessor();
+    protected static Markdown4jProcessor markdownProcessor = new Markdown4jProcessor();
+    static {
+        //markdownProcessor.addHtmlAttribute("style", "color:red", "blockquote", "h1");
+        //markdownProcessor.addStyleClass("", "img");
+    }
 
     // Logger
     private static final Logger LOGGER =
         Logger.getLogger(HtmlExporter.class);
     
     @Override
-    public String getMasterNodeResult(DataDomain masterNode,
-            OutputOptions oOptions) throws Exception {
-        oOptions = genOutputOptionsForHtml(oOptions);
+    public String getMasterNodeResult(final DataDomain masterNode,
+            final OutputOptions poOptions) throws Exception {
+        OutputOptions oOptions = genOutputOptionsForHtml(poOptions);
         return super.getMasterNodeResult(masterNode, oOptions);
     }
     
@@ -110,7 +114,7 @@ public class HtmlExporter extends WikiExporter {
      * @param baseOOptions - Default OutputOptions to override
      * @return OuputOptions for generation of the html
      */
-    public OutputOptions genOutputOptionsForHtml(OutputOptions baseOOptions) {
+    public OutputOptions genOutputOptionsForHtml(final OutputOptions baseOOptions) {
         OutputOptions options = new OutputOptionsImpl(baseOOptions);
 
         // activate desc
@@ -129,8 +133,8 @@ public class HtmlExporter extends WikiExporter {
     }
 
     @Override
-    public StringBuffer getNodeResult(DataDomain node,  String praefix,
-            OutputOptions oOptions) throws Exception {
+    public StringBuffer getNodeResult(final DataDomain node,  final String praefix,
+            final OutputOptions oOptions) throws Exception {
         StringBuffer res = new StringBuffer();
 
         // Template-Nodes ignorieren
@@ -141,7 +145,7 @@ public class HtmlExporter extends WikiExporter {
 //            return res;
 //        }
         
-        BaseNode curNode = (BaseNode)node;
+        BaseNode curNode = (BaseNode) node;
 
         // Anfang
         if (LOGGER.isDebugEnabled()) {
@@ -189,8 +193,8 @@ public class HtmlExporter extends WikiExporter {
      * @return - formatted output of node-hierarchy and DataDomains
      * @throws Exception - parser/format-Exceptions possible
      */
-    public String genHtmlDokuLayoutForNode(BaseNode curNode,
-        OutputOptions oOptions) throws Exception {
+    public String genHtmlDokuLayoutForNode(final BaseNode curNode,
+        final OutputOptions oOptions) throws Exception {
         String res = "";
 
         // max. Ebene pruefen
@@ -222,7 +226,7 @@ public class HtmlExporter extends WikiExporter {
             boolean flgTableStarted = false;
             boolean flgCloseNode = false;
             for (String nodeName : curNode.getChildNodesByNameMap().keySet()) {
-                BaseNode node = (BaseNode)curNode.getChildNodesByNameMap().get(nodeName);
+                BaseNode node = (BaseNode) curNode.getChildNodesByNameMap().get(nodeName);
 
                 // eventuelles Divs des vorherigen Nodes schließen
                 if (flgCloseNode) {
@@ -238,7 +242,7 @@ public class HtmlExporter extends WikiExporter {
                 //eventuelle Tabelle starten
                 if (CONST_LAYOUT_TAG_TR.equalsIgnoreCase(command)) {
                     // aktuelle ChildNode ist Table
-                    if (! flgTableStarted) {
+                    if (!flgTableStarted) {
                         // Liste starten
                         String addStyle = node.getDocLayoutAddStyleClass();
                         blockChildren += "<table class='table-portdesc"
@@ -256,7 +260,7 @@ public class HtmlExporter extends WikiExporter {
                 // eventuell Liste starten
                 if (CONST_LAYOUT_TAG_LI.equalsIgnoreCase(command)) {
                     // aktuelle ChildNode ist Liste
-                    if (! flgListStarted) {
+                    if (!flgListStarted) {
                         // Liste starten
                         String addStyle = node.getDocLayoutAddStyleClass();
                         blockChildren += "<ul class='ul-portdesc"
@@ -310,7 +314,7 @@ public class HtmlExporter extends WikiExporter {
         }
         // check if I'am matching
         boolean flgMatchesFilter = this.isNodeMatchingFilter(curNode, oOptions);
-        if (! (flgMatchesFilter || flgChildMatched)) {
+        if (!(flgMatchesFilter || flgChildMatched)) {
             // sorry me and my children didnt match
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("sorry me and my children didnt match"
@@ -374,7 +378,7 @@ public class HtmlExporter extends WikiExporter {
             String content = "";
             int pos = name.indexOf(":");
             if (pos > 0) {
-                ue = name.substring(0, pos+1);
+                ue = name.substring(0, pos + 1);
                 content = name.substring(pos + 1, name.length());
             }
             
@@ -387,7 +391,7 @@ public class HtmlExporter extends WikiExporter {
             // check for UrlRes
             if (UrlResNode.class.isInstance(curNode)) {
                 // URLRes
-                UrlResNode urlResNode = ((UrlResNode)curNode);
+                UrlResNode urlResNode = ((UrlResNode) curNode);
                 
                 // set label
                 String label = urlResNode.getResLocName();
@@ -511,7 +515,7 @@ public class HtmlExporter extends WikiExporter {
                 // TD Spalten einfuegen
                 tag = "td";
                 String[] lstContent = name.split("\\|");
-                for (int zaehler=0; zaehler < lstContent.length; zaehler++) {
+                for (int zaehler = 0; zaehler < lstContent.length; zaehler++) {
                     // Formeln parsen
                     String tdId = "td_" + curNode.getWorkingId() + "_" + zaehler;
                     String tdContent = lstContent[zaehler];
@@ -523,7 +527,7 @@ public class HtmlExporter extends WikiExporter {
                             + tag + "-portdesc " + tag + "-portdesc-" + zaehler
                             + (addStyle.length() > 0
                                 ? " " + tag + "-portdesc-" + addStyle + " "
-                                  + tag + "-portdesc-"+ zaehler + "-" + addStyle : "") + "'"
+                                  + tag + "-portdesc-" + zaehler + "-" + addStyle : "") + "'"
                         + " id='" + tdId + "'>"
                         + tdContent
                         + "</td>";
@@ -538,7 +542,7 @@ public class HtmlExporter extends WikiExporter {
                     + (addStyle.length() > 0
                         ? " box-portdesc-" + addStyle : "") + "'"
                     + (shortName.length() > 0 ? " toclabel='" + shortName + "'" : "")
-                    + " id='box_"+ curNode.getWorkingId() + "'>"
+                    + " id='box_" + curNode.getWorkingId() + "'>"
                     + "<div class='boxline boxline-ue" + tagEbene + " h" + tagEbene + "-portdesc"
                     + (addStyle.length() > 0
                         ? " h" + tagEbene + "-portdesc-" + addStyle : "") + "'"
@@ -547,8 +551,7 @@ public class HtmlExporter extends WikiExporter {
                     + "</div>\n"
                     + "<div class='togglecontainer"
                     + (addStyle.length() > 0 ? " togglecontainer-" + addStyle : "") + "'"
-                    + " id='detail_"+ curNode.getWorkingId() + "'>\n"
-                    ;
+                    + " id='detail_" + curNode.getWorkingId() + "'>\n";
                 
                 // optionaler Contentbereich
                 if (content.length() > 0 || (descFull != null && descFull.length() > 0)) {
@@ -602,8 +605,7 @@ public class HtmlExporter extends WikiExporter {
                         ? " " + tag + "-portdesc-desc-" + addStyle : "") + "'"
                     +   " id='pSpanDesc_" + curNode.getWorkingId() + "'>"
                     + content
-                    + "</span>"
-                    ;
+                    + "</span>";
 
                 // eventuelles SPAN fuer Detailbeschreibung
                 if (descFull != null && descFull.length() > 0) {
@@ -646,8 +648,8 @@ public class HtmlExporter extends WikiExporter {
      * @return - formatted output of node-hierarchy and DataDomains
      * @throws Exception - parser/format-Exceptions possible
      */
-    public String genHtmlProjektLayoutForNode(BaseNode curNode,
-        OutputOptions oOptions) throws Exception {
+    public String genHtmlProjektLayoutForNode(final BaseNode curNode,
+        final OutputOptions oOptions) throws Exception {
         String res = "";
 
         // max. Ebene pruefen
@@ -727,7 +729,7 @@ public class HtmlExporter extends WikiExporter {
         }
         // check if I'am matching
         boolean flgMatchesFilter = this.isNodeMatchingFilter(curNode, oOptions);
-        if (! (flgMatchesFilter || flgChildMatched)) {
+        if (!(flgMatchesFilter || flgChildMatched)) {
             // sorry me and my children didnt match
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("sorry me and my children didnt match"
@@ -750,10 +752,10 @@ public class HtmlExporter extends WikiExporter {
         name = name.replaceAll("<WLTAB>", "\t");
         name = DataUtils.htmlEscapeText(name);
         blockName = name + " (" + curNode.getWorkingId() + ")";
-        styleClassesNameContainer2 = " node-level" +  + curNode.getEbene();
+        styleClassesNameContainer2 = " node-level" + curNode.getEbene();
         if (UrlResNode.class.isInstance(curNode)) {
             // URLRes
-            UrlResNode symlinkNode = ((UrlResNode)curNode);
+            UrlResNode symlinkNode = (UrlResNode) curNode;
             
             // Label belegen
             String suffix = name;
@@ -778,7 +780,7 @@ public class HtmlExporter extends WikiExporter {
                 + label + "</a> " + suffix + " (" + curNode.getWorkingId() + ")";
         } else if (SymLinkNode.class.isInstance(curNode)) {
             // Symlink
-            SymLinkNode symlinkNode = ((SymLinkNode)curNode);
+            SymLinkNode symlinkNode = ((SymLinkNode) curNode);
             blockName = name + " (" + curNode.getWorkingId() + ")"
                 + " &gt; " + "<a onclick=\"javascript:openNode('" 
                 +    symlinkNode.getSymLinkRef() + "');return false;\""
@@ -848,8 +850,8 @@ public class HtmlExporter extends WikiExporter {
                 blockIst = "";
                 blockPlan = "";
             }
-            if (   (istCalcSum == null || istCalcSum.length() <=0) 
-                && (planCalcSum == null || planCalcSum.length() <=0)) {
+            if (   (istCalcSum == null || istCalcSum.length() <= 0) 
+                && (planCalcSum == null || planCalcSum.length() <= 0)) {
                 blockIstCalcSum = "";
                 blockPlanCalcSum = "";
             }
@@ -922,16 +924,18 @@ public class HtmlExporter extends WikiExporter {
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     Layout
-     * @param curNode - the node
-     * @param data - the formatted data to export in html-block
-     * @param dataName - the name for idFields
-     * @param flgShow - true/false show the block or ignore it 
-     * @return - htmlblock of the node
+     * @param curNode    - the node
+     * @param pData      - the formatted data to export in html-block
+     * @param dataName   - the name for idFields
+     * @param flgShow    - true/false show the block or ignore it 
+     * @return           - htmlblock of the node
      * @throws Exception - parser/format-Exceptions possible
      */
-    public String genHtmlDataBlock(BaseNode curNode, String data, String dataName, boolean flgShow) {
+    public String genHtmlDataBlock(final BaseNode curNode, final String pData, 
+                                   final String dataName, final boolean flgShow) {
         // Plan-Daten
         String res = "";
+        String data = pData;
         if (flgShow) {
             String styleClasses = "";
             if (data != null && data.length() > 0) {
@@ -966,9 +970,9 @@ public class HtmlExporter extends WikiExporter {
      * @return - the tagcommand
      * @throws Exception - parser/format-Exceptions possible
      */
-    public String getDocLayoutTagCommand(BaseNode curNode) {
+    public String getDocLayoutTagCommand(final BaseNode curNode) {
         String command = curNode.getDocLayoutTagCommand();
-        if (command == null || (! (command.length() > 0))) {
+        if (command == null || (!(command.length() > 0))) {
             // kein Tag definiert (Standard-Tags)
             command = CONST_LAYOUT_TAG_P;
             if (curNode.getChildNodes().size() > 0) {
@@ -992,20 +996,20 @@ public class HtmlExporter extends WikiExporter {
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     Layout
-     * @param descText - the string to format
-     * @return - formatted markdown
+     * @param descText     - the string to format
+     * @return             - formatted markdown
      * @throws IOException - IOException-Exceptions possible
      */
-    public String formatTextAsMarkdown(String descText) throws IOException {
+    public String formatTextAsMarkdown(final String descText) throws IOException {
         // prepare descText
-        descText = this.prepareTextForMarkdown(descText);
+        String newDescText = this.prepareTextForMarkdown(descText);
         
-        descText = descText.replaceAll("…", "...");
-        descText = markdownProcessor.process(descText);
-        descText = descText.replaceAll("…", "...");
-        descText = descText.replaceAll("<code>", "<code class=\"txt\">");
+        newDescText = newDescText.replaceAll("…", "...");
+        newDescText = markdownProcessor.process(newDescText);
+        newDescText = newDescText.replaceAll("…", "...");
+        newDescText = newDescText.replaceAll("<code>", "<code class=\"txt\">");
         
-        return descText;
+        return newDescText;
     }
 
     /**
@@ -1024,10 +1028,11 @@ public class HtmlExporter extends WikiExporter {
      * @param descText - the string to prepare
      * @return - prpeared text to format as markdown
      */
-    public String prepareTextForMarkdown(String descText) {
+    public String prepareTextForMarkdown(final String descText) {
         // prepare descText
         String newDescText = "";
-        String newDescTextRest = descText;
+        String newDescTextRest = DataUtils.htmlEscapeTextLazy(descText);
+        newDescTextRest = newDescTextRest.replaceAll("\\&lt;br\\&gt;", "<br>");
         int codeStart = newDescTextRest.indexOf("```");
         while (codeStart >= 0) {
             // splice start and add to newDescText

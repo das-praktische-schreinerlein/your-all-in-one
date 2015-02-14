@@ -56,7 +56,9 @@ function initLanguageSupport() {
     //if the user asks to change to that language. We pass the two-letter language
     //code and the path to the language pack js file
     window.lang.dynamic('de', 'lang/lang-tech-to-de.json');
+    window.lang.dynamic('en', 'lang/lang-tech-to-en.json');
     window.lang.loadPack('de');
+    window.lang.loadPack('en');
 
     // change to de
     window.lang.change('de');
@@ -148,6 +150,7 @@ function setupAppSize() {
 
 function yaioShowHelpSite(url) {
     // set messagetext
+    url += "?" + createXFrameAllowFrom();
     console.log("yaioShowHelpSite:" + url);
     $("#help-iframe").attr('src',url);
     
@@ -196,6 +199,14 @@ function htmlEscapeText(text) {
         text = text.replace(/"/g, "&quot;");
         text = text.replace(/'/g, "&#x27;");
         text = text.replace(/\//g, "&#x2F;");
+    }
+    return text;
+}
+
+function htmlEscapeTextLazy(text) {
+    if ((text != "undefined") && (text != "") && (text != null)) {
+        text = text.replace(/</g, "&lt;");
+        text = text.replace(/>/g, "&gt;");
     }
     return text;
 }
@@ -330,14 +341,21 @@ function formatMarkdown(descText, flgHighlightNow) {
  */
 function prepareTextForMarkdown(descText) {
     // prepare descText
+    var noCode = "";
     var newDescText = '';
     var newDescTextRest = descText;
     var codeStart = newDescTextRest.indexOf("```");
     while (codeStart >= 0) {
-        // splice start and add to newDescText
-        newDescText += newDescTextRest.slice(0, codeStart + 3);
-        newDescTextRest = newDescTextRest.slice(codeStart + 3);
+        // splice start before ```and add to newDescText
+        noCode = newDescTextRest.slice(0, codeStart + 3);
         
+        // replace <> but prevent <br> in noCode
+        noCode = htmlEscapeTextLazy(noCode);
+        noCode = noCode.replace(/&lt;br&gt;/g, "<br>");
+        newDescText += noCode;
+        
+        // extract code
+        newDescTextRest = newDescTextRest.slice(codeStart + 3);
         var codeEnd = newDescTextRest.indexOf("```");
         if (codeEnd >= 0) {
             // splice all before ending ```
@@ -359,8 +377,70 @@ function prepareTextForMarkdown(descText) {
         }
         codeStart = newDescTextRest.indexOf("```");
     }
+
+    // replace <> but prevent <br> in noCode
+    noCode = newDescTextRest;
+    noCode = htmlEscapeTextLazy(noCode);
+    noCode = noCode.replace(/&lt;br&gt;/g, "<br>");
+    
     // add rest to newDescText
-    newDescText += newDescTextRest;
+    newDescText += noCode;
     
     return newDescText;
+}
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     GUI
+ * <h4>FeatureDescription:</h4>
+ *     convert the markdown-text to jira-format
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>returnValue String - jira-converted text
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     Convert
+ * @param descText - the string to prepare
+ * @return - markdown-text in jira-format
+ */
+function convertMarkdownToJira(descText) {
+    // prepare descText
+    var newDescText = '';
+    
+    var separatedBlocks = descText.split("```");
+    for (var i=0;i < separatedBlocks.length; i++) {
+        var tmpText = separatedBlocks[i];
+        if ((i % 2) == 0) {
+            // text-block: do convert
+            
+            // add dummy \n
+            tmpText = '\n' + tmpText;
+            
+            // lists
+            tmpText = tmpText.replace(/\n  - /g, "\n-- ");
+            tmpText = tmpText.replace(/\n    - /g, "\n--- ");
+            tmpText = tmpText.replace(/\n      - /g, "\n---- ");
+
+            // headings
+            tmpText = tmpText.replace(/\n##### /g, "\nh5. ");
+            tmpText = tmpText.replace(/\n#### /g, "\nh4. ");
+            tmpText = tmpText.replace(/\n### /g, "\nh3. ");
+            tmpText = tmpText.replace(/\n## /g, "\nh2. ");
+            tmpText = tmpText.replace(/\n# /g, "\nh1. ");
+            
+            // delete dummy \n
+            tmpText = tmpText.substr(1);;
+            
+            newDescText += tmpText;
+        } else {
+            // code-block
+            newDescText += '{code}' + tmpText + '{code}';
+        }
+    }
+    
+    return newDescText;
+}
+
+function createXFrameAllowFrom() {
+    return "x-frames-allow-from=" + window.location.hostname;
 }

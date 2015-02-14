@@ -51,5 +51,5 @@ public interface DocLayoutDataParser extends Parser {
      * @return count elements found
      * @throws Exception - parser-Exceptions possible
      */
-    public int parseDocLayoutDataFromName(DocLayoutData node, ImportOptions options) throws Exception;
+    int parseDocLayoutDataFromName(DocLayoutData node, ImportOptions options) throws Exception;
 }

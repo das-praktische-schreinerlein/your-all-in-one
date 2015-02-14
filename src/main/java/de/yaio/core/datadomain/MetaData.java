@@ -29,16 +29,16 @@ package de.yaio.core.datadomain;
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public interface MetaData extends DataDomain {
-    public static final int CONST_ORDER = 90;
+    int CONST_ORDER = 90;
     
-    public String getMetaNodePraefix();
-    public void setMetaNodePraefix(String metaNodePraefix);
-    public String getMetaNodeNummer();
-    public void setMetaNodeNummer(String metaNodeNummer);
-    public String getMetaNodeTypeTags();
-    public void setMetaNodeTypeTags(String metaNodeTypeTags);
-    public String getMetaNodeSubTypeTags();
-    public void setMetaNodeSubTypeTags(String metaNodeSubTypeTags);
+    String getMetaNodePraefix();
+    void setMetaNodePraefix(String metaNodePraefix);
+    String getMetaNodeNummer();
+    void setMetaNodeNummer(String metaNodeNummer);
+    String getMetaNodeTypeTags();
+    void setMetaNodeTypeTags(String metaNodeTypeTags);
+    String getMetaNodeSubTypeTags();
+    void setMetaNodeSubTypeTags(String metaNodeSubTypeTags);
     
-    public void initMetaData() throws Exception;
+    void initMetaData() throws Exception;
 }

@@ -33,7 +33,7 @@ import de.yaio.core.datadomain.SysData;
 public interface SysDataService {
     
     /** the position in the recalc-order at which the recalcer will run */
-    public static final int CONST_RECALC_ORDER = DataDomainRecalc.CONST_ORDER_NOOP;
+    int CONST_RECALC_ORDER = DataDomainRecalc.CONST_ORDER_NOOP;
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -49,7 +49,7 @@ public interface SysDataService {
      * @param node - node to initialize
      * @throws Exception - parser/format/io-Exceptions possible
      */
-    public void initSysData(SysData node) throws Exception;
+    void initSysData(SysData node) throws Exception;
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -66,5 +66,5 @@ public interface SysDataService {
      * @return the checksum
      * @throws Exception - parser/format/io-Exceptions possible
      */
-    public String getCheckSum(SysData node) throws Exception;
+    String getCheckSum(SysData node) throws Exception;
 }

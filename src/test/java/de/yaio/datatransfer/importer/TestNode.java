@@ -25,29 +25,28 @@ public class TestNode extends BaseNode implements TestObj {
         StringBuffer resBuffer = new StringBuffer();
         resBuffer.append(this.getName()).append("|")
                  .append(this.getState()).append("|")
-                 .append(this.getClass().getName()).append("|")
-                 ;
+                 .append(this.getClass().getName()).append("|");
         return resBuffer.toString();
         
     }
 
     // Status-Konstanten
-    public static Map<String, Object> CONST_MAP_NODETYPE_IDENTIFIER = new HashMap<String, Object>();
+    public static final Map<String, Object> CONST_MAP_NODETYPE_IDENTIFIER = new HashMap<String, Object>();
     static {
         // Defaults
         CONST_MAP_NODETYPE_IDENTIFIER.put("TEST", "TEST");
         CONST_MAP_NODETYPE_IDENTIFIER.put("TEST1", "TEST");
     }
 
-    public static void configureNodeTypeIdentifier(NodeFactory nodeFactory) {
+    public static void configureNodeTypeIdentifier(final NodeFactory nodeFactory) {
         nodeFactory.addNodeTypeIdentifier(TestNode.CONST_MAP_NODETYPE_IDENTIFIER, TestNode.class);
     }
 
-    public static void configureNodeTypes(Importer importer) {
+    public static void configureNodeTypes(final Importer importer) {
         importer.addNodeTypeIdentifierVariantMapping(TestNode.CONST_MAP_NODETYPE_IDENTIFIER);
     }
 
-    public static void configureWorkflowNodeTypeMapping(Importer importer) {
+    public static void configureWorkflowNodeTypeMapping(final Importer importer) {
         // NOP 
     }
 }

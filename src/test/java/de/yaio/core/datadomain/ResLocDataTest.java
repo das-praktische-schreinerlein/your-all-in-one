@@ -55,8 +55,7 @@ public class ResLocDataTest extends DataDomainTest {
             resBuffer.append(this.getName()).append("|")
                      .append(this.getResLocRef()).append("|")
                      .append(this.getResLocName()).append("|")
-                     .append(this.getResLocTags()).append("|")
-                     ;
+                     .append(this.getResLocTags()).append("|");
             return resBuffer.toString();
             
         }
@@ -89,10 +88,9 @@ public class ResLocDataTest extends DataDomainTest {
      * <h4>FeatureKeywords:</h4>
      *     Test Config Initialisation
      * @return - a new dataobj for the test
-     * @throws Exception
-     */
+     * @throws Exception - possible Exception     */
     protected ResLocDataTestObj getNewResLocDataTestObj() throws Exception  {
-        return (ResLocDataTestObj)setupNewTestObj();
+        return (ResLocDataTestObj) setupNewTestObj();
     }
 
     @Override

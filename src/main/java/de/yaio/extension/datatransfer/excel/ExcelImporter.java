@@ -67,11 +67,11 @@ public class ExcelImporter extends ImporterImpl {
     public PPLExporter exporter = new PPLExporter();
     protected static Map<String, String> hshNodes = new HashMap<String, String>();
 
-    public ExcelImporter(ImportOptions options) {
+    public ExcelImporter(final ImportOptions options) {
         super(options);
     }
 
-    public List<String> fromExcel(String inFileName) throws Exception {
+    public List<String> fromExcel(final String inFileName) throws Exception {
 
         // Parameter pruefen
         if (inFileName == null) {
@@ -88,8 +88,8 @@ public class ExcelImporter extends ImporterImpl {
         return lines;
     }
 
-    public List<String> parsePlanungSheet(HSSFWorkbook wb)
-    throws Exception {
+    public List<String> parsePlanungSheet(final HSSFWorkbook wb)
+                    throws Exception {
 
         // ExcelService anlegen
         this.exlSv = new ExcelOutputService(wb);
@@ -100,7 +100,7 @@ public class ExcelImporter extends ImporterImpl {
                     + wb + "'");
         }
 
-        ArrayList<String> lines = new ArrayList<String>();
+        List<String> lines = new ArrayList<String>();
 
         // Betreffendes Sheet anhand des Indexes ermitteln (funkt. auch noch
         // wenn mal das Tabellenblatt umbenannt wird)
@@ -126,8 +126,8 @@ public class ExcelImporter extends ImporterImpl {
         return lines;
     }
 
-    public String parsePlanungLine(HSSFSheet sheet, HSSFFormulaEvaluator formulaEval,
-            int startRownNum) throws Exception {
+    public String parsePlanungLine(final HSSFSheet sheet, final HSSFFormulaEvaluator formulaEval,
+            final int startRownNum) throws Exception {
         Date MINDATE = ParserImpl.DF.parse("01.01.1970");
 
         // auf Bereich pruefen
@@ -137,41 +137,41 @@ public class ExcelImporter extends ImporterImpl {
 
         // Zeile einlesen
         String Id =
-            ExcelService.getCell(sheet, startRownNum,ExcelNodeService.CONST_PLANUNG_COL_ID).
+            ExcelService.getCell(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_ID).
             getRichStringCellValue().getString();
         String projekt =
-            ExcelService.getCell(sheet, startRownNum,ExcelNodeService.CONST_PLANUNG_COL_PROJEKT)
+            ExcelService.getCell(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_PROJEKT)
             .getRichStringCellValue().getString();
         String modul =
-            ExcelService.getCell(sheet, startRownNum,ExcelNodeService.CONST_PLANUNG_COL_MODUL)
+            ExcelService.getCell(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_MODUL)
             .getRichStringCellValue().getString();
         String paket =
-            ExcelService.getCell(sheet, startRownNum,ExcelNodeService.CONST_PLANUNG_COL_PAKET)
+            ExcelService.getCell(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_PAKET)
             .getRichStringCellValue().getString();
         String unterpaket =
-            ExcelService.getCell(sheet, startRownNum,ExcelNodeService.CONST_PLANUNG_COL_UNTERPAKET)
+            ExcelService.getCell(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_UNTERPAKET)
             .getRichStringCellValue().getString();
         String schritt =
-            ExcelService.getCell(sheet, startRownNum,ExcelNodeService.CONST_PLANUNG_COL_SCHRITT)
+            ExcelService.getCell(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_SCHRITT)
             .getRichStringCellValue().getString();
         String schritt2 =
-            ExcelService.getCell(sheet, startRownNum,ExcelNodeService.CONST_PLANUNG_COL_SCHRITT2)
+            ExcelService.getCell(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_SCHRITT2)
             .getRichStringCellValue().getString();
         String schritt3 =
-            ExcelService.getCell(sheet, startRownNum,ExcelNodeService.CONST_PLANUNG_COL_SCHRITT3)
+            ExcelService.getCell(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_SCHRITT3)
             .getRichStringCellValue().getString();
         String schritt4 =
-            ExcelService.getCell(sheet, startRownNum,ExcelNodeService.CONST_PLANUNG_COL_SCHRITT4)
+            ExcelService.getCell(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_SCHRITT4)
             .getRichStringCellValue().getString();
         String schritt5 =
-            ExcelService.getCell(sheet, startRownNum,ExcelNodeService.CONST_PLANUNG_COL_SCHRITT5)
+            ExcelService.getCell(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_SCHRITT5)
             .getRichStringCellValue().getString();
         String idesc =
-            ExcelService.getCell(sheet, startRownNum,ExcelNodeService.CONST_PLANUNG_COL_DESC)
+            ExcelService.getCell(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_DESC)
             .getRichStringCellValue().getString();
 
         // Namen extrahieren
-        ArrayList<Object> ebenen = new ArrayList<Object>();
+       List<Object> ebenen = new ArrayList<Object>();
         if (projekt == null || projekt.length() == 0) {
             // kein Projekt: nichts zu tun
             return null;
@@ -206,55 +206,59 @@ public class ExcelImporter extends ImporterImpl {
         
         // Plan
         String ptask =
-            ExcelService.getCell(sheet, startRownNum,ExcelNodeService.CONST_PLANUNG_COL_PLAN_TASK)
+            ExcelService.getCell(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_PLAN_TASK)
             .getRichStringCellValue().getString();
 
         HSSFCell cell = null;
-        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum,ExcelNodeService.CONST_PLANUNG_COL_PLAN_AUFWAND);
-//        cell = ExcelService.getCell(sheet, startRownNum,ExcelNodeService.CONST_PLANUNG_COL_PLAN_AUFWAND);
+        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_PLAN_AUFWAND);
+//        cell = ExcelService.getCell(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_PLAN_AUFWAND);
         Double paufwand = ExcelService.getCellNummeric(cell);
 
-        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum,ExcelNodeService.CONST_PLANUNG_COL_PLAN_DATE_START);
-//        cell = ExcelService.getCell(sheet, startRownNum,ExcelNodeService.CONST_PLANUNG_COL_PLAN_DATE_START);
+        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_PLAN_DATE_START);
+//        cell = ExcelService.getCell(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_PLAN_DATE_START);
         Date pstart = ExcelService.getCellDate(cell);
-        if (pstart == null || pstart.before(MINDATE))
+        if (pstart == null || pstart.before(MINDATE)) {
             pstart = null;
+        }
 
-        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum,ExcelNodeService.CONST_PLANUNG_COL_PLAN_DATE_ENDE);
-//        cell = ExcelService.getCell(sheet, startRownNum,ExcelNodeService.CONST_PLANUNG_COL_PLAN_DATE_ENDE);
+        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_PLAN_DATE_ENDE);
+//        cell = ExcelService.getCell(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_PLAN_DATE_ENDE);
         Date pende = ExcelService.getCellDate(cell);
-        if (pende == null || pende.before(MINDATE))
+        if (pende == null || pende.before(MINDATE)) {
             pende = null;
+        }
 
         // Ist
         String itask =
-            ExcelService.getCell(sheet, startRownNum,ExcelNodeService.CONST_PLANUNG_COL_IST_TASK)
+            ExcelService.getCell(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_IST_TASK)
             .getRichStringCellValue().getString();
 
-        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum,ExcelNodeService.CONST_PLANUNG_COL_IST_STAND);
-        double istand =  ExcelService.getCellNummeric(cell)*100;
+        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_IST_STAND);
+        double istand =  ExcelService.getCellNummeric(cell) * 100;
 
-        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum,ExcelNodeService.CONST_PLANUNG_COL_IST_AUFWAND);
+        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_IST_AUFWAND);
         double iaufwand = ExcelService.getCellNummeric(cell);
 
-        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum,ExcelNodeService.CONST_PLANUNG_COL_IST_DATE_START);
+        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_IST_DATE_START);
         Date istart = ExcelService.getCellDate(cell);
-        if (istart == null || istart.before(MINDATE))
+        if (istart == null || istart.before(MINDATE)) {
             istart = null;
+        }
 
-        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum,ExcelNodeService.CONST_PLANUNG_COL_IST_DATE_ENDE);
+        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_IST_DATE_ENDE);
         Date iende = ExcelService.getCellDate(cell);
-        if (iende == null || iende.before(MINDATE))
+        if (iende == null || iende.before(MINDATE)) {
             iende = null;
+        }
 
         // Real
-        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum,ExcelNodeService.CONST_PLANUNG_COL_REAL_AUFWAND);
+        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_REAL_AUFWAND);
         double raufwand = ExcelService.getCellNummeric(cell);
 
-        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum,ExcelNodeService.CONST_PLANUNG_COL_REAL_OFFEN);
+        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_REAL_OFFEN);
         double roffen = ExcelService.getCellNummeric(cell);
 
-        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum,ExcelNodeService.CONST_PLANUNG_COL_REAL_DIFF);
+        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_REAL_DIFF);
         double rdiff = ExcelService.getCellNummeric(cell);
 
         // Status aus den Planzahlen extrahieren
@@ -279,7 +283,7 @@ public class ExcelImporter extends ImporterImpl {
         }
 
         // letztes Element der Hirarchy extrahieren: den Namen
-        String curName = (String)ebenen.remove(ebenen.size()-1);
+        String curName = (String) ebenen.remove(ebenen.size() - 1);
         String fullName = status + " - " + curName;
 
         // create Hirarchy
@@ -295,7 +299,7 @@ public class ExcelImporter extends ImporterImpl {
         }
         
         // Projektnode erzeugen
-        TaskNode node = (TaskNode)this.getNodeFactory().createNodeObjFromText(
+        TaskNode node = (TaskNode) this.getNodeFactory().createNodeObjFromText(
                 TaskNode.class, ExcelImporter.curId++, 
                 hirarchyStr + fullName, fullName, null);
         node.setPlanAufwand(paufwand);

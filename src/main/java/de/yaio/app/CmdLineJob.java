@@ -73,7 +73,7 @@ public abstract class CmdLineJob {
      *     Constructor
      * @param args the command line arguments
      */
-    public CmdLineJob(String[] args) {
+    public CmdLineJob(final String[] args) {
         // set args
         Configurator.getInstance().setCmdLineArgs(args);
     }
@@ -90,9 +90,8 @@ public abstract class CmdLineJob {
      * <h4>FeatureKeywords:</h4>
      *     CLI-Handling
      * @return String - jobname (Classname without package)
-     * @throws Throwable
-     */
-    protected String getJobName() throws Throwable  {
+     * @throws Exception - possible Exception     */
+    protected String getJobName() throws Exception  {
         return this.getClass().getName();
     }
 
@@ -107,9 +106,8 @@ public abstract class CmdLineJob {
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     CLI-Handling
-     * @throws Throwable
-     */
-    protected void printUsage() throws Throwable  {
+     * @throws Exception - possible Exception     */
+    protected void printUsage() throws Exception  {
         HelpFormatter formatter = new HelpFormatter();
         formatter.printHelp(this.getJobName(), 
                         Configurator.getInstance().getAvailiableCmdLineOptions());
@@ -123,9 +121,8 @@ public abstract class CmdLineJob {
      * <h1>Nebenwirkungen:</h1>
      *     Rueckgabe als Options
      * @return Options
-     * @throws Throwable
-     */
-    protected abstract Options addAvailiableCmdLineOptions() throws Throwable;
+     * @throws Exception - possible Exception     */
+    protected abstract Options addAvailiableCmdLineOptions() throws Exception;
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -146,9 +143,10 @@ public abstract class CmdLineJob {
             // config cmdArgs
             LOGGER.info("configure CmdArgs");
             Options newAvailiableCmdLineOptions = this.addAvailiableCmdLineOptions();
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("startJobProcessing: "
                                 + "add commandLineOptions:" + newAvailiableCmdLineOptions);
+            }
 
             Configurator.getInstance().addAvailiableCmdLineOptions(newAvailiableCmdLineOptions);
 
@@ -157,20 +155,20 @@ public abstract class CmdLineJob {
             Configurator.getInstance().getCommandLine();
 
             // check for unknown Args
-            String strCmdLineArgs = "";;
+            String strCmdLineArgs = "";
             for (String arg : Configurator.getInstance().getCmdLineArgs()) {
                 strCmdLineArgs += ", " + arg;
             }
             LOGGER.info("used CmdLineArgs: " 
                             + strCmdLineArgs);
             if (Configurator.getInstance().getCommandLine() != null) {
-                strCmdLineArgs = "";;
+                strCmdLineArgs = "";
                 for (String arg : Configurator.getInstance().getCommandLine().getArgs()) {
                     strCmdLineArgs += ", " + arg;
                 }
                 LOGGER.info("unknown CmdLineArgs: " 
                             + strCmdLineArgs);
-                strCmdLineArgs = "";;
+                strCmdLineArgs = "";
                 for (Option option : Configurator.getInstance().getCommandLine().getOptions()) {
                     strCmdLineArgs += ", " + option.toString();
                 }
@@ -179,7 +177,7 @@ public abstract class CmdLineJob {
 
             // validate cmdLine
             LOGGER.info("validate CmdLine");
-            if (! Configurator.getInstance().validateCmdLine()) {
+            if (!Configurator.getInstance().validateCmdLine()) {
                 logErrorMsg("Illegal CmdArgs: print Usage");
                 this.printUsage();
                 LOGGER.info("Exit: 1");
@@ -211,13 +209,13 @@ public abstract class CmdLineJob {
             LOGGER.info("start cleanUpAfterJob");
             this.cleanUpAfterJob();
             LOGGER.info("done cleanUpAfterJob");
-        } catch(Throwable e) {
+        } catch (Throwable e) {
             // Catch Error
             try {
                 LOGGER.info("start cleanUpAfterJob when Error");
                 this.cleanUpAfterJob();
                 LOGGER.info("done cleanUpAfterJob when Error");
-            } catch (Throwable e2){
+            } catch (Throwable e2) {
                 // Log Error while cleanUp
                 this.handleThrowable(e2, false);
             }
@@ -236,7 +234,7 @@ public abstract class CmdLineJob {
      *     Jobhandling
      * @param errorMsg - the errormsg for output on System.out and Logger
      */
-    public static void logErrorMsg(String errorMsg) {
+    public static void logErrorMsg(final String errorMsg) {
         System.out.println(errorMsg);
         LOGGER.fatal(errorMsg);
     }
@@ -251,7 +249,7 @@ public abstract class CmdLineJob {
      * @param e - the exceptuiion/error...
      * @param flgExit - do exit if it is set
      */
-    public void handleThrowable(Throwable e, boolean flgExit) {
+    public void handleThrowable(final Throwable e, final boolean flgExit) {
 
         String errorMsg = "JOB - Exception:\n" + e.getMessage();
         e.printStackTrace();
@@ -265,14 +263,14 @@ public abstract class CmdLineJob {
         }
     }
 
-    protected void initJob() throws Throwable {
+    protected void initJob() throws Exception {
     }
 
-    protected abstract void doJob() throws Throwable;
+    protected abstract void doJob() throws Exception;
 
 
 
-    protected void cleanUpAfterJob() throws Throwable {
+    protected void cleanUpAfterJob() throws Exception {
         // TODO: hack to close HSLDB-connection -> Hibernate doesn't close the 
         //       database and so the content is not written to file
         org.hsqldb.DatabaseManager.closeDatabases(0);

@@ -118,20 +118,22 @@ public abstract class DataDomainTest extends BaseTest {
      * @param myImportOptions - Importoptions for the parser
      * @throws Exception - io-Exceptions possible
      */
-    public void testParser(DataDomain myDataDomainObj, String myExpectedParserResult, 
-            ImportOptions myImportOptions) throws Exception {
+    public void testParser(final DataDomain myDataDomainObj, final String myExpectedParserResult, 
+            final ImportOptions myImportOptions) throws Exception {
         // Master ausgeben
-        if (LOGGER.isDebugEnabled())
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("do parsing of:" + myDataDomainObj.getName());
+        }
 
         // run
         parser.parseFromName(myDataDomainObj, myImportOptions);
 
-        if (LOGGER.isDebugEnabled())
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("got parserresult of:" + myDataDomainObj.toString());
+        }
 
         // Test
-        testService.checkToStringResult((TestObj)myDataDomainObj, myExpectedParserResult);
+        testService.checkToStringResult((TestObj) myDataDomainObj, myExpectedParserResult);
     }
 
     /**
@@ -160,14 +162,15 @@ public abstract class DataDomainTest extends BaseTest {
      * @param myOutputOptions - outputoptions for the formatter
      * @throws Exception - io-Exceptions possible
      */
-    public void testFormatter(DataDomain myDataDomainObj, String myExpectedFormatterResult, 
-            OutputOptions myOutputOptions) throws Exception {
+    public void testFormatter(final DataDomain myDataDomainObj, final String myExpectedFormatterResult, 
+            final OutputOptions myOutputOptions) throws Exception {
         // init
         StringBuffer resBuffer = new StringBuffer();
         
         // Master ausgeben
-        if (LOGGER.isDebugEnabled())
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("do format of:" + myDataDomainObj.toString());
+        }
 
         // run
         formatter.format(myDataDomainObj, resBuffer, myOutputOptions);
@@ -175,8 +178,9 @@ public abstract class DataDomainTest extends BaseTest {
         // get result
         String res = resBuffer.toString();
         
-        if (LOGGER.isDebugEnabled())
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("got format of:" + res);
+        }
 
         // Test
         assertEquals(myExpectedFormatterResult, res);

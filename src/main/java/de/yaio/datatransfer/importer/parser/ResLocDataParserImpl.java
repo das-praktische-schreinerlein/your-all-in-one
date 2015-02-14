@@ -50,7 +50,7 @@ public class ResLocDataParserImpl  extends ParserImpl implements ResLocDataParse
             Logger.getLogger(ResLocDataParserImpl.class);
 
     // Patterns
-    protected static String CONST_PATTERN_SEG_STRING1 = "[^,:\\[\\]]";
+    protected static final String CONST_PATTERN_SEG_STRING1 = "[^,:\\[\\]]";
     protected static final String CONST_PATTERN_SEG_URL =
         "[-a-zA-Z0-9\\.:%&=_?/#\\~\\\\+\\(\\)!]+";
     protected static final String CONST_PATTERN_SEG_URLRES =
@@ -80,30 +80,31 @@ public class ResLocDataParserImpl  extends ParserImpl implements ResLocDataParse
      *     Config
      * @param nodeFactory - instance of the nodeFactory which will use the parser 
      */
-    public static void configureDataDomainParser(NodeFactory nodeFactory) {
+    public static void configureDataDomainParser(final NodeFactory nodeFactory) {
         nodeFactory.addDataDomainParser(new ResLocDataParserImpl());
     }
 
     @Override
-    public int parseFromName(DataDomain node, ImportOptions options) throws Exception {
+    public int parseFromName(final DataDomain node, final ImportOptions options) throws Exception {
         // Check if node is compatibel
         if (node != null) {
-            if (! ResLocData.class.isInstance(node)) {
+            if (!ResLocData.class.isInstance(node)) {
                 throw new IllegalArgumentException();
             }
         }
-        return parseResLocDataFromName((ResLocData)node, options);
+        return parseResLocDataFromName((ResLocData) node, options);
     }
 
     @Override
-    public int parseResLocDataFromName(ResLocData node, ImportOptions options) throws Exception {
+    public int parseResLocDataFromName(final ResLocData node, final ImportOptions options) throws Exception {
         int found = 0;
 
         // Check for valid data
         if (node.getName() == null) {
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Pattern ResLoc dosnt match because node has no name for node:" 
                         + node.getNameForLogger());
+            }
             return found;
         }
 
@@ -117,25 +118,28 @@ public class ResLocDataParserImpl  extends ParserImpl implements ResLocDataParse
 
             // Reference
             matcherindex = 2;
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Pattern: " + CONST_PATTERN_SEG_URL + " " 
                     + matcherindex + ":" + matcher.group(matcherindex));
+            }
             if (matcher.group(matcherindex) != null) {
                 node.setResLocRef(matcher.group(matcherindex));
             }
             // Label
             matcherindex = 3;
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Pattern: " + CONST_PATTERN_SEG_STRING1 + " " 
                     + matcherindex + ":" + matcher.group(matcherindex));
+            }
             if (matcher.group(matcherindex) != null) {
                 node.setResLocName(matcher.group(matcherindex));
             }
             // Tags
             matcherindex = 4;
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Pattern: " + CONST_PATTERN_SEG_TAGS + " " 
                     + matcherindex + ":" + matcher.group(matcherindex));
+            }
             if (matcher.group(matcherindex) != null) {
                 node.setResLocTags(matcher.group(matcherindex));
             }

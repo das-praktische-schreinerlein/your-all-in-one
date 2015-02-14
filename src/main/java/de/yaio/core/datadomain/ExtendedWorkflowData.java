@@ -34,6 +34,6 @@ import java.util.Date;
  */
 public interface ExtendedWorkflowData extends BaseWorkflowData, IstData, PlanData {
 
-    public Date getCurrentStart();
-    public Date getCurrentEnde();
+    Date getCurrentStart();
+    Date getCurrentEnde();
 }

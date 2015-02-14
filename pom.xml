@@ -6,6 +6,7 @@
     <groupId>de.yaio</groupId>
     <artifactId>yaio</artifactId>
     <name>yaio</name>
+    <description>YourAllInOne D'Artagnan</description>
     
     <!-- packaging jar or war and version -->
     <packaging>jar</packaging>
@@ -13,15 +14,28 @@
     
     <!-- settings-->
     <properties>
-        <aspectj.version>1.7.2</aspectj.version>
-        <java.version>1.7</java.version>
+        <!--  project -->
+        <start-class>de.yaio.rest.Application</start-class>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!--  versions -->
+        <java.version>1.7</java.version>
+        <aspectj.version>1.7.2</aspectj.version>
         <roo.version>1.2.4.RELEASE</roo.version>
         <slf4j.version>1.7.5</slf4j.version>
+
         <!-- spring boot starter -->
         <spring.version>4.0.7.RELEASE</spring.version>
-         <start-class>de.yaio.rest.Application</start-class>
         <springboot.version>1.1.6.RELEASE</springboot.version>
+
+        <!-- Plugin versions -->
+        <maven.surefire.plugin.version>2.14</maven.surefire.plugin.version>
+        <maven.failsafe.plugin.version>2.14</maven.failsafe.plugin.version>
+        <maven.surefire.report.plugin.version>2.14</maven.surefire.report.plugin.version>
+        <maven.javadoc.plugin.version>2.9.1</maven.javadoc.plugin.version>
+        <maven.checkstyle.plugin.version>2.12.1</maven.checkstyle.plugin.version>
+        <maven.findbugs.plugin.version>2.5.5</maven.findbugs.plugin.version>
+        <maven.pmd.plugin.version>3.1</maven.pmd.plugin.version>
     </properties>
 
     <!-- for spring boot -->
@@ -340,10 +354,35 @@
             <artifactId>markdown4j</artifactId>
             <version>2.2-cj-1.0</version>
         </dependency>
+        <!--  security/crypto -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <!-- admin -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.3.6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpmime</artifactId>
+            <version>4.3.6</version>
+        </dependency>
     </dependencies>
 
     <!-- build options -->
     <build>
+        <!-- set finalname for jar + context as war -->
+        <finalName>yaio</finalName>
+        <!-- for actuator-infos -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -417,18 +456,43 @@
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
+            
+            <!--  tests -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.12</version>
                 <configuration>
-                    <printSummary>false</printSummary>
+                    <printSummary>true</printSummary>
                     <redirectTestOutputToFile>true</redirectTestOutputToFile>
                     <excludes>
                         <exclude>**/*_Roo_*</exclude>
                     </excludes>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+                <version>${maven.surefire.report.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>generate-test-report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report-only</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>generate-integration-test-report</id>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>failsafe-report-only</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- shade and big-jar -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
@@ -531,6 +595,77 @@
                         <addResources>false</addResources>
                     </configuration>
             </plugin>
+
+            <!-- checkstyle -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>${maven.checkstyle.plugin.version}</version>
+                <configuration>
+                    <configLocation>checkstyle.xml</configLocation>
+                    <consoleOutput>true</consoleOutput>
+                    <violationSeverity>info</violationSeverity>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>findbugs-maven-plugin</artifactId>
+                <version>${maven.findbugs.plugin.version}</version>
+                <configuration>
+                    <failOnError>false</failOnError>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>${maven.pmd.plugin.version}</version>
+            </plugin>
         </plugins>
     </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+                <version>${maven.surefire.report.plugin.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${maven.javadoc.plugin.version}</version>
+                <configuration>
+                    <aggregate>true</aggregate>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>${maven.checkstyle.plugin.version}</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>checkstyle</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>findbugs-maven-plugin</artifactId>
+                <version>${maven.findbugs.plugin.version}</version>
+                <configuration>
+                    <failOnError>false</failOnError>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>${maven.pmd.plugin.version}</version>
+                <configuration>
+                    <targetJdk>${java.version}</targetJdk>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
 </project>

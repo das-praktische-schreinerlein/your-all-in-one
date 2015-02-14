@@ -44,8 +44,7 @@ public class WikiImportOptions extends ImportOptionsImpl {
                 + " flgReadUe:" + flgReadUe
                 + " flgReadList:" + flgReadList
                 + " flgReadWithStatusOnly:" + flgReadWithStatusOnly
-                + " strReadIfStatusInListOnly:" + strReadIfStatusInListOnly
-                ;
+                + " strReadIfStatusInListOnly:" + strReadIfStatusInListOnly;
 
     }
 
@@ -75,7 +74,7 @@ public class WikiImportOptions extends ImportOptionsImpl {
      *     DataImport ParserOptions
      * @param flgReadUe - true/false = read/ignore
      */
-    public void setFlgReadUe(boolean flgReadUe) {
+    public void setFlgReadUe(final boolean flgReadUe) {
         this.flgReadUe = flgReadUe;
     }
 
@@ -105,7 +104,7 @@ public class WikiImportOptions extends ImportOptionsImpl {
      *     DataImport ParserOptions
      * @param flgReadList - true/false = read/ignore
      */
-    public void setFlgReadList(boolean flgReadList) {
+    public void setFlgReadList(final boolean flgReadList) {
         this.flgReadList = flgReadList;
     }
 
@@ -137,7 +136,7 @@ public class WikiImportOptions extends ImportOptionsImpl {
      *     DataImport ParserOptions
      * @param flgReadWithStatusOnly - true/false = read only with Status/ read all
      */
-    public void setFlgReadWithStatusOnly(boolean flgReadWithStatusOnly) {
+    public void setFlgReadWithStatusOnly(final boolean flgReadWithStatusOnly) {
         this.flgReadWithStatusOnly = flgReadWithStatusOnly;
     }
 
@@ -169,7 +168,7 @@ public class WikiImportOptions extends ImportOptionsImpl {
      *     DataImport ParserOptions
      * @param flgReadWithWFStatusOnly - true/false = read only with WFStatus/ read all
      */
-    public void setFlgReadWithWFStatusOnly(boolean flgReadWithWFStatusOnly) {
+    public void setFlgReadWithWFStatusOnly(final boolean flgReadWithWFStatusOnly) {
         this.flgReadWithWFStatusOnly = flgReadWithWFStatusOnly;
     }
 
@@ -201,7 +200,7 @@ public class WikiImportOptions extends ImportOptionsImpl {
      *     DataImport ParserOptions
      * @param strReadIfStatusInListOnly - commaseparated list of node-stati to filter
      */
-    public void setStrReadIfStatusInListOnly(String strReadIfStatusInListOnly) {
+    public void setStrReadIfStatusInListOnly(final String strReadIfStatusInListOnly) {
         this.strReadIfStatusInListOnly = strReadIfStatusInListOnly;
     }
 }

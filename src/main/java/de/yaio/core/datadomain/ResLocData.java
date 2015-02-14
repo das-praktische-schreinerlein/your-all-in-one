@@ -30,12 +30,12 @@ package de.yaio.core.datadomain;
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public interface ResLocData extends DataDomain {
-    public static final int CONST_ORDER = 25;
+    int CONST_ORDER = 25;
 
-    public String getResLocRef();
-    public void setResLocRef(String resLocRef);
-    public String getResLocName();
-    public void setResLocName(String resLocName);
-    public String getResLocTags();
-    public void setResLocTags(String resLocTags);
+    String getResLocRef();
+    void setResLocRef(String resLocRef);
+    String getResLocName();
+    void setResLocName(String resLocName);
+    String getResLocTags();
+    void setResLocTags(String resLocTags);
 }

@@ -49,7 +49,7 @@ public class SysDataTest extends DataDomainTest {
      * @copyright Copyright (c) 2014, Michael Schreiner
      * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
      */
-    public class SysDataTestObj extends InfoNode implements TestObj{
+    public class SysDataTestObj extends InfoNode implements TestObj {
         @Override
         public String toString() {
             StringBuffer resBuffer = new StringBuffer();
@@ -58,8 +58,7 @@ public class SysDataTest extends DataDomainTest {
                      .append(this.getSysCreateDate()).append("|")
                      .append(this.getSysCurChecksum()).append("|")
                      .append(this.getSysChangeDate()).append("|")
-                     .append(this.getSysChangeCount()).append("|")
-                     ;
+                     .append(this.getSysChangeCount()).append("|");
             return resBuffer.toString();
             
         }
@@ -93,10 +92,9 @@ public class SysDataTest extends DataDomainTest {
      * <h4>FeatureKeywords:</h4>
      *     Test Config Initialisation
      * @return - a new dataobj for the test
-     * @throws Exception
-     */
+     * @throws Exception - possible Exception     */
     protected SysDataTestObj getNewSysDataTestObj() throws Exception  {
-        return (SysDataTestObj)setupNewTestObj();
+        return (SysDataTestObj) setupNewTestObj();
     }
 
     @Override

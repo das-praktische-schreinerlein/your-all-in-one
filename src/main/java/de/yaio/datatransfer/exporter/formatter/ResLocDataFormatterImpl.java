@@ -63,28 +63,29 @@ public class ResLocDataFormatterImpl extends FormatterImpl implements ResLocData
      *     Config
      * @param exporter - instance of the Exporter which will use me
      */
-    public static void configureDataDomainFormatter(Exporter exporter) {
+    public static void configureDataDomainFormatter(final Exporter exporter) {
         Formatter formatter = new ResLocDataFormatterImpl();
         exporter.addDataDomainFormatter(formatter);
     }
 
     @Override
-    public void format(DataDomain node, StringBuffer nodeOutput, OutputOptions options) throws Exception {
+    public void format(final DataDomain node, final StringBuffer nodeOutput, final OutputOptions options) throws Exception {
         // Check if node is compatibel
         if (node != null) {
-            if (! ResLocData.class.isInstance(node)) {
+            if (!ResLocData.class.isInstance(node)) {
                 throw new IllegalArgumentException();
             }
         }
-        formatResLocData((ResLocData)node, nodeOutput, options);
+        formatResLocData((ResLocData) node, nodeOutput, options);
     }
 
     @Override
-    public void formatResLocData(ResLocData node, StringBuffer nodeOutput, OutputOptions oOptions) throws Exception {
+    public void formatResLocData(final ResLocData node, final StringBuffer nodeOutput, final OutputOptions oOptions) throws Exception {
         // exit if Flg not set
-        if (! oOptions.isFlgShowResLoc()) {
-            if (LOGGER.isDebugEnabled())
+        if (!oOptions.isFlgShowResLoc()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("SKIP: isFlgShowResLoc not set for node:" + node.getNameForLogger());
+            }
             return;
         }
 
@@ -100,12 +101,14 @@ public class ResLocDataFormatterImpl extends FormatterImpl implements ResLocData
                 || (resLocName != null && resLocName.length() > 0)
                 || (resLocTags != null && resLocTags.length() > 0)
                 ) {
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Do: ResLocDataFormatter for Node:" + node.getNameForLogger());
+            }
 
             // Abstand
-            if (nodeOutput.length() > 0)
+            if (nodeOutput.length() > 0) {
                 nodeOutput.append(" ");
+            }
 
             // Einrueckung
             if (oOptions.isFlgShowBrackets()) {

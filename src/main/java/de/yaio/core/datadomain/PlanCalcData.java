@@ -31,12 +31,12 @@ import java.util.Date;
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public interface PlanCalcData extends DataDomain {
-    public static final int CONST_ORDER = 65;
+    int CONST_ORDER = 65;
 
-    public Date getPlanCalcStart();
-    public void setPlanCalcStart(Date planStart);
-    public Date getPlanCalcEnde();
-    public void setPlanCalcEnde(Date planEnde);
-    public String getPlanCalcCheckSum();
-    public void setPlanCalcCheckSum(String planCalcCheckSum);
+    Date getPlanCalcStart();
+    void setPlanCalcStart(Date planStart);
+    Date getPlanCalcEnde();
+    void setPlanCalcEnde(Date planEnde);
+    String getPlanCalcCheckSum();
+    void setPlanCalcCheckSum(String planCalcCheckSum);
 }

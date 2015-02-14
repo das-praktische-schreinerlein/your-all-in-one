@@ -59,29 +59,25 @@ import de.yaio.webapp.controller.ExportController;
  */
 public class Configurator {
 
-    private final static Logger LOGGER = Logger.getLogger(Configurator.class);
-    
-    /** property: file location of the spring-application-config **/
-    public static String CONST_PROPNAME_APPLICATIONCONFIG_PATH = 
-                    "config.spring.applicationconfig.path";
-    protected static String CONST_DEFAULT_APPLICATIONCONFIG_PATH = 
-                    "/META-INF/spring/applicationContext.xml";
-    
     /** property: file location exportcontroller.replacer.config **/
-    public static String CONST_PROPNAME_EXPORTCONTROLLER_REPLACER = 
+    public static final String CONST_PROPNAME_EXPORTCONTROLLER_REPLACER = 
                     "yaio.exportcontroller.replacerdef.location";
     /** property:  exportcontroller.replacer documentation pattern**/
-    public static String CONST_PROPNAME_EXPORTCONTROLLER_REPLACER_DOCUMENTATION_SRC = 
+    public static final String CONST_PROPNAME_EXPORTCONTROLLER_REPLACER_DOCUMENTATION_SRC = 
                     "replacer.documentation.pattern";
     /** property:  exportcontroller.replacer documentation target**/
-    public static String CONST_PROPNAME_EXPORTCONTROLLER_REPLACER_DOCUMENTATION_TARGET = 
+    public static final String CONST_PROPNAME_EXPORTCONTROLLER_REPLACER_DOCUMENTATION_TARGET = 
                     "replacer.documentation.target";
 
-    
-    protected static Configurator instance = new Configurator();
+    /** property: file location of the spring-application-config **/
+    public static final String CONST_PROPNAME_APPLICATIONCONFIG_PATH = 
+                    "config.spring.applicationconfig.path";
+    protected static final String CONST_DEFAULT_APPLICATIONCONFIG_PATH = 
+                    "/META-INF/spring/applicationContext.xml";
 
-    
-    
+    private static final Logger LOGGER = Logger.getLogger(Configurator.class);
+    protected static final Configurator instance = new Configurator();
+
     protected ApplicationContext applicationContext;
     protected CommandLine commandLine;
     protected String[] cmdLineArgs;
@@ -120,8 +116,9 @@ public class Configurator {
          */
         public CommandlineOptions() {
             super();
-            if (LOGGER.isDebugEnabled())
-                LOGGER.debug("new FixedOptions"); 
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("new FixedOptions");
+            }
         }
         
         /** a protected (not private!!!) map of the options with the long key */
@@ -138,15 +135,17 @@ public class Configurator {
         public Collection<Option> getOptions() {
             // get the hacked Options
             Collection<Option> myCollection = new ArrayList<Option>(super.getOptions());
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("getOptions: "
-                                + "orig " + myCollection.size() + ": " + myCollection); 
+                                + "orig " + myCollection.size() + ": " + myCollection);
+            } 
             
             // add my LongOptions
             myCollection.addAll(mylongOpts.values());
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("getOptions: "
-                                + "new " + myCollection.size() + ": " + myCollection); 
+                                + "new " + myCollection.size() + ": " + myCollection);
+            } 
             
             return Collections.unmodifiableCollection(myCollection);
         }
@@ -159,19 +158,21 @@ public class Configurator {
          * @return the resulting Options instance
          */
         @Override
-        public Options addOption(Option opt) {
+        public Options addOption(final Option opt) {
             super.addOption(opt);
             
             // add to my longopts
             if (opt.getOpt() == null || opt.getOpt() == "" && opt.hasLongOpt()) {
-                if (LOGGER.isDebugEnabled())
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("addOption: "
-                                    + "toMyLongOption " + mylongOpts.size() + ": " + opt); 
+                                    + "toMyLongOption " + mylongOpts.size() + ": " + opt);
+                } 
                 mylongOpts.put(opt.getLongOpt(), opt);
             } else {
-                if (LOGGER.isDebugEnabled())
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("addOption: "
-                                    + "only to shortOption because of " + opt.getOpt() + " : " + opt); 
+                                    + "only to shortOption because of " + opt.getOpt() + " : " + opt);
+                } 
             }
             return this;
         }
@@ -305,7 +306,7 @@ public class Configurator {
         // add all properties to system
         for (String propName : props.stringPropertyNames()) {
             System.setProperty(propName, props.getProperty(propName));
-                LOGGER.info("set System.prop:" + propName +"=" + props.getProperty(propName));
+                LOGGER.info("set System.prop:" + propName + "=" + props.getProperty(propName));
         }
         
         // load PostProcessorReplacements
@@ -316,18 +317,20 @@ public class Configurator {
             
             // load defined
             int count = replacerConfig.size();
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.info("check PostProcessorReplacements_documentation found:" 
                     + count + " in file:" + replacerConfigPath + " props:" + replacerConfig);
+            }
             for (int zaehler = 0; zaehler < count; zaehler++) {
-                String keyName = CONST_PROPNAME_EXPORTCONTROLLER_REPLACER_DOCUMENTATION_SRC + "." + (zaehler+1);
+                String keyName = CONST_PROPNAME_EXPORTCONTROLLER_REPLACER_DOCUMENTATION_SRC + "." + (zaehler + 1);
                 String pattern = replacerConfig.getProperty(keyName);
-                String valueName = CONST_PROPNAME_EXPORTCONTROLLER_REPLACER_DOCUMENTATION_TARGET + "." + (zaehler+1);
+                String valueName = CONST_PROPNAME_EXPORTCONTROLLER_REPLACER_DOCUMENTATION_TARGET + "." + (zaehler + 1);
                 String target = replacerConfig.getProperty(valueName);
-                if (LOGGER.isDebugEnabled())
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.info("check PostProcessorReplacements_documentation:" 
                         + zaehler + " " + keyName + "=" + valueName 
-                        + " / " +pattern + "=" + target);
+                        + " / " + pattern + "=" + target);
+                }
                 if (pattern != null) {
                     ExportController.PostProcessorReplacements_documentation.put(
                                     pattern, (target != null ? target : ""));
@@ -397,7 +400,7 @@ public class Configurator {
      *     CLI-Handling
      * @param cmdLineArgs - current CMD-Args
      */
-    public void setCmdLineArgs(String[] cmdLineArgs) {
+    public void setCmdLineArgs(final String[] cmdLineArgs) {
         if (this.cmdLineArgs != null) {
             throw new IllegalStateException("initCommandLine: "
                             + "cant set commandLine cmdLineArgs, "
@@ -469,9 +472,9 @@ public class Configurator {
      *     aktualisiert availiableCmdLineOptions
      * @param availiableCmdLineOptions Options
      */
-    public void addAvailiableBaseCmdLineOptions(Options availiableCmdLineOptions) {
+    public void addAvailiableBaseCmdLineOptions(final Options availiableCmdLineOptions) {
         // Config-File
-        Option configOption = new Option("", "config", true,
+        Option configOption = new Option(null, "config", true,
                 "comma separated list of JobConfig property files");
         configOption.setRequired(true);
         availiableCmdLineOptions.addOption(configOption);
@@ -482,7 +485,7 @@ public class Configurator {
         availiableCmdLineOptions.addOption(helpOption);
 
         // debug-Option
-        Option debugOption = new Option("", "debug", false, "debug");
+        Option debugOption = new Option(null, "debug", false, "debug");
         debugOption.setRequired(false);
         availiableCmdLineOptions.addOption(debugOption);
     }
@@ -513,9 +516,9 @@ public class Configurator {
      * <h1>Nebenwirkungen:</h1>
      *     Rueckgabe als Options
      * @param newAvailiableCmdLineOptions - cmd-options to add to availiableCmdLineOptions 
-     * @throws Throwable - parseExceptions possible
+     * @throws Exception - parseExceptions possible
      */
-    public void addAvailiableCmdLineOptions(Options newAvailiableCmdLineOptions) throws Throwable {
+    public void addAvailiableCmdLineOptions(final Options newAvailiableCmdLineOptions) throws Exception {
         if (commandLine != null) {
             throw new IllegalStateException("addAvailiableCmdLineOptions: "
                             + "cant add availiableCmdLineOptions "
@@ -535,14 +538,16 @@ public class Configurator {
                                 + " details:" + newAvailiableCmdLineOptions);
             }
             for (Object newOption : newAvailiableCmdLineOptions.getOptions()) {
-                if (LOGGER.isDebugEnabled())
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("addAvailiableCmdLineOptions: "
-                                    + "add commandLineOption: " + (Option)newOption);
-                availiableCmdLineOptions.addOption((Option)newOption);
+                                    + "add commandLineOption: " + (Option) newOption);
+                }
+                availiableCmdLineOptions.addOption((Option) newOption);
             }
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("done addAvailiableCmdLineOptions: "
                                 + "with commandLineOptions:" + newAvailiableCmdLineOptions);
+            }
         }
         
     }
@@ -599,7 +604,7 @@ public class Configurator {
      * @return the properties read from propertyfile
      * @throws Exception - parse/io-Exceptions possible
      */
-    public static Properties readProperties(String filePath) throws Exception {
+    public static Properties readProperties(final String filePath) throws Exception {
         Properties prop = new Properties();
         
         // first try it from fileystem
@@ -635,8 +640,8 @@ public class Configurator {
      * @return CommandLine
      * @throws ParseException - pase-Exceptions possible
      */
-    public static CommandLine createCommandLineFromCmdArgs(String[] cmdArgs,
-            Options availiableCmdLineOptions) throws ParseException {
+    public static CommandLine createCommandLineFromCmdArgs(final String[] cmdArgs,
+            final Options availiableCmdLineOptions) throws ParseException {
         CommandLineParser parser = new PosixParser();
         return parser.parse(availiableCmdLineOptions, cmdArgs);
     }

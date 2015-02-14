@@ -5,7 +5,9 @@ set BASEPATH=%1%
 set FLGWP=%2%
 
 rem set appconfig
-set STARTURL=http://localhost:999/yaio-explorerapp/yaio-explorerapp.html#/
+set YAIOINSTANCE=localhost:8083
+set YAIOAPPURLCONFIG=-config dummy -yaioinstance %YAIOINSTANCE% -username admin -password secret
+set STARTURL=http://%YAIOINSTANCE%/yaio-explorerapp/yaio-explorerapp.html#/
 
 rem Gen Wiki-Only
 set PARSEONLY=
@@ -24,11 +26,7 @@ set YAIOCONFIGPATH=%BASEPATH%\..\config\
 set YAIOSCRIPTPATH=%BASEPATH%\..\sbin\
 set YAIORESPATH=%BASEPATH%\..\ressources\
 set YAIOVARPATH=%BASEPATH%\..\var\
-rem old set YAIOAPP=%BASEPATH%..\target\yaio-0.1.0.BUILD-SNAPSHOT-jar-with-dependencies.jar
-rem fast set YAIOAPP=%BASEPATH%..\target\classes\;%BASEPATH%..\target\yaio-0.1.0.BUILD-SNAPSHOT-shaded.jar
-rem old prod set YAIOAPP=%BASEPATH%..\target\yaio-0.1.0.BUILD-SNAPSHOT-shaded.jar
-rem new prod
-set YAIOAPP=%BASEPATH%..\target\yaio-0.1.0.BUILD-SNAPSHOT-shaded.jar
+set YAIOAPP=%BASEPATH%..\target\yaio.jar
 set CP="%YAIOAPP%;"
 set CFGFILE=%BASEPATH%..\config\application.properties
 set CFG=--config %CFGFILE% 
@@ -49,6 +47,10 @@ set PROG_ICalN=de.yaio.extension.datatransfer.ical.JobNodes2ICal
 set PROG_CSVN=de.yaio.extension.datatransfer.csv.JobNodes2CSV
 set PROG_JSONN=de.yaio.extension.datatransfer.json.JobNodes2JSON
 set PROG_JPAN=de.yaio.extension.datatransfer.jpa.JobNodes2JPA
+set PROG_CALLYAIORESET=de.yaio.jobs.CallYaioReset
+set PROG_CALLYAIORECALC=de.yaio.jobs.CallYaioRecalc
+set PROG_CALLYAIOEXPORT=de.yaio.jobs.CallYaioExport
+set PROG_CALLYAIOIMPORT=de.yaio.jobs.CallYaioImport
 set PROG_APP=de.yaio.app.Application
 set PROG_RECALC=de.yaio.jobs.JobRecalcNodes
 set PROG_DIFF=
@@ -56,7 +58,7 @@ set PROG_WINMERGE="C:\ProgrammePortable\PortableApps\PortableApps\WinMergePortab
 
 set FILE_DELIM=-
 
-echo %CP%
+rem echo %CP%
 
 rem set Config
 set NEWID_OPTIONS=-pathiddb %YAIOVARPATH%\\nodeids.properties

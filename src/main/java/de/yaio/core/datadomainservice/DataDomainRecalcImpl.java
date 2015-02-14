@@ -34,7 +34,7 @@ package de.yaio.core.datadomainservice;
 public abstract class DataDomainRecalcImpl implements DataDomainRecalc {
 
     @Override
-    public int compareTo(DataDomainRecalc o) {
+    public int compareTo(final DataDomainRecalc o) {
         Integer myOrder = this.getRecalcTargetOrder();
         Integer oOrder = o.getRecalcTargetOrder();
         return myOrder.compareTo(oOrder);

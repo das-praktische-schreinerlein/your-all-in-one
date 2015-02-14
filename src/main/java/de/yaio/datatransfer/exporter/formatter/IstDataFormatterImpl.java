@@ -66,31 +66,32 @@ public class IstDataFormatterImpl extends FormatterImpl implements IstDataFormat
      *     Config
      * @param exporter - instance of the Exporter which will use me
      */
-    public static void configureDataDomainFormatter(Exporter exporter) {
+    public static void configureDataDomainFormatter(final Exporter exporter) {
         Formatter formatter = new IstDataFormatterImpl();
         exporter.addDataDomainFormatter(formatter);
     }
 
     @Override
-    public void format(DataDomain node, StringBuffer nodeOutput, 
-                       OutputOptions options) throws Exception {
+    public void format(final DataDomain node, final StringBuffer nodeOutput, 
+                       final OutputOptions options) throws Exception {
         // Check if node is compatibel
         if (node != null) {
-            if (! IstData.class.isInstance(node)) {
+            if (!IstData.class.isInstance(node)) {
                 throw new IllegalArgumentException();
             }
         }
-        formatIstData((IstData)node, nodeOutput, options);
+        formatIstData((IstData) node, nodeOutput, options);
     }
 
     @Override
-    public void formatIstData(IstData node, StringBuffer nodeOutput, 
-                              OutputOptions oOptions) throws Exception {
+    public void formatIstData(final IstData node, final StringBuffer nodeOutput, 
+                              final OutputOptions oOptions) throws Exception {
         // exit if Flg not set
-        if (! oOptions.isFlgShowIst()) {
-            if (LOGGER.isDebugEnabled())
+        if (!oOptions.isFlgShowIst()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("SKIP: isFlgShowIst not set for node:" 
                            + node.getNameForLogger());
+            }
             return;
         }
 
@@ -115,12 +116,14 @@ public class IstDataFormatterImpl extends FormatterImpl implements IstDataFormat
                 || start != null
                 || ende != null
                 || task != null) {
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Do: IstDataFormatter for Node:" + node.getNameForLogger());
+            }
 
             // Abstand
-            if (nodeOutput.length() > 0)
+            if (nodeOutput.length() > 0) {
                 nodeOutput.append(" ");
+            }
 
             // Einrueckung
             if (oOptions.getIntendFuncArea() > 0) {
@@ -138,6 +141,11 @@ public class IstDataFormatterImpl extends FormatterImpl implements IstDataFormat
             nodeOutput.append("Ist: ")
                 .append(labelIntend)
                 .append(this.intendLeft(intStand, (oOptions.isFlgDoIntend() ? 3 : 0)) + "%");
+            
+            // set aufwand=0 if null and if start or end is set
+            if (aufwand == null && (start != null || ende != null)) {
+                aufwand = 0.0; 
+            }
             if (aufwand != null) {
                 nodeOutput.append(" " + this.intendLeft(
                    this.formatNumber(aufwand, 0, 2), (oOptions.isFlgDoIntend() ? 2 : 0)) + "h");
@@ -155,7 +163,7 @@ public class IstDataFormatterImpl extends FormatterImpl implements IstDataFormat
                     nodeOutput.append("-          ");
                 }
             }
-            if (task != null && ! task.equals("") && ! task.equals(" ")) {
+            if (task != null && !task.equals("") && !task.equals(" ")) {
                 nodeOutput.append(" " + task);
             }
             if (oOptions.isFlgShowBrackets()) {

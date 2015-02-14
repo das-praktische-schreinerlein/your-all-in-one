@@ -47,7 +47,7 @@ public class JobNodes2ICal extends JobNodes2Wiki {
      *     Constructor
      * @param args the command line arguments
      */
-    public JobNodes2ICal(String[] args) {
+    public JobNodes2ICal(final String[] args) {
         super(args);
     }
 
@@ -69,7 +69,7 @@ public class JobNodes2ICal extends JobNodes2Wiki {
      *     CLI
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         JobNodes2ICal me = new JobNodes2ICal(args);
         me.startJobProcessing();
     }

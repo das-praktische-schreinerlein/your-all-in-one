@@ -180,7 +180,7 @@ Lexer.prototype.token = function(src, top, bq) {
         lang: cap[2],
         text: cap[3]
       });
-      console.log('marked found fences from 0-' + cap[0].length + "code:" + cap[3]);
+      //console.log('marked found fences from 0-' + cap[0].length + "code:" + cap[3]);
       continue;
     }
 
@@ -307,10 +307,10 @@ Lexer.prototype.token = function(src, top, bq) {
         var codeStart = item.indexOf('```');
         if (0 && codeStart >= 0) {
             // code found: 
-console.log("marked loop item " + codeStart +  " olditem: " + item);            
+//console.log("marked loop item " + codeStart +  " olditem: " + item);            
             src = item.substring(codeStart, item.length) + '\n' + src;
             item = item.substring(0, codeStart);
-console.log("marked loop item pos ```" + codeStart +  " newitem: " + item);            
+//console.log("marked loop item pos ```" + codeStart +  " newitem: " + item);            
 //console.log("marked loop  ```" + codeStart +  " newsrc: " + src);            
             // exit list after this item
             flgExitLoop = true;
@@ -335,9 +335,9 @@ console.log("marked loop item pos ```" + codeStart +  " newitem: " + item);
         if (this.options.smartLists && i !== l - 1) {
           b = block.bullet.exec(cap[i + 1])[0];
           if (bull !== b && !(bull.length > 1 && b.length > 1)) {
-            console.log("renew src old:" + src);
+            //console.log("renew src old:" + src);
             src = cap.slice(i + 1).join('\n') + src;
-            console.log("renew src new:" + src);
+            //console.log("renew src new:" + src);
             i = l - 1;
           }
         }

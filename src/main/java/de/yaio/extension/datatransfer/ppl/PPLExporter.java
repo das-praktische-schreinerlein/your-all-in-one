@@ -61,8 +61,8 @@ public class PPLExporter extends ExporterImpl {
     // service-functions to generate PPL from node
     ////////////////
     @Override
-    public String getMasterNodeResult(DataDomain masterNode,
-            OutputOptions oOptions) throws Exception {
+    public String getMasterNodeResult(final DataDomain masterNode,
+            final OutputOptions oOptions) throws Exception {
         // Parameter pruefen
         if (masterNode == null) {
             throw new IllegalArgumentException("Masternode must not be null: '" + masterNode + "'");
@@ -72,32 +72,35 @@ public class PPLExporter extends ExporterImpl {
     }
 
     @Override
-    public StringBuffer getNodeResult(DataDomain node,
-            String praefix, OutputOptions oOptions) throws Exception {
+    public StringBuffer getNodeResult(final DataDomain node,
+            final String pPraefix, final OutputOptions oOptions) throws Exception {
         // Parameter pruefen
         if (node == null) {
             throw new IllegalArgumentException("Node must not be null: '" + node + "'");
         }
+        String praefix = pPraefix;
 
         // Daten formatieren
         StringBuffer res = new StringBuffer();
         formatNodeDataDomains(node, res, oOptions);
 
-        if (LOGGER.isDebugEnabled())
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Praefix for node=" + node.getNameForLogger() 
                     + " praefix=" + praefix);
+        }
 
         // Praefix voranstellen
-        if (praefix.length() > 0 ) {
+        if (praefix.length() > 0) {
             res.insert(0, praefix + PPLService.DEFAULT_ENTRY_DELIMITER);
         }
 
         // Praefix neu berechnen
         praefix = res.toString();
 
-        if (LOGGER.isDebugEnabled())
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Praefix for Children of node=" + node.getNameForLogger()
                     + " praefix=" + praefix);
+        }
 
         // Childs iterieren
         res.append("\n");

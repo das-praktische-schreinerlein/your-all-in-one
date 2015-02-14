@@ -50,7 +50,7 @@ public interface Exporter {
      * <h4>FeatureKeywords:</h4>
      *     Config
      */
-    public void initDataDomainFormatter();
+    void initDataDomainFormatter();
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -63,7 +63,7 @@ public interface Exporter {
      *     Config
      * @param formatter - instance of the formatter
      */
-    public void addDataDomainFormatter(Formatter formatter);
+    void addDataDomainFormatter(Formatter formatter);
 
     ////////////////
     // service-functions for node-output
@@ -88,10 +88,10 @@ public interface Exporter {
      *     Layout
      * @param node - node to be formatted
      * @param nodeOutput -StringBuffer to append output of the formatter
-     * @param options - options for output (formatter)formatter
+     * @param options - options for output (formatter) formatter
      * @throws Exception - parser/format-Exceptions possible
      */
-    public void formatNodeDataDomains(DataDomain node, StringBuffer nodeOutput, 
+    void formatNodeDataDomains(DataDomain node, StringBuffer nodeOutput, 
             OutputOptions options) throws Exception;
 
     /**
@@ -113,10 +113,10 @@ public interface Exporter {
      * @param node - node to be formatted
      * @param formatter - formatter to be run
      * @param nodeOutput -StringBuffer to append output of the formatter
-     * @param options - options for output (formatter)formatter
+     * @param options - options for output (formatter) formatter
      * @throws Exception - parser/format-Exceptions possible
      */
-    public void formatNodeDataDomain(DataDomain node, Formatter formatter, 
+    void formatNodeDataDomain(DataDomain node, Formatter formatter, 
             StringBuffer nodeOutput, OutputOptions options) throws Exception;
 
 
@@ -140,7 +140,7 @@ public interface Exporter {
      * @param oOptions - options for output (formatter)
      * @throws Exception - parser/format/io-Exceptions possible
      */
-    public void prepareNodeForExport(DataDomain node, OutputOptions oOptions)
+    void prepareNodeForExport(DataDomain node, OutputOptions oOptions)
             throws Exception;
 
     /**
@@ -162,7 +162,7 @@ public interface Exporter {
      * @return - formatted output of node-hierarchy and DataDomains
      * @throws Exception - parser/format/io-Exceptions possible
      */
-    public String getMasterNodeResult(DataDomain masterNode, OutputOptions oOptions)
+    String getMasterNodeResult(DataDomain masterNode, OutputOptions oOptions)
             throws Exception;
 
     
@@ -183,7 +183,7 @@ public interface Exporter {
      * @return - new MasterNode with filtered childnodes
      * @throws Exception - parser/format-Exceptions possible
      */
-    public DataDomain filterNodes(DataDomain masterNode, OutputOptions oOptions)
+    DataDomain filterNodes(DataDomain masterNode, OutputOptions oOptions)
             throws Exception;
 
     /**
@@ -204,7 +204,7 @@ public interface Exporter {
      * @return - new MasterNode with filtered childnodes
      * @throws Exception - parser/format-Exceptions possible
      */
-    public DataDomain filterNodeByState(DataDomain node, OutputOptions oOptions,
+    DataDomain filterNodeByState(DataDomain node, OutputOptions oOptions,
             Map<String, Object> mpStates) throws Exception;
 
     /**

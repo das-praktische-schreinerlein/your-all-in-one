@@ -51,5 +51,5 @@ public interface BaseDataParser extends Parser {
      * @return count elements found
      * @throws Exception - parser-Exceptions possible
      */
-    public int parseBaseDataFromName(DataDomain node, ImportOptions options) throws Exception;
+    int parseBaseDataFromName(DataDomain node, ImportOptions options) throws Exception;
 }

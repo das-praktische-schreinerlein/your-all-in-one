@@ -37,31 +37,31 @@ import de.yaio.core.nodeservice.NodeService;
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public interface DataDomain {
-    public static final int CONST_ORDER = 1;
+    int CONST_ORDER = 1;
     
     // because of Spring roo with Node
-    public Set<BaseNode> getChildNodes();
-    public BaseNode getParentNode();
-    public void setParentNode(BaseNode parentNode);
-    public void setParentNode(DataDomain parentNode);
+    Set<BaseNode> getChildNodes();
+    BaseNode getParentNode();
+    void setParentNode(BaseNode parentNode);
+    void setParentNode(DataDomain parentNode);
 
     // hirarchy-functions
-    public void setParentNodeOnly(DataDomain parentNode);
-    public Map<String, DataDomain> getChildNodesByNameMap();
-    public String getIdForChildByNameMap();
-    public void addChildNode(DataDomain childNode);
-    public boolean hasChildNode(DataDomain childNode);
-    public Integer getSortPos();
-    public void setSortPos(Integer sortPos);
+    void setParentNodeOnly(DataDomain parentNode);
+    Map<String, DataDomain> getChildNodesByNameMap();
+    String getIdForChildByNameMap();
+    void addChildNode(DataDomain childNode);
+    boolean hasChildNode(DataDomain childNode);
+    Integer getSortPos();
+    void setSortPos(Integer sortPos);
 
     // basefields
-    public Integer getEbene();
-    public void setEbene(Integer ebene);
-    public String getName();
-    public void setName(String name);
+    Integer getEbene();
+    void setEbene(Integer ebene);
+    String getName();
+    void setName(String name);
 
     // servies
-    public NodeService getNodeService();
+    NodeService getNodeService();
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -76,7 +76,7 @@ public interface DataDomain {
      *     Validation
      * @return - set of violations
      */
-     public Set<ConstraintViolation<BaseNode>> validateMe();
+     Set<ConstraintViolation<BaseNode>> validateMe();
 
      /**
      * <h4>FeatureDomain:</h4>
@@ -91,18 +91,18 @@ public interface DataDomain {
      * <h4>FeatureKeywords:</h4>
      *     BusinessLogic
      * @param recursionDirection - direction for recursivly recalc CONST_RECURSE_DIRECTION_* 
-     * @throws Exception
+     * @throws Exception - possible Exception
      */
-    public void recalcData(int recursionDirection) throws Exception;
+    void recalcData(int recursionDirection) throws Exception;
 
-    public String getNameForLogger();
+    String getNameForLogger();
 
     /**
      * @return the {@link BaseNode#flgForceUpdate}
      */
-    public boolean isFlgForceUpdate();
+    boolean isFlgForceUpdate();
     /**
      * @param flgForceUpdate the {@link BaseNode#flgForceUpdate} to set
      */
-    public void setFlgForceUpdate(boolean flgForceUpdate);
+    void setFlgForceUpdate(boolean flgForceUpdate);
 }

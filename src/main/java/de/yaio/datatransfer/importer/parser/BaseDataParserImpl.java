@@ -45,12 +45,12 @@ public class BaseDataParserImpl  extends ParserImpl implements BaseDataParser {
     }
 
     @Override
-    public int parseFromName(DataDomain node, ImportOptions options) throws Exception {
+    public int parseFromName(final DataDomain node, final ImportOptions options) throws Exception {
         return parseBaseDataFromName(node, options);
     }
 
     @Override
-    public int parseBaseDataFromName(DataDomain node, ImportOptions options) throws Exception {
+    public int parseBaseDataFromName(final DataDomain node, final ImportOptions options) throws Exception {
 
         return 0;
     }
@@ -65,7 +65,7 @@ public class BaseDataParserImpl  extends ParserImpl implements BaseDataParser {
      *     Config
      * @param nodeFactory - instance of the nodeFactory which will use the parser 
      */
-    public static void configureDataDomainParser(NodeFactory nodeFactory) {
+    public static void configureDataDomainParser(final NodeFactory nodeFactory) {
         nodeFactory.addDataDomainParser(new BaseDataParserImpl());
     }
 

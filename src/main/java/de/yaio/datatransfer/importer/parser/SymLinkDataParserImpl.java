@@ -50,7 +50,7 @@ public class SymLinkDataParserImpl  extends ParserImpl implements SymLinkDataPar
             Logger.getLogger(SymLinkDataParserImpl.class);
 
     // Patterns
-    protected static String CONST_PATTERN_SEG_STRING1 = "[^,:\\[\\]]";
+    protected static final String CONST_PATTERN_SEG_STRING1 = "[^,:\\[\\]]";
     protected static final String CONST_PATTERN_SEG_SYMREF = "[A-Za-z]+[0-9]+";
     protected static final String CONST_PATTERN_SEG_SYMLINK =
         "SymLink: (" + CONST_PATTERN_SEG_SYMREF + ")?," 
@@ -79,30 +79,31 @@ public class SymLinkDataParserImpl  extends ParserImpl implements SymLinkDataPar
      *     Config
      * @param nodeFactory - instance of the nodeFactory which will use the parser 
      */
-    public static void configureDataDomainParser(NodeFactory nodeFactory) {
+    public static void configureDataDomainParser(final NodeFactory nodeFactory) {
         nodeFactory.addDataDomainParser(new SymLinkDataParserImpl());
     }
 
     @Override
-    public int parseFromName(DataDomain node, ImportOptions options) throws Exception {
+    public int parseFromName(final DataDomain node, final ImportOptions options) throws Exception {
         // Check if node is compatibel
         if (node != null) {
-            if (! SymLinkData.class.isInstance(node)) {
+            if (!SymLinkData.class.isInstance(node)) {
                 throw new IllegalArgumentException();
             }
         }
-        return parseSymLinkDataFromName((SymLinkData)node, options);
+        return parseSymLinkDataFromName((SymLinkData) node, options);
     }
 
     @Override
-    public int parseSymLinkDataFromName(SymLinkData node, ImportOptions options) throws Exception {
+    public int parseSymLinkDataFromName(final SymLinkData node, final ImportOptions options) throws Exception {
         int found = 0;
 
         // Check for valid data
         if (node.getName() == null) {
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Pattern SymLink dosnt match because node has no name for node:" 
                         + node.getNameForLogger());
+            }
             return found;
         }
 
@@ -116,25 +117,28 @@ public class SymLinkDataParserImpl  extends ParserImpl implements SymLinkDataPar
 
             // Reference
             matcherindex = 2;
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Pattern: " + CONST_PATTERN_SEG_SYMREF + " " 
                     + matcherindex + ":" + matcher.group(matcherindex));
+            }
             if (matcher.group(matcherindex) != null) {
                 node.setSymLinkRef(matcher.group(matcherindex));
             }
             // Label
             matcherindex = 3;
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Pattern: " + CONST_PATTERN_SEG_STRING1 + " " 
                     + matcherindex + ":" + matcher.group(matcherindex));
+            }
             if (matcher.group(matcherindex) != null) {
                 node.setSymLinkName(matcher.group(matcherindex));
             }
             // Tags
             matcherindex = 4;
-            if (LOGGER.isDebugEnabled())
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Pattern: " + CONST_PATTERN_SEG_TAGS + " " 
                     + matcherindex + ":" + matcher.group(matcherindex));
+            }
             if (matcher.group(matcherindex) != null) {
                 node.setSymLinkTags(matcher.group(matcherindex));
             }

@@ -47,7 +47,7 @@ public class JobNodes2MindMap extends JobNodes2Wiki {
      *     Constructor
      * @param args the command line arguments
      */
-    public JobNodes2MindMap(String[] args) {
+    public JobNodes2MindMap(final String[] args) {
         super(args);
     }
 
@@ -69,7 +69,7 @@ public class JobNodes2MindMap extends JobNodes2Wiki {
      *     CLI
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         JobNodes2MindMap me = new JobNodes2MindMap(args);
         me.startJobProcessing();
     }
