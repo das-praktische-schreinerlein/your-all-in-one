@@ -1203,3 +1203,25 @@ div.container-content-desc img:not([class]) {
 #details_login fieldset {
     width: 600px
 }
+
+/*****************************************
+ *****************************************
+ * language
+ *****************************************
+ *****************************************/
+.ue3MenueTop {
+    float: right;
+    margin: 0;
+    padding: 0;
+    width: 110px;
+}
+.button-lang {
+}
+.button-lang-active {
+    font-size: 9px;
+    font-weight: bold;
+}
+.button-lang-inactive {
+    font-size: 8px;
+    font-weight: lighter;
+}

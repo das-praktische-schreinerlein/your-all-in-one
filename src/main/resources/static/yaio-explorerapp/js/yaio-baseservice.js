@@ -56,7 +56,9 @@ function initLanguageSupport() {
     //if the user asks to change to that language. We pass the two-letter language
     //code and the path to the language pack js file
     window.lang.dynamic('de', 'lang/lang-tech-to-de.json');
+    window.lang.dynamic('en', 'lang/lang-tech-to-en.json');
     window.lang.loadPack('de');
+    window.lang.loadPack('en');
 
     // change to de
     window.lang.change('de');
