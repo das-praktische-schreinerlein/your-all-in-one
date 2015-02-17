@@ -5,6 +5,11 @@ echo off
 export BASEPATH=${1}
 export FLGWP=${2}
 
+# set appconfig
+export YAIOINSTANCE=yaio-playground.local
+export YAIOAPPURLCONFIG=-config dummy -yaioinstance ${YAIOINSTANCE} -username admin -password secret
+export STARTURL=http://${YAIOINSTANCE}/index.html
+
 # Gen Wiki-Only
 export PARSEONLY=
 # parse ppl from wiki an generate 
@@ -23,10 +28,10 @@ export YAIOSCRIPTPATH=${BASEPATH}/../sbin/
 export YAIORESPATH=${BASEPATH}/../ressources/
 export YAIOVARPATH=${BASEPATH}/../var/
 export YAIOAPP=${BASEPATH}../target/yaio.jar
-export CP="${YAIOAPP}"
+export CP="${YAIOAPP}:${BASEPATH}../target/"
 export CFGFILE=${BASEPATH}../config/application.properties
 export CFG="--config ${CFGFILE}" 
-export JAVAOPTIONS="-Xmx768m -Xms128m -Dspring.config.location=file:${CFGFILE} -Dlog4j.configuration=file:${BASEPATH}../config/log4j.properties"
+export JAVAOPTIONS="-Xmx768m -Xms128m -Djava.net.preferIPv4Stack=true -Djava.net.preferIPv4Addresses -Dspring.config.location=file:${CFGFILE} -Dlog4j.configuration=file:${BASEPATH}../config/log4j.properties"
 
 
 # set progs
@@ -40,6 +45,10 @@ export PROG_ICalN=de.yaio.extension.datatransfer.ical.JobNodes2ICal
 export PROG_CSVN=de.yaio.extension.datatransfer.csv.JobNodes2CSV
 export PROG_JSONN=de.yaio.extension.datatransfer.json.JobNodes2JSON
 export PROG_JPAN=de.yaio.extension.datatransfer.jpa.JobNodes2JPA
+export PROG_CALLYAIORESET=de.yaio.jobs.CallYaioReset
+export PROG_CALLYAIORECALC=de.yaio.jobs.CallYaioRecalc
+export PROG_CALLYAIOEXPORT=de.yaio.jobs.CallYaioExport
+export PROG_CALLYAIOIMPORT=de.yaio.jobs.CallYaioImport
 export PROG_APP=de.yaio.app.Application
 export PROG_RECALC=de.yaio.jobs.JobRecalcNodes
 export PROG_DIFF=

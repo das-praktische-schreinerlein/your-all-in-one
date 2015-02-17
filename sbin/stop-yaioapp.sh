@@ -1,13 +1,14 @@
+#!/bin/bash
 echo off
 # <h4>FeatureDomain:</h4>
 #     Collaboration
 # <h4>FeatureDescription:</h4>
-#     run the app with rest-services
+#     stop the app with rest-services
 # <h4>Syntax:</h4>
 #     PROG
 # <h4>Example:</h4>
 #     cd /cygdrive/D/public_projects/yaio/yaio
-#     sbin/start-yaioapp
+#     sbin/stop-yaioapp
 # 
 # @package de.yaio
 # @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
@@ -26,5 +27,10 @@ YAIOCONFIGPATH=${YAIOSCRIPTPATH}../config/
 
 # add --debug option to see the startprocess of spring-boot
 CMD="java ${JAVAOPTIONS} -cp ${CP} ${PROG_APP} ${CFG} ${NEWID_OPTIONS}"
-echo "start-yaioapp: ${CMD}"
-${CMD} &
+echo "stop-yaioapp: ${CMD}"
+
+
+pid=`ps aux | grep "${CMD}" | grep -v grep | awk '{print $2}'`
+echo "kill $pid"
+kill TERM $pid
+

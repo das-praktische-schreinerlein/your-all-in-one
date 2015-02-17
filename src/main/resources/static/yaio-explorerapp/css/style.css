@@ -21,7 +21,7 @@
  *****************************************
  *****************************************/
 body { 
-    background: white; 
+    background: linear-gradient(to right, #FCEBBF 0%, #FFFFFF 49%, #FCEBBF 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
     color: black; 
     font-family: Verdana, Arial, Helvetica, sans-serif; 
     line-height: 1.3em; 
@@ -368,6 +368,22 @@ ul.nodecommands {
 }
 
 
+
+
+/*****************************************
+ *****************************************
+ * preview
+ *****************************************
+ *****************************************/
+#preview-content {
+    width: 1000px;
+    height: 600px;
+    overflow: auto;
+}
+#preview-box {
+    width: 1050px;
+    height: 650px;
+}
 
 
 /*****************************************
@@ -879,6 +895,23 @@ td input[type=input] {
 
 /*****************************************
  *****************************************
+ * frontpage
+ *****************************************
+ *****************************************/
+#front-content-intro {
+    overflow-y:auto;
+    overflow-x: hidden;
+    clear: both;
+    float: left;
+}
+
+#front-content-intro pre code  {
+    white-space: pre;
+}
+
+
+/*****************************************
+ *****************************************
  * tooltips
  *****************************************
  *****************************************/
@@ -1224,4 +1257,53 @@ div.container-content-desc img:not([class]) {
 .button-lang-inactive {
     font-size: 8px;
     font-weight: lighter;
+}
+
+
+/*****************************************
+ *****************************************
+ * starter
+ *****************************************
+ *****************************************/
+.starter-box{
+    background-color: #8CACD3;
+    border: 2px solid #FFFFFF;
+    border-radius: 10px;
+    margin: auto;
+    margin-top: 150px;
+    padding: 5px;
+    text-align: left;
+    width: 600px;
+}
+.starter-ue {
+    color: #FCF1B5;
+    font-size: 25px;
+    padding-bottom: 20px;
+    padding-top: 15px;
+    text-align: center;
+    line-height: 1.5em;
+}    
+.starter-hint {
+    color: #FFFFFF;
+    font-size: 12px;
+    padding-bottom: 0;
+    text-align: left;
+    padding-left: 20px;
+    text-align: left;
+}
+.starter-msg {
+    color: #FFFFFF;
+    font-size: 16px;
+    padding-bottom: 0;
+    text-align: center;
+}
+.starter-msg2 {
+    color: #FFFFFF;
+    font-size: 18px;
+    padding-top: 10px;
+    font-weight: bold;
+    text-align: center;
+}
+.starter-nomore {
+   text-decoration: line-through;
 }
