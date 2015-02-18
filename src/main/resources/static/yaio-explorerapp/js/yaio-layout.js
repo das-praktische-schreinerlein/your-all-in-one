@@ -399,8 +399,31 @@ function togglePreWrap(element) {
                  
                  // higlight code-blocks
                  $("#container_content_desc_" + id + " code").each(function(i, block) {
-                     console.log("toggleNodeDescContainer highlight for #container_content_desc_" + id + " block: " + block.id);
-                     hljs.highlightBlock(block);
+                     if ($(block).hasClass("lang-mermaid") || $(block).hasClass("mermaid")) {
+                         // mermaid: no highlight
+                         console.log("toggleNodeDescContainer mermaid for #container_content_desc_" + id + " block: " + block.id);
+                         $(block).html(prepareTextForMermaid($(block).html()));
+                         mermaid.init();
+                     } else {
+                         // do highlight
+                         console.log("toggleNodeDescContainer highlight for #container_content_desc_" + id + " block: " + block.id);
+                         hljs.highlightBlock(block);
+                     }
+                 });
+
+                 // mermaid code-blocks
+                 $("#container_content_desc_" + id + " div").each(function(i, block) {
+                     if (   ($(block).hasClass("lang-mermaid") || $(block).hasClass("mermaid")) 
+                         && ! $(block).attr("data-processed")) {
+                         // mermaid: no highlight
+                         console.log("toggleNodeDescContainer mermaid for #container_content_desc_" + id + " block: " + block.id);
+                         $(block).html(prepareTextForMermaid($(block).html()));
+                         try {
+                             mermaid.init();
+                         } catch (ex) {
+                             showModalErrorMessage("Mermaid-processing failed:" + ex.source);
+                         }
+                     }
                  });
              }
          } else {
@@ -424,10 +447,34 @@ function togglePreWrap(element) {
              
              // higlight code-blocks
              $("#" + descBlock.id + " code").each(function(i, block) {
-                 console.log("toggleAllNodeDescContainer highlight descBlock: " + descBlock.id + " block: " + block.id);
-                 hljs.highlightBlock(block);
+                 if ($(block).hasClass("lang-mermaid") || $(block).hasClass("mermaid")) {
+                     // mermaid: no highlight
+                     console.log("toggleAllNodeDescContainer preparemermaid descBlock: " + descBlock.id + " block: " + block.id);
+                     $(block).html(prepareTextForMermaid($(block).html()));
+                 } else {
+                     // do highlight
+                     console.log("toggleAllNodeDescContainer highlight descBlock: " + descBlock.id + " block: " + block.id);
+                     hljs.highlightBlock(block);
+                 }
+             });
+
+             // mermaid code-blocks
+             $("#" + descBlock.id + " div").each(function(i, block) {
+                 if (   ($(block).hasClass("lang-mermaid") || $(block).hasClass("mermaid")) 
+                     && ! $(block).attr("data-processed")) {
+                     // mermaid: no highlight
+                     console.log("toggleAllNodeDescContainer mermaid descBlock: " + descBlock.id + " block: " + block.id);
+                     $(block).html(prepareTextForMermaid($(block).html()));
+                 }
              });
          });
+         
+         // mermaid all
+         try {
+             mermaid.init();
+         } catch (ex) {
+             showModalErrorMessage("Mermaid-processing failed:" + ex.source);
+         }
      } else {
          // hide all desc
          $("div.field_nodeDesc").slideUp(1000);

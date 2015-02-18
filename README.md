@@ -101,6 +101,7 @@ Take a look at the Wiki, Mindmaps, Excel, html, ICal...
 - https://github.com/coolbloke1324/jquery-lang-js
 - https://github.com/jquery/jquery
 - https://github.com/jquery/jquery-ui
+- https://github.com/knsv/mermaid
 - https://github.com/mar10/fancytree
 - https://github.com/spring-projects/spring-boot
 - https://github.com/spring-projects/spring-framework

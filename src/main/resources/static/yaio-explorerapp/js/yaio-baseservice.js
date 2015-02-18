@@ -301,9 +301,19 @@ function formatMarkdown(descText, flgHighlightNow) {
     // prepare descText
     descText = prepareTextForMarkdown(descText);
     
+    var renderer = new marked.Renderer();
+    renderer.code = function (code, language) {
+        if(code.match(/^sequenceDiagram/)||code.match(/^graph/)){
+            return '<div class="mermaid">'+code+'</div>';
+        }
+        else{
+            return '<pre><code class="lang-' + language + '">'+code+'</code></pre>';
+        }
+    };    
+    
     // Marked
     marked.setOptions({
-      renderer: new marked.Renderer(),
+      renderer: renderer,
       gfm: true,
       tables: true,
       breaks: false,
@@ -390,6 +400,28 @@ function prepareTextForMarkdown(descText) {
 }
 
 /**
+ * <h4>FeatureDomain:</h4>
+ *     GUI
+ * <h4>FeatureDescription:</h4>
+ *     prepare the text to format as mermaid
+ *     delete .
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>returnValue String - prepared text
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     Layout
+ * @param descText - the string to prepare
+ * @return - prpeared text to format with mermaid
+ */
+function prepareTextForMermaid(descText) {
+    // prepare descText
+    var newDescText = descText;
+    newDescText = newDescText.replace(/\n\.\n/g, "\n\n");
+    return newDescText;
+}
+    
+    /**
  * <h4>FeatureDomain:</h4>
  *     GUI
  * <h4>FeatureDescription:</h4>

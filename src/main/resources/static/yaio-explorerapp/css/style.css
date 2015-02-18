@@ -1019,6 +1019,15 @@ div.container-content-desc img:not([class]) {
     margin-left: auto;
     margin-right: auto;
 }
+div.container-content-desc svg:not([class]) {
+    max-width: 1000px;
+    width: auto;
+    max-height: 700px;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
 
 .pre-wrap {
     white-space: normal;
@@ -1220,6 +1229,12 @@ div.container-content-desc img:not([class]) {
     max-width: 600px;
     width: auto;
     height: auto;
+}
+#front-content-intro svg:not([class]) {
+    max-width: 600px;
+    width: auto;
+    height: auto;
+    height: 400px;
 }
 #front-content-intro .boxline-ue3 {
     color: #ff9933;
