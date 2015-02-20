@@ -17,11 +17,6 @@
         </div>
     </div>
 <script type="text/javascript">
-    // alle Bloecke toggeln
-    //jMATService.getPageLayoutService().doAllBlockToggler(false);
-    togglePrintLayout();
-</script>
-<script type="text/javascript">
     // alle OFFEN hervorheben
     var styles = {
         "color": "red",
@@ -40,6 +35,9 @@
         console.error("formatMermaidGlobal error:" + ex);
     }
     // toggleAll after mermaid!!!
+    // alle Bloecke toggeln
+    //jMATService.getPageLayoutService().doAllBlockToggler(false);
+    togglePrintLayout();
     delayedOptimize = window.setInterval(
             function() {
                 // nach 2 Sekunden ausfuehren und Intervall loeschen
