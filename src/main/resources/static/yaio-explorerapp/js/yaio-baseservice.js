@@ -303,11 +303,12 @@ function formatMarkdown(descText, flgHighlightNow) {
     
     var renderer = new marked.Renderer();
     renderer.code = function (code, language) {
+        code = htmlEscapeTextLazy(code);
         if(code.match(/^sequenceDiagram/)||code.match(/^graph/)){
-            return '<div class="mermaid">'+code+'</div>';
+            return '<div class="mermaid">'+ prepareTextForMermaid(code ) + '</div>';
         }
         else{
-            return '<pre><code class="lang-' + language + '">'+code+'</code></pre>';
+            return '<pre><code class="lang-' + language + '">' + code + '</code></pre>';
         }
     };    
     
@@ -397,6 +398,29 @@ function prepareTextForMarkdown(descText) {
     newDescText += noCode;
     
     return newDescText;
+}
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     GUI
+ * <h4>FeatureDescription:</h4>
+ *     calls the global mermaid-formatter
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>formats all divs with class=mermaid
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     Layout
+ */
+function formatMermaidGlobal() {
+    mermaid.parseError = function(err,hash){
+        showModalErrorMessage("Mermaid-processing failed:" + err);
+    };
+    try {
+        mermaid.init();
+    } catch (ex) {
+        console.error("formatMermaidGlobal error:" + ex);
+    }
 }
 
 /**

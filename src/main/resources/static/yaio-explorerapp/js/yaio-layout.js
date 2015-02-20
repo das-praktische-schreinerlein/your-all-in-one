@@ -393,6 +393,7 @@ function togglePreWrap(element) {
              // check if syntaxhighlighting to do
              if ($("#container_content_desc_" + id).hasClass('syntaxhighlighting-open')) {
                  console.log("toggleNodeDescContainer highlight for: #container_content_desc_" + id);
+                 var flgDoMermaid = false;
                  
                  // remove trigger-flag
                  $("#container_content_desc_" + id).removeClass('syntaxhighlighting-open');
@@ -402,8 +403,7 @@ function togglePreWrap(element) {
                      if ($(block).hasClass("lang-mermaid") || $(block).hasClass("mermaid")) {
                          // mermaid: no highlight
                          console.log("toggleNodeDescContainer mermaid for #container_content_desc_" + id + " block: " + block.id);
-                         $(block).html(prepareTextForMermaid($(block).html()));
-                         mermaid.init();
+                         flgDoMermaid = true;
                      } else {
                          // do highlight
                          console.log("toggleNodeDescContainer highlight for #container_content_desc_" + id + " block: " + block.id);
@@ -417,14 +417,14 @@ function togglePreWrap(element) {
                          && ! $(block).attr("data-processed")) {
                          // mermaid: no highlight
                          console.log("toggleNodeDescContainer mermaid for #container_content_desc_" + id + " block: " + block.id);
-                         $(block).html(prepareTextForMermaid($(block).html()));
-                         try {
-                             mermaid.init();
-                         } catch (ex) {
-                             showModalErrorMessage("Mermaid-processing failed:" + ex.source);
-                         }
+                         flgDoMermaid = true;
                      }
                  });
+                 
+                 // do Mermaid if found
+                 if (flgDoMermaid) {
+                     formatMermaidGlobal();
+                 }
              }
          } else {
              // desc is now hidden
@@ -440,6 +440,7 @@ function togglePreWrap(element) {
          $("div.fieldtype_descToggler > a").addClass('toggler_show').removeClass('toggler_hidden');
 
          // check if syntaxhighlighting to do
+         var flgDoMermaid = false;
          $("div.syntaxhighlighting-open").each(function (i, descBlock) {
              console.log("toggleAllNodeDescContainer highlight for descBlock: " + descBlock.id);
              // remove trigger-flag
@@ -450,7 +451,7 @@ function togglePreWrap(element) {
                  if ($(block).hasClass("lang-mermaid") || $(block).hasClass("mermaid")) {
                      // mermaid: no highlight
                      console.log("toggleAllNodeDescContainer preparemermaid descBlock: " + descBlock.id + " block: " + block.id);
-                     $(block).html(prepareTextForMermaid($(block).html()));
+                     flgDoMermaid = true;
                  } else {
                      // do highlight
                      console.log("toggleAllNodeDescContainer highlight descBlock: " + descBlock.id + " block: " + block.id);
@@ -464,16 +465,14 @@ function togglePreWrap(element) {
                      && ! $(block).attr("data-processed")) {
                      // mermaid: no highlight
                      console.log("toggleAllNodeDescContainer mermaid descBlock: " + descBlock.id + " block: " + block.id);
-                     $(block).html(prepareTextForMermaid($(block).html()));
+                     flgDoMermaid = true;
                  }
              });
          });
          
          // mermaid all
-         try {
-             mermaid.init();
-         } catch (ex) {
-             showModalErrorMessage("Mermaid-processing failed:" + ex.source);
+         if (flgDoMermaid) {
+             formatMermaidGlobal();
          }
      } else {
          // hide all desc
@@ -687,6 +686,9 @@ function togglePreWrap(element) {
            }
          }
      });    
+
+     // do mermaid when preview visible
+     formatMermaidGlobal();
  }
  
  function showMarkdownHelp() {
@@ -804,8 +806,8 @@ function togglePreWrap(element) {
          buttons: {
            Ok: function() {
              $( this ).dialog( "close" );
-             console.log("openWysiwhgForTextareaId: clearMyInterval : " + intervallHandler + " for " + myParentId);
-             clearInterval(intervallHandler)
+             console.log("openWysiwhgForTextareaId: clearMyInterval : " + intervalHandler + " for " + myParentId);
+             clearInterval(intervalHandler);
            },
            "Vorlesen": function () {
                openSpeechSynthWindow(document.getElementById('wysiwhg-preview'));
@@ -821,6 +823,7 @@ function togglePreWrap(element) {
 
      // set preview-content
      $( "#wysiwhg-preview" ).html(descHtmlMarked);
+     formatMermaidGlobal();
  } 
 
  

@@ -16425,17 +16425,24 @@ var init = function () {
     var cnt = 0;
     for (i = 0; i < arr.length; i++) {
         var element = arr[i];
+        var id = 'mermaidChart' + i;
 
+        // check if visible
+        if (! (element.offsetWidth > 0 && element.offsetHeight > 0)) {
+            console.log("init skip invisible mermaid i:" + i + "id:" + id);
+            continue;
+        }
+        
         // Check if previously processed
         if(!element.getAttribute("data-processed")) {
             element.setAttribute("data-processed", true);
         } else {
+            console.log("init skip invisible mermaid i:" + i + "id:" + id);
             continue;
         }
 
-        var id;
-
-        id = 'mermaidChart' + cnt;
+        // do it
+        console.log("init mermaid i:" + i + "id:" + id);
         cnt++;
 
         var txt = element.innerHTML;
