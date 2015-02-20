@@ -1008,7 +1008,10 @@ public class HtmlExporter extends WikiExporter {
         newDescText = markdownProcessor.process(newDescText);
         newDescText = newDescText.replaceAll("…", "...");
         newDescText = newDescText.replaceAll("<code>", "<code class=\"txt\">");
-        
+        newDescText = newDescText.replaceAll("<pre><code class=\"mermaid\">(.*?)<\\/code><\\/pre>", "<div class=\"mermaid\">$1</div>");
+        newDescText = newDescText.replaceAll("<code class=\"mermaid\">(.*?)<\\/code>", "<div class=\"mermaid\">$1</div>");
+        newDescText = newDescText.replaceAll("&amp;gt;", "&gt;");
+                
         return newDescText;
     }
 

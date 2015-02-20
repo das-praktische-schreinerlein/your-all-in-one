@@ -16448,6 +16448,8 @@ var init = function () {
         var txt = element.innerHTML;
         txt = txt.replace(/>/g,'&gt;');
         txt = txt.replace(/</g,'&lt;');
+        txt = txt.replace(/\n\.\n/g,'\n');
+        txt = txt.replace(/\n\n/g,'\n');
         txt = he.decode(txt).trim();
 
         element.innerHTML = '<svg id="' + id + '" width="100%" xmlns="http://www.w3.org/2000/svg">' +

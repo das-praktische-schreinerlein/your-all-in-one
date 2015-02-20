@@ -75,7 +75,7 @@ div.container-content-desc svg:not([class]) {
     width: 100%;
     height: auto;
 }
-div.mermaid {
+div.mermaid, code.mermaid {
     max-width: 500px;
     height: auto;
     margin-left: auto;
