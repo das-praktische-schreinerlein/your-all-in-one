@@ -79,6 +79,7 @@ public class SysDataServiceImpl extends DataDomainRecalcImpl implements SysDataS
         
         // Roll
         this.initSysData((SysData) node);
+        this.updateChildrenCount((SysData) node);
     }
     
     @Override
@@ -150,5 +151,10 @@ public class SysDataServiceImpl extends DataDomainRecalcImpl implements SysDataS
 
         // Checksumme
         return DataUtils.generateCheckSum(data);
+    }
+
+    @Override
+    public void updateChildrenCount(final SysData node) throws Exception {
+        node.setChildNodeCount(node.getChildNodesByNameMap().size());
     }
 }

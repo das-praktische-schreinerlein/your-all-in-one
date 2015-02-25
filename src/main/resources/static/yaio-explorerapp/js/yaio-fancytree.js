@@ -616,6 +616,12 @@ function createFancyDataFromNodeData(basenode) {
        lazy: true,
        basenode: basenode
     };
+    
+    // deactivate lazyload for node if no children avaiable
+    if (basenode.childNodeCount == "undefined" || basenode.childNodeCount <= 0) {
+        datanode.lazy = false;
+        datanode.children = [];
+    }
 
     if (basenode.className == "UrlResNode") {
         datanode.title = basenode.resLocName;

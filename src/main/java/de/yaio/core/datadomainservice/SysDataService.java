@@ -55,6 +55,22 @@ public interface SysDataService {
      * <h4>FeatureDomain:</h4>
      *     BusinessLogic
      * <h4>FeatureDescription:</h4>
+     *     update the childrenCount-Fields of the node 
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>updates memberVariable node.childNodeCount
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     BusinessLogic
+     * @param node - node to initialize
+     * @throws Exception - parser/format-Exceptions possible
+     */
+    void updateChildrenCount(SysData node) throws Exception;
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     BusinessLogic
+     * <h4>FeatureDescription:</h4>
      *     calcs the checksum of the node 
      * <h4>FeatureResult:</h4>
      *   <ul>

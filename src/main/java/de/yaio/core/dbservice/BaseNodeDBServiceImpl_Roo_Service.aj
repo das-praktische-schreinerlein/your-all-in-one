@@ -3,14 +3,13 @@
 
 package de.yaio.core.dbservice;
 
+import de.yaio.core.dbservice.BaseNodeDBServiceImpl;
+import de.yaio.core.node.BaseNode;
 import java.util.List;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import de.yaio.core.node.BaseNode;
-
-privileged aspect BaseNodeServiceImpl_Roo_Service {
+privileged aspect BaseNodeDBServiceImpl_Roo_Service {
     
     declare @type: BaseNodeDBServiceImpl: @Service;
     

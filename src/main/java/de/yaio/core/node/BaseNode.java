@@ -489,6 +489,12 @@ public class BaseNode implements BaseData, MetaData, SysData,
     private Set<BaseNode> childNodes = new LinkedHashSet<BaseNode>();
 
     /**
+     * count of my direct children: for caching the count of childNodes
+     */
+    @Min(0)
+    private Integer childNodeCount;
+
+    /**
      */
     @ManyToOne
     private BaseNode parentNode;

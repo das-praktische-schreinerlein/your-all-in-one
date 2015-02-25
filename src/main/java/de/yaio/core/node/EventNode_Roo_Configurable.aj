@@ -3,6 +3,7 @@
 
 package de.yaio.core.node;
 
+import de.yaio.core.node.EventNode;
 import org.springframework.beans.factory.annotation.Configurable;
 
 privileged aspect EventNode_Roo_Configurable {

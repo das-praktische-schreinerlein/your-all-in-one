@@ -3,6 +3,7 @@
 
 package de.yaio.core.node;
 
+import de.yaio.core.node.UrlResNode;
 import org.springframework.beans.factory.annotation.Configurable;
 
 privileged aspect UrlResNode_Roo_Configurable {

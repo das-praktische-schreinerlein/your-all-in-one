@@ -3,6 +3,7 @@
 
 package de.yaio.core.node;
 
+import de.yaio.core.node.BaseNode;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Version;

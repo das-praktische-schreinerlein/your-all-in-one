@@ -3,6 +3,7 @@
 
 package de.yaio.core.node;
 
+import de.yaio.core.node.EventNode;
 import javax.persistence.Entity;
 
 privileged aspect EventNode_Roo_Jpa_Entity {
