@@ -47,8 +47,9 @@
  *   </ul> 
  * <h4>FeatureKeywords:</h4>
  *     GUI Editor Multilanguagesupport
+ * @param langKey - key of the preferred-language
  */
-function initLanguageSupport() {
+function initLanguageSupport(langKey) {
     // Create language switcher instance and set default language to tech
     window.lang = new Lang('tech');
 
@@ -61,7 +62,7 @@ function initLanguageSupport() {
     window.lang.loadPack('en');
 
     // change to de
-    window.lang.change('de');
+    window.lang.change(langKey);
 }
 
 function setupAppSize() {
