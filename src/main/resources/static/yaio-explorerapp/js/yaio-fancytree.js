@@ -618,7 +618,7 @@ function createFancyDataFromNodeData(basenode) {
     };
     
     // deactivate lazyload for node if no children avaiable
-    if (basenode.childNodeCount == "undefined" || basenode.childNodeCount <= 0) {
+    if (basenode.statChildNodeCount == "undefined" || basenode.statChildNodeCount <= 0) {
         datanode.lazy = false;
         datanode.children = [];
     }
@@ -1226,7 +1226,16 @@ function renderColumnsForNode(event, data) {
                     .addClass("fieldtype_sysCreateDate")
                     .addClass("field_sysCreateDate")
                     ); 
-
+    $row.append(
+            $("<div lang='tech' />").html("Kinder: " + basenode.statChildNodeCount 
+                    + " Workflows: " + basenode.statWorkflowCount
+                    + " ToDos: " + basenode.statWorkflowTodoCount)
+                    .addClass("container_field")
+                    .addClass("fieldtype_basedata")
+                    .addClass("fieldtype_statistik")
+                    .addClass("field_statistik")
+                    ); 
+    
     // add nodeDesc if set
     if (basenode.nodeDesc != "" && basenode.nodeDesc != null) {
         // columncount
