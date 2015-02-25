@@ -19,6 +19,9 @@
   <link rel="stylesheet" href="../css/highlightjs/default.css">
   <script src="../js/highlightjs/highlight.pack.js"></script>
  
+  <!-- mermaid -->
+  <script src="../js/mermaid/mermaid.full.js" charset="UTF-8"></script>
+ 
   <!-- yaio -->
   <link rel="stylesheet" type="text/css" media="all" href="../css/yaio/style.css" />
   <link rel="stylesheet" type="text/css" media="all" href="../css/yaio/main.css" />
@@ -47,12 +50,29 @@
                         
 <textarea id="markdownExample" class="hidden">
 # Überschrift Ebene 1
+Das hier ist ganz normaler Fließtext.
 - Aufzählung Ebene 1
-  - Aufzählung Unterpunkt Ebene2
-- Aufzählung Ebene 1
+  - Aufzählung Unterpunkt Ebene2 mit [Link + Label](http://daringfireball.net/projects/markdown/syntax).
 
 ## Überschrift Ebene 2
-Das hier ist ganz normaler Fließtext.
+Ein schönes Feature ist der integrierte Diagramm-Editor.
+- Sequenz-Diagramme
+```mermaid
+sequenceDiagram
+    participant Du
+    participant D'Artagnan
+    Du->>D'Artagnan: Ich habe ein Problem
+    D'Artagnan->>D'Artagnan: denkt nach
+    D'Artagnan->>Du: Ich kann Dir helfen
+```
+- Prozess-Diagramme
+```mermaid
+graph LR
+    A[Du] -->|fragst| B(D'Artagnan)
+    B --> C{D'Artagnan überlegt<br>Kann ich helfen?}
+    C -->|na klar| D[Du bist glücklich]
+    C -->|ich versuchs| D
+```
 
 ### Überschrift Ebene 3
 So kann man Code-Blöcke oder ähnliches einbinden.
@@ -60,33 +80,22 @@ So kann man Code-Blöcke oder ähnliches einbinden.
 Masterplan
   System
      Default
-        Startseite
 ```        
-
 Das schöne ist, dass ein automatisches Syntaxhighlighting erfolgt, wenn er die Sprache erkennt.
 ```
-<script type="text/javascript">
+#!/bin/bash
     // activate elements after 1 second
     setTimeout(function() { 
         // activate speech recognition and others
-        addSpeechRecognitionToElements();
-        addPreviewToElements();
-        addWysiwhgToElements();
-        addDatePickerToElements();
-        addDocLayoutStyleSelectorToElements();
         initLanguageSupport();
         a = a + 1;
 ```
 
 #### Überschrift Ebene 4
-Nicht zu vergessen sind Hyperlinks die automatisch erkannt und verlinkt werden http://www.your-all-in-one.de
-Oder explizit mit [Label](http://daringfireball.net/projects/markdown/syntax).
 
+Und auch die Einbindung von Bildern ist ganz einfach möglich :-)
 
-##### Überschrift Ebene 5
-Und auch die Einbidung von Bildern ist ganz einfach möglich :-)
-
-![Projektexplorer](/examples/hilfe-screen-projektexplorer-uebersicht.png "Übersicht Projektexplorer")
+![Projektexplorer](/examples/help/hilfe-screen-projektexplorer-uebersicht.png "Übersicht Projektexplorer")
 
 Und immer wieder gerne gesehen: *Tabellen*
 
@@ -95,8 +104,10 @@ Head1 | Head2 | Head3
 Column1 | Column2 | Column3
 
 ## Referenzen
+- Die Markdown-Syntax orientiert sich an [http://daringfireball.net/projects/markdown/syntax](http://daringfireball.net/projects/markdown/syntax)
+- Die  Syntax der Prozess-Diagramme folgt http://knsv.github.io/mermaid/flowchart.html
+- Und die Syntax der Sequenz-Diagramme folgt http://knsv.github.io/mermaid/sequenceDiagram.html
 
-Das ganze orientiert sich an [http://daringfireball.net/projects/markdown/syntax](http://daringfireball.net/projects/markdown/syntax)
 
 </textarea>
 
@@ -108,7 +119,6 @@ Das ganze orientiert sich an [http://daringfireball.net/projects/markdown/syntax
 <script src="js/yaio-baseservice.js"></script>
 <script src="js/yaio-layout.js"></script>
 <script src="js/yaio-fancytree.js"></script>
-<script src="js/yaio-explorerapp.js"></script>
 
 <!-- Tooltip -->
 <script type="text/javascript">
@@ -122,6 +132,9 @@ Das ganze orientiert sich an [http://daringfireball.net/projects/markdown/syntax
 
      // set preview-content
      $( "#wysiwhg-preview" ).html(descHtmlMarked);
+
+    // Syntaxhightlighter highlightjs
+    hljs.initHighlightingOnLoad();
 </script>
 
 </body>
