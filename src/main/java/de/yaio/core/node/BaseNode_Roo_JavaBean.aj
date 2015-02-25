@@ -379,12 +379,28 @@ privileged aspect BaseNode_Roo_JavaBean {
         this.childNodes = childNodes;
     }
     
-    public Integer BaseNode.getChildNodeCount() {
-        return this.childNodeCount;
+    public Integer BaseNode.getStatChildNodeCount() {
+        return this.statChildNodeCount;
     }
     
-    public void BaseNode.setChildNodeCount(Integer childNodeCount) {
-        this.childNodeCount = childNodeCount;
+    public void BaseNode.setStatChildNodeCount(Integer statChildNodeCount) {
+        this.statChildNodeCount = statChildNodeCount;
+    }
+    
+    public Integer BaseNode.getStatWorkflowCount() {
+        return this.statWorkflowCount;
+    }
+    
+    public void BaseNode.setStatWorkflowCount(Integer statWorkflowCount) {
+        this.statWorkflowCount = statWorkflowCount;
+    }
+    
+    public Integer BaseNode.getStatWorkflowTodoCount() {
+        return this.statWorkflowTodoCount;
+    }
+    
+    public void BaseNode.setStatWorkflowTodoCount(Integer statWorkflowTodoCount) {
+        this.statWorkflowTodoCount = statWorkflowTodoCount;
     }
     
     public BaseNode BaseNode.getParentNode() {

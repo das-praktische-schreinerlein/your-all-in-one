@@ -46,7 +46,4 @@ public interface SysData extends DataDomain {
 
     String getDataBlocks4CheckSum() throws Exception;
     void initSysData() throws Exception;
-
-    void setChildNodeCount(Integer newChildNodeCount);
-    Integer getChildNodeCount();
 }
