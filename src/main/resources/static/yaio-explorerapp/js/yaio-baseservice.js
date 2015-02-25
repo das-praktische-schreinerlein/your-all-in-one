@@ -307,7 +307,6 @@ function formatMarkdown(descText, flgHighlightNow) {
         code = htmlEscapeTextLazy(code);
         if(code.match(/^sequenceDiagram/)||code.match(/^graph/)){
             return '<div class="mermaid">'+ prepareTextForMermaid(code ) + '</div>';
-        }
         else{
             return '<pre><code class="lang-' + language + '">' + code + '</code></pre>';
         }
