@@ -779,6 +779,7 @@ function togglePreWrap(element) {
          // update textarea for angular
          var value = editor.getValue();
          $("#" + textAreaId).val(value).trigger('select').triggerHandler("change");
+         console.log("openWysiwhgForTextareaId: updatetextAreaId: " + textAreaId);
 
          // update preview
          showWyswhgPreviewForTextareaId(textAreaId);
@@ -809,9 +810,57 @@ function togglePreWrap(element) {
              console.log("openWysiwhgForTextareaId: clearMyInterval : " + intervalHandler + " for " + myParentId);
              clearInterval(intervalHandler);
            },
+           "Hilfe": function () {
+               showMarkdownHelp();
+           },
+           "Vorschau": function () {
+               showPreviewForTextareaId(textAreaId);
+           },
            "Vorlesen": function () {
                openSpeechSynthWindow(document.getElementById('wysiwhg-preview'));
-           }
+           },
+           "Export": function () {
+               downloadAsFile($(this), $("#" + textAreaId).val(), 'data.md', "text/markdown", "utf-8");
+           },
+           "Load": function () {
+               // define handler
+               var handleImportJSONFileSelectHandler = function handleImportJSONFileSelect(evt) {
+                   var files = evt.target.files; // FileList object
+
+                   // Loop through the FileList.
+                   for (var i = 0, numFiles = files.length; i < numFiles; i++) {
+                       var file = files[i];
+                       var reader = new FileReader();
+
+                       // config reader
+                       reader.onload = function(res) {
+                           console.log("read fileName:" + file.name);
+                           var data = res.target.result;
+                           
+                           // set new content (textarea+editor)
+                           editor.setValue(data);
+                           $("#" + myParentId).data("aceEditor.flgChanged", "true");
+                       };
+                       
+                       // read the file
+                       reader.readAsText(file);
+                       
+                       i = files.length +1000;
+                   }
+               }
+               // initFileUploader
+               var fileDialog = document.getElementById('importJSONFile');
+               fileDialog.addEventListener('change', handleImportJSONFileSelectHandler, false);
+               $( "#jsonuploader-box" ).dialog({
+                   modal: true,
+                   width: "200px",
+                   buttons: {
+                     "Schließen": function() {
+                       $( this ).dialog( "close" );
+                     }
+                   }
+               });
+            }
          }
      });    
  }
