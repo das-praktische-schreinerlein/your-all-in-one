@@ -247,7 +247,7 @@ function formatNumbers(number, nachkomma, suffix) {
    return (number.toFixed(nachkomma)) + suffix;
 }
 
-function downloadAsFile($link, data, fileName, mime, encoding) {
+ function downloadAsFile($link, data, fileName, mime, encoding) {
     if (mime == "undefind") {
         mime = "application/text";
     }
@@ -307,7 +307,7 @@ function formatMarkdown(descText, flgHighlightNow) {
         code = htmlEscapeTextLazy(code);
         if(code.match(/^sequenceDiagram/)||code.match(/^graph/)){
             return '<div class="mermaid">'+ prepareTextForMermaid(code ) + '</div>';
-        else{
+        } else {
             return '<pre><code class="lang-' + language + '">' + code + '</code></pre>';
         }
     };    
