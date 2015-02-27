@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="yaioExplorerApp">
+<html>
 <head>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <title>YAIO - D'Artagnan - Wysiwyg-Editor</title>
@@ -31,6 +31,13 @@
   <link rel="stylesheet" type="text/css" media="print" href="./css/print-dataonly.css" id="link_css_dataonly" disabled="true" />
   <script src="js/yaio-baseservice.js"></script>
   <script src="js/yaio-layout.js"></script>
+  
+  <style type="text/css">
+  #wysiwhg-print {
+      left: 0px;
+      background: white;
+  }
+  </style>
 </head>
 
 <body>
@@ -97,6 +104,9 @@
    <input type="file" id="importJSONFile" name="importJSONFile" value="Import JSON" />                        
 </div>
 
+<div id="print-box">
+  <div id="wysiwhg-print" class="box field_nodeDesc container-content-desc"></div>
+</div>
 
                     </div>
                     
@@ -156,8 +166,45 @@
     });
 </script>
 <script type="text/javascript">
+// override
+function showWyswhgPreviewForTextareaId(textAreaId) {
+    // prepare descText
+    var descText = $("#" + textAreaId).val();
+    var descHtmlMarked = formatMarkdown(descText, true);
 
+    // set preview-content
+    $( "#wysiwhg-preview" ).html(descHtmlMarked);
+    $( "#wysiwhg-print" ).html(descHtmlMarked);
+
+    // do mermaid when preview visible
+    formatMermaidGlobal();
+    
+    // do syntax-highlight
+    $("#wysiwhg-preview code, #wysiwhg-print code").each(function(i, block) {
+        if ($(block).hasClass("lang-mermaid") || $(block).hasClass("mermaid")) {
+            // mermaid: no highlight
+            console.log("showWyswhgPreviewForTextareaId mermaid for #wysiwhg-preview block: " + block.id);
+        } else {
+            // do highlight
+            console.log("showWyswhgPreviewForTextareaId highlight for #wysiwhg-preview block: " + block.id);
+            hljs.highlightBlock(block);
+        }
+    });     
+} 
+
+// open Wysiwyg
 openWysiwhgForTextareaId("workspaceContent");
+
+// disable OK-Button
+$(".ui-dialog-buttonset button").first().addClass("hidden");
+
+// add print
+$(".ui-dialog-buttonset").append($("<a href='' id='wysiwyg-printlink'" +
+        + " sdf='ojfvbhwjh'"
+        + " onclick=\"window.print(); return false;\">"
+        + "<span class='ui-button-text'>Print</span></a>"));
+$('#wysiwyg-printlink').addClass("ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only");
+$(".ui-dialog-buttonset").append($("<input type=\"checkbox\" onclick=\"togglePrintLayout()\" checked id=\"checkboxPrintAll\"> All"));
 </script>
 </body>
 </html>

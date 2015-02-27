@@ -686,9 +686,21 @@ function togglePreWrap(element) {
            }
          }
      });    
-
+     
      // do mermaid when preview visible
      formatMermaidGlobal();
+
+     // do syntax-highlight
+     $("#preview-content code").each(function(i, block) {
+         if ($(block).hasClass("lang-mermaid") || $(block).hasClass("mermaid")) {
+             // mermaid: no highlight
+             console.log("showPreview mermaid for #preview-content block: " + block.id);
+         } else {
+             // do highlight
+             console.log("showPreview highlight for #preview-content block: " + block.id);
+             hljs.highlightBlock(block);
+         }
+     });     
  }
  
  function showMarkdownHelp() {
@@ -798,7 +810,7 @@ function togglePreWrap(element) {
      });
      
      // init preview
-     showWyswhgPreviewForTextareaId(textAreaId)
+     showWyswhgPreviewForTextareaId(textAreaId);
 
      // show message
      $( "#wysiwhg-box" ).dialog({
@@ -818,9 +830,6 @@ function togglePreWrap(element) {
            },
            "Vorlesen": function () {
                openSpeechSynthWindow(document.getElementById('wysiwhg-preview'));
-           },
-           "Export": function () {
-               downloadAsFile($(this), $("#" + textAreaId).val(), 'data.md', "text/markdown", "utf-8");
            },
            "Load": function () {
                // define handler
@@ -862,7 +871,14 @@ function togglePreWrap(element) {
                });
             }
          }
-     });    
+     });
+     // add export-link -> buggy to mix jquery and styles
+     $(".ui-dialog-buttonset").append($("<a href='' id='wysiwyg-exportlink'" +
+         + " sdf='ojfvbhwjh'"
+         + " onclick=\"downloadAsFile($('#wysiwyg-exportlink'), $('#" + textAreaId + "').val(), 'data.md', 'text/markdown', 'utf-8');\">"
+         + "<span class='ui-button-text'>Export</span></a>"));
+     $('#wysiwyg-exportlink').addClass("ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only");
+
  }
 
  function showWyswhgPreviewForTextareaId(textAreaId) {
@@ -872,7 +888,21 @@ function togglePreWrap(element) {
 
      // set preview-content
      $( "#wysiwhg-preview" ).html(descHtmlMarked);
+
+     // do mermaid when preview visible
      formatMermaidGlobal();
+     
+     // do syntax-highlight
+     $("#wysiwhg-preview code").each(function(i, block) {
+         if ($(block).hasClass("lang-mermaid") || $(block).hasClass("mermaid")) {
+             // mermaid: no highlight
+             console.log("showWyswhgPreviewForTextareaId mermaid for #wysiwhg-preview block: " + block.id);
+         } else {
+             // do highlight
+             console.log("showWyswhgPreviewForTextareaId highlight for #wysiwhg-preview block: " + block.id);
+             hljs.highlightBlock(block);
+         }
+     });     
  } 
 
  

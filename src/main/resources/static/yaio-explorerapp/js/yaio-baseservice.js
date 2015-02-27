@@ -259,7 +259,7 @@ function formatNumbers(number, nachkomma, suffix) {
             + encodeURIComponent(data);
 
     // set link
-    var flgSafeMode = 1;
+    var flgSafeMode = 0;
     if (   (navigator.userAgent.indexOf("Trident") >= 0) 
         || (navigator.userAgent.indexOf("MSIE") >= 0)
         || flgSafeMode) {
@@ -270,7 +270,7 @@ function formatNumbers(number, nachkomma, suffix) {
            logError("Leider kann der Download nicht angezeigt werden, da Ihr Popup-Blocker aktiv ist. Beachten Sie die Hinweise im Kopf des Browsers. ", true);
        } else {
            // set data to document
-           $(popup.document.body).html(data);
+           $(popup.document.body).html("<pre>" + htmlEscapeTextLazy(data) + "</pre>");
        }
        return false;
    } else {
