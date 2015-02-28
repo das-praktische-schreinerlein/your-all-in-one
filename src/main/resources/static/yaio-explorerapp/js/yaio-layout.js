@@ -393,15 +393,38 @@ function togglePreWrap(element) {
              // check if syntaxhighlighting to do
              if ($("#container_content_desc_" + id).hasClass('syntaxhighlighting-open')) {
                  console.log("toggleNodeDescContainer highlight for: #container_content_desc_" + id);
+                 var flgDoMermaid = false;
                  
                  // remove trigger-flag
                  $("#container_content_desc_" + id).removeClass('syntaxhighlighting-open');
                  
                  // higlight code-blocks
                  $("#container_content_desc_" + id + " code").each(function(i, block) {
-                     console.log("toggleNodeDescContainer highlight for #container_content_desc_" + id + " block: " + block.id);
-                     hljs.highlightBlock(block);
+                     if ($(block).hasClass("lang-mermaid") || $(block).hasClass("mermaid")) {
+                         // mermaid: no highlight
+                         console.log("toggleNodeDescContainer mermaid for #container_content_desc_" + id + " block: " + block.id);
+                         flgDoMermaid = true;
+                     } else {
+                         // do highlight
+                         console.log("toggleNodeDescContainer highlight for #container_content_desc_" + id + " block: " + block.id);
+                         hljs.highlightBlock(block);
+                     }
                  });
+
+                 // mermaid code-blocks
+                 $("#container_content_desc_" + id + " div").each(function(i, block) {
+                     if (   ($(block).hasClass("lang-mermaid") || $(block).hasClass("mermaid")) 
+                         && ! $(block).attr("data-processed")) {
+                         // mermaid: no highlight
+                         console.log("toggleNodeDescContainer mermaid for #container_content_desc_" + id + " block: " + block.id);
+                         flgDoMermaid = true;
+                     }
+                 });
+                 
+                 // do Mermaid if found
+                 if (flgDoMermaid) {
+                     formatMermaidGlobal();
+                 }
              }
          } else {
              // desc is now hidden
@@ -417,6 +440,7 @@ function togglePreWrap(element) {
          $("div.fieldtype_descToggler > a").addClass('toggler_show').removeClass('toggler_hidden');
 
          // check if syntaxhighlighting to do
+         var flgDoMermaid = false;
          $("div.syntaxhighlighting-open").each(function (i, descBlock) {
              console.log("toggleAllNodeDescContainer highlight for descBlock: " + descBlock.id);
              // remove trigger-flag
@@ -424,10 +448,32 @@ function togglePreWrap(element) {
              
              // higlight code-blocks
              $("#" + descBlock.id + " code").each(function(i, block) {
-                 console.log("toggleAllNodeDescContainer highlight descBlock: " + descBlock.id + " block: " + block.id);
-                 hljs.highlightBlock(block);
+                 if ($(block).hasClass("lang-mermaid") || $(block).hasClass("mermaid")) {
+                     // mermaid: no highlight
+                     console.log("toggleAllNodeDescContainer preparemermaid descBlock: " + descBlock.id + " block: " + block.id);
+                     flgDoMermaid = true;
+                 } else {
+                     // do highlight
+                     console.log("toggleAllNodeDescContainer highlight descBlock: " + descBlock.id + " block: " + block.id);
+                     hljs.highlightBlock(block);
+                 }
+             });
+
+             // mermaid code-blocks
+             $("#" + descBlock.id + " div").each(function(i, block) {
+                 if (   ($(block).hasClass("lang-mermaid") || $(block).hasClass("mermaid")) 
+                     && ! $(block).attr("data-processed")) {
+                     // mermaid: no highlight
+                     console.log("toggleAllNodeDescContainer mermaid descBlock: " + descBlock.id + " block: " + block.id);
+                     flgDoMermaid = true;
+                 }
              });
          });
+         
+         // mermaid all
+         if (flgDoMermaid) {
+             formatMermaidGlobal();
+         }
      } else {
          // hide all desc
          $("div.field_nodeDesc").slideUp(1000);
@@ -640,6 +686,21 @@ function togglePreWrap(element) {
            }
          }
      });    
+     
+     // do mermaid when preview visible
+     formatMermaidGlobal();
+
+     // do syntax-highlight
+     $("#preview-content code").each(function(i, block) {
+         if ($(block).hasClass("lang-mermaid") || $(block).hasClass("mermaid")) {
+             // mermaid: no highlight
+             console.log("showPreview mermaid for #preview-content block: " + block.id);
+         } else {
+             // do highlight
+             console.log("showPreview highlight for #preview-content block: " + block.id);
+             hljs.highlightBlock(block);
+         }
+     });     
  }
  
  function showMarkdownHelp() {
@@ -730,6 +791,7 @@ function togglePreWrap(element) {
          // update textarea for angular
          var value = editor.getValue();
          $("#" + textAreaId).val(value).trigger('select').triggerHandler("change");
+         console.log("openWysiwhgForTextareaId: updatetextAreaId: " + textAreaId);
 
          // update preview
          showWyswhgPreviewForTextareaId(textAreaId);
@@ -748,7 +810,7 @@ function togglePreWrap(element) {
      });
      
      // init preview
-     showWyswhgPreviewForTextareaId(textAreaId)
+     showWyswhgPreviewForTextareaId(textAreaId);
 
      // show message
      $( "#wysiwhg-box" ).dialog({
@@ -757,14 +819,66 @@ function togglePreWrap(element) {
          buttons: {
            Ok: function() {
              $( this ).dialog( "close" );
-             console.log("openWysiwhgForTextareaId: clearMyInterval : " + intervallHandler + " for " + myParentId);
-             clearInterval(intervallHandler)
+             console.log("openWysiwhgForTextareaId: clearMyInterval : " + intervalHandler + " for " + myParentId);
+             clearInterval(intervalHandler);
+           },
+           "Hilfe": function () {
+               showMarkdownHelp();
+           },
+           "Vorschau": function () {
+               showPreviewForTextareaId(textAreaId);
            },
            "Vorlesen": function () {
                openSpeechSynthWindow(document.getElementById('wysiwhg-preview'));
-           }
+           },
+           "Load": function () {
+               // define handler
+               var handleImportJSONFileSelectHandler = function handleImportJSONFileSelect(evt) {
+                   var files = evt.target.files; // FileList object
+
+                   // Loop through the FileList.
+                   for (var i = 0, numFiles = files.length; i < numFiles; i++) {
+                       var file = files[i];
+                       var reader = new FileReader();
+
+                       // config reader
+                       reader.onload = function(res) {
+                           console.log("read fileName:" + file.name);
+                           var data = res.target.result;
+                           
+                           // set new content (textarea+editor)
+                           editor.setValue(data);
+                           $("#" + myParentId).data("aceEditor.flgChanged", "true");
+                       };
+                       
+                       // read the file
+                       reader.readAsText(file);
+                       
+                       i = files.length +1000;
+                   }
+               }
+               // initFileUploader
+               var fileDialog = document.getElementById('importJSONFile');
+               fileDialog.addEventListener('change', handleImportJSONFileSelectHandler, false);
+               $( "#jsonuploader-box" ).dialog({
+                   modal: true,
+                   width: "200px",
+                   buttons: {
+                     "Schließen": function() {
+                       $( this ).dialog( "close" );
+                     }
+                   }
+               });
+            }
          }
-     });    
+     });
+     // add export-link -> buggy to mix jquery and styles
+     $(".ui-dialog-buttonset").append($("<a href='' id='wysiwyg-exportlink'" +
+         + " sdf='ojfvbhwjh'"
+         + " onclick=\"downloadAsFile($('#wysiwyg-exportlink'), $('#" + textAreaId + "').val(), 'data.md', 'text/markdown', 'utf-8');\">"
+         + "<span class='ui-button-text'>Export</span></a>"));
+     $('#wysiwyg-exportlink').addClass("ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only");
+
  }
 
  function showWyswhgPreviewForTextareaId(textAreaId) {
@@ -774,6 +888,21 @@ function togglePreWrap(element) {
 
      // set preview-content
      $( "#wysiwhg-preview" ).html(descHtmlMarked);
+
+     // do mermaid when preview visible
+     formatMermaidGlobal();
+     
+     // do syntax-highlight
+     $("#wysiwhg-preview code").each(function(i, block) {
+         if ($(block).hasClass("lang-mermaid") || $(block).hasClass("mermaid")) {
+             // mermaid: no highlight
+             console.log("showWyswhgPreviewForTextareaId mermaid for #wysiwhg-preview block: " + block.id);
+         } else {
+             // do highlight
+             console.log("showWyswhgPreviewForTextareaId highlight for #wysiwhg-preview block: " + block.id);
+             hljs.highlightBlock(block);
+         }
+     });     
  } 
 
  

@@ -21,10 +21,6 @@
     </div>
 
 <script type="text/javascript">
-    // alle Bloecke toggeln
-    jMATService.getPageLayoutService().doAllBlockToggler(false);
-</script>
-<script type="text/javascript">
     // alle OFFEN hervorheben
     var styles = {
         "color": "red",
@@ -36,9 +32,14 @@
 <script type="text/javascript">
     // Syntaxhightlighter highlightjs
     hljs.initHighlightingOnLoad();
-</script>
-<script type="text/javascript">
-    // verzoegerte Druckoptimierung
+    // mermaid after hightlight!
+    try {
+        mermaid.init();
+    } catch (ex) {
+        console.error("formatMermaidGlobal error:" + ex);
+    }
+    // toggleAll after mermaid!!!
+    jMATService.getPageLayoutService().doAllBlockToggler(false);
     delayedOptimize = window.setInterval(
             function() {
                 // nach 2 Sekunden ausfuehren und Intervall loeschen
@@ -55,7 +56,8 @@
                 initSearch();
                 window.clearInterval(delayedOptimize);
             }, 2000);
-
+</script>
+<script type="text/javascript">
     // show speechSynthLink
     if (('speechSynthesis' in window)) {
         $("#speechSynthLink").show(0);

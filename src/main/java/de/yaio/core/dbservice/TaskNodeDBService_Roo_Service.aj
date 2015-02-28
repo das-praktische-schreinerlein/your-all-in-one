@@ -3,11 +3,11 @@
 
 package de.yaio.core.dbservice;
 
+import de.yaio.core.dbservice.TaskNodeDBService;
+import de.yaio.core.node.TaskNode;
 import java.util.List;
 
-import de.yaio.core.node.TaskNode;
-
-privileged aspect TaskNodeService_Roo_Service {
+privileged aspect TaskNodeDBService_Roo_Service {
     
     public abstract long TaskNodeDBService.countAllTaskNodes();    
     public abstract void TaskNodeDBService.deleteTaskNode(TaskNode taskNode);    

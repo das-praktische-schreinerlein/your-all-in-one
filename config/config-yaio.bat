@@ -7,7 +7,7 @@ set FLGWP=%2%
 rem set appconfig
 set YAIOINSTANCE=localhost:8083
 set YAIOAPPURLCONFIG=-config dummy -yaioinstance %YAIOINSTANCE% -username admin -password secret
-set STARTURL=http://%YAIOINSTANCE%/yaio-explorerapp/yaio-explorerapp.html#/
+set STARTURL=http://%YAIOINSTANCE%/index.html
 
 rem Gen Wiki-Only
 set PARSEONLY=

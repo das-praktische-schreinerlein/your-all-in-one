@@ -613,14 +613,30 @@ ul.ulMenueFooter li {
     float: right;
 }
 
+/* mermaid */
+svg:not([class]) {
+    width: 100%;
+    height: auto;
+}
+div.mermaid, code.mermaid {
+    max-width: 950px;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+
     </style>
     <link rel="stylesheet" type="text/css" media="print" href="/css/yaio/print.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="/yaio-explorerapp/css/mermaid.css" />
     <link rel="stylesheet" type="text/css" media="print" href="/yaio-explorerapp/css/print.css" />
     <link rel="stylesheet" type="text/css" media="print" href="/yaio-explorerapp/css/print-dataonly.css" id="link_css_dataonly" disabled="true" />
     
     <!-- Syntaxhightlighter highlightjs -->
     <link rel="stylesheet" href="/css/highlightjs/default.css">
     <script src="/js/highlightjs/highlight.pack.js"></script>
+
+    <!-- diagrams -->
+    <script src="/js/mermaid/mermaid.full.js" charset="UTF-8"></script>
 
     <!-- JQery-Slimbox2 (Lightbox) -->
     <script type="text/javascript" src="/js/slimbox2/slimbox2.js"></script>

@@ -59,6 +59,7 @@ import de.yaio.core.datadomain.BaseWorkflowData;
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.datadomain.DescData;
 import de.yaio.core.datadomain.MetaData;
+import de.yaio.core.datadomain.StatData;
 import de.yaio.core.datadomain.SysData;
 import de.yaio.core.datadomainservice.MetaDataService;
 import de.yaio.core.datadomainservice.MetaDataServiceImpl;
@@ -88,7 +89,7 @@ import de.yaio.datatransfer.importer.parser.Parser;
 @RooToString
 @RooJpaActiveRecord
 public class BaseNode implements BaseData, MetaData, SysData, 
-    DescData, BaseWorkflowData {
+    DescData, BaseWorkflowData, StatData {
     
     // Logger
     private static final Logger LOGGER =
@@ -487,6 +488,24 @@ public class BaseNode implements BaseData, MetaData, SysData,
     @XmlTransient
     @JsonIgnore
     private Set<BaseNode> childNodes = new LinkedHashSet<BaseNode>();
+
+    /**
+     * count of my direct children: for caching the count of childNodes
+     */
+    @Min(0)
+    private Integer statChildNodeCount;
+
+    /**
+     * count of my children with workflow (tasks, events...)
+     */
+    @Min(0)
+    private Integer statWorkflowCount;
+
+    /**
+     * count of my children with open workflow (tasks, events...)
+     */
+    @Min(0)
+    private Integer statWorkflowTodoCount;
 
     /**
      */

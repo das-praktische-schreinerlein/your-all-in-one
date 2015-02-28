@@ -3,6 +3,7 @@
 
 package de.yaio.core.node;
 
+import de.yaio.core.node.SymLinkNode;
 import javax.persistence.Entity;
 
 privileged aspect SymLinkNode_Roo_Jpa_Entity {

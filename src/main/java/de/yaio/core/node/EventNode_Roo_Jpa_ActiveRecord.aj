@@ -3,8 +3,8 @@
 
 package de.yaio.core.node;
 
+import de.yaio.core.node.EventNode;
 import java.util.List;
-
 import org.springframework.transaction.annotation.Transactional;
 
 privileged aspect EventNode_Roo_Jpa_ActiveRecord {

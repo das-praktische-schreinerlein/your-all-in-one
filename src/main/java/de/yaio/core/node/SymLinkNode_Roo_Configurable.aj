@@ -3,6 +3,7 @@
 
 package de.yaio.core.node;
 
+import de.yaio.core.node.SymLinkNode;
 import org.springframework.beans.factory.annotation.Configurable;
 
 privileged aspect SymLinkNode_Roo_Configurable {

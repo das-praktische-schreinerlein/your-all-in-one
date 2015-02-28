@@ -3,6 +3,7 @@
 
 package de.yaio.core.node;
 
+import de.yaio.core.node.TaskNode;
 import javax.persistence.Entity;
 
 privileged aspect TaskNode_Roo_Jpa_Entity {

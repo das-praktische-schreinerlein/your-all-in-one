@@ -3,15 +3,11 @@
 
 package de.yaio.core.node;
 
+import de.yaio.core.datadomain.DataDomain;
+import de.yaio.core.node.BaseNode;
 import java.util.Date;
-import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
-
-import de.yaio.core.datadomain.DataDomain;
-import de.yaio.core.datadomain.PlanDependencieData.DurationMeasure;
-import de.yaio.core.datadomain.PlanDependencieData.PredecessorDependencieType;
-import de.yaio.core.datadomain.PlanDependencieData.PredecessorType;
 
 privileged aspect BaseNode_Roo_JavaBean {
     
@@ -222,7 +218,7 @@ privileged aspect BaseNode_Roo_JavaBean {
     public void BaseNode.setPlanCalcCheckSum(String planCalcCheckSum) {
         this.planCalcCheckSum = planCalcCheckSum;
     }
-
+    
     public Date BaseNode.getPlanChildrenSumStart() {
         return this.planChildrenSumStart;
     }
@@ -247,51 +243,61 @@ privileged aspect BaseNode_Roo_JavaBean {
         this.planChildrenSumAufwand = planChildrenSumAufwand;
     }
     
-    
     public Integer BaseNode.getPlanDuration() {
         return this.planDuration;
     }
+    
     public void BaseNode.setPlanDuration(Integer planDuration) {
         this.planDuration = planDuration;
     }
+    
     public DurationMeasure BaseNode.getPlanDurationMeasure() {
         return this.planDurationMeasure;
     }
+    
     public void BaseNode.setPlanDurationMeasure(DurationMeasure planDurationMeasure) {
         this.planDurationMeasure = planDurationMeasure;
     }
+    
     public PredecessorType BaseNode.getPlanPredecessorType() {
         return this.planPredecessorType;
     }
+    
     public void BaseNode.setPlanPredecessorType(PredecessorType planPredecessorType) {
         this.planPredecessorType = planPredecessorType;
     }
+    
     public BaseNode BaseNode.getPlanPredecessor() {
         return this.planPredecessor;
     }
+    
     public void BaseNode.setPlanPredecessor(BaseNode planPredecessor) {
         this.planPredecessor = planPredecessor;
     }
+    
     public PredecessorDependencieType BaseNode.getPlanPredecessorDependencieType() {
         return this.planPredecessorDependencieType;
     }
+    
     public void BaseNode.setPlanPredecessorDependencieType(PredecessorDependencieType planPredecessorDependencieType) {
         this.planPredecessorDependencieType = planPredecessorDependencieType;
     }
+    
     public Integer BaseNode.getPlanPredecessorShift() {
         return this.planPredecessorShift;
     }
+    
     public void BaseNode.setPlanPredecessorShift(Integer planPredecessorShift) {
         this.planPredecessorShift = planPredecessorShift;
     }
+    
     public DurationMeasure BaseNode.getPlanPredecessorShiftMeasure() {
         return this.planPredecessorShiftMeasure;
     }
+    
     public void BaseNode.setPlanPredecessorShiftMeasure(DurationMeasure planPredecessorShiftMeasure) {
         this.planPredecessorShiftMeasure = planPredecessorShiftMeasure;
     }
-
-    
     
     public Double BaseNode.getIstStand() {
         return this.istStand;
@@ -369,8 +375,32 @@ privileged aspect BaseNode_Roo_JavaBean {
         return this.childNodes;
     }
     
-    public void BaseNode.setChildNodes(LinkedHashSet<BaseNode> childNodes) {
+    public void BaseNode.setChildNodes(Set<BaseNode> childNodes) {
         this.childNodes = childNodes;
+    }
+    
+    public Integer BaseNode.getStatChildNodeCount() {
+        return this.statChildNodeCount;
+    }
+    
+    public void BaseNode.setStatChildNodeCount(Integer statChildNodeCount) {
+        this.statChildNodeCount = statChildNodeCount;
+    }
+    
+    public Integer BaseNode.getStatWorkflowCount() {
+        return this.statWorkflowCount;
+    }
+    
+    public void BaseNode.setStatWorkflowCount(Integer statWorkflowCount) {
+        this.statWorkflowCount = statWorkflowCount;
+    }
+    
+    public Integer BaseNode.getStatWorkflowTodoCount() {
+        return this.statWorkflowTodoCount;
+    }
+    
+    public void BaseNode.setStatWorkflowTodoCount(Integer statWorkflowTodoCount) {
+        this.statWorkflowTodoCount = statWorkflowTodoCount;
     }
     
     public BaseNode BaseNode.getParentNode() {
@@ -407,6 +437,10 @@ privileged aspect BaseNode_Roo_JavaBean {
     
     public void BaseNode.setChildNodesByNameMapMap(Map<String, DataDomain> childNodesByNameMapMap) {
         this.childNodesByNameMapMap = childNodesByNameMapMap;
+    }
+    
+    public void BaseNode.setClassName(String className) {
+        this.className = className;
     }
     
 }

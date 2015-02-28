@@ -21,7 +21,7 @@
  *****************************************
  *****************************************/
 body { 
-    background: white; 
+    background: linear-gradient(to right, #FCEBBF 0%, #FFFFFF 49%, #FCEBBF 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
     color: black; 
     font-family: Verdana, Arial, Helvetica, sans-serif; 
     line-height: 1.3em; 
@@ -326,6 +326,17 @@ ul.nodecommands {
     width: 1050px;
     height: 650px;
 }
+#preview-content svg:not([class]) {
+    width: 100%;
+    height: auto;
+}
+
+#preview-content div.mermaid {
+    max-width: 950px;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
 
 
 /*****************************************
@@ -339,6 +350,17 @@ ul.nodecommands {
     height: 600px;
     overflow: auto;
     padding-left: 10px;
+}
+#wysiwhg-preview svg:not([class]) {
+    width: 100%;
+    height: auto;
+}
+
+#wysiwhg-preview div.mermaid {
+    max-width: 550px;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 #wysiwhg-editor {
     float: left;
@@ -368,22 +390,6 @@ ul.nodecommands {
 }
 
 
-
-
-/*****************************************
- *****************************************
- * preview
- *****************************************
- *****************************************/
-#preview-content {
-    width: 1000px;
-    height: 600px;
-    overflow: auto;
-}
-#preview-box {
-    width: 1050px;
-    height: 650px;
-}
 
 
 /*****************************************
@@ -1019,7 +1025,17 @@ div.container-content-desc img:not([class]) {
     margin-left: auto;
     margin-right: auto;
 }
+div.container-content-desc svg:not([class]) {
+    width: 100%;
+    height: auto;
+}
 
+div.container-content-desc div.mermaid {
+    max-width: 1000px;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
 .pre-wrap {
     white-space: normal;
     white-space: -moz-pre-line;
@@ -1221,6 +1237,16 @@ div.container-content-desc img:not([class]) {
     width: auto;
     height: auto;
 }
+#front-content-intro svg:not([class]) {
+    width: 100%;
+    height: auto;
+}
+#front-content-intro div.mermaid {
+    max-width: 600px;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
 #front-content-intro .boxline-ue3 {
     color: #ff9933;
     float: left;
@@ -1257,4 +1283,53 @@ div.container-content-desc img:not([class]) {
 .button-lang-inactive {
     font-size: 8px;
     font-weight: lighter;
+}
+
+
+/*****************************************
+ *****************************************
+ * starter
+ *****************************************
+ *****************************************/
+.starter-box{
+    background-color: #8CACD3;
+    border: 2px solid #FFFFFF;
+    border-radius: 10px;
+    margin: auto;
+    margin-top: 150px;
+    padding: 5px;
+    text-align: left;
+    width: 600px;
+}
+.starter-ue {
+    color: #FCF1B5;
+    font-size: 25px;
+    padding-bottom: 20px;
+    padding-top: 15px;
+    text-align: center;
+    line-height: 1.5em;
+}    
+.starter-hint {
+    color: #FFFFFF;
+    font-size: 12px;
+    padding-bottom: 0;
+    text-align: left;
+    padding-left: 20px;
+    text-align: left;
+}
+.starter-msg {
+    color: #FFFFFF;
+    font-size: 16px;
+    padding-bottom: 0;
+    text-align: center;
+}
+.starter-msg2 {
+    color: #FFFFFF;
+    font-size: 18px;
+    padding-top: 10px;
+    font-weight: bold;
+    text-align: center;
+}
+.starter-nomore {
+   text-decoration: line-through;
 }

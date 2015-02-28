@@ -128,3 +128,8 @@ table.fancytree-ext-table.fancytree-treefocus tbody tr.fancytree-active {
     background-color: node;
     outline: none;
 }
+
+
+#wysiwhg-box, #preview-box, div [class*="ui-dialog"], .ui-widget-overlay {
+    display: none;
+}

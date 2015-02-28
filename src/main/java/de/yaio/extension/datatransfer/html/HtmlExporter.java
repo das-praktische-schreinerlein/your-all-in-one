@@ -34,6 +34,7 @@ import de.yaio.datatransfer.exporter.formatter.IstChildrenSumDataFormatterImpl;
 import de.yaio.datatransfer.exporter.formatter.IstDataFormatterImpl;
 import de.yaio.datatransfer.exporter.formatter.PlanChildrenSumDataFormatterImpl;
 import de.yaio.datatransfer.exporter.formatter.PlanDataFormatterImpl;
+import de.yaio.datatransfer.importer.parser.Parser;
 import de.yaio.extension.datatransfer.wiki.WikiExporter;
 import de.yaio.utils.DataUtils;
 
@@ -1008,7 +1009,9 @@ public class HtmlExporter extends WikiExporter {
         newDescText = markdownProcessor.process(newDescText);
         newDescText = newDescText.replaceAll("…", "...");
         newDescText = newDescText.replaceAll("<code>", "<code class=\"txt\">");
-        
+        newDescText = newDescText.replaceAll("<pre><code class=\\\"mermaid\\\">(" + Parser.CONST_PATTERN_SEG_DESC + "*?)<\\/code><\\/pre>", "<div class=\"mermaid\">$1</div>");
+        newDescText = newDescText.replaceAll("&amp;gt;", "&gt;");
+                
         return newDescText;
     }
 

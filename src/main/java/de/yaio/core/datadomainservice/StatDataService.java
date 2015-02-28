@@ -16,25 +16,38 @@
  */
 package de.yaio.core.datadomainservice;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import org.junit.runners.Suite.SuiteClasses;
+import de.yaio.core.datadomain.StatData;
 
 /**
  * <h4>FeatureDomain:</h4>
- *     Tests
+ *     BusinessLogic
  * <h4>FeatureDescription:</h4>
- *     Testsuite for the datadomainservice-logic
+ *     businesslogic for dataDomain: StatData
  * 
- * @package de.yaio.core.datadomainservice
+ * @package de.yaio.core.dataservice
  * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category tests
+ * @category collaboration
  * @copyright Copyright (c) 2014, Michael Schreiner
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
+public interface StatDataService {
+    
+    /** the position in the recalc-order at which the recalcer will run */
+    int CONST_RECALC_ORDER = 15;
 
-@RunWith(Suite.class)
-@SuiteClasses({MetaDataServiceTest.class, SysDataServiceTest.class,
-               BaseWorkflowDataServiceTest.class, StatDataServiceTest.class})
-public class DoAllDataDomainServiceTests {
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     BusinessLogic
+     * <h4>FeatureDescription:</h4>
+     *     update the childrenCount-Fields of the node 
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>updates memberVariable node.childNodeCount
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     BusinessLogic
+     * @param node - node to initialize
+     * @throws Exception - parser/format-Exceptions possible
+     */
+    void updateChildrenCount(StatData node) throws Exception;
 }

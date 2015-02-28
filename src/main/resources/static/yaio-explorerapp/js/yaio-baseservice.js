@@ -47,8 +47,9 @@
  *   </ul> 
  * <h4>FeatureKeywords:</h4>
  *     GUI Editor Multilanguagesupport
+ * @param langKey - key of the preferred-language
  */
-function initLanguageSupport() {
+function initLanguageSupport(langKey) {
     // Create language switcher instance and set default language to tech
     window.lang = new Lang('tech');
 
@@ -61,7 +62,7 @@ function initLanguageSupport() {
     window.lang.loadPack('en');
 
     // change to de
-    window.lang.change('de');
+    window.lang.change(langKey);
 }
 
 function setupAppSize() {
@@ -246,7 +247,7 @@ function formatNumbers(number, nachkomma, suffix) {
    return (number.toFixed(nachkomma)) + suffix;
 }
 
-function downloadAsFile($link, data, fileName, mime, encoding) {
+ function downloadAsFile($link, data, fileName, mime, encoding) {
     if (mime == "undefind") {
         mime = "application/text";
     }
@@ -258,7 +259,7 @@ function downloadAsFile($link, data, fileName, mime, encoding) {
             + encodeURIComponent(data);
 
     // set link
-    var flgSafeMode = 1;
+    var flgSafeMode = 0;
     if (   (navigator.userAgent.indexOf("Trident") >= 0) 
         || (navigator.userAgent.indexOf("MSIE") >= 0)
         || flgSafeMode) {
@@ -269,7 +270,7 @@ function downloadAsFile($link, data, fileName, mime, encoding) {
            logError("Leider kann der Download nicht angezeigt werden, da Ihr Popup-Blocker aktiv ist. Beachten Sie die Hinweise im Kopf des Browsers. ", true);
        } else {
            // set data to document
-           $(popup.document.body).html(data);
+           $(popup.document.body).html("<pre>" + htmlEscapeTextLazy(data) + "</pre>");
        }
        return false;
    } else {
@@ -301,9 +302,19 @@ function formatMarkdown(descText, flgHighlightNow) {
     // prepare descText
     descText = prepareTextForMarkdown(descText);
     
+    var renderer = new marked.Renderer();
+    renderer.code = function (code, language) {
+        code = htmlEscapeTextLazy(code);
+        if(code.match(/^sequenceDiagram/)||code.match(/^graph/)){
+            return '<div class="mermaid">'+ prepareTextForMermaid(code ) + '</div>';
+        } else {
+            return '<pre><code class="lang-' + language + '">' + code + '</code></pre>';
+        }
+    };    
+    
     // Marked
     marked.setOptions({
-      renderer: new marked.Renderer(),
+      renderer: renderer,
       gfm: true,
       tables: true,
       breaks: false,
@@ -390,6 +401,51 @@ function prepareTextForMarkdown(descText) {
 }
 
 /**
+ * <h4>FeatureDomain:</h4>
+ *     GUI
+ * <h4>FeatureDescription:</h4>
+ *     calls the global mermaid-formatter
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>formats all divs with class=mermaid
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     Layout
+ */
+function formatMermaidGlobal() {
+    mermaid.parseError = function(err,hash){
+        showModalErrorMessage("Mermaid-processing failed:" + err);
+    };
+    try {
+        mermaid.init();
+    } catch (ex) {
+        console.error("formatMermaidGlobal error:" + ex);
+    }
+}
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     GUI
+ * <h4>FeatureDescription:</h4>
+ *     prepare the text to format as mermaid
+ *     delete .
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>returnValue String - prepared text
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     Layout
+ * @param descText - the string to prepare
+ * @return - prpeared text to format with mermaid
+ */
+function prepareTextForMermaid(descText) {
+    // prepare descText
+    var newDescText = descText;
+    newDescText = newDescText.replace(/\n\.\n/g, "\n\n");
+    return newDescText;
+}
+    
+    /**
  * <h4>FeatureDomain:</h4>
  *     GUI
  * <h4>FeatureDescription:</h4>

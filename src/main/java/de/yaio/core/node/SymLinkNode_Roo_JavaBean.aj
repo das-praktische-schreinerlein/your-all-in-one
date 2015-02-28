@@ -3,6 +3,7 @@
 
 package de.yaio.core.node;
 
+import de.yaio.core.node.SymLinkNode;
 
 privileged aspect SymLinkNode_Roo_JavaBean {
     

@@ -154,7 +154,7 @@ yaioM.config(function ($translateProvider) {
     $(".button-lang").removeClass("button-lang-active").addClass("button-lang-inactive");
     $("#button_lang_" + langKey).removeClass("button-lang-inactive").addClass("button-lang-active");
 });
-    
+
 /**
  * <h4>FeatureDomain:</h4>
  *     Configuration

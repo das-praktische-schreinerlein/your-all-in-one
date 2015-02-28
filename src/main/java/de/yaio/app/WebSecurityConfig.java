@@ -151,7 +151,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and() 
                     // authorize Requests
                     .authorizeRequests()
-                        .antMatchers("/js/**", "/css/**", "/yaio-explorerapp/**", "/examples/**", "/tests/**", "/user/current", "/login", "/logout")
+                        .antMatchers("/js/**", "/css/**", "/yaio-explorerapp/**",
+                                     "/examples/**", "/tests/**",
+                                     "/user/current", "/login", "/logout",
+                                     "/index.html", "/demo-public.html", "/demo.html")
                             .permitAll()
 //                        .antMatchers("/admin/**")
 //                            .hasRole("ADMIN")

@@ -3,6 +3,7 @@
 
 package de.yaio.core.node;
 
+import de.yaio.core.node.UrlResNode;
 
 privileged aspect UrlResNode_Roo_JavaBean {
     

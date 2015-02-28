@@ -3,6 +3,7 @@
 
 package de.yaio.core.node;
 
+import de.yaio.core.node.UrlResNode;
 import javax.persistence.Entity;
 
 privileged aspect UrlResNode_Roo_Jpa_Entity {

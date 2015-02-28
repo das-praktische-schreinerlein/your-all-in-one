@@ -3,14 +3,13 @@
 
 package de.yaio.core.dbservice;
 
+import de.yaio.core.dbservice.TaskNodeDBServiceImpl;
+import de.yaio.core.node.TaskNode;
 import java.util.List;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import de.yaio.core.node.TaskNode;
-
-privileged aspect TaskNodeServiceImpl_Roo_Service {
+privileged aspect TaskNodeDBServiceImpl_Roo_Service {
     
     declare @type: TaskNodeDBServiceImpl: @Service;
     

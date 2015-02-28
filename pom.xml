@@ -10,7 +10,7 @@
     
     <!-- packaging jar or war and version -->
     <packaging>jar</packaging>
-    <version>0.1.0.BUILD-SNAPSHOT</version>
+    <version>feature-YAIO1980-improvements-201502-RELEASE</version>
     
     <!-- settings-->
     <properties>

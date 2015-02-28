@@ -4,6 +4,7 @@
     "common.buttonSend": "Submit",
     "common.button.lang.de": "DE",
     "common.button.lang.en": "EN",
+    "common.command.DoSearch": "Search",
     "common.command.ExportWiki": "Export as wiki",
     "common.command.ExportHtml": "HTML",
     "common.command.ExportICal": "WebCalendar",

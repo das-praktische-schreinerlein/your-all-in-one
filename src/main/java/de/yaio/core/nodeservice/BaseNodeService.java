@@ -23,6 +23,7 @@ import org.apache.log4j.Logger;
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.datadomainservice.BaseWorkflowDataServiceImpl;
 import de.yaio.core.datadomainservice.MetaDataServiceImpl;
+import de.yaio.core.datadomainservice.StatDataServiceImpl;
 import de.yaio.core.datadomainservice.SysDataServiceImpl;
 import de.yaio.core.node.BaseNode;
 
@@ -65,6 +66,7 @@ public class BaseNodeService extends NodeServiceImpl {
         MetaDataServiceImpl.configureDataDomainRecalcer(this);
         SysDataServiceImpl.configureDataDomainRecalcer(this);
         BaseWorkflowDataServiceImpl.configureDataDomainRecalcer(this);
+        StatDataServiceImpl.configureDataDomainRecalcer(this);
     }
 
 
