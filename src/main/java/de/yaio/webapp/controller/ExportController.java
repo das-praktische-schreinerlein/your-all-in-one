@@ -46,6 +46,7 @@ import de.yaio.extension.datatransfer.excel.ExcelOutputOptions;
 import de.yaio.extension.datatransfer.html.HtmlExporter;
 import de.yaio.extension.datatransfer.ical.ICalExporter;
 import de.yaio.extension.datatransfer.mindmap.MindMapExporter;
+import de.yaio.extension.datatransfer.ppl.PPLExporter;
 import de.yaio.extension.datatransfer.wiki.WikiExporter;
 
 /**
@@ -286,6 +287,7 @@ public class ExportController {
         String res = this.exportNode(sysUID, exporter, oOptions, ".csv", response);
         return res;
     }
+    
     /**
      * <h4>FeatureDomain:</h4>
      *     Webservice
@@ -317,6 +319,69 @@ public class ExportController {
         
         // run
         String res = this.exportNode(sysUID, exporter, oOptions, ".csv", response);
+        return res;
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
+     *     Request to read the node for sysUID and return it in ppl-format with all children
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>String - ppl-format of the node
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice Query
+     * @param sysUID - sysUID to export
+     * @param response - the response-Obj to set contenttype and headers
+     * @return String - ppl-format of the node
+     */
+    @RequestMapping(method = RequestMethod.GET, 
+                    value = "/ppl/{sysUID}", 
+                    produces = "application/ppl")
+    public @ResponseBody String exportNodeAsPpl(
+           @PathVariable(value = "sysUID") final String sysUID, final HttpServletResponse response) {
+        // configure
+        Exporter exporter = new PPLExporter();
+        OutputOptions oOptions = new OutputOptionsImpl();
+        
+        // run
+        String res = this.exportNode(sysUID, exporter, oOptions, ".ppl", response);
+        return res;
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
+     *     Request to read the node for sysUID and return it in ppl-format with all children<br>
+     *     use the setting of the output-options from request<br>
+     *     requires an post-form application/x-www-form-urlencoded
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>String - ppl-format of the node
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice Query
+     * @param sysUID - sysUID to export
+     * @param oOptions - the outputOptions 
+     * @param response - the response-Obj to set contenttype and headers
+     * @return String - ppl-format of the node
+     */
+    @RequestMapping(method = {RequestMethod.POST}, 
+                    value = "/ppluseoptions/{sysUID}", 
+                    produces = "application/ppl",
+                    consumes = "application/x-www-form-urlencoded")
+    public @ResponseBody String exportNodeAsPpl(
+           @PathVariable(value = "sysUID") final String sysUID,
+           @ModelAttribute final EmptyOutputOptionsImpl oOptions,
+           final HttpServletResponse response) {
+        // configure
+        Exporter exporter = new PPLExporter();
+        
+        // run
+        String res = this.exportNode(sysUID, exporter, oOptions, ".ppl", response);
         return res;
     }
 
