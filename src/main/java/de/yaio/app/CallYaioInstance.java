@@ -44,6 +44,7 @@ import org.apache.http.impl.client.BasicAuthCache;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.HttpContext;
+import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 
 /**
@@ -152,7 +153,7 @@ public abstract class CallYaioInstance extends CmdLineJob {
     }
     
     
-    protected StringBuffer callGetUrl(final String baseUrl, final Map<String, String> params) throws IOException {
+    protected byte[] callGetUrl(final String baseUrl, final Map<String, String> params) throws IOException {
         // map params
         String url = "http://" + yaioinstance + baseUrl;
         if (params != null && params.size() > 0) {
@@ -178,20 +179,13 @@ public abstract class CallYaioInstance extends CmdLineJob {
         if (LOGGER.isInfoEnabled()) {
             LOGGER.info("Response Code : " + response.getStatusLine().getStatusCode());
         }
-        BufferedReader rd = new BufferedReader(
-                       new InputStreamReader(response.getEntity().getContent()));
-        StringBuffer result = new StringBuffer();
-        String line = "";
-        while ((line = rd.readLine()) != null) {
-            result.append(line).append("\n");
-        }
- 
-        return result;
+        HttpEntity entity = response.getEntity();
+        return EntityUtils.toByteArray(entity);
     }
 
     
     
-    protected StringBuffer callPostUrl(final String baseUrl, 
+    protected byte[] callPostUrl(final String baseUrl, 
                                        final Map<String, String> params, 
                                        final Map<String, String> fileParams) throws IOException {
         // create request
@@ -231,14 +225,7 @@ public abstract class CallYaioInstance extends CmdLineJob {
         if (LOGGER.isInfoEnabled()) {
             LOGGER.info("Response Code : " + response.getStatusLine().getStatusCode());
         }
-        BufferedReader rd = new BufferedReader(
-                       new InputStreamReader(response.getEntity().getContent()));
-        StringBuffer result = new StringBuffer();
-        String line = "";
-        while ((line = rd.readLine()) != null) {
-            result.append(line);
-        }
- 
-        return result;
+        HttpEntity entity = response.getEntity();
+        return EntityUtils.toByteArray(entity);
     }
 }

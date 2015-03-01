@@ -81,9 +81,9 @@ public class CallYaioRecalcNodes extends CallYaioInstance {
         String sysUID = Configurator.getInstance().getCommandLine().getOptionValue("sysuid");
         
         // call url
-        StringBuffer result = this.callGetUrl("/admin/recalc/" + sysUID, null);
+        byte[] result = this.callGetUrl("/admin/recalc/" + sysUID, null);
         
-        System.out.println(result);
+        System.out.write(result);
     }
 
     // #############
