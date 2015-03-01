@@ -9,6 +9,17 @@ set YAIOINSTANCE=yaio-playground.local
 set YAIOAPPURLCONFIG=-config dummy -yaioinstance %YAIOINSTANCE% -username admin -password secret
 set STARTURL=http://%YAIOINSTANCE%/index.html
 
+rem ##############################
+rem # Configure appbased yaio
+rem Gen Wiki-Only
+set WIKIONLY=
+rem Show Diffs
+set SHOWINMERGE=1
+rem ##############################
+
+
+rem ##############################
+rem # Configure filebased yaio
 rem Gen Wiki-Only
 set PARSEONLY=
 rem parse ppl from wiki an generate 
@@ -20,6 +31,7 @@ set GEN_SRC=jpa
 rem the masternode
 set MASTERNODEID=MasterplanMasternode1
 set IMPORT_OPTIONS_JPA=--addnodestosysuid %MASTERNODEID%
+rem ##############################
 
 rem set Path
 set YAIOCONFIGPATH=%BASEPATH%\..\config\
