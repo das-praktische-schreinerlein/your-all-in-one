@@ -18,7 +18,6 @@ package de.yaio.webapp.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -114,6 +113,7 @@ public class ExportController {
                     LOGGER.debug("run export with oOptions=" + oOptions);
                 }
                 res = exporter.getMasterNodeResult(node, oOptions);
+//                    res = res.getBytes(StandardCharsets.UTF_8.name()).toString();
             } catch (Exception e) {
                 LOGGER.error("error while export of node:" + sysUID 
                                 + " with:" + exporter.getClass().getName(), e);
@@ -127,7 +127,7 @@ public class ExportController {
                         "attachment; filename=" + sysUID + extension);
         
         // TODO FIXME: a awful hack
-        response.setCharacterEncoding(StandardCharsets.ISO_8859_1.name());
+        response.setCharacterEncoding("ISO-8859-15");
 //        response.setCharacterEncoding(StandardCharsets.UTF_8.name());
         
         return res;
