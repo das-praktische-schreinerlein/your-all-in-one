@@ -182,7 +182,8 @@ function yaioShowHelpSite(url) {
 function logError(message, flgShowDialog) {
     console.error(message);
     if (flgShowDialog) {
-        showModalErrorMessage(htmlEscapeText(message));
+        showToastMessage("error", "Oops! Ein Fehlerchen :-(", htmlEscapeText(message));
+//        showModalErrorMessage(htmlEscapeText(message));
     }
 }
 
@@ -414,7 +415,8 @@ function prepareTextForMarkdown(descText) {
  */
 function formatMermaidGlobal() {
     mermaid.parseError = function(err,hash){
-        showModalErrorMessage("Mermaid-processing failed:" + err);
+        showToastMessage("error", "Oops! Ein Fehlerchen :-(", "Sytanxfehler bei Parsen des Diagrammcodes:" + err);
+//        showModalErrorMessage(":" + err);
     };
     try {
         mermaid.init();

@@ -286,6 +286,27 @@ function togglePreWrap(element) {
    }
  }
 
+function showToastMessage(type, title, message) {
+    // show message
+    toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "10000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+    };
+    toastr[type](type, htmlEscapeText(message));
+}
+
  function showModalErrorMessage(message) {
      // set messagetext
      $( "#error-message-text" ).html(message);
@@ -952,7 +973,7 @@ function togglePreWrap(element) {
      
      // convert and secure
      var nodeDesc = convertMarkdownToJira(descText);
-     nodeDesc = htmlEscapeText(descText);
+     nodeDesc = htmlEscapeText(nodeDesc);
      
      // set clipboard-content
      $( "#clipboard-content" ).html(nodeDesc);
