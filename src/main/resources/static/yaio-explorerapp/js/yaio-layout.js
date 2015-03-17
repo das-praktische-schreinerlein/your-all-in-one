@@ -304,7 +304,7 @@ function showToastMessage(type, title, message) {
             "showMethod": "fadeIn",
             "hideMethod": "fadeOut"
     };
-    toastr[type](type, htmlEscapeText(message));
+    toastr[type](htmlEscapeText(message), title);
 }
 
  function showModalErrorMessage(message) {
