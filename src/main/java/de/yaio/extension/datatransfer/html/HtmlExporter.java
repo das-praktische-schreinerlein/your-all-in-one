@@ -201,14 +201,14 @@ public class HtmlExporter extends WikiExporter {
         // max. Ebene pruefen
         if (curNode.getEbene() > oOptions.getMaxEbene()) {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("node:" + curNode.getWorkingId() 
+                LOGGER.debug("node:" + curNode.getSysUID() 
                         + " ignore:" + curNode.getEbene() + ">" + oOptions.getMaxEbene());
             }
             return res;
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("node:" + curNode.getWorkingId() + " start processing");
+            LOGGER.debug("node:" + curNode.getSysUID() + " start processing");
         }
 
         // alle Kindselemente durchlaufen
@@ -218,7 +218,7 @@ public class HtmlExporter extends WikiExporter {
                 && curNode.getChildNodes().size() > 0) {
             // Elternblock: Zweig
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("node:" + curNode.getWorkingId() + " iterate subnodes:" 
+                LOGGER.debug("node:" + curNode.getSysUID() + " iterate subnodes:" 
                         + curNode.getChildNodes().size());
             }
 
@@ -249,7 +249,7 @@ public class HtmlExporter extends WikiExporter {
                         blockChildren += "<table class='table-portdesc"
                                       + (addStyle.length() > 0
                                           ? " table-portdesc-" + addStyle : "")
-                                      +   "' id='table_" + node.getWorkingId() + "'>\n";
+                                      +   "' id='table_" + node.getSysUID() + "'>\n";
                         flgTableStarted = true;
                     }
                 } else if (flgTableStarted) {
@@ -267,7 +267,7 @@ public class HtmlExporter extends WikiExporter {
                         blockChildren += "<ul class='ul-portdesc"
                                       + (addStyle.length() > 0
                                           ? " ul-portdesc-" + addStyle : "")
-                                      +   "' id='ul_" + node.getWorkingId() + "'>\n";
+                                      +   "' id='ul_" + node.getSysUID() + "'>\n";
                         flgListStarted = true;
                     }
                 } else if (flgListStarted) {
@@ -305,7 +305,7 @@ public class HtmlExporter extends WikiExporter {
         } else {
             // Blatt
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("node:" + curNode.getWorkingId() + " no subnodes");
+                LOGGER.debug("node:" + curNode.getSysUID() + " no subnodes");
             }
         }
         
@@ -319,14 +319,14 @@ public class HtmlExporter extends WikiExporter {
             // sorry me and my children didnt match
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("sorry me and my children didnt match"
-                                + " - node:" + curNode.getWorkingId() 
+                                + " - node:" + curNode.getSysUID() 
                                 + " flgMatchesFilter=" + flgMatchesFilter
                                 + " flgChildMatched=" + flgChildMatched);
             }
             return res;
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("node:" + curNode.getWorkingId() + " do processing"
+            LOGGER.debug("node:" + curNode.getSysUID() + " do processing"
                             + " flgMatchesFilter=" + flgMatchesFilter
                             + " flgChildMatched=" + flgChildMatched);
         }
@@ -414,12 +414,12 @@ public class HtmlExporter extends WikiExporter {
                         +   " class='a-img" + tagEbene + "-urlres "
                         +     (addStyle.length() > 0
                                 ? " " + "a-img" + tagEbene + "-urlres-" + addStyle : "") + "'"
-                        +   " id='a_" + curNode.getWorkingId() + "'>" 
+                        +   " id='a_" + curNode.getSysUID() + "'>" 
                         + "<img src='" + urlResNode.getResLocRef() + "' "
                         + " class='img" + tagEbene + "-urlres "
                         + (addStyle.length() > 0
                             ? " " + "img" + tagEbene + "-urlres-" + addStyle : "") + "'"
-                        +   " id='img_" + curNode.getWorkingId() + "' alt='" + label + "' title='" + label + "'></a>";
+                        +   " id='img_" + curNode.getSysUID() + "' alt='" + label + "' title='" + label + "'></a>";
                 } else {
                     // Url
                     content += "<a href='" + urlResNode.getResLocRef() + "' "
@@ -427,7 +427,7 @@ public class HtmlExporter extends WikiExporter {
                         + " class='a" + tagEbene + "-urlres "
                         + (addStyle.length() > 0
                             ? " " + "a" + tagEbene + "-urlres-" + addStyle : "") + "'"
-                        +   " id='a_" + curNode.getWorkingId() + "'>"
+                        +   " id='a_" + curNode.getSysUID() + "'>"
                         + label + "</a> ";
                 }
             }
@@ -438,7 +438,7 @@ public class HtmlExporter extends WikiExporter {
                 res += "<" + tag + " class='" + tag + "-portdesc"
                     + (addStyle.length() > 0
                         ? " " + tag + "-portdesc-" + addStyle : "") + "'"
-                    +   " id='" + tag + "_" + curNode.getWorkingId() + "'>"
+                    +   " id='" + tag + "_" + curNode.getSysUID() + "'>"
                     + ue
                     + "</" + tag + ">\n";
 
@@ -448,14 +448,14 @@ public class HtmlExporter extends WikiExporter {
                     res += "<" + tag + " class='" + tag + "-portdesc"
                         + (addStyle.length() > 0
                             ? " " + tag + "-portdesc-" + addStyle : "") + "'"
-                        +   " id='" + tag + "_" + curNode.getWorkingId() + "'>";
+                        +   " id='" + tag + "_" + curNode.getSysUID() + "'>";
                     
                     // content
                     if (content.length() > 0) {
                         res += "<span class='" + tag + "-portdesc-desc"
                                         + (addStyle.length() > 0
                                             ? " " + tag + "-portdesc-desc-" + addStyle : "") + "'"
-                                        +   " id='pSpanDesc_" + curNode.getWorkingId() + "'>"
+                                        +   " id='pSpanDesc_" + curNode.getSysUID() + "'>"
                                         + content
                                         + "</span>";
                     }
@@ -465,7 +465,7 @@ public class HtmlExporter extends WikiExporter {
                         res +=  "<span class='" + tag + "-portdesc-descdetail"
                             + (addStyle.length() > 0
                                 ? " " + tag + "-portdesc-descdetail-" + addStyle : "") + "'"
-                            +   " id='pSpanDescDetail_" + curNode.getWorkingId() + "'>"
+                            +   " id='pSpanDescDetail_" + curNode.getSysUID() + "'>"
                             + descFull
                             + "</span>";
 
@@ -478,17 +478,17 @@ public class HtmlExporter extends WikiExporter {
                 res += "<" + tag + " class='" + tag + "-portdesc"
                     + (addStyle.length() > 0
                         ? " " + tag + "-portdesc-" + addStyle : "") + "'"
-                    +   " id='li_" + curNode.getWorkingId() + "'>"
+                    +   " id='li_" + curNode.getSysUID() + "'>"
                     + "<span class='" + tag + "-portdesc-ue"
                     + (addStyle.length() > 0
                         ? " " + tag + "-portdesc-ue-" + addStyle : "") + "'"
-                    +   " id='liSpanUe_" + curNode.getWorkingId() + "'>"
+                    +   " id='liSpanUe_" + curNode.getSysUID() + "'>"
                     + ue
                     + "</span>"
                     + "<span class='" + tag + "-portdesc-desc"
                     + (addStyle.length() > 0
                         ? " " + tag + "-portdesc-desc-" + addStyle : "") + "'"
-                    +   " id='liSpanDesc_" + curNode.getWorkingId() + "'>"
+                    +   " id='liSpanDesc_" + curNode.getSysUID() + "'>"
                     + content
                     + "</span>";
 
@@ -497,7 +497,7 @@ public class HtmlExporter extends WikiExporter {
                     res +=  "<span class='" + tag + "-portdesc-descdetail"
                         + (addStyle.length() > 0
                             ? " " + tag + "-portdesc-descdetail-" + addStyle : "") + "'"
-                        +   " id='liSpanDescDetail_" + curNode.getWorkingId() + "'>"
+                        +   " id='liSpanDescDetail_" + curNode.getSysUID() + "'>"
                         + descFull
                         + "</span>";
 
@@ -511,14 +511,14 @@ public class HtmlExporter extends WikiExporter {
                 res += "<" + tag + " class='" + tag + "-portdesc"
                     + (addStyle.length() > 0
                         ? " " + tag + "-portdesc-" + addStyle : "") + "'"
-                    +   " id='tr_" + curNode.getWorkingId() + "'>";
+                    +   " id='tr_" + curNode.getSysUID() + "'>";
 
                 // TD Spalten einfuegen
                 tag = "td";
                 String[] lstContent = name.split("\\|");
                 for (int zaehler = 0; zaehler < lstContent.length; zaehler++) {
                     // Formeln parsen
-                    String tdId = "td_" + curNode.getWorkingId() + "_" + zaehler;
+                    String tdId = "td_" + curNode.getSysUID() + "_" + zaehler;
                     String tdContent = lstContent[zaehler];
                     tdContent = tdContent.replaceAll("=SUMCOL=",
                         "<script>calcColumns('" + tdId + "', 'SUM', '', '');</script>");
@@ -543,16 +543,16 @@ public class HtmlExporter extends WikiExporter {
                     + (addStyle.length() > 0
                         ? " box-portdesc-" + addStyle : "") + "'"
                     + (shortName.length() > 0 ? " toclabel='" + shortName + "'" : "")
-                    + " id='box_" + curNode.getWorkingId() + "'>"
+                    + " id='box_" + curNode.getSysUID() + "'>"
                     + "<div class='boxline boxline-ue" + tagEbene + " h" + tagEbene + "-portdesc"
                     + (addStyle.length() > 0
                         ? " h" + tagEbene + "-portdesc-" + addStyle : "") + "'"
-                    + " id='ue_" + curNode.getWorkingId() + "'>"
+                    + " id='ue_" + curNode.getSysUID() + "'>"
                     + ue
                     + "</div>\n"
                     + "<div class='togglecontainer"
                     + (addStyle.length() > 0 ? " togglecontainer-" + addStyle : "") + "'"
-                    + " id='detail_" + curNode.getWorkingId() + "'>\n";
+                    + " id='detail_" + curNode.getSysUID() + "'>\n";
                 
                 // optionaler Contentbereich
                 if (content.length() > 0 || (descFull != null && descFull.length() > 0)) {
@@ -560,14 +560,14 @@ public class HtmlExporter extends WikiExporter {
                     res += "<" + tag + " class='" + tag + "-portdesc"
                         + (addStyle.length() > 0
                             ? " " + tag + "-portdesc-" + addStyle : "") + "'"
-                        +   " id='" + tag + "_" + curNode.getWorkingId() + "'>";
+                        +   " id='" + tag + "_" + curNode.getSysUID() + "'>";
                     
                     // content
                     if (content.length() > 0) {
                         res += "<span class='" + tag + "-portdesc-desc"
                                         + (addStyle.length() > 0
                                             ? " " + tag + "-portdesc-desc-" + addStyle : "") + "'"
-                                        +   " id='pSpanDesc_" + curNode.getWorkingId() + "'>"
+                                        +   " id='pSpanDesc_" + curNode.getSysUID() + "'>"
                                         + content
                                         + "</span>";
                     }
@@ -577,7 +577,7 @@ public class HtmlExporter extends WikiExporter {
                         res +=  "<span class='" + tag + "-portdesc-descdetail"
                             + (addStyle.length() > 0
                                 ? " " + tag + "-portdesc-descdetail-" + addStyle : "") + "'"
-                            +   " id='pSpanDescDetail_" + curNode.getWorkingId() + "'>"
+                            +   " id='pSpanDescDetail_" + curNode.getSysUID() + "'>"
                             + descFull
                             + "</span>";
 
@@ -594,17 +594,17 @@ public class HtmlExporter extends WikiExporter {
                 res += "<" + tag + " class='" + tag + "-portdesc"
                     + (addStyle.length() > 0
                         ? " " + tag + "-portdesc-" + addStyle : "") + "'"
-                    +   " id='p_" + curNode.getWorkingId() + "'>"
+                    +   " id='p_" + curNode.getSysUID() + "'>"
                     + "<span class='" + tag + "-portdesc-ue"
                     + (addStyle.length() > 0
                         ? " " + tag + "-portdesc-ue-" + addStyle : "") + "'"
-                    +   " id='pSpanUe_" + curNode.getWorkingId() + "'>"
+                    +   " id='pSpanUe_" + curNode.getSysUID() + "'>"
                     + ue
                     + "</span>"
                     + "<span class='" + tag + "-portdesc-desc"
                     + (addStyle.length() > 0
                         ? " " + tag + "-portdesc-desc-" + addStyle : "") + "'"
-                    +   " id='pSpanDesc_" + curNode.getWorkingId() + "'>"
+                    +   " id='pSpanDesc_" + curNode.getSysUID() + "'>"
                     + content
                     + "</span>";
 
@@ -613,7 +613,7 @@ public class HtmlExporter extends WikiExporter {
                     res +=  "<span class='" + tag + "-portdesc-descdetail"
                         + (addStyle.length() > 0
                             ? " " + tag + "-portdesc-descdetail-" + addStyle : "") + "'"
-                        +   " id='pSpanDescDetail_" + curNode.getWorkingId() + "'>"
+                        +   " id='pSpanDescDetail_" + curNode.getSysUID() + "'>"
                         + descFull
                         + "</span>";
 
@@ -626,7 +626,7 @@ public class HtmlExporter extends WikiExporter {
         res += blockChildren;
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("node:" + curNode.getWorkingId() + " return datalength:" + res.length());
+            LOGGER.debug("node:" + curNode.getSysUID() + " return datalength:" + res.length());
         }
 
         return res;
@@ -656,7 +656,7 @@ public class HtmlExporter extends WikiExporter {
         // max. Ebene pruefen
         if (curNode.getEbene() > oOptions.getMaxEbene()) {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("node:" + curNode.getWorkingId() 
+                LOGGER.debug("node:" + curNode.getSysUID() 
                         + " ignore:" + curNode.getEbene() + ">" + oOptions.getMaxEbene());
             }
             return res;
@@ -700,7 +700,7 @@ public class HtmlExporter extends WikiExporter {
         if (curNode.getEbene() < oOptions.getMaxEbene() && curNode.getChildNodes().size() > 0) {
             // Elternblock: Zweig
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("node:" + curNode.getWorkingId() 
+                LOGGER.debug("node:" + curNode.getSysUID() 
                         + " iterate subnodes:" + curNode.getChildNodes().size());
             }
             blockChildren = "";
@@ -709,7 +709,7 @@ public class HtmlExporter extends WikiExporter {
                 blockChildren += this.getNodeResult(node, "", oOptions);
             }
             if (blockChildren.length() > 0) {
-                blockChildren = "<div id='node_" + curNode.getWorkingId() +  "_cildren' class='node-block-children'>\n"
+                blockChildren = "<div id='node_" + curNode.getSysUID() +  "_cildren' class='node-block-children'>\n"
                                 + blockChildren
                                 + "</div>\n";
             }
@@ -719,7 +719,7 @@ public class HtmlExporter extends WikiExporter {
         } else {
             // Blatt
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("node:" + curNode.getWorkingId() + " no subnodes");
+                LOGGER.debug("node:" + curNode.getSysUID() + " no subnodes");
             }
             styleClassesUe += " node-type-leaf node-type-leaf" + curNode.getEbene();
             styleClassesBlock += " node-block-leaf node-block-leaf" + curNode.getEbene();
@@ -734,7 +734,7 @@ public class HtmlExporter extends WikiExporter {
             // sorry me and my children didnt match
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("sorry me and my children didnt match"
-                                + " - node:" + curNode.getWorkingId() 
+                                + " - node:" + curNode.getSysUID() 
                                 + " flgMatchesFilter=" + flgMatchesFilter
                                 + " flgChildMatched=" + flgChildMatched);
             }
@@ -742,7 +742,7 @@ public class HtmlExporter extends WikiExporter {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("node:" + curNode.getWorkingId() + " start processing"
+            LOGGER.debug("node:" + curNode.getSysUID() + " start processing"
                             + " flgMatchesFilter=" + flgMatchesFilter
                             + " flgChildMatched=" + flgChildMatched);
         }
@@ -859,32 +859,32 @@ public class HtmlExporter extends WikiExporter {
         }
 
         // Result erzeugen
-        res = "<div id='node_" + curNode.getWorkingId() + "_master' data-pjebene='" + curNode.getEbene() + "' class='node-block " + styleClassesBlock + "'>\n"
-            + "  <div id='node_" + curNode.getWorkingId() + "_datacontainer' class='node-line-ue " + styleClassesUe + "'>\n"
-            + "    <div id='node_" + curNode.getWorkingId() + "_namecontainer' class='node-area-name-container'>\n"
-            + "      <div id='node_" + curNode.getWorkingId() + "_namecontainer2' class='node-area-name-container2 " + styleClassesNameContainer2 + "'>\n"
-            + "        <div id='node_" + curNode.getWorkingId() + "_stateshort' class='node-area-stateshort " + styleClassesStateShort + "'>-</div>\n"
-            + "        <div id='node_" + curNode.getWorkingId() + "_name' class='node-area-name " + styleClassesName + "'>"
+        res = "<div id='node_" + curNode.getSysUID() + "_master' data-pjebene='" + curNode.getEbene() + "' class='node-block " + styleClassesBlock + "'>\n"
+            + "  <div id='node_" + curNode.getSysUID() + "_datacontainer' class='node-line-ue " + styleClassesUe + "'>\n"
+            + "    <div id='node_" + curNode.getSysUID() + "_namecontainer' class='node-area-name-container'>\n"
+            + "      <div id='node_" + curNode.getSysUID() + "_namecontainer2' class='node-area-name-container2 " + styleClassesNameContainer2 + "'>\n"
+            + "        <div id='node_" + curNode.getSysUID() + "_stateshort' class='node-area-stateshort " + styleClassesStateShort + "'>-</div>\n"
+            + "        <div id='node_" + curNode.getSysUID() + "_name' class='node-area-name " + styleClassesName + "'>"
             +            blockName + "</div>\n"
             + "      </div>\n"
             + "    </div>\n"
-            + "    <div id='node_" + curNode.getWorkingId() + "_state' class='node-area-state " + styleClassesState + "'>" + labelState + "</div>\n"
-//                    + "    <div id='node_" + curNode.getWorkingId() + "_name' class='node-area-name " + styleClassesState + " " + styleClassesName + "'>" + labelState + " - " + blockName + "</div>"
-            + "    <div id='node_" + curNode.getWorkingId() + "_istplan' class='node-area-istplan " + styleClassesState + "'>" + blockIstCalcSum + blockPlanCalcSum + blockIst + blockPlan + "</div>\n"
+            + "    <div id='node_" + curNode.getSysUID() + "_state' class='node-area-state " + styleClassesState + "'>" + labelState + "</div>\n"
+//                    + "    <div id='node_" + curNode.getSysUID() + "_name' class='node-area-name " + styleClassesState + " " + styleClassesName + "'>" + labelState + " - " + blockName + "</div>"
+            + "    <div id='node_" + curNode.getSysUID() + "_istplan' class='node-area-istplan " + styleClassesState + "'>" + blockIstCalcSum + blockPlanCalcSum + blockIst + blockPlan + "</div>\n"
             + "  </div>\n"
-            + "  <div id='node_" + curNode.getWorkingId() + "_desccontainer' class='node-container-desc'>" + blockDesc + "</div>\n";
+            + "  <div id='node_" + curNode.getSysUID() + "_desccontainer' class='node-container-desc'>" + blockDesc + "</div>\n";
 
         // Children einfuegen
         if (curNode.getChildNodes().size() > 0) {
-            res +=  "  <div id='node_" + curNode.getWorkingId() + "_childrencontainer' data-pjebene='" + curNode.getEbene() + "' class='node-container-children'>" + blockChildren + "</div>\n";
+            res +=  "  <div id='node_" + curNode.getSysUID() + "_childrencontainer' data-pjebene='" + curNode.getEbene() + "' class='node-container-children'>" + blockChildren + "</div>\n";
         }
 
 //                // Trenner einfuegen
 //                if (curNode.getLstChildProjektNodes().size() > 0) {
-//                    res += "  <div id='node_" + curNode.getWorkingId() + "_datacontainer_dummy' class='node-line-ue node-line-trenner '>"
-//                        + "    <div id='node_" + curNode.getWorkingId() + "_state_dummy' class='node-area-state node-trenner-area-state'>&nbsp;</div>"
-//                        + "    <div id='node_" + curNode.getWorkingId() + "_name_dummy' class='node-area-name " + styleClassesName + " node-trenner-area-name'><span class='node-trenner-area-intend'>&nbsp;</span></div>"
-//                        + "    <div id='node_" + curNode.getWorkingId() + "_istplan' class='node-area-istplan '><span class='node-trenner-area-intend'>&nbsp;</span></div>"
+//                    res += "  <div id='node_" + curNode.getSysUID() + "_datacontainer_dummy' class='node-line-ue node-line-trenner '>"
+//                        + "    <div id='node_" + curNode.getSysUID() + "_state_dummy' class='node-area-state node-trenner-area-state'>&nbsp;</div>"
+//                        + "    <div id='node_" + curNode.getSysUID() + "_name_dummy' class='node-area-name " + styleClassesName + " node-trenner-area-name'><span class='node-trenner-area-intend'>&nbsp;</span></div>"
+//                        + "    <div id='node_" + curNode.getSysUID() + "_istplan' class='node-area-istplan '><span class='node-trenner-area-intend'>&nbsp;</span></div>"
 //                        + "  </div>\n";
 //                }
 
@@ -895,18 +895,18 @@ public class HtmlExporter extends WikiExporter {
         if (   curNode.getChildNodes().size() > 0 
             && blockChildren != null && blockChildren.length() > 0) {
             res += "<script type='text/javascript'>"
-                +  "jMATService.getPageLayoutService().appendBlockToggler('node_" + curNode.getWorkingId() + "_stateshort', 'node_" + curNode.getWorkingId() + "_childrencontainer');"
+                +  "jMATService.getPageLayoutService().appendBlockToggler('node_" + curNode.getSysUID() + "_stateshort', 'node_" + curNode.getSysUID() + "_childrencontainer');"
                 +  "</script>\n";
         }
         // falls Desc belegt: Toggler
         if (blockDesc.length() > 0) {
             res += "<script type='text/javascript'>"
-                +  "jMATService.getPageLayoutService().appendBlockToggler('node_" + curNode.getWorkingId() + "_name', 'node_" + curNode.getWorkingId() + "_desccontainer');"
+                +  "jMATService.getPageLayoutService().appendBlockToggler('node_" + curNode.getSysUID() + "_name', 'node_" + curNode.getSysUID() + "_desccontainer');"
                 +  "</script>\n";
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("node:" + curNode.getWorkingId() + " return datalength:" + res.length());
+            LOGGER.debug("node:" + curNode.getSysUID() + " return datalength:" + res.length());
         }
 
         return res;
@@ -946,7 +946,7 @@ public class HtmlExporter extends WikiExporter {
                 styleClasses = "node-block-" + dataName + "-empty";
                 data = "&nbsp;";
             }
-            res = "<div id='node_" + curNode.getWorkingId() +  "_" + dataName + "' "
+            res = "<div id='node_" + curNode.getSysUID() +  "_" + dataName + "' "
                 + " class='node-data-block node-block-" + dataName + " " + styleClasses + "'>"
                 + data + "</div>";
         }
