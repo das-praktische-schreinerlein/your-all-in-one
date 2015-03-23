@@ -107,12 +107,12 @@
                            <div class="ue1MenueTop" lang="tech">D'Artagnan - Dein pers&ouml;nlicher Software-Musketier 
                             <span class="ue2MenueTop" lang="tech">"Einer f&uuml;r Alles - Alles in Einem"</span>
                             <span class="ue3MenueTop">
-                               <ul class="ulTopKontakt" ng-controller="LanguageCtrl">
+                               <ul class="ulTopKontakt" ng-controller="LanguageCtrl" id="ulLanguage" data-curlanguage="{{currentLanguageKey}}">
                                    <li class="liTopKontakt liTopKontaktLanguage">
-                                       <button ng-click="changeLanguage('de')" translate="common.button.lang.de" class="button button-lang" id="button_lang_de">DE</button>
+                                       <button ng-click="changeLanguage('de')" translate="common.button.lang.de" data-tooltip='tooltip.button.lang.de' lang="tech" class="button button-lang" id="button_lang_de">DE</button>
                                    </li>
                                    <li class="liTopKontakt liTopKontaktLanguage">
-                                        <button ng-click="changeLanguage('en')" translate="common.button.lang.en" class="button button-lang" id="button_lang_en">EN</button>
+                                        <button ng-click="changeLanguage('en')" translate="common.button.lang.en" data-tooltip='tooltip.button.lang.en' lang="tech" class="button button-lang" id="button_lang_en">EN</button>
                                    </li>
                                    <li class="liTopKontakt liTopKontaktTwitter"><a 
                                        target="_blank" 
