@@ -38,6 +38,7 @@ var CLIPBOARD = null;
  *****************************************
  *****************************************/
 var CONST_MasterId = "MasterplanMasternode1";
+var loginUrl = "/yaio-explorerapp/yaio-explorerapp.html#/login";
 var baseUrl = "/nodes/";
 var showUrl = baseUrl + "show/";
 var symLinkUrl = baseUrl + "showsymlink/";
@@ -213,6 +214,11 @@ function yaioCreateFancyTree(treeId, masterNodeId, doneHandler) {
     treeInstances[treeId] = {};
     treeInstances[treeId].state = "loading";
     $(treeId).fancytree({
+        
+        // errorHandler
+        loadError: function (e,data) { 
+            yaioFancyTreeLoadError(e, data); 
+        },
         
         // save masterNodeId
         masterNodeId: masterNodeId,
@@ -674,6 +680,39 @@ function postProcessNodeData(event, data) {
     
     data.result = list;
 }
+
+
+function yaioFancyTreeLoadError(e, data) {
+    var error = data.error;
+    if (error.status && error.statusText) {
+        data.message = "Ajax error: " + data.message;
+        data.details = "Ajax error: " + error.statusText + ", status code = " + error.status;
+        
+        // check if http-form result
+        if (error.status == 401) {
+            // reload loginseite
+            $( "#error-message-text" ).html("Sie wurden vom System abgemeldet.");
+            
+            // show message
+            $( "#error-message" ).dialog({
+                modal: true,
+                buttons: {
+                  "Neu anmelden": function() {
+                    $( this ).dialog( "close" );
+                    window.location.assign(loginUrl);
+                  }
+                }
+            });    
+        }
+    } else {
+        data.message = "Custom error: " + data.message;
+        data.details = "An error occured during loading: " + error;
+    }
+    showToastMessage("error", "Oops! Ein Fehlerchen beim Laden :-(", 
+            "Es ist ein Fehler beim Nachladen aufgetreten:" + data.message 
+            + " Details:" + data.details);
+  }
+
 
 /**
  * <h4>FeatureDomain:</h4>
