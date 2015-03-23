@@ -40,7 +40,7 @@
  * <h4>FeatureDomain:</h4>
  *     GUI
  * <h4>FeatureDescription:</h4>
- *     init the multilanguage support for all tags wirth attribute <XX lang="de">
+ *     init the multilanguage support for all tags with attribute <XX lang="de">
  * <h4>FeatureResult:</h4>
  *   <ul>
  *     <li>GUI-result: init multilanguage-support
