@@ -15,19 +15,19 @@ Die Oberfläche von D'Artagnan besteht aus folgenden Komponenten:
 
 - **Startseite mit kurzer Einführung**
 - **Projektexplorer mit Baumansicht**
-  - Daten und Aktionen für den aktuellen Knoten
-  - Explorer zum Navigieren innerhalb des Projektbaumes des aktuellen Knotens
-  - Editor zum Bearbeiten der Daten
-  - Wysiwyg-Markdown-Editor zum Bearbeiten von längeren Beschreibungstexten
-  - Datenexporter
-  - Datenimporter
-  - Gantt-Sicht
+    - Daten und Aktionen für den aktuellen Knoten
+    - Explorer zum Navigieren innerhalb des Projektbaumes des aktuellen Knotens
+    - Editor zum Bearbeiten der Daten
+    - Wysiwyg-Markdown-Editor zum Bearbeiten von längeren Beschreibungstexten
+    - Datenexporter
+    - Datenimporter
+    - Gantt-Sicht
 - **Suche mit Listen**
 - **YAIO-Menü**
-  - Contextwechsel-Wechsel zwischen den Punkten (Startseite, Baumansicht, Suche)
-  - Druck
-  - Hilfe
-  - Infos
+    - Contextwechsel-Wechsel zwischen den Punkten (Startseite, Baumansicht, Suche)
+    - Druck
+    - Hilfe
+    - Infos
 
 Die einzelnen Komponenten werden im Folgenden näher erläutert.
 
@@ -68,18 +68,18 @@ Im oberen Bereich haben wir die Möglichkeit über den Schieberegler den Projekt
 Für jeden angezeigten Kindsknoten werden dabei folgende Daten+Aktionen zur Verfügung gestellt:
 
 - Navigationsbereich
-  - Öffnen des weiteren Teilbaumes (Navigieren im Baum)
-  - Fokussieren auf diesen Teilbaum - dieser Teilbaum wird als aktueller Knoten geöffnet
-  - bei Rechtsklick öffnet sich ein Kontext-Menü mit weiteren Aktionen wie neuen Kindsknoten anlege, Löschen, Fokussieren usw.
+    - Öffnen des weiteren Teilbaumes (Navigieren im Baum)
+    - Fokussieren auf diesen Teilbaum - dieser Teilbaum wird als aktueller Knoten geöffnet
+    - bei Rechtsklick öffnet sich ein Kontext-Menü mit weiteren Aktionen wie neuen Kindsknoten anlege, Löschen, Fokussieren usw.
 - Status sowie Titel und Id des Knotens
 - je nach Knotentypen weiteren Details wie Plan/Ist-Daten, Url usw.
 - falls eine Detailbeschreibung vorhanden ist, folgt rechts das Icon um dies einzublenden
 - am rechten Rand befinden sich abschließend die verfügbaren Knoten-Aktionen
-  - Einblenden der Metainformationen wie "letzte Änderung", "aktuelle Version" usw.
-  - Bearbeiten der Knoten (öffnet den Knoten-Editor)
-  - Anlegen einer neuen Kindsknoten unter dieser Knoten
-  - Anlegen eines Symlinks auf diese Knoten
-  - Löschen dieser Knoten
+    - Einblenden der Metainformationen wie "letzte Änderung", "aktuelle Version" usw.
+    - Bearbeiten der Knoten (öffnet den Knoten-Editor)
+    - Anlegen einer neuen Kindsknoten unter dieser Knoten
+    - Anlegen eines Symlinks auf diese Knoten
+    - Löschen dieser Knoten
 ![Projektexplorer Kindsknoten Übersicht](/examples/help/hilfe-screen-kindsknoten-uebersicht.png "Projektexplorer Kindsknoten Übersicht")
 
 ## Suche
@@ -165,10 +165,10 @@ Im folgenden werden die verfügbaren Funktionen von D'Artagnan näher beschriebe
 ## Navigieren innerhalb des Projektbaumes
 Die Navigation innerhalb des Projektbaumes kann auf 3 verschiedene Arten erfolgen
 
-  - aktueller Knoten: Benutzung der klickbaren Knoten-Hierarchie
-  - Kindsknoten: Öffnen des weiteren Teilbaumes (Navigieren im Baum)
-  - Kindsknoten: Fokussieren auf diesen Teilbaum - dieser Teilbaum wird als aktueller Knoten geöffnet
-  - Kindsknoten: bei Rechtsklick mit der Maus, weitere Aktionen für diesen Knoten im Kontextmenü 
+- aktueller Knoten: Benutzung der klickbaren Knoten-Hierarchie
+- Kindsknoten: Öffnen des weiteren Teilbaumes (Navigieren im Baum)
+- Kindsknoten: Fokussieren auf diesen Teilbaum - dieser Teilbaum wird als aktueller Knoten geöffnet
+- Kindsknoten: bei Rechtsklick mit der Maus, weitere Aktionen für diesen Knoten im Kontextmenü 
 
 ## Knoten bearbeiten/anlegen mit dem Knoten-Editor
 Der Knoten-Editor zum Bearbeiten der Knotendaten öffnet sich im rechten Teil der Arbeitsfläche. Je nach Knotentyp werden an den Kontext angepasste Felder angezeigt (Plan, Ist, Url usw.). Nach Betätigen des Speichern-Buttons wird der Knoten gespeichert und der gesamte Projektbaum aktualisiert sich. Anschließend wird automatisch wieder zum bearbeiteten/neuen Knoten gesprungen.
@@ -224,19 +224,19 @@ Da sich eventuelle Holperer in der Formulierung meistens erst beim lauten Vorles
 Möchte man einen Knoten im Baum verschieben, gibt es verschiedene Möglichkeiten
 
 - **mit der Maus verschieben**: als Kind an Knoten anhängen
-  - mit der Maus auf den Knoten klicken
-  - die Maustaste gedrückt halten
-  - den Knoten ziehen und über einem anderen Knoten loslassen
-  - die Frage ob der Knoten verschoben werden soll mit ja beantworten
-  - schon wird der Knoten als Kindsknoten an diesen Knoten verschoben
+    - mit der Maus auf den Knoten klicken
+    - die Maustaste gedrückt halten
+    - den Knoten ziehen und über einem anderen Knoten loslassen
+    - die Frage ob der Knoten verschoben werden soll mit ja beantworten
+    - schon wird der Knoten als Kindsknoten an diesen Knoten verschoben
 ![Knoten verschieben](/examples/help/hilfe-screen-verschieben-maus.png "Knoten verschieben")
 - **mit der Maus verschieben**: hinter einen Knoten hängen
-  - wie vorher, nur dass man kurz unterhalb des Knotens die Maus losläßt 
-  - nun wird der Knoten hinter diesem Knoten in die Liste eingefügt
+    - wie vorher, nur dass man kurz unterhalb des Knotens die Maus losläßt 
+    - nun wird der Knoten hinter diesem Knoten in die Liste eingefügt
 - **mit den Hoch/Runter-Cursortasten**: innerhalb der gleichen Hierarchie
-  - den Knoten innerhalb der Kindsknoten der Ebene mit gedrückter Strg-Taste nach oben/unten verschieben
+    - den Knoten innerhalb der Kindsknoten der Ebene mit gedrückter Strg-Taste nach oben/unten verschieben
 - **mit den Links/Rechts-Cursortasten**: in der Hierarchie nach vorne/hinten
-  - den Knoten in der Hierarchie mit gedrückter Strg-Taste nach links/rechts verschieben
+    - den Knoten in der Hierarchie mit gedrückter Strg-Taste nach links/rechts verschieben
 
 ## Anzeige der Knotendetails
 Wurde die Anzeige der Metadaten aktiviert, werden unter dem Titel Informationen wie "letzte Änderung", "aktuelle Version" usw. eingeblendet.
@@ -324,10 +324,10 @@ d:\public_projects\yaio
 ```
 ### Configure
 - update config in 
-  - config/config-yaio.bat (pathes to external progs, port)
-  - config/applicationContext.xml
-  - config/application.properties
-  - src/test/java/de/yaio/rest/controller/BaseNodeRestControllerTest.java (its bullshit to configure it here, but be sure it ion my todo-list)
+    - config/config-yaio.bat (pathes to external progs, port)
+    - config/applicationContext.xml
+    - config/application.properties
+    - src/test/java/de/yaio/rest/controller/BaseNodeRestControllerTest.java (its bullshit to configure it here, but be sure it ion my todo-list)
 
 ### Enyoy
 - run webview
@@ -345,10 +345,10 @@ d:\public_projects\yaio
 
 ### Configure
 - update config in 
-  - config/config-yaio.bat (pathes to external progs, port)
-  - config/applicationContext.xml
-  - config/application.properties
-  - src/test/java/de/yaio/rest/controller/BaseNodeRestControllerTest.java (its bullshit to configure it here, but be sure it ion my todo-list)
+    - config/config-yaio.bat (pathes to external progs, port)
+    - config/applicationContext.xml
+    - config/application.properties
+    - src/test/java/de/yaio/rest/controller/BaseNodeRestControllerTest.java (its bullshit to configure it here, but be sure it ion my todo-list)
 
 ### Generate
 - run maven 
