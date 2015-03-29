@@ -29,6 +29,7 @@
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 
+var localHtmlId = 1;
 
 /*****************************************
  *****************************************
@@ -306,10 +307,12 @@ function formatMarkdown(descText, flgHighlightNow) {
     var renderer = new marked.Renderer();
     renderer.code = function (code, language) {
         code = htmlEscapeTextLazy(code);
-        if(code.match(/^sequenceDiagram/)||code.match(/^graph/)){
-            return '<div class="mermaid">'+ prepareTextForMermaid(code ) + '</div>';
+        if (code.match(/^sequenceDiagram/)||code.match(/^graph/)) {
+            return '<div id="inlineMermaid' + (localHtmlId++) + '" class="mermaid">'+ prepareTextForMermaid(code ) + '</div>';
+        } else if (language !== undefined && language.match(/^yaiofreemind/)) {
+            return '<div id="inlineFreemind' + (localHtmlId++) + '"  class="yaiofreemind">'+ code + '</div>';
         } else {
-            return '<pre><code class="lang-' + language + '">' + code + '</code></pre>';
+            return '<pre><code id="inlineCode' + (localHtmlId++) + '" class="lang-' + language + '">' + code + '</code></pre>';
         }
     };    
     
@@ -400,6 +403,52 @@ function prepareTextForMarkdown(descText) {
     
     return newDescText;
 }
+
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     GUI
+ * <h4>FeatureDescription:</h4>
+ *     format the block-content as freemind. 
+ *     <ul>
+ *     <li>creates a FlashObject /freemind-flash/visorFreemind.swf
+ *     <li>Calls /converters/mindmap with the html-content of the block
+ *     <li>insert the returning flash-object into block-element 
+ *     
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>returnValue shows Freemind-Flashviewer with the mindmap-content of block
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     Layout
+ * @param block - jquery-html-element with the content to convert to mindmap 
+ */
+function formatYaioFreemind(block) {
+    var content = $(block).html();
+    var url = "/converters/mindmap?source=" + encodeURIComponent(content);
+    console.log("formatYaioFreemind " + $(block).attr('id') + " url:" + url);
+    
+    var fo = new FlashObject("/freemind-flash/visorFreemind.swf", "visorFreeMind", "100%", "100%", 6, "#9999ff");
+    fo.addParam("quality", "high");
+    fo.addParam("bgcolor", "#a0a0f0");
+    fo.addVariable("openUrl", "_blank");
+    fo.addVariable("startCollapsedToLevel","10");
+    fo.addVariable("maxNodeWidth","200");
+    //
+    fo.addVariable("mainNodeShape","elipse");
+    fo.addVariable("justMap","false");
+    
+    fo.addVariable("initLoadFile",url);
+    fo.addVariable("defaultToolTipWordWrap",200);
+    fo.addVariable("offsetX","left");
+    fo.addVariable("offsetY","top");
+    fo.addVariable("buttonsPos","top");
+    fo.addVariable("min_alpha_buttons",20);
+    fo.addVariable("max_alpha_buttons",100);
+    fo.addVariable("scaleTooltips","false");
+    fo.write($(block).attr('id'));
+}
+
 
 /**
  * <h4>FeatureDomain:</h4>

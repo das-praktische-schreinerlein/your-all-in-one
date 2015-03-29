@@ -28,6 +28,9 @@
   <!-- diagrams -->
   <script src="../js/mermaid/mermaid.full.js" charset="UTF-8"></script>
 
+  <!-- freemind -->
+  <script src="../freemind-flash/flashobject.js"></script>
+
   <!-- yaio-explorer -->
   <link rel="stylesheet" type="text/css" media="all" href="./css/style.css" />
   <link rel="stylesheet" type="text/css" media="all" href="./css/mermaid.css" />
@@ -185,16 +188,8 @@ function showWyswhgPreviewForTextareaId(textAreaId) {
     formatMermaidGlobal();
     
     // do syntax-highlight
-    $("#wysiwhg-preview code, #wysiwhg-print code").each(function(i, block) {
-        if ($(block).hasClass("lang-mermaid") || $(block).hasClass("mermaid")) {
-            // mermaid: no highlight
-            console.log("showWyswhgPreviewForTextareaId mermaid for #wysiwhg-preview block: " + block.id);
-        } else {
-            // do highlight
-            console.log("showWyswhgPreviewForTextareaId highlight for #wysiwhg-preview block: " + block.id);
-            hljs.highlightBlock(block);
-        }
-    });     
+    formatDescBlock($("#wysiwhg-preview"));
+    formatDescBlock($("#wysiwhg-print"));
 } 
 
 // open Wysiwyg

@@ -412,35 +412,12 @@ function showToastMessage(type, title, message) {
              $("#toggler_desc_" + id).addClass('toggler_show').removeClass('toggler_hidden');
 
              // check if syntaxhighlighting to do
-             if ($("#container_content_desc_" + id).hasClass('syntaxhighlighting-open')) {
-                 console.log("toggleNodeDescContainer highlight for: #container_content_desc_" + id);
+             var descBlock = $("#container_content_desc_" + id);
+             if ($(descBlock).hasClass('syntaxhighlighting-open')) {
                  var flgDoMermaid = false;
-                 
-                 // remove trigger-flag
-                 $("#container_content_desc_" + id).removeClass('syntaxhighlighting-open');
-                 
-                 // higlight code-blocks
-                 $("#container_content_desc_" + id + " code").each(function(i, block) {
-                     if ($(block).hasClass("lang-mermaid") || $(block).hasClass("mermaid")) {
-                         // mermaid: no highlight
-                         console.log("toggleNodeDescContainer mermaid for #container_content_desc_" + id + " block: " + block.id);
-                         flgDoMermaid = true;
-                     } else {
-                         // do highlight
-                         console.log("toggleNodeDescContainer highlight for #container_content_desc_" + id + " block: " + block.id);
-                         hljs.highlightBlock(block);
-                     }
-                 });
-
-                 // mermaid code-blocks
-                 $("#container_content_desc_" + id + " div").each(function(i, block) {
-                     if (   ($(block).hasClass("lang-mermaid") || $(block).hasClass("mermaid")) 
-                         && ! $(block).attr("data-processed")) {
-                         // mermaid: no highlight
-                         console.log("toggleNodeDescContainer mermaid for #container_content_desc_" + id + " block: " + block.id);
-                         flgDoMermaid = true;
-                     }
-                 });
+                 console.log("toggleNodeDescContainer highlight for descBlock: " + $(descBlock).attr('id'));
+                 flgDoMermaid = flgDoMermaid || formatDescBlock(descBlock);
+                 console.log("toggleNodeDescContainer resulting flgDoMermaid: " + flgDoMermaid);
                  
                  // do Mermaid if found
                  if (flgDoMermaid) {
@@ -463,33 +440,10 @@ function showToastMessage(type, title, message) {
          // check if syntaxhighlighting to do
          var flgDoMermaid = false;
          $("div.syntaxhighlighting-open").each(function (i, descBlock) {
-             console.log("toggleAllNodeDescContainer highlight for descBlock: " + descBlock.id);
-             // remove trigger-flag
-             $(descBlock).removeClass('syntaxhighlighting-open');
-             
-             // higlight code-blocks
-             $("#" + descBlock.id + " code").each(function(i, block) {
-                 if ($(block).hasClass("lang-mermaid") || $(block).hasClass("mermaid")) {
-                     // mermaid: no highlight
-                     console.log("toggleAllNodeDescContainer preparemermaid descBlock: " + descBlock.id + " block: " + block.id);
-                     flgDoMermaid = true;
-                 } else {
-                     // do highlight
-                     console.log("toggleAllNodeDescContainer highlight descBlock: " + descBlock.id + " block: " + block.id);
-                     hljs.highlightBlock(block);
-                 }
-             });
-
-             // mermaid code-blocks
-             $("#" + descBlock.id + " div").each(function(i, block) {
-                 if (   ($(block).hasClass("lang-mermaid") || $(block).hasClass("mermaid")) 
-                     && ! $(block).attr("data-processed")) {
-                     // mermaid: no highlight
-                     console.log("toggleAllNodeDescContainer mermaid descBlock: " + descBlock.id + " block: " + block.id);
-                     flgDoMermaid = true;
-                 }
-             });
+             console.log("toggleAllNodeDescContainer highlight for descBlock: " + $(descBlock).attr('id'));
+             flgDoMermaid = flgDoMermaid || formatDescBlock(descBlock);
          });
+         console.log("toggleAllNodeDescContainer resulting flgDoMermaid: " + flgDoMermaid);
          
          // mermaid all
          if (flgDoMermaid) {
@@ -500,6 +454,43 @@ function showToastMessage(type, title, message) {
          $("div.field_nodeDesc").slideUp(1000);
          $("div.fieldtype_descToggler > a").addClass('toggler_hidden').removeClass('toggler_show');
      }
+ }
+ 
+ function formatDescBlock(descBlock) {
+     var flgDoMermaid = false;
+
+     console.log("formatDescBlock highlight for descBlock: " + $(descBlock).attr('id'));
+     // remove trigger-flag
+     $(descBlock).removeClass('syntaxhighlighting-open');
+     
+     // higlight code-blocks
+     $("#" + $(descBlock).attr('id') + " code").each(function(i, block) {
+         if ($(block).hasClass("lang-mermaid") || $(block).hasClass("mermaid")) {
+             // mermaid: no highlight
+             console.log("formatDescBlock preparemermaid descBlock: " + $(descBlock).attr('id') + " block: " + $(block).attr('id'));
+             flgDoMermaid = true;
+         } else {
+             // do highlight
+             console.log("formatDescBlock highlight descBlock: " + $(descBlock).attr('id') + " block: " + $(block).attr('id'));
+             hljs.highlightBlock(block);
+         }
+     });
+
+     // mermaid/freemind div-blocks
+     $("#" + $(descBlock).attr('id') + " div").each(function(i, block) {
+         if (   ($(block).hasClass("lang-mermaid") || $(block).hasClass("mermaid")) 
+             && ! $(block).attr("data-processed")) {
+             // mermaid: no highlight
+             console.log("formatDescBlock mermaid descBlock: " + $(descBlock).attr('id') + " block: " + $(block).attr('id'));
+             flgDoMermaid = true;
+         } else if ($(block).hasClass("lang-yaiofreemind") || $(block).hasClass("yaiofreemind")) {
+             // freemind: no highlight
+             console.log("formatDescBlock yaiofreemind for descBlock: " + $(descBlock).attr('id') + " block: " + $(block).attr('id'));
+             formatYaioFreemind(block);
+         }
+     });
+     
+     return flgDoMermaid;
  }
 
  /**
@@ -712,16 +703,7 @@ function showToastMessage(type, title, message) {
      formatMermaidGlobal();
 
      // do syntax-highlight
-     $("#preview-content code").each(function(i, block) {
-         if ($(block).hasClass("lang-mermaid") || $(block).hasClass("mermaid")) {
-             // mermaid: no highlight
-             console.log("showPreview mermaid for #preview-content block: " + block.id);
-         } else {
-             // do highlight
-             console.log("showPreview highlight for #preview-content block: " + block.id);
-             hljs.highlightBlock(block);
-         }
-     });     
+     formatDescBlock($("#preview-content"));
  }
  
  function showMarkdownHelp() {
@@ -914,16 +896,7 @@ function showToastMessage(type, title, message) {
      formatMermaidGlobal();
      
      // do syntax-highlight
-     $("#wysiwhg-preview code").each(function(i, block) {
-         if ($(block).hasClass("lang-mermaid") || $(block).hasClass("mermaid")) {
-             // mermaid: no highlight
-             console.log("showWyswhgPreviewForTextareaId mermaid for #wysiwhg-preview block: " + block.id);
-         } else {
-             // do highlight
-             console.log("showWyswhgPreviewForTextareaId highlight for #wysiwhg-preview block: " + block.id);
-             hljs.highlightBlock(block);
-         }
-     });     
+     formatDescBlock($("#wysiwhg-preview"));
  } 
 
  
