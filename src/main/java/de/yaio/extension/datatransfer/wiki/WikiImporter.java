@@ -50,6 +50,37 @@ import de.yaio.extension.datatransfer.ppl.PPLService;
  */
 public class WikiImporter extends ImporterImpl {
 
+    protected static final String CONST_UE = "=";
+    protected static final String CONST_LIST = "*";
+
+    protected static final String CONST_PATTERN =
+            "^[ ]*?([" + CONST_UE + "\\" + CONST_LIST + "]+)[ ]*(.*)";
+
+    protected static final String testStr =
+                    "= LATE - Projekt3" + PPLService.LINE_DELIMITER
+                    + "=== OFFEN - Unterprojekt1"  + PPLService.LINE_DELIMITER
+                    + "** OFFEN - Punkt0" + PPLService.LINE_DELIMITER
+                    + "* OFFEN - Punkt1" + PPLService.LINE_DELIMITER
+                    + "** OFFEN - Punkt1.1" + PPLService.LINE_DELIMITER
+                    + "** OFFEN - Punkt1.2" + PPLService.LINE_DELIMITER
+                    + "** Punkt1.2 [Ist: 20% 10h ] [Plan: 10h ]" + PPLService.LINE_DELIMITER
+                    + "** Punkt1.2" + PPLService.LINE_DELIMITER
+                    + "** Punkt1.2" + PPLService.LINE_DELIMITER
+                    + "== RUNNING - Unterprojekt2" + PPLService.LINE_DELIMITER
+                    + "adejigwtiojboiaqrjiqoajbhiaqrbn" + PPLService.LINE_DELIMITER
+                    + "* RUNNING - Punkt1" + PPLService.LINE_DELIMITER
+                    + "== LATE - Unterprojekt3" + PPLService.LINE_DELIMITER
+                    + "=== LATE - Unterprojekt4" + PPLService.LINE_DELIMITER
+                    + "adejigwtiojboiaqrjiqoajbhiaqrbn" + PPLService.LINE_DELIMITER
+                    + "* RUNNING - Punkt1 [Plan: 10h 22.03.2014-23.05.2014]" + PPLService.LINE_DELIMITER
+                    + "  adejigwtiojboiaqrjiqoajbhiaqrbn" + PPLService.LINE_DELIMITER
+                    + "** LATE - Punkt1.1" + PPLService.LINE_DELIMITER
+                    + "** DONE - Punkt1.2" + PPLService.LINE_DELIMITER;
+
+    private static final Pattern CONST_WIKI =
+            Pattern.compile(CONST_PATTERN, Pattern.UNICODE_CHARACTER_CLASS);
+
+
     private static final Logger LOGGER =
             Logger.getLogger(WikiImporter.class);
 
@@ -66,11 +97,11 @@ public class WikiImporter extends ImporterImpl {
      */
     public class WikiStructLine {
 
-        protected String wiki;
+        private String wiki;
         protected String text;
-        protected String hirarchy;
+        private String hirarchy;
         protected String desc;
-        protected String idPraefix;
+        private String idPraefix;
 
         /**
          * <h4>FeatureDomain:</h4>
@@ -88,13 +119,13 @@ public class WikiImporter extends ImporterImpl {
          * @param desc - the optional desc
          */
         public WikiStructLine(final String wiki, final String text, final String desc) {
-            this.wiki = wiki;
+            this.setWiki(wiki);
             this.text = text;
             this.desc = desc;
         }
 
         public String toString() {
-            return "WL: " + wiki + " " + text + " HI:" + hirarchy;
+            return "WL: " + getWiki() + " " + text + " HI:" + getHirarchy();
         }
 
         /**
@@ -186,37 +217,42 @@ public class WikiImporter extends ImporterImpl {
 
             return dummyText;
         }
+
+        /**
+         * @return the {@link WikiStructLine#idPraefix}
+         */
+        public String getIdPraefix() {
+            return idPraefix;
+        }
+
+        /**
+         * @param idPraefix the {@link WikiStructLine#idPraefix} to set
+         */
+        public void setIdPraefix(String idPraefix) {
+            this.idPraefix = idPraefix;
+        }
+
+        /**
+         * @param hirarchy the {@link WikiStructLine#hirarchy} to set
+         */
+        public void setHirarchy(String hirarchy) {
+            this.hirarchy = hirarchy;
+        }
+
+        /**
+         * @return the {@link WikiStructLine#wiki}
+         */
+        public String getWiki() {
+            return wiki;
+        }
+
+        /**
+         * @param wiki the {@link WikiStructLine#wiki} to set
+         */
+        public void setWiki(String wiki) {
+            this.wiki = wiki;
+        }
     }
-
-    protected static final String CONST_UE = "=";
-    protected static final String CONST_LIST = "*";
-
-    protected static final String CONST_PATTERN =
-            "^[ ]*?([" + CONST_UE + "\\" + CONST_LIST + "]+)[ ]*(.*)";
-    private static final Pattern CONST_WIKI =
-            Pattern.compile(CONST_PATTERN, Pattern.UNICODE_CHARACTER_CLASS);
-
-
-    protected static String testStr =
-            "= LATE - Projekt3" + PPLService.LINE_DELIMITER
-            + "=== OFFEN - Unterprojekt1"  + PPLService.LINE_DELIMITER
-            + "** OFFEN - Punkt0" + PPLService.LINE_DELIMITER
-            + "* OFFEN - Punkt1" + PPLService.LINE_DELIMITER
-            + "** OFFEN - Punkt1.1" + PPLService.LINE_DELIMITER
-            + "** OFFEN - Punkt1.2" + PPLService.LINE_DELIMITER
-            + "** Punkt1.2 [Ist: 20% 10h ] [Plan: 10h ]" + PPLService.LINE_DELIMITER
-            + "** Punkt1.2" + PPLService.LINE_DELIMITER
-            + "** Punkt1.2" + PPLService.LINE_DELIMITER
-            + "== RUNNING - Unterprojekt2" + PPLService.LINE_DELIMITER
-            + "adejigwtiojboiaqrjiqoajbhiaqrbn" + PPLService.LINE_DELIMITER
-            + "* RUNNING - Punkt1" + PPLService.LINE_DELIMITER
-            + "== LATE - Unterprojekt3" + PPLService.LINE_DELIMITER
-            + "=== LATE - Unterprojekt4" + PPLService.LINE_DELIMITER
-            + "adejigwtiojboiaqrjiqoajbhiaqrbn" + PPLService.LINE_DELIMITER
-            + "* RUNNING - Punkt1 [Plan: 10h 22.03.2014-23.05.2014]" + PPLService.LINE_DELIMITER
-            + "  adejigwtiojboiaqrjiqoajbhiaqrbn" + PPLService.LINE_DELIMITER
-            + "** LATE - Punkt1.1" + PPLService.LINE_DELIMITER
-            + "** DONE - Punkt1.2" + PPLService.LINE_DELIMITER;
 
     protected PPLImporter importer = new PPLImporter(new ImportOptionsImpl());
     protected PPLExporter exporter = new PPLExporter();
@@ -323,7 +359,7 @@ public class WikiImporter extends ImporterImpl {
                 String line = lines[zaehler];
                 line = line.replace("\r", "");
                 line = line.replace("\n", "");
-                List<MatchResult> matches = findMatches(CONST_WIKI, line);
+                List<MatchResult> matches = findMatches(getWikiPattern(), line);
                 if (matches == null || matches.size() <= 0) {
                     // falls String keine Wikizeile ist, an aktuelle Wikizeile anhaengen
                     if (curWikiLine != null) {
@@ -469,7 +505,7 @@ public class WikiImporter extends ImporterImpl {
             // alle Wikilines iterieren
             for (WikiStructLine curWk : lstWikiLines) {
                 // aktuelle Wikiline bearbeiten
-                String wiki = curWk.wiki;
+                String wiki = curWk.getWiki();
                 int ebene = wiki.length();
                 String cleanText = curWk.getCleanText();
 
@@ -488,13 +524,13 @@ public class WikiImporter extends ImporterImpl {
                 // Id-Praefix des Vorgaengers extrahieren und an Masternode setzen
                 String idPraefixVorgaenger = "UNKNOWN";
                 WikiStructLine vorgaengerWk = null;
-                if (wiki.startsWith(CONST_UE) && ebene > 1) {
+                if (wiki.startsWith(getWikiCharUe()) && ebene > 1) {
                     // Vorgaenger-UE vorhanden
                     int idxVorgaenger = ebene - 2;
                     if (lastUe.size() > idxVorgaenger) {
                         vorgaengerWk = (WikiStructLine) lastUe.get(idxVorgaenger);
                     }
-                } else if (wiki.startsWith(CONST_LIST)) {
+                } else if (wiki.startsWith(getWikiCharList())) {
 
                     if (ebene > 1) {
                         // Nachfolger
@@ -507,15 +543,14 @@ public class WikiImporter extends ImporterImpl {
                     }
                 }
                 if (vorgaengerWk != null) {
-                    idPraefixVorgaenger = vorgaengerWk.idPraefix;
+                    idPraefixVorgaenger = vorgaengerWk.getIdPraefix();
                 }
                 masterNode.setMetaNodePraefix(idPraefixVorgaenger);
 
                 // Node initialisieren und aktuelles idPraefix belegen
-                curNode.initMetaData();
-                curWk.idPraefix = curNode.getMetaNodePraefix();
-                curNode.initSysData();
-
+                initNodeData(curNode);
+                curWk.setIdPraefix(curNode.getMetaNodePraefix());
+                
                 // Node ohne Desc generieren
                 oOptions = genOutputOptionsForBaseDataExport();
                 StringBuffer baseRes = new StringBuffer();
@@ -530,11 +565,11 @@ public class WikiImporter extends ImporterImpl {
                 cleanText += curWk.getEscapedDesc(" ProjektDesc:");
 
                 // Ueberschrift
-                if (wiki.startsWith(CONST_UE) && inputOptions.isFlgReadUe()) {
+                if (wiki.startsWith(getWikiCharUe()) && inputOptions.isFlgReadUe()) {
                     if (ebene == 1) {
                         // 1. Ebene belegen
                         lastUe = new ArrayList<WikiStructLine>();
-                        curWk.hirarchy = cleanText;
+                        curWk.setHirarchy(cleanText);
                     } else {
                         // Nachfolger
                         int idxVorgaenger = ebene - 2;
@@ -542,8 +577,8 @@ public class WikiImporter extends ImporterImpl {
 
                         // falls leer BasisElement
                         if (lastUe.size() == 0) {
-                            WikiStructLine newWK = new WikiStructLine("=", "DEFAULT", null);
-                            newWK.hirarchy = newWK.getCleanText();
+                            WikiStructLine newWK = new WikiStructLine(getWikiCharUe(), "DEFAULT", null);
+                            newWK.setHirarchy(newWK.getCleanText());
                             lastUe.add(newWK);
                         }
                         // dann weiter auffuellen
@@ -551,19 +586,19 @@ public class WikiImporter extends ImporterImpl {
                             // mit Dummy-WikiLines Auffuellen
                             for (int zaehler = lastUe.size() - 1; zaehler <= idxMe; zaehler++) {
                                 vorgaengerWk = (WikiStructLine) lastUe.get(zaehler);
-                                WikiStructLine newWK = new WikiStructLine("=", "DEFAULT", null);
-                                newWK.hirarchy = vorgaengerWk.hirarchy
+                                WikiStructLine newWK = new WikiStructLine(getWikiCharUe(), "DEFAULT", null);
+                                newWK.setHirarchy(vorgaengerWk.getHirarchy()
                                         + PPLService.DEFAULT_ENTRY_DELIMITER
-                                        + newWK.getCleanText();
+                                        + newWK.getCleanText());
                                 lastUe.add(newWK);
                             }
                         }
 
                         // Hirarchy des Vorgaengers kopieren
                         vorgaengerWk = (WikiStructLine) lastUe.get(idxVorgaenger);
-                        curWk.hirarchy = vorgaengerWk.hirarchy
+                        curWk.setHirarchy(vorgaengerWk.getHirarchy()
                                 + PPLService.DEFAULT_ENTRY_DELIMITER
-                                + cleanText;
+                                + cleanText);
 
                         // die Vorganeger kopieren
                         List<WikiStructLine> tmpList = lastUe.subList(0, idxVorgaenger + 1);
@@ -578,7 +613,7 @@ public class WikiImporter extends ImporterImpl {
 
                     // an Resultliste anfuegen
                     lstWikiTab.add(curWk);
-                } else if (wiki.startsWith(CONST_LIST) && inputOptions.isFlgReadList()) {
+                } else if (wiki.startsWith(getWikiCharList()) && inputOptions.isFlgReadList()) {
                     if (ebene == 1) {
                         // 1. Ebene belegen
                         lastUl = new ArrayList<WikiStructLine>();
@@ -586,11 +621,11 @@ public class WikiImporter extends ImporterImpl {
                         String parent = "";
                         if (lastUe.size() > 0) {
                             WikiStructLine curUe = (WikiStructLine) lastUe.get(lastUe.size() - 1);
-                            parent = curUe.hirarchy
+                            parent = curUe.getHirarchy()
                                     + PPLService.DEFAULT_ENTRY_DELIMITER;
                         }
-                        curWk.hirarchy = parent
-                                + cleanText;
+                        curWk.setHirarchy(parent
+                                + cleanText);
                     } else {
                         // Nachfolger
 
@@ -599,15 +634,15 @@ public class WikiImporter extends ImporterImpl {
 
                         // falls leer BasisEleent
                         if (lastUl.size() == 0) {
-                            WikiStructLine newWK = new WikiStructLine("*", "DEFAULT", null);
+                            WikiStructLine newWK = new WikiStructLine(getWikiCharList(), "DEFAULT", null);
                             String parent = "";
                             if (lastUe.size() > 0) {
                                 WikiStructLine curUe = (WikiStructLine) lastUe.get(lastUe.size() - 1);
-                                parent = curUe.hirarchy
+                                parent = curUe.getHirarchy()
                                         + PPLService.DEFAULT_ENTRY_DELIMITER;
                             }
-                            newWK.hirarchy = parent
-                                    + newWK.getCleanText();
+                            newWK.setHirarchy(parent
+                                    + newWK.getCleanText());
                             lastUl.add(newWK);
                         }
                         // dann weiter auffuellen
@@ -615,19 +650,19 @@ public class WikiImporter extends ImporterImpl {
                             // mit Dummy-WikiLines Auffuellen
                             for (int zaehler = lastUl.size() - 1; zaehler <= idxMe; zaehler++) {
                                 vorgaengerWk = (WikiStructLine) lastUl.get(zaehler);
-                                WikiStructLine newWK = new WikiStructLine("=", "DEFAULT", null);
-                                newWK.hirarchy = vorgaengerWk.hirarchy
+                                WikiStructLine newWK = new WikiStructLine(getWikiCharUe(), "DEFAULT", null);
+                                newWK.setHirarchy(vorgaengerWk.getHirarchy()
                                         + PPLService.DEFAULT_ENTRY_DELIMITER
-                                        + newWK.getCleanText();
+                                        + newWK.getCleanText());
                                 lastUl.add(newWK);
                             }
                         }
 
                         // Hirarchy des Vorgaengers kopieren
                         vorgaengerWk = (WikiStructLine) lastUl.get(idxVorgaenger);
-                        curWk.hirarchy = vorgaengerWk.hirarchy
+                        curWk.setHirarchy(vorgaengerWk.getHirarchy()
                                 + PPLService.DEFAULT_ENTRY_DELIMITER
-                                + cleanText;
+                                + cleanText);
 
                         // die Vorganeger kopieren
                         List<WikiStructLine> tmpList = lastUl.subList(0, idxVorgaenger + 1);
@@ -648,6 +683,11 @@ public class WikiImporter extends ImporterImpl {
 
 
         return lstWikiTab;
+    }
+    
+    protected void initNodeData(BaseNode curNode) throws Exception {
+        curNode.initMetaData();
+        curNode.initSysData();
     }
 
     /**
@@ -721,7 +761,20 @@ public class WikiImporter extends ImporterImpl {
 
         return wikiLines;
     }
+    
+    
+    public Pattern getWikiPattern() {
+        return CONST_WIKI;
+    }
 
+    public String getWikiCharUe() {
+        return CONST_UE;
+    }
+    
+    public String getWikiCharList() {
+        return CONST_LIST;
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -754,7 +807,7 @@ public class WikiImporter extends ImporterImpl {
             // WikiListe ausgeben
             if (lstWikiLines != null) {
                 for (WikiStructLine wk : lstWikiLines) {
-                    System.out.println(wk.hirarchy);
+                    System.out.println(wk.getHirarchy());
                 }
             }
         } catch (Exception ex) {
