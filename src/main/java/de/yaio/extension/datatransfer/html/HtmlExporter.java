@@ -93,6 +93,8 @@ public class HtmlExporter extends WikiExporter {
     private static final Logger LOGGER =
         Logger.getLogger(HtmlExporter.class);
     
+    protected int htmlElementId = 1;
+    
     @Override
     public String getMasterNodeResult(final DataDomain masterNode,
             final OutputOptions poOptions) throws Exception {
@@ -1008,8 +1010,14 @@ public class HtmlExporter extends WikiExporter {
         newDescText = newDescText.replaceAll("…", "...");
         newDescText = markdownProcessor.process(newDescText);
         newDescText = newDescText.replaceAll("…", "...");
-        newDescText = newDescText.replaceAll("<code>", "<code class=\"txt\">");
-        newDescText = newDescText.replaceAll("<pre><code class=\\\"mermaid\\\">(" + Parser.CONST_PATTERN_SEG_DESC + "*?)<\\/code><\\/pre>", "<div class=\"mermaid\">$1</div>");
+        newDescText = newDescText.replaceAll("<code>", 
+                        "<code id=\"inlineCode" + new Integer(htmlElementId++) +  "\" class=\"txt\">");
+        newDescText = newDescText.replaceAll(
+                        "<pre><code class=\\\"mermaid\\\">(" + Parser.CONST_PATTERN_SEG_DESC + "*?)<\\/code><\\/pre>", 
+                        "<div id=\"inlineMermaid" + new Integer(htmlElementId++) +  "\" class=\"mermaid\">$1</div>");
+        newDescText = newDescText.replaceAll(
+                        "<pre><code class=\\\"yaiofreemind\\\">(" + Parser.CONST_PATTERN_SEG_DESC + "*?)<\\/code><\\/pre>", 
+                        "<div id=\"inlineFreemind" + new Integer(htmlElementId++) +  "\" class=\"yaiofreemind\">$1</div>");
         newDescText = newDescText.replaceAll("&amp;gt;", "&gt;");
                 
         return newDescText;
