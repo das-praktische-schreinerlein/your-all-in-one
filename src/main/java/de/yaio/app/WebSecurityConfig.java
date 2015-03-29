@@ -152,6 +152,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     // authorize Requests
                     .authorizeRequests()
                         .antMatchers("/js/**", "/css/**", "/yaio-explorerapp/**",
+                                     "/converters/**",
                                      "/examples/**", "/tests/**",
                                      "/user/current", "/login", "/logout",
                                      "/index.html", "/demo-public.html", "/demo.html")
