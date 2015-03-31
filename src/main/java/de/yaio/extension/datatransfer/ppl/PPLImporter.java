@@ -52,12 +52,12 @@ import de.yaio.datatransfer.importer.ImporterImpl;
  */
 public class PPLImporter extends ImporterImpl {
 
-    /** Logger */
-    private static final Logger LOGGER =
-            Logger.getLogger(PPLImporter.class);
     /** identify UTF8-BOM */
     public static final String UTF8_BOM = "\uFEFF";
 
+    /** Logger */
+    private static final Logger LOGGER =
+            Logger.getLogger(PPLImporter.class);
     /**
      * <h4>FeatureDomain:</h4>
      *     Constructor
@@ -85,6 +85,7 @@ public class PPLImporter extends ImporterImpl {
      * <h4>FeatureDescription:</h4>
      *     extracts the nodes from PPL nodeSrc (single Line) and appends them to masterNode
      * <h4>FeatureResult:</h4>
+     *   <ul> 
      *     <li>updates masterNode - appends from nodeSrc extracted Nodes
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
@@ -94,7 +95,9 @@ public class PPLImporter extends ImporterImpl {
      * @param delimiter - delimiter of PPL node-hirarchy
      * @throws Exception - parser/format-Exceptions possible
      */
-    public void extractNodeFromSrcLine(final DataDomain masterNode, final String nodeSrc, final String delimiter) throws Exception {
+    public void extractNodeFromSrcLine(final DataDomain masterNode, 
+                                       final String nodeSrc, 
+                                       final String delimiter) throws Exception {
         // Parameter pruefen
         if (masterNode == null) {
             throw new IllegalArgumentException("Masternode must not be null: '" + masterNode + "'");
@@ -175,6 +178,7 @@ public class PPLImporter extends ImporterImpl {
      * <h4>FeatureDescription:</h4>
      *     extracts the nodes from PPL lstNodeSrc (list of lines) and appends them to masterNode
      * <h4>FeatureResult:</h4>
+     *   <ul> 
      *     <li>updates masterNode - appends from nodeSrc extracted Nodes
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
@@ -184,7 +188,9 @@ public class PPLImporter extends ImporterImpl {
      * @param delimiter - delimiter of PPL node-hirarchy
      * @throws Exception - parser/format-Exceptions possible
      */
-    public void extractNodesFromLines(final DataDomain masterNode, final String [] lstNodeSrc, final String delimiter) throws Exception {
+    public void extractNodesFromLines(final DataDomain masterNode, 
+                                      final String [] lstNodeSrc, 
+                                      final String delimiter) throws Exception {
         // Parameter pruefen
         if (lstNodeSrc == null || lstNodeSrc.length <= 0) {
             throw new IllegalArgumentException("LstNodeSrc must not be empty: '" + lstNodeSrc + "'");
@@ -204,6 +210,7 @@ public class PPLImporter extends ImporterImpl {
      * <h4>FeatureDescription:</h4>
      *     extracts the nodes from PPL nodeSrc (several lines) and appends them to masterNode
      * <h4>FeatureResult:</h4>
+     *   <ul> 
      *     <li>updates masterNode - appends from nodeSrc extracted Nodes
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
@@ -213,7 +220,9 @@ public class PPLImporter extends ImporterImpl {
      * @param delimiter  - delimiter of PPL node-hirarchy
      * @throws Exception - parser/format-Exceptions possible
      */
-    public void extractNodesFromLines(final DataDomain masterNode, final String pNodesSrc, final String delimiter) throws Exception {
+    public void extractNodesFromLines(final DataDomain masterNode, 
+                                      final String pNodesSrc, 
+                                      final String delimiter) throws Exception {
         String nodesSrc = pNodesSrc;
         if (nodesSrc == null || nodesSrc.trim().length() <= 0) {
             throw new IllegalArgumentException("NodesSrc must not be empty: '" + nodesSrc + "'");
@@ -241,6 +250,7 @@ public class PPLImporter extends ImporterImpl {
      * <h4>FeatureDescription:</h4>
      *     extracts the nodes from file and appends them to masterNode
      * <h4>FeatureResult:</h4>
+     *   <ul> 
      *     <li>updates masterNode - appends from nodeSrc extracted Nodes
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
@@ -250,7 +260,9 @@ public class PPLImporter extends ImporterImpl {
      * @param delimiter - delimiter of PPL node-hirarchy
      * @throws Exception - parser/format/io-Exceptions possible
      */
-    public void extractNodesFromFile(final DataDomain masterNode, final String fileName, final String delimiter) throws Exception {
+    public void extractNodesFromFile(final DataDomain masterNode, 
+                                     final String fileName, 
+                                     final String delimiter) throws Exception {
         String fileContent = readFromFile(fileName);
         this.extractNodesFromLines(masterNode, fileContent, delimiter);
     }
@@ -261,6 +273,7 @@ public class PPLImporter extends ImporterImpl {
      * <h4>FeatureDescription:</h4>
      *     read filecontent
      * <h4>FeatureResult:</h4>
+     *   <ul> 
      *     <li>returnValue String - filecontent
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
@@ -288,6 +301,7 @@ public class PPLImporter extends ImporterImpl {
      *     1 run: to detect<br>
      *     2 run: to read in the best matching encoding
      * <h4>FeatureResult:</h4>
+     *   <ul> 
      *     <li>returnValue String - filecontent
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
@@ -350,12 +364,12 @@ public class PPLImporter extends ImporterImpl {
                 // check if we are better than before
                 if (match.getConfidence() > bestConfidence) {
                     
-                    if (   match.getName().startsWith("ISO-8859") 
+                    if (match.getName().startsWith("ISO-8859") 
                         && bestEncoding.startsWith("windows-12")) {
                         // dirty hack but use windows-encoding: its 'better'!!!
                     } else {
                         // check if bestEncoding changed
-                        if (   run > 1 
+                        if (run > 1 
                             && !match.getName().equals(bestEncoding)) {
                             // if we are not on first run, set changed flag
                             LOGGER.info("changed best charset from: " + bestEncoding 
