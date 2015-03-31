@@ -1018,7 +1018,9 @@ public class HtmlExporter extends WikiExporter {
         newDescText = newDescText.replaceAll(
                         "<pre><code class=\\\"yaiofreemind\\\">(" + Parser.CONST_PATTERN_SEG_DESC + "*?)<\\/code><\\/pre>", 
                         "<div id=\"inlineFreemind" + new Integer(htmlElementId++) +  "\" class=\"yaiofreemind\">$1</div>");
+        // reescape > and replace markdown-hack "."
         newDescText = newDescText.replaceAll("&amp;gt;", "&gt;");
+        newDescText = newDescText.replaceAll("\n\\.\n", "\n");
                 
         return newDescText;
     }
