@@ -7,9 +7,9 @@
            <li class="command" data-tooltip='tooltip.command.OpenSearchView' lang="tech">
               <a href="#/search/" class="button" translate="common.command.OpenSearchView">Open Searchview</a></li>
            <li class="command" data-tooltip='tooltip.command.OpenHelp' lang="tech">
-              <a href="" ng-click="showHelpSite('/exports/documentation/SysHelp1')" target="help" class="button command_help" translate="common.command.OpenHelp">Hilfe</a></li>
+              <a href="" ng-click="yaioUtils.showHelpSite('/exports/documentation/SysHelp1')" target="help" class="button command_help" translate="common.command.OpenHelp">Hilfe</a></li>
            <li class="command" data-tooltip='tooltip.command.OpenInfo' lang="tech">
-              <a href="" ng-click="showHelpSite('/exports/documentation/SysInfo1')" target="help" class="button" translate="common.command.OpenInfo">Hilfe</a></li>
+              <a href="" ng-click="yaioUtils.showHelpSite('/exports/documentation/SysInfo1')" target="help" class="button" translate="common.command.OpenInfo">Hilfe</a></li>
            <li class="command" data-tooltip='tooltip.command.Print' lang="tech">
               <a onclick="window.print(); return true;" class="button" translate="common.command.Print">Print</a>
               <input type="checkbox" onclick="togglePrintLayout()" checked id="checkboxPrintAll"> All</li>
@@ -351,24 +351,23 @@
                   <td />
                   <td />
                   <td class="container_field fieldtype_actions" >
-                      <div class='fieldtype_sysToggler toggler_show'>
-                          <a ng-click="toggleSysContainerForNode(node);"
-                                  id='toggler_sys_{{node.sysUID }}'
-                                  class='' data-tooltip='tooltip.command.ToggleSys' lang='tech'></a>
-                       </div>
-                       <a ng-click="openNodeEditorForNode(node, 'edit');"
-                              id='cmdEdit{{node.sysUID}}'
-                              class='yaio-icon-edit'
-                              data-tooltip='Bearbeite die Daten'></a>
-                      <a ng-click="openNodeEditorForNode(node, 'create');"
-                              id='cmdCreate{{ node.sysUID }}'
-                              class='yaio-icon-create'"
-                              data-tooltip='Erzeuge ein neues KindsElement'></a>
-                      <a ng-click="openNodeEditorForNode(node, 'createsymlink');"
-                              id='cmdCreateSymLink{{ node.sysUID }}'
-                              class='yaio-icon-createsymlink'
-                              data-tooltip='Erzeuge einen SymLink der auf dieses Element verweist'></a>
-                </tbody>
+                    <div class='fieldtype_sysToggler toggler_show'>
+                        <a ng-click="yaioUtils.toggleSysContainerForNode(node);"
+                                id='toggler_sys_{{node.sysUID }}'
+                                class='' data-tooltip='tooltip.command.ToggleSys' lang='tech'></a>
+                     </div>
+                     <a ng-click="yaioUtils.openNodeEditorForNode(node, 'edit');"
+                        id='cmdEdit{{node.sysUID}}' class='yaio-icon-edit'
+                        data-tooltip='Bearbeite die Daten'></a>
+                    <a ng-click="yaioUtils.openNodeEditorForNode(node, 'create');"
+                       id='cmdCreate{{ node.sysUID }}' class='yaio-icon-create'"
+                       data-tooltip='Erzeuge ein neues KindsElement'></a>
+                    <a ng-click="yaioUtils.openNodeEditorForNode(node, 'createsymlink');"
+                       id='cmdCreateSymLink{{ node.sysUID }}' class='yaio-icon-createsymlink'
+                       data-tooltip='Erzeuge einen SymLink der auf dieses Element verweist'></a>
+                  </td>
+                </tr>
+              </tbody>
           </table>
           
     </div>

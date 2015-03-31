@@ -182,6 +182,61 @@ yaioM.directive('state', function(){
     
 /**
  * <h4>FeatureDomain:</h4>
+ *     Utils
+ * <h4>FeatureDescription:</h4>
+ *     factory to create yaioUtils with util-functions
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>returns new yaioUtils obj
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     Utils
+ */
+yaioM.factory('yaioUtils', function ($rootScope) {
+    return {
+        /**
+         * <h4>FeatureDomain:</h4>
+         *     Help
+         * <h4>FeatureDescription:</h4>
+         *     callbackhandler to open helpsite
+         * <h4>FeatureResult:</h4>
+         *   <ul>
+         *     <li>open the helpsite
+         *   </ul> 
+         * <h4>FeatureKeywords:</h4>
+         *     GUI Callback
+         * @param url - the url of the helpsite
+         */
+        showHelpSite: function(url) {
+            console.log("showHelpSite:" + " url:" + url);
+            yaioShowHelpSite(url);
+            return false;
+        },
+        toggleSysContainerForNode: function(node) {
+            toggleNodeSysContainer(node.sysUID);
+        },
+        openNodeEditorForNode: function(node, mode) {
+            yaioOpenNodeEditorForNode(node, mode);
+        },
+        renderNodeLine: function(node, trIdSelector) {
+            // load me
+            var data = {
+                 node: {
+                     data: {
+                         basenode: node,
+                     },
+                     tr: trIdSelector,
+                 } 
+            };
+            
+            console.log("renderNodeLine nodeId=" + node.sysUID + " tr=" + $(trIdSelector).length);
+            renderColumnsForNode(null, data, true);
+        }
+    };
+});
+
+/**
+ * <h4>FeatureDomain:</h4>
  *     Configuration
  * <h4>FeatureDescription:</h4>
  *     the factory to check the authorization
@@ -274,32 +329,17 @@ yaioM.controller('AuthController', function($rootScope, $scope, $location, $http
  * <h4>FeatureKeywords:</h4>
  *     GUI Configuration
  */
-yaioM.controller('FrontPageCtrl', function($rootScope, $scope, $location, $http, $routeParams, setFormErrors, OutputOptionsEditor, authorization) {
+yaioM.controller('FrontPageCtrl', function($rootScope, $scope, $location, $http, $routeParams, setFormErrors, OutputOptionsEditor, authorization, yaioUtils) {
+    // include utils    
+    $scope.yaioUtils = yaioUtils;
+    
+    // set vars
     var nodeId = $routeParams.nodeId;
     if (nodeId == null || nodeId == "" || ! nodeId) {
         nodeId = 'SysStart1';
     }
     console.log("FrontPageCtrl - processing nodeId=" + nodeId);
-
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Help
-     * <h4>FeatureDescription:</h4>
-     *     callbackhandler to open helpsite
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>open the helpsite
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Callback
-     * @param url - the url of the helpsite
-     */
-    $scope.showHelpSite = function(url) {
-        console.log("showHelpSite:" + " url:" + url);
-        yaioShowHelpSite(url);
-        return false;
-    }
-
+    
     // call authentificate 
     authorization.authentificate(function () {
         // check authentification
@@ -325,7 +365,11 @@ yaioM.controller('FrontPageCtrl', function($rootScope, $scope, $location, $http,
  * <h4>FeatureKeywords:</h4>
  *     GUI Configuration
  */
-yaioM.controller('LanguageCtrl', ['$translate', '$scope', function ($translate, $scope) {
+yaioM.controller('LanguageCtrl', ['$translate', '$scope', function ($translate, $scope, yaioUtils) {
+    // include utils    
+    $scope.yaioUtils = yaioUtils;
+
+    // define languageutils
     $scope.currentLanguageKey = $translate.currentLanguageKey;
     $scope.changeLanguage = function (langKey) {
         // change angularTranslate
@@ -355,7 +399,9 @@ yaioM.controller('LanguageCtrl', ['$translate', '$scope', function ($translate, 
  * <h4>FeatureKeywords:</h4>
  *     GUI Configuration BusinessLogic
  */
-yaioM.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $http, $routeParams, setFormErrors, authorization) {
+yaioM.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $http, $routeParams, setFormErrors, authorization, yaioUtils) {
+    // include utils    
+    $scope.yaioUtils = yaioUtils;
 
     // create search
     $scope.nodes = new Array();
@@ -547,20 +593,9 @@ yaioM.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $http
      *     GUI Callback
      */
     $scope.renderNodeLine = function(node) {
-        // load me
-        var data = {
-             node: {
-                 data: {
-                     basenode: node,
-                 },
-                 tr: "#tr" + node.sysUID,
-             } 
-        };
-        
         // we need a timeout to put the tr into DOM
         setTimeout(function(){
-                console.log("renderNodeLine nodeId=" + node.sysUID + " tr=" + $("#tr" + node.sysUID).length);
-                renderColumnsForNode(null, data);
+                $scope.yaioUtils.renderNodeLine(node, "#tr" + node.sysUID);
             }, 10);
     }
 
@@ -609,7 +644,9 @@ yaioM.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $http
  * <h4>FeatureKeywords:</h4>
  *     GUI Configuration BusinessLogic
  */
-yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, $routeParams, setFormErrors, OutputOptionsEditor, authorization) {
+yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, $routeParams, setFormErrors, OutputOptionsEditor, authorization, yaioUtils) {
+    // include utils    
+    $scope.yaioUtils = yaioUtils;
 
     // register pattern
     $scope.CONST_PATTERN_CSSCLASS  = yaioM.CONST_PATTERN_CSSCLASS ;
@@ -747,15 +784,7 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
                     yaioCreateFancyTree("#tree", $scope.node.sysUID, activeNodeIdHandler);
                     
                     // load me
-                    var data = {
-                         node: {
-                             data: {
-                                 basenode: nodeResponse.data.node,
-                             },
-                             tr: "#masterTr",
-                         } 
-                    };
-                    renderColumnsForNode(null, data, true);
+                    $scope.yaioUtils.renderNodeLine(nodeResponse.data.node, "#masterTr")
 
                     // recalc gantt
                     yaioRecalcMasterGanttBlock($scope.node);
@@ -778,14 +807,6 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
         }
     });
     
-    $scope.toggleSysContainerForNode = function(node) {
-        toggleNodeSysContainer(node.sysUID);
-    }
-    
-    $scope.openNodeEditorForNode = function(node, mode) {
-        yaioOpenNodeEditorForNode(node, mode);
-    }
-    
     /**
      * <h4>FeatureDomain:</h4>
      *     Editor
@@ -804,24 +825,6 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
         return false;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Help
-     * <h4>FeatureDescription:</h4>
-     *     callbackhandler to open helpsite
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>open the helpsite
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Callback
-     * @param url - the url of the helpsite
-     */
-    $scope.showHelpSite = function(url) {
-        console.log("showHelpSite:" + " url:" + url);
-        yaioShowHelpSite(url);
-        return false;
-    }
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -1386,7 +1389,10 @@ yaioM.factory('OutputOptionsEditor', function($http) {
  * <h4>FeatureKeywords:</h4>
  *     GUI Configuration BusinessLogic
  */
-yaioM.controller('OutputOptionsCtrl', function($rootScope, $scope, $location, $http, $routeParams, setFormErrors, OutputOptionsEditor) {
+yaioM.controller('OutputOptionsCtrl', function($rootScope, $scope, $location, $http, $routeParams, setFormErrors, OutputOptionsEditor, yaioUtils) {
+    // include utils    
+    $scope.yaioUtils = yaioUtils;
+
     // register the editor
     $scope.outputOptionsEditor = OutputOptionsEditor;
     // create options
