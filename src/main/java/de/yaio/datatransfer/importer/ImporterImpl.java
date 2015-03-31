@@ -36,13 +36,13 @@ import de.yaio.datatransfer.importer.parser.Parser;
  */
 public class ImporterImpl implements Importer {
 
+    protected static int curId = 1;
+
     // Map mit den Identifier-String un der entprechenden Node-Klase
     protected Map<String, Class<?>> hshNodeTypeIdentifier = new HashMap<String, Class<?>>();
     protected Map<String, Object> hshNodeTypeIdentifierVariantMapping = new HashMap<String, Object>();
     protected Map<String, Object> hshWorkflowNodeTypeMapping = new HashMap<String, Object>();
     protected Map<Integer, Parser> hshDataDomainParser = new HashMap<Integer, Parser>();
-
-    protected static int curId = 1;
 
     protected ImportOptions options = null;
     protected NodeFactory nodeFactory = null;
@@ -144,10 +144,10 @@ public class ImporterImpl implements Importer {
     @Override
     public DataDomain createNodeObjFromText(final int id, final String strFullSrc,
             final String srcName, final DataDomain curParentNode) throws Exception {
-        NodeFactory nodeFactory = this.getNodeFactory();
+        NodeFactory myNodeFactory = this.getNodeFactory();
 
-        Class<?> classType = nodeFactory.getNodeTypeFromText(strFullSrc, srcName);
-        DataDomain myNode = nodeFactory.createNodeObjFromText(
+        Class<?> classType = myNodeFactory.getNodeTypeFromText(strFullSrc, srcName);
+        DataDomain myNode = myNodeFactory.createNodeObjFromText(
                 classType, curId++, strFullSrc, srcName, curParentNode);
 
         return myNode;
