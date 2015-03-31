@@ -16,17 +16,15 @@
  */
 package de.yaio.webapp.controller;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,7 +40,6 @@ import de.yaio.datatransfer.exporter.OutputOptionsImpl;
 import de.yaio.extension.datatransfer.csv.CSVExporter;
 import de.yaio.extension.datatransfer.excel.ExcelExporter;
 import de.yaio.extension.datatransfer.excel.ExcelOutputOptions;
-import de.yaio.extension.datatransfer.html.HtmlExporter;
 import de.yaio.extension.datatransfer.ical.ICalExporter;
 import de.yaio.extension.datatransfer.mindmap.MindMapExporter;
 import de.yaio.extension.datatransfer.ppl.PPLExporter;
@@ -65,74 +62,17 @@ import de.yaio.extension.datatransfer.wiki.WikiExporter;
 @RequestMapping("/exports")
 public class ExportController {
     
-    // Logger
-    private static final Logger LOGGER =
-            Logger.getLogger(ExportController.class);
-    
     /** replaceent to do after processing a node in documentation-context **/
     public static final Map<String, String> PostProcessorReplacements_documentation = 
                     new LinkedHashMap<String, String>();
     
+    // Logger
+    private static final Logger LOGGER =
+            Logger.getLogger(ExportController.class);
+   
+    @Autowired
+    protected ConverterUtils converterUtils;
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     read the node and use the exporter to convert it with all children to 
-     *     exporter-format<br>
-     *     set headers (contentype, disposition) on the response-obj
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>String - wiki-format of the node
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Export
-     * @param sysUID - sysUID to export
-     * @param exporter - the exporter to use
-     * @param oOptions - the outputoptions for the exporter
-     * @param extension - the fileextension for the Content-Disposition
-     * @param response - the response-Obj to set contenttype and headers
-     * @return String - export-format of the node
-     */
-    public String exportNode(final String sysUID, final Exporter exporter, 
-                             final OutputOptions oOptions, final String extension,
-                             final HttpServletResponse response) {
-        // find a specific node
-        BaseNode node = BaseNode.findBaseNode(sysUID);
-        String res = "";
-        if (node != null) {
-            // read all childnodes
-            node.initChildNodesFromDB(-1);
-            
-            // export node with exporter
-            try {
-                // renew oOptions
-                oOptions.initFilterMaps();
-                
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("run export with oOptions=" + oOptions);
-                }
-                res = exporter.getMasterNodeResult(node, oOptions);
-//                    res = res.getBytes(StandardCharsets.UTF_8.name()).toString();
-            } catch (Exception e) {
-                LOGGER.error("error while export of node:" + sysUID 
-                                + " with:" + exporter.getClass().getName(), e);
-                e.printStackTrace();
-            }
-        }
-
-        // set headers to force download
-        response.setContentType("application/force-download");
-        response.setHeader("Content-Disposition", 
-                        "attachment; filename=" + sysUID + extension);
-        
-        // TODO FIXME: a awful hack
-        response.setCharacterEncoding("ISO-8859-15");
-//        response.setCharacterEncoding(StandardCharsets.UTF_8.name());
-        
-        return res;
-    }
-
     /**
      * <h4>FeatureDomain:</h4>
      *     Webservice
@@ -159,7 +99,7 @@ public class ExportController {
         OutputOptions oOptions = new OutputOptionsImpl();
         
         // run
-        String res = this.exportNode(sysUID, exporter, oOptions, ".wiki", response);
+        String res = converterUtils.exportNode(sysUID, exporter, oOptions, ".wiki", response);
         return res;
     }
 
@@ -193,7 +133,7 @@ public class ExportController {
         Exporter exporter = new WikiExporter();
         
         // run
-        String res = this.exportNode(sysUID, exporter, oOptions, ".wiki", response);
+        String res = converterUtils.exportNode(sysUID, exporter, oOptions, ".wiki", response);
         return res;
     }
 
@@ -222,7 +162,7 @@ public class ExportController {
         OutputOptions oOptions = new OutputOptionsImpl();
         
         // run
-        String res = this.exportNode(sysUID, exporter, oOptions, ".mm", response);
+        String res = converterUtils.exportNode(sysUID, exporter, oOptions, ".mm", response);
         return res;
     }
     /**
@@ -255,7 +195,7 @@ public class ExportController {
         Exporter exporter = new MindMapExporter();
         
         // run
-        String res = this.exportNode(sysUID, exporter, oOptions, ".mm", response);
+        String res = converterUtils.exportNode(sysUID, exporter, oOptions, ".mm", response);
         return res;
     }
 
@@ -284,7 +224,7 @@ public class ExportController {
         OutputOptions oOptions = new OutputOptionsImpl();
         
         // run
-        String res = this.exportNode(sysUID, exporter, oOptions, ".csv", response);
+        String res = converterUtils.exportNode(sysUID, exporter, oOptions, ".csv", response);
         return res;
     }
     
@@ -318,7 +258,7 @@ public class ExportController {
         Exporter exporter = new CSVExporter();
         
         // run
-        String res = this.exportNode(sysUID, exporter, oOptions, ".csv", response);
+        String res = converterUtils.exportNode(sysUID, exporter, oOptions, ".csv", response);
         return res;
     }
 
@@ -347,7 +287,7 @@ public class ExportController {
         OutputOptions oOptions = new OutputOptionsImpl();
         
         // run
-        String res = this.exportNode(sysUID, exporter, oOptions, ".ppl", response);
+        String res = converterUtils.exportNode(sysUID, exporter, oOptions, ".ppl", response);
         return res;
     }
 
@@ -381,7 +321,7 @@ public class ExportController {
         Exporter exporter = new PPLExporter();
         
         // run
-        String res = this.exportNode(sysUID, exporter, oOptions, ".ppl", response);
+        String res = converterUtils.exportNode(sysUID, exporter, oOptions, ".ppl", response);
         return res;
     }
 
@@ -410,7 +350,7 @@ public class ExportController {
         OutputOptions oOptions = new OutputOptionsImpl();
         
         // run
-        String res = this.exportNode(sysUID, exporter, oOptions, ".ics", response);
+        String res = converterUtils.exportNode(sysUID, exporter, oOptions, ".ics", response);
         return res;
     }
 
@@ -442,7 +382,7 @@ public class ExportController {
         oOptions.setStrClassFilter("EventNode");
         
         // run
-        String res = this.exportNode(sysUID, exporter, oOptions, ".ics", response);
+        String res = converterUtils.exportNode(sysUID, exporter, oOptions, ".ics", response);
         return res;
     }
 
@@ -474,7 +414,7 @@ public class ExportController {
         oOptions.setStrClassFilter("TaskNode");
         
         // run
-        String res = this.exportNode(sysUID, exporter, oOptions, ".ics", response);
+        String res = converterUtils.exportNode(sysUID, exporter, oOptions, ".ics", response);
         return res;
     }
 
@@ -504,11 +444,11 @@ public class ExportController {
         Exporter exporter = new ICalExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
         
-        oOptions.setStrClassFilter("TaskNode");;
-        oOptions.setStrTypeFilter("OFFEN,RUNNING,LATE,WARNING");;
+        oOptions.setStrClassFilter("TaskNode");
+        oOptions.setStrTypeFilter("OFFEN,RUNNING,LATE,WARNING");
         
         // run
-        String res = this.exportNode(sysUID, exporter, oOptions, ".ics", response);
+        String res = converterUtils.exportNode(sysUID, exporter, oOptions, ".ics", response);
         return res;
     }
 
@@ -538,11 +478,11 @@ public class ExportController {
         Exporter exporter = new ICalExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
         
-        oOptions.setStrClassFilter("TaskNode");;
-        oOptions.setStrTypeFilter("LATE,WARNING");;
+        oOptions.setStrClassFilter("TaskNode");
+        oOptions.setStrTypeFilter("LATE,WARNING");
         
         // run
-        String res = this.exportNode(sysUID, exporter, oOptions, ".ics", response);
+        String res = converterUtils.exportNode(sysUID, exporter, oOptions, ".ics", response);
         return res;
     }
 
@@ -576,71 +516,11 @@ public class ExportController {
         Exporter exporter = new ICalExporter();
         
         // run
-        String res = this.exportNode(sysUID, exporter, oOptions, ".ics", response);
+        String res = converterUtils.exportNode(sysUID, exporter, oOptions, ".ics", response);
         return res;
     }
     
     
-    
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     read the node for sysUID and return it in html-format with all children<br>
-     *     use the setting of the output-options and set contect-header on response-obj
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>String - html-format of the node
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param sysUID - sysUID to export
-     * @param oOptions - the outputOptions 
-     * @param response - the response-Obj to set contenttype and headers
-     * @param pHeaderFile - path to headerFile-resource (if null=defaultfile will used; if empfty=ignored)
-     * @param pFooterFile - path to footerFile-resource (if null=defaultfile will used; if empfty=ignored)
-     * @return String - html-format of the node
-     */
-    public String commonExportNodeAsHtml(final String sysUID,
-                                         final OutputOptions oOptions,
-                                         final HttpServletResponse response,
-                                         final String pHeaderFile,
-                                         final String pFooterFile) {
-        Exporter exporter = new HtmlExporter();
-        String res = null;
-        String headerFile = pHeaderFile;
-        String footerFile = pFooterFile;
-        
-        // check headerFile
-        if (headerFile == null) {
-            headerFile = "/static/html/projektplan-export-header.html";
-        }
-        if (footerFile == null) {
-            footerFile = "/static/html/projektplan-export-footer.html";
-        }
-        try {
-            // run export
-            res = this.exportNode(sysUID, exporter, oOptions, ".html", response);
-            
-            if (headerFile != "" && footerFile != "") {
-                // read header
-                InputStream in = this.getClass().getResourceAsStream(headerFile);
-                res = IOUtils.toString(in) + res;
-
-                // add footer
-                in = this.getClass().getResourceAsStream(footerFile);
-                res = res + IOUtils.toString(in);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // change headers to display html in browser
-        response.setContentType("text/html");
-        response.setHeader("Content-Disposition", "");
-        
-        return res;
-    }
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -664,7 +544,7 @@ public class ExportController {
            @PathVariable(value = "sysUID") final String sysUID, final HttpServletResponse response) {
         // configure
         OutputOptions oOptions = new OutputOptionsImpl();
-        return this.commonExportNodeAsHtml(sysUID, oOptions, response, null, null);
+        return converterUtils.commonExportNodeAsHtml(sysUID, oOptions, response, null, null);
     }
 
     /**
@@ -693,7 +573,7 @@ public class ExportController {
         oOptions.setFlgProcessDocLayout(true);
         oOptions.setFlgProcessMarkdown(true);
         oOptions.setMaxUeEbene(-1);
-        return this.commonExportNodeAsHtml(sysUID, oOptions, response, "", "");
+        return converterUtils.commonExportNodeAsHtml(sysUID, oOptions, response, "", "");
     }
 
     /**
@@ -723,7 +603,7 @@ public class ExportController {
         oOptions.setFlgProcessDocLayout(true);
         oOptions.setFlgProcessMarkdown(true);
         oOptions.setMaxUeEbene(-1);
-        String res = this.commonExportNodeAsHtml(sysUID, oOptions, response, "", "");
+        String res = converterUtils.commonExportNodeAsHtml(sysUID, oOptions, response, "", "");
         
         // replace urls to frontpage
         res = res.replaceAll("\"/exports/documentation/", 
@@ -758,7 +638,7 @@ public class ExportController {
            @PathVariable(value = "sysUID") final String sysUID,
            @ModelAttribute final EmptyOutputOptionsImpl oOptions,
            final HttpServletResponse response) {
-        return this.commonExportNodeAsHtml(sysUID, oOptions, response, null, null);
+        return converterUtils.commonExportNodeAsHtml(sysUID, oOptions, response, null, null);
     }
 
     /**
@@ -792,7 +672,7 @@ public class ExportController {
         oOptions.setMaxUeEbene(-1);
         
         // generate
-        String res = this.commonExportNodeAsHtml(sysUID, oOptions, response, 
+        String res = converterUtils.commonExportNodeAsHtml(sysUID, oOptions, response, 
                         "/static/html/documentation-export-header.html", 
                         "/static/html/documentation-export-footer.html");
         // replace static pathes...

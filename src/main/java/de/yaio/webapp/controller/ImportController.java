@@ -18,8 +18,8 @@ package de.yaio.webapp.controller;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,9 +31,6 @@ import org.springframework.web.multipart.MultipartFile;
 import de.yaio.core.node.BaseNode;
 import de.yaio.extension.datatransfer.jpa.JPAExporter;
 import de.yaio.extension.datatransfer.ppl.PPLImporter;
-import de.yaio.extension.datatransfer.wiki.WikiImportOptions;
-import de.yaio.extension.datatransfer.wiki.WikiImporter;
-import de.yaio.extension.datatransfer.wiki.WikiImporter.WikiStructLine;
 import de.yaio.rest.controller.NodeActionResponse;
 import de.yaio.rest.controller.NodeRestController;
 
@@ -53,6 +50,9 @@ import de.yaio.rest.controller.NodeRestController;
 @Controller
 @RequestMapping("/imports")
 public class ImportController {
+    
+    @Autowired
+    protected ConverterUtils converterUtils;
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -106,28 +106,8 @@ public class ImportController {
                 masterNode.setSysUID(parentSysUID);
                 masterNode.setEbene(0);
                 
-                // Parser+Options anlegen
-                WikiImportOptions inputOptions = new WikiImportOptions();
-                inputOptions.setFlgReadList(true);
-                inputOptions.setFlgReadUe(true);
-                WikiImporter wikiImporter = new WikiImporter(inputOptions);
-                
-                // parse src
-                List<WikiStructLine> lstWikiLines;
-                lstWikiLines = wikiImporter.extractWikiStructLinesFromSrc(wikiSrc, inputOptions);
-    
-                // add to PPL-source
-                StringBuffer resBuf = new StringBuffer();
-                if (lstWikiLines != null) {
-                    for (WikiStructLine wk : lstWikiLines) {
-                        resBuf.append(wk.getHirarchy()).append("\n");
-                    }
-                }
-                String pplSource = resBuf.toString();
-                
-                // PPL-IMporter
-                PPLImporter pplImporter = new PPLImporter(null);
-                pplImporter.extractNodesFromLines(masterNode, pplSource, "\t");
+                // parse Wiki
+                converterUtils.parseNodesFromString(masterNode, wikiSrc);
                 
                 // JPA-Exporter
                 JPAExporter jpaExporter = new JPAExporter();
