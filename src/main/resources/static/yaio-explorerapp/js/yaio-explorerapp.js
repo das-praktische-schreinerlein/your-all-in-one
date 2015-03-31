@@ -133,7 +133,7 @@ yaioM.config(['$httpProvider', function($httpProvider) {
  *   </ul> 
  * <h4>FeatureKeywords:</h4>
  *     GUI Configuration
- * @param $httpProvider - the $translateProvider to get text-resources
+ * @param $translateProvider - the $translateProvider to get text-resources
  */
 yaioM.config(function ($translateProvider) {
     $translateProvider.translations();
@@ -149,6 +149,8 @@ yaioM.config(function ($translateProvider) {
     // init
     $translateProvider.preferredLanguage(langKey);
     initLanguageSupport(langKey);
+    $translateProvider.currentLanguageKey = langKey;
+    
 
     // change icons
     $(".button-lang").removeClass("button-lang-active").addClass("button-lang-inactive");
@@ -324,12 +326,15 @@ yaioM.controller('FrontPageCtrl', function($rootScope, $scope, $location, $http,
  *     GUI Configuration
  */
 yaioM.controller('LanguageCtrl', ['$translate', '$scope', function ($translate, $scope) {
+    $scope.currentLanguageKey = $translate.currentLanguageKey;
     $scope.changeLanguage = function (langKey) {
         // change angularTranslate
         $translate.use(langKey);
         
         // change other languagetranslator
         window.lang.change(langKey);
+        
+        $scope.currentLanguageKey = langKey;
         
         // change icons
         $(".button-lang").removeClass("button-lang-active").addClass("button-lang-inactive");
@@ -750,7 +755,9 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
                              tr: "#masterTr",
                          } 
                     };
-                    renderColumnsForNode(null, data);
+                    renderColumnsForNode(null, data, true);
+
+                    // recalc gantt
                     yaioRecalcMasterGanttBlock($scope.node);
                 } else {
                     // error
@@ -771,6 +778,13 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
         }
     });
     
+    $scope.toggleSysContainerForNode = function(node) {
+        toggleNodeSysContainer(node.sysUID);
+    }
+    
+    $scope.openNodeEditorForNode = function(node, mode) {
+        yaioOpenNodeEditorForNode(node, mode);
+    }
     
     /**
      * <h4>FeatureDomain:</h4>
