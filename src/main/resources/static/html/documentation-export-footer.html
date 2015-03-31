@@ -26,14 +26,12 @@
     $( "span:contains('OFFEN')" ).css( styles );
 </script>
 <script type="text/javascript">
-    // Syntaxhightlighter highlightjs
-    hljs.initHighlightingOnLoad();
-    // mermaid after hightlight!
-    try {
-        mermaid.init();
-    } catch (ex) {
-        console.error("formatMermaidGlobal error:" + ex);
+    // format markdown-extension
+    var flgDoMermaid = formatDescBlock("#div_full");
+    if (flgDoMermaid) {
+        formatMermaidGlobal();
     }
+
     // toggleAll after mermaid!!!
     // alle Bloecke toggeln
     //jMATService.getPageLayoutService().doAllBlockToggler(false);
