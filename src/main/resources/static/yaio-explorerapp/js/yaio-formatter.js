@@ -17,11 +17,13 @@
 
 'use strict';
 /* require 'yaio-basesservice' */
-/* require 'yaio-layout' */
 /* require '/js/highlightjs' */
 /* require '/js/jquery' */
 /* require '/js/marked' */
 /* require '/freemind-flash' */
+
+var localHtmlId = 1;
+
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -215,7 +217,7 @@ function formatYaioFreemind(block) {
  */
 function formatMermaidGlobal() {
     mermaid.parseError = function(err,hash){
-        showToastMessage("error", "Oops! Ein Fehlerchen :-(", "Sytanxfehler bei Parsen des Diagrammcodes:" + err);
+        showToastMessage("error", "Oops! Ein Fehlerchen :-(", "Syntaxfehler bei Parsen des Diagrammcodes:" + err);
 //        showModalErrorMessage(":" + err);
     };
     try {

@@ -29,155 +29,81 @@
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 
-var localHtmlId = 1;
-
 /*****************************************
  *****************************************
  * Service-Funktions (layout)
  *****************************************
  *****************************************/
 
-/**
- * <h4>FeatureDomain:</h4>
- *     GUI
- * <h4>FeatureDescription:</h4>
- *     init the multilanguage support for all tags with attribute <XX lang="de">
- * <h4>FeatureResult:</h4>
- *   <ul>
- *     <li>GUI-result: init multilanguage-support
- *   </ul> 
- * <h4>FeatureKeywords:</h4>
- *     GUI Editor Multilanguagesupport
- * @param langKey - key of the preferred-language
- */
-function initLanguageSupport(langKey) {
-    // Create language switcher instance and set default language to tech
-    window.lang = new Lang('tech');
+ function showModalErrorMessage(message) {
+     // set messagetext
+     $( "#error-message-text" ).html(message);
+     
+     // show message
+     $( "#error-message" ).dialog({
+         modal: true,
+         buttons: {
+           Ok: function() {
+             $( this ).dialog( "close" );
+           }
+         }
+     });    
+ }
 
-    //Define the de language pack as a dynamic pack to be loaded on demand
-    //if the user asks to change to that language. We pass the two-letter language
-    //code and the path to the language pack js file
-    window.lang.dynamic('de', 'lang/lang-tech-to-de.json');
-    window.lang.dynamic('en', 'lang/lang-tech-to-en.json');
-    window.lang.loadPack('de');
-    window.lang.loadPack('en');
+ function showModalConfirmDialog(message, yesHandler, noHandler) {
+     // set messagetext
+     $( "#dialog-confirm-text" ).html(message);
+     
+     // show message
+     
+     $( "#dialog-confirm" ).dialog({
+         resizable: false,
+         height:140,
+         modal: true,
+         buttons: {
+           "Ja": function() {
+             $( this ).dialog( "close" );
+             if (yesHandler) {
+                 yesHandler();
+             }
+           },
+           "Abbrechen": function() {
+             $( this ).dialog( "close" );
+             if (noHandler) {
+                 noHandler();
+             }
+           }
+         }
+     });
+ }
 
-    // change to de
-    window.lang.change(langKey);
-}
-
-function setupAppSize() {
-    var height = window.innerHeight;
-    var width = window.innerWidth;
-    
-    // YAIO-editor
-    var ele = $("#containerBoxYaioEditor");
-    if (ele.length > 0) {
-        // we are relative to the tree
-        var paddingToHead = $("#containerYaioTree").position().top;
-        var left = $("#containerYaioTree").position().left + $("#containerYaioTree").width + 2;
-
-        // set posTop as scrollTop burt never < paddingToHead
-        var posTop = $(window).scrollTop();
-        if (posTop < paddingToHead) {
-            posTop = paddingToHead;
-        }
-        
-        // calc maxHeight = windHeight - 20 (puffer)
-        var maxHeight = height - 20;
-        // sub topPos - Scollpos
-        maxHeight = maxHeight - (posTop - $(window).scrollTop());
-
-        // set values
-        $(ele).css("position", "absolute");
-        $(ele).css("max-height", maxHeight);
-        $(ele).css("top", posTop);
-        $(ele).css("left", left);
-        
-        console.log("setup size containerBoxYaioEditor width:" + window.innerWidth 
-                + " height:" + window.innerHeight 
-                + " scrollTop:" + $(window).scrollTop()
-                + " offset.top" + $(ele).offset().top
-                + " top:" + posTop
-                + " max-height:" + $(ele).css("max-height")
-                );
-    }
-    
-    // Export-editor
-    ele = $("#containerFormYaioEditorOutputOptions");
-    if (ele.length > 0) {
-        $(ele).css("max-height", height-$(ele).offset().top);
-        console.log("setup size containerFormYaioEditorOutputOptions width:" + window.innerWidth 
-                + " height:" + window.innerHeight 
-                + " scrollTop:" + $(window).scrollTop()
-                + " offset.top" + $(ele).offset().top
-                + " max-height:" + $(ele).css("max-height")
-                );
-    }
-    // Import-editor
-    ele = $("#containerFormYaioEditorImport");
-    if (ele.length > 0) {
-        $(ele).css("max-height", height-$(ele).offset().top);
-        console.log("setup size containerFormYaioEditorImport width:" + window.innerWidth 
-                + " height:" + window.innerHeight 
-                + " scrollTop:" + $(window).scrollTop()
-                + " offset.top" + $(ele).offset().top
-                + " max-height:" + $(ele).css("max-height")
-                );
-    }
-
-    // Frontpage
-    ele = $("#front-content-intro");
-    if (ele.length > 0) {
-        var maxHeight = height-$(ele).offset().top;
-        
-        // sub todonextbox
-        if ($('#box_todonext').length > 0 ) {
-            if ($('#box_todonext').height > 0) {
-                maxHeight = maxHeight - $('#box_todonext').height;
-            } else {
-                // sometime height is not set: then default
-                maxHeight = maxHeight - 100;
-            }
-        }
-        $(ele).css("max-height", maxHeight);
-        console.log("setup size front-content-intro width:" + window.innerWidth 
-                + " height:" + window.innerHeight 
-                + " scrollTop:" + $(window).scrollTop()
-                + " offset.top" + $(ele).offset().top
-                + " max-height:" + $(ele).css("max-height")
-                );
-    }
-}
-
-function yaioShowHelpSite(url) {
-    // set messagetext
-    url += "?" + createXFrameAllowFrom();
-    console.log("yaioShowHelpSite:" + url);
-    $("#help-iframe").attr('src',url);
-    
-    // show message
-    $( "#help-box" ).dialog({
-        modal: true,
-        width: "800px",
-        buttons: {
-          "Schliessen": function() {
-            $( this ).dialog( "close" );
-          },
-          "Eigenes Fenster": function() {
-              var helpFenster = window.open(url, "help", "width=750,height=500,scrollbars=yes,resizable=yes");
-              helpFenster.focus();
-              $( this ).dialog( "close" );
-            }
-        }
-    });    
-}
 
 /*****************************************
  *****************************************
  * Service-Funktions (logging)
  *****************************************
  *****************************************/
+ function showToastMessage(type, title, message) {
+     // show message
+     toastr.options = {
+             "closeButton": true,
+             "debug": false,
+             "newestOnTop": true,
+             "progressBar": true,
+             "positionClass": "toast-top-right",
+             "preventDuplicates": false,
+             "showDuration": "300",
+             "hideDuration": "1000",
+             "timeOut": "10000",
+             "extendedTimeOut": "1000",
+             "showEasing": "swing",
+             "hideEasing": "linear",
+             "showMethod": "fadeIn",
+             "hideMethod": "fadeOut"
+     };
+     toastr[type](htmlEscapeText(message), title);
+ }
+
 
 
 function logError(message, flgShowDialog) {
