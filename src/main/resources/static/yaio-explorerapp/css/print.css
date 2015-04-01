@@ -141,6 +141,9 @@ table.fancytree-ext-table.fancytree-treefocus tbody tr.fancytree-active {
 pre {
     max-height: none;
     overflow-y: auto;
+    /* show all whitespaces */
+    white-space: pre-wrap;
+    overflow: visible;
 }
 
 div.mermaid-source {

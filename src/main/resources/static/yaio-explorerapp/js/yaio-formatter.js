@@ -362,9 +362,9 @@ function addServicesToDiagrammBlock(block, type, downloadLink) {
             + "<pre>" + content + "</pre></div>");
     // add service-links
     $("#fallback" + blockId).before(
-            "<div class='services" + type + "' id='services" + blockId + "'>"
+            "<div class='services" + type + "' id='services" + blockId + "'><div>"
             + downloadLink
-            + " <a href='#' style='display: none;' id='toggleorig" + blockId + "' onclick=\"toggleWithLinks('#toggleorig" + blockId + "', '#togglesource" + blockId + "', '#" + blockId + "', '#fallback" + blockId + "'); return false;\" target='_blank'>Diagramm</a>"
-            + " <a href='#' id='togglesource" + blockId + "' onclick=\"toggleWithLinks('#toggleorig" + blockId + "', '#togglesource" + blockId + "', '#" + blockId + "', '#fallback" + blockId + "'); return false;\" target='_blank'>Source</a>"
-            + "</div>");
+            + "<a href='#' style='display: none;' id='toggleorig" + blockId + "' onclick=\"toggleWithLinks('#toggleorig" + blockId + "', '#togglesource" + blockId + "', '#" + blockId + "', '#fallback" + blockId + "'); return false;\" target='_blank'>Diagramm</a>"
+            + "<a href='#' id='togglesource" + blockId + "' onclick=\"toggleWithLinks('#toggleorig" + blockId + "', '#togglesource" + blockId + "', '#" + blockId + "', '#fallback" + blockId + "'); return false;\" target='_blank'>Source</a>"
+            + "</div></div>");
 }
