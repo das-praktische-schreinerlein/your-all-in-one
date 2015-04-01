@@ -18,6 +18,8 @@
 package de.yaio.extension.datatransfer.html;
 
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
 import org.markdown4j.Markdown4jProcessor;
@@ -783,7 +785,7 @@ public class HtmlExporter extends WikiExporter {
                 + label + "</a> " + suffix + " (" + curNode.getWorkingId() + ")";
         } else if (SymLinkNode.class.isInstance(curNode)) {
             // Symlink
-            SymLinkNode symlinkNode = ((SymLinkNode) curNode);
+            SymLinkNode symlinkNode = (SymLinkNode) curNode;
             blockName = name + " (" + curNode.getWorkingId() + ")"
                 + " &gt; " + "<a onclick=\"javascript:openNode('" 
                 +    symlinkNode.getSymLinkRef() + "');return false;\""
@@ -848,12 +850,12 @@ public class HtmlExporter extends WikiExporter {
                     planCalcSum, "plancalcsum", oOptions.isFlgShowPlan() && oOptions.isFlgShowChildrenSum());
             }
             // Block-Layout anpassen
-            if (   (ist == null || ist.length() <= 0)  
+            if ((ist == null || ist.length() <= 0)  
                 && (plan == null || plan.length() <= 0)) {
                 blockIst = "";
                 blockPlan = "";
             }
-            if (   (istCalcSum == null || istCalcSum.length() <= 0) 
+            if ((istCalcSum == null || istCalcSum.length() <= 0) 
                 && (planCalcSum == null || planCalcSum.length() <= 0)) {
                 blockIstCalcSum = "";
                 blockPlanCalcSum = "";
@@ -1010,20 +1012,34 @@ public class HtmlExporter extends WikiExporter {
         newDescText = newDescText.replaceAll("…", "...");
         newDescText = markdownProcessor.process(newDescText);
         newDescText = newDescText.replaceAll("…", "...");
-        newDescText = newDescText.replaceAll("<code>", 
-                        "<code id=\"inlineCode" + new Integer(htmlElementId++) +  "\" class=\"txt\">");
-        newDescText = newDescText.replaceAll(
+        
+        // replace code-blocks
+        newDescText = replaceDiagrammPattern(newDescText,
+                        "<code>", 
+                        "<code id=\"inlineCode",
+                        "\" class=\"txt\">").toString();
+        newDescText = replaceDiagrammPattern(newDescText,
                         "<pre><code class=\\\"mermaid\\\">(" + Parser.CONST_PATTERN_SEG_DESC + "*?)<\\/code><\\/pre>", 
-                        "<div id=\"inlineMermaid" + new Integer(htmlElementId++) +  "\" class=\"mermaid\">$1</div>");
-        newDescText = newDescText.replaceAll(
-                        "<pre><code class=\\\"yaiofreemind\\\">(" + Parser.CONST_PATTERN_SEG_DESC + "*?)<\\/code><\\/pre>", 
-                        "<div id=\"inlineFreemind" + new Integer(htmlElementId++) +  "\" class=\"yaiofreemind\">$1</div>");
+                        "<div id=\"inlineMermaid",
+                        "\" class=\"mermaid\">$1</div>").toString();
+        newDescText = replaceDiagrammPattern(newDescText,
+                        "<pre><code class=\\\"yaiofreemind\\\">(" + Parser.CONST_PATTERN_SEG_DESC 
+                            + "*?)<\\/code><\\/pre>", 
+                        "<div id=\"inlineMindmap",
+                        "\" class=\"yaiomindmap\">$1</div>").toString();
+        newDescText = replaceDiagrammPattern(newDescText,
+                        "<pre><code class=\\\"yaiomindmap\\\">(" + Parser.CONST_PATTERN_SEG_DESC 
+                            + "*?)<\\/code><\\/pre>", 
+                        "<div id=\"inlineMindmap",
+                        "\" class=\"yaiomindmap\">$1</div>").toString();
+        
         // reescape > and replace markdown-hack "."
         newDescText = newDescText.replaceAll("&amp;gt;", "&gt;");
         newDescText = newDescText.replaceAll("\n\\.\n", "\n");
-                
+        
         return newDescText;
     }
+    
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -1077,5 +1093,37 @@ public class HtmlExporter extends WikiExporter {
         newDescText += newDescTextRest;
         
         return newDescText;
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     DataExport
+     *     Presentation
+     * <h4>FeatureDescription:</h4>
+     *     search for the pattern and replace it with the replacementhead + htmlId + replacementTail
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue String - formatted diagramm-markdown
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Layout
+     * @param text             the haystack
+     * @param patternString    the needle to replace
+     * @param replacementHead  the head before the new htmlelement-id
+     * @param replacementTail  the tail after the new htmlelement-id
+     * @return formatted diagramm-markdown
+     */
+    protected StringBuffer replaceDiagrammPattern(final String text, 
+                                               final String patternString, 
+                                               final String replacementHead, final String replacementTail) {
+        Pattern pattern = Pattern.compile(patternString);
+        Matcher matcher = pattern.matcher(text);
+        StringBuffer result = new StringBuffer();
+        while (matcher.find()) {
+            matcher.appendReplacement(result, replacementHead + new Integer(htmlElementId++) + replacementTail);
+        }
+        matcher.appendTail(result);
+        
+        return result;
     }
 }
