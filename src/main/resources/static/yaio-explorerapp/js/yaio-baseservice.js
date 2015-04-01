@@ -35,6 +35,21 @@
  *****************************************
  *****************************************/
 
+ function toggleWithLinks(link1, link2, id1, id2) {
+     if ($(id1).css("display") != "none") {
+         $(id1).css("display", "none");
+         $(link1).css("display", "inline");
+         $(id2).css("display", "block");
+         $(link2).css("display", "none");
+     } else {
+         $(id2).css("display", "none");
+         $(link2).css("display", "inline");
+         $(id1).css("display", "block");
+         $(link1).css("display", "none");
+     }
+     return false;     
+ }
+
  function showModalErrorMessage(message) {
      // set messagetext
      $( "#error-message-text" ).html(message);
