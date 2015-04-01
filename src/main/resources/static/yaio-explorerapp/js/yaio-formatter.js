@@ -16,14 +16,12 @@
  */
 
 'use strict';
+
 /* require 'yaio-basesservice' */
 /* require '/js/highlightjs' */
 /* require '/js/jquery' */
 /* require '/js/marked' */
 /* require '/freemind-flash' */
-
-var localHtmlId = 1;
-
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -37,6 +35,7 @@ var localHtmlId = 1;
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 
+var localHtmlId = 1;
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -62,8 +61,9 @@ function formatMarkdown(descText, flgHighlightNow) {
         code = htmlEscapeTextLazy(code);
         if (code.match(/^sequenceDiagram/)||code.match(/^graph/)) {
             return '<div id="inlineMermaid' + (localHtmlId++) + '" class="mermaid">'+ prepareTextForMermaid(code ) + '</div>';
-        } else if (language !== undefined && language.match(/^yaiofreemind/)) {
-            return '<div id="inlineFreemind' + (localHtmlId++) + '"  class="yaiofreemind">'+ code + '</div>';
+        } else if (language !== undefined 
+                   && (language.match(/^yaiomindmap/) || language.match(/^yaiofreemind/))) {
+            return '<div id="inlineMindmap' + (localHtmlId++) + '"  class="yaiomindmap">'+ code + '</div>';
         } else {
             return '<pre><code id="inlineCode' + (localHtmlId++) + '" class="lang-' + language + '">' + code + '</code></pre>';
         }
@@ -162,7 +162,7 @@ function prepareTextForMarkdown(descText) {
  * <h4>FeatureDomain:</h4>
  *     GUI
  * <h4>FeatureDescription:</h4>
- *     format the block-content as freemind. 
+ *     format the block-content as mindmap. 
  *     <ul>
  *     <li>creates a FlashObject /freemind-flash/visorFreemind.swf
  *     <li>Calls /converters/mindmap with the html-content of the block
@@ -176,10 +176,11 @@ function prepareTextForMarkdown(descText) {
  *     Layout
  * @param block - jquery-html-element with the content to convert to mindmap 
  */
-function formatYaioFreemind(block) {
+function formatYaioMindmap(block) {
     var content = $(block).html();
+    var blockId = $(block).attr('id');
     var url = "/converters/mindmap?source=" + encodeURIComponent(content);
-    console.log("formatYaioFreemind " + $(block).attr('id') + " url:" + url);
+    console.log("formatYaioMindmap " + blockId + " url:" + url);
     
     var fo = new FlashObject("/freemind-flash/visorFreemind.swf", "visorFreeMind", "100%", "100%", 6, "#9999ff");
     fo.addParam("quality", "high");
@@ -199,7 +200,7 @@ function formatYaioFreemind(block) {
     fo.addVariable("min_alpha_buttons",20);
     fo.addVariable("max_alpha_buttons",100);
     fo.addVariable("scaleTooltips","false");
-    fo.write($(block).attr('id'));
+    fo.write(blockId);
 }
 
 
@@ -303,38 +304,67 @@ function convertMarkdownToJira(descText) {
 
 function formatDescBlock(descBlock) {
     var flgDoMermaid = false;
+    var descBlockId = $(descBlock).attr('id');
 
-    console.log("formatDescBlock highlight for descBlock: " + $(descBlock).attr('id'));
+    console.log("formatDescBlock highlight for descBlock: " + descBlockId);
     // remove trigger-flag
     $(descBlock).removeClass('syntaxhighlighting-open');
     
     // higlight code-blocks
-    $("#" + $(descBlock).attr('id') + " code").each(function(i, block) {
+    $("#" + descBlockId + " code").each(function(i, block) {
+        var blockId = $(block).attr('id');
         if ($(block).hasClass("lang-mermaid") || $(block).hasClass("mermaid")) {
             // mermaid: no highlight
-            console.log("formatDescBlock preparemermaid descBlock: " + $(descBlock).attr('id') + " block: " + $(block).attr('id'));
+            console.log("formatDescBlock mermaid descBlock: " + descBlockId + " block: " + blockId);
+            addServicesToDiagrammBlock(block, 'mermaid',
+                    "<a href='' id='linkdownload" + blockId + "'  target='_blank'"
+                    +   " onclick=\"javascript: downloadAsFile($('#linkdownload" + blockId + "'), $('#" + blockId + "').html(), 'diagram.svg', 'image/svg+xml', 'utf-8'); return true;\">"
+                    + "Download</a>");
             flgDoMermaid = true;
         } else {
             // do highlight
-            console.log("formatDescBlock highlight descBlock: " + $(descBlock).attr('id') + " block: " + $(block).attr('id'));
+            console.log("formatDescBlock highlight descBlock: " + descBlockId + " block: " + blockId);
             hljs.highlightBlock(block);
         }
     });
 
-    // mermaid/freemind div-blocks
-    $("#" + $(descBlock).attr('id') + " div").each(function(i, block) {
+    // mermaid/mindmap div-blocks
+    $("#" + descBlockId + " div").each(function(i, block) {
+        var blockId = $(block).attr('id');
         if (   ($(block).hasClass("lang-mermaid") || $(block).hasClass("mermaid")) 
             && ! $(block).attr("data-processed")) {
             // mermaid: no highlight
-            console.log("formatDescBlock mermaid descBlock: " + $(descBlock).attr('id') + " block: " + $(block).attr('id'));
+            console.log("formatDescBlock mermaid descBlock: " + descBlockId + " block: " + blockId);
+            addServicesToDiagrammBlock(block, 'mermaid',
+                    "<a href='' id='linkdownload" + blockId + "'  target='_blank'"
+                    +   " onclick=\"javascript: downloadAsFile($('#linkdownload" + blockId + "'), $('#" + blockId + "').html(), 'diagram.svg', 'image/svg+xml', 'utf-8'); return true;\">"
+                    + "Download</a>");
             flgDoMermaid = true;
-        } else if ($(block).hasClass("lang-yaiofreemind") || $(block).hasClass("yaiofreemind")) {
-            // freemind: no highlight
-            console.log("formatDescBlock yaiofreemind for descBlock: " + $(descBlock).attr('id') + " block: " + $(block).attr('id'));
-            formatYaioFreemind(block);
+        } else if ($(block).hasClass("lang-yaiomindmap") || $(block).hasClass("yaiomindmap")) {
+            // mindmap: no highlight
+            console.log("formatDescBlock yaiomindmap for descBlock: " + descBlockId + " block: " + blockId);
+            var content = $(block).html();
+            var url = "/converters/mindmap?source=" + encodeURIComponent(content);
+            addServicesToDiagrammBlock(block, 'yaiomindmap', "<a href='" + url + "' id='download" + blockId + "' target='_blank'>Download</a>");
+            formatYaioMindmap(block);
         }
     });
     
     return flgDoMermaid;
 }
 
+function addServicesToDiagrammBlock(block, type, downloadLink) {
+    var content = $(block).html();
+    var blockId = $(block).attr('id');
+
+    // add source
+    $(block).before("<div class='" + type + "-source' id='fallback" + blockId + "'>"
+            + "<pre>" + content + "</pre></div>");
+    // add service-links
+    $("#fallback" + blockId).before(
+            "<div class='services" + type + "' id='services" + blockId + "'>"
+            + downloadLink
+            + " <a href='#' style='display: none;' id='toggleorig" + blockId + "' onclick=\"toggleWithLinks('#toggleorig" + blockId + "', '#togglesource" + blockId + "', '#" + blockId + "', '#fallback" + blockId + "'); return false;\" target='_blank'>Diagramm</a>"
+            + " <a href='#' id='togglesource" + blockId + "' onclick=\"toggleWithLinks('#toggleorig" + blockId + "', '#togglesource" + blockId + "', '#" + blockId + "', '#fallback" + blockId + "'); return false;\" target='_blank'>Source</a>"
+            + "</div>");
+}
