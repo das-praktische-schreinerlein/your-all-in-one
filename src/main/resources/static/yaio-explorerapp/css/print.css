@@ -43,11 +43,6 @@ body {
     size:landscape; 
 }
 
-pre {
-    max-height: none;
-    overflow-y: auto;
-}
-
 .blockPageFooter {
     display: none;
 }
@@ -134,5 +129,32 @@ table.fancytree-ext-table.fancytree-treefocus tbody tr.fancytree-active {
 
 
 #wysiwhg-box, #preview-box, div [class*="ui-dialog"], .ui-widget-overlay {
+    display: none;
+}
+
+
+/*****************************************
+ *****************************************
+ * formatter-elements
+ *****************************************
+ *****************************************/
+pre {
+    max-height: none;
+    overflow-y: auto;
+}
+
+div.mermaid-source {
+    display: none;
+}
+div.yaiomindmap {
+    display: none !important;
+}
+div.yaiomindmap-source {
+    display: block !important;
+}
+div.servicesmermaid {
+    display: none;
+}
+div.servicesyaiomindmap {
     display: none;
 }
