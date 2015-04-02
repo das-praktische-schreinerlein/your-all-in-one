@@ -49,14 +49,16 @@ var localHtmlId = 1;
  * <h4>FeatureKeywords:</h4>
  *     Layout
  * @param descText - the string to format
- * @param flgHighlightNow - if isd set do syntax-highlighting while markdown-processing, if not set do it later
+ * @param flgHighlightNow - if is set do syntax-highlighting while markdown-processing, if not set do it later
+ * @param headerPrefix - headerPrefix for heading-ids
  * @return - formatted markdown
  */
-function formatMarkdown(descText, flgHighlightNow) {
+function formatMarkdown(descText, flgHighlightNow, headerPrefix) {
     // prepare descText
     descText = prepareTextForMarkdown(descText);
     
     var renderer = new marked.Renderer();
+    // my own code-handler
     renderer.code = function (code, language) {
         code = htmlEscapeTextLazy(code);
         if (code.match(/^sequenceDiagram/)||code.match(/^graph/)) {
@@ -67,7 +69,22 @@ function formatMarkdown(descText, flgHighlightNow) {
         } else {
             return '<pre><code id="inlineCode' + (localHtmlId++) + '" class="lang-' + language + '">' + code + '</code></pre>';
         }
-    };    
+    };
+    
+    // my own heading-handler to be sure that the heading id is unique
+    renderer.heading = function(text, level, raw) {
+      return '<h'
+        + level
+        + ' id="'
+        + this.options.headerPrefix
+        + '_' + (localHtmlId++) + '_'
+        + raw.toLowerCase().replace(/[^\w]+/g, '-')
+        + '">'
+        + text
+        + '</h'
+        + level
+        + '>\n';
+    };
     
     // Marked
     marked.setOptions({
@@ -78,7 +95,8 @@ function formatMarkdown(descText, flgHighlightNow) {
       pedantic: false,
       sanitize: true,
       smartLists: true,
-      smartypants: false
+      smartypants: false,
+      headerPrefix: headerPrefix
     });
     if (flgHighlightNow) {
         marked.setOptions({
@@ -367,4 +385,13 @@ function addServicesToDiagrammBlock(block, type, downloadLink) {
             + "<a href='#' style='display: none;' id='toggleorig" + blockId + "' onclick=\"toggleWithLinks('#toggleorig" + blockId + "', '#togglesource" + blockId + "', '#" + blockId + "', '#fallback" + blockId + "'); return false;\" target='_blank'>Diagramm</a>"
             + "<a href='#' id='togglesource" + blockId + "' onclick=\"toggleWithLinks('#toggleorig" + blockId + "', '#togglesource" + blockId + "', '#" + blockId + "', '#fallback" + blockId + "'); return false;\" target='_blank'>Source</a>"
             + "</div></div>");
+}
+
+
+function addTOCForBlock(tocElement, srcElement, settings) {
+    // add TOC
+    settings = settings || { toc: {}};
+    settings.toc = settings.toc || { };
+    settings.toc.dest = $(tocElement);
+    $.fn.toc($(srcElement), settings);
 }

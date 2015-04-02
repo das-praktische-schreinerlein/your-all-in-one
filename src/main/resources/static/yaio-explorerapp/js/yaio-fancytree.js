@@ -371,8 +371,16 @@ function yaioCreateFancyTree(treeId, masterNodeId, doneHandler) {
         gridnav: {
             autofocusInput: false,
             handleCursorKeys: true
-        }
-
+        },
+/**
+        click: function(event, data) {
+            var node = data.node,
+                tt = $.ui.fancytree.getEventTargetType(event.originalEvent);
+            if (tt == undefined) {
+                return true;
+            }
+        },
+**/
     }).on("nodeCommand", function(event, data){
         // Custom event handler that is triggered by keydown-handler and
         // context menu:
@@ -1333,12 +1341,12 @@ function renderColumnsForNode(event, data, preventActionsColum) {
                         + htmlEscapeText(descText) + "</pre>";
 
         // prepare descText
-        var descHtml = formatMarkdown(descText, false);
+        var descHtml = formatMarkdown(descText, false, basenode.sysUID);
         $divDesc.append("<div id='container_content_desc_" + basenode.sysUID + "' class='container-content-desc syntaxhighlighting-open'>" + descHtml + "</div>");
-        
+
         // append to datablock
         $nodeDataBlock.append($divDesc);
-        
+
         // disable draggable for td.block_nodedata
         $( "#tree" ).draggable({ cancel: "td.block_nodedata" });
         
@@ -1349,6 +1357,13 @@ function renderColumnsForNode(event, data, preventActionsColum) {
     // add nodeData
     $tdList.eq(colData).html($nodeDataBlock).addClass("block_nodedata");
     
+    // add TOC
+    var settings = {
+            toc: {}
+    };
+    settings.toc.dest = $("#commands_desc_" + basenode.sysUID);
+    $.fn.toc($("#container_content_desc_" + basenode.sysUID), settings);
+
     // add gantt
     var $nodeGanttBlock = renderGanttBlock(basenode, node);
     $tdList.eq(colGantt).html($nodeGanttBlock).addClass("block_nodegantt");

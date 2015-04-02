@@ -377,7 +377,7 @@ function setupAppSize() {
 
     // Frontpage
     ele = $("#front-content-intro");
-    if (ele.length > 0) {
+    if (0 && ele.length > 0) {
         var maxHeight = height-$(ele).offset().top;
         
         // sub todonextbox
