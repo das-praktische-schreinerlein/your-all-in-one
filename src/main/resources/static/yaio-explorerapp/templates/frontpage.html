@@ -45,9 +45,16 @@
   </div>
 </div>
 <div id="front-content-right">
+    <div id="sidebartoc" class="sidebartoc documentation-sidebartoc"> </div>
 </div>
 
 <script type="text/javascript">
+    // format markdown-extension
+    var flgDoMermaid = formatDescBlock("#front-content-intro");
+    if (flgDoMermaid) {
+        formatMermaidGlobal();
+    }
+    
     // activate elements after 1 second
     setTimeout(function() { 
         // activate speech recognition
@@ -63,6 +70,10 @@
     
     // resize elements after 3 second
     setTimeout(function() { 
+        // add TOC
+        addTOCForBlock("#sidebartoc", "#front-content-intro", { toc: { topLink: "Seitenkopf"}});
         setupAppSize();
     }, 3000);
+    
+
 </script>
