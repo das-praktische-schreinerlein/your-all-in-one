@@ -546,6 +546,13 @@ code, kbd, pre, samp {
     color: #ff9933;
     width: 710px;
 }
+ul.ulMenueFooter li {
+    float: left;
+    font-size: 14px;
+    list-style: outside none none;
+    margin: 1px;
+    padding: 4px 2px 4px 2px;
+}
 
 /* set img from markdown without class to 600px */
 img:not([class]) {
@@ -570,6 +577,9 @@ img:not([class]) {
     <!-- Toastr -->
     <link rel="stylesheet" href="/css/toastr/toastr.css">
     <script src="/js/toastr/toastr.min.js" type="text/javascript"></script>
+
+    <!-- toc -->
+    <script src="/js/strapdown/strapdown-toc.js" type="text/javascript"></script>
 
     <!-- Syntaxhightlighter highlightjs -->
     <link rel="stylesheet" href="/css/highlightjs/default.css">
@@ -953,3 +963,5 @@ img:not([class]) {
 </head>
 <body>
     <div id="div_full" style="width: 100%">
+       <div id="globtoc" class="globtoc projectplan-globtoc"> </div>
+    

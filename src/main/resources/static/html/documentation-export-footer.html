@@ -6,6 +6,14 @@
             <ul id="ulMenueFooter" class="ulMenueFooter">
                 <li class="menueFooterMasterLink display-if-js-block command"><a class="a-menue-footer-norm button flg-textonly hidden" id="speechSynthLink" onclick="javascript:openSpeechSynth();return false;">Vorlesen</a></li>
                 <li class="menueFooterMasterLink display-if-js-block"><span class="button"><a onclick="window.print(); return true;" class="a-menue-footer-norm flg-textonly">Drucken</a><input type="checkbox" onclick="togglePrintLayout()" id="checkboxPrintAll"> All</span></li>
+                <li class="menueFooterMasterLink display-if-js-block command">
+                   <a class="a-menue-footer-norm button flg-textonly" id="showSidebarTOCLink" onclick="javascript:toggleWithLinks('#showSidebarTOCLink', '#hideSidebarTOCLink', '#sidebartoc', '');return false;">Sidebar an</a>
+                   <a class="a-menue-footer-norm button flg-textonly" style="display: none" id="hideSidebarTOCLink" onclick="javascript:toggleWithLinks('#showSidebarTOCLink', '#hideSidebarTOCLink', '#sidebartoc', '');return false;">Sidebar aus</a>
+                </li>
+                <li class="menueFooterMasterLink display-if-js-block command">
+                   <a class="a-menue-footer-norm button flg-textonly" id="showGlobalTOCLink" onclick="javascript:toggleWithLinks('#showGlobalTOCLink', '#hideGlobalTOCLink', '#globtoc', '');return false;">TOC an</a>
+                   <a class="a-menue-footer-norm button flg-textonly" style="display: none" id="hideGlobalTOCLink" onclick="javascript:toggleWithLinks('#showGlobalTOCLink', '#hideGlobalTOCLink', '#globtoc', '');return false;">TOC aus</a>
+                </li>
 <!--
                 <li class="menueFooterMasterLink display-if-js-block">
                    <input type="text" style="width:200px" class="volltextsuchfeld" id="vlt_msglist">
@@ -16,6 +24,8 @@
              </ul>
         </div>
     </div>
+    <div id="sidebartoc" class="sidebartoc documentation-sidebartoc"> </div>
+    
 <script type="text/javascript">
     // alle OFFEN hervorheben
     var styles = {
@@ -31,6 +41,10 @@
     if (flgDoMermaid) {
         formatMermaidGlobal();
     }
+    
+    // add TOC
+    addTOCForBlock("#globtoc", "#div_full", { toc: { hide: true, minDeep: 2}});
+    addTOCForBlock("#sidebartoc", "#div_full", { toc: { hide: true, minDeep: 2}});
 
     // toggleAll after mermaid!!!
     // alle Bloecke toggeln
