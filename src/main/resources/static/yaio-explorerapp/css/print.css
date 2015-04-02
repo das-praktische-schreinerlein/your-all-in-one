@@ -99,7 +99,6 @@ table#masterTable tbody tr td:first-child + td + td + td {
     display: none;
 }
 
-
 #searchcommand {
     display: none;
 }
@@ -165,6 +164,9 @@ div.servicesyaiomindmap {
     display: none;
 }
 
+.nodetoc {
+    display: none !important;
+}
 #sidebartoc {
     display: none !important;
 }

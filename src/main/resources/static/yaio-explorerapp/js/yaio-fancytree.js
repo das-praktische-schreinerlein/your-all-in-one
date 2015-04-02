@@ -1309,7 +1309,7 @@ function renderColumnsForNode(event, data, preventActionsColum) {
 
         // add commands
         var commands = "<div class='container-commands-desc' id='commands_desc_" + basenode.sysUID + "'"
-            + "data-tooltip='tooltip.command.TogglePreWrap' lang='tech' >" 
+            + " data-tooltip='tooltip.command.TogglePreWrap' lang='tech' >" 
             + "<input type='checkbox' id='cmd_toggle_content_desc_" + basenode.sysUID + "' onclick=\"togglePreWrap('#content_desc_" + basenode.sysUID + "');togglePreWrap('#container_content_desc_" + basenode.sysUID + "'); return true;\">"
             + "<span lang='tech'>im Originallayout anzeigen</span>"
     //        + "<input type='checkbox' id='cmd_toggle_content_desc_markdown_" + basenode.sysUID + "' onclick=\"toggleDescMarkdown('#container_content_desc_" + basenode.sysUID + "'); return true;\">"
@@ -1329,6 +1329,7 @@ function renderColumnsForNode(event, data, preventActionsColum) {
            }        
         commands += "</div>";
         $divDesc.append(commands);
+        $divDesc.append("<div class='container-toc-desc' id='toc_desc_" + basenode.sysUID + "'><h1>Inhalt</h1></div>");
         
         // append content
         var descText = basenode.nodeDesc;
@@ -1361,7 +1362,8 @@ function renderColumnsForNode(event, data, preventActionsColum) {
     var settings = {
             toc: {}
     };
-    settings.toc.dest = $("#commands_desc_" + basenode.sysUID);
+    settings.toc.dest = $("#toc_desc_" + basenode.sysUID);
+    settings.toc.minDeep = 3;
     $.fn.toc($("#container_content_desc_" + basenode.sysUID), settings);
 
     // add gantt
