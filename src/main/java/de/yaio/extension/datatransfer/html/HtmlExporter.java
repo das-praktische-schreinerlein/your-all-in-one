@@ -1013,6 +1013,12 @@ public class HtmlExporter extends WikiExporter {
         newDescText = markdownProcessor.process(newDescText);
         newDescText = newDescText.replaceAll("…", "...");
         
+        // add id to heading
+        newDescText = replaceDiagrammPattern(newDescText,
+                        "<h([0-9]*)>", 
+                        "<h$1 id=\"heading_",
+                        "\">").toString();
+
         // replace code-blocks
         newDescText = replaceDiagrammPattern(newDescText,
                         "<code>", 
