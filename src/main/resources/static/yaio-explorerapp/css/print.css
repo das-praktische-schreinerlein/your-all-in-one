@@ -39,6 +39,9 @@ body {
 .pageContent {
     width: 100%;
 }
+#div_full {
+    width: 1150px !important;
+}
 @page { 
     size:landscape; 
 }
@@ -160,4 +163,8 @@ div.servicesmermaid {
 }
 div.servicesyaiomindmap {
     display: none;
+}
+
+#sidebartoc {
+    display: none !important;
 }
