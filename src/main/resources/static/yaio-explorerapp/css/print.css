@@ -164,8 +164,7 @@ div.servicesyaiomindmap {
     display: none;
 }
 
-.nodetoc {
-    display: none !important;
+.container-toc-desc {
 }
 #sidebartoc {
     display: none !important;

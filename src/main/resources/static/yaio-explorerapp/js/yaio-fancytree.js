@@ -1363,7 +1363,7 @@ function renderColumnsForNode(event, data, preventActionsColum) {
             toc: {}
     };
     settings.toc.dest = $("#toc_desc_" + basenode.sysUID);
-    settings.toc.minDeep = 3;
+    settings.toc.minDeep = 2;
     $.fn.toc($("#container_content_desc_" + basenode.sysUID), settings);
 
     // add gantt
