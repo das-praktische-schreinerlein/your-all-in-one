@@ -63,11 +63,13 @@ public class StatDataServiceImpl extends DataDomainRecalcImpl implements StatDat
 
     @Override
     public void doRecalcAfterChildren(final DataDomain node, final int recurceDirection) throws Exception {
+        if (node == null) {
+            return;
+        }
+
         // Check if node is compatibel
-        if (node != null) {
-            if (!StatData.class.isInstance(node)) {
-                throw new IllegalArgumentException();
-            }
+        if (!StatData.class.isInstance(node)) {
+            throw new IllegalArgumentException();
         }
         
         // Roll
