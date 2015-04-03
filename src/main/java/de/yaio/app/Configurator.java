@@ -162,7 +162,7 @@ public class Configurator {
             super.addOption(opt);
             
             // add to my longopts
-            if (opt.getOpt() == null || opt.getOpt() == "" && opt.hasLongOpt()) {
+            if (opt.getOpt() == null || "".equals(opt.getOpt()) && opt.hasLongOpt()) {
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("addOption: "
                                     + "toMyLongOption " + mylongOpts.size() + ": " + opt);
