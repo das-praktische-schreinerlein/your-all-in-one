@@ -87,11 +87,12 @@ public class BaseDataFormatterImpl extends FormatterImpl implements BaseDataForm
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Do: BaseDataFormatter for Node:" + node.getNameForLogger());
         }
-        if (options.isFlgShowName() && options.isFlgShowType()) {
-            nodeOutput.append(node.getType()).append(" - ").append(node.getName());
-        } else if (options.isFlgShowName()) {
+        if (options.isFlgShowName() && options.isFlgShowType() 
+            && node.getName() != null && node.getType() != null) {
+                nodeOutput.append(node.getType()).append(" - ").append(node.getName());
+        } else if (options.isFlgShowName() && node.getName() != null) {
             nodeOutput.append(node.getName());
-        } else if (options.isFlgShowType()) {
+        } else if (options.isFlgShowType() && node.getType() != null) {
             nodeOutput.append(node.getType());
         }
     }
