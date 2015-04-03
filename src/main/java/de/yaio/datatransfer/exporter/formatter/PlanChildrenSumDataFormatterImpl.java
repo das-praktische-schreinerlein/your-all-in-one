@@ -88,7 +88,7 @@ public class PlanChildrenSumDataFormatterImpl extends FormatterImpl
     public void formatPlanChildrenSumData(final PlanChildrenSumData node, 
             final StringBuffer nodeOutput, final OutputOptions oOptions) throws Exception {
         // exit if Flg not set
-        if (!oOptions.isFlgShowChildrenSum()) {
+        if (oOptions == null || !oOptions.isFlgShowChildrenSum()) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("SKIP: isFlgShowChildrenSum not set for node:" + node.getNameForLogger());
             }

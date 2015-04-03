@@ -83,9 +83,10 @@ public class PlanDataFormatterImpl extends FormatterImpl implements PlanDataForm
     }
 
     @Override
-    public void formatPlanData(final PlanData node, final StringBuffer nodeOutput, final OutputOptions oOptions) throws Exception {
+    public void formatPlanData(final PlanData node, final StringBuffer nodeOutput, 
+                               final OutputOptions oOptions) throws Exception {
         // exit if Flg not set
-        if (!oOptions.isFlgShowPlan()) {
+        if (oOptions == null || !oOptions.isFlgShowPlan()) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("SKIP: isFlgShowPlan not set for node:" + node.getNameForLogger());
             }
