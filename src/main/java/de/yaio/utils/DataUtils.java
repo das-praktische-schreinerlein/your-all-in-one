@@ -17,6 +17,8 @@
 package de.yaio.utils;
 
 import java.security.MessageDigest;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -173,5 +175,33 @@ public class DataUtils {
     
     public static Date getNewDate(final Date oldDate) {
         return (oldDate != null ? new Date(oldDate.getTime()) : null);
+    }
+    
+    /** 
+     * @return dateformat-instance for german date dd.MM.yyyy 
+     * */
+    public static DateFormat getDF() {
+        return  new SimpleDateFormat("dd.MM.yyyy");
+    }
+    
+    /**
+     * @return dateformat-instance for german time HH:mm
+     */
+    public static DateFormat getTF() {
+        return new SimpleDateFormat("HH:mm");
+    }
+
+    /**
+     * @return dateformat-instance for german datetime dd.MM.yyyy HH:mm
+     * */
+    public static DateFormat getDTF() {
+        return new SimpleDateFormat("dd.MM.yyyy HH:mm");
+    }
+    
+    /**
+     * @return dateformat-instance for UID yyyyMMddHHmmssSSS
+     */
+    public static DateFormat getUIDF() {
+        return new SimpleDateFormat("yyyyMMddHHmmssSSS");
     }
 }
