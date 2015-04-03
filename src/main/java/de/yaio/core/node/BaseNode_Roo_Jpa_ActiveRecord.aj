@@ -3,10 +3,11 @@
 
 package de.yaio.core.node;
 
-import de.yaio.core.node.BaseNode;
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
 import org.springframework.transaction.annotation.Transactional;
 
 privileged aspect BaseNode_Roo_Jpa_ActiveRecord {

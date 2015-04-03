@@ -3,7 +3,6 @@
 
 package de.yaio.core.node;
 
-import de.yaio.core.node.InfoNode;
 import javax.persistence.Entity;
 
 privileged aspect InfoNode_Roo_Jpa_Entity {

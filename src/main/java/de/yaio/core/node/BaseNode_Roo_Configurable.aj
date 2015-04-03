@@ -3,7 +3,6 @@
 
 package de.yaio.core.node;
 
-import de.yaio.core.node.BaseNode;
 import org.springframework.beans.factory.annotation.Configurable;
 
 privileged aspect BaseNode_Roo_Configurable {
