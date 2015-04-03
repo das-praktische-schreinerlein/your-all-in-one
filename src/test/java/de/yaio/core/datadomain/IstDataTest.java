@@ -19,7 +19,6 @@ package de.yaio.core.datadomain;
 import de.yaio.core.node.TaskNode;
 import de.yaio.datatransfer.exporter.formatter.IstDataFormatterImpl;
 import de.yaio.datatransfer.importer.parser.IstDataParserImpl;
-import de.yaio.datatransfer.importer.parser.Parser;
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -155,19 +154,19 @@ public class IstDataTest extends DataDomainTest {
         testFormatter(mytestObj, expected, outputOptions);
 
         // without enddate
-        mytestObj.setIstStart(Parser.DF.parse("12.03.2014"));
+        mytestObj.setIstStart(DF.parse("12.03.2014"));
         expected = "                                                                                [Ist:  30%  2h 12.03.2014 00:00-          ]";
         testFormatter(mytestObj, expected, outputOptions);
 
         // without startdate
         mytestObj.setIstStart(null);
-        mytestObj.setIstEnde(Parser.DF.parse("12.04.2014"));
+        mytestObj.setIstEnde(DF.parse("12.04.2014"));
         expected = "                                                                                [Ist:  30%  2h           -12.04.2014 00:00]";
         testFormatter(mytestObj, expected, outputOptions);
         
         // with date
-        mytestObj.setIstStart(Parser.DF.parse("12.03.2014"));
-        mytestObj.setIstEnde(Parser.DF.parse("12.04.2014"));
+        mytestObj.setIstStart(DF.parse("12.03.2014"));
+        mytestObj.setIstEnde(DF.parse("12.04.2014"));
         expected = "                                                                                [Ist:  30%  2h 12.03.2014 00:00-12.04.2014 00:00]";
         testFormatter(mytestObj, expected, outputOptions);
 

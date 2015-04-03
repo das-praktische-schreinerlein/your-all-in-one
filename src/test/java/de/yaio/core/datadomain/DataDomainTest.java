@@ -17,6 +17,8 @@
 package de.yaio.core.datadomain;
 import static org.junit.Assert.assertEquals;
 
+import java.text.DateFormat;
+
 import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,6 +33,7 @@ import de.yaio.datatransfer.exporter.formatter.Formatter;
 import de.yaio.datatransfer.importer.ImportOptions;
 import de.yaio.datatransfer.importer.ImportOptionsImpl;
 import de.yaio.datatransfer.importer.parser.Parser;
+import de.yaio.utils.DataUtils;
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -55,11 +58,20 @@ public abstract class DataDomainTest extends BaseTest {
             Logger.getLogger(DataDomainTest.class);
 
     // define Parser+Formatter
-    Parser parser = null;
-    ImportOptions importOptions = new ImportOptionsImpl();
-    Formatter formatter = null;
-    OutputOptions outputOptions = new OutputOptionsImpl();
+    protected Parser parser = null;
+    protected ImportOptions importOptions = new ImportOptionsImpl();
+    protected Formatter formatter = null;
+    protected OutputOptions outputOptions = new OutputOptionsImpl();
 
+    /** dateformat-instance for german date dd.MM.yyyy  */
+    protected final DateFormat DF = DataUtils.getDF();
+    /** dateformat-instance for german time HH:mm */
+    protected final DateFormat TF = DataUtils.getTF();
+    /** dateformat-instance for german datetime dd.MM.yyyy HH:mm */
+    protected final DateFormat DTF = DataUtils.getDTF();
+    /** dateformat-instance for UID yyyyMMddHHmmssSSS */
+    protected final DateFormat UIDF = DataUtils.getUIDF();
+    
     /**
      * <h4>FeatureDomain:</h4>
      *     Tests

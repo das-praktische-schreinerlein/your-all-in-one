@@ -107,9 +107,9 @@ public class SysDataServiceTest extends DataDomainServiceTest {
         expectedAfterDoAfterChildren = "Name XX  |DT201404081141327673|Tue Apr 08 11:41:00 CEST 2014|55153855B71FD0C5B51C592A65EB969A|Thu Apr 10 10:04:00 CEST 2014|9|";
         myDataDomainObj.setName("Name XX  ");
         myDataDomainObj.setSysUID("DT201404081141327673");
-        myDataDomainObj.setSysCreateDate(Parser.DTF.parse("08.04.2014 11:41"));
+        myDataDomainObj.setSysCreateDate(DTF.parse("08.04.2014 11:41"));
         myDataDomainObj.setSysCurChecksum("55153855B71FD0C5B51C592A65EB969A");
-        myDataDomainObj.setSysChangeDate(Parser.DTF.parse("10.04.2014 10:04"));
+        myDataDomainObj.setSysChangeDate(DTF.parse("10.04.2014 10:04"));
         myDataDomainObj.setSysChangeCount(9);
         this.testServiceDoRecalc(myDataDomainObj, expectedAfterDoBeforeChildren, 
                         expectedAfterDoAfterChildren, recurseDirection);
@@ -129,9 +129,9 @@ public class SysDataServiceTest extends DataDomainServiceTest {
         expectedAfterDoAfterChildren = "Name XX2|DT201404081141327673|Tue Apr 08 11:41:00 CEST 2014|EEC8BEB1D41E1F3DBA285D7B9ADD47B3|" + new Date() + "|10|";
         myDataDomainObj.setName("Name XX2");
         myDataDomainObj.setSysUID("DT201404081141327673");
-        myDataDomainObj.setSysCreateDate(Parser.DTF.parse("08.04.2014 11:41"));
+        myDataDomainObj.setSysCreateDate(DTF.parse("08.04.2014 11:41"));
         myDataDomainObj.setSysCurChecksum("459FB28B91E59689E400563665B6B513");
-        myDataDomainObj.setSysChangeDate(Parser.DTF.parse("10.04.2014 10:04"));
+        myDataDomainObj.setSysChangeDate(DTF.parse("10.04.2014 10:04"));
         myDataDomainObj.setSysChangeCount(9);
         this.testServiceDoRecalc(myDataDomainObj, expectedAfterDoBeforeChildren, 
                         expectedAfterDoAfterChildren, recurseDirection);

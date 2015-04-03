@@ -15,6 +15,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 package de.yaio.core.datadomainservice;
+import java.text.DateFormat;
+
 import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,6 +27,7 @@ import org.springframework.mock.staticmock.MockStaticEntityMethods;
 import de.yaio.BaseTest;
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.nodeservice.NodeService;
+import de.yaio.utils.DataUtils;
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -49,6 +52,15 @@ public abstract class DataDomainServiceTest extends BaseTest {
 
     // define Service
     protected DataDomainRecalc dataDomainService = null;
+    
+    /** dateformat-instance for german date dd.MM.yyyy  */
+    protected final DateFormat DF = DataUtils.getDF();
+    /** dateformat-instance for german time HH:mm */
+    protected final DateFormat TF = DataUtils.getTF();
+    /** dateformat-instance for german datetime dd.MM.yyyy HH:mm */
+    protected final DateFormat DTF = DataUtils.getDTF();
+    /** dateformat-instance for UID yyyyMMddHHmmssSSS */
+    protected final DateFormat UIDF = DataUtils.getUIDF();
     
     /**
      * <h4>FeatureDomain:</h4>
