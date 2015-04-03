@@ -47,8 +47,8 @@ import de.yaio.datatransfer.exporter.formatter.DescDataFormatterImpl;
 import de.yaio.datatransfer.exporter.formatter.DocLayoutDataFormatterImpl;
 import de.yaio.datatransfer.exporter.formatter.IstDataFormatterImpl;
 import de.yaio.datatransfer.exporter.formatter.PlanDataFormatterImpl;
-import de.yaio.datatransfer.importer.parser.ParserImpl;
 import de.yaio.extension.datatransfer.wiki.WikiExporter;
+import de.yaio.utils.DataUtils;
 import de.yaio.utils.ExcelService;
 
 /**
@@ -555,7 +555,7 @@ public class ExcelExporter extends WikiExporter {
 
             // StartDatum berechnen
             Date date = projektNode.getPlanStart();
-            Date MINDATE = ParserImpl.DF.parse("01.01.1970");
+            Date MINDATE = DataUtils.getDF().parse("01.01.1970");
             if ((date == null || date.before(MINDATE)) && vorgaengerRownNum >= 0) {
                 // falls leer mit dem Ende des Vorgaengers belegen
                 String formula = ExcelService.getColName(ExcelNodeService.CONST_PLANUNG_COL_PLAN_DATE_ENDE) + ExcelService.getRowNum(vorgaengerRownNum);

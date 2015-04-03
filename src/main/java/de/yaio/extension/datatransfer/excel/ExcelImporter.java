@@ -43,9 +43,9 @@ import de.yaio.datatransfer.exporter.OutputOptionsImpl;
 import de.yaio.datatransfer.importer.ImportOptions;
 import de.yaio.datatransfer.importer.ImportOptionsImpl;
 import de.yaio.datatransfer.importer.ImporterImpl;
-import de.yaio.datatransfer.importer.parser.ParserImpl;
 import de.yaio.extension.datatransfer.ppl.PPLExporter;
 import de.yaio.extension.datatransfer.ppl.PPLImporter;
+import de.yaio.utils.DataUtils;
 import de.yaio.utils.ExcelService;
 
 /**
@@ -128,7 +128,7 @@ public class ExcelImporter extends ImporterImpl {
 
     public String parsePlanungLine(final HSSFSheet sheet, final HSSFFormulaEvaluator formulaEval,
             final int startRownNum) throws Exception {
-        Date MINDATE = ParserImpl.DF.parse("01.01.1970");
+        Date MINDATE = DataUtils.getDF().parse("01.01.1970");
 
         // auf Bereich pruefen
         if (startRownNum > sheet.getLastRowNum()) {
