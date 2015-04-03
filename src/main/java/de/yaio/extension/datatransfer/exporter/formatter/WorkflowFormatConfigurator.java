@@ -187,8 +187,8 @@ public class WorkflowFormatConfigurator {
      * @return the mapped icon
      */
     public String getStateIcon(final String state) {
-        String color = (String) this.getConfigStateIcon().get(state);
-        return color;
+        String icon = (String) this.getConfigStateIcon().get(state);
+        return icon;
     }
 
 }
