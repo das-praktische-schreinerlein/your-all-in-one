@@ -85,11 +85,12 @@ public class SymLinkDataParserImpl  extends ParserImpl implements SymLinkDataPar
 
     @Override
     public int parseFromName(final DataDomain node, final ImportOptions options) throws Exception {
+        if (node == null) {
+            return 0;
+        }
         // Check if node is compatibel
-        if (node != null) {
-            if (!SymLinkData.class.isInstance(node)) {
-                throw new IllegalArgumentException();
-            }
+        if (!SymLinkData.class.isInstance(node)) {
+            throw new IllegalArgumentException();
         }
         return parseSymLinkDataFromName((SymLinkData) node, options);
     }

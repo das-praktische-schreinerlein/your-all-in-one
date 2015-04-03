@@ -40,16 +40,16 @@ import de.yaio.datatransfer.importer.NodeFactory;
  */
 public class DescDataParserImpl  extends ParserImpl implements DescDataParser {
 
-    // Logger
-    private static final Logger LOGGER =
-            Logger.getLogger(DescDataParserImpl.class);
-
     // Pattern fuer die Projectbeschreibung
     protected static final String CONST_PATTERN_SEG_DESC =
         "ProjektDesc: *(.*)";
     protected static final Pattern CONST_PATTERN_DESC =
         Pattern.compile("(.*)" + CONST_PATTERN_SEG_DESC + "(.*)", 
                         Pattern.UNICODE_CHARACTER_CLASS);
+
+    // Logger
+    private static final Logger LOGGER =
+            Logger.getLogger(DescDataParserImpl.class);
 
 
     @Override
@@ -78,11 +78,13 @@ public class DescDataParserImpl  extends ParserImpl implements DescDataParser {
 
     @Override
     public int parseFromName(final DataDomain node, final ImportOptions options) throws Exception {
+        if (node == null) {
+            return 0;
+        }
+
         // Check if node is compatibel
-        if (node != null) {
-            if (!DescData.class.isInstance(node)) {
-                throw new IllegalArgumentException();
-            }
+        if (!DescData.class.isInstance(node)) {
+            throw new IllegalArgumentException();
         }
         return parseDescDataFromName((DescData) node, options);
     }

@@ -43,8 +43,8 @@ import de.yaio.datatransfer.importer.NodeFactory;
  */
 public class IstDataParserImpl  extends ParserImpl implements IstDataParser {
 
-    static Calendar calDate = new GregorianCalendar();
-    static Calendar calTime = new GregorianCalendar();
+    protected Calendar calDate = new GregorianCalendar();
+    protected Calendar calTime = new GregorianCalendar();
 
     // Logger
     private static final Logger LOGGER =
@@ -94,11 +94,12 @@ public class IstDataParserImpl  extends ParserImpl implements IstDataParser {
 
     @Override
     public int parseFromName(final DataDomain node, final ImportOptions options) throws Exception {
+        if (node == null) {
+            return 0;
+        }
         // Check if node is compatibel
-        if (node != null) {
-            if (!IstData.class.isInstance(node)) {
-                throw new IllegalArgumentException();
-            }
+        if (!IstData.class.isInstance(node)) {
+            throw new IllegalArgumentException();
         }
         return parseIstDataFromName((IstData) node, options);
     }

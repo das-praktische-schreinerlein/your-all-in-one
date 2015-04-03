@@ -86,11 +86,12 @@ public class MetaDataParserImpl  extends ParserImpl implements MetaDataParser {
 
     @Override
     public int parseFromName(final DataDomain node, final ImportOptions options) throws Exception {
+        if (node == null) {
+            return 0;
+        }
         // Check if node is compatibel
-        if (node != null) {
-            if (!MetaData.class.isInstance(node)) {
-                throw new IllegalArgumentException();
-            }
+        if (!MetaData.class.isInstance(node)) {
+            throw new IllegalArgumentException();
         }
         return parseMetaDataFromName((MetaData) node, options);
     }

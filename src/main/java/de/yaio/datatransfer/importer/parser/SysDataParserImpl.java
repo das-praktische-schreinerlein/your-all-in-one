@@ -16,8 +16,6 @@
  */
 package de.yaio.datatransfer.importer.parser;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -42,13 +40,6 @@ import de.yaio.datatransfer.importer.NodeFactory;
  */
 public class SysDataParserImpl  extends ParserImpl implements SysDataParser {
 
-    Calendar calDate = new GregorianCalendar();
-    Calendar calTime = new GregorianCalendar();
-
-    // Logger
-    private static final Logger LOGGER =
-            Logger.getLogger(SysDataParserImpl.class);
-
     // Patterns
     // Pattern fuer NodeSys: UID,CreateDatum Uhrzeit, Checksum, ChangeDatum Uhrzeit,ChangeCount)
     protected static final String CONST_PATTERN_SEG_NODESYS =
@@ -60,6 +51,10 @@ public class SysDataParserImpl  extends ParserImpl implements SysDataParser {
                + "(" + CONST_PATTERN_SEG_INT + "*)?";
     protected static final Pattern CONST_PATTERN_NODESYS =
         Pattern.compile("(.*)" + CONST_PATTERN_SEG_NODESYS + "(.*)", Pattern.UNICODE_CHARACTER_CLASS);
+
+    // Logger
+    private static final Logger LOGGER =
+            Logger.getLogger(SysDataParserImpl.class);
 
     @Override
     public Class<?> getTargetClass() {
@@ -87,11 +82,12 @@ public class SysDataParserImpl  extends ParserImpl implements SysDataParser {
 
     @Override
     public int parseFromName(final DataDomain node, final ImportOptions options) throws Exception {
+        if (node == null) {
+            return 0;
+        }
         // Check if node is compatibel
-        if (node != null) {
-            if (!SysData.class.isInstance(node)) {
-                throw new IllegalArgumentException();
-            }
+        if (!SysData.class.isInstance(node)) {
+            throw new IllegalArgumentException();
         }
         return parseSysDataFromName((SysData) node, options);
     }

@@ -16,10 +16,12 @@
  */
 package de.yaio.datatransfer.importer.parser;
 
+import java.text.DateFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import de.yaio.core.datadomain.DataDomain;
+import de.yaio.utils.DataUtils;
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -35,13 +37,22 @@ import de.yaio.core.datadomain.DataDomain;
  */
 public abstract class ParserImpl implements Parser {
 
+    /** dateformat-instance for german date dd.MM.yyyy  */
+    protected final DateFormat DF = DataUtils.getDF();
+    /** dateformat-instance for german time HH:mm */
+    protected final DateFormat TF = DataUtils.getTF();
+    /** dateformat-instance for german datetime dd.MM.yyyy HH:mm */
+    protected final DateFormat DTF = DataUtils.getDTF();
+    /** dateformat-instance for UID yyyyMMddHHmmssSSS */
+    protected final DateFormat UIDF = DataUtils.getUIDF();
+
     @Override
     public int compareTo(final Parser o) {
         Integer myOrder = this.getTargetOrder();
         Integer oOrder = o.getTargetOrder();
         return myOrder.compareTo(oOrder);
     }
-
+    
     @Override
     public boolean trimNodeName(final DataDomain node, final Pattern pattern, 
             final Matcher matcher, final int first, final int last) {

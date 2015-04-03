@@ -93,11 +93,12 @@ public class PlanDataParserImpl  extends ParserImpl implements PlanDataParser {
 
     @Override
     public int parseFromName(final DataDomain node, final ImportOptions options) throws Exception {
+        if (node == null) {
+            return 0;
+        }
         // Check if node is compatibel
-        if (node != null) {
-            if (!PlanData.class.isInstance(node)) {
-                throw new IllegalArgumentException();
-            }
+        if (!PlanData.class.isInstance(node)) {
+            throw new IllegalArgumentException();
         }
         return parsePlanDataFromName((PlanData) node, options);
     }
