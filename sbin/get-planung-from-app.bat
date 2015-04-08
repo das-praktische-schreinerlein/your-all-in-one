@@ -50,8 +50,8 @@ mv %PLANDIR%%PLANFILEBASE%.yaioexport.mindmap %PLANDIR%%PLANFILEBASE%.yaioexport
 call %BASEPATH%exportFromYAIOApp.bat %PLANDIR% %PLANFILEBASE% %PLANNAME% icalevents %PLANSYSUID%
 mv %PLANDIR%%PLANFILEBASE%.yaioexport.icalevents %PLANDIR%%PLANFILEBASE%.yaioexport-real-events.ics
 
-call %BASEPATH%exportFromYAIOApp.bat %PLANDIR% %PLANFILEBASE% %PLANNAME% icaltodos %PLANSYSUID%
-mv %PLANDIR%%PLANFILEBASE%.yaioexport.icaltodos %PLANDIR%%PLANFILEBASE%.yaioexport-real-todos.ics
+call %BASEPATH%exportFromYAIOApp.bat %PLANDIR% %PLANFILEBASE% %PLANNAME% icaltasks %PLANSYSUID%
+mv %PLANDIR%%PLANFILEBASE%.yaioexport.icaltasks %PLANDIR%%PLANFILEBASE%.yaioexport-real-todos.ics
 
 call %BASEPATH%exportFromYAIOApp.bat %PLANDIR% %PLANFILEBASE% %PLANNAME% csv %PLANSYSUID%
 mv %PLANDIR%%PLANFILEBASE%.yaioexport.csv %PLANDIR%%PLANFILEBASE%.yaioexport-real.csv

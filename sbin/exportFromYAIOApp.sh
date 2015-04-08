@@ -23,6 +23,7 @@ FORMAT=${4}
 SYSUID=${5}
 
 #  export data from running yaio
-CMD=java ${JAVAOPTIONS} -cp ${CP} ${PROG_CALLYAIOEXPORT} ${YAIOAPPURLCONFIG} -sysuid ${SYSUID} -format ${FORMAT}
+CMD=java ${JAVAOPTIONS} -cp ${CP} ${PROG_CALLYAIOEXPORT} ${YAIOAPPURLCONFIG} -sysuid ${SYSUID} -format ${FORMAT} -outfile ${MMPATH}\${SRCFILE}.yaioexport.${FORMAT}
 #  echo "${CMD} > ${MMPATH}\${SRCFILE}.new.${FORMAT}"
-${CMD} > ${MMPATH}\${SRCFILE}.yaioexport.${FORMAT}
+# ${CMD} > ${MMPATH}\${SRCFILE}.yaioexport.${FORMAT}
+${CMD}

@@ -23,6 +23,7 @@ set FORMAT=%4%
 set SYSUID=%5%
 
 rem export data from running yaio
-set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_CALLYAIOEXPORT% %YAIOAPPURLCONFIG% -sysuid %SYSUID% -format %FORMAT%
+set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_CALLYAIOEXPORT% %YAIOAPPURLCONFIG% -sysuid %SYSUID% -format %FORMAT% -outfile %MMPATH%\%SRCFILE%.yaioexport.%FORMAT%
 rem echo "%CMD% > %MMPATH%\%SRCFILE%.new.%FORMAT%"
-%CMD% > %MMPATH%\%SRCFILE%.yaioexport.%FORMAT%
+rem %CMD% > %MMPATH%\%SRCFILE%.yaioexport.%FORMAT%
+%CMD%
