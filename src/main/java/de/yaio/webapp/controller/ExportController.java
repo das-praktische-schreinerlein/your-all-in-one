@@ -571,7 +571,6 @@ public class ExportController {
         // configure
         OutputOptions oOptions = new OutputOptionsImpl();
         oOptions.setFlgProcessDocLayout(true);
-        oOptions.setFlgProcessMarkdown(true);
         oOptions.setMaxUeEbene(-1);
         return converterUtils.commonExportNodeAsHtml(sysUID, oOptions, response, "", "");
     }
@@ -601,7 +600,6 @@ public class ExportController {
         // configure
         OutputOptions oOptions = new OutputOptionsImpl();
         oOptions.setFlgProcessDocLayout(true);
-        oOptions.setFlgProcessMarkdown(true);
         oOptions.setMaxUeEbene(-1);
         String res = converterUtils.commonExportNodeAsHtml(sysUID, oOptions, response, "", "");
         
@@ -665,7 +663,6 @@ public class ExportController {
         OutputOptions oOptions = new OutputOptionsImpl();
         oOptions.setAllFlgShow(false);
         oOptions.setFlgProcessDocLayout(true);
-        oOptions.setFlgProcessMarkdown(true);
         oOptions.setFlgReEscapeDesc(true);
         oOptions.setFlgShowDesc(true);
         oOptions.setFlgShowName(true);

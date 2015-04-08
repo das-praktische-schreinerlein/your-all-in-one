@@ -22,6 +22,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
@@ -224,6 +225,22 @@ public class ConverterUtils {
             // add footer
             in = this.getClass().getResourceAsStream(footerFile);
             res = res + IOUtils.toString(in);
+        }
+
+        // set baseref 
+        String baseref = null;
+        if (oOptions.isFlgUsePublicBaseRef()) {
+            // set baseref to publicbaseref if outputoption is set
+            baseref = System.getProperty("yaio.exportcontroller.replace.publicbaseref");
+        }
+        if (StringUtils.isEmpty(baseref)) {
+            // set baseref to default baseref if already empty but property defined
+            baseref = System.getProperty("yaio.exportcontroller.replace.baseref");
+        }
+        if (StringUtils.isNotEmpty(baseref)) {
+            // replace inactive baseref if baseref is set
+            res = res.replace("<!--<base href=\"/\" />-->", 
+                              "<base href=\"" + baseref + "\" />");
         }
 
         // change headers to display html in browser
