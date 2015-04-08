@@ -166,6 +166,7 @@
     "editor.formOutputOptions.label.flgChildrenSum": "Daten neu berechnen?",
     "editor.formOutputOptions.label.flgProcessDocLayout": "Layoutbefehle prozessieren (html-only)",
     "editor.formOutputOptions.label.flgRecalc": "Daten neu berechnen?",
+    "editor.formOutputOptions.label.flgUsePublicBaseRef": "Bibliotheken von öffentlicher Url einbinden?",
     "editor.formOutputOptions.label.intendFuncArea": "Einrückung Func (Spaces)",
     "editor.formOutputOptions.label.intend": "Einrückung (Spaces)",
     "editor.formOutputOptions.label.intendLi": "Einrückung Listen (Spaces)",
