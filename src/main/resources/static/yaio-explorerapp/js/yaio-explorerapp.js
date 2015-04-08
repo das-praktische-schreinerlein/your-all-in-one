@@ -193,6 +193,9 @@ yaioM.directive('state', function(){
  *     Utils
  */
 yaioM.factory('yaioUtils', function ($rootScope) {
+    var ganttRangeStart = formatGermanDate((new Date()).getTime() - 90*24*60*60*1000); 
+    var ganttRangeEnd = formatGermanDate((new Date()).getTime() + 90*24*60*60*1000);
+    
     return {
         /**
          * <h4>FeatureDomain:</h4>
@@ -212,12 +215,15 @@ yaioM.factory('yaioUtils', function ($rootScope) {
             yaioShowHelpSite(url);
             return false;
         },
+        
         toggleSysContainerForNode: function(node) {
             toggleNodeSysContainer(node.sysUID);
         },
+        
         openNodeEditorForNode: function(node, mode) {
             yaioOpenNodeEditorForNode(node, mode);
         },
+        
         renderNodeLine: function(node, trIdSelector) {
             // load me
             var data = {
@@ -231,6 +237,11 @@ yaioM.factory('yaioUtils', function ($rootScope) {
             
             console.log("renderNodeLine nodeId=" + node.sysUID + " tr=" + $(trIdSelector).length);
             renderColumnsForNode(null, data, true);
+        },
+        
+        ganttOptions: { 
+            ganttRangeStart: ganttRangeStart, 
+            ganttRangeEnd: ganttRangeEnd
         }
     };
 });
@@ -405,7 +416,6 @@ yaioM.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $http
 
     // create search
     $scope.nodes = new Array();
-    $scope.ganttOptions = { ganttRangeStart: "01.01.2014", ganttRangeEnd: "31.12.2014"};
     
     $scope.searchOptions = {
             curPage: 1,
@@ -679,7 +689,6 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
     $scope.node = {};
     $scope.nodeForEdit = {};
     $scope.config = {treeOpenLevel: 1};
-    $scope.ganttOptions = { ganttRangeStart: "01.01.2014", ganttRangeEnd: "31.12.2014"};
     
     // check activeNodeId
     var activeNodeIdHandler;
@@ -1272,6 +1281,7 @@ yaioM.factory('OutputOptionsEditor', function($http) {
 
     oOptions.flgChildrenSum = false;
     oOptions.flgProcessDocLayout = false;
+    oOptions.flgUsePublicBaseRef = false;
     oOptions.flgRecalc= false;
     oOptions.strClassFilter = "";
     oOptions.strTypeFilter = "";
