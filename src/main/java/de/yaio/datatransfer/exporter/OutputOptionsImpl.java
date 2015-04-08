@@ -45,26 +45,26 @@ public class OutputOptionsImpl implements OutputOptions {
     protected Integer intendSys = 160;
     protected boolean flgTrimDesc = true;
     protected boolean flgReEscapeDesc = true;
-
-    protected boolean flgShowState = true;
-    protected boolean flgShowType = true;
-    protected boolean flgShowName = true;
-    protected boolean flgShowResLoc = true;
-    protected boolean flgShowSymLink = true;
-    protected boolean flgShowDocLayout = true;
-    protected boolean flgShowIst = true;
-    protected boolean flgShowPlan = true;
-    protected boolean flgShowPlanCalc = false;
-    protected boolean flgShowChildrenSum = false;
-    protected boolean flgShowMetaData = true;
-    protected boolean flgShowSysData = true;
-    protected boolean flgShowDesc = true;
     protected boolean flgShowDescWithUe = false;
     protected boolean flgShowDescInNextLine = false;
 
+    protected boolean flgShowChildrenSum = false;
+    protected boolean flgShowDesc = true;
+    protected boolean flgShowDocLayout = true;
+    protected boolean flgShowIst = true;
+    protected boolean flgShowMetaData = true;
+    protected boolean flgShowName = true;
+    protected boolean flgShowPlan = true;
+    protected boolean flgShowPlanCalc = false;
+    protected boolean flgShowResLoc = true;
+    protected boolean flgShowState = true;
+    protected boolean flgShowSymLink = true;
+    protected boolean flgShowSysData = true;
+    protected boolean flgShowType = true;
+
     protected boolean flgRecalc = false;
     protected boolean flgProcessDocLayout = false;
-    protected boolean flgProcessMarkdown = false;
+    protected boolean flgUsePublicBaseRef = false;
     protected String strReadIfStatusInListOnly = "";
     protected String strClassFilter = "";
     protected String strTypeFilter = "";
@@ -102,7 +102,7 @@ public class OutputOptionsImpl implements OutputOptions {
         this.flgShowDesc = baseOptions.isFlgShowDesc();
         this.flgRecalc = baseOptions.isFlgRecalc();
         this.flgProcessDocLayout = baseOptions.isFlgProcessDocLayout();
-        this.flgProcessMarkdown = baseOptions.isFlgProcessMarkdown();
+        this.flgUsePublicBaseRef = baseOptions.isFlgUsePublicBaseRef();
         this.strReadIfStatusInListOnly = baseOptions.getStrReadIfStatusInListOnly();
         this.strClassFilter = baseOptions.getStrClassFilter();
         this.strTypeFilter = baseOptions.getStrTypeFilter();
@@ -229,11 +229,11 @@ public class OutputOptionsImpl implements OutputOptions {
     public void setFlgProcessDocLayout(final boolean flgProcessDocLayout) {
         this.flgProcessDocLayout = flgProcessDocLayout;
     }
-    public boolean isFlgProcessMarkdown() {
-        return flgProcessMarkdown;
+    public boolean isFlgUsePublicBaseRef() {
+        return flgUsePublicBaseRef;
     }
-    public void setFlgProcessMarkdown(final boolean flgProcessMarkdown) {
-        this.flgProcessMarkdown = flgProcessMarkdown;
+    public void setFlgUsePublicBaseRef(final boolean flgUsePublicBaseRef) {
+        this.flgUsePublicBaseRef = flgUsePublicBaseRef;
     }
     public int getMaxEbene() {
         return manageIntValues(maxEbene);
@@ -387,7 +387,7 @@ public class OutputOptionsImpl implements OutputOptions {
 
         this.flgRecalc = false;
         this.flgProcessDocLayout = false;
-        this.flgProcessMarkdown = false;
+        this.flgUsePublicBaseRef = false;
         this.setStrReadIfStatusInListOnly("");
         this.setStrClassFilter("");
         this.setStrTypeFilter("");
@@ -423,7 +423,7 @@ public class OutputOptionsImpl implements OutputOptions {
                         + ", flgShowDescInNextLine=" + this.flgShowDescInNextLine 
                         + ", flgRecalc=" + this.flgRecalc 
                         + ", flgProcessDocLayout=" + this.flgProcessDocLayout
-                        + ", flgProcessMarkdown=" + this.flgProcessMarkdown
+                        + ", flgUsePublicBaseRef=" + this.flgUsePublicBaseRef
                         + ", strReadIfStatusInListOnly=" + this.strReadIfStatusInListOnly 
                         + ", strClassFilter=" + this.strClassFilter 
                         + ", strTypeFilter=" + this.strTypeFilter 
