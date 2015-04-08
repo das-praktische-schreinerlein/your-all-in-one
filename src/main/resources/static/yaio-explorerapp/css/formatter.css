@@ -155,7 +155,7 @@ div.container-content-desc div.mermaid {
     margin-right: auto;
 }
 .pre-wrap {
-    white-space: normal;
+    white-space: pre-line;
     white-space: -moz-pre-line;
     white-space: -o-pre-line;
     word-wrap: break-word;
