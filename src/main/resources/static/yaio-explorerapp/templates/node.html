@@ -159,6 +159,10 @@
               <input type="checkbox" name="flgProcessDocLayout" class="inputtype_option" ng-model="oOptions.flgProcessDocLayout" id="inputflgProcessDocLayoutOutputOptions" ng-change="">
               <fielderrors for="flgProcessDocLayout"></fielderrors>
 
+              <label for="flgUsePublicBaseRef" class="label_option" translate="editor.formOutputOptions.label.flgUsePublicBaseRef">flgUsePublicBaseRef</label>
+              <input type="checkbox" name="flgUsePublicBaseRef" class="inputtype_option" ng-model="oOptions.flgUsePublicBaseRef" id="inputflgUsePublicBaseRefOutputOptions" ng-change="">
+              <fielderrors for="flgUsePublicBaseRef"></fielderrors>
+
               <br />
               <label for="maxEbene" class="label_number" translate="editor.formOutputOptions.label.maxEbene">maxEbene</label>
               <input type="number" name="maxEbene" class="inputtype_number" ng-model="oOptions.maxEbene" id="inputmaxEbeneOutputOptions" default="9999"  ng-change="">
@@ -330,9 +334,9 @@
                     <div class="gantt_container"  id="gantt_container_head">
                        <div class="gantt_aufwand" id="gantt_aufwand_head"  translate="fancytree.table.headline.ganttaufwand">Aufwand</div>
                        <div class="gantt_bar"  id="gantt_bar_head" data-tooltip='tooltip.command.GanttRange' lang="tech">
-                        <input type="text" placeholder="dd.mm.jjjj" name="ganttRangeStart" pattern="\d{2}\.\d{2}\.\d{4}"  maxsize="10" value="01.01.2014" class="inputtype_date" id="inputGanttRangeStart" ng-model="ganttOptions.ganttRangeStart" ng-change="recalcGanttBlocks()">
+                        <input type="text" placeholder="dd.mm.jjjj" name="ganttRangeStart" pattern="\d{2}\.\d{2}\.\d{4}"  maxsize="10" value="{{ yaioUtils.ganttOptions.ganttRangeStart }}" class="inputtype_date" id="inputGanttRangeStart" ng-model="yaioUtils.ganttOptions.ganttRangeStart" ng-change="recalcGanttBlocks()">
                         <a ng-click="recalcGanttBlocks();" class="button" translate="fancytree.table.headline.ganttrange">Zeitbereich</a> 
-                        <input type="text" placeholder="dd.mm.jjjj" name="ganttRangeEnde" pattern="\d{2}\.\d{2}\.\d{4}"  maxsize="10" value="31.12.2014" class="inputtype_date" style="text-align: right" id="inputGanttRangeEnde" ng-model="ganttOptions.ganttRangeEnd" ng-change="recalcGanttBlocks()"></th>
+                        <input type="text" placeholder="dd.mm.jjjj" name="ganttRangeEnde" pattern="\d{2}\.\d{2}\.\d{4}"  maxsize="10" value="{{ yaioUtils.ganttOptions.ganttRangeEnd }}" class="inputtype_date" style="text-align: right" id="inputGanttRangeEnde" ng-model="yaioUtils.ganttOptions.ganttRangeEnd" ng-change="recalcGanttBlocks()"></th>
                        </div>
                     </div>
                   <th  >
