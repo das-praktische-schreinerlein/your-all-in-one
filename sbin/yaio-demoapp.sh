@@ -3,17 +3,18 @@
 #
 # description: start yaio demoapp
 APPPATH=/var/www/vhosts/your-all-in-one.de/yaio-appdemo
+YAIOUSER=yaiodemo
 cd $APPPATH
 case $1 in
     start)
-        /bin/bash $APPPATH/sbin/start-yaioapp.sh
+        su --preserve-environment --shell /bin/bash -c $APPPATH/sbin/start-yaioapp.sh $YAIOUSER
     ;;
     stop)
-        /bin/bash $APPPATH/sbin/stop-yaioapp.sh
+        su --preserve-environment --shell /bin/bash -c  $APPPATH/sbin/stop-yaioapp.sh $YAIOUSER
     ;;
     restart)
-        /bin/bash $APPPATH/sbin/stop-yaioapp.sh
-        /bin/bash $APPPATH/sbin/start-yaioapp.sh
+        su --preserve-environment --shell /bin/bash -c $APPPATH/sbin/stop-yaioapp.sh $YAIOUSER
+        su --preserve-environment --shell /bin/bash -c $APPPATH/sbin/start-yaioapp.sh $YAIOUSER
     ;;
     *)
         echo "Usage: /etc/init.d/yaio-appdemo.sh {start|stop|restart}"

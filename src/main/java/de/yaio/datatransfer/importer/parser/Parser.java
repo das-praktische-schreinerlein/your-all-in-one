@@ -16,8 +16,6 @@
  */
 package de.yaio.datatransfer.importer.parser;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -79,15 +77,6 @@ public interface Parser extends Comparable<Parser> {
     String CONST_PATTERN_SEG_STATE = "[-A-Za-z_]";
     /** Pattern to validate type */
     String CONST_PATTERN_SEG_TYPE = "[-A-Za-z_]";;
-
-    /** dateformat-instance for german date dd.MM.yyyy  */
-    DateFormat DF = new SimpleDateFormat("dd.MM.yyyy");
-    /** dateformat-instance for german time HH:mm */
-    DateFormat TF = new SimpleDateFormat("HH:mm");
-    /** dateformat-instance for german datetime dd.MM.yyyy HH:mm */
-    DateFormat DTF = new SimpleDateFormat("dd.MM.yyyy HH:mm");
-    /** dateformat-instance for UID yyyyMMddHHmmssSSS */
-    DateFormat UIDF = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 
     /** if second of time are set to this value -> then ignore the seconds */
     int CONST_FLAG_NODATE_SECONDS = 59;

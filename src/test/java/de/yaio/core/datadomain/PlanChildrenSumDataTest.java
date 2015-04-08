@@ -18,7 +18,6 @@ package de.yaio.core.datadomain;
 
 import de.yaio.core.node.TaskNode;
 import de.yaio.datatransfer.exporter.formatter.PlanChildrenSumDataFormatterImpl;
-import de.yaio.datatransfer.importer.parser.Parser;
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -110,19 +109,19 @@ public class PlanChildrenSumDataTest extends DataDomainTest {
         testFormatter(mytestObj, expected, outputOptions);
 
         // without enddate
-        mytestObj.setPlanChildrenSumStart(Parser.DF.parse("12.03.2014"));
+        mytestObj.setPlanChildrenSumStart(DF.parse("12.03.2014"));
         expected = "                                                                                [PlanSum:      2h 12.03.2014 00:00-          ]";
         testFormatter(mytestObj, expected, outputOptions);
 
         // without startdate
         mytestObj.setPlanChildrenSumStart(null);
-        mytestObj.setPlanChildrenSumEnde(Parser.DF.parse("12.04.2014"));
+        mytestObj.setPlanChildrenSumEnde(DF.parse("12.04.2014"));
         expected = "                                                                                [PlanSum:      2h           -12.04.2014 00:00]";
         testFormatter(mytestObj, expected, outputOptions);
         
         // with date
-        mytestObj.setPlanChildrenSumStart(Parser.DF.parse("12.03.2014"));
-        mytestObj.setPlanChildrenSumEnde(Parser.DF.parse("12.04.2014"));
+        mytestObj.setPlanChildrenSumStart(DF.parse("12.03.2014"));
+        mytestObj.setPlanChildrenSumEnde(DF.parse("12.04.2014"));
         expected = "                                                                                [PlanSum:      2h 12.03.2014 00:00-12.04.2014 00:00]";
         testFormatter(mytestObj, expected, outputOptions);
 

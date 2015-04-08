@@ -38,6 +38,7 @@ var CLIPBOARD = null;
  *****************************************
  *****************************************/
 var CONST_MasterId = "MasterplanMasternode1";
+var loginUrl = "/yaio-explorerapp/yaio-explorerapp.html#/login";
 var baseUrl = "/nodes/";
 var showUrl = baseUrl + "show/";
 var symLinkUrl = baseUrl + "showsymlink/";
@@ -214,6 +215,11 @@ function yaioCreateFancyTree(treeId, masterNodeId, doneHandler) {
     treeInstances[treeId].state = "loading";
     $(treeId).fancytree({
         
+        // errorHandler
+        loadError: function (e,data) { 
+            yaioFancyTreeLoadError(e, data); 
+        },
+        
         // save masterNodeId
         masterNodeId: masterNodeId,
         
@@ -365,8 +371,16 @@ function yaioCreateFancyTree(treeId, masterNodeId, doneHandler) {
         gridnav: {
             autofocusInput: false,
             handleCursorKeys: true
-        }
-
+        },
+/**
+        click: function(event, data) {
+            var node = data.node,
+                tt = $.ui.fancytree.getEventTargetType(event.originalEvent);
+            if (tt == undefined) {
+                return true;
+            }
+        },
+**/
     }).on("nodeCommand", function(event, data){
         // Custom event handler that is triggered by keydown-handler and
         // context menu:
@@ -674,6 +688,39 @@ function postProcessNodeData(event, data) {
     
     data.result = list;
 }
+
+
+function yaioFancyTreeLoadError(e, data) {
+    var error = data.error;
+    if (error.status && error.statusText) {
+        data.message = "Ajax error: " + data.message;
+        data.details = "Ajax error: " + error.statusText + ", status code = " + error.status;
+        
+        // check if http-form result
+        if (error.status == 401) {
+            // reload loginseite
+            $( "#error-message-text" ).html("Sie wurden vom System abgemeldet.");
+            
+            // show message
+            $( "#error-message" ).dialog({
+                modal: true,
+                buttons: {
+                  "Neu anmelden": function() {
+                    $( this ).dialog( "close" );
+                    window.location.assign(loginUrl);
+                  }
+                }
+            });    
+        }
+    } else {
+        data.message = "Custom error: " + data.message;
+        data.details = "An error occured during loading: " + error;
+    }
+    showToastMessage("error", "Oops! Ein Fehlerchen beim Laden :-(", 
+            "Es ist ein Fehler beim Nachladen aufgetreten:" + data.message 
+            + " Details:" + data.details);
+  }
+
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -1106,8 +1153,9 @@ function renderGanttBlock(basenode, fancynode) {
  *     GUI Tree Rendering
  * @param event - fancytree-event
  * @param data - the fancytreenode-data (basenode = data.node.data.basenode, tr = data.node.tr)
+ * @param preventActionsColum - dont replace Action-column
  */
-function renderColumnsForNode(event, data) {
+function renderColumnsForNode(event, data, preventActionsColum) {
     // extract nodedata
     var node = data.node;
     var basenode = node.data.basenode;
@@ -1128,33 +1176,35 @@ function renderColumnsForNode(event, data) {
     $(node.tr).addClass("container_nodeline");
     
     // add fields
-    $tdList.eq(colActions).html(
-            "<div class='fieldtype_sysToggler toggler_show'>"
-                + "<a onclick=\"javascript: toggleNodeSysContainer('" + basenode.sysUID + "'); return false;\""
-                        + " id='toggler_sys_" + basenode.sysUID + "'"
-                        + " class='' "
-                        + " data-tooltip='tooltip.command.ToggleSys' lang='tech'></a>"
-                + "</div>"
-            + "<a onclick=\"javascript: yaioOpenNodeEditor('" + basenode.sysUID + "', 'edit'); return false;\""
-                    + " id='cmdEdit" + basenode.sysUID + "'"
-                    + " class='yaio-icon-edit'"
-                    + " data-tooltip='Bearbeite die Daten'></a>"
-            + "<a onclick=\"javascript: yaioOpenNodeEditor('" + basenode.sysUID + "', 'create'); return false;\""
-                    + " id='cmdCreate" + basenode.sysUID + "'"
-                    + " class='yaio-icon-create'"
-                    + " data-tooltip='Erzeuge ein neues KindsElement'></a>"
-            + "<a onclick=\"javascript: yaioOpenNodeEditor('" + basenode.sysUID + "', 'createsymlink'); return false;\""
-                    + " id='cmdCreateSymLink" + basenode.sysUID + "'"
-                    + " class='yaio-icon-createsymlink'"
-                    + " data-tooltip='Erzeuge einen SymLink der auf dieses Element verweist'></a>"
-            + "<a onclick=\"javascript: yaioRemoveNodeById('" + basenode.sysUID + "'); return false;\""
-                    + " id='cmdRemove" + basenode.sysUID + "'"
-                    + " class='yaio-icon-remove'"
-                    + " data-tooltip='L&ouml;sche dieses Element'></a>"
-            ).addClass("container_field")
-             .addClass("fieldtype_actions")
-             //.addClass(statestyle)
-             ;
+    if (! preventActionsColum) {
+        $tdList.eq(colActions).html(
+                "<div class='fieldtype_sysToggler toggler_show'>"
+                    + "<a onclick=\"javascript: toggleNodeSysContainer('" + basenode.sysUID + "'); return false;\""
+                            + " id='toggler_sys_" + basenode.sysUID + "'"
+                            + " class='' "
+                            + " data-tooltip='tooltip.command.ToggleSys' lang='tech'></a>"
+                    + "</div>"
+                + "<a onclick=\"javascript: yaioOpenNodeEditor('" + basenode.sysUID + "', 'edit'); return false;\""
+                        + " id='cmdEdit" + basenode.sysUID + "'"
+                        + " class='yaio-icon-edit'"
+                        + " data-tooltip='Bearbeite die Daten'></a>"
+                + "<a onclick=\"javascript: yaioOpenNodeEditor('" + basenode.sysUID + "', 'create'); return false;\""
+                        + " id='cmdCreate" + basenode.sysUID + "'"
+                        + " class='yaio-icon-create'"
+                        + " data-tooltip='Erzeuge ein neues KindsElement'></a>"
+                + "<a onclick=\"javascript: yaioOpenNodeEditor('" + basenode.sysUID + "', 'createsymlink'); return false;\""
+                        + " id='cmdCreateSymLink" + basenode.sysUID + "'"
+                        + " class='yaio-icon-createsymlink'"
+                        + " data-tooltip='Erzeuge einen SymLink der auf dieses Element verweist'></a>"
+                + "<a onclick=\"javascript: yaioRemoveNodeById('" + basenode.sysUID + "'); return false;\""
+                        + " id='cmdRemove" + basenode.sysUID + "'"
+                        + " class='yaio-icon-remove'"
+                        + " data-tooltip='L&ouml;sche dieses Element'></a>"
+                ).addClass("container_field")
+                 .addClass("fieldtype_actions")
+                 //.addClass(statestyle)
+                 ;
+    }
 
     // replace checkbox by center-command
     var $expanderEle = $tdList.eq(colName).find("span.fancytree-expander");
@@ -1259,7 +1309,7 @@ function renderColumnsForNode(event, data) {
 
         // add commands
         var commands = "<div class='container-commands-desc' id='commands_desc_" + basenode.sysUID + "'"
-            + "data-tooltip='tooltip.command.TogglePreWrap' lang='tech' >" 
+            + " data-tooltip='tooltip.command.TogglePreWrap' lang='tech' >" 
             + "<input type='checkbox' id='cmd_toggle_content_desc_" + basenode.sysUID + "' onclick=\"togglePreWrap('#content_desc_" + basenode.sysUID + "');togglePreWrap('#container_content_desc_" + basenode.sysUID + "'); return true;\">"
             + "<span lang='tech'>im Originallayout anzeigen</span>"
     //        + "<input type='checkbox' id='cmd_toggle_content_desc_markdown_" + basenode.sysUID + "' onclick=\"toggleDescMarkdown('#container_content_desc_" + basenode.sysUID + "'); return true;\">"
@@ -1279,6 +1329,7 @@ function renderColumnsForNode(event, data) {
            }        
         commands += "</div>";
         $divDesc.append(commands);
+        $divDesc.append("<div class='container-toc-desc' id='toc_desc_" + basenode.sysUID + "'><h1>Inhalt</h1></div>");
         
         // append content
         var descText = basenode.nodeDesc;
@@ -1291,12 +1342,12 @@ function renderColumnsForNode(event, data) {
                         + htmlEscapeText(descText) + "</pre>";
 
         // prepare descText
-        var descHtml = formatMarkdown(descText, false);
+        var descHtml = formatMarkdown(descText, false, basenode.sysUID);
         $divDesc.append("<div id='container_content_desc_" + basenode.sysUID + "' class='container-content-desc syntaxhighlighting-open'>" + descHtml + "</div>");
-        
+
         // append to datablock
         $nodeDataBlock.append($divDesc);
-        
+
         // disable draggable for td.block_nodedata
         $( "#tree" ).draggable({ cancel: "td.block_nodedata" });
         
@@ -1307,6 +1358,14 @@ function renderColumnsForNode(event, data) {
     // add nodeData
     $tdList.eq(colData).html($nodeDataBlock).addClass("block_nodedata");
     
+    // add TOC
+    var settings = {
+            toc: {}
+    };
+    settings.toc.dest = $("#toc_desc_" + basenode.sysUID);
+    settings.toc.minDeep = 2;
+    $.fn.toc($("#container_content_desc_" + basenode.sysUID), settings);
+
     // add gantt
     var $nodeGanttBlock = renderGanttBlock(basenode, node);
     $tdList.eq(colGantt).html($nodeGanttBlock).addClass("block_nodegantt");
@@ -1936,3 +1995,97 @@ function yaioDoRemoveNode(node, url) {
     });
 }
 
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     GUI
+ * <h4>FeatureDescription:</h4>
+ *     open the jirawindow for the node  
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>GUI-result: opens jira window with jira-converted node-content
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Convert
+ * @param nodeId - id of the node
+ */
+function openJiraExportWindow(nodeId) {
+    // check vars
+    if (! nodeId) {
+        // tree not found
+        logError("error openJiraWindow: nodeId required", false);
+        return null;
+    }
+    // load node
+    var tree = $("#tree").fancytree("getTree");
+    if (!tree) {
+        // tree not found
+        logError("error openJiraWindow: cant load tree for node:" + nodeId, false);
+        return null;
+    }
+    var treeNode = tree.getNodeByKey(nodeId);
+    if (! treeNode) {
+        logError("error openJiraWindow: cant load node:" + nodeId, false);
+        return null;
+    }
+    
+    // extract nodedata
+    var basenode = treeNode.data.basenode;
+    var descText = basenode.nodeDesc;
+    if (! descText) {
+        descText = "";
+    }
+    descText = descText.replace(/\<WLBR\>/g, "\n");
+    descText = descText.replace(/\<WLESC\>/g, "\\");
+    descText = descText.replace(/\<WLTAB\>/g, "\t");
+    
+    // convert and secure
+    var nodeDesc = convertMarkdownToJira(descText);
+    nodeDesc = htmlEscapeText(nodeDesc);
+    
+    // set clipboard-content
+    $( "#clipboard-content" ).html(nodeDesc);
+    
+    // show message
+    $( "#clipboard-box" ).dialog({
+        modal: true,
+        width: "700px",
+        buttons: {
+          Ok: function() {
+            $( this ).dialog( "close" );
+          }
+        }
+    });    
+}
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     GUI
+ * <h4>FeatureDescription:</h4>
+ *     open the txtwindow for the node  
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>GUI-result: opens txt-window with txt node-content
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Convert
+ * @param content - txt content
+ */
+function openTxtExportWindow(content) {
+    // secure
+    content = htmlEscapeText(content);
+
+    // set clipboard-content
+    $( "#clipboard-content" ).html(content);
+    
+    // show message
+    $( "#clipboard-box" ).dialog({
+        modal: true,
+        width: "700px",
+        buttons: {
+          Ok: function() {
+            $( this ).dialog( "close" );
+          }
+        }
+    });    
+}

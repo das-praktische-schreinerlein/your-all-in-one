@@ -139,7 +139,7 @@ public class WikiImporterTest extends BaseTest {
         // concat resultlines
         StringBuffer resBuf = new StringBuffer();
         for (WikiStructLine wk : lstWikiLines) {
-            resBuf.append(wk.hirarchy).append("\n");
+            resBuf.append(wk.getHirarchy()).append("\n");
         }
         
         //System.out.println("Erg:" + resBuf);

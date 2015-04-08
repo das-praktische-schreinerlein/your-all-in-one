@@ -47,8 +47,6 @@ import org.apache.log4j.Logger;
  */
 public abstract class CmdLineJob {
 
-    private final static Logger LOGGER = Logger.getLogger(CmdLineJob.class);
-    
     /** exitcode for shell */
     public static final int CONST_EXITCODE_OK = 0;
     /** exitcode for shell */
@@ -58,6 +56,8 @@ public abstract class CmdLineJob {
     /** exitcode for shell */
     public static final int CONST_EXITCODE_FAILED_JOB = 3;
 
+    private static final Logger LOGGER = Logger.getLogger(CmdLineJob.class);
+    
     protected String jobConfFile = null;
 
     /**
@@ -90,7 +90,8 @@ public abstract class CmdLineJob {
      * <h4>FeatureKeywords:</h4>
      *     CLI-Handling
      * @return String - jobname (Classname without package)
-     * @throws Exception - possible Exception     */
+     * @throws Exception - possible Exception
+     */
     protected String getJobName() throws Exception  {
         return this.getClass().getName();
     }
@@ -106,7 +107,8 @@ public abstract class CmdLineJob {
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     CLI-Handling
-     * @throws Exception - possible Exception     */
+     * @throws Exception - possible Exception
+     */
     protected void printUsage() throws Exception  {
         HelpFormatter formatter = new HelpFormatter();
         formatter.printHelp(this.getJobName(), 
@@ -121,7 +123,8 @@ public abstract class CmdLineJob {
      * <h1>Nebenwirkungen:</h1>
      *     Rueckgabe als Options
      * @return Options
-     * @throws Exception - possible Exception     */
+     * @throws Exception - possible Exception
+     */
     protected abstract Options addAvailiableCmdLineOptions() throws Exception;
 
     /**

@@ -16,9 +16,6 @@
  */
 package de.yaio.datatransfer.exporter.formatter;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.datatransfer.exporter.OutputOptions;
 
@@ -35,12 +32,6 @@ import de.yaio.datatransfer.exporter.OutputOptions;
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public interface Formatter extends Comparable<Formatter> {
-    /** dateformat-instance for german date dd.MM.yyyy  */
-    DateFormat DF = new SimpleDateFormat("dd.MM.yyyy");
-    /** dateformat-instance for german time HH:mm */
-    DateFormat TF = new SimpleDateFormat("HH:mm");
-    /** dateformat-instance for german datetime dd.MM.yyyy HH:mm */
-    DateFormat DTF = new SimpleDateFormat("dd.MM.yyyy HH:mm");
     /** if second of time are set to this value -> then ignore the seconds */
     int CONST_FLAG_NODATE_SECONDS = 59;
     

@@ -45,7 +45,7 @@ public class SysDataServiceImpl extends DataDomainRecalcImpl implements SysDataS
     private static final Logger LOGGER =
             Logger.getLogger(SysDataServiceImpl.class);
 
-    protected static final DateFormat UIDF = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+    protected final DateFormat UIDF = new SimpleDateFormat("yyyyMMddHHmmssSSS");
     protected static int VAR_CUR_UID = 1;
 
     /**
@@ -70,13 +70,14 @@ public class SysDataServiceImpl extends DataDomainRecalcImpl implements SysDataS
 
     @Override
     public void doRecalcAfterChildren(final DataDomain node, final int recurceDirection) throws Exception {
-        // Check if node is compatibel
-        if (node != null) {
-            if (!SysData.class.isInstance(node)) {
-                throw new IllegalArgumentException();
-            }
+        if (node == null) {
+            return;
         }
-        
+        // Check if node is compatibel
+        if (!SysData.class.isInstance(node)) {
+            throw new IllegalArgumentException();
+        }
+
         // Roll
         this.initSysData((SysData) node);
     }

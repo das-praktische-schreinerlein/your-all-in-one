@@ -3,7 +3,6 @@
 
 package de.yaio.core.node;
 
-import de.yaio.core.node.InfoNode;
 import org.springframework.beans.factory.annotation.Configurable;
 
 privileged aspect InfoNode_Roo_Configurable {

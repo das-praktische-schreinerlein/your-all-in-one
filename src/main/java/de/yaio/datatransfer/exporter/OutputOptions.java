@@ -33,7 +33,6 @@ import java.util.Map;
 public interface OutputOptions {
     boolean isFlgDoIntend();
     void setFlgDoIntend(boolean flgDoIntend);
-
     boolean isFlgIntendSum();
     void setFlgIntendSum(boolean flgIntendSum);
 
@@ -69,8 +68,8 @@ public interface OutputOptions {
     void setFlgRecalc(boolean flgRecalc);
     boolean isFlgProcessDocLayout();
     void setFlgProcessDocLayout(boolean flgProcessDocLayout);
-    boolean isFlgProcessMarkdown();
-    void setFlgProcessMarkdown(boolean flgProcessMarkdown);
+    boolean isFlgUsePublicBaseRef();
+    void setFlgUsePublicBaseRef(boolean flgUsePublicBaseRef);
 
     int getMaxEbene();
     void setMaxEbene(Integer maxEbene);

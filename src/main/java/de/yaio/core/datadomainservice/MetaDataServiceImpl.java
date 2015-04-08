@@ -69,13 +69,14 @@ public class MetaDataServiceImpl extends DataDomainRecalcImpl implements MetaDat
     
     @Override
     public void doRecalcBeforeChildren(final DataDomain node, final int recurceDirection) throws Exception {
-        // Check if node is compatibel
-        if (node != null) {
-            if (!MetaData.class.isInstance(node)) {
-                throw new IllegalArgumentException();
-            }
+        if (node == null) {
+            return;
         }
-        
+        // Check if node is compatibel
+        if (!MetaData.class.isInstance(node)) {
+            throw new IllegalArgumentException();
+        }
+
         // Roll
         this.initMetaData((MetaData) node);
     }

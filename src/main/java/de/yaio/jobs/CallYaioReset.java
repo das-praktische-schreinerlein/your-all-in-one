@@ -70,9 +70,9 @@ public class CallYaioReset extends CallYaioInstance {
     @Override
     public void doJob() throws Exception {
         // call url
-        StringBuffer result = this.callGetUrl("/admin/reset", null);
+        byte[] result = this.callGetUrl("/admin/reset", null);
         
-        System.out.println(result);
+        System.out.write(result);
     }
 
     // #############

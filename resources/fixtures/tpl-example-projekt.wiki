@@ -1,0 +1,152 @@
+= WARNING - Ein Beispiel-Projekt
+# Aufgabe
+Ziel des Projektes ist es, Euch ein paar der Möglichkeiten von D'Artagnan zu auszuzeigen...
+
+# Stand
+Schaut euch die Teilaufgaben an... Soweit ich sehe sind wir im Verzug :-(
+
+# grundsätzliche Struktur
+Die Ursprungsplanung ging von 2 Teilprojekten mit verschiedenen Aufgaben aus.
+```yaiomindmap
+- Projektbaum
+  -- Teilprojekt 1
+    --- Aufgabe 1
+    --- Aufgabe 2
+    --- Aufgabe 3
+  -- Teilprojekt 2
+    --- Aufgabe 4
+    --- Aufgabe 5
+```
+* **WARNING - Teilprojekt 1**
+# Aufgabe
+Das "Teilprojekt 1" soll die Aufgaben von "Teilprojekt 1" bündeln. Was denn sonst??
+
+# Stand
+Schaut bei den Einzelaufgaben nach
+  ** ERLEDIGT - Erledigte Teilaufgabe                                           [Ist: 100%  8h 04.03.2015 00:00-05.03.2015 00:00] [Plan:     10h 01.03.2015 00:00-10.03.2015 00:00]
+# Aufgabe
+Ganz viele wichtige Sachen
+
+# Stand
+Was zu erledigen war - gut so :-)
+
+# Doku
+Ganz viel wichtiges Zeugs
+  ** WARNING - In Terminverzug                                                  [Ist:  90%  3h 10.03.2015 00:00-04.04.2015 00:00] [Plan:      5h 10.03.2015 00:00-01.04.2015 00:00]
+# Aufgabe
+Ganz viele wichtige Sachen
+
+# Stand
+Oops wir sind in Verzug! Hier müssen wir aktuell ranklotzen!!!
+
+# Doku
+Ganz viel wichtiges Zeugs
+  ** RUNNING - Wir arbeiten dran                                                [Ist:  10%  1h 01.04.2015 00:00-04.04.2015 00:00] [Plan:     10h 01.04.2015 00:00-10.10.2025 00:00]
+# Aufgabe
+Ganz viele wichtige Sachen
+
+# Stand
+Hier arbeiten wir aktuell und sind im Plan (kein Wunder ;-)
+
+# Doku
+Ganz viel wichtiges Zeugs
+* **LATE - Teilprojekt 2**
+# Aufgabe
+Das "Teilprojekt 2" soll die Aufgaben von "Teilprojekt 2" bündeln. Erstaunlich oder??
+Es überschneidet sich übrigens mit "Teilprojekt 1".
+
+# Stand
+Schaut bei den Einzelaufgaben nach
+  ** LATE - Hätte eigentlich schon beginnen müssen                              [Plan:      5h 10.03.2015 00:00-10.10.2025 00:00]
+# Aufgabe
+Ganz viele wichtige Sachen
+
+# Stand
+UI,UI,UI auch hier hätten wir schon beginnen müssen...
+
+# Doku
+Ganz viel wichtiges Zeugs
+  ** OFFEN - Kommt im Anschluß                                                  [Plan:      5h 10.10.2025 00:00-11.10.2025 00:00]
+# Aufgabe
+Ganz viele wichtige Sachen
+
+# Stand
+Ein Glück, da haben wir noch Zeit...
+
+# Doku
+Ganz viel wichtiges Zeugs
+* **DOKU - Projekt-Wiki**
+# Projekt-Wiki 
+In diesem Bereich werden wichtige Infos, Howtos, Links usw. abgespeichert
+  ** URLRES - Interessante Infos zum Projekt [ResLoc: http://http://www.your-all-in-one.de,Interessante Infos zum Projekt,]
+  ** HOWTO - Layoutmöglichkeiten des Editors
+# Überschrift Ebene 1
+Das hier ist ganz normaler Fließtext.
+- Aufzählung Ebene 1
+    - Aufzählung Unterpunkt Ebene2 mit [Link + Label](http://daringfireball.net/projects/markdown/syntax).
+
+## Überschrift Ebene 2
+Ein schönes Feature ist der integrierte Diagramm-Editor.
+- Sequenz-Diagramme
+```mermaid
+sequenceDiagram
+    participant Du
+    participant D'Artagnan
+    Du->>D'Artagnan: Ich habe ein Problem
+    D'Artagnan->>D'Artagnan: denkt nach
+    D'Artagnan->>Du: Ich kann Dir helfen
+```
+- Prozess-Diagramme
+```mermaid
+graph LR
+    A[Du] -->|fragst| B(D'Artagnan)
+    B --> C{D'Artagnan überlegt<br>Kann ich helfen?}
+    C -->|na klar| D[Du bist glücklich]
+    C -->|ich versuchs| D
+```
+- Mindmaps
+
+```yaiomindmap
+- Projektbaum
+  -- Teilprojekt 1
+    --- Aufgabe 1
+    --- Aufgabe 2
+    --- Aufgabe 3
+  -- Teilprojekt 2
+    --- Aufgabe 4
+    --- Aufgabe 5
+```
+
+### Überschrift Ebene 3
+So kann man Code-Blöcke oder ähnliches einbinden.
+```
+Masterplan
+  System
+     Default
+```        
+Das schöne ist, dass ein automatisches Syntaxhighlighting erfolgt, wenn er die Sprache erkennt.
+```
+    #!/bin/bash
+    // activate elements after 1 second
+    setTimeout(function() { 
+        // activate speech recognition and others
+        initLanguageSupport();
+        a = a + 1;
+```
+
+#### Überschrift Ebene 4
+
+Und auch die Einbindung von Bildern ist ganz einfach möglich :-)
+
+![Projektexplorer](/examples/help/hilfe-screen-projektexplorer-uebersicht.png "Übersicht Projektexplorer")
+
+Und immer wieder gerne gesehen: *Tabellen*
+
+Head1 | Head2 | Head3
+----|----|----
+Column1 | Column2 | Column3
+
+# Referenzen
+- Die Markdown-Syntax orientiert sich an [http://daringfireball.net/projects/markdown/syntax](http://daringfireball.net/projects/markdown/syntax)
+- Die  Syntax der Prozess-Diagramme folgt http://knsv.github.io/mermaid/flowchart.html
+- Und die Syntax der Sequenz-Diagramme folgt http://knsv.github.io/mermaid/sequenceDiagram.html

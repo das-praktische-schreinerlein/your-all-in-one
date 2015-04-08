@@ -149,7 +149,7 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    protected TypedQuery createFulltextQuery(final boolean flgCount, final String fulltext, final String sortConfig) {
+    protected TypedQuery createFulltextQuery(final boolean flgCount, final String pfulltext, final String sortConfig) {
         // setup class
         Class resClass = BaseNode.class;
         if (flgCount) {
@@ -159,8 +159,8 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
         // tokenize words
         String filter = "";
         String[] searchWords = null;
-        fulltext.replace("  ", " ");
-        if (fulltext != null && fulltext.length() > 0) {
+        if (pfulltext != null && pfulltext.length() > 0) {
+            String fulltext = pfulltext.replace("  ", " ");
             searchWords = fulltext.split(" ");
             if (searchWords.length > 0) {
                 int idx = 0;

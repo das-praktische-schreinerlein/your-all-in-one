@@ -112,19 +112,19 @@ public class IstChildrenSumDataTest extends DataDomainTest {
         testFormatter(mytestObj, expected, outputOptions);
 
         // without enddate
-        mytestObj.setIstChildrenSumStart(Parser.DF.parse("12.03.2014"));
+        mytestObj.setIstChildrenSumStart(DF.parse("12.03.2014"));
         expected = "                                                                                [IstSum:  30%  2h 12.03.2014 00:00-          ]";
         testFormatter(mytestObj, expected, outputOptions);
 
         // without startdate
         mytestObj.setIstChildrenSumStart(null);
-        mytestObj.setIstChildrenSumEnde(Parser.DF.parse("12.04.2014"));
+        mytestObj.setIstChildrenSumEnde(DF.parse("12.04.2014"));
         expected = "                                                                                [IstSum:  30%  2h           -12.04.2014 00:00]";
         testFormatter(mytestObj, expected, outputOptions);
         
         // with date
-        mytestObj.setIstChildrenSumStart(Parser.DF.parse("12.03.2014"));
-        mytestObj.setIstChildrenSumEnde(Parser.DF.parse("12.04.2014"));
+        mytestObj.setIstChildrenSumStart(DF.parse("12.03.2014"));
+        mytestObj.setIstChildrenSumEnde(DF.parse("12.04.2014"));
         expected = "                                                                                [IstSum:  30%  2h 12.03.2014 00:00-12.04.2014 00:00]";
         testFormatter(mytestObj, expected, outputOptions);
 

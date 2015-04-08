@@ -16,8 +16,13 @@
  */
 package de.yaio.jobs;
 
+import java.io.FileWriter;
+import java.io.Writer;
+
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import de.yaio.app.CallYaioInstance;
@@ -74,6 +79,12 @@ public class CallYaioExport extends CallYaioInstance {
         sysuidOption.setRequired(true);
         availiableCmdLineOptions.addOption(sysuidOption);
 
+        // sysuid for export
+        Option outfileNameOption = new Option(null, "outfile", true,
+                "Filename to write");
+        sysuidOption.setRequired(false);
+        availiableCmdLineOptions.addOption(outfileNameOption);
+
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("addAvailiableCmdLineOptions: " + availiableCmdLineOptions);
         }
@@ -86,11 +97,20 @@ public class CallYaioExport extends CallYaioInstance {
         // get options
         String sysUID = Configurator.getInstance().getCommandLine().getOptionValue("sysuid");
         String format = Configurator.getInstance().getCommandLine().getOptionValue("format");
+        String outfileName = Configurator.getInstance().getCommandLine().getOptionValue("outfile");
         
         // call url
-        StringBuffer result = this.callGetUrl("/exports/" + format + "/" + sysUID, null);
+        byte[] result = this.callGetUrl("/exports/" + format + "/" + sysUID, null);
         
-        System.out.println(result);
+        if (! StringUtils.isEmpty(outfileName)) {
+            // write to file
+            Writer output = new FileWriter(outfileName);
+            IOUtils.write(result, output);
+            output.close();
+        } else {
+            // write to stdout
+            System.out.write(result);
+        }
     }
 
     // #############

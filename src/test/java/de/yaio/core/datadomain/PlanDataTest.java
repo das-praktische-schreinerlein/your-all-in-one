@@ -18,7 +18,6 @@ package de.yaio.core.datadomain;
 
 import de.yaio.core.node.TaskNode;
 import de.yaio.datatransfer.exporter.formatter.PlanDataFormatterImpl;
-import de.yaio.datatransfer.importer.parser.Parser;
 import de.yaio.datatransfer.importer.parser.PlanDataParserImpl;
 
 /**
@@ -143,19 +142,19 @@ public class PlanDataTest extends DataDomainTest {
         testFormatter(mytestObj, expected, outputOptions);
 
         // without enddate
-        mytestObj.setPlanStart(Parser.DF.parse("12.03.2014"));
+        mytestObj.setPlanStart(DF.parse("12.03.2014"));
         expected = "                                                                                [Plan:      2h 12.03.2014 00:00-          ]";
         testFormatter(mytestObj, expected, outputOptions);
 
         // without startdate
         mytestObj.setPlanStart(null);
-        mytestObj.setPlanEnde(Parser.DF.parse("12.04.2014"));
+        mytestObj.setPlanEnde(DF.parse("12.04.2014"));
         expected = "                                                                                [Plan:      2h           -12.04.2014 00:00]";
         testFormatter(mytestObj, expected, outputOptions);
         
         // with date
-        mytestObj.setPlanStart(Parser.DF.parse("12.03.2014"));
-        mytestObj.setPlanEnde(Parser.DF.parse("12.04.2014"));
+        mytestObj.setPlanStart(DF.parse("12.03.2014"));
+        mytestObj.setPlanEnde(DF.parse("12.04.2014"));
         expected = "                                                                                [Plan:      2h 12.03.2014 00:00-12.04.2014 00:00]";
         testFormatter(mytestObj, expected, outputOptions);
 

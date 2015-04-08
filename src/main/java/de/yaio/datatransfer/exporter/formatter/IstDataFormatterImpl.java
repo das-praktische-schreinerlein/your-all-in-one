@@ -87,7 +87,7 @@ public class IstDataFormatterImpl extends FormatterImpl implements IstDataFormat
     public void formatIstData(final IstData node, final StringBuffer nodeOutput, 
                               final OutputOptions oOptions) throws Exception {
         // exit if Flg not set
-        if (!oOptions.isFlgShowIst()) {
+        if (oOptions == null || !oOptions.isFlgShowIst()) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("SKIP: isFlgShowIst not set for node:" 
                            + node.getNameForLogger());

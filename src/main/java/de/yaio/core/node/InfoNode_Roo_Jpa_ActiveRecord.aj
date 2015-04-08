@@ -3,8 +3,8 @@
 
 package de.yaio.core.node;
 
-import de.yaio.core.node.InfoNode;
 import java.util.List;
+
 import org.springframework.transaction.annotation.Transactional;
 
 privileged aspect InfoNode_Roo_Jpa_ActiveRecord {

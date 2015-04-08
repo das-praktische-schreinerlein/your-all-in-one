@@ -18,7 +18,6 @@ package de.yaio.core.datadomain;
 
 import de.yaio.core.node.InfoNode;
 import de.yaio.datatransfer.exporter.formatter.SysDataFormatterImpl;
-import de.yaio.datatransfer.importer.parser.Parser;
 import de.yaio.datatransfer.importer.parser.SysDataParserImpl;
 
 /**
@@ -118,9 +117,9 @@ public class SysDataTest extends DataDomainTest {
         mytestObj = getNewSysDataTestObj();
         mytestObj.setName("Name XX  ");
         mytestObj.setSysUID("DT201404081141327673");
-        mytestObj.setSysCreateDate(Parser.DTF.parse("08.04.2014 11:41"));
+        mytestObj.setSysCreateDate(DTF.parse("08.04.2014 11:41"));
         mytestObj.setSysCurChecksum("8BD061519EBEF22082D731304768276C");
-        mytestObj.setSysChangeDate(Parser.DTF.parse("10.04.2014 10:04"));
+        mytestObj.setSysChangeDate(DTF.parse("10.04.2014 10:04"));
         mytestObj.setSysChangeCount(9);
         expected = "                                                                                                                                                                [NodeSys: DT201404081141327673,08.04.2014 11:41,8BD061519EBEF22082D731304768276C,10.04.2014 10:04,9]";
         testFormatter(mytestObj, expected, outputOptions);

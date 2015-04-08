@@ -17,6 +17,7 @@
 package de.yaio.datatransfer.exporter.formatter;
 
 import java.math.BigDecimal;
+import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -25,6 +26,7 @@ import org.apache.log4j.Logger;
 
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.datatransfer.exporter.OutputOptions;
+import de.yaio.utils.DataUtils;
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -43,6 +45,15 @@ public abstract class FormatterImpl implements Formatter {
     // Logger
     private static final Logger LOGGER =
             Logger.getLogger(FormatterImpl.class);
+
+    /** dateformat-instance for german date dd.MM.yyyy  */
+    protected final DateFormat DF = DataUtils.getDF();
+    /** dateformat-instance for german time HH:mm */
+    protected final DateFormat TF = DataUtils.getTF();
+    /** dateformat-instance for german datetime dd.MM.yyyy HH:mm */
+    protected final DateFormat DTF = DataUtils.getDTF();
+    /** dateformat-instance for UID yyyyMMddHHmmssSSS */
+    protected final DateFormat UIDF = DataUtils.getUIDF();
 
     Calendar calTime = new GregorianCalendar();
 
@@ -177,7 +188,7 @@ public abstract class FormatterImpl implements Formatter {
                 // wenn Sekunde gesetzt, dann keine Uhrzeit angegeben
             } else {
                 // Uhrzeit des Datums benutzen
-                res += " " + Formatter.TF.format(src);
+                res += " " + TF.format(src);
             }
         }
 

@@ -47,8 +47,8 @@ import de.yaio.datatransfer.exporter.formatter.DescDataFormatterImpl;
 import de.yaio.datatransfer.exporter.formatter.DocLayoutDataFormatterImpl;
 import de.yaio.datatransfer.exporter.formatter.IstDataFormatterImpl;
 import de.yaio.datatransfer.exporter.formatter.PlanDataFormatterImpl;
-import de.yaio.datatransfer.importer.parser.ParserImpl;
 import de.yaio.extension.datatransfer.wiki.WikiExporter;
+import de.yaio.utils.DataUtils;
 import de.yaio.utils.ExcelService;
 
 /**
@@ -136,7 +136,8 @@ public class ExcelExporter extends WikiExporter {
      * @param wb - Workbook to fill
      * @param masterNode - node for output recursively
      * @param oOptions - options for output (formatter)
-     * @throws Exception - possible Exception     */
+     * @throws Exception - possible Exception
+     */
     public void fillPlanungSheet(final HSSFWorkbook wb, final BaseNode masterNode,
                 final ExcelOutputOptions oOptions)
         throws Exception {
@@ -555,7 +556,7 @@ public class ExcelExporter extends WikiExporter {
 
             // StartDatum berechnen
             Date date = projektNode.getPlanStart();
-            Date MINDATE = ParserImpl.DF.parse("01.01.1970");
+            Date MINDATE = DataUtils.getDF().parse("01.01.1970");
             if ((date == null || date.before(MINDATE)) && vorgaengerRownNum >= 0) {
                 // falls leer mit dem Ende des Vorgaengers belegen
                 String formula = ExcelService.getColName(ExcelNodeService.CONST_PLANUNG_COL_PLAN_DATE_ENDE) + ExcelService.getRowNum(vorgaengerRownNum);
@@ -834,7 +835,8 @@ public class ExcelExporter extends WikiExporter {
      * @param wb - Workbook to fill
      * @param masterNode - node for output recursively
      * @param oOptions - options for output (formatter)
-     * @throws Exception - possible Exception     */
+     * @throws Exception - possible Exception
+     */
     public void fillGantSheet(final HSSFWorkbook wb, final BaseNode masterNode,
             final ExcelOutputOptions oOptions)
     throws Exception {

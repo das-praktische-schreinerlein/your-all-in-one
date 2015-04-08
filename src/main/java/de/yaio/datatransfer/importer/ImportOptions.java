@@ -16,6 +16,8 @@
  */
 package de.yaio.datatransfer.importer;
 
+import java.util.Map;
+
 /**
  * <h4>FeatureDomain:</h4>
 *     import
@@ -29,5 +31,38 @@ package de.yaio.datatransfer.importer;
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public interface ImportOptions {
+
+    boolean isFlgParseDesc();
+    void setFlgParseDesc(boolean flgParseDesc);
+    boolean isFlgParseDocLayout();
+    void setFlgParseDocLayout(boolean flgParseDocLayout);
+    boolean isFlgParseIst();
+    void setFlgParseIst(boolean flgParseIst);
+    boolean isFlgParseMetaData();
+    void setFlgParseMetaData(boolean flgParseNoMetaData);
+    boolean isFlgParsePlan();
+    void setFlgParsePlan(boolean flgParsePlan);
+    boolean isFlgParsePlanCalc();
+    void setFlgParsePlanCalc(boolean flgParsePlanCalc);
+    boolean isFlgParseResLoc();
+    void setFlgParseResLoc(boolean flgParseResLoc);
+    boolean isFlgParseSymLink();
+    void setFlgParseSymLink(boolean flgParseSymLink);
+    boolean isFlgParseSysData();
+    void setFlgParseSysData(boolean flgParseNoSysData);
+
+    String getStrReadIfStatusInListOnly();
+    void setStrReadIfStatusInListOnly(String strReadIfStatusInListOnly);
+    String getStrClassFilter();
+    void setStrClassFilter(String strClassFilter);
+    String getStrTypeFilter();
+    void setStrTypeFilter(String strTypeFilter);
+
+    void setAllFlgParse(boolean value);
+    
+    Map<String, String> getMapClassFilter();
+    Map<String, String> getMapTypeFilter();
+    Map<String, String> getMapStateFilter();
+    void initFilterMaps();
 
 }

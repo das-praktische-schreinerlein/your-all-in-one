@@ -82,12 +82,20 @@ public class PPLExporter extends ExporterImpl {
 
         // Daten formatieren
         StringBuffer res = new StringBuffer();
+        oOptions.setFlgShowDescWithUe(true);
         formatNodeDataDomains(node, res, oOptions);
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Praefix for node=" + node.getNameForLogger() 
                     + " praefix=" + praefix);
         }
+        
+        // escape and reinit res
+        String dummyText = res.toString();
+        dummyText = dummyText.replaceAll("\n", "<WLBR>");
+        dummyText = dummyText.replaceAll("\t", "<WLTAB>");
+        //dummyText = dummyText.replaceAll("\\", "<WLESC>");
+        res = new StringBuffer(dummyText);
 
         // Praefix voranstellen
         if (praefix.length() > 0) {

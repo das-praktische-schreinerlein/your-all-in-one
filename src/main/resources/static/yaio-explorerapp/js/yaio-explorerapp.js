@@ -133,7 +133,7 @@ yaioM.config(['$httpProvider', function($httpProvider) {
  *   </ul> 
  * <h4>FeatureKeywords:</h4>
  *     GUI Configuration
- * @param $httpProvider - the $translateProvider to get text-resources
+ * @param $translateProvider - the $translateProvider to get text-resources
  */
 yaioM.config(function ($translateProvider) {
     $translateProvider.translations();
@@ -149,6 +149,8 @@ yaioM.config(function ($translateProvider) {
     // init
     $translateProvider.preferredLanguage(langKey);
     initLanguageSupport(langKey);
+    $translateProvider.currentLanguageKey = langKey;
+    
 
     // change icons
     $(".button-lang").removeClass("button-lang-active").addClass("button-lang-inactive");
@@ -178,6 +180,72 @@ yaioM.directive('state', function(){
      };
 })
     
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Utils
+ * <h4>FeatureDescription:</h4>
+ *     factory to create yaioUtils with util-functions
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>returns new yaioUtils obj
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     Utils
+ */
+yaioM.factory('yaioUtils', function ($rootScope) {
+    var ganttRangeStart = formatGermanDate((new Date()).getTime() - 90*24*60*60*1000); 
+    var ganttRangeEnd = formatGermanDate((new Date()).getTime() + 90*24*60*60*1000);
+    
+    return {
+        /**
+         * <h4>FeatureDomain:</h4>
+         *     Help
+         * <h4>FeatureDescription:</h4>
+         *     callbackhandler to open helpsite
+         * <h4>FeatureResult:</h4>
+         *   <ul>
+         *     <li>open the helpsite
+         *   </ul> 
+         * <h4>FeatureKeywords:</h4>
+         *     GUI Callback
+         * @param url - the url of the helpsite
+         */
+        showHelpSite: function(url) {
+            console.log("showHelpSite:" + " url:" + url);
+            yaioShowHelpSite(url);
+            return false;
+        },
+        
+        toggleSysContainerForNode: function(node) {
+            toggleNodeSysContainer(node.sysUID);
+        },
+        
+        openNodeEditorForNode: function(node, mode) {
+            yaioOpenNodeEditorForNode(node, mode);
+        },
+        
+        renderNodeLine: function(node, trIdSelector) {
+            // load me
+            var data = {
+                 node: {
+                     data: {
+                         basenode: node,
+                     },
+                     tr: trIdSelector,
+                 } 
+            };
+            
+            console.log("renderNodeLine nodeId=" + node.sysUID + " tr=" + $(trIdSelector).length);
+            renderColumnsForNode(null, data, true);
+        },
+        
+        ganttOptions: { 
+            ganttRangeStart: ganttRangeStart, 
+            ganttRangeEnd: ganttRangeEnd
+        }
+    };
+});
+
 /**
  * <h4>FeatureDomain:</h4>
  *     Configuration
@@ -272,32 +340,17 @@ yaioM.controller('AuthController', function($rootScope, $scope, $location, $http
  * <h4>FeatureKeywords:</h4>
  *     GUI Configuration
  */
-yaioM.controller('FrontPageCtrl', function($rootScope, $scope, $location, $http, $routeParams, setFormErrors, OutputOptionsEditor, authorization) {
+yaioM.controller('FrontPageCtrl', function($rootScope, $scope, $location, $http, $routeParams, setFormErrors, OutputOptionsEditor, authorization, yaioUtils) {
+    // include utils    
+    $scope.yaioUtils = yaioUtils;
+    
+    // set vars
     var nodeId = $routeParams.nodeId;
     if (nodeId == null || nodeId == "" || ! nodeId) {
         nodeId = 'SysStart1';
     }
     console.log("FrontPageCtrl - processing nodeId=" + nodeId);
-
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Help
-     * <h4>FeatureDescription:</h4>
-     *     callbackhandler to open helpsite
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>open the helpsite
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Callback
-     * @param url - the url of the helpsite
-     */
-    $scope.showHelpSite = function(url) {
-        console.log("showHelpSite:" + " url:" + url);
-        yaioShowHelpSite(url);
-        return false;
-    }
-
+    
     // call authentificate 
     authorization.authentificate(function () {
         // check authentification
@@ -323,13 +376,20 @@ yaioM.controller('FrontPageCtrl', function($rootScope, $scope, $location, $http,
  * <h4>FeatureKeywords:</h4>
  *     GUI Configuration
  */
-yaioM.controller('LanguageCtrl', ['$translate', '$scope', function ($translate, $scope) {
+yaioM.controller('LanguageCtrl', ['$translate', '$scope', function ($translate, $scope, yaioUtils) {
+    // include utils    
+    $scope.yaioUtils = yaioUtils;
+
+    // define languageutils
+    $scope.currentLanguageKey = $translate.currentLanguageKey;
     $scope.changeLanguage = function (langKey) {
         // change angularTranslate
         $translate.use(langKey);
         
         // change other languagetranslator
         window.lang.change(langKey);
+        
+        $scope.currentLanguageKey = langKey;
         
         // change icons
         $(".button-lang").removeClass("button-lang-active").addClass("button-lang-inactive");
@@ -350,11 +410,12 @@ yaioM.controller('LanguageCtrl', ['$translate', '$scope', function ($translate, 
  * <h4>FeatureKeywords:</h4>
  *     GUI Configuration BusinessLogic
  */
-yaioM.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $http, $routeParams, setFormErrors, authorization) {
+yaioM.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $http, $routeParams, setFormErrors, authorization, yaioUtils) {
+    // include utils    
+    $scope.yaioUtils = yaioUtils;
 
     // create search
     $scope.nodes = new Array();
-    $scope.ganttOptions = { ganttRangeStart: "01.01.2014", ganttRangeEnd: "31.12.2014"};
     
     $scope.searchOptions = {
             curPage: 1,
@@ -542,20 +603,9 @@ yaioM.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $http
      *     GUI Callback
      */
     $scope.renderNodeLine = function(node) {
-        // load me
-        var data = {
-             node: {
-                 data: {
-                     basenode: node,
-                 },
-                 tr: "#tr" + node.sysUID,
-             } 
-        };
-        
         // we need a timeout to put the tr into DOM
         setTimeout(function(){
-                console.log("renderNodeLine nodeId=" + node.sysUID + " tr=" + $("#tr" + node.sysUID).length);
-                renderColumnsForNode(null, data);
+                $scope.yaioUtils.renderNodeLine(node, "#tr" + node.sysUID);
             }, 10);
     }
 
@@ -604,7 +654,9 @@ yaioM.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $http
  * <h4>FeatureKeywords:</h4>
  *     GUI Configuration BusinessLogic
  */
-yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, $routeParams, setFormErrors, OutputOptionsEditor, authorization) {
+yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, $routeParams, setFormErrors, OutputOptionsEditor, authorization, yaioUtils) {
+    // include utils    
+    $scope.yaioUtils = yaioUtils;
 
     // register pattern
     $scope.CONST_PATTERN_CSSCLASS  = yaioM.CONST_PATTERN_CSSCLASS ;
@@ -637,7 +689,6 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
     $scope.node = {};
     $scope.nodeForEdit = {};
     $scope.config = {treeOpenLevel: 1};
-    $scope.ganttOptions = { ganttRangeStart: "01.01.2014", ganttRangeEnd: "31.12.2014"};
     
     // check activeNodeId
     var activeNodeIdHandler;
@@ -742,15 +793,9 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
                     yaioCreateFancyTree("#tree", $scope.node.sysUID, activeNodeIdHandler);
                     
                     // load me
-                    var data = {
-                         node: {
-                             data: {
-                                 basenode: nodeResponse.data.node,
-                             },
-                             tr: "#masterTr",
-                         } 
-                    };
-                    renderColumnsForNode(null, data);
+                    $scope.yaioUtils.renderNodeLine(nodeResponse.data.node, "#masterTr")
+
+                    // recalc gantt
                     yaioRecalcMasterGanttBlock($scope.node);
                 } else {
                     // error
@@ -771,7 +816,6 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
         }
     });
     
-    
     /**
      * <h4>FeatureDomain:</h4>
      *     Editor
@@ -790,24 +834,6 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
         return false;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Help
-     * <h4>FeatureDescription:</h4>
-     *     callbackhandler to open helpsite
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>open the helpsite
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Callback
-     * @param url - the url of the helpsite
-     */
-    $scope.showHelpSite = function(url) {
-        console.log("showHelpSite:" + " url:" + url);
-        yaioShowHelpSite(url);
-        return false;
-    }
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -1255,6 +1281,7 @@ yaioM.factory('OutputOptionsEditor', function($http) {
 
     oOptions.flgChildrenSum = false;
     oOptions.flgProcessDocLayout = false;
+    oOptions.flgUsePublicBaseRef = false;
     oOptions.flgRecalc= false;
     oOptions.strClassFilter = "";
     oOptions.strTypeFilter = "";
@@ -1372,7 +1399,10 @@ yaioM.factory('OutputOptionsEditor', function($http) {
  * <h4>FeatureKeywords:</h4>
  *     GUI Configuration BusinessLogic
  */
-yaioM.controller('OutputOptionsCtrl', function($rootScope, $scope, $location, $http, $routeParams, setFormErrors, OutputOptionsEditor) {
+yaioM.controller('OutputOptionsCtrl', function($rootScope, $scope, $location, $http, $routeParams, setFormErrors, OutputOptionsEditor, yaioUtils) {
+    // include utils    
+    $scope.yaioUtils = yaioUtils;
+
     // register the editor
     $scope.outputOptionsEditor = OutputOptionsEditor;
     // create options

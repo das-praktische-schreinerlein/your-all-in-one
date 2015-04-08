@@ -379,7 +379,6 @@ public class JobNodes2Wiki extends CmdLineJob {
                 cmdLine.getOptionValue("intendsys", 
                         new Integer(oOptions.getIntendSys()).toString())));
         oOptions.setFlgProcessDocLayout(cmdLine.hasOption("processdoclayout"));
-        oOptions.setFlgProcessMarkdown(cmdLine.hasOption("processmarkdown"));
         oOptions.setStrReadIfStatusInListOnly(cmdLine.getOptionValue("onlyifstateinlist", null));
         
         if (LOGGER.isDebugEnabled()) {

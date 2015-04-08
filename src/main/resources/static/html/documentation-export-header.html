@@ -1,11 +1,13 @@
-<html><head>
-<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
-    <link rel="stylesheet" type="text/css" media="all" href="/css/yaio/style.css" />
-    <link rel="stylesheet" type="text/css" media="all" href="/css/yaio/main.css" />
+<html>
+<head>
+    <!--<base href="/" />-->
+    <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+    <link rel="stylesheet" type="text/css" media="all" href="./css/yaio/style.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="./css/yaio/main.css" />
     <script type="text/javascript">var flgDetailFrameAllowed = false;</script>
-    <script type="text/javascript" src="/js/jquery/jquery.min.js"></script>
-    <script type="text/javascript" src="/js/jqueryui/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="/js/yaio/JMATAllIn.js"></script>    
+    <script type="text/javascript" src="./js/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="./js/jqueryui/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="./js/yaio/JMATAllIn.js"></script>    
     <style>
 body { 
     background: white; 
@@ -80,9 +82,6 @@ body {
  * Node-Elemente
  */
 .node-data-block {
-    /* show all whitespaces */
-    white-space: pre;
-    overflow: auto;
 }
 .node-area-stateshort {
     vertical-align: top;
@@ -626,22 +625,36 @@ div.mermaid, code.mermaid {
 }
 
     </style>
-    <link rel="stylesheet" type="text/css" media="print" href="/css/yaio/print.css" />
-    <link rel="stylesheet" type="text/css" media="all" href="/yaio-explorerapp/css/mermaid.css" />
-    <link rel="stylesheet" type="text/css" media="print" href="/yaio-explorerapp/css/print.css" />
-    <link rel="stylesheet" type="text/css" media="print" href="/yaio-explorerapp/css/print-dataonly.css" id="link_css_dataonly" disabled="true" />
+
+    <!-- yaio -->
+    <script src="./yaio-explorerapp/js/yaio-baseservice.js" type="text/javascript"></script>
+    <script src="./yaio-explorerapp/js/yaio-formatter.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" media="print" href="./css/yaio/print.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="./yaio-explorerapp/css/formatter.css" />
+    <link rel="stylesheet" type="text/css" media="print" href="./yaio-explorerapp/css/print.css" />
+    <link rel="stylesheet" type="text/css" media="print" href="./yaio-explorerapp/css/print-dataonly.css" id="link_css_dataonly" disabled="true" />
     
+    <!-- Toastr -->
+    <link rel="stylesheet" href="./css/toastr/toastr.css">
+    <script src="./js/toastr/toastr.min.js" type="text/javascript"></script>
+
+    <!-- toc -->
+    <script src="./js/strapdown/strapdown-toc.js" type="text/javascript"></script>
+
     <!-- Syntaxhightlighter highlightjs -->
-    <link rel="stylesheet" href="/css/highlightjs/default.css">
-    <script src="/js/highlightjs/highlight.pack.js"></script>
+    <link rel="stylesheet" href="./css/highlightjs/default.css">
+    <script src="./js/highlightjs/highlight.pack.js"></script>
 
     <!-- diagrams -->
-    <script src="/js/mermaid/mermaid.full.js" charset="UTF-8"></script>
+    <script src="./js/mermaid/mermaid.full.js" charset="UTF-8"></script>
+
+    <!-- freemind -->
+    <script src="./freemind-flash/flashobject.js"></script>
 
     <!-- JQery-Slimbox2 (Lightbox) -->
-    <script type="text/javascript" src="/js/slimbox2/slimbox2.js"></script>
-    <script type="text/javascript" src="/js/slimbox2/autoload.js"></script>
-    <link rel="stylesheet" href="/css/slimbox2/slimbox2.css" type="text/css" media="screen" />
+    <script type="text/javascript" src="./js/slimbox2/slimbox2.js"></script>
+    <script type="text/javascript" src="./js/slimbox2/autoload.js"></script>
+    <link rel="stylesheet" href="./css/slimbox2/slimbox2.css" type="text/css" media="screen" />
 
     <script type="text/javascript">
     
@@ -1008,3 +1021,4 @@ div.mermaid, code.mermaid {
 </head>
 <body>
     <div id="div_full" style="width: 100%">
+       <div id="globtoc" class="globtoc documentation-globtoc"> </div>

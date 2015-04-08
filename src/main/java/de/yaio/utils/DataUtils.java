@@ -16,11 +16,18 @@
  */
 package de.yaio.utils;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.security.MessageDigest;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 /**
@@ -36,9 +43,6 @@ import org.apache.log4j.Logger;
  */
 
 public class DataUtils {
-    // Logger
-    private static final Logger LOGGER =
-            Logger.getLogger(DataUtils.class);
     protected static MessageDigest objMD5Coder;
     static { 
         try {
@@ -47,6 +51,11 @@ public class DataUtils {
             // TODO: handle exception
         }
     }
+
+    // Logger
+    private static final Logger LOGGER =
+            Logger.getLogger(DataUtils.class);
+    
     
 
     /**
@@ -121,7 +130,7 @@ public class DataUtils {
      */
     public static Map<String, String> initMapFromCsvString(final String csvString) {
         Map<String, String> mpStates = null;
-        if (   csvString != null 
+        if (csvString != null 
             && csvString.length() > 0) {
             mpStates = new HashMap<String, String>();
             String [] arrStatusFilter =
@@ -163,7 +172,7 @@ public class DataUtils {
             // als Hex
             b = digest[i];
             value = (b & 0x7F) + (b < 0 ? 128 : 0);
-            praefix = (value < 16 ? "0" : "");
+            praefix = value < 16 ? "0" : "";
             strbuf.append(praefix);
             strbuf.append(Integer.toHexString(value).toUpperCase());
         }        
@@ -171,7 +180,119 @@ public class DataUtils {
         return strbuf.toString();
     }
     
+    /** 
+     * copy date
+     * @param oldDate - date to copy
+     * @return new Date
+     */
     public static Date getNewDate(final Date oldDate) {
-        return (oldDate != null ? new Date(oldDate.getTime()) : null);
+        return oldDate != null ? new Date(oldDate.getTime()) : null;
     }
+    
+    /** 
+     * @return dateformat-instance for german date dd.MM.yyyy 
+     */
+    public static DateFormat getDF() {
+        return  new SimpleDateFormat("dd.MM.yyyy");
+    }
+    
+    /**
+     * @return dateformat-instance for german time HH:mm
+     */
+    public static DateFormat getTF() {
+        return new SimpleDateFormat("HH:mm");
+    }
+
+    /**
+     * @return dateformat-instance for german datetime dd.MM.yyyy HH:mm
+     * */
+    public static DateFormat getDTF() {
+        return new SimpleDateFormat("dd.MM.yyyy HH:mm");
+    }
+    
+    /**
+     * @return dateformat-instance for UID yyyyMMddHHmmssSSS
+     */
+    public static DateFormat getUIDF() {
+        return new SimpleDateFormat("yyyyMMddHHmmssSSS");
+    }
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Tools - URL-Handling
+     * <h4>FeatureDescription:</h4>
+     *     extract url from string (defaults if not set scheme:http host:localhost port:80)
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValues - the extracted url
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     URL-Handling
+     * @param value                  - string to extract url from
+     * @return                       - the extracted url
+     * @throws MalformedURLException - possible invalid URL
+     */
+    public static URL extractWebUrl(final String value) throws MalformedURLException {
+        if (StringUtils.isEmpty(value)) {
+            LOGGER.warn("cant parse url from empty value");
+            return null;
+        }
+        
+        // define url-pattern
+        String urlPattern = "(https?://)?([-a-zA-Z\\.]+)(:[0-9]+)?(\\?.*)?$";
+        Pattern pattern = Pattern.compile(urlPattern, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(value);
+        URL url = null;
+        
+        // extract url-parts if matches
+        if (matcher.matches()) {
+            int matcherindex = 1;
+            String protocol = "http";
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Pattern: " + pattern + " " 
+                    + matcherindex + ":" + matcher.group(matcherindex));
+            }
+            if (matcher.group(matcherindex) != null) {
+                protocol = matcher.group(matcherindex).toLowerCase().trim();
+            }
+            
+            matcherindex = 2;
+            String host = "localhost";
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Pattern: " + pattern + " " 
+                    + matcherindex + ":" + matcher.group(matcherindex));
+            }
+            if (matcher.group(matcherindex) != null) {
+                host = matcher.group(matcherindex).toLowerCase().trim();
+            }
+
+            matcherindex = 3;
+            int port = 80;
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Pattern: " + pattern + " " 
+                    + matcherindex + ":" + matcher.group(matcherindex));
+            }
+            if (matcher.group(matcherindex) != null) {
+                port = Integer.parseInt(matcher.group(matcherindex).trim());
+            }
+
+            matcherindex = 4;
+            String context = "";
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Pattern: " + pattern + " " 
+                    + matcherindex + ":" + matcher.group(matcherindex));
+            }
+            if (matcher.group(matcherindex) != null) {
+                context = matcher.group(matcherindex).trim();
+            }
+            
+            url = new URL(protocol, host, port, context);
+            LOGGER.debug("parsed url:" + url + " from value:" + value);
+            return url;
+        }
+        
+        // return not found
+        LOGGER.warn("cant parse url from value:" + value);
+        return null;
+    }    
 }

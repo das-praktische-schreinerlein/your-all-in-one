@@ -133,7 +133,7 @@ function yaioResetNodeEditorFormFields() {
  *     GUI Editor
  * @param field - fieldconfig from configNodeTypeFields
  * @param fieldSuffix - sufix of the fieldName to identify the form (nodeclass of basenode)
- * @param basenoe - the node to map the fieldvalue
+ * @param basenode - the node to map the fieldvalue
  */
 function yaioSetFormField(field, fieldSuffix, basenode) {
     var fieldName = field.fieldName;
@@ -225,7 +225,38 @@ function yaioOpenNodeEditor(nodeId, mode) {
     
     // extract nodedata
     var basenode = treeNode.data.basenode;
-        
+    
+    // open editor
+    yaioOpenNodeEditorForNode(basenode, mode);
+}
+    
+/**
+ * <h4>FeatureDomain:</h4>
+ *     GUI
+ * <h4>FeatureDescription:</h4>
+ *     open the nodeeditor for the node (toggle it fromleft), transfer the data from node to the formfields  
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>GUI-result: reset forms+field, hide forms, open the spcific form for the nodeclass, updates fields
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Editor
+ * @param basenode - the node
+ * @param mode - edit, create, createsymlink
+ */
+function yaioOpenNodeEditorForNode(basenode, mode) {
+    // reset editor
+    console.log("yaioOpenNodeEditor: reset editor");
+    yaioResetNodeEditor();
+    
+    // check vars
+    if (! basenode) {
+        // tree not found
+        logError("error yaioOpenNodeEditor: basenode required", false);
+        return null;
+    }
+    var nodeId = basenode['id'];
+
     // check mode    
     var fields = new Array();
     var formSuffix, fieldSuffix;

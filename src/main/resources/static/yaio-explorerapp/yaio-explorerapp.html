@@ -50,7 +50,7 @@
   <script src="../js/angularjs/angular-route.js"></script>
   <script src="../js/angularjs/angular-translate.js"></script>
   <script src="../js/angularjs/angular-translate-loader-static-files.js"></script>
-  
+
   <!-- Markdown-Editor+Formatter -->
 <!-- 
   <script src="https://raw.githubusercontent.com/chjj/marked/master/lib/marked.js" type="text/javascript"></script>
@@ -60,12 +60,22 @@
   <script src="../js/ace/ace.js" type="text/javascript"></script>
 <!-- <script src="../js/ace/ext-spellcheck.js" type="text/javascript"></script>  -->
 
+  <!-- toc -->
+  <script src="../js/strapdown/strapdown-toc.js" type="text/javascript"></script>
+
   <!-- Syntaxhightlighter -->
   <link rel="stylesheet" href="../css/highlightjs/default.css">
   <script src="../js/highlightjs/highlight.pack.js"></script>
  
+  <!-- Toastr -->
+  <link rel="stylesheet" href="../css/toastr/toastr.css">
+  <script src="../js/toastr/toastr.min.js"></script>
+
   <!-- diagrams -->
   <script src="../js/mermaid/mermaid.full.js" charset="UTF-8"></script>
+  
+  <!-- freemind -->
+  <script src="../freemind-flash/flashobject.js"></script>
 
   <!-- yaio -->
   <!-- 
@@ -80,7 +90,7 @@
 
   <!-- yaio-explorer -->
   <link rel="stylesheet" type="text/css" media="all" href="./css/style.css" />
-  <link rel="stylesheet" type="text/css" media="all" href="./css/mermaid.css" />
+  <link rel="stylesheet" type="text/css" media="all" href="./css/formatter.css" />
   <link rel="stylesheet" type="text/css" media="print" href="./css/print.css" />
   <link rel="stylesheet" type="text/css" media="print" href="./css/print-dataonly.css" id="link_css_dataonly" disabled="true" />
 
@@ -103,12 +113,12 @@
                            <div class="ue1MenueTop" lang="tech">D'Artagnan - Dein pers&ouml;nlicher Software-Musketier 
                             <span class="ue2MenueTop" lang="tech">"Einer f&uuml;r Alles - Alles in Einem"</span>
                             <span class="ue3MenueTop">
-                               <ul class="ulTopKontakt" ng-controller="LanguageCtrl">
+                               <ul class="ulTopKontakt" ng-controller="LanguageCtrl" id="ulLanguage" data-curlanguage="{{currentLanguageKey}}">
                                    <li class="liTopKontakt liTopKontaktLanguage">
-                                       <button ng-click="changeLanguage('de')" translate="common.button.lang.de" class="button button-lang" id="button_lang_de">DE</button>
+                                       <button ng-click="changeLanguage('de')" translate="common.button.lang.de" data-tooltip='tooltip.button.lang.de' lang="tech" class="button button-lang" id="button_lang_de">DE</button>
                                    </li>
                                    <li class="liTopKontakt liTopKontaktLanguage">
-                                        <button ng-click="changeLanguage('en')" translate="common.button.lang.en" class="button button-lang" id="button_lang_en">EN</button>
+                                        <button ng-click="changeLanguage('en')" translate="common.button.lang.en" data-tooltip='tooltip.button.lang.en' lang="tech" class="button button-lang" id="button_lang_en">EN</button>
                                    </li>
                                    <li class="liTopKontakt liTopKontaktTwitter"><a 
                                        target="_blank" 
@@ -204,6 +214,7 @@
                             <a href="http://paulrobertlloyd.com/2009/06/social_media_icons/" target="_blank">paulrobertlloyd.com</a>,
                             <a href="http://www.digitalia.be/software/slimbox2" target="_blank">Slimbox2</a>
                             <a href="https://github.com/knsv/mermaid" target="_blank">mermaid</a>,
+                            <a href="https://github.com/CodeSeven/toastr" target="_blank">Toastr</a>
                             zugegriffen.<br />
                         </div>
                       </div>
@@ -216,14 +227,16 @@
 </div>
 
 <!-- yaio-explorer -->
-<script src="js/jmat.js"></script>
-<script src="js/yaio-editorservice.js"></script>
-<script src="js/yaio-baseservice.js"></script>
-<script src="js/yaio-layout.js"></script>
-<script src="js/yaio-fancytree.js"></script>
-<script src="js/yaio-explorerapp.js"></script>
+<script src="js/jmat.js" type="text/javascript"></script>
+<script src="js/yaio-editorservice.js" type="text/javascript"></script>
+<script src="js/yaio-baseservice.js" type="text/javascript"></script>
+<script src="js/yaio-layout.js" type="text/javascript"></script>
+<script src="js/yaio-formatter.js" type="text/javascript"></script>
+<script src="js/yaio-markdowneditor.js" type="text/javascript"></script>
+<script src="js/yaio-fancytree.js" type="text/javascript"></script>
+<script src="js/yaio-explorerapp.js" type="text/javascript"></script>
 <!-- https://raw.githubusercontent.com/brantwills/Angular-Paging/master/paging.js  -->
-<script src="../js/angularjs/paging.js"></script>
+<script src="../js/angularjs/paging.js" type="text/javascript"></script>
 
 <!-- Tooltip -->
 <script type="text/javascript">

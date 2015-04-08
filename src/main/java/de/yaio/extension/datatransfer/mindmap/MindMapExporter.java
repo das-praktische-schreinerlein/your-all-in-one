@@ -199,8 +199,10 @@ public class MindMapExporter extends WikiExporter {
 
         // Hintergrund-Farbe
         String color = workflowFormatConfigurator.getStateColor(curNode.getState());
-        res.append(" background_color=\"" + color + "\"");
-        res.append(" BACKGROUND_COLOR=\"" + color + "\"");
+        if (color != null) {
+            res.append(" background_color=\"" + color + "\"");
+            res.append(" BACKGROUND_COLOR=\"" + color + "\"");
+        }
         res.append(" >\n");
 
         // Icons

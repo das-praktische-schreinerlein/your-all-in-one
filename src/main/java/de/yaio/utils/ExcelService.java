@@ -123,7 +123,7 @@ public class ExcelService {
             } else if (cellValue.getCellType() == HSSFCell.CELL_TYPE_STRING) {
                 String value = cellValue.getStringValue().toString();
                 // System.err.println("Value:'" + value + "'" + " lenght:" + value.length());
-                if (value != null && value != "" && value.length() > 0) {
+                if (value != null && !"".equals(value) && value.length() > 0) {
                     setCellString(sheet, rownum, cellnum, value);
                 }
             }

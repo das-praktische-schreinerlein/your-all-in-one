@@ -80,9 +80,10 @@ public class MetaDataFormatterImpl extends FormatterImpl implements MetaDataForm
     }
 
     @Override
-    public void formatMetaData(final MetaData node, final StringBuffer nodeOutput, final OutputOptions oOptions) throws Exception {
+    public void formatMetaData(final MetaData node, final StringBuffer nodeOutput, 
+                               final OutputOptions oOptions) throws Exception {
         // exit if Flg not set
-        if (!oOptions.isFlgShowMetaData()) {
+        if (oOptions == null || !oOptions.isFlgShowMetaData()) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("SKIP: isFlgShowMetaData not set for node:" + node.getNameForLogger());
             }
