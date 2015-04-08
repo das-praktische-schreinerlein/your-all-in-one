@@ -136,7 +136,8 @@ public class ExcelExporter extends WikiExporter {
      * @param wb - Workbook to fill
      * @param masterNode - node for output recursively
      * @param oOptions - options for output (formatter)
-     * @throws Exception - possible Exception     */
+     * @throws Exception - possible Exception
+     */
     public void fillPlanungSheet(final HSSFWorkbook wb, final BaseNode masterNode,
                 final ExcelOutputOptions oOptions)
         throws Exception {
@@ -834,7 +835,8 @@ public class ExcelExporter extends WikiExporter {
      * @param wb - Workbook to fill
      * @param masterNode - node for output recursively
      * @param oOptions - options for output (formatter)
-     * @throws Exception - possible Exception     */
+     * @throws Exception - possible Exception
+     */
     public void fillGantSheet(final HSSFWorkbook wb, final BaseNode masterNode,
             final ExcelOutputOptions oOptions)
     throws Exception {
