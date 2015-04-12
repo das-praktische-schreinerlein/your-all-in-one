@@ -1589,7 +1589,7 @@ function yaioRecalcMasterGanttBlockLine(masterNodeId, praefix) {
     // check for tree
     var treeId = "#tree";
     var tree = $(treeId).fancytree("getTree");
-    if (! tree) {
+    if ($(treeId).length <= 0 || !tree || tree == "undefined" ) {
         logError("yaioRecalcMasterGanttBlock: error tree:'" + treeId + "' not found.", false);
         return;
     }
