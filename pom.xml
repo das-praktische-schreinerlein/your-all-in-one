@@ -10,7 +10,7 @@
     
     <!-- packaging jar or war and version -->
     <packaging>jar</packaging>
-    <version>feature-YAIO2040-improvements-201503-RELEASE</version>
+    <version>feature-YAIO2082-improvements-201504-RC</version>
     
     <!-- settings-->
     <properties>
