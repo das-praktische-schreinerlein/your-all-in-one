@@ -494,6 +494,24 @@ ul.nodecommands {
     font-size: 11px;
     line-height: 1.42857;
 }
+.field_nodeParent {
+    text-align: left;
+    overflow-x:auto;
+    left: -420px;
+    position: relative;
+    width: 1000px; /*  orig: 550px; */
+    font-size: 11px;
+    line-height: 1.42857;
+}
+.field_nodeSearchData {
+    text-align: left;
+    overflow-x:auto;
+    left: -420px;
+    position: relative;
+    width: 1000px; /*  orig: 550px; */
+    font-size: 11px;
+    line-height: 1.42857;
+}
 .field_center {
    text-align: center; !IMPORTANT
 }
