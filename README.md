@@ -18,8 +18,17 @@ More information about the prototype at http://www.your-all-in-one.de/yaio/stati
 - [ ] use and optimize it :-)
 
 # History and milestones
+- see details on [resources/docs/Changelog.md](resources/docs/Changelog.md)
+- 2015
+   - added mindmap, state-diagramms as markdown-extension
+   - added speach-synthesizer to read the text
+   - added multilanguage-support
+   - added new exports (PPL, Jira, Text)
+   - added Admin-Scripts, Commandline-Interface for the App
+   - secured app with user-login 
+   - improved layout 
 - 2014
-   - added markdown to format desc with automatic synatx-hihglighting for code-blocks
+   - added markdown to format desc with automatic synatx-highlighting for code-blocks
    - add searchview
    - added yaio-explorer as frontendview
    - added RESTfull-WS
