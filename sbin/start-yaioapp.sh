@@ -28,3 +28,7 @@ YAIOCONFIGPATH=${YAIOSCRIPTPATH}../config/
 CMD="java ${JAVAOPTIONS} -cp ${CP} ${PROG_APP} ${CFG} ${NEWID_OPTIONS}"
 echo "start-yaioapp: ${CMD}"
 ${CMD} &
+
+CMD="java ${JAVAOPTIONS} -cp ${CP} ${PROG_APPPROPAGATOR} ${CFG}"
+echo "stop-apppropagator: ${CMD}"
+${CMD} &
