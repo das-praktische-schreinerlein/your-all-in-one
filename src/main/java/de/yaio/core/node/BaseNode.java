@@ -806,7 +806,9 @@ public class BaseNode implements BaseData, MetaData, SysData,
                 } else {
                     childNode.persist();
                 }
+                //CHECKSTYLE.OFF: IllegalCatch - Much more readable than catching x exceptions
             } catch (Exception ex) {
+                //CHECKSTYLE.ON: IllegalCatch
                 LOGGER.error("errors while saving childnode for '" 
                                 + sysUID + "':", ex);
                 LOGGER.error("error saving node '" 

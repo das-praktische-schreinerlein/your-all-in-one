@@ -810,7 +810,9 @@ public class WikiImporter extends ImporterImpl {
                     System.out.println(wk.getHirarchy());
                 }
             }
+            //CHECKSTYLE.OFF: IllegalCatch - Much more readable than catching x exceptions
         } catch (Exception ex) {
+            //CHECKSTYLE.ON: IllegalCatch
             ex.printStackTrace();
         }
     }

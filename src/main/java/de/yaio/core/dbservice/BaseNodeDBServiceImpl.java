@@ -105,7 +105,9 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
 
                 // save me
                 node.merge();
+                //CHECKSTYLE.OFF: IllegalCatch - Much more readable than catching x exceptions
             } catch (Exception ex) {
+                //CHECKSTYLE.ON: IllegalCatch
                 LOGGER.error("errors while updating node '" 
                                 + node.getNameForLogger() + "':", ex);
                 LOGGER.error("error saving node '" 
