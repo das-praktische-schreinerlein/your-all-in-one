@@ -74,8 +74,9 @@ public class Configurator {
                     "config.spring.applicationconfig.path";
     protected static final String CONST_DEFAULT_APPLICATIONCONFIG_PATH = 
                     "/META-INF/spring/applicationContext.xml";
-
     private static final Logger LOGGER = Logger.getLogger(Configurator.class);
+
+    // should be instantiated after LOGGER because it is used in constructor
     protected static final Configurator instance = new Configurator();
 
     protected ApplicationContext applicationContext;
@@ -612,13 +613,17 @@ public class Configurator {
             InputStream in = new FileInputStream(new File(filePath));
             prop.load(in);
             in.close();
+            //CHECKSTYLE.OFF: IllegalCatch - Much more readable than catching x exceptions
         } catch (Throwable ex) {
+            //CHECKSTYLE.ON: IllegalCatch
             // try it from jar
             try {
                 InputStream in = instance.getClass().getResourceAsStream(filePath);
                 prop.load(in);
                 in.close();
+                //CHECKSTYLE.OFF: IllegalCatch - Much more readable than catching x exceptions
             } catch (Throwable ex2) {
+                //CHECKSTYLE.ON: IllegalCatch
                 throw new Exception("cant read propertiesfile: " + filePath 
                                 + " Exception1:" + ex
                                 + " Exception2:" + ex2);

@@ -74,7 +74,7 @@ public class Application {
         try {
             // parse cmdArgs
             LOGGER.info("initCommandLine");
-            Option pathIdDB = new Option("", "pathiddb", true,
+            Option pathIdDB = new Option(null, "pathiddb", true,
                             "Pfad zur ID-Datenbank");
                     pathIdDB.setRequired(true);
             Configurator.getInstance().getAvailiableCmdLineOptions().addOption(pathIdDB);
