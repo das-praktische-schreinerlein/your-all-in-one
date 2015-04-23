@@ -335,7 +335,8 @@ public class Configurator {
                 }
                 if (pattern != null) {
                     ExportController.PostProcessorReplacements_documentation.put(
-                                    pattern, (target != null ? target : ""));
+                                    pattern, 
+                                    target != null ? target : "");
                         LOGGER.info("set PostProcessorReplacements_documentation:" 
                                     + pattern + "=" + target);
                 }

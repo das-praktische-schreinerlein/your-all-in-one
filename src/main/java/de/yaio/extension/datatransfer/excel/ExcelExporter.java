@@ -1238,7 +1238,7 @@ public class ExcelExporter extends WikiExporter {
             + "$" + ExcelService.getRowNum(startRownNum)
             + ")/" + ExcelNodeService.CONST_GANT_PERIODS + "*" + zaehler;
         cell = ExcelService.setCellFormula(sheet, startRownNum,
-                versatz + ExcelNodeService.CONST_GANT_COL_GANT_START+zaehler, formula,
+                versatz + ExcelNodeService.CONST_GANT_COL_GANT_START + zaehler, formula,
                 this.exlSv.csFieldGantNormDate_Ue);
     }
 
@@ -1297,8 +1297,8 @@ public class ExcelExporter extends WikiExporter {
 
     // TODO Doku
     public void createGantLineDiag4Node(final HSSFSheet sheet, final BaseNode node,
-            int startRownNum, List<Integer> lstChildRowNum,
-            ExcelOutputOptions oOptions, int versatz)
+            final int startRownNum, final List<Integer> lstChildRowNum,
+            final ExcelOutputOptions oOptions, final int versatz)
     throws Exception {
         // Parameter pruefen
         if (sheet == null) {
@@ -1333,7 +1333,7 @@ public class ExcelExporter extends WikiExporter {
         //
         // Aufwand
         //
-        HashMap<String, String> formValues = new HashMap<String, String>();
+        Map<String, String> formValues = new HashMap<String, String>();
         String element2 =
             ExcelNodeService.CONST_SHEETNNAME_PLANUNG + "!"
             + ExcelService.getColName(ExcelNodeService.CONST_PLANUNG_COL_PLAN_PROGNOSE) 
@@ -1377,7 +1377,7 @@ public class ExcelExporter extends WikiExporter {
             + " + " + ExcelNodeService.CONST_SHEETNNAME_PLANUNG + "!"
             + ExcelService.getColName(ExcelNodeService.CONST_PLANUNG_COL_REAL_OFFEN) 
             + ExcelService.getRowNum(startRownNum)
-            +")";
+            + ")";
         formValues.put("4",
                 "IF(AND(" + element + ">0" + ExcelService.CONST_PARAM_DELIM
                 + element + ">0)" + ExcelService.CONST_PARAM_DELIM
@@ -1468,11 +1468,11 @@ public class ExcelExporter extends WikiExporter {
                             + ExcelService.getRowNum(startRownNum);
 
             //1. Anzahl der h innerhalb des Zeitraums berechen (Nettoarbeitstage
-            String pAufwandPerDay = pAufwand + "/" +"(" + pEnde + "-" + pStart + "+1)";
+            String pAufwandPerDay = pAufwand + "/" + "(" + pEnde + "-" + pStart + "+1)";
 
-            String curStart = ExcelService.getColName(versatz + ExcelNodeService.CONST_GANT_COL_GANT_START+zaehler) 
+            String curStart = ExcelService.getColName(versatz + ExcelNodeService.CONST_GANT_COL_GANT_START + zaehler) 
                             + "$" + ExcelService.getRowNum(ExcelNodeService.CONST_GANT_ROUW_UE);
-            String nextStart = ExcelService.getColName(versatz + ExcelNodeService.CONST_GANT_COL_GANT_START+zaehler+1) 
+            String nextStart = ExcelService.getColName(versatz + ExcelNodeService.CONST_GANT_COL_GANT_START + zaehler + 1) 
                             + "$" + ExcelService.getRowNum(ExcelNodeService.CONST_GANT_ROUW_UE);
 
             if (lstChildRowNum.size() > 0 && node.getEbene() <= oOptions.getMaxEbene()) {
@@ -1494,13 +1494,13 @@ public class ExcelExporter extends WikiExporter {
                 // PStart vor dem aktuellen Intervall, PEnde danach PStart<=curStart & PEnde>=NextStart: NextStart-curStart+1
                 // PStart vor dem aktuellen Intervall, PEnde innerhalb PStart<=curStart & PEnde<NextStart & PEnde >=curStart: PEnde-curStart+1
                 formula =
-                    "IF(AND(" + pStart + ">=" + curStart + ExcelService.CONST_PARAM_DELIM + pEnde+ "<" + nextStart + ")" + ExcelService.CONST_PARAM_DELIM
+                    "IF(AND(" + pStart + ">=" + curStart + ExcelService.CONST_PARAM_DELIM + pEnde + "<" + nextStart + ")" + ExcelService.CONST_PARAM_DELIM
                     + " (" + pEnde + "-" + pStart + "+1)*" + pAufwandPerDay
-                    + ExcelService.CONST_PARAM_DELIM + "IF(AND(" + pStart + ">=" + curStart  + ExcelService.CONST_PARAM_DELIM + pStart + "<" + nextStart +  ExcelService.CONST_PARAM_DELIM + pEnde+ ">=" + nextStart + ")" + ExcelService.CONST_PARAM_DELIM
+                    + ExcelService.CONST_PARAM_DELIM + "IF(AND(" + pStart + ">=" + curStart  + ExcelService.CONST_PARAM_DELIM + pStart + "<" + nextStart +  ExcelService.CONST_PARAM_DELIM + pEnde + ">=" + nextStart + ")" + ExcelService.CONST_PARAM_DELIM
                     + "  (" + nextStart + "-" + pStart + ")*" + pAufwandPerDay
                     + ExcelService.CONST_PARAM_DELIM + "  IF(AND(" + pStart + "<=" + curStart  + ExcelService.CONST_PARAM_DELIM + pEnde + ">=" + nextStart + ")" + ExcelService.CONST_PARAM_DELIM
                     + "   (" + nextStart + "-" + curStart + ")*" + pAufwandPerDay
-                    + ExcelService.CONST_PARAM_DELIM + "   IF(AND(" + pStart + "<=" + curStart  + ExcelService.CONST_PARAM_DELIM + pEnde + "<" + nextStart + ExcelService.CONST_PARAM_DELIM + pEnde + ">=" + curStart+ ")" + ExcelService.CONST_PARAM_DELIM
+                    + ExcelService.CONST_PARAM_DELIM + "   IF(AND(" + pStart + "<=" + curStart  + ExcelService.CONST_PARAM_DELIM + pEnde + "<" + nextStart + ExcelService.CONST_PARAM_DELIM + pEnde + ">=" + curStart + ")" + ExcelService.CONST_PARAM_DELIM
                     + "    (" + pEnde + "-" + curStart + "+1)*" + pAufwandPerDay
                     + ExcelService.CONST_PARAM_DELIM + "    \"\")"
                     + "  )"
@@ -1515,10 +1515,12 @@ public class ExcelExporter extends WikiExporter {
                     + pEnde + ">0" + ExcelService.CONST_PARAM_DELIM + pEnde  + "<>\"\")" + ExcelService.CONST_PARAM_DELIM
                     + formula  + ExcelService.CONST_PARAM_DELIM + "\"\")";
             }
-            if (LOGGER.isDebugEnabled()) 
-                LOGGER.debug("Row:" + startRownNum + " Col:" + (versatz + ExcelNodeService.CONST_GANT_COL_GANT_START+zaehler) + " = " + formula);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Row:" + startRownNum + " Col:" 
+                             + (versatz + ExcelNodeService.CONST_GANT_COL_GANT_START + zaehler) + " = " + formula);
+            }
             cell = ExcelService.setCellFormula(sheet, startRownNum,
-                    versatz + ExcelNodeService.CONST_GANT_COL_GANT_START+zaehler, formula,
+                    versatz + ExcelNodeService.CONST_GANT_COL_GANT_START + zaehler, formula,
                     getCellStyle4ModulOrEntry(lstChildRowNum,
                             this.exlSv.csFieldGantNormDate_Modul,
                             this.exlSv.csFieldGantNormDate_Entry)
@@ -1532,7 +1534,7 @@ public class ExcelExporter extends WikiExporter {
                         this.exlSv.csFieldGantStartDate_Entry)
         );
         cell = ExcelService.getCell(sheet, startRownNum,
-                versatz + ExcelNodeService.CONST_GANT_COL_GANT_START+ExcelNodeService.CONST_GANT_PERIODS);
+                versatz + ExcelNodeService.CONST_GANT_COL_GANT_START + ExcelNodeService.CONST_GANT_PERIODS);
         cell.setCellStyle(
                 getCellStyle4ModulOrEntry(lstChildRowNum,
                         this.exlSv.csFieldGantEndDate_Modul,
@@ -1541,14 +1543,16 @@ public class ExcelExporter extends WikiExporter {
     }
 
     // TODO Doku
-    public HSSFWorkbook toExcel(BaseNode masterNode,
-            ExcelOutputOptions oOptions) throws Exception {
+    public HSSFWorkbook toExcel(final BaseNode pmasterNode,
+                                final ExcelOutputOptions poOptions) throws Exception {
+
+        BaseNode masterNode = pmasterNode;
+        ExcelOutputOptions oOptions = poOptions;
 
         // Parameter pruefen
         if (masterNode == null) {
             throw new IllegalArgumentException("Masternode must not be null: '" + masterNode + "'");
         }
-
         // WorkBook erzeugen
 //            File projektMasterFile = new File(FILEPATH_PLANUNGSMASTER);
 //            InputStream is = new FileInputStream(projektMasterFile);
@@ -1569,15 +1573,16 @@ public class ExcelExporter extends WikiExporter {
         this.fillPlanungSheet(wb, masterNode, oOptions);
 
         // GantSheet nur anfuegen, wenn nicht gemerged
-        if (!oOptions.isFlgMergeExcelPlanungGantSheets())
+        if (!oOptions.isFlgMergeExcelPlanungGantSheets()) {
             this.fillGantSheet(wb, masterNode, oOptions);
+        }
 
         return wb;
     }
 
     // TODO Doku
-    public void toExcel(BaseNode masterNode, String outFile,
-            ExcelOutputOptions oOptions) throws Exception {
+    public void toExcel(final BaseNode masterNode, final String outFile,
+            final ExcelOutputOptions oOptions) throws Exception {
 
         // Parameter pruefen
         if (outFile == null) {
@@ -1592,12 +1597,14 @@ public class ExcelExporter extends WikiExporter {
     }
 
     // TODO Doku
-    public HSSFCellStyle getCellStyle4ModulOrEntry(List<Integer> children, 
-            HSSFCellStyle styleModul, HSSFCellStyle styleEntry) {
-        if (children != null && children.size() > 0)
+    public HSSFCellStyle getCellStyle4ModulOrEntry(final List<Integer> children, 
+                                                   final HSSFCellStyle styleModul, 
+                                                   final HSSFCellStyle styleEntry) {
+        if (children != null && children.size() > 0) {
             return styleModul;
-        else
+        } else {
             return styleEntry;
+        }
     }
 
 }

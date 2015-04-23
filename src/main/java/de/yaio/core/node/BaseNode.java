@@ -1179,12 +1179,12 @@ public class BaseNode implements BaseData, MetaData, SysData,
     }
 
     @Override
-    public boolean isWFStatusDone (final String state) {
+    public boolean isWFStatusDone(final String state) {
         return getNodeService().isWFStatusDone(state);
     }
 
     @Override
-    public boolean isWFStatusOpen (final String state) {
+    public boolean isWFStatusOpen(final String state) {
         return getNodeService().isWFStatusOpen(state);
     }
 

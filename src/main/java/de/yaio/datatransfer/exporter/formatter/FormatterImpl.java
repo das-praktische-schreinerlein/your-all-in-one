@@ -128,7 +128,8 @@ public abstract class FormatterImpl implements Formatter {
 
             // alle Stellen kontrollieren, bis gleich
             double faktor = 1;
-            double tmp1, tmp2;
+            double tmp1;
+            double tmp2;
             for (int zaehler = minStellen; zaehler <= maxStellen; zaehler++) {
                 decimalPlaces = zaehler;
 

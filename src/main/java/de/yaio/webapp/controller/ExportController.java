@@ -766,11 +766,12 @@ public class ExportController {
      * @param response - the response-Obj to set contenttype and headers
      * @return ByteArrayOutputStream - excel-format of the node
      */
+    @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
                     value = "/excel/{sysUID}", 
                     produces = "application/excel")
-    public @ResponseBody String exportNodeAsExcel(
-           @PathVariable(value = "sysUID") final String sysUID, final HttpServletResponse response) {
+    public String exportNodeAsExcel(@PathVariable(value = "sysUID") final String sysUID, 
+                                    final HttpServletResponse response) {
         ExcelOutputOptions oOptions = new ExcelOutputOptions(new OutputOptionsImpl());
         return this.commonExportNodeAsExcel(sysUID, oOptions, response);
     }
@@ -793,13 +794,13 @@ public class ExportController {
      * @param response - the response-Obj to set contenttype and headers
      * @return String - html-format of the node
      */
+    @ResponseBody
     @RequestMapping(method = {RequestMethod.POST}, 
                     value = "/exceluseoptions/{sysUID}", 
                     produces = "application/excel",
                     consumes = "application/x-www-form-urlencoded")
-    public @ResponseBody String exportNodeAsExcel(
-           @PathVariable(value = "sysUID") final String sysUID,
-           @ModelAttribute final ExcelOutputOptions oOptions,
+    public String exportNodeAsExcel(@PathVariable(value = "sysUID") final String sysUID,
+                                    @ModelAttribute final ExcelOutputOptions oOptions,
            final HttpServletResponse response) {
         return this.commonExportNodeAsExcel(sysUID, oOptions, response);
     }

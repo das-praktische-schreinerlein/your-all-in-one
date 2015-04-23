@@ -303,7 +303,8 @@ public class ExcelImporter extends ImporterImpl {
         String nodeSrc = "";
         String nodeRes = "";
         for (Iterator<Object> iter = ebenen.iterator(); iter.hasNext();) {
-            nodeSrc = nodeRes = iter.next().toString();
+            nodeRes = iter.next().toString();
+            nodeSrc = nodeRes;
             if (hshNodes.containsKey(nodeSrc)) {
                 nodeRes = hshNodes.get(nodeSrc);
             }

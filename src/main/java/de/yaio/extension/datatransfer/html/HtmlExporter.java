@@ -169,7 +169,7 @@ public class HtmlExporter extends WikiExporter {
 
         // Result erzeugen
         if ((InfoNode.class.isInstance(curNode) || UrlResNode.class.isInstance(curNode))
-            && oOptions.isFlgProcessDocLayout() == true
+            && oOptions.isFlgProcessDocLayout()
             && curNode.getEbene() > oOptions.getMaxUeEbene()) {
             // Layout-Ausgabe der Infossätze
             res.append(this.genHtmlDokuLayoutForNode(curNode, oOptions));

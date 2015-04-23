@@ -87,7 +87,8 @@ public class TestServices {
         // split Strings
         String[] resLines = result.split("\n");
         String[] expectedResLines = myExpectedResult.split("\n");
-        String resLine, expectedResLine;
+        String resLine;
+        String expectedResLine;
         
         // compare line by line
         for (int lineNum = 0; lineNum < resLines.length && lineNum <= expectedResLines.length; lineNum++) {

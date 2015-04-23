@@ -351,7 +351,7 @@ public class ExporterImpl implements Exporter {
             } else {
                 // check state
                 String state = ((BaseWorkflowData) node).getState();
-                if (   (mpStates.get(state) == null)) {
+                if (mpStates.get(state) == null) {
                     flgMatchesState = false;
                     if (LOGGER.isDebugEnabled()) {
                         LOGGER.debug("NodeFilter-Status FAILED: state="
@@ -375,7 +375,7 @@ public class ExporterImpl implements Exporter {
         if (mpClasses != null && mpClasses.size() > 0) {
             // check class
             String className = ((BaseNode) node).getClassName();
-            if (   (mpClasses.get(className) == null)) {
+            if (mpClasses.get(className) == null) {
                 flgMatchesClass = false;
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("NodeFilter-Class FAILED: class="
@@ -398,7 +398,7 @@ public class ExporterImpl implements Exporter {
         if (mpTypes != null && mpTypes.size() > 0) {
             // check class
             String type = ((BaseNode) node).getType();
-            if (   (mpTypes.get(type) == null)) {
+            if (mpTypes.get(type) == null) {
                 flgMatchesType = false;
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("NodeFilter-Type FAILED: type="
