@@ -109,9 +109,8 @@ public class PlanChildrenSumDataFormatterImpl extends FormatterImpl
         Date ende = node.getPlanChildrenSumEnde();
 
         // Ausgabe erzeugen
-        if ( (aufwand != null && aufwand >= Calculator.CONST_DOUBLE_NULL)
-                || start != null
-                || ende != null) {
+        if ((aufwand != null && aufwand >= Calculator.CONST_DOUBLE_NULL)
+            || start != null || ende != null) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Do: PlanChildrenSumDataFormatter for Node:" + node.getNameForLogger());
             }

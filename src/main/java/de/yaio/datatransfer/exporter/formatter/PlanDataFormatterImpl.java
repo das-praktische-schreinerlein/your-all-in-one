@@ -109,10 +109,10 @@ public class PlanDataFormatterImpl extends FormatterImpl implements PlanDataForm
         String task = node.getPlanTask();
 
         // Ausgabe erzeugen
-        if ( (aufwand != null && aufwand >= Calculator.CONST_DOUBLE_NULL)
-                || start != null
-                || ende != null
-                || task != null) {
+        if ((aufwand != null && aufwand >= Calculator.CONST_DOUBLE_NULL)
+            || start != null
+            || ende != null
+            || task != null) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Do: PlanDataFormatter for Node:" + node.getNameForLogger());
             }

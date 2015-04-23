@@ -408,8 +408,8 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
                     standFaktor, tmpStandFaktor, Calculator.CONST_CALCULATE_ACTION_SUM);
             
             // update sumStandNullAufwand
-            if (    childNode.getIstChildrenSumStand() != null 
-                && (   childNode.getPlanChildrenSumAufwand() == null 
+            if (childNode.getIstChildrenSumStand() != null 
+                && (childNode.getPlanChildrenSumAufwand() == null 
                     || childNode.getPlanChildrenSumAufwand().doubleValue() <= Calculator.CONST_DOUBLE_NULL)) {
                 sumStandNullAufwand += childNode.getIstChildrenSumStand();
                 countStandNullAufwand++;
@@ -425,7 +425,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
         // calc Stand
         // TODO: Bugfix wenn kein Aufwand definiert
         // if me and children 
-        if (   baseNode.getPlanChildrenSumAufwand() == null 
+        if (baseNode.getPlanChildrenSumAufwand() == null 
             || baseNode.getPlanChildrenSumAufwand() <= Calculator.CONST_DOUBLE_NULL) {
             Double istStand = null;
             if (ExtendedWorkflowData.class.isInstance(baseNode)) {
@@ -435,8 +435,8 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
                 istStand = istData.getIstStand();
                 
                 // but take a look if there is no planaufwand!!!
-                if (    istData.getIstStand() != null 
-                    && (   planData.getPlanAufwand() == null 
+                if (istData.getIstStand() != null 
+                    && (planData.getPlanAufwand() == null 
                         || planData.getPlanAufwand().doubleValue() <= Calculator.CONST_DOUBLE_NULL)) {
                     sumStandNullAufwand += istData.getIstStand();
                     countStandNullAufwand++;
@@ -529,28 +529,28 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
         String newState = baseNode.getState();
 
         // alles außer Infos betrachten
-        if (   newState == null 
-                || BaseNode.CONST_NODETYPE_IDENTIFIER_UNKNOWN.equalsIgnoreCase(newState)
-                || baseNode.isWFStatus(newState)) {
+        if (newState == null 
+            || BaseNode.CONST_NODETYPE_IDENTIFIER_UNKNOWN.equalsIgnoreCase(newState)
+            || baseNode.isWFStatus(newState)) {
             // Status zuruecksetzen
             newState = BaseNode.CONST_NODETYPE_IDENTIFIER_UNKNOWN;
 
-            if (    baseNode.getIstChildrenSumStand() != null 
-                    && (baseNode.getIstChildrenSumStand() >= Calculator.CONST_DOUBLE_100)) {
+            if (baseNode.getIstChildrenSumStand() != null 
+                && (baseNode.getIstChildrenSumStand() >= Calculator.CONST_DOUBLE_100)) {
                 // falls Stand=100 DONE
                 newState = EventNode.CONST_NODETYPE_IDENTIFIER_EVENT_DONE;
-            } else if (   (baseNode.getPlanAufwand() != null 
+            } else if ((baseNode.getPlanAufwand() != null 
                            && (baseNode.getPlanAufwand() >= Calculator.CONST_DOUBLE_NULL))
-                    || (baseNode.getPlanChildrenSumAufwand() != null 
+                       || (baseNode.getPlanChildrenSumAufwand() != null 
                            && (baseNode.getPlanChildrenSumAufwand() >= Calculator.CONST_DOUBLE_NULL))) {
                 // noch nicht erledigt
-                if (   (    baseNode.getIstAufwand() != null 
-                            && (baseNode.getIstAufwand() >= Calculator.CONST_DOUBLE_NULL))
-                        || (baseNode.getIstChildrenSumAufwand() != null 
-                            && (baseNode.getIstChildrenSumAufwand() >= Calculator.CONST_DOUBLE_NULL))
-                        || (baseNode.getIstChildrenSumStand() != null 
-                            && (baseNode.getIstChildrenSumStand() >= Calculator.CONST_DOUBLE_NULL))
-                        ) {
+                if ((baseNode.getIstAufwand() != null 
+                        && (baseNode.getIstAufwand() >= Calculator.CONST_DOUBLE_NULL))
+                    || (baseNode.getIstChildrenSumAufwand() != null 
+                        && (baseNode.getIstChildrenSumAufwand() >= Calculator.CONST_DOUBLE_NULL))
+                    || (baseNode.getIstChildrenSumStand() != null 
+                        && (baseNode.getIstChildrenSumStand() >= Calculator.CONST_DOUBLE_NULL))
+                    ) {
                     // wurde schon begonnen
                     newState = EventNode.CONST_NODETYPE_IDENTIFIER_EVENT_RUNNNING;
 
@@ -606,7 +606,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
                         + " Class" + baseNode.getClass().getName()); //$NON-NLS-1$
 
         // alles außer Infos betrachten
-        if (   newState == null 
+        if (newState == null 
             || BaseNode.CONST_NODETYPE_IDENTIFIER_UNKNOWN.equalsIgnoreCase(newState)
             || baseNode.isWFStatus(newState)) {
             // Status zuruecksetzen
@@ -616,7 +616,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
                     && (baseNode.getIstChildrenSumStand() >= Calculator.CONST_DOUBLE_100)) {
                 // falls Stand=100 DONE
                 newState = TaskNode.CONST_NODETYPE_IDENTIFIER_DONE;
-            } else if (   (baseNode.getPlanAufwand() != null 
+            } else if ((baseNode.getPlanAufwand() != null 
                            && (baseNode.getPlanAufwand() >= Calculator.CONST_DOUBLE_NULL))
                        || (baseNode.getPlanChildrenSumAufwand() != null 
                            && (baseNode.getPlanChildrenSumAufwand() >= Calculator.CONST_DOUBLE_NULL))
@@ -628,7 +628,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
                            && (baseNode.getIstChildrenSumStand() >= Calculator.CONST_DOUBLE_NULL))
                        ) {
                 // noch nicht erledigt
-                if (   (baseNode.getIstAufwand() != null 
+                if ((baseNode.getIstAufwand() != null 
                         && (baseNode.getIstAufwand() >= Calculator.CONST_DOUBLE_NULL))
                     || (baseNode.getIstChildrenSumAufwand() != null 
                         && (baseNode.getIstChildrenSumAufwand() >= Calculator.CONST_DOUBLE_NULL))
@@ -698,7 +698,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
                         + " Class" + node.getClass().getName());
 
         // alles außer Infos betrachten
-        if (   newState != WorkflowState.CANCELED 
+        if (newState != WorkflowState.CANCELED 
             && newState != WorkflowState.NOWORKFLOW) {
             // check if node is extended
             if (ExtendedWorkflowData.class.isInstance(node)) {
@@ -712,7 +712,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
                         && (baseNode.getIstStand() >= Calculator.CONST_DOUBLE_100)) {
                     // falls Stand=100 DONE
                     newState = WorkflowState.DONE;
-                } else if (   (baseNode.getPlanAufwand() != null 
+                } else if ((baseNode.getPlanAufwand() != null 
                                && (baseNode.getPlanAufwand() >= Calculator.CONST_DOUBLE_NULL))
                            || (baseNode.getPlanAufwand() != null 
                                && (baseNode.getPlanAufwand() >= Calculator.CONST_DOUBLE_NULL))
@@ -726,7 +726,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
                            || (baseNode.getPlanEnde() != null)
                            ) {
                     // noch nicht erledigt
-                    if (   (baseNode.getIstAufwand() != null 
+                    if ((baseNode.getIstAufwand() != null 
                             && (baseNode.getIstAufwand() >= Calculator.CONST_DOUBLE_NULL))
                         || (baseNode.getIstAufwand() != null 
                             && (baseNode.getIstAufwand() >= Calculator.CONST_DOUBLE_NULL))

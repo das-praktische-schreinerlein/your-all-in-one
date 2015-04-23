@@ -629,7 +629,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     @JsonIgnore
     public boolean isPlanStartValid() {
         if (getPlanStart() != null) {
-            return (    getPlanStart().compareTo(CONST_MINDATE) >= 0) 
+            return (getPlanStart().compareTo(CONST_MINDATE) >= 0) 
                     && (getPlanStart().compareTo(CONST_MAXDATE) <= 0);
         }
         return true;
@@ -645,7 +645,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     @JsonIgnore
     public boolean isPlanEndeValid() {
         if (getPlanEnde() != null) {
-            return (    getPlanEnde().compareTo(CONST_MINDATE) >= 0) 
+            return (getPlanEnde().compareTo(CONST_MINDATE) >= 0) 
                     && (getPlanEnde().compareTo(CONST_MAXDATE) <= 0);
         }
         return true;
@@ -681,7 +681,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     @JsonIgnore
     public boolean isIstStartValid() {
         if (getIstStart() != null) {
-            return (    getIstStart().compareTo(CONST_MINDATE) >= 0) 
+            return (getIstStart().compareTo(CONST_MINDATE) >= 0) 
                     && (getIstStart().compareTo(CONST_MAXDATE) <= 0);
         }
         return true;
@@ -697,7 +697,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     @JsonIgnore
     public boolean isIstEndeValid() {
         if (getIstEnde() != null) {
-            return (    getIstEnde().compareTo(CONST_MINDATE) >= 0) 
+            return (getIstEnde().compareTo(CONST_MINDATE) >= 0) 
                     && (getIstEnde().compareTo(CONST_MAXDATE) <= 0);
         }
         return true;
@@ -732,7 +732,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
         List<BaseNode> tmpChildNodes = getBaseNodeDBService().findChildNodes(this.getSysUID());
         
         // set new level if it is not -1
-        recursionLevel = (recursionLevel > 0 ? recursionLevel-- : recursionLevel);
+        recursionLevel = recursionLevel > 0 ? recursionLevel-- : recursionLevel;
 
         // interate children
         for (BaseNode childNode : tmpChildNodes) {
@@ -744,8 +744,8 @@ public class BaseNode implements BaseData, MetaData, SysData,
             this.addChildNode(childNode);
             
             // check recursionLevel
-            if (    (recursionLevel == NodeService.CONST_DB_RECURSIONLEVEL_ALL_CHILDREN) 
-                 || (recursionLevel > 0)) {
+            if ((recursionLevel == NodeService.CONST_DB_RECURSIONLEVEL_ALL_CHILDREN) 
+                || (recursionLevel > 0)) {
                 // recurse
                 childNode.initChildNodesFromDB(recursionLevel);
             }

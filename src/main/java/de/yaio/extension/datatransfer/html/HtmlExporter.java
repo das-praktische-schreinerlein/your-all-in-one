@@ -896,7 +896,7 @@ public class HtmlExporter extends WikiExporter {
         res += "</div>\n";
 
         // falls Children: Toggler anfuegen
-        if (   curNode.getChildNodes().size() > 0 
+        if (curNode.getChildNodes().size() > 0 
             && blockChildren != null && blockChildren.length() > 0) {
             res += "<script type='text/javascript'>"
                 +  "jMATService.getPageLayoutService().appendBlockToggler('node_" + curNode.getSysUID() + "_stateshort', 'node_" + curNode.getSysUID() + "_childrencontainer');"

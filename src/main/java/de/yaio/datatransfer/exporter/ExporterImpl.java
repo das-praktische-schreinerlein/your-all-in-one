@@ -208,7 +208,7 @@ public class ExporterImpl implements Exporter {
 
         // Filter konfigurieren
         Map<String, Object> mpStates = null;
-        if (   oOptions.getStrReadIfStatusInListOnly() != null 
+        if (oOptions.getStrReadIfStatusInListOnly() != null 
             && oOptions.getStrReadIfStatusInListOnly().length() > 0) {
             mpStates = new HashMap<String, Object>();
             String [] arrStatusFilter =
@@ -302,7 +302,7 @@ public class ExporterImpl implements Exporter {
         
         // Wenn Status nicht im Filter und keine Kindselemente vorhanden
         String state = ((BaseWorkflowData) node).getState();
-        if (   (mpStates.get(state) == null)
+        if ((mpStates.get(state) == null)
                 && !flgHasChilds) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("NodeFilter-Status delete: no Children and state="
@@ -326,7 +326,7 @@ public class ExporterImpl implements Exporter {
         Map<String, String> mpStates = oOptions.getMapStateFilter();
         Map<String, String> mpClasses = oOptions.getMapClassFilter();
         Map<String, String> mpTypes = oOptions.getMapTypeFilter();
-        if (   !(mpStates != null && mpStates.size() > 0)
+        if (!(mpStates != null && mpStates.size() > 0)
             && !(mpClasses != null && mpClasses.size() > 0) 
             && !(mpTypes != null && mpTypes.size() > 0)) {
             // no filter return true

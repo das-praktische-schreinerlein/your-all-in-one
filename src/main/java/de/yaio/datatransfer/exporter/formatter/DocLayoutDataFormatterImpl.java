@@ -100,11 +100,11 @@ public class DocLayoutDataFormatterImpl extends FormatterImpl implements DocLayo
         String docLayoutFlgCloseDiv = node.getDocLayoutFlgCloseDiv();
 
         // Ausgabe erzeugen
-        if (   (docLayoutTagCommand != null && docLayoutTagCommand.length() > 0)
-                || (docLayoutAddStyleClass != null && docLayoutAddStyleClass.length() > 0)
-                || (docLayoutShortName != null && docLayoutShortName.length() > 0)
-                || (docLayoutFlgCloseDiv != null && docLayoutFlgCloseDiv.length() > 0)
-                ) {
+        if ((docLayoutTagCommand != null && docLayoutTagCommand.length() > 0)
+            || (docLayoutAddStyleClass != null && docLayoutAddStyleClass.length() > 0)
+            || (docLayoutShortName != null && docLayoutShortName.length() > 0)
+            || (docLayoutFlgCloseDiv != null && docLayoutFlgCloseDiv.length() > 0)
+            ) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Do: DocLayoutDataFormatter for Node:" + node.getNameForLogger());
             }

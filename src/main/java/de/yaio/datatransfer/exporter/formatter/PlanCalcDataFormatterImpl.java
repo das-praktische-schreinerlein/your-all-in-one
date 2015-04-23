@@ -103,8 +103,7 @@ public class PlanCalcDataFormatterImpl extends FormatterImpl
         Date ende = node.getPlanCalcEnde();
 
         // Ausgabe erzeugen
-        if ( start != null
-                || ende != null) {
+        if (start != null || ende != null) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Do: PlanCalcDataFormatter for Node:" + node.getNameForLogger());
             }

@@ -99,10 +99,10 @@ public class ResLocDataFormatterImpl extends FormatterImpl implements ResLocData
         String resLocTags = node.getResLocTags();
 
         // Ausgabe erzeugen
-        if (   (resLocRef != null && resLocRef.length() > 0)
-                || (resLocName != null && resLocName.length() > 0)
-                || (resLocTags != null && resLocTags.length() > 0)
-                ) {
+        if ((resLocRef != null && resLocRef.length() > 0)
+            || (resLocName != null && resLocName.length() > 0)
+            || (resLocTags != null && resLocTags.length() > 0)
+            ) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Do: ResLocDataFormatter for Node:" + node.getNameForLogger());
             }

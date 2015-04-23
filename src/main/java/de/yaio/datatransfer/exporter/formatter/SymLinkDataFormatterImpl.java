@@ -99,10 +99,10 @@ public class SymLinkDataFormatterImpl extends FormatterImpl implements SymLinkDa
         String symLinkTags = node.getSymLinkTags();
 
         // Ausgabe erzeugen
-        if (   (symLinkRef != null && symLinkRef.length() > 0)
-                || (symLinkName != null && symLinkName.length() > 0)
-                || (symLinkTags != null && symLinkTags.length() > 0)
-                ) {
+        if ((symLinkRef != null && symLinkRef.length() > 0)
+            || (symLinkName != null && symLinkName.length() > 0)
+            || (symLinkTags != null && symLinkTags.length() > 0)
+            ) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Do: SymLinkDataFormatter for Node:" + node.getNameForLogger());
             }

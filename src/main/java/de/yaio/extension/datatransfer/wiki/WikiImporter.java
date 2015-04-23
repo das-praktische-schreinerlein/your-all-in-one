@@ -313,14 +313,14 @@ public class WikiImporter extends ImporterImpl {
      * @param haystack - haystack
      * @return - list of matching results
      */
-    public static List<MatchResult> findMatches( final Pattern pattern, final CharSequence haystack) {
+    public static List<MatchResult> findMatches(final Pattern pattern, final CharSequence haystack) {
         List<MatchResult> results = null;
 
-        for ( Matcher m = pattern.matcher(haystack); m.find();) {
+        for (Matcher m = pattern.matcher(haystack); m.find();) {
             if (results == null) {
                 results = new ArrayList<MatchResult>();
             }
-            results.add( m.toMatchResult());
+            results.add(m.toMatchResult());
         }
 
         return results;

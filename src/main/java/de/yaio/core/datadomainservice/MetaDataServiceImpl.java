@@ -102,8 +102,7 @@ public class MetaDataServiceImpl extends DataDomainRecalcImpl implements MetaDat
         // Praefix initialisieren
         if (praefix == null || praefix.length() <= 0) {
             MetaData vorgaenger = node.getParentNode();
-            while (   vorgaenger != null 
-                    && (praefix == null || praefix.length() <= 0)) {
+            while (vorgaenger != null && (praefix == null || praefix.length() <= 0)) {
                 praefix = vorgaenger.getMetaNodePraefix();
                 vorgaenger = vorgaenger.getParentNode();
             }
@@ -111,8 +110,8 @@ public class MetaDataServiceImpl extends DataDomainRecalcImpl implements MetaDat
         }
 
         // ID intialisieren
-        if (    (praefix != null && praefix.length() > 0)
-                && (id == null || id.length() <= 0)) {
+        if ((praefix != null && praefix.length() > 0)
+            && (id == null || id.length() <= 0)) {
             node.setMetaNodeNummer(this.getNextNodeNumber(node).toString());
         }
     }

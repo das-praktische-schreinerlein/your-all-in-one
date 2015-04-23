@@ -103,12 +103,12 @@ public class SysDataFormatterImpl extends FormatterImpl implements SysDataFormat
 
         // Ausgabe erzeugen
         boolean flgEver = false;
-        if (    (uid != null && uid.length() > 0)
-             || (created != null)
-             || (checksum != null && checksum.length() > 0)
-             || (changed != null)
-             || flgEver
-             ) {
+        if ((uid != null && uid.length() > 0)
+            || (created != null)
+            || (checksum != null && checksum.length() > 0)
+            || (changed != null)
+            || flgEver
+            ) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Do: SysDataFormatter for Node:" + node.getNameForLogger());
             }
