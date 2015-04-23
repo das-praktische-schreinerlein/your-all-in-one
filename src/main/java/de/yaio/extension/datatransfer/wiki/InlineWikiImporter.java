@@ -70,7 +70,7 @@ public class InlineWikiImporter extends WikiImporter {
     protected void initNodeData(final BaseNode curNode) throws Exception {
         // set metadata to local values so that they change not the global scope
         if (MetaData.class.isInstance(curNode)) {
-            MetaData metaCurNode = (MetaData)curNode;
+            MetaData metaCurNode = (MetaData) curNode;
             metaCurNode.setMetaNodeNummer(new Integer(localId++).toString());
             metaCurNode.setMetaNodePraefix(strMetaIdPraefix);
         }

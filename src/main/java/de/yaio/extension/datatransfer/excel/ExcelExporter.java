@@ -1165,7 +1165,7 @@ public class ExcelExporter extends WikiExporter {
                 + "$" + ExcelService.getRowNum(startRownNum)
                 + ")/" + ExcelNodeService.CONST_GANT_PERIODS + "*" + zaehler;
             cell = ExcelService.setCellFormula(sheet, startRownNum,
-                    versatz + ExcelNodeService.CONST_GANT_COL_GANT_START+zaehler, formula,
+                    versatz + ExcelNodeService.CONST_GANT_COL_GANT_START + zaehler, formula,
                     this.exlSv.csFieldGantNormDate_Ue);
         }
 
