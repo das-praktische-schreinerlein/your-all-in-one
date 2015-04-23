@@ -70,27 +70,6 @@ public class TaskNode extends BaseNode implements ExtendedWorkflowData {
     /** nodetype-identifier for parser/formatter on Tasknode canceled */
     public static final String CONST_NODETYPE_IDENTIFIER_CANCELED = "VERWORFEN";
 
-    @Transient
-    protected static SysDataService sysDataService = new SysDataServiceImpl();
-    @Transient
-    protected static MetaDataService metaDataService = new MetaDataServiceImpl();
-    @Transient
-    protected static NodeService nodeDataService = new TaskNodeService();
-
-    @XmlTransient
-    @JsonIgnore
-    public NodeService getNodeService() {
-        return nodeDataService;
-    }
-    public static void setNodeDataService(final NodeService newNodeDataService) {
-        nodeDataService = newNodeDataService;
-    }
-    @XmlTransient
-    @JsonIgnore
-    public static NodeService getConfiguredNodeService() {
-        return nodeDataService;
-    }
-
     // Status-Konstanten
     public static final Map<String, Object> CONST_MAP_NODETYPE_IDENTIFIER = new HashMap<String, Object>();
     public static final Map<String, WorkflowState> CONST_MAP_STATE_WORKFLOWSTATE = new HashMap<String, WorkflowState>();
@@ -135,6 +114,27 @@ public class TaskNode extends BaseNode implements ExtendedWorkflowData {
         CONST_MAP_NODETYPE_IDENTIFIER.put("VERWORFEN", CONST_NODETYPE_IDENTIFIER_CANCELED);
         CONST_MAP_NODETYPE_IDENTIFIER.put("GELOESCHT", CONST_NODETYPE_IDENTIFIER_CANCELED);
         CONST_MAP_NODETYPE_IDENTIFIER.put("ABGEBROCHEN", CONST_NODETYPE_IDENTIFIER_CANCELED);
+    }
+
+    @Transient
+    protected static SysDataService sysDataService = new SysDataServiceImpl();
+    @Transient
+    protected static MetaDataService metaDataService = new MetaDataServiceImpl();
+    @Transient
+    protected static NodeService nodeDataService = new TaskNodeService();
+
+    @XmlTransient
+    @JsonIgnore
+    public NodeService getNodeService() {
+        return nodeDataService;
+    }
+    public static void setNodeDataService(final NodeService newNodeDataService) {
+        nodeDataService = newNodeDataService;
+    }
+    @XmlTransient
+    @JsonIgnore
+    public static NodeService getConfiguredNodeService() {
+        return nodeDataService;
     }
 
     @Override

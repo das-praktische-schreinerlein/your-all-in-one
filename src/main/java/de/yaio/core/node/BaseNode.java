@@ -91,10 +91,6 @@ import de.yaio.datatransfer.importer.parser.Parser;
 public class BaseNode implements BaseData, MetaData, SysData, 
     DescData, BaseWorkflowData, StatData {
     
-    // Logger
-    private static final Logger LOGGER =
-        Logger.getLogger(BaseNode.class);
-
     public static final String CONST_NODETYPE_IDENTIFIER_UNKNOWN = "UNKNOWN";
     public static final Map<String, Object> CONST_MAP_NODETYPE_IDENTIFIER = new HashMap<String, Object>();
     public static final Map<String, WorkflowState> CONST_MAP_STATE_WORKFLOWSTATE = new HashMap<String, WorkflowState>();
@@ -118,68 +114,32 @@ public class BaseNode implements BaseData, MetaData, SysData,
     protected static NodeService nodeService = new BaseNodeService();
     protected static BaseNodeDBService baseNodeDBService = BaseNodeDBServiceImpl.getInstance();
     
-    public BaseNode() {
-        super();
-    }
+    @Transient
+    @XmlTransient
+    @JsonIgnore
+    protected static final int CONST_CURSORTIDX_STEP = 5;
 
-    @XmlTransient
-    @JsonIgnore
-    public SysDataService getSysDataService() {
-        return sysDataService;
-    }
-    @XmlTransient
-    @JsonIgnore
-    public static SysDataService getConfiguredSysDataService() {
-        return sysDataService;
-    }
-    @XmlTransient
-    @JsonIgnore
-    public static final void setSysDataService(final SysDataService newSysDataService) {
-        sysDataService = newSysDataService;
-    }
-    @XmlTransient
-    @JsonIgnore
-    public static MetaDataService getConfiguredMetaDataService() {
-        return metaDataService;
-    }
-    @XmlTransient
-    @JsonIgnore
-    public MetaDataService getMetaDataService() {
-        return metaDataService;
-    }
-
-    @XmlTransient
-    @JsonIgnore
-    public static final void setMetaDataService(final MetaDataService newMetaDataService) {
-        metaDataService = newMetaDataService;
-    }
-    @XmlTransient
-    @JsonIgnore
-    public static NodeService getConfiguredNodeService() {
-        return nodeService;
-    }
-    @XmlTransient
-    @JsonIgnore
-    public NodeService getNodeService() {
-        return nodeService;
-    }
+    // Logger
+    private static final Logger LOGGER = Logger.getLogger(BaseNode.class);
 
     /**
-     * @return the {@link BaseNode#baseNodeDBService}
+     * next position in list
      */
+    @Transient
     @XmlTransient
     @JsonIgnore
-    public BaseNodeDBService getBaseNodeDBService() {
-        return baseNodeDBService;
-    }
-    /**
-     * @param newBaseNodeDBService the {@link BaseNode#baseNodeDBService} to set
-     */
+    protected int curSortIdx = 0;
+
+    //####################
+    // Hierarchy-functions
+    //####################
+    @Transient
     @XmlTransient
     @JsonIgnore
-    public void setBaseNodeDBService(final BaseNodeDBService newBaseNodeDBService) {
-        baseNodeDBService = newBaseNodeDBService;
-    }
+    protected Map<String, DataDomain> childNodesByNameMapMap = new LinkedHashMap <String, DataDomain>();
+
+    /** dummy classname for JSON-Exporter**/
+    private String className;
 
     /**
      * flag to indicate that item hat to be update
@@ -525,14 +485,88 @@ public class BaseNode implements BaseData, MetaData, SysData,
     @Pattern(regexp = "(" + Parser.CONST_PATTERN_SEG_TYPE + "*)?", 
              message = "type can only contain characters.")
     private String type;
+
+    /**
+     * summary of all children workflowstate with the highest priority
+     */
+    @Enumerated
+    private WorkflowState workflowState;
+
+    /**
+     * position in list
+     */
+    @Min(0L)
+    private Integer sortPos;
+
+    public BaseNode() {
+        super();
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public SysDataService getSysDataService() {
+        return sysDataService;
+    }
+    @XmlTransient
+    @JsonIgnore
+    public static SysDataService getConfiguredSysDataService() {
+        return sysDataService;
+    }
+    @XmlTransient
+    @JsonIgnore
+    public static final void setSysDataService(final SysDataService newSysDataService) {
+        sysDataService = newSysDataService;
+    }
+    @XmlTransient
+    @JsonIgnore
+    public static MetaDataService getConfiguredMetaDataService() {
+        return metaDataService;
+    }
+    @XmlTransient
+    @JsonIgnore
+    public MetaDataService getMetaDataService() {
+        return metaDataService;
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public static final void setMetaDataService(final MetaDataService newMetaDataService) {
+        metaDataService = newMetaDataService;
+    }
+    @XmlTransient
+    @JsonIgnore
+    public static NodeService getConfiguredNodeService() {
+        return nodeService;
+    }
+    @XmlTransient
+    @JsonIgnore
+    public NodeService getNodeService() {
+        return nodeService;
+    }
+
+    /**
+     * @return the {@link BaseNode#baseNodeDBService}
+     */
+    @XmlTransient
+    @JsonIgnore
+    public BaseNodeDBService getBaseNodeDBService() {
+        return baseNodeDBService;
+    }
+    /**
+     * @param newBaseNodeDBService the {@link BaseNode#baseNodeDBService} to set
+     */
+    @XmlTransient
+    @JsonIgnore
+    public void setBaseNodeDBService(final BaseNodeDBService newBaseNodeDBService) {
+        baseNodeDBService = newBaseNodeDBService;
+    }
+
     
     
     
     /**
      * summary of all children workflowstate with the highest priority
      */
-    @Enumerated
-    private WorkflowState workflowState;
     public WorkflowState getWorkflowState() {
         if (workflowState == null) {
             return WorkflowState.NOWORKFLOW;
@@ -543,24 +577,6 @@ public class BaseNode implements BaseData, MetaData, SysData,
         workflowState = istState;
     };
 
-    /**
-     * position in list
-     */
-    @Min(0L)
-    private Integer sortPos;
-    
-    /**
-     * next position in list
-     */
-    @Transient
-    @XmlTransient
-    @JsonIgnore
-    protected int curSortIdx = 0;
-    @Transient
-    @XmlTransient
-    @JsonIgnore
-    protected static final int CONST_CURSORTIDX_STEP = 5;
-    
     //
     // checks 
     //
@@ -873,11 +889,6 @@ public class BaseNode implements BaseData, MetaData, SysData,
     //####################
     // Hierarchy-functions
     //####################
-    @Transient
-    @XmlTransient
-    @JsonIgnore
-    protected Map<String, DataDomain> childNodesByNameMapMap = new LinkedHashMap <String, DataDomain>();
-
     public void initChildNodesByNameMap() {
         Set<BaseNode> childSet = childNodes;
         for (BaseNode child : childSet) {
@@ -1205,8 +1216,6 @@ public class BaseNode implements BaseData, MetaData, SysData,
     //####################
     // service-functions
     //####################
-    /** dummy classsname for JSON-Exporter**/
-    public String className;
     public String getClassName() {
         return this.getClass().getSimpleName();
     }

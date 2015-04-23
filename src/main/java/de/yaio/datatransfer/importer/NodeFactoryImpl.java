@@ -56,6 +56,11 @@ import de.yaio.datatransfer.importer.parser.SysDataParserImpl;
  */
 public class NodeFactoryImpl implements NodeFactory {
 
+    protected static int curId = 1;
+
+    // Parameter des Standard-Node-Konstruktors
+    private static final Class<?>[] CONST_NODE_CONSTRUCTOR = {};
+
     // Logger
     private static final Logger LOGGER =
             Logger.getLogger(NodeFactoryImpl.class);
@@ -64,10 +69,6 @@ public class NodeFactoryImpl implements NodeFactory {
     protected Map<String, Class<?>> hshNodeTypeIdentifier = new HashMap<String, Class<?>>();
     protected Set<Parser> hshDataDomainParser = new TreeSet<Parser>();
 
-    // Parameter des Standard-Node-Konstruktors
-    private static final Class<?>[] CONST_NODE_CONSTRUCTOR = {};
-
-    protected static int curId = 1;
     protected ImportOptions options = null;
 
     /**

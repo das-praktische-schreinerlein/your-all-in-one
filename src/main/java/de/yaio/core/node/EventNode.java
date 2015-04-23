@@ -68,21 +68,6 @@ public class EventNode extends TaskNode {
     /** nodetype-identifier for parser/formatter on Eventnode canceled */
     public static final String CONST_NODETYPE_IDENTIFIER_EVENT_CANCELED = "EVENT_VERWORFEN";
     
-    protected static SysDataService sysDataService = new SysDataServiceImpl();
-    protected static MetaDataService metaDataService = new MetaDataServiceImpl();
-    protected static NodeService nodeDataService = new EventNodeService();
-
-    @XmlTransient
-    @JsonIgnore
-    public NodeService getNodeService() {
-        return nodeDataService;
-    }
-    @XmlTransient
-    @JsonIgnore
-    public static void setNodeDataService(final NodeService newNodeDataService) {
-        nodeDataService = newNodeDataService;
-    }
-
     // Status-Konstanten
     public static final Map<String, Object> CONST_MAP_NODETYPE_IDENTIFIER = new HashMap<String, Object>();
     public static final Map<String, WorkflowState> CONST_MAP_STATE_WORKFLOWSTATE = new HashMap<String, WorkflowState>();
@@ -102,12 +87,15 @@ public class EventNode extends TaskNode {
         }
 
         // Defaults
-        CONST_MAP_NODETYPE_IDENTIFIER.put(CONST_NODETYPE_IDENTIFIER_EVENT_PLANED, CONST_NODETYPE_IDENTIFIER_EVENT_PLANED);
-        CONST_MAP_NODETYPE_IDENTIFIER.put(CONST_NODETYPE_IDENTIFIER_EVENT_RUNNNING, CONST_NODETYPE_IDENTIFIER_EVENT_RUNNNING);
+        CONST_MAP_NODETYPE_IDENTIFIER.put(CONST_NODETYPE_IDENTIFIER_EVENT_PLANED, 
+                        CONST_NODETYPE_IDENTIFIER_EVENT_PLANED);
+        CONST_MAP_NODETYPE_IDENTIFIER.put(CONST_NODETYPE_IDENTIFIER_EVENT_RUNNNING, 
+                        CONST_NODETYPE_IDENTIFIER_EVENT_RUNNNING);
         CONST_MAP_NODETYPE_IDENTIFIER.put(CONST_NODETYPE_IDENTIFIER_EVENT_LATE, CONST_NODETYPE_IDENTIFIER_EVENT_LATE);
         CONST_MAP_NODETYPE_IDENTIFIER.put(CONST_NODETYPE_IDENTIFIER_EVENT_SHORT, CONST_NODETYPE_IDENTIFIER_EVENT_SHORT);
         CONST_MAP_NODETYPE_IDENTIFIER.put(CONST_NODETYPE_IDENTIFIER_EVENT_DONE, CONST_NODETYPE_IDENTIFIER_EVENT_DONE);
-        CONST_MAP_NODETYPE_IDENTIFIER.put(CONST_NODETYPE_IDENTIFIER_EVENT_CANCELED, CONST_NODETYPE_IDENTIFIER_EVENT_CANCELED);
+        CONST_MAP_NODETYPE_IDENTIFIER.put(CONST_NODETYPE_IDENTIFIER_EVENT_CANCELED, 
+                        CONST_NODETYPE_IDENTIFIER_EVENT_CANCELED);
         // Abarten
         CONST_MAP_NODETYPE_IDENTIFIER.put("EVENT_PLANED", CONST_NODETYPE_IDENTIFIER_EVENT_PLANED);
         CONST_MAP_NODETYPE_IDENTIFIER.put("EVENT_GREPLANT", CONST_NODETYPE_IDENTIFIER_EVENT_PLANED);
@@ -129,6 +117,21 @@ public class EventNode extends TaskNode {
         CONST_MAP_NODETYPE_IDENTIFIER.put("EVENT_VERWORFEN", CONST_NODETYPE_IDENTIFIER_EVENT_CANCELED);
         CONST_MAP_NODETYPE_IDENTIFIER.put("EVENT_GELOESCHT", CONST_NODETYPE_IDENTIFIER_EVENT_CANCELED);
         CONST_MAP_NODETYPE_IDENTIFIER.put("EVENT_ABGEBROCHEN", CONST_NODETYPE_IDENTIFIER_EVENT_CANCELED);
+    }
+
+    protected static SysDataService sysDataService = new SysDataServiceImpl();
+    protected static MetaDataService metaDataService = new MetaDataServiceImpl();
+    protected static NodeService nodeDataService = new EventNodeService();
+
+    @XmlTransient
+    @JsonIgnore
+    public NodeService getNodeService() {
+        return nodeDataService;
+    }
+    @XmlTransient
+    @JsonIgnore
+    public static void setNodeDataService(final NodeService newNodeDataService) {
+        nodeDataService = newNodeDataService;
     }
 
     @Override

@@ -20,16 +20,6 @@ import de.yaio.core.node.BaseNode;
  */
 public class TestNode extends BaseNode implements TestObj {
     
-    @Override
-    public String toString() {
-        StringBuffer resBuffer = new StringBuffer();
-        resBuffer.append(this.getName()).append("|")
-                 .append(this.getState()).append("|")
-                 .append(this.getClass().getName()).append("|");
-        return resBuffer.toString();
-        
-    }
-
     // Status-Konstanten
     public static final Map<String, Object> CONST_MAP_NODETYPE_IDENTIFIER = new HashMap<String, Object>();
     static {
@@ -48,5 +38,15 @@ public class TestNode extends BaseNode implements TestObj {
 
     public static void configureWorkflowNodeTypeMapping(final Importer importer) {
         // NOP 
+    }
+
+    @Override
+    public String toString() {
+        StringBuffer resBuffer = new StringBuffer();
+        resBuffer.append(this.getName()).append("|")
+                 .append(this.getState()).append("|")
+                 .append(this.getClass().getName()).append("|");
+        return resBuffer.toString();
+        
     }
 }

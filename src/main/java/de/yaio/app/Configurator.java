@@ -74,15 +74,20 @@ public class Configurator {
                     "config.spring.applicationconfig.path";
     protected static final String CONST_DEFAULT_APPLICATIONCONFIG_PATH = 
                     "/META-INF/spring/applicationContext.xml";
+    
     private static final Logger LOGGER = Logger.getLogger(Configurator.class);
 
-    // should be instantiated after LOGGER because it is used in constructor
+    // must be instantiated after LOGGER because it is used in constructor
     protected static final Configurator instance = new Configurator();
 
     protected ApplicationContext applicationContext;
     protected CommandLine commandLine;
     protected String[] cmdLineArgs;
     protected Options availiableCmdLineOptions;
+    
+    protected Configurator() {
+        initConfigurator();
+    }
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -106,6 +111,9 @@ public class Configurator {
          */
         private static final long serialVersionUID = 1L;
 
+        /** a protected (not private!!!) map of the options with the long key */
+        protected Map<String, Option> mylongOpts = new HashMap<String, Option>();
+        
         /**
          * <h4>FeatureDomain:</h4>
          *     Configuration
@@ -121,9 +129,6 @@ public class Configurator {
                 LOGGER.debug("new FixedOptions");
             }
         }
-        
-        /** a protected (not private!!!) map of the options with the long key */
-        protected Map<String, Option> mylongOpts = new HashMap<String, Option>();
         
         /**
          * Retrieve a read-only list of options in this set
@@ -206,11 +211,6 @@ public class Configurator {
      ***********************
      ***********************
      */
-    protected Configurator() {
-        initConfigurator();
-    }
-    
-    
     protected void initConfigurator() {
         this.createAvailiableCmdLineOptions();
     }

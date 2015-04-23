@@ -41,12 +41,12 @@ import de.yaio.utils.DataUtils;
  */
 public class SysDataServiceImpl extends DataDomainRecalcImpl implements SysDataService {
 
+    protected static int VAR_CUR_UID = 1;
+
     // Logger
-    private static final Logger LOGGER =
-            Logger.getLogger(SysDataServiceImpl.class);
+    private static final Logger LOGGER = Logger.getLogger(SysDataServiceImpl.class);
 
     protected final DateFormat UIDF = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-    protected static int VAR_CUR_UID = 1;
 
     /**
      * <h4>FeatureDomain:</h4>

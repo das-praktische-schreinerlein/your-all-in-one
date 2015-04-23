@@ -41,17 +41,16 @@ import de.yaio.core.datadomainservice.DataDomainRecalc;
  */
 public abstract class NodeServiceImpl implements NodeService {
 
-    /** sorted Treeset of the configured DadaDomainRecacler */
-    protected Set<DataDomainRecalc> hshDataDomainRecalcer = 
-                    new TreeSet<DataDomainRecalc>();
+    // Logger
+    private static final Logger LOGGER = Logger.getLogger(NodeServiceImpl.class);
+    
     /** Hashmap of the configured DadaDomainRecacler by ClassName */
     public Map<Class<?>, DataDomainRecalc> hshDataDomainRecalcerByClass = 
                     new HashMap<Class<?>, DataDomainRecalc>();
     
-    // Logger
-    private static final Logger LOGGER =
-            Logger.getLogger(NodeServiceImpl.class);
-    
+    /** sorted Treeset of the configured DadaDomainRecacler */
+    protected Set<DataDomainRecalc> hshDataDomainRecalcer = 
+                    new TreeSet<DataDomainRecalc>();
     //////////////
     // service-functions for configuration
     //////////////

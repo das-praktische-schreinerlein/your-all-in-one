@@ -27,7 +27,6 @@ import java.nio.charset.Charset;
 import org.apache.log4j.Logger;
 import org.hamcrest.core.IsNull;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
@@ -63,21 +62,18 @@ public abstract class BaseNodeRestControllerTest  extends BaseTest {
     /** masternodeId **/
     public static final String CONST_MASTERNODE_ID = "MasterplanMasternode1";
                     
-    /** Logger **/
-    private static final Logger LOGGER =
-            Logger.getLogger(BaseNodeRestControllerTest.class);
-    
-    @Autowired
-    NodeRestController NodeController;
-    BaseNode baseNode;
-    MockMvc mockMvc;
-    
-    
     /** contentype of my app **/
     public static final MediaType APPLICATION_JSON_UTF8 = 
                     new MediaType(MediaType.APPLICATION_JSON.getType(), 
                                     MediaType.APPLICATION_JSON.getSubtype(), 
                                     Charset.forName("utf8"));
+
+    /** Logger **/
+    private static final Logger LOGGER =
+            Logger.getLogger(BaseNodeRestControllerTest.class);
+    
+    protected BaseNode baseNode;
+    protected MockMvc mockMvc;
     
     @Override
     public void setUp() throws Exception {
@@ -340,7 +336,7 @@ public abstract class BaseNodeRestControllerTest  extends BaseTest {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("info state:" + state + " msg:" + stateMsg);
         }
-        if (!state.equalsIgnoreCase("OK1")) {
+        if (!"OK1".equalsIgnoreCase(state)) {
             LOGGER.error("error state:" + state + " msg:" + stateMsg);
         }
         res.andExpect(jsonPath("$.state", is("OK")));

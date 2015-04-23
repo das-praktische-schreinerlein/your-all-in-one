@@ -43,11 +43,6 @@ import de.yaio.core.nodeservice.BaseNodeService;
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class BaseNodeDBServiceImpl implements BaseNodeDBService {
-    // Logger
-    private static final Logger LOGGER =
-        Logger.getLogger(BaseNodeDBServiceImpl.class);
-
-    
     protected static final Map<String, String> CONST_AVAILIABLE_SORTS = new HashMap<String, String>();
     static {
         CONST_AVAILIABLE_SORTS.put("default", "");
@@ -75,6 +70,10 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
     
     protected static BaseNodeDBService instance = new BaseNodeDBServiceImpl();
     
+    // Logger
+    private static final Logger LOGGER =
+        Logger.getLogger(BaseNodeDBServiceImpl.class);
+
     /**
      * <h4>FeatureDomain:</h4>
      *     Persistence
