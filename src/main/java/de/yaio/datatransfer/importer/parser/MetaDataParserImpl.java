@@ -56,9 +56,6 @@ public class MetaDataParserImpl  extends ParserImpl implements MetaDataParser {
     // Logger
     private static final Logger LOGGER = Logger.getLogger(MetaDataParserImpl.class);
 
-    protected Calendar calDate = new GregorianCalendar();
-    protected Calendar calTime = new GregorianCalendar();
-
     @Override
     public Class<?> getTargetClass() {
         return MetaData.class;
