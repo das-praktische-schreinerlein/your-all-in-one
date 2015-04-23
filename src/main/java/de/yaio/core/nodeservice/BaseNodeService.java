@@ -42,9 +42,13 @@ import de.yaio.core.node.BaseNode;
  */
 public class BaseNodeService extends NodeServiceImpl {
     
-    private static final Logger LOGGER =
-            Logger.getLogger(NodeServiceImpl.class);
+    /**
+     * step for next position in list
+     */
+    public static final int CONST_CURSORTIDX_STEP = 5;
     
+    private static final Logger LOGGER = Logger.getLogger(NodeServiceImpl.class);
+
     /**
      * <h4>FeatureDomain:</h4>
      *     Constructor

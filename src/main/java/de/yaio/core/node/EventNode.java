@@ -26,10 +26,6 @@ import org.springframework.roo.addon.tostring.RooToString;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import de.yaio.core.datadomainservice.MetaDataService;
-import de.yaio.core.datadomainservice.MetaDataServiceImpl;
-import de.yaio.core.datadomainservice.SysDataService;
-import de.yaio.core.datadomainservice.SysDataServiceImpl;
 import de.yaio.core.nodeservice.EventNodeService;
 import de.yaio.core.nodeservice.NodeService;
 
@@ -119,8 +115,6 @@ public class EventNode extends TaskNode {
         CONST_MAP_NODETYPE_IDENTIFIER.put("EVENT_ABGEBROCHEN", CONST_NODETYPE_IDENTIFIER_EVENT_CANCELED);
     }
 
-    protected static SysDataService sysDataService = new SysDataServiceImpl();
-    protected static MetaDataService metaDataService = new MetaDataServiceImpl();
     protected static NodeService nodeDataService = new EventNodeService();
 
     @XmlTransient

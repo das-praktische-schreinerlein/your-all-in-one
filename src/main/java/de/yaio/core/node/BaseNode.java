@@ -114,11 +114,6 @@ public class BaseNode implements BaseData, MetaData, SysData,
     protected static NodeService nodeService = new BaseNodeService();
     protected static BaseNodeDBService baseNodeDBService = BaseNodeDBServiceImpl.getInstance();
     
-    @Transient
-    @XmlTransient
-    @JsonIgnore
-    protected static final int CONST_CURSORTIDX_STEP = 5;
-
     // Logger
     private static final Logger LOGGER = Logger.getLogger(BaseNode.class);
 
@@ -532,11 +527,6 @@ public class BaseNode implements BaseData, MetaData, SysData,
     @JsonIgnore
     public static final void setMetaDataService(final MetaDataService newMetaDataService) {
         metaDataService = newMetaDataService;
-    }
-    @XmlTransient
-    @JsonIgnore
-    public static NodeService getConfiguredNodeService() {
-        return nodeService;
     }
     @XmlTransient
     @JsonIgnore
@@ -982,12 +972,12 @@ public class BaseNode implements BaseData, MetaData, SysData,
                 // preserve sortpos of the child
                 if (childNode.getSortPos() > curSortIdx) {
                     // update idx
-                    curSortIdx = childNode.getSortPos() + CONST_CURSORTIDX_STEP;
+                    curSortIdx = childNode.getSortPos() + BaseNodeService.CONST_CURSORTIDX_STEP;
                 }
             } else {
                 // set new sortpos for the child
                 childNode.setSortPos(curSortIdx);
-                curSortIdx = curSortIdx + CONST_CURSORTIDX_STEP;
+                curSortIdx = curSortIdx + BaseNodeService.CONST_CURSORTIDX_STEP;
             }
             this.childNodesByNameMapMap.put(childNode.getIdForChildByNameMap(), childNode);
             this.childNodes.add((BaseNode) childNode);
@@ -1071,7 +1061,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
         curSortIdx = 0;
         for (BaseNode curChild : this.getChildNodes()) {
             curChild.setSortPos(curSortIdx);
-            curSortIdx = curSortIdx + CONST_CURSORTIDX_STEP;
+            curSortIdx = curSortIdx + BaseNodeService.CONST_CURSORTIDX_STEP;
         }
     }
     

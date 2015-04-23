@@ -29,10 +29,6 @@ import org.springframework.roo.addon.tostring.RooToString;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import de.yaio.core.datadomain.ExtendedWorkflowData;
-import de.yaio.core.datadomainservice.MetaDataService;
-import de.yaio.core.datadomainservice.MetaDataServiceImpl;
-import de.yaio.core.datadomainservice.SysDataService;
-import de.yaio.core.datadomainservice.SysDataServiceImpl;
 import de.yaio.core.nodeservice.NodeService;
 import de.yaio.core.nodeservice.TaskNodeService;
 import de.yaio.utils.DataUtils;
@@ -116,10 +112,6 @@ public class TaskNode extends BaseNode implements ExtendedWorkflowData {
         CONST_MAP_NODETYPE_IDENTIFIER.put("ABGEBROCHEN", CONST_NODETYPE_IDENTIFIER_CANCELED);
     }
 
-    @Transient
-    protected static SysDataService sysDataService = new SysDataServiceImpl();
-    @Transient
-    protected static MetaDataService metaDataService = new MetaDataServiceImpl();
     @Transient
     protected static NodeService nodeDataService = new TaskNodeService();
 
