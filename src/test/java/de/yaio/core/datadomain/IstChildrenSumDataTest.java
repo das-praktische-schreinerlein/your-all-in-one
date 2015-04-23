@@ -18,7 +18,6 @@ package de.yaio.core.datadomain;
 
 import de.yaio.core.node.TaskNode;
 import de.yaio.datatransfer.exporter.formatter.IstChildrenSumDataFormatterImpl;
-import de.yaio.datatransfer.importer.parser.Parser;
 
 /**
  * <h4>FeatureDomain:</h4>
