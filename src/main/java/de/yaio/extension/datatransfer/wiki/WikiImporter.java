@@ -97,11 +97,11 @@ public class WikiImporter extends ImporterImpl {
      */
     public class WikiStructLine {
 
-        private String wiki;
         protected String text;
-        private String hirarchy;
         protected String desc;
+        private String wiki;
         private String idPraefix;
+        private String hirarchy;
 
         /**
          * <h4>FeatureDomain:</h4>

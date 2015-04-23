@@ -50,14 +50,12 @@ import de.yaio.extension.datatransfer.wiki.WikiImporter.WikiStructLine;
  */
 public class CommonImporter {
     
+    // Logger
+    private static final Logger LOGGER = Logger.getLogger(CommonImporter.class);
+
     protected String defaultSourceType = "ppl";
     protected PPLImporter pplImporter = null;
     
-    // Logger
-    private static final Logger LOGGER =
-        Logger.getLogger(CommonImporter.class);
-
-
     /**
      * <h4>FeatureDomain:</h4>
      *     Constructor

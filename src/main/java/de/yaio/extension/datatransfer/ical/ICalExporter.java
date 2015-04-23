@@ -51,7 +51,14 @@ import de.yaio.extension.datatransfer.wiki.WikiExporter;
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class ICalExporter extends WikiExporter {
-    
+
+    // Logger
+    private static final Logger LOGGER =
+        Logger.getLogger(ICalExporter.class);
+
+    protected final DateFormat DF = new SimpleDateFormat("yyyyMMdd");
+    protected final DateFormat TF = new SimpleDateFormat("HHmmss");
+
     /**
      * <h4>FeatureDomain:</h4>
      *     Constructor
@@ -67,13 +74,6 @@ public class ICalExporter extends WikiExporter {
     public ICalExporter() {
         super();
     }
-
-    protected final DateFormat DF = new SimpleDateFormat("yyyyMMdd");
-    protected final DateFormat TF = new SimpleDateFormat("HHmmss");
-    
-    // Logger
-    private static final Logger LOGGER =
-        Logger.getLogger(ICalExporter.class);
 
     @Override
     public void initDataDomainFormatter() {

@@ -44,6 +44,10 @@ import de.yaio.extension.datatransfer.wiki.WikiExporter;
  */
 public class CSVExporter extends WikiExporter {
     
+    protected static FormatterImpl baseFormatter = new BaseDataFormatterImpl();
+    
+    private static final Logger LOGGER = Logger.getLogger(CSVExporter.class);
+
     /**
      * <h4>FeatureDomain:</h4>
      *     Constructor
@@ -59,11 +63,6 @@ public class CSVExporter extends WikiExporter {
     public CSVExporter() {
         super();
     }
-
-    protected static FormatterImpl baseFormatter = new BaseDataFormatterImpl();
-    
-    private static final Logger LOGGER =
-        Logger.getLogger(CSVExporter.class);
 
     @Override
     public void initDataDomainFormatter() {

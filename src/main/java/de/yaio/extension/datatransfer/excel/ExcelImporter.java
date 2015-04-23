@@ -62,10 +62,12 @@ import de.yaio.utils.ExcelService;
  */
 public class ExcelImporter extends ImporterImpl {
 
-    protected ExcelOutputService exlSv = null;
+    protected static Map<String, String> hshNodes = new HashMap<String, String>();
+
     public PPLImporter importer = new PPLImporter(new ImportOptionsImpl());
     public PPLExporter exporter = new PPLExporter();
-    protected static Map<String, String> hshNodes = new HashMap<String, String>();
+
+    protected ExcelOutputService exlSv = null;
 
     public ExcelImporter(final ImportOptions options) {
         super(options);

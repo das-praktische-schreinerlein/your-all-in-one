@@ -17,6 +17,8 @@
 package de.yaio.datatransfer.importer.parser;
 
 import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,6 +38,9 @@ import de.yaio.utils.DataUtils;
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public abstract class ParserImpl implements Parser {
+
+    protected final Calendar calDate = new GregorianCalendar();
+    protected final Calendar calTime = new GregorianCalendar();
 
     /** dateformat-instance for german date dd.MM.yyyy  */
     protected final DateFormat DF = DataUtils.getDF();

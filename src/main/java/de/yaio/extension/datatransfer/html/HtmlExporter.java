@@ -55,22 +55,6 @@ import de.yaio.utils.DataUtils;
  */
 public class HtmlExporter extends WikiExporter {
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Constructor
-     * <h4>FeatureDescription:</h4>
-     *     service functions to export nodes as Html
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>initialize the exporter
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Constructor
-     */
-    public HtmlExporter() {
-        super();
-    }
-    
     protected static final String CONST_LAYOUT_TAG_DIV = "DIV";
     protected static final String CONST_LAYOUT_TAG_UE = "UE";
     protected static final String CONST_LAYOUT_TAG_P = "P";
@@ -86,16 +70,32 @@ public class HtmlExporter extends WikiExporter {
     protected static final String CONST_FORMATTER_PLANCHILDRENSUM = PlanChildrenSumDataFormatterImpl.class.getName();
     
     protected static Markdown4jProcessor markdownProcessor = new Markdown4jProcessor();
-    static {
-        //markdownProcessor.addHtmlAttribute("style", "color:red", "blockquote", "h1");
-        //markdownProcessor.addStyleClass("", "img");
-    }
+//    static {
+//        markdownProcessor.addHtmlAttribute("style", "color:red", "blockquote", "h1");
+//        markdownProcessor.addStyleClass("", "img");
+//    }
 
     // Logger
     private static final Logger LOGGER =
         Logger.getLogger(HtmlExporter.class);
     
     protected int htmlElementId = 1;
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Constructor
+     * <h4>FeatureDescription:</h4>
+     *     service functions to export nodes as Html
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>initialize the exporter
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Constructor
+     */
+    public HtmlExporter() {
+        super();
+    }
     
     @Override
     public String getMasterNodeResult(final DataDomain masterNode,

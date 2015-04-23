@@ -47,6 +47,9 @@ public class MindMapExporter extends WikiExporter {
     protected static WorkflowFormatConfigurator workflowFormatConfigurator = 
             WorkflowFormatConfigurator.getWorkflowFormatConfigurator();
     
+    // Logger
+    private static final Logger LOGGER = Logger.getLogger(MindMapExporter.class);
+
     /**
      * <h4>FeatureDomain:</h4>
      *     Constructor
@@ -62,11 +65,6 @@ public class MindMapExporter extends WikiExporter {
     public MindMapExporter() {
         super();
     }
-
-    // Logger
-    private static final Logger LOGGER =
-        Logger.getLogger(MindMapExporter.class);
-    
 
     @Override
     public void initDataDomainFormatter() {

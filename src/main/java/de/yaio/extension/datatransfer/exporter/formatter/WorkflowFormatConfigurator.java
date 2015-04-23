@@ -42,21 +42,6 @@ public class WorkflowFormatConfigurator {
 
     protected static WorkflowFormatConfigurator me = new WorkflowFormatConfigurator();
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Factory
-     * <h4>FeatureDescription:</h4>
-     *     return the global WorkflowFormatConfigurator
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue WorkflowFormatConfigurator
-     *   </ul>
-     * @return the global WorkflowFormatConfigurator 
-     */
-    public static WorkflowFormatConfigurator getWorkflowFormatConfigurator() {
-        return me;
-    }
-
     protected static final Map<String, String> CONST_STATI_COLOR = new HashMap<String, String>();
     static {
         CONST_STATI_COLOR.put(BaseNode.CONST_NODETYPE_IDENTIFIER_UNKNOWN, "#fffafa");
@@ -127,6 +112,21 @@ public class WorkflowFormatConfigurator {
         CONST_STATI_ICON.put(UrlResNode.CONST_NODETYPE_IDENTIFIER_EMAILRES, null);
     }
     
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Factory
+     * <h4>FeatureDescription:</h4>
+     *     return the global WorkflowFormatConfigurator
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue WorkflowFormatConfigurator
+     *   </ul>
+     * @return the global WorkflowFormatConfigurator 
+     */
+    public static WorkflowFormatConfigurator getWorkflowFormatConfigurator() {
+        return me;
+    }
+
     /**
      * <h4>FeatureDomain:</h4>
      *     Presentation

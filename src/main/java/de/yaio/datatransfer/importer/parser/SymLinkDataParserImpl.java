@@ -16,8 +16,6 @@
  */
 package de.yaio.datatransfer.importer.parser;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -42,13 +40,6 @@ import de.yaio.datatransfer.importer.NodeFactory;
  */
 public class SymLinkDataParserImpl  extends ParserImpl implements SymLinkDataParser {
 
-    Calendar calDate = new GregorianCalendar();
-    Calendar calTime = new GregorianCalendar();
-
-    // Logger
-    private static final Logger LOGGER =
-            Logger.getLogger(SymLinkDataParserImpl.class);
-
     // Patterns
     protected static final String CONST_PATTERN_SEG_STRING1 = "[^,:\\[\\]]";
     protected static final String CONST_PATTERN_SEG_SYMREF = "[A-Za-z]+[0-9]+";
@@ -58,6 +49,9 @@ public class SymLinkDataParserImpl  extends ParserImpl implements SymLinkDataPar
                + "(" + CONST_PATTERN_SEG_TAGS + "*)?";
     private static final Pattern CONST_PATTERN_SYMLINK =
         Pattern.compile("(.*)" + CONST_PATTERN_SEG_SYMLINK + "(.*)", Pattern.UNICODE_CHARACTER_CLASS);
+
+    // Logger
+    private static final Logger LOGGER = Logger.getLogger(SymLinkDataParserImpl.class);
 
     @Override
     public Class<?> getTargetClass() {

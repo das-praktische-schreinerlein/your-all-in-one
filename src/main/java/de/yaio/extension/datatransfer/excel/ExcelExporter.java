@@ -66,19 +66,20 @@ import de.yaio.utils.ExcelService;
  */
 public class ExcelExporter extends WikiExporter {
     
-    public ExcelExporter() {
-        super();
-    }
+    public static final String CONST_FORMATTER_DESC = DescDataFormatterImpl.class.getName();
+    public static final String CONST_FORMATTER_DOCLAYOUT = DocLayoutDataFormatterImpl.class.getName();
+    public static final String CONST_FORMATTER_IST = IstDataFormatterImpl.class.getName();
+    public static final String CONST_FORMATTER_PLAN = PlanDataFormatterImpl.class.getName();
     
     // Logger
     private static final Logger LOGGER =
         Logger.getLogger(ExcelExporter.class);
     
     protected ExcelOutputService exlSv = null;
-    public static final String CONST_FORMATTER_DESC = DescDataFormatterImpl.class.getName();
-    public static final String CONST_FORMATTER_DOCLAYOUT = DocLayoutDataFormatterImpl.class.getName();
-    public static final String CONST_FORMATTER_IST = IstDataFormatterImpl.class.getName();
-    public static final String CONST_FORMATTER_PLAN = PlanDataFormatterImpl.class.getName();
+    
+    public ExcelExporter() {
+        super();
+    }
     
     @Override
     public String getMasterNodeResult(final DataDomain masterNode,

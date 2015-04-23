@@ -43,6 +43,9 @@ import de.yaio.extension.datatransfer.wiki.WikiExporter;
  */
 public class JPAExporter extends WikiExporter {
     
+    // Logger
+    private static final Logger LOGGER = Logger.getLogger(JPAExporter.class);
+
     /**
      * <h4>FeatureDomain:</h4>
      *     Constructor
@@ -59,16 +62,12 @@ public class JPAExporter extends WikiExporter {
         super();
     }
 
-    // Logger
-    private static final Logger LOGGER =
-        Logger.getLogger(JPAExporter.class);
-
     @Override
     public void initDataDomainFormatter() {
     };
 
     @Override
-    @Transactional()
+    @Transactional
     public String getMasterNodeResult(final DataDomain tmpMasterNode, final OutputOptions oOptions)
             throws Exception {
         if (LOGGER.isDebugEnabled()) {
