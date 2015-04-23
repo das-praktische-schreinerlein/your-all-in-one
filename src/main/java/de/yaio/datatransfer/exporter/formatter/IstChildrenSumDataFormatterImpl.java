@@ -73,7 +73,8 @@ public class IstChildrenSumDataFormatterImpl extends FormatterImpl
     }
 
     @Override
-    public void format(final DataDomain node, final StringBuffer nodeOutput, final OutputOptions options) throws Exception {
+    public void format(final DataDomain node, final StringBuffer nodeOutput, 
+                       final OutputOptions options) throws Exception {
         // Check if node is compatibel
         if (node != null) {
             if (!IstChildrenSumData.class.isInstance(node)) {

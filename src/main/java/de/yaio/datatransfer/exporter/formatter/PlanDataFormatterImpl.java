@@ -72,7 +72,8 @@ public class PlanDataFormatterImpl extends FormatterImpl implements PlanDataForm
     }
 
     @Override
-    public void format(final DataDomain node, final StringBuffer nodeOutput, final OutputOptions options) throws Exception {
+    public void format(final DataDomain node, final StringBuffer nodeOutput, 
+                       final OutputOptions options) throws Exception {
         // Check if node is compatibel
         if (node != null) {
             if (!PlanData.class.isInstance(node)) {
@@ -152,7 +153,7 @@ public class PlanDataFormatterImpl extends FormatterImpl implements PlanDataForm
                     nodeOutput.append("-          ");
                 }
             }
-            if (task != null && !task.equals("") && !task.equals(" ")) {
+            if (task != null && !"".equals(task) && !" ".equals(task)) {
                 nodeOutput.append(" " + task);
             }
             if (oOptions.isFlgShowBrackets()) {

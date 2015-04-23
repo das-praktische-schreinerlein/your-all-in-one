@@ -69,7 +69,8 @@ public class MetaDataFormatterImpl extends FormatterImpl implements MetaDataForm
     }
 
     @Override
-    public void format(final DataDomain node, final StringBuffer nodeOutput, final OutputOptions options) throws Exception {
+    public void format(final DataDomain node, final StringBuffer nodeOutput, 
+                       final OutputOptions options) throws Exception {
         // Check if node is compatibel
         if (node != null) {
             if (!MetaData.class.isInstance(node)) {

@@ -534,16 +534,16 @@ public class CommonImporter {
         String sourceType = 
                         Configurator.getInstance().getCommandLine().getOptionValue(
                                         "sourcetype", defaultSourceType);
-        if (sourceType.equalsIgnoreCase("jpa")) {
+        if ("jpa".equalsIgnoreCase(sourceType)) {
             // from jpa
             this.importDataToMasterNodeFromJPA(masterNode);
-        } else if (sourceType.equalsIgnoreCase("excel")) {
+        } else if ("excel".equalsIgnoreCase(sourceType)) {
             // from excel
             this.importDataToMasterNodeFromExcel(masterNode);
-        } else if (sourceType.equalsIgnoreCase("wiki")) {
+        } else if ("wiki".equalsIgnoreCase(sourceType)) {
             // from wiki
             this.importDataToMasterNodeFromWiki(masterNode);
-        } else if (sourceType.equalsIgnoreCase("ppl")) {
+        } else if ("ppl".equalsIgnoreCase(sourceType)) {
             // default: ppl
             this.importDataToMasterNodeFromPPLFile(masterNode);
         } else {

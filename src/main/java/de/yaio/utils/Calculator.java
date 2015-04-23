@@ -169,13 +169,15 @@ public class Calculator {
                         // wenn IstStand leer, dann Aufwand nehmen
                         res = new Double(0);
                         if (LOGGER.isDebugEnabled()) {
-                            LOGGER.debug("calc set arg1=null: " + action + " arg1:" + arg1 + " arg2:" + arg2 + " =" + res);
+                            LOGGER.debug("calc set arg1=null: " + action
+                                            + " arg1:" + arg1 + " arg2:" + arg2 + " =" + res);
                         }
                     } else if (((Double) arg2).doubleValue() <= CONST_DOUBLE_NULL) {
                         // wenn Aufwand leer, dann nichts
                         res = new Double(0);
                         if (LOGGER.isDebugEnabled()) {
-                            LOGGER.debug("calc set arg2=null: " + action + " arg1:" + arg1 + " arg2:" + arg2 + " =" + res);
+                            LOGGER.debug("calc set arg2=null: " + action
+                                            + " arg1:" + arg1 + " arg2:" + arg2 + " =" + res);
                         }
                     } else {
                         // Stand und Aufwand mulitplizieren

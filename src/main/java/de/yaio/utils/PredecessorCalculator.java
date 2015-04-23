@@ -66,7 +66,8 @@ public class PredecessorCalculator {
         return measure;
     }
     
-    public static Date addDurationToDate(final Date baseDate, final boolean flgAdd, final Integer duration, final DurationMeasure myDurationMeasure) {
+    public static Date addDurationToDate(final Date baseDate, final boolean flgAdd, 
+                                         final Integer duration, final DurationMeasure myDurationMeasure) {
         Date date = baseDate;
         if (baseDate != null && duration != null && duration.intValue() > 0) {
             Calendar calendar = Calendar.getInstance();

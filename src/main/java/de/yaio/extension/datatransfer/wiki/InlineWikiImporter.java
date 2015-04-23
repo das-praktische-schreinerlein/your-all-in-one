@@ -61,7 +61,7 @@ public class InlineWikiImporter extends WikiImporter {
      *     Constructor
      *  @param options - the importoptions for the parser...
      */
-    public InlineWikiImporter(final ImportOptions options, String strMetaIdPraefix) {
+    public InlineWikiImporter(final ImportOptions options, final String strMetaIdPraefix) {
         super(options);
         this.strMetaIdPraefix = strMetaIdPraefix;
     }

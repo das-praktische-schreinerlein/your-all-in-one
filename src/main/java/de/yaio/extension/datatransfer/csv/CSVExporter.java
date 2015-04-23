@@ -248,7 +248,8 @@ public class CSVExporter extends WikiExporter {
     protected String formatNodeDate(final BaseNode curNode, final Date src) {
         return baseFormatter.formatDate(src);
     }
-    protected String formatNodeNumber(final BaseNode curNode, final Double src, final int minStellen, final int maxStellen) {
+    protected String formatNodeNumber(final BaseNode curNode, final Double src, 
+                                      final int minStellen, final int maxStellen) {
         return baseFormatter.formatNumber(src, minStellen, maxStellen).replace(".", ",");
     }
 

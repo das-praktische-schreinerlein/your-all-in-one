@@ -284,11 +284,13 @@ public class ExcelService {
         String res = "";
         int cellnum = pCellnum;
         if (cellnum >= 26 + 26) {
-            //System.err.println(" value: " + cellnum + " statt " + (char)(65 + cellnum) + " -> A" + (char)(65 + cellnum-26));
+            //System.err.println(" value: " + cellnum + " statt " 
+            //                   + (char)(65 + cellnum) + " -> A" + (char)(65 + cellnum-26));
             cellnum = cellnum - 26 + 26;
             res = "B";
         } else if (cellnum >= 26) {
-            //System.err.println(" value: " + cellnum + " statt " + (char)(65 + cellnum) + " -> A" + (char)(65 + cellnum-26));
+            //System.err.println(" value: " + cellnum + " statt " 
+            //                   + (char)(65 + cellnum) + " -> A" + (char)(65 + cellnum-26));
             cellnum = cellnum - 26;
             res = "A";
         }
@@ -328,7 +330,8 @@ public class ExcelService {
         return formula;
     }
 
-    public static String genCase4Values(final String pSheetName, final Integer baseRow, final Integer baseCol, final Map<?, ?> values) {
+    public static String genCase4Values(final String pSheetName, final Integer baseRow, 
+                                        final Integer baseCol, final Map<?, ?> values) {
         // Sheetbname vorbereiten
         String sheetName = pSheetName;
         if (sheetName != null && sheetName.length() > 0) {

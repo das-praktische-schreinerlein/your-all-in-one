@@ -198,7 +198,8 @@ public class ICalExporter extends WikiExporter {
         if (!curNode.isWFStatus(state) || flgHasWFChildren) {
             // kein eigener WFNode oder Kindelemente haben WF-State -> SKIP
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("SKIP - No WFNode - node:" + curNode.getWorkingId() + " return datalength:" + res.length());
+                LOGGER.debug("SKIP - No WFNode - node:" + curNode.getWorkingId() 
+                                + " return datalength:" + res.length());
             }
             return blockChildren;
         }
@@ -280,7 +281,8 @@ public class ICalExporter extends WikiExporter {
         if (!curNode.isWFStatus(state)) {
             // kein eigener WFNode oder Kindelemente haben WF-State -> SKIP
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("SKIP - No WFNode - node:" + curNode.getWorkingId() + " return datalength:" + res.length());
+                LOGGER.debug("SKIP - No WFNode - node:" + curNode.getWorkingId() 
+                                + " return datalength:" + res.length());
             }
             return res;
         }
@@ -410,7 +412,8 @@ public class ICalExporter extends WikiExporter {
         if (!curNode.isWFStatus(state)) {
             // kein eigener WFNode oder Kindelemente haben WF-State -> SKIP
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("SKIP - No WFNode - node:" + curNode.getWorkingId() + " return datalength:" + res.length());
+                LOGGER.debug("SKIP - No WFNode - node:" + curNode.getWorkingId() 
+                                + " return datalength:" + res.length());
             }
             return res;
         }

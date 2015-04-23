@@ -794,14 +794,14 @@ public class BaseNode implements BaseData, MetaData, SysData,
     public void saveChildNodesToDB(final int pRecursionLevel, final boolean flgForceMerge) throws Exception {
         // set new level if it is not -1
         int recursionLevel = pRecursionLevel;
-        recursionLevel = (recursionLevel > 0 ? recursionLevel-- : recursionLevel);
+        recursionLevel = recursionLevel > 0 ? recursionLevel-- : recursionLevel;
 
         // interate children
         for (BaseNode childNode : this.getChildNodes()) {
             // validate data
-            if (childNode.getMetaNodeNummer() == null) {
-                //childNode.initMetaData();
-            }
+//            if (childNode.getMetaNodeNummer() == null) {
+//                childNode.initMetaData();
+//            }
             if (childNode.getSysUID() == null) {
                 childNode.initSysData();
             }
@@ -841,7 +841,8 @@ public class BaseNode implements BaseData, MetaData, SysData,
 //                           + " SysUID: " + childNode.getSysUID() 
 //                           + " Name: " + childNode.getName() 
 //                           + " ex:" + ex);
-////                LOGGER.error("persistChildNodesToDB error for parent " + this.getSysUID() + " Name: " + this.getName());
+////                LOGGER.error("persistChildNodesToDB error for parent " 
+////                        + this.getSysUID() + " Name: " + this.getName());
 ////                LOGGER.error("persistChildNodesToDB error for childnodedetails " + childNode.getNameForLogger());
 ////                LOGGER.error("persistChildNodesToDB error for parentdetails " + this.getNameForLogger());
 //                flgOK = false;
@@ -849,7 +850,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
 //            }
             
             // check recursionLevel
-            if (    (recursionLevel == NodeService.CONST_DB_RECURSIONLEVEL_ALL_CHILDREN) 
+            if ((recursionLevel == NodeService.CONST_DB_RECURSIONLEVEL_ALL_CHILDREN) 
                  || (recursionLevel > 0)) {
                 // recurse
 //                if (flgOK)
@@ -1050,16 +1051,17 @@ public class BaseNode implements BaseData, MetaData, SysData,
                 flgChildWaiting = false;
             }
             if (child.equals(curChild) || child.getSysUID().equalsIgnoreCase(curChild.getSysUID())) {
-                if (LOGGER.isDebugEnabled())
-                 {
-                    LOGGER.debug("bullshit iam in List already " + curChild.getSortPos().intValue() + " at " + this.childNodes.size());
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("bullshit iam in List already " 
+                 + curChild.getSortPos().intValue() + " at " + this.childNodes.size());
                 // hey i'm already here
                 }
             } else {
                 // add the other child
                 this.addChildNode(curChild);
                 if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("added other child:" + curChild.getName() + " new:" + curChild.getSortPos().intValue() + " at " + this.childNodes.size());
+                    LOGGER.debug("added other child:" + curChild.getName() 
+                                    + " new:" + curChild.getSortPos().intValue() + " at " + this.childNodes.size());
                 }
             }
             
@@ -1074,7 +1076,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     }
     
     @Override
-    public void setParentNode(DataDomain parentNode) {
+    public void setParentNode(final DataDomain parentNode) {
         setParentNode((BaseNode) parentNode);
     }
 
@@ -1086,9 +1088,9 @@ public class BaseNode implements BaseData, MetaData, SysData,
     }
 
     @Override
-    public boolean hasChildNode(DataDomain childNode) {
-        if (    (childNode != null) 
-             && (childNodesByNameMapMap.get(childNode.getIdForChildByNameMap()) != null)) {
+    public boolean hasChildNode(final DataDomain childNode) {
+        if ((childNode != null) 
+            && (childNodesByNameMapMap.get(childNode.getIdForChildByNameMap()) != null)) {
             return true;
         }
     
@@ -1100,7 +1102,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     //####################
     
     @Override
-    public void recalcData(int recursionDirection) throws Exception {
+    public void recalcData(final int recursionDirection) throws Exception {
         getNodeService().recalcData(this, recursionDirection);
     }
     
@@ -1123,8 +1125,8 @@ public class BaseNode implements BaseData, MetaData, SysData,
         data.append(this.getType())
             .append(this.getState())
             .append(" name=").append(getName())
-// TODO difference DB + PPL-Import          .append(" parentNode=").append((getParentNode() != null ? getParentNode().getSysUID() : null))
-// TODO difference DB + PPL-Import         .append(" sortPos=").append(getSortPos())
+// TODO difference DB + PPL-Import  .append(" parentNode=").append((getParentNode() != null ? getParentNode().getSysUID() : null))
+// TODO difference DB + PPL-Import  .append(" sortPos=").append(getSortPos())
 //            .append(" ebene=").append(getEbene())
 //            .append(" istStandChildrenSum=").append(getIstChildrenSumStand())
 //            .append(" istStartChildrenSum=").append(getIstChildrenSumStart())
@@ -1149,7 +1151,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     // Workflow-functions TODO - separate type+state
     //####################
     @Override
-    public void setType(String type) {
+    public void setType(final String type) {
         this.type = type;
         if (BaseWorkflowData.class.isInstance(this)) {
             this.state = type;
@@ -1157,7 +1159,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     }
 
     @Override
-    public void setState(String state) {
+    public void setState(final String state) {
         this.state = state;
         if (BaseWorkflowData.class.isInstance(this)) {
             this.type = state;
@@ -1172,22 +1174,22 @@ public class BaseNode implements BaseData, MetaData, SysData,
     }
     
     @Override
-    public boolean isWFStatus(String state) {
+    public boolean isWFStatus(final String state) {
         return getNodeService().isWFStatus(state);
     }
 
     @Override
-    public boolean isWFStatusDone (String state) {
+    public boolean isWFStatusDone (final String state) {
         return getNodeService().isWFStatusDone(state);
     }
 
     @Override
-    public boolean isWFStatusOpen (String state) {
+    public boolean isWFStatusOpen (final String state) {
         return getNodeService().isWFStatusOpen(state);
     }
 
     @Override
-    public boolean isWFStatusCanceled(String state) {
+    public boolean isWFStatusCanceled(final String state) {
         return getNodeService().isWFStatusCanceled(state);
     }
     
@@ -1201,14 +1203,14 @@ public class BaseNode implements BaseData, MetaData, SysData,
     @Override
     @XmlTransient
     @JsonIgnore
-    public WorkflowState getWorkflowStateForState(String state)  throws IllegalStateException {
+    public WorkflowState getWorkflowStateForState(final String state)  throws IllegalStateException {
         return WorkflowState.NOWORKFLOW;
     };
 
     @Override
     @XmlTransient
     @JsonIgnore
-    public String getStateForWorkflowState(WorkflowState workflowState)  throws IllegalStateException {
+    public String getStateForWorkflowState(final WorkflowState workflowState)  throws IllegalStateException {
         return this.getState();
     };
     
@@ -1231,7 +1233,8 @@ public class BaseNode implements BaseData, MetaData, SysData,
     @XmlTransient
     @JsonIgnore
     public String getNameForLogger() {
-        String nameForLogger = "sysUID_" + this.getSysUID() + "_name_" + this.getName() + "_srcName_" + this.getSrcName();
+        String nameForLogger = "sysUID_" + this.getSysUID() 
+                        + "_name_" + this.getName() + "_srcName_" + this.getSrcName();
         return nameForLogger;    
     }
     
@@ -1254,11 +1257,10 @@ public class BaseNode implements BaseData, MetaData, SysData,
     @Override
     @XmlTransient
     @JsonIgnore
-    public String getParentNameHirarchry(String delimiter, boolean directionForward) {
+    public String getParentNameHirarchry(final String pdelimiter, 
+                                         final boolean directionForward) {
         String parentNames = "";
-        if (delimiter == null) {
-            delimiter = "";
-        }
+        String delimiter = pdelimiter == null ? "" : pdelimiter;
 
         if (this.getParentNode() != null) {
             if (directionForward) {
@@ -1300,7 +1302,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
         return this.flgForceUpdate;
     }
     @Override
-    public void setFlgForceUpdate(boolean flgForceUpdate) {
+    public void setFlgForceUpdate(final boolean flgForceUpdate) {
         this.flgForceUpdate = flgForceUpdate;
     }
 }

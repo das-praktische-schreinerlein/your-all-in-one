@@ -212,18 +212,21 @@ public class ExcelImporter extends ImporterImpl {
             .getRichStringCellValue().getString();
 
         HSSFCell cell = null;
-        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_PLAN_AUFWAND);
+        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, 
+                        ExcelNodeService.CONST_PLANUNG_COL_PLAN_AUFWAND);
 //        cell = ExcelService.getCell(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_PLAN_AUFWAND);
         Double paufwand = ExcelService.getCellNummeric(cell);
 
-        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_PLAN_DATE_START);
+        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, 
+                        ExcelNodeService.CONST_PLANUNG_COL_PLAN_DATE_START);
 //        cell = ExcelService.getCell(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_PLAN_DATE_START);
         Date pstart = ExcelService.getCellDate(cell);
         if (pstart == null || pstart.before(MINDATE)) {
             pstart = null;
         }
 
-        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_PLAN_DATE_ENDE);
+        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, 
+                        ExcelNodeService.CONST_PLANUNG_COL_PLAN_DATE_ENDE);
 //        cell = ExcelService.getCell(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_PLAN_DATE_ENDE);
         Date pende = ExcelService.getCellDate(cell);
         if (pende == null || pende.before(MINDATE)) {
@@ -235,32 +238,39 @@ public class ExcelImporter extends ImporterImpl {
             ExcelService.getCell(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_IST_TASK)
             .getRichStringCellValue().getString();
 
-        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_IST_STAND);
+        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, 
+                        ExcelNodeService.CONST_PLANUNG_COL_IST_STAND);
         double istand =  ExcelService.getCellNummeric(cell) * 100;
 
-        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_IST_AUFWAND);
+        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, 
+                        ExcelNodeService.CONST_PLANUNG_COL_IST_AUFWAND);
         double iaufwand = ExcelService.getCellNummeric(cell);
 
-        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_IST_DATE_START);
+        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, 
+                        ExcelNodeService.CONST_PLANUNG_COL_IST_DATE_START);
         Date istart = ExcelService.getCellDate(cell);
         if (istart == null || istart.before(MINDATE)) {
             istart = null;
         }
 
-        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_IST_DATE_ENDE);
+        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, 
+                        ExcelNodeService.CONST_PLANUNG_COL_IST_DATE_ENDE);
         Date iende = ExcelService.getCellDate(cell);
         if (iende == null || iende.before(MINDATE)) {
             iende = null;
         }
 
         // Real
-        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_REAL_AUFWAND);
+        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, 
+                        ExcelNodeService.CONST_PLANUNG_COL_REAL_AUFWAND);
         double raufwand = ExcelService.getCellNummeric(cell);
 
-        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_REAL_OFFEN);
+        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, 
+                        ExcelNodeService.CONST_PLANUNG_COL_REAL_OFFEN);
         double roffen = ExcelService.getCellNummeric(cell);
 
-        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_REAL_DIFF);
+        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, 
+                        ExcelNodeService.CONST_PLANUNG_COL_REAL_DIFF);
         double rdiff = ExcelService.getCellNummeric(cell);
 
         // Status aus den Planzahlen extrahieren

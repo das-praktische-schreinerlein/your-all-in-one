@@ -69,7 +69,8 @@ public class ResLocDataFormatterImpl extends FormatterImpl implements ResLocData
     }
 
     @Override
-    public void format(final DataDomain node, final StringBuffer nodeOutput, final OutputOptions options) throws Exception {
+    public void format(final DataDomain node, final StringBuffer nodeOutput, 
+                       final OutputOptions options) throws Exception {
         // Check if node is compatibel
         if (node != null) {
             if (!ResLocData.class.isInstance(node)) {
@@ -80,7 +81,8 @@ public class ResLocDataFormatterImpl extends FormatterImpl implements ResLocData
     }
 
     @Override
-    public void formatResLocData(final ResLocData node, final StringBuffer nodeOutput, final OutputOptions oOptions) throws Exception {
+    public void formatResLocData(final ResLocData node, final StringBuffer nodeOutput, 
+                                 final OutputOptions oOptions) throws Exception {
         // exit if Flg not set
         if (!oOptions.isFlgShowResLoc()) {
             if (LOGGER.isDebugEnabled()) {

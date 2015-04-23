@@ -163,7 +163,7 @@ public class IstDataFormatterImpl extends FormatterImpl implements IstDataFormat
                     nodeOutput.append("-          ");
                 }
             }
-            if (task != null && !task.equals("") && !task.equals(" ")) {
+            if (task != null && !"".equals(task) && !" ".equals(task)) {
                 nodeOutput.append(" " + task);
             }
             if (oOptions.isFlgShowBrackets()) {

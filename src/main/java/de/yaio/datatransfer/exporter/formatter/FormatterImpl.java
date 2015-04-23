@@ -144,7 +144,8 @@ public abstract class FormatterImpl implements Formatter {
                 tmp2 = Math.round(tmp2);
                 tmp2 = tmp2 / faktor;
 
-                LOGGER.debug("formatNumber check: src" + src + " zaehler:" + zaehler + " tmp1:" + tmp1 + " <> tmp2:" + tmp2);
+                LOGGER.debug("formatNumber check: src" + src + " zaehler:" + zaehler 
+                                + " tmp1:" + tmp1 + " <> tmp2:" + tmp2);
                 if (tmp1 != tmp2) {
                     // 1 Stelle kleiner 2 Stellen: 2 Stellen ausgeben
                 } else {
@@ -209,7 +210,7 @@ public abstract class FormatterImpl implements Formatter {
      * @throws java.io.IOException - io-exception on outputappender possible
      */
     public static <T extends Appendable> T escapeNonLatin(final CharSequence src,
-                                                             final T out) throws java.io.IOException {
+                                                          final T out) throws java.io.IOException {
            for (int i = 0; i < src.length(); i++) {
                char ch = src.charAt(i);
                if (Character.UnicodeBlock.of(ch) == Character.UnicodeBlock.BASIC_LATIN) {

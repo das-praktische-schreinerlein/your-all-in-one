@@ -247,7 +247,8 @@ public class Configurator {
      * <h4>FeatureDomain:</h4>
      *     Tools - CLI-Handling
      * <h4>FeatureDescription:</h4>
-     *     return the current SpringApplicationContext if is not set call ApplicationContext.initSpringApplicationContext()
+     *     return the current SpringApplicationContext 
+     *     if is not set call ApplicationContext.initSpringApplicationContext()
      * <h4>FeatureResult:</h4>
      *   <ul>
      *     <li>returnValue the current SpringApplicationContext

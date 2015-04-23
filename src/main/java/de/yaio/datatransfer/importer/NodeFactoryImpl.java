@@ -171,7 +171,8 @@ public class NodeFactoryImpl implements NodeFactory {
     }
 
     @Override
-    public int parseNodeDataDomain(final DataDomain node, final Parser parser, final ImportOptions options) throws Exception {
+    public int parseNodeDataDomain(final DataDomain node, final Parser parser, 
+                                   final ImportOptions options) throws Exception {
         // nur parsen, wenn zustaendig
         if (parser.getTargetClass().isInstance(node)) {
             return parser.parseFromName(node, options);

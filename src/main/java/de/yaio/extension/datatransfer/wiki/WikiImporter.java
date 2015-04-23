@@ -228,14 +228,14 @@ public class WikiImporter extends ImporterImpl {
         /**
          * @param idPraefix the {@link WikiStructLine#idPraefix} to set
          */
-        public void setIdPraefix(String idPraefix) {
+        public void setIdPraefix(final String idPraefix) {
             this.idPraefix = idPraefix;
         }
 
         /**
          * @param hirarchy the {@link WikiStructLine#hirarchy} to set
          */
-        public void setHirarchy(String hirarchy) {
+        public void setHirarchy(final String hirarchy) {
             this.hirarchy = hirarchy;
         }
 
@@ -249,7 +249,7 @@ public class WikiImporter extends ImporterImpl {
         /**
          * @param wiki the {@link WikiStructLine#wiki} to set
          */
-        public void setWiki(String wiki) {
+        public void setWiki(final String wiki) {
             this.wiki = wiki;
         }
     }
@@ -685,7 +685,7 @@ public class WikiImporter extends ImporterImpl {
         return lstWikiTab;
     }
     
-    protected void initNodeData(BaseNode curNode) throws Exception {
+    protected void initNodeData(final BaseNode curNode) throws Exception {
         curNode.initMetaData();
         curNode.initSysData();
     }

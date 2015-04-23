@@ -157,7 +157,8 @@ public class MindMapExporter extends WikiExporter {
         }
         // check if I'am matching
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("node: checking filter " + curNode.getWorkingId() + " oOption=" + oOptions + " name:" + curNode.getNameForLogger());
+            LOGGER.debug("node: checking filter " + curNode.getWorkingId() 
+                            + " oOption=" + oOptions + " name:" + curNode.getNameForLogger());
         }
         boolean flgMatchesFilter = this.isNodeMatchingFilter(curNode, oOptions);
         if (!(flgMatchesFilter || flgChildMatched)) {

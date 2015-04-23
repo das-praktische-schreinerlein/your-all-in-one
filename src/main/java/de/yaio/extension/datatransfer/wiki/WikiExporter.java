@@ -280,9 +280,9 @@ public class WikiExporter extends ExporterImpl {
             for (int zaehler = 1; zaehler <= curNode.getEbene(); zaehler++) {
                 res.insert(0, "=");
                 // falls > 1 einruecken
-                if (zaehler > 1) {
-                    //                    strIntendPraefix = strItend + strIntendPraefix;
-                }
+//                if (zaehler > 1) {
+//                    strIntendPraefix = strItend + strIntendPraefix;
+//                }
             }
             // Einrueckung voranstellen
             res.insert(0, strIntendPraefix);
