@@ -800,4 +800,36 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
         }
         return newState;
     }
+
+    @Override
+    public Date calcCurrentStart(final ExtendedWorkflowData node) {
+        // wenn belegt IST-Daten benutzen, sonst Plandaten
+        Date curStart = node.getIstStart();
+        if (curStart != null) {
+            return curStart;
+        }
+
+        return node.getPlanStart();
+    }
+
+    @Override
+    public Date calcCurrentEnde(final ExtendedWorkflowData node) {
+        // wenn belegt IST-Daten benutzen, sonst Plandaten
+        Date curEnde = node.getIstEnde();
+        Date curPlanEnde = node.getPlanEnde();
+        Date curIstStart = node.getIstStart();
+        Date curIstEnde = node.getIstEnde();
+        Double curIstStan = node.getIstStand();
+        if (curEnde != null) {
+            if (curPlanEnde != null && curIstStart != null) {
+                // wenn Istdaten vor Plandaten und noch nicht fertig, dann Plandaten
+                if (curIstEnde.before(curPlanEnde) && curIstStan < 100) {
+                    return curPlanEnde;
+                }
+            }
+            return curIstEnde;
+        }
+
+        return curPlanEnde;
+    }
 }

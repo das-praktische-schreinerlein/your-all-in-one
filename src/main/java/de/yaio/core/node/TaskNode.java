@@ -27,6 +27,7 @@ import org.springframework.roo.addon.tostring.RooToString;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import de.yaio.core.datadomain.ExtendedWorkflowData;
+import de.yaio.core.datadomainservice.BaseWorkflowDataServiceImpl;
 import de.yaio.core.nodeservice.BaseNodeService;
 import de.yaio.core.nodeservice.NodeService;
 import de.yaio.core.nodeservice.TaskNodeService;
@@ -70,36 +71,13 @@ public class TaskNode extends BaseNode implements ExtendedWorkflowData {
     @XmlTransient
     @JsonIgnore
     public Date getCurrentStart() {
-        // wenn belegt IST-Daten benutzen, sonst Plandaten
-        Date curStart = getIstStart();
-        if (curStart != null) {
-            return curStart;
-        }
-
-        return getPlanStart();
+        return BaseWorkflowDataServiceImpl.getInstance().calcCurrentStart(this);
     }
 
     @Override
     @XmlTransient
     @JsonIgnore
     public Date getCurrentEnde() {
-        // wenn belegt IST-Daten benutzen, sonst Plandaten
-        Date curEnde = getIstEnde();
-        Date curPlanEnde = this.getPlanEnde();
-        Date curIstStart = getIstStart();
-        Date curIstEnde = getIstEnde();
-        Double curIstStan = getIstStand();
-        if (curEnde != null) {
-            if (curPlanEnde != null && curIstStart != null) {
-                // wenn Istdaten vor Plandaten und noch nicht fertig, dann Plandaten
-                if (curIstEnde.before(curPlanEnde) && curIstStan < 100) {
-                    return curPlanEnde;
-                }
-            }
-            return curIstEnde;
-        }
-
-        return curPlanEnde;
+        return BaseWorkflowDataServiceImpl.getInstance().calcCurrentEnde(this);
     }
-    
 }
