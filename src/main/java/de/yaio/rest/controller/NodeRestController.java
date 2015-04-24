@@ -84,7 +84,7 @@ public class NodeRestController {
      */
     public static NodeActionResponse createResponseObj(final BaseNode node, final String okMsg) {
         // extract parents
-        List<String> parentIdHierarchy = node.getParentIdHierarchy();
+        List<String> parentIdHierarchy = node.getBaseNodeService().getParentIdHierarchy(node);
         
         // reverse
         Collections.reverse(parentIdHierarchy);

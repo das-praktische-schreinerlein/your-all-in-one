@@ -15,7 +15,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 package de.yaio.core.node;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -117,7 +116,9 @@ public class BaseNode implements BaseData, MetaData, SysData,
     @JsonIgnore
     protected Map<String, DataDomain> childNodesByNameMapMap = new LinkedHashMap <String, DataDomain>();
 
-    /** dummy classname for JSON-Exporter**/
+    /** 
+     * dummy classname for JSON-Exporter
+     **/
     private String className;
 
     /**
@@ -742,7 +743,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
      *     Persistence
      */
     public void initChildNodesForParentsFromDB() {
-        List<BaseNode> parentHierarchy = this.getParentHierarchy();
+        List<BaseNode> parentHierarchy = this.getBaseNodeService().getParentHierarchy(this);
         for (BaseNode parent : parentHierarchy) {
             parent.initChildNodesFromDB(0);
         }
@@ -767,71 +768,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
      * @throws Exception - ioExceptions possible
      */
     public void saveChildNodesToDB(final int pRecursionLevel, final boolean flgForceMerge) throws Exception {
-        // set new level if it is not -1
-        int recursionLevel = pRecursionLevel;
-        recursionLevel = recursionLevel > 0 ? recursionLevel-- : recursionLevel;
-
-        // interate children
-        for (BaseNode childNode : this.getChildNodes()) {
-            // validate data
-//            if (childNode.getMetaNodeNummer() == null) {
-//                childNode.initMetaData();
-//            }
-            if (childNode.getSysUID() == null) {
-                childNode.initSysData();
-            }
-
-            // persist to DB
-            try {
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("persistChildNodesToDB from " + this.getNameForLogger() 
-                               + " child:" + childNode.getNameForLogger());
-                }
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("childNode:" + childNode.getName() + " pos: " + childNode.getSortPos());
-                }
-                
-                // check if persist or merge
-                if (entityManager().contains(childNode) || flgForceMerge) {
-                    childNode.merge();
-                } else {
-                    childNode.persist();
-                }
-                //CHECKSTYLE.OFF: IllegalCatch - Much more readable than catching x exceptions
-            } catch (Exception ex) {
-                //CHECKSTYLE.ON: IllegalCatch
-                LOGGER.error("errors while saving childnode for '" 
-                                + sysUID + "':", ex);
-                LOGGER.error("error saving node '" 
-                                + childNode);
-                throw ex;
-            }            
-//            boolean flgOK = true;
-//            try {
-//                childNode.persist();
-//            } catch (Exception ex) {
-//                LOGGER.error("persistChildNodesToDB error for childnode " 
-//                           + childNode.getMetaNodePraefix() 
-//                           + "," + childNode.getMetaNodeNummer() 
-//                           + " SysUID: " + childNode.getSysUID() 
-//                           + " Name: " + childNode.getName() 
-//                           + " ex:" + ex);
-////                LOGGER.error("persistChildNodesToDB error for parent " 
-////                        + this.getSysUID() + " Name: " + this.getName());
-////                LOGGER.error("persistChildNodesToDB error for childnodedetails " + childNode.getNameForLogger());
-////                LOGGER.error("persistChildNodesToDB error for parentdetails " + this.getNameForLogger());
-//                flgOK = false;
-////                throw new Exception(ex);
-//            }
-            
-            // check recursionLevel
-            if ((recursionLevel == NodeService.CONST_DB_RECURSIONLEVEL_ALL_CHILDREN) 
-                 || (recursionLevel > 0)) {
-                // recurse
-//                if (flgOK)
-                childNode.saveChildNodesToDB(recursionLevel, flgForceMerge);
-            }
-        }
+        this.getBaseNodeDBService().saveChildNodesToDB(this, pRecursionLevel, flgForceMerge);
     }
 
     /**
@@ -847,19 +784,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
      *     Persistence
      */
     public void removeChildNodesFromDB() {
-        // interate children on db
-        for (BaseNode childNode : getBaseNodeDBService().findChildNodes(this.getSysUID())) {
-            // persist to DB
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("removeChildNodesFromDB from " + this.getNameForLogger() 
-                           + " child:" + childNode.getNameForLogger());
-            }
-            // recurse
-            childNode.removeChildNodesFromDB();
-            
-            // remove this child
-            childNode.remove();
-        }
+        this.getBaseNodeDBService().removeChildNodesFromDB(this);
     }
 
     //####################
@@ -872,57 +797,6 @@ public class BaseNode implements BaseData, MetaData, SysData,
         }
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Persistence
-     * <h4>FeatureDescription:</h4>
-     *     get a List of the parent-hierarchy
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue List<BaseNode> - list of the parents, start with my own parent (not me)
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Persistence
-     * @return list of the parents, start with my own parent (not me)
-     */
-    @Transient
-    @XmlTransient
-    @JsonIgnore
-    public List<BaseNode> getParentHierarchy() {
-        List<BaseNode> parentHierarchy = new ArrayList<BaseNode>();
-        BaseNode parent = this.getParentNode();
-        while (parent != null) {
-            parentHierarchy.add(parent);
-            parent = parent.getParentNode();
-        }
-        return parentHierarchy;
-    }
-
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Persistence
-     * <h4>FeatureDescription:</h4>
-     *     get a List of the Ids of parent-hierarchy 
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue List<String> - list of the parent-sysUIDs, start with my own parent (not me)
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Persistence
-     * @return list of the parent-sysUIDs, start with my own parent (not me)
-     */
-    @Transient
-    @XmlTransient
-    @JsonIgnore
-    public List<String> getParentIdHierarchy() {
-        List<String> parentIdHierarchy = new ArrayList<String>();
-        for (BaseNode parent: getParentHierarchy()) {
-            parentIdHierarchy.add(parent.getSysUID());
-        }
-        
-        return parentIdHierarchy;
-    }
-        
     @Override
     public void setParentNode(final BaseNode parentNode) {
         getBaseNodeService().setParentNode(this, parentNode, true);

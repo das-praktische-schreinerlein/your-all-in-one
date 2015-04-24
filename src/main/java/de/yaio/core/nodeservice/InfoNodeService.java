@@ -19,8 +19,6 @@ package de.yaio.core.nodeservice;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.collections.map.SingletonMap;
-
 import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
 
 

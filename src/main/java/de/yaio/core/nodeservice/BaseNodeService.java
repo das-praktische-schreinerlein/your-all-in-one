@@ -16,11 +16,18 @@
  */
 package de.yaio.core.nodeservice;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import javax.persistence.Transient;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.apache.commons.collections.map.SingletonMap;
 import org.apache.log4j.Logger;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import de.yaio.core.datadomain.BaseWorkflowData;
 import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
@@ -221,6 +228,56 @@ public class BaseNodeService extends NodeServiceImpl {
             }
         }
         return maxEbene;
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Persistence
+     * <h4>FeatureDescription:</h4>
+     *     get a List of the parent-hierarchy
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue List<BaseNode> - list of the parents, start with my own parent (not me)
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Persistence
+     * @param baseNode node
+     * @return list of the parents, start with my own parent (not baseNode)
+     */
+    @Transient
+    @XmlTransient
+    @JsonIgnore
+    public List<BaseNode> getParentHierarchy(final DataDomain baseNode) {
+        List<BaseNode> parentHierarchy = new ArrayList<BaseNode>();
+        BaseNode parent = baseNode.getParentNode();
+        while (parent != null) {
+            parentHierarchy.add(parent);
+            parent = parent.getParentNode();
+        }
+        return parentHierarchy;
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Persistence
+     * <h4>FeatureDescription:</h4>
+     *     get a List of the Ids of parent-hierarchy 
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue List<String> - list of the parent-sysUIDs, start with my own parent (not me)
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Persistence
+     * @param baseNode node
+     * @return list of the parent-sysUIDs, start with my own parent (not baseNode)
+     */
+    public List<String> getParentIdHierarchy(final DataDomain baseNode) {
+        List<String> parentIdHierarchy = new ArrayList<String>();
+        for (BaseNode parent: getParentHierarchy(baseNode)) {
+            parentIdHierarchy.add(parent.getSysUID());
+        }
+        
+        return parentIdHierarchy;
     }
 
     @Override
