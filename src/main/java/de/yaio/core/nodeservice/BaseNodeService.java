@@ -18,8 +18,10 @@ package de.yaio.core.nodeservice;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.collections.map.SingletonMap;
 import org.apache.log4j.Logger;
@@ -232,7 +234,128 @@ public class BaseNodeService extends NodeServiceImpl {
         
         return parentIdHierarchy;
     }
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Persistence
+     * <h4>FeatureDescription:</h4>
+     *     add the child in childlist
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>updates childNodes
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Persistence
+     * @param baseNode - basenode to add child
+     * @param childNode - the child to add
+     */
+    public void addChildNode(final BaseNode baseNode, final DataDomain childNode) {
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("add child:" + childNode.getNameForLogger() + " to " + baseNode.getNameForLogger());
+        }
+        if (childNode != null) {
+            if (childNode.getSortPos() != null) {
+                // preserve sortpos of the child
+                if (childNode.getSortPos() > baseNode.getCurSortIdx()) {
+                    // update idx
+                    baseNode.setCurSortIdx(childNode.getSortPos() + BaseNodeService.CONST_CURSORTIDX_STEP);
+                }
+            } else {
+                // set new sortpos for the child
+                childNode.setSortPos(baseNode.getCurSortIdx());
+                baseNode.setCurSortIdx(baseNode.getCurSortIdx() + BaseNodeService.CONST_CURSORTIDX_STEP);
+            }
+            baseNode.getChildNodesByNameMap().put(childNode.getIdForChildByNameMap(), childNode);
+            baseNode.getChildNodes().add((BaseNode) childNode);
+        }
+    }
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Persistence
+     * <h4>FeatureDescription:</h4>
+     *     move the child in childlist to the sortPos
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>reorder childNodes
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Persistence
+     * @param baseNode - basenode to add child
+     * @param child - the child to move in list
+     * @param newSortPos - the new position
+     */
+    public void moveChildToSortPos(final BaseNode baseNode, final BaseNode child, 
+                                   final Integer newSortPos) {
+        // check data
+        if (child == null) {
+            throw new IllegalArgumentException("child must not be null");
+        }
+        if (newSortPos == null) {
+            throw new IllegalArgumentException("newSortPos must not be null");
+        }
+        if (!baseNode.getChildNodes().contains(child)) {
+            throw new IllegalArgumentException("child is no member of my childlist");
+        }
+        
+        // iterate childlist and look for child
+        boolean flgChildWaiting = true;
+        
+        // preserve the childnodes in order
+        Set<BaseNode> tmpChildNodes = new LinkedHashSet<BaseNode>();
+        for (BaseNode curChild : baseNode.getChildNodes()) {
+            // add the other child
+            tmpChildNodes.add(curChild);
+        }
+        
+        // clear the  orig list
+        baseNode.getChildNodes().clear();
+        baseNode.setCurSortIdx(0);
+        
+        // if the child moves down, then we have to realize that it is no more in list: so we have to sub the idx 
+        int newPos = newSortPos.intValue();
+        
+        // add the childs to the list
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("I " + child.getName() + " want newPos:" + newPos);
+        }
+        for (BaseNode curChild : tmpChildNodes) {
+            // if sortPos of curChild > newSortPos, then insert it here
+            if (flgChildWaiting && curChild.getSortPos().intValue() > newPos) {
+                baseNode.addChildNode(child);
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("added me " + child.getName() 
+                                 + " and got " + child.getSortPos().intValue());
+                }
+                flgChildWaiting = false;
+            }
+            if (child.equals(curChild) || child.getSysUID().equalsIgnoreCase(curChild.getSysUID())) {
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("bullshit iam in List already " 
+                                 + curChild.getSortPos().intValue() 
+                                 + " at " + baseNode.getChildNodes().size());
+                // hey i'm already here
+                }
+            } else {
+                // add the other child
+                baseNode.addChildNode(curChild);
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("added other child:" + curChild.getName() 
+                                 + " new:" + curChild.getSortPos().intValue() 
+                                 + " at " + baseNode.getChildNodes().size());
+                }
+            }
+            
+        }
+
+        // recalc the sortidx
+        baseNode.setCurSortIdx(0);
+        for (BaseNode curChild : baseNode.getChildNodes()) {
+            curChild.setSortPos(baseNode.getCurSortIdx());
+            baseNode.setCurSortIdx(baseNode.getCurSortIdx() + BaseNodeService.CONST_CURSORTIDX_STEP);
+        }
+    }
+    
     /**
      * <h4>FeatureDomain:</h4>
      *     BusinessLogic

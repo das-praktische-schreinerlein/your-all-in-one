@@ -1121,7 +1121,7 @@ public class NodeRestController {
             // check for needed update
             if (flgChangedParent || flgChangedPosition) {
                 // recalc the position
-                newParent.moveChildToSortPos(node, newSortPos);
+                newParent.getBaseNodeService().moveChildToSortPos(newParent, node, newSortPos);
                 
                 // save children of newParent
                 newParent.saveChildNodesToDB(0, true);
