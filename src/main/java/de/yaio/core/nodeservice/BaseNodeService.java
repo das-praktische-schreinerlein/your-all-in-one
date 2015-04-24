@@ -67,6 +67,25 @@ public class BaseNodeService extends NodeServiceImpl {
         
     }
     
+    private static BaseNodeService instance = new BaseNodeService();
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Persistence
+     * <h4>FeatureDescription:</h4>
+     *     return the main instance of this service
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>return the main instance of this service
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Persistence
+     * @return the main instance of this service
+     */
+    public static BaseNodeService getInstance() {
+        return instance;
+    }
+
     /**
      * <h4>FeatureDomain:</h4>
      *     Constructor
@@ -168,7 +187,7 @@ public class BaseNodeService extends NodeServiceImpl {
         // alle Kinder durchsuchen
         if (baseNode.getChildNodes() != null) {
             for (BaseNode node : baseNode.getChildNodes()) {
-                int maxEbeneChild = node.getNodeService().getMaxChildEbene(node);
+                int maxEbeneChild = node.getBaseNodeService().getMaxChildEbene(node);
                 if (maxEbeneChild > maxEbene) {
                     maxEbene = maxEbeneChild;
                 }

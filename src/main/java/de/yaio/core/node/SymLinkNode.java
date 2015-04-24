@@ -27,7 +27,7 @@ import org.springframework.roo.addon.tostring.RooToString;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import de.yaio.core.datadomain.SymLinkData;
-import de.yaio.core.nodeservice.NodeService;
+import de.yaio.core.nodeservice.BaseNodeService;
 import de.yaio.core.nodeservice.SymLinkNodeService;
 
 /**
@@ -50,7 +50,7 @@ import de.yaio.core.nodeservice.SymLinkNodeService;
 @RooJpaActiveRecord
 public class SymLinkNode extends BaseNode implements SymLinkData {
 
-    protected static NodeService nodeDataService = new SymLinkNodeService();
+    protected static SymLinkNodeService nodeDataService = SymLinkNodeService.getInstance();
 
     /**
      */
@@ -69,13 +69,8 @@ public class SymLinkNode extends BaseNode implements SymLinkData {
 
     @XmlTransient
     @JsonIgnore
-    public NodeService getNodeService() {
+    public BaseNodeService getBaseNodeService() {
         return nodeDataService;
-    }
-    @XmlTransient
-    @JsonIgnore
-    public static void setNodeDataService(final NodeService newNodeDataService) {
-        nodeDataService = newNodeDataService;
     }
 
     @Override

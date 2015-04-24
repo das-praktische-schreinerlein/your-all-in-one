@@ -104,6 +104,27 @@ public class EventNodeService extends TaskNodeService {
         CONST_MAP_NODETYPE_IDENTIFIER.put("EVENT_ABGEBROCHEN", CONST_NODETYPE_IDENTIFIER_EVENT_CANCELED);
     }
 
+    private static EventNodeService instance = new EventNodeService();
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Persistence
+     * <h4>FeatureDescription:</h4>
+     *     return the main instance of this service
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>return the main instance of this service
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Persistence
+     * @return the main instance of this service
+     */
+    public static EventNodeService getInstance() {
+        return instance;
+    }
+
+    
+    
     @Override
     public boolean isWFStatus(final String state) {
         if (CONST_NODETYPE_IDENTIFIER_EVENT_PLANED.equalsIgnoreCase(state)) {

@@ -50,6 +50,25 @@ public class SymLinkNodeService extends BaseNodeService {
         CONST_MAP_NODETYPE_IDENTIFIER.put(CONST_NODETYPE_IDENTIFIER_SYMLINK, CONST_NODETYPE_IDENTIFIER_SYMLINK);
     }
     
+    private static SymLinkNodeService instance = new SymLinkNodeService();
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Persistence
+     * <h4>FeatureDescription:</h4>
+     *     return the main instance of this service
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>return the main instance of this service
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Persistence
+     * @return the main instance of this service
+     */
+    public static SymLinkNodeService getInstance() {
+        return instance;
+    }
+
     @Override
     public String getDataBlocks4CheckSum(final DataDomain baseNode) throws Exception {
         SymLinkNode node = (SymLinkNode) baseNode;

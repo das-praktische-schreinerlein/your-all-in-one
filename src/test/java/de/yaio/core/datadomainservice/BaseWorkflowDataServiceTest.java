@@ -101,7 +101,7 @@ public class BaseWorkflowDataServiceTest extends DataDomainServiceTest {
         NodeServiceImpl nodeService = (NodeServiceImpl) TaskNode.getConfiguredNodeService();
         dataDomainService = nodeService.hshDataDomainRecalcerByClass.get(BaseWorkflowDataServiceImpl.class);
 
-//        dataDomainService = new BaseWorkflowDataServiceImpl(); 
+//        dataDomainService = BaseWorkflowDataServiceImpl.getInstance(); 
 //        // clear DomainRecalcerConfig to prevent obscure effects
 //        nodeService.hshDataDomainRecalcer.clear();
 //        nodeService.addDataDomainRecalcer(dataDomainService);

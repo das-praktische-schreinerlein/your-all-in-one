@@ -62,6 +62,26 @@ public class UrlResNodeService extends InfoNodeService {
         CONST_MAP_NODETYPE_IDENTIFIER.put("IMAGERES", CONST_NODETYPE_IDENTIFIER_IMAGERES);
         CONST_MAP_NODETYPE_IDENTIFIER.put("EMAILRES", CONST_NODETYPE_IDENTIFIER_EMAILRES);
     }
+    
+    
+    private static UrlResNodeService instance = new UrlResNodeService();
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Persistence
+     * <h4>FeatureDescription:</h4>
+     *     return the main instance of this service
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>return the main instance of this service
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Persistence
+     * @return the main instance of this service
+     */
+    public static UrlResNodeService getInstance() {
+        return instance;
+    }
 
     @Override
     public String getDataBlocks4CheckSum(final DataDomain baseNode) throws Exception {

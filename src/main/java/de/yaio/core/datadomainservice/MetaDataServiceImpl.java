@@ -40,8 +40,27 @@ public class MetaDataServiceImpl extends DataDomainRecalcImpl implements MetaDat
     private static final Logger LOGGER =
             Logger.getLogger(MetaDataServiceImpl.class);
 
-    NodeNumberService nodeNumberService = new NodeNumberServiceImpl();
+    private static MetaDataServiceImpl instance = new MetaDataServiceImpl();
     
+    protected NodeNumberService nodeNumberService = NodeNumberServiceImpl.getInstance();
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Persistence
+     * <h4>FeatureDescription:</h4>
+     *     return the main instance of this service
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>return the main instance of this service
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Persistence
+     * @return the main instance of this service
+     */
+    public static MetaDataServiceImpl getInstance() {
+        return instance;
+    }
+
     @Override
     public Class<?> getRecalcTargetClass() {
         return MetaData.class;
@@ -63,7 +82,7 @@ public class MetaDataServiceImpl extends DataDomainRecalcImpl implements MetaDat
      * @param nodeService - instance of the nodeService which will call me as recalcer
      */
     public static void configureDataDomainRecalcer(final NodeService nodeService) {
-        DataDomainRecalc baseDataDomainRecalc  = new MetaDataServiceImpl();
+        DataDomainRecalc baseDataDomainRecalc = MetaDataServiceImpl.getInstance();
         nodeService.addDataDomainRecalcer(baseDataDomainRecalc);
     }
     

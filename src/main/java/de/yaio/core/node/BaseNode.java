@@ -93,9 +93,9 @@ public class BaseNode implements BaseData, MetaData, SysData,
     // Validator
     protected static ValidatorFactory validationFactory = Validation.buildDefaultValidatorFactory();
 
-    protected static SysDataService sysDataService = new SysDataServiceImpl();
-    protected static MetaDataService metaDataService = new MetaDataServiceImpl();
-    protected static NodeService nodeService = new BaseNodeService();
+    protected static SysDataService sysDataService = SysDataServiceImpl.getInstance();
+    protected static MetaDataService metaDataService = MetaDataServiceImpl.getInstance();
+    protected static BaseNodeService nodeService = BaseNodeService.getInstance();
     protected static BaseNodeDBService baseNodeDBService = BaseNodeDBServiceImpl.getInstance();
     
     // Logger
@@ -512,9 +512,10 @@ public class BaseNode implements BaseData, MetaData, SysData,
     public static final void setMetaDataService(final MetaDataService newMetaDataService) {
         metaDataService = newMetaDataService;
     }
+    
     @XmlTransient
     @JsonIgnore
-    public NodeService getNodeService() {
+    public BaseNodeService getBaseNodeService() {
         return nodeService;
     }
 
@@ -924,7 +925,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
         
     @Override
     public void setParentNode(final BaseNode parentNode) {
-        getNodeService().setParentNode(this, parentNode, true);
+        getBaseNodeService().setParentNode(this, parentNode, true);
     }
     @Override
     @XmlTransient
@@ -1077,7 +1078,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     
     @Override
     public void recalcData(final int recursionDirection) throws Exception {
-        getNodeService().recalcData(this, recursionDirection);
+        getBaseNodeService().recalcData(this, recursionDirection);
     }
     
     @Override
@@ -1094,7 +1095,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     @XmlTransient
     @JsonIgnore
     public String getDataBlocks4CheckSum() throws Exception {
-        return getNodeService().getDataBlocks4CheckSum(this);
+        return getBaseNodeService().getDataBlocks4CheckSum(this);
     }
 
     //####################
@@ -1125,22 +1126,22 @@ public class BaseNode implements BaseData, MetaData, SysData,
     
     @Override
     public boolean isWFStatus(final String state) {
-        return getNodeService().isWFStatus(state);
+        return getBaseNodeService().isWFStatus(state);
     }
 
     @Override
     public boolean isWFStatusDone(final String state) {
-        return getNodeService().isWFStatusDone(state);
+        return getBaseNodeService().isWFStatusDone(state);
     }
 
     @Override
     public boolean isWFStatusOpen(final String state) {
-        return getNodeService().isWFStatusOpen(state);
+        return getBaseNodeService().isWFStatusOpen(state);
     }
 
     @Override
     public boolean isWFStatusCanceled(final String state) {
-        return getNodeService().isWFStatusCanceled(state);
+        return getBaseNodeService().isWFStatusCanceled(state);
     }
     
     @Override
@@ -1183,14 +1184,14 @@ public class BaseNode implements BaseData, MetaData, SysData,
     @XmlTransient
     @JsonIgnore
     public String getNameForLogger() {
-        return getNodeService().getNameForLogger(this);
+        return getBaseNodeService().getNameForLogger(this);
     }
     
     @Override
     @XmlTransient
     @JsonIgnore
     public String getWorkingId() {
-        return getNodeService().getWorkingId(this);
+        return getBaseNodeService().getWorkingId(this);
     }
 
     @Override
@@ -1198,7 +1199,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     @JsonIgnore
     public String getParentNameHirarchry(final String pdelimiter, 
                                          final boolean directionForward) {
-        return getNodeService().getParentNameHirarchry(this, pdelimiter, directionForward);
+        return getBaseNodeService().getParentNameHirarchry(this, pdelimiter, directionForward);
     }
     
     @Override

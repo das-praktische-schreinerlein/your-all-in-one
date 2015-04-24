@@ -63,6 +63,24 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
     private static final Logger LOGGER =
             Logger.getLogger(BaseWorkflowDataServiceImpl.class);
 
+    private static BaseWorkflowDataServiceImpl instance = new BaseWorkflowDataServiceImpl();
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Persistence
+     * <h4>FeatureDescription:</h4>
+     *     return the main instance of this service
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>return the main instance of this service
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Persistence
+     * @return the main instance of this service
+     */
+    public static BaseWorkflowDataServiceImpl getInstance() {
+        return instance;
+    }
 
     @Override
     public Class<?> getRecalcTargetClass() {
@@ -85,7 +103,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
      * @param nodeService - instance of the nodeService which will call me as recalcer
      */
     public static void configureDataDomainRecalcer(final NodeService nodeService) {
-        DataDomainRecalc baseDataDomainRecalc  = new BaseWorkflowDataServiceImpl();
+        DataDomainRecalc baseDataDomainRecalc  = BaseWorkflowDataServiceImpl.getInstance();
         nodeService.addDataDomainRecalcer(baseDataDomainRecalc);
     }
     

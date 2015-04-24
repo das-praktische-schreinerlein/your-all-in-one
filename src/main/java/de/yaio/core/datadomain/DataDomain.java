@@ -61,7 +61,7 @@ public interface DataDomain {
     void setName(String name);
 
     // servies
-    NodeService getNodeService();
+    NodeService getBaseNodeService();
     
     /**
      * <h4>FeatureDomain:</h4>

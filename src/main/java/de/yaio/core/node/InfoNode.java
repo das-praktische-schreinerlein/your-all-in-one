@@ -26,8 +26,8 @@ import org.springframework.roo.addon.tostring.RooToString;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import de.yaio.core.datadomain.DocLayoutData;
+import de.yaio.core.nodeservice.BaseNodeService;
 import de.yaio.core.nodeservice.InfoNodeService;
-import de.yaio.core.nodeservice.NodeService;
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -48,17 +48,13 @@ import de.yaio.core.nodeservice.NodeService;
 @RooJpaActiveRecord
 public class InfoNode extends BaseNode implements DocLayoutData {
     
-    protected static NodeService nodeDataService = new InfoNodeService();
+    protected static InfoNodeService nodeDataService = InfoNodeService.getInstance();
 
     @XmlTransient
     @JsonIgnore
-    public NodeService getNodeService() {
+    @Override
+    public BaseNodeService getBaseNodeService() {
         return nodeDataService;
-    }
-    @XmlTransient
-    @JsonIgnore
-    public static void setNodeDataService(final NodeService newNodeDataService) {
-        nodeDataService = newNodeDataService;
     }
 
     @Override

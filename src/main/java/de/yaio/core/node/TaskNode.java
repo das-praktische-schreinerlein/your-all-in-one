@@ -28,6 +28,7 @@ import org.springframework.roo.addon.tostring.RooToString;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import de.yaio.core.datadomain.ExtendedWorkflowData;
+import de.yaio.core.nodeservice.BaseNodeService;
 import de.yaio.core.nodeservice.NodeService;
 import de.yaio.core.nodeservice.TaskNodeService;
 
@@ -51,15 +52,13 @@ import de.yaio.core.nodeservice.TaskNodeService;
 @RooJpaActiveRecord
 public class TaskNode extends BaseNode implements ExtendedWorkflowData {
     @Transient
-    protected static NodeService nodeDataService = new TaskNodeService();
+    protected static TaskNodeService nodeDataService = TaskNodeService.getInstance();
 
     @XmlTransient
     @JsonIgnore
-    public NodeService getNodeService() {
+    @Override
+    public BaseNodeService getBaseNodeService() {
         return nodeDataService;
-    }
-    public static void setNodeDataService(final NodeService newNodeDataService) {
-        nodeDataService = newNodeDataService;
     }
 
     @XmlTransient

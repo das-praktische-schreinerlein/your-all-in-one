@@ -41,6 +41,25 @@ public class StatDataServiceImpl extends DataDomainRecalcImpl implements StatDat
     private static final Logger LOGGER =
             Logger.getLogger(StatDataServiceImpl.class);
 
+    private static StatDataServiceImpl instance = new StatDataServiceImpl();
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Persistence
+     * <h4>FeatureDescription:</h4>
+     *     return the main instance of this service
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>return the main instance of this service
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Persistence
+     * @return the main instance of this service
+     */
+    public static StatDataServiceImpl getInstance() {
+        return instance;
+    }
+
     /**
      * <h4>FeatureDomain:</h4>
      *     DataExport
@@ -52,7 +71,7 @@ public class StatDataServiceImpl extends DataDomainRecalcImpl implements StatDat
      * @param nodeService - instance of the nodeService which will call me as recalcer
      */
     public static void configureDataDomainRecalcer(final NodeService nodeService) {
-        DataDomainRecalc baseDataDomainRecalc  = new StatDataServiceImpl();
+        DataDomainRecalc baseDataDomainRecalc = StatDataServiceImpl.getInstance();
         nodeService.addDataDomainRecalcer(baseDataDomainRecalc);
     }
     

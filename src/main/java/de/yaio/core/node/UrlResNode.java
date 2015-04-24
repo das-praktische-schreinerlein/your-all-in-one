@@ -28,7 +28,7 @@ import org.springframework.roo.addon.tostring.RooToString;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import de.yaio.core.datadomain.ResLocData;
-import de.yaio.core.nodeservice.NodeService;
+import de.yaio.core.nodeservice.BaseNodeService;
 import de.yaio.core.nodeservice.UrlResNodeService;
 
 /**
@@ -50,7 +50,7 @@ import de.yaio.core.nodeservice.UrlResNodeService;
 @RooJpaActiveRecord
 public class UrlResNode extends InfoNode implements ResLocData {
     @Transient
-    protected static NodeService nodeDataService = new UrlResNodeService();
+    protected static UrlResNodeService nodeDataService = UrlResNodeService.getInstance();
 
     /**
      */
@@ -69,11 +69,9 @@ public class UrlResNode extends InfoNode implements ResLocData {
 
     @XmlTransient
     @JsonIgnore
-    public NodeService getNodeService() {
+    @Override
+    public BaseNodeService getBaseNodeService() {
         return nodeDataService;
-    }
-    public static void setNodeDataService(final NodeService newNodeDataService) {
-        nodeDataService = newNodeDataService;
     }
     
     @Override

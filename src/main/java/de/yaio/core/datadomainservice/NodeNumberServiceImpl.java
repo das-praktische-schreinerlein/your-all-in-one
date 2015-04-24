@@ -41,6 +41,25 @@ public class NodeNumberServiceImpl implements NodeNumberService {
     /** the map with the nextNodeIds per nodePraefix */
     public static Map<String, Integer>  MAP_CUR_NEXTNODEID = null;
     
+    private static NodeNumberServiceImpl instance = new NodeNumberServiceImpl();
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Persistence
+     * <h4>FeatureDescription:</h4>
+     *     return the main instance of this service
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>return the main instance of this service
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Persistence
+     * @return the main instance of this service
+     */
+    public static NodeNumberServiceImpl getInstance() {
+        return instance;
+    }
+
     @Override
     public synchronized Object getNextNodeNumber(final MetaData node) throws Exception {
         String praefix = node.getMetaNodePraefix();

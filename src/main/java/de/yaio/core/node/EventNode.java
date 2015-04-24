@@ -25,8 +25,8 @@ import org.springframework.roo.addon.tostring.RooToString;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import de.yaio.core.nodeservice.BaseNodeService;
 import de.yaio.core.nodeservice.EventNodeService;
-import de.yaio.core.nodeservice.NodeService;
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -47,17 +47,13 @@ import de.yaio.core.nodeservice.NodeService;
 @RooJpaActiveRecord
 public class EventNode extends TaskNode {
 
-    protected static NodeService nodeDataService = new EventNodeService();
+    protected static EventNodeService nodeDataService = EventNodeService.getInstance();
 
     @XmlTransient
     @JsonIgnore
-    public NodeService getNodeService() {
+    @Override
+    public BaseNodeService getBaseNodeService() {
         return nodeDataService;
-    }
-    @XmlTransient
-    @JsonIgnore
-    public static void setNodeDataService(final NodeService newNodeDataService) {
-        nodeDataService = newNodeDataService;
     }
 
     @Override

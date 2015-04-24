@@ -195,7 +195,7 @@ public class ExcelExporter extends WikiExporter {
             sheet.autoSizeColumn(curCol);
         }
         // alle Struktur-Spalten vor MaxEbene verkleinern
-        int maxEbene = masterNode.getNodeService().getMaxChildEbene(masterNode);
+        int maxEbene = masterNode.getBaseNodeService().getMaxChildEbene(masterNode);
         for (int curCol = ExcelNodeService.CONST_PLANUNG_COL_PROJEKT; 
              curCol < ExcelNodeService.CONST_PLANUNG_COL_PROJEKT + maxEbene - 1; 
              curCol++) {

@@ -59,4 +59,23 @@ public class InfoNodeService extends BaseNodeService {
         CONST_MAP_NODETYPE_IDENTIFIER.put("IDEE", CONST_NODETYPE_IDENTIFIER_IDEE);
         CONST_MAP_NODETYPE_IDENTIFIER.put("HOWTO", CONST_NODETYPE_IDENTIFIER_HOWTO);
     }
+
+    private static InfoNodeService instance = new InfoNodeService();
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Persistence
+     * <h4>FeatureDescription:</h4>
+     *     return the main instance of this service
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>return the main instance of this service
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Persistence
+     * @return the main instance of this service
+     */
+    public static InfoNodeService getInstance() {
+        return instance;
+    }
 }
