@@ -1094,31 +1094,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     @XmlTransient
     @JsonIgnore
     public String getDataBlocks4CheckSum() throws Exception {
-        // Content erzeugen
-        StringBuffer data = new StringBuffer();
-        data.append(this.getType())
-            .append(this.getState())
-            .append(" name=").append(getName())
-// TODO difference DB + PPL-Import  .append(" parentNode=").append((getParentNode() != null ? getParentNode().getSysUID() : null))
-// TODO difference DB + PPL-Import  .append(" sortPos=").append(getSortPos())
-//            .append(" ebene=").append(getEbene())
-//            .append(" istStandChildrenSum=").append(getIstChildrenSumStand())
-//            .append(" istStartChildrenSum=").append(getIstChildrenSumStart())
-//            .append(" istEndeChildrenSum=").append(getIstChildrenSumEnde())
-//            .append(" istAufwandChildrenSum=").append(getIstChildrenSumAufwand())
-//            .append(" planStartChildrenSum=").append(getPlanChildrenSumStart())
-//            .append(" planEndeChildrenSum=").append(getPlanChildrenSumEnde())
-//            .append(" planAufwandChildrenSum=").append(getPlanChildrenSumAufwand())
-            .append(" docLayoutTagCommand=").append(getDocLayoutTagCommand())
-            .append(" docLayoutAddStyleClass=").append(getDocLayoutAddStyleClass())
-            .append(" docLayoutShortName=").append(getDocLayoutShortName())
-            .append(" docLayoutFlgCloseDiv=").append(getDocLayoutFlgCloseDiv())
-            .append(" metaNodePraefix=").append(getMetaNodePraefix())
-            .append(" metaNodeNummer=").append(getMetaNodeNummer())
-            .append(" metaNodeTypeTags=").append(getMetaNodeTypeTags())
-            .append(" metaNodeSubTypeTags=").append(getMetaNodeSubTypeTags())
-            .append(" desc=").append(getNodeDesc());
-        return data.toString();
+        return getNodeService().getDataBlocks4CheckSum(this);
     }
 
     //####################
@@ -1207,70 +1183,24 @@ public class BaseNode implements BaseData, MetaData, SysData,
     @XmlTransient
     @JsonIgnore
     public String getNameForLogger() {
-        String nameForLogger = "sysUID_" + this.getSysUID() 
-                        + "_name_" + this.getName() + "_srcName_" + this.getSrcName();
-        return nameForLogger;    
+        return getNodeService().getNameForLogger(this);
     }
     
     @Override
     @XmlTransient
     @JsonIgnore
     public String getWorkingId() {
-        String res = "UNKNOWN";
-        if (this.getMetaNodeNummer() != null && (this.getMetaNodeNummer().length() > 0)) {
-            res = this.getMetaNodePraefix() + this.getMetaNodeNummer();
-        } else if (this.getImportTmpId() != null) {
-            res = this.getImportTmpId().toString();
-        }
-
-        return res;
+        return getNodeService().getWorkingId(this);
     }
 
-    
-    
     @Override
     @XmlTransient
     @JsonIgnore
     public String getParentNameHirarchry(final String pdelimiter, 
                                          final boolean directionForward) {
-        String parentNames = "";
-        String delimiter = pdelimiter == null ? "" : pdelimiter;
-
-        if (this.getParentNode() != null) {
-            if (directionForward) {
-                parentNames = this.getParentNode().getParentNameHirarchry(delimiter,
-                    directionForward)
-                    + delimiter
-                    + this.getParentNode().getName();
-            } else {
-                parentNames = this.getParentNode().getName()
-                    + delimiter
-                    + this.getParentNode().getParentNameHirarchry(delimiter,
-                        directionForward);
-            }
-        }
-
-        return parentNames;
+        return getNodeService().getParentNameHirarchry(this, pdelimiter, directionForward);
     }
     
-    // TODO cache this
-    @XmlTransient
-    @JsonIgnore
-    public int getMaxChildEbene() {
-        int maxEbene = this.getEbene();
-
-        // alle Kinder durchsuchen
-        if (this.getChildNodes() != null) {
-            for (BaseNode node : this.getChildNodes()) {
-                int maxEbeneChild = node.getMaxChildEbene();
-                if (maxEbeneChild > maxEbene) {
-                    maxEbene = maxEbeneChild;
-                }
-            }
-        }
-        return maxEbene;
-    }
-
     @Override
     public boolean isFlgForceUpdate() {
         return this.flgForceUpdate;

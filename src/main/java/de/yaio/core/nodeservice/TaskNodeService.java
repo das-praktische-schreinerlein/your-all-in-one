@@ -20,6 +20,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
+import de.yaio.core.datadomain.DataDomain;
+import de.yaio.core.node.TaskNode;
+import de.yaio.utils.DataUtils;
 
 
 /**
@@ -144,5 +147,24 @@ public class TaskNodeService extends BaseNodeService {
         }
 
         return false;
+    }
+
+    @Override
+    public String getDataBlocks4CheckSum(final DataDomain baseNode) throws Exception {
+        TaskNode node = (TaskNode) baseNode;
+
+        // Content erzeugen
+        StringBuffer data = new StringBuffer();
+        data.append(super.getDataBlocks4CheckSum(node))
+            .append(" istStand=").append(node.getIstStand())
+            .append(" istStart=").append(DataUtils.getNewDate(node.getIstStart()))
+            .append(" istEnde=").append(DataUtils.getNewDate(node.getIstEnde()))
+            .append(" istAufwand=").append(node.getIstAufwand())
+            .append(" istTask=").append(node.getIstTask())
+            .append(" planStart=").append(DataUtils.getNewDate(node.getPlanStart()))
+            .append(" planEnde=").append(DataUtils.getNewDate(node.getPlanEnde()))
+            .append(" planAufwand=").append(node.getPlanAufwand())
+            .append(" planTask=").append(node.getPlanTask());
+        return data.toString();
     }
 }

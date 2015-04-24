@@ -30,7 +30,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import de.yaio.core.datadomain.ExtendedWorkflowData;
 import de.yaio.core.nodeservice.NodeService;
 import de.yaio.core.nodeservice.TaskNodeService;
-import de.yaio.utils.DataUtils;
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -143,27 +142,6 @@ public class TaskNode extends BaseNode implements ExtendedWorkflowData {
         return state;
     };
 
-    @Override
-    @XmlTransient
-    @JsonIgnore
-    public String getDataBlocks4CheckSum() throws Exception {
-        // Content erzeugen
-        StringBuffer data = new StringBuffer();
-        
-        data.append(super.getDataBlocks4CheckSum())
-            .append(" istStand=").append(getIstStand())
-            .append(" istStart=").append(DataUtils.getNewDate(getIstStart()))
-            .append(" istEnde=").append(DataUtils.getNewDate(getIstEnde()))
-            .append(" istAufwand=").append(getIstAufwand())
-            .append(" istTask=").append(getIstTask())
-            .append(" planStart=").append(DataUtils.getNewDate(getPlanStart()))
-            .append(" planEnde=").append(DataUtils.getNewDate(getPlanEnde()))
-            .append(" planAufwand=").append(getPlanAufwand())
-            .append(" planTask=").append(getPlanTask());
-        return data.toString();
-    }
-    
-    
     @Override
     @XmlTransient
     @JsonIgnore

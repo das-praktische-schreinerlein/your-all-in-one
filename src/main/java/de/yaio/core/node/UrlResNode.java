@@ -82,18 +82,4 @@ public class UrlResNode extends InfoNode implements ResLocData {
     public Map<String, Object> getConfigState() {
         return UrlResNodeService.CONST_MAP_NODETYPE_IDENTIFIER;
     }
-
-    @Override
-    @XmlTransient
-    @JsonIgnore
-    public String getDataBlocks4CheckSum() throws Exception {
-        // Content erzeugen
-        StringBuffer data = new StringBuffer();
-        
-        data.append(super.getDataBlocks4CheckSum())
-            .append(" resLocRef=").append(getResLocRef())
-            .append(" resLocName=").append(getResLocName())
-            .append(" resLocTags=").append(getResLocTags());
-        return data.toString();
-    }
 }

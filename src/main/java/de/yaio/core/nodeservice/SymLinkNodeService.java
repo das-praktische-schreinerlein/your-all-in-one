@@ -19,6 +19,9 @@ package de.yaio.core.nodeservice;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.yaio.core.datadomain.DataDomain;
+import de.yaio.core.node.SymLinkNode;
+
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -47,4 +50,16 @@ public class SymLinkNodeService extends BaseNodeService {
         CONST_MAP_NODETYPE_IDENTIFIER.put(CONST_NODETYPE_IDENTIFIER_SYMLINK, CONST_NODETYPE_IDENTIFIER_SYMLINK);
     }
     
+    @Override
+    public String getDataBlocks4CheckSum(final DataDomain baseNode) throws Exception {
+        SymLinkNode node = (SymLinkNode) baseNode;
+
+        // Content erzeugen
+        StringBuffer data = new StringBuffer();
+        data.append(super.getDataBlocks4CheckSum(node))
+            .append(" symLinkRef=").append(node.getSymLinkRef())
+            .append(" symLinkName=").append(node.getSymLinkName())
+            .append(" symLinkTags=").append(node.getSymLinkTags());
+        return data.toString();
+    }
 }

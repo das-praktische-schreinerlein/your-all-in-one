@@ -159,4 +159,97 @@ public class BaseNodeService extends NodeServiceImpl {
     public void recalcData(final DataDomain baseNode, final int recursionDirection) throws Exception {
         this.doRecalc(baseNode, recursionDirection);
     }
+
+    @Override
+    public int getMaxChildEbene(final DataDomain baseNode) {
+        // TODO cache this
+        int maxEbene = baseNode.getEbene();
+
+        // alle Kinder durchsuchen
+        if (baseNode.getChildNodes() != null) {
+            for (BaseNode node : baseNode.getChildNodes()) {
+                int maxEbeneChild = node.getNodeService().getMaxChildEbene(node);
+                if (maxEbeneChild > maxEbene) {
+                    maxEbene = maxEbeneChild;
+                }
+            }
+        }
+        return maxEbene;
+    }
+
+    @Override
+    public String getParentNameHirarchry(final DataDomain baseNode,
+                                         final String pdelimiter, 
+                                         final boolean directionForward) {
+        String parentNames = "";
+        String delimiter = pdelimiter == null ? "" : pdelimiter;
+
+        if (baseNode.getParentNode() != null) {
+            if (directionForward) {
+                parentNames = baseNode.getParentNode().getParentNameHirarchry(delimiter,
+                    directionForward)
+                    + delimiter
+                    + baseNode.getParentNode().getName();
+            } else {
+                parentNames = baseNode.getParentNode().getName()
+                    + delimiter
+                    + baseNode.getParentNode().getParentNameHirarchry(delimiter,
+                        directionForward);
+            }
+        }
+
+        return parentNames;
+    }
+
+    @Override
+    public String getWorkingId(final DataDomain baseNode) {
+        String res = "UNKNOWN";
+        BaseNode node = (BaseNode) baseNode;
+        if (node.getMetaNodeNummer() != null && (node.getMetaNodeNummer().length() > 0)) {
+            res = node.getMetaNodePraefix() + node.getMetaNodeNummer();
+        } else if (node.getImportTmpId() != null) {
+            res = node.getImportTmpId().toString();
+        }
+
+        return res;
+    }
+
+    @Override
+    public String getNameForLogger(final DataDomain baseNode) {
+        BaseNode node = (BaseNode) baseNode;
+        String nameForLogger = "sysUID_" + node.getSysUID() 
+                        + "_name_" + node.getName() + "_srcName_" + node.getSrcName();
+        return nameForLogger;    
+    }
+    
+    @Override
+    public String getDataBlocks4CheckSum(final DataDomain baseNode) throws Exception {
+        BaseNode node = (BaseNode) baseNode;
+
+        // Content erzeugen
+        StringBuffer data = new StringBuffer();
+        data.append(node.getType())
+            .append(node.getState())
+            .append(" name=").append(node.getName())
+// TODO difference DB + PPL-Import  .append(" parentNode=").append((node.getParentNode() != null ? getParentNode().getSysUID() : null))
+// TODO difference DB + PPL-Import  .append(" sortPos=").append(node.getSortPos())
+//            .append(" ebene=").append(node.getEbene())
+//            .append(" istStandChildrenSum=").append(node.getIstChildrenSumStand())
+//            .append(" istStartChildrenSum=").append(node.getIstChildrenSumStart())
+//            .append(" istEndeChildrenSum=").append(node.getIstChildrenSumEnde())
+//            .append(" istAufwandChildrenSum=").append(node.getIstChildrenSumAufwand())
+//            .append(" planStartChildrenSum=").append(node.getPlanChildrenSumStart())
+//            .append(" planEndeChildrenSum=").append(node.getPlanChildrenSumEnde())
+//            .append(" planAufwandChildrenSum=").append(node.getPlanChildrenSumAufwand())
+            .append(" docLayoutTagCommand=").append(node.getDocLayoutTagCommand())
+            .append(" docLayoutAddStyleClass=").append(node.getDocLayoutAddStyleClass())
+            .append(" docLayoutShortName=").append(node.getDocLayoutShortName())
+            .append(" docLayoutFlgCloseDiv=").append(node.getDocLayoutFlgCloseDiv())
+            .append(" metaNodePraefix=").append(node.getMetaNodePraefix())
+            .append(" metaNodeNummer=").append(node.getMetaNodeNummer())
+            .append(" metaNodeTypeTags=").append(node.getMetaNodeTypeTags())
+            .append(" metaNodeSubTypeTags=").append(node.getMetaNodeSubTypeTags())
+            .append(" desc=").append(node.getNodeDesc());
+        return data.toString();
+    }
 }

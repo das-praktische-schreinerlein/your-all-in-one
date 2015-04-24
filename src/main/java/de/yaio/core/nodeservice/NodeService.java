@@ -43,6 +43,9 @@ public interface NodeService {
     /** constants for recursion of DB-functions: recurse all children */
     int CONST_DB_RECURSIONLEVEL_ALL_CHILDREN = -1;
 
+    ///////////////////////
+    // Recalc
+    ///////////////////////
     /**
      * <h4>FeatureDomain:</h4>
      *     BusinessLogic
@@ -140,6 +143,27 @@ public interface NodeService {
      * <h4>FeatureDomain:</h4>
      *     BusinessLogic
      * <h4>FeatureDescription:</h4>
+     *     recalc the WFData of the node
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>updates memberfields of dataDomain PlanChildrenSum
+     *     <li>updates memberfields of dataDomain IstChildrenSum
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     BusinessLogic
+     * @param baseNode - node to get the state from
+     * @param recursionDirection - direction for recursivly recalc CONST_RECURSE_DIRECTION_* 
+     * @throws Exception - parser/format-Exceptions possible
+     */
+    void recalcData(DataDomain baseNode, int recursionDirection) throws Exception;
+
+    ///////////////////////
+    // Hirarchy
+    ///////////////////////
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     BusinessLogic
+     * <h4>FeatureDescription:</h4>
      *     sets the parentNode of the baseNode and updates recursivly 
      *     field Ebene of all childnodes 
      * <h4>FeatureResult:</h4>
@@ -160,20 +184,42 @@ public interface NodeService {
      * <h4>FeatureDomain:</h4>
      *     BusinessLogic
      * <h4>FeatureDescription:</h4>
-     *     recalc the WFData of the node
+     *     returns the max level of children for this node 
      * <h4>FeatureResult:</h4>
      *   <ul>
-     *     <li>updates memberfields of dataDomain PlanChildrenSum
-     *     <li>updates memberfields of dataDomain IstChildrenSum
+     *     <li>return maximum childLevel
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     BusinessLogic
-     * @param baseNode - node to get the state from
-     * @param recursionDirection - direction for recursivly recalc CONST_RECURSE_DIRECTION_* 
-     * @throws Exception - parser/format-Exceptions possible
+     * @param baseNode - node
+     * @return maximum childLevel
      */
-    void recalcData(DataDomain baseNode, int recursionDirection) throws Exception;
+    int getMaxChildEbene(DataDomain baseNode);
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     BusinessLogic
+     * <h4>FeatureDescription:</h4>
+     *     returns parenthierarchy
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>return parenthierarchy
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     BusinessLogic
+     * @param baseNode - node
+     * @param pdelimiter - text to delimit the diffrent parentnames
+     * @param directionForward - if set reverse the order
+     * @return parenthierarchy
+     */
+    String getParentNameHirarchry(final DataDomain baseNode,
+                                  final String pdelimiter, 
+                                  final boolean directionForward);
+
+    ///////////////////////
+    // Workflow
+    ///////////////////////
+    
     /**
      * <h4>FeatureDomain:</h4>
      *     Workflow
@@ -239,4 +285,56 @@ public interface NodeService {
     boolean isWFStatusCanceled(String state);
     
 
+    ///////////////////////
+    // Name+Id-Services
+    ///////////////////////
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     BusinessLogic
+     * <h4>FeatureDescription:</h4>
+     *     returns WorkingId to identify in process (parsing...)
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>return WorkingId to identify in process (parsing...)
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     BusinessLogic
+     * @param baseNode - node
+     * @return WorkingId to identify in process (parsing...)
+     */
+    String getWorkingId(final DataDomain baseNode);
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     BusinessLogic
+     * <h4>FeatureDescription:</h4>
+     *     returns name for logging
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>return name for logging
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     BusinessLogic
+     * @param baseNode - node
+     * @return name for logging
+     */
+    String getNameForLogger(final DataDomain baseNode);
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     BusinessLogic
+     * <h4>FeatureDescription:</h4>
+     *     returns the data to create a checksum from
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>return datastring
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     BusinessLogic
+     * @param baseNode - node
+     * @return datastring
+     * @throws Exception 
+     */
+    String getDataBlocks4CheckSum(final DataDomain baseNode) throws Exception;
 }

@@ -84,18 +84,4 @@ public class SymLinkNode extends BaseNode implements SymLinkData {
     public Map<String, Object> getConfigState() {
         return SymLinkNodeService.CONST_MAP_NODETYPE_IDENTIFIER;
     }
-
-    @Override
-    @XmlTransient
-    @JsonIgnore
-    public String getDataBlocks4CheckSum() throws Exception {
-        // Content erzeugen
-        StringBuffer data = new StringBuffer();
-        
-        data.append(super.getDataBlocks4CheckSum())
-            .append(" symLinkRef=").append(getSymLinkRef())
-            .append(" symLinkName=").append(getSymLinkName())
-            .append(" symLinkTags=").append(getSymLinkTags());
-        return data.toString();
-    }
 }

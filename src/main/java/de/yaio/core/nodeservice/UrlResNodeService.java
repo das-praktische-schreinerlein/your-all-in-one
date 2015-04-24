@@ -19,6 +19,9 @@ package de.yaio.core.nodeservice;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.yaio.core.datadomain.DataDomain;
+import de.yaio.core.node.UrlResNode;
+
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -32,7 +35,7 @@ import java.util.Map;
  * @copyright Copyright (c) 2014, Michael Schreiner
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-public class UrlResNodeService extends BaseNodeService {
+public class UrlResNodeService extends InfoNodeService {
 
     // Status-Konstanten
     /** nodetype-identifier for parser/formatter on UrlResnode URL */
@@ -58,5 +61,18 @@ public class UrlResNodeService extends BaseNodeService {
         CONST_MAP_NODETYPE_IDENTIFIER.put("FILERES", CONST_NODETYPE_IDENTIFIER_FILERES);
         CONST_MAP_NODETYPE_IDENTIFIER.put("IMAGERES", CONST_NODETYPE_IDENTIFIER_IMAGERES);
         CONST_MAP_NODETYPE_IDENTIFIER.put("EMAILRES", CONST_NODETYPE_IDENTIFIER_EMAILRES);
+    }
+
+    @Override
+    public String getDataBlocks4CheckSum(final DataDomain baseNode) throws Exception {
+        UrlResNode node = (UrlResNode) baseNode;
+        
+        // Content erzeugen
+        StringBuffer data = new StringBuffer();
+        data.append(super.getDataBlocks4CheckSum(node))
+            .append(" resLocRef=").append(node.getResLocRef())
+            .append(" resLocName=").append(node.getResLocName())
+            .append(" resLocTags=").append(node.getResLocTags());
+        return data.toString();
     }
 }
