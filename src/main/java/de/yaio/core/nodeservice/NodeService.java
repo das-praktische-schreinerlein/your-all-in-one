@@ -16,11 +16,13 @@
  */
 package de.yaio.core.nodeservice;
 
+import java.util.List;
 import java.util.Map;
 
 import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.datadomainservice.DataDomainRecalc;
+import de.yaio.core.node.BaseNode;
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -160,6 +162,14 @@ public interface NodeService {
      */
     void recalcData(DataDomain baseNode, int recursionDirection) throws Exception;
 
+
+    ///////////////////////
+    // Workflow
+    ///////////////////////
+    Map<String, String> getConfigState();
+    Map<String, WorkflowState> getConfigWorkflowState();
+    Map<WorkflowState, String> getConfigWorkflowStateState();
+
     ///////////////////////
     // Hirarchy
     ///////////////////////
@@ -185,162 +195,33 @@ public interface NodeService {
 
     /**
      * <h4>FeatureDomain:</h4>
-     *     BusinessLogic
+     *     Persistence
      * <h4>FeatureDescription:</h4>
-     *     returns the max level of children for this node 
+     *     get a List of the Ids of parent-hierarchy 
      * <h4>FeatureResult:</h4>
      *   <ul>
-     *     <li>return maximum childLevel
+     *     <li>returnValue List<String> - list of the parent-sysUIDs, start with my own parent (not me)
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
-     *     BusinessLogic
-     * @param baseNode - node
-     * @return maximum childLevel
+     *     Persistence
+     * @param baseNode node
+     * @return list of the parent-sysUIDs, start with my own parent (not baseNode)
      */
-    int getMaxChildEbene(DataDomain baseNode);
+    List<String> getParentIdHierarchy(final DataDomain baseNode);
 
     /**
      * <h4>FeatureDomain:</h4>
-     *     BusinessLogic
+     *     Persistence
      * <h4>FeatureDescription:</h4>
-     *     returns parenthierarchy
+     *     get a List of the parent-hierarchy
      * <h4>FeatureResult:</h4>
      *   <ul>
-     *     <li>return parenthierarchy
+     *     <li>returnValue List<BaseNode> - list of the parents, start with my own parent (not me)
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
-     *     BusinessLogic
-     * @param baseNode - node
-     * @param pdelimiter - text to delimit the diffrent parentnames
-     * @param directionForward - if set reverse the order
-     * @return parenthierarchy
+     *     Persistence
+     * @param baseNode node
+     * @return list of the parents, start with my own parent (not baseNode)
      */
-    String getParentNameHirarchry(final DataDomain baseNode,
-                                  final String pdelimiter, 
-                                  final boolean directionForward);
-
-    ///////////////////////
-    // Workflow
-    ///////////////////////
-    
-    public Map<String, String> getConfigState();
-    public Map<String, WorkflowState> getConfigWorkflowState();
-    
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Workflow
-     * <h4>FeatureDescription:</h4>
-     *     checks weather the state is a configurated workflow-state
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue boolean - workflow-state yes/no
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Worflow
-     * @param state - state to check
-     * @return workflow-state yes/no
-     */
-    boolean isWFStatus(String state);
-
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Workflow
-     * <h4>FeatureDescription:</h4>
-     *     checks weather the state is a configurated workflow-state for DONE
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue boolean - workflow-DONE yes/no
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Worflow
-     * @param state - state to check
-     * @return workflow-DONE yes/no
-     */
-    boolean isWFStatusDone(String state);
-
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Workflow
-     * <h4>FeatureDescription:</h4>
-     *     checks weather the state is a configurated workflow-state for OPEN
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue boolean - workflow-OPEN yes/no
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Worflow
-     * @param state - state to check
-     * @return workflow-OPEN yes/no
-     */
-    boolean isWFStatusOpen(String state);
-
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Workflow
-     * <h4>FeatureDescription:</h4>
-     *     checks weather the state is a configurated workflow-state for CANCELED
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue boolean - workflow-CANCELED yes/no
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Worflow
-     * @param state - state to check
-     * @return workflow-CANCELED yes/no
-     */
-    boolean isWFStatusCanceled(String state);
-    
-
-    ///////////////////////
-    // Name+Id-Services
-    ///////////////////////
-    
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     BusinessLogic
-     * <h4>FeatureDescription:</h4>
-     *     returns WorkingId to identify in process (parsing...)
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>return WorkingId to identify in process (parsing...)
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     BusinessLogic
-     * @param baseNode - node
-     * @return WorkingId to identify in process (parsing...)
-     */
-    String getWorkingId(final DataDomain baseNode);
-
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     BusinessLogic
-     * <h4>FeatureDescription:</h4>
-     *     returns name for logging
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>return name for logging
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     BusinessLogic
-     * @param baseNode - node
-     * @return name for logging
-     */
-    String getNameForLogger(final DataDomain baseNode);
-
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     BusinessLogic
-     * <h4>FeatureDescription:</h4>
-     *     returns the data to create a checksum from
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>return datastring
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     BusinessLogic
-     * @param baseNode - node
-     * @return datastring
-     * @throws Exception 
-     */
-    String getDataBlocks4CheckSum(final DataDomain baseNode) throws Exception;
+    List<BaseNode> getParentHierarchy(final DataDomain baseNode);
 }

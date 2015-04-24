@@ -123,18 +123,27 @@ public class BaseNodeService extends NodeServiceImpl {
     public Map<String, String> getConfigState() {
         return CONST_MAP_NODETYPE_IDENTIFIER;
     }
-    @Override
-    public Map<String, WorkflowState> getConfigWorkflowState() {
-        return this.getConfigWorkflowState();
-    }
-    public Map<WorkflowState, String> getConfigWorkflowStateState() {
-        return CONST_MAP_WORKFLOWSTATE_STATE;
-    }
-    public Map<String, WorkflowState> getConfigWorkflowStateNoWorkflow() {
+    protected Map<String, WorkflowState> getConfigWorkflowStateNoWorkflow() {
         return CONST_MAP_STATE_WORKFLOWSTATE;
     }
-    public Map<WorkflowState, String> getConfigWorkflowStateStateNoWorkflow() {
+    protected Map<WorkflowState, String> getConfigWorkflowStateStateNoWorkflow() {
         return CONST_MAP_WORKFLOWSTATE_STATE;
+    }
+    @Override
+    public Map<String, WorkflowState> getConfigWorkflowState() {
+        return this.getConfigWorkflowStateNoWorkflow();
+    }
+    @Override
+    public Map<WorkflowState, String> getConfigWorkflowStateState() {
+        return getConfigWorkflowStateStateNoWorkflow();
+    }
+
+    ///////////////////////
+    // recalc
+    ///////////////////////
+    @Override
+    public void recalcData(final DataDomain baseNode, final int recursionDirection) throws Exception {
+        this.doRecalc(baseNode, recursionDirection);
     }
 
     ///////////////////////
@@ -204,11 +213,40 @@ public class BaseNodeService extends NodeServiceImpl {
     }
 
     @Override
-    public void recalcData(final DataDomain baseNode, final int recursionDirection) throws Exception {
-        this.doRecalc(baseNode, recursionDirection);
+    public List<BaseNode> getParentHierarchy(final DataDomain baseNode) {
+        List<BaseNode> parentHierarchy = new ArrayList<BaseNode>();
+        BaseNode parent = baseNode.getParentNode();
+        while (parent != null) {
+            parentHierarchy.add(parent);
+            parent = parent.getParentNode();
+        }
+        return parentHierarchy;
     }
 
     @Override
+    public List<String> getParentIdHierarchy(final DataDomain baseNode) {
+        List<String> parentIdHierarchy = new ArrayList<String>();
+        for (BaseNode parent: getParentHierarchy(baseNode)) {
+            parentIdHierarchy.add(parent.getSysUID());
+        }
+        
+        return parentIdHierarchy;
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     BusinessLogic
+     * <h4>FeatureDescription:</h4>
+     *     returns the max level of children for this node 
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>return maximum childLevel
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     BusinessLogic
+     * @param baseNode - node
+     * @return maximum childLevel
+     */
     public int getMaxChildEbene(final DataDomain baseNode) {
         // TODO cache this
         int maxEbene = baseNode.getEbene();
@@ -238,6 +276,7 @@ public class BaseNodeService extends NodeServiceImpl {
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     Persistence
+     * @param baseNode node
      * @param pRecursionLevel - how many recursion-level will be read from DB
      */
     public void initChildNodesFromDB(final BaseNode baseNode, final int pRecursionLevel) {
@@ -272,52 +311,20 @@ public class BaseNodeService extends NodeServiceImpl {
 
     /**
      * <h4>FeatureDomain:</h4>
-     *     Persistence
+     *     BusinessLogic
      * <h4>FeatureDescription:</h4>
-     *     get a List of the parent-hierarchy
+     *     returns parenthierarchy
      * <h4>FeatureResult:</h4>
      *   <ul>
-     *     <li>returnValue List<BaseNode> - list of the parents, start with my own parent (not me)
+     *     <li>return parenthierarchy
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
-     *     Persistence
-     * @param baseNode node
-     * @return list of the parents, start with my own parent (not baseNode)
+     *     BusinessLogic
+     * @param baseNode - node
+     * @param pdelimiter - text to delimit the diffrent parentnames
+     * @param directionForward - if set reverse the order
+     * @return parenthierarchy
      */
-    public List<BaseNode> getParentHierarchy(final DataDomain baseNode) {
-        List<BaseNode> parentHierarchy = new ArrayList<BaseNode>();
-        BaseNode parent = baseNode.getParentNode();
-        while (parent != null) {
-            parentHierarchy.add(parent);
-            parent = parent.getParentNode();
-        }
-        return parentHierarchy;
-    }
-
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Persistence
-     * <h4>FeatureDescription:</h4>
-     *     get a List of the Ids of parent-hierarchy 
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue List<String> - list of the parent-sysUIDs, start with my own parent (not me)
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Persistence
-     * @param baseNode node
-     * @return list of the parent-sysUIDs, start with my own parent (not baseNode)
-     */
-    public List<String> getParentIdHierarchy(final DataDomain baseNode) {
-        List<String> parentIdHierarchy = new ArrayList<String>();
-        for (BaseNode parent: getParentHierarchy(baseNode)) {
-            parentIdHierarchy.add(parent.getSysUID());
-        }
-        
-        return parentIdHierarchy;
-    }
-
-    @Override
     public String getParentNameHirarchry(final DataDomain baseNode,
                                          final String pdelimiter, 
                                          final boolean directionForward) {
@@ -341,7 +348,23 @@ public class BaseNodeService extends NodeServiceImpl {
         return parentNames;
     }
 
-    @Override
+    ///////////////////////
+    // Name+Id-Services
+    ///////////////////////
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     BusinessLogic
+     * <h4>FeatureDescription:</h4>
+     *     returns WorkingId to identify in process (parsing...)
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>return WorkingId to identify in process (parsing...)
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     BusinessLogic
+     * @param baseNode - node
+     * @return WorkingId to identify in process (parsing...)
+     */
     public String getWorkingId(final DataDomain baseNode) {
         String res = "UNKNOWN";
         BaseNode node = (BaseNode) baseNode;
@@ -354,7 +377,20 @@ public class BaseNodeService extends NodeServiceImpl {
         return res;
     }
 
-    @Override
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     BusinessLogic
+     * <h4>FeatureDescription:</h4>
+     *     returns name for logging
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>return name for logging
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     BusinessLogic
+     * @param baseNode - node
+     * @return name for logging
+     */
     public String getNameForLogger(final DataDomain baseNode) {
         BaseNode node = (BaseNode) baseNode;
         String nameForLogger = "sysUID_" + node.getSysUID() 
@@ -362,7 +398,21 @@ public class BaseNodeService extends NodeServiceImpl {
         return nameForLogger;    
     }
     
-    @Override
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     BusinessLogic
+     * <h4>FeatureDescription:</h4>
+     *     returns the data to create a checksum from
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>return datastring
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     BusinessLogic
+     * @param baseNode - node
+     * @return datastring
+     * @throws Exception - possible Exception
+     */
     public String getDataBlocks4CheckSum(final DataDomain baseNode) throws Exception {
         BaseNode node = (BaseNode) baseNode;
 
@@ -397,15 +447,135 @@ public class BaseNodeService extends NodeServiceImpl {
     /////////////////////////
     // Workflow
     /////////////////////////
-    public WorkflowState getWorkflowState(final BaseWorkflowData node)  throws IllegalStateException {
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Workflow
+     * <h4>FeatureDescription:</h4>
+     *     checks weather the state is a configurated workflow-state
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue boolean - workflow-state yes/no
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Worflow
+     * @param state - state to check
+     * @return workflow-state yes/no
+     */
+    public boolean isWFStatus(final String state) {
+        return false;
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Workflow
+     * <h4>FeatureDescription:</h4>
+     *     checks weather the state is a configurated workflow-state for DONE
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue boolean - workflow-DONE yes/no
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Worflow
+     * @param state - state to check
+     * @return workflow-DONE yes/no
+     */
+    public boolean isWFStatusDone(final String state) {
+        return false;
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Workflow
+     * <h4>FeatureDescription:</h4>
+     *     checks weather the state is a configurated workflow-state for OPEN
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue boolean - workflow-OPEN yes/no
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Worflow
+     * @param state - state to check
+     * @return workflow-OPEN yes/no
+     */
+    public boolean isWFStatusOpen(final String state) {
+        return false;
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Workflow
+     * <h4>FeatureDescription:</h4>
+     *     checks weather the state is a configurated workflow-state for CANCELED
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue boolean - workflow-CANCELED yes/no
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Worflow
+     * @param state - state to check
+     * @return workflow-CANCELED yes/no
+     */
+    public boolean isWFStatusCanceled(final String state) {
+        return false;
+    }
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Workflow
+     * <h4>FeatureDescription:</h4>
+     *     returns the workflowstate of the node. 
+     *     if empty and no state do: NOWORKFLOW of Unplaned if it is a task/evvent
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue workflowstate
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Worflow
+     * @param node - node to get the workflow state from
+     * @return workflowstate
+     * @throws IllegalStateException - if illegal state 
+     */
+    public WorkflowState getWorkflowState(final BaseWorkflowData node) throws IllegalStateException {
         return WorkflowState.NOWORKFLOW;
     };
 
-    public WorkflowState getWorkflowStateForState(final BaseWorkflowData node)  throws IllegalStateException {
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Workflow
+     * <h4>FeatureDescription:</h4>
+     *     returns the workflowstate for the state of the node. 
+     *     if empty and no state do: NOWORKFLOW of Unplaned if it is a task/event
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue workflowstate
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Worflow
+     * @param node - node to get the workflow state from
+     * @return workflowstate
+     * @throws IllegalStateException - if illegal state 
+     */
+    public WorkflowState getWorkflowStateForState(final BaseWorkflowData node) throws IllegalStateException {
         return WorkflowState.NOWORKFLOW;
     };
 
-    public String getStateForWorkflowState(final BaseWorkflowData node)  throws IllegalStateException {
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Workflow
+     * <h4>FeatureDescription:</h4>
+     *     returns the state for the workflowstate of the node. 
+     *     if empty and no workflowstate: return the given state of the node
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue state
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Worflow
+     * @param node - node to get the workflow state from
+     * @return state
+     * @throws IllegalStateException - if illegal state 
+     */
+    public String getStateForWorkflowState(final BaseWorkflowData node) throws IllegalStateException {
         return node.getState();
     };
 }
