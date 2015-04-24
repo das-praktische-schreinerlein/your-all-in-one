@@ -29,6 +29,7 @@ import de.yaio.core.node.BaseNode;
 import de.yaio.core.node.InfoNode;
 import de.yaio.core.node.SymLinkNode;
 import de.yaio.core.node.UrlResNode;
+import de.yaio.core.nodeservice.UrlResNodeService;
 import de.yaio.datatransfer.exporter.OutputOptions;
 import de.yaio.datatransfer.exporter.OutputOptionsImpl;
 import de.yaio.datatransfer.exporter.formatter.DescDataFormatterImpl;
@@ -412,7 +413,7 @@ public class HtmlExporter extends WikiExporter {
                     label = urlResNode.getResLocRef();
                 }
                 
-                if (UrlResNode.CONST_NODETYPE_IDENTIFIER_IMAGERES.equals(curNode.getState())) {
+                if (UrlResNodeService.CONST_NODETYPE_IDENTIFIER_IMAGERES.equals(curNode.getState())) {
                     // Image
                     content += "<a href='" + urlResNode.getResLocRef() + "' target='_blank_'"
                         +   " class='a-img" + tagEbene + "-urlres "

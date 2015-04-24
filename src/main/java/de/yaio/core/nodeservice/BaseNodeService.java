@@ -16,10 +16,12 @@
  */
 package de.yaio.core.nodeservice;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.datadomainservice.BaseWorkflowDataServiceImpl;
 import de.yaio.core.datadomainservice.MetaDataServiceImpl;
@@ -49,6 +51,22 @@ public class BaseNodeService extends NodeServiceImpl {
     
     private static final Logger LOGGER = Logger.getLogger(NodeServiceImpl.class);
 
+    public static final String CONST_NODETYPE_IDENTIFIER_UNKNOWN = "UNKNOWN";
+    public static final Map<String, Object> CONST_MAP_NODETYPE_IDENTIFIER = new HashMap<String, Object>();
+    public static final Map<String, WorkflowState> CONST_MAP_STATE_WORKFLOWSTATE = new HashMap<String, WorkflowState>();
+
+    static {
+        // define WorkflowStates
+        CONST_MAP_STATE_WORKFLOWSTATE.put(CONST_NODETYPE_IDENTIFIER_UNKNOWN, WorkflowState.NOWORKFLOW);
+
+        // Defaults
+        CONST_MAP_NODETYPE_IDENTIFIER.put(CONST_NODETYPE_IDENTIFIER_UNKNOWN, CONST_NODETYPE_IDENTIFIER_UNKNOWN);
+        // Abarten
+        CONST_MAP_NODETYPE_IDENTIFIER.put("UNKNOWN", CONST_NODETYPE_IDENTIFIER_UNKNOWN);
+        CONST_MAP_NODETYPE_IDENTIFIER.put("UNBEKANNT", CONST_NODETYPE_IDENTIFIER_UNKNOWN);
+        
+    }
+    
     /**
      * <h4>FeatureDomain:</h4>
      *     Constructor

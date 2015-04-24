@@ -28,6 +28,7 @@ import org.apache.log4j.Logger;
 import de.yaio.core.node.BaseNode;
 import de.yaio.core.node.TaskNode;
 import de.yaio.core.nodeservice.BaseNodeService;
+import de.yaio.core.nodeservice.TaskNodeService;
 
 
 /**
@@ -309,9 +310,9 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
         masterNode.setName("Masterplan");
         masterNode.setNodeDesc("Masternode of the Masterplan");
         masterNode.setSrcName("Masterplan");
-        masterNode.setState(TaskNode.CONST_NODETYPE_IDENTIFIER_RUNNNING);
+        masterNode.setState(TaskNodeService.CONST_NODETYPE_IDENTIFIER_RUNNNING);
         masterNode.setSysUID("MasterplanMasternode1");
-        masterNode.setType(TaskNode.CONST_NODETYPE_IDENTIFIER_RUNNNING);
+        masterNode.setType(TaskNodeService.CONST_NODETYPE_IDENTIFIER_RUNNNING);
         
         masterNode.persist();
         return masterNode;

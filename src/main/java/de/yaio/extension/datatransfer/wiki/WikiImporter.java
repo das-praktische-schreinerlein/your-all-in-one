@@ -27,6 +27,7 @@ import java.util.regex.Pattern;
 import org.apache.log4j.Logger;
 
 import de.yaio.core.node.BaseNode;
+import de.yaio.core.nodeservice.BaseNodeService;
 import de.yaio.datatransfer.exporter.OutputOptions;
 import de.yaio.datatransfer.exporter.OutputOptionsImpl;
 import de.yaio.datatransfer.importer.ImportOptions;
@@ -441,7 +442,7 @@ public class WikiImporter extends ImporterImpl {
 
             // alle iterieren
             for (WikiStructLine curWk : lstWikiLines) {
-                String state = BaseNode.CONST_NODETYPE_IDENTIFIER_UNKNOWN;
+                String state = BaseNodeService.CONST_NODETYPE_IDENTIFIER_UNKNOWN;
                 String ue = curWk.getCleanText();
 
                 // Statusdefinition durchlaufen unn pruefen ob Name so beginnt
@@ -458,7 +459,7 @@ public class WikiImporter extends ImporterImpl {
                 }
 
                 // gefunden
-                if (BaseNode.CONST_NODETYPE_IDENTIFIER_UNKNOWN.equals(state)) {
+                if (BaseNodeService.CONST_NODETYPE_IDENTIFIER_UNKNOWN.equals(state)) {
                     // SKIP: UNKNOWN
                     continue;
                 } else if (flgWFStatesOnly && !this.importer.isWFStatus(state)) {

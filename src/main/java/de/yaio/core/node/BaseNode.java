@@ -17,7 +17,6 @@
 package de.yaio.core.node;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -90,21 +89,6 @@ import de.yaio.datatransfer.importer.parser.Parser;
 @RooJpaActiveRecord
 public class BaseNode implements BaseData, MetaData, SysData, 
     DescData, BaseWorkflowData, StatData {
-    
-    public static final String CONST_NODETYPE_IDENTIFIER_UNKNOWN = "UNKNOWN";
-    public static final Map<String, Object> CONST_MAP_NODETYPE_IDENTIFIER = new HashMap<String, Object>();
-    public static final Map<String, WorkflowState> CONST_MAP_STATE_WORKFLOWSTATE = new HashMap<String, WorkflowState>();
-    static {
-        // define WorkflowStates
-        CONST_MAP_STATE_WORKFLOWSTATE.put(CONST_NODETYPE_IDENTIFIER_UNKNOWN, WorkflowState.NOWORKFLOW);
-
-        // Defaults
-        CONST_MAP_NODETYPE_IDENTIFIER.put(CONST_NODETYPE_IDENTIFIER_UNKNOWN, CONST_NODETYPE_IDENTIFIER_UNKNOWN);
-        // Abarten
-        CONST_MAP_NODETYPE_IDENTIFIER.put("UNKNOWN", CONST_NODETYPE_IDENTIFIER_UNKNOWN);
-        CONST_MAP_NODETYPE_IDENTIFIER.put("UNBEKANNT", CONST_NODETYPE_IDENTIFIER_UNKNOWN);
-        
-    }
     
     // Validator
     protected static ValidatorFactory validationFactory = Validation.buildDefaultValidatorFactory();
@@ -1160,7 +1144,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     @XmlTransient
     @JsonIgnore
     public Map<String, Object> getConfigState() {
-        return CONST_MAP_NODETYPE_IDENTIFIER;
+        return BaseNodeService.CONST_MAP_NODETYPE_IDENTIFIER;
     }
     
     @Override
@@ -1187,7 +1171,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     @XmlTransient
     @JsonIgnore
     public Map<String, WorkflowState> getConfigWorkflowState() {
-        return CONST_MAP_STATE_WORKFLOWSTATE;
+        return BaseNodeService.CONST_MAP_STATE_WORKFLOWSTATE;
     }
     
     @Override

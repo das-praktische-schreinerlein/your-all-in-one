@@ -38,6 +38,8 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import de.yaio.core.node.BaseNode;
 import de.yaio.core.node.TaskNode;
+import de.yaio.core.nodeservice.BaseNodeService;
+import de.yaio.core.nodeservice.TaskNodeService;
 import de.yaio.datatransfer.exporter.OutputOptions;
 import de.yaio.datatransfer.exporter.OutputOptionsImpl;
 import de.yaio.datatransfer.importer.ImportOptions;
@@ -274,23 +276,23 @@ public class ExcelImporter extends ImporterImpl {
         double rdiff = ExcelService.getCellNummeric(cell);
 
         // Status aus den Planzahlen extrahieren
-        String status = BaseNode.CONST_NODETYPE_IDENTIFIER_UNKNOWN;
+        String status = BaseNodeService.CONST_NODETYPE_IDENTIFIER_UNKNOWN;
         if (paufwand != null && (paufwand > 0)) {
-            status = TaskNode.CONST_NODETYPE_IDENTIFIER_OPEN;
+            status = TaskNodeService.CONST_NODETYPE_IDENTIFIER_OPEN;
             if ((iaufwand > 0) || (istand > 0)) {
-                status = TaskNode.CONST_NODETYPE_IDENTIFIER_RUNNNING;
+                status = TaskNodeService.CONST_NODETYPE_IDENTIFIER_RUNNNING;
                 if (roffen == 0) {
-                    status = TaskNode.CONST_NODETYPE_IDENTIFIER_DONE;
+                    status = TaskNodeService.CONST_NODETYPE_IDENTIFIER_DONE;
                 } else if (rdiff > 0) {
-                    status = TaskNode.CONST_NODETYPE_IDENTIFIER_SHORT;
+                    status = TaskNodeService.CONST_NODETYPE_IDENTIFIER_SHORT;
                 }
             }
         } else {
             // falls keine Planzahlen aus IstStand
             if (istand == 100) {
-                status = TaskNode.CONST_NODETYPE_IDENTIFIER_DONE;
+                status = TaskNodeService.CONST_NODETYPE_IDENTIFIER_DONE;
             } else if (istand > 0) {
-                status = TaskNode.CONST_NODETYPE_IDENTIFIER_RUNNNING;
+                status = TaskNodeService.CONST_NODETYPE_IDENTIFIER_RUNNNING;
             }
         }
 

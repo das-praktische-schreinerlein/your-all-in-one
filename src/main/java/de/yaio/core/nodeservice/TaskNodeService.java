@@ -16,7 +16,11 @@
  */
 package de.yaio.core.nodeservice;
 
-import de.yaio.core.node.TaskNode;
+import java.util.HashMap;
+import java.util.Map;
+
+import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
+
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -32,17 +36,78 @@ import de.yaio.core.node.TaskNode;
  */
 public class TaskNodeService extends BaseNodeService {
 
+    // Daten
+    /** nodetype-identifier for parser/formatter on Tasknode Ist=0% */
+    public static final String CONST_NODETYPE_IDENTIFIER_OPEN = "OFFEN";
+    /** nodetype-identifier for parser/formatter on Tasknode Ist=0 and planstart<today */
+    public static final String CONST_NODETYPE_IDENTIFIER_LATE = "LATE";
+    /** nodetype-identifier for parser/formatter on Tasknode Ist>0 */
+    public static final String CONST_NODETYPE_IDENTIFIER_RUNNNING = "RUNNING";
+    /** nodetype-identifier for parser/formatter on Tasknode Ist>0 and planende<today */
+    public static final String CONST_NODETYPE_IDENTIFIER_SHORT = "WARNING";
+    /** nodetype-identifier for parser/formatter on Tasknode Ist=100 */
+    public static final String CONST_NODETYPE_IDENTIFIER_DONE = "ERLEDIGT";
+    /** nodetype-identifier for parser/formatter on Tasknode canceled */
+    public static final String CONST_NODETYPE_IDENTIFIER_CANCELED = "VERWORFEN";
+
+    // Status-Konstanten
+    public static final Map<String, Object> CONST_MAP_NODETYPE_IDENTIFIER = new HashMap<String, Object>();
+    public static final Map<String, WorkflowState> CONST_MAP_STATE_WORKFLOWSTATE = new HashMap<String, WorkflowState>();
+    public static final Map<WorkflowState, String> CONST_MAP_WORKFLOWSTATE_STATE = new HashMap<WorkflowState, String>();
+
+    static {
+        // define WorkflowStates
+        CONST_MAP_STATE_WORKFLOWSTATE.put(BaseNodeService.CONST_NODETYPE_IDENTIFIER_UNKNOWN, WorkflowState.NOTPLANED);
+        CONST_MAP_STATE_WORKFLOWSTATE.put(CONST_NODETYPE_IDENTIFIER_OPEN, WorkflowState.OPEN);
+        CONST_MAP_STATE_WORKFLOWSTATE.put(CONST_NODETYPE_IDENTIFIER_RUNNNING, WorkflowState.RUNNING);
+        CONST_MAP_STATE_WORKFLOWSTATE.put(CONST_NODETYPE_IDENTIFIER_LATE, WorkflowState.LATE);
+        CONST_MAP_STATE_WORKFLOWSTATE.put(CONST_NODETYPE_IDENTIFIER_SHORT, WorkflowState.WARNING);
+        CONST_MAP_STATE_WORKFLOWSTATE.put(CONST_NODETYPE_IDENTIFIER_DONE, WorkflowState.DONE);
+        CONST_MAP_STATE_WORKFLOWSTATE.put(CONST_NODETYPE_IDENTIFIER_CANCELED, WorkflowState.CANCELED);
+        // backlink states
+        for (String state : CONST_MAP_STATE_WORKFLOWSTATE.keySet()) {
+            CONST_MAP_WORKFLOWSTATE_STATE.put(CONST_MAP_STATE_WORKFLOWSTATE.get(state), state);
+        }
+
+        // Defaults
+        CONST_MAP_NODETYPE_IDENTIFIER.put(CONST_NODETYPE_IDENTIFIER_OPEN, CONST_NODETYPE_IDENTIFIER_OPEN);
+        CONST_MAP_NODETYPE_IDENTIFIER.put(CONST_NODETYPE_IDENTIFIER_RUNNNING, CONST_NODETYPE_IDENTIFIER_RUNNNING);
+        CONST_MAP_NODETYPE_IDENTIFIER.put(CONST_NODETYPE_IDENTIFIER_LATE, CONST_NODETYPE_IDENTIFIER_LATE);
+        CONST_MAP_NODETYPE_IDENTIFIER.put(CONST_NODETYPE_IDENTIFIER_SHORT, CONST_NODETYPE_IDENTIFIER_SHORT);
+        CONST_MAP_NODETYPE_IDENTIFIER.put(CONST_NODETYPE_IDENTIFIER_DONE, CONST_NODETYPE_IDENTIFIER_DONE);
+        CONST_MAP_NODETYPE_IDENTIFIER.put(CONST_NODETYPE_IDENTIFIER_CANCELED, CONST_NODETYPE_IDENTIFIER_CANCELED);
+        // Abarten
+        CONST_MAP_NODETYPE_IDENTIFIER.put("OPEN", CONST_NODETYPE_IDENTIFIER_OPEN);
+        CONST_MAP_NODETYPE_IDENTIFIER.put("OFFEN", CONST_NODETYPE_IDENTIFIER_OPEN);
+        CONST_MAP_NODETYPE_IDENTIFIER.put("RUNNING", CONST_NODETYPE_IDENTIFIER_RUNNNING);
+        CONST_MAP_NODETYPE_IDENTIFIER.put("LAUFEND", CONST_NODETYPE_IDENTIFIER_RUNNNING);
+        CONST_MAP_NODETYPE_IDENTIFIER.put("LATE", CONST_NODETYPE_IDENTIFIER_LATE);
+        CONST_MAP_NODETYPE_IDENTIFIER.put("OVERDUE", CONST_NODETYPE_IDENTIFIER_LATE);
+        CONST_MAP_NODETYPE_IDENTIFIER.put("VERSPÄTET", CONST_NODETYPE_IDENTIFIER_LATE);
+        CONST_MAP_NODETYPE_IDENTIFIER.put("VERSPAETET", CONST_NODETYPE_IDENTIFIER_LATE);
+        CONST_MAP_NODETYPE_IDENTIFIER.put("SHORT", CONST_NODETYPE_IDENTIFIER_SHORT);
+        CONST_MAP_NODETYPE_IDENTIFIER.put("ÜBERFÄLLIG", CONST_NODETYPE_IDENTIFIER_SHORT);
+        CONST_MAP_NODETYPE_IDENTIFIER.put("UEBERFAELLIG", CONST_NODETYPE_IDENTIFIER_SHORT);
+        CONST_MAP_NODETYPE_IDENTIFIER.put("WARNING", CONST_NODETYPE_IDENTIFIER_SHORT);
+        CONST_MAP_NODETYPE_IDENTIFIER.put("DONE", CONST_NODETYPE_IDENTIFIER_DONE);
+        CONST_MAP_NODETYPE_IDENTIFIER.put("ERLEDIGT", CONST_NODETYPE_IDENTIFIER_DONE);
+        CONST_MAP_NODETYPE_IDENTIFIER.put("CANCELED", CONST_NODETYPE_IDENTIFIER_CANCELED);
+        CONST_MAP_NODETYPE_IDENTIFIER.put("VERWORFEN", CONST_NODETYPE_IDENTIFIER_CANCELED);
+        CONST_MAP_NODETYPE_IDENTIFIER.put("GELOESCHT", CONST_NODETYPE_IDENTIFIER_CANCELED);
+        CONST_MAP_NODETYPE_IDENTIFIER.put("ABGEBROCHEN", CONST_NODETYPE_IDENTIFIER_CANCELED);
+    }
+
     @Override
     public boolean isWFStatus(final String state) {
-        if (TaskNode.CONST_NODETYPE_IDENTIFIER_OPEN.equalsIgnoreCase(state)) {
+        if (CONST_NODETYPE_IDENTIFIER_OPEN.equalsIgnoreCase(state)) {
             return true;
-        } else if (TaskNode.CONST_NODETYPE_IDENTIFIER_RUNNNING.equalsIgnoreCase(state)) {
+        } else if (CONST_NODETYPE_IDENTIFIER_RUNNNING.equalsIgnoreCase(state)) {
             return true;
-        } else if (TaskNode.CONST_NODETYPE_IDENTIFIER_SHORT.equalsIgnoreCase(state)) {
+        } else if (CONST_NODETYPE_IDENTIFIER_SHORT.equalsIgnoreCase(state)) {
             return true;
-        } else if (TaskNode.CONST_NODETYPE_IDENTIFIER_LATE.equalsIgnoreCase(state)) {
+        } else if (CONST_NODETYPE_IDENTIFIER_LATE.equalsIgnoreCase(state)) {
             return true;
-        } else if (TaskNode.CONST_NODETYPE_IDENTIFIER_DONE.equalsIgnoreCase(state)) {
+        } else if (CONST_NODETYPE_IDENTIFIER_DONE.equalsIgnoreCase(state)) {
             return true;
         }
 
@@ -52,7 +117,7 @@ public class TaskNodeService extends BaseNodeService {
 
     @Override
     public boolean isWFStatusDone(final String state) {
-        if (TaskNode.CONST_NODETYPE_IDENTIFIER_DONE.equalsIgnoreCase(state)) {
+        if (CONST_NODETYPE_IDENTIFIER_DONE.equalsIgnoreCase(state)) {
             return true;
         }
         return false;
@@ -60,7 +125,7 @@ public class TaskNodeService extends BaseNodeService {
     
     @Override
     public boolean isWFStatusCanceled(final String state) {
-        if (TaskNode.CONST_NODETYPE_IDENTIFIER_CANCELED.equalsIgnoreCase(state)) {
+        if (CONST_NODETYPE_IDENTIFIER_CANCELED.equalsIgnoreCase(state)) {
             return true;
         }
         return false;
@@ -68,13 +133,13 @@ public class TaskNodeService extends BaseNodeService {
     
     @Override
     public boolean isWFStatusOpen(final String state) {
-        if (TaskNode.CONST_NODETYPE_IDENTIFIER_OPEN.equalsIgnoreCase(state)) {
+        if (CONST_NODETYPE_IDENTIFIER_OPEN.equalsIgnoreCase(state)) {
             return true;
-        } else if (TaskNode.CONST_NODETYPE_IDENTIFIER_RUNNNING.equalsIgnoreCase(state)) {
+        } else if (CONST_NODETYPE_IDENTIFIER_RUNNNING.equalsIgnoreCase(state)) {
             return true;
-        } else if (TaskNode.CONST_NODETYPE_IDENTIFIER_SHORT.equalsIgnoreCase(state)) {
+        } else if (CONST_NODETYPE_IDENTIFIER_SHORT.equalsIgnoreCase(state)) {
             return true;
-        } else if (TaskNode.CONST_NODETYPE_IDENTIFIER_LATE.equalsIgnoreCase(state)) {
+        } else if (CONST_NODETYPE_IDENTIFIER_LATE.equalsIgnoreCase(state)) {
             return true;
         }
 

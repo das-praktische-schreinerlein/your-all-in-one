@@ -17,6 +17,7 @@
 package de.yaio.datatransfer.importer;
 
 import de.yaio.core.node.BaseNode;
+import de.yaio.core.nodeservice.BaseNodeService;
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -46,7 +47,7 @@ public class NodeConfigurator {
      * @param nodeFactory - instance of the nodeFactory which will use the config 
      */
     public static void configureNodeTypeIdentifier(final NodeFactory nodeFactory) {
-        nodeFactory.addNodeTypeIdentifier(BaseNode.CONST_MAP_NODETYPE_IDENTIFIER, BaseNode.class);
+        nodeFactory.addNodeTypeIdentifier(BaseNodeService.CONST_MAP_NODETYPE_IDENTIFIER, BaseNode.class);
     }
 
     /**
@@ -60,7 +61,7 @@ public class NodeConfigurator {
      * @param importer - instance of the importer which will use the config 
      */
     public static void configureNodeTypes(final Importer importer) {
-        importer.addNodeTypeIdentifierVariantMapping(BaseNode.CONST_MAP_NODETYPE_IDENTIFIER);
+        importer.addNodeTypeIdentifierVariantMapping(BaseNodeService.CONST_MAP_NODETYPE_IDENTIFIER);
     }
 
     /**
