@@ -66,7 +66,6 @@ import de.yaio.core.datadomainservice.SysDataServiceImpl;
 import de.yaio.core.dbservice.BaseNodeDBService;
 import de.yaio.core.dbservice.BaseNodeDBServiceImpl;
 import de.yaio.core.nodeservice.BaseNodeService;
-import de.yaio.core.nodeservice.NodeService;
 import de.yaio.datatransfer.importer.parser.Parser;
 
 /**
@@ -699,33 +698,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
      * @param pRecursionLevel - how many recursion-level will be read from DB
      */
     public void initChildNodesFromDB(final int pRecursionLevel) {
-        int recursionLevel = pRecursionLevel;
-        // clear the children
-        this.childNodes.clear();
-        this.childNodesByNameMapMap.clear();
-        
-        // read my childNodes
-        List<BaseNode> tmpChildNodes = getBaseNodeDBService().findChildNodes(this.getSysUID());
-        
-        // set new level if it is not -1
-        recursionLevel = recursionLevel > 0 ? recursionLevel-- : recursionLevel;
-
-        // interate children
-        for (BaseNode childNode : tmpChildNodes) {
-            // add to childrenMaps
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("initChildNodesFromDB add to " + this.getNameForLogger() 
-                           + " child:" + childNode.getNameForLogger());
-            }
-            this.addChildNode(childNode);
-            
-            // check recursionLevel
-            if ((recursionLevel == NodeService.CONST_DB_RECURSIONLEVEL_ALL_CHILDREN) 
-                || (recursionLevel > 0)) {
-                // recurse
-                childNode.initChildNodesFromDB(recursionLevel);
-            }
-        }
+        this.getBaseNodeService().initChildNodesFromDB(this, pRecursionLevel);
     }
 
     /**
@@ -791,9 +764,9 @@ public class BaseNode implements BaseData, MetaData, SysData,
     // Hierarchy-functions
     //####################
     public void initChildNodesByNameMap() {
-        Set<BaseNode> childSet = childNodes;
+        Set<BaseNode> childSet = this.getChildNodes();
         for (BaseNode child : childSet) {
-            childNodesByNameMapMap.put(child.getIdForChildByNameMap(), child);
+            this.getChildNodesByNameMap().put(child.getIdForChildByNameMap(), child);
         }
     }
 
@@ -801,6 +774,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     public void setParentNode(final BaseNode parentNode) {
         getBaseNodeService().setParentNode(this, parentNode, true);
     }
+    
     @Override
     @XmlTransient
     @JsonIgnore
@@ -816,7 +790,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
             return getSrcName();
         }
         if (getSysUID() != null) {
-            return sysUID;
+            return getSysUID();
         }
         return getName();
     }
@@ -829,17 +803,17 @@ public class BaseNode implements BaseData, MetaData, SysData,
         if (childNode != null) {
             if (childNode.getSortPos() != null) {
                 // preserve sortpos of the child
-                if (childNode.getSortPos() > curSortIdx) {
+                if (childNode.getSortPos() > this.getCurSortIdx()) {
                     // update idx
-                    curSortIdx = childNode.getSortPos() + BaseNodeService.CONST_CURSORTIDX_STEP;
+                    this.setCurSortIdx(childNode.getSortPos() + BaseNodeService.CONST_CURSORTIDX_STEP);
                 }
             } else {
                 // set new sortpos for the child
-                childNode.setSortPos(curSortIdx);
-                curSortIdx = curSortIdx + BaseNodeService.CONST_CURSORTIDX_STEP;
+                childNode.setSortPos(this.getCurSortIdx());
+                this.setCurSortIdx(this.getCurSortIdx() + BaseNodeService.CONST_CURSORTIDX_STEP);
             }
-            this.childNodesByNameMapMap.put(childNode.getIdForChildByNameMap(), childNode);
-            this.childNodes.add((BaseNode) childNode);
+            this.getChildNodesByNameMap().put(childNode.getIdForChildByNameMap(), childNode);
+            this.getChildNodes().add((BaseNode) childNode);
         }
     }
     
@@ -865,7 +839,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
         if (newSortPos == null) {
             throw new IllegalArgumentException("newSortPos must not be null");
         }
-        if (!this.childNodes.contains(child)) {
+        if (!this.getChildNodes().contains(child)) {
             throw new IllegalArgumentException("child is no member of my childlist");
         }
         
@@ -874,14 +848,14 @@ public class BaseNode implements BaseData, MetaData, SysData,
         
         // preserve the childnodes in order
         Set<BaseNode> tmpChildNodes = new LinkedHashSet<BaseNode>();
-        for (BaseNode curChild : this.childNodes) {
+        for (BaseNode curChild : this.getChildNodes()) {
             // add the other child
             tmpChildNodes.add(curChild);
         }
         
         // clear the  orig list
-        this.childNodes.clear();
-        curSortIdx = 0;
+        this.getChildNodes().clear();
+        this.setCurSortIdx(0);
         
         // if the child moves down, then we have to realize that it is no more in list: so we have to sub the idx 
         int newPos = newSortPos.intValue();
@@ -902,7 +876,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
             if (child.equals(curChild) || child.getSysUID().equalsIgnoreCase(curChild.getSysUID())) {
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("bullshit iam in List already " 
-                 + curChild.getSortPos().intValue() + " at " + this.childNodes.size());
+                 + curChild.getSortPos().intValue() + " at " + this.getChildNodes().size());
                 // hey i'm already here
                 }
             } else {
@@ -917,10 +891,10 @@ public class BaseNode implements BaseData, MetaData, SysData,
         }
 
         // recalc the sortidx
-        curSortIdx = 0;
+        this.setCurSortIdx(0);
         for (BaseNode curChild : this.getChildNodes()) {
-            curChild.setSortPos(curSortIdx);
-            curSortIdx = curSortIdx + BaseNodeService.CONST_CURSORTIDX_STEP;
+            curChild.setSortPos(this.getCurSortIdx());
+            this.setCurSortIdx(this.getCurSortIdx() + BaseNodeService.CONST_CURSORTIDX_STEP);
         }
     }
     
@@ -939,7 +913,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     @Override
     public boolean hasChildNode(final DataDomain childNode) {
         if ((childNode != null) 
-            && (childNodesByNameMapMap.get(childNode.getIdForChildByNameMap()) != null)) {
+            && (getChildNodesByNameMap().get(childNode.getIdForChildByNameMap()) != null)) {
             return true;
         }
     

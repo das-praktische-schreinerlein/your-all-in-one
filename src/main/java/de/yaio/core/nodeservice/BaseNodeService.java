@@ -21,13 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.Transient;
-import javax.xml.bind.annotation.XmlTransient;
-
 import org.apache.commons.collections.map.SingletonMap;
 import org.apache.log4j.Logger;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import de.yaio.core.datadomain.BaseWorkflowData;
 import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
@@ -234,6 +229,51 @@ public class BaseNodeService extends NodeServiceImpl {
      * <h4>FeatureDomain:</h4>
      *     Persistence
      * <h4>FeatureDescription:</h4>
+     *     initialize the Children from database (childNodes and childNodesByNameMapMap)
+     *     recursivly
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>updates memberfields childNodes
+     *     <li>updates memberfields childNodesByNameMapMap
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Persistence
+     * @param pRecursionLevel - how many recursion-level will be read from DB
+     */
+    public void initChildNodesFromDB(final BaseNode baseNode, final int pRecursionLevel) {
+        int recursionLevel = pRecursionLevel;
+        // clear the children
+        baseNode.getChildNodes().clear();
+        baseNode.getChildNodesByNameMap().clear();
+        
+        // read my childNodes
+        List<BaseNode> tmpChildNodes = baseNode.getBaseNodeDBService().findChildNodes(baseNode.getSysUID());
+        
+        // set new level if it is not -1
+        recursionLevel = recursionLevel > 0 ? recursionLevel-- : recursionLevel;
+
+        // interate children
+        for (BaseNode childNode : tmpChildNodes) {
+            // add to childrenMaps
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("initChildNodesFromDB add to " + baseNode.getNameForLogger() 
+                           + " child:" + childNode.getNameForLogger());
+            }
+            baseNode.addChildNode(childNode);
+            
+            // check recursionLevel
+            if ((recursionLevel == NodeService.CONST_DB_RECURSIONLEVEL_ALL_CHILDREN) 
+                || (recursionLevel > 0)) {
+                // recurse
+                childNode.initChildNodesFromDB(recursionLevel);
+            }
+        }
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Persistence
+     * <h4>FeatureDescription:</h4>
      *     get a List of the parent-hierarchy
      * <h4>FeatureResult:</h4>
      *   <ul>
@@ -244,9 +284,6 @@ public class BaseNodeService extends NodeServiceImpl {
      * @param baseNode node
      * @return list of the parents, start with my own parent (not baseNode)
      */
-    @Transient
-    @XmlTransient
-    @JsonIgnore
     public List<BaseNode> getParentHierarchy(final DataDomain baseNode) {
         List<BaseNode> parentHierarchy = new ArrayList<BaseNode>();
         BaseNode parent = baseNode.getParentNode();
