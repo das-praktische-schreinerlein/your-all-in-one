@@ -50,8 +50,6 @@ public class InfoNodeService extends BaseNodeService {
 
     // Status-Konstanten
     private static final Map<String, String> CONST_MAP_NODETYPE_IDENTIFIER = new HashMap<String, String>();
-    private static final Map<String, WorkflowState> CONST_MAP_STATE_WORKFLOWSTATE = new SingletonMap();
-
     static {
         // Defaults
         CONST_MAP_NODETYPE_IDENTIFIER.put(CONST_NODETYPE_IDENTIFIER_INFO, CONST_NODETYPE_IDENTIFIER_INFO);

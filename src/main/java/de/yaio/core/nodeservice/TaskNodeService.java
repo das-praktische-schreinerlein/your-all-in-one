@@ -241,8 +241,6 @@ public class TaskNodeService extends BaseNodeService {
         return state;
     };
 
-    
-    
     @Override
     public String getDataBlocks4CheckSum(final DataDomain baseNode) throws Exception {
         TaskNode node = (TaskNode) baseNode;
