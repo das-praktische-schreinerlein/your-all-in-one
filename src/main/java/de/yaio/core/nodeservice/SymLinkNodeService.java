@@ -19,6 +19,7 @@ package de.yaio.core.nodeservice;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.node.SymLinkNode;
 
@@ -41,7 +42,7 @@ public class SymLinkNodeService extends BaseNodeService {
     public static final String CONST_NODETYPE_IDENTIFIER_SYMLINK = "SYMLINK";
 
     // Status-Konstanten
-    public static final Map<String, Object> CONST_MAP_NODETYPE_IDENTIFIER = new HashMap<String, Object>();
+    private static final Map<String, String> CONST_MAP_NODETYPE_IDENTIFIER = new HashMap<String, String>();
 
     static {
         // Defaults
@@ -80,5 +81,14 @@ public class SymLinkNodeService extends BaseNodeService {
             .append(" symLinkName=").append(node.getSymLinkName())
             .append(" symLinkTags=").append(node.getSymLinkTags());
         return data.toString();
+    }
+
+    @Override
+    public Map<String, String> getConfigState() {
+        return CONST_MAP_NODETYPE_IDENTIFIER;
+    }
+    @Override
+    public Map<String, WorkflowState> getConfigWorkflowState() {
+        return super.getConfigWorkflowStateNoWorkflow();
     }
 }

@@ -66,10 +66,10 @@ public interface NodeFactory {
      *     bekannt gemacht
      * <h4>FeatureKeywords:</h4>
      *     Config
-     * @param stateMap - Liste der Schlagworte (Typ, Status usw.)
+     * @param constMapNodetypeIdentifier - Liste der Schlagworte (Typ, Status usw.)
      * @param classType - Klasse (Node) die bei Auffinden des Schlagwortes instanziiert wird
      */
-    void addNodeTypeIdentifier(Map<String, Object> stateMap,
+    void addNodeTypeIdentifier(Map<String, String> constMapNodetypeIdentifier,
             Class<?> classType);
 
     /**

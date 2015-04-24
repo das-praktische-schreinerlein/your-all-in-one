@@ -15,8 +15,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 package de.yaio.core.node;
-import java.util.Map;
-
 import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlTransient;
@@ -72,12 +70,5 @@ public class UrlResNode extends InfoNode implements ResLocData {
     @Override
     public BaseNodeService getBaseNodeService() {
         return nodeDataService;
-    }
-    
-    @Override
-    @XmlTransient
-    @JsonIgnore
-    public Map<String, Object> getConfigState() {
-        return UrlResNodeService.CONST_MAP_NODETYPE_IDENTIFIER;
     }
 }

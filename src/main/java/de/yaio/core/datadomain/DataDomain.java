@@ -22,7 +22,6 @@ import java.util.Set;
 import javax.validation.ConstraintViolation;
 
 import de.yaio.core.node.BaseNode;
-import de.yaio.core.nodeservice.NodeService;
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -61,7 +60,7 @@ public interface DataDomain {
     void setName(String name);
 
     // servies
-    NodeService getBaseNodeService();
+    de.yaio.core.nodeservice.BaseNodeService getBaseNodeService();
     
     /**
      * <h4>FeatureDomain:</h4>

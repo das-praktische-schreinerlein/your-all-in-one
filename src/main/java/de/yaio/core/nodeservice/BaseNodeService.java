@@ -19,8 +19,10 @@ package de.yaio.core.nodeservice;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.collections.map.SingletonMap;
 import org.apache.log4j.Logger;
 
+import de.yaio.core.datadomain.BaseWorkflowData;
 import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.datadomainservice.BaseWorkflowDataServiceImpl;
@@ -52,13 +54,13 @@ public class BaseNodeService extends NodeServiceImpl {
     private static final Logger LOGGER = Logger.getLogger(NodeServiceImpl.class);
 
     public static final String CONST_NODETYPE_IDENTIFIER_UNKNOWN = "UNKNOWN";
-    public static final Map<String, Object> CONST_MAP_NODETYPE_IDENTIFIER = new HashMap<String, Object>();
-    public static final Map<String, WorkflowState> CONST_MAP_STATE_WORKFLOWSTATE = new HashMap<String, WorkflowState>();
 
+    private static final Map<String, String> CONST_MAP_NODETYPE_IDENTIFIER = new HashMap<String, String>();
+    private static final Map<String, WorkflowState> CONST_MAP_STATE_WORKFLOWSTATE = 
+                    new SingletonMap(CONST_NODETYPE_IDENTIFIER_UNKNOWN, WorkflowState.NOWORKFLOW);
+    private static final Map<WorkflowState, String> CONST_MAP_WORKFLOWSTATE_STATE = 
+                    new SingletonMap(WorkflowState.NOWORKFLOW, CONST_NODETYPE_IDENTIFIER_UNKNOWN);
     static {
-        // define WorkflowStates
-        CONST_MAP_STATE_WORKFLOWSTATE.put(CONST_NODETYPE_IDENTIFIER_UNKNOWN, WorkflowState.NOWORKFLOW);
-
         // Defaults
         CONST_MAP_NODETYPE_IDENTIFIER.put(CONST_NODETYPE_IDENTIFIER_UNKNOWN, CONST_NODETYPE_IDENTIFIER_UNKNOWN);
         // Abarten
@@ -102,6 +104,11 @@ public class BaseNodeService extends NodeServiceImpl {
         configureDataDomainRecalcer();
     }
     
+    
+    /////////////////////////
+    // Configuration
+    /////////////////////////
+    
     @Override
     public void configureDataDomainRecalcer() {
         MetaDataServiceImpl.configureDataDomainRecalcer(this);
@@ -110,7 +117,27 @@ public class BaseNodeService extends NodeServiceImpl {
         StatDataServiceImpl.configureDataDomainRecalcer(this);
     }
 
+    @Override
+    public Map<String, String> getConfigState() {
+        return CONST_MAP_NODETYPE_IDENTIFIER;
+    }
+    @Override
+    public Map<String, WorkflowState> getConfigWorkflowState() {
+        return this.getConfigWorkflowState();
+    }
+    public Map<WorkflowState, String> getConfigWorkflowStateState() {
+        return CONST_MAP_WORKFLOWSTATE_STATE;
+    }
+    public Map<String, WorkflowState> getConfigWorkflowStateNoWorkflow() {
+        return CONST_MAP_STATE_WORKFLOWSTATE;
+    }
+    public Map<WorkflowState, String> getConfigWorkflowStateStateNoWorkflow() {
+        return CONST_MAP_WORKFLOWSTATE_STATE;
+    }
 
+    ///////////////////////
+    // Hierarchy-data
+    ///////////////////////
     @Override
     public void setParentNode(final DataDomain baseNode, final DataDomain parentNode, 
             final boolean flgRenewParent) {
@@ -271,4 +298,20 @@ public class BaseNodeService extends NodeServiceImpl {
             .append(" desc=").append(node.getNodeDesc());
         return data.toString();
     }
+    
+    
+    /////////////////////////
+    // Workflow
+    /////////////////////////
+    public WorkflowState getWorkflowState(final BaseWorkflowData node)  throws IllegalStateException {
+        return WorkflowState.NOWORKFLOW;
+    };
+
+    public WorkflowState getWorkflowStateForState(final BaseWorkflowData node)  throws IllegalStateException {
+        return WorkflowState.NOWORKFLOW;
+    };
+
+    public String getStateForWorkflowState(final BaseWorkflowData node)  throws IllegalStateException {
+        return node.getState();
+    };
 }

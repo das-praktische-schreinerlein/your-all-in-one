@@ -47,7 +47,7 @@ public class EventNodeConfigurator {
      * @param nodeFactory - instance of the nodeFactory which will use the config 
      */
     public static void configureNodeTypeIdentifier(final NodeFactory nodeFactory) {
-        nodeFactory.addNodeTypeIdentifier(EventNodeService.CONST_MAP_NODETYPE_IDENTIFIER, EventNode.class);
+        nodeFactory.addNodeTypeIdentifier(EventNodeService.getInstance().getConfigState(), EventNode.class);
     }
 
     /**
@@ -61,7 +61,7 @@ public class EventNodeConfigurator {
      * @param importer - instance of the importer which will use the config 
      */
     public static void configureNodeTypes(final Importer importer) {
-        importer.addNodeTypeIdentifierVariantMapping(EventNodeService.CONST_MAP_NODETYPE_IDENTIFIER);
+        importer.addNodeTypeIdentifierVariantMapping(EventNodeService.getInstance().getConfigState());
     }
 
     /**
@@ -74,7 +74,7 @@ public class EventNodeConfigurator {
      * @param importer - instance of the importer which will use the config 
      */
     public static void configureWorkflowNodeTypeMapping(final Importer importer) {
-        importer.addWorkflowNodeTypeMapping(EventNodeService.CONST_MAP_NODETYPE_IDENTIFIER);
+        importer.addWorkflowNodeTypeMapping(EventNodeService.getInstance().getConfigState());
     }
 
 

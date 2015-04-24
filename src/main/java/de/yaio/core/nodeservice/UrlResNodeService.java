@@ -19,6 +19,7 @@ package de.yaio.core.nodeservice;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.node.UrlResNode;
 
@@ -48,8 +49,7 @@ public class UrlResNodeService extends InfoNodeService {
     public static final String CONST_NODETYPE_IDENTIFIER_EMAILRES = "EMAILRES";
 
     // Status-Konstanten
-    public static final Map<String, Object> CONST_MAP_NODETYPE_IDENTIFIER = new HashMap<String, Object>();
-
+    private static final Map<String, String> CONST_MAP_NODETYPE_IDENTIFIER = new HashMap<String, String>();
     static {
         // Defaults
         CONST_MAP_NODETYPE_IDENTIFIER.put(CONST_NODETYPE_IDENTIFIER_URLRES, CONST_NODETYPE_IDENTIFIER_URLRES);
@@ -81,6 +81,15 @@ public class UrlResNodeService extends InfoNodeService {
      */
     public static UrlResNodeService getInstance() {
         return instance;
+    }
+
+    @Override
+    public Map<String, String> getConfigState() {
+        return CONST_MAP_NODETYPE_IDENTIFIER;
+    }
+    @Override
+    public Map<String, WorkflowState> getConfigWorkflowState() {
+        return super.getConfigWorkflowStateNoWorkflow();
     }
 
     @Override

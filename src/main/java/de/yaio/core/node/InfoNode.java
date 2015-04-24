@@ -15,8 +15,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 package de.yaio.core.node;
-import java.util.Map;
-
 import javax.xml.bind.annotation.XmlTransient;
 
 import org.springframework.roo.addon.javabean.RooJavaBean;
@@ -55,12 +53,5 @@ public class InfoNode extends BaseNode implements DocLayoutData {
     @Override
     public BaseNodeService getBaseNodeService() {
         return nodeDataService;
-    }
-
-    @Override
-    @XmlTransient
-    @JsonIgnore
-    public Map<String, Object> getConfigState() {
-        return InfoNodeService.CONST_MAP_NODETYPE_IDENTIFIER;
     }
 }

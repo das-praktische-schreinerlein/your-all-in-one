@@ -19,6 +19,10 @@ package de.yaio.core.nodeservice;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.collections.map.SingletonMap;
+
+import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
+
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -45,7 +49,8 @@ public class InfoNodeService extends BaseNodeService {
     public static final String CONST_NODETYPE_IDENTIFIER_HOWTO = "HOWTO";
 
     // Status-Konstanten
-    public static final Map<String, Object> CONST_MAP_NODETYPE_IDENTIFIER = new HashMap<String, Object>();
+    private static final Map<String, String> CONST_MAP_NODETYPE_IDENTIFIER = new HashMap<String, String>();
+    private static final Map<String, WorkflowState> CONST_MAP_STATE_WORKFLOWSTATE = new SingletonMap();
 
     static {
         // Defaults
@@ -77,5 +82,14 @@ public class InfoNodeService extends BaseNodeService {
      */
     public static InfoNodeService getInstance() {
         return instance;
+    }
+
+    @Override
+    public Map<String, String> getConfigState() {
+        return CONST_MAP_NODETYPE_IDENTIFIER;
+    }
+    @Override
+    public Map<String, WorkflowState> getConfigWorkflowState() {
+        return super.getConfigWorkflowStateNoWorkflow();
     }
 }

@@ -40,8 +40,8 @@ public class ImporterImpl implements Importer {
 
     // Map mit den Identifier-String un der entprechenden Node-Klase
     protected Map<String, Class<?>> hshNodeTypeIdentifier = new HashMap<String, Class<?>>();
-    protected Map<String, Object> hshNodeTypeIdentifierVariantMapping = new HashMap<String, Object>();
-    protected Map<String, Object> hshWorkflowNodeTypeMapping = new HashMap<String, Object>();
+    protected Map<String, String> hshNodeTypeIdentifierVariantMapping = new HashMap<String, String>();
+    protected Map<String, String> hshWorkflowNodeTypeMapping = new HashMap<String, String>();
     protected Map<Integer, Parser> hshDataDomainParser = new HashMap<Integer, Parser>();
 
     protected ImportOptions options = null;
@@ -85,7 +85,7 @@ public class ImporterImpl implements Importer {
     }
 
     @Override
-    public void addNodeTypeIdentifierVariantMapping(final Map<String, Object> stateMap) {
+    public void addNodeTypeIdentifierVariantMapping(final Map<String, String> stateMap) {
         for (String stateDef : stateMap.keySet()) {
             this.addNodeTypeIdentifierVariantMapping(stateDef, (String) stateMap.get(stateDef));
         }
@@ -96,7 +96,7 @@ public class ImporterImpl implements Importer {
     }
 
 
-    public Map<String, Object> getHshNodeTypeIdentifierVariantMapping() {
+    public Map<String, String> getHshNodeTypeIdentifierVariantMapping() {
         return hshNodeTypeIdentifierVariantMapping;
     }
     
@@ -119,7 +119,7 @@ public class ImporterImpl implements Importer {
     }
 
     @Override
-    public void addWorkflowNodeTypeMapping(final Map<String, Object> stateMap) {
+    public void addWorkflowNodeTypeMapping(final Map<String, String> stateMap) {
         for (String stateDef : stateMap.keySet()) {
             this.addWorkflowNodeTypeMapping(stateDef, (String) stateMap.get(stateDef));
         }
@@ -129,7 +129,7 @@ public class ImporterImpl implements Importer {
         this.hshWorkflowNodeTypeMapping.put(type, masterType);
     }
 
-    public Map<String, Object> getHshWorkflowNodeTypeMapping() {
+    public Map<String, String> getHshWorkflowNodeTypeMapping() {
         return hshWorkflowNodeTypeMapping;
     }
 

@@ -53,9 +53,11 @@ public class EventNodeService extends TaskNodeService {
     public static final String CONST_NODETYPE_IDENTIFIER_EVENT_CANCELED = "EVENT_VERWORFEN";
     
     // Status-Konstanten
-    public static final Map<String, Object> CONST_MAP_NODETYPE_IDENTIFIER = new HashMap<String, Object>();
-    public static final Map<String, WorkflowState> CONST_MAP_STATE_WORKFLOWSTATE = new HashMap<String, WorkflowState>();
-    public static final Map<WorkflowState, String> CONST_MAP_WORKFLOWSTATE_STATE = new HashMap<WorkflowState, String>();
+    private static final Map<String, String> CONST_MAP_NODETYPE_IDENTIFIER = new HashMap<String, String>();
+    private static final Map<String, WorkflowState> CONST_MAP_STATE_WORKFLOWSTATE = 
+                    new HashMap<String, WorkflowState>();
+    private static final Map<WorkflowState, String> CONST_MAP_WORKFLOWSTATE_STATE = 
+                    new HashMap<WorkflowState, String>();
 
     static {
         // define WorkflowStates
@@ -123,7 +125,18 @@ public class EventNodeService extends TaskNodeService {
         return instance;
     }
 
-    
+    @Override
+    public Map<String, String> getConfigState() {
+        return CONST_MAP_NODETYPE_IDENTIFIER;
+    }
+    @Override
+    public Map<String, WorkflowState> getConfigWorkflowState() {
+        return CONST_MAP_STATE_WORKFLOWSTATE;
+    }
+    @Override
+    public Map<WorkflowState, String> getConfigWorkflowStateState() {
+        return CONST_MAP_WORKFLOWSTATE_STATE;
+    }
     
     @Override
     public boolean isWFStatus(final String state) {

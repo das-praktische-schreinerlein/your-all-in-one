@@ -438,7 +438,7 @@ public class WikiImporter extends ImporterImpl {
             // Identifier konfigurieren
             Map<String, Class<?>> hshNodeTypeIdentifier = 
                     this.importer.getNodeFactory().getHshNodeTypeIdentifier();
-            Map<String, Object> hshNodeTypes = this.importer.getHshNodeTypeIdentifierVariantMapping();
+            Map<String, String> hshNodeTypes = this.importer.getHshNodeTypeIdentifierVariantMapping();
 
             // alle iterieren
             for (WikiStructLine curWk : lstWikiLines) {

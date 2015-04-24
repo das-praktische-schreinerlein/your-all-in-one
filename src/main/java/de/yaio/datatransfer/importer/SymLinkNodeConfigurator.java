@@ -47,7 +47,7 @@ public class SymLinkNodeConfigurator {
      * @param nodeFactory - instance of the nodeFactory which will use the config 
      */
     public static void configureNodeTypeIdentifier(final NodeFactory nodeFactory) {
-        nodeFactory.addNodeTypeIdentifier(SymLinkNodeService.CONST_MAP_NODETYPE_IDENTIFIER, SymLinkNode.class);
+        nodeFactory.addNodeTypeIdentifier(SymLinkNodeService.getInstance().getConfigState(), SymLinkNode.class);
     }
 
     /**
@@ -61,7 +61,7 @@ public class SymLinkNodeConfigurator {
      * @param importer - instance of the importer which will use the config 
      */
     public static void configureNodeTypes(final Importer importer) {
-        importer.addNodeTypeIdentifierVariantMapping(SymLinkNodeService.CONST_MAP_NODETYPE_IDENTIFIER);
+        importer.addNodeTypeIdentifierVariantMapping(SymLinkNodeService.getInstance().getConfigState());
     }
 
     /**

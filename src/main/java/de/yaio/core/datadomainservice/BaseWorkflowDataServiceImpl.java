@@ -518,11 +518,11 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
            return baseNode.getState();
         } else if (EventNode.class.isInstance(baseNode)) {
            // Event
-           return baseNode.getStateForWorkflowState(baseNode.getWorkflowState());
+           return baseNode.getBaseNodeService().getStateForWorkflowState(baseNode);
 //           return this.getRecalcedEventState((ExtendedWorkflowData) baseNode);
         } else if (TaskNode.class.isInstance(baseNode)) {
            // Task
-            return baseNode.getStateForWorkflowState(baseNode.getWorkflowState());
+            return baseNode.getBaseNodeService().getStateForWorkflowState(baseNode);
 //           return this.getRecalcedTaskState((ExtendedWorkflowData) baseNode);
         }
         

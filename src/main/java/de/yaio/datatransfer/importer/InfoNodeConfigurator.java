@@ -47,7 +47,7 @@ public class InfoNodeConfigurator {
      * @param nodeFactory - instance of the nodeFactory which will use the config 
      */
     public static void configureNodeTypeIdentifier(final NodeFactory nodeFactory) {
-        nodeFactory.addNodeTypeIdentifier(InfoNodeService.CONST_MAP_NODETYPE_IDENTIFIER, InfoNode.class);
+        nodeFactory.addNodeTypeIdentifier(InfoNodeService.getInstance().getConfigState(), InfoNode.class);
     }
 
     /**
@@ -61,7 +61,7 @@ public class InfoNodeConfigurator {
      * @param importer - instance of the importer which will use the config 
      */
     public static void configureNodeTypes(final Importer importer) {
-        importer.addNodeTypeIdentifierVariantMapping(InfoNodeService.CONST_MAP_NODETYPE_IDENTIFIER);
+        importer.addNodeTypeIdentifierVariantMapping(InfoNodeService.getInstance().getConfigState());
     }
 
     /**

@@ -16,6 +16,9 @@
  */
 package de.yaio.core.nodeservice;
 
+import java.util.Map;
+
+import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.datadomainservice.DataDomainRecalc;
 
@@ -219,6 +222,9 @@ public interface NodeService {
     ///////////////////////
     // Workflow
     ///////////////////////
+    
+    public Map<String, String> getConfigState();
+    public Map<String, WorkflowState> getConfigWorkflowState();
     
     /**
      * <h4>FeatureDomain:</h4>

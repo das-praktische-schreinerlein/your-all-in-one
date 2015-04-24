@@ -543,8 +543,8 @@ public class BaseNode implements BaseData, MetaData, SysData,
      * summary of all children workflowstate with the highest priority
      */
     public WorkflowState getWorkflowState() {
-        if (workflowState == null) {
-            return WorkflowState.NOWORKFLOW;
+        if (workflowState == null || workflowState == WorkflowState.NOWORKFLOW) {
+            return this.getBaseNodeService().getWorkflowState(this);
         }
         return workflowState;
     };
@@ -1118,13 +1118,6 @@ public class BaseNode implements BaseData, MetaData, SysData,
     }
 
     @Override
-    @XmlTransient
-    @JsonIgnore
-    public Map<String, Object> getConfigState() {
-        return BaseNodeService.CONST_MAP_NODETYPE_IDENTIFIER;
-    }
-    
-    @Override
     public boolean isWFStatus(final String state) {
         return getBaseNodeService().isWFStatus(state);
     }
@@ -1143,28 +1136,6 @@ public class BaseNode implements BaseData, MetaData, SysData,
     public boolean isWFStatusCanceled(final String state) {
         return getBaseNodeService().isWFStatusCanceled(state);
     }
-    
-    @Override
-    @XmlTransient
-    @JsonIgnore
-    public Map<String, WorkflowState> getConfigWorkflowState() {
-        return BaseNodeService.CONST_MAP_STATE_WORKFLOWSTATE;
-    }
-    
-    @Override
-    @XmlTransient
-    @JsonIgnore
-    public WorkflowState getWorkflowStateForState(final String state)  throws IllegalStateException {
-        return WorkflowState.NOWORKFLOW;
-    };
-
-    @Override
-    @XmlTransient
-    @JsonIgnore
-    public String getStateForWorkflowState(final WorkflowState workflowState)  throws IllegalStateException {
-        return this.getState();
-    };
-    
     
     //####################
     // service-functions

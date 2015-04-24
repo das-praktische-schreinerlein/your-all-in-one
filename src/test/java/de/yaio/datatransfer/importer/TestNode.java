@@ -21,7 +21,7 @@ import de.yaio.core.node.BaseNode;
 public class TestNode extends BaseNode implements TestObj {
     
     // Status-Konstanten
-    public static final Map<String, Object> CONST_MAP_NODETYPE_IDENTIFIER = new HashMap<String, Object>();
+    public static final Map<String, String> CONST_MAP_NODETYPE_IDENTIFIER = new HashMap<String, String>();
     static {
         // Defaults
         CONST_MAP_NODETYPE_IDENTIFIER.put("TEST", "TEST");

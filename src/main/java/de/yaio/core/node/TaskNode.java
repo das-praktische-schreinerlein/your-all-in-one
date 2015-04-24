@@ -16,7 +16,6 @@
  */
 package de.yaio.core.node;
 import java.util.Date;
-import java.util.Map;
 
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlTransient;
@@ -66,80 +65,6 @@ public class TaskNode extends BaseNode implements ExtendedWorkflowData {
     public static NodeService getConfiguredNodeService() {
         return nodeDataService;
     }
-
-    @Override
-    @XmlTransient
-    @JsonIgnore
-    public Map<String, Object> getConfigState() {
-        return TaskNodeService.CONST_MAP_NODETYPE_IDENTIFIER;
-    }
-    
-    @Override
-    @XmlTransient
-    @JsonIgnore
-    public Map<String, WorkflowState> getConfigWorkflowState() {
-        return TaskNodeService.CONST_MAP_STATE_WORKFLOWSTATE;
-    }
-    
-    @Override
-    public WorkflowState getWorkflowState() {
-        WorkflowState masterState = super.getWorkflowState();
-        if (masterState == WorkflowState.NOWORKFLOW) {
-            // default if empty
-            
-            // calc from state
-            if (this.getState() != null) {
-                WorkflowState newState = this.getWorkflowStateForState(this.getState());
-                if (newState != null) {
-                    return newState;
-                }
-            }
-            
-            // return default
-            return WorkflowState.NOTPLANED;
-        }
-        return masterState;
-    };
-
-    @Override
-    @XmlTransient
-    @JsonIgnore
-    public WorkflowState getWorkflowStateForState(final String state)  throws IllegalStateException {
-        // get WorkflowState for state
-        WorkflowState wfState = getConfigWorkflowState().get(state);
-        
-        if (wfState == null) {
-            // if null: second try - normalize state
-            String newState = (String) getConfigState().get(state);
-            wfState = getConfigWorkflowState().get(newState);
-        }
-        
-        // unknown state
-        if (wfState == null) {
-            throw new IllegalStateException("No WorkflowState found for state=" + state 
-                            + " node=" + this.getNameForLogger());
-        }
-        return wfState;
-    };
-    
-    @Override
-    @XmlTransient
-    @JsonIgnore
-    public String getStateForWorkflowState(final WorkflowState workflowState)  throws IllegalStateException {
-        // workflowState must be set
-        if (workflowState == null) {
-            throw new IllegalStateException("workflowState must be set node=" + this.getNameForLogger());
-        }
-        
-        // unknown state
-        String state = TaskNodeService.CONST_MAP_WORKFLOWSTATE_STATE.get(workflowState);
-        if (state == null) {
-            throw new IllegalStateException("No state found for workflowState=" + workflowState 
-                            + " node=" + this.getNameForLogger());
-        }
-        
-        return state;
-    };
 
     @Override
     @XmlTransient

@@ -106,7 +106,7 @@ public class NodeFactoryImpl implements NodeFactory {
     }
 
     @Override
-    public void addNodeTypeIdentifier(final Map<String, Object> stateMap, final Class<?> classType) {
+    public void addNodeTypeIdentifier(final Map<String, String> stateMap, final Class<?> classType) {
         for (String stateDef : stateMap.keySet()) {
             this.putNodeTypeIdentifier(stateDef, classType);
         }

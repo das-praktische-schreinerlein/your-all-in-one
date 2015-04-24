@@ -15,8 +15,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 package de.yaio.core.node;
-import java.util.Map;
-
 import javax.xml.bind.annotation.XmlTransient;
 
 import org.springframework.roo.addon.javabean.RooJavaBean;
@@ -55,25 +53,4 @@ public class EventNode extends TaskNode {
     public BaseNodeService getBaseNodeService() {
         return nodeDataService;
     }
-
-    @Override
-    @XmlTransient
-    @JsonIgnore
-    public Map<String, Object> getConfigState() {
-        return EventNodeService.CONST_MAP_NODETYPE_IDENTIFIER;
-    }
-    
-    @Override
-    @XmlTransient
-    @JsonIgnore
-    public Map<String, WorkflowState> getConfigWorkflowState() {
-        return EventNodeService.CONST_MAP_STATE_WORKFLOWSTATE;
-    }
-    
-    @Override
-    @XmlTransient
-    @JsonIgnore
-    public String getStateForWorkflowState(final WorkflowState workflowState)  throws IllegalStateException {
-        return EventNodeService.CONST_MAP_WORKFLOWSTATE_STATE.get(workflowState);
-    };
 }

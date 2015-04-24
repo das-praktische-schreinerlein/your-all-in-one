@@ -19,6 +19,7 @@ package de.yaio.core.nodeservice;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.yaio.core.datadomain.BaseWorkflowData;
 import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.node.TaskNode;
@@ -54,10 +55,12 @@ public class TaskNodeService extends BaseNodeService {
     public static final String CONST_NODETYPE_IDENTIFIER_CANCELED = "VERWORFEN";
 
     // Status-Konstanten
-    public static final Map<String, Object> CONST_MAP_NODETYPE_IDENTIFIER = new HashMap<String, Object>();
-    public static final Map<String, WorkflowState> CONST_MAP_STATE_WORKFLOWSTATE = new HashMap<String, WorkflowState>();
-    public static final Map<WorkflowState, String> CONST_MAP_WORKFLOWSTATE_STATE = new HashMap<WorkflowState, String>();
-
+    private static final Map<String, String> CONST_MAP_NODETYPE_IDENTIFIER = 
+                    new HashMap<String, String>();
+    private static final Map<String, WorkflowState> CONST_MAP_STATE_WORKFLOWSTATE = 
+                    new HashMap<String, WorkflowState>();
+    private static final Map<WorkflowState, String> CONST_MAP_WORKFLOWSTATE_STATE = 
+                    new HashMap<WorkflowState, String>();
     static {
         // define WorkflowStates
         CONST_MAP_STATE_WORKFLOWSTATE.put(BaseNodeService.CONST_NODETYPE_IDENTIFIER_UNKNOWN, WorkflowState.NOTPLANED);
@@ -118,7 +121,19 @@ public class TaskNodeService extends BaseNodeService {
     public static TaskNodeService getInstance() {
         return instance;
     }
-    
+
+    @Override
+    public Map<String, String> getConfigState() {
+        return CONST_MAP_NODETYPE_IDENTIFIER;
+    }
+    @Override
+    public Map<String, WorkflowState> getConfigWorkflowState() {
+        return CONST_MAP_STATE_WORKFLOWSTATE;
+    }
+    @Override
+    public Map<WorkflowState, String> getConfigWorkflowStateState() {
+        return CONST_MAP_WORKFLOWSTATE_STATE;
+    }
 
     @Override
     public boolean isWFStatus(final String state) {
@@ -169,6 +184,65 @@ public class TaskNodeService extends BaseNodeService {
         return false;
     }
 
+    @Override
+    public WorkflowState getWorkflowState(final BaseWorkflowData node) {
+        WorkflowState masterState = super.getWorkflowState(node);
+        if (masterState == WorkflowState.NOWORKFLOW || masterState == null) {
+            // default if empty
+            
+            // calc from state
+            if (node.getState() != null) {
+                WorkflowState newState = this.getWorkflowStateForState(node);
+                if (newState != null) {
+                    return newState;
+                }
+            }
+            
+            // return default
+            return WorkflowState.NOTPLANED;
+        }
+        return masterState;
+    };
+
+    @Override
+    public WorkflowState getWorkflowStateForState(final BaseWorkflowData node)  throws IllegalStateException {
+        // get WorkflowState for state
+        String state = node.getState();
+        WorkflowState wfState = getConfigWorkflowState().get(state);
+        
+        if (wfState == null) {
+            // if null: second try - normalize state
+            String newState = (String) getConfigState().get(state);
+            wfState = getConfigWorkflowState().get(newState);
+        }
+        
+        // unknown state
+        if (wfState == null) {
+            throw new IllegalStateException("No WorkflowState found for state=" + state);
+        }
+        return wfState;
+    };
+    
+    @Override
+    public String getStateForWorkflowState(final BaseWorkflowData node)  throws IllegalStateException {
+        // workflowState must be set
+        WorkflowState workflowState = node.getWorkflowState();
+        if (workflowState == null) {
+            throw new IllegalStateException("workflowState must be set node=" + node.getNameForLogger());
+        }
+        
+        // unknown state
+        String state = this.getConfigWorkflowStateState().get(workflowState);
+        if (state == null) {
+            throw new IllegalStateException("No state found for workflowState=" + workflowState 
+                            + " node=" + node.getNameForLogger());
+        }
+        
+        return state;
+    };
+
+    
+    
     @Override
     public String getDataBlocks4CheckSum(final DataDomain baseNode) throws Exception {
         TaskNode node = (TaskNode) baseNode;
