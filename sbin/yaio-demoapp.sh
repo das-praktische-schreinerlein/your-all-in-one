@@ -8,7 +8,7 @@
 # Short-Description: Start yaio-demoapp at boot time
 # Description:       Start yaio-demoapp at boot time
 ### END INIT INFO
-APPPATH=/var/www/vhosts/your-all-in-one.de/yaio-appdemo
+APPPATH=/home/yaiodemo/your-all-in-one/
 YAIOUSER=yaiodemo
 cd $APPPATH
 case $1 in
