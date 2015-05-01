@@ -367,8 +367,86 @@ function formatDescBlock(descBlock) {
             formatYaioMindmap(block);
         }
     });
+
+    // highlight checklist
+    highlightCheckList(descBlock);
     
     return flgDoMermaid;
+}
+
+function highlightCheckList(descBlock) {
+    var descBlockId = $(descBlock).attr('id');
+    console.log("highlightCheckList highlight for descBlock: " + descBlockId);
+
+    // states
+    var checkListConfigs = {
+        "checklist-state-OPEN": {
+            styleClassPraefix: "checklist-state-",
+            matchers: ["OPEN", "OFFEN", "o", "O", "0"]
+        },
+        "checklist-state-RUNNING": {
+            styleClassPraefix: "checklist-state-",
+            matchers: ["RUNNING"]
+        },
+        "checklist-state-LATE": {
+            styleClassPraefix: "checklist-state-",
+            matchers: ["LATE"]
+        },
+        "checklist-state-BLOCKED": {
+            styleClassPraefix: "checklist-state-",
+            matchers: ["BLOCKED", "WAITING", "WAIT"]
+        },
+        "checklist-state-WARNING": {
+            styleClassPraefix: "checklist-state-",
+            matchers: ["WARNING"]
+        },
+        "checklist-state-DONE": {
+            styleClassPraefix: "checklist-state-",
+            matchers: ["DONE", "OK", "x", "X", "ERLEDIGT"]
+        },
+        "checklist-test-TESTOPEN": {
+            styleClassPraefix: "checklist-test-",
+            matchers: ["TESTOPEN"]
+        },
+        "checklist-test-PASSED": {
+            styleClassPraefix: "checklist-test-",
+            matchers: ["PASSED"]
+        },
+        "checklist-test-FAILED": {
+            styleClassPraefix: "checklist-test-",
+            matchers: ["FAILED", "ERROR"]
+        },
+    } 
+    // tests
+    for (var idx in checkListConfigs) {
+        var matchers = checkListConfigs[idx].matchers;
+        highlightCheckListForMatchers(descBlock, matchers, idx, '');
+    }
+}
+
+function highlightCheckListForMatchers(descBlock, matchers, styleClass, style) {
+    var descBlockId = $(descBlock).attr('id');
+    console.log("highlightCheckListForMatchers matchers '" + matchers + "' for descBlock: " + descBlockId);
+    for (var idx in matchers) {
+        highlightCheckListForMatcher(descBlock, "[" + matchers[idx] + "]", styleClass, style);
+    }
+}
+function highlightCheckListForMatcher(descBlock, matcherStr, styleClass, style) {
+    var descBlockId = $(descBlock).attr('id');
+    console.log("highlightCheckListForMatcher matcherStr '" + matcherStr + "' for descBlock: " + descBlockId);
+    $("#" + descBlockId + " li:contains('" + matcherStr + "'),h1:contains('" + matcherStr + "'),h2:contains('" + matcherStr + "')").each(function(index, value) {
+        var regEx = RegExp(escapeRegExp(matcherStr), 'gi');
+        findAndReplaceDOMText($(value).get(0), {
+            find: regEx,
+            replace: function(portion) {
+                var el = document.createElement('span');
+                el.style = style;
+                el.className = styleClass
+                el.innerHTML = portion.text;
+                return el;
+            }
+        });
+    });
 }
 
 function addServicesToDiagrammBlock(block, type, downloadLink) {
