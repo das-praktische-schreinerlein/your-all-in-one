@@ -634,7 +634,7 @@ yaioM.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $http
                     descText = descText.toLowerCase();
                     
                     for (var idx in searchWords) {
-                        searchWord = searchWords[idx];
+                        searchWord = escapeRegExp(searchWords[idx]);
 
                         // split by searchwords
                         searchResults = descText.toLowerCase().split(searchWord.toLowerCase());
