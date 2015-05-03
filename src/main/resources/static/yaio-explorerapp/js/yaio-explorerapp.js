@@ -81,6 +81,9 @@ yaioM.config(function($routeProvider) {
         .when('/show/:nodeId/activate/:activeNodeId', { 
             controller:  'NodeShowCtrl',
             templateUrl: 'templates/node.html' })
+        .when('/showByAllIds/:nodeByAllId', { 
+            controller:  'NodeShowCtrl',
+            templateUrl: 'templates/node.html' })
         .when('/show/:nodeId', { 
             controller:  'NodeShowCtrl',
             templateUrl: 'templates/node.html' })
@@ -757,10 +760,19 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
     $scope.outputOptionsEditor = OutputOptionsEditor;
 
     // check parameter - set default if empty
+    var baseUrl = '/show/';
+    var restBaseUrl = '/nodes/show/';
     var nodeId = $routeParams.nodeId;
+    var nodeByAllId = $routeParams.nodeByAllId;
+    if (nodeByAllId != null && nodeByAllId != "" && nodeByAllId) {
+        nodeId = nodeByAllId;
+        baseUrl = '/showByAllIds/';
+        restBaseUrl = '/nodes/showsymlink/';
+    }
     if (nodeId == null || nodeId == "" || ! nodeId) {
         nodeId = "MasterplanMasternode1";
     }
+
     // create node
     $scope.node = {};
     $scope.nodeForEdit = {};
@@ -772,10 +784,10 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
 
     console.log("NodeShowCtrl - processing nodeId=" + nodeId + " activeNodeId=" + activeNodeId);
 
-    var curNodeUrl = '/nodes/show/' + nodeId;
+    var curNodeUrl = restBaseUrl + nodeId;
 
     // save lastLocation for login
-    $rootScope.lastLocation = '/show/' + nodeId;
+    $rootScope.lastLocation = baseUrl + nodeId;
     
     // call authentificate 
     authorization.authentificate(function () {

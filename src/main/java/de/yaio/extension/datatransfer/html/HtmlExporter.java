@@ -1040,13 +1040,16 @@ public class HtmlExporter extends WikiExporter {
                         "<div id=\"inlineMindmap",
                         "\" class=\"yaiomindmap\">$1</div>").toString();
         
+        // replace yaio-links
+        newDescText = newDescText.replaceAll("href=\"yaio:", "href=\"" + "/yaio-explorerapp/yaio-explorerapp.html#/showByAllIds/");
+        
         // reescape > and replace markdown-hack "."
         newDescText = newDescText.replaceAll("&amp;gt;", "&gt;");
         newDescText = newDescText.replaceAll("\n\\.\n", "\n");
         
         return newDescText;
     }
-    
+
 
     /**
      * <h4>FeatureDomain:</h4>

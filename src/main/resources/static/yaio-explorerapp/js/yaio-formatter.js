@@ -73,18 +73,39 @@ function formatMarkdown(descText, flgHighlightNow, headerPrefix) {
     
     // my own heading-handler to be sure that the heading id is unique
     renderer.heading = function(text, level, raw) {
-      return '<h'
-        + level
-        + ' id="'
-        + this.options.headerPrefix
-        + '_' + (localHtmlId++) + '_'
-        + raw.toLowerCase().replace(/[^\w]+/g, '-')
+      return '<h' + level 
+        + ' id="' + this.options.headerPrefix + '_' + (localHtmlId++) + '_' + raw.toLowerCase().replace(/[^\w]+/g, '-')
         + '">'
         + text
-        + '</h'
-        + level
-        + '>\n';
+        + '</h' + level + '>\n';
     };
+    
+    // my own link: for yaio
+    renderer.link = function(href, title, text) {
+        var prot; 
+        if (this.options.sanitize) {
+          try {
+            var prot = decodeURIComponent(unescape(href))
+              .replace(/[^\w:]/g, '')
+              .toLowerCase();
+          } catch (e) {
+            return '';
+          }
+          if (prot.indexOf('javascript:') === 0) {
+            return '';
+          }
+          if (prot.indexOf('yaio:') === 0) {
+              href = href.substr(5);
+              href="/yaio-explorerapp/yaio-explorerapp.html#/showByAllIds/" + href;
+          }
+        }
+        var out = '<a href="' + href + '"';
+        if (title) {
+          out += ' title="' + title + '"';
+        }
+        out += '>' + text + '</a>';
+        return out;
+      };
     
     // Marked
     marked.setOptions({
