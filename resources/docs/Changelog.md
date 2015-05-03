@@ -1,18 +1,37 @@
 # Changelog
 
+## Changelog for release: feature-YAIO2082-improvements-201504-RELEASE
+- **Neue Funktionen (YAIO2094)**
+    - Textsnippets in Suche anzeigen (YAIO2104)
+    - added Markdown-Checklists (YAIO2109)
+    - YAIO-Refs im Markdown (YAIO2110)
+- **GUI (YAIO2091)**
+    - Styles fixen (YAIO2103)
+- **Code-Verbesserungen (YAIO2097)**
+    - Startscript für Linux (YAIO2105)
+    - Fixing Translation + State (YAIO2111)
+    - Bugfixung Maven-Config (versions, testresources) (YAIO2112)
+    - Integration JS-Testing in Deploy-Prozess (YAIO2099)
+    - Refactoring Java-Code (Services, Util-Classes, Factories) (YAIO2113)
+    - configure MaxFileSize for Upload (YAIO2114)
+- **Erweiterungen (YAIO2049)**
+    - manuelle Install Vagrant-Ubuntu-Devbox (YAIO2115)
+    - Apppropagartor (YAIO2116)
+    - YAIO-Demo-Installer (YAIO2117)
+
 ## Changelog for release: feature-YAIO2040-improvements-201503-RELEASE
-- Neue Funktionen (YAIO2079)
+- **Neue Funktionen (YAIO2079)**
     - neuer PPL-Exporter (YAIO2080)
     - Erweiterung des Markdown um Freemind (YAIO2081)
     - BaseRef in Html-Export (YAIO2077)
-- GUI (YAIO2047)
+- **GUI (YAIO2047)**
     - Einbindung von Toast-Messages (Fehler, Infos usw.) (YAIO2062)
     - Layoutverbesserungen für Exporte (YAIO2065)
     - Download/SourceView-Links für Diagramme (YAIO2066)
     - TOC (YAIO2067)
     - Gantt-Datum auf +-3Monate von heute setzen (YAIO2069)
     - Bugfix Styles/Druckversion (YAIO2070)
-- Code-Verbesserungen (YAIO2048)
+- **Code-Verbesserungen (YAIO2048)**
     - YAIO-Caller Bugfix Encoding + FileOutput-Option (YAIO2071)
     - Html-Ids für Markdown-Elemente eindeutig vergeben (YAIO2072)
     - Im/Ex/Converter auf einheitliche Code-Basis (YAIO2073)
@@ -22,7 +41,7 @@
     - YAIO-Caller Codeverbesserung (YAIO2078)
 
 ## Changelog for release: feature-YAIO1980-improvements-201502
-- GUI (YAIO1981)
+- **GUI (YAIO1981)**
     - Export als Jira oder Plaintext (YAIO2031)
     - Statistiken + Tree-Expander nur anzeigen, wenn Node children hat (YAIO1676)
     - expander nur anzeigen, wenn children vorhanden (YAIO1677)
@@ -31,11 +50,11 @@
     - Einbindung von Diagrammen (YAIO2017)
     - Standalone-Wysiwyg-Editor (YAIO2027)
     - statische Startseiten (YAIO2030)
-- Code-Verbesserungen (YAIO1983)
+- **Code-Verbesserungen (YAIO1983)**
     - Alle Shellscipte in Hauptprojekt uebernehmen (YAIO1853)
-- Security-Isuses (YAIO1984)
+- **Security-Isuses (YAIO1984)**
     - Html und Markdown (YAIO1985)
-- Erweiterungen (YAIO1960)
+- **Erweiterungen (YAIO1960)**
     - Absicherung über User-Modul (YAIO1970)
         - Konfiguration von Apache-Domains für eigene Session-Coockie (YAIO2019)
         - YAIO Basisabsicherung (YAIO2023)
@@ -44,40 +63,40 @@
     - Clients für Remote-Calls (YAIO1987)    
 
 ## Changelog for milestone: 201501 (YAIO1931)
-- GUI (YAIO1932)
+- **GUI (YAIO1932)**
     - Markdown für Html-Export (YAIO1961)
     - SyntaxHighLighting für Html-Export (YAIO1939)
     - Aufbereitung Druckversion (YAIO1952)
     - DetailBlock mit Metadaten: Create/Change/metaNodeNumer... (mit Toggler) (YAIO1469)
     - Wyswyg-Editor (YAIO1969)
     - Vorlesefunktion (YAIO1934)
-- Code-Verbesserungen (YAIO1953)
+- **Code-Verbesserungen (YAIO1953)**
     - Improve app-naming (YAIO1954)
     - Actuator mit Managementinfos (YAIO1955)
 
 ## Changelog for milestone: 201411-12 (YAIO255)
-- GUI (YAIO1573)
+- **GUI (YAIO1573)**
     - bei neuer InfoNode, UrlRes-Node Standardtyp vorbelegen (YAIO1845)
     - Formatierung der Beschreibung (YAIO1856)
     - Preview-Fenster (YAIO1904)
     - Verbesserung Druckversion (YAIO1905)
     - Verschärfung der Vailidierungsregeln (YAIO1816)
-- Code-Verbesserungen (YAIO1576)
+- **Code-Verbesserungen (YAIO1576)**
     - eigene JS-Klassen (YAIO1250)
 
 ## Changelog for milestone: 201410 SpringRoo-Web (YAIO642)
-- neue Funktionen 
+- **neue Funktionen**
     - Implementierung eines RESTfull webservice zum Abruf Version1 (YAIO1169)
     - Implementierung eines Javascript-Ports (YAIO1200)
 
 ## Changelog for milestone: 201409
-- Implementierung SpringRoo-Persistence (Step1) (YAIO1140)
+- **Implementierung SpringRoo-Persistence (Step1) (YAIO1140)**
     - Implementierung Port Persistence mit Roo (YAIO727)
     - Performance-Verbesserung Startup (YAIO1117)
     - DB-Config in Parameterfile auslagern (YAIO1142)
     
 ## Changelog for milestone: 201404
-- Neu-Implementierung mit Spring Roo (YAIO445)
+- **Neu-Implementierung mit Spring Roo (YAIO445)**
     - Testprojekt aufsetzen (YAIO446)
     - YAIO zur Übernahme integriert (YAIO448)
     - Modell (YAIO449)
@@ -87,7 +106,7 @@
     - Port Prasentation Statisch (YAIO489)
 
 ## Changelog for milestone: 201401 (YAIO142)
-- Neue Features
+- **Neue Features**
     - Darstellungs-Filter V1 (YAIO143)
     - Systemdaten speichern (YAIO146)
     - Metadaten speichern (YAIO149)
