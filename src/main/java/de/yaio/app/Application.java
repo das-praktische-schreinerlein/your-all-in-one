@@ -25,6 +25,8 @@ import javax.servlet.MultipartConfigElement;
 
 import org.apache.commons.cli.Option;
 import org.apache.log4j.Logger;
+import org.apache.tomcat.util.http.fileupload.FileUpload;
+import org.apache.tomcat.util.http.fileupload.FileUploadBase;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.context.embedded.MultipartConfigFactory;
@@ -140,14 +142,21 @@ public class Application {
     }
     
     @Bean
-    MultipartConfigElement multipartConfigElement() {
+    MultipartConfigElement configureMultipartConfigElement() {
+        // spring-config
         MultipartConfigFactory factory = new MultipartConfigFactory();
-        factory.setMaxFileSize("128KB");
-        factory.setMaxRequestSize("128KB");
-        return factory.createMultipartConfig();
+        factory.setMaxFileSize(System.getProperty("yaio.server.maxfilesize", "128kb"));
+        factory.setMaxRequestSize(System.getProperty("yaio.server.maxrequestsize", "128kb"));
+        MultipartConfigElement config = factory.createMultipartConfig();
+        
+        // tomcat-config
+        FileUploadBase tomcatConfig = new FileUpload();
+        tomcatConfig.setFileSizeMax(config.getMaxFileSize());
+        tomcatConfig.setSizeMax(config.getMaxFileSize());
+
+        return config;
     }
-    
-    
+
     @PreDestroy
     protected static void cleanUpAfterJob() throws Exception {
         // Ids speichern
