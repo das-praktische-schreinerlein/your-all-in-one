@@ -7,10 +7,10 @@ collaboration-softwareproject: "D'Artagnan - Dein persönlicher Software-Musketi
 
 More information about the prototype at [http://www.your-all-in-one.de/yaio/static/lepetit](http://www.your-all-in-one.de/yaio/static/lepetit )
 # Installation
-- **see details on [resources/docs/Installation.md](resources/docs/Installation.md)**
+- **see common details on [resources/docs/Installation.md](resources/docs/Installation.md)**
 
 # TODO for me
-- [ ] update the documentation on http://www.your-all-in-one.de/yaio/static/lepetit  (new features, howto...)
+- [ ] update the documentation on [http://www.your-all-in-one.de/yaio/static/lepetit](http://www.your-all-in-one.de/yaio/static/lepetit) (new features, howto...)
 - [ ] code-documentation
 - [ ] code review: configuration, minor layout-bugs
 - [ ] new feature: new nodetypes (contact, call, bug, document..)
@@ -74,15 +74,13 @@ More information about the prototype at [http://www.your-all-in-one.de/yaio/stat
 - [highlightjs](https://highlightjs.org)
 
 # License
-```
-/**
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2010-2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-```
+    /**
+     * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
+     * @category collaboration
+     * @copyright Copyright (c) 2010-2014, Michael Schreiner
+     * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+     *
+     * This Source Code Form is subject to the terms of the Mozilla Public
+     * License, v. 2.0. If a copy of the MPL was not distributed with this
+     * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+     */
