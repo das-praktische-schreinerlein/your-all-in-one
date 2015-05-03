@@ -129,7 +129,7 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
         }
         return parentHierarchy;
     }
-    
+
     @Override
     public List<BaseNode> findChildNodes(final String sysUID) {
         return BaseNode.entityManager().createQuery(
@@ -351,5 +351,4 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
         
         return query;
     }
-    
 }

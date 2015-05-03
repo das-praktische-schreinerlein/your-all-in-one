@@ -28,7 +28,7 @@ import de.yaio.core.nodeservice.UrlResNodeService;
 
 /**
  * <h4>FeatureDomain:</h4>
-*     import
+ *     export
  * <h4>FeatureDescription:</h4>
  *     configurator for formatting workflow nodes
  * 

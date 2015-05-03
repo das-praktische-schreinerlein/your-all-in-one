@@ -52,8 +52,7 @@ public interface BaseNodeDBService {
      * @throws Exception - io/DB-Exceptions possible
      */
     List<BaseNode> updateMeAndMyParents(BaseNode node) throws Exception;
-    
-    
+
     /**
      * <h4>FeatureDomain:</h4>
      *     Persistence

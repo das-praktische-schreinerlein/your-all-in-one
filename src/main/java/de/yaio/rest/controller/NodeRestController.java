@@ -25,6 +25,7 @@ import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -248,8 +249,7 @@ public class NodeRestController {
         
         return response;
     }
-    
-    
+
     /**
      * <h4>FeatureDomain:</h4>
      *     Webservice
@@ -277,7 +277,7 @@ public class NodeRestController {
         // find a specific node
         BaseNodeDBService baseNodeDBService = BaseNodeDBServiceImpl.getInstance();
         List<BaseNode> nodes = baseNodeDBService.findSymLinkBaseNode(symLinkRef);
-        if (nodes != null && nodes.size() > 0) {
+        if (CollectionUtils.isNotEmpty(nodes)) {
             // symLinkref found
             
             // check if it is unique
@@ -286,7 +286,6 @@ public class NodeRestController {
                                 "ERROR", "node '" + symLinkRef + "' is not unique", 
                                 null, null, nodes, null);
                 return response;
-
             }
             
             // use the first one
