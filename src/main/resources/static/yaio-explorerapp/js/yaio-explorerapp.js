@@ -908,24 +908,6 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
      * <h4>FeatureDomain:</h4>
      *     Editor
      * <h4>FeatureDescription:</h4>
-     *     export GUI As Checklist
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>exportAsChecklist
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Callback
-     */
-    $scope.exportAsChecklist = function() {
-        console.log("exportAsChecklist");
-        yaioExportExplorerLinesAsCheckList();
-        return false;
-    }
-
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Editor
-     * <h4>FeatureDescription:</h4>
      *     callbackhandler to open all subnodes<level in the treeview
      * <h4>FeatureResult:</h4>
      *   <ul>
@@ -939,6 +921,7 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
         yaioOpenSubNodesForTree("#tree", $scope.config.treeOpenLevel);
         return false;
     }
+
 
     /**
      * <h4>FeatureDomain:</h4>

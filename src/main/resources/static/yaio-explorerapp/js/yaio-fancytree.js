@@ -2059,39 +2059,6 @@ function openJiraExportWindow(nodeId) {
     });    
 }
 
-
-/**
- * <h4>FeatureDomain:</h4>
- *     GUI
- * <h4>FeatureDescription:</h4>
- *     open the clipboardwindow for the explorercontent 
- * <h4>FeatureResult:</h4>
- *   <ul>
- *     <li>GUI-result: opens clipboard window with checklist-converted node-content
- *   </ul> 
- * <h4>FeatureKeywords:</h4>
- *     GUI Convert
- */
-function yaioExportExplorerLinesAsCheckList() {
-    // convert and secure
-    var checkListSrc = convertExplorerLinesAsCheckList();
-    checkListSrc = htmlEscapeText(checkListSrc);
-    
-    // set clipboard-content
-    $( "#clipboard-content" ).html(checkListSrc);
-    
-    // show message
-    $( "#clipboard-box" ).dialog({
-        modal: true,
-        width: "700px",
-        buttons: {
-          Ok: function() {
-            $( this ).dialog( "close" );
-          }
-        }
-    });    
-}
-
 /**
  * <h4>FeatureDomain:</h4>
  *     GUI
