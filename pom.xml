@@ -649,6 +649,7 @@
                       <goal>shade</goal>
                     </goals>
                     <configuration>
+                        <minimizeJar>false</minimizeJar>
                         <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
                           <resource>META-INF/spring.handlers</resource>
                         </transformer>

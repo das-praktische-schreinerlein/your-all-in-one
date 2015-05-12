@@ -37,6 +37,46 @@
 
 var localHtmlId = 1;
 
+// states
+var checkListConfigs = {
+    "checklist-state-OPEN": {
+        styleClassPraefix: "checklist-state-",
+        matchers: ["OPEN", "OFFEN", "o", "O", "0"]
+    },
+    "checklist-state-RUNNING": {
+        styleClassPraefix: "checklist-state-",
+        matchers: ["RUNNING"]
+    },
+    "checklist-state-LATE": {
+        styleClassPraefix: "checklist-state-",
+        matchers: ["LATE"]
+    },
+    "checklist-state-BLOCKED": {
+        styleClassPraefix: "checklist-state-",
+        matchers: ["BLOCKED", "WAITING", "WAIT"]
+    },
+    "checklist-state-WARNING": {
+        styleClassPraefix: "checklist-state-",
+        matchers: ["WARNING"]
+    },
+    "checklist-state-DONE": {
+        styleClassPraefix: "checklist-state-",
+        matchers: ["DONE", "OK", "x", "X", "ERLEDIGT"]
+    },
+    "checklist-test-TESTOPEN": {
+        styleClassPraefix: "checklist-test-",
+        matchers: ["TESTOPEN"]
+    },
+    "checklist-test-PASSED": {
+        styleClassPraefix: "checklist-test-",
+        matchers: ["PASSED"]
+    },
+    "checklist-test-FAILED": {
+        styleClassPraefix: "checklist-test-",
+        matchers: ["FAILED", "ERROR"]
+    },
+} 
+
 /**
  * <h4>FeatureDomain:</h4>
  *     GUI
@@ -399,45 +439,6 @@ function highlightCheckList(descBlock) {
     var descBlockId = $(descBlock).attr('id');
     console.log("highlightCheckList highlight for descBlock: " + descBlockId);
 
-    // states
-    var checkListConfigs = {
-        "checklist-state-OPEN": {
-            styleClassPraefix: "checklist-state-",
-            matchers: ["OPEN", "OFFEN", "o", "O", "0"]
-        },
-        "checklist-state-RUNNING": {
-            styleClassPraefix: "checklist-state-",
-            matchers: ["RUNNING"]
-        },
-        "checklist-state-LATE": {
-            styleClassPraefix: "checklist-state-",
-            matchers: ["LATE"]
-        },
-        "checklist-state-BLOCKED": {
-            styleClassPraefix: "checklist-state-",
-            matchers: ["BLOCKED", "WAITING", "WAIT"]
-        },
-        "checklist-state-WARNING": {
-            styleClassPraefix: "checklist-state-",
-            matchers: ["WARNING"]
-        },
-        "checklist-state-DONE": {
-            styleClassPraefix: "checklist-state-",
-            matchers: ["DONE", "OK", "x", "X", "ERLEDIGT"]
-        },
-        "checklist-test-TESTOPEN": {
-            styleClassPraefix: "checklist-test-",
-            matchers: ["TESTOPEN"]
-        },
-        "checklist-test-PASSED": {
-            styleClassPraefix: "checklist-test-",
-            matchers: ["PASSED"]
-        },
-        "checklist-test-FAILED": {
-            styleClassPraefix: "checklist-test-",
-            matchers: ["FAILED", "ERROR"]
-        },
-    } 
     // tests
     for (var idx in checkListConfigs) {
         var matchers = checkListConfigs[idx].matchers;
@@ -468,6 +469,73 @@ function highlightCheckListForMatcher(descBlock, matcherStr, styleClass, style) 
             }
         });
     });
+}
+
+
+function convertExplorerLinesAsCheckList() {
+    var checkList = "";
+    
+    // iterate all nodelines
+    $("table.fancytree-ext-table tr").each(function(i, line) {
+        // extract data
+        var titleSpan = $(line).find("span.fancytree-title2");
+        var stateSpan = $(line).find("span.fancytree-title-state");
+        var numberSpan = $(line).find("div.field_metanummer");
+        var levelSpan = $(line).find("span.fancytree-node");
+        
+        // extract content
+        var level = 0;
+        var title = null;
+        var state = null;
+        var number = null;
+        if ($(levelSpan).size() > 0) {
+            // extraxt level from intend
+            var intend = $(levelSpan).css("margin-left").replace("px", "");
+            level = parseInt(intend, 10) / 20;
+        }
+        if ($(stateSpan).size() > 0) {
+            // extract state from style
+            var idx = extractCheckListStatefromStateSpan($(stateSpan));
+            if (idx) {
+                state = idx;
+                state = state.replace("checklist-state-", "");
+                state = state.replace("checklist-test-", "");
+            }
+        }
+        if ($(titleSpan).size() > 0) {
+            title = $(titleSpan).text();
+        }
+        if ($(numberSpan).size() > 0) {
+            number = $(numberSpan).text();
+        }
+        
+        // if all set: generate checklist
+        console.log("state:" + state + " title:" + title + " number:" + number + " level:" + level);
+        if (title && state && number) {
+            for (var idx = 0; idx < level; idx ++) {
+                checkList += "    ";
+            }
+            checkList += "- [" + state + "] - [" + title + "](yaio:" + number + ")\n";
+        }
+    });
+    
+    return checkList;
+}
+
+function extractCheckListStatefromStateSpan(block) {
+    // iterate all configs
+    for (var idx in checkListConfigs) {
+        var matchers = checkListConfigs[idx].matchers;
+        
+        // iterate all matchers
+        for (var idx2 in matchers) {
+            // check for matcher in style
+            if (block.hasClass("node-state-" + matchers[idx2])) {
+                return idx;
+            }
+        }
+    }
+    return null;
 }
 
 function addServicesToDiagrammBlock(block, type, downloadLink) {

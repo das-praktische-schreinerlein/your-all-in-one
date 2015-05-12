@@ -6,6 +6,7 @@
     "common.button.lang.en": "EN",
     "common.command.DoSearch": "Search",
     "common.command.Export": "Exports...",
+    "common.command.ExportAsChecklist": "Export as todolist",
     "common.command.ExportForm": "Configure",
     "common.command.ExportWiki": "Export as wiki",
     "common.command.ExportHtml": "HTML",
