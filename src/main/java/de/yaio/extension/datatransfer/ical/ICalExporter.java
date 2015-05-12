@@ -398,7 +398,7 @@ public class ICalExporter extends WikiExporter {
         }
         
         // nur Projektnodes zulassen
-        if (!TaskNode.class.isInstance(paramCurNode)) {
+        if (!EventNode.class.isInstance(paramCurNode)) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("node:" + paramCurNode.getWorkingId() 
                     + " ignore: not EventNode but " + paramCurNode.getClass());

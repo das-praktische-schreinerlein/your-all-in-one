@@ -307,15 +307,15 @@ public class OutputOptionsImpl implements OutputOptions {
         return strClassFilter;
     }
     public void setStrClassFilter(final String strClassFilter) {
-        this.mpClassFilter = DataUtils.initMapFromCsvString(this.strClassFilter);
         this.strClassFilter = strClassFilter;
+        this.mpClassFilter = DataUtils.initMapFromCsvString(this.strClassFilter);
     }
     public String getStrTypeFilter() {
         return strTypeFilter;
     }
     public void setStrTypeFilter(final String strTypeFilter) {
-        this.mpTypeFilter = DataUtils.initMapFromCsvString(this.strTypeFilter);
         this.strTypeFilter = strTypeFilter;
+        this.mpTypeFilter = DataUtils.initMapFromCsvString(this.strTypeFilter);
     }
     
     public int manageIntValues(final Integer value) {
@@ -427,6 +427,9 @@ public class OutputOptionsImpl implements OutputOptions {
                         + ", strReadIfStatusInListOnly=" + this.strReadIfStatusInListOnly 
                         + ", strClassFilter=" + this.strClassFilter 
                         + ", strTypeFilter=" + this.strTypeFilter 
+                        + ", mpStateFilter=" + this.mpStateFilter 
+                        + ", mpClassFilter=" + this.mpClassFilter 
+                        + ", mpTypeFilter=" + this.mpTypeFilter 
                         + "]";
     }
 }

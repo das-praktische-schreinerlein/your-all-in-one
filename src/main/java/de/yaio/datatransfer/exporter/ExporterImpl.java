@@ -23,6 +23,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.apache.commons.collections.MapUtils;
 import org.apache.log4j.Logger;
 
 import de.yaio.core.datadomain.BaseWorkflowData;
@@ -326,12 +327,12 @@ public class ExporterImpl implements Exporter {
         Map<String, String> mpStates = oOptions.getMapStateFilter();
         Map<String, String> mpClasses = oOptions.getMapClassFilter();
         Map<String, String> mpTypes = oOptions.getMapTypeFilter();
-        if (!(mpStates != null && mpStates.size() > 0)
-            && !(mpClasses != null && mpClasses.size() > 0) 
-            && !(mpTypes != null && mpTypes.size() > 0)) {
+        if (MapUtils.isEmpty(mpStates)
+            && MapUtils.isEmpty(mpClasses) 
+            && MapUtils.isEmpty(mpTypes)) {
             // no filter return true
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("no NodeFilterdefined oOptions=" + oOptions 
+                LOGGER.debug("no NodeFilter defined oOptions=" + oOptions 
                                 + " for " + node.getNameForLogger());
             }
             return true;
@@ -343,7 +344,7 @@ public class ExporterImpl implements Exporter {
         boolean flgMatchesClass = false;
 
         // if statefilter set: do it
-        if (mpStates != null && mpStates.size() > 0) {
+        if (MapUtils.isNotEmpty(mpStates)) {
             // check if workflow node
             if (!BaseWorkflowData.class.isInstance(node)) {
                 // no workflow -> not state
@@ -372,7 +373,7 @@ public class ExporterImpl implements Exporter {
         }
 
         // if classfilter set: do it
-        if (mpClasses != null && mpClasses.size() > 0) {
+        if (MapUtils.isNotEmpty(mpClasses)) {
             // check class
             String className = ((BaseNode) node).getClassName();
             if (mpClasses.get(className) == null) {
@@ -395,7 +396,7 @@ public class ExporterImpl implements Exporter {
         }
 
         // if classfilter set: do it
-        if (mpTypes != null && mpTypes.size() > 0) {
+        if (MapUtils.isNotEmpty(mpTypes)) {
             // check class
             String type = ((BaseNode) node).getType();
             if (mpTypes.get(type) == null) {
@@ -415,6 +416,10 @@ public class ExporterImpl implements Exporter {
         } else {
             // if no filter set: true
             flgMatchesType = true;
+        }
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("NodeFilter Result=" + (flgMatchesClass && flgMatchesState && flgMatchesType)  
+                            + " for " + node.getNameForLogger());
         }
 
         return flgMatchesClass && flgMatchesState && flgMatchesType;
