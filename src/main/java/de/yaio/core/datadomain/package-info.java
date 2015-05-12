@@ -4,7 +4,7 @@
  *
  * <h4>FeatureDescription:</h4>
  *     software for projectmanagement and documentation<br>
- *     DataDomains with the interfaces for the busines-logic
+ *     DataDomains with the interfaces for the business-logic
  * 
  * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
  * @category collaboration

@@ -4,7 +4,7 @@
  *
  * <h4>FeatureDescription:</h4>
  *     software for projectmanagement and documentation<br>
- *     dataservices for the busines-logic of domains 
+ *     dataservices for the business-logic of domains 
  * 
  * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
  * @category collaboration

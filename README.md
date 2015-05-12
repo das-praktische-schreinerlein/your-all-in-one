@@ -9,7 +9,7 @@ More information about the prototype at [http://www.your-all-in-one.de/yaio/stat
 # Installation
 - **see common details on [resources/docs/Installation.md](resources/docs/Installation.md)**
 
-# TODO for me
+# Todos for me
 - [ ] update the documentation on [http://www.your-all-in-one.de/yaio/static/lepetit](http://www.your-all-in-one.de/yaio/static/lepetit) (new features, howto...)
 - [ ] code-documentation
 - [ ] code review: configuration, minor layout-bugs
@@ -56,22 +56,42 @@ More information about the prototype at [http://www.your-all-in-one.de/yaio/stat
 # Implementation
 - **see details on [resources/docs/Implementation.md](resources/docs/Implementation.md)**
 
-
 # Thanks to
-- [markdown4j](https://code.google.com/p/markdown4j/)
-- [ace](https://github.com/ajaxorg/ace-builds)
-- [angular-translate/](https://github.com/angular-translate/)
-- [maven maven](https://github.com/apache/maven)
-- [Apache poi](https://github.com/apache/poi)
-- [jquery-lang-js](https://github.com/coolbloke1324/jquery-lang-js)
-- [jquery](https://github.com/jquery/jquery)
-- [jquery-ui](https://github.com/jquery/jquery-ui)
-- [mermaid](https://github.com/knsv/mermaid)
-- [fancytree](https://github.com/mar10/fancytree)
-- [spring-boot](https://github.com/spring-projects/spring-boot)
-- [spring-framework](https://github.com/spring-projects/spring-framework)
-- [spring-roo](https://github.com/spring-projects/spring-roo)
-- [highlightjs](https://highlightjs.org)
+- **Build-Tools**
+    - [Apache Maven](https://github.com/apache/maven)
+    - [Eclipse](http://eclipse.org/)
+    - [Karma](https://karma-runner.github.io/)
+    - [Node](https://nodejs.org/)
+- **Java-Core-Frameworks**
+    - [Spring-Framework](https://github.com/spring-projects/spring-framework)
+    - [Spring-boot](https://github.com/spring-projects/spring-boot)
+    - [Spring-roo](https://github.com/spring-projects/spring-roo)
+    - [Spring Security](https://github.com/spring-projects/spring-security)
+    - [Hibernate](https://github.com/hibernate/)
+- **Java-Formatter**
+    - [Markdown4j](https://code.google.com/p/markdown4j/)
+    - [Apache Poi](https://github.com/apache/poi)
+- **JS-Code-Frameworks**
+    - [AngularJS](https://angularjs.org/)
+    - [JQuery](https://github.com/jquery/jquery)
+- **JS-GUI**
+    - [Ace](https://github.com/ajaxorg/ace-builds)
+    - [fancytree](https://github.com/mar10/fancytree)
+    - [JQuery-UI](https://github.com/jquery/jquery-ui)
+    - [Slimbox2](http://www.digitalia.be/software/slimbox2)
+    - [Toastr](https://github.com/CodeSeven/toastr)
+    - [findAndReplaceDOMText](https://github.com/padolsey/findAndReplaceDOMText)
+    - [Strapdown TOC](https://github.com/ndossougbe/strapdown)
+- **JS-Formatter**
+    - [Marked](https://github.com/chjj/marked)
+    - [highlight.js](https://highlightjs.org/)
+    - [mermaid](https://github.com/knsv/mermaid)
+    - [Freemind Flash-Browser](http://freemind.sourceforge.net/wiki/index.php/Flash_browser)
+- **JS-Multilanguage**
+    - [JQuery-Lang](https://github.com/coolbloke1324/jquery-lang-js)
+    - [Angular-Translate](https://github.com/angular-translate/)
+- **Media**
+    - [paulrobertlloyd.com](http://paulrobertlloyd.com/2009/06/social_media_icons/)
 
 # License
     /**
