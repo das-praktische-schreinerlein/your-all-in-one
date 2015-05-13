@@ -554,6 +554,10 @@
           <artifactId>json-smart</artifactId>
           <groupId>net.minidev</groupId>
         </exclusion>
+        <exclusion>
+          <artifactId>commons-lang</artifactId>
+          <groupId>commons-lang</groupId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
@@ -630,12 +634,6 @@
       <version>4.3.6</version>
       <scope>provided</scope>
     </dependency>
-    <dependency>
-      <groupId>org.mnode.ical4j</groupId>
-      <artifactId>ical4j</artifactId>
-      <version>1.0.6</version>
-      <scope>provided</scope>
-    </dependency>
   </dependencies>
   <reporting>
     <plugins>
@@ -702,7 +700,6 @@
     <maven.pmd.plugin.version>3.1</maven.pmd.plugin.version>
     <commons-dbcp.version>1.4</commons-dbcp.version>
     <maven.javadoc.plugin.version>2.9.1</maven.javadoc.plugin.version>
-    <ical4j.version>1.0.6</ical4j.version>
     <flexjson.version>2.1</flexjson.version>
     <commons-lang3.version>3.1</commons-lang3.version>
     <maven.findbugs.plugin.version>2.5.5</maven.findbugs.plugin.version>
