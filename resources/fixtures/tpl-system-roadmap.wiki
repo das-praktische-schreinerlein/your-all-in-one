@@ -1,11 +1,11 @@
 = INFO - Roadmap                                                                                                                                           [NodeMeta: SysRoad,1,,] [NodeSys: SysRoad1,,,,]
 
-* **INFO - Wie wird es weitergehen...**                                     [DocLayout: DIV,vision,Vision,]                                                
+* **INFO - Wie wird es weitergehen...**                                     [DocLayout: DIV,weiter,Wie Weiter,]                                                
 Ja, Ja D'Artagnan ist noch lange (und wohl niemals ;-) fertig. Ständig fallen mir weitere kleine Features ein, die ich noch unterbringen möchte.
 Deshalb hioer eine kleine Übersicht, was die auf lange Sicht geplant und was davon auch schon umgesetzt wurde.
 ** INFO - Ende [DocLayout: P,,,X]                                                      
 
-* **INFO - Die Vision**                                     [DocLayout: DIV,vision,Vision,]                                                
+** **INFO - Die Vision**                                     [DocLayout: DIV,vision,Vision,]                                                
 ## Welche Versionen wird es geben?
 Für jeden die passende: Nicht jeder hat die gleichen Ansprüche. Deshalb wird D'Artagnan in verschiedenen Versionen nutzbar sein.
 
