@@ -1,78 +1,262 @@
 = INFO - Roadmap                                                                                                                                           [NodeMeta: SysRoad,1,,] [NodeSys: SysRoad1,,,,]
-* **INFO - Wie wird es weitergehen...**                                     [DocLayout: DIV,roadmap,Roadmap,]                                                
-    ** **INFO - Welche Versionen wird es geben?**                               [DocLayout: Ue,version,Versionen,]                                              
-      *** **INFO - Für jeden die passende: Nicht jeder hat die gleichen Ansprüche. Deshalb wird D'Artagnan in verschiedenen Versionen nutzbar sein.** [DocLayout: P,,,]  
-        **** INFO - lokaler Single-User: Für den standortgebundenen Single-User sollte eine lokal installierte Version (Package mit lokalem Tomcat, SqlLite), auf die er mit seinem lokalen Browser zugreift, ausreichen. Er kann seine Installation auf einen Stick kopieren und überall lokal ausführen (vielleicht sogar als PortableApps-Paket). [DocLayout: LI,version,,]  
-        **** INFO - Lokale Arbeitsgruppen: Für lokale Arbeitsgruppen kann entweder die Single-User-Version aus dem lokalen Netz erreichbar gemacht werden, oder es wird gleich die Server-Version genutzt. [DocLayout: LI,version,,]  
-        **** INFO - Server-Version: Für größere Arbeitsgruppen ist eine Server-Version mit (Apache, Tomcat, MySql...) entweder auf einer Appliance oder als Installations-Paket für bestehende Server vorgesehen. [DocLayout: LI,version,,]  
-        **** INFO - Mobiler Zugriff: Neben der für mobile Browser optimierten Weboberfläche der Server-Version, soll es auch eine Native-App mit direktem Zugriff auf die D'Artagnan-WebServices geben. [DocLayout: LI,version,,]  
-      *** INFO - Resume: Also, für jeden die passende Version, damit er sich überall und in jeder Lebenslage der Unterstützung von D'Artagnan sicher sein kann ;-) [DocLayout: P,,,X]  
-    ** **INFO - Welche Verbesserungen sind geplant?**                     [DocLayout: DIV,ablauf,ablauf,]                                                  
-      *** **INFO - moderne Visualierung/einfache Handhabung**                   [DocLayout: UE,,,]                                                               
-        **** INFO - Kontakte: Kontakte lassen sich im System anlegen, mit externen Datenquellen synchronisieren und dienen der Unterfütterungen von Kommunikationspuren mit Kontaktdetails. [DocLayout: LI,features,,]  
-        **** INFO - automatische Email-Zuordnung: Emails lassen sich per BCC an das System senden und werden entweder in der Inbox gespeichert (für eine spätere manuelle Zuordnung) oder bei Angabe eines Aufgaben-Kenners automatisch der Aufgabe zugeordnet. [DocLayout: LI,features,,]  
-        **** INFO - Datei-Upload: Dateien lassen sich bei Nutzung des WebDav-Servers im abgebildeten virtuellen Projektstruktur speichern/aufrufen und erscheinen damit direkt in den anderen Sichten des Projektbaumes. [DocLayout: LI,features,,]  
-        **** INFO - Drag&Drop: Ressourcen wie (Emails, Dateien, Kontakte usw.) lassen sich per Drag&Drop direkt in den Projektbaum ziehen/hochladen und einbinden. [DocLayout: LI,features,,]  
-        **** INFO - Telefonpotokoll: Metadaten der Telefonate lassen sich manuell oder über Connectoren zur Telefonanlage im System loggen und das Gedächnisprotokoll anschließend den zugehörigen Aufgaben zuordnen. [DocLayout: LI,features,,]  
-      *** **INFO - Sichten**                                                    [DocLayout: UE,,,]                                                               
-        **** INFO - Sichten: Neben dem normalen Projektbaum wird es eine Vielzahl an Sichten auf die Daten geben. [DocLayout: P,,,]                              
-        **** INFO - Struktur: Strukturansicht (Projekt)                         [DocLayout: LI,sichten,,]                                                        
-        **** INFO - Ressourcen: Ressourcen (Dateien, Emails...)                 [DocLayout: LI,sichten,,]                                                        
-        **** INFO - Projektressourcen: Projektressourcen (Mitarbeiter, Werkzeuge...) [DocLayout: LI,sichten,,]                                                   
-        **** INFO - Events: Events (Termine, Todos mit Termin)                  [DocLayout: LI,sichten,,]                                                        
-        **** INFO - Kommunikation: Kommunikation (Tel, Fax, Email, Chats usw.)  [DocLayout: LI,sichten,,]                                                        
-        **** INFO - Zeitstrahl: Alle vergangenen/geplanten Knoten in chronologischer Reihenfolge. [DocLayout: LI,sichten,,]                                      
-        **** INFO - ToDos: ToDos (Termine, Aufgaben, Projekte usw.)             [DocLayout: LI,sichten,,]                                                        
-        **** INFO - Infos: Infos, Ideen, Dokumentation usw.                     [DocLayout: LI,sichten,,]                                                        
-        **** INFO - Kontakte: Kontakte (gruppiert nach den beteiligten Kontakten) [DocLayout: LI,sichten,,]                                                      
-        **** INFO - ...                                                         [DocLayout: LI,sichten,,]                                                        
-      *** **INFO - Ui-Ui-Ui der Inbegriff von - Work in Progress**              [DocLayout: UE,,,]                                                               
-        **** INFO - Work in Progress: Hier folgen erstmal nur ungeordnete Gedanken - Konkreter wird es da schon beim Prototypen. [DocLayout: P,,,]               
-        **** INFO - Prototyp: <a href="/yaio/static/lepetit" class="a-biglink">"Le petit D'Artagnan"</a> [DocLayout: P,biglink,,]                                
-      *** INFO - Und weiter mit Ideenfetzen                                     [DocLayout: UE,,,]                                                               
-      *** **INFO - Lebensbaum: Initial baut man sich seinen Projektbaum mit allen relevanten Punkten auf.** [DocLayout: P,,,]                                    
-        **** INFO - Arbeit: Arbeit                                              [DocLayout: LI,,,]                                                               
-        **** **INFO - Finanzen: Finanzen**                                      [DocLayout: LI,,,]                                                               
-          ***** INFO - Versicherung: Versicherung                               [DocLayout: LI,,,]                                                               
-          ***** INFO - Banken: Banken                                           [DocLayout: LI,,,]                                                               
-        **** INFO - Freunde: Freunde                                            [DocLayout: LI,,,]                                                               
-        **** INFO - Gesundheit: Gesundheit                                      [DocLayout: LI,,,]                                                               
-        **** INFO - Urlaub: Urlaub                                              [DocLayout: LI,,,]                                                               
-      *** **INFO - Verfeinern: Nun fängt man an, die einzelnen Äste weiter zu strukturieren und durch feine Zweige (Unterprojekte) und Blätter (Aufgaben, Termine, Infos) zu verfeinern.** [DocLayout: P,,,]  
-        **** INFO - Knieproblem: Habe ich z.B. einen Arzttermin wegen eines Knieproblems, lege ich unter Gesundheit ein Unterprojekt "Knieproblem 2014" an. [DocLayout: P,,,]  
-        **** INFO - Arzttermin: Und darunter einen Arzttermin                   [DocLayout: P,,,]                                                                
-        **** INFO - Kontakt: Unter dem Termin lege ich die Kontaktdaten ab, die direkt mit dem Adressbuch verknüpft sind. [DocLayout: P,,,]                      
-        **** INFO - Dokumente: Von meinem letzten Röntgen des Knies existieren noch Röntgenaufnahmen, die ich einscanne und direkt unter dem Termin als Dokument verlinke. [DocLayout: P,,,]  
-      *** **INFO - Übersicht: "D'Artagnan" kümmert sich nun um die Terminverfolgung, Visualisierung, Erinnerung usw.** [DocLayout: P,,,]                         
-        **** INFO - Terminverfolgung: "D'Artagnan" exportiert meine Termine/Aufgaben automatisch an mein Kalender/Smartphone, so dass ich sie dort übersichtlich einsehen kann und dort erinnert werde. [DocLayout: P,,,]  
-        **** INFO - Übersicht: "D'Artagnan" zeigt mir Übersichtslisten, wo ich alle Informationen (Termine, Aufgaben, Infos...) zentral und zusammengehalten einsehen kann. [DocLayout: P,,,]  
-        **** INFO - Dokumentation: Ich kann unter dem Terminknoten einen Dokumentationsknoten mit dem Ergebnis des Arztbesuches anhängen. [DocLayout: P,,,]      
-        **** INFO - Infos verlinken: Werde ich an einen anderen Arzt überwiesen, lege ich einen neuen Termin an und verlinke auf die schon bestehenden Dokumente, alte Termine und Kontakte (nichts wird mehrmals gespeichert) sondern zentral an einer Stelle abgelegt und verlinkt. [DocLayout: P,,,]  
-      *** **INFO - Knotentypen**                                                [DocLayout: UE,,,]                                                               
-        **** INFO - Projekte: Projekte als Sammelcontainer für Unterknoten      [DocLayout: LI,,,]                                                               
-        **** **INFO - Unter-Projekte: Unter-Projekte als Sammelcontainer für Unterknoten** [DocLayout: LI,,,]                                                    
-          ***** INFO - Termine: Termine mit den Stati: geplant, laufend, erledigt, verworfen [DocLayout: LI,,,]                                                  
-          ***** **INFO - Aufgaben: Aufgaben mit den Stati: offen, laufend, erledigt, verworfen** [DocLayout: LI,,,]                                              
-            ****** INFO - ToDos: ToDos mit den Stati: offen, laufend, erledigt, verworfen [DocLayout: LI,,,]                                                     
-          ***** INFO - Infos: Infos                                             [DocLayout: LI,,,]                                                               
-          ***** INFO - Ideen: Ideen                                             [DocLayout: LI,,,]                                                               
-          ***** INFO - Dokumentation: Dokumentation                             [DocLayout: LI,,,]                                                               
-          ***** INFO - Email: Email                                             [DocLayout: LI,,,]                                                               
-          ***** INFO - Fax: Fax                                                 [DocLayout: LI,,,]                                                               
-          ***** INFO - Telefonat: Telefonat                                     [DocLayout: LI,,,]                                                               
-          ***** INFO - Chat: Chat                                               [DocLayout: LI,,,]                                                               
-          ***** INFO - Url: Url                                                 [DocLayout: LI,,,]                                                               
-          ***** INFO - File: File                                               [DocLayout: LI,,,]                                                               
-        **** INFO - Kontakt: Kontakt                                            [DocLayout: LI,,,]                                                               
-        **** INFO - Location: Location                                          [DocLayout: LI,,,]                                                               
-        **** INFO - SymLink: SymLink auf einen anderen Knoten                   [DocLayout: LI,,,]                                                               
-      *** **INFO - Features**                                                   [DocLayout: UE,,,]                                                               
-        **** INFO - Plandaten: Planung von Aufwand und Umsetzungszeitraum für Projekte, Aufgaben, Termine [DocLayout: LI,,,]                                     
-        **** INFO - Istdaten: Dokumentation des aktuellen Umsetzungsstandes diesen Knotens mit benötigtem Aufwand und Umsetzungszeitraum [DocLayout: LI,,,]      
-        **** INFO - Url-Ressourcen: Dokumentation von Urls z.B. HowTos usw. die hilfreich sind [DocLayout: LI,,,]                                                
-        **** INFO - Datei-Ressourcen: Dokumentation von Dateien (versioniert) die zum Projekt gehören [DocLayout: LI,,,]                                         
-        **** INFO - Infos: Dokumentation von Informationen, Howtos, Notizen, Protokollen usw. [DocLayout: LI,,,]                                                 
-        **** INFO - Telefonate: Dokumentation von Telefonaten mit allen Metainformationen (Beteiligte, Zeit, Nummern...) [DocLayout: LI,,,]                      
-        **** INFO - Emails: Dokumentation von Emails mit allen Metainformationen (Beteiligte, Zeit, Inhalt, Anhänge...) [DocLayout: LI,,,]                       
-        **** INFO - Kontakte: Dokumentation von Kontakten und Verknüpfung mit Email. Telefonaten, Sitzungsprotokollen usw. [DocLayout: LI,,,]                    
-        **** INFO - Layout: Formatierung für den Dokumentations-Export (DIV,UE,P,LI,TR) [DocLayout: LI,,,X]                                                      
+
+* **INFO - Wie wird es weitergehen...**                                     [DocLayout: DIV,vision,Vision,]                                                
+Ja, Ja D'Artagnan ist noch lange (und wohl niemals ;-) fertig. Ständig fallen mir weitere kleine Features ein, die ich noch unterbringen möchte.
+Deshalb hioer eine kleine Übersicht, was die auf lange Sicht geplant und was davon auch schon umgesetzt wurde.
+** INFO - Ende [DocLayout: P,,,X]                                                      
+
+* **INFO - Die Vision**                                     [DocLayout: DIV,vision,Vision,]                                                
+## Welche Versionen wird es geben?
+Für jeden die passende: Nicht jeder hat die gleichen Ansprüche. Deshalb wird D'Artagnan in verschiedenen Versionen nutzbar sein.
+
+- lokaler Single-User: Für den standortgebundenen Single-User sollte eine lokal installierte Version (Package mit lokalem Tomcat, SqlLite), auf die er mit seinem lokalen Browser zugreift, ausreichen. Er kann seine Installation auf einen Stick kopieren und überall lokal ausführen (vielleicht sogar als PortableApps-Paket).
+- Lokale Arbeitsgruppen: Für lokale Arbeitsgruppen kann entweder die Single-User-Version aus dem lokalen Netz erreichbar gemacht werden, oder es wird gleich die Server-Version genutzt.
+- Server-Version: Für größere Arbeitsgruppen ist eine Server-Version mit (Apache, Tomcat, MySql...) entweder auf einer Appliance oder als Installations-Paket für bestehende Server vorgesehen.
+- Mobiler Zugriff: Neben der für mobile Browser optimierten Weboberfläche der Server-Version, soll es auch eine Native-App mit direktem Zugriff auf die D'Artagnan-WebServices geben.
+
+Resume: Also, für jeden die passende Version, damit er sich überall und in jeder Lebenslage der Unterstützung von D'Artagnan sicher sein kann ;-)
+
+## Welche Verbesserungen sind geplant?
+- **moderne Visualierung/einfache Handhabung**
+    - Kontakte: Kontakte lassen sich im System anlegen, mit externen Datenquellen synchronisieren und dienen der Unterfütterungen von Kommunikationspuren mit Kontaktdetails.
+    - automatische Email-Zuordnung: Emails lassen sich per BCC an das System senden und werden entweder in der Inbox gespeichert (für eine spätere manuelle Zuordnung) oder bei Angabe eines Aufgaben-Kenners automatisch der Aufgabe zugeordnet.
+    - Datei-Upload: Dateien lassen sich bei Nutzung des WebDav-Servers im abgebildeten virtuellen Projektstruktur speichern/aufrufen und erscheinen damit direkt in den anderen Sichten des Projektbaumes.
+    - Drag&Drop: Ressourcen wie (Emails, Dateien, Kontakte usw.) lassen sich per Drag&Drop direkt in den Projektbaum ziehen/hochladen und einbinden.
+    - Telefonpotokoll: Metadaten der Telefonate lassen sich manuell oder über Connectoren zur Telefonanlage im System loggen und das Gedächnisprotokoll anschließend den zugehörigen Aufgaben zuordnen.
+- **Sichten**
+    - Sichten: Neben dem normalen Projektbaum wird es eine Vielzahl an Sichten auf die Daten geben.
+    - Struktur: Strukturansicht (Projekt)
+    - Ressourcen: Ressourcen (Dateien, Emails...)
+    - Projektressourcen: Projektressourcen (Mitarbeiter, Werkzeuge...)
+    - Events: Events (Termine, Todos mit Termin)
+    - Kommunikation: Kommunikation (Tel, Fax, Email, Chats usw.)
+    - Zeitstrahl: Alle vergangenen/geplanten Knoten in chronologischer Reihenfolge.
+    - ToDos: ToDos (Termine, Aufgaben, Projekte usw.)
+    - Infos: Infos, Ideen, Dokumentation usw.
+    - Kontakte: Kontakte (gruppiert nach den beteiligten Kontakten)
+    - ...
+- ** *Ui-Ui-Ui der Inbegriff von - Work in Progress* **
+
+## Und weiter mit Ideenfetzen
+- **Features**
+    - Plandaten: Planung von Aufwand und Umsetzungszeitraum für Projekte, Aufgaben, Termine
+    - Istdaten: Dokumentation des aktuellen Umsetzungsstandes diesen Knotens mit benötigtem Aufwand und Umsetzungszeitraum
+    - Url-Ressourcen: Dokumentation von Urls z.B. HowTos usw. die hilfreich sind
+    - Datei-Ressourcen: Dokumentation von Dateien (versioniert) die zum Projekt gehören
+    - Infos: Dokumentation von Informationen, Howtos, Notizen, Protokollen usw.
+    - Telefonate: Dokumentation von Telefonaten mit allen Metainformationen (Beteiligte, Zeit, Nummern...)
+    - Emails: Dokumentation von Emails mit allen Metainformationen (Beteiligte, Zeit, Inhalt, Anhänge...)
+    - Kontakte: Dokumentation von Kontakten und Verknüpfung mit Email. Telefonaten, Sitzungsprotokollen usw.
+    - Layout: Formatierung für den Dokumentations-Export (DIV,UE,P,LI,TR) 
+*** INFO - Ende [DocLayout: P,,,X]                                                      
+
+** **INFO - technische Roadmap**                                     [DocLayout: DIV,roadmap,Roadmap,]                                                
+# Roadmap
+
+## short term
+
+- **Neue Funktionen (YAIO2123)**
+    - Im/Export als JSON (YAIO2095)
+    - Copy/Move über GUI+JSON (YAIO2096)
+- **GUI (YAIO2124)**
+    - Kontextmenü über Icon öffnen (YAIO2092)
+    - neues Iconset als sprite einbinden (YAIO2093)
+- **Code-Verbesserungen (YAIO2125)**
+    - Java-Codeabdeckung für neue Java-Funktionen (YAIO2098)
+    - Layout-Tests (YAIO2100)
+    - Auswertung Checkstyle (YAIO2132)
+    - Auswertung Findbugs (YAIO1979)
+    - Seleniumtests als JUnit-Tests (YAIO2052)
+
+## mid term
+- **Dokumentation (YAIO1143)**
+    - Projektplanung (YAIO643)
+    - Code-Dokumentation Prio2-Klassen (YAIO1145)
+    - Modellierung (YAIO644)
+- **Erweiterungen (YAIO1921)**
+    - Ergonomie (YAIO1923)
+        - externe CSS-Styles definieren (YAIO1724)
+        - DryRun-Modus für Import (YAIO1712)
+        - OutputOptions im Cookie speichern (YAIO1674)
+        - bei Anlegen/Löschen einer Task - Aufwand von Parent abziehen (YAIO1680)
+        - Style-Switcher (anderes css mit Auswahl in Coockie) (YAIO1626)
+        - Änderung von Metadaten ermöglichen (mit Check ob eindeutig in DB) (YAIO1470)
+        - Form bei Hinweis ablehnen, Force-Option zum ueberschreiben (YAIO1542)
+        - Hinweise im Formular einblenden (YAIO1543)
+        - Verschärfung der Vailidierungsregeln (YAIO1924)
+    - Funktionen (YAIO1575)
+        - Tagen der Nodes mit TagEditor (YAIO1247)
+    - Datenmodell (YAIO1686)
+        - rekursive Aktualisierung CalcSum usw. (YAIO576)
+        - Terminvererbung (YAIO1891)
+- **Code-Verbesserungen (YAIO1926)**
+    - Optionen in Config auslagern (YAIO1638)
+    - eigene JS-Klassen (YAIO1927)
+    - DB-Zugriffe von BaseNodeDBService machen und nicht von BaseNode (YAIO1553)
+    - checksum+version per json uebertragen, beim speichern kontrollieren und ggf. Warnung (YAIO1541)
+    - für Formular eigene Angular-Directive (Tag mit Layout, ganze Form-Elemente, ganze Forms) (YAIO1550)
+    - autom Classloader fuer Formatter/Parser-Plugins (YAIO575)
+    - Exceptions aufräumen (YAIO676)
+
+## long term
+
+- **Projekt - Configurator (YAIO1716)**
+    - java ConfiguratorClass (YAIO1717)
+    - Frontend - ConfigController (YAIO1718)
+- **Projekt - User-Modul (YAIO1705)**
+    - Datenmodell: Usertabelle (YAIO1706)
+    - CRUD-Masken User (YAIO1707)
+    - Node-User: Creator/Besitzer/LastChanger (YAIO1710)
+    - Rechtemodell an Node Alle/Team/Privat (YAIO1711)
+    - Mandantenmodell -> an User wird Mandant festgemacht, jede Node bekommt Mandant zugewiesen (YAIO1719)
+- **Projekt - neue Funktionen (YAIO171)**
+    - AbrechnungsTyp hinzufuegen (YAIO183)
+    - Typ hinzufuegen (YAIO182)
+    - neue Bereiche Alarm4Start, Alarm4End (YAIO240)
+    - neue Bereiche Taskstati Sleep, Wait (YAIO243)
+- **Projekt - Correspondence-Modul (YAIO1688)**
+    - Einführung eines Correspondence-Modells mit Kontakten/Email/Tel... (YAIO1551)
+    - neuer Typ Kontakt (YAIO246)
+    - Dokumentenverwaltung (YAIO187)
+        - Inbox mit allen möglichen Ressourcen (YAIO188)
+        - Ressource verlinkt auf Ressource mit Detaildaten (analog Correspondence) (YAIO189)
+        - Ressource wird versioniert analog Correspondence (YAIO190)
+        - Ressourcen-Stammadten änderbar (YAIO191)
+        - Ressourcen-Kontakte analog Correspondence (Sender, Empfänger ) usw. (YAIO192)
+        - können mit Schlagworten versehen werden (YAIO193)
+        - Verlinkung n:n Ressourcen mit Nodes (YAIO194)
+        - Framelösung links Nodeliste, rechts Ressourcenliste und dann mit Drag&Drop) verlinken (YAIO195)
+        - Emails, Telefonate, Chats werden als Thread versioniert und dargestellt (YAIO196)
+        - Dokumente per Upload bzw. WebDav (YAIO197)
+        - Email-Datei x.msg per Upload bzw. WebDav -> parse die Infos dort direkt raus (YAIO198)
+        - Telefonate per WebForm/Email/Asterisk (YAIO199)
+- **Projekt - als Android-App (YAIO1689)**
+    - das ganze als lokale Android-App (YAIO1552)
+- **Projekt - Zeiterfassung (YAIO200)**
+    - An Node Kalender aufrufen, Tag auswählen und speichern wie viele Stunden ich an diesem Tag dort gearbeitet habe (YAIO201)
+    - Im Kalender Tag aufrufen, aus Selectbox Node auswählen und Stunden angeben (YAIO202)
+    - Datenmodell: Tag,Projekt,Mitarbeiter,Stunden (YAIO203)
+*** INFO - Ende [DocLayout: P,,,X]                                                      
+
+** **INFO - Der Blick zurück...**                                     [DocLayout: DIV,changelog,Chnagelog,]                                                
+# Changelog
+
+## Changelog for release: feature-YAIO2082-improvements-201504-RELEASE
+- **Neue Funktionen (YAIO2094)**
+    - Textsnippets in Suche anzeigen (YAIO2104)
+    - added Markdown-Checklists (YAIO2109)
+    - YAIO-Refs im Markdown (YAIO2110)
+- **GUI (YAIO2091)**
+    - Styles fixen (YAIO2103)
+- **Code-Verbesserungen (YAIO2097)**
+    - Startscript für Linux (YAIO2105)
+    - Fixing Translation + State (YAIO2111)
+    - Bugfixung Maven-Config (versions, testresources) (YAIO2112)
+    - Integration JS-Testing in Deploy-Prozess (YAIO2099)
+    - Refactoring Java-Code (Services, Util-Classes, Factories) (YAIO2113)
+    - configure MaxFileSize for Upload (YAIO2114)
+- **Erweiterungen (YAIO2049)**
+    - manuelle Install Vagrant-Ubuntu-Devbox (YAIO2115)
+    - Apppropagartor (YAIO2116)
+    - YAIO-Demo-Installer (YAIO2117)
+
+## Changelog for release: feature-YAIO2040-improvements-201503-RELEASE
+- **Neue Funktionen (YAIO2079)**
+    - neuer PPL-Exporter (YAIO2080)
+    - Erweiterung des Markdown um Freemind (YAIO2081)
+    - BaseRef in Html-Export (YAIO2077)
+- **GUI (YAIO2047)**
+    - Einbindung von Toast-Messages (Fehler, Infos usw.) (YAIO2062)
+    - Layoutverbesserungen für Exporte (YAIO2065)
+    - Download/SourceView-Links für Diagramme (YAIO2066)
+    - TOC (YAIO2067)
+    - Gantt-Datum auf +-3Monate von heute setzen (YAIO2069)
+    - Bugfix Styles/Druckversion (YAIO2070)
+- **Code-Verbesserungen (YAIO2048)**
+    - YAIO-Caller Bugfix Encoding + FileOutput-Option (YAIO2071)
+    - Html-Ids für Markdown-Elemente eindeutig vergeben (YAIO2072)
+    - Im/Ex/Converter auf einheitliche Code-Basis (YAIO2073)
+    - Refactoring JS (YAIO2074)
+    - Codeclean: static DateFormat-Fields (YAIO2075)
+    - Angular-Refactoring globale Util-Funktionen (YAIO2076)
+    - YAIO-Caller Codeverbesserung (YAIO2078)
+
+## Changelog for release: feature-YAIO1980-improvements-201502
+- **GUI (YAIO1981)**
+    - Export als Jira oder Plaintext (YAIO2031)
+    - Statistiken + Tree-Expander nur anzeigen, wenn Node children hat (YAIO1676)
+    - expander nur anzeigen, wenn children vorhanden (YAIO1677)
+    - Statistik anzeigen (YAIO2014)
+    - Language-Switcher (Übersetzung nach en) (YAIO1625)
+    - Einbindung von Diagrammen (YAIO2017)
+    - Standalone-Wysiwyg-Editor (YAIO2027)
+    - statische Startseiten (YAIO2030)
+- **Code-Verbesserungen (YAIO1983)**
+    - Alle Shellscipte in Hauptprojekt uebernehmen (YAIO1853)
+- **Security-Isuses (YAIO1984)**
+    - Html und Markdown (YAIO1985)
+- **Erweiterungen (YAIO1960)**
+    - Absicherung über User-Modul (YAIO1970)
+        - Konfiguration von Apache-Domains für eigene Session-Coockie (YAIO2019)
+        - YAIO Basisabsicherung (YAIO2023)
+        - Absicherung: WS nur nach Login abrufbar (YAIO1709)
+    - Admin-Endpunkte (YAIO1986)
+    - Clients für Remote-Calls (YAIO1987)    
+
+## Changelog for milestone: 201501 (YAIO1931)
+- **GUI (YAIO1932)**
+    - Markdown für Html-Export (YAIO1961)
+    - SyntaxHighLighting für Html-Export (YAIO1939)
+    - Aufbereitung Druckversion (YAIO1952)
+    - DetailBlock mit Metadaten: Create/Change/metaNodeNumer... (mit Toggler) (YAIO1469)
+    - Wyswyg-Editor (YAIO1969)
+    - Vorlesefunktion (YAIO1934)
+- **Code-Verbesserungen (YAIO1953)**
+    - Improve app-naming (YAIO1954)
+    - Actuator mit Managementinfos (YAIO1955)
+
+## Changelog for milestone: 201411-12 (YAIO255)
+- **GUI (YAIO1573)**
+    - bei neuer InfoNode, UrlRes-Node Standardtyp vorbelegen (YAIO1845)
+    - Formatierung der Beschreibung (YAIO1856)
+    - Preview-Fenster (YAIO1904)
+    - Verbesserung Druckversion (YAIO1905)
+    - Verschärfung der Vailidierungsregeln (YAIO1816)
+- **Code-Verbesserungen (YAIO1576)**
+    - eigene JS-Klassen (YAIO1250)
+
+## Changelog for milestone: 201410 SpringRoo-Web (YAIO642)
+- **neue Funktionen**
+    - Implementierung eines RESTfull webservice zum Abruf Version1 (YAIO1169)
+    - Implementierung eines Javascript-Ports (YAIO1200)
+
+## Changelog for milestone: 201409
+- **Implementierung SpringRoo-Persistence (Step1) (YAIO1140)**
+    - Implementierung Port Persistence mit Roo (YAIO727)
+    - Performance-Verbesserung Startup (YAIO1117)
+    - DB-Config in Parameterfile auslagern (YAIO1142)
+    
+## Changelog for milestone: 201404
+- **Neu-Implementierung mit Spring Roo (YAIO445)**
+    - Testprojekt aufsetzen (YAIO446)
+    - YAIO zur Übernahme integriert (YAIO448)
+    - Modell (YAIO449)
+    - Port Importer Allg (YAIO469)
+    - Port Exporter Allg (YAIO479)
+    - Anwendungs-Umgebung aufsetzen (YAIO588)
+    - Port Prasentation Statisch (YAIO489)
+
+## Changelog for milestone: 201401 (YAIO142)
+- **Neue Features**
+    - Darstellungs-Filter V1 (YAIO143)
+    - Systemdaten speichern (YAIO146)
+    - Metadaten speichern (YAIO149)
+    - Diff-Script -> start winmerge wenn Diffs vorhanden (YAIO206)
+    - CYGWIN-Warnungen ausschalten (YAIO207)
+    - Url-Ressourcen als Typ (YAIO153)
+    - Neuer Typ Template (YAIO211)
+    - Datumswerte bei Plan+Ist mit optionaler Zeitangabe versehen (insbesondere für Termine) (YAIO252)
+    - Export als CSV (TAB) (YAIO253)
+    - Export als JSON (YAIO254)
+    - Volltextsuche im Javascript V1 (YAIO152)
+*** INFO - Ende [DocLayout: P,,,X]                                                      
