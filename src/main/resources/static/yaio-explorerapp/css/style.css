@@ -1159,12 +1159,12 @@ body .ui-tooltip {
     border-right: 1px dotted #008000;
     border-top: 0px;
     border-bottom: 0px;
-    font-size: 13px;
+    font-size: 12px;
     text-align: center;
 } 
 .box-portdesc-nextactions li a {
     font-size: 15px;
-  font-weight: bold;
+    font-weight: bold;
 } 
 
 #front-content-intro pre code  {
