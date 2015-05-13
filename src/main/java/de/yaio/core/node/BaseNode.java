@@ -15,9 +15,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 package de.yaio.core.node;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -68,7 +66,6 @@ import de.yaio.core.datadomainservice.SysDataServiceImpl;
 import de.yaio.core.dbservice.BaseNodeDBService;
 import de.yaio.core.dbservice.BaseNodeDBServiceImpl;
 import de.yaio.core.nodeservice.BaseNodeService;
-import de.yaio.core.nodeservice.NodeService;
 import de.yaio.datatransfer.importer.parser.Parser;
 
 /**
@@ -91,95 +88,37 @@ import de.yaio.datatransfer.importer.parser.Parser;
 public class BaseNode implements BaseData, MetaData, SysData, 
     DescData, BaseWorkflowData, StatData {
     
-    // Logger
-    private static final Logger LOGGER =
-        Logger.getLogger(BaseNode.class);
-
-    public static final String CONST_NODETYPE_IDENTIFIER_UNKNOWN = "UNKNOWN";
-    public static final Map<String, Object> CONST_MAP_NODETYPE_IDENTIFIER = new HashMap<String, Object>();
-    public static final Map<String, WorkflowState> CONST_MAP_STATE_WORKFLOWSTATE = new HashMap<String, WorkflowState>();
-    static {
-        // define WorkflowStates
-        CONST_MAP_STATE_WORKFLOWSTATE.put(CONST_NODETYPE_IDENTIFIER_UNKNOWN, WorkflowState.NOWORKFLOW);
-
-        // Defaults
-        CONST_MAP_NODETYPE_IDENTIFIER.put(CONST_NODETYPE_IDENTIFIER_UNKNOWN, CONST_NODETYPE_IDENTIFIER_UNKNOWN);
-        // Abarten
-        CONST_MAP_NODETYPE_IDENTIFIER.put("UNKNOWN", CONST_NODETYPE_IDENTIFIER_UNKNOWN);
-        CONST_MAP_NODETYPE_IDENTIFIER.put("UNBEKANNT", CONST_NODETYPE_IDENTIFIER_UNKNOWN);
-        
-    }
-    
     // Validator
     protected static ValidatorFactory validationFactory = Validation.buildDefaultValidatorFactory();
 
-    protected static SysDataService sysDataService = new SysDataServiceImpl();
-    protected static MetaDataService metaDataService = new MetaDataServiceImpl();
-    protected static NodeService nodeService = new BaseNodeService();
+    protected static SysDataService sysDataService = SysDataServiceImpl.getInstance();
+    protected static MetaDataService metaDataService = MetaDataServiceImpl.getInstance();
+    protected static BaseNodeService nodeService = BaseNodeService.getInstance();
     protected static BaseNodeDBService baseNodeDBService = BaseNodeDBServiceImpl.getInstance();
     
-    public BaseNode() {
-        super();
-    }
-
-    @XmlTransient
-    @JsonIgnore
-    public SysDataService getSysDataService() {
-        return sysDataService;
-    }
-    @XmlTransient
-    @JsonIgnore
-    public static SysDataService getConfiguredSysDataService() {
-        return sysDataService;
-    }
-    @XmlTransient
-    @JsonIgnore
-    public static final void setSysDataService(final SysDataService newSysDataService) {
-        sysDataService = newSysDataService;
-    }
-    @XmlTransient
-    @JsonIgnore
-    public static MetaDataService getConfiguredMetaDataService() {
-        return metaDataService;
-    }
-    @XmlTransient
-    @JsonIgnore
-    public MetaDataService getMetaDataService() {
-        return metaDataService;
-    }
-
-    @XmlTransient
-    @JsonIgnore
-    public static final void setMetaDataService(final MetaDataService newMetaDataService) {
-        metaDataService = newMetaDataService;
-    }
-    @XmlTransient
-    @JsonIgnore
-    public static NodeService getConfiguredNodeService() {
-        return nodeService;
-    }
-    @XmlTransient
-    @JsonIgnore
-    public NodeService getNodeService() {
-        return nodeService;
-    }
+    // Logger
+    private static final Logger LOGGER = Logger.getLogger(BaseNode.class);
 
     /**
-     * @return the {@link BaseNode#baseNodeDBService}
+     * next position in list
      */
+    @Transient
     @XmlTransient
     @JsonIgnore
-    public BaseNodeDBService getBaseNodeDBService() {
-        return baseNodeDBService;
-    }
-    /**
-     * @param newBaseNodeDBService the {@link BaseNode#baseNodeDBService} to set
-     */
+    protected int curSortIdx = 0;
+
+    //####################
+    // Hierarchy-functions
+    //####################
+    @Transient
     @XmlTransient
     @JsonIgnore
-    public void setBaseNodeDBService(final BaseNodeDBService newBaseNodeDBService) {
-        baseNodeDBService = newBaseNodeDBService;
-    }
+    protected Map<String, DataDomain> childNodesByNameMapMap = new LinkedHashMap <String, DataDomain>();
+
+    /** 
+     * dummy classname for JSON-Exporter
+     **/
+    private String className;
 
     /**
      * flag to indicate that item hat to be update
@@ -525,17 +464,87 @@ public class BaseNode implements BaseData, MetaData, SysData,
     @Pattern(regexp = "(" + Parser.CONST_PATTERN_SEG_TYPE + "*)?", 
              message = "type can only contain characters.")
     private String type;
+
+    /**
+     * summary of all children workflowstate with the highest priority
+     */
+    @Enumerated
+    private WorkflowState workflowState;
+
+    /**
+     * position in list
+     */
+    @Min(0L)
+    private Integer sortPos;
+
+    public BaseNode() {
+        super();
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public SysDataService getSysDataService() {
+        return sysDataService;
+    }
+    @XmlTransient
+    @JsonIgnore
+    public static SysDataService getConfiguredSysDataService() {
+        return sysDataService;
+    }
+    @XmlTransient
+    @JsonIgnore
+    public static final void setSysDataService(final SysDataService newSysDataService) {
+        sysDataService = newSysDataService;
+    }
+    @XmlTransient
+    @JsonIgnore
+    public static MetaDataService getConfiguredMetaDataService() {
+        return metaDataService;
+    }
+    @XmlTransient
+    @JsonIgnore
+    public MetaDataService getMetaDataService() {
+        return metaDataService;
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public static final void setMetaDataService(final MetaDataService newMetaDataService) {
+        metaDataService = newMetaDataService;
+    }
+    
+    @XmlTransient
+    @JsonIgnore
+    public BaseNodeService getBaseNodeService() {
+        return nodeService;
+    }
+
+    /**
+     * @return the {@link BaseNode#baseNodeDBService}
+     */
+    @XmlTransient
+    @JsonIgnore
+    public BaseNodeDBService getBaseNodeDBService() {
+        return baseNodeDBService;
+    }
+    /**
+     * @param newBaseNodeDBService the {@link BaseNode#baseNodeDBService} to set
+     */
+    @XmlTransient
+    @JsonIgnore
+    public void setBaseNodeDBService(final BaseNodeDBService newBaseNodeDBService) {
+        baseNodeDBService = newBaseNodeDBService;
+    }
+
     
     
     
     /**
      * summary of all children workflowstate with the highest priority
      */
-    @Enumerated
-    private WorkflowState workflowState;
     public WorkflowState getWorkflowState() {
-        if (workflowState == null) {
-            return WorkflowState.NOWORKFLOW;
+        if (workflowState == null || workflowState == WorkflowState.NOWORKFLOW) {
+            return this.getBaseNodeService().getWorkflowState(this);
         }
         return workflowState;
     };
@@ -543,24 +552,6 @@ public class BaseNode implements BaseData, MetaData, SysData,
         workflowState = istState;
     };
 
-    /**
-     * position in list
-     */
-    @Min(0L)
-    private Integer sortPos;
-    
-    /**
-     * next position in list
-     */
-    @Transient
-    @XmlTransient
-    @JsonIgnore
-    protected int curSortIdx = 0;
-    @Transient
-    @XmlTransient
-    @JsonIgnore
-    protected static final int CONST_CURSORTIDX_STEP = 5;
-    
     //
     // checks 
     //
@@ -613,7 +604,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     @JsonIgnore
     public boolean isPlanStartValid() {
         if (getPlanStart() != null) {
-            return (    getPlanStart().compareTo(CONST_MINDATE) >= 0) 
+            return (getPlanStart().compareTo(CONST_MINDATE) >= 0) 
                     && (getPlanStart().compareTo(CONST_MAXDATE) <= 0);
         }
         return true;
@@ -629,7 +620,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     @JsonIgnore
     public boolean isPlanEndeValid() {
         if (getPlanEnde() != null) {
-            return (    getPlanEnde().compareTo(CONST_MINDATE) >= 0) 
+            return (getPlanEnde().compareTo(CONST_MINDATE) >= 0) 
                     && (getPlanEnde().compareTo(CONST_MAXDATE) <= 0);
         }
         return true;
@@ -665,7 +656,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     @JsonIgnore
     public boolean isIstStartValid() {
         if (getIstStart() != null) {
-            return (    getIstStart().compareTo(CONST_MINDATE) >= 0) 
+            return (getIstStart().compareTo(CONST_MINDATE) >= 0) 
                     && (getIstStart().compareTo(CONST_MAXDATE) <= 0);
         }
         return true;
@@ -681,7 +672,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     @JsonIgnore
     public boolean isIstEndeValid() {
         if (getIstEnde() != null) {
-            return (    getIstEnde().compareTo(CONST_MINDATE) >= 0) 
+            return (getIstEnde().compareTo(CONST_MINDATE) >= 0) 
                     && (getIstEnde().compareTo(CONST_MAXDATE) <= 0);
         }
         return true;
@@ -707,33 +698,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
      * @param pRecursionLevel - how many recursion-level will be read from DB
      */
     public void initChildNodesFromDB(final int pRecursionLevel) {
-        int recursionLevel = pRecursionLevel;
-        // clear the children
-        this.childNodes.clear();
-        this.childNodesByNameMapMap.clear();
-        
-        // read my childNodes
-        List<BaseNode> tmpChildNodes = getBaseNodeDBService().findChildNodes(this.getSysUID());
-        
-        // set new level if it is not -1
-        recursionLevel = (recursionLevel > 0 ? recursionLevel-- : recursionLevel);
-
-        // interate children
-        for (BaseNode childNode : tmpChildNodes) {
-            // add to childrenMaps
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("initChildNodesFromDB add to " + this.getNameForLogger() 
-                           + " child:" + childNode.getNameForLogger());
-            }
-            this.addChildNode(childNode);
-            
-            // check recursionLevel
-            if (    (recursionLevel == NodeService.CONST_DB_RECURSIONLEVEL_ALL_CHILDREN) 
-                 || (recursionLevel > 0)) {
-                // recurse
-                childNode.initChildNodesFromDB(recursionLevel);
-            }
-        }
+        this.getBaseNodeService().initChildNodesFromDB(this, pRecursionLevel);
     }
 
     /**
@@ -751,7 +716,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
      *     Persistence
      */
     public void initChildNodesForParentsFromDB() {
-        List<BaseNode> parentHierarchy = this.getParentHierarchy();
+        List<BaseNode> parentHierarchy = this.getBaseNodeService().getParentHierarchy(this);
         for (BaseNode parent : parentHierarchy) {
             parent.initChildNodesFromDB(0);
         }
@@ -776,68 +741,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
      * @throws Exception - ioExceptions possible
      */
     public void saveChildNodesToDB(final int pRecursionLevel, final boolean flgForceMerge) throws Exception {
-        // set new level if it is not -1
-        int recursionLevel = pRecursionLevel;
-        recursionLevel = (recursionLevel > 0 ? recursionLevel-- : recursionLevel);
-
-        // interate children
-        for (BaseNode childNode : this.getChildNodes()) {
-            // validate data
-            if (childNode.getMetaNodeNummer() == null) {
-                //childNode.initMetaData();
-            }
-            if (childNode.getSysUID() == null) {
-                childNode.initSysData();
-            }
-
-            // persist to DB
-            try {
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("persistChildNodesToDB from " + this.getNameForLogger() 
-                               + " child:" + childNode.getNameForLogger());
-                }
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("childNode:" + childNode.getName() + " pos: " + childNode.getSortPos());
-                }
-                
-                // check if persist or merge
-                if (entityManager().contains(childNode) || flgForceMerge) {
-                    childNode.merge();
-                } else {
-                    childNode.persist();
-                }
-            } catch (Exception ex) {
-                LOGGER.error("errors while saving childnode for '" 
-                                + sysUID + "':", ex);
-                LOGGER.error("error saving node '" 
-                                + childNode);
-                throw ex;
-            }            
-//            boolean flgOK = true;
-//            try {
-//                childNode.persist();
-//            } catch (Exception ex) {
-//                LOGGER.error("persistChildNodesToDB error for childnode " 
-//                           + childNode.getMetaNodePraefix() 
-//                           + "," + childNode.getMetaNodeNummer() 
-//                           + " SysUID: " + childNode.getSysUID() 
-//                           + " Name: " + childNode.getName() 
-//                           + " ex:" + ex);
-////                LOGGER.error("persistChildNodesToDB error for parent " + this.getSysUID() + " Name: " + this.getName());
-////                LOGGER.error("persistChildNodesToDB error for childnodedetails " + childNode.getNameForLogger());
-////                LOGGER.error("persistChildNodesToDB error for parentdetails " + this.getNameForLogger());
-//                flgOK = false;
-////                throw new Exception(ex);
-//            }
-            
-            // check recursionLevel
-            if (    (recursionLevel == NodeService.CONST_DB_RECURSIONLEVEL_ALL_CHILDREN) 
-                 || (recursionLevel > 0)) {
-                // recurse
-//                if (flgOK)
-                childNode.saveChildNodesToDB(recursionLevel, flgForceMerge);
-            }
-        }
+        this.getBaseNodeDBService().saveChildNodesToDB(this, pRecursionLevel, flgForceMerge);
     }
 
     /**
@@ -853,91 +757,24 @@ public class BaseNode implements BaseData, MetaData, SysData,
      *     Persistence
      */
     public void removeChildNodesFromDB() {
-        // interate children on db
-        for (BaseNode childNode : getBaseNodeDBService().findChildNodes(this.getSysUID())) {
-            // persist to DB
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("removeChildNodesFromDB from " + this.getNameForLogger() 
-                           + " child:" + childNode.getNameForLogger());
-            }
-            // recurse
-            childNode.removeChildNodesFromDB();
-            
-            // remove this child
-            childNode.remove();
-        }
+        this.getBaseNodeDBService().removeChildNodesFromDB(this);
     }
 
     //####################
     // Hierarchy-functions
     //####################
-    @Transient
-    @XmlTransient
-    @JsonIgnore
-    protected Map<String, DataDomain> childNodesByNameMapMap = new LinkedHashMap <String, DataDomain>();
-
     public void initChildNodesByNameMap() {
-        Set<BaseNode> childSet = childNodes;
+        Set<BaseNode> childSet = this.getChildNodes();
         for (BaseNode child : childSet) {
-            childNodesByNameMapMap.put(child.getIdForChildByNameMap(), child);
+            this.getChildNodesByNameMap().put(child.getIdForChildByNameMap(), child);
         }
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Persistence
-     * <h4>FeatureDescription:</h4>
-     *     get a List of the parent-hierarchy
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue List<BaseNode> - list of the parents, start with my own parent (not me)
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Persistence
-     * @return list of the parents, start with my own parent (not me)
-     */
-    @Transient
-    @XmlTransient
-    @JsonIgnore
-    public List<BaseNode> getParentHierarchy() {
-        List<BaseNode> parentHierarchy = new ArrayList<BaseNode>();
-        BaseNode parent = this.getParentNode();
-        while (parent != null) {
-            parentHierarchy.add(parent);
-            parent = parent.getParentNode();
-        }
-        return parentHierarchy;
-    }
-
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Persistence
-     * <h4>FeatureDescription:</h4>
-     *     get a List of the Ids of parent-hierarchy 
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue List<String> - list of the parent-sysUIDs, start with my own parent (not me)
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Persistence
-     * @return list of the parent-sysUIDs, start with my own parent (not me)
-     */
-    @Transient
-    @XmlTransient
-    @JsonIgnore
-    public List<String> getParentIdHierarchy() {
-        List<String> parentIdHierarchy = new ArrayList<String>();
-        for (BaseNode parent: getParentHierarchy()) {
-            parentIdHierarchy.add(parent.getSysUID());
-        }
-        
-        return parentIdHierarchy;
-    }
-        
     @Override
     public void setParentNode(final BaseNode parentNode) {
-        getNodeService().setParentNode(this, parentNode, true);
+        getBaseNodeService().setParentNode(this, parentNode, true);
     }
+    
     @Override
     @XmlTransient
     @JsonIgnore
@@ -953,115 +790,18 @@ public class BaseNode implements BaseData, MetaData, SysData,
             return getSrcName();
         }
         if (getSysUID() != null) {
-            return sysUID;
+            return getSysUID();
         }
         return getName();
     }
 
     @Override
     public void addChildNode(final DataDomain childNode) {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("add child:" + childNode.getNameForLogger() + " to " + this.getNameForLogger());
-        }
-        if (childNode != null) {
-            if (childNode.getSortPos() != null) {
-                // preserve sortpos of the child
-                if (childNode.getSortPos() > curSortIdx) {
-                    // update idx
-                    curSortIdx = childNode.getSortPos() + CONST_CURSORTIDX_STEP;
-                }
-            } else {
-                // set new sortpos for the child
-                childNode.setSortPos(curSortIdx);
-                curSortIdx = curSortIdx + CONST_CURSORTIDX_STEP;
-            }
-            this.childNodesByNameMapMap.put(childNode.getIdForChildByNameMap(), childNode);
-            this.childNodes.add((BaseNode) childNode);
-        }
-    }
-    
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Persistence
-     * <h4>FeatureDescription:</h4>
-     *     move the child in childlist to the sortPos
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>reorder childNodes
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Persistence
-     * @param child - the child to move in list
-     * @param newSortPos - the new position
-     */
-    public void moveChildToSortPos(final BaseNode child, final Integer newSortPos) {
-        // check data
-        if (child == null) {
-            throw new IllegalArgumentException("child must not be null");
-        }
-        if (newSortPos == null) {
-            throw new IllegalArgumentException("newSortPos must not be null");
-        }
-        if (!this.childNodes.contains(child)) {
-            throw new IllegalArgumentException("child is no member of my childlist");
-        }
-        
-        // iterate childlist and look for child
-        boolean flgChildWaiting = true;
-        
-        // preserve the childnodes in order
-        Set<BaseNode> tmpChildNodes = new LinkedHashSet<BaseNode>();
-        for (BaseNode curChild : this.childNodes) {
-            // add the other child
-            tmpChildNodes.add(curChild);
-        }
-        
-        // clear the  orig list
-        this.childNodes.clear();
-        curSortIdx = 0;
-        
-        // if the child moves down, then we have to realize that it is no more in list: so we have to sub the idx 
-        int newPos = newSortPos.intValue();
-        
-        // add the childs to the list
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("I " + child.getName() + " want newPos:" + newPos);
-        }
-        for (BaseNode curChild : tmpChildNodes) {
-            // if sortPos of curChild > newSortPos, then insert it here
-            if (flgChildWaiting && curChild.getSortPos().intValue() > newPos) {
-                this.addChildNode(child);
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("added me " + child.getName() + " and got " + child.getSortPos().intValue());
-                }
-                flgChildWaiting = false;
-            }
-            if (child.equals(curChild) || child.getSysUID().equalsIgnoreCase(curChild.getSysUID())) {
-                if (LOGGER.isDebugEnabled())
-                 {
-                    LOGGER.debug("bullshit iam in List already " + curChild.getSortPos().intValue() + " at " + this.childNodes.size());
-                // hey i'm already here
-                }
-            } else {
-                // add the other child
-                this.addChildNode(curChild);
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("added other child:" + curChild.getName() + " new:" + curChild.getSortPos().intValue() + " at " + this.childNodes.size());
-                }
-            }
-            
-        }
-
-        // recalc the sortidx
-        curSortIdx = 0;
-        for (BaseNode curChild : this.getChildNodes()) {
-            curChild.setSortPos(curSortIdx);
-            curSortIdx = curSortIdx + CONST_CURSORTIDX_STEP;
-        }
+        this.getBaseNodeService().addChildNode(this, childNode);
     }
     
     @Override
-    public void setParentNode(DataDomain parentNode) {
+    public void setParentNode(final DataDomain parentNode) {
         setParentNode((BaseNode) parentNode);
     }
 
@@ -1073,9 +813,9 @@ public class BaseNode implements BaseData, MetaData, SysData,
     }
 
     @Override
-    public boolean hasChildNode(DataDomain childNode) {
-        if (    (childNode != null) 
-             && (childNodesByNameMapMap.get(childNode.getIdForChildByNameMap()) != null)) {
+    public boolean hasChildNode(final DataDomain childNode) {
+        if ((childNode != null) 
+            && (getChildNodesByNameMap().get(childNode.getIdForChildByNameMap()) != null)) {
             return true;
         }
     
@@ -1087,8 +827,8 @@ public class BaseNode implements BaseData, MetaData, SysData,
     //####################
     
     @Override
-    public void recalcData(int recursionDirection) throws Exception {
-        getNodeService().recalcData(this, recursionDirection);
+    public void recalcData(final int recursionDirection) throws Exception {
+        getBaseNodeService().recalcData(this, recursionDirection);
     }
     
     @Override
@@ -1105,38 +845,14 @@ public class BaseNode implements BaseData, MetaData, SysData,
     @XmlTransient
     @JsonIgnore
     public String getDataBlocks4CheckSum() throws Exception {
-        // Content erzeugen
-        StringBuffer data = new StringBuffer();
-        data.append(this.getType())
-            .append(this.getState())
-            .append(" name=").append(getName())
-// TODO difference DB + PPL-Import          .append(" parentNode=").append((getParentNode() != null ? getParentNode().getSysUID() : null))
-// TODO difference DB + PPL-Import         .append(" sortPos=").append(getSortPos())
-//            .append(" ebene=").append(getEbene())
-//            .append(" istStandChildrenSum=").append(getIstChildrenSumStand())
-//            .append(" istStartChildrenSum=").append(getIstChildrenSumStart())
-//            .append(" istEndeChildrenSum=").append(getIstChildrenSumEnde())
-//            .append(" istAufwandChildrenSum=").append(getIstChildrenSumAufwand())
-//            .append(" planStartChildrenSum=").append(getPlanChildrenSumStart())
-//            .append(" planEndeChildrenSum=").append(getPlanChildrenSumEnde())
-//            .append(" planAufwandChildrenSum=").append(getPlanChildrenSumAufwand())
-            .append(" docLayoutTagCommand=").append(getDocLayoutTagCommand())
-            .append(" docLayoutAddStyleClass=").append(getDocLayoutAddStyleClass())
-            .append(" docLayoutShortName=").append(getDocLayoutShortName())
-            .append(" docLayoutFlgCloseDiv=").append(getDocLayoutFlgCloseDiv())
-            .append(" metaNodePraefix=").append(getMetaNodePraefix())
-            .append(" metaNodeNummer=").append(getMetaNodeNummer())
-            .append(" metaNodeTypeTags=").append(getMetaNodeTypeTags())
-            .append(" metaNodeSubTypeTags=").append(getMetaNodeSubTypeTags())
-            .append(" desc=").append(getNodeDesc());
-        return data.toString();
+        return getBaseNodeService().getDataBlocks4CheckSum(this);
     }
 
     //####################
     // Workflow-functions TODO - separate type+state
     //####################
     @Override
-    public void setType(String type) {
+    public void setType(final String type) {
         this.type = type;
         if (BaseWorkflowData.class.isInstance(this)) {
             this.state = type;
@@ -1144,7 +860,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     }
 
     @Override
-    public void setState(String state) {
+    public void setState(final String state) {
         this.state = state;
         if (BaseWorkflowData.class.isInstance(this)) {
             this.type = state;
@@ -1152,59 +868,28 @@ public class BaseNode implements BaseData, MetaData, SysData,
     }
 
     @Override
-    @XmlTransient
-    @JsonIgnore
-    public Map<String, Object> getConfigState() {
-        return CONST_MAP_NODETYPE_IDENTIFIER;
-    }
-    
-    @Override
-    public boolean isWFStatus(String state) {
-        return getNodeService().isWFStatus(state);
+    public boolean isWFStatus(final String state) {
+        return getBaseNodeService().isWFStatus(state);
     }
 
     @Override
-    public boolean isWFStatusDone (String state) {
-        return getNodeService().isWFStatusDone(state);
+    public boolean isWFStatusDone(final String state) {
+        return getBaseNodeService().isWFStatusDone(state);
     }
 
     @Override
-    public boolean isWFStatusOpen (String state) {
-        return getNodeService().isWFStatusOpen(state);
+    public boolean isWFStatusOpen(final String state) {
+        return getBaseNodeService().isWFStatusOpen(state);
     }
 
     @Override
-    public boolean isWFStatusCanceled(String state) {
-        return getNodeService().isWFStatusCanceled(state);
+    public boolean isWFStatusCanceled(final String state) {
+        return getBaseNodeService().isWFStatusCanceled(state);
     }
-    
-    @Override
-    @XmlTransient
-    @JsonIgnore
-    public Map<String, WorkflowState> getConfigWorkflowState() {
-        return CONST_MAP_STATE_WORKFLOWSTATE;
-    }
-    
-    @Override
-    @XmlTransient
-    @JsonIgnore
-    public WorkflowState getWorkflowStateForState(String state)  throws IllegalStateException {
-        return WorkflowState.NOWORKFLOW;
-    };
-
-    @Override
-    @XmlTransient
-    @JsonIgnore
-    public String getStateForWorkflowState(WorkflowState workflowState)  throws IllegalStateException {
-        return this.getState();
-    };
-    
     
     //####################
     // service-functions
     //####################
-    /** dummy classsname for JSON-Exporter**/
-    public String className;
     public String getClassName() {
         return this.getClass().getSimpleName();
     }
@@ -1220,76 +905,30 @@ public class BaseNode implements BaseData, MetaData, SysData,
     @XmlTransient
     @JsonIgnore
     public String getNameForLogger() {
-        String nameForLogger = "sysUID_" + this.getSysUID() + "_name_" + this.getName() + "_srcName_" + this.getSrcName();
-        return nameForLogger;    
+        return getBaseNodeService().getNameForLogger(this);
     }
     
     @Override
     @XmlTransient
     @JsonIgnore
     public String getWorkingId() {
-        String res = "UNKNOWN";
-        if (this.getMetaNodeNummer() != null && (this.getMetaNodeNummer().length() > 0)) {
-            res = this.getMetaNodePraefix() + this.getMetaNodeNummer();
-        } else if (this.getImportTmpId() != null) {
-            res = this.getImportTmpId().toString();
-        }
-
-        return res;
+        return getBaseNodeService().getWorkingId(this);
     }
 
-    
-    
     @Override
     @XmlTransient
     @JsonIgnore
-    public String getParentNameHirarchry(String delimiter, boolean directionForward) {
-        String parentNames = "";
-        if (delimiter == null) {
-            delimiter = "";
-        }
-
-        if (this.getParentNode() != null) {
-            if (directionForward) {
-                parentNames = this.getParentNode().getParentNameHirarchry(delimiter,
-                    directionForward)
-                    + delimiter
-                    + this.getParentNode().getName();
-            } else {
-                parentNames = this.getParentNode().getName()
-                    + delimiter
-                    + this.getParentNode().getParentNameHirarchry(delimiter,
-                        directionForward);
-            }
-        }
-
-        return parentNames;
+    public String getParentNameHirarchry(final String pdelimiter, 
+                                         final boolean directionForward) {
+        return getBaseNodeService().getParentNameHirarchry(this, pdelimiter, directionForward);
     }
     
-    // TODO cache this
-    @XmlTransient
-    @JsonIgnore
-    public int getMaxChildEbene() {
-        int maxEbene = this.getEbene();
-
-        // alle Kinder durchsuchen
-        if (this.getChildNodes() != null) {
-            for (BaseNode node : this.getChildNodes()) {
-                int maxEbeneChild = node.getMaxChildEbene();
-                if (maxEbeneChild > maxEbene) {
-                    maxEbene = maxEbeneChild;
-                }
-            }
-        }
-        return maxEbene;
-    }
-
     @Override
     public boolean isFlgForceUpdate() {
         return this.flgForceUpdate;
     }
     @Override
-    public void setFlgForceUpdate(boolean flgForceUpdate) {
+    public void setFlgForceUpdate(final boolean flgForceUpdate) {
         this.flgForceUpdate = flgForceUpdate;
     }
 }

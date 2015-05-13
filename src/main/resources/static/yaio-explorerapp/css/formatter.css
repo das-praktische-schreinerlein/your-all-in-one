@@ -210,6 +210,7 @@ div.container-content-desc div.mermaid {
     max-height: 400px;
     top: 10px;
     right: 10px;
+    overflow-y: auto;
 }
 .sidebartoc ul{
     list-style-type: disc;
@@ -220,4 +221,41 @@ div.container-content-desc div.mermaid {
 
 #front-content-right .sidebartoc {
     top: 200px;
-} 
+}
+
+/*****************************************
+ *****************************************
+ * checklist-states
+ *****************************************
+ *****************************************/
+.checklist-state-OPEN {
+    background-color: #adff2f; 
+}
+.checklist-state-RUNNING {
+    background-color: #adff2f;
+}
+.checklist-state-LATE {
+    background-color: #ffd700;
+    font-weight: bold;
+}
+.checklist-state-BLOCKED {
+    background-color: #F3F940;
+    font-weight: bold;
+}
+.checklist-state-WARNING {
+    background-color: #ff6347;
+    font-weight: bold;
+}
+.checklist-state-DONE {
+    font-style: italic;
+}
+.checklist-test-TESTOPEN {
+    background-color: #F3F940; 
+}
+.checklist-test-PASSED {
+    font-style: italic;
+}
+.checklist-test-FAILED {
+    background-color: #ff6347; 
+    font-weight: bold;
+}

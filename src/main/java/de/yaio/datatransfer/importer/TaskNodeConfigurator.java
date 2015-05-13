@@ -17,6 +17,7 @@
 package de.yaio.datatransfer.importer;
 
 import de.yaio.core.node.TaskNode;
+import de.yaio.core.nodeservice.TaskNodeService;
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -46,7 +47,7 @@ public class TaskNodeConfigurator {
      * @param nodeFactory - instance of the nodeFactory which will use the config 
      */
     public static void configureNodeTypeIdentifier(final NodeFactory nodeFactory) {
-        nodeFactory.addNodeTypeIdentifier(TaskNode.CONST_MAP_NODETYPE_IDENTIFIER, TaskNode.class);
+        nodeFactory.addNodeTypeIdentifier(TaskNodeService.getInstance().getConfigState(), TaskNode.class);
     }
 
     /**
@@ -60,7 +61,7 @@ public class TaskNodeConfigurator {
      * @param importer - instance of the importer which will use the config 
      */
     public static void configureNodeTypes(final Importer importer) {
-        importer.addNodeTypeIdentifierVariantMapping(TaskNode.CONST_MAP_NODETYPE_IDENTIFIER);
+        importer.addNodeTypeIdentifierVariantMapping(TaskNodeService.getInstance().getConfigState());
     }
 
     /**
@@ -73,6 +74,6 @@ public class TaskNodeConfigurator {
      * @param importer - instance of the importer which will use the config 
      */
     public static void configureWorkflowNodeTypeMapping(final Importer importer) {
-        importer.addWorkflowNodeTypeMapping(TaskNode.CONST_MAP_NODETYPE_IDENTIFIER);
+        importer.addWorkflowNodeTypeMapping(TaskNodeService.getInstance().getConfigState());
     }
 }

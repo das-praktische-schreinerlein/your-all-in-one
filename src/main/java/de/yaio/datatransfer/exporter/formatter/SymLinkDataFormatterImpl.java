@@ -69,7 +69,8 @@ public class SymLinkDataFormatterImpl extends FormatterImpl implements SymLinkDa
     }
 
     @Override
-    public void format(final DataDomain node, final StringBuffer nodeOutput, final OutputOptions options) throws Exception {
+    public void format(final DataDomain node, final StringBuffer nodeOutput, 
+                       final OutputOptions options) throws Exception {
         // Check if node is compatibel
         if (node != null) {
             if (!SymLinkData.class.isInstance(node)) {
@@ -80,7 +81,8 @@ public class SymLinkDataFormatterImpl extends FormatterImpl implements SymLinkDa
     }
 
     @Override
-    public void formatSymLinkData(final SymLinkData node, final StringBuffer nodeOutput, final OutputOptions oOptions) throws Exception {
+    public void formatSymLinkData(final SymLinkData node, final StringBuffer nodeOutput, 
+                                  final OutputOptions oOptions) throws Exception {
         // exit if Flg not set
         if (!oOptions.isFlgShowSymLink()) {
             if (LOGGER.isDebugEnabled()) {
@@ -97,10 +99,10 @@ public class SymLinkDataFormatterImpl extends FormatterImpl implements SymLinkDa
         String symLinkTags = node.getSymLinkTags();
 
         // Ausgabe erzeugen
-        if (   (symLinkRef != null && symLinkRef.length() > 0)
-                || (symLinkName != null && symLinkName.length() > 0)
-                || (symLinkTags != null && symLinkTags.length() > 0)
-                ) {
+        if ((symLinkRef != null && symLinkRef.length() > 0)
+            || (symLinkName != null && symLinkName.length() > 0)
+            || (symLinkTags != null && symLinkTags.length() > 0)
+            ) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Do: SymLinkDataFormatter for Node:" + node.getNameForLogger());
             }

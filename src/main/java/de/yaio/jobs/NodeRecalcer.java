@@ -38,6 +38,9 @@ import de.yaio.core.nodeservice.NodeService;
  */
 public class NodeRecalcer {
     
+    // Logger
+    private static final Logger LOGGER = Logger.getLogger(NodeRecalcer.class);
+
     /**
      * <h4>FeatureDomain:</h4>
      *     Constructor
@@ -53,10 +56,6 @@ public class NodeRecalcer {
     public NodeRecalcer() {
         super();
     }
-
-    // Logger
-    private static final Logger LOGGER =
-        Logger.getLogger(NodeRecalcer.class);
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -74,7 +73,7 @@ public class NodeRecalcer {
      * @return - result-message
      * @throws Exception - possible io/db/recalc-Exceptions
      */
-    @Transactional()
+    @Transactional
     public String findAndRecalcMasternode(final String sysUID)
             throws Exception {
         // look for this masternode in DB

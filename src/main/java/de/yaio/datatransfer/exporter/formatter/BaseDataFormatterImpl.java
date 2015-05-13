@@ -68,12 +68,14 @@ public class BaseDataFormatterImpl extends FormatterImpl implements BaseDataForm
     }
 
     @Override
-    public void format(final DataDomain node, final StringBuffer nodeOutput, final OutputOptions options) throws Exception {
+    public void format(final DataDomain node, final StringBuffer nodeOutput, 
+                       final OutputOptions options) throws Exception {
         formatBaseData((BaseData) node, nodeOutput, options);
     }
 
     @Override
-    public void formatBaseData(final BaseData node, final StringBuffer nodeOutput, final OutputOptions options) throws Exception {
+    public void formatBaseData(final BaseData node, final StringBuffer nodeOutput, 
+                               final OutputOptions options) throws Exception {
         // exit if Flg not set
         if (!options.isFlgShowName() && !options.isFlgShowType() && !options.isFlgShowState()) {
             if (LOGGER.isDebugEnabled()) {

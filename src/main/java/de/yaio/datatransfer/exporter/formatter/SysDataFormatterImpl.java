@@ -70,7 +70,8 @@ public class SysDataFormatterImpl extends FormatterImpl implements SysDataFormat
     }
 
     @Override
-    public void format(final DataDomain node, final StringBuffer nodeOutput, final OutputOptions options) throws Exception {
+    public void format(final DataDomain node, final StringBuffer nodeOutput, 
+                       final OutputOptions options) throws Exception {
         // Check if node is compatibel
         if (node != null) {
             if (!SysData.class.isInstance(node)) {
@@ -81,7 +82,8 @@ public class SysDataFormatterImpl extends FormatterImpl implements SysDataFormat
     }
 
     @Override
-    public void formatSysData(final SysData node, final StringBuffer nodeOutput, final OutputOptions oOptions) throws Exception {
+    public void formatSysData(final SysData node, final StringBuffer nodeOutput, 
+                              final OutputOptions oOptions) throws Exception {
         // exit if Flg not set
         if (!oOptions.isFlgShowSysData()) {
             if (LOGGER.isDebugEnabled()) {
@@ -101,12 +103,12 @@ public class SysDataFormatterImpl extends FormatterImpl implements SysDataFormat
 
         // Ausgabe erzeugen
         boolean flgEver = false;
-        if (    (uid != null && uid.length() > 0)
-             || (created != null)
-             || (checksum != null && checksum.length() > 0)
-             || (changed != null)
-             || flgEver
-             ) {
+        if ((uid != null && uid.length() > 0)
+            || (created != null)
+            || (checksum != null && checksum.length() > 0)
+            || (changed != null)
+            || flgEver
+            ) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Do: SysDataFormatter for Node:" + node.getNameForLogger());
             }

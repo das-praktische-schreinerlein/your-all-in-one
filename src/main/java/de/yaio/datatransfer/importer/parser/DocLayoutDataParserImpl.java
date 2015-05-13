@@ -16,8 +16,6 @@
  */
 package de.yaio.datatransfer.importer.parser;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -42,13 +40,6 @@ import de.yaio.datatransfer.importer.NodeFactory;
  */
 public class DocLayoutDataParserImpl  extends ParserImpl implements DocLayoutDataParser {
 
-    Calendar calDate = new GregorianCalendar();
-    Calendar calTime = new GregorianCalendar();
-
-    /** Logger */ 
-    private static final Logger LOGGER =
-            Logger.getLogger(DocLayoutDataParserImpl.class);
-
     // Pattern fuer das Doc-Layout (Type, Styleclass, ShortUe, FlagDivBeenden)
     protected static final String CONST_PATTERN_SEG_STRING1 = "[^,:\\[\\]]";
     protected static final String CONST_PATTERN_SEG_DOCLAYOUT =
@@ -60,6 +51,8 @@ public class DocLayoutDataParserImpl  extends ParserImpl implements DocLayoutDat
     protected static final Pattern CONST_PATTERN_DOCLAYOUT =
         Pattern.compile("(.*)" + CONST_PATTERN_SEG_DOCLAYOUT + "(.*)", Pattern.UNICODE_CHARACTER_CLASS);
 
+    /** Logger */ 
+    private static final Logger LOGGER = Logger.getLogger(DocLayoutDataParserImpl.class);
 
     @Override
     public Class<?> getTargetClass() {

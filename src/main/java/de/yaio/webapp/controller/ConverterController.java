@@ -52,11 +52,12 @@ public class ConverterController {
     @Autowired
     protected ConverterUtils converterUtils;
     
+    @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
                     value = "/html",
                     produces = "text/html")
-    public @ResponseBody String convertToIHtml(
-           @RequestParam(value = "source") final String source, final HttpServletResponse response) {
+    public String convertToIHtml(@RequestParam(value = "source") final String source, 
+                                 final HttpServletResponse response) {
         try {
                 OutputOptions oOptions = new OutputOptionsImpl();
                 BaseNode masterNode = converterUtils.parseInlineNodesFromString(source);
@@ -72,20 +73,22 @@ public class ConverterController {
             }
     }
 
+    @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
                     value = "/ical",
                     produces = "application/ical")
-    public @ResponseBody String convertToICal(
-           @RequestParam(value = "source") final String source, final HttpServletResponse response) {
+    public String convertToICal(@RequestParam(value = "source") final String source, 
+                                final HttpServletResponse response) {
         Exporter exporter = new ICalExporter();
         return commonComnvertSource(exporter, ".ics", source, response);
     }
 
+    @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
                     value = "/mindmap",
                     produces = "application/mindmap")
-    public @ResponseBody String convertToMindmap(
-           @RequestParam(value = "source") final String source, final HttpServletResponse response) {
+    public String convertToMindmap(@RequestParam(value = "source") final String source, 
+                                   final HttpServletResponse response) {
         Exporter exporter = new MindMapExporter();
         return commonComnvertSource(exporter, ".mm", source, response);
     }

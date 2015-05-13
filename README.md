@@ -5,21 +5,24 @@ your-all-in-one - Le petit D'Artagnan
 "Your-All-In-One" or "Le petit D'Artagnan" is the prototype of my 
 collaboration-softwareproject: "D'Artagnan - Dein persönlicher Software-Musketier".
 
-More information about the prototype at http://www.your-all-in-one.de/yaio/static/lepetit 
+More information about the prototype at [http://www.your-all-in-one.de/yaio/static/lepetit](http://www.your-all-in-one.de/yaio/static/lepetit )
+# Installation
+- **see common details on [resources/docs/Installation.md](resources/docs/Installation.md)**
 
-# TODO for me
-- [ ] update the documentation on http://www.your-all-in-one.de/yaio/static/lepetit  (new features, howto...)
+# Todos for me
+- [ ] update the documentation on [http://www.your-all-in-one.de/yaio/static/lepetit](http://www.your-all-in-one.de/yaio/static/lepetit) (new features, howto...)
 - [ ] code-documentation
 - [ ] code review: configuration, minor layout-bugs
-- [ ] new feature: fulltextsearch with lucene and solr
 - [ ] new feature: new nodetypes (contact, call, bug, document..)
 - [ ] new feature: document-management
 - [ ] new feature: contact-management
 - [ ] use and optimize it :-)
+- **and a lot more to implement - take a look at [resources/docs/Roadmap.md](resources/docs/Roadmap.md)**
 
 # History and milestones
-- see details on [resources/docs/Changelog.md](resources/docs/Changelog.md)
+- **see details on [resources/docs/Changelog.md](resources/docs/Changelog.md)**
 - 2015
+   - added checklist, app-propagator, installer, searchpreview
    - added mindmap, state-diagramms as markdown-extension
    - added speach-synthesizer to read the text
    - added multilanguage-support
@@ -49,85 +52,55 @@ More information about the prototype at http://www.your-all-in-one.de/yaio/stati
    - initial version with excel for private project-planning
    - used at private projects and some projects at work
 
-# Requires
-- for building
-   - maven
-   - spring-roo
-   - IDE (I built it with eclipse)
-- to use, take a look at http://www.your-all-in-one.de/yaio/static/lepetithow#h3_YAIO716
-   - java
-   - notepadd++
-   - freemind
-   - firefox
-   - excel
-   - winmerge
-   - cygwin
 
-# Install
-- save the project to 
-```bat
-d:\public_projects\yaio
-```
-
-- import project to Eclipse
-
-# Configure
-- update config in 
-   - config/config-yaio.bat (pathes to external progs, port)
-   - config/applicationContext.xml
-   - config/application.properties
-   - src/test/java/de/yaio/rest/controller/BaseNodeRestControllerTest.java (its bullshit to configure it here, but be sure it ion my todo-list)
-
-# Generate
-- run maven 
-```bat
-cd d:\public_projects\yaio
-mvn compile
-mvn package
-```
-
-# Enyoy
-- run webview
-```bat
-cd d:\public_projects\yaio
-sbin\start-yaioapp.bat
-```
-
-# Example for the batches
-- run example 
-```bat
-cd d:\public_projects\yaio
-src\test\testproject\gen-planung.bat
-```
-Take a look at the Wiki, Mindmaps, Excel, html, ICal...
+# Implementation
+- **see details on [resources/docs/Implementation.md](resources/docs/Implementation.md)**
 
 # Thanks to
-- https://code.google.com/p/markdown4j/
-- https://github.com/ajaxorg/ace-builds
-- https://github.com/angular-translate/
-- https://github.com/apache/maven
-- https://github.com/apache/poi
-- https://github.com/coolbloke1324/jquery-lang-js
-- https://github.com/jquery/jquery
-- https://github.com/jquery/jquery-ui
-- https://github.com/knsv/mermaid
-- https://github.com/mar10/fancytree
-- https://github.com/spring-projects/spring-boot
-- https://github.com/spring-projects/spring-framework
-- https://github.com/spring-projects/spring-roo
-- https://highlightjs.org
- 
+- **Build-Tools**
+    - [Apache Maven](https://github.com/apache/maven)
+    - [Eclipse](http://eclipse.org/)
+    - [Karma](https://karma-runner.github.io/)
+    - [Node](https://nodejs.org/)
+- **Java-Core-Frameworks**
+    - [Spring-Framework](https://github.com/spring-projects/spring-framework)
+    - [Spring-boot](https://github.com/spring-projects/spring-boot)
+    - [Spring-roo](https://github.com/spring-projects/spring-roo)
+    - [Spring Security](https://github.com/spring-projects/spring-security)
+    - [Hibernate](https://github.com/hibernate/)
+- **Java-Formatter**
+    - [Markdown4j](https://code.google.com/p/markdown4j/)
+    - [Apache Poi](https://github.com/apache/poi)
+- **JS-Code-Frameworks**
+    - [AngularJS](https://angularjs.org/)
+    - [JQuery](https://github.com/jquery/jquery)
+- **JS-GUI**
+    - [Ace](https://github.com/ajaxorg/ace-builds)
+    - [fancytree](https://github.com/mar10/fancytree)
+    - [JQuery-UI](https://github.com/jquery/jquery-ui)
+    - [Slimbox2](http://www.digitalia.be/software/slimbox2)
+    - [Toastr](https://github.com/CodeSeven/toastr)
+    - [findAndReplaceDOMText](https://github.com/padolsey/findAndReplaceDOMText)
+    - [Strapdown TOC](https://github.com/ndossougbe/strapdown)
+- **JS-Formatter**
+    - [Marked](https://github.com/chjj/marked)
+    - [highlight.js](https://highlightjs.org/)
+    - [mermaid](https://github.com/knsv/mermaid)
+    - [Freemind Flash-Browser](http://freemind.sourceforge.net/wiki/index.php/Flash_browser)
+- **JS-Multilanguage**
+    - [JQuery-Lang](https://github.com/coolbloke1324/jquery-lang-js)
+    - [Angular-Translate](https://github.com/angular-translate/)
+- **Media**
+    - [paulrobertlloyd.com](http://paulrobertlloyd.com/2009/06/social_media_icons/)
 
 # License
-```
-/**
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2010-2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-```
+    /**
+     * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
+     * @category collaboration
+     * @copyright Copyright (c) 2010-2014, Michael Schreiner
+     * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+     *
+     * This Source Code Form is subject to the terms of the Mozilla Public
+     * License, v. 2.0. If a copy of the MPL was not distributed with this
+     * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+     */

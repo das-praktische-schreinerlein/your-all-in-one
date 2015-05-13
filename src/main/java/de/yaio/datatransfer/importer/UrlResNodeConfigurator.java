@@ -17,6 +17,7 @@
 package de.yaio.datatransfer.importer;
 
 import de.yaio.core.node.UrlResNode;
+import de.yaio.core.nodeservice.UrlResNodeService;
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -46,7 +47,7 @@ public class UrlResNodeConfigurator {
      * @param nodeFactory - instance of the nodeFactory which will use the config 
      */
     public static void configureNodeTypeIdentifier(final NodeFactory nodeFactory) {
-        nodeFactory.addNodeTypeIdentifier(UrlResNode.CONST_MAP_NODETYPE_IDENTIFIER, UrlResNode.class);
+        nodeFactory.addNodeTypeIdentifier(UrlResNodeService.getInstance().getConfigState(), UrlResNode.class);
     }
 
     /**
@@ -60,7 +61,7 @@ public class UrlResNodeConfigurator {
      * @param importer - instance of the importer which will use the config 
      */
     public static void configureNodeTypes(final Importer importer) {
-        importer.addNodeTypeIdentifierVariantMapping(UrlResNode.CONST_MAP_NODETYPE_IDENTIFIER);
+        importer.addNodeTypeIdentifierVariantMapping(UrlResNodeService.getInstance().getConfigState());
     }
 
     /**

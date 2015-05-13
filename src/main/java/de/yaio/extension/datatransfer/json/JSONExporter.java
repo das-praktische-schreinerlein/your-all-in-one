@@ -116,7 +116,8 @@ public class JSONExporter extends CSVExporter {
         }
         return res;
     }
-    public String formatNodeNumber(final BaseNode curNode, final Double src, final int minStellen, final int maxStellen) {
+    public String formatNodeNumber(final BaseNode curNode, final Double src, 
+                                   final int minStellen, final int maxStellen) {
         return baseFormatter.formatNumber(src, minStellen, maxStellen).replace(".", ",");
     }
 

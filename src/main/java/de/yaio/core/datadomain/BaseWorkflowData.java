@@ -18,7 +18,6 @@
 package de.yaio.core.datadomain;
 
 import java.util.Date;
-import java.util.Map;
 
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlTransient;
@@ -44,12 +43,12 @@ public interface BaseWorkflowData extends DataDomain, IstChildrenSumData,
     @Transient
     @XmlTransient
     @JsonIgnore
-    public static Date CONST_MINDATE = new Date(0);
+    Date CONST_MINDATE = new Date(0);
     /** maximum of accepted dates: 2038*/
     @Transient
     @XmlTransient
     @JsonIgnore
-    public static Date CONST_MAXDATE = new Date(2147483647000L);
+    Date CONST_MAXDATE = new Date(2147483647000L);
     
     @XmlTransient
     public static enum WorkflowState {
@@ -61,14 +60,9 @@ public interface BaseWorkflowData extends DataDomain, IstChildrenSumData,
         LATE, WARNING
     }
 
-    Map<String, Object> getConfigState();
     String getState();
     void setState(String state);
     
-    Map<String, WorkflowState> getConfigWorkflowState();
-    WorkflowState getWorkflowStateForState(String state) throws IllegalStateException;
-    String getStateForWorkflowState(WorkflowState workflowState) throws IllegalStateException;
-
     WorkflowState getWorkflowState();
     void setWorkflowState(WorkflowState istState);
 

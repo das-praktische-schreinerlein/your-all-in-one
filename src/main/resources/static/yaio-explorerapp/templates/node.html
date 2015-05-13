@@ -288,10 +288,9 @@
      -->
     <div class="container-verortung">
         <div class="entry node-state-{{parentnode.state}}" ng-repeat="parentnode in nodeHierarchy">
-          <b> --&gt;</b> 
-              <a href='#/show/{{parentnode.sysUID}}' class="" >
-                  <state value="parentnode.state" /> 
-                  - {{parentnode.name}}
+          <b>--&gt;</b><a href='#/show/{{parentnode.sysUID}}' class="" >
+                  <!--<span translate="node.state.{{parentnode.state}}">{{parentnode.state}}</span> - -->
+                   {{parentnode.name}}
                </a>
         </div>
     </div>
@@ -351,7 +350,7 @@
               </thead>
               <tbody>
                 <tr id="masterTr" data-value="{{node.sysUID}}">
-                  <td><div class="entry node-state-{{node.state}}"><b><state value="node.state" /> - {{node.name}}</b></div></td>
+                  <td><div class="entry node-state-{{node.state}}"><b><span translate="{{node.state}}">{{node.state}}</span> - {{node.name}}</b></div></td>
                   <td />
                   <td />
                   <td class="container_field fieldtype_actions" >
@@ -362,13 +361,13 @@
                      </div>
                      <a ng-click="yaioUtils.openNodeEditorForNode(node, 'edit');"
                         id='cmdEdit{{node.sysUID}}' class='yaio-icon-edit'
-                        data-tooltip='Bearbeite die Daten'></a>
+                        lang='tech' data-tooltip='tooltip.command.NodeEdit'></a>
                     <a ng-click="yaioUtils.openNodeEditorForNode(node, 'create');"
                        id='cmdCreate{{ node.sysUID }}' class='yaio-icon-create'"
-                       data-tooltip='Erzeuge ein neues KindsElement'></a>
+                       lang='tech' data-tooltip='tooltip.command.NodeCreateChild'></a>
                     <a ng-click="yaioUtils.openNodeEditorForNode(node, 'createsymlink');"
                        id='cmdCreateSymLink{{ node.sysUID }}' class='yaio-icon-createsymlink'
-                       data-tooltip='Erzeuge einen SymLink der auf dieses Element verweist'></a>
+                       lang='tech' data-tooltip='tooltip.command.NodeCreateSymLink'></a>
                   </td>
                 </tr>
               </tbody>
@@ -397,8 +396,10 @@
           -->
           <ul class="commands nodecommands">
              <li class="command" data-tooltip='tooltip.command.OpenLevel' lang="tech">
-                <a href="" ng-click="openSubNodes()" class="button command_switchlevel">&Ouml;ffne bis Level</a>
+                <a href="" ng-click="openSubNodes()" class="button command_switchlevel" translate="common.command.OpenTreeLevel">&Ouml;ffne bis Level</a>
                 <input type="range" min="0" max="10" value="" id="treeOpenLevel" ng-model="config.treeOpenLevel" ng-change="openSubNodes()" class="command_switchlevel_input"> </li>
+             <li class="command" data-tooltip='tooltip.command.ExportAsChecklist' lang="tech">
+                <a href="" ng-click="exportAsChecklist()" class="button command_exportaschecklist" translate="common.command.ExportAsChecklist">Export als Checklist</a></li>
           </ul>
         </div>
     

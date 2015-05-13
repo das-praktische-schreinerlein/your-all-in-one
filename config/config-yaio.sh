@@ -28,7 +28,8 @@ export YAIOSCRIPTPATH=${BASEPATH}/../sbin/
 export YAIORESPATH=${BASEPATH}/../ressources/
 export YAIOVARPATH=${BASEPATH}/../var/
 export YAIOAPP=${BASEPATH}../target/yaio.jar
-export CP="${YAIOAPP}:${BASEPATH}../target/"
+export APPPROPAGATOR=${BASEPATH}../sbin/apppropagator.jar
+export CP="${YAIOAPP}:${APPPROPAGATOR}:${BASEPATH}../target/"
 export CFGFILE=${BASEPATH}../config/application.properties
 export CFG="--config ${CFGFILE}" 
 export JAVAOPTIONS="-Xmx768m -Xms128m -Djava.net.preferIPv4Stack=true -Djava.net.preferIPv4Addresses -Dspring.config.location=file:${CFGFILE} -Dlog4j.configuration=file:${BASEPATH}../config/log4j.properties"
@@ -50,6 +51,7 @@ export PROG_CALLYAIORECALC=de.yaio.jobs.CallYaioRecalc
 export PROG_CALLYAIOEXPORT=de.yaio.jobs.CallYaioExport
 export PROG_CALLYAIOIMPORT=de.yaio.jobs.CallYaioImport
 export PROG_APP=de.yaio.app.Application
+export PROG_APPPROPAGATOR=de.yitf.app.apppropagator.UpnpAppPropagator
 export PROG_RECALC=de.yaio.jobs.JobRecalcNodes
 export PROG_DIFF=
 export PROG_WINMERGE="C:/ProgrammePortable/PortableApps/PortableApps/WinMergePortable/WinMergePortable.exe"

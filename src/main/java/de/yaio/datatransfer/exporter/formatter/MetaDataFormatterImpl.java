@@ -69,7 +69,8 @@ public class MetaDataFormatterImpl extends FormatterImpl implements MetaDataForm
     }
 
     @Override
-    public void format(final DataDomain node, final StringBuffer nodeOutput, final OutputOptions options) throws Exception {
+    public void format(final DataDomain node, final StringBuffer nodeOutput, 
+                       final OutputOptions options) throws Exception {
         // Check if node is compatibel
         if (node != null) {
             if (!MetaData.class.isInstance(node)) {
@@ -105,11 +106,11 @@ public class MetaDataFormatterImpl extends FormatterImpl implements MetaDataForm
         String nodeSubType = node.getMetaNodeSubTypeTags();
 
         // Ausgabe erzeugen
-        if (    (praefix != null && praefix.length() > 0)
-             || (id != null  && id.length() > 0)
-             || (nodeType != null && nodeType.length() > 0)
-             || (nodeSubType != null && nodeSubType.length() > 0)
-             ) {
+        if ((praefix != null && praefix.length() > 0)
+            || (id != null  && id.length() > 0)
+            || (nodeType != null && nodeType.length() > 0)
+            || (nodeSubType != null && nodeSubType.length() > 0)
+            ) {
             // Abstand
             if (nodeOutput.length() > 0) {
                 nodeOutput.append(" ");

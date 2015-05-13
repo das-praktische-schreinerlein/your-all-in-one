@@ -15,9 +15,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 package de.yaio.core.node;
-import java.util.HashMap;
-import java.util.Map;
-
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -28,6 +26,8 @@ import org.springframework.roo.addon.tostring.RooToString;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import de.yaio.core.datadomain.ResLocData;
+import de.yaio.core.nodeservice.BaseNodeService;
+import de.yaio.core.nodeservice.UrlResNodeService;
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -47,32 +47,8 @@ import de.yaio.core.datadomain.ResLocData;
 @RooToString
 @RooJpaActiveRecord
 public class UrlResNode extends InfoNode implements ResLocData {
-    
-    // Status-Konstanten
-    /** nodetype-identifier for parser/formatter on UrlResnode URL */
-    public static final String CONST_NODETYPE_IDENTIFIER_URLRES = "URLRES";
-    /** nodetype-identifier for parser/formatter on UrlResnode FILE */
-    public static final String CONST_NODETYPE_IDENTIFIER_FILERES = "FILERES";
-    /** nodetype-identifier for parser/formatter on UrlResnode IMAGEFILE */
-    public static final String CONST_NODETYPE_IDENTIFIER_IMAGERES = "IMAGERES";
-    /** nodetype-identifier for parser/formatter on UrlResnode EMAIL */
-    public static final String CONST_NODETYPE_IDENTIFIER_EMAILRES = "EMAILRES";
-    
-    // Status-Konstanten
-    public static final Map<String, Object> CONST_MAP_NODETYPE_IDENTIFIER = new HashMap<String, Object>();
-    static {
-        // Defaults
-        CONST_MAP_NODETYPE_IDENTIFIER.put(CONST_NODETYPE_IDENTIFIER_URLRES, CONST_NODETYPE_IDENTIFIER_URLRES);
-        CONST_MAP_NODETYPE_IDENTIFIER.put(CONST_NODETYPE_IDENTIFIER_FILERES, CONST_NODETYPE_IDENTIFIER_FILERES);
-        CONST_MAP_NODETYPE_IDENTIFIER.put(CONST_NODETYPE_IDENTIFIER_IMAGERES, CONST_NODETYPE_IDENTIFIER_IMAGERES);
-        CONST_MAP_NODETYPE_IDENTIFIER.put(CONST_NODETYPE_IDENTIFIER_EMAILRES, CONST_NODETYPE_IDENTIFIER_EMAILRES);
-        // Abarten
-        CONST_MAP_NODETYPE_IDENTIFIER.put("URLRES", CONST_NODETYPE_IDENTIFIER_URLRES);
-        CONST_MAP_NODETYPE_IDENTIFIER.put("FILERES", CONST_NODETYPE_IDENTIFIER_FILERES);
-        CONST_MAP_NODETYPE_IDENTIFIER.put("IMAGERES", CONST_NODETYPE_IDENTIFIER_IMAGERES);
-        CONST_MAP_NODETYPE_IDENTIFIER.put("EMAILRES", CONST_NODETYPE_IDENTIFIER_EMAILRES);
-    }
-    
+    @Transient
+    protected static UrlResNodeService nodeDataService = UrlResNodeService.getInstance();
 
     /**
      */
@@ -89,24 +65,10 @@ public class UrlResNode extends InfoNode implements ResLocData {
     @Size(max = 255)
     private String resLocTags;
 
-    @Override
     @XmlTransient
     @JsonIgnore
-    public Map<String, Object> getConfigState() {
-        return CONST_MAP_NODETYPE_IDENTIFIER;
-    }
-
     @Override
-    @XmlTransient
-    @JsonIgnore
-    public String getDataBlocks4CheckSum() throws Exception {
-        // Content erzeugen
-        StringBuffer data = new StringBuffer();
-        
-        data.append(super.getDataBlocks4CheckSum())
-            .append(" resLocRef=").append(getResLocRef())
-            .append(" resLocName=").append(getResLocName())
-            .append(" resLocTags=").append(getResLocTags());
-        return data.toString();
+    public BaseNodeService getBaseNodeService() {
+        return nodeDataService;
     }
 }

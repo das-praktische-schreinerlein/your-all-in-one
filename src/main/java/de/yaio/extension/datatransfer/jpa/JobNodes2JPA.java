@@ -81,7 +81,8 @@ public class JobNodes2JPA extends JobNodes2Wiki {
             }
             masterNode = BaseNode.findBaseNode(sysUID);
             if (masterNode == null) {
-                throw new IllegalArgumentException("Masternode to add the new node with sysUID:" + sysUID + " not found!");
+                throw new IllegalArgumentException("Masternode to add the new node with "
+                                + "sysUID:" + sysUID + " not found!");
             }
             
             // create dummy masternode

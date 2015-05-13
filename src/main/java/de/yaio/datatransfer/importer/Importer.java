@@ -59,9 +59,9 @@ public interface Importer {
      *     the sourcedata)<br>
      * <h4>FeatureKeywords:</h4>
      *     Config
-     * @param stateMap - Map der Schlagwortvarianten (Variante = NodeTypeIdentifier)
+     * @param constMapNodetypeIdentifier - Map der Schlagwortvarianten (Variante = NodeTypeIdentifier)
      */
-    void addNodeTypeIdentifierVariantMapping(Map<String, Object> stateMap);
+    void addNodeTypeIdentifierVariantMapping(Map<String, String> constMapNodetypeIdentifier);
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -77,7 +77,7 @@ public interface Importer {
      *     Config
      * @return - variants for NodeTypeIdentifier
      */
-    Map<String, Object> getHshNodeTypeIdentifierVariantMapping();
+    Map<String, String> getHshNodeTypeIdentifierVariantMapping();
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -100,7 +100,7 @@ public interface Importer {
      *     Config
      * @param stateMap - Map der Schlagwortvarianten (Variante = NodeTypeIdentifier)
      */
-    void addWorkflowNodeTypeMapping(Map<String, Object> stateMap);
+    void addWorkflowNodeTypeMapping(Map<String, String> stateMap);
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -116,7 +116,7 @@ public interface Importer {
      *     Config
      * @return - Map of Workflow-NodeTypeIdentifier
      */
-    Map<String, Object> getHshWorkflowNodeTypeMapping();
+    Map<String, String> getHshWorkflowNodeTypeMapping();
     
     
     /**

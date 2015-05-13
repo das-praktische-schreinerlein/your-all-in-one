@@ -1187,19 +1187,19 @@ function renderColumnsForNode(event, data, preventActionsColum) {
                 + "<a onclick=\"javascript: yaioOpenNodeEditor('" + basenode.sysUID + "', 'edit'); return false;\""
                         + " id='cmdEdit" + basenode.sysUID + "'"
                         + " class='yaio-icon-edit'"
-                        + " data-tooltip='Bearbeite die Daten'></a>"
+                        + " lang='tech' data-tooltip='tooltip.command.NodeEdit'></a>"
                 + "<a onclick=\"javascript: yaioOpenNodeEditor('" + basenode.sysUID + "', 'create'); return false;\""
                         + " id='cmdCreate" + basenode.sysUID + "'"
                         + " class='yaio-icon-create'"
-                        + " data-tooltip='Erzeuge ein neues KindsElement'></a>"
+                        + " lang='tech' data-tooltip='tooltip.command.NodeCreateChild'></a>"
                 + "<a onclick=\"javascript: yaioOpenNodeEditor('" + basenode.sysUID + "', 'createsymlink'); return false;\""
                         + " id='cmdCreateSymLink" + basenode.sysUID + "'"
                         + " class='yaio-icon-createsymlink'"
-                        + " data-tooltip='Erzeuge einen SymLink der auf dieses Element verweist'></a>"
+                        + " lang='tech' data-tooltip='tooltip.command.NodeCreateSymLink'></a>"
                 + "<a onclick=\"javascript: yaioRemoveNodeById('" + basenode.sysUID + "'); return false;\""
                         + " id='cmdRemove" + basenode.sysUID + "'"
                         + " class='yaio-icon-remove'"
-                        + " data-tooltip='L&ouml;sche dieses Element'></a>"
+                        + " lang='tech' data-tooltip='tooltip.command.NodeDelete'></a>"
                 ).addClass("container_field")
                  .addClass("fieldtype_actions")
                  //.addClass(statestyle)
@@ -1208,14 +1208,15 @@ function renderColumnsForNode(event, data, preventActionsColum) {
 
     // replace checkbox by center-command
     var $expanderEle = $tdList.eq(colName).find("span.fancytree-expander");
-    $expanderEle.attr('data-tooltip', '&Ouml;ffne Teilbaum mit Kindern');
+    $expanderEle.attr('data-tooltip', 'tooltip.command.NodeShow');
+    $expanderEle.attr('lang', 'tech');
     $expanderEle.attr('id', 'expander' + basenode.sysUID);
 
     // replace checkbox by center-command
     var $checkEle = $tdList.eq(colName).find("span.fancytree-checkbox");
     $checkEle.html("<a href='#/show/" + basenode.sysUID + "'"
         + " class='yaio-icon-center'"
-        + " data-tooltip='Zeige nur diesen Teilbaum mit allen Kindselementen'></a>");
+        + " lang='tech' data-tooltip='tooltip.command.NodeFocus'></a>");
     $checkEle.removeClass("fancytree-checkbox").addClass("command-center");
 
     // manipulate name-column
@@ -1589,7 +1590,7 @@ function yaioRecalcMasterGanttBlockLine(masterNodeId, praefix) {
     // check for tree
     var treeId = "#tree";
     var tree = $(treeId).fancytree("getTree");
-    if (! tree) {
+    if ($(treeId).length <= 0 || !tree || tree == "undefined" ) {
         logError("yaioRecalcMasterGanttBlock: error tree:'" + treeId + "' not found.", false);
         return;
     }
@@ -2045,6 +2046,39 @@ function openJiraExportWindow(nodeId) {
     
     // set clipboard-content
     $( "#clipboard-content" ).html(nodeDesc);
+    
+    // show message
+    $( "#clipboard-box" ).dialog({
+        modal: true,
+        width: "700px",
+        buttons: {
+          Ok: function() {
+            $( this ).dialog( "close" );
+          }
+        }
+    });    
+}
+
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     GUI
+ * <h4>FeatureDescription:</h4>
+ *     open the clipboardwindow for the explorercontent 
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>GUI-result: opens clipboard window with checklist-converted node-content
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Convert
+ */
+function yaioExportExplorerLinesAsCheckList() {
+    // convert and secure
+    var checkListSrc = convertExplorerLinesAsCheckList();
+    checkListSrc = htmlEscapeText(checkListSrc);
+    
+    // set clipboard-content
+    $( "#clipboard-content" ).html(checkListSrc);
     
     // show message
     $( "#clipboard-box" ).dialog({

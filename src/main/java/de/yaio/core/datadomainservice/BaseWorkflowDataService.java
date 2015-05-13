@@ -16,7 +16,10 @@
  */
 package de.yaio.core.datadomainservice;
 
+import java.util.Date;
+
 import de.yaio.core.datadomain.BaseWorkflowData;
+import de.yaio.core.datadomain.ExtendedWorkflowData;
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -82,4 +85,38 @@ public interface BaseWorkflowDataService {
      * @throws Exception - parser/format-Exceptions possible
      */
     void recalcStateData(BaseWorkflowData node) throws Exception;
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     BusinessLogic
+     * <h4>FeatureDescription:</h4>
+     *     calcs the currentStart for the node (prio: ist before plan)
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returns date
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     BusinessLogic Workflow
+     * @param node - node
+     * @return - current start
+     * @throws Exception - parser/format-Exceptions possible
+     */
+    Date calcCurrentStart(ExtendedWorkflowData node);
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     BusinessLogic
+     * <h4>FeatureDescription:</h4>
+     *     calcs the currentEnde for the node (prio: ist before plan)
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returns date
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     BusinessLogic Workflow
+     * @param node - node
+     * @return - current end
+     * @throws Exception - parser/format-Exceptions possible
+     */
+    Date calcCurrentEnde(ExtendedWorkflowData node);
 }

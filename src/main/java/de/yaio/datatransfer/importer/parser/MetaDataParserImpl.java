@@ -16,8 +16,6 @@
  */
 package de.yaio.datatransfer.importer.parser;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -42,13 +40,6 @@ import de.yaio.datatransfer.importer.NodeFactory;
  */
 public class MetaDataParserImpl  extends ParserImpl implements MetaDataParser {
 
-    Calendar calDate = new GregorianCalendar();
-    Calendar calTime = new GregorianCalendar();
-
-    // Logger
-    private static final Logger LOGGER =
-            Logger.getLogger(MetaDataParserImpl.class);
-
     // Patterns
     // Pattern fuer NodeMeta: Praefix,Id,NodeTyp-Tags,NodeSubType-Tags
     protected static final String CONST_PATTERN_SEG_NODEMETA =
@@ -59,6 +50,9 @@ public class MetaDataParserImpl  extends ParserImpl implements MetaDataParser {
                + "(" + CONST_PATTERN_SEG_TAGS + "*)? *";
     protected static final Pattern CONST_PATTERN_NODEMETA =
         Pattern.compile("(.*)" + CONST_PATTERN_SEG_NODEMETA + "(.*)", Pattern.UNICODE_CHARACTER_CLASS);
+
+    // Logger
+    private static final Logger LOGGER = Logger.getLogger(MetaDataParserImpl.class);
 
     @Override
     public Class<?> getTargetClass() {

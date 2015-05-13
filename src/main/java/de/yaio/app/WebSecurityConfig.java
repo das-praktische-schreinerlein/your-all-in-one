@@ -28,9 +28,9 @@ import de.yaio.rest.controller.CsrfHeaderFilter;
  */
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    private static final Logger logger = Logger.getLogger(WebSecurityConfig.class);
-    
     public static final String CONST_FILELOCATION_APIUSERS = "yaio.security.apiusers.filelocation";
+    
+    private static final Logger logger = Logger.getLogger(WebSecurityConfig.class);
     
     /**
      * configure API-Configuration

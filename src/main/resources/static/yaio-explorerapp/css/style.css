@@ -494,6 +494,29 @@ ul.nodecommands {
     font-size: 11px;
     line-height: 1.42857;
 }
+.field_nodeParent {
+    text-align: left;
+    overflow-x:auto;
+    left: -420px;
+    position: relative;
+    width: 1000px; /*  orig: 550px; */
+    font-size: 11px;
+    line-height: 1.42857;
+}
+.field_nodeSearchData {
+    text-align: left;
+    overflow-x:auto;
+    left: -420px;
+    position: relative;
+    width: 1000px; /*  orig: 550px; */
+    font-size: 11px;
+    line-height: 1.42857;
+    color: grey;
+}
+.field_nodeSearchData b {
+    color: black;
+    font-size: 12px;
+}
 .field_center {
    text-align: center; !IMPORTANT
 }
@@ -1136,12 +1159,12 @@ body .ui-tooltip {
     border-right: 1px dotted #008000;
     border-top: 0px;
     border-bottom: 0px;
-    font-size: 13px;
+    font-size: 12px;
     text-align: center;
 } 
 .box-portdesc-nextactions li a {
     font-size: 15px;
-  font-weight: bold;
+    font-weight: bold;
 } 
 
 #front-content-intro pre code  {

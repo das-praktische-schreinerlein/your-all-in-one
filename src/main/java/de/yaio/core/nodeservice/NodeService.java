@@ -16,8 +16,13 @@
  */
 package de.yaio.core.nodeservice;
 
+import java.util.List;
+import java.util.Map;
+
+import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.datadomainservice.DataDomainRecalc;
+import de.yaio.core.node.BaseNode;
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -43,6 +48,9 @@ public interface NodeService {
     /** constants for recursion of DB-functions: recurse all children */
     int CONST_DB_RECURSIONLEVEL_ALL_CHILDREN = -1;
 
+    ///////////////////////
+    // Recalc
+    ///////////////////////
     /**
      * <h4>FeatureDomain:</h4>
      *     BusinessLogic
@@ -140,6 +148,35 @@ public interface NodeService {
      * <h4>FeatureDomain:</h4>
      *     BusinessLogic
      * <h4>FeatureDescription:</h4>
+     *     recalc the WFData of the node
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>updates memberfields of dataDomain PlanChildrenSum
+     *     <li>updates memberfields of dataDomain IstChildrenSum
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     BusinessLogic
+     * @param baseNode - node to get the state from
+     * @param recursionDirection - direction for recursivly recalc CONST_RECURSE_DIRECTION_* 
+     * @throws Exception - parser/format-Exceptions possible
+     */
+    void recalcData(DataDomain baseNode, int recursionDirection) throws Exception;
+
+
+    ///////////////////////
+    // Workflow
+    ///////////////////////
+    Map<String, String> getConfigState();
+    Map<String, WorkflowState> getConfigWorkflowState();
+    Map<WorkflowState, String> getConfigWorkflowStateState();
+
+    ///////////////////////
+    // Hirarchy
+    ///////////////////////
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     BusinessLogic
+     * <h4>FeatureDescription:</h4>
      *     sets the parentNode of the baseNode and updates recursivly 
      *     field Ebene of all childnodes 
      * <h4>FeatureResult:</h4>
@@ -158,85 +195,33 @@ public interface NodeService {
 
     /**
      * <h4>FeatureDomain:</h4>
-     *     BusinessLogic
+     *     Persistence
      * <h4>FeatureDescription:</h4>
-     *     recalc the WFData of the node
+     *     get a List of the Ids of parent-hierarchy 
      * <h4>FeatureResult:</h4>
      *   <ul>
-     *     <li>updates memberfields of dataDomain PlanChildrenSum
-     *     <li>updates memberfields of dataDomain IstChildrenSum
+     *     <li>returnValue List<String> - list of the parent-sysUIDs, start with my own parent (not me)
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
-     *     BusinessLogic
-     * @param baseNode - node to get the state from
-     * @param recursionDirection - direction for recursivly recalc CONST_RECURSE_DIRECTION_* 
-     * @throws Exception - parser/format-Exceptions possible
+     *     Persistence
+     * @param baseNode node
+     * @return list of the parent-sysUIDs, start with my own parent (not baseNode)
      */
-    void recalcData(DataDomain baseNode, int recursionDirection) throws Exception;
+    List<String> getParentIdHierarchy(final DataDomain baseNode);
 
     /**
      * <h4>FeatureDomain:</h4>
-     *     Workflow
+     *     Persistence
      * <h4>FeatureDescription:</h4>
-     *     checks weather the state is a configurated workflow-state
+     *     get a List of the parent-hierarchy
      * <h4>FeatureResult:</h4>
      *   <ul>
-     *     <li>returnValue boolean - workflow-state yes/no
+     *     <li>returnValue List<BaseNode> - list of the parents, start with my own parent (not me)
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
-     *     Worflow
-     * @param state - state to check
-     * @return workflow-state yes/no
+     *     Persistence
+     * @param baseNode node
+     * @return list of the parents, start with my own parent (not baseNode)
      */
-    boolean isWFStatus(String state);
-
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Workflow
-     * <h4>FeatureDescription:</h4>
-     *     checks weather the state is a configurated workflow-state for DONE
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue boolean - workflow-DONE yes/no
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Worflow
-     * @param state - state to check
-     * @return workflow-DONE yes/no
-     */
-    boolean isWFStatusDone(String state);
-
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Workflow
-     * <h4>FeatureDescription:</h4>
-     *     checks weather the state is a configurated workflow-state for OPEN
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue boolean - workflow-OPEN yes/no
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Worflow
-     * @param state - state to check
-     * @return workflow-OPEN yes/no
-     */
-    boolean isWFStatusOpen(String state);
-
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Workflow
-     * <h4>FeatureDescription:</h4>
-     *     checks weather the state is a configurated workflow-state for CANCELED
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue boolean - workflow-CANCELED yes/no
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Worflow
-     * @param state - state to check
-     * @return workflow-CANCELED yes/no
-     */
-    boolean isWFStatusCanceled(String state);
-    
-
+    List<BaseNode> getParentHierarchy(final DataDomain baseNode);
 }

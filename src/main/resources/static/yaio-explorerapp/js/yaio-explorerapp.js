@@ -81,6 +81,9 @@ yaioM.config(function($routeProvider) {
         .when('/show/:nodeId/activate/:activeNodeId', { 
             controller:  'NodeShowCtrl',
             templateUrl: 'templates/node.html' })
+        .when('/showByAllIds/:nodeByAllId', { 
+            controller:  'NodeShowCtrl',
+            templateUrl: 'templates/node.html' })
         .when('/show/:nodeId', { 
             controller:  'NodeShowCtrl',
             templateUrl: 'templates/node.html' })
@@ -420,7 +423,7 @@ yaioM.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $http
     $scope.searchOptions = {
             curPage: 1,
             pageSize: 20,
-            searchSort: 'default',
+            searchSort: 'lastChangeDown',
             baseSysUID: "MasterplanMasternode1",
             fulltext: "",
             total: 0
@@ -547,9 +550,10 @@ yaioM.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $http
         $rootScope.lastLocation = '/search' + uri + encodeURI($scope.searchOptions.fulltext) + '/';
 
         // no empty fulltext for webservice -> we use there another route 
-        if ($scope.searchOptions.fulltext && $scope.searchOptions.fulltext.length > 0)
+        if ($scope.searchOptions.fulltext && $scope.searchOptions.fulltext.length > 0) {
             uri = uri + encodeURI($scope.searchOptions.fulltext)
-                  + '/';
+            + '/';
+        }
 
         // load data
         var searchNodeUrl = '/nodes/search'
@@ -606,6 +610,81 @@ yaioM.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $http
         // we need a timeout to put the tr into DOM
         setTimeout(function(){
                 $scope.yaioUtils.renderNodeLine(node, "#tr" + node.sysUID);
+                console.log("renderNodeLine: done to:" + "#tr" + node.sysUID + $("#detail_sys_" + node.sysUID).length);
+
+                // render hierarchy
+                var parentNode = node.parentNode;
+                var parentStr = node.name;
+                while (parentNode != null && parentNode != "" && parentNode != "undefined") {
+                    parentStr = parentNode.name + " --> " + parentStr;
+                    parentNode = parentNode.parentNode;
+                }
+                parentStr = "<b>" + htmlEscapeText(parentStr) + "</b>";
+                
+                // extract search words
+                var searchExtract = "";
+                if ($scope.searchOptions.fulltext 
+                    && $scope.searchOptions.fulltext.length > 0
+                    && node.nodeDesc != undefined) {
+                    // split to searchwords
+                    var searchWords = $scope.searchOptions.fulltext.split(" ");
+                    var searchWord, searchResults, splitLength, splitText;
+
+                    var descText = node.nodeDesc;
+                    descText = descText.replace(/\<WLBR\>/g, "\n");
+                    descText = descText.replace(/\<WLESC\>/g, "\\");
+                    descText = descText.replace(/\<WLTAB\>/g, "\t");
+                    descText = descText.toLowerCase();
+                    
+                    for (var idx in searchWords) {
+                        searchWord = escapeRegExp(searchWords[idx]);
+
+                        // split by searchwords
+                        searchResults = descText.toLowerCase().split(searchWord.toLowerCase());
+                        
+                        // add dummy-element if desc start/ends with searchWord 
+                        if (descText.search(searchWord.toLowerCase()) == 0) {
+                            searchResults.insert(" ");
+                        }
+                        if (descText.search(searchWord.toLowerCase()) == (descText.length - searchWord.length)) {
+                            searchResults.push(" ");
+                        }
+
+                        // iterate and show 50 chars before and behind
+                        for (var idx2 = 0; idx2 < searchResults.length; idx2++) {
+//                            console.log("found " + searchWord + " after " + searchResults[idx2]);
+                            if (idx2 > 0) {
+                                splitLength = (searchResults[idx2].length > 50 ? 50 : searchResults[idx2].length);
+                                splitText = searchResults[idx2].substr(0, splitLength);
+                                console.log("found " + searchWord + " after use " + splitLength + " extracted:" + splitText);
+                                searchExtract += "<b>"+ searchWord + "</b>" 
+                                    + htmlEscapeText(splitText) + "...";
+                            }
+                            if (idx2 < searchResults.length) {
+                                splitLength = (searchResults[idx2].length > 50 ? 50 : searchResults[idx2].length);
+                                splitText = searchResults[idx2].substr(
+                                        searchResults[idx2].length - splitLength, 
+                                        searchResults[idx2].length);
+                                console.log("found " + searchWord + " before use " + splitLength + " extracted:" + splitText);
+                                searchExtract += "..." 
+                                    + htmlEscapeText(splitText);
+                            }
+                        }
+                    }
+                }
+                
+                // add searchdata
+                console.log("renderNodeLine: add searchdata to:" + "#tr" + node.sysUID);
+                var $html = $("<div id='details_parent_" + node.sysUID + "'"
+                                + " class='field_nodeParent'>"
+                                + parentStr
+                                + "</div>"
+                              + "<div id='details_searchdata_" + node.sysUID + "'"
+                                + " class='field_nodeSearchData'>"
+                                + searchExtract
+                                + "</div>");
+                $("#detail_sys_" + node.sysUID).after($html);
+                console.log("renderNodeLine: added searchdata to:" + "#detail_sys_" + node.sysUID + $("#detail_sys_" + node.sysUID).length);
             }, 10);
     }
 
@@ -681,10 +760,19 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
     $scope.outputOptionsEditor = OutputOptionsEditor;
 
     // check parameter - set default if empty
+    var baseUrl = '/show/';
+    var restBaseUrl = '/nodes/show/';
     var nodeId = $routeParams.nodeId;
+    var nodeByAllId = $routeParams.nodeByAllId;
+    if (nodeByAllId != null && nodeByAllId != "" && nodeByAllId) {
+        nodeId = nodeByAllId;
+        baseUrl = '/showByAllIds/';
+        restBaseUrl = '/nodes/showsymlink/';
+    }
     if (nodeId == null || nodeId == "" || ! nodeId) {
         nodeId = "MasterplanMasternode1";
     }
+
     // create node
     $scope.node = {};
     $scope.nodeForEdit = {};
@@ -696,10 +784,10 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
 
     console.log("NodeShowCtrl - processing nodeId=" + nodeId + " activeNodeId=" + activeNodeId);
 
-    var curNodeUrl = '/nodes/show/' + nodeId;
+    var curNodeUrl = restBaseUrl + nodeId;
 
     // save lastLocation for login
-    $rootScope.lastLocation = '/show/' + nodeId;
+    $rootScope.lastLocation = baseUrl + nodeId;
     
     // call authentificate 
     authorization.authentificate(function () {
@@ -820,6 +908,24 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
      * <h4>FeatureDomain:</h4>
      *     Editor
      * <h4>FeatureDescription:</h4>
+     *     export GUI As Checklist
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>exportAsChecklist
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     GUI Callback
+     */
+    $scope.exportAsChecklist = function() {
+        console.log("exportAsChecklist");
+        yaioExportExplorerLinesAsCheckList();
+        return false;
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Editor
+     * <h4>FeatureDescription:</h4>
      *     callbackhandler to open all subnodes<level in the treeview
      * <h4>FeatureResult:</h4>
      *   <ul>
@@ -833,7 +939,6 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
         yaioOpenSubNodesForTree("#tree", $scope.config.treeOpenLevel);
         return false;
     }
-
 
     /**
      * <h4>FeatureDomain:</h4>

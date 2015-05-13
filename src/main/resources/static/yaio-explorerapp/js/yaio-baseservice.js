@@ -229,3 +229,7 @@ function formatNumbers(number, nachkomma, suffix) {
 function createXFrameAllowFrom() {
     return "x-frames-allow-from=" + window.location.hostname;
 }
+
+function escapeRegExp(str) {
+    return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+}

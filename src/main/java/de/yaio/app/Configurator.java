@@ -74,14 +74,20 @@ public class Configurator {
                     "config.spring.applicationconfig.path";
     protected static final String CONST_DEFAULT_APPLICATIONCONFIG_PATH = 
                     "/META-INF/spring/applicationContext.xml";
-
+    
     private static final Logger LOGGER = Logger.getLogger(Configurator.class);
+
+    // must be instantiated after LOGGER because it is used in constructor
     protected static final Configurator instance = new Configurator();
 
     protected ApplicationContext applicationContext;
     protected CommandLine commandLine;
     protected String[] cmdLineArgs;
     protected Options availiableCmdLineOptions;
+    
+    protected Configurator() {
+        initConfigurator();
+    }
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -105,6 +111,9 @@ public class Configurator {
          */
         private static final long serialVersionUID = 1L;
 
+        /** a protected (not private!!!) map of the options with the long key */
+        protected Map<String, Option> mylongOpts = new HashMap<String, Option>();
+        
         /**
          * <h4>FeatureDomain:</h4>
          *     Configuration
@@ -120,9 +129,6 @@ public class Configurator {
                 LOGGER.debug("new FixedOptions");
             }
         }
-        
-        /** a protected (not private!!!) map of the options with the long key */
-        protected Map<String, Option> mylongOpts = new HashMap<String, Option>();
         
         /**
          * Retrieve a read-only list of options in this set
@@ -205,11 +211,6 @@ public class Configurator {
      ***********************
      ***********************
      */
-    protected Configurator() {
-        initConfigurator();
-    }
-    
-    
     protected void initConfigurator() {
         this.createAvailiableCmdLineOptions();
     }
@@ -246,7 +247,8 @@ public class Configurator {
      * <h4>FeatureDomain:</h4>
      *     Tools - CLI-Handling
      * <h4>FeatureDescription:</h4>
-     *     return the current SpringApplicationContext if is not set call ApplicationContext.initSpringApplicationContext()
+     *     return the current SpringApplicationContext 
+     *     if is not set call ApplicationContext.initSpringApplicationContext()
      * <h4>FeatureResult:</h4>
      *   <ul>
      *     <li>returnValue the current SpringApplicationContext
@@ -333,7 +335,8 @@ public class Configurator {
                 }
                 if (pattern != null) {
                     ExportController.PostProcessorReplacements_documentation.put(
-                                    pattern, (target != null ? target : ""));
+                                    pattern, 
+                                    target != null ? target : "");
                         LOGGER.info("set PostProcessorReplacements_documentation:" 
                                     + pattern + "=" + target);
                 }
@@ -612,13 +615,17 @@ public class Configurator {
             InputStream in = new FileInputStream(new File(filePath));
             prop.load(in);
             in.close();
+            //CHECKSTYLE.OFF: IllegalCatch - Much more readable than catching x exceptions
         } catch (Throwable ex) {
+            //CHECKSTYLE.ON: IllegalCatch
             // try it from jar
             try {
                 InputStream in = instance.getClass().getResourceAsStream(filePath);
                 prop.load(in);
                 in.close();
+                //CHECKSTYLE.OFF: IllegalCatch - Much more readable than catching x exceptions
             } catch (Throwable ex2) {
+                //CHECKSTYLE.ON: IllegalCatch
                 throw new Exception("cant read propertiesfile: " + filePath 
                                 + " Exception1:" + ex
                                 + " Exception2:" + ex2);

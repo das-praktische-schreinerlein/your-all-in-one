@@ -1,8 +1,14 @@
 #!/bin/bash
-# yaio-demoapp
-#
-# description: start yaio demoapp
-APPPATH=/var/www/vhosts/your-all-in-one.de/yaio-appdemo
+### BEGIN INIT INFO
+# Provides:          yaio-demoapp
+# Required-Start:    $network $remote_fs $syslog
+# Required-Stop:     $network $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start yaio-demoapp at boot time
+# Description:       Start yaio-demoapp at boot time
+### END INIT INFO
+APPPATH=/home/yaiodemo/your-all-in-one/
 YAIOUSER=yaiodemo
 cd $APPPATH
 case $1 in

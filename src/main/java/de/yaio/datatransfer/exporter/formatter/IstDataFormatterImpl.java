@@ -111,11 +111,11 @@ public class IstDataFormatterImpl extends FormatterImpl implements IstDataFormat
         String task = node.getIstTask();
 
         // Ausgabe erzeugen
-        if ( (aufwand != null && aufwand >= Calculator.CONST_DOUBLE_NULL)
-                || (stand != null && stand >= Calculator.CONST_DOUBLE_NULL)
-                || start != null
-                || ende != null
-                || task != null) {
+        if ((aufwand != null && aufwand >= Calculator.CONST_DOUBLE_NULL)
+            || (stand != null && stand >= Calculator.CONST_DOUBLE_NULL)
+            || start != null
+            || ende != null
+            || task != null) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Do: IstDataFormatter for Node:" + node.getNameForLogger());
             }
@@ -163,7 +163,7 @@ public class IstDataFormatterImpl extends FormatterImpl implements IstDataFormat
                     nodeOutput.append("-          ");
                 }
             }
-            if (task != null && !task.equals("") && !task.equals(" ")) {
+            if (task != null && !"".equals(task) && !" ".equals(task)) {
                 nodeOutput.append(" " + task);
             }
             if (oOptions.isFlgShowBrackets()) {

@@ -66,19 +66,20 @@ import de.yaio.utils.ExcelService;
  */
 public class ExcelExporter extends WikiExporter {
     
-    public ExcelExporter() {
-        super();
-    }
+    public static final String CONST_FORMATTER_DESC = DescDataFormatterImpl.class.getName();
+    public static final String CONST_FORMATTER_DOCLAYOUT = DocLayoutDataFormatterImpl.class.getName();
+    public static final String CONST_FORMATTER_IST = IstDataFormatterImpl.class.getName();
+    public static final String CONST_FORMATTER_PLAN = PlanDataFormatterImpl.class.getName();
     
     // Logger
     private static final Logger LOGGER =
         Logger.getLogger(ExcelExporter.class);
     
     protected ExcelOutputService exlSv = null;
-    public static final String CONST_FORMATTER_DESC = DescDataFormatterImpl.class.getName();
-    public static final String CONST_FORMATTER_DOCLAYOUT = DocLayoutDataFormatterImpl.class.getName();
-    public static final String CONST_FORMATTER_IST = IstDataFormatterImpl.class.getName();
-    public static final String CONST_FORMATTER_PLAN = PlanDataFormatterImpl.class.getName();
+    
+    public ExcelExporter() {
+        super();
+    }
     
     @Override
     public String getMasterNodeResult(final DataDomain masterNode,
@@ -164,11 +165,11 @@ public class ExcelExporter extends WikiExporter {
         }
 
         // alle SubNotes des Mastrs durchlaufen
-        if (masterNode.getEbene() != 1) {
+//        if (masterNode.getEbene() != 1) {
 // TODO
 //            throw new IllegalArgumentException("Masternode ist not Master: "
 //                    + masterNode.getEbene() + "'" + masterNode + "'");
-        }
+//        }
 
         int startRownNum = ExcelNodeService.CONST_PLANUNG_ROUW_UE;
         this.createPlanungLineUe(sheet, startRownNum, oOptions);
@@ -194,13 +195,17 @@ public class ExcelExporter extends WikiExporter {
             sheet.autoSizeColumn(curCol);
         }
         // alle Struktur-Spalten vor MaxEbene verkleinern
-        int maxEbene = masterNode.getMaxChildEbene();
-        for (int curCol = ExcelNodeService.CONST_PLANUNG_COL_PROJEKT; curCol < ExcelNodeService.CONST_PLANUNG_COL_PROJEKT + maxEbene - 1; curCol++) {
+        int maxEbene = masterNode.getBaseNodeService().getMaxChildEbene(masterNode);
+        for (int curCol = ExcelNodeService.CONST_PLANUNG_COL_PROJEKT; 
+             curCol < ExcelNodeService.CONST_PLANUNG_COL_PROJEKT + maxEbene - 1; 
+             curCol++) {
             sheet.setColumnWidth(curCol, 150);
         }
 
         // alle Struktur-Spalten hinter MaxEbene ausblenden
-        for (int curCol = ExcelNodeService.CONST_PLANUNG_COL_PROJEKT + maxEbene; curCol <= ExcelNodeService.CONST_PLANUNG_COL_DESC; curCol++) {
+        for (int curCol = ExcelNodeService.CONST_PLANUNG_COL_PROJEKT + maxEbene; 
+             curCol <= ExcelNodeService.CONST_PLANUNG_COL_DESC; 
+             curCol++) {
             sheet.setColumnWidth(curCol, 0);
             sheet.setColumnHidden(curCol, true);
         }
@@ -303,33 +308,60 @@ public class ExcelExporter extends WikiExporter {
                     + " for Ue");
         }
 
-        HSSFCell cell = ExcelService.setCellString(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_ID, "Id", this.exlSv.csFieldPlanungBaseUe);
-        cell = ExcelService.setCellString(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_PROJEKT, "Projekt", this.exlSv.csFieldPlanungBaseUe);
-        cell = ExcelService.setCellString(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_MODUL, "Modul", this.exlSv.csFieldPlanungBaseUe);
-        cell = ExcelService.setCellString(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_PAKET, "Paket", this.exlSv.csFieldPlanungBaseUe);
-        cell = ExcelService.setCellString(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_UNTERPAKET, "Unterpaket", this.exlSv.csFieldPlanungBaseUe);
-        cell = ExcelService.setCellString(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_SCHRITT, "Schritt", this.exlSv.csFieldPlanungBaseUe);
-        cell = ExcelService.setCellString(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_SCHRITT2, "Schritt2", this.exlSv.csFieldPlanungBaseUe);
-        cell = ExcelService.setCellString(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_SCHRITT3, "Schritt3", this.exlSv.csFieldPlanungBaseUe);
-        cell = ExcelService.setCellString(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_SCHRITT4, "Schritt4", this.exlSv.csFieldPlanungBaseUe);
-        cell = ExcelService.setCellString(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_SCHRITT5, "Schritt5", this.exlSv.csFieldPlanungBaseUe);
-        cell = ExcelService.setCellString(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_DESC, "ProjektDesc", this.exlSv.csFieldPlanungBaseUe);
-        cell = ExcelService.setCellString(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_PLAN_TASK, "P-Task", this.exlSv.csFieldPlanungBaseUe);
-        cell = ExcelService.setCellString(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_PLAN_PROGNOSE, "Prognose", this.exlSv.csFieldPlanungBaseUe);
-        cell = ExcelService.setCellString(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_PLAN_AUFWAND, "P-Aufwand", this.exlSv.csFieldPlanungBaseUe);
-        cell = ExcelService.setCellString(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_PLAN_DATE_START, "P-Start", this.exlSv.csFieldPlanungBaseUe);
-        cell = ExcelService.setCellString(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_PLAN_DATE_ENDE, "P-Ende", this.exlSv.csFieldPlanungBaseUe);
-        cell = ExcelService.setCellString(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_PLAN_DATE_MIN_ENDE, "P-Min-Ende", this.exlSv.csFieldPlanungBaseUe);
-        cell = ExcelService.setCellString(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_IST_TASK, "I-Task", this.exlSv.csFieldPlanungBaseUe);
-        cell = ExcelService.setCellString(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_IST_STAND, "I-Stand", this.exlSv.csFieldPlanungBaseUe);
-        cell = ExcelService.setCellString(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_IST_AUFWAND, "I-Aufwand", this.exlSv.csFieldPlanungBaseUe);
-        cell = ExcelService.setCellString(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_IST_DATE_START, "I-Start", this.exlSv.csFieldPlanungBaseUe);
-        cell = ExcelService.setCellString(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_IST_DATE_ENDE, "I-Ende", this.exlSv.csFieldPlanungBaseUe);
-        cell = ExcelService.setCellString(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_REAL_AUFWAND, "R-Plan-Aufwand", this.exlSv.csFieldPlanungBaseUe);
-        cell = ExcelService.setCellString(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_REAL_OFFEN, "R-Offen", this.exlSv.csFieldPlanungBaseUe);
-        cell = ExcelService.setCellString(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_REAL_DIFF, "R-Diff", this.exlSv.csFieldPlanungBaseUe);
-        cell = ExcelService.setCellString(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_REAL_DATE_START, "R-Start", this.exlSv.csFieldPlanungBaseUe);
-        cell = ExcelService.setCellString(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_REAL_DATE_ENDE, "R-Ende", this.exlSv.csFieldPlanungBaseUe);
+        HSSFCell cell = ExcelService.setCellString(sheet, startRownNum, 
+                        ExcelNodeService.CONST_PLANUNG_COL_ID, "Id", this.exlSv.csFieldPlanungBaseUe);
+        cell = ExcelService.setCellString(sheet, startRownNum,
+                        ExcelNodeService.CONST_PLANUNG_COL_PROJEKT, "Projekt", this.exlSv.csFieldPlanungBaseUe);
+        cell = ExcelService.setCellString(sheet, startRownNum, 
+                        ExcelNodeService.CONST_PLANUNG_COL_MODUL, "Modul", this.exlSv.csFieldPlanungBaseUe);
+        cell = ExcelService.setCellString(sheet, startRownNum, 
+                        ExcelNodeService.CONST_PLANUNG_COL_PAKET, "Paket", this.exlSv.csFieldPlanungBaseUe);
+        cell = ExcelService.setCellString(sheet, startRownNum, 
+                        ExcelNodeService.CONST_PLANUNG_COL_UNTERPAKET, "Unterpaket", this.exlSv.csFieldPlanungBaseUe);
+        cell = ExcelService.setCellString(sheet, startRownNum, 
+                        ExcelNodeService.CONST_PLANUNG_COL_SCHRITT, "Schritt", this.exlSv.csFieldPlanungBaseUe);
+        cell = ExcelService.setCellString(sheet, startRownNum, 
+                        ExcelNodeService.CONST_PLANUNG_COL_SCHRITT2, "Schritt2", this.exlSv.csFieldPlanungBaseUe);
+        cell = ExcelService.setCellString(sheet, startRownNum, 
+                        ExcelNodeService.CONST_PLANUNG_COL_SCHRITT3, "Schritt3", this.exlSv.csFieldPlanungBaseUe);
+        cell = ExcelService.setCellString(sheet, startRownNum, 
+                        ExcelNodeService.CONST_PLANUNG_COL_SCHRITT4, "Schritt4", this.exlSv.csFieldPlanungBaseUe);
+        cell = ExcelService.setCellString(sheet, startRownNum, 
+                        ExcelNodeService.CONST_PLANUNG_COL_SCHRITT5, "Schritt5", this.exlSv.csFieldPlanungBaseUe);
+        cell = ExcelService.setCellString(sheet, startRownNum, 
+                        ExcelNodeService.CONST_PLANUNG_COL_DESC, "ProjektDesc", this.exlSv.csFieldPlanungBaseUe);
+        cell = ExcelService.setCellString(sheet, startRownNum, 
+                        ExcelNodeService.CONST_PLANUNG_COL_PLAN_TASK, "P-Task", this.exlSv.csFieldPlanungBaseUe);
+        cell = ExcelService.setCellString(sheet, startRownNum, 
+                        ExcelNodeService.CONST_PLANUNG_COL_PLAN_PROGNOSE, "Prognose", this.exlSv.csFieldPlanungBaseUe);
+        cell = ExcelService.setCellString(sheet, startRownNum, 
+                        ExcelNodeService.CONST_PLANUNG_COL_PLAN_AUFWAND, "P-Aufwand", this.exlSv.csFieldPlanungBaseUe);
+        cell = ExcelService.setCellString(sheet, startRownNum, 
+                        ExcelNodeService.CONST_PLANUNG_COL_PLAN_DATE_START, "P-Start", this.exlSv.csFieldPlanungBaseUe);
+        cell = ExcelService.setCellString(sheet, startRownNum, 
+                        ExcelNodeService.CONST_PLANUNG_COL_PLAN_DATE_ENDE, "P-Ende", this.exlSv.csFieldPlanungBaseUe);
+        cell = ExcelService.setCellString(sheet, startRownNum, 
+                        ExcelNodeService.CONST_PLANUNG_COL_PLAN_DATE_MIN_ENDE, "P-Min-Ende", this.exlSv.csFieldPlanungBaseUe);
+        cell = ExcelService.setCellString(sheet, startRownNum, 
+                        ExcelNodeService.CONST_PLANUNG_COL_IST_TASK, "I-Task", this.exlSv.csFieldPlanungBaseUe);
+        cell = ExcelService.setCellString(sheet, startRownNum, 
+                        ExcelNodeService.CONST_PLANUNG_COL_IST_STAND, "I-Stand", this.exlSv.csFieldPlanungBaseUe);
+        cell = ExcelService.setCellString(sheet, startRownNum, 
+                        ExcelNodeService.CONST_PLANUNG_COL_IST_AUFWAND, "I-Aufwand", this.exlSv.csFieldPlanungBaseUe);
+        cell = ExcelService.setCellString(sheet, startRownNum, 
+                        ExcelNodeService.CONST_PLANUNG_COL_IST_DATE_START, "I-Start", this.exlSv.csFieldPlanungBaseUe);
+        cell = ExcelService.setCellString(sheet, startRownNum, 
+                        ExcelNodeService.CONST_PLANUNG_COL_IST_DATE_ENDE, "I-Ende", this.exlSv.csFieldPlanungBaseUe);
+        cell = ExcelService.setCellString(sheet, startRownNum, 
+                        ExcelNodeService.CONST_PLANUNG_COL_REAL_AUFWAND, "R-Plan-Aufwand", this.exlSv.csFieldPlanungBaseUe);
+        cell = ExcelService.setCellString(sheet, startRownNum, 
+                        ExcelNodeService.CONST_PLANUNG_COL_REAL_OFFEN, "R-Offen", this.exlSv.csFieldPlanungBaseUe);
+        cell = ExcelService.setCellString(sheet, startRownNum, 
+                        ExcelNodeService.CONST_PLANUNG_COL_REAL_DIFF, "R-Diff", this.exlSv.csFieldPlanungBaseUe);
+        cell = ExcelService.setCellString(sheet, startRownNum, 
+                        ExcelNodeService.CONST_PLANUNG_COL_REAL_DATE_START, "R-Start", this.exlSv.csFieldPlanungBaseUe);
+        cell = ExcelService.setCellString(sheet, startRownNum, 
+                        ExcelNodeService.CONST_PLANUNG_COL_REAL_DATE_ENDE, "R-Ende", this.exlSv.csFieldPlanungBaseUe);
     }
 
     // TODO Doku
@@ -488,7 +520,8 @@ public class ExcelExporter extends WikiExporter {
                 + ExcelService.getRowNum(startRownNum);
             formula = "IF(" + formula + "> 0" + ExcelService.CONST_PARAM_DELIM
                 + "1/" + formula + "*" + formula2
-                + ExcelService.CONST_PARAM_DELIM + ExcelService.getColName(ExcelNodeService.CONST_PLANUNG_COL_PLAN_AUFWAND)
+                + ExcelService.CONST_PARAM_DELIM 
+                + ExcelService.getColName(ExcelNodeService.CONST_PLANUNG_COL_PLAN_AUFWAND)
                 + ExcelService.getRowNum(startRownNum) +  ")";
             cell = ExcelService.setCellFormula(sheet, startRownNum,
                     ExcelNodeService.CONST_PLANUNG_COL_REAL_AUFWAND, formula,
@@ -559,7 +592,8 @@ public class ExcelExporter extends WikiExporter {
             Date MINDATE = DataUtils.getDF().parse("01.01.1970");
             if ((date == null || date.before(MINDATE)) && vorgaengerRownNum >= 0) {
                 // falls leer mit dem Ende des Vorgaengers belegen
-                String formula = ExcelService.getColName(ExcelNodeService.CONST_PLANUNG_COL_PLAN_DATE_ENDE) + ExcelService.getRowNum(vorgaengerRownNum);
+                String formula = ExcelService.getColName(ExcelNodeService.CONST_PLANUNG_COL_PLAN_DATE_ENDE) 
+                                + ExcelService.getRowNum(vorgaengerRownNum);
                 cell = ExcelService.setCellFormula(sheet, startRownNum,
                         ExcelNodeService.CONST_PLANUNG_COL_PLAN_DATE_START, formula,
                         this.exlSv.csFieldPlanungPlanStartDate_Entry);
@@ -574,7 +608,8 @@ public class ExcelExporter extends WikiExporter {
             date = projektNode.getPlanEnde();
             if (date == null) {
                 // falls leer mit dem berechneten Endedatum belegen
-                String formula = ExcelService.getColName(ExcelNodeService.CONST_PLANUNG_COL_PLAN_DATE_MIN_ENDE) + ExcelService.getRowNum(startRownNum);
+                String formula = ExcelService.getColName(ExcelNodeService.CONST_PLANUNG_COL_PLAN_DATE_MIN_ENDE) 
+                                + ExcelService.getRowNum(startRownNum);
                 cell = ExcelService.setCellFormula(sheet, startRownNum,
                         ExcelNodeService.CONST_PLANUNG_COL_PLAN_DATE_ENDE, formula,
                         this.exlSv.csFieldPlanungPlanEndDate_Entry);
@@ -587,8 +622,10 @@ public class ExcelExporter extends WikiExporter {
 
             // Maximum-MinEndDatum berechnen
             // WENN(UND(K30>0;K30<>"";J30>0);   ARBEITSTAG(K30;J30/8)   + ((STUNDE(K30)+MINUTE(K30)/60)/3 + REST(J30;8))/8;"")
-            String pStart = ExcelService.getColName(ExcelNodeService.CONST_PLANUNG_COL_PLAN_DATE_START) + ExcelService.getRowNum(startRownNum);
-            String pAufwand = ExcelService.getColName(ExcelNodeService.CONST_PLANUNG_COL_PLAN_AUFWAND) + ExcelService.getRowNum(startRownNum);
+            String pStart = ExcelService.getColName(ExcelNodeService.CONST_PLANUNG_COL_PLAN_DATE_START) 
+                            + ExcelService.getRowNum(startRownNum);
+            String pAufwand = ExcelService.getColName(ExcelNodeService.CONST_PLANUNG_COL_PLAN_AUFWAND) 
+                            + ExcelService.getRowNum(startRownNum);
             int faktor = 24 / ExcelNodeService.CONST_WORKHOURS_PERDAY;
             String formula =
                 "IF(AND("
@@ -605,7 +642,9 @@ public class ExcelExporter extends WikiExporter {
 
                 + " +(("
 // HOUR in POI erst ab 3.8 (wg. Recalc)               + " +(((HOUR(" + pStart + ")+ MINUTE(" + pStart + ")/60)/" + faktor
-                + " +  MOD(" + pAufwand  + ExcelService.CONST_PARAM_DELIM + ExcelNodeService.CONST_WORKHOURS_PERDAY + "))/" + ExcelNodeService.CONST_WORKHOURS_PERDAY
+                + " +  MOD(" + pAufwand 
+                + ExcelService.CONST_PARAM_DELIM + ExcelNodeService.CONST_WORKHOURS_PERDAY + "))/" 
+                + ExcelNodeService.CONST_WORKHOURS_PERDAY
                 + " )"
 
                 + ExcelService.CONST_PARAM_DELIM + "\"\")";
@@ -652,7 +691,7 @@ public class ExcelExporter extends WikiExporter {
                 ExcelService.getColName(ExcelNodeService.CONST_PLANUNG_COL_IST_STAND) +
                 ExcelService.getRowNum(startRownNum)
                 + "*" + ExcelService.getColName(ExcelNodeService.CONST_PLANUNG_COL_PLAN_AUFWAND)
-                + ExcelService.getRowNum(startRownNum);;;
+                + ExcelService.getRowNum(startRownNum);
             formula =
                 "IF(" + formula + " > 0" + ExcelService.CONST_PARAM_DELIM + formula
                 + ExcelService.CONST_PARAM_DELIM + "\"\")";
@@ -673,7 +712,8 @@ public class ExcelExporter extends WikiExporter {
                 + ExcelService.getRowNum(startRownNum);
             formula = "IF(" + formula + "> 0" + ExcelService.CONST_PARAM_DELIM
                 + "1/" + formula + "*" + formula2
-                + ExcelService.CONST_PARAM_DELIM + ExcelService.getColName(ExcelNodeService.CONST_PLANUNG_COL_PLAN_AUFWAND)
+                + ExcelService.CONST_PARAM_DELIM 
+                + ExcelService.getColName(ExcelNodeService.CONST_PLANUNG_COL_PLAN_AUFWAND)
                 + ExcelService.getRowNum(startRownNum) +  ")";
             cell = ExcelService.setCellFormula(sheet, startRownNum,
                     ExcelNodeService.CONST_PLANUNG_COL_REAL_AUFWAND, formula,
@@ -740,7 +780,9 @@ public class ExcelExporter extends WikiExporter {
 
                 + " +(("
 // HOUR in POI erst ab 3.8 (wg. Recalc)               + " +(((HOUR(" + iEnde + ")+ MINUTE(" + iEnde + ")/60)/" + faktor
-                + " +  MOD(" + pAufwand  + ExcelService.CONST_PARAM_DELIM + ExcelNodeService.CONST_WORKHOURS_PERDAY + "))/" + ExcelNodeService.CONST_WORKHOURS_PERDAY
+                + " +  MOD(" + pAufwand 
+                + ExcelService.CONST_PARAM_DELIM + ExcelNodeService.CONST_WORKHOURS_PERDAY 
+                + "))/" + ExcelNodeService.CONST_WORKHOURS_PERDAY
                 + " )"
                 + ExcelService.CONST_PARAM_DELIM + "\"\")"
                 + ExcelService.CONST_PARAM_DELIM + pEnde + ")";
@@ -863,11 +905,11 @@ public class ExcelExporter extends WikiExporter {
         }
 
         // alle SubNotes des Masters durchlaufen
-        if (masterNode.getEbene() != 1) {
+//        if (masterNode.getEbene() != 1) {
 // TODO 
 //            throw new IllegalArgumentException("Masternode ist not Master: "
 //                    + masterNode.getEbene() + "'" + masterNode + "'");
-        }
+//        }
 
         int startRownNum = ExcelNodeService.CONST_GANT_ROUW_UE;
         this.createGantLineUe(sheet, startRownNum, oOptions);
@@ -926,11 +968,17 @@ public class ExcelExporter extends WikiExporter {
             // Datumsbereiche
             String formula =
                 "SUMIF("
-                + ExcelNodeService.CONST_SHEETNNAME_PLANUNG + "!$" + ExcelService.getColName(ExcelNodeService.CONST_PLANUNG_COL_FLG_DETAIL) + ExcelService.getRowNum(ExcelNodeService.CONST_GANT_ROUW_UE + 1)
-                + ":" + ExcelNodeService.CONST_SHEETNNAME_PLANUNG + "!$" + ExcelService.getColName(ExcelNodeService.CONST_PLANUNG_COL_FLG_DETAIL) + ExcelService.getRowNum(lastRownNum)
+                + ExcelNodeService.CONST_SHEETNNAME_PLANUNG 
+                    + "!$" + ExcelService.getColName(ExcelNodeService.CONST_PLANUNG_COL_FLG_DETAIL) 
+                    + ExcelService.getRowNum(ExcelNodeService.CONST_GANT_ROUW_UE + 1)
+                + ":" + ExcelNodeService.CONST_SHEETNNAME_PLANUNG 
+                    + "!$" + ExcelService.getColName(ExcelNodeService.CONST_PLANUNG_COL_FLG_DETAIL) 
+                    + ExcelService.getRowNum(lastRownNum)
                 + ExcelService.CONST_PARAM_DELIM + "1" + ExcelService.CONST_PARAM_DELIM
-                + "$" + ExcelService.getColName(versatz + ExcelNodeService.CONST_GANT_COL_GANT_START + zaehler) + ExcelService.getRowNum(ExcelNodeService.CONST_GANT_ROUW_UE + 1)
-                + ":" + "$" + ExcelService.getColName(versatz + ExcelNodeService.CONST_GANT_COL_GANT_START + zaehler) + ExcelService.getRowNum(lastRownNum)
+                + "$" + ExcelService.getColName(versatz + ExcelNodeService.CONST_GANT_COL_GANT_START + zaehler) 
+                + ExcelService.getRowNum(ExcelNodeService.CONST_GANT_ROUW_UE + 1)
+                + ":" + "$" + ExcelService.getColName(versatz + ExcelNodeService.CONST_GANT_COL_GANT_START + zaehler) 
+                + ExcelService.getRowNum(lastRownNum)
                 + ")";
             HSSFCell cell = ExcelService.setCellFormula(sheet, lastRownNum + 1,
                     versatz + ExcelNodeService.CONST_GANT_COL_GANT_START + zaehler, formula,
@@ -992,19 +1040,25 @@ public class ExcelExporter extends WikiExporter {
         condFormSheet.addConditionalFormatting(regions, rules);
 
         // Gesamten Sheet formatieren
-        sheet.setColumnWidth(versatz + ExcelNodeService.CONST_GANT_COL_PLAN_DATE_START, ExcelService.CONST_COL_WIDTH_DATE);
-        sheet.setColumnWidth(versatz + ExcelNodeService.CONST_GANT_COL_PLAN_DATE_ENDE, ExcelService.CONST_COL_WIDTH_DATE);
-        sheet.setColumnWidth(versatz + ExcelNodeService.CONST_GANT_COL_PLAN_PROGNOSE, ExcelService.CONST_COL_WIDTH_INT);
-        sheet.setColumnWidth(versatz + ExcelNodeService.CONST_GANT_COL_PLAN_PROGNOSE_AUFWAND, ExcelService.CONST_COL_WIDTH_INT);
-        for (int curCol = ExcelNodeService.CONST_GANT_COL_GANT_START; curCol <= ExcelNodeService.CONST_GANT_COL_GANT_START + ExcelNodeService.CONST_GANT_PERIODS; curCol++) {
+        sheet.setColumnWidth(versatz + ExcelNodeService.CONST_GANT_COL_PLAN_DATE_START, 
+                        ExcelService.CONST_COL_WIDTH_DATE);
+        sheet.setColumnWidth(versatz + ExcelNodeService.CONST_GANT_COL_PLAN_DATE_ENDE, 
+                        ExcelService.CONST_COL_WIDTH_DATE);
+        sheet.setColumnWidth(versatz + ExcelNodeService.CONST_GANT_COL_PLAN_PROGNOSE, 
+                        ExcelService.CONST_COL_WIDTH_INT);
+        sheet.setColumnWidth(versatz + ExcelNodeService.CONST_GANT_COL_PLAN_PROGNOSE_AUFWAND, 
+                        ExcelService.CONST_COL_WIDTH_INT);
+        for (int curCol = ExcelNodeService.CONST_GANT_COL_GANT_START; 
+             curCol <= ExcelNodeService.CONST_GANT_COL_GANT_START + ExcelNodeService.CONST_GANT_PERIODS; 
+             curCol++) {
             sheet.setColumnWidth(versatz + curCol, ExcelService.CONST_COL_WIDTH_DATE_SHORT);
         }
     }
 
 
     // TODO Doku
-    public int createGantLines4Node(HSSFSheet sheet, BaseNode node,
-            int startRownNum, ExcelOutputOptions oOptions)
+    public int createGantLines4Node(final HSSFSheet sheet, final BaseNode node,
+            final int startRownNum, final ExcelOutputOptions oOptions)
     throws Exception {
         // Parameter pruefen
         if (sheet == null) {
@@ -1044,8 +1098,8 @@ public class ExcelExporter extends WikiExporter {
 
 
     // TODO Doku
-    public void createGantLineUe(HSSFSheet sheet, int startRownNum,
-            ExcelOutputOptions oOptions)
+    public void createGantLineUe(final HSSFSheet sheet, final int startRownNum,
+            final ExcelOutputOptions oOptions)
     throws Exception {
         // Parameter pruefen
         if (sheet == null) {
@@ -1103,8 +1157,8 @@ public class ExcelExporter extends WikiExporter {
 
 
     // TODO Doku
-    public void createGantLineDiagUe(HSSFSheet sheet, int startRownNum,
-            ExcelOutputOptions oOptions, int versatz)
+    public void createGantLineDiagUe(final HSSFSheet sheet, final int startRownNum,
+            final ExcelOutputOptions oOptions, final int versatz)
     throws Exception {
         // Parameter pruefen
         if (sheet == null) {
@@ -1159,36 +1213,40 @@ public class ExcelExporter extends WikiExporter {
             formula =
                 "$" + ExcelService.getColName(versatz + ExcelNodeService.CONST_GANT_COL_GANT_START)
                 + "$" + ExcelService.getRowNum(startRownNum)
-                + "+($" + ExcelService.getColName(versatz + ExcelNodeService.CONST_GANT_COL_GANT_START + ExcelNodeService.CONST_GANT_PERIODS)
+                + "+($" + ExcelService.getColName(versatz 
+                                                  + ExcelNodeService.CONST_GANT_COL_GANT_START 
+                                                  + ExcelNodeService.CONST_GANT_PERIODS)
                 + "$" + ExcelService.getRowNum(startRownNum)
                 + "-" + "$" + ExcelService.getColName(versatz + ExcelNodeService.CONST_GANT_COL_GANT_START)
                 + "$" + ExcelService.getRowNum(startRownNum)
                 + ")/" + ExcelNodeService.CONST_GANT_PERIODS + "*" + zaehler;
             cell = ExcelService.setCellFormula(sheet, startRownNum,
-                    versatz + ExcelNodeService.CONST_GANT_COL_GANT_START+zaehler, formula,
+                    versatz + ExcelNodeService.CONST_GANT_COL_GANT_START + zaehler, formula,
                     this.exlSv.csFieldGantNormDate_Ue);
         }
 
         // letzte Zeile
-        int zaehler = ExcelNodeService.CONST_GANT_PERIODS+1;
+        int zaehler = ExcelNodeService.CONST_GANT_PERIODS + 1;
         formula =
             "$" + ExcelService.getColName(versatz + ExcelNodeService.CONST_GANT_COL_GANT_START)
             + "$" + ExcelService.getRowNum(startRownNum)
-            + "+($" + ExcelService.getColName(versatz + ExcelNodeService.CONST_GANT_COL_GANT_START+ExcelNodeService.CONST_GANT_PERIODS)
+            + "+($" + ExcelService.getColName(versatz 
+                                              + ExcelNodeService.CONST_GANT_COL_GANT_START 
+                                              + ExcelNodeService.CONST_GANT_PERIODS)
             + "$" + ExcelService.getRowNum(startRownNum)
             + "-" + "$" + ExcelService.getColName(versatz + ExcelNodeService.CONST_GANT_COL_GANT_START)
             + "$" + ExcelService.getRowNum(startRownNum)
             + ")/" + ExcelNodeService.CONST_GANT_PERIODS + "*" + zaehler;
         cell = ExcelService.setCellFormula(sheet, startRownNum,
-                versatz + ExcelNodeService.CONST_GANT_COL_GANT_START+zaehler, formula,
+                versatz + ExcelNodeService.CONST_GANT_COL_GANT_START + zaehler, formula,
                 this.exlSv.csFieldGantNormDate_Ue);
     }
 
 
     // TODO Doku
-    public void createGantLine4Node(HSSFSheet sheet, BaseNode node,
-            int startRownNum, List<Integer> lstChildRowNum,
-            ExcelOutputOptions oOptions)
+    public void createGantLine4Node(final HSSFSheet sheet, final BaseNode node,
+            final int startRownNum, final List<Integer> lstChildRowNum,
+            final ExcelOutputOptions oOptions)
     throws Exception {
         // Parameter pruefen
         if (sheet == null) {
@@ -1238,9 +1296,9 @@ public class ExcelExporter extends WikiExporter {
 
 
     // TODO Doku
-    public void createGantLineDiag4Node(HSSFSheet sheet, BaseNode node,
-            int startRownNum, List<Integer> lstChildRowNum,
-            ExcelOutputOptions oOptions, int versatz)
+    public void createGantLineDiag4Node(final HSSFSheet sheet, final BaseNode node,
+            final int startRownNum, final List<Integer> lstChildRowNum,
+            final ExcelOutputOptions oOptions, final int versatz)
     throws Exception {
         // Parameter pruefen
         if (sheet == null) {
@@ -1275,15 +1333,17 @@ public class ExcelExporter extends WikiExporter {
         //
         // Aufwand
         //
-        HashMap<String, String> formValues = new HashMap<String, String>();
+        Map<String, String> formValues = new HashMap<String, String>();
         String element2 =
             ExcelNodeService.CONST_SHEETNNAME_PLANUNG + "!"
-            + ExcelService.getColName(ExcelNodeService.CONST_PLANUNG_COL_PLAN_PROGNOSE) + ExcelService.getRowNum(startRownNum);
+            + ExcelService.getColName(ExcelNodeService.CONST_PLANUNG_COL_PLAN_PROGNOSE) 
+            + ExcelService.getRowNum(startRownNum);
 
         // Plandaten
         String element =
             ExcelNodeService.CONST_SHEETNNAME_PLANUNG + "!"
-            + ExcelService.getColName(ExcelNodeService.CONST_PLANUNG_COL_PLAN_AUFWAND) + ExcelService.getRowNum(startRownNum);
+            + ExcelService.getColName(ExcelNodeService.CONST_PLANUNG_COL_PLAN_AUFWAND) 
+            + ExcelService.getRowNum(startRownNum);
         formValues.put("1",
                 "IF(AND(" + element + ">0" + ExcelService.CONST_PARAM_DELIM
                 + element + ">0)" + ExcelService.CONST_PARAM_DELIM
@@ -1292,7 +1352,8 @@ public class ExcelExporter extends WikiExporter {
         // Istdaten
         element =
             ExcelNodeService.CONST_SHEETNNAME_PLANUNG + "!"
-            + ExcelService.getColName(ExcelNodeService.CONST_PLANUNG_COL_IST_AUFWAND) + ExcelService.getRowNum(startRownNum);
+            + ExcelService.getColName(ExcelNodeService.CONST_PLANUNG_COL_IST_AUFWAND) 
+            + ExcelService.getRowNum(startRownNum);
         formValues.put("2",
                 "IF(AND(" + element + ">0" + ExcelService.CONST_PARAM_DELIM
                 + element + ">0)" + ExcelService.CONST_PARAM_DELIM
@@ -1301,7 +1362,8 @@ public class ExcelExporter extends WikiExporter {
         // Real-Offen
         element =
             ExcelNodeService.CONST_SHEETNNAME_PLANUNG + "!"
-            + ExcelService.getColName(ExcelNodeService.CONST_PLANUNG_COL_REAL_OFFEN) + ExcelService.getRowNum(startRownNum);
+            + ExcelService.getColName(ExcelNodeService.CONST_PLANUNG_COL_REAL_OFFEN) 
+            + ExcelService.getRowNum(startRownNum);
         formValues.put("3",
                 "IF(AND(" + element + ">0" + ExcelService.CONST_PARAM_DELIM
                 + element + ">0)" + ExcelService.CONST_PARAM_DELIM
@@ -1310,10 +1372,12 @@ public class ExcelExporter extends WikiExporter {
         // Real-Gesamt
         element =
             "("  + ExcelNodeService.CONST_SHEETNNAME_PLANUNG + "!"
-            + ExcelService.getColName(ExcelNodeService.CONST_PLANUNG_COL_IST_AUFWAND) + ExcelService.getRowNum(startRownNum)
+            + ExcelService.getColName(ExcelNodeService.CONST_PLANUNG_COL_IST_AUFWAND) 
+            + ExcelService.getRowNum(startRownNum)
             + " + " + ExcelNodeService.CONST_SHEETNNAME_PLANUNG + "!"
-            + ExcelService.getColName(ExcelNodeService.CONST_PLANUNG_COL_REAL_OFFEN) + ExcelService.getRowNum(startRownNum)
-            +")";
+            + ExcelService.getColName(ExcelNodeService.CONST_PLANUNG_COL_REAL_OFFEN) 
+            + ExcelService.getRowNum(startRownNum)
+            + ")";
         formValues.put("4",
                 "IF(AND(" + element + ">0" + ExcelService.CONST_PARAM_DELIM
                 + element + ">0)" + ExcelService.CONST_PARAM_DELIM
@@ -1395,24 +1459,30 @@ public class ExcelExporter extends WikiExporter {
             // WENN($F3<=H$2;WENN($G3>=H$2;"X";"");WENN($F3<I$2;WENN($G3>=H$2;"X";"");""))
 
             // Datumsbereiche
-            String pStart = "$" + ExcelService.getColName(versatz + ExcelNodeService.CONST_GANT_COL_PLAN_DATE_START) + ExcelService.getRowNum(startRownNum);
-            String pEnde = "$" + ExcelService.getColName(versatz + ExcelNodeService.CONST_GANT_COL_PLAN_DATE_ENDE) + ExcelService.getRowNum(startRownNum);
-            String pAufwand = "$" + ExcelService.getColName(versatz + ExcelNodeService.CONST_GANT_COL_PLAN_PROGNOSE_AUFWAND) + ExcelService.getRowNum(startRownNum);
+            String pStart = "$" + ExcelService.getColName(versatz + ExcelNodeService.CONST_GANT_COL_PLAN_DATE_START) 
+                            + ExcelService.getRowNum(startRownNum);
+            String pEnde = "$" + ExcelService.getColName(versatz + ExcelNodeService.CONST_GANT_COL_PLAN_DATE_ENDE) 
+                            + ExcelService.getRowNum(startRownNum);
+            String pAufwand = "$" + ExcelService.getColName(versatz 
+                                    + ExcelNodeService.CONST_GANT_COL_PLAN_PROGNOSE_AUFWAND) 
+                            + ExcelService.getRowNum(startRownNum);
 
             //1. Anzahl der h innerhalb des Zeitraums berechen (Nettoarbeitstage
-            String pAufwandPerDay = pAufwand + "/" +"(" + pEnde + "-" + pStart + "+1)";
+            String pAufwandPerDay = pAufwand + "/" + "(" + pEnde + "-" + pStart + "+1)";
 
-            String curStart = ExcelService.getColName(versatz + ExcelNodeService.CONST_GANT_COL_GANT_START+zaehler) + "$" + ExcelService.getRowNum(ExcelNodeService.CONST_GANT_ROUW_UE);
-            String nextStart = ExcelService.getColName(versatz + ExcelNodeService.CONST_GANT_COL_GANT_START+zaehler+1) + "$" + ExcelService.getRowNum(ExcelNodeService.CONST_GANT_ROUW_UE);
+            String curStart = ExcelService.getColName(versatz + ExcelNodeService.CONST_GANT_COL_GANT_START + zaehler) 
+                            + "$" + ExcelService.getRowNum(ExcelNodeService.CONST_GANT_ROUW_UE);
+            String nextStart = ExcelService.getColName(versatz + ExcelNodeService.CONST_GANT_COL_GANT_START + zaehler + 1) 
+                            + "$" + ExcelService.getRowNum(ExcelNodeService.CONST_GANT_ROUW_UE);
 
             if (lstChildRowNum.size() > 0 && node.getEbene() <= oOptions.getMaxEbene()) {
                 // Oberpunkt
                 formula =
                     "IF(" + pStart + "<=" + curStart + ExcelService.CONST_PARAM_DELIM
                     + " IF(" + pEnde + " >=" + curStart  + ExcelService.CONST_PARAM_DELIM + "\"X\""
-                    + ExcelService.CONST_PARAM_DELIM + "\"\")"+ ExcelService.CONST_PARAM_DELIM
+                    + ExcelService.CONST_PARAM_DELIM + "\"\")" + ExcelService.CONST_PARAM_DELIM
                     + " IF(" + pStart + " <" + nextStart + ExcelService.CONST_PARAM_DELIM
-                    + "  IF(" + pEnde+ "  >=" + curStart  + ExcelService.CONST_PARAM_DELIM + "\"X\""
+                    + "  IF(" + pEnde + "  >=" + curStart  + ExcelService.CONST_PARAM_DELIM + "\"X\""
                     + ExcelService.CONST_PARAM_DELIM + "\"\")"
                     + ExcelService.CONST_PARAM_DELIM + "\"\")"
                     + ")";
@@ -1424,13 +1494,13 @@ public class ExcelExporter extends WikiExporter {
                 // PStart vor dem aktuellen Intervall, PEnde danach PStart<=curStart & PEnde>=NextStart: NextStart-curStart+1
                 // PStart vor dem aktuellen Intervall, PEnde innerhalb PStart<=curStart & PEnde<NextStart & PEnde >=curStart: PEnde-curStart+1
                 formula =
-                    "IF(AND(" + pStart + ">=" + curStart + ExcelService.CONST_PARAM_DELIM + pEnde+ "<" + nextStart + ")" + ExcelService.CONST_PARAM_DELIM
+                    "IF(AND(" + pStart + ">=" + curStart + ExcelService.CONST_PARAM_DELIM + pEnde + "<" + nextStart + ")" + ExcelService.CONST_PARAM_DELIM
                     + " (" + pEnde + "-" + pStart + "+1)*" + pAufwandPerDay
-                    + ExcelService.CONST_PARAM_DELIM + "IF(AND(" + pStart + ">=" + curStart  + ExcelService.CONST_PARAM_DELIM + pStart + "<" + nextStart +  ExcelService.CONST_PARAM_DELIM + pEnde+ ">=" + nextStart + ")" + ExcelService.CONST_PARAM_DELIM
+                    + ExcelService.CONST_PARAM_DELIM + "IF(AND(" + pStart + ">=" + curStart  + ExcelService.CONST_PARAM_DELIM + pStart + "<" + nextStart +  ExcelService.CONST_PARAM_DELIM + pEnde + ">=" + nextStart + ")" + ExcelService.CONST_PARAM_DELIM
                     + "  (" + nextStart + "-" + pStart + ")*" + pAufwandPerDay
                     + ExcelService.CONST_PARAM_DELIM + "  IF(AND(" + pStart + "<=" + curStart  + ExcelService.CONST_PARAM_DELIM + pEnde + ">=" + nextStart + ")" + ExcelService.CONST_PARAM_DELIM
                     + "   (" + nextStart + "-" + curStart + ")*" + pAufwandPerDay
-                    + ExcelService.CONST_PARAM_DELIM + "   IF(AND(" + pStart + "<=" + curStart  + ExcelService.CONST_PARAM_DELIM + pEnde + "<" + nextStart + ExcelService.CONST_PARAM_DELIM + pEnde + ">=" + curStart+ ")" + ExcelService.CONST_PARAM_DELIM
+                    + ExcelService.CONST_PARAM_DELIM + "   IF(AND(" + pStart + "<=" + curStart  + ExcelService.CONST_PARAM_DELIM + pEnde + "<" + nextStart + ExcelService.CONST_PARAM_DELIM + pEnde + ">=" + curStart + ")" + ExcelService.CONST_PARAM_DELIM
                     + "    (" + pEnde + "-" + curStart + "+1)*" + pAufwandPerDay
                     + ExcelService.CONST_PARAM_DELIM + "    \"\")"
                     + "  )"
@@ -1445,10 +1515,12 @@ public class ExcelExporter extends WikiExporter {
                     + pEnde + ">0" + ExcelService.CONST_PARAM_DELIM + pEnde  + "<>\"\")" + ExcelService.CONST_PARAM_DELIM
                     + formula  + ExcelService.CONST_PARAM_DELIM + "\"\")";
             }
-            if (LOGGER.isDebugEnabled()) 
-                LOGGER.debug("Row:" + startRownNum + " Col:" + (versatz + ExcelNodeService.CONST_GANT_COL_GANT_START+zaehler) + " = " + formula);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Row:" + startRownNum + " Col:" 
+                             + (versatz + ExcelNodeService.CONST_GANT_COL_GANT_START + zaehler) + " = " + formula);
+            }
             cell = ExcelService.setCellFormula(sheet, startRownNum,
-                    versatz + ExcelNodeService.CONST_GANT_COL_GANT_START+zaehler, formula,
+                    versatz + ExcelNodeService.CONST_GANT_COL_GANT_START + zaehler, formula,
                     getCellStyle4ModulOrEntry(lstChildRowNum,
                             this.exlSv.csFieldGantNormDate_Modul,
                             this.exlSv.csFieldGantNormDate_Entry)
@@ -1462,7 +1534,7 @@ public class ExcelExporter extends WikiExporter {
                         this.exlSv.csFieldGantStartDate_Entry)
         );
         cell = ExcelService.getCell(sheet, startRownNum,
-                versatz + ExcelNodeService.CONST_GANT_COL_GANT_START+ExcelNodeService.CONST_GANT_PERIODS);
+                versatz + ExcelNodeService.CONST_GANT_COL_GANT_START + ExcelNodeService.CONST_GANT_PERIODS);
         cell.setCellStyle(
                 getCellStyle4ModulOrEntry(lstChildRowNum,
                         this.exlSv.csFieldGantEndDate_Modul,
@@ -1471,14 +1543,16 @@ public class ExcelExporter extends WikiExporter {
     }
 
     // TODO Doku
-    public HSSFWorkbook toExcel(BaseNode masterNode,
-            ExcelOutputOptions oOptions) throws Exception {
+    public HSSFWorkbook toExcel(final BaseNode pmasterNode,
+                                final ExcelOutputOptions poOptions) throws Exception {
+
+        BaseNode masterNode = pmasterNode;
+        ExcelOutputOptions oOptions = poOptions;
 
         // Parameter pruefen
         if (masterNode == null) {
             throw new IllegalArgumentException("Masternode must not be null: '" + masterNode + "'");
         }
-
         // WorkBook erzeugen
 //            File projektMasterFile = new File(FILEPATH_PLANUNGSMASTER);
 //            InputStream is = new FileInputStream(projektMasterFile);
@@ -1499,15 +1573,16 @@ public class ExcelExporter extends WikiExporter {
         this.fillPlanungSheet(wb, masterNode, oOptions);
 
         // GantSheet nur anfuegen, wenn nicht gemerged
-        if (!oOptions.isFlgMergeExcelPlanungGantSheets())
+        if (!oOptions.isFlgMergeExcelPlanungGantSheets()) {
             this.fillGantSheet(wb, masterNode, oOptions);
+        }
 
         return wb;
     }
 
     // TODO Doku
-    public void toExcel(BaseNode masterNode, String outFile,
-            ExcelOutputOptions oOptions) throws Exception {
+    public void toExcel(final BaseNode masterNode, final String outFile,
+            final ExcelOutputOptions oOptions) throws Exception {
 
         // Parameter pruefen
         if (outFile == null) {
@@ -1522,12 +1597,14 @@ public class ExcelExporter extends WikiExporter {
     }
 
     // TODO Doku
-    public HSSFCellStyle getCellStyle4ModulOrEntry(List<Integer> children, 
-            HSSFCellStyle styleModul, HSSFCellStyle styleEntry) {
-        if (children != null && children.size() > 0)
+    public HSSFCellStyle getCellStyle4ModulOrEntry(final List<Integer> children, 
+                                                   final HSSFCellStyle styleModul, 
+                                                   final HSSFCellStyle styleEntry) {
+        if (children != null && children.size() > 0) {
             return styleModul;
-        else
+        } else {
             return styleEntry;
+        }
     }
 
 }

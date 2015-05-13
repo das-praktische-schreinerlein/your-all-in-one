@@ -52,8 +52,7 @@ public interface BaseNodeDBService {
      * @throws Exception - io/DB-Exceptions possible
      */
     List<BaseNode> updateMeAndMyParents(BaseNode node) throws Exception;
-    
-    
+
     /**
      * <h4>FeatureDomain:</h4>
      *     Persistence
@@ -136,4 +135,41 @@ public interface BaseNodeDBService {
      * @return new Masternode
      */
     BaseNode resetYaio();
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Persistence
+     * <h4>FeatureDescription:</h4>
+     *     saves the children to database (childNodes) recursivly<br>
+     *     check if entityManger contains objects<br>
+     *     if not: do persist
+     *     if yes or flgForceMerge is set: do merge
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>saves memberfields childNodes to database
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Persistence
+     * @param basenode - parentnode
+     * @param pRecursionLevel - how many recursion-level will be saved to DB (0 = only my children)
+     * @param flgForceMerge - force merge not persists
+     * @throws Exception - ioExceptions possible
+     */
+    void saveChildNodesToDB(final BaseNode basenode, final int pRecursionLevel, 
+                            final boolean flgForceMerge) throws Exception;
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Persistence
+     * <h4>FeatureDescription:</h4>
+     *     remove the children from database recursivly
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>deletes all children with this,.getSysUID recursivly from db
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Persistence
+     * @param basenode - parentnode
+     */
+    void removeChildNodesFromDB(final BaseNode basenode);
 }

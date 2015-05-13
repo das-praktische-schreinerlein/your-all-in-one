@@ -28,6 +28,8 @@ import org.apache.log4j.Logger;
 import de.yaio.core.node.BaseNode;
 import de.yaio.core.node.TaskNode;
 import de.yaio.core.nodeservice.BaseNodeService;
+import de.yaio.core.nodeservice.NodeService;
+import de.yaio.core.nodeservice.TaskNodeService;
 
 
 /**
@@ -43,11 +45,6 @@ import de.yaio.core.nodeservice.BaseNodeService;
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class BaseNodeDBServiceImpl implements BaseNodeDBService {
-    // Logger
-    private static final Logger LOGGER =
-        Logger.getLogger(BaseNodeDBServiceImpl.class);
-
-    
     protected static final Map<String, String> CONST_AVAILIABLE_SORTS = new HashMap<String, String>();
     static {
         CONST_AVAILIABLE_SORTS.put("default", "");
@@ -75,6 +72,10 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
     
     protected static BaseNodeDBService instance = new BaseNodeDBServiceImpl();
     
+    // Logger
+    private static final Logger LOGGER =
+        Logger.getLogger(BaseNodeDBServiceImpl.class);
+
     /**
      * <h4>FeatureDomain:</h4>
      *     Persistence
@@ -105,7 +106,9 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
 
                 // save me
                 node.merge();
+                //CHECKSTYLE.OFF: IllegalCatch - Much more readable than catching x exceptions
             } catch (Exception ex) {
+                //CHECKSTYLE.ON: IllegalCatch
                 LOGGER.error("errors while updating node '" 
                                 + node.getNameForLogger() + "':", ex);
                 LOGGER.error("error saving node '" 
@@ -126,27 +129,151 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
         }
         return parentHierarchy;
     }
-    
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Persistence
-     * <h4>FeatureDescription:</h4>
-     *     read the children for the sysUID from database
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue List<BaseNode> - list of the children
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Persistence JPA
-     * @param sysUID - sysUID for the filter on parent_node
-     * @return List of childnodes for basenode with sysUID
-     */
+
+    @Override
     public List<BaseNode> findChildNodes(final String sysUID) {
         return BaseNode.entityManager().createQuery(
                         "SELECT o FROM BaseNode o where parent_node = :sysUID order by sort_pos asc", 
                         BaseNode.class
                         ).setParameter("sysUID", sysUID).getResultList();
     }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public long countFulltextBaseNodes(final String fulltext) {
+        TypedQuery<Long> query = (TypedQuery<Long>) this.createFulltextQuery(true, fulltext, null);
+        return query.getSingleResult();
+    }
+    
+    
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<BaseNode> findFulltextBaseNodeEntries(final String fulltext, final String sortConfig,
+                    final int firstResult, final int maxResults) {
+        TypedQuery<BaseNode> query = (TypedQuery<BaseNode>) this.createFulltextQuery(false, fulltext, sortConfig);
+        query.setFirstResult(firstResult);
+        query.setMaxResults(maxResults);
+        
+        return query.getResultList();
+    }
+    
+    @Override
+    public List<BaseNode> findSymLinkBaseNode(final String symLinkRef) {
+        return BaseNode.entityManager().createQuery(
+                        "SELECT o FROM BaseNode o where sysUID = :symLinkRef"
+                        + " or CONCAT(metaNodePraefix, metaNodeNummer) = :symLinkRef"
+                        + " order by sort_pos asc", 
+                        BaseNode.class
+                        ).setParameter("symLinkRef", symLinkRef).getResultList();
+    }
+
+    @Override
+    public BaseNode resetYaio() {
+        // delete all nodes
+        BaseNode.entityManager().createNativeQuery("delete from BASE_NODE").executeUpdate();
+        
+        TaskNode masterNode = new TaskNode();
+        masterNode.setEbene(0);
+        masterNode.setMetaNodeNummer("1");
+        masterNode.setMetaNodePraefix("Masterplan");
+        masterNode.setName("Masterplan");
+        masterNode.setNodeDesc("Masternode of the Masterplan");
+        masterNode.setSrcName("Masterplan");
+        masterNode.setState(TaskNodeService.CONST_NODETYPE_IDENTIFIER_RUNNNING);
+        masterNode.setSysUID("MasterplanMasternode1");
+        masterNode.setType(TaskNodeService.CONST_NODETYPE_IDENTIFIER_RUNNNING);
+        
+        masterNode.persist();
+        return masterNode;
+    }
+    
+    @Override
+    public void saveChildNodesToDB(final BaseNode baseNode, final int pRecursionLevel, 
+                                   final boolean flgForceMerge) throws Exception {
+        // set new level if it is not -1
+        int recursionLevel = pRecursionLevel;
+        recursionLevel = recursionLevel > 0 ? recursionLevel-- : recursionLevel;
+
+        // interate children
+        for (BaseNode childNode : baseNode.getChildNodes()) {
+            // validate data
+//            if (childNode.getMetaNodeNummer() == null) {
+//                childNode.initMetaData();
+//            }
+            if (childNode.getSysUID() == null) {
+                childNode.initSysData();
+            }
+
+            // persist to DB
+            try {
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("persistChildNodesToDB from " + baseNode.getNameForLogger() 
+                               + " child:" + childNode.getNameForLogger());
+                }
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("childNode:" + childNode.getName() + " pos: " + childNode.getSortPos());
+                }
+                
+                // check if persist or merge
+                if (BaseNode.entityManager().contains(childNode) || flgForceMerge) {
+                    childNode.merge();
+                } else {
+                    childNode.persist();
+                }
+                //CHECKSTYLE.OFF: IllegalCatch - Much more readable than catching x exceptions
+            } catch (Exception ex) {
+                //CHECKSTYLE.ON: IllegalCatch
+                LOGGER.error("errors while saving childnode for '" 
+                                + baseNode.getSysUID() + "':", ex);
+                LOGGER.error("error saving node '" 
+                                + childNode);
+                throw ex;
+            }            
+//            boolean flgOK = true;
+//            try {
+//                childNode.persist();
+//            } catch (Exception ex) {
+//                LOGGER.error("persistChildNodesToDB error for childnode " 
+//                           + childNode.getMetaNodePraefix() 
+//                           + "," + childNode.getMetaNodeNummer() 
+//                           + " SysUID: " + childNode.getSysUID() 
+//                           + " Name: " + childNode.getName() 
+//                           + " ex:" + ex);
+////                LOGGER.error("persistChildNodesToDB error for parent " 
+////                        + this.getSysUID() + " Name: " + this.getName());
+////                LOGGER.error("persistChildNodesToDB error for childnodedetails " + childNode.getNameForLogger());
+////                LOGGER.error("persistChildNodesToDB error for parentdetails " + this.getNameForLogger());
+//                flgOK = false;
+////                throw new Exception(ex);
+//            }
+            
+            // check recursionLevel
+            if ((recursionLevel == NodeService.CONST_DB_RECURSIONLEVEL_ALL_CHILDREN) 
+                 || (recursionLevel > 0)) {
+                // recurse
+//                if (flgOK)
+                childNode.saveChildNodesToDB(recursionLevel, flgForceMerge);
+            }
+        }
+    }
+
+    @Override
+    public void removeChildNodesFromDB(final BaseNode baseNode) {
+        // interate children on db
+        for (BaseNode childNode : baseNode.getBaseNodeDBService().findChildNodes(baseNode.getSysUID())) {
+            // persist to DB
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("removeChildNodesFromDB from " + baseNode.getNameForLogger() 
+                           + " child:" + childNode.getNameForLogger());
+            }
+            // recurse
+            childNode.removeChildNodesFromDB();
+            
+            // remove this child
+            childNode.remove();
+        }
+    }
+    
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     protected TypedQuery createFulltextQuery(final boolean flgCount, final String pfulltext, final String sortConfig) {
@@ -223,96 +350,5 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
         }
         
         return query;
-    }
-    
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Persistence
-     * <h4>FeatureDescription:</h4>
-     *     count the basenodes which match fulltext
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue List<BaseNode> - list of the nodes
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Persistence JPA
-     * @param fulltext - fulltext to search in desc and name
-     * @return total of matching nodes
-     */
-    @SuppressWarnings("unchecked")
-    public long countFulltextBaseNodes(final String fulltext) {
-        TypedQuery<Long> query = (TypedQuery<Long>) this.createFulltextQuery(true, fulltext, null);
-        return query.getSingleResult();
-    }
-    
-    
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Persistence
-     * <h4>FeatureDescription:</h4>
-     *     read the basenodes which match fulltext
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue List<BaseNode> - list of the nodes
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Persistence JPA
-     * @param fulltext - fulltext to search in desc and name
-     * @param sortConfig - use sort
-     * @param firstResult - resultrange for pagination
-     * @param maxResults - resultrange for pagination
-     * @return List of matching nodes
-     */
-    @SuppressWarnings("unchecked")
-    public List<BaseNode> findFulltextBaseNodeEntries(final String fulltext, final String sortConfig,
-                    final int firstResult, final int maxResults) {
-        TypedQuery<BaseNode> query = (TypedQuery<BaseNode>) this.createFulltextQuery(false, fulltext, sortConfig);
-        query.setFirstResult(firstResult);
-        query.setMaxResults(maxResults);
-        
-        return query.getResultList();
-    }
-    
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Persistence
-     * <h4>FeatureDescription:</h4>
-     *     read the matching nodes for the symLinkRef from database
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue List<BaseNode> - list of the the children
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Persistence JPA
-     * @param symLinkRef - symLinkRef for the filter on node
-     * @return List of machting nodes for symLinkRef
-     */
-    public List<BaseNode> findSymLinkBaseNode(final String symLinkRef) {
-        return BaseNode.entityManager().createQuery(
-                        "SELECT o FROM BaseNode o where sysUID = :symLinkRef"
-                        + " or CONCAT(metaNodePraefix, metaNodeNummer) = :symLinkRef"
-                        + " order by sort_pos asc", 
-                        BaseNode.class
-                        ).setParameter("symLinkRef", symLinkRef).getResultList();
-    }
-
-    @Override
-    public BaseNode resetYaio() {
-        // delete all nodes
-        BaseNode.entityManager().createNativeQuery("delete from BASE_NODE").executeUpdate();
-        
-        TaskNode masterNode = new TaskNode();
-        masterNode.setEbene(0);
-        masterNode.setMetaNodeNummer("1");
-        masterNode.setMetaNodePraefix("Masterplan");
-        masterNode.setName("Masterplan");
-        masterNode.setNodeDesc("Masternode of the Masterplan");
-        masterNode.setSrcName("Masterplan");
-        masterNode.setState(TaskNode.CONST_NODETYPE_IDENTIFIER_RUNNNING);
-        masterNode.setSysUID("MasterplanMasternode1");
-        masterNode.setType(TaskNode.CONST_NODETYPE_IDENTIFIER_RUNNNING);
-        
-        masterNode.persist();
-        return masterNode;
     }
 }

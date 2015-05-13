@@ -38,6 +38,8 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import de.yaio.core.node.BaseNode;
 import de.yaio.core.node.TaskNode;
+import de.yaio.core.nodeservice.BaseNodeService;
+import de.yaio.core.nodeservice.TaskNodeService;
 import de.yaio.datatransfer.exporter.OutputOptions;
 import de.yaio.datatransfer.exporter.OutputOptionsImpl;
 import de.yaio.datatransfer.importer.ImportOptions;
@@ -62,10 +64,12 @@ import de.yaio.utils.ExcelService;
  */
 public class ExcelImporter extends ImporterImpl {
 
-    protected ExcelOutputService exlSv = null;
+    protected static Map<String, String> hshNodes = new HashMap<String, String>();
+
     public PPLImporter importer = new PPLImporter(new ImportOptionsImpl());
     public PPLExporter exporter = new PPLExporter();
-    protected static Map<String, String> hshNodes = new HashMap<String, String>();
+
+    protected ExcelOutputService exlSv = null;
 
     public ExcelImporter(final ImportOptions options) {
         super(options);
@@ -210,18 +214,21 @@ public class ExcelImporter extends ImporterImpl {
             .getRichStringCellValue().getString();
 
         HSSFCell cell = null;
-        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_PLAN_AUFWAND);
+        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, 
+                        ExcelNodeService.CONST_PLANUNG_COL_PLAN_AUFWAND);
 //        cell = ExcelService.getCell(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_PLAN_AUFWAND);
         Double paufwand = ExcelService.getCellNummeric(cell);
 
-        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_PLAN_DATE_START);
+        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, 
+                        ExcelNodeService.CONST_PLANUNG_COL_PLAN_DATE_START);
 //        cell = ExcelService.getCell(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_PLAN_DATE_START);
         Date pstart = ExcelService.getCellDate(cell);
         if (pstart == null || pstart.before(MINDATE)) {
             pstart = null;
         }
 
-        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_PLAN_DATE_ENDE);
+        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, 
+                        ExcelNodeService.CONST_PLANUNG_COL_PLAN_DATE_ENDE);
 //        cell = ExcelService.getCell(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_PLAN_DATE_ENDE);
         Date pende = ExcelService.getCellDate(cell);
         if (pende == null || pende.before(MINDATE)) {
@@ -233,52 +240,59 @@ public class ExcelImporter extends ImporterImpl {
             ExcelService.getCell(sheet, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_IST_TASK)
             .getRichStringCellValue().getString();
 
-        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_IST_STAND);
+        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, 
+                        ExcelNodeService.CONST_PLANUNG_COL_IST_STAND);
         double istand =  ExcelService.getCellNummeric(cell) * 100;
 
-        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_IST_AUFWAND);
+        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, 
+                        ExcelNodeService.CONST_PLANUNG_COL_IST_AUFWAND);
         double iaufwand = ExcelService.getCellNummeric(cell);
 
-        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_IST_DATE_START);
+        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, 
+                        ExcelNodeService.CONST_PLANUNG_COL_IST_DATE_START);
         Date istart = ExcelService.getCellDate(cell);
         if (istart == null || istart.before(MINDATE)) {
             istart = null;
         }
 
-        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_IST_DATE_ENDE);
+        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, 
+                        ExcelNodeService.CONST_PLANUNG_COL_IST_DATE_ENDE);
         Date iende = ExcelService.getCellDate(cell);
         if (iende == null || iende.before(MINDATE)) {
             iende = null;
         }
 
         // Real
-        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_REAL_AUFWAND);
+        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, 
+                        ExcelNodeService.CONST_PLANUNG_COL_REAL_AUFWAND);
         double raufwand = ExcelService.getCellNummeric(cell);
 
-        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_REAL_OFFEN);
+        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, 
+                        ExcelNodeService.CONST_PLANUNG_COL_REAL_OFFEN);
         double roffen = ExcelService.getCellNummeric(cell);
 
-        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, ExcelNodeService.CONST_PLANUNG_COL_REAL_DIFF);
+        cell = ExcelService.getCellEvaluated(sheet, formulaEval, startRownNum, 
+                        ExcelNodeService.CONST_PLANUNG_COL_REAL_DIFF);
         double rdiff = ExcelService.getCellNummeric(cell);
 
         // Status aus den Planzahlen extrahieren
-        String status = BaseNode.CONST_NODETYPE_IDENTIFIER_UNKNOWN;
+        String status = BaseNodeService.CONST_NODETYPE_IDENTIFIER_UNKNOWN;
         if (paufwand != null && (paufwand > 0)) {
-            status = TaskNode.CONST_NODETYPE_IDENTIFIER_OPEN;
+            status = TaskNodeService.CONST_NODETYPE_IDENTIFIER_OPEN;
             if ((iaufwand > 0) || (istand > 0)) {
-                status = TaskNode.CONST_NODETYPE_IDENTIFIER_RUNNNING;
+                status = TaskNodeService.CONST_NODETYPE_IDENTIFIER_RUNNNING;
                 if (roffen == 0) {
-                    status = TaskNode.CONST_NODETYPE_IDENTIFIER_DONE;
+                    status = TaskNodeService.CONST_NODETYPE_IDENTIFIER_DONE;
                 } else if (rdiff > 0) {
-                    status = TaskNode.CONST_NODETYPE_IDENTIFIER_SHORT;
+                    status = TaskNodeService.CONST_NODETYPE_IDENTIFIER_SHORT;
                 }
             }
         } else {
             // falls keine Planzahlen aus IstStand
             if (istand == 100) {
-                status = TaskNode.CONST_NODETYPE_IDENTIFIER_DONE;
+                status = TaskNodeService.CONST_NODETYPE_IDENTIFIER_DONE;
             } else if (istand > 0) {
-                status = TaskNode.CONST_NODETYPE_IDENTIFIER_RUNNNING;
+                status = TaskNodeService.CONST_NODETYPE_IDENTIFIER_RUNNNING;
             }
         }
 
@@ -291,7 +305,8 @@ public class ExcelImporter extends ImporterImpl {
         String nodeSrc = "";
         String nodeRes = "";
         for (Iterator<Object> iter = ebenen.iterator(); iter.hasNext();) {
-            nodeSrc = nodeRes = iter.next().toString();
+            nodeRes = iter.next().toString();
+            nodeSrc = nodeRes;
             if (hshNodes.containsKey(nodeSrc)) {
                 nodeRes = hshNodes.get(nodeSrc);
             }

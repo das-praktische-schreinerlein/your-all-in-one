@@ -17,6 +17,7 @@
 package de.yaio.datatransfer.importer;
 
 import de.yaio.core.node.SymLinkNode;
+import de.yaio.core.nodeservice.SymLinkNodeService;
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -46,7 +47,7 @@ public class SymLinkNodeConfigurator {
      * @param nodeFactory - instance of the nodeFactory which will use the config 
      */
     public static void configureNodeTypeIdentifier(final NodeFactory nodeFactory) {
-        nodeFactory.addNodeTypeIdentifier(SymLinkNode.CONST_MAP_NODETYPE_IDENTIFIER, SymLinkNode.class);
+        nodeFactory.addNodeTypeIdentifier(SymLinkNodeService.getInstance().getConfigState(), SymLinkNode.class);
     }
 
     /**
@@ -60,7 +61,7 @@ public class SymLinkNodeConfigurator {
      * @param importer - instance of the importer which will use the config 
      */
     public static void configureNodeTypes(final Importer importer) {
-        importer.addNodeTypeIdentifierVariantMapping(SymLinkNode.CONST_MAP_NODETYPE_IDENTIFIER);
+        importer.addNodeTypeIdentifierVariantMapping(SymLinkNodeService.getInstance().getConfigState());
     }
 
     /**

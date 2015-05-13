@@ -69,7 +69,8 @@ public class ResLocDataFormatterImpl extends FormatterImpl implements ResLocData
     }
 
     @Override
-    public void format(final DataDomain node, final StringBuffer nodeOutput, final OutputOptions options) throws Exception {
+    public void format(final DataDomain node, final StringBuffer nodeOutput, 
+                       final OutputOptions options) throws Exception {
         // Check if node is compatibel
         if (node != null) {
             if (!ResLocData.class.isInstance(node)) {
@@ -80,7 +81,8 @@ public class ResLocDataFormatterImpl extends FormatterImpl implements ResLocData
     }
 
     @Override
-    public void formatResLocData(final ResLocData node, final StringBuffer nodeOutput, final OutputOptions oOptions) throws Exception {
+    public void formatResLocData(final ResLocData node, final StringBuffer nodeOutput, 
+                                 final OutputOptions oOptions) throws Exception {
         // exit if Flg not set
         if (!oOptions.isFlgShowResLoc()) {
             if (LOGGER.isDebugEnabled()) {
@@ -97,10 +99,10 @@ public class ResLocDataFormatterImpl extends FormatterImpl implements ResLocData
         String resLocTags = node.getResLocTags();
 
         // Ausgabe erzeugen
-        if (   (resLocRef != null && resLocRef.length() > 0)
-                || (resLocName != null && resLocName.length() > 0)
-                || (resLocTags != null && resLocTags.length() > 0)
-                ) {
+        if ((resLocRef != null && resLocRef.length() > 0)
+            || (resLocName != null && resLocName.length() > 0)
+            || (resLocTags != null && resLocTags.length() > 0)
+            ) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Do: ResLocDataFormatter for Node:" + node.getNameForLogger());
             }

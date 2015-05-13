@@ -73,7 +73,8 @@ public class IstChildrenSumDataFormatterImpl extends FormatterImpl
     }
 
     @Override
-    public void format(final DataDomain node, final StringBuffer nodeOutput, final OutputOptions options) throws Exception {
+    public void format(final DataDomain node, final StringBuffer nodeOutput, 
+                       final OutputOptions options) throws Exception {
         // Check if node is compatibel
         if (node != null) {
             if (!IstChildrenSumData.class.isInstance(node)) {
@@ -109,10 +110,10 @@ public class IstChildrenSumDataFormatterImpl extends FormatterImpl
         Date ende = node.getIstChildrenSumEnde();
 
         // Ausgabe erzeugen
-        if ( (aufwand != null && aufwand >= Calculator.CONST_DOUBLE_NULL)
-                || (stand != null && stand >= Calculator.CONST_DOUBLE_NULL)
-                || start != null
-                || ende != null) {
+        if ((aufwand != null && aufwand >= Calculator.CONST_DOUBLE_NULL)
+            || (stand != null && stand >= Calculator.CONST_DOUBLE_NULL)
+            || start != null
+            || ende != null) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Do: IstChildrenSumDataFormatter for Node:" + node.getNameForLogger());
             }

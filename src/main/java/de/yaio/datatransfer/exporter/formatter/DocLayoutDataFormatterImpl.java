@@ -69,7 +69,8 @@ public class DocLayoutDataFormatterImpl extends FormatterImpl implements DocLayo
     }
 
     @Override
-    public void format(final DataDomain node, final StringBuffer nodeOutput, final OutputOptions options) throws Exception {
+    public void format(final DataDomain node, final StringBuffer nodeOutput, 
+                       final OutputOptions options) throws Exception {
         // Check if node is compatibel
         if (node != null) {
             if (!DocLayoutData.class.isInstance(node)) {
@@ -80,7 +81,8 @@ public class DocLayoutDataFormatterImpl extends FormatterImpl implements DocLayo
     }
 
     @Override
-    public void formatDocLayoutData(final DocLayoutData node, final StringBuffer nodeOutput, final OutputOptions oOptions) throws Exception {
+    public void formatDocLayoutData(final DocLayoutData node, final StringBuffer nodeOutput, 
+                                    final OutputOptions oOptions) throws Exception {
         // exit if Flg not set
         if (!oOptions.isFlgShowDocLayout()) {
             if (LOGGER.isDebugEnabled()) {
@@ -98,11 +100,11 @@ public class DocLayoutDataFormatterImpl extends FormatterImpl implements DocLayo
         String docLayoutFlgCloseDiv = node.getDocLayoutFlgCloseDiv();
 
         // Ausgabe erzeugen
-        if (   (docLayoutTagCommand != null && docLayoutTagCommand.length() > 0)
-                || (docLayoutAddStyleClass != null && docLayoutAddStyleClass.length() > 0)
-                || (docLayoutShortName != null && docLayoutShortName.length() > 0)
-                || (docLayoutFlgCloseDiv != null && docLayoutFlgCloseDiv.length() > 0)
-                ) {
+        if ((docLayoutTagCommand != null && docLayoutTagCommand.length() > 0)
+            || (docLayoutAddStyleClass != null && docLayoutAddStyleClass.length() > 0)
+            || (docLayoutShortName != null && docLayoutShortName.length() > 0)
+            || (docLayoutFlgCloseDiv != null && docLayoutFlgCloseDiv.length() > 0)
+            ) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Do: DocLayoutDataFormatter for Node:" + node.getNameForLogger());
             }

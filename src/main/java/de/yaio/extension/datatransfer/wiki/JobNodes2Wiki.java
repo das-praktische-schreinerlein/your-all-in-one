@@ -44,15 +44,14 @@ import de.yaio.extension.datatransfer.common.CommonImporter;
  */
 public class JobNodes2Wiki extends CmdLineJob {
 
+    private static final Logger LOGGER = Logger.getLogger(JobNodes2Wiki.class);
+
     /**
      * the exporter to format the masternode-data 
      */
     public Exporter exporter;
     protected CommonImporter commonImporter;
     
-    private static final Logger LOGGER =
-        Logger.getLogger(JobNodes2Wiki.class);
-
     /**
      * <h4>FeatureDomain:</h4>
      *     Constructor

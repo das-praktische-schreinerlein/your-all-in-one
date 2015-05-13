@@ -46,7 +46,7 @@ public class InlineWikiImporter extends WikiImporter {
             Pattern.compile(CONST_PATTERN, Pattern.UNICODE_CHARACTER_CLASS);
 
     protected int localId = 1;
-    String strMetaIdPraefix = "Inline";
+    protected String strMetaIdPraefix = "Inline";
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -59,9 +59,10 @@ public class InlineWikiImporter extends WikiImporter {
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     Constructor
-     *  @param options - the importoptions for the parser...
+     * @param options - the importoptions for the parser...
+     * @param strMetaIdPraefix - default meta id praefix 
      */
-    public InlineWikiImporter(final ImportOptions options, String strMetaIdPraefix) {
+    public InlineWikiImporter(final ImportOptions options, final String strMetaIdPraefix) {
         super(options);
         this.strMetaIdPraefix = strMetaIdPraefix;
     }
@@ -70,7 +71,7 @@ public class InlineWikiImporter extends WikiImporter {
     protected void initNodeData(final BaseNode curNode) throws Exception {
         // set metadata to local values so that they change not the global scope
         if (MetaData.class.isInstance(curNode)) {
-            MetaData metaCurNode = (MetaData)curNode;
+            MetaData metaCurNode = (MetaData) curNode;
             metaCurNode.setMetaNodeNummer(new Integer(localId++).toString());
             metaCurNode.setMetaNodePraefix(strMetaIdPraefix);
         }

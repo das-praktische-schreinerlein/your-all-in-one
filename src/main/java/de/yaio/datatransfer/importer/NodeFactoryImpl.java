@@ -56,6 +56,11 @@ import de.yaio.datatransfer.importer.parser.SysDataParserImpl;
  */
 public class NodeFactoryImpl implements NodeFactory {
 
+    protected static int curId = 1;
+
+    // Parameter des Standard-Node-Konstruktors
+    private static final Class<?>[] CONST_NODE_CONSTRUCTOR = {};
+
     // Logger
     private static final Logger LOGGER =
             Logger.getLogger(NodeFactoryImpl.class);
@@ -64,10 +69,6 @@ public class NodeFactoryImpl implements NodeFactory {
     protected Map<String, Class<?>> hshNodeTypeIdentifier = new HashMap<String, Class<?>>();
     protected Set<Parser> hshDataDomainParser = new TreeSet<Parser>();
 
-    // Parameter des Standard-Node-Konstruktors
-    private static final Class<?>[] CONST_NODE_CONSTRUCTOR = {};
-
-    protected static int curId = 1;
     protected ImportOptions options = null;
 
     /**
@@ -105,7 +106,7 @@ public class NodeFactoryImpl implements NodeFactory {
     }
 
     @Override
-    public void addNodeTypeIdentifier(final Map<String, Object> stateMap, final Class<?> classType) {
+    public void addNodeTypeIdentifier(final Map<String, String> stateMap, final Class<?> classType) {
         for (String stateDef : stateMap.keySet()) {
             this.putNodeTypeIdentifier(stateDef, classType);
         }
@@ -170,7 +171,8 @@ public class NodeFactoryImpl implements NodeFactory {
     }
 
     @Override
-    public int parseNodeDataDomain(final DataDomain node, final Parser parser, final ImportOptions options) throws Exception {
+    public int parseNodeDataDomain(final DataDomain node, final Parser parser, 
+                                   final ImportOptions options) throws Exception {
         // nur parsen, wenn zustaendig
         if (parser.getTargetClass().isInstance(node)) {
             return parser.parseFromName(node, options);
@@ -241,8 +243,7 @@ public class NodeFactoryImpl implements NodeFactory {
         Map<String, Class<?>> hshCurNodeTypeIdentifier = this.hshNodeTypeIdentifier;
         String nodeTypeIdentifier = 
                 getNodeTypeIdentifierFromText(hshCurNodeTypeIdentifier, srcName);
-        if (   nodeTypeIdentifier != null 
-            && hshCurNodeTypeIdentifier.get(nodeTypeIdentifier) != null) {
+        if (nodeTypeIdentifier != null && hshCurNodeTypeIdentifier.get(nodeTypeIdentifier) != null) {
             classType = hshCurNodeTypeIdentifier.get(nodeTypeIdentifier);
         }
 

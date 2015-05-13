@@ -19,7 +19,6 @@ package de.yaio.core.datadomainservice;
 import de.yaio.core.node.TaskNode;
 import de.yaio.core.nodeservice.NodeService;
 import de.yaio.core.nodeservice.NodeServiceImpl;
-import de.yaio.datatransfer.importer.parser.Parser;
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -102,7 +101,7 @@ public class BaseWorkflowDataServiceTest extends DataDomainServiceTest {
         NodeServiceImpl nodeService = (NodeServiceImpl) TaskNode.getConfiguredNodeService();
         dataDomainService = nodeService.hshDataDomainRecalcerByClass.get(BaseWorkflowDataServiceImpl.class);
 
-//        dataDomainService = new BaseWorkflowDataServiceImpl(); 
+//        dataDomainService = BaseWorkflowDataServiceImpl.getInstance(); 
 //        // clear DomainRecalcerConfig to prevent obscure effects
 //        nodeService.hshDataDomainRecalcer.clear();
 //        nodeService.addDataDomainRecalcer(dataDomainService);
@@ -121,32 +120,40 @@ public class BaseWorkflowDataServiceTest extends DataDomainServiceTest {
         
         // empty BaseWorkflow calculate UNKNOWN without %
         myDataDomainObj = getNewBaseWorkflowDataTestObj(); 
-        expectedAfterDoBeforeChildren = "null|null|null|null|null|null|null|null|null|null|null|null|null|null|null|null|";
-        expectedAfterDoAfterChildren = "null|UNKNOWN|null|null|null|null|null|null|null|null|null|null|null|null|null|null|";
+        expectedAfterDoBeforeChildren = 
+                        "null|null|null|null|null|null|null|null|null|null|null|null|null|null|null|null|";
+        expectedAfterDoAfterChildren = 
+                        "null|UNKNOWN|null|null|null|null|null|null|null|null|null|null|null|null|null|null|";
         this.testServiceDoRecalc(myDataDomainObj, expectedAfterDoBeforeChildren, 
                         expectedAfterDoAfterChildren, recurseDirection);
 
         // BaseWorkflow calculate ERLEDIGT if 100%
         myDataDomainObj = getNewBaseWorkflowDataTestObj(); 
         myDataDomainObj.setIstStand(100.0);
-        expectedAfterDoBeforeChildren = "null|null|100.0|null|null|null|null|null|null|null|null|null|null|null|null|null|";
-        expectedAfterDoAfterChildren = "null|ERLEDIGT|100.0|null|null|null|100.0|null|null|null|null|null|null|null|null|null|";
+        expectedAfterDoBeforeChildren = 
+                        "null|null|100.0|null|null|null|null|null|null|null|null|null|null|null|null|null|";
+        expectedAfterDoAfterChildren = 
+                        "null|ERLEDIGT|100.0|null|null|null|100.0|null|null|null|null|null|null|null|null|null|";
         this.testServiceDoRecalc(myDataDomainObj, expectedAfterDoBeforeChildren, 
                         expectedAfterDoAfterChildren, recurseDirection);
 
         // BaseWorkflow calculate OFFEN if 0% but plan
         myDataDomainObj = getNewBaseWorkflowDataTestObj(); 
         myDataDomainObj.setPlanAufwand(50.0);
-        expectedAfterDoBeforeChildren = "null|null|null|null|null|null|null|null|null|null|50.0|null|null|null|null|null|";
-        expectedAfterDoAfterChildren = "null|OFFEN|null|null|null|null|0.0|null|null|null|50.0|null|null|50.0|null|null|";
+        expectedAfterDoBeforeChildren = 
+                        "null|null|null|null|null|null|null|null|null|null|50.0|null|null|null|null|null|";
+        expectedAfterDoAfterChildren = 
+                        "null|OFFEN|null|null|null|null|0.0|null|null|null|50.0|null|null|50.0|null|null|";
         this.testServiceDoRecalc(myDataDomainObj, expectedAfterDoBeforeChildren, 
                         expectedAfterDoAfterChildren, recurseDirection);
 
         // BaseWorkflow calculate OFFEN if 50%
         myDataDomainObj = getNewBaseWorkflowDataTestObj(); 
         myDataDomainObj.setIstStand(50.0);
-        expectedAfterDoBeforeChildren = "null|null|50.0|null|null|null|null|null|null|null|null|null|null|null|null|null|";
-        expectedAfterDoAfterChildren = "null|RUNNING|50.0|null|null|null|50.0|null|null|null|null|null|null|null|null|null|";
+        expectedAfterDoBeforeChildren = 
+                        "null|null|50.0|null|null|null|null|null|null|null|null|null|null|null|null|null|";
+        expectedAfterDoAfterChildren = 
+                        "null|RUNNING|50.0|null|null|null|50.0|null|null|null|null|null|null|null|null|null|";
         this.testServiceDoRecalc(myDataDomainObj, expectedAfterDoBeforeChildren, 
                         expectedAfterDoAfterChildren, recurseDirection);
 
@@ -168,8 +175,10 @@ public class BaseWorkflowDataServiceTest extends DataDomainServiceTest {
         myDataDomainObj3.setPlanAufwand(20.0);
         myDataDomainObj3.setPlanStart(DF.parse("22.10.2013"));
         myDataDomainObj3.setParentNode(myDataDomainObj);
-        expectedAfterDoBeforeChildren = "null|OFFEN|null|null|null|null|null|null|null|null|50.0|null|null|null|null|null|";
-        expectedAfterDoAfterChildren = "null|LATE|null|null|null|null|13.5|10.0|null|null|50.0|null|null|100.0|Tue Oct 22 00:00:00 CEST 2013|null|";
+        expectedAfterDoBeforeChildren = 
+                        "null|OFFEN|null|null|null|null|null|null|null|null|50.0|null|null|null|null|null|";
+        expectedAfterDoAfterChildren = 
+                        "null|LATE|null|null|null|null|13.5|10.0|null|null|50.0|null|null|100.0|Tue Oct 22 00:00:00 CEST 2013|null|";
         this.testServiceDoRecalc(myDataDomainObj, expectedAfterDoBeforeChildren, 
                         expectedAfterDoAfterChildren, recurseDirection);
 
@@ -182,8 +191,10 @@ public class BaseWorkflowDataServiceTest extends DataDomainServiceTest {
         myDataDomainObj2.setEbene(2);
         myDataDomainObj2.setIstStand(100.0);
         myDataDomainObj2.setParentNode(myDataDomainObj);
-        expectedAfterDoBeforeChildren = "null|OFFEN|null|null|null|null|null|null|null|null|null|null|null|null|null|null|";
-        expectedAfterDoAfterChildren = "null|ERLEDIGT|null|null|null|null|100.0|null|null|null|null|null|null|null|null|null|";
+        expectedAfterDoBeforeChildren = 
+                        "null|OFFEN|null|null|null|null|null|null|null|null|null|null|null|null|null|null|";
+        expectedAfterDoAfterChildren = 
+                        "null|ERLEDIGT|null|null|null|null|100.0|null|null|null|null|null|null|null|null|null|";
         this.testServiceDoRecalc(myDataDomainObj, expectedAfterDoBeforeChildren, 
                         expectedAfterDoAfterChildren, recurseDirection);
 
@@ -197,8 +208,10 @@ public class BaseWorkflowDataServiceTest extends DataDomainServiceTest {
         myDataDomainObj2.setEbene(2);
         myDataDomainObj2.setIstStand(100.0);
         myDataDomainObj2.setParentNode(myDataDomainObj);
-        expectedAfterDoBeforeChildren = "null|OFFEN|50.0|null|null|null|null|null|null|null|null|null|null|null|null|null|";
-        expectedAfterDoAfterChildren = "null|RUNNING|50.0|null|null|null|75.0|null|null|null|null|null|null|null|null|null|";
+        expectedAfterDoBeforeChildren = 
+                        "null|OFFEN|50.0|null|null|null|null|null|null|null|null|null|null|null|null|null|";
+        expectedAfterDoAfterChildren = 
+                        "null|RUNNING|50.0|null|null|null|75.0|null|null|null|null|null|null|null|null|null|";
         this.testServiceDoRecalc(myDataDomainObj, expectedAfterDoBeforeChildren, 
                         expectedAfterDoAfterChildren, recurseDirection);
 
@@ -213,8 +226,10 @@ public class BaseWorkflowDataServiceTest extends DataDomainServiceTest {
         myDataDomainObj2.setEbene(2);
         myDataDomainObj2.setIstStand(100.0);
         myDataDomainObj2.setParentNode(myDataDomainObj);
-        expectedAfterDoBeforeChildren = "null|OFFEN|50.0|null|null|null|null|null|null|null|20.0|null|null|null|null|null|";
-        expectedAfterDoAfterChildren = "null|RUNNING|50.0|null|null|null|50.0|null|null|null|20.0|null|null|20.0|null|null|";
+        expectedAfterDoBeforeChildren = 
+                        "null|OFFEN|50.0|null|null|null|null|null|null|null|20.0|null|null|null|null|null|";
+        expectedAfterDoAfterChildren = 
+                        "null|RUNNING|50.0|null|null|null|50.0|null|null|null|20.0|null|null|20.0|null|null|";
         this.testServiceDoRecalc(myDataDomainObj, expectedAfterDoBeforeChildren, 
                         expectedAfterDoAfterChildren, recurseDirection);
     }

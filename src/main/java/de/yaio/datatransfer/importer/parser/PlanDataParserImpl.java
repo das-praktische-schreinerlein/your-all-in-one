@@ -18,7 +18,6 @@ package de.yaio.datatransfer.importer.parser;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,13 +42,6 @@ import de.yaio.datatransfer.importer.NodeFactory;
  */
 public class PlanDataParserImpl  extends ParserImpl implements PlanDataParser {
 
-    Calendar calDate = new GregorianCalendar();
-    Calendar calTime = new GregorianCalendar();
-
-    // Logger
-    private static final Logger LOGGER =
-            Logger.getLogger(PlanDataParserImpl.class);
-
     // Patterns
     protected static final String CONST_PATTERN_SEG_OPTIONAL_DATETIME = 
             //          "("+ CONST_PATTERN_SEG_DATUM + ")?\\s?("+ CONST_PATTERN_SEG_TIME + ")?" 
@@ -66,6 +58,9 @@ public class PlanDataParserImpl  extends ParserImpl implements PlanDataParser {
                     + "[ ]*(" + CONST_PATTERN_SEG_TASK + ")?";
     protected static final Pattern CONST_PATTERN_PLAN =
             Pattern.compile("(.*)" + CONST_PATTERN_SEG_PLAN + "(.*)", Pattern.UNICODE_CHARACTER_CLASS);
+
+    // Logger
+    private static final Logger LOGGER = Logger.getLogger(PlanDataParserImpl.class);
 
     @Override
     public Class<?> getTargetClass() {

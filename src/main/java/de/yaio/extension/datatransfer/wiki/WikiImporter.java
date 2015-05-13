@@ -27,6 +27,7 @@ import java.util.regex.Pattern;
 import org.apache.log4j.Logger;
 
 import de.yaio.core.node.BaseNode;
+import de.yaio.core.nodeservice.BaseNodeService;
 import de.yaio.datatransfer.exporter.OutputOptions;
 import de.yaio.datatransfer.exporter.OutputOptionsImpl;
 import de.yaio.datatransfer.importer.ImportOptions;
@@ -97,11 +98,11 @@ public class WikiImporter extends ImporterImpl {
      */
     public class WikiStructLine {
 
-        private String wiki;
         protected String text;
-        private String hirarchy;
         protected String desc;
+        private String wiki;
         private String idPraefix;
+        private String hirarchy;
 
         /**
          * <h4>FeatureDomain:</h4>
@@ -228,14 +229,14 @@ public class WikiImporter extends ImporterImpl {
         /**
          * @param idPraefix the {@link WikiStructLine#idPraefix} to set
          */
-        public void setIdPraefix(String idPraefix) {
+        public void setIdPraefix(final String idPraefix) {
             this.idPraefix = idPraefix;
         }
 
         /**
          * @param hirarchy the {@link WikiStructLine#hirarchy} to set
          */
-        public void setHirarchy(String hirarchy) {
+        public void setHirarchy(final String hirarchy) {
             this.hirarchy = hirarchy;
         }
 
@@ -249,7 +250,7 @@ public class WikiImporter extends ImporterImpl {
         /**
          * @param wiki the {@link WikiStructLine#wiki} to set
          */
-        public void setWiki(String wiki) {
+        public void setWiki(final String wiki) {
             this.wiki = wiki;
         }
     }
@@ -313,14 +314,14 @@ public class WikiImporter extends ImporterImpl {
      * @param haystack - haystack
      * @return - list of matching results
      */
-    public static List<MatchResult> findMatches( final Pattern pattern, final CharSequence haystack) {
+    public static List<MatchResult> findMatches(final Pattern pattern, final CharSequence haystack) {
         List<MatchResult> results = null;
 
-        for ( Matcher m = pattern.matcher(haystack); m.find();) {
+        for (Matcher m = pattern.matcher(haystack); m.find();) {
             if (results == null) {
                 results = new ArrayList<MatchResult>();
             }
-            results.add( m.toMatchResult());
+            results.add(m.toMatchResult());
         }
 
         return results;
@@ -437,11 +438,11 @@ public class WikiImporter extends ImporterImpl {
             // Identifier konfigurieren
             Map<String, Class<?>> hshNodeTypeIdentifier = 
                     this.importer.getNodeFactory().getHshNodeTypeIdentifier();
-            Map<String, Object> hshNodeTypes = this.importer.getHshNodeTypeIdentifierVariantMapping();
+            Map<String, String> hshNodeTypes = this.importer.getHshNodeTypeIdentifierVariantMapping();
 
             // alle iterieren
             for (WikiStructLine curWk : lstWikiLines) {
-                String state = BaseNode.CONST_NODETYPE_IDENTIFIER_UNKNOWN;
+                String state = BaseNodeService.CONST_NODETYPE_IDENTIFIER_UNKNOWN;
                 String ue = curWk.getCleanText();
 
                 // Statusdefinition durchlaufen unn pruefen ob Name so beginnt
@@ -458,7 +459,7 @@ public class WikiImporter extends ImporterImpl {
                 }
 
                 // gefunden
-                if (BaseNode.CONST_NODETYPE_IDENTIFIER_UNKNOWN.equals(state)) {
+                if (BaseNodeService.CONST_NODETYPE_IDENTIFIER_UNKNOWN.equals(state)) {
                     // SKIP: UNKNOWN
                     continue;
                 } else if (flgWFStatesOnly && !this.importer.isWFStatus(state)) {
@@ -685,7 +686,7 @@ public class WikiImporter extends ImporterImpl {
         return lstWikiTab;
     }
     
-    protected void initNodeData(BaseNode curNode) throws Exception {
+    protected void initNodeData(final BaseNode curNode) throws Exception {
         curNode.initMetaData();
         curNode.initSysData();
     }
@@ -810,7 +811,9 @@ public class WikiImporter extends ImporterImpl {
                     System.out.println(wk.getHirarchy());
                 }
             }
+            //CHECKSTYLE.OFF: IllegalCatch - Much more readable than catching x exceptions
         } catch (Exception ex) {
+            //CHECKSTYLE.ON: IllegalCatch
             ex.printStackTrace();
         }
     }

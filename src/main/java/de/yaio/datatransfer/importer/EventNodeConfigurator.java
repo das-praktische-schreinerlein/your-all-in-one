@@ -17,6 +17,7 @@
 package de.yaio.datatransfer.importer;
 
 import de.yaio.core.node.EventNode;
+import de.yaio.core.nodeservice.EventNodeService;
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -46,7 +47,7 @@ public class EventNodeConfigurator {
      * @param nodeFactory - instance of the nodeFactory which will use the config 
      */
     public static void configureNodeTypeIdentifier(final NodeFactory nodeFactory) {
-        nodeFactory.addNodeTypeIdentifier(EventNode.CONST_MAP_NODETYPE_IDENTIFIER, EventNode.class);
+        nodeFactory.addNodeTypeIdentifier(EventNodeService.getInstance().getConfigState(), EventNode.class);
     }
 
     /**
@@ -60,7 +61,7 @@ public class EventNodeConfigurator {
      * @param importer - instance of the importer which will use the config 
      */
     public static void configureNodeTypes(final Importer importer) {
-        importer.addNodeTypeIdentifierVariantMapping(EventNode.CONST_MAP_NODETYPE_IDENTIFIER);
+        importer.addNodeTypeIdentifierVariantMapping(EventNodeService.getInstance().getConfigState());
     }
 
     /**
@@ -73,7 +74,7 @@ public class EventNodeConfigurator {
      * @param importer - instance of the importer which will use the config 
      */
     public static void configureWorkflowNodeTypeMapping(final Importer importer) {
-        importer.addWorkflowNodeTypeMapping(EventNode.CONST_MAP_NODETYPE_IDENTIFIER);
+        importer.addWorkflowNodeTypeMapping(EventNodeService.getInstance().getConfigState());
     }
 
 

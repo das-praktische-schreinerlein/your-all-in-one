@@ -130,14 +130,16 @@ public class DataUtils {
      */
     public static Map<String, String> initMapFromCsvString(final String csvString) {
         Map<String, String> mpStates = null;
-        if (csvString != null 
-            && csvString.length() > 0) {
+        if (!StringUtils.isEmpty(csvString)) {
             mpStates = new HashMap<String, String>();
-            String [] arrStatusFilter =
-                            csvString.split(",");
+            String [] arrStatusFilter = csvString.split(",");
             for (int zaehler = 0; zaehler < arrStatusFilter.length; zaehler++) {
                 mpStates.put(arrStatusFilter[zaehler], arrStatusFilter[zaehler]);
             }
+        }
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("map for csvString:" + csvString 
+                            + " = " + mpStates);
         }
         
         return mpStates;

@@ -102,7 +102,7 @@ public class CallYaioExport extends CallYaioInstance {
         // call url
         byte[] result = this.callGetUrl("/exports/" + format + "/" + sysUID, null);
         
-        if (! StringUtils.isEmpty(outfileName)) {
+        if (!StringUtils.isEmpty(outfileName)) {
             // write to file
             Writer output = new FileWriter(outfileName);
             IOUtils.write(result, output);

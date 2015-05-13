@@ -19,7 +19,6 @@ package de.yaio.core.datadomainservice;
 import de.yaio.core.node.TaskNode;
 import de.yaio.core.nodeservice.NodeService;
 import de.yaio.core.nodeservice.NodeServiceImpl;
-import de.yaio.datatransfer.importer.parser.Parser;
 
 /**
  * <h4>FeatureDomain:</h4>

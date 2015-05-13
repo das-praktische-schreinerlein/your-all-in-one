@@ -58,11 +58,11 @@ public class AdminController {
      * @param sysUID - sysUID to recalc
      * @return text-message
      */
+    @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
                     value = "/recalc/{sysUID}", 
                     produces = "text/html")
-    public @ResponseBody String recalcNode(
-           @PathVariable(value = "sysUID") final String sysUID) {
+    public String recalcNode(@PathVariable(value = "sysUID") final String sysUID) {
         NodeActionResponse response = new NodeActionResponse(
                         "ERROR", "node '" + sysUID + "' doesnt exists", 
                         null, null, null, null);
@@ -107,10 +107,11 @@ public class AdminController {
      *     Webservice Admin
      * @return text-message
      */
+    @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
                     value = "/reset", 
                     produces = "text/html")
-    public @ResponseBody String reset() {
+    public String reset() {
         NodeActionResponse response = new NodeActionResponse(
                         "ERROR", "it is not allowed to reset this yaio-instance: change yaio.demo.allow-reset=true", 
                         null, null, null, null);

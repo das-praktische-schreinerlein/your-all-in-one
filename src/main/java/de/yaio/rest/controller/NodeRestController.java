@@ -25,6 +25,7 @@ import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -84,7 +85,7 @@ public class NodeRestController {
      */
     public static NodeActionResponse createResponseObj(final BaseNode node, final String okMsg) {
         // extract parents
-        List<String> parentIdHierarchy = node.getParentIdHierarchy();
+        List<String> parentIdHierarchy = node.getBaseNodeService().getParentIdHierarchy(node);
         
         // reverse
         Collections.reverse(parentIdHierarchy);
@@ -171,14 +172,14 @@ public class NodeRestController {
      * @param fulltext - fulltext search string
      * @return NodeSearchResponse (OK, FAILED, ERROR) with matching nodes
      */
-    @RequestMapping(method = RequestMethod.GET, value = "/search/{curPage}/{pageSize}/{sortConfig}/{sysUID}/{fulltext}/")
-    public @ResponseBody NodeSearchResponse searchNodeFulltext(
-           @PathVariable(value = "curPage") final Long curPage,
-           @PathVariable(value = "pageSize") final Long pageSize,
-           @PathVariable(value = "sortConfig") final String sortConfig,
-           @PathVariable(value = "sysUID") final String sysUID,
-           @PathVariable(value = "fulltext") final String fulltext
-           ) {
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.GET, 
+                    value = "/search/{curPage}/{pageSize}/{sortConfig}/{sysUID}/{fulltext}/")
+    public NodeSearchResponse searchNodeFulltext(@PathVariable(value = "curPage") final Long curPage,
+                                                 @PathVariable(value = "pageSize") final Long pageSize,
+                                                 @PathVariable(value = "sortConfig") final String sortConfig,
+                                                 @PathVariable(value = "sysUID") final String sysUID,
+                                                 @PathVariable(value = "fulltext") final String fulltext) {
         return commonSearchNode(curPage, pageSize, sortConfig, sysUID, fulltext);
     }
     
@@ -200,13 +201,13 @@ public class NodeRestController {
      * @param sysUID - sysUID to filter as perentNode
      * @return NodeSearchResponse (OK, FAILED, ERROR) with matching nodes
      */
-    @RequestMapping(method = RequestMethod.GET, value = "/search/{curPage}/{pageSize}/{sortConfig}/{sysUID}/")
-    public @ResponseBody NodeSearchResponse searchNode(
-           @PathVariable(value = "curPage") final Long curPage,
-           @PathVariable(value = "pageSize") final Long pageSize,
-           @PathVariable(value = "sortConfig") final String sortConfig,
-           @PathVariable(value = "sysUID") final String sysUID
-           ) {
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.GET, 
+                    value = "/search/{curPage}/{pageSize}/{sortConfig}/{sysUID}/")
+    public NodeSearchResponse searchNode(@PathVariable(value = "curPage") final Long curPage,
+                                         @PathVariable(value = "pageSize") final Long pageSize,
+                                         @PathVariable(value = "sortConfig") final String sortConfig,
+                                         @PathVariable(value = "sysUID") final String sysUID) {
         return commonSearchNode(curPage, pageSize, sortConfig, sysUID, "");
     }
 
@@ -224,9 +225,10 @@ public class NodeRestController {
      * @param sysUID - sysUID to filter
      * @return NodeResponse (OK, ERROR) with the node for sysUID
      */
-    @RequestMapping(method = RequestMethod.GET, value = "/show/{sysUID}")
-    public @ResponseBody NodeActionResponse getNodeWithChildren(
-           @PathVariable(value = "sysUID") final String sysUID) {
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.GET, 
+                    value = "/show/{sysUID}")
+    public NodeActionResponse getNodeWithChildren(@PathVariable(value = "sysUID") final String sysUID) {
         // create default response
         NodeActionResponse response = new NodeActionResponse(
                         "ERROR", "node '" + sysUID + "' doesnt exists", 
@@ -247,8 +249,7 @@ public class NodeRestController {
         
         return response;
     }
-    
-    
+
     /**
      * <h4>FeatureDomain:</h4>
      *     Webservice
@@ -263,9 +264,11 @@ public class NodeRestController {
      * @param symLinkRef - symLinkRef to filter
      * @return NodeResponse (OK, ERROR) with the node for sysUID
      */
-    @RequestMapping(method = RequestMethod.GET, value = "/showsymlink/{symLinkRef}")
-    public @ResponseBody NodeActionResponse getSymLinkRefNodeWithChildren(
-           @PathVariable(value = "symLinkRef") final String symLinkRef) {
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.GET, 
+                    value = "/showsymlink/{symLinkRef}")
+    public NodeActionResponse getSymLinkRefNodeWithChildren(
+                              @PathVariable(value = "symLinkRef") final String symLinkRef) {
         // create default response
         NodeActionResponse response = new NodeActionResponse(
                         "ERROR", "node '" + symLinkRef + "' doesnt exists", 
@@ -274,7 +277,7 @@ public class NodeRestController {
         // find a specific node
         BaseNodeDBService baseNodeDBService = BaseNodeDBServiceImpl.getInstance();
         List<BaseNode> nodes = baseNodeDBService.findSymLinkBaseNode(symLinkRef);
-        if (nodes != null && nodes.size() > 0) {
+        if (CollectionUtils.isNotEmpty(nodes)) {
             // symLinkref found
             
             // check if it is unique
@@ -283,7 +286,6 @@ public class NodeRestController {
                                 "ERROR", "node '" + symLinkRef + "' is not unique", 
                                 null, null, nodes, null);
                 return response;
-
             }
             
             // use the first one
@@ -317,9 +319,10 @@ public class NodeRestController {
      * @param sysUID - sysUID to delete
      * @return NodeResponse (OK, ERROR) with the node for sysUID
      */
-    @RequestMapping(method = RequestMethod.DELETE, value = "/delete/{sysUID}")
-    public @ResponseBody NodeActionResponse deleteNodeWithChildren(
-           @PathVariable(value = "sysUID") final String sysUID) {
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.DELETE, 
+                    value = "/delete/{sysUID}")
+    public NodeActionResponse deleteNodeWithChildren(@PathVariable(value = "sysUID") final String sysUID) {
         // create default response
         NodeActionResponse response = new NodeActionResponse(
                         "ERROR", "node '" + sysUID + "' doesnt exists", 
@@ -411,7 +414,7 @@ public class NodeRestController {
         // check for special nodedata recursively
         
         // Task+EventNodes
-        if (   TaskNode.class.isInstance(origNode) 
+        if (TaskNode.class.isInstance(origNode) 
             || EventNode.class.isInstance(origNode)) {
             TaskNode newTaskNode = (TaskNode) newNode;
             TaskNode origTaskNode = (TaskNode) origNode;
@@ -794,10 +797,11 @@ public class NodeRestController {
      * @param newNode - the node created from request-data
      * @return NodeResponse (OK, ERROR) with the node for sysUID
      */
-    @RequestMapping(method = RequestMethod.PATCH, value = "/update/BaseNode/{sysUID}")
-    public @ResponseBody NodeActionResponse updateBaseNode(
-                @PathVariable(value = "sysUID") final String sysUID, 
-                @RequestBody final BaseNode newNode) {
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.PATCH, 
+                    value = "/update/BaseNode/{sysUID}")
+    public NodeActionResponse updateBaseNode(@PathVariable(value = "sysUID") final String sysUID, 
+                                             @RequestBody final BaseNode newNode) {
         // create default response
         return this.updateNode(sysUID, newNode);
     }
@@ -817,10 +821,11 @@ public class NodeRestController {
      * @param newNode - the node created from request-data
      * @return NodeResponse (OK, ERROR) with the node for sysUID
      */
-    @RequestMapping(method = RequestMethod.PATCH, value = "/update/TaskNode/{sysUID}")
-    public @ResponseBody NodeActionResponse updateTaskNode(
-                @PathVariable(value = "sysUID") final String sysUID, 
-                @RequestBody final TaskNode newNode) {
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.PATCH, 
+                    value = "/update/TaskNode/{sysUID}")
+    public NodeActionResponse updateTaskNode(@PathVariable(value = "sysUID") final String sysUID, 
+                                             @RequestBody final TaskNode newNode) {
         // create default response
         return this.updateNode(sysUID, newNode);
     }
@@ -840,10 +845,11 @@ public class NodeRestController {
      * @param newNode - the node created from request-data
      * @return NodeResponse (OK, ERROR) with the node for sysUID
      */
-    @RequestMapping(method = RequestMethod.POST, value = "/create/TaskNode/{parentSysUID}")
-    public @ResponseBody NodeActionResponse createTaskNode(
-                @PathVariable(value = "parentSysUID") final String parentSysUID, 
-                @RequestBody final TaskNode newNode) {
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, 
+                    value = "/create/TaskNode/{parentSysUID}")
+    public NodeActionResponse createTaskNode(@PathVariable(value = "parentSysUID") final String parentSysUID, 
+                                             @RequestBody final TaskNode newNode) {
         // create default response
         return this.createNode(parentSysUID, newNode);
     }
@@ -863,10 +869,11 @@ public class NodeRestController {
      * @param newNode - the node created from request-data
      * @return NodeResponse (OK, ERROR) with the node for sysUID
      */
-    @RequestMapping(method = RequestMethod.PATCH, value = "/update/EventNode/{sysUID}")
-    public @ResponseBody NodeActionResponse updateEventNode(
-                @PathVariable(value = "sysUID") final String sysUID, 
-                @RequestBody final EventNode newNode) {
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.PATCH, 
+                    value = "/update/EventNode/{sysUID}")
+    public NodeActionResponse updateEventNode(@PathVariable(value = "sysUID") final String sysUID, 
+                                              @RequestBody final EventNode newNode) {
         // create default response
         return this.updateNode(sysUID, newNode);
     }
@@ -886,10 +893,11 @@ public class NodeRestController {
      * @param newNode - the node created from request-data
      * @return NodeResponse (OK, ERROR) with the node for sysUID
      */
-    @RequestMapping(method = RequestMethod.POST, value = "/create/EventNode/{parentSysUID}")
-    public @ResponseBody NodeActionResponse createEventNode(
-                @PathVariable(value = "parentSysUID") final String parentSysUID, 
-                @RequestBody final EventNode newNode) {
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, 
+                    value = "/create/EventNode/{parentSysUID}")
+    public NodeActionResponse createEventNode(@PathVariable(value = "parentSysUID") final String parentSysUID, 
+                                              @RequestBody final EventNode newNode) {
         // create default response
         return this.createNode(parentSysUID, newNode);
     }
@@ -909,10 +917,11 @@ public class NodeRestController {
      * @param newNode - the node created from request-data
      * @return NodeResponse (OK, ERROR) with the node for sysUID
      */
-    @RequestMapping(method = RequestMethod.PATCH, value = "/update/UrlResNode/{sysUID}")
-    public @ResponseBody NodeActionResponse updateUrlResNode(
-                @PathVariable(value = "sysUID") final String sysUID, 
-                @RequestBody final UrlResNode newNode) {
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.PATCH, 
+                    value = "/update/UrlResNode/{sysUID}")
+    public NodeActionResponse updateUrlResNode(@PathVariable(value = "sysUID") final String sysUID, 
+                                               @RequestBody final UrlResNode newNode) {
         // create default response
         return this.updateNode(sysUID, newNode);
     }
@@ -932,10 +941,11 @@ public class NodeRestController {
      * @param newNode - the node created from request-data
      * @return NodeResponse (OK, ERROR) with the node for sysUID
      */
-    @RequestMapping(method = RequestMethod.POST, value = "/create/UrlResNode/{parentSysUID}")
-    public @ResponseBody NodeActionResponse createUrlResNode(
-                @PathVariable(value = "parentSysUID") final String parentSysUID, 
-                @RequestBody final UrlResNode newNode) {
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, 
+                    value = "/create/UrlResNode/{parentSysUID}")
+    public NodeActionResponse createUrlResNode(@PathVariable(value = "parentSysUID") final String parentSysUID, 
+                                               @RequestBody final UrlResNode newNode) {
         // create default response
         return this.createNode(parentSysUID, newNode);
     }
@@ -955,10 +965,11 @@ public class NodeRestController {
      * @param newNode - the node created from request-data
      * @return NodeResponse (OK, ERROR) with the node for sysUID
      */
-    @RequestMapping(method = RequestMethod.PATCH, value = "/update/InfoNode/{sysUID}")
-    public @ResponseBody NodeActionResponse updateInfoNode(
-                @PathVariable(value = "sysUID") final String sysUID, 
-                @RequestBody final InfoNode newNode) {
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.PATCH, 
+                    value = "/update/InfoNode/{sysUID}")
+    public NodeActionResponse updateInfoNode(@PathVariable(value = "sysUID") final String sysUID, 
+                                             @RequestBody final InfoNode newNode) {
         // create default response
         return this.updateNode(sysUID, newNode);
     }
@@ -978,10 +989,11 @@ public class NodeRestController {
      * @param newNode - the node created from request-data
      * @return NodeResponse (OK, ERROR) with the node for sysUID
      */
-    @RequestMapping(method = RequestMethod.POST, value = "/create/InfoNode/{parentSysUID}")
-    public @ResponseBody NodeActionResponse createInfoNode(
-                @PathVariable(value = "parentSysUID") final String parentSysUID, 
-                @RequestBody final InfoNode newNode) {
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, 
+                    value = "/create/InfoNode/{parentSysUID}")
+    public NodeActionResponse createInfoNode(@PathVariable(value = "parentSysUID") final String parentSysUID, 
+                                             @RequestBody final InfoNode newNode) {
         // create default response
         return this.createNode(parentSysUID, newNode);
     }
@@ -1001,10 +1013,11 @@ public class NodeRestController {
      * @param newNode - the node created from request-data
      * @return NodeResponse (OK, ERROR) with the node for sysUID
      */
-    @RequestMapping(method = RequestMethod.PATCH, value = "/update/SymLinkNode/{sysUID}")
-    public @ResponseBody NodeActionResponse updateSymLinkNode(
-                @PathVariable(value = "sysUID") final String sysUID, 
-                @RequestBody final SymLinkNode newNode) {
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.PATCH, 
+                    value = "/update/SymLinkNode/{sysUID}")
+    public NodeActionResponse updateSymLinkNode(@PathVariable(value = "sysUID") final String sysUID, 
+                                                @RequestBody final SymLinkNode newNode) {
         // create default response
         return this.updateNode(sysUID, newNode);
     }
@@ -1024,10 +1037,11 @@ public class NodeRestController {
      * @param newNode - the node created from request-data
      * @return NodeResponse (OK, ERROR) with the node for sysUID
      */
-    @RequestMapping(method = RequestMethod.POST, value = "/create/SymLinkNode/{parentSysUID}")
-    public @ResponseBody NodeActionResponse createSymLinkNode(
-                @PathVariable(value = "parentSysUID") final String parentSysUID, 
-                @RequestBody final SymLinkNode newNode) {
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, 
+                    value = "/create/SymLinkNode/{parentSysUID}")
+    public NodeActionResponse createSymLinkNode(@PathVariable(value = "parentSysUID") final String parentSysUID, 
+                                                @RequestBody final SymLinkNode newNode) {
         // create default response
         return this.createNode(parentSysUID, newNode);
     }
@@ -1049,11 +1063,12 @@ public class NodeRestController {
      * @return NodeResponse (OK, ERROR) with the node for sysUID
      */
     @Transactional
-    @RequestMapping(method = RequestMethod.PATCH, value = "/move/{sysUID}/{newParentSysUID}/{newSortPos}")
-    public @ResponseBody NodeActionResponse moveNode(
-                @PathVariable(value = "sysUID") final String sysUID,
-                @PathVariable(value = "newParentSysUID") final String newParentSysUID,
-                @PathVariable(value = "newSortPos") final Integer newSortPos) {
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.PATCH, 
+                    value = "/move/{sysUID}/{newParentSysUID}/{newSortPos}")
+    public NodeActionResponse moveNode(@PathVariable(value = "sysUID") final String sysUID,
+                                       @PathVariable(value = "newParentSysUID") final String newParentSysUID,
+                                       @PathVariable(value = "newSortPos") final Integer newSortPos) {
         // create default response
         NodeActionResponse response = new NodeActionResponse(
                         "ERROR", "node '" + sysUID + "' doesnt exists", 
@@ -1105,7 +1120,7 @@ public class NodeRestController {
             // check for needed update
             if (flgChangedParent || flgChangedPosition) {
                 // recalc the position
-                newParent.moveChildToSortPos(node, newSortPos);
+                newParent.getBaseNodeService().moveChildToSortPos(newParent, node, newSortPos);
                 
                 // save children of newParent
                 newParent.saveChildNodesToDB(0, true);

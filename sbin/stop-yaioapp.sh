@@ -34,3 +34,11 @@ pid=`ps aux | grep "${CMD}" | grep -v grep | awk '{print $2}'`
 echo "kill $pid"
 kill TERM $pid
 
+
+CMD="java ${JAVAOPTIONS} -cp ${CP} ${PROG_APPPROPAGATOR} ${CFG}"
+echo "stop-apppropagator: ${CMD}"
+
+pid=`ps aux | grep "${CMD}" | grep -v grep | awk '{print $2}'`
+echo "kill $pid"
+kill TERM $pid
+

@@ -16,8 +16,6 @@
  */
 package de.yaio.datatransfer.importer.parser;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -42,13 +40,6 @@ import de.yaio.datatransfer.importer.NodeFactory;
  */
 public class ResLocDataParserImpl  extends ParserImpl implements ResLocDataParser {
 
-    Calendar calDate = new GregorianCalendar();
-    Calendar calTime = new GregorianCalendar();
-
-    // Logger
-    private static final Logger LOGGER =
-            Logger.getLogger(ResLocDataParserImpl.class);
-
     // Patterns
     protected static final String CONST_PATTERN_SEG_STRING1 = "[^,:\\[\\]]";
     protected static final String CONST_PATTERN_SEG_URL =
@@ -59,6 +50,10 @@ public class ResLocDataParserImpl  extends ParserImpl implements ResLocDataParse
                + "(" + CONST_PATTERN_SEG_TAGS + "*)?";
     private static final Pattern CONST_PATTERN_URLRES =
         Pattern.compile("(.*)" + CONST_PATTERN_SEG_URLRES + "(.*)", Pattern.UNICODE_CHARACTER_CLASS);
+
+    // Logger
+    private static final Logger LOGGER =
+            Logger.getLogger(ResLocDataParserImpl.class);
 
     @Override
     public Class<?> getTargetClass() {

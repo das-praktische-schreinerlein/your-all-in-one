@@ -27,13 +27,12 @@ import de.yaio.datatransfer.exporter.OutputOptionsImpl;
 
 public class TestPPL {
 
-    // Logger
-    private static final Logger LOGGER =
-            Logger.getLogger(TestPPL.class);
-
     public static final String DEFAULT_ENTRY_DELIMITER = PPLService.DEFAULT_ENTRY_DELIMITER;
     public static final String LINE_DELIMITER = PPLService.LINE_DELIMITER;
     
+    // Logger
+    private static final Logger LOGGER = Logger.getLogger(TestPPL.class);
+
     //@Test
     public void testPPLParserAndExporter() {
         String src =
