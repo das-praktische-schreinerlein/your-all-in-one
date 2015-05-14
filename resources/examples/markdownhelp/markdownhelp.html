@@ -22,6 +22,9 @@
   <!-- mermaid -->
   <script src="../js/mermaid/mermaid.full.js" charset="UTF-8"></script>
  
+  <!-- TextReplacer -->
+  <script src="../js/findandreplacedomtext/findAndReplaceDOMText.js"></script>
+
   <!-- yaio -->
   <link rel="stylesheet" type="text/css" media="all" href="../css/yaio/style.css" />
   <link rel="stylesheet" type="text/css" media="all" href="../css/yaio/main.css" />
@@ -30,6 +33,7 @@
 
   <!-- yaio-explorer -->
   <link rel="stylesheet" type="text/css" media="all" href="./css/style.css" />
+  <link rel="stylesheet" type="text/css" media="all" href="./css/formatter.css" />
   <link rel="stylesheet" type="text/css" media="print" href="./css/print.css" />
   <link rel="stylesheet" type="text/css" media="print" href="./css/print-dataonly.css" id="link_css_dataonly" disabled="true" />
   <style>
@@ -52,7 +56,7 @@
 # Überschrift Ebene 1
 Das hier ist ganz normaler Fließtext.
 - Aufzählung Ebene 1
-  - Aufzählung Unterpunkt Ebene2 mit [Link + Label](http://daringfireball.net/projects/markdown/syntax).
+  - Aufzählung Unterpunkt Ebene2 mit [Link + Label](http://daringfireball.net/projects/markdown/syntax) oder auch ein interner Link zur [YAIO-Spielwiese](yaio:SysPlay1).
 
 ## Überschrift Ebene 2
 Ein schönes Feature ist der integrierte Diagramm-Editor.
@@ -103,6 +107,20 @@ Head1 | Head2 | Head3
 ----|----|----
 Column1 | Column2 | Column3
 
+Und für ganz strukturierte Leute Checklisten:
+- **Aufgabenliste**
+    - [OFFEN] - Aufgabe
+    - [LATE] - Aufgabe
+    - [RUNNING] - Aufgabe
+    - [BLOCKED] - Aufgabe
+    - [WARNING] - Aufgabe
+    - [DONE] - Aufgabe
+
+- **Testergebnisse**
+    - [TESTOPEN] - Testergebnis
+    - [FAILED] - Testergebnis
+    - [PASSED] - Testergebnis
+
 ## Referenzen
 - Die Markdown-Syntax orientiert sich an [http://daringfireball.net/projects/markdown/syntax](http://daringfireball.net/projects/markdown/syntax)
 - Die  Syntax der Prozess-Diagramme folgt http://knsv.github.io/mermaid/flowchart.html
@@ -134,8 +152,11 @@ Column1 | Column2 | Column3
      // set preview-content
      $( "#wysiwhg-preview" ).html(descHtmlMarked);
 
-    // Syntaxhightlighter highlightjs
-    hljs.initHighlightingOnLoad();
+     // format markdown-extension
+     var flgDoMermaid = formatDescBlock("#wysiwhg-preview");
+     if (flgDoMermaid) {
+         formatMermaidGlobal();
+     }
 </script>
 
 </body>
