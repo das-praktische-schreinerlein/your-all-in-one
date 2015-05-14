@@ -1,4 +1,4 @@
-= WARNING - Ein Beispiel-Projekt
+= WARNING - Ein Beispiel-Projekt [NodeMeta: SysPlay,10,,] [NodeSys: SysPlay10,,,,]
 # Aufgabe
 Ziel des Projektes ist es, Euch ein paar der Möglichkeiten von D'Artagnan zu auszuzeigen...
 
@@ -83,7 +83,7 @@ In diesem Bereich werden wichtige Infos, Howtos, Links usw. abgespeichert
 # Überschrift Ebene 1
 Das hier ist ganz normaler Fließtext.
 - Aufzählung Ebene 1
-    - Aufzählung Unterpunkt Ebene2 mit [Link + Label](http://daringfireball.net/projects/markdown/syntax).
+    - Aufzählung Unterpunkt Ebene2 mit [Link + Label](http://daringfireball.net/projects/markdown/syntax) oder auch ein interner Link zur [YAIO-Spielwiese](yaio:SysPlay1).
 
 ## Überschrift Ebene 2
 Ein schönes Feature ist der integrierte Diagramm-Editor.
@@ -145,6 +145,21 @@ Und immer wieder gerne gesehen: *Tabellen*
 Head1 | Head2 | Head3
 ----|----|----
 Column1 | Column2 | Column3
+
+Und für ganz strukturierte Leute Checklisten:
+- **Aufgabenliste**
+    - [OFFEN] - Aufgabe
+    - [LATE] - Aufgabe
+    - [RUNNING] - Aufgabe
+    - [BLOCKED] - Aufgabe
+    - [WARNING] - Aufgabe
+    - [DONE] - Aufgabe
+
+- **Testergebnisse**
+    - [TESTOPEN] - Testergebnis
+    - [FAILED] - Testergebnis
+    - [PASSED] - Testergebnis
+
 
 # Referenzen
 - Die Markdown-Syntax orientiert sich an [http://daringfireball.net/projects/markdown/syntax](http://daringfireball.net/projects/markdown/syntax)
