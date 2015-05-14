@@ -1328,6 +1328,28 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
     $scope.recalcGanttBlocks = function() {
         yaioRecalcFancytreeGanttBlocks();
         yaioRecalcMasterGanttBlock($scope.node);
+        return false;
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     GUI
+     * <h4>FeatureDescription:</h4>
+     *     callbackhandler to recalc Gantt with Master-Ist/Plan-DateRange
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>recalc ganttblocks
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     GUI Callback
+     * @param  flgShowIst   boolean if is set show ist, if not show plan
+     */
+    $scope.recalcGanttForIstOrPlan = function(flgShowIst) {
+        var start = flgShowIst ? $scope.node.istChildrenSumStart : $scope.node.planChildrenSumStart;
+        var ende = flgShowIst ? $scope.node.istChildrenSumEnde : $scope.node.planChildrenSumEnde;
+        $("#inputGanttRangeStart").val(formatGermanDate(start)).trigger('input').triggerHandler("change");
+        $("#inputGanttRangeEnde").val(formatGermanDate(ende)).trigger('input').triggerHandler("change");
+        return false;
     }
 });
 

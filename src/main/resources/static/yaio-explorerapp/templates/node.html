@@ -335,6 +335,8 @@
                        <div class="gantt_bar"  id="gantt_bar_head" data-tooltip='tooltip.command.GanttRange' lang="tech">
                         <input type="text" placeholder="dd.mm.jjjj" name="ganttRangeStart" pattern="\d{2}\.\d{2}\.\d{4}"  maxsize="10" value="{{ yaioUtils.ganttOptions.ganttRangeStart }}" class="inputtype_date" id="inputGanttRangeStart" ng-model="yaioUtils.ganttOptions.ganttRangeStart" ng-change="recalcGanttBlocks()">
                         <a ng-click="recalcGanttBlocks();" class="button" translate="fancytree.table.headline.ganttrange">Zeitbereich</a> 
+                        <a ng-click="recalcGanttForIstOrPlan(true);" class="button" translate="fancytree.table.headline.recalcGanttIst">Ist</a> 
+                        <a ng-click="recalcGanttForIstOrPlan(false);" class="button" translate="fancytree.table.headline.recalcGanttPlan">Plan</a> 
                         <input type="text" placeholder="dd.mm.jjjj" name="ganttRangeEnde" pattern="\d{2}\.\d{2}\.\d{4}"  maxsize="10" value="{{ yaioUtils.ganttOptions.ganttRangeEnd }}" class="inputtype_date" style="text-align: right" id="inputGanttRangeEnde" ng-model="yaioUtils.ganttOptions.ganttRangeEnd" ng-change="recalcGanttBlocks()"></th>
                        </div>
                     </div>

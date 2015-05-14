@@ -186,6 +186,8 @@
     "fancytree.table.headline.actions": "Aktionen",
     "fancytree.table.headline.ganttaufwand": "Aufwand",
     "fancytree.table.headline.ganttrange": "darzustellender Zeitraum",
+    "fancytree.table.headline.recalcGanttIst": "Ist",
+    "fancytree.table.headline.recalcGanttPlan": "Plan",
     "fancytree.table.headline.name": "Titel",
     "fancytree.table.headline.tabTogglerData": "Rohdaten anzeigen",
     "fancytree.table.headline.tabTogglerGantt": "Als Gantt-Diagramm anzeigen",

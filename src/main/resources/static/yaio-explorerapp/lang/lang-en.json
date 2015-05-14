@@ -186,6 +186,8 @@
     "fancytree.table.headline.actions": "Actions",
     "fancytree.table.headline.ganttaufwand": "effort",
     "fancytree.table.headline.ganttrange": "show period",
+    "fancytree.table.headline.recalcGanttIst": "Ist",
+    "fancytree.table.headline.recalcGanttPlan": "Plan",
     "fancytree.table.headline.name": "title",
     "fancytree.table.headline.tabTogglerData": "View raw data",
     "fancytree.table.headline.tabTogglerGantt": "As Gantt Chart",
