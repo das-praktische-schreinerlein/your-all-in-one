@@ -31,8 +31,6 @@
 
 (function () {
     describe('Modul yaio-formatter Service-Funktions (Formatter formatMarkdown)', function () {
-        var source, expected;
-
         beforeEach(function (done) {
             // load async
             setTimeout(function () {
@@ -66,8 +64,6 @@
     });
 
     describe('Modul yaio-formatter Service-Funktions (Formatter highlightCheckList)', function () {
-        var source, expected;
-
         beforeEach(function (done) {
             // load async
             setTimeout(function () {
@@ -97,6 +93,38 @@
             
             // Then
             expect(res).toBe(expected);
+        });
+    });
+
+    describe('Modul yaio-formatter Service-Funktions (Formatter checklists)', function () {
+        var doCheckHighlightCheckList = function(src, expected, formatter) {
+            // Given
+            $('body').html("<div id='test'>" + src + "</div>");
+            
+            // When
+            formatter();
+            var res = $("#test").html();
+            
+            // Expected
+            expect(res).toBe(expected);
+        }
+
+        it( "highlightCheckListForMatchers should result checklist", function() {
+            doCheckHighlightCheckList(
+                    "<ul><li>[TEST1] - xyz</li><li>[TEST3] - xyz</li></ul>", 
+                    "<ul><li><span class=\"style1\">[TEST1]</span> - xyz</li><li>[TEST3] - xyz</li></ul>", 
+                    function() {
+                        highlightCheckListForMatchers($("#test"), ["TEST1", "TEST2"], "style1");
+            });
+        });
+
+        it( "highlightCheckListForMatcher should result checklist", function() {
+            doCheckHighlightCheckList(
+                    "<ul><li>[TEST1] - xyz</li><li>[TEST3] - xyz</li></ul>", 
+                    "<ul><li><span class=\"style1\">[TEST1]</span> - xyz</li><li>[TEST3] - xyz</li></ul>", 
+                    function() {
+                        highlightCheckListForMatcher($("#test"), "[TEST1]", "style1");
+            });
         });
     });
 })();
