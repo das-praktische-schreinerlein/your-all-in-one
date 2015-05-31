@@ -1,0 +1,63 @@
+= OFFEN - Bug BUGNR - BUGNAME                                           [Plan:      8h]
+# Bug
+_TODO - Hier erfolgt die Aufgabenbeschreibung eines kleinen Bugs._
+
+## Akzeptantkriterien
+Für die Erfüllung der Aufgabe sind folgende Akzeptanzkriterien zu erfüllen:
+- **fachliche Kriterien**
+    - Bug beseitigt: Verhalten soll so sein
+- **technische Kriterien**
+    - Testcoverage
+    - Codestyle: Checkstyle, PMC, PMD
+    - Dokumentation
+
+## Stand
+- [OFFEN] - DATE - Meldung per Email/Tel/... durch XY
+- [OFFEN] - DATE - Konzept (fachl., techn.)
+- [OFFEN] - DATE - Vorbereitung Arbeitsumgebung (Branch... bugfix-BUGNR-desc angelegt)
+- [OFFEN] - DATE - Umsetzung
+- [OFFEN] - DATE - techn. Abnahme durch Team
+- [OFFEN] - DATE - fachl. Abnahme durch Fachabteilung
+- [OFFEN] - DATE - Abnahme durch QA
+- [OFFEN] - DATE - Rollout
+- [OFFEN] - DATE - Dokumentation (JIRA, Confluence, Changelog...)
+
+# Konzept
+_TODO - Hier stehen Details zur Planung der fachlichen und technischen Umsetzung_
+
+# Vorbereitung Arbeitsumgebung
+_TODO - Hier stehen Details zur Vorbereitung der Arbeitsumgebung wie z.B. Branchname usw._
+- [OFFEN] - create Branch "bugfix-team-id-name"
+
+# Umsetzung
+
+## Details zu Mechanismen usw.
+_TODO - Hier stehen details zu techn. Mechanismen, Code-Snippets, Reesourcen (Urls) die benutzt wurden bzw. wo recherchiert wurde._
+
+## Geänderte File
+_TODO - Außerdem sollten die geänderten Dateien, Packages und bestenfalls mit wichtigen Code-Snippets erwähnt werden._
+- new File src/XYZ zur Validierung
+```java
+public class
+...
+```
+
+# techn. Abnahme durch Team
+_TODO - Codereview, Kennzahlen zur Checkstyle, Findbugs usw. prüfen und die Unit-Tests usw. abnehmen lassen_
+
+# fachl. Abnahme durch Fachabteilung
+_TODO - Kurze Beschreibung wie die Fachabteilung das ganze im Testsystem testen kann. Hinweise zu Logins usw._
+- _Ggf. Feedback von der Fachabteilung und Änderungsbedarf_
+- _Kurze Dokumentation wie Deployment ins Abnahmesystem erfolgt_
+
+# Abnahme durch QA
+_TODO - Kurze Beschreibung wie die QA das ganze im Testsystem testen kann._
+- _Hinweise zu Modulen die neu sind oder auch geändert wurden, sowie Hinweise zu Modulen die durch die Auswirkungen indirekt betroffen sind._
+- _Ggf. Feedback von der Fachabteilung und Änderungsbedarf_
+- _Kurze Dokumentation wie Deployment ins Abnahmesystem erfolgt_
+
+# Rollout
+_TODO - Kurze Dokumentation wie Deployment ins Livesystem erfolgt_
+
+# Dokumentation
+_TODO - Dokumentation im Changelog sowie den jeweiligen Dokumentationssystemen wie Jira, Confluence, Bugzilla usw._

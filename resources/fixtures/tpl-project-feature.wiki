@@ -1,18 +1,18 @@
-= OFFEN - Major-Bug BUGNR - BUGNAME
-# Bug
-_TODO - Hier erfolgt die Aufgabenbeschreibung eines umfangreichen Bugfixes._
+= OFFEN - Epic-Feature FUEATURENR - FEATURENAME
+# Feature FUEATURENR - FEATURENAME
+_TODO - Hier erfolgt die Aufgabenbeschreibung eines umfangreichen Features. Allgemeines Blabla und die HintergrÃ¼nde warum das Feature benÃ¶tigt wird_
 
 ## Akzeptantkriterien
-Für die Erfüllung der Aufgabe sind folgende Akzeptanzkriterien zu erfüllen:
+FÃ¼r die ErfÃ¼llung der Aufgabe sind folgende Akzeptanzkriterien zu erfÃ¼llen
 - **fachliche Kriterien**
-    - Bug beseitigt: Verhalten soll so sein
+    - Feature in GUI sichtbar
+    - Nach AusfÃ¼hrung sind folgende Ã„nderung in Datenbank
 - **technische Kriterien**
     - Testcoverage
     - Codestyle: Checkstyle, PMC, PMD
     - Dokumentation
 
 ## Stand
-- [OFFEN] - DATE - Meldung per Email/Tel/... durch XY
 - [OFFEN] - DATE - Konzept (fachl., techn.) [siehe Task](yaio:TODOTASKNUMMER)
 - [OFFEN] - DATE - Vorbereitung Arbeitsumgebung (Branch...) [siehe Task](yaio:TODOTASKNUMMER)
 - [OFFEN] - DATE - Umsetzung [siehe Task](yaio:TODOTASKNUMMER)
@@ -49,7 +49,7 @@ _TODO - Hier stehen Details zur Vorbereitung der Arbeitsumgebung wie z.B. Branch
 
 # Versionsverwaltung
 _TODO - Hier stehen Details zur Versionsverwaltung wie z.B. Branchname, Devbox  usw._
-- create Branch "bugfix-team-id-name"
+- create Branch "feature-team-id-name"
 
 # IDE
 _TODO - Hier stehen Details zur Vorbereitung der IDE usw._
@@ -57,7 +57,7 @@ _TODO - Hier stehen Details zur Vorbereitung der IDE usw._
 # DevBox
 _TODO - Hier stehen Details zur Vorbereitung der Arbeitsumgebung usw._
 
-== OFFEN - Umsetzung [Plan: 4h]
+== OFFEN - Umsetzung [Plan: 20h]
 # Aufgabe
 _TODO - Hier stehen Details zur technischen Umsetzung_
 
@@ -69,7 +69,7 @@ _TODO - Hier stehen Details zur technischen Umsetzung_
 _TODO - Hier stehen details zu techn. Mechanismen, Code-Snippets, Reesourcen (Urls) die benutzt wurden bzw. wo recherchiert wurde._
 
 # Implementierung
-_TODO - Außerdem sollten die geänderten Dateien, Packages und bestenfalls mit wichtigen Code-Snippets erwähnt werden._
+_TODO - AuÃŸerdem sollten die geÃ¤nderten Dateien, Packages und bestenfalls mit wichtigen Code-Snippets erwÃ¤hnt werden._
 - new File src/XYZ zur Validierung
 ```java
 public class
@@ -86,17 +86,17 @@ _TODO - Hier stehen Details zur techn. fach Abnahme_
 - [OFFEN] - DATE - Abnahme durch QA
 
 # techn. Abnahme durch Team
-_TODO - Codereview, Kennzahlen zur Checkstyle, Findbugs usw. prüfen und die Unit-Tests usw. abnehmen lassen_
+_TODO - Codereview, Kennzahlen zur Checkstyle, Findbugs usw. prÃ¼fen und die Unit-Tests usw. abnehmen lassen_
 
 # fachl. Abnahme durch Fachabteilung
 _TODO - Kurze Beschreibung wie die Fachabteilung das ganze im Testsystem testen kann. Hinweise zu Logins usw._
-- _Ggf. Feedback von der Fachabteilung und Änderungsbedarf_
+- _Ggf. Feedback von der Fachabteilung und Ã„nderungsbedarf_
 - _Kurze Dokumentation wie Deployment ins Abnahmesystem erfolgt_
 
 # Abnahme durch QA
 _TODO - Kurze Beschreibung wie die QA das ganze im Testsystem testen kann._
-- _Hinweise zu Modulen die neu sind oder auch geändert wurden, sowie Hinweise zu Modulen die durch die Auswirkungen indirekt betroffen sind._
-- _Ggf. Feedback von der Fachabteilung und Änderungsbedarf_
+- _Hinweise zu Modulen die neu sind oder auch geÃ¤ndert wurden, sowie Hinweise zu Modulen die durch die Auswirkungen indirekt betroffen sind._
+- _Ggf. Feedback von der Fachabteilung und Ã„nderungsbedarf_
 - _Kurze Dokumentation wie Deployment ins Abnahmesystem erfolgt_
 
 == OFFEN - Rollout [Plan: 1h]
@@ -112,7 +112,7 @@ _TODO - Hier stehen Details zum Rollout_
 _TODO - Kurze Dokumentation wie Deployment ins Livesystem erfolgt_
 
 - Checkliste
-    - [OFFEN] - DATE - Info an Fachabteilung über Zeitfenster
+    - [OFFEN] - DATE - Info an Fachabteilung Ã¼ber Zeitfenster
     - [OFFEN] - DATE - Vorarbeiten
     - [OFFEN] - DATE - Umstellung
     - [OFFEN] - DATE - Nacharbeiten
