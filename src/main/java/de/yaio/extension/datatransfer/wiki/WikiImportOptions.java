@@ -39,13 +39,13 @@ public class WikiImportOptions extends ImportOptionsImpl {
     protected boolean flgReadWithWFStatusOnly = false;
     protected String strReadIfStatusInListOnly = null;
 
+    @Override
     public String toString() {
         return "WikiImportOptions" 
                 + " flgReadUe:" + flgReadUe
                 + " flgReadList:" + flgReadList
                 + " flgReadWithStatusOnly:" + flgReadWithStatusOnly
                 + " strReadIfStatusInListOnly:" + strReadIfStatusInListOnly;
-
     }
 
     /**

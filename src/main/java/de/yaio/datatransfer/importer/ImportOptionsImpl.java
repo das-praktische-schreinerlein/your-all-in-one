@@ -45,6 +45,7 @@ public class ImportOptionsImpl implements ImportOptions {
     protected boolean flgParseSysData = true;
 
     protected String strReadIfStatusInListOnly = "";
+    protected String strDefaultMetaNodePraefix = CONST_DEFAULT_META_NODE_PRAEFIX;
     protected String strClassFilter = "";
     protected String strTypeFilter = "";
     
@@ -68,113 +69,20 @@ public class ImportOptionsImpl implements ImportOptions {
         this.strReadIfStatusInListOnly = baseOptions.getStrReadIfStatusInListOnly();
         this.strClassFilter = baseOptions.getStrClassFilter();
         this.strTypeFilter = baseOptions.getStrTypeFilter();
+        this.strDefaultMetaNodePraefix = baseOptions.getStrDefaultMetaNodePraefix();
         
         this.initFilterMaps();
     }
 
-    public boolean isFlgParseDesc() {
-        return flgParseDesc;
-    }
-    public void setFlgParseDesc(final boolean flgParseDesc) {
-        this.flgParseDesc = flgParseDesc;
-    }
-    public boolean isFlgParseDocLayout() {
-        return flgParseDocLayout;
-    }
-    public void setFlgParseDocLayout(final boolean flgParseDocLayout) {
-        this.flgParseDocLayout = flgParseDocLayout;
-    }
 
-    public boolean isFlgParseIst() {
-        return flgParseIst;
-    }
-    public void setFlgParseIst(final boolean flgParseIst) {
-        this.flgParseIst = flgParseIst;
-    }
-    public boolean isFlgParseMetaData() {
-        return flgParseMetaData;
-    }
-    public void setFlgParseMetaData(final boolean flgParseMetaData) {
-        this.flgParseMetaData = flgParseMetaData;
-    }
-    public boolean isFlgParsePlan() {
-        return flgParsePlan;
-    }
-    public void setFlgParsePlan(final boolean flgParsePlan) {
-        this.flgParsePlan = flgParsePlan;
-    }
-    public boolean isFlgParsePlanCalc() {
-        return flgParsePlanCalc;
-    }
-    public void setFlgParsePlanCalc(final boolean flgParsePlanCalc) {
-        this.flgParsePlanCalc = flgParsePlanCalc;
-    }
-    public boolean isFlgParseResLoc() {
-        return flgParseResLoc;
-    }
-
-    public void setFlgParseResLoc(final boolean flgParseResLoc) {
-        this.flgParseResLoc = flgParseResLoc;
-    }
-
-    public boolean isFlgParseSymLink() {
-        return flgParseSymLink;
-    }
-
-    public void setFlgParseSymLink(final boolean flgParseSymLink) {
-        this.flgParseSymLink = flgParseSymLink;
-    }
-
-    public boolean isFlgParseSysData() {
-        return flgParseSysData;
-    }
-    public void setFlgParseSysData(final boolean flgParseSysData) {
-        this.flgParseSysData = flgParseSysData;
-    }
-
-    public String getStrReadIfStatusInListOnly() {
-        return strReadIfStatusInListOnly;
-    }
-    public void setStrReadIfStatusInListOnly(final String strReadIfStatusInListOnly) {
-        this.strReadIfStatusInListOnly = strReadIfStatusInListOnly;
-        this.mpStateFilter = DataUtils.initMapFromCsvString(this.strReadIfStatusInListOnly);
-    }
-    public String getStrClassFilter() {
-        return strClassFilter;
-    }
-    public void setStrClassFilter(final String strClassFilter) {
-        this.mpClassFilter = DataUtils.initMapFromCsvString(this.strClassFilter);
-        this.strClassFilter = strClassFilter;
-    }
-    public String getStrTypeFilter() {
-        return strTypeFilter;
-    }
-    public void setStrTypeFilter(final String strTypeFilter) {
-        this.mpTypeFilter = DataUtils.initMapFromCsvString(this.strTypeFilter);
-        this.strTypeFilter = strTypeFilter;
-    }
-    
-    public int manageIntValues(final Integer value) {
-        return (value != null ? value : 0);
-    }
-    
-    
-    public Map<String, String> getMapClassFilter() {
-        return this.mpClassFilter;
-    };
-    public Map<String, String> getMapTypeFilter() {
-        return this.mpTypeFilter;
-    };
-    public Map<String, String> getMapStateFilter() {
-        return this.mpStateFilter;
-    };
-    
+    @Override
     public void initFilterMaps() {
         this.setStrReadIfStatusInListOnly(this.getStrReadIfStatusInListOnly());
         this.setStrClassFilter(this.getStrClassFilter());
         this.setStrTypeFilter(this.getStrTypeFilter());
     }
     
+    @Override
     public void setAllFlgParse(final boolean value) {
         setFlgParseDesc(value);
         setFlgParseDocLayout(value);
@@ -186,7 +94,7 @@ public class ImportOptionsImpl implements ImportOptions {
         setFlgParseSymLink(value);
         setFlgParseSysData(value);
     }
-    
+
     public void resetDefaults() {
         this.flgParseDesc = false;
         this.flgParseDocLayout = false;
@@ -197,6 +105,7 @@ public class ImportOptionsImpl implements ImportOptions {
         this.flgParseResLoc = false;
         this.flgParseSymLink = false;
         this.flgParseSysData = false;
+        this.strDefaultMetaNodePraefix = "UNKNOWN";
 
         this.setStrReadIfStatusInListOnly("");
         this.setStrClassFilter("");
@@ -219,6 +128,133 @@ public class ImportOptionsImpl implements ImportOptions {
                         + ", strReadIfStatusInListOnly=" + this.strReadIfStatusInListOnly 
                         + ", strClassFilter=" + this.strClassFilter 
                         + ", strTypeFilter=" + this.strTypeFilter 
-                        + "]";
+                        + ", strDefaultMetaNodePraefix:" + this.strDefaultMetaNodePraefix
+        + "]";
     }
+
+    @Override
+    public boolean isFlgParseDesc() {
+        return flgParseDesc;
+    }
+    @Override
+    public void setFlgParseDesc(final boolean flgParseDesc) {
+        this.flgParseDesc = flgParseDesc;
+    }
+    @Override
+    public boolean isFlgParseDocLayout() {
+        return flgParseDocLayout;
+    }
+    @Override
+    public void setFlgParseDocLayout(final boolean flgParseDocLayout) {
+        this.flgParseDocLayout = flgParseDocLayout;
+    }
+    @Override
+    public boolean isFlgParseIst() {
+        return flgParseIst;
+    }
+    @Override
+    public void setFlgParseIst(final boolean flgParseIst) {
+        this.flgParseIst = flgParseIst;
+    }
+    @Override
+    public boolean isFlgParseMetaData() {
+        return flgParseMetaData;
+    }
+    @Override
+    public void setFlgParseMetaData(final boolean flgParseMetaData) {
+        this.flgParseMetaData = flgParseMetaData;
+    }
+    @Override
+    public boolean isFlgParsePlan() {
+        return flgParsePlan;
+    }
+    @Override
+    public void setFlgParsePlan(final boolean flgParsePlan) {
+        this.flgParsePlan = flgParsePlan;
+    }
+    @Override
+    public boolean isFlgParsePlanCalc() {
+        return flgParsePlanCalc;
+    }
+    @Override
+    public void setFlgParsePlanCalc(final boolean flgParsePlanCalc) {
+        this.flgParsePlanCalc = flgParsePlanCalc;
+    }
+    @Override
+    public boolean isFlgParseResLoc() {
+        return flgParseResLoc;
+    }
+    @Override
+    public void setFlgParseResLoc(final boolean flgParseResLoc) {
+        this.flgParseResLoc = flgParseResLoc;
+    }
+    @Override
+    public boolean isFlgParseSymLink() {
+        return flgParseSymLink;
+    }
+    @Override
+    public void setFlgParseSymLink(final boolean flgParseSymLink) {
+        this.flgParseSymLink = flgParseSymLink;
+    }
+    @Override
+    public boolean isFlgParseSysData() {
+        return flgParseSysData;
+    }
+    @Override
+    public void setFlgParseSysData(final boolean flgParseSysData) {
+        this.flgParseSysData = flgParseSysData;
+    }
+    @Override
+    public String getStrReadIfStatusInListOnly() {
+        return strReadIfStatusInListOnly;
+    }
+    @Override
+    public void setStrReadIfStatusInListOnly(final String strReadIfStatusInListOnly) {
+        this.strReadIfStatusInListOnly = strReadIfStatusInListOnly;
+        this.mpStateFilter = DataUtils.initMapFromCsvString(this.strReadIfStatusInListOnly);
+    }
+    @Override
+    public final String getStrDefaultMetaNodePraefix() {
+        return this.strDefaultMetaNodePraefix;
+    }
+    @Override
+    public final void setStrDefaultMetaNodePraefix(final String strDefaultMetaNodePraefix) {
+        this.strDefaultMetaNodePraefix = strDefaultMetaNodePraefix;
+    }
+    @Override
+    public String getStrClassFilter() {
+        return strClassFilter;
+    }
+    @Override
+    public void setStrClassFilter(final String strClassFilter) {
+        this.mpClassFilter = DataUtils.initMapFromCsvString(this.strClassFilter);
+        this.strClassFilter = strClassFilter;
+    }
+    @Override
+    public String getStrTypeFilter() {
+        return strTypeFilter;
+    }
+    @Override
+    public void setStrTypeFilter(final String strTypeFilter) {
+        this.mpTypeFilter = DataUtils.initMapFromCsvString(this.strTypeFilter);
+        this.strTypeFilter = strTypeFilter;
+    }
+    
+    @Override
+    public Map<String, String> getMapClassFilter() {
+        return this.mpClassFilter;
+    };
+    @Override
+    public Map<String, String> getMapTypeFilter() {
+        return this.mpTypeFilter;
+    };
+    @Override
+    public Map<String, String> getMapStateFilter() {
+        return this.mpStateFilter;
+    };
+
+    protected int manageIntValues(final Integer value) {
+        return (value != null ? value : 0);
+    }
+    
 }

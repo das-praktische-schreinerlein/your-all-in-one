@@ -31,7 +31,10 @@ import java.util.Map;
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public interface ImportOptions {
-
+    
+    public static final String CONST_DEFAULT_META_NODE_PRAEFIX = "UNKNOWN";
+    
+    
     boolean isFlgParseDesc();
     void setFlgParseDesc(boolean flgParseDesc);
     boolean isFlgParseDocLayout();
@@ -53,6 +56,8 @@ public interface ImportOptions {
 
     String getStrReadIfStatusInListOnly();
     void setStrReadIfStatusInListOnly(String strReadIfStatusInListOnly);
+    String getStrDefaultMetaNodePraefix();
+    void setStrDefaultMetaNodePraefix(String strDefaultMetaNodePraefix);
     String getStrClassFilter();
     void setStrClassFilter(String strClassFilter);
     String getStrTypeFilter();
