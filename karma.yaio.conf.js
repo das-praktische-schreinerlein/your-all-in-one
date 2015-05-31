@@ -7,10 +7,9 @@ module.exports = function(config) {
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '',
 
-
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['qunit', 'jasmine'], // jasmine, qunit
+    frameworks: ['jasmine'], // jasmine, qunit
 
 
     // list of files / patterns to load in the browser
@@ -39,6 +38,7 @@ module.exports = function(config) {
         'src/main/resources/static/yaio-explorerapp/../js/highlightjs/highlight.pack.js',
         'src/main/resources/static/yaio-explorerapp/../js/toastr/toastr.min.js',
         'src/main/resources/static/yaio-explorerapp/../js/mermaid/mermaid.full.js',
+        'src/main/resources/static/yaio-explorerapp/../js/findandreplacedomtext/findAndReplaceDOMText.js',
         'src/main/resources/static/yaio-explorerapp/../freemind-flash/flashobject.js',
         'src/main/resources/static/yaio-explorerapp/../js/yaio/JMATAllIn.js',
         'src/main/resources/static/yaio-explorerapp/js/jmat.js',
@@ -50,7 +50,19 @@ module.exports = function(config) {
         'src/main/resources/static/yaio-explorerapp/js/yaio-fancytree.js',
         'src/main/resources/static/yaio-explorerapp/js/yaio-explorerapp.js',
         'src/main/resources/static/yaio-explorerapp/../js/angularjs/paging.js',
-        'src/test/static/jstests/yaio-explorerapp/**/*.js'
+        'src/test/static/jstests/resources/js/jasmine/jasmine-jquery.js',
+        'src/test/static/jstests/jasmine-config.js',
+
+        // unit-tests
+        'src/test/static/jstests/yaio-explorerapp/**/*_test.js',
+
+        // fixtures
+        {
+            pattern: 'src/test/static/jstests/fixtures/**/*.html',
+            watched: true,
+            served: true,
+            included: false
+        },
     ],
 
 
@@ -81,7 +93,7 @@ module.exports = function(config) {
 
     // level of logging
     // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-    logLevel: config.LOG_DEBUG,
+    logLevel: config.LOG_INFO,
 
 
     // enable / disable watching file and executing tests whenever any file changes
@@ -90,7 +102,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['PhantomJS', 'IE'], // 'PhantomJS', 'Chrome', 'Firefox'
+    browsers: ['PhantomJS'], // 'PhantomJS', 'Chrome', 'Firefox', 'IE'
 
 
     // Continuous Integration mode
