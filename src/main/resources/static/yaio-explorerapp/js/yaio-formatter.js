@@ -454,7 +454,7 @@ function formatDescBlock(descBlock) {
  * <h4>FeatureDomain:</h4>
  *     GUI
  * <h4>FeatureDescription:</h4>
- *     executes checklist-formatter on the block [use checkListConfigs]
+ *     executes checklist-formatter (add span with checklist-Styles) on the block [use checkListConfigs]
  * <h4>FeatureResult:</h4>
  *   <ul>
  *     <li>updates DOM
@@ -474,6 +474,22 @@ function highlightCheckList(descBlock) {
     }
 }
 
+/**
+ * <h4>FeatureDomain:</h4>
+ *     GUI
+ * <h4>FeatureDescription:</h4>
+ *     executes checklist-formatter (add span with checklistFormat) with style and styleclass for all matchers "[XXX]" on descBlock
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>updates DOM
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     Convert
+ * @param descBlock  - id-filter to identify the block to format
+ * @param matchers   - list of matcher which will call as stringfilter of "[" + matcher + "]" to identify checklist-entry
+ * @param styleClass - styleClass to add to span for matcher found 
+ * @param style      - style to add to new span for matcher found
+ */
 function highlightCheckListForMatchers(descBlock, matchers, styleClass, style) {
     var descBlockId = $(descBlock).attr('id');
     console.log("highlightCheckListForMatchers matchers '" + matchers + "' for descBlock: " + descBlockId);
@@ -481,6 +497,23 @@ function highlightCheckListForMatchers(descBlock, matchers, styleClass, style) {
         highlightCheckListForMatcher(descBlock, "[" + matchers[idx] + "]", styleClass, style);
     }
 }
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     GUI
+ * <h4>FeatureDescription:</h4>
+ *     executes checklist-formatter (add span with checklistFormat) with style and styleclass for all matchers "[XXX]" on descBlock
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>updates DOM
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     Convert
+ * @param descBlock  - id-filter to identify the block to format
+ * @param matchers   - matcher will call as stringfilter to identify checklist-entry
+ * @param styleClass - styleClass to add to span for matcher found 
+ * @param style      - style to add to new span for matcher found
+ */
 function highlightCheckListForMatcher(descBlock, matcherStr, styleClass, style) {
     var descBlockId = $(descBlock).attr('id');
     console.log("highlightCheckListForMatcher matcherStr '" + matcherStr + "' for descBlock: " + descBlockId);
