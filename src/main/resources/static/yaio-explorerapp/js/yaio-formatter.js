@@ -41,7 +41,7 @@ var localHtmlId = 1;
 var checkListConfigs = {
     "checklist-state-OPEN": {
         styleClassPraefix: "checklist-state-",
-        matchers: ["OPEN", "OFFEN", "o", "O", "0"]
+        matchers: ["OPEN", "OFFEN", "o", "O", "0", "TODO"]
     },
     "checklist-state-RUNNING": {
         styleClassPraefix: "checklist-state-",
@@ -91,7 +91,7 @@ var checkListConfigs = {
  * @param descText - the string to format
  * @param flgHighlightNow - if is set do syntax-highlighting while markdown-processing, if not set do it later
  * @param headerPrefix - headerPrefix for heading-ids
- * @return - formatted markdown
+ * @return {String} - formatted markdown
  */
 function formatMarkdown(descText, flgHighlightNow, headerPrefix) {
     // prepare descText
@@ -329,7 +329,7 @@ function prepareTextForMermaid(descText) {
     return newDescText;
 }
     
-    /**
+/**
  * <h4>FeatureDomain:</h4>
  *     GUI
  * <h4>FeatureDescription:</h4>
@@ -381,6 +381,21 @@ function convertMarkdownToJira(descText) {
     return newDescText;
 }
 
+/**
+ * <h4>FeatureDomain:</h4>
+ *     GUI
+ * <h4>FeatureDescription:</h4>
+ *     executes mermaid, highlight and checklist-formatter on the block,
+ *     return a flag if a mermaid-block is found an mermaid should be executed
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>returnValue Boolean - flag if a Mermaid-Block is found and mermaid should be executed
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     Convert
+ * @param descBlock - id-filter to identify the block to format
+ * @return {boolean} - flag if a Mermaid-Block is found and mermaid should be executed
+ */
 function formatDescBlock(descBlock) {
     var flgDoMermaid = false;
     var descBlockId = $(descBlock).attr('id');
@@ -435,6 +450,19 @@ function formatDescBlock(descBlock) {
     return flgDoMermaid;
 }
 
+/**
+ * <h4>FeatureDomain:</h4>
+ *     GUI
+ * <h4>FeatureDescription:</h4>
+ *     executes checklist-formatter on the block [use checkListConfigs]
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>updates DOM
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     Convert
+ * @param descBlock - id-filter to identify the block to format
+ */
 function highlightCheckList(descBlock) {
     var descBlockId = $(descBlock).attr('id');
     console.log("highlightCheckList highlight for descBlock: " + descBlockId);
@@ -462,8 +490,12 @@ function highlightCheckListForMatcher(descBlock, matcherStr, styleClass, style) 
             find: regEx,
             replace: function(portion) {
                 var el = document.createElement('span');
-                el.style = style;
-                el.className = styleClass
+                if (style) {
+                    el.style = style;
+                }
+                if (styleClass) {
+                    el.className = styleClass;
+                }
                 el.innerHTML = portion.text;
                 return el;
             }
