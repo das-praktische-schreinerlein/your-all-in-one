@@ -104,6 +104,8 @@ public class ImportController {
                 // create dummy masternode
                 BaseNode masterNode = new BaseNode();
                 masterNode.setSysUID(parentSysUID);
+                masterNode.setMetaNodePraefix(node.getMetaNodePraefix());
+                masterNode.setMetaNodeNummer(node.getMetaNodeNummer());
                 masterNode.setEbene(0);
                 
                 // parse Wiki
