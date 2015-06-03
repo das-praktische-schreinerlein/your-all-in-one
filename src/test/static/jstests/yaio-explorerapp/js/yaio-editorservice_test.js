@@ -30,7 +30,6 @@
  */
 
 (function () {
-    
     describe('Modul yaio-editorservice Service-Funktions (businesslogic calcIstStandFromState)', function () {
         var doCheckCalcIstStandFromState = function(basenode, state, stand) {
             // Given

@@ -30,7 +30,7 @@
  */
 
 (function () {
-    describe('Modul yaio-layout Service-Funktions (layout)', function () {
+    describe('Modul yaio-layout Service-Funktions (layout)', function doSuiteLayout() {
         var originalTimeout;
         beforeEach(function () {
             // add testblock
@@ -43,7 +43,7 @@
             $("body").remove("#testDiv");
         });
 
-        it( "asynchronous test: check toggleTableBlock", function() {
+        it( "asynchronous test: check toggleTableBlock", function doTestToggleTableBlock() {
             // check default
             var isShown = $("#testDiv").css("display");
             expect(isShown).toBe("block");
