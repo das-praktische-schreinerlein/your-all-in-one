@@ -36,7 +36,7 @@ Column1 | Column2 | Column3
 
 
         <!-- SNIP cut from http://yaio-prod.local/examples/markdownhelp/markdownhelp.html -->
-        <div id="markdown_res"><h1 id="undefined_1_-berschrift-ebene-1">Überschrift Ebene 1</h1>
+        <div id="markdown_expected"><h1 id="undefined_1_-berschrift-ebene-1">Überschrift Ebene 1</h1>
 <p>Das hier ist ganz normaler Fließtext.</p>
 <ul>
 <li>Aufzählung Ebene 1<ul>
@@ -174,7 +174,7 @@ Und für ganz strukturierte Leute Checklisten:
 
 
         <!-- SNIP cut from http://yaio-prod.local/examples/markdownhelp/markdownhelp.html -->
-        <textarea id="markdown2jira_res">h1. Überschrift Ebene 1
+        <textarea id="markdown2jira_expected">h1. Überschrift Ebene 1
 Das hier ist ganz normaler Fließtext.
 - Aufzählung Ebene 1
 -- Aufzählung Unterpunkt Ebene2 mit [Link + Label](http://daringfireball.net/projects/markdown/syntax) oder auch ein interner Link zur [YAIO-Spielwiese](yaio:SysPlay1).
@@ -305,7 +305,7 @@ h1. Referenzen
 
 
         <!-- SNIP -->
-        <div id="markdownPrepare_res">
+        <div id="markdownPrepare_expected">
 # Überschrift Ebene
 &lt;script&gt;&lt;/script&gt;
 <br>
@@ -338,5 +338,28 @@ h1. Referenzen
 <br>
 &lt;br /&gt;</div>
         <!-- SNAP -->
-</body>
+
+
+
+        <!-- ############################
+             #### Testarea
+             ############################ 
+        -->
+        <h1>Test-Area addTOCForBlock</h1>
+        <div id="addTOCForBlock_src">
+            <h1>Test1</h1>
+                <h2>Test1.1</h2>
+                <h2>Test1.2</h2>
+            <h1>Test2</h1>
+        </div>
+        <div id="addTOCForBlockEmpty">
+        </div>
+        <div id="addTOCForBlockEmpty_expected">
+        </div>
+        <div id="addTOCForBlockFilled">
+        </div>
+        <div id="addTOCForBlockFilled_expected">
+          <ul class=""><li><a onclick="$('#').scrollView(); return false;" href="" target="_self">Test1</a><ul><li><a onclick="$('#').scrollView(); return false;" href="" target="_self">Test1.1</a></li><li><a onclick="$('#').scrollView(); return false;" href="" target="_self">Test1.2</a></li></ul></li><li><a onclick="$('#').scrollView(); return false;" href="" target="_self">Test2</a></li></ul>
+        </div>
+    </body>
 </html>

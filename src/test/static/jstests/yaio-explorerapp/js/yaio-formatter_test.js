@@ -51,7 +51,7 @@
         it( "formatMarkdown should result html", function doTestFormatMarkdown() {
             // Given
             var src = $("#markdown_src").val();
-            var expected = $("#markdown_res").html().trim();
+            var expected = $("#markdown_expected").html().trim();
             
             // When
             var res = formatMarkdown(src, false).trim();
@@ -85,7 +85,7 @@
             // Given
             var src = $("#markdown_src").val();
             var checkSrc = $("#checklist_src").html(formatMarkdown(src, false));
-            var expected = $("#checklist_res").html().trim();
+            var expected = $("#checklist_expected").html().trim();
             
             // When
             highlightCheckList("#checklist_src");
@@ -145,7 +145,7 @@
 
         it( "convertExplorerLinesAsCheckList should extract checklist from table", function doTestConvertExplorerLinesAsCheckList() {
             // Given
-            var expected = $("#extractchecklist_res").html().trim();
+            var expected = $("#extractchecklist_expected").html().trim();
             
             // When
             var res = convertExplorerLinesAsCheckList().trim();
@@ -173,7 +173,7 @@
         it( "convertMarkdownToJira should convert to jira", function doTestConvertMarkdownToJira() {
             // Given
             var src = $("#markdown2jira_src").val().trim();
-            var expected = $("#markdown2jira_res").val().trim();
+            var expected = $("#markdown2jira_expected").val().trim();
             
             // When
             var res = convertMarkdownToJira(src).trim();
@@ -183,7 +183,7 @@
         });
     });
 
-    describe('Modul yaio-formatter Service-Funktions (TextPrepare)', function doSuiteTexdtPrepare() {
+    describe('Modul yaio-formatter Service-Funktions (TextPrepare)', function doSuiteTextPrepare() {
         beforeEach(function (done) {
             // load async
             setTimeout(function () {
@@ -198,10 +198,10 @@
             localHtmlId = 1;
         });
 
-        it( "prepareTextForMarkdown should replace html-tags outside code and mask empty lines", function doTestConvertMarkdownToJira() {
+        it( "prepareTextForMarkdown should replace html-tags outside code and mask empty lines", function doTestPrepareTextForMarkdown() {
             // Given
             var src = $("#markdownPrepare_src").val().trim();
-            var expected = $("#markdownPrepare_res").html().trim();
+            var expected = $("#markdownPrepare_expected").html().trim();
             
             // When
             var res = prepareTextForMarkdown(src).trim();
@@ -209,8 +209,60 @@
             var reGeneratedExpected = $("<div>" + expected.trim() + "</div>").html(); 
             
             // Then
-            //expect(res).toBe(expected);
             expect(reGeneratedRes).toBe(reGeneratedExpected);
         });
     });
+    
+
+    describe('Modul yaio-formatter Service-Funktions (TOC)', function doSuiteTOC() {
+        beforeEach(function (done) {
+            // load async
+            setTimeout(function () {
+                // load fixture
+                loadFixtures("yaio-formatter_markdown.html");
+                
+                // call done
+                done();
+            }, 1000);
+            
+            // set localHtmlId
+            localHtmlId = 1;
+        });
+
+        it( "addTOCForBlock should render TOC if minDeep reached", function doTestAddTOCForBlockFull() {
+            // Given
+            var expected = $("#addTOCForBlockFilled_expected").html().trim();
+            var expectedDisplay = "block";
+            
+            // When
+            addTOCForBlock("#addTOCForBlockFilled", "#addTOCForBlock_src", { toc: { hide: false, minDeep: 2}});
+            var res = $("#addTOCForBlockFilled").html();
+            var display = $("#addTOCForBlockFilled").css("display");
+            
+            // extract common html
+            var reGeneratedRes = $("<div>" + res.trim() + "</div>").html(); 
+            var reGeneratedExpected = $("<div>" + expected.trim() + "</div>").html(); 
+            reGeneratedExpected = reGeneratedExpected.replace(/href="" /g, '');
+            reGeneratedRes = reGeneratedRes.replace(/href="" /g, '');
+            
+            // Then
+            expect(display).toBe(expectedDisplay);
+            expect(reGeneratedRes).toBe(reGeneratedExpected);
+        });
+
+        it( "addTOCForBlock should not show TOC if minDeep not reached", function doTestAddTOCForBlockEmpty() {
+            // Given
+            var expectedDisplay = "none";
+            
+            // When
+            addTOCForBlock("#addTOCForBlockEmpty", "#addTOCForBlock_src", { toc: { hide: false, minDeep: 6}});
+            var display = $("#addTOCForBlockEmpty").css("display");
+            
+            // Then
+            expect(display).toBe(expectedDisplay);
+        });
+    });
+    
+    
+
 })();
