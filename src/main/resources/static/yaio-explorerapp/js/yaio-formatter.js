@@ -357,9 +357,9 @@ function convertMarkdownToJira(descText) {
             tmpText = '\n' + tmpText;
             
             // lists
-            tmpText = tmpText.replace(/\n  - /g, "\n-- ");
-            tmpText = tmpText.replace(/\n    - /g, "\n--- ");
-            tmpText = tmpText.replace(/\n      - /g, "\n---- ");
+            tmpText = tmpText.replace(/\n    - /g, "\n-- ");
+            tmpText = tmpText.replace(/\n        - /g, "\n--- ");
+            tmpText = tmpText.replace(/\n            - /g, "\n---- ");
 
             // headings
             tmpText = tmpText.replace(/\n##### /g, "\nh5. ");

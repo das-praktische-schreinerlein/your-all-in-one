@@ -68,5 +68,189 @@ Column1 | Column2 | Column3
 </ul>
 </div>
         <!-- SNAP -->
+
+
+
+
+        <!-- SNIP cut from http://yaio-prod.local/examples/markdownhelp/markdownhelp.html -->
+        <textarea id="markdown2jira_src">
+# Überschrift Ebene 1
+Das hier ist ganz normaler Fließtext.
+- Aufzählung Ebene 1
+    - Aufzählung Unterpunkt Ebene2 mit [Link + Label](http://daringfireball.net/projects/markdown/syntax) oder auch ein interner Link zur [YAIO-Spielwiese](yaio:SysPlay1).
+
+## Überschrift Ebene 2
+Ein schönes Feature ist der integrierte Diagramm-Editor.
+- Sequenz-Diagramme
+```mermaid
+sequenceDiagram
+    participant Du
+    participant D'Artagnan
+    Du->>D'Artagnan: Ich habe ein Problem
+    D'Artagnan->>D'Artagnan: denkt nach
+    D'Artagnan->>Du: Ich kann Dir helfen
+```
+- Prozess-Diagramme
+```mermaid
+graph LR
+    A[Du] -->|fragst| B(D'Artagnan)
+    B --> C{D'Artagnan überlegt<br>Kann ich helfen?}
+    C -->|na klar| D[Du bist glücklich]
+    C -->|ich versuchs| D
+```
+- Mindmaps
+
+```yaiomindmap
+- Projektbaum
+  -- Teilprojekt 1
+    --- Aufgabe 1
+    --- Aufgabe 2
+    --- Aufgabe 3
+  -- Teilprojekt 2
+    --- Aufgabe 4
+    --- Aufgabe 5
+```
+
+### Überschrift Ebene 3
+So kann man Code-Blöcke oder ähnliches einbinden.
+```
+Masterplan
+  System
+     Default
+```        
+Das schöne ist, dass ein automatisches Syntaxhighlighting erfolgt, wenn er die Sprache erkennt.
+```
+    #!/bin/bash
+    // activate elements after 1 second
+    setTimeout(function() { 
+        // activate speech recognition and others
+        initLanguageSupport();
+        a = a + 1;
+```
+
+#### Überschrift Ebene 4
+
+Und auch die Einbindung von Bildern ist ganz einfach möglich :-)
+
+![Projektexplorer](/examples/help/hilfe-screen-projektexplorer-uebersicht.png "Übersicht Projektexplorer")
+
+Und immer wieder gerne gesehen: *Tabellen*
+
+Head1 | Head2 | Head3
+----|----|----
+Column1 | Column2 | Column3
+
+Und für ganz strukturierte Leute Checklisten:
+- **Aufgabenliste**
+    - [OFFEN] - Aufgabe
+    - [LATE] - Aufgabe
+    - [RUNNING] - Aufgabe
+    - [BLOCKED] - Aufgabe
+    - [WARNING] - Aufgabe
+    - [DONE] - Aufgabe
+
+- **Testergebnisse**
+    - [TESTOPEN] - Testergebnis
+    - [FAILED] - Testergebnis
+    - [PASSED] - Testergebnis
+
+
+# Referenzen
+- Die Markdown-Syntax orientiert sich an [http://daringfireball.net/projects/markdown/syntax](http://daringfireball.net/projects/markdown/syntax)
+- Die  Syntax der Prozess-Diagramme folgt http://knsv.github.io/mermaid/flowchart.html
+- Und die Syntax der Sequenz-Diagramme folgt http://knsv.github.io/mermaid/sequenceDiagram.html</textarea>
+        <!-- SNAP -->
+
+
+
+
+        <!-- SNIP cut from http://yaio-prod.local/examples/markdownhelp/markdownhelp.html -->
+        <textarea id="markdown2jira_res">h1. Überschrift Ebene 1
+Das hier ist ganz normaler Fließtext.
+- Aufzählung Ebene 1
+-- Aufzählung Unterpunkt Ebene2 mit [Link + Label](http://daringfireball.net/projects/markdown/syntax) oder auch ein interner Link zur [YAIO-Spielwiese](yaio:SysPlay1).
+
+h2. Überschrift Ebene 2
+Ein schönes Feature ist der integrierte Diagramm-Editor.
+- Sequenz-Diagramme
+{code}mermaid
+sequenceDiagram
+    participant Du
+    participant D'Artagnan
+    Du->>D'Artagnan: Ich habe ein Problem
+    D'Artagnan->>D'Artagnan: denkt nach
+    D'Artagnan->>Du: Ich kann Dir helfen
+{code}
+- Prozess-Diagramme
+{code}mermaid
+graph LR
+    A[Du] -->|fragst| B(D'Artagnan)
+    B --> C{D'Artagnan überlegt<br>Kann ich helfen?}
+    C -->|na klar| D[Du bist glücklich]
+    C -->|ich versuchs| D
+{code}
+- Mindmaps
+
+{code}yaiomindmap
+- Projektbaum
+  -- Teilprojekt 1
+    --- Aufgabe 1
+    --- Aufgabe 2
+    --- Aufgabe 3
+  -- Teilprojekt 2
+    --- Aufgabe 4
+    --- Aufgabe 5
+{code}
+
+h3. Überschrift Ebene 3
+So kann man Code-Blöcke oder ähnliches einbinden.
+{code}
+Masterplan
+  System
+     Default
+{code}        
+Das schöne ist, dass ein automatisches Syntaxhighlighting erfolgt, wenn er die Sprache erkennt.
+{code}
+    #!/bin/bash
+    // activate elements after 1 second
+    setTimeout(function() { 
+        // activate speech recognition and others
+        initLanguageSupport();
+        a = a + 1;
+{code}
+
+h4. Überschrift Ebene 4
+
+Und auch die Einbindung von Bildern ist ganz einfach möglich :-)
+
+![Projektexplorer](/examples/help/hilfe-screen-projektexplorer-uebersicht.png "Übersicht Projektexplorer")
+
+Und immer wieder gerne gesehen: *Tabellen*
+
+Head1 | Head2 | Head3
+----|----|----
+Column1 | Column2 | Column3
+
+Und für ganz strukturierte Leute Checklisten:
+- **Aufgabenliste**
+-- [OFFEN] - Aufgabe
+-- [LATE] - Aufgabe
+-- [RUNNING] - Aufgabe
+-- [BLOCKED] - Aufgabe
+-- [WARNING] - Aufgabe
+-- [DONE] - Aufgabe
+
+- **Testergebnisse**
+-- [TESTOPEN] - Testergebnis
+-- [FAILED] - Testergebnis
+-- [PASSED] - Testergebnis
+
+
+h1. Referenzen
+- Die Markdown-Syntax orientiert sich an [http://daringfireball.net/projects/markdown/syntax](http://daringfireball.net/projects/markdown/syntax)
+- Die  Syntax der Prozess-Diagramme folgt http://knsv.github.io/mermaid/flowchart.html
+- Und die Syntax der Sequenz-Diagramme folgt http://knsv.github.io/mermaid/sequenceDiagram.html</textarea>
+        <!-- SNAP -->
+
 </body>
 </html>
