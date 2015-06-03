@@ -154,4 +154,63 @@
             expect(res).toBe(expected);
         });
     });
+
+    describe('Modul yaio-formatter Service-Funktions (convertMarkdownToJira)', function doSuiteConvertMarkdownToJira() {
+        beforeEach(function (done) {
+            // load async
+            setTimeout(function () {
+                // load fixture
+                loadFixtures("yaio-formatter_markdown.html");
+                
+                // call done
+                done();
+            }, 1000);
+            
+            // set localHtmlId
+            localHtmlId = 1;
+        });
+
+        it( "convertMarkdownToJira should convert to jira", function doTestConvertMarkdownToJira() {
+            // Given
+            var src = $("#markdown2jira_src").val().trim();
+            var expected = $("#markdown2jira_res").val().trim();
+            
+            // When
+            var res = convertMarkdownToJira(src).trim();
+            
+            // Then
+            expect(res).toBe(expected);
+        });
+    });
+
+    describe('Modul yaio-formatter Service-Funktions (TextPrepare)', function doSuiteTexdtPrepare() {
+        beforeEach(function (done) {
+            // load async
+            setTimeout(function () {
+                // load fixture
+                loadFixtures("yaio-formatter_markdown.html");
+                
+                // call done
+                done();
+            }, 1000);
+            
+            // set localHtmlId
+            localHtmlId = 1;
+        });
+
+        it( "prepareTextForMarkdown should replace html-tags outside code and mask empty lines", function doTestConvertMarkdownToJira() {
+            // Given
+            var src = $("#markdownPrepare_src").val().trim();
+            var expected = $("#markdownPrepare_res").html().trim();
+            
+            // When
+            var res = prepareTextForMarkdown(src).trim();
+            var reGeneratedRes = $("<div>" + res.trim() + "</div>").html(); 
+            var reGeneratedExpected = $("<div>" + expected.trim() + "</div>").html(); 
+            
+            // Then
+            //expect(res).toBe(expected);
+            expect(reGeneratedRes).toBe(reGeneratedExpected);
+        });
+    });
 })();

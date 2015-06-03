@@ -2,7 +2,11 @@
 
     <body>
 
-
+        <!-- ############################
+             #### Testarea
+             ############################ 
+        -->
+        <h1>Test-Area formatMarkdown</h1>
         <!-- SNIP cut from http://yaio-prod.local/examples/markdownhelp/markdownhelp.html -->
         <textarea id="markdown_src">
 # Überschrift Ebene 1
@@ -72,6 +76,11 @@ Column1 | Column2 | Column3
 
 
 
+        <!-- ############################
+             #### Testarea
+             ############################ 
+        -->
+        <h1>Test-Area convertMarkdownToJira</h1>
         <!-- SNIP cut from http://yaio-prod.local/examples/markdownhelp/markdownhelp.html -->
         <textarea id="markdown2jira_src">
 # Überschrift Ebene 1
@@ -252,5 +261,82 @@ h1. Referenzen
 - Und die Syntax der Sequenz-Diagramme folgt http://knsv.github.io/mermaid/sequenceDiagram.html</textarea>
         <!-- SNAP -->
 
+        <!-- ############################
+             #### Testarea
+             ############################ 
+        -->
+        <h1>Test-Area prepareTextForMarkdown</h1>
+        <textarea id="markdownPrepare_src">
+# Überschrift Ebene
+<script></script>
+<br>
+<br />
+- Test1
+```mermaid
+<script></script>
+
+<br>
+
+<br />
+
+```
+<script></script>
+<br>
+<br />
+- Test2
+```mermaid
+<script></script>
+<br>
+<br />
+```
+- test 3
+```yaiomindmap
+<script></script>
+<br>
+<br />
+```
+<script></script>
+<br>
+<br />
+</textarea>
+        <!-- SNAP -->
+
+
+
+
+        <!-- SNIP -->
+        <div id="markdownPrepare_res">
+# Überschrift Ebene
+&lt;script&gt;&lt;/script&gt;
+<br>
+&lt;br /&gt;
+- Test1
+```mermaid
+<script></script>
+.
+<br>
+.
+<br>
+.
+```
+&lt;script&gt;&lt;/script&gt;
+<br>
+&lt;br /&gt;
+- Test2
+```mermaid
+<script></script>
+<br>
+<br>
+```
+- test 3
+```yaiomindmap
+<script></script>
+<br>
+<br>
+```
+&lt;script&gt;&lt;/script&gt;
+<br>
+&lt;br /&gt;</div>
+        <!-- SNAP -->
 </body>
 </html>
