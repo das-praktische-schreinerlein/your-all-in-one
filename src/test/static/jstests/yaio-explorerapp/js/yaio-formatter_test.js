@@ -30,7 +30,7 @@
  */
 
 (function () {
-    describe('Modul yaio-formatter Service-Funktions (Formatter formatMarkdown)', function () {
+    describe('Modul yaio-formatter Service-Funktions (Formatter formatMarkdown)', function doSuiteFormatMarkdown() {
         beforeEach(function (done) {
             // load async
             setTimeout(function () {
@@ -48,7 +48,7 @@
         afterEach(function () {
         });
 
-        it( "formatMarkdown should result html", function() {
+        it( "formatMarkdown should result html", function doTestFormatMarkdown() {
             // Given
             var src = $("#markdown_src").val();
             var expected = $("#markdown_res").html().trim();
@@ -63,7 +63,7 @@
         });
     });
 
-    describe('Modul yaio-formatter Service-Funktions (Formatter highlightCheckList)', function () {
+    describe('Modul yaio-formatter Service-Funktions (Formatter highlightCheckList)', function doSuiteHighlightCheckList() {
         beforeEach(function (done) {
             // load async
             setTimeout(function () {
@@ -81,7 +81,7 @@
         afterEach(function () {
         });
 
-        it( "highlightCheckList should result checklist", function() {
+        it( "highlightCheckList should result checklist", function doTestHighlightCheckList() {
             // Given
             var src = $("#markdown_src").val();
             var checkSrc = $("#checklist_src").html(formatMarkdown(src, false));
@@ -96,7 +96,7 @@
         });
     });
 
-    describe('Modul yaio-formatter Service-Funktions (Formatter checklists)', function () {
+    describe('Modul yaio-formatter Service-Funktions (Formatter checklists)', function doSuiteHighlightCheckListForMatcher() {
         var doCheckHighlightCheckList = function(src, expected, formatter) {
             // Given
             $('body').html("<div id='test'>" + src + "</div>");
@@ -109,7 +109,7 @@
             expect(res).toBe(expected);
         }
 
-        it( "highlightCheckListForMatchers should result checklist", function() {
+        it( "highlightCheckListForMatchers should result checklist", function doTestHighlightCheckListForMatchers() {
             doCheckHighlightCheckList(
                     "<ul><li>[TEST1] - xyz</li><li>[TEST3] - xyz</li></ul>", 
                     "<ul><li><span class=\"style1\">[TEST1]</span> - xyz</li><li>[TEST3] - xyz</li></ul>", 
@@ -118,13 +118,40 @@
             });
         });
 
-        it( "highlightCheckListForMatcher should result checklist", function() {
+        it( "highlightCheckListForMatcher should result checklist", function doTestHighlightCheckListForMatcher() {
             doCheckHighlightCheckList(
                     "<ul><li>[TEST1] - xyz</li><li>[TEST3] - xyz</li></ul>", 
                     "<ul><li><span class=\"style1\">[TEST1]</span> - xyz</li><li>[TEST3] - xyz</li></ul>", 
                     function() {
                         highlightCheckListForMatcher($("#test"), "[TEST1]", "style1");
             });
+        });
+    });
+
+    describe('Modul yaio-formatter Service-Funktions (extract checklists)', function doSuiteExtractCheckList() {
+        beforeEach(function (done) {
+            // load async
+            setTimeout(function () {
+                // load fixture
+                loadFixtures("yaio-formatter_extractchecklist.html");
+                
+                // call done
+                done();
+            }, 1000);
+            
+            // set localHtmlId
+            localHtmlId = 1;
+        });
+
+        it( "convertExplorerLinesAsCheckList should extract checklist from table", function doTestConvertExplorerLinesAsCheckList() {
+            // Given
+            var expected = $("#extractchecklist_res").html().trim();
+            
+            // When
+            var res = convertExplorerLinesAsCheckList().trim();
+            
+            // Then
+            expect(res).toBe(expected);
         });
     });
 })();
