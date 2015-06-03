@@ -229,7 +229,7 @@
             localHtmlId = 1;
         });
 
-        it( "addTOCForBlock should render TOC if minDeep reached", function doTestAddTOCForBlockFull() {
+        it( "addTOCForBlock should render TOC and show it if minDeep reached", function doTestAddTOCForBlockFull() {
             // Given
             var expected = $("#addTOCForBlockFilled_expected").html().trim();
             var expectedDisplay = "block";
