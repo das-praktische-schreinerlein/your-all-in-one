@@ -50,15 +50,15 @@ module.exports = function(config) {
         'src/main/resources/static/yaio-explorerapp/js/yaio-fancytree.js',
         'src/main/resources/static/yaio-explorerapp/js/yaio-explorerapp.js',
         'src/main/resources/static/yaio-explorerapp/../js/angularjs/paging.js',
-        'src/test/static/jstests/resources/js/jasmine/jasmine-jquery.js',
-        'src/test/static/jstests/jasmine-config.js',
+        'src/test/static/unit/resources/js/jasmine/jasmine-jquery.js',
+        'src/test/static/unit/jasmine-config.js',
 
         // unit-tests
-        'src/test/static/jstests/yaio-explorerapp/**/*_test.js',
+        'src/test/static/unit/yaio-explorerapp/**/*_test.js',
 
         // fixtures
         {
-            pattern: 'src/test/static/jstests/fixtures/**/*.html',
+            pattern: 'src/test/static/unit/fixtures/**/*.html',
             watched: true,
             served: true,
             included: false
