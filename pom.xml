@@ -80,6 +80,8 @@
         <maven.checkstyle.plugin.version>2.12.1</maven.checkstyle.plugin.version>
         <maven.findbugs.plugin.version>2.5.5</maven.findbugs.plugin.version>
         <maven.pmd.plugin.version>3.1</maven.pmd.plugin.version>
+        <maven.antrun.plugin.version>1.6</maven.antrun.plugin.version>
+        <maven.ng.protractor.version>0.0.2</maven.ng.protractor.version>
     </properties>
 
     <!-- use these repositories to solve dependencies and get jars -->
@@ -722,6 +724,75 @@
                     <karmaFailureIgnore>false</karmaFailureIgnore>
                     <reporters>dots,junit</reporters>
                 </configuration>
+            </plugin>
+            
+            <!--  integration-tests -->
+            <plugin>
+                <groupId>com.github.greengerong</groupId>
+                <artifactId>maven-ng-protractor</artifactId>
+                <version>${maven.ng.protractor.version}</version>
+                <configuration>
+                    <protractor>c:\Users\micha\AppData\Roaming\npm\protractor.cmd</protractor>
+                    <configFile>${project.basedir}/protractor.yaio.conf.js</configFile>
+                    <!-- 
+                    <beforeRunning>${project.basedir}/kill-chrome.bat</beforeRunning>
+                     -->
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>ng-protractor</id>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>${maven.antrun.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>start-third-parties</id>
+                        <phase>pre-integration-test</phase>
+                        <configuration>
+                            <target>
+                                <!-- clean all instances -->
+                                <exec executable="cmd.exe">
+                                    <arg value="/C" />
+                                    <arg value="${basedir}/sbin/stop-yaioapp.bat" />
+                                </exec>
+                                <!-- start instance -->
+                                <exec executable="cmd.exe">
+                                    <arg value="/C" />
+                                    <arg value="${basedir}/sbin/start-yaioapp-test.bat" />
+                                </exec>
+                                <!-- wait till instance is up -->
+                                <sleep seconds="30" />
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>stop-third-parties</id>
+                        <phase>post-integration-test</phase>
+                        <configuration>
+                            <target>
+                                <!-- clean all instances -->
+                                <exec executable="cmd.exe">
+                                    <arg value="/C" />
+                                    <arg value="${basedir}/sbin/stop-yaioapp.bat" />
+                                </exec>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                   </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
