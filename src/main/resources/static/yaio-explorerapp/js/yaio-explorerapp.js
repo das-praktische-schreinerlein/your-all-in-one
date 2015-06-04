@@ -96,6 +96,9 @@ yaioM.config(function($routeProvider) {
         .when('/login', {
             controller : 'AuthController',
             templateUrl: 'templates/login.html' })
+        .when('/logout', {
+            controller : 'AuthController',
+            templateUrl: 'templates/login.html' })
         .when('/frontpage/:nodeId', { 
             controller:  'FrontPageCtrl',
             templateUrl: 'templates/frontpage.html' })
@@ -326,6 +329,7 @@ yaioM.controller('AuthController', function($rootScope, $scope, $location, $http
             $rootScope.authenticated = false;
             $location.path("/");
         }).error(function(data) {
+            $location.path("/");
             $rootScope.authenticated = false;
         });
     }    
