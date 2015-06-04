@@ -101,7 +101,7 @@ function formatMarkdown(descText, flgHighlightNow, headerPrefix) {
     // my own code-handler
     renderer.code = function (code, language) {
         code = htmlEscapeTextLazy(code);
-        if (code.match(/^sequenceDiagram/)||code.match(/^graph/)) {
+        if (code.match(/^sequenceDiagram/) || code.match(/^graph/) || code.match(/^gantt/)) {
             return '<div id="inlineMermaid' + (localHtmlId++) + '" class="mermaid">'+ prepareTextForMermaid(code ) + '</div>';
         } else if (language !== undefined 
                    && (language.match(/^yaiomindmap/) || language.match(/^yaiofreemind/))) {
