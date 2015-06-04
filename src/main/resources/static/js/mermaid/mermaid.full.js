@@ -28259,7 +28259,8 @@ var conf = {
     sidePadding: 75,
     gridLineStartPadding: 35,
     fontSize: 11,
-    fontFamily: '"Open-Sans", "sans-serif"'
+    fontFamily: '"Open-Sans", "sans-serif"',
+    numberSectionStyles: 5
 };
 module.exports.setConf = function (cnf) {
     var keys = Object.keys(cnf);
@@ -28371,6 +28372,8 @@ module.exports.draw = function (text, id) {
             .attr('class', function (d) {
                 for (var i = 0; i < categories.length; i++) {
                     if (d.type === categories[i]) {
+                        
+                        alert("conf.numberSectionStyles:" + conf.numberSectionStyles);
                         return 'section section' + (i % conf.numberSectionStyles);
                     }
                 }
@@ -30904,14 +30907,22 @@ var init = function () {
     for (i = 0; i < nodes.length; i++) {
         var element = nodes[i];
 
+        var id = 'mermaidChart' + nextId++;
+        
+        // check if visible
+        if (! (element.offsetWidth > 0 && element.offsetHeight > 0)) {
+            console.log("init skip invisible mermaid i:" + i + "id:" + id);
+            continue;
+        }
+
         // Check if previously processed
         if(!element.getAttribute("data-processed")) {
             element.setAttribute("data-processed", true);
         } else {
             continue;
         }
-
-        var id = 'mermaidChart' + nextId++;
+        // do it
+        console.log("init mermaid i:" + i + "id:" + id);
 
         var txt = element.innerHTML;
         txt = txt.replace(/>/g,'&gt;');
