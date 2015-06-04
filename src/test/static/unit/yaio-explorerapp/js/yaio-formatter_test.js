@@ -48,7 +48,7 @@
         afterEach(function () {
         });
 
-        it( "formatMarkdown should result html", function doTestFormatMarkdown() {
+        it( "should format Markdown as html (formatMarkdown)", function doTestFormatMarkdown() {
             // Given
             var src = $("#markdown_src").val();
             var expected = $("#markdown_expected").html().trim();
@@ -81,7 +81,7 @@
         afterEach(function () {
         });
 
-        it( "highlightCheckList should result checklist", function doTestHighlightCheckList() {
+        it( "should convert html-listentries to formatted checklist (highlightCheckList)", function doTestHighlightCheckList() {
             // Given
             var src = $("#markdown_src").val();
             var checkSrc = $("#checklist_src").html(formatMarkdown(src, false));
@@ -109,7 +109,7 @@
             expect(res).toBe(expected);
         }
 
-        it( "highlightCheckListForMatchers should result checklist", function doTestHighlightCheckListForMatchers() {
+        it( "should convert html-listentries to formatted checklist (highlightCheckListForMatchers)", function doTestHighlightCheckListForMatchers() {
             doCheckHighlightCheckList(
                     "<ul><li>[TEST1] - xyz</li><li>[TEST3] - xyz</li></ul>", 
                     "<ul><li><span class=\"style1\">[TEST1]</span> - xyz</li><li>[TEST3] - xyz</li></ul>", 
@@ -118,7 +118,7 @@
             });
         });
 
-        it( "highlightCheckListForMatcher should result checklist", function doTestHighlightCheckListForMatcher() {
+        it( "should convert html-listentries to formatted checklist (highlightCheckListForMatcher)", function doTestHighlightCheckListForMatcher() {
             doCheckHighlightCheckList(
                     "<ul><li>[TEST1] - xyz</li><li>[TEST3] - xyz</li></ul>", 
                     "<ul><li><span class=\"style1\">[TEST1]</span> - xyz</li><li>[TEST3] - xyz</li></ul>", 
@@ -143,7 +143,7 @@
             localHtmlId = 1;
         });
 
-        it( "convertExplorerLinesAsCheckList should extract checklist from table", function doTestConvertExplorerLinesAsCheckList() {
+        it( "should extract checklist from fancytree-table (convertExplorerLinesAsCheckList)", function doTestConvertExplorerLinesAsCheckList() {
             // Given
             var expected = $("#extractchecklist_expected").html().trim();
             
@@ -170,7 +170,7 @@
             localHtmlId = 1;
         });
 
-        it( "convertMarkdownToJira should convert to jira", function doTestConvertMarkdownToJira() {
+        it( "should convert markdown to jira (convertMarkdownToJira)", function doTestConvertMarkdownToJira() {
             // Given
             var src = $("#markdown2jira_src").val().trim();
             var expected = $("#markdown2jira_expected").val().trim();
@@ -198,7 +198,7 @@
             localHtmlId = 1;
         });
 
-        it( "prepareTextForMarkdown should replace html-tags outside code and mask empty lines", function doTestPrepareTextForMarkdown() {
+        it( "should pepare markdown by replacing html-tags outside code and mask empty lines (prepareTextForMarkdown)", function doTestPrepareTextForMarkdown() {
             // Given
             var src = $("#markdownPrepare_src").val().trim();
             var expected = $("#markdownPrepare_expected").html().trim();
@@ -229,7 +229,7 @@
             localHtmlId = 1;
         });
 
-        it( "addTOCForBlock should render TOC and show it if minDeep reached", function doTestAddTOCForBlockFull() {
+        it( "should render TOC and show it if minDeep reached (addTOCForBlock)", function doTestAddTOCForBlockFull() {
             // Given
             var expected = $("#addTOCForBlockFilled_expected").html().trim();
             var expectedDisplay = "block";
@@ -250,7 +250,7 @@
             expect(reGeneratedRes).toBe(reGeneratedExpected);
         });
 
-        it( "addTOCForBlock should not show TOC if minDeep not reached", function doTestAddTOCForBlockEmpty() {
+        it( "should not show TOC if minDeep not reached (addTOCForBlock)", function doTestAddTOCForBlockEmpty() {
             // Given
             var expectedDisplay = "none";
             
@@ -262,7 +262,5 @@
             expect(display).toBe(expectedDisplay);
         });
     });
-    
-    
 
 })();
