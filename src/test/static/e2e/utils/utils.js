@@ -1,12 +1,10 @@
 'use strict';
 
 var Utils = {
-    waitUntilElementPresent: function (elem, time) {
-        browser.wait(function () {
-                return elem.isDisplayed();
-            }, 
-            time);
+    waitUntilElementPresent: function (elem, timeout) {
+        browser.wait(elem.isDisplayed, timeout);
     },
+
     waitTime: function (time) {
         browser.sleep(time);
     },
