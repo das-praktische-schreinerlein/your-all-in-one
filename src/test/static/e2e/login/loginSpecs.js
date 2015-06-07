@@ -2,15 +2,20 @@
  * test the LoginPage of YAIO
  * 
  */
+'use strict';
+
 var YAIOLoginPage = require('./login.po.js');
+var YAIOFrontPage = require('../frontpage/frontpage.po.js');
+
 describe('yaio loginpage', function() {
     var yaioLoginPage = new YAIOLoginPage();
+    var yaioFrontPage = new YAIOFrontPage();
     
     beforeEach(function() {
-        browser.get(protractor.yaioBaseAppUrl + '/login');
+        yaioLoginPage.openLoginPage();
     });
     afterEach(function() {
-        browser.get(protractor.yaioBaseAppUrl + '/logout');
+        yaioLoginPage.doLogout();
     });
     
     it('should show login', function() {
@@ -20,7 +25,7 @@ describe('yaio loginpage', function() {
     it('should reject login with invalid credentials', function() {
         // fill loginform with invalid credentials
         yaioLoginPage.username.sendKeys('admin');
-        yaioLoginPage.password.sendKeys('false');
+        yaioLoginPage.password.sendKeys('blabla');
         
         // send login
         yaioLoginPage.submit.click();
@@ -31,15 +36,10 @@ describe('yaio loginpage', function() {
     
     it('should show explorer after login', function() {
         // fill loginform with valid credentials
-        yaioLoginPage.username.sendKeys('admin');
-        yaioLoginPage.password.sendKeys('secret');
-        
-        // send login
-        yaioLoginPage.submit.click();
+        yaioLoginPage.submitValidLoginPage();
     
-        // expect login-error
-        var head = element(by.id('ue_explorer'));
-        expect(head.getAttribute('id')).toEqual("ue_explorer");
+        // expect frontContent
+        expect(yaioFrontPage.fontContentLeft.getAttribute('id')).toEqual("front-content-left");
     });
 });
 
