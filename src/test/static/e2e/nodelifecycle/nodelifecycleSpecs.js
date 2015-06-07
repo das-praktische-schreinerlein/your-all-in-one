@@ -72,7 +72,9 @@ describe('yaio loginpage', function() {
             browser.ignoreSynchronization = true;
             protractor.utils.waitUntilElementPresent(yaioNodePage.containerMasterdata, 2000);
             protractor.utils.waitUntilElementPresent(yaioNodePage.expanderSysPlay1, 2000);
-            protractor.utils.waitTime(20, 1000);
+            
+            // wait till data is loaded
+            protractor.utils.waitTime(1000);
             expect(yaioNodePage.expanderSysPlay1.getAttribute('id')).toEqual('expanderSysPlay1');
             protractor.utils.waitUntilElementPresent(yaioNodePage.linkCreateChildSysTest1, 2000);
             expect(yaioNodePage.linkCreateChildSysTest1.getAttribute('id')).toEqual('cmdCreateSysTest1');

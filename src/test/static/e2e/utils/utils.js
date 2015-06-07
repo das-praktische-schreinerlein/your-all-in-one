@@ -7,12 +7,8 @@ var Utils = {
             }, 
             time);
     },
-    waitTime: function (runs, time) {
-        var i = 1;
-        browser.wait(function () {
-                return i++ == runs;
-            }, 
-            time);
+    waitTime: function (time) {
+        browser.sleep(time);
     },
 
     findByText: function() {
