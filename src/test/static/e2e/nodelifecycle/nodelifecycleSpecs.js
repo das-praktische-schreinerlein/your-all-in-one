@@ -8,7 +8,7 @@ var YAIOLoginPage = require('../login/login.po.js');
 var YAIOFrontPage = require('../frontpage/frontpage.po.js');
 var YAIONodePage = require('../explorer/node.po.js');
 
-describe('yaio loginpage', function() {
+describe('yaio explorer', function() {
 
     var yaioLoginPage = new YAIOLoginPage();
     var yaioFrontPage = new YAIOFrontPage();
@@ -29,6 +29,7 @@ describe('yaio loginpage', function() {
         yaioFrontPage.linkExplorer.click();
         
         // expect SysPlay1
+        protractor.utils.waitUntilElementPresent(yaioNodePage.expanderSysPlay1, 2000);
         expect(yaioNodePage.expanderSysPlay1.getAttribute('id')).toEqual('expanderSysPlay1');
         
         // expand SysPlay1
