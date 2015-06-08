@@ -715,14 +715,14 @@
                     <configFile>karma.yaio.conf.js</configFile>
                     <!-- <junitReportFile>src/main/webapp/resources/test-results.xml</junitReportFile> -->
                     <reportsDirectory>${project.build.directory}/karma-reports</reportsDirectory>
-                    <browsers>PhantomJS,IE</browsers>
+                    <!-- <browsers>PhantomJS,IE</browsers> -->
                     <autoWatch>false</autoWatch>
                     <singleRun>true</singleRun>
                     <colors>true</colors>
                     <skipKarma>false</skipKarma>
                     <skipTests>false</skipTests>
                     <karmaFailureIgnore>false</karmaFailureIgnore>
-                    <reporters>dots,junit</reporters>
+                    <!-- <reporters>story</reporters> -->
                 </configuration>
             </plugin>
             
@@ -759,15 +759,9 @@
                         <configuration>
                             <target>
                                 <!-- clean all instances -->
-                                <exec executable="cmd.exe">
-                                    <arg value="/C" />
-                                    <arg value="${basedir}/sbin/stop-yaioapp.bat" />
-                                </exec>
+                                <exec executable="cmd.exe"><arg value="/C" /><arg value="${basedir}/sbin/stop-yaioapp.bat" /></exec>
                                 <!-- start instance -->
-                                <exec executable="cmd.exe">
-                                    <arg value="/C" />
-                                    <arg value="${basedir}/sbin/start-yaioapp-test.bat" />
-                                </exec>
+                                <exec executable="cmd.exe"><arg value="/C" /><arg value="${basedir}/sbin/start-yaioapp-test.bat" /></exec>
                                 <!-- wait till instance is up -->
                                 <sleep seconds="30" />
                             </target>
@@ -782,10 +776,7 @@
                         <configuration>
                             <target>
                                 <!-- clean all instances -->
-                                <exec executable="cmd.exe">
-                                    <arg value="/C" />
-                                    <arg value="${basedir}/sbin/stop-yaioapp.bat" />
-                                </exec>
+                                <exec executable="cmd.exe"><arg value="/C" /><arg value="${basedir}/sbin/stop-yaioapp.bat" /></exec>
                             </target>
                         </configuration>
                         <goals>
