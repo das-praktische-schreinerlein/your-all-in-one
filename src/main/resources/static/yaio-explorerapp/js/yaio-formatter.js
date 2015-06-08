@@ -536,7 +536,20 @@ function highlightCheckListForMatcher(descBlock, matcherStr, styleClass, style) 
     });
 }
 
-
+/**
+ * <h4>FeatureDomain:</h4>
+ *     GUI
+ * <h4>FeatureDescription:</h4>
+ *     extract data from explorerlines (table.fancytree-ext-table tr) and format 
+ *     them as linked markdown-checklists ([state] - [title](yaio:number)
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>return String - checklist in yaio-markdown-format
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     Convert
+ * @return <String>      - checklist in yaio-markdown-format
+ */
 function convertExplorerLinesAsCheckList() {
     var checkList = "";
     
@@ -601,6 +614,99 @@ function extractCheckListStatefromStateSpan(block) {
         }
     }
     return null;
+}
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     GUI
+ * <h4>FeatureDescription:</h4>
+ *     extract data from explorerlines (table.fancytree-ext-table tr) and format 
+ *     them as mermaid-gantt-markdown
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>return String - mermaid-gantt-markdown
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     Convert
+ * @return <String>      - mermaid-gantt-markdown
+ */
+function convertExplorerLinesAsGanttMarkdown() {
+    // get title
+    var title = $("#masterTr td.fieldtype_name").text();
+
+    var ganttMarkdown = "```mermaid\n"
+        + "gantt\n"
+        + "    title " + title + "\n"
+        + "    dateFormat  DD.MM.YYYY\n"
+        + "\n";
+    var ganttMarkdownPlan = "";
+    var ganttMarkdownIst  = "";
+    
+    // iterate all nodelines
+    $("table.fancytree-ext-table tr").each(function(i, line) {
+        // extract data
+        var titleSpan = $(line).find("span.fancytree-title2");
+        var numberSpan = $(line).find("div.field_metanummer");
+        var startEndPlanDiv = $(line).find("div.fieldtype_fromto.field_planChildrenSum");
+        var startEndIstDiv = $(line).find("div.fieldtype_fromto.field_istChildrenSum");
+        
+        // extract content
+        var title = null;
+        var number = null;
+        var start = null;
+        var end = null;
+        if ($(titleSpan).size() > 0) {
+            title = $(titleSpan).text();
+        }
+        if ($(numberSpan).size() > 0) {
+            number = $(numberSpan).text();
+        }
+        ganttMarkdownPlan += generateGanttMarkdownLineFromBlock(title, number, startEndPlanDiv);
+        ganttMarkdownIst += generateGanttMarkdownLineFromBlock(title, number, startEndIstDiv);
+    });
+
+    // concat
+    ganttMarkdownPlan = ganttMarkdownPlan.length > 0 ? "    section Plan\n" + ganttMarkdownPlan : "";
+    ganttMarkdownIst = ganttMarkdownIst.length > 0 ? "    section Ist\n" + ganttMarkdownIst : "";
+    ganttMarkdown += ganttMarkdownPlan + ganttMarkdownIst  + "```\n";
+    
+    return ganttMarkdown;
+}
+
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     GUI
+ * <h4>FeatureDescription:</h4>
+ *     generate a mermaid-gantt-markdown-line for selector (if start, end-date can be extracted)
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>return String - mermaid-gantt-markdown
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     Convert
+ * @param title          - title of the line
+ * @param number         - referenc
+ * @param selector       - seletor to filter the element with jquery
+ * @return <String>      - mermaid-gantt-markdown-line
+ */
+function generateGanttMarkdownLineFromBlock(title, number, selector) {
+    if ($(selector).size() > 0) {
+        // extract dates
+        var dates = $(selector).html().replace(/\&nbsp\;/g, ' ').split("-");
+        if (dates.length != 2) {
+            return "";
+        }
+        var start = dates[0];
+        var end = dates[1];
+
+        // if all set: generate gantt
+        console.log("extractGanttMarkdownLineFromBlock: title:" + title + " number:" + number + " start:" + start + " end:" + end);
+        if (title && number && start && end) {
+            return "    " + title + ": " + number + ", " + start + ", " + end + "\n";
+        }
+    }
+    return "";
 }
 
 function addServicesToDiagrammBlock(block, type, downloadLink) {

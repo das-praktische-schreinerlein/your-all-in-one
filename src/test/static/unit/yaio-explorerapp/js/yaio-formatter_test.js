@@ -155,6 +155,33 @@
         });
     });
 
+    describe('Modul yaio-formatter Service-Funktions (extract ganttMarkdown)', function doSuiteExtractGanttMarkdown() {
+        beforeEach(function (done) {
+            // load async
+            setTimeout(function () {
+                // load fixture
+                loadFixtures("yaio-formatter_extractganttmarkdown.html");
+                
+                // call done
+                done();
+            }, 1000);
+            
+            // set localHtmlId
+            localHtmlId = 1;
+        });
+
+        it( "should extract ganttMarkdown from fancytree-table (convertExplorerLinesAsGanttMarkdown)", function doTestConvertExplorerLinesAsCheckList() {
+            // Given
+            var expected = $("#extractganttmarkdown_expected").html().trim();
+            
+            // When
+            var res = convertExplorerLinesAsGanttMarkdown().trim();
+            
+            // Then
+            expect(res).toBe(expected);
+        });
+    });
+
     describe('Modul yaio-formatter Service-Funktions (convertMarkdownToJira)', function doSuiteConvertMarkdownToJira() {
         beforeEach(function (done) {
             // load async

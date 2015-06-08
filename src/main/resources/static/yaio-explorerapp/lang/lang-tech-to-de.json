@@ -18,6 +18,7 @@
         "tooltip.command.DoSearch": "Benutzen Sie die Volltextsuche um einzelne Elemente unabhängig von der Position im Baum zu finden.<br>Das Suchergebnis ist nach der Position im Baum sortiert. Druck Klick auf die Icons in der 1. Spalte können Suie das gefundene Element direkt im Baum ansehen.",
         "tooltip.command.Export": "Exportieren Sie die aktuelle Node mit allen Kindselementen in verschiedene Formate", 
         "tooltip.command.ExportAsChecklist": "Export als Markdown-Checkliste",
+        "tooltip.command.ExportAsGanttMarkdown": "Export als GanttMarkdown",
         "tooltip.command.ExportForm": "Konfigurieren Sie den Export selbst", 
         "tooltip.command.ExportDirect": "Benutzen Sie eionen vorkonfigurierten Export", 
         "tooltip.command.ExportWiki": "Exportieren Sie die aktuelle Node mit allen Kindselementen als Wiki zur Weiterbearbeitung und eventuellen Import in ein anderes D'Artagnan-System :-)", 

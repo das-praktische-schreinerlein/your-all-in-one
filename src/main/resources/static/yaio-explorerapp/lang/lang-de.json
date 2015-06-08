@@ -7,6 +7,7 @@
     "common.command.DoSearch": "Suchen",
     "common.command.Export": "Exporte...",
     "common.command.ExportAsChecklist": "Export als Checkliste",
+    "common.command.ExportAsGanttMarkdown": "Export als GanttMarkdown",
     "common.command.ExportForm": "Konfigurierbar",
     "common.command.ExportWiki": "als Wiki",
     "common.command.ExportHtml": "Html",

@@ -2064,7 +2064,7 @@ function openJiraExportWindow(nodeId) {
  * <h4>FeatureDomain:</h4>
  *     GUI
  * <h4>FeatureDescription:</h4>
- *     open the clipboardwindow for the explorercontent 
+ *     open the clipboardwindow with generated checklist 
  * <h4>FeatureResult:</h4>
  *   <ul>
  *     <li>GUI-result: opens clipboard window with checklist-converted node-content
@@ -2091,6 +2091,40 @@ function yaioExportExplorerLinesAsCheckList() {
         }
     });    
 }
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     GUI
+ * <h4>FeatureDescription:</h4>
+ *     open the clipboardwindow with generated gantt-source
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>GUI-result: opens clipboard window with gantt-converted node-content
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Convert
+ */
+function yaioExportExplorerLinesAsGanttMarkdown() {
+    // convert and secure
+    var ganttSrc = convertExplorerLinesAsGanttMarkdown();
+    ganttSrc = htmlEscapeText(ganttSrc);
+    
+    // set clipboard-content
+    $( "#clipboard-content" ).html(ganttSrc);
+    
+    // show message
+    $( "#clipboard-box" ).dialog({
+        modal: true,
+        width: "700px",
+        buttons: {
+          Ok: function() {
+            $( this ).dialog( "close" );
+          }
+        }
+    });    
+}
+
+
 
 /**
  * <h4>FeatureDomain:</h4>

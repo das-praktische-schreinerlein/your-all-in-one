@@ -18,6 +18,7 @@
         "tooltip.command.DoSearch": "Use to find full-text search to individual elements regardless of the position in Tree And The search result is sorted by position in the tree print Click on the icons in the first column.. Suie can directly view the element found in the tree. ",
         "tooltip.command.Export": "Export the current node with all child elements to different formats",
         "tooltip.command.ExportAsChecklist": "Export as Markdown-todolist",
+        "tooltip.command.ExportAsGanttMarkdown": "Export as GanttMarkdown",
         "tooltip.command.ExportForm": "Configure your export",
         "tooltip.command.ExportDirect": "Use preconfigured exports",
         "tooltip.command.ExportWiki": "Export the current node with all child elements as a wiki for further processing and eventual import into another D'Artagnan system:-)",
