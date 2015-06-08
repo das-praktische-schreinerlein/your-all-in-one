@@ -39,10 +39,16 @@ exports.config = {
     jasmineNodeOpts: {
         showColors: true, // Use colors in the command line report.
         defaultTimeoutInterval: 360000,
+        print: function() {}
     },
     
-    // addidtion config for protractor
+    // add Screenshots on error
     onPrepare: function() {
+        // add spec-reporter
+        var SpecReporter = require('jasmine-spec-reporter');
+        // add jasmine spec reporter
+        jasmine.getEnv().addReporter(new SpecReporter({displayStacktrace: true}));
+
         // add ScreenshotReporter
         jasmine.getEnv().addReporter(
             new ScreenShotReporter({
