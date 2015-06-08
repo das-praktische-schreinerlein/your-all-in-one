@@ -28373,7 +28373,6 @@ module.exports.draw = function (text, id) {
                 for (var i = 0; i < categories.length; i++) {
                     if (d.type === categories[i]) {
                         
-                        alert("conf.numberSectionStyles:" + conf.numberSectionStyles);
                         return 'section section' + (i % conf.numberSectionStyles);
                     }
                 }
