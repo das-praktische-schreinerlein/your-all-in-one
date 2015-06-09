@@ -912,40 +912,19 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
      * <h4>FeatureDomain:</h4>
      *     Editor
      * <h4>FeatureDescription:</h4>
-     *     export GUI As Checklist
+     *     export GUI As Overview
      * <h4>FeatureResult:</h4>
      *   <ul>
-     *     <li>exportAsChecklist
+     *     <li>exportAsOverview
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     GUI Callback
      */
-    $scope.exportAsChecklist = function() {
-        console.log("exportAsChecklist");
-        yaioExportExplorerLinesAsCheckList();
+    $scope.exportAsOverview = function() {
+        console.log("exportAsOverview");
+        yaioExportExplorerLinesAsOverview();
         return false;
     }
-    
-    
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Editor
-     * <h4>FeatureDescription:</h4>
-     *     export GUI As Gantt-Markdown
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>exportAsGanttMarkdown
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Callback
-     */
-    $scope.exportAsGanttMarkdown = function() {
-        console.log("exportAsGanttMarkdown");
-        yaioExportExplorerLinesAsGanttMarkdown();
-        return false;
-    }
-    
-
     /**
      * <h4>FeatureDomain:</h4>
      *     Editor

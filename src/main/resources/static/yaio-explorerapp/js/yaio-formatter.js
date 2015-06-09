@@ -551,7 +551,11 @@ function highlightCheckListForMatcher(descBlock, matcherStr, styleClass, style) 
  * @return <String>      - checklist in yaio-markdown-format
  */
 function convertExplorerLinesAsCheckList() {
-    var checkList = "";
+    // get title
+    var title = $("#masterTr td.fieldtype_name").text();
+    var now = formatGermanDateTime((new Date()).getTime());
+
+    var checkList = "# Checklist: " + title + " (Stand: " + now + ")\n\n";
     
     // iterate all nodelines
     $("table.fancytree-ext-table tr").each(function(i, line) {
@@ -633,10 +637,12 @@ function extractCheckListStatefromStateSpan(block) {
 function convertExplorerLinesAsGanttMarkdown() {
     // get title
     var title = $("#masterTr td.fieldtype_name").text();
+    var now = formatGermanDateTime((new Date()).getTime());
 
-    var ganttMarkdown = "```mermaid\n"
+    var ganttMarkdown = "# Gantt: " + title + " (Stand: " + now + ")\n\n"
+        + "```mermaid\n"
         + "gantt\n"
-        + "    title " + title + "\n"
+        + "    title " + title + " (Stand: " + now + ")\n"
         + "    dateFormat  DD.MM.YYYY\n"
         + "\n";
     var ganttMarkdownPlan = "";

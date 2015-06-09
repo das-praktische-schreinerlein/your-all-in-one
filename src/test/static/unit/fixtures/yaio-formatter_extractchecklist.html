@@ -8,6 +8,93 @@
         <h1>Test-Area convertExplorerLinesAsCheckList</h1>
     <!-- SNIP cut from http://yaio-prod.local/yaio-explorerapp/yaio-explorerapp.html#/show/SysPlay10 -->
     <div id="extractchecklist_src">
+
+          <table id="masterTable">
+              <!-- define columngroups -->
+              <colgroup>
+              <col class="container_field fieldtype_name field_name">
+              <col class="block_nodedata">
+              <col class="block_nodegantt">
+              <col class="container_field fieldtype_actions">
+              </colgroup>
+              <thead>
+                <tr id="tab_header"> 
+                  <th id="tab_name_haeder">
+                    <!-- show name-header and data-toggler -->
+                    <span class="ng-scope" translate="fancytree.table.headline.name">Titel</span>
+                    <span style="display: inline-block; width: 300px;" data-tooltip="Wechseln Sie hier zwischen der Ansicht der Rohdaten und einer Darstellung als Gantt-Diagramm. <br /><br /><b>Achtung!!!</b> Die Gantt-Darstellung ist nur eine grobe Verteilung der Plan/Ist-Stunden auf den gesamten Plan/Ist-Zeitraum. Aufwende ohne Zeitraum werden erstmal den Eltern mit Plan/Ist-Datum zugerechnet bzw. wenn das Element ohne Datum sichtbar wird, überhaupt nicht eingerechnet! Aufwende der Kindselemente werden über den gesamten Zeitraum des Elternelement verteilt und können sich somit völlig verschieben! Also Plan+Ist am besten immer mit Datum pflegen, sonst gibt es in der Gantt-Sicht 'komische' Effekte ;-)" lang="de">
+                      <a onclick="yaioShowGanttBlock();return false;" id="tabTogglerGantt" class="button tabToggler ng-scope" translate="fancytree.table.headline.tabTogglerGantt">Als Gantt-Diagramm anzeigen</a>
+                      <a onclick="yaioShowDataBlock();return false;" id="tabTogglerData" class="button tabToggler ng-scope" translate="fancytree.table.headline.tabTogglerData" style="display: none">Rohdaten anzeigen</a>
+                    </span>
+                    </th>
+                  <th class="block_nodedata">
+                    <!-- show workflow-header -->
+                    <div class="container_data_row">
+                      <div class="container_field fieldtype_basedata fieldtype_metanummer field_metanummer field_center ng-scope" translate="fancytree.table.headline.metanummer">Nr.<br>&nbsp;</div>
+                      <div class="container_field fieldtype_basedata fieldtype_type field_type field_center ng-scope" translate="fancytree.table.headline.type">Typ<br>&nbsp;</div>
+                      <div class="container_field fieldtype_additionaldata fieldtype_stand field_istChildrenSumStand field_center ng-scope" translate="fancytree.table.headline.istChildrenSumStand">Ist<br>Stand</div>
+                      <div class="container_field fieldtype_additionaldata fieldtype_aufwand field_istChildrenSumAufwand field_center ng-scope" translate="fancytree.table.headline.istChildrenSumAufwand"> <br>Aufwand</div>
+                      <div class="container_field fieldtype_additionaldata fieldtype_fromto field_istChildrenSum field_center ng-scope" translate="fancytree.table.headline.istChildrenSum"> <br>Zeitraum</div>
+                      <div class="container_field fieldtype_additionaldata fieldtype_aufwand field_planChildrenSumAufwand field_center ng-scope" translate="fancytree.table.headline.planChildrenSumAufwand">Plan<br>Aufwand</div>
+                      <div class="container_field fieldtype_additionaldata fieldtype_fromto field_planChildrenSum field_center ng-scope" translate="fancytree.table.headline.planChildrenSum"> <br>Zeitraum</div>
+                      <div class="container_field fieldtype_additionaldata fieldtype_descToggler toggler_show">
+                         <br>
+                         <a data-tooltip="Zeige für alle Knoten die detaillierten Beschreibungen an." id="toggler_desc_all" onclick="toggleAllNodeDescContainer(); return false;" href="#" class="toggler_hidden" lang="de"></a>
+                      </div>
+                    </div></th>
+                  <th class="block_nodegantt">
+                    <!-- show gantt-header -->
+                    <div class="gantt_container" id="gantt_container_head">
+                       <div class="gantt_aufwand ng-scope" id="gantt_aufwand_head" translate="fancytree.table.headline.ganttaufwand">Aufwand</div>
+                       <div class="gantt_bar" id="gantt_bar_head" data-tooltip="Wählen Sie hier den Zeitbereich aus, für welchen das Gantt-Diagramm dargstellt werden soll. <br /><br /><b>Achtung!!!</b> Die Gantt-Darstellung ist nur eine grobe Verteilung der Plan/Ist-Stunden auf den gesamten Plan/Ist-Zeitraum. Aufwende ohne Zeitraum werden nicht eingerechnet. Aufwende der Kindselemente werden über den gesamten Zeitraum des Elternelement verteilt und können sich somit völlig verschieben." lang="de">
+                        <input placeholder="dd.mm.jjjj" name="ganttRangeStart" pattern="\d{2}\.\d{2}\.\d{4}" maxsize="10" value="10.03.2015" class="inputtype_date ng-scope ng-pristine ng-valid hasDatepicker" id="inputGanttRangeStart" ng-model="yaioUtils.ganttOptions.ganttRangeStart" ng-change="recalcGanttBlocks()" type="text">
+                        <a ng-click="recalcGanttBlocks();" class="button ng-scope" translate="fancytree.table.headline.ganttrange">darzustellender Zeitraum</a> 
+                        <a ng-click="recalcGanttForIstOrPlan(true);" class="button ng-scope" translate="fancytree.table.headline.recalcGanttIst">Ist</a> 
+                        <a ng-click="recalcGanttForIstOrPlan(false);" class="button ng-scope" translate="fancytree.table.headline.recalcGanttPlan">Plan</a> 
+                        <input placeholder="dd.mm.jjjj" name="ganttRangeEnde" pattern="\d{2}\.\d{2}\.\d{4}" maxsize="10" value="06.09.2015" class="inputtype_date ng-scope ng-pristine ng-valid hasDatepicker" style="text-align: right" id="inputGanttRangeEnde" ng-model="yaioUtils.ganttOptions.ganttRangeEnd" ng-change="recalcGanttBlocks()" type="text"></div></div></th>
+                       
+                    
+                  <th>
+                    <!-- show actions-header -->
+                    <span class="ng-scope" translate="fancytree.table.headline.actions">Aktionen</span>
+                    <br>
+                    <div class="fieldtype_sysToggler toggler_show">
+                      <a data-tooltip="Zeige für alle Knoten die Metadaten an." id="toggler_sys_all" onclick="toggleAllNodeSysContainer(); return false;" href="#" class="toggler_hidden" lang="de"></a>
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="container_nodeline" id="masterTr" data-value="SysPlay10">
+                  <td class="container_field fieldtype_name field_name"><div class="entry node-state-WARNING"><b class="ng-binding"><span class="ng-scope ng-binding" translate="WARNING">Überschritten</span> - Ein Beispiel-Projekt</b></div></td>
+                  <td style="display: table-cell;" class="block_nodedata"><div class="container_data_table"><div class="container_data_row"><div class="container_field fieldtype_basedata fieldtype_metanummer field_metanummer">SysPlay10</div><div class="container_field fieldtype_basedata fieldtype_type field_type node-state-WARNING" lang="de">Aufgabe</div><div class="container_field fieldtype_additionaldata fieldtype_stand field_istChildrenSumStand node-state-WARNING">&nbsp;44%</div><div class="container_field fieldtype_additionaldata fieldtype_aufwand field_istChildrenSumAufwand node-state-WARNING">&nbsp;12.0h</div><div class="container_field fieldtype_additionaldata fieldtype_fromto field_istChildrenSum node-state-WARNING">&nbsp;04.03.2015-04.04.2015</div><div class="container_field fieldtype_additionaldata fieldtype_aufwand field_planChildrenSumAufwand node-state-WARNING">&nbsp;35.0h</div><div class="container_field fieldtype_additionaldata fieldtype_fromto field_planChildrenSum node-state-WARNING">&nbsp;01.03.2015-11.10.2025</div><div class="container_field fieldtype_descToggler toggler_show"><a class="toggler_hidden" href="#" onclick="toggleNodeDescContainer('SysPlay10'); return false;" id="toggler_desc_SysPlay10" data-tooltip="Zeige die detaillierte Beschreibung an." lang="de"></a></div></div><div style="display: none;" class="togglecontainer field_nodeSys" id="detail_sys_SysPlay10"><div class="container_field fieldtype_basedata fieldtype_sysChangeDate field_sysChangeDate" lang="de">Stand: 15.05.2015 00:22</div><div class="container_field fieldtype_basedata fieldtype_sysChangeCount field_sysChangeCount" lang="de"> (V 1)</div><div class="container_field fieldtype_basedata fieldtype_sysCreateDate field_sysCreateDate" lang="de">angelegt: 15.05.2015 00:22</div><div class="container_field fieldtype_basedata fieldtype_statistik field_statistik" lang="de">Kinder: 10 Workflows: 8 ToDos: 7</div></div><div style="display: none;" class="togglecontainer field_nodeDesc" id="detail_desc_SysPlay10"><div class="container-commands-desc" id="commands_desc_SysPlay10" data-tooltip="Hier können Sie wählen, ob die Beschreibung im Fenster umgebrochen (vorteilhaft bei Briefen und Fließtext) oder ob das Original bebehalten werden soll (empfehlenswert für Quelltexte, Logs usw.)." lang="de"><input id="cmd_toggle_content_desc_SysPlay10" onclick="togglePreWrap('#content_desc_SysPlay10');togglePreWrap('#container_content_desc_SysPlay10'); return true;" type="checkbox"><span lang="de">Originallayout anzeigen (ohne Anpassung an die Fensterbreite!)?</span><a class="button command-desc-jiraexport" onclick="openJiraExportWindow('SysPlay10'); return false;" data-tooltip="Konvertiere Markdown-Format nach Jira." lang="de">Export Jira</a><a class="button command-desc-txtexport" onclick="openTxtExportWindow($('#container_content_desc_SysPlay10').text()); return false;" data-tooltip="Konvertiere Format in Text." lang="de">Export Text</a></div><div style="display: block;" class="container-toc-desc" id="toc_desc_SysPlay10"><h1>Inhalt</h1><ul class=""><li><a href="" onclick="$('#SysPlay10_1_aufgabe').scrollView(); return false;" target="_self">Aufgabe</a></li><li><a href="" onclick="$('#SysPlay10_2_stand').scrollView(); return false;" target="_self">Stand</a></li><li><a href="" onclick="$('#SysPlay10_3_grunds-tzliche-struktur').scrollView(); return false;" target="_self">grundsätzliche Struktur</a></li></ul></div><div id="container_content_desc_SysPlay10" class="container-content-desc"><h1 id="SysPlay10_1_aufgabe">Aufgabe</h1>
+<p>Ziel des Projektes ist es, Euch ein paar der Möglichkeiten von D'Artagnan zu auszuzeigen...</p>
+<h1 id="SysPlay10_2_stand">Stand</h1>
+<p>Schaut euch die Teilaufgaben an... Soweit ich sehe sind wir im Verzug :-(</p>
+<h1 id="SysPlay10_3_grunds-tzliche-struktur">grundsätzliche Struktur</h1>
+<p>Die Ursprungsplanung ging von 2 Teilprojekten mit verschiedenen Aufgaben aus.</p>
+<div class="servicesyaiomindmap" id="servicesinlineMindmap4"><div><a href="/converters/mindmap?source=-%20Projektbaum%0A%20%20--%20Teilprojekt%201%0A%20%20%20%20---%20Aufgabe%201%0A%20%20%20%20---%20Aufgabe%202%0A%20%20%20%20---%20Aufgabe%203%0A%20%20--%20Teilprojekt%202%0A%20%20%20%20---%20Aufgabe%204%0A%20%20%20%20---%20Aufgabe%205" id="downloadinlineMindmap4" target="_blank">Download</a><a href="#" style="display: none;" id="toggleoriginlineMindmap4" onclick="toggleWithLinks('#toggleoriginlineMindmap4', '#togglesourceinlineMindmap4', '#inlineMindmap4', '#fallbackinlineMindmap4'); return false;" target="_blank">Diagramm</a><a href="#" id="togglesourceinlineMindmap4" onclick="toggleWithLinks('#toggleoriginlineMindmap4', '#togglesourceinlineMindmap4', '#inlineMindmap4', '#fallbackinlineMindmap4'); return false;" target="_blank">Source</a></div></div><div class="yaiomindmap-source" id="fallbackinlineMindmap4"><pre>- Projektbaum
+  -- Teilprojekt 1
+    --- Aufgabe 1
+    --- Aufgabe 2
+    --- Aufgabe 3
+  -- Teilprojekt 2
+    --- Aufgabe 4
+    --- Aufgabe 5</pre></div><div id="inlineMindmap4" class="yaiomindmap"><embed type="application/x-shockwave-flash" src="/freemind-flash/visorFreemind.swf" id="visorFreeMind" bgcolor="#a0a0f0" quality="high" flashvars="openUrl=_blank&amp;startCollapsedToLevel=10&amp;maxNodeWidth=200&amp;mainNodeShape=elipse&amp;justMap=false&amp;initLoadFile=/converters/mindmap%3Fsource%3D-%2520Projektbaum%250A%2520%2520--%2520Teilprojekt%25201%250A%2520%2520%2520%2520---%2520Aufgabe%25201%250A%2520%2520%2520%2520---%2520Aufgabe%25202%250A%2520%2520%2520%2520---%2520Aufgabe%25203%250A%2520%2520--%2520Teilprojekt%25202%250A%2520%2520%2520%2520---%2520Aufgabe%25204%250A%2520%2520%2520%2520---%2520Aufgabe%25205&amp;defaultToolTipWordWrap=200&amp;offsetX=left&amp;offsetY=top&amp;buttonsPos=top&amp;min_alpha_buttons=20&amp;max_alpha_buttons=100&amp;scaleTooltips=false" height="100%" width="100%" align="middle"></div></div></div></div></td>
+                  <td style="display: none;" class="block_nodegantt"><div class="container_gantt_table"><div class="container_gantt_row"><div id="gantt_plan_container_SysPlay10" class="gantt_container gantt_plan_container" data-tooltip="<b>Achtung!!!</b> Die Gantt-Darstellung ist nur eine grobe Verteilung der Plan/Ist-Stunden auf den gesamten Plan/Ist-Zeitraum. Aufwende ohne Zeitraum werden erstmal den Eltern mit Plan/Ist-Datum zugerechnet bzw. wenn das Element ohne Datum sichtbar wird, überhaupt nicht eingerechnet! Aufwende der Kindselemente werden über den gesamten Zeitraum des Elternelement verteilt und können sich somit völlig verschieben! Also Plan+Ist am besten immer mit Datum pflegen, sonst gibt es in der Gantt-Sicht 'komische' Effekte ;-)" lang="de"><div id="gantt_plan_aufwand_SysPlay10" class="gantt_aufwand ganttblock_plan_aufwand node-state-WARNING"></div><div data-rangeaufwand="0" style="width: 0px; margin-left: 0px;" id="gantt_plan_bar_SysPlay10" class="gantt_bar gantt_plan_bar node-state-WARNING">&nbsp;</div></div><div id="gantt_planChildrenSum_container_SysPlay10" class="gantt_container gantt_planChildrenSum_container" data-tooltip="<b>Achtung!!!</b> Die Gantt-Darstellung ist nur eine grobe Verteilung der Plan/Ist-Stunden auf den gesamten Plan/Ist-Zeitraum. Aufwende ohne Zeitraum werden erstmal den Eltern mit Plan/Ist-Datum zugerechnet bzw. wenn das Element ohne Datum sichtbar wird, überhaupt nicht eingerechnet! Aufwende der Kindselemente werden über den gesamten Zeitraum des Elternelement verteilt und können sich somit völlig verschieben! Also Plan+Ist am besten immer mit Datum pflegen, sonst gibt es in der Gantt-Sicht 'komische' Effekte ;-)" lang="de"><div id="gantt_planChildrenSum_aufwand_SysPlay10" class="gantt_aufwand ganttblock_planChildrenSum_aufwand node-state-WARNING"><span class="gantt_aufwand_label">planSum:</span><span class="gantt_aufwand_value">6h</span></div><div data-rangeaufwand="1.6244693998173125" style="width: 450px; margin-left: 0px;" id="gantt_planChildrenSum_bar_SysPlay10" class="gantt_bar gantt_planChildrenSum_bar node-state-WARNING">&nbsp;</div></div><div id="gantt_ist_container_SysPlay10" class="gantt_container gantt_ist_container" data-tooltip="<b>Achtung!!!</b> Die Gantt-Darstellung ist nur eine grobe Verteilung der Plan/Ist-Stunden auf den gesamten Plan/Ist-Zeitraum. Aufwende ohne Zeitraum werden erstmal den Eltern mit Plan/Ist-Datum zugerechnet bzw. wenn das Element ohne Datum sichtbar wird, überhaupt nicht eingerechnet! Aufwende der Kindselemente werden über den gesamten Zeitraum des Elternelement verteilt und können sich somit völlig verschieben! Also Plan+Ist am besten immer mit Datum pflegen, sonst gibt es in der Gantt-Sicht 'komische' Effekte ;-)" lang="de"><div id="gantt_ist_aufwand_SysPlay10" class="gantt_aufwand ganttblock_ist_aufwand node-state-WARNING"></div><div data-rangeaufwand="0" style="width: 0px; margin-left: 0px;" id="gantt_ist_bar_SysPlay10" class="gantt_bar gantt_ist_bar node-state-WARNING">&nbsp;</div></div><div id="gantt_istChildrenSum_container_SysPlay10" class="gantt_container gantt_istChildrenSum_container" data-tooltip="<b>Achtung!!!</b> Die Gantt-Darstellung ist nur eine grobe Verteilung der Plan/Ist-Stunden auf den gesamten Plan/Ist-Zeitraum. Aufwende ohne Zeitraum werden erstmal den Eltern mit Plan/Ist-Datum zugerechnet bzw. wenn das Element ohne Datum sichtbar wird, überhaupt nicht eingerechnet! Aufwende der Kindselemente werden über den gesamten Zeitraum des Elternelement verteilt und können sich somit völlig verschieben! Also Plan+Ist am besten immer mit Datum pflegen, sonst gibt es in der Gantt-Sicht 'komische' Effekte ;-)" lang="de"><div id="gantt_istChildrenSum_aufwand_SysPlay10" class="gantt_aufwand ganttblock_istChildrenSum_aufwand node-state-WARNING"><span class="gantt_aufwand_label">istSum:</span><span class="gantt_aufwand_value">4h</span></div><div data-rangeaufwand="9.69906790945406" style="width: 63.2438px; margin-left: 0px;" id="gantt_istChildrenSum_bar_SysPlay10" class="gantt_bar gantt_istChildrenSum_bar node-state-WARNING">&nbsp;</div></div></div></div></td>
+                  <td class="container_field fieldtype_actions">
+                    <div class="fieldtype_sysToggler toggler_show">
+                        <a ng-click="yaioUtils.toggleSysContainerForNode(node);" id="toggler_sys_SysPlay10" class="toggler_hidden" data-tooltip="Zeige die Metadaten an." lang="de"></a>
+                     </div>
+                     <a ng-click="yaioUtils.openNodeEditorForNode(node, 'edit');" id="cmdEditSysPlay10" class="yaio-icon-edit" data-tooltip="Bearbeite die Daten" lang="de"></a>
+                    <a ng-click="yaioUtils.openNodeEditorForNode(node, 'create');" id="cmdCreateSysPlay10" class="yaio-icon-create" "="" data-tooltip="Erzeuge ein neues KindsElement" lang="de"></a>
+                    <a ng-click="yaioUtils.openNodeEditorForNode(node, 'createsymlink');" id="cmdCreateSymLinkSysPlay10" class="yaio-icon-createsymlink" data-tooltip="Erzeuge einen SymLink der auf dieses Element verweist" lang="de"></a>
+                  </td>
+                </tr>
+              </tbody>
+          </table>
+
+
 <table id="tree" class="fancytree-container fancytree-ext-table fancytree-ext-gridnav" tabindex="-1">
               <!-- define columngroups -->
               <colgroup>
@@ -171,7 +258,9 @@ Es überschneidet sich übrigens mit "Teilprojekt 1".</p>
     <!-- SNAP -->
     
     <!-- SNIP cut after "Export als Checkliste" from http://yaio-prod.local/yaio-explorerapp/yaio-explorerapp.html#/show/SysPlay10 -->
-    <textarea id="extractchecklist_expected">- [WARNING] - [Teilprojekt 1](yaio:SysPlay1)
+    <textarea id="extractchecklist_expected"># Checklist: Überschritten - Ein Beispiel-Projekt (Stand: 09.06.2015 10:25)
+
+- [WARNING] - [Teilprojekt 1](yaio:SysPlay1)
     - [DONE] - [Erledigte Teilaufgabe](yaio:SysPlay2)
     - [WARNING] - [In Terminverzug](yaio:SysPlay3)
     - [RUNNING] - [Wir arbeiten dran](yaio:SysPlay4)

@@ -2064,53 +2064,23 @@ function openJiraExportWindow(nodeId) {
  * <h4>FeatureDomain:</h4>
  *     GUI
  * <h4>FeatureDescription:</h4>
- *     open the clipboardwindow with generated checklist 
+ *     open the clipboardwindow with generated checklist and gantt-markdown
  * <h4>FeatureResult:</h4>
  *   <ul>
- *     <li>GUI-result: opens clipboard window with checklist-converted node-content
+ *     <li>GUI-result: opens clipboard window with checklist/ganttmarkdown-converted node-content
  *   </ul> 
  * <h4>FeatureKeywords:</h4>
  *     GUI Convert
  */
-function yaioExportExplorerLinesAsCheckList() {
+function yaioExportExplorerLinesAsOverview() {
     // convert and secure
     var checkListSrc = convertExplorerLinesAsCheckList();
     checkListSrc = htmlEscapeText(checkListSrc);
-    
-    // set clipboard-content
-    $( "#clipboard-content" ).html(checkListSrc);
-    
-    // show message
-    $( "#clipboard-box" ).dialog({
-        modal: true,
-        width: "700px",
-        buttons: {
-          Ok: function() {
-            $( this ).dialog( "close" );
-          }
-        }
-    });    
-}
-
-/**
- * <h4>FeatureDomain:</h4>
- *     GUI
- * <h4>FeatureDescription:</h4>
- *     open the clipboardwindow with generated gantt-source
- * <h4>FeatureResult:</h4>
- *   <ul>
- *     <li>GUI-result: opens clipboard window with gantt-converted node-content
- *   </ul> 
- * <h4>FeatureKeywords:</h4>
- *     GUI Convert
- */
-function yaioExportExplorerLinesAsGanttMarkdown() {
-    // convert and secure
     var ganttSrc = convertExplorerLinesAsGanttMarkdown();
     ganttSrc = htmlEscapeText(ganttSrc);
     
     // set clipboard-content
-    $( "#clipboard-content" ).html(ganttSrc);
+    $( "#clipboard-content" ).html(checkListSrc + "\n\n" +  ganttSrc);
     
     // show message
     $( "#clipboard-box" ).dialog({
@@ -2123,8 +2093,6 @@ function yaioExportExplorerLinesAsGanttMarkdown() {
         }
     });    
 }
-
-
 
 /**
  * <h4>FeatureDomain:</h4>

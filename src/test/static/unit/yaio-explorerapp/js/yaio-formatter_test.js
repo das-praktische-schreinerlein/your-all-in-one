@@ -149,6 +149,10 @@
             
             // When
             var res = convertExplorerLinesAsCheckList().trim();
+
+            // generalize
+            res = res.replace(/\(Stand: .*?\)/g, "(Stand: XXX)");
+            expected = expected.replace(/\(Stand: .*?\)/g, "(Stand: XXX)");
             
             // Then
             expect(res).toBe(expected);
@@ -176,6 +180,10 @@
             
             // When
             var res = convertExplorerLinesAsGanttMarkdown().trim();
+            
+            // generalize
+            res = res.replace(/\(Stand: .*?\)/g, "(Stand: XXX)");
+            expected = expected.replace(/\(Stand: .*?\)/g, "(Stand: XXX)");
             
             // Then
             expect(res).toBe(expected);
