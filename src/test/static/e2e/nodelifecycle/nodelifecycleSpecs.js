@@ -23,6 +23,7 @@ describe('yaio explorer', function() {
     
     it('should create/edit/delete a new node', function() {
         // expect frontPage
+        protractor.utils.waitUntilElementPresent(yaioFrontPage.fontContentLeft, 2000);
         expect(yaioFrontPage.fontContentLeft.getAttribute('id')).toEqual("front-content-left");
         
         // open explorer-link
@@ -71,15 +72,12 @@ describe('yaio explorer', function() {
         yaioNodePage.buttonSaveTask.click().then(function () {
             // wait for result
             browser.ignoreSynchronization = true;
-            protractor.utils.waitUntilElementPresent(yaioNodePage.containerMasterdata, 2000);
-            protractor.utils.waitUntilElementPresent(yaioNodePage.expanderSysPlay1, 2000);
-            
+
             // wait till data is loaded
-            protractor.utils.waitTime(1000);
-            expect(yaioNodePage.expanderSysPlay1.getAttribute('id')).toEqual('expanderSysPlay1');
-            protractor.utils.waitUntilElementPresent(yaioNodePage.linkCreateChildSysTest1, 2000);
+            protractor.utils.waitUntilElementPresent(yaioNodePage.linkCreateChildSysTest1, 10000);
             expect(yaioNodePage.linkCreateChildSysTest1.getAttribute('id')).toEqual('cmdCreateSysTest1');
             
+            // wait till data is loaded
             var eleNewTaskName = element(by.cssContainingText('span.fancytree-title2', taskName));
             expect(eleNewTaskName.getText()).toEqual(taskName);
             browser.ignoreSynchronization = false;

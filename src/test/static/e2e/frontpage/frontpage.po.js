@@ -5,9 +5,9 @@
 
 var YAIOFrontpagePage = function() {
     // explorer-link
-    this.linkExplorer = element(by.css('[translate="common.command.OpenTreeView"]'));
+    this.linkExplorer = $('[translate="common.command.OpenTreeView"]');
 
     // content
-    this.fontContentLeft = element(by.id('front-content-left'));
+    this.fontContentLeft = $('#front-content-left');
 };
 module.exports = YAIOFrontpagePage;

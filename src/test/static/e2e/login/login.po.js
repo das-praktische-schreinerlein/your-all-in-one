@@ -7,10 +7,10 @@ var YAIOLoginPage = function() {
     // login-form
     this.username = element(by.model('credentials.username'));
     this.password = element(by.model('credentials.password'));
-    this.submit = element(by.css('[translate="loginform.button.login"]'));
+    this.submit = $('[translate="loginform.button.login"]');
     
     // results
-    this.errorMsg = element(by.css('.alert-danger'));
+    this.errorMsg = $('.alert-danger');
     
     this.openLoginPage = function () {
         browser.manage().window().setSize(
