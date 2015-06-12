@@ -22,66 +22,12 @@ describe('yaio explorer', function() {
     });
     
     it('should create/edit/delete a new node', function() {
-        // expect frontPage
-        protractor.utils.waitUntilElementPresent(yaioFrontPage.fontContentLeft, 2000);
-        expect(yaioFrontPage.fontContentLeft.getAttribute('id')).toEqual("front-content-left");
         
-        // open explorer-link
-        yaioFrontPage.linkExplorer.click();
-        
-        // expect SysPlay1
-        protractor.utils.waitUntilElementPresent(yaioNodePage.expanderSysPlay1, 2000);
-        expect(yaioNodePage.expanderSysPlay1.getAttribute('id')).toEqual('expanderSysPlay1');
-        
-        // expand SysPlay1
-        yaioNodePage.expanderSysPlay1.click();
-        protractor.utils.waitUntilElementPresent(yaioNodePage.linkCreateChildSysTest1, 2000);
-        expect(yaioNodePage.linkCreateChildSysTest1.getAttribute('id')).toEqual('cmdCreateSysTest1');
-        
-        // create child for SysTest1
-        yaioNodePage.linkCreateChildSysTest1.click();
-        protractor.utils.waitUntilElementPresent(yaioNodePage.inputCreateNodeType, 2000);
-        expect(yaioNodePage.inputCreateNodeType.getAttribute('id')).toEqual('inputCreateNodeType');
-
-        // select Aufgabe
-        yaioNodePage.inputCreateNodeType.sendKeys('Aufgabe\n');
-        expect(yaioNodePage.inputNameTaskNode.getAttribute('id')).toEqual('inputNameTaskNode');
-        
-        // set taskdata and submit form
-        var taskName = 'testask' + new Date().getTime();
-        yaioNodePage.inputNameTaskNode.sendKeys(taskName);
-        yaioNodePage.inputTypeTaskNode.sendKeys("+-- Offen\n");
-        yaioNodePage.inputPlanAufwandTaskNode.sendKeys("1");
-        yaioNodePage.inputPlanStartTaskNode.click();
-        protractor.utils.waitUntilElementPresent(yaioNodePage.uiDatePickerDay1, 2000);
-        yaioNodePage.uiDatePickerDay1.click();
-        yaioNodePage.inputPlanEndeTaskNode.click();
-        protractor.utils.waitUntilElementPresent(yaioNodePage.uiDatePickerDay25, 2000);
-        yaioNodePage.uiDatePickerDay25.click();
-        
-        // toggle desc
-//        yaioNodePage.filterDescTaskForm_Off.click().then(function() {
-//          protractor.utils.waitUntilElementPresent(yaioNodePage.inputNodeDescTaskNode, 2000);
-//          expect(yaioNodePage.inputNodeDescTaskNode.getAttribute('id')).toEqual('inputNodeDescTaskNode');
-//          yaioNodePage.inputNodeDescTaskNode.sendKeys("fehlerhafte Tetsdaten");
-//        });
-
-        // submit form
-        protractor.utils.waitUntilElementPresent(yaioNodePage.buttonSaveTask, 20000);
-        expect(yaioNodePage.buttonSaveTask.isDisplayed()).toEqual(true);
-        yaioNodePage.buttonSaveTask.click().then(function () {
-            // wait for result
-            browser.ignoreSynchronization = true;
-
-            // wait till data is loaded
-            protractor.utils.waitUntilElementPresent(yaioNodePage.linkCreateChildSysTest1, 10000);
-            expect(yaioNodePage.linkCreateChildSysTest1.getAttribute('id')).toEqual('cmdCreateSysTest1');
-            
-            // wait till data is loaded
-            var eleNewTaskName = element(by.cssContainingText('span.fancytree-title2', taskName));
-            expect(eleNewTaskName.getText()).toEqual(taskName);
-            browser.ignoreSynchronization = false;
-        });
+        yaioNodePage.openExplorerFromFrontPage().then(function () {
+            yaioNodePage.navigateToSysTest1AndOpenCreateNode().then(function (){
+                yaioNodePage.createTaskNode();
+            });
+        })
 
         /**
 -->
