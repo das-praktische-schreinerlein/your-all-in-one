@@ -1,5 +1,5 @@
 /**
- * test the LoginPage of YAIO
+ * test the ExplorerPage of YAIO with a full lifecycle of a node
  * 
  */
 
