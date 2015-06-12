@@ -13,6 +13,18 @@ var Utils = {
         return browser.wait(isPresent, timeout);
     },
 
+    /**
+     * wait that element is not present in DOM
+     * @param   {ElementFinder} elem     expected element
+     * @param   {Integer}       timeout  timeout in milliseconds
+     * @returns {Promise}       browser.wait for elem
+     */
+    waitThatElementIsNotPresent: function (elem, timeout) {
+        var EC = protractor.ExpectedConditions;
+        var isNotPresent = EC.invisibilityOf(elem);
+        return browser.wait(isNotPresent, timeout);
+    },
+
     waitTime: function (time) {
         browser.sleep(time);
     },

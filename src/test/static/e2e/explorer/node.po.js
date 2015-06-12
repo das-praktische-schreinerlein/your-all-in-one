@@ -72,7 +72,7 @@ var YAIONodePage = function() {
 
     /**
      * create TaskNode and wait until present
-     * @returns {Promise}       promise on the taskname
+     * @returns {Element}       promise on the taskname
      */
     me.createTaskNode = function () {
         expect(me.inputCreateNodeType.getAttribute('id')).toEqual('inputCreateNodeType');
@@ -119,8 +119,110 @@ var YAIONodePage = function() {
             browser.ignoreSynchronization = false;
         });
         
-        return eleNewTaskName.getText();
+        return eleNewTaskName;
+    };
+
+    /**
+     * navigate to TaskNode by id, edit and wait until new site present
+     * @param   {Integer} nodeId  noid of the node to delete
+     * @returns {Promise}         promise 
+     */
+    me.editTaskNodeById = function (nodeId) {
+        expect(nodeId).toMatch(/DT.*/);
+
+        var linkCmdEditNode = $('#cmdEdit' + nodeId);
+        protractor.utils.waitUntilElementPresent(linkCmdEditNode, 2000);
+        expect(linkCmdEditNode.isDisplayed()).toEqual(true);
+
+        // define SearchElement
+        var taskName = 'correct testask' + new Date().getTime();
+        var eleNewTaskName = element(by.cssContainingText('span.fancytree-title2', taskName));
+
+        linkCmdEditNode.click().then(function () {
+            // set new taskdata and submit form
+            protractor.utils.waitUntilElementPresent(me.inputNameTaskNode, 2000);
+            me.inputNameTaskNode.clear().then(function () {
+                me.inputNameTaskNode.sendKeys(taskName);
+            });
+            me.inputPlanAufwandTaskNode.clear().then(function () {
+                me.inputPlanAufwandTaskNode.sendKeys("10");
+            });
+            me.inputPlanStartTaskNode.click();
+            protractor.utils.waitUntilElementPresent(me.uiDatePickerDay1, 2000);
+            me.uiDatePickerDay1.click();
+            me.inputPlanEndeTaskNode.click();
+            protractor.utils.waitUntilElementPresent(me.uiDatePickerDay25, 2000);
+            me.uiDatePickerDay25.click();
+            
+            // toggle desc
+            me.filterDescTaskForm_Off.click();
+            protractor.utils.waitUntilElementPresent(me.inputNodeDescTaskNode, 2000);
+            expect(me.inputNodeDescTaskNode.getAttribute('id')).toEqual('inputNodeDescTaskNode');
+            // me.inputNodeDescTaskNode.sendKeys("fehlerhafte Tetsdaten");
+
+            // submit form
+            protractor.utils.waitUntilElementPresent(me.buttonSaveTask, 2000);
+            expect(me.buttonSaveTask.isDisplayed()).toEqual(true);
+            me.buttonSaveTask.click().then(function () {
+                // wait for result
+                browser.ignoreSynchronization = true;
+        
+                // wait till data is loaded
+                protractor.utils.waitUntilElementPresent(me.linkCreateChildSysTest1, 10000);
+                expect(me.linkCreateChildSysTest1.getAttribute('id')).toEqual('cmdCreateSysTest1');
+                
+                // wait till data is loaded
+                protractor.utils.waitUntilElementPresent(eleNewTaskName, 2000);
+                expect(eleNewTaskName.getText()).toEqual(taskName);
+                browser.ignoreSynchronization = false;
+            });
+        });
+
+        return eleNewTaskName;
+    };
+
+    /**
+     * extract NnodeId from TaskNameElement
+     * @param   {Element} eleTaskName       tasknameElement
+     * @returns {Promise}                   promise to get nodeId 
+     */
+    me.extractNodeIdFromTaskNameElement = function (eleTaskName) {
+        protractor.utils.waitUntilElementPresent(eleTaskName, 2000);
+        return eleTaskName.getAttribute('id').then(function (titleId) {
+            return titleId.replace(/title/, '');
+        });
     };
     
+    /**
+     * navigate to TaskNode by id, call delete and wait until new site present without nodeId
+     * @param   {Integer} nodeId  noid of the node to delete
+     * @returns {Promise}         promise 
+     */
+    me.deleteNodeById = function (nodeId) {
+        expect(nodeId).toMatch(/DT.*/);
+
+        var linkCmdRemoveNode = $('#cmdRemove' + nodeId);
+        protractor.utils.waitUntilElementPresent(linkCmdRemoveNode, 2000);
+        expect(linkCmdRemoveNode.isDisplayed()).toEqual(true);
+        
+        linkCmdRemoveNode.click().then(function () {
+            var alertDialog = browser.switchTo().alert();
+            alertDialog.accept();
+    
+            // wait for result
+            browser.ignoreSynchronization = true;
+            
+            // wait till data is loaded
+            protractor.utils.waitUntilElementPresent(me.linkCreateChildSysTest1, 10000);
+            expect(me.linkCreateChildSysTest1.getAttribute('id')).toEqual('cmdCreateSysTest1');
+            
+            // wait till data is loaded
+            protractor.utils.waitThatElementIsNotPresent(linkCmdRemoveNode, 2000);
+            expect(linkCmdRemoveNode.isPresent()).toEqual(false);
+            browser.ignoreSynchronization = false;
+        });
+        
+        return linkCmdRemoveNode;
+    };
 };
 module.exports = YAIONodePage;
