@@ -47,7 +47,25 @@ exports.config = {
         // add spec-reporter
         var SpecReporter = require('jasmine-spec-reporter');
         // add jasmine spec reporter
-        jasmine.getEnv().addReporter(new SpecReporter({displayStacktrace: true}));
+        jasmine.getEnv().addReporter(new SpecReporter({
+            displayStacktrace: 'all',     // display stacktrace for each failed assertion, values: (all|specs|summary|none) 
+            displayFailuresSummary: true, // display summary of all failures after execution 
+            displaySuccessfulSpec: true,  // display each successful spec 
+            displayFailedSpec: true,      // display each failed spec 
+            displayPendingSpec: true,     // display each pending spec 
+            displaySpecDuration: true,    // display each spec duration 
+            displaySuiteNumber: true,     // display each suite number (hierarchical) 
+            colors: {
+              success: 'green',
+              failure: 'red',
+              pending: 'cyan'
+            },
+            prefixes: {
+                success: '✓ ',
+                failure: '✗ ',
+                pending: '- '
+            }
+        }));
 
         // add ScreenshotReporter
         jasmine.getEnv().addReporter(
