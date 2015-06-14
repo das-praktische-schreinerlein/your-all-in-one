@@ -61,6 +61,7 @@ import de.yaio.core.node.BaseNode;
 public abstract class BaseNodeRestControllerTest  extends BaseTest {
     /** masternodeId **/
     public static final String CONST_MASTERNODE_ID = "MasterplanMasternode1";
+    public static final String CONST_TESTPARENTNODE_ID = "JavaUnitTest1";
                     
     /** contentype of my app **/
     public static final MediaType APPLICATION_JSON_UTF8 = 
@@ -147,7 +148,7 @@ public abstract class BaseNodeRestControllerTest  extends BaseTest {
      */
     public void testNodeLifeCycle(final BaseNode node) throws Exception {
         // create node
-        String newSysUID = testCreateNode(CONST_MASTERNODE_ID, node);
+        String newSysUID = testCreateNode(CONST_TESTPARENTNODE_ID, node);
         node.setSysUID(newSysUID);
         
         // show node
