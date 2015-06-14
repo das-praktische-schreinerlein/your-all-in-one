@@ -39,6 +39,7 @@ describe('yaio loginpage', function() {
         yaioLoginPage.submitValidLoginPage();
     
         // expect frontContent
+        protractor.utils.waitUntilElementPresent(yaioFrontPage.fontContentLeft, protractor.utils.CONST_WAIT_NODEHIRARCHY);
         expect(yaioFrontPage.fontContentLeft.getAttribute('id')).toEqual("front-content-left");
     });
 });

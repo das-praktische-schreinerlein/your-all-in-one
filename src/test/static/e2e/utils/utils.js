@@ -1,6 +1,10 @@
 'use strict';
 
 var Utils = {
+    
+    CONST_WAIT_ELEMENT: 2000,
+    CONST_WAIT_NODEHIRARCHY: 10000,
+    
     /**
      * wait until element present in DOM
      * @param   {ElementFinder} elem     expected element

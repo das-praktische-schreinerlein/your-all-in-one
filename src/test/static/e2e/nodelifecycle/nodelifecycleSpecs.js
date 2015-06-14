@@ -23,7 +23,7 @@ describe('yaio explorer', function() {
     
     it('should create/edit/delete a new node', function() {
         yaioNodePage.openExplorerFromFrontPage().then(function () {
-            yaioNodePage.navigateToSysTest1AndOpenCreateNode().then(function () {
+            yaioNodePage.navigateToJsFuncTest1ndOpenCreateNode().then(function () {
                 var newTaskNameElement = yaioNodePage.createTaskNode();
                 yaioNodePage.extractNodeIdFromTaskNameElement(newTaskNameElement).then(function (taskId) {
                     var editTaskNameElement = yaioNodePage.editTaskNodeById(taskId);
