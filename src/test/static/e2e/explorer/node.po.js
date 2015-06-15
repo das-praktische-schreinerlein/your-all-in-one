@@ -52,7 +52,7 @@ var YAIONodePage = function() {
         // open explorer-link
         yaioFrontPage.linkExplorer.click();
         
-        return protractor.utils.waitUntilElementPresent(me.expanderSysPlay1, protractor.utils.CONST_WAIT_ELEMENT);
+        return protractor.utils.waitUntilElementClickable(me.expanderSysPlay1, protractor.utils.CONST_WAIT_ELEMENT);
     };
 
     /**
@@ -65,12 +65,12 @@ var YAIONodePage = function() {
         
         // expand SysPlay1
         me.expanderSysPlay1.click();
-        protractor.utils.waitUntilElementPresent(me.linkCreateChildSysTest1, protractor.utils.CONST_WAIT_NODEHIRARCHY);
+        protractor.utils.waitUntilElementClickable(me.linkCreateChildSysTest1, protractor.utils.CONST_WAIT_NODEHIRARCHY);
         expect(me.linkCreateChildSysTest1.getAttribute('id')).toEqual('cmdCreateSysTest1');
         
         // expand SysTest1
         me.expanderSysTest1.click();
-        protractor.utils.waitUntilElementPresent(me.linkCreateChildJsFuncTest1, protractor.utils.CONST_WAIT_NODEHIRARCHY);
+        protractor.utils.waitUntilElementClickable(me.linkCreateChildJsFuncTest1, protractor.utils.CONST_WAIT_NODEHIRARCHY);
         expect(me.linkCreateChildJsFuncTest1.getAttribute('id')).toEqual('cmdCreateJsFuncTest1');
 
         // create child for JsFuncTest1
@@ -139,7 +139,7 @@ var YAIONodePage = function() {
         expect(nodeId).toMatch(/DT.*/);
 
         var linkCmdEditNode = $('#cmdEdit' + nodeId);
-        protractor.utils.waitUntilElementPresent(linkCmdEditNode, protractor.utils.CONST_WAIT_ELEMENT);
+        protractor.utils.waitUntilElementClickable(linkCmdEditNode, protractor.utils.CONST_WAIT_ELEMENT);
         expect(linkCmdEditNode.isDisplayed()).toEqual(true);
 
         // define SearchElement
@@ -176,7 +176,7 @@ var YAIONodePage = function() {
                 browser.ignoreSynchronization = true;
         
                 // wait till data is loaded
-                protractor.utils.waitUntilElementPresent(me.linkCreateChildSysTest1, protractor.utils.CONST_WAIT_NODEHIRARCHY);
+                protractor.utils.waitUntilElementClickable(me.linkCreateChildSysTest1, protractor.utils.CONST_WAIT_NODEHIRARCHY);
                 expect(me.linkCreateChildJsFuncTest1.getAttribute('id')).toEqual('cmdCreateJsFuncTest1');
                 
                 // wait till data is loaded
@@ -210,7 +210,7 @@ var YAIONodePage = function() {
         expect(nodeId).toMatch(/DT.*/);
 
         var linkCmdRemoveNode = $('#cmdRemove' + nodeId);
-        protractor.utils.waitUntilElementPresent(linkCmdRemoveNode, protractor.utils.CONST_WAIT_ELEMENT);
+        protractor.utils.waitUntilElementClickable(linkCmdRemoveNode, protractor.utils.CONST_WAIT_ELEMENT);
         expect(linkCmdRemoveNode.isDisplayed()).toEqual(true);
         
         linkCmdRemoveNode.click().then(function () {
@@ -221,7 +221,7 @@ var YAIONodePage = function() {
             browser.ignoreSynchronization = true;
             
             // wait till data is loaded
-            protractor.utils.waitUntilElementPresent(me.linkCreateChildJsFuncTest1, protractor.utils.CONST_WAIT_NODEHIRARCHY);
+            protractor.utils.waitUntilElementClickable(me.linkCreateChildJsFuncTest1, protractor.utils.CONST_WAIT_NODEHIRARCHY);
             expect(me.linkCreateChildJsFuncTest1.getAttribute('id')).toEqual('cmdCreateJsFuncTest1');
             
             // wait till data is loaded
