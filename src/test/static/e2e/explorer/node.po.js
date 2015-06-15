@@ -52,17 +52,18 @@ var YAIONodePage = function() {
         // open explorer-link
         yaioFrontPage.linkExplorer.click();
         
+        // expect SysPlay1
+        protractor.utils.waitUntilElementClickable(me.expanderSysPlay1, protractor.utils.CONST_WAIT_ELEMENT);
+        expect(me.expanderSysPlay1.getAttribute('id')).toEqual('expanderSysPlay1');
         return protractor.utils.waitUntilElementClickable(me.expanderSysPlay1, protractor.utils.CONST_WAIT_ELEMENT);
+
     };
 
     /**
      * open node SysTests1, open createNodeDialog and wait until present
      * @returns {Promise}       browser.wait for element "#inputCreateNodeType"
      */
-    me.navigateToJsFuncTest1ndOpenCreateNode = function () {
-        // expect SysPlay1
-        expect(me.expanderSysPlay1.getAttribute('id')).toEqual('expanderSysPlay1');
-        
+    me.navigateToJsFuncTest1 = function () {
         // expand SysPlay1
         me.expanderSysPlay1.click();
         protractor.utils.waitUntilElementClickable(me.linkCreateChildSysTest1, protractor.utils.CONST_WAIT_NODEHIRARCHY);
@@ -72,17 +73,22 @@ var YAIONodePage = function() {
         me.expanderSysTest1.click();
         protractor.utils.waitUntilElementClickable(me.linkCreateChildJsFuncTest1, protractor.utils.CONST_WAIT_NODEHIRARCHY);
         expect(me.linkCreateChildJsFuncTest1.getAttribute('id')).toEqual('cmdCreateJsFuncTest1');
-
-        // create child for JsFuncTest1
-        me.linkCreateChildJsFuncTest1.click();
-        return protractor.utils.waitUntilElementPresent(me.inputCreateNodeType, protractor.utils.CONST_WAIT_ELEMENT);
+        return protractor.utils.waitUntilElementClickable(me.linkCreateChildJsFuncTest1, protractor.utils.CONST_WAIT_NODEHIRARCHY);
     };
 
     /**
      * create TaskNode and wait until present
-     * @returns {Element}       promise on the taskname
+     * @param   {String}  parentId  id of the parentNode
+     * @returns {Element}           promise on the taskname
      */
-    me.createTaskNode = function () {
+    me.openNodeEditorAndCreateTaskNode = function (parentId) {
+        var linkCmdCreateNode = $('#cmdCreate' + parentId);
+        protractor.utils.waitUntilElementClickable(linkCmdCreateNode, protractor.utils.CONST_WAIT_NODEHIRARCHY);
+        expect(linkCmdCreateNode.getAttribute('id')).toEqual('cmdCreate' + parentId);
+
+        // create child for parentId
+        linkCmdCreateNode.click();
+        protractor.utils.waitUntilElementPresent(me.inputCreateNodeType, protractor.utils.CONST_WAIT_ELEMENT);
         expect(me.inputCreateNodeType.getAttribute('id')).toEqual('inputCreateNodeType');
 
         // select Aufgabe
