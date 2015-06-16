@@ -5,36 +5,54 @@
 
 var YAIOLoginPage = function() {
     // login-form
-    this.username = element(by.model('credentials.username'));
-    this.password = element(by.model('credentials.password'));
-    this.submit = $('[translate="loginform.button.login"]');
+    var me = this;
+    me.username = element(by.model('credentials.username'));
+    me.password = element(by.model('credentials.password'));
+    me.submit = $('[translate="loginform.button.login"]');
     
     // results
-    this.errorMsg = $('.alert-danger');
+    me.errorMsg = $('.alert-danger');
     
-    this.openLoginPage = function () {
+    /**
+     * open login-page
+     * @returns {Browser}  - broser element
+     */
+    me.openLoginPage = function () {
         browser.manage().window().setSize(
                 browser.params.yaioConfig.browserSize.width, 
                 browser.params.yaioConfig.browserSize.height);
         browser.get(browser.params.yaioConfig.yaioBaseAppUrl + '/login');
+        return browser;
     }
 
-    this.submitValidLoginPage = function () {
+    /**
+     * submit valid login-page
+     * @returns {Promise}  - promise on the submit-click
+     */
+    me.submitValidLoginPage = function () {
         // fill loginform with invalid credentials
-        this.username.sendKeys('admin');
-        this.password.sendKeys('secret');
+        me.username.sendKeys('admin');
+        me.password.sendKeys('secret');
         
         // send login
-        this.submit.click();
+        return me.submit.click();
     };
 
-    this.doLogin = function () {
-        this.openLoginPage();
-        this.submitValidLoginPage();
+    /**
+     * do valid login
+     * @returns {Promise}  - promise on the submit-click
+     */
+    me.doLogin = function () {
+        me.openLoginPage();
+        return me.submitValidLoginPage();
     };
 
-    this.doLogout = function () {
-        browser.get(browser.params.yaioConfig.yaioBaseAppUrl + '/logout');
+    /**
+     * submit logout
+     * @returns {Promise}  - promise on the browser.get
+     */
+    me.doLogout = function () {
+        return browser.get(browser.params.yaioConfig.yaioBaseAppUrl + '/logout');
     }
     
 };
