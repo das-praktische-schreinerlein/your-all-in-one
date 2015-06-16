@@ -41,6 +41,15 @@ var YAIONodePage = function() {
     me.uiDatePickerDay25 = $$(me.idUiDatePicker + " table.ui-datepicker-calendar tbody tr td a").get(25);
     
     /**
+     * open masterpage
+     * @returns {Browser}  - broser element
+     */
+    me.openMasternode = function () {
+        browser.get(browser.params.yaioConfig.yaioBaseAppUrl + '/show/MasterplanMasternode1');
+        return browser;
+    }
+
+    /**
      * open explorer from frontpage and wait until present
      * @returns {Promise}       browser.wait for element "#front-content-left"
      */

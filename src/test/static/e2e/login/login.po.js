@@ -15,7 +15,7 @@ var YAIOLoginPage = function() {
     
     /**
      * open login-page
-     * @returns {Browser}  - broser element
+     * @returns {Browser}  - browser element
      */
     me.openLoginPage = function () {
         browser.manage().window().setSize(
@@ -52,7 +52,8 @@ var YAIOLoginPage = function() {
      * @returns {Promise}  - promise on the browser.get
      */
     me.doLogout = function () {
-        return browser.get(browser.params.yaioConfig.yaioBaseAppUrl + '/logout');
+        browser.get(browser.params.yaioConfig.yaioBaseAppUrl + '/logout');
+        return browser;
     }
     
 };

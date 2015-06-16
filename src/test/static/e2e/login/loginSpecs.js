@@ -18,11 +18,11 @@ describe('yaio loginpage', function() {
         yaioLoginPage.doLogout();
     });
     
-    it('should show login', function() {
+    it('should show login', function doShowLogin() {
         expect(yaioLoginPage.username.getAttribute('id')).toEqual("username");
     });
     
-    it('should reject login with invalid credentials', function() {
+    it('should reject login with invalid credentials', function doRejectInvalidLogin() {
         // fill loginform with invalid credentials
         yaioLoginPage.username.sendKeys('admin');
         yaioLoginPage.password.sendKeys('blabla');
@@ -34,7 +34,7 @@ describe('yaio loginpage', function() {
         expect(yaioLoginPage.errorMsg.getText()).toEqual("There was a problem logging in. Please try again.");
     });
     
-    it('should show explorer after login', function() {
+    it('should show explorer after login', function doValidLogin() {
         // fill loginform with valid credentials
         yaioLoginPage.submitValidLoginPage();
     
