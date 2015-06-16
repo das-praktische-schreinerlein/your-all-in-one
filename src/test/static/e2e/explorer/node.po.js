@@ -8,19 +8,19 @@ var YAIONodePage = function() {
     var yaioFrontPage = new YAIOFrontPage();
     var me = this;
 
-    var sysplayId = 'SysPlay1';
-    var systestId = "SysTest1";
-    var jsFuncTestId = "JsFuncTest1";
+    // nodeIds
+    me.sysplayId = 'SysPlay1';
+    me.systestId = "SysTest1";
+    me.jsFuncTestId = "JsFuncTest1";
+    me.jsFuncTestHierarchy = ['SysPlay1', 'SysTest1', 'JsFuncTest1'];
     
     // explorer-link
     me.linkFrontpage = $('[translate="common.command.OpenFrontpage"]');
     
     // mastercontainer
     me.containerMasterdata = $('#masterdata');
-    me.expanderSysPlay1 = $('#expander' + sysplayId);
-    me.linkCreateChildSysTest1 = $('#cmdCreate' + systestId);
-    me.expanderSysTest1 = $('#expander' + systestId);
-    me.linkCreateChildJsFuncTest1 = $('#cmdCreate' + jsFuncTestId);
+    me.expanderSysPlay1 = $('#expander' + me.sysplayId);
+    me.linkCreateChildJsFuncTest1 = $('#cmdCreate' + me.jsFuncTestId);
     
     // create form
     me.inputCreateNodeType = $('#inputCreateNodeType');
@@ -60,26 +60,75 @@ var YAIONodePage = function() {
     };
 
     /**
-     * open node SysTests1, open createNodeDialog and wait until present
-     * @returns {Promise}       browser.wait for element "#inputCreateNodeType"
+     * open node-hierarchy and wait until present
+     * @param {Array} nodeIdHirarchy       array of nodeids to expand recursively
+     * @returns {Promise}                  promise on the cmdCreate if fullfilled
      */
-    me.navigateToJsFuncTest1 = function () {
-        // expand SysPlay1
-        me.expanderSysPlay1.click();
-        protractor.utils.waitUntilElementClickable(me.linkCreateChildSysTest1, protractor.utils.CONST_WAIT_NODEHIRARCHY);
-        expect(me.linkCreateChildSysTest1.getAttribute('id')).toEqual('cmdCreateSysTest1');
+    me.navigateToNode = function (nodeIdHirarchy) {
+        var resultArr = [];
         
-        // expand SysTest1
-        me.expanderSysTest1.click();
-        protractor.utils.waitUntilElementClickable(me.linkCreateChildJsFuncTest1, protractor.utils.CONST_WAIT_NODEHIRARCHY);
-        expect(me.linkCreateChildJsFuncTest1.getAttribute('id')).toEqual('cmdCreateJsFuncTest1');
-        return protractor.utils.waitUntilElementClickable(me.linkCreateChildJsFuncTest1, protractor.utils.CONST_WAIT_NODEHIRARCHY);
+        // call navigateToNode
+        function _recursive(idx) {
+            if (idx >= nodeIdHirarchy.length) return resultArr.pop();
+            return me.expandNode(nodeIdHirarchy[idx], nodeIdHirarchy.length == idx).then(function(res) {
+                resultArr.push(res);
+                return _recursive(idx + 1);
+            });
+        }
+
+        return _recursive(0);
+    };
+    
+    /**
+     * expand with click on #expander{id} node and wait until present, if flag last is set then only check if #cmdCreate{id} is clickable
+     * @param {Integer} id      id of the node to expand
+     * @param {Boolean} last    flag if the node is the last of the hierarchy
+     * @returns {Promise}       browser.wait for element "#cmdCreate..."
+     */
+    me.expandNode = function (id, last) {
+        // console.log("expandNode: check for " + '#expander' + id);
+        var expander = $('#expander' + id);
+        var createChild = $('#cmdCreate' + id);
+        var deferred = protractor.promise.defer();
+        var promise = deferred.promise;
+        if (last) {
+            // last element: check only for link
+            // console.log("expandNode: check for " + '#expander' + id);
+            protractor.utils.waitUntilElementClickable(createChild, protractor.utils.CONST_WAIT_NODEHIRARCHY).then (function () {
+                deferred.fulfill(expander);
+            }, function (err) {
+                deferred.reject(new Error("Element not found #expander" + id + " :" + err));
+            });
+        } else {
+            // expand and check
+            // console.log("expandNode: wait for clickable for " + '#expander' + id);
+            protractor.utils.waitUntilElementClickable(expander, protractor.utils.CONST_WAIT_NODEHIRARCHY).then( function expanderClickable() {
+                // clickable 
+                // console.log("expandNode: click " + '#expander' + id);
+                expander.click().then(function okCallBack() {
+                    // click passed
+                    // console.log("expandNode: click passed " + '#expander' + id);
+                    deferred.fulfill(expander);
+                }, function errCallBack(err) {
+                    // click failed
+                    // console.log("expandNode: click failed" + '#expander' + id);
+                    deferred.reject(new Error("Error while clicking #expander" + id + " : " + err));
+                });
+            }, function expandernotClickable(err) {
+                // Error not clickable; 
+                // console.log("expandNode: not clickable " + '#expander' + id);
+                deferred.reject(new Error("Element not clickable #expander" + id + " :" + err));
+            });
+            
+        }
+
+        return promise;
     };
 
     /**
      * create TaskNode and wait until present
      * @param   {String}  parentId  id of the parentNode
-     * @returns {Element}           promise on the taskname
+     * @returns {Element}           element-filter on the newTaskname
      */
     me.openNodeEditorAndCreateTaskNode = function (parentId) {
         var linkCmdCreateNode = $('#cmdCreate' + parentId);
@@ -123,9 +172,9 @@ var YAIONodePage = function() {
             // wait for result
             browser.ignoreSynchronization = true;
     
-            // wait till data is loaded
-            protractor.utils.waitUntilElementPresent(me.linkCreateChildSysTest1, protractor.utils.CONST_WAIT_NODEHIRARCHY);
-            expect(me.linkCreateChildJsFuncTest1.getAttribute('id')).toEqual('cmdCreateJsFuncTest1');
+            // wait till parent- data is loaded
+            protractor.utils.waitUntilElementPresent(linkCmdCreateNode, protractor.utils.CONST_WAIT_NODEHIRARCHY);
+            expect(linkCmdCreateNode.getAttribute('id')).toEqual('cmdCreate' + parentId);
             
             // wait till data is loaded
             protractor.utils.waitUntilElementPresent(eleNewTaskName, protractor.utils.CONST_WAIT_ELEMENT);
@@ -138,8 +187,8 @@ var YAIONodePage = function() {
 
     /**
      * navigate to TaskNode by id, edit and wait until new site present
-     * @param   {Integer} nodeId  noid of the node to delete
-     * @returns {Promise}         promise 
+     * @param   {Integer} nodeId  nodeId of the node to delete
+     * @returns {Element}         element-filter on the editedTaskName
      */
     me.editTaskNodeById = function (nodeId) {
         expect(nodeId).toMatch(/DT.*/);
@@ -182,11 +231,7 @@ var YAIONodePage = function() {
                 browser.ignoreSynchronization = true;
         
                 // wait till data is loaded
-                protractor.utils.waitUntilElementClickable(me.linkCreateChildSysTest1, protractor.utils.CONST_WAIT_NODEHIRARCHY);
-                expect(me.linkCreateChildJsFuncTest1.getAttribute('id')).toEqual('cmdCreateJsFuncTest1');
-                
-                // wait till data is loaded
-                protractor.utils.waitUntilElementPresent(eleNewTaskName, protractor.utils.CONST_WAIT_ELEMENT);
+                protractor.utils.waitUntilElementPresent(eleNewTaskName, protractor.utils.CONST_WAIT_NODEHIRARCHY);
                 expect(eleNewTaskName.getText()).toEqual(taskName);
                 browser.ignoreSynchronization = false;
             });
@@ -209,10 +254,11 @@ var YAIONodePage = function() {
     
     /**
      * navigate to TaskNode by id, call delete and wait until new site present without nodeId
-     * @param   {Integer} nodeId  noid of the node to delete
-     * @returns {Promise}         promise 
+     * @param   {Integer} nodeId  nodeId of the node to delete
+     * @param   {Integer} checkId nodeId of the node to check
+     * @returns {Element}         element-filter on the cmdRemode
      */
-    me.deleteNodeById = function (nodeId) {
+    me.deleteNodeById = function (nodeId, checkId) {
         expect(nodeId).toMatch(/DT.*/);
 
         var linkCmdRemoveNode = $('#cmdRemove' + nodeId);
@@ -220,15 +266,16 @@ var YAIONodePage = function() {
         expect(linkCmdRemoveNode.isDisplayed()).toEqual(true);
         
         linkCmdRemoveNode.click().then(function () {
-            var alertDialog = browser.switchTo().alert();
-            alertDialog.accept();
-    
             // wait for result
             browser.ignoreSynchronization = true;
             
+            var alertDialog = browser.switchTo().alert();
+            alertDialog.accept();
+    
             // wait till data is loaded
-            protractor.utils.waitUntilElementClickable(me.linkCreateChildJsFuncTest1, protractor.utils.CONST_WAIT_NODEHIRARCHY);
-            expect(me.linkCreateChildJsFuncTest1.getAttribute('id')).toEqual('cmdCreateJsFuncTest1');
+            var checkElement = $('#cmdCreate' + checkId);
+            protractor.utils.waitUntilElementClickable(checkElement, protractor.utils.CONST_WAIT_NODEHIRARCHY);
+            expect(me.linkCreateChildJsFuncTest1.getAttribute('id')).toEqual('cmdCreate' + checkId);
             
             // wait till data is loaded
             protractor.utils.waitThatElementIsNotPresent(linkCmdRemoveNode, protractor.utils.CONST_WAIT_ELEMENT);

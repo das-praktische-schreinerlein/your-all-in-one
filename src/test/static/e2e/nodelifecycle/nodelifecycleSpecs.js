@@ -22,17 +22,60 @@ describe('yaio explorer', function() {
     });
     
     it('should create/edit/delete a new node', function() {
-        yaioNodePage.openExplorerFromFrontPage().then(function () {
-            yaioNodePage.navigateToJsFuncTest1().then(function () {
-                var newTaskNameElement = yaioNodePage.openNodeEditorAndCreateTaskNode('JsFuncTest1');
-                yaioNodePage.extractNodeIdFromTaskNameElement(newTaskNameElement).then(function (taskId) {
-                    var editTaskNameElement = yaioNodePage.editTaskNodeById(taskId);
-                    yaioNodePage.extractNodeIdFromTaskNameElement(editTaskNameElement).then(function (taskId) {
-                        yaioNodePage.deleteNodeById(taskId);
-                    });
-                });
-            });
+        // open explorer
+        yaioNodePage.openExplorerFromFrontPage()
+        .then(function doneOpenExplorer() {
+            // navigate to FuncTest
+            return yaioNodePage.navigateToNode(yaioNodePage.jsFuncTestHierarchy);
         })
+        .then(function doneNavigate(){
+            // create task
+            var deferred = protractor.promise.defer();
+            var newTaskNameElement = yaioNodePage.openNodeEditorAndCreateTaskNode(yaioNodePage.jsFuncTestId);
+            newTaskNameElement.getText().then(function() {
+                deferred.fulfill(newTaskNameElement);
+            })
+            
+            return deferred.promise;
+        })
+        .then(function doneCreateTask(newTaskNameElement) {
+            // extract nodeid from new task
+            return yaioNodePage.extractNodeIdFromTaskNameElement(newTaskNameElement);
+        })
+        .then(function doneExtractNodeId(taskId) {
+            // edit new task
+            var deferred = protractor.promise.defer();
+            var editTaskNameElement = yaioNodePage.editTaskNodeById(taskId);
+            editTaskNameElement.getText().then(function() {
+                deferred.fulfill(editTaskNameElement);
+            })
+            
+            return deferred.promise;
+        })
+        .then(function doneEditTask(editTaskNameElement){
+            // extract nodeid from edited task
+            return yaioNodePage.extractNodeIdFromTaskNameElement(editTaskNameElement);
+        })
+        .then(function doneExtractNodeId2(taskId){
+            // delete this task
+            var deferred = protractor.promise.defer();
+            var deletedElement = yaioNodePage.deleteNodeById(taskId, yaioNodePage.jsFuncTestId);
+            deletedElement.isPresent().then(function() {
+                deferred.fulfill(deletedElement);
+            })
+            // check that element no more exists
+            expect(deletedElement.isPresent()).toEqual(false);
+            
+            return deferred.promise;
+        })
+        .then(null, function(err) {
+            // on error
+            console.error("an error occured:", err);
+            expect(err).toBe(false);
+        });
     });
+
+    
+    
 });
 
