@@ -13,21 +13,24 @@ describe('yaio explorer', function() {
     var yaioLoginPage = new YAIOLoginPage();
     var yaioFrontPage = new YAIOFrontPage();
     var yaioNodePage = new YAIONodePage();
-    
+
     beforeEach(function() {
-        yaioLoginPage.doLogin();
+        // do Login
+        yaioLoginPage.doLogin()
+        .then(function doneOpenExplorer() {
+            // open explorer
+            yaioNodePage.openExplorerFromFrontPage();
+        });
+        protractor.utils.waitUntilElementClickable(yaioNodePage.containerMasterdata, protractor.utils.CONST_WAIT_NODEHIRARCHY);
+        expect(yaioNodePage.containerMasterdata.isPresent()).toEqual(true);
     });
     afterEach(function() {
-        //yaioLoginPage.doLogout();
+        yaioLoginPage.doLogout();
     });
     
-    it('should create/edit/delete a new node', function() {
-        // open explorer
-        yaioNodePage.openExplorerFromFrontPage()
-        .then(function doneOpenExplorer() {
-            // navigate to FuncTest
-            return yaioNodePage.navigateToNode(yaioNodePage.jsFuncTestHierarchy);
-        })
+    it('should create/edit/delete a new node', function doCreateEditDeleteTask() {
+        // navigate to Node
+        yaioNodePage.navigateToNode(yaioNodePage.jsFuncTestHierarchy)
         .then(function doneNavigate(){
             // create task
             var deferred = protractor.promise.defer();
@@ -75,7 +78,5 @@ describe('yaio explorer', function() {
         });
     });
 
-    
-    
 });
 
