@@ -35,6 +35,12 @@ var YAIONodePage = function() {
     me.inputNodeDescTaskNode = $('#inputNodeDescTaskNode');
     me.buttonSaveTask = $('#nodeFormTaskNode fieldset button[translate="common.buttonSave"]');
     
+    // symlinkform
+    me.inputNameSymLinkNode = $('#inputNameSymLinkNode');
+    me.filterDescSymLinkForm_Off = $('#filterDescSymLinkForm_Off');
+    me.inputNodeDescSymLinkNode = $('#inputNodeDescSymLinkNode');
+    me.buttonSaveSymLink = $('#nodeFormSymLinkNode fieldset button[translate="common.buttonSave"]');
+
     // utils
     me.idUiDatePicker = "#ui-datepicker-div";
     me.uiDatePickerDay1 = $$(me.idUiDatePicker + " table.ui-datepicker-calendar tbody tr td a").get(1);
@@ -196,7 +202,7 @@ var YAIONodePage = function() {
 
     /**
      * navigate to TaskNode by id, edit and wait until new site present
-     * @param   {Integer} nodeId  nodeId of the node to delete
+     * @param   {Integer} nodeId  nodeId of the node to edit
      * @returns {Element}         element-filter on the editedTaskName
      */
     me.editTaskNodeById = function (nodeId) {
@@ -249,12 +255,111 @@ var YAIONodePage = function() {
         return eleNewTaskName;
     };
 
+
+    /**
+     * create SymLinkNode and wait until present
+     * @param   {String}  parentId  id of the parentNode
+     * @returns {Element}           element-filter on the newSymLinkname
+     */
+    me.openNodeEditorAndCreateSymLinkNode = function (parentId) {
+        var linkCmdCreateNode = $('#cmdCreateSymLink' + parentId);
+        protractor.utils.waitUntilElementClickable(linkCmdCreateNode, protractor.utils.CONST_WAIT_NODEHIRARCHY);
+        expect(linkCmdCreateNode.getAttribute('id')).toEqual('cmdCreateSymLink' + parentId);
+
+        // create child for parentId
+        linkCmdCreateNode.click();
+        protractor.utils.waitUntilElementPresent(me.inputCreateNodeType, protractor.utils.CONST_WAIT_ELEMENT);
+        expect(me.inputCreateNodeType.getAttribute('id')).toEqual('inputCreateNodeType');
+
+        // select Aufgabe
+        expect(me.inputNameSymLinkNode.getAttribute('id')).toEqual('inputNameSymLinkNode');
+        
+        // set symlinkdata and submit form
+        var nodeName = 'testsymlink' + new Date().getTime();
+        me.inputNameSymLinkNode.clear().then(function () {
+            me.inputNameSymLinkNode.sendKeys(nodeName);
+        });
+        
+        // toggle desc
+        me.filterDescSymLinkForm_Off.click();
+        protractor.utils.waitUntilElementPresent(me.inputNodeDescSymLinkNode, protractor.utils.CONST_WAIT_ELEMENT);
+        expect(me.inputNodeDescSymLinkNode.getAttribute('id')).toEqual('inputNodeDescSymLinkNode');
+        // me.inputNodeDescSymLinkNode.sendKeys("fehlerhafte Tetsdaten");
+        
+        // define SearchElement
+        var eleNewSymLinkName = element(by.cssContainingText('span.fancytree-title2', nodeName));
+
+        // submit form
+        protractor.utils.waitUntilElementPresent(me.buttonSaveSymLink, protractor.utils.CONST_WAIT_ELEMENT);
+        expect(me.buttonSaveSymLink.isDisplayed()).toEqual(true);
+        me.buttonSaveSymLink.click().then(function () {
+            // wait for result
+            browser.ignoreSynchronization = true;
+    
+            // wait till parent- data is loaded
+            protractor.utils.waitUntilElementPresent(linkCmdCreateNode, protractor.utils.CONST_WAIT_NODEHIRARCHY);
+            expect(linkCmdCreateNode.getAttribute('id')).toEqual('cmdCreateSymLink' + parentId);
+            
+            // wait till data is loaded
+            protractor.utils.waitUntilElementPresent(eleNewSymLinkName, protractor.utils.CONST_WAIT_ELEMENT);
+            expect(eleNewSymLinkName.getText()).toEqual(nodeName);
+            browser.ignoreSynchronization = false;
+        });
+        
+        return eleNewSymLinkName;
+    };
+    
+    /**
+     * follow SymLinkNode and wait until parent present
+     * @param   {Integer} nodeId    nodeId of the symlinknode to follow
+     * @param   {String}  parentId  id of the parentNode
+     * @returns {Element}           element-filter on the symLink
+     */
+    me.followSymLinkNodeById = function (nodeId, parentId) {
+        // load base for node
+        var linkCmdCreateNodeForMe = $('#cmdCreateSymLink' + nodeId);
+        protractor.utils.waitUntilElementClickable(linkCmdCreateNodeForMe, protractor.utils.CONST_WAIT_NODEHIRARCHY);
+        expect(linkCmdCreateNodeForMe.getAttribute('id')).toEqual('cmdCreateSymLink' + nodeId);
+        
+        // load finder for parent
+        var linkCmdCreateNodeForParent = $('#cmdCreateSymLink' + parentId);
+        
+        // find symlink on nodeline
+        var symLink = linkCmdCreateNodeForMe.element(by.xpath("../../td[2]/div/div[1]/a"));
+        protractor.utils.waitUntilElementPresent(symLink, protractor.utils.CONST_WAIT_ELEMENT);
+        expect(symLink.isDisplayed()).toEqual(true);
+        // click symlink
+        symLink.click().then(function () {
+            // wait for result
+            browser.ignoreSynchronization = true;
+    
+            // wait till parent- data is loaded
+            protractor.utils.waitUntilElementPresent(linkCmdCreateNodeForParent, protractor.utils.CONST_WAIT_NODEHIRARCHY);
+            expect(linkCmdCreateNodeForParent.getAttribute('id')).toEqual('cmdCreateSymLink' + parentId);
+            
+            // wait till data is loaded
+            protractor.utils.waitUntilElementPresent(linkCmdCreateNodeForMe, protractor.utils.CONST_WAIT_ELEMENT);
+            expect(linkCmdCreateNodeForMe.getAttribute('id')).toEqual('cmdCreateSymLink' + nodeId);
+            
+            // expect new Url
+            expect(browser.getLocationAbsUrl()).toContain('activate/' + parentId);
+
+            browser.ignoreSynchronization = false;
+        }).then(null, function (err) {
+            console.error("an error occured:", err);
+            expect(err).toBe(false);
+        });
+        
+
+        return linkCmdCreateNodeForMe;
+    };
+
     /**
      * extract NnodeId from TaskNameElement
      * @param   {Element} eleTaskName       tasknameElement
      * @returns {Promise}                   promise to get nodeId 
      */
-    me.extractNodeIdFromTaskNameElement = function (eleTaskName) {
+    me.extractNodeIdFromNodeNameElement = function (eleTaskName) {
         protractor.utils.waitUntilElementPresent(eleTaskName, protractor.utils.CONST_WAIT_ELEMENT);
         return eleTaskName.getAttribute('id').then(function (titleId) {
             return titleId.replace(/title/, '');

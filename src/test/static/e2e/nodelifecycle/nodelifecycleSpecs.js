@@ -28,27 +28,27 @@ describe('yaio explorer', function() {
         yaioLoginPage.doLogout();
     });
     
-    it('should create/edit/delete a new node', function doCreateEditDeleteTask() {
+    it('should create/edit/delete a new TaskNode', function doCreateEditDeleteTask() {
         // navigate to Node
         yaioNodePage.navigateToNode(yaioNodePage.jsFuncTestHierarchy)
         .then(function doneNavigate(){
             // create task
             var deferred = protractor.promise.defer();
-            var newTaskNameElement = yaioNodePage.openNodeEditorAndCreateTaskNode(yaioNodePage.jsFuncTestId);
-            newTaskNameElement.getText().then(function() {
-                deferred.fulfill(newTaskNameElement);
+            var newNodeElement = yaioNodePage.openNodeEditorAndCreateTaskNode(yaioNodePage.jsFuncTestId);
+            newNodeElement.getText().then(function() {
+                deferred.fulfill(newNodeElement);
             })
             
             return deferred.promise;
         })
-        .then(function doneCreateTask(newTaskNameElement) {
+        .then(function doneCreateTask(newNodeElement) {
             // extract nodeid from new task
-            return yaioNodePage.extractNodeIdFromTaskNameElement(newTaskNameElement);
+            return yaioNodePage.extractNodeIdFromNodeNameElement(newNodeElement);
         })
-        .then(function doneExtractNodeId(taskId) {
+        .then(function doneExtractNodeId(nodeId) {
             // edit new task
             var deferred = protractor.promise.defer();
-            var editTaskNameElement = yaioNodePage.editTaskNodeById(taskId);
+            var editTaskNameElement = yaioNodePage.editTaskNodeById(nodeId);
             editTaskNameElement.getText().then(function() {
                 deferred.fulfill(editTaskNameElement);
             })
@@ -57,12 +57,12 @@ describe('yaio explorer', function() {
         })
         .then(function doneEditTask(editTaskNameElement){
             // extract nodeid from edited task
-            return yaioNodePage.extractNodeIdFromTaskNameElement(editTaskNameElement);
+            return yaioNodePage.extractNodeIdFromNodeNameElement(editTaskNameElement);
         })
-        .then(function doneExtractNodeId2(taskId){
+        .then(function doneExtractNodeId2(nodeId){
             // delete this task
             var deferred = protractor.promise.defer();
-            var deletedElement = yaioNodePage.deleteNodeById(taskId, yaioNodePage.jsFuncTestId);
+            var deletedElement = yaioNodePage.deleteNodeById(nodeId, yaioNodePage.jsFuncTestId);
             deletedElement.isPresent().then(function() {
                 deferred.fulfill(deletedElement);
             })
@@ -78,5 +78,50 @@ describe('yaio explorer', function() {
         });
     });
 
+    it('should create/follow/delete a SymLinkNode', function doCreateSymLink() {
+        // navigate to Node
+        yaioNodePage.navigateToNode(yaioNodePage.jsFuncTestHierarchy)
+        .then(function doneNavigate(){
+            // create symlink
+            var deferred = protractor.promise.defer();
+            var newNodeElement = yaioNodePage.openNodeEditorAndCreateSymLinkNode(yaioNodePage.jsFuncTestId);
+            newNodeElement.getText().then(function() {
+                deferred.fulfill(newNodeElement);
+            })
+            
+            return deferred.promise;
+        })
+        .then(function doneCreateSymLink(newNodeElement) {
+            // extract nodeid from new task
+            return yaioNodePage.extractNodeIdFromNodeNameElement(newNodeElement);
+        })
+        .then(function doneExtractNodeId(nodeId) {
+            // follow symlink
+            var deferred = protractor.promise.defer();
+            var symlinkTargetElement = yaioNodePage.followSymLinkNodeById(nodeId, yaioNodePage.jsFuncTestId);
+            symlinkTargetElement.getText().then(function() {
+                deferred.fulfill(nodeId);
+            })
+            
+            return deferred.promise;
+        })
+        .then(function doneFollowSymLink(nodeId){
+            // delete this task
+            var deferred = protractor.promise.defer();
+            var deletedElement = yaioNodePage.deleteNodeById(nodeId, yaioNodePage.jsFuncTestId);
+            deletedElement.isPresent().then(function() {
+                deferred.fulfill(deletedElement);
+            })
+            // check that element no more exists
+            expect(deletedElement.isPresent()).toEqual(false);
+            
+            return deferred.promise;
+        })
+        .then(null, function(err) {
+            // on error
+            console.error("an error occured:", err);
+            expect(err).toBe(false);
+        });
+    });
 });
 
