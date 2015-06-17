@@ -19,26 +19,66 @@ describe('yaio explorer', function() {
         yaioLoginPage.doLogin()
         .then(function doneOpenExplorer() {
             // open explorer
-            yaioNodePage.openExplorerFromFrontPage();
+            return yaioNodePage.openExplorerFromFrontPage();
         });
         protractor.utils.waitUntilElementClickable(yaioNodePage.containerMasterdata, protractor.utils.CONST_WAIT_NODEHIRARCHY);
         expect(yaioNodePage.containerMasterdata.isPresent()).toEqual(true);
     });
     afterEach(function() {
+        browser.ignoreSynchronization = false;
+        
+        // do logout
         yaioLoginPage.doLogout();
     });
     
-    it('should show/export Desc of Testnode', function doShowDescOfTestNode() {
+    it('should focus on a node and export the full Nodetree', function doShowDescOfTestNode() {
+        // Given
+        var expectedHtmlDocumentation = "Ein Beispiel-Projekt (SysPlay118)";
+        var expectedMindmap = '<node  id="SysPlay119" text="WARNING - Teilprojekt 1" ID="SysPlay119" TEXT="WARNING - Teilprojekt 1" background_color="#FF6347" BACKGROUND_COLOR="#FF6347" >';
+        var expectedICal = 'Ein Beispiel-Projekt';
+        
+        // When and Then
+
         // navigate to Node
         yaioNodePage.navigateToNode(yaioNodePage.jsFuncTestHierarchy)
         .then(function doneNavigate(){
-            // show desc of testnode
+            // focus on node
             var deferred = protractor.promise.defer();
-            var expectedText = "Diese Aufgabe bitte nicht löschen, da hier die JavaScript-E2E-Tests ausgeführt werden.";
-            var expectedHtml = "<p>" + expectedText + "</p>";
-            var contentHandler = yaioNodePage.createHandlerToCheckNodeExports(yaioNodePage.jsFuncTestId, expectedHtml, expectedText, expectedText);
-
             // call service-function
+            var link = yaioNodePage.focusOnNode(yaioNodePage.jsLayoutTestId);
+            link.getText().then(function() {
+                deferred.fulfill(link);
+            })
+            
+            return deferred.promise;
+        })
+        .then(function doneFocusOnNode() {
+            // export as html documentation
+            return yaioNodePage.clickShortlinkExportAsHtmlDocumentation(expectedHtmlDocumentation);
+        })
+        .then(function doneExportAsHtmlDocumentation() {
+            // export as ICal 
+            return yaioNodePage.clickShortlinkExportAsMindmap(expectedMindmap);
+        })
+        .then(function doneExportAsMindmap() {
+            // export as ICal 
+            return yaioNodePage.clickShortlinkExportAsICal(expectedICal);
+        })
+    });
+
+    it('should show/export Desc of Testnode', function doShowDescOfTestNode() {
+        // Given
+        var deferred = protractor.promise.defer();
+        var expectedText = "Diese Aufgabe bitte nicht löschen, da hier die JavaScript-E2E-Tests ausgeführt werden.";
+        var expectedHtml = "<p>" + expectedText + "</p>";
+        var contentHandler = yaioNodePage.createHandlerToCheckNodeExports(yaioNodePage.jsFuncTestId, expectedHtml, expectedText, expectedText);
+
+        // When and Then
+
+        // navigate to Node
+        yaioNodePage.navigateToNode(yaioNodePage.jsFuncTestHierarchy)
+        .then(function doneNavigate(){
+
             var container = yaioNodePage.showDescForNode(yaioNodePage.jsFuncTestId, contentHandler);
             container.getText().then(function() {
                 deferred.fulfill(container);
@@ -48,19 +88,21 @@ describe('yaio explorer', function() {
         });
     });
 
-    it('should show Sys of Testnode', function doShowDescOfTestNode() {
+    it('should show Sys of Testnode', function doShowSysOfTestNode() {
+        // Given
+        var checkContentHandler = function (sysContainer) {
+            expect(sysContainer.getText()).toContain("Stand:");
+            return sysContainer.getText();
+        };
+
+        // When and Then
+
         // navigate to Node
         yaioNodePage.navigateToNode(yaioNodePage.jsFuncTestHierarchy)
         .then(function doneNavigate(){
             // show sys of testnode
             var deferred = protractor.promise.defer();
             
-           // define checkContentHandler
-            var checkContentHandler = function (sysContainer) {
-                expect(sysContainer.getText()).toContain("Stand:");
-                return sysContainer.getText();
-            };
-
             // call service-function
             var container = yaioNodePage.showSysForNode(yaioNodePage.jsFuncTestId, checkContentHandler);
             container.getText().then(function() {
@@ -72,6 +114,8 @@ describe('yaio explorer', function() {
     });
 
     it('should create/edit/delete a new TaskNode', function doCreateEditDeleteTask() {
+        // When and Then
+
         // navigate to Node
         yaioNodePage.navigateToNode(yaioNodePage.jsFuncTestHierarchy)
         .then(function doneNavigate(){
@@ -113,15 +157,12 @@ describe('yaio explorer', function() {
             expect(deletedElement.isPresent()).toEqual(false);
             
             return deferred.promise;
-//        })
-//        .then(null, function(err) {
-//            // on error
-//            console.error("an error occured:", err);
-//            expect(err).toBe(false);
         });
     });
 
     it('should create/follow/delete a SymLinkNode', function doCreateSymLink() {
+        // When and Then
+
         // navigate to Node
         yaioNodePage.navigateToNode(yaioNodePage.jsFuncTestHierarchy)
         .then(function doneNavigate(){
@@ -159,11 +200,6 @@ describe('yaio explorer', function() {
             expect(deletedElement.isPresent()).toEqual(false);
             
             return deferred.promise;
-//        })
-//        .then(null, function(err) {
-//            // on error
-//            console.error("an error occured:", err);
-//            expect(err).toBe(false);
         });
     });
 });
