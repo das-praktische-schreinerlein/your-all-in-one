@@ -70,11 +70,11 @@ describe('yaio explorer', function() {
             expect(deletedElement.isPresent()).toEqual(false);
             
             return deferred.promise;
-        })
-        .then(null, function(err) {
-            // on error
-            console.error("an error occured:", err);
-            expect(err).toBe(false);
+//        })
+//        .then(null, function(err) {
+//            // on error
+//            console.error("an error occured:", err);
+//            expect(err).toBe(false);
         });
     });
 
@@ -116,11 +116,11 @@ describe('yaio explorer', function() {
             expect(deletedElement.isPresent()).toEqual(false);
             
             return deferred.promise;
-        })
-        .then(null, function(err) {
-            // on error
-            console.error("an error occured:", err);
-            expect(err).toBe(false);
+//        })
+//        .then(null, function(err) {
+//            // on error
+//            console.error("an error occured:", err);
+//            expect(err).toBe(false);
         });
     });
 });
