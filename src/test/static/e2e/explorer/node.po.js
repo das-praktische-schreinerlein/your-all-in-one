@@ -516,17 +516,17 @@ var YAIONodePage = function() {
         // define checkHandler
         var checkClipboardHandlerText = function (clipboard) {
             // check text content
-            expect(clipboard.getText()).toEqual(expectedText);
+            expect(clipboard.getText()).toContain(expectedText);
             return clipboard.getText();
         };
         var checkClipboardHandlerJira = function (clipboard) {
             // check jira content
-            expect(clipboard.getText()).toEqual(expectedJira);
+            expect(clipboard.getText()).toContain(expectedJira);
             return clipboard.getText();
         };
         var contentHandler = function (descContainer) {
             // check desc content
-            expect(descContainer.getText()).toEqual(expectedDesc);
+            expect(descContainer.getInnerHtml()).toContain(expectedDesc);
 
             // export to text clipboard
             var contentActions = me.callButtonExportNodeAsText(nodeId)

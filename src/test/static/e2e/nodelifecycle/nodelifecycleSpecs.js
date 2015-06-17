@@ -35,7 +35,8 @@ describe('yaio explorer', function() {
             // show desc of testnode
             var deferred = protractor.promise.defer();
             var expectedText = "Diese Aufgabe bitte nicht löschen, da hier die JavaScript-E2E-Tests ausgeführt werden.";
-            var contentHandler = yaioNodePage.createHandlerToCheckNodeExports(yaioNodePage.jsFuncTestId, expectedText, expectedText, expectedText);
+            var expectedHtml = "<p>" + expectedText + "</p>";
+            var contentHandler = yaioNodePage.createHandlerToCheckNodeExports(yaioNodePage.jsFuncTestId, expectedHtml, expectedText, expectedText);
 
             // call service-function
             var container = yaioNodePage.showDescForNode(yaioNodePage.jsFuncTestId, contentHandler);
