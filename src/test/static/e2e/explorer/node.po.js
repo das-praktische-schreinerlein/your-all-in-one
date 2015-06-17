@@ -206,7 +206,7 @@ var YAIONodePage = function() {
      * @returns {Element}         element-filter on the editedTaskName
      */
     me.editTaskNodeById = function (nodeId) {
-        expect(nodeId).toMatch(/DT.*/);
+        expect(nodeId).toBeDefined();
 
         var linkCmdEditNode = $('#cmdEdit' + nodeId);
         protractor.utils.waitUntilElementClickable(linkCmdEditNode, protractor.utils.CONST_WAIT_ELEMENT);
@@ -367,13 +367,13 @@ var YAIONodePage = function() {
     };
     
     /**
-     * navigate to TaskNode by id, call delete and wait until new site present without nodeId
+     * navigate to Node by id, call delete and wait until new site present without nodeId
      * @param   {Integer} nodeId  nodeId of the node to delete
      * @param   {Integer} checkId nodeId of the node to check
      * @returns {Element}         element-filter on the cmdRemode
      */
     me.deleteNodeById = function (nodeId, checkId) {
-        expect(nodeId).toMatch(/DT.*/);
+        expect(nodeId).toBeDefined();
 
         var linkCmdRemoveNode = $('#cmdRemove' + nodeId);
         protractor.utils.waitUntilElementClickable(linkCmdRemoveNode, protractor.utils.CONST_WAIT_ELEMENT);
@@ -399,5 +399,198 @@ var YAIONodePage = function() {
         
         return linkCmdRemoveNode;
     };
+
+    /**
+     * navigate to Node by id, open container with link, call checkHandler and close container
+     * @param   {Integer}  nodeId             nodeId of the node to show
+     * @param   {Function} checkHandler       handler which is called after opening the container (should return a promise)
+     * @param   {String}   containerIdPraefix prefix of the container-element
+     * @param   {String}   linkIdPraefix      prefix of the container-toggler
+     * @returns {Element}                     element-filter on the containerDesc
+     */
+    me.showContainerForNode = function (nodeId, checkHandler, containerIdPraefix, linkIdPraefix) {
+        // check id
+        expect(nodeId).toBeDefined();
+        
+        browser.ignoreSynchronization = true;
+
+        // define container
+        var container = $(containerIdPraefix + nodeId);
+
+        // open container
+        var linkCmdShowContainer = $(linkIdPraefix + nodeId);
+        protractor.utils.waitUntilElementClickable(linkCmdShowContainer, protractor.utils.CONST_WAIT_ELEMENT);
+        expect(linkCmdShowContainer.isDisplayed()).toEqual(true);
+        linkCmdShowContainer.click().then(function doneOpenContainer() {
+            // wait till container is loaded
+            protractor.utils.waitUntilElementVisible(container, protractor.utils.CONST_WAIT_ELEMENT);
+            expect(container.isDisplayed()).toEqual(true);
+            
+            // define CloseHandler
+            var closeContainer = function () {
+                // close Desc
+                linkCmdShowContainer.click().then(function () {
+                    // wait till data is loaded and container hidden
+                    protractor.utils.waitThatElementIsNotPresent(container, protractor.utils.CONST_WAIT_ELEMENT);
+                    expect(container.isDisplayed()).toEqual(false);
+                });
+            }
+            
+            if (checkHandler != "undefined") {
+                checkHandler(container).then( function doneCheckHandler() {
+                    // run CloseHandler
+                    closeContainer()
+                });
+            } else  {
+                // run CloseHandler
+                closeContainer()
+            }
+        });
+
+        browser.ignoreSynchronization = false;
+        
+        return container;
+    };
+
+    /**
+     * navigate to Node by id, call showDesc open/close
+     * @param   {Integer}  nodeId        nodeId of the node to show
+     * @param   {Function} checkHandler  handler which is called after opening of the desc (should return a promise)
+     * @returns {Element}                element-filter on the containerDesc
+     */
+    me.showDescForNode = function (nodeId, checkHandler) {
+        return me.showContainerForNode(nodeId, checkHandler, '#container_content_desc_', '#toggler_desc_');
+    };
+
+    /**
+     * navigate to Node by id, call showMetaData open/close
+     * @param   {Integer}  nodeId        nodeId of the node to show
+     * @param   {Function} checkHandler  handler which is called after opening of the desc (should return a promise)
+     * @returns {Element}                element-filter on the containerDesc
+     */
+    me.showSysForNode = function (nodeId, checkHandler) {
+        return me.showContainerForNode(nodeId, checkHandler, '#detail_sys_', '#toggler_sys_');
+    };
+    
+
+    /**
+     * click export-link for node
+     * @returns {JQuery}                 export-link as JQuery-Selector
+     * @returns {Promise}                promise on the exportLink-click
+     */
+    me.callButtonExport = function (linkExportCommand) {
+        protractor.utils.waitUntilElementClickable(linkExportCommand, protractor.utils.CONST_WAIT_ELEMENT);
+        expect(linkExportCommand.isDisplayed()).toEqual(true);
+        return linkExportCommand.click();
+    };
+
+    /**
+     * click text-export-link for node
+     * @param   {Integer}  nodeId        nodeId of the node to show
+     * @returns {Promise}                promise on the exportLink-click
+     */
+    me.callButtonExportNodeAsText = function (nodeId) {
+        var linkExportCommand = $("div#commands_desc_" + nodeId + " a.button.command-desc-txtexport");
+        return me.callButtonExport(linkExportCommand);
+    };
+    
+    /**
+     * click jira-export-link for node
+     * @param   {Integer}  nodeId        nodeId of the node to show
+     * @returns {Promise}                promise on the exportLink-click
+     */
+    me.callButtonExportNodeAsJira = function (nodeId) {
+        var linkExportCommand = $("div#commands_desc_" + nodeId + " a.button.command-desc-jiraexport");
+        return me.callButtonExport(linkExportCommand);
+    };
+    
+    /**
+     * returns a handler(descContainer) which will check the nodedesc, click all export-links and check the exports (text, jira)
+     * @param   {Integer}  nodeId        nodeId of the node to check
+     * @param   {String}   expectedDesc  expected nodeDesc in descContainer
+     * @param   {String}   expectedText  expected nodeDesc in clipboard after click on TextExport
+     * @param   {String}   expectedJira  expected nodeDesc in clipboard after click on JiraExport
+     * @returns {Function}               function: handler(descContainer) return promise
+     */
+    me.createHandlerToCheckNodeExports = function (nodeId, expectedDesc, expectedText, expectedJira) {
+        // define checkHandler
+        var checkClipboardHandlerText = function (clipboard) {
+            // check text content
+            expect(clipboard.getText()).toEqual(expectedText);
+            return clipboard.getText();
+        };
+        var checkClipboardHandlerJira = function (clipboard) {
+            // check jira content
+            expect(clipboard.getText()).toEqual(expectedJira);
+            return clipboard.getText();
+        };
+        var contentHandler = function (descContainer) {
+            // check desc content
+            expect(descContainer.getText()).toEqual(expectedDesc);
+
+            // export to text clipboard
+            var contentActions = me.callButtonExportNodeAsText(nodeId)
+            .then(function doneCallTextExport() {
+                // check text-clipboard
+                var clipboardElement = me.checkAndCloseClipboard(checkClipboardHandlerText);
+                return clipboardElement.getText();
+            })
+            .then(function doneCloseClipboard() {
+                // export to jira clipboard
+                return me.callButtonExportNodeAsJira(nodeId);
+            })
+            .then(function doneCallJiraExport() {
+                // check jira-clipboard
+                var clipboardElement = me.checkAndCloseClipboard(checkClipboardHandlerJira);
+                return clipboardElement.getText();
+            });
+            
+            return contentActions;
+        };
+        
+        return contentHandler;
+    }
+
+    /**
+     * check the clipboard-content and close the clipboard
+     * @param   {Function} checkHandler  handler which is called to check the clipboard (should return a promise) before the closebutton is cliked
+     * @returns {Element}                element-filter on the clipboardContent
+     */
+    me.checkAndCloseClipboard = function(checkHandler) {
+        browser.ignoreSynchronization = true;
+
+        // define container
+        var clipboardContent = $('#clipboard-content');
+        protractor.utils.waitUntilElementVisible(clipboardContent, protractor.utils.CONST_WAIT_ELEMENT);
+        expect(clipboardContent.isDisplayed()).toEqual(true);
+        
+        // define CloseHandler
+        var linkCmdCloseClipboard = $('div.ui-dialog div.ui-dialog-buttonset button.ui-button');
+        protractor.utils.waitUntilElementClickable(linkCmdCloseClipboard, protractor.utils.CONST_WAIT_ELEMENT);
+        expect(linkCmdCloseClipboard.isDisplayed()).toEqual(true);
+        var closeContainer = function () {
+            // close Desc
+            linkCmdCloseClipboard.click().then(function () {
+                // wait till data is loaded and container hidden
+                protractor.utils.waitThatElementIsNotPresent(clipboardContent, protractor.utils.CONST_WAIT_ELEMENT);
+                expect(clipboardContent.isDisplayed()).toEqual(false);
+            });
+        }
+        
+        if (checkHandler != "undefined") {
+            // run checkHandler
+            checkHandler(clipboardContent).then( function doneCheckHandler() {
+                // run CloseHandler
+                closeContainer()
+            });
+        } else  {
+            // run CloseHandler
+            closeContainer()
+        }
+
+        browser.ignoreSynchronization = false;
+        
+        return clipboardContent;
+    }
 };
 module.exports = YAIONodePage;

@@ -18,6 +18,18 @@ var Utils = {
     },
 
     /**
+     * wait until element visible in DOM
+     * @param   {ElementFinder} elem     expected element
+     * @param   {Integer}       timeout  timeout in milliseconds
+     * @returns {Promise}       browser.wait for elem
+     */
+    waitUntilElementVisible: function (elem, timeout) {
+        var EC = protractor.ExpectedConditions;
+        var isPresent = EC.visibilityOf(elem);
+        return browser.wait(isPresent, timeout);
+    },
+
+    /**
      * wait until element is clickable in DOM
      * @param   {ElementFinder} elem     expected element
      * @param   {Integer}       timeout  timeout in milliseconds

@@ -28,6 +28,48 @@ describe('yaio explorer', function() {
         yaioLoginPage.doLogout();
     });
     
+    it('should show/export Desc of Testnode', function doShowDescOfTestNode() {
+        // navigate to Node
+        yaioNodePage.navigateToNode(yaioNodePage.jsFuncTestHierarchy)
+        .then(function doneNavigate(){
+            // show desc of testnode
+            var deferred = protractor.promise.defer();
+            var expectedText = "Diese Aufgabe bitte nicht löschen, da hier die JavaScript-E2E-Tests ausgeführt werden.";
+            var contentHandler = yaioNodePage.createHandlerToCheckNodeExports(yaioNodePage.jsFuncTestId, expectedText, expectedText, expectedText);
+
+            // call service-function
+            var container = yaioNodePage.showDescForNode(yaioNodePage.jsFuncTestId, contentHandler);
+            container.getText().then(function() {
+                deferred.fulfill(container);
+            })
+            
+            return deferred.promise;
+        });
+    });
+
+    it('should show Sys of Testnode', function doShowDescOfTestNode() {
+        // navigate to Node
+        yaioNodePage.navigateToNode(yaioNodePage.jsFuncTestHierarchy)
+        .then(function doneNavigate(){
+            // show sys of testnode
+            var deferred = protractor.promise.defer();
+            
+           // define checkContentHandler
+            var checkContentHandler = function (sysContainer) {
+                expect(sysContainer.getText()).toContain("Stand:");
+                return sysContainer.getText();
+            };
+
+            // call service-function
+            var container = yaioNodePage.showSysForNode(yaioNodePage.jsFuncTestId, checkContentHandler);
+            container.getText().then(function() {
+                deferred.fulfill(container);
+            })
+            
+            return deferred.promise;
+        });
+    });
+
     it('should create/edit/delete a new TaskNode', function doCreateEditDeleteTask() {
         // navigate to Node
         yaioNodePage.navigateToNode(yaioNodePage.jsFuncTestHierarchy)
