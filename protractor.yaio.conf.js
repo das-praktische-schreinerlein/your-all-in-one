@@ -18,8 +18,8 @@ exports.config = {
         'chromeOptions': {
             binary: chromeBin,
             // no sandbox to get file
-            args: ['--no-sandbox'],
-            //args: [],
+            //args: ['--no-sandbox'],
+            args: [],
             extensions: [],
             prefs: {
                 'download': {
@@ -48,6 +48,9 @@ exports.config = {
     jasmineNodeOpts: {
         showColors: true, // Use colors in the command line report.
         defaultTimeoutInterval: 360000,
+//        isVerbose: true,
+        realtimeFailure: true,
+        includeStackTrace: true,
         print: function() {}
     },
     
