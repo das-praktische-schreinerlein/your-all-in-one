@@ -17,8 +17,16 @@ exports.config = {
         'browserName': 'chrome',
         'chromeOptions': {
             binary: chromeBin,
-            args: [],
+            // no sandbox to get file
+            args: ['--no-sandbox'],
+            //args: [],
             extensions: [],
+            prefs: {
+                'download': {
+                    'prompt_for_download': false,
+                    'default_directory': 'd:/tmp/',
+                },
+            },
         }
     },
     
@@ -87,6 +95,7 @@ exports.config = {
 
     // specific YAIO-config
     params: {
+        downloadPath: "d:/tmp/",
         yaioConfig: {
             yaioBaseUrl    : baseUrl,
             yaioBaseAppUrl : baseUrl + '/yaio-explorerapp/yaio-explorerapp.html#',
