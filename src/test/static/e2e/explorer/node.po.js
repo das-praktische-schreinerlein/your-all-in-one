@@ -3,6 +3,7 @@
  */
 'use strict';
 var YAIOFrontPage = require('../frontpage/frontpage.po.js');
+var fs = require('fs');
 
 var YAIONodePage = function() {
     var yaioFrontPage = new YAIOFrontPage();
@@ -11,6 +12,7 @@ var YAIONodePage = function() {
     // nodeIds
     me.sysplayId = 'SysPlay1';
     me.systestId = "SysTest1";
+    me.jsLayoutTestId = "DT2015061620443946714";
     me.jsFuncTestId = "JsFuncTest1";
     me.jsFuncTestHierarchy = ['SysPlay1', 'SysTest1', 'JsFuncTest1'];
     
@@ -138,6 +140,42 @@ var YAIONodePage = function() {
         }
 
         return promise;
+    };
+
+    /**
+     * focus on a node
+     * @param   {String}  nodeId  id of the node to focus
+     * @returns {Promise}         browser.wait for element.clicl()
+     */
+    me.focusOnNode = function (nodeId) {
+        // load base for node
+        var linkCmdCreateNodeForMe = $('#cmdCreateSymLink' + nodeId);
+        protractor.utils.waitUntilElementClickable(linkCmdCreateNodeForMe, protractor.utils.CONST_WAIT_NODEHIRARCHY);
+        expect(linkCmdCreateNodeForMe.getAttribute('id')).toEqual('cmdCreateSymLink' + nodeId);
+        
+        // find symlink on nodeline
+        var focusMe = linkCmdCreateNodeForMe.element(by.xpath("../../td[1]/span/span[2]/a"));
+        protractor.utils.waitUntilElementPresent(focusMe, protractor.utils.CONST_WAIT_ELEMENT);
+        expect(focusMe.isDisplayed()).toEqual(true);
+        // click symlink
+        focusMe.click().then(function () {
+            // wait for result
+            browser.ignoreSynchronization = true;
+    
+            // wait till data is loaded
+            protractor.utils.waitUntilElementPresent(linkCmdCreateNodeForMe, protractor.utils.CONST_WAIT_ELEMENT);
+            expect(linkCmdCreateNodeForMe.getAttribute('id')).toEqual('cmdCreateSymLink' + nodeId);
+            
+            // expect new Url
+            expect(browser.getLocationAbsUrl()).toContain('show/' + nodeId);
+
+//        }).then(null, function (err) {
+//            console.error("an error occured:", err);
+//            expect(err).toBe(false);
+        });
+        
+
+        return linkCmdCreateNodeForMe;
     };
 
     /**
@@ -480,7 +518,7 @@ var YAIONodePage = function() {
      * @returns {JQuery}                 export-link as JQuery-Selector
      * @returns {Promise}                promise on the exportLink-click
      */
-    me.callButtonExport = function (linkExportCommand) {
+    me.clickButtonExportNodeToClipboard = function (linkExportCommand) {
         protractor.utils.waitUntilElementClickable(linkExportCommand, protractor.utils.CONST_WAIT_ELEMENT);
         expect(linkExportCommand.isDisplayed()).toEqual(true);
         return linkExportCommand.click();
@@ -491,9 +529,9 @@ var YAIONodePage = function() {
      * @param   {Integer}  nodeId        nodeId of the node to show
      * @returns {Promise}                promise on the exportLink-click
      */
-    me.callButtonExportNodeAsText = function (nodeId) {
+    me.clickButtonExportNodeToClipboardAsText = function (nodeId) {
         var linkExportCommand = $("div#commands_desc_" + nodeId + " a.button.command-desc-txtexport");
-        return me.callButtonExport(linkExportCommand);
+        return me.clickButtonExportNodeToClipboard(linkExportCommand);
     };
     
     /**
@@ -501,9 +539,9 @@ var YAIONodePage = function() {
      * @param   {Integer}  nodeId        nodeId of the node to show
      * @returns {Promise}                promise on the exportLink-click
      */
-    me.callButtonExportNodeAsJira = function (nodeId) {
+    me.clickButtonExportNodeToClipboardAsJira = function (nodeId) {
         var linkExportCommand = $("div#commands_desc_" + nodeId + " a.button.command-desc-jiraexport");
-        return me.callButtonExport(linkExportCommand);
+        return me.clickButtonExportNodeToClipboard(linkExportCommand);
     };
     
     /**
@@ -531,7 +569,7 @@ var YAIONodePage = function() {
             expect(descContainer.getInnerHtml()).toContain(expectedDesc);
 
             // export to text clipboard
-            var contentActions = me.callButtonExportNodeAsText(nodeId)
+            var contentActions = me.clickButtonExportNodeToClipboardAsText(nodeId)
             .then(function doneCallTextExport() {
                 // check text-clipboard
                 var clipboardElement = me.checkAndCloseClipboard(checkClipboardHandlerText);
@@ -539,7 +577,7 @@ var YAIONodePage = function() {
             })
             .then(function doneCloseClipboard() {
                 // export to jira clipboard
-                return me.callButtonExportNodeAsJira(nodeId);
+                return me.clickButtonExportNodeToClipboardAsJira(nodeId);
             })
             .then(function doneCallJiraExport() {
                 // check jira-clipboard
@@ -594,5 +632,135 @@ var YAIONodePage = function() {
         
         return clipboardContent;
     }
+
+
+    /**
+     * open Export-Menu, click export-link, check result and close export-menu
+     * @returns {JQuery} linkExportCommand   export-link as JQuery-Selector
+     * @param   {Function} checkHandler      handler which is called to check the result (should return a promise)
+     * @returns {Promise}                    promise on the linkExportMenu-click
+     */
+    me.clickButtonExportAndCheck = function (linkExportCommand, checkHandler) {
+        // look for element and click
+        var linkExportMenu = $('[translate="common.command.Export"]');
+        protractor.utils.waitUntilElementClickable(linkExportMenu, protractor.utils.CONST_WAIT_ELEMENT);
+        expect(linkExportMenu.isDisplayed()).toEqual(true);
+
+        // open menu
+        return linkExportMenu.click()
+        .then(function doneMenuCommand() {
+            // click export-button for new window
+            browser.ignoreSynchronization = true;
+            protractor.utils.waitUntilElementClickable(linkExportCommand, protractor.utils.CONST_WAIT_ELEMENT);
+            expect(linkExportCommand.isDisplayed()).toEqual(true);
+            return linkExportCommand.click()
+        })
+        .then(function doneLinkCommand() {
+            // call checkHandler
+            return checkHandler();
+        })
+        .then(function doneCheckHandler() {
+            // close export-menu
+            return linkExportMenu.click();
+        });
+    };
+
+    /**
+     * open Export-Menu, click export-link, check result in new window and close export-menu
+     * @returns {JQuery} linkExportCommand   export-link as JQuery-Selector
+     * @param   {Function} checkHandler      handler which is called to check the result (should return a promise)
+     * @returns {Promise}                    promise on the linkExportMenu-click
+     */
+    me.clickButtonExportAndCheckInNewWindow = function (linkExportCommand, checkHandler) {
+        var newWindowCheckHandler = function () {
+            var myHandles = [];
+            // get windows
+            return browser.getAllWindowHandles()
+            .then(function doneGetWindowHandles(handles) {
+                // switch to the popup
+                myHandles = handles;
+                return browser.switchTo().window(myHandles[1]);
+            }).then(function doneSwitchWindow() {
+                // call checkHandler
+                return checkHandler();
+            }).then(function doneSwitchWindow() {
+                // close and go back to the main window
+                browser.driver.close();
+                return browser.switchTo().window(myHandles[0]);
+            })
+        }
+        return me.clickButtonExportAndCheck(linkExportCommand, newWindowCheckHandler);
+    };
+    
+    /**
+     * export node as html-Documentation-DirectLink and check against expected text
+     * @param   {String} expectedText  export must contain this text
+     * @returns {Promise}              promise on the linkExportMenu-click
+     */
+    me.clickShortlinkExportAsHtmlDocumentation = function (expectedText) {
+        // define export-button
+        var linkExportCommand = $('[translate="common.command.ExportHtmlDocumentationDirect"]');
+        
+        // define checkhandler
+        var checkHandler = function () {
+            protractor.utils.waitUntilElementPresent($("#div_full"), protractor.utils.CONST_WAIT_NODEHIRARCHY);
+            expect($("#div_full").getInnerHtml()).toContain(expectedText);
+        };
+        // call exporter
+        var newWindow = me.clickButtonExportAndCheckInNewWindow(linkExportCommand, checkHandler);
+        return newWindow;
+    };
+
+    /**
+     * export node by button, download and check the filecontent against expected text
+     * @returns {JQuery} linkExportCommand   export-link as JQuery-Selector
+     * @param   {String} filename            static name of the exportfile
+     * @param   {String} expectedText        export must contain this text
+     * @returns {Promise}                    promise on the linkExportMenu-click
+     */
+    me.clickButtonExportAndCheckFileDownload = function (linkExportCommand, fileName, expectedText) {
+        // delete file
+        var filePath = browser.params.downloadPath + fileName;
+        if (fs.existsSync(filePath)) {
+            // Make sure the browser doesn't have to rename the download.
+            fs.unlinkSync(filePath);
+        }
+
+        // define checkHandler
+        var downloadCheckHandler = function () {
+            return browser.driver.wait(function() {
+                // Wait until the file has been downloaded.
+                return fs.existsSync(filePath);
+            }, 2000)
+            .then(function() {
+                // check that file contains text
+                expect(fs.readFileSync(filePath, { encoding: 'utf8' })).toContain(expectedText);
+            });
+        };
+        
+        return me.clickButtonExportAndCheck(linkExportCommand, downloadCheckHandler);
+    };
+
+    /**
+     * export node as ICal-DirectLink and check against expected text
+     * @param   {String} expectedText  export must contain this text
+     * @returns {Promise}              promise on the linkExportMenu-click
+     */
+    me.clickShortlinkExportAsICal = function (expectedText) {
+        // define export-button
+        var linkExportCommand = $('[translate="common.command.ExportICalDirect"]');
+        return me.clickButtonExportAndCheckFileDownload(linkExportCommand, "converted.ics", expectedText);
+    };
+
+    /**
+     * export node as Mindmap-DirectLink and check against expected text
+     * @param   {String} expectedText  export must contain this text
+     * @returns {Promise}              promise on the linkExportMenu-click
+     */
+    me.clickShortlinkExportAsMindmap = function (expectedText) {
+        // define export-button
+        var linkExportCommand = $('[translate="common.command.ExportMindmapDirect"]');
+        return me.clickButtonExportAndCheckFileDownload(linkExportCommand, "converted.mm", expectedText);
+    };
 };
 module.exports = YAIONodePage;
