@@ -40,6 +40,18 @@ var Utils = {
         var isPresent = EC.elementToBeClickable(elem);
         return browser.wait(isPresent, timeout);
     },
+    
+    /**
+     * wait until alert is present
+     * @param   {Integer}       timeout  timeout in milliseconds
+     * @returns {Promise}       browser.wait for elem
+     */
+    waitUntilAlertIsPresent: function (timeout) {
+        var EC = protractor.ExpectedConditions;
+        var isPresent = EC.alertIsPresent();
+        return browser.wait(isPresent, timeout);
+    },
+    
 
     /**
      * wait that element is not present in DOM
