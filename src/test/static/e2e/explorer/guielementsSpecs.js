@@ -14,6 +14,9 @@ describe('yaio explorer guielements', function() {
     var yaioFrontPage = new YAIOFrontPage();
     var yaioNodePage = new YAIONodePage();
 
+    /**
+     * prepare tests
+     */
     beforeEach(function() {
         // do Login
         yaioLoginPage.doLogin()
@@ -24,6 +27,10 @@ describe('yaio explorer guielements', function() {
         protractor.utils.waitUntilElementClickable(yaioNodePage.containerMasterdata, protractor.utils.CONST_WAIT_NODEHIRARCHY);
         expect(yaioNodePage.containerMasterdata.isPresent()).toEqual(true);
     });
+
+    /**
+     * cleanup after tests
+     */
     afterEach(function() {
         browser.ignoreSynchronization = false;
         
@@ -31,6 +38,9 @@ describe('yaio explorer guielements', function() {
         yaioLoginPage.doLogout();
     });
     
+    /**
+     * define tests
+     */
     it('should show Desc of Testnode', function doShowDescOfTestNode() {
         // Given
         var expectedText = "Diese Aufgabe bitte nicht löschen, da hier die JavaScript-E2E-Tests ausgeführt werden.";

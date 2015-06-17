@@ -11,13 +11,23 @@ describe('yaio loginpage', function() {
     var yaioLoginPage = new YAIOLoginPage();
     var yaioFrontPage = new YAIOFrontPage();
     
+    /**
+     * prepare tests
+     */
     beforeEach(function() {
         yaioLoginPage.openLoginPage();
     });
+
+    /**
+     * cleanup after tests
+     */
     afterEach(function() {
         yaioLoginPage.doLogout();
     });
     
+    /**
+     * define tests
+     */
     it('should show login', function doShowLogin() {
         expect(yaioLoginPage.username.getAttribute('id')).toEqual("username");
     });

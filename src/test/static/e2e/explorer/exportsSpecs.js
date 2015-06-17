@@ -16,6 +16,9 @@ describe('yaio explorer exports', function() {
     var yaioNodePage = new YAIONodePage();
     var yaioExportPage = new YAIOExportPage();
 
+    /**
+     * prepare tests
+     */
     beforeEach(function() {
         // do Login
         yaioLoginPage.doLogin()
@@ -26,6 +29,10 @@ describe('yaio explorer exports', function() {
         protractor.utils.waitUntilElementClickable(yaioNodePage.containerMasterdata, protractor.utils.CONST_WAIT_NODEHIRARCHY);
         expect(yaioNodePage.containerMasterdata.isPresent()).toEqual(true);
     });
+
+    /**
+     * cleanup after tests
+     */
     afterEach(function() {
         browser.ignoreSynchronization = false;
         
@@ -33,6 +40,9 @@ describe('yaio explorer exports', function() {
         yaioLoginPage.doLogout();
     });
     
+    /**
+     * define tests
+     */
     it('should focus on a node and export the full Nodetree', function doShowDescOfTestNode() {
         // Given
         var expectedHtmlDocumentation = "Ein Beispiel-Projekt (SysPlay118)";
