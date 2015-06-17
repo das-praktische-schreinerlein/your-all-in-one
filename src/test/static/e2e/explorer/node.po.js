@@ -383,6 +383,7 @@ var YAIONodePage = function() {
             // wait for result
             browser.ignoreSynchronization = true;
             
+            // accept delete
             var alertDialog = browser.switchTo().alert();
             expect(alertDialog.accept()).toBe(null);
     
