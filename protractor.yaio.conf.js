@@ -91,7 +91,7 @@ exports.config = {
             yaioBaseUrl    : baseUrl,
             yaioBaseAppUrl : baseUrl + '/yaio-explorerapp/yaio-explorerapp.html#',
             browserSize    : {
-                width: 1280,
+                width: 1380,
                 height: 800
             }
         },
