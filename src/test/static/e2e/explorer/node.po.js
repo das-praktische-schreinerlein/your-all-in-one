@@ -384,7 +384,7 @@ var YAIONodePage = function() {
             browser.ignoreSynchronization = true;
             
             var alertDialog = browser.switchTo().alert();
-            alertDialog.accept();
+            expect(alertDialog.accept()).toBe(null);
     
             // wait till data is loaded
             var checkElement = $('#cmdCreate' + checkId);
@@ -394,6 +394,7 @@ var YAIONodePage = function() {
             // wait till data is loaded
             protractor.utils.waitThatElementIsNotPresent(linkCmdRemoveNode, protractor.utils.CONST_WAIT_ELEMENT);
             expect(linkCmdRemoveNode.isPresent()).toEqual(false);
+            
             browser.ignoreSynchronization = false;
         });
         
