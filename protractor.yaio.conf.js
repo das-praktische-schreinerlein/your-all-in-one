@@ -11,24 +11,34 @@ var Utils = require(baseDir + './utils/utils.js');
 exports.config = {
     // The address of a running selenium server.
     seleniumAddress: 'http://localhost:4444/wd/hub',
+    seleniumServerJar: 'node_modules/selenium/lib/runner/selenium-server-standalone-2.20.0.jar',
+    chromeDriver: 'node_modules/chromedriver/bin/chromedriver',
 
     // Capabilities to be passed to the webdriver instance.
-    capabilities: {
-        'browserName': 'chrome',
-        'chromeOptions': {
-            binary: chromeBin,
-            // no sandbox to get file
-            //args: ['--no-sandbox'],
-            args: [],
-            extensions: [],
-            prefs: {
-                'download': {
-                    'prompt_for_download': false,
-                    'default_directory': 'd:/tmp/',
+    multiCapabilities: [
+        {
+            'browserName': 'chrome',
+            'chromeOptions': {
+                binary: chromeBin,
+                // no sandbox to get file
+                //args: ['--no-sandbox'],
+                args: [],
+                extensions: [],
+                prefs: {
+                    'download': {
+                        'prompt_for_download': false,
+                        'default_directory': 'd:/tmp/',
+                    },
                 },
             },
+//        },
+//        {
+//            'browserName': 'phantomjs',
+//            'phantomjs.binary.path': require('phantomjs').path,
+//             // Command line args to pass to ghostdriver, phantomjs's browser driver. See https://github.com/detro/ghostdriver#faq
+//            'phantomjs.ghostdriver.cli.args': ['--loglevel=DEBUG']
         }
-    },
+    ],
     
     getPageTimeout: 100000,
     allScriptsTimeout: 100000,
@@ -73,9 +83,9 @@ exports.config = {
               pending: 'cyan'
             },
             prefixes: {
-                success: '✓ ',
-                failure: '✗ ',
-                pending: '- '
+                success: 'OK     ', //'✓ ',
+                failure: 'FAILED ', //'✗ ',
+                pending: '-      ', //'- '
             }
         }));
 

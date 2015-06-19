@@ -73,6 +73,7 @@
         -->
 
         <!-- Plugin versions -->
+        <frontend-maven-plugin.version>0.0.23</frontend-maven-plugin.version>
         <maven.surefire.plugin.version>2.14</maven.surefire.plugin.version>
         <maven.failsafe.plugin.version>2.14</maven.failsafe.plugin.version>
         <maven.surefire.report.plugin.version>2.14</maven.surefire.report.plugin.version>
@@ -82,6 +83,8 @@
         <maven.pmd.plugin.version>3.1</maven.pmd.plugin.version>
         <maven.antrun.plugin.version>1.6</maven.antrun.plugin.version>
         <maven.ng.protractor.version>0.0.2</maven.ng.protractor.version>
+        <node.version>v0.10.35</node.version>
+        <npm.version>1.3.15</npm.version>
     </properties>
 
     <!-- use these repositories to solve dependencies and get jars -->
@@ -366,6 +369,11 @@
             <version>${json-path.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.github.eirslett</groupId>
+            <artifactId>frontend-maven-plugin</artifactId>
+            <version>${frontend-maven-plugin.version}</version>
+        </dependency>
 <!--
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
@@ -455,7 +463,50 @@
                 <directory>${project.basedir}/src/test/resources</directory>
             </testResource>
         </testResources>
+
         <plugins>
+
+            <!-- grunt-integration to prepare ressources -->
+            <plugin>
+               <groupId>com.github.eirslett</groupId>
+               <artifactId>frontend-maven-plugin</artifactId>
+               <version>${frontend-maven-plugin.version}</version>
+               
+               <executions>
+                   <execution>
+                       <id>install node and npm</id>
+                       <phase>generate-resources</phase>
+                       <goals>
+                           <goal>install-node-and-npm</goal>
+                       </goals>
+                       <configuration>
+                           <nodeVersion>${node.version}</nodeVersion>
+                           <npmVersion>${npm.version}</npmVersion>
+                       </configuration>
+                   </execution>
+                   <execution>
+                       <id>npm install</id>
+                       <phase>generate-resources</phase>
+                       <goals>
+                           <goal>npm</goal>
+                       </goals>
+                       <configuration>
+                           <arguments>install</arguments>
+                       </configuration>
+                   </execution>
+                   <execution>
+                       <id>grunt build</id>
+                       <phase>generate-resources</phase>
+                       <goals>
+                           <goal>grunt</goal>
+                       </goals>
+                       <configuration>
+                           <arguments>dist</arguments>
+                       </configuration>
+                   </execution>
+               </executions>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
@@ -734,9 +785,6 @@
                 <configuration>
                     <protractor>c:\Users\micha\AppData\Roaming\npm\protractor.cmd</protractor>
                     <configFile>${project.basedir}/protractor.yaio.conf.js</configFile>
-                    <!-- 
-                    <beforeRunning>${project.basedir}/kill-chrome.bat</beforeRunning>
-                     -->
                 </configuration>
                 <executions>
                     <execution>
@@ -763,7 +811,7 @@
                                 <!-- start instance -->
                                 <exec executable="cmd.exe"><arg value="/C" /><arg value="${basedir}/sbin/start-yaioapp-test.bat" /></exec>
                                 <!-- wait till instance is up -->
-                                <sleep seconds="30" />
+                                <sleep seconds="60" />
                             </target>
                         </configuration>
                         <goals>
