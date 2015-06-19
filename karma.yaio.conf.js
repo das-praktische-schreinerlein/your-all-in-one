@@ -14,7 +14,9 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+        // vendors
         'src/main/resources/static/yaio-explorerapp/../dist/vendors-full.js',
+        // needs own script for loading plugins
         'src/main/resources/static/yaio-explorerapp/../js/fancytree/jquery.fancytree.js',
         'src/main/resources/static/yaio-explorerapp/../js/fancytree/jquery.fancytree.dnd.js',
         'src/main/resources/static/yaio-explorerapp/../js/fancytree/jquery.fancytree.edit.js',
@@ -23,6 +25,7 @@ module.exports = function(config) {
         'src/main/resources/static/yaio-explorerapp/../js/ace/ace.js',
         'src/main/resources/static/yaio-explorerapp/../js/ace/ext-spellcheck.js',
         'src/main/resources/static/yaio-explorerapp/../freemind-flash/flashobject.js',
+        // yaio: files
         'src/main/resources/static/yaio-explorerapp/../dist/yaio-support-full.js',
         'src/main/resources/static/yaio-explorerapp/../dist/yaio-app-full.js',
         'src/test/static/unit/resources/js/jasmine/jasmine-jquery.js',
