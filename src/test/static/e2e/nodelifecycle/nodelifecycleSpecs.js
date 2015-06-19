@@ -18,6 +18,13 @@ describe('yaio explorer', function() {
      * prepare tests
      */
     beforeEach(function() {
+        // bypassing PhantomJS 1.9.7/GhostDriver window.confirm (or alert) bug.
+        // as WebDriver's switchTo().alert() is not implemented yet.
+        if (browser.browserName == "phantomjs") {
+            browser.executeScript('window.confirm = function() {return true;}')
+        }
+
+        
         // do Login
         yaioLoginPage.doLogin()
         .then(function doneOpenExplorer() {

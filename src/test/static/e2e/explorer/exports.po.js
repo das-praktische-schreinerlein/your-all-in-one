@@ -151,7 +151,9 @@ var YAIOExportPage = function() {
         })
         .then(function doneLinkCommand() {
             // call checkHandler
-            return checkHandler();
+            if (checkHandler) {
+                return checkHandler();
+            }
         })
         .then(function doneCheckHandler() {
             // close export-menu
@@ -231,6 +233,10 @@ var YAIOExportPage = function() {
                 expect(fs.readFileSync(filePath, { encoding: 'utf8' })).toContain(expectedText);
             });
         };
+        
+        if (browser.browserName === "phantomjs") {
+            downloadCheckHandler = null;
+        }
         
         return me.clickButtonExportAndCheck(linkExportCommand, downloadCheckHandler);
     };

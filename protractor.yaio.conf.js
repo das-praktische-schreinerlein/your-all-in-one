@@ -2,7 +2,7 @@
 var baseDir = "./src/test/static/e2e/";
 var testDir = baseDir;
 var baseUrl = 'http://yaio-playground.local';
-var chromeBin = 'C://ProgrammePortable//PortableApps//PortableApps//GoogleChromePortable//App//Chrome-bin//chrome.exe';
+var chromeBin = 'C:/ProgrammePortable/PortableApps/PortableApps/GoogleChromePortable/App/Chrome-bin/chrome.exe';
 
 // imports
 var ScreenShotReporter = require('protractor-screenshot-reporter');
@@ -19,9 +19,7 @@ exports.config = {
         {
             'browserName': 'chrome',
             'chromeOptions': {
-                binary: chromeBin,
-                // no sandbox to get file
-                //args: ['--no-sandbox'],
+                'binary': chromeBin,
                 args: [],
                 extensions: [],
                 prefs: {
@@ -31,13 +29,19 @@ exports.config = {
                     },
                 },
             },
+        },
+
+//        {
+//                'browserName': 'firefox',
+//                profile.set_preference('browser.download.dir', download_path)
 //        },
 //        {
+//            // phantomjs buggy :-(
 //            'browserName': 'phantomjs',
 //            'phantomjs.binary.path': require('phantomjs').path,
 //             // Command line args to pass to ghostdriver, phantomjs's browser driver. See https://github.com/detro/ghostdriver#faq
-//            'phantomjs.ghostdriver.cli.args': ['--loglevel=DEBUG']
-        }
+//            'phantomjs.ghostdriver.cli.args': ['--local-storage-path d:/tmp/', '--loglevel=DEBUG']
+//        }
     ],
     
     getPageTimeout: 100000,
@@ -101,6 +105,11 @@ exports.config = {
         // add logging
         browser.manage().logs().get('browser').then(function(browserLog) {
             console.log('log: ' + require('util').inspect(browserLog));
+        });
+        
+        // add browsername
+        browser.getCapabilities().then(function (cap) {
+            browser.browserName = cap.caps_.browserName;
         });
         
         // add utils
