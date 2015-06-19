@@ -90,12 +90,13 @@ exports.config = {
         }));
 
         // add ScreenshotReporter
-        jasmine.getEnv().addReporter(
-            new ScreenShotReporter({
-                baseDirectory: "target/protractor-reports/"
-                }
-            )
-        );
+// sometimes buggy :-(
+//        jasmine.getEnv().addReporter(
+//            new ScreenShotReporter({
+//                baseDirectory: "target/protractor-reports/"
+//                }
+//            )
+//        );
         
         // add logging
         browser.manage().logs().get('browser').then(function(browserLog) {
