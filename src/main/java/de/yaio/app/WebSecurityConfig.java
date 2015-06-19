@@ -151,7 +151,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and() 
                     // authorize Requests
                     .authorizeRequests()
-                        .antMatchers("/js/**", "/css/**", "/yaio-explorerapp/**",
+                        .antMatchers("/js/**", "/css/**", "/yaio-explorerapp/**", "/dist/**",
                                      "/converters/**",
                                      "/freemind-flash/**",
                                      "/examples/**", "/tests/**",
