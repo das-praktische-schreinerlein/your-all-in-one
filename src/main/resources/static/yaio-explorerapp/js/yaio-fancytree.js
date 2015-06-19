@@ -1551,8 +1551,13 @@ function yaioRecalcMasterGanttBlock(basenode) {
 function yaioRecalcMasterGanttBlockFromTree() {
     // calc from children
     var masterNodeId = $("#masterTr").attr('data-value');
-    yaioRecalcMasterGanttBlockLine(masterNodeId, "plan");
-    yaioRecalcMasterGanttBlockLine(masterNodeId, "ist");
+    if (masterNodeId != undefined) {
+        console.log("yaioRecalcMasterGanttBlockFromTree calc for masterNodeId:", masterNodeId);
+        yaioRecalcMasterGanttBlockLine(masterNodeId, "plan");
+        yaioRecalcMasterGanttBlockLine(masterNodeId, "ist");
+    } else {
+        console.log("yaioRecalcMasterGanttBlockFromTree skip: no masterNodeId");
+    }
 }
 
 /**

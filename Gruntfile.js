@@ -34,7 +34,7 @@ module.exports = function( grunt ){
               'src/main/resources/static/yaio-explorerapp/../js/mermaid/mermaid.full.js',
               'src/main/resources/static/yaio-explorerapp/../js/findandreplacedomtext/findAndReplaceDOMText.js',
 // loaded standalone because of plugins
-//              'src/main/resources/static/yaio-explorerapp/../freemind-flash/flashobject.js',
+              'src/main/resources/static/yaio-explorerapp/../freemind-flash/flashobject.js',
               'src/main/resources/static/yaio-explorerapp/../js/yaio/JMATAllIn.js',
         ],
         vendorCssFiles: [
@@ -63,9 +63,15 @@ module.exports = function( grunt ){
                  'src/main/resources/static/yaio-explorerapp/js/yaio-formatter.js',
                  'src/main/resources/static/yaio-explorerapp/js/yaio-markdowneditor.js',
         ],
+        projectExportsJsFiles: [
+            'src/main/resources/static/yaio-explorerapp/js/yaio-export-tools.js',
+        ],
         projectCssFiles: [
               'src/main/resources/static/yaio-explorerapp/css/style.css',
               'src/main/resources/static/yaio-explorerapp/css/formatter.css'
+        ],
+        projectSupportCssFiles: [
+            'src/main/resources/static/yaio-explorerapp/css/formatter.css'
         ],
         vendorJsTestFiles: [
               'src/test/static/unit/resources/js/jasmine/jasmine-jquery.js',
@@ -95,9 +101,14 @@ module.exports = function( grunt ){
                     'src/main/resources/static/dist/<%= pkg.name %>-app-<%= pkg.version %>-full.css': ['<%= projectCssFiles %>'],
 
                     'src/main/resources/static/dist/<%= pkg.name %>-support-full.js': ['<%= projectSupportJsFiles %>'],
-                    'src/main/resources/static/dist/<%= pkg.name %>-support-full.css': ['<%= projectCssFiles %>'],
+                    'src/main/resources/static/dist/<%= pkg.name %>-support-full.css': ['<%= projectSupportCssFiles %>'],
                     'src/main/resources/static/dist/<%= pkg.name %>-support-<%= pkg.version %>-full.js': ['<%= projectSupportJsFiles %>'],
-                    'src/main/resources/static/dist/<%= pkg.name %>-support-<%= pkg.version %>-full.css': ['<%= projectCssFiles %>'],
+                    'src/main/resources/static/dist/<%= pkg.name %>-support-<%= pkg.version %>-full.css': ['<%= projectSupportCssFiles %>'],
+
+                    'src/main/resources/static/dist/<%= pkg.name %>-exports-full.js': ['<%= projectSupportJsFiles %>', '<%= projectExportsJsFiles %>'],
+                    'src/main/resources/static/dist/<%= pkg.name %>-exports-full.css': ['<%= projectSupportCssFiles %>'],
+                    'src/main/resources/static/dist/<%= pkg.name %>-exports-<%= pkg.version %>-full.js': ['<%= projectSupportJsFiles %>', '<%= projectExportsJsFiles %>'],
+                    'src/main/resources/static/dist/<%= pkg.name %>-exports-<%= pkg.version %>-full.css': ['<%= projectSupportCssFiles %>'],
 
                     'src/test/static/testsupport-full.js': ['<%= vendorJsTestFiles %>'],
                     'src/test/static/<%= pkg.name %>_tests-full.js': ['<%= projectUnitJsTestFiles %>', '<%= projectE2EJsTestFiles %>']

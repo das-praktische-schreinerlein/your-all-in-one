@@ -2,20 +2,28 @@
 <head>
     <!--<base href="/" />-->
     <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
-    <link rel="stylesheet" type="text/css" media="print" href="./css/mermaid/mermaid.css" />
-    <link rel="stylesheet" type="text/css" media="all" href="./css/yaio/style.css" />
-    <link rel="stylesheet" type="text/css" media="all" href="./css/yaio/main.css" />
-    <script type="text/javascript">var flgDetailFrameAllowed = false;</script>
-    <script type="text/javascript" src="./js/jquery/jquery.min.js"></script>
-    <script type="text/javascript" src="./js/jqueryui/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="./js/yaio/JMATAllIn.js"></script>    
+
+    <!-- styles: reset -->
+    <link rel="stylesheet" type="text/css" media="all" href="./yaio-explorerapp/css/reset.css" />
+
+    <!-- styles: vendors -->
+    <link rel="stylesheet" type="text/css" media="all" href="./dist/vendors-full.css" />
+    <link rel="stylesheet" type="text/css" media="print" href="./css/yaio/print.css" />
+    <!-- style: fancytree needs own script for loading plugins -->
+    <link rel="stylesheet" type="text/css" media="all" href="./js/fancytree/skin-win8/ui.fancytree.css">
+
+    <!-- styles: yaio-explorer -->
+    <link rel="stylesheet" type="text/css" media="all" href="./dist/yaio-support-full.css" />
+    <link rel="stylesheet" type="text/css" media="print" href="./yaio-explorerapp/css/print.css" />
+    <link rel="stylesheet" type="text/css" media="print" href="./yaio-explorerapp/css/print-dataonly.css" id="link_css_dataonly" disabled="true" />
+
     <style>
 body { 
     background: white; 
-	color: black; 
-	font-family: Verdana, Arial, Helvetica, sans-serif; 
-	line-height: 1.3em; 
-	font-size: 11px;
+    color: black; 
+    font-family: Verdana, Arial, Helvetica, sans-serif; 
+    line-height: 1.3em; 
+    font-size: 11px;
 }
 
 .menueFooterDummy {
@@ -565,402 +573,20 @@ img:not([class]) {
 
     </style>
 
-    <!-- yaio -->
-    <script src="./yaio-explorerapp/js/yaio-baseservice.js" type="text/javascript"></script>
-    <script src="./yaio-explorerapp/js/yaio-formatter.js" type="text/javascript"></script>
-    <link rel="stylesheet" type="text/css" media="print" href="./css/yaio/print.css" />
-    <link rel="stylesheet" type="text/css" media="all" href="./yaio-explorerapp/css/formatter.css" />
-    <link rel="stylesheet" type="text/css" media="print" href="./yaio-explorerapp/css/print.css" />
-    <link rel="stylesheet" type="text/css" media="print" href="./yaio-explorerapp/css/print-dataonly.css" id="link_css_dataonly" disabled="true" />
+    <!-- scripts: vendors -->
+    <script  type="text/javascript" charset="UTF-8" src="./dist/vendors-full.js"></script>
+    <!-- scripts: Markdown-Editor+Formatter needs own script for loading plugins -->
+    <script type="text/javascript" charset="UTF-8" src="./js/ace/ace.js"></script>
+    <!-- scripts: freemind needs own script for loading plugins -->
+    <script type="text/javascript" charset="UTF-8" src="./freemind-flash/flashobject.js"></script>
 
-    <!-- Toastr -->
-    <link rel="stylesheet" href="./css/toastr/toastr.css">
-    <script src="./js/toastr/toastr.min.js" type="text/javascript"></script>
-
-    <!-- toc -->
-    <script src="./js/strapdown/strapdown-toc.js" type="text/javascript"></script>
-
-    <!-- Syntaxhightlighter highlightjs -->
-    <link rel="stylesheet" href="./css/highlightjs/default.css">
-    <script src="./js/highlightjs/highlight.pack.js"></script>
-
-    <!-- TextReplacer -->
-    <script src="./js/findandreplacedomtext/findAndReplaceDOMText.js"></script>
-
-    <!-- diagrams -->
-    <script src="./js/mermaid/mermaid.full.js" charset="UTF-8"></script>
-
-    <!-- freemind -->
-    <script src="./freemind-flash/flashobject.js"></script>
+    <!-- scripts: yaio-support -->
+    <script  type="text/javascript" charset="UTF-8" src="./dist/yaio-exports-full.js"></script>
 
     <!-- JQery-Slimbox2 (Lightbox) -->
     <script type="text/javascript" src="./js/slimbox2/slimbox2.js"></script>
     <script type="text/javascript" src="./js/slimbox2/autoload.js"></script>
     <link rel="stylesheet" href="./css/slimbox2/slimbox2.css" type="text/css" media="screen" />
-
-    <script type="text/javascript">
-    
-    /*
-     * ###########################
-     * # PrintLayout
-     * ###########################
-     */
-    function togglePrintLayout() {
-        if ($("#checkboxPrintAll").prop('checked')) {
-            // print all
-            $("#link_css_dataonly").attr("disabled", "disabled");
-            $("#link_css_dataonly").prop("disabled", true);
-        } else  {
-            // print data only
-            $("#link_css_dataonly").removeAttr("disabled");
-            $("#link_css_dataonly").prop("disabled", false);
-        }
-    }
-    
-    /*
-     * ###########################
-     * # SpeechSynth
-     * ###########################
-     */
-     function openSpeechSynth() {
-         var target = document.getElementById('div_full');
-         if (target == null) target = self;
-         target.focus();
-         var speechsynthWindow = window.open('/yaio-explorerapp/speechsynth.html', "speechsynth", "width=690,height=350,resizable=yes,dependent=yes,scrollbars=yes");
-         speechsynthWindow.focus();
-         if (speechsynthWindow.opener == null) { speechsynthWindow.opener = self; }
-         speechsynthWindow.opener.targetElement = target;
-     }
-
-    /*
-     * ###########################
-     * # Kalkulation
-     * ###########################
-     */
-    const CONST_FUNCNAME_SUM = "SUM";
-    
-    function calcColumns(nodeTDId, functionName, praefix, suffix) {
-       // Variablen belegen
-       var errMsg = null;
-       var elemNodeTD = null;
-       var idxCol = null;
-       var elemNodeTABLE = null;
-        
-       // Parameter checken und Eelemente einlesen
-       
-       // TD-Element einlesen
-       if (! errMsg && ! functionName) { 
-           errMsg = "Parameter functionName required"; 
-       } else {
-           if (functionName != CONST_FUNCNAME_SUM) {
-              errMsg = "Parameter functionName must be [" + CONST_FUNCNAME_SUM + "]"; 
-           }
-       }
-       if (! errMsg && ! nodeTDId) { 
-           errMsg = "Parameter nodeTDId required"; 
-       } else {
-           elemNodeTD = $("#" + nodeTDId);
-       }
-       
-       // TABLE-Element einlesen
-       if (! errMsg && ! elemNodeTD) { 
-           errMsg = "HTMLElement nodeTDId not found"; 
-       } else {
-           idxCol = elemNodeTD.attr('cellIndex');
-           elemNodeTABLE = $(elemNodeTD).closest('table');
-       }
-
-       // IDX einlesen
-       if (! errMsg && ! elemNodeTABLE) { 
-           errMsg = "HTMLElement elemNodeTABLE not found"; 
-       } else {
-           idxCol = elemNodeTD[0].cellIndex;
-       }
-       if (! errMsg && ! idxCol) { 
-           errMsg = "idxCol not found"; 
-       }
-       
-       // abschließender Fehlercheck
-       if (errMsg) {
-          alert("Fehler aufgetreten: " + errMsg);
-          return null;
-       }
-       
-       // Funktionalitaet: alle x-Spalten iterieren und Zahlen extrahieren
-       var filterTD = "td:nth-child(" + (idxCol + 1) + ")";
-       var numbers = new Array();
-       $(elemNodeTABLE).children("tbody").children("tr").children(filterTD).each(function (i) {
-           var col = $(this);
-
-           // mich selbst herauslassen 
-           if (col.attr('id') == nodeTDId) {
-              // Jquery continue;
-              //alert("SKIP NODEID: Zeile:" + (i+1) + " ID:" + col.id + " Content:" + col.html() + " Number" + number);
-              return;
-           }
-
-           // normalisieren
-           var strNumber = col.html();
-           strNumber = strNumber.replace(/./g, "");
-           strNumber = strNumber.replace(/,/, ".");
-           
-           // auf Zahl testen
-           var number = parseFloat(strNumber, "10");
-           if (isNaN(number)) {
-              // Jquery continue;
-              //alert("SKIP NAN: Zeile:" + (i+1) + " ID:" + col.id + " Content:" + col.html() + " Number" + number);
-              return;
-           }
-           
-           // an Zahlen anhaengen
-           //alert("ADD NUMBER: Zeile:" + (i+1) + " ID:" + col.id + " Content:" + col.html() + " Number" + number);
-           numbers.push(number);
-       });       
-       
-       // Funktionalitaet: gewünsche Aktion auf alle Zahlen ausführen
-       var funcResult = 0;
-       for (index = 0; index < numbers.length; ++index) {
-           // alert("funcResult +" +  numbers[index]);
-           if (functionName == CONST_FUNCNAME_SUM) {
-              funcResult += numbers[index]; 
-           }
-       }
-       
-       // Inhalt des Elements setzen
-       //alert("funcResult:" + funcResult);
-       var text = (praefix ? praefix : "") + funcResult + (suffix ? suffix : "");
-       elemNodeTD.html(funcResult);
-    }
-    
-    /*
-     * ######################
-     * # Volltextsuche
-     * #######################
-     */
-    function doAllNodeToggler(flgShow, minEbene) {
-        try {
-            // Bloecke Oeffnen/Schließen
-            var toggleList = document.getElementsByClassName("blockToggler");
-            if (toggleList.length > 0) {
-                // Elemente vorhanden
-                for (var j = 0; j < toggleList.length; j++) {
-                    // Elemente iterieren
-                    var element = toggleList[j];
-                    var toggleId = element.getAttribute('toggleId');
-                    var togglerBaseId = element.getAttribute('togglerBaseId');
-
-                    // Pruefen ob Node-Toggler
-                    if (toggleId && toggleId.search("childrencontainer") > 0) {
-                        // Ebene einlesen
-                        var toggleBlock = document.getElementById(toggleId);
-                        var curEbene = 0;
-                        if (toggleBlock) {
-                            curEbene = toggleBlock.getAttribute('data-pjebene');
-                        }
-
-                        var effect = function(){
-                            // Leertoggler
-                            var togEf = new ToggleEffect(toggleId); 
-                            togEf.slideAniLen = 1; 
-                            togEf.doEffect();
-                        };
-                        if (flgShow) {
-                            // Block zeigen
-                            if (minEbene && curEbene && curEbene < minEbene) {
-                                jMATService.getLayoutService().togglerBlockShow(
-                                    togglerBaseId, toggleId, effect);
-                            } else {
-                                jMATService.getLayoutService().togglerBlockHide(
-                                    togglerBaseId, toggleId, effect);
-                            }
-                        }
-                        else {
-                            // Block verbergen
-                            if (minEbene && curEbene && curEbene > minEbene) {
-                                jMATService.getLayoutService().togglerBlockHide(
-                                    togglerBaseId, toggleId, effect);
-                            } else {
-                                jMATService.getLayoutService().togglerBlockShow(
-                                    togglerBaseId, toggleId, effect);
-                            }
-                        }
-                    }
-                }
-            }
-        } catch (e) {
-            // anscheinend  nicht definiert
-            alert(e);
-        }
-    }
-    
-    function doParentNodeToggler(myId, flgShow) {
-        try {
-            // Parent-Container einlesen (Child)
-            var parents = $("#" + myId).parents();
-            if (parents) {
-                parents.map( 
-                    function () {
-                        // Toggler visible setzen, wenn gefunden
-                        var parentId = $(this).attr("id");
-                        if (parentId) {
-                            var nodeIdMatcher = parentId.match(/node_(.*)_childrencontainer/);
-                            if (nodeIdMatcher && nodeIdMatcher.length > 0) {
-                                // Toggler aktivieren
-                                var togglerId = parentId;
-                                if (! $(this).is(":visible")) {
-                                    jMATService.getLayoutService().togglerBlockShow(
-                                        togglerId, togglerId, function () { 
-                                            var togEf = new ToggleEffect(togglerId); 
-                                            togEf.slideAniLen = 1; 
-                                            togEf.doEffect();
-                                        }
-                                     );
-                                }
-
-                                // Element anzeigen
-                                var nodeId = nodeIdMatcher[1];
-                                var master = $("#node_" + nodeId + "_master");
-                                if (master && ! $(master).is(":visible") ) {
-                                    $(master).show();                                
-                                }
-                            }
-                        }
-                    }
-                );
-            }
-        } catch (e) {
-            // anscheinend  nicht definiert
-            alert(e);
-        }
-    }
-    
-
-    /* Um einen Volltext-Treffer zu haben, müssen alle Worte im durchsuchten Text vorkommen. */
-    function VolltextTreffer(inhalt, suchworte) {
-        // Wenn keine Suchzeichenkette als gefnden kennzeichnen
-        if ( suchworte.length == 0 )
-            return true;
-     
-        // alle Suchworte iterieren
-        for ( i = 0; i < suchworte.length; i++) {
-            if ( inhalt.indexOf(suchworte[i]) == -1) {
-                // Wort nicht gefunden
-                return false;
-            }
-        }
-     
-        // alle Worte gefunden
-        return true;
-    }
-    
-    function doSearch(suchworte) {
-        // Suche auf alle Node-Elemente ausführen
-        $(".node-block").each(
-            function(index, value) {
-                var flgFound = false;
-                
-                // Datenelemente konfigurieren
-                var searchElements = new Array();
-                searchElements.push($("#" + $(value).attr("id") + " > div:eq(1)").attr("id")); // Desc
-                searchElements.push($("#" + $(value).attr("id") + " > div:first > div:first > div:first > div:eq(1)").attr("id")); // Name
-                searchElements.push($("#" + $(value).attr("id") + " > div:first > div:eq(1)").attr("id")); // Status 
-
-                // alle Datenelemente iterieren
-                $.each(searchElements,
-                    function(subIndex, subId) {
-                        // Inhalt auslesen
-                        inhalt = $("#"+subId).text().toLowerCase();
-                        
-                        // Volltextsuche
-                        if (VolltextTreffer(inhalt, suchworte)) {
-                            // wenn geufndne: verlassen;
-                            flgFound = true;
-                            return;
-                        }
-                    }
-                 );
-                
-                // Elemente je nach Status der SubElemente ein/ausblenden
-                if (flgFound) {
-                    if ( !$(value).is(":visible") ) {
-                        // Element aktivieren
-                        $(value).show();
-                    }  
-
-                    // Eltern oeffnen
-                    doParentNodeToggler($(value).attr("id"), true);
-                } else {
-                    // Element deaktivieren
-                    $(value).hide();
-                }
-            }
-        );
-    }
-    
-    function startSearch() {
-        // Suchworte auslesen
-        suchworte = $(".volltextsuchfeld").val().toLowerCase().split(" ");
-
-        // alle Toggler schließen
-        doAllNodeToggler(false, 0);
-        
-        // Suche ausfuehren
-        doSearch(suchworte);
-    }
-
-    function resetSearch() {
-        // Suchworte leeren
-        $(".volltextsuchfeld").val('');
-        
-        // suche ausfuehren
-        startSearch();
-    }
-
-    function initSearch() {
-        // Volltextsuche
-        $(".volltextsuchfeld").keyup(
-            function(event) {
-                // nur ausfuehren wenn enter
-                if(event.keyCode != 13) {
-                   return;
-                }
-                
-                // Suche ausfuehren
-                startSearch();
-            }
-        );
-    }
-    
-    /*
-     * ######################
-     * # Symlink
-     * #######################
-     */
-    function openNode(nodeId) {
-        var masterId = "node_" + nodeId + "_master";
-        
-        // Node aktivieren
-        $("#" + masterId).show();
-        
-        // openParent-Nodes
-        doParentNodeToggler(masterId, true);
-        
-        // animated ScrollTo after intervall, because of time used for ToggleEffects
-        delayedFocus = window.setInterval(
-            function() {
-                // nach 0,1 Sekunden ausfuehren und Intervall loeschen
-                $('html, body').animate({
-                    scrollTop: $("#" + masterId).offset().top
-                    }, 
-                    1000);
-                window.clearInterval(delayedFocus);
-            }, 
-            100
-        );
-    }
-    
-    
-    </script>
 
 </head>
 <body>
