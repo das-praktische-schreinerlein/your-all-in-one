@@ -104,7 +104,7 @@ var YAIOExportPage = function() {
         expect(linkCmdCloseClipboard.isDisplayed()).toEqual(true);
         var closeContainer = function () {
             // close Desc
-            linkCmdCloseClipboard.click().then(function () {
+            return linkCmdCloseClipboard.click().then(function () {
                 // wait till data is loaded and container hidden
                 protractor.utils.waitThatElementIsNotPresent(clipboardContent, protractor.utils.CONST_WAIT_ELEMENT);
                 expect(clipboardContent.isDisplayed()).toEqual(false);
