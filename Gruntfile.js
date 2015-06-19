@@ -51,17 +51,17 @@ module.exports = function( grunt ){
               'src/main/resources/static/yaio-explorerapp/../css/yaio/print.css',
         ],
         projectJsFiles: [
-               'src/main/resources/static/yaio-explorerapp/js/jmat.js',
-               'src/main/resources/static/yaio-explorerapp/js/yaio-editorservice.js',
                'src/main/resources/static/yaio-explorerapp/js/yaio-fancytree.js',
                'src/main/resources/static/yaio-explorerapp/js/yaio-explorerapp.js',
                'src/main/resources/static/yaio-explorerapp/../js/angularjs/paging.js',
         ],
         projectSupportJsFiles: [
-                 'src/main/resources/static/yaio-explorerapp/js/yaio-baseservice.js',
-                 'src/main/resources/static/yaio-explorerapp/js/yaio-layout.js',
-                 'src/main/resources/static/yaio-explorerapp/js/yaio-formatter.js',
-                 'src/main/resources/static/yaio-explorerapp/js/yaio-markdowneditor.js',
+               'src/main/resources/static/yaio-explorerapp/js/jmat.js',
+               'src/main/resources/static/yaio-explorerapp/js/yaio-editorservice.js',
+               'src/main/resources/static/yaio-explorerapp/js/yaio-baseservice.js',
+               'src/main/resources/static/yaio-explorerapp/js/yaio-layout.js',
+               'src/main/resources/static/yaio-explorerapp/js/yaio-formatter.js',
+               'src/main/resources/static/yaio-explorerapp/js/yaio-markdowneditor.js',
         ],
         projectExportsJsFiles: [
             'src/main/resources/static/yaio-explorerapp/js/yaio-export-tools.js',
