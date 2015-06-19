@@ -13,33 +13,36 @@ module.exports = function( grunt ){
               'src/main/resources/static/yaio-explorerapp/../js/jqueryui/jquery-ui-sliderAccess.js',
               'src/main/resources/static/yaio-explorerapp/../js/jqueryui/jquery-ui-timepicker-addon.js',
               'src/main/resources/static/yaio-explorerapp/../js/jquery/jquery-lang.js',
-              'src/main/resources/static/yaio-explorerapp/../js/fancytree/jquery.fancytree.js',
-              'src/main/resources/static/yaio-explorerapp/../js/fancytree/jquery.fancytree.dnd.js',
-              'src/main/resources/static/yaio-explorerapp/../js/fancytree/jquery.fancytree.edit.js',
-              'src/main/resources/static/yaio-explorerapp/../js/fancytree/jquery.fancytree.gridnav.js',
-              'src/main/resources/static/yaio-explorerapp/../js/fancytree/jquery.fancytree.table.js',
+// loaded standalone because of plugins
+//              'src/main/resources/static/yaio-explorerapp/../js/fancytree/jquery.fancytree.js',
+//              'src/main/resources/static/yaio-explorerapp/../js/fancytree/jquery.fancytree.dnd.js',
+//              'src/main/resources/static/yaio-explorerapp/../js/fancytree/jquery.fancytree.edit.js',
+//              'src/main/resources/static/yaio-explorerapp/../js/fancytree/jquery.fancytree.gridnav.js',
+//              'src/main/resources/static/yaio-explorerapp/../js/fancytree/jquery.fancytree.table.js',
               'src/main/resources/static/yaio-explorerapp/../js/angularjs/angular.js',
               'src/main/resources/static/yaio-explorerapp/../js/angularjs/angular-animate.js',
               'src/main/resources/static/yaio-explorerapp/../js/angularjs/angular-route.js',
               'src/main/resources/static/yaio-explorerapp/../js/angularjs/angular-translate.js',
               'src/main/resources/static/yaio-explorerapp/../js/angularjs/angular-translate-loader-static-files.js',
               'src/main/resources/static/yaio-explorerapp/../js/marked/marked.js',
-              'src/main/resources/static/yaio-explorerapp/../js/ace/ace.js',
-              'src/main/resources/static/yaio-explorerapp/../js/ace/ext-spellcheck.js',
+// loaded standalone because of plugins
+//              'src/main/resources/static/yaio-explorerapp/../js/ace/ace.js',
+//              'src/main/resources/static/yaio-explorerapp/../js/ace/ext-spellcheck.js',
               'src/main/resources/static/yaio-explorerapp/../js/strapdown/strapdown-toc.js',
               'src/main/resources/static/yaio-explorerapp/../js/highlightjs/highlight.pack.js',
               'src/main/resources/static/yaio-explorerapp/../js/toastr/toastr.min.js',
               'src/main/resources/static/yaio-explorerapp/../js/mermaid/mermaid.full.js',
               'src/main/resources/static/yaio-explorerapp/../js/findandreplacedomtext/findAndReplaceDOMText.js',
-              'src/main/resources/static/yaio-explorerapp/../freemind-flash/flashobject.js',
+// loaded standalone because of plugins
+//              'src/main/resources/static/yaio-explorerapp/../freemind-flash/flashobject.js',
               'src/main/resources/static/yaio-explorerapp/../js/yaio/JMATAllIn.js',
-              'src/main/resources/static/yaio-explorerapp/../js/angularjs/paging.js',
         ],
         vendorCssFiles: [
               'src/main/resources/static/yaio-explorerapp/../css/reset.css',
               'src/main/resources/static/yaio-explorerapp/../css/jqueryui//jquery-ui.css',
               'src/main/resources/static/yaio-explorerapp/../css/jqueryui//jquery-ui-timepicker-addon.css',
-              'src/main/resources/static/yaio-explorerapp/../js/fancytree/skin-win8/ui.fancytree.css',
+// loaded standalone because of plugins
+//              'src/main/resources/static/yaio-explorerapp/../js/fancytree/skin-win8/ui.fancytree.css',
               'src/main/resources/static/yaio-explorerapp/../css/highlightjs/default.css',
               'src/main/resources/static/yaio-explorerapp/../css/toastr/toastr.css',
               'src/main/resources/static/yaio-explorerapp/../css/mermaid/mermaid.css',
@@ -50,12 +53,15 @@ module.exports = function( grunt ){
         projectJsFiles: [
                'src/main/resources/static/yaio-explorerapp/js/jmat.js',
                'src/main/resources/static/yaio-explorerapp/js/yaio-editorservice.js',
-               'src/main/resources/static/yaio-explorerapp/js/yaio-baseservice.js',
-               'src/main/resources/static/yaio-explorerapp/js/yaio-layout.js',
-               'src/main/resources/static/yaio-explorerapp/js/yaio-formatter.js',
-               'src/main/resources/static/yaio-explorerapp/js/yaio-markdowneditor.js',
                'src/main/resources/static/yaio-explorerapp/js/yaio-fancytree.js',
                'src/main/resources/static/yaio-explorerapp/js/yaio-explorerapp.js',
+               'src/main/resources/static/yaio-explorerapp/../js/angularjs/paging.js',
+        ],
+        projectSupportJsFiles: [
+                 'src/main/resources/static/yaio-explorerapp/js/yaio-baseservice.js',
+                 'src/main/resources/static/yaio-explorerapp/js/yaio-layout.js',
+                 'src/main/resources/static/yaio-explorerapp/js/yaio-formatter.js',
+                 'src/main/resources/static/yaio-explorerapp/js/yaio-markdowneditor.js',
         ],
         projectCssFiles: [
               'src/main/resources/static/yaio-explorerapp/css/style.css',
@@ -80,12 +86,21 @@ module.exports = function( grunt ){
             },            
             full: {
                 files: {
-                    'src/main/resources/static/js/vendors-full.js': ['<%= vendorJsFiles %>'],
-                    'src/main/resources/static/css/vendors-full.css': ['<%= vendorCssFiles %>'],
-                    'src/main/resources/static/yaio-explorerapp/js/<%= pkg.name %>-<%= pkg.version %>-full.js': ['<%= projectJsFiles %>'],
-                    'src/main/resources/static/yaio-explorerapp/css/<%= pkg.name %>-<%= pkg.version %>-full.css': ['<%= projectCssFiles %>'],
+                    'src/main/resources/static/dist/vendors-full.js': ['<%= vendorJsFiles %>'],
+                    'src/main/resources/static/dist/vendors-full.css': ['<%= vendorCssFiles %>'],
+
+                    'src/main/resources/static/dist/<%= pkg.name %>-app-full.js': ['<%= projectJsFiles %>'],
+                    'src/main/resources/static/dist/<%= pkg.name %>-app-full.css': ['<%= projectCssFiles %>'],
+                    'src/main/resources/static/dist/<%= pkg.name %>-app-<%= pkg.version %>-full.js': ['<%= projectJsFiles %>'],
+                    'src/main/resources/static/dist/<%= pkg.name %>-app-<%= pkg.version %>-full.css': ['<%= projectCssFiles %>'],
+
+                    'src/main/resources/static/dist/<%= pkg.name %>-support-full.js': ['<%= projectSupportJsFiles %>'],
+                    'src/main/resources/static/dist/<%= pkg.name %>-support-full.css': ['<%= projectCssFiles %>'],
+                    'src/main/resources/static/dist/<%= pkg.name %>-support-<%= pkg.version %>-full.js': ['<%= projectSupportJsFiles %>'],
+                    'src/main/resources/static/dist/<%= pkg.name %>-support-<%= pkg.version %>-full.css': ['<%= projectCssFiles %>'],
+
                     'src/test/static/testsupport-full.js': ['<%= vendorJsTestFiles %>'],
-                    'src/test/static/<%= pkg.name %>-<%= pkg.version %>_tests-full.js': ['<%= projectUnitJsTestFiles %>', '<%= projectE2EJsTestFiles %>']
+                    'src/test/static/<%= pkg.name %>_tests-full.js': ['<%= projectUnitJsTestFiles %>', '<%= projectE2EJsTestFiles %>']
                 },
             },
         },   
