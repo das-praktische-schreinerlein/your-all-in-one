@@ -47,8 +47,7 @@ module.exports = function( grunt ){
               'src/main/resources/static/yaio-explorerapp/../css/toastr/toastr.css',
               'src/main/resources/static/yaio-explorerapp/../css/mermaid/mermaid.css',
               'src/main/resources/static/yaio-explorerapp/../css/yaio/style.css',
-              'src/main/resources/static/yaio-explorerapp/../css/yaio/main.css',
-              'src/main/resources/static/yaio-explorerapp/../css/yaio/print.css',
+              'src/main/resources/static/yaio-explorerapp/../css/yaio/main.css'
         ],
         projectJsFiles: [
                'src/main/resources/static/yaio-explorerapp/js/yaio-fancytree.js',
@@ -204,8 +203,8 @@ module.exports = function( grunt ){
     // register tasks
     grunt.registerTask('default',   ['jshint']);
     grunt.registerTask('dist',      ['concat:full']);
-    grunt.registerTask('unit-test', ['karma:continuous:start', 'watch:karma']);
-    grunt.registerTask('e2e-test',  ['protractor:continuous', 'watch:protractor']);
+    grunt.registerTask('unit-test', ['dist', 'karma:continuous:start', 'watch:karma']);
+    grunt.registerTask('e2e-test',  ['dist', 'protractor:continuous', 'watch:protractor']);
 
     // load grunt tasks
     grunt.loadNpmTasks('grunt-contrib-concat');
