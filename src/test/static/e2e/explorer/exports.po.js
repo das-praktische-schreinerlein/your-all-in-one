@@ -64,20 +64,20 @@ var YAIOExportPage = function() {
 
             // export to text clipboard
             var contentActions = me.clickButtonExportNodeToClipboardAsText(nodeId)
-            .then(function doneCallTextExport() {
-                // check text-clipboard
-                var clipboardElement = me.checkAndCloseClipboard(checkClipboardHandlerText);
-                return clipboardElement.getText();
-            })
-            .then(function doneCloseClipboard() {
-                // export to jira clipboard
-                return me.clickButtonExportNodeToClipboardAsJira(nodeId);
-            })
-            .then(function doneCallJiraExport() {
-                // check jira-clipboard
-                var clipboardElement = me.checkAndCloseClipboard(checkClipboardHandlerJira);
-                return clipboardElement.getText();
-            });
+                .then(function doneCallTextExport() {
+                    // check text-clipboard
+                    var clipboardElement = me.checkAndCloseClipboard(checkClipboardHandlerText);
+                    return clipboardElement.getText();
+                })
+                .then(function doneCloseClipboard() {
+                    // export to jira clipboard
+                    return me.clickButtonExportNodeToClipboardAsJira(nodeId);
+                })
+                .then(function doneCallJiraExport() {
+                    // check jira-clipboard
+                    var clipboardElement = me.checkAndCloseClipboard(checkClipboardHandlerJira);
+                    return clipboardElement.getText();
+                });
             
             return contentActions;
         };
@@ -142,23 +142,23 @@ var YAIOExportPage = function() {
 
         // open menu
         return linkExportMenu.click()
-        .then(function doneMenuCommand() {
-            // click export-button for new window
-            browser.ignoreSynchronization = true;
-            protractor.utils.waitUntilElementClickable(linkExportCommand, protractor.utils.CONST_WAIT_ELEMENT);
-            expect(linkExportCommand.isDisplayed()).toEqual(true);
-            return linkExportCommand.click()
-        })
-        .then(function doneLinkCommand() {
-            // call checkHandler
-            if (checkHandler) {
-                return checkHandler();
-            }
-        })
-        .then(function doneCheckHandler() {
-            // close export-menu
-            return linkExportMenu.click();
-        });
+            .then(function doneMenuCommand() {
+                // click export-button for new window
+                browser.ignoreSynchronization = true;
+                protractor.utils.waitUntilElementClickable(linkExportCommand, protractor.utils.CONST_WAIT_ELEMENT);
+                expect(linkExportCommand.isDisplayed()).toEqual(true);
+                return linkExportCommand.click()
+            })
+            .then(function doneLinkCommand() {
+                // call checkHandler
+                if (checkHandler) {
+                    return checkHandler();
+                }
+            })
+            .then(function doneCheckHandler() {
+                // close export-menu
+                return linkExportMenu.click();
+            });
     };
 
     /**
@@ -172,18 +172,18 @@ var YAIOExportPage = function() {
             var myHandles = [];
             // get windows
             return browser.getAllWindowHandles()
-            .then(function doneGetWindowHandles(handles) {
-                // switch to the popup
-                myHandles = handles;
-                return browser.switchTo().window(myHandles[1]);
-            }).then(function doneSwitchWindow() {
-                // call checkHandler
-                return checkHandler();
-            }).then(function doneSwitchWindow() {
-                // close and go back to the main window
-                browser.driver.close();
-                return browser.switchTo().window(myHandles[0]);
-            })
+                .then(function doneGetWindowHandles(handles) {
+                    // switch to the popup
+                    myHandles = handles;
+                    return browser.switchTo().window(myHandles[1]);
+                }).then(function doneSwitchWindow() {
+                    // call checkHandler
+                    return checkHandler();
+                }).then(function doneSwitchWindow() {
+                    // close and go back to the main window
+                    browser.driver.close();
+                    return browser.switchTo().window(myHandles[0]);
+                })
         }
         return me.clickButtonExportAndCheck(linkExportCommand, newWindowCheckHandler);
     };
@@ -225,13 +225,13 @@ var YAIOExportPage = function() {
         // define checkHandler
         var downloadCheckHandler = function () {
             return browser.driver.wait(function() {
-                // Wait until the file has been downloaded.
-                return fs.existsSync(filePath);
-            }, 2000)
-            .then(function() {
-                // check that file contains text
-                expect(fs.readFileSync(filePath, { encoding: 'utf8' })).toContain(expectedText);
-            });
+                    // Wait until the file has been downloaded.
+                    return fs.existsSync(filePath);
+                }, 2000)
+                .then(function() {
+                    // check that file contains text
+                    expect(fs.readFileSync(filePath, { encoding: 'utf8' })).toContain(expectedText);
+                });
         };
         
         if (browser.browserName === "phantomjs") {

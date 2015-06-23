@@ -22,10 +22,10 @@ describe('yaio explorer exports', function() {
     beforeEach(function() {
         // do Login
         yaioLoginPage.doLogin()
-        .then(function doneOpenExplorer() {
-            // open explorer
-            return yaioNodePage.openExplorerFromFrontPage();
-        });
+            .then(function doneOpenExplorer() {
+                // open explorer
+                return yaioNodePage.openExplorerFromFrontPage();
+            });
         protractor.utils.waitUntilElementClickable(yaioNodePage.containerMasterdata, protractor.utils.CONST_WAIT_NODEHIRARCHY);
         expect(yaioNodePage.containerMasterdata.isPresent()).toEqual(true);
     });
@@ -53,29 +53,29 @@ describe('yaio explorer exports', function() {
 
         // navigate to Node
         yaioNodePage.navigateToNode(yaioNodePage.jsFuncTestHierarchy)
-        .then(function doneNavigate(){
-            // focus on node
-            var deferred = protractor.promise.defer();
-            // call service-function
-            var link = yaioNodePage.focusOnNode(yaioNodePage.jsLayoutTestId);
-            link.getText().then(function() {
-                deferred.fulfill(link);
+            .then(function doneNavigate(){
+                // focus on node
+                var deferred = protractor.promise.defer();
+                // call service-function
+                var link = yaioNodePage.focusOnNode(yaioNodePage.jsLayoutTestId);
+                link.getText().then(function() {
+                    deferred.fulfill(link);
+                });
+                
+                return deferred.promise;
             })
-            
-            return deferred.promise;
-        })
-        .then(function doneFocusOnNode() {
-            // export as html documentation
-            return yaioExportPage.clickShortlinkExportAsHtmlDocumentation(expectedHtmlDocumentation);
-        })
-        .then(function doneExportAsHtmlDocumentation() {
-            // export as ICal 
-            return yaioExportPage.clickShortlinkExportAsMindmap(expectedMindmap);
-        })
-        .then(function doneExportAsMindmap() {
-            // export as ICal 
-            return yaioExportPage.clickShortlinkExportAsICal(expectedICal);
-        })
+            .then(function doneFocusOnNode() {
+                // export as html documentation
+                return yaioExportPage.clickShortlinkExportAsHtmlDocumentation(expectedHtmlDocumentation);
+            })
+            .then(function doneExportAsHtmlDocumentation() {
+                // export as ICal 
+                return yaioExportPage.clickShortlinkExportAsMindmap(expectedMindmap);
+            })
+            .then(function doneExportAsMindmap() {
+                // export as ICal 
+                return yaioExportPage.clickShortlinkExportAsICal(expectedICal);
+            });
     });
 
     it('should export Desc of Testnode', function doShowDescOfTestNode() {
