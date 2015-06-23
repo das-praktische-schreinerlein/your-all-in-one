@@ -9,15 +9,18 @@ var YAIOFrontPage = require('../frontpage/frontpage.po.js');
 var YAIONodePage = require('../explorer/node.po.js');
 
 describe('yaio explorer guielements', function() {
-
-    var yaioLoginPage = new YAIOLoginPage();
-    var yaioFrontPage = new YAIOFrontPage();
-    var yaioNodePage = new YAIONodePage();
+    // define vars
+    var yaioLoginPage, yaioFrontPage, yaioNodePage;
 
     /**
      * prepare tests
      */
     beforeEach(function() {
+        // initpages (reset elements)
+        yaioLoginPage = new YAIOLoginPage();
+        yaioFrontPage = new YAIOFrontPage();
+        yaioNodePage = new YAIONodePage();
+        
         // do Login
         yaioLoginPage.doLogin()
         .then(function doneOpenExplorer() {

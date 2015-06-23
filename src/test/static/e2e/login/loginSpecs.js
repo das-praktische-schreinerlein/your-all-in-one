@@ -8,13 +8,17 @@ var YAIOLoginPage = require('./login.po.js');
 var YAIOFrontPage = require('../frontpage/frontpage.po.js');
 
 describe('yaio loginpage', function() {
-    var yaioLoginPage = new YAIOLoginPage();
-    var yaioFrontPage = new YAIOFrontPage();
-    
+    // define vars
+    var yaioLoginPage, yaioFrontPage;
+
     /**
      * prepare tests
      */
     beforeEach(function() {
+        // initpages (reset elements)
+        yaioLoginPage = new YAIOLoginPage();
+        yaioFrontPage = new YAIOFrontPage();
+        
         yaioLoginPage.openLoginPage();
     });
 
