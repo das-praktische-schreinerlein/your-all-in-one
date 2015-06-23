@@ -501,7 +501,7 @@ var YAIONodePage = function() {
      * @return {[]}  visible treenode-spans
      */
     me.getVisibleNodes = function() { 
-        var nodes = $$(('.fancytree-title')); 
+        var nodes = $$(('span.fancytree-title2')); 
         return protractor.promise.filter(nodes, function(node) { 
                 return node.isDisplayed(); 
             }); 

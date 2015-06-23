@@ -47,8 +47,9 @@ describe('yaio explorer search', function() {
      * define tests
      */
     it('should get initial 20 Nodes with pagination but without searchwords', function doCheckInitialSearchPage() {
-        // count visible nodes, pages, seatchwords
-        return yaioNodePage.getVisibleNodes().then( function (nodes) {
+        // count visible nodes, pages, searchwords
+        return yaioNodePage.getVisibleNodes()
+            .then( function (nodes) {
                 // check nodecount
                 expect(nodes.length).toEqual(20);
             })
@@ -70,7 +71,7 @@ describe('yaio explorer search', function() {
             });
     });
 
-    it('should open nodelink when click on open', function doFocusOnNode() {
+    it('should open nodelink when click on open', function doOpenOnNode() {
         return yaioSearchPage.clickAndCheckSearchResLink('.yaio-icon-open');
     });
 
@@ -78,7 +79,7 @@ describe('yaio explorer search', function() {
         return yaioSearchPage.clickAndCheckSearchResLink('.yaio-icon-center');
     });
 
-    it('should search for "der" with less pagination and show more than 20 searchwords', function doCheckInitialSearchPage() {
+    it('should search for "der" with less pagination and show more than 20 searchwords', function doCheckSearchPage() {
         // count pages
         var firstCount = 0;
         $$(yaioSearchPage.paginationLinkStyles).count()
@@ -109,5 +110,66 @@ describe('yaio explorer search', function() {
             });
     });
 
+    it('should show Sys of first SearchResult', function doShowSysOfFirstSearchResult() {
+        // Given
+        var expectedText = "Stand:";
+        var checkContentHandler = function (container) {
+            expect(container.getText()).toContain(expectedText);
+            return container.getText();
+        };
+
+        // When and Then
+
+        // check first Node
+        return yaioNodePage.getVisibleNodes()
+            .then( function (nodes) {
+                // extract nodeid from new task
+                return yaioNodePage.extractNodeIdFromNodeNameElement(nodes[0]);
+            })
+            .then(function doneExtractNodeId(nodeId) {
+                // show sys of testnode
+                var deferred = protractor.promise.defer();
+                
+                // call service-function
+                var container = yaioNodePage.showSysForNode(nodeId, checkContentHandler);
+                container.getText().then(function() {
+                    deferred.fulfill(container);
+                })
+                
+                return deferred.promise;
+            });
+    });
+
+    it('should show Desc of first SearchResult', function doShowDescOfFirstSearchResult() {
+        // Given
+        var expectedText = "der";
+        var checkContentHandler = function (container) {
+            expect(container.getText()).toContain(expectedText);
+            return container.getText();
+        };
+
+        // When
+        yaioSearchPage.inputFullText.sendKeys('der');
+        yaioSearchPage.buttonDoSearch.click();
+
+        // check first Node for "der" in desc
+        return yaioNodePage.getVisibleNodes()
+            .then( function (nodes) {
+                // extract nodeid from new task
+                return yaioNodePage.extractNodeIdFromNodeNameElement(nodes[0]);
+            })
+            .then(function doneExtractNodeId(nodeId) {
+                // show desc of testnode
+                var deferred = protractor.promise.defer();
+                
+                // call service-function
+                var container = yaioNodePage.showDescForNode(nodeId, checkContentHandler);
+                container.getText().then(function() {
+                    deferred.fulfill(container);
+                })
+                
+                return deferred.promise;
+            });
+    });
 });
 

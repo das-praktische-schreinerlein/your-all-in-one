@@ -53,6 +53,7 @@ exports.config = {
         guielements:   [testDir + '/explorer/**/guiElementsSpecs.js'],
         login:         [testDir + '/login/**/*Specs.js'],
         nodelifecycle: [testDir + '/nodelifecycle/**/*Specs.js'],
+        search:        [testDir + '/search/**/*Specs.js'],
         full:          [testDir + '/**/*Specs.js'],
         //search:        ['tests/e2e/search/**/*Spec.js']
         //formats:       ['tests/e2e/formats/**/*Spec.js']
