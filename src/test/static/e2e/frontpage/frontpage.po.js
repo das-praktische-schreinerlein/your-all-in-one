@@ -4,8 +4,9 @@
 'use strict';
 
 var YAIOFrontpagePage = function() {
-    // explorer-link
+    // define elements
     this.linkExplorer = $('[translate="common.command.OpenTreeView"]');
+    this.linkSearch = $('[translate="common.command.OpenSearchView"]');
 
     // content
     this.fontContentLeft = $('#front-content-left');
