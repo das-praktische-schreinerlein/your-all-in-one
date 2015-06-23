@@ -47,7 +47,6 @@ describe('yaio explorer guielements', function() {
     it('should open/collapse tree when click on "Open till Level"', function doOpenCollapseTree() {
         // Given
         var countNodes = 0;
-        var nodesFilter = '.fancytree-node';
 
         // count visible nodes
         return yaioNodePage.getVisibleNodes().then( function (nodes) {
