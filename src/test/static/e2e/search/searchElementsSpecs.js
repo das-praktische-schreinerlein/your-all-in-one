@@ -46,7 +46,7 @@ describe('yaio explorer search', function() {
     /**
      * define tests
      */
-    it('should get initial 20 Nodes with pagination but without searchwords', function doCheckInitialSearchPage() {
+    it('should get initial searchpage with 20 Nodes and pagination but without searchwords', function doCheckInitialSearchPage() {
         // count visible nodes, pages, searchwords
         return yaioNodePage.getVisibleNodes()
             .then( function (nodes) {
