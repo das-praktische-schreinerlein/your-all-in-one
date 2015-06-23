@@ -1,5 +1,5 @@
 /**
- * test the ExplorerPage of YAIO with export-functions
+ * test the export-functions on ExplorerPage of YAIO
  * 
  */
 

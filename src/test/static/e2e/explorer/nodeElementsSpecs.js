@@ -1,5 +1,5 @@
 /**
- * test the ExplorerPage of YAIO with a full lifecycle of a node
+ * test the node elements on the ExplorerPage of YAIO
  * 
  */
 
@@ -8,7 +8,7 @@ var YAIOLoginPage = require('../login/login.po.js');
 var YAIOFrontPage = require('../frontpage/frontpage.po.js');
 var YAIONodePage = require('../explorer/node.po.js');
 
-describe('yaio explorer guielements', function() {
+describe('yaio explorer nodeelements', function() {
     // define vars
     var yaioLoginPage, yaioFrontPage, yaioNodePage;
 
@@ -23,10 +23,10 @@ describe('yaio explorer guielements', function() {
         
         // do Login
         yaioLoginPage.doLogin()
-        .then(function doneOpenExplorer() {
-            // open explorer
-            return yaioNodePage.openExplorerFromFrontPage();
-        });
+            .then(function doneOpenExplorer() {
+                // open explorer
+                return yaioNodePage.openExplorerFromFrontPage();
+            });
         protractor.utils.waitUntilElementClickable(yaioNodePage.containerMasterdata, protractor.utils.CONST_WAIT_NODEHIRARCHY);
         expect(yaioNodePage.containerMasterdata.isPresent()).toEqual(true);
     });
@@ -56,16 +56,16 @@ describe('yaio explorer guielements', function() {
 
         // navigate to Node
         yaioNodePage.navigateToNode(yaioNodePage.jsFuncTestHierarchy)
-        .then(function doneNavigate(){
-            // show desc of testnode
-            var deferred = protractor.promise.defer();
-            var container = yaioNodePage.showDescForNode(yaioNodePage.jsFuncTestId, checkContentHandler);
-            container.getText().then(function() {
-                deferred.fulfill(container);
-            })
-            
-            return deferred.promise;
-        });
+            .then(function doneNavigate(){
+                // show desc of testnode
+                var deferred = protractor.promise.defer();
+                var container = yaioNodePage.showDescForNode(yaioNodePage.jsFuncTestId, checkContentHandler);
+                container.getText().then(function() {
+                    deferred.fulfill(container);
+                })
+                
+                return deferred.promise;
+            });
     });
 
     it('should show Sys of Testnode', function doShowSysOfTestNode() {
@@ -80,18 +80,18 @@ describe('yaio explorer guielements', function() {
 
         // navigate to Node
         yaioNodePage.navigateToNode(yaioNodePage.jsFuncTestHierarchy)
-        .then(function doneNavigate(){
-            // show sys of testnode
-            var deferred = protractor.promise.defer();
-            
-            // call service-function
-            var container = yaioNodePage.showSysForNode(yaioNodePage.jsFuncTestId, checkContentHandler);
-            container.getText().then(function() {
-                deferred.fulfill(container);
-            })
-            
-            return deferred.promise;
-        });
+            .then(function doneNavigate(){
+                // show sys of testnode
+                var deferred = protractor.promise.defer();
+                
+                // call service-function
+                var container = yaioNodePage.showSysForNode(yaioNodePage.jsFuncTestId, checkContentHandler);
+                container.getText().then(function() {
+                    deferred.fulfill(container);
+                })
+                
+                return deferred.promise;
+            });
     });
 });
 

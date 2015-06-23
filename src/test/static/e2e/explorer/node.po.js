@@ -24,6 +24,10 @@ var YAIONodePage = function() {
     me.expanderSysPlay1 = $('#expander' + me.sysplayId);
     me.linkCreateChildJsFuncTest1 = $('#cmdCreate' + me.jsFuncTestId);
     
+    // gui-elements
+    me.buttonOpenTilllevel = $('a.command_switchlevel');
+    me.inputOpenTilllevel = $('#treeOpenLevel');
+    
     // create form
     me.inputCreateNodeType = $('#inputCreateNodeType');
 
@@ -110,31 +114,17 @@ var YAIONodePage = function() {
         var promise = deferred.promise;
         if (last) {
             // last element: check only for link
-            // console.log("expandNode: check for " + '#expander' + id);
             protractor.utils.waitUntilElementClickable(createChild, protractor.utils.CONST_WAIT_NODEHIRARCHY).then (function () {
                 deferred.fulfill(expander);
-//            }, function (err) {
-//                deferred.reject(new Error("Element not found #expander" + id + " :" + err));
             });
         } else {
             // expand and check
-            // console.log("expandNode: wait for clickable for " + '#expander' + id);
             protractor.utils.waitUntilElementClickable(expander, protractor.utils.CONST_WAIT_NODEHIRARCHY).then( function expanderClickable() {
                 // clickable 
-                // console.log("expandNode: click " + '#expander' + id);
                 expander.click().then(function okCallBack() {
                     // click passed
-                    // console.log("expandNode: click passed " + '#expander' + id);
                     deferred.fulfill(expander);
-//                }, function errCallBack(err) {
-//                    // click failed
-//                    // console.log("expandNode: click failed" + '#expander' + id);
-//                    deferred.reject(new Error("Error while clicking #expander" + id + " : " + err));
                 });
-//            }, function expandernotClickable(err) {
-//                // Error not clickable; 
-//                // console.log("expandNode: not clickable " + '#expander' + id);
-//                deferred.reject(new Error("Element not clickable #expander" + id + " :" + err));
             });
             
         }
@@ -168,10 +158,6 @@ var YAIONodePage = function() {
             
             // expect new Url
             expect(browser.getLocationAbsUrl()).toContain('show/' + nodeId);
-
-//        }).then(null, function (err) {
-//            console.error("an error occured:", err);
-//            expect(err).toBe(false);
         });
         
 
@@ -383,9 +369,6 @@ var YAIONodePage = function() {
             expect(browser.getLocationAbsUrl()).toContain('activate/' + parentId);
 
             browser.ignoreSynchronization = false;
-//        }).then(null, function (err) {
-//            console.error("an error occured:", err);
-//            expect(err).toBe(false);
         });
         
 
@@ -510,6 +493,18 @@ var YAIONodePage = function() {
      */
     me.showSysForNode = function (nodeId, checkHandler) {
         return me.showContainerForNode(nodeId, checkHandler, '#detail_sys_', '#toggler_sys_');
+    };
+    
+    
+    /**
+     * returns a list of all visible treenode-spans
+     * @return {[]}  visible treenode-spans
+     */
+    me.getVisibleNodes = function() { 
+        var nodes = $$(('.fancytree-node')); 
+        return protractor.promise.filter(nodes, function(node) { 
+                return node.isDisplayed(); 
+            }); 
     };
 };
 module.exports = YAIONodePage;
