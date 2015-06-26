@@ -1,0 +1,77 @@
+* **OFFEN - Urlaub JAHR.MONAT SHORTNAME**
+# Urlaub JAHR.MONAT SHORTNAME
+- Fahrt nach XX mit Übernachtung im Auto und Hütten
+
+## Tourenideen
+- Tour 1
+  ** EVENT_PLANED - Urlaub SHORTNAME                                            [Plan:    0.5h]
+  ** OFFEN - Mittelfristige Vorbereitung (1 Woche vorher)                      [Plan:      2h]
+# Aufgabe Mittelfristige Vorbereitung
+Die mittelfristige Vorbereitung in der Woche vor dem Urlaub wie Mitfahrgelegenheit, Auto vorbereiten, Technik, Packen...
+
+## Stand
+- [OFFEN] - Mitfahrgelegenheit inserieren
+- [OFFEN] - Auto
+- [OFFEN] - Technik vorbereiten
+- [OFFEN] - Packen
+- [OFFEN] - Einkaufen
+
+## Mitfahrgelegenheit inserieren
+Bei Mitfahrgelegenheit inserieren
+- [OFFEN] - Hinfahrt einstellen
+- [OFFEN] - Rückfahrt einstellen
+- [OFFEN] - Buchungsbestätigungen
+
+## Auto vorbereiten
+Das Auto für die Fahrt vorbereiten ggf Werkstatt, Mitfahrgelegenheit, Putzen, Tanken usw.:
+- [OFFEN] - Werkstatt
+- [OFFEN] - Tanken
+- [OFFEN] - Putzen
+
+## Technik Vorbereiten
+Die Technik vorbereiten, wie z.B. Akku laden, Karten aufspielen usw.:
+- **Akkus**
+    - [OFFEN] - Kamera-Akkus laden
+    - [OFFEN] - Netbook laden
+    - [OFFEN] - Tablet laden
+    - [OFFEN] - GPS-Akkus laden
+- **Kartenmaterial**
+    - [OFFEN] - [Kartendownload für Garmin] (http://www.wanderreitkarte.de/garmin_de.php)
+    - [OFFEN] - [Karten online kaufen](http://www.amazon.de)
+    - [OFFEN] - Karten bei Peak
+    
+## Packen
+Alles siehe Packliste:
+- [OFFEN] - Technik
+- [OFFEN] - Hygiene
+- [OFFEN] - Buddy
+- [OFFEN] - Bergzeugs
+- [OFFEN] - Klamotten
+- [OFFEN] - Karten/Führer
+  ** OFFEN - kurzfristige Vorbereitung (1 Tag vorher)                          [Plan:      1h]
+# Aufgabe kurzfristige Vorbereitung
+Die kurzfristige Vorbereitung am Tag+Abend vorher wie ggf. Taxi bestellen, Imbiss vorbereiten
+
+## Stand
+- [OFFEN] - Imbiss (Kaffee Brötchen)
+- [OFFEN] - Auto packen
+
+## Infos
+- **Wetter*
+    - [Wetter Achensee](http://www.bergfex.at/sommer/achensee/wetter/)
+    - [Wetter ammergauer](http://www.bergfex.de/sommer/ammergauer-alpen/wetter/)
+    - [Wetter dolomiten](http://www.bergfex.it/sommer/dolomiten/wetter/)
+    - [Wetter lechtal](http://www.bergfex.at/sommer/lechtal/wetter/)
+    - [Wetter Meraner-Land](http://www.bergfex.it/sommer/meraner-land/wetter/)
+    - [Wetter oberallgaeu](http://www.bergfex.de/sommer/oberallgaeu/wetter/)
+    - [Wetter oetztal](http://www.bergfex.at/sommer/oetztal/wetter/)
+    - [Wetter paznaun](http://www.bergfex.at/sommer/paznaun-ischgl/wetter/)
+    - [Wetter pitztal](http://www.bergfex.at/sommer/pitztal/wetter/)
+    - [Wetter stubaital](http://www.bergfex.at/sommer/stubaital/wetter/)
+    - [Wetter tannheimertal](http://www.bergfex.at/sommer/tannheimertal/wetter/)
+    - [Wetter venosta](http://www.bergfex.it/sommer/venosta/#/sommer/venosta/wetter/)
+    - [Wetter wipptal](http://www.bergfex.at/sommer/wipptal/wetter/)
+    - [Wetter zillertal](http://www.bergfex.at/sommer/zillertal/wetter/)
+    - [Wetter zugspitzarena](http://www.bergfex.at/sommer/zugspitzarena/wetter/)
+  ** EVENT_PLANED - Anfahrt                                                     [Plan:      3h]
+  ** EVENT_PLANED - Rückfahrt                                                   [Plan:      3h]

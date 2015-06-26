@@ -1,0 +1,85 @@
+* **OFFEN - Urlaub JAHR.MONAT SHORTNAME**
+# Urlaub JAHR.MONAT SHORTNAME
+- Flug nach XX mit Übernachtung in Hotel und Mietwagen
+
+## Tourenideen
+- Tour 1
+  ** EVENT_PLANED - Urlaub SHORTNAME                                            [Plan:    0.5h]
+  ** OFFEN - Langfristige Vorbereitung                                         [Plan:      2h]
+# Aufgabe Langfristige Vorbereitung
+Die langfristige Vorbereitung des Urlaub wie grobe Planung, Buchungen usw.
+
+## Stand
+- [OFFEN] - Recherche
+- [OFFEN] - Buchung Reise
+- [OFFEN] - Buchung Mietwagen
+
+## Recherche
+- **Portale**
+    - [Weg.de](http://www.weg.de)
+    - [ab-in-den-urlaub.de](http://ab-in-den-urlaub.de)
+
+## Buchung Reise
+- **Vorausauswahl Reise**
+    - [OFFEN] - [Flug+Hotel 1](http://XXXX)
+- **Buchung Unterkunft**
+    - [OFFEN] - [Flug+Hotel 1](http://XXXX)
+    - [OFFEN] - DATUM Rückantwort mit Modalitäten+Voucher
+```email
+```
+
+## Buchung Mietwagen
+- **Vorausauswahl Anbieter*
+   - [adac.de](https://www.adac.de/produkte/autovermietung/)
+- **Buchung*
+    - [OFFEN] - [Wagen](http://XXXX)
+    - [OFFEN] - DATUM Rückantwort mit Modalitäten+Voucher
+  ** OFFEN - Mittelfristige Vorbereitung (1 Woche vorher)                      [Plan:      2h]
+# Aufgabe Mittelfristige Vorbereitung
+Die mittelfristige Vorbereitung in der Woche vor dem Urlaub wie Mitfahrgelegenheit, Auto vorbereiten, Technik, Packen...
+
+## Stand
+- [OFFEN] - Reiseunterlagen
+- [OFFEN] - Technik vorbereiten
+- [OFFEN] - Packen
+- [OFFEN] - Einkaufen
+
+## Reiseunterlagen zusammenstellen
+Alle nötigen Reiseunterlagen wie Buchungsbestätigung, Anreisekarte usw. ausdrucken:
+- [OFFEN] - Buchungsbestätigung
+- [OFFEN] - Flugdaten
+- [OFFEN] - Mietwagenvoucher
+- [OFFEN] - Hotelbeschreibung
+- [OFFEN] - Anfahrt mit Gogle Maps
+
+## Technik Vorbereiten
+Die Technik vorbereiten, wie z.B. Akku laden, Karten aufspielen usw.:
+- **Akkus**
+    - [OFFEN] - Kamera-Akkus laden
+    - [OFFEN] - Netbook laden
+    - [OFFEN] - Tablet laden
+    - [OFFEN] - GPS-Akkus laden
+- **Kartenmaterial**
+    - [OFFEN] - [Kartendownload für Garmin] (http://www.wanderreitkarte.de/garmin_de.php)
+    - [OFFEN] - [Karten online kaufen](http://www.amazon.de)
+    - [OFFEN] - Karten bei Peak
+
+## Packen
+Alles siehe Packliste:
+- [OFFEN] - Technik
+- [OFFEN] - Hygiene
+- [OFFEN] - Klamotten
+- [OFFEN] - Karten/Führer
+  ** OFFEN - kurzfristige Vorbereitung (1 Tag vorher)                          [Plan:      1h]
+# Aufgabe kurzfristige Vorbereitung
+Die kurzfristige Vorbereitung am Tag+Abend vorher wie ggf. Taxi bestellen, Imbiss vorbereiten
+
+## Stand
+- [OFFEN] - Imbiss (Kaffee Brötchen)
+- [OFFEN] - Taxi bestellen
+
+## Infos
+- **Wetter*
+    - [Wetter Allgemein](http://www.wetteronline.de/)
+  ** EVENT_PLANED - Hinflug                                                     [Plan:      3h]
+  ** EVENT_PLANED - Rückflug                                                   [Plan:      3h]

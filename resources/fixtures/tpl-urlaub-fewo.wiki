@@ -1,0 +1,112 @@
+* **OFFEN - Urlaub JAHR.MONAT SHORTNAME**
+# Urlaub JAHR.MONAT SHORTNAME
+- Fahrt nach XX mit Übernachtung in Fewo
+
+## Tourenideen
+- Tour 1
+  ** EVENT_PLANED - Urlaub SHORTNAME                                            [Plan:    0.5h]
+  ** OFFEN - Langfristige Vorbereitung                                         [Plan:      2h]
+# Aufgabe Langfristige Vorbereitung
+Die langfristige Vorbereitung des Urlaub wie grobe Planung, Buchungen usw.
+
+## Stand
+- [OFFEN] - Recherche
+- [OFFEN] - Buchung Unterkunft
+
+## Recherche
+- **Portale**
+   - [Fewo-Direkt](http://www.fewo-direkt.de)
+   - [Hotel.de](http://www.hotel.de)
+   - [Hotel.com](http://www.hotel.com)
+
+## Buchung Unterkunft
+- **Vorausauswahl Unterkunft**
+    - [OFFEN] - [Fewo 1](http://XXXX)
+- **Anfrage Unterkunft**
+    - [OFFEN] - Anfragetext
+```email
+Hallo, 
+wir suchen für nächste Woche eine freie Fewo für 2 Personen mit Hund. 
+Geplant ist die Zeit vom XXXX - XXXX. 
+Wäre Ihre Fewo für diesen Zeitraum noch frei??? 
+
+Viele Grüße aus dem wunderbar frühlingshaften Berlin 
+
+Michael Schreiner 
+```
+    - [OFFEN] - DATUM - [Fewo 1](http://XXXX)
+- **Antwort Unterkunft**
+    - [OFFEN] - DATUM - [Fewo 1](http://XXXX)
+- **Buchung Unterkunft**
+    - [OFFEN] - DATUM - [Fewo 1](http://XXXX)
+```email
+Sehr geehrte XXXX,
+ 
+schön dass es klappt, wir nehmen Ihr Angebot gerne an :-)
+ 
+Viele Grüße aus dem gerade noch sonnigen Berlin
+ 
+Michael Schreiner
+```
+    - [OFFEN] - DATUM Rückantwort mit Modalitäten
+```email
+Guten Morgen Herr Schreiner, 
+
+```
+- **Absage an andere Angebote**
+    - [OFFEN] - DATUM - [Fewo 1](http://XXXX)
+  ** OFFEN - Mittelfristige Vorbereitung (1 Woche vorher)                      [Plan:      2h]
+# Aufgabe Mittelfristige Vorbereitung
+Die mittelfristige Vorbereitung in der Woche vor dem Urlaub wie Mitfahrgelegenheit, Auto vorbereiten, Technik, Packen...
+
+## Stand
+- [OFFEN] - Reiseunterlagen
+- [OFFEN] - Auto
+- [OFFEN] - Technik vorbereiten
+- [OFFEN] - Packen
+- [OFFEN] - Einkaufen
+
+## Reiseunterlagen zusammenstellen
+Alle nötigen Reiseunterlagen wie Buchungsbestätigung, Anreisekarte usw. ausdrucken:
+- [OFFEN] - Buchungsbestätigung
+
+## Auto vorbereiten
+Das Auto für die Fahrt vorbereiten ggf Werkstatt, Mitfahrgelegenheit, Putzen, Tanken usw.:
+- [OFFEN] - Werkstatt
+- [OFFEN] - Tanken
+- [OFFEN] - Putzen
+
+## Technik Vorbereiten
+Die Technik vorbereiten, wie z.B. Akku laden, Karten aufspielen usw.:
+- **Akkus**
+    - [OFFEN] - Kamera-Akkus laden
+    - [OFFEN] - Netbook laden
+    - [OFFEN] - Tablet laden
+    - [OFFEN] - GPS-Akkus laden
+- **Kartenmaterial**
+    - [OFFEN] - [Kartendownload für Garmin] (http://www.wanderreitkarte.de/garmin_de.php)
+    - [OFFEN] - [Karten online kaufen](http://www.amazon.de)
+    - [OFFEN] - Karten bei Peak
+    
+## Packen
+Alles siehe Packliste:
+- [OFFEN] - Technik
+- [OFFEN] - Hygiene
+- [OFFEN] - Buddy
+- [OFFEN] - Bergzeugs
+- [OFFEN] - Klamotten
+- [OFFEN] - Karten/Führer
+  ** OFFEN - kurzfristige Vorbereitung (1 Tag vorher)                          [Plan:      1h]
+# Aufgabe kurzfristige Vorbereitung
+Die kurzfristige Vorbereitung am Tag+Abend vorher wie ggf. Taxi bestellen, Imbiss vorbereiten
+
+## Stand
+- [OFFEN] - Imbiss (Kaffee Brötchen)
+- [OFFEN] - Auto packen
+
+## Infos
+- **Wetter*
+    - [Wetter Berge](http://www.bergfex.de/)
+    - [Wetter Allgemein](http://www.wetteronline.de/)
+  ** EVENT_PLANED - Anfahrt                                                     [Plan:      3h]
+  ** EVENT_PLANED - Rückfahrt                                                   [Plan:      3h]
