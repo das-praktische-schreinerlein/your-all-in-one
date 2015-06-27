@@ -105,7 +105,7 @@ Die kurzfristige Vorbereitung am Tag+Abend vorher wie ggf. Taxi bestellen, Imbis
 - [OFFEN] - Auto packen
 
 ## Infos
-- **Wetter*
+- **Wetter**
     - [Wetter Berge](http://www.bergfex.de/)
     - [Wetter Allgemein](http://www.wetteronline.de/)
   ** EVENT_PLANED - Anfahrt                                                     [Plan:      3h]

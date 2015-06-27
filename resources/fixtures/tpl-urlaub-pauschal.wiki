@@ -79,7 +79,7 @@ Die kurzfristige Vorbereitung am Tag+Abend vorher wie ggf. Taxi bestellen, Imbis
 - [OFFEN] - Taxi bestellen
 
 ## Infos
-- **Wetter*
+- **Wetter**
     - [Wetter Allgemein](http://www.wetteronline.de/)
   ** EVENT_PLANED - Hinflug                                                     [Plan:      3h]
   ** EVENT_PLANED - Rückflug                                                   [Plan:      3h]
