@@ -168,6 +168,25 @@ div.container-content-desc div.mermaid {
     word-wrap: normal;
 }
 
+/* Tabellen */
+div.container-content-desc table {
+    border: 1px solid #8CACD3;
+    margin-left: 30px;
+    border
+}
+div.container-content-desc td {
+    border: 1px solid #8CACD3;
+}
+div.container-content-desc th {
+    font-weight: bold;
+    background: #8CACD3;
+}
+div.container-content-desc tr {
+    font-weight: bold;
+    background: #DEE9EF;
+}
+
+
 /*****************************************
  *****************************************
  * toc

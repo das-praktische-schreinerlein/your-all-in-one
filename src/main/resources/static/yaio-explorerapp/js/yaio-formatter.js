@@ -41,7 +41,7 @@ var localHtmlId = 1;
 var checkListConfigs = {
     "checklist-state-OPEN": {
         styleClassPraefix: "checklist-state-",
-        matchers: ["OPEN", "OFFEN", "o", "O", "0"]
+        matchers: ["OPEN", "OFFEN", "o", "O", "0", "TODO"]
     },
     "checklist-state-RUNNING": {
         styleClassPraefix: "checklist-state-",
@@ -91,7 +91,7 @@ var checkListConfigs = {
  * @param descText - the string to format
  * @param flgHighlightNow - if is set do syntax-highlighting while markdown-processing, if not set do it later
  * @param headerPrefix - headerPrefix for heading-ids
- * @return - formatted markdown
+ * @return {String} - formatted markdown
  */
 function formatMarkdown(descText, flgHighlightNow, headerPrefix) {
     // prepare descText
@@ -101,7 +101,7 @@ function formatMarkdown(descText, flgHighlightNow, headerPrefix) {
     // my own code-handler
     renderer.code = function (code, language) {
         code = htmlEscapeTextLazy(code);
-        if (code.match(/^sequenceDiagram/)||code.match(/^graph/)) {
+        if (code.match(/^sequenceDiagram/) || code.match(/^graph/) || code.match(/^gantt/)) {
             return '<div id="inlineMermaid' + (localHtmlId++) + '" class="mermaid">'+ prepareTextForMermaid(code ) + '</div>';
         } else if (language !== undefined 
                    && (language.match(/^yaiomindmap/) || language.match(/^yaiofreemind/))) {
@@ -329,7 +329,7 @@ function prepareTextForMermaid(descText) {
     return newDescText;
 }
     
-    /**
+/**
  * <h4>FeatureDomain:</h4>
  *     GUI
  * <h4>FeatureDescription:</h4>
@@ -357,9 +357,9 @@ function convertMarkdownToJira(descText) {
             tmpText = '\n' + tmpText;
             
             // lists
-            tmpText = tmpText.replace(/\n  - /g, "\n-- ");
-            tmpText = tmpText.replace(/\n    - /g, "\n--- ");
-            tmpText = tmpText.replace(/\n      - /g, "\n---- ");
+            tmpText = tmpText.replace(/\n    - /g, "\n-- ");
+            tmpText = tmpText.replace(/\n        - /g, "\n--- ");
+            tmpText = tmpText.replace(/\n            - /g, "\n---- ");
 
             // headings
             tmpText = tmpText.replace(/\n##### /g, "\nh5. ");
@@ -381,6 +381,21 @@ function convertMarkdownToJira(descText) {
     return newDescText;
 }
 
+/**
+ * <h4>FeatureDomain:</h4>
+ *     GUI
+ * <h4>FeatureDescription:</h4>
+ *     executes mermaid, highlight and checklist-formatter on the block,
+ *     return a flag if a mermaid-block is found an mermaid should be executed
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>returnValue Boolean - flag if a Mermaid-Block is found and mermaid should be executed
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     Convert
+ * @param descBlock - id-filter to identify the block to format
+ * @return {boolean} - flag if a Mermaid-Block is found and mermaid should be executed
+ */
 function formatDescBlock(descBlock) {
     var flgDoMermaid = false;
     var descBlockId = $(descBlock).attr('id');
@@ -435,6 +450,19 @@ function formatDescBlock(descBlock) {
     return flgDoMermaid;
 }
 
+/**
+ * <h4>FeatureDomain:</h4>
+ *     GUI
+ * <h4>FeatureDescription:</h4>
+ *     executes checklist-formatter (add span with checklist-Styles) on the block [use checkListConfigs]
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>updates DOM
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     Convert
+ * @param descBlock - id-filter to identify the block to format
+ */
 function highlightCheckList(descBlock) {
     var descBlockId = $(descBlock).attr('id');
     console.log("highlightCheckList highlight for descBlock: " + descBlockId);
@@ -446,6 +474,22 @@ function highlightCheckList(descBlock) {
     }
 }
 
+/**
+ * <h4>FeatureDomain:</h4>
+ *     GUI
+ * <h4>FeatureDescription:</h4>
+ *     executes checklist-formatter (add span with checklistFormat) with style and styleclass for all matchers "[XXX]" on descBlock
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>updates DOM
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     Convert
+ * @param descBlock  - id-filter to identify the block to format
+ * @param matchers   - list of matcher which will call as stringfilter of "[" + matcher + "]" to identify checklist-entry
+ * @param styleClass - styleClass to add to span for matcher found 
+ * @param style      - style to add to new span for matcher found
+ */
 function highlightCheckListForMatchers(descBlock, matchers, styleClass, style) {
     var descBlockId = $(descBlock).attr('id');
     console.log("highlightCheckListForMatchers matchers '" + matchers + "' for descBlock: " + descBlockId);
@@ -453,6 +497,23 @@ function highlightCheckListForMatchers(descBlock, matchers, styleClass, style) {
         highlightCheckListForMatcher(descBlock, "[" + matchers[idx] + "]", styleClass, style);
     }
 }
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     GUI
+ * <h4>FeatureDescription:</h4>
+ *     executes checklist-formatter (add span with checklistFormat) with style and styleclass for all matchers "[XXX]" on descBlock
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>updates DOM
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     Convert
+ * @param descBlock  - id-filter to identify the block to format
+ * @param matchers   - matcher will call as stringfilter to identify checklist-entry
+ * @param styleClass - styleClass to add to span for matcher found 
+ * @param style      - style to add to new span for matcher found
+ */
 function highlightCheckListForMatcher(descBlock, matcherStr, styleClass, style) {
     var descBlockId = $(descBlock).attr('id');
     console.log("highlightCheckListForMatcher matcherStr '" + matcherStr + "' for descBlock: " + descBlockId);
@@ -462,8 +523,12 @@ function highlightCheckListForMatcher(descBlock, matcherStr, styleClass, style) 
             find: regEx,
             replace: function(portion) {
                 var el = document.createElement('span');
-                el.style = style;
-                el.className = styleClass
+                if (style) {
+                    el.style = style;
+                }
+                if (styleClass) {
+                    el.className = styleClass;
+                }
                 el.innerHTML = portion.text;
                 return el;
             }
@@ -471,9 +536,26 @@ function highlightCheckListForMatcher(descBlock, matcherStr, styleClass, style) 
     });
 }
 
-
+/**
+ * <h4>FeatureDomain:</h4>
+ *     GUI
+ * <h4>FeatureDescription:</h4>
+ *     extract data from explorerlines (table.fancytree-ext-table tr) and format 
+ *     them as linked markdown-checklists ([state] - [title](yaio:number)
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>return String - checklist in yaio-markdown-format
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     Convert
+ * @return <String>      - checklist in yaio-markdown-format
+ */
 function convertExplorerLinesAsCheckList() {
-    var checkList = "";
+    // get title
+    var title = $("#masterTr td.fieldtype_name").text();
+    var now = formatGermanDateTime((new Date()).getTime());
+
+    var checkList = "# Checklist: " + title + " (Stand: " + now + ")\n\n";
     
     // iterate all nodelines
     $("table.fancytree-ext-table tr").each(function(i, line) {
@@ -536,6 +618,101 @@ function extractCheckListStatefromStateSpan(block) {
         }
     }
     return null;
+}
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     GUI
+ * <h4>FeatureDescription:</h4>
+ *     extract data from explorerlines (table.fancytree-ext-table tr) and format 
+ *     them as mermaid-gantt-markdown
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>return String - mermaid-gantt-markdown
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     Convert
+ * @return <String>      - mermaid-gantt-markdown
+ */
+function convertExplorerLinesAsGanttMarkdown() {
+    // get title
+    var title = $("#masterTr td.fieldtype_name").text();
+    var now = formatGermanDateTime((new Date()).getTime());
+
+    var ganttMarkdown = "# Gantt: " + title + " (Stand: " + now + ")\n\n"
+        + "```mermaid\n"
+        + "gantt\n"
+        + "    title " + title + " (Stand: " + now + ")\n"
+        + "    dateFormat  DD.MM.YYYY\n"
+        + "\n";
+    var ganttMarkdownPlan = "";
+    var ganttMarkdownIst  = "";
+    
+    // iterate all nodelines
+    $("table.fancytree-ext-table tr").each(function(i, line) {
+        // extract data
+        var titleSpan = $(line).find("span.fancytree-title2");
+        var numberSpan = $(line).find("div.field_metanummer");
+        var startEndPlanDiv = $(line).find("div.fieldtype_fromto.field_planChildrenSum");
+        var startEndIstDiv = $(line).find("div.fieldtype_fromto.field_istChildrenSum");
+        
+        // extract content
+        var title = null;
+        var number = null;
+        var start = null;
+        var end = null;
+        if ($(titleSpan).size() > 0) {
+            title = $(titleSpan).text();
+        }
+        if ($(numberSpan).size() > 0) {
+            number = $(numberSpan).text();
+        }
+        ganttMarkdownPlan += generateGanttMarkdownLineFromBlock(title, number, startEndPlanDiv);
+        ganttMarkdownIst += generateGanttMarkdownLineFromBlock(title, number, startEndIstDiv);
+    });
+
+    // concat
+    ganttMarkdownPlan = ganttMarkdownPlan.length > 0 ? "    section Plan\n" + ganttMarkdownPlan : "";
+    ganttMarkdownIst = ganttMarkdownIst.length > 0 ? "    section Ist\n" + ganttMarkdownIst : "";
+    ganttMarkdown += ganttMarkdownPlan + ganttMarkdownIst  + "```\n";
+    
+    return ganttMarkdown;
+}
+
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     GUI
+ * <h4>FeatureDescription:</h4>
+ *     generate a mermaid-gantt-markdown-line for selector (if start, end-date can be extracted)
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>return String - mermaid-gantt-markdown
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     Convert
+ * @param title          - title of the line
+ * @param number         - referenc
+ * @param selector       - seletor to filter the element with jquery
+ * @return <String>      - mermaid-gantt-markdown-line
+ */
+function generateGanttMarkdownLineFromBlock(title, number, selector) {
+    if ($(selector).size() > 0) {
+        // extract dates
+        var dates = $(selector).html().replace(/\&nbsp\;/g, ' ').split("-");
+        if (dates.length != 2) {
+            return "";
+        }
+        var start = dates[0];
+        var end = dates[1];
+
+        // if all set: generate gantt
+        console.log("extractGanttMarkdownLineFromBlock: title:" + title + " number:" + number + " start:" + start + " end:" + end);
+        if (title && number && start && end) {
+            return "    " + title + ": " + number + ", " + start + ", " + end + "\n";
+        }
+    }
+    return "";
 }
 
 function addServicesToDiagrammBlock(block, type, downloadLink) {

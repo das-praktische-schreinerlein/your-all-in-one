@@ -1,5 +1,17 @@
 # Changelog
 
+## Changelog for release: feature-YAIO2118-improvements-201505-RELEASE
+- **GUI(YAIO2124)**
+    - Link für Auswahl des Ganttbereichs Plan/Ist für Masternode(YAIO2133)
+- **Code-Verbesserungen(YAIO2125)**
+    - Node-Abhängigkeiten über npm auflösen (YAIO2153)
+    - Analyse und Update der JS-Bibliotheken und Versionen (YAIO2158)
+    - Wechsel von qunit zu jasmin (YAIO2160)
+    - Einführung von protractor für e2e-Tests (YAIO2154)
+    - Einführung von grunt als Taskrunner (YAIO2155)
+    - Implementierung der Selenium-Tests als Protractor e2e-tests (YAIO2156)
+    - Concat/Minify der JS/CSS-Ressourcen (YAIO2157)
+
 ## Changelog for release: feature-YAIO2082-improvements-201504-RELEASE
 - **Neue Funktionen (YAIO2094)**
     - Textsnippets in Suche anzeigen (YAIO2104)

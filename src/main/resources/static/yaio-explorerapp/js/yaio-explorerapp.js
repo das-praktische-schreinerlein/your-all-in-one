@@ -96,6 +96,9 @@ yaioM.config(function($routeProvider) {
         .when('/login', {
             controller : 'AuthController',
             templateUrl: 'templates/login.html' })
+        .when('/logout', {
+            controller : 'AuthController',
+            templateUrl: 'templates/login.html' })
         .when('/frontpage/:nodeId', { 
             controller:  'FrontPageCtrl',
             templateUrl: 'templates/frontpage.html' })
@@ -326,6 +329,7 @@ yaioM.controller('AuthController', function($rootScope, $scope, $location, $http
             $rootScope.authenticated = false;
             $location.path("/");
         }).error(function(data) {
+            $location.path("/");
             $rootScope.authenticated = false;
         });
     }    
@@ -908,20 +912,19 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
      * <h4>FeatureDomain:</h4>
      *     Editor
      * <h4>FeatureDescription:</h4>
-     *     export GUI As Checklist
+     *     export GUI As Overview
      * <h4>FeatureResult:</h4>
      *   <ul>
-     *     <li>exportAsChecklist
+     *     <li>exportAsOverview
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     GUI Callback
      */
-    $scope.exportAsChecklist = function() {
-        console.log("exportAsChecklist");
-        yaioExportExplorerLinesAsCheckList();
+    $scope.exportAsOverview = function() {
+        console.log("exportAsOverview");
+        yaioExportExplorerLinesAsOverview();
         return false;
     }
-
     /**
      * <h4>FeatureDomain:</h4>
      *     Editor
@@ -1328,6 +1331,28 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
     $scope.recalcGanttBlocks = function() {
         yaioRecalcFancytreeGanttBlocks();
         yaioRecalcMasterGanttBlock($scope.node);
+        return false;
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     GUI
+     * <h4>FeatureDescription:</h4>
+     *     callbackhandler to recalc Gantt with Master-Ist/Plan-DateRange
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>recalc ganttblocks
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     GUI Callback
+     * @param  flgShowIst   boolean if is set show ist, if not show plan
+     */
+    $scope.recalcGanttForIstOrPlan = function(flgShowIst) {
+        var start = flgShowIst ? $scope.node.istChildrenSumStart : $scope.node.planChildrenSumStart;
+        var ende = flgShowIst ? $scope.node.istChildrenSumEnde : $scope.node.planChildrenSumEnde;
+        $("#inputGanttRangeStart").val(formatGermanDate(start)).trigger('input').triggerHandler("change");
+        $("#inputGanttRangeEnde").val(formatGermanDate(ende)).trigger('input').triggerHandler("change");
+        return false;
     }
 });
 

@@ -1,0 +1,138 @@
+= OFFEN - Epic-Feature FUEATURENR - FEATURENAME
+# Feature FUEATURENR - FEATURENAME
+_TODO - Hier erfolgt die Aufgabenbeschreibung eines umfangreichen Features. Allgemeines Blabla und die Hintergründe warum das Feature benötigt wird_
+
+## Akzeptantkriterien
+Für die Erfüllung der Aufgabe sind folgende Akzeptanzkriterien zu erfüllen
+- **fachliche Kriterien**
+    - Feature in GUI sichtbar
+    - Nach Ausführung sind folgende Änderung in Datenbank
+- **technische Kriterien**
+    - Testcoverage
+    - Codestyle: Checkstyle, PMC, PMD
+    - Dokumentation
+
+## Stand
+- [OFFEN] - DATE - Konzept (fachl., techn.) [siehe Task](yaio:TODOTASKNUMMER)
+- [OFFEN] - DATE - Vorbereitung Arbeitsumgebung (Branch...) [siehe Task](yaio:TODOTASKNUMMER)
+- [OFFEN] - DATE - Umsetzung [siehe Task](yaio:TODOTASKNUMMER)
+- [OFFEN] - DATE - techn. Abnahme durch Team [siehe Task](yaio:TODOTASKNUMMER)
+- [OFFEN] - DATE - fachl. Abnahme durch Fachabteilung [siehe Task](yaio:TODOTASKNUMMER)
+- [OFFEN] - DATE - Abnahme durch QA [siehe Task](yaio:TODOTASKNUMMER)
+- [OFFEN] - DATE - Rollout [siehe Task](yaio:TODOTASKNUMMER)
+- [OFFEN] - DATE - Dokumentation/Kommunikation (JIRA, Confluence, Changelog...) [siehe Task](yaio:TODOTASKNUMMER)
+
+== OFFEN - Konzept [Plan: 4h]
+# Aufgabe
+_TODO - Hier stehen Details zur Planung der fachlichen und technischen Umsetzung_
+
+## Stand
+- [OFFEN] - DATE - fachl. Konzept
+- [OFFEN] - DATE - techn. Konzept
+
+# Konzept
+
+## fachl. Konzept
+_TODO - Hier stehen Details zur Planung der fachlichen Umsetzung_
+
+## techn. Konzept
+_TODO - Hier stehen Details zur Planung der technischen Umsetzung_
+
+== OFFEN - Vorbereitung Arbeitsumgebung [Plan: 1h]
+# Aufgabe
+_TODO - Hier stehen Details zur Vorbereitung der Arbeitsumgebung wie z.B. Branchname, Devbox  usw._
+
+## Stand
+- [OFFEN] - DATE - Versionsverwaltung
+- [OFFEN] - DATE - IDE
+- [OFFEN] - DATE - Devbox
+
+# Versionsverwaltung
+_TODO - Hier stehen Details zur Versionsverwaltung wie z.B. Branchname, Devbox  usw._
+- create Branch "feature-team-id-name"
+
+# IDE
+_TODO - Hier stehen Details zur Vorbereitung der IDE usw._
+
+# DevBox
+_TODO - Hier stehen Details zur Vorbereitung der Arbeitsumgebung usw._
+
+== OFFEN - Umsetzung [Plan: 20h]
+# Aufgabe
+_TODO - Hier stehen Details zur technischen Umsetzung_
+
+## Stand
+- [OFFEN] - DATE - Details zu Mechanismen
+- [OFFEN] - DATE - Implementierung
+
+# Details zu Mechanismen usw.
+_TODO - Hier stehen details zu techn. Mechanismen, Code-Snippets, Reesourcen (Urls) die benutzt wurden bzw. wo recherchiert wurde._
+
+# Implementierung
+_TODO - Außerdem sollten die geänderten Dateien, Packages und bestenfalls mit wichtigen Code-Snippets erwähnt werden._
+- new File src/XYZ zur Validierung
+```java
+public class
+...
+```
+
+== OFFEN - tech/fachl. Abnahme [Plan: 4h]
+# Aufgabe
+_TODO - Hier stehen Details zur techn. fach Abnahme_
+
+## Stand
+- [OFFEN] - DATE - techn. Abnahme durch Team
+- [OFFEN] - DATE - fachl. Abnahme durch Fachabteilung
+- [OFFEN] - DATE - Abnahme durch QA
+
+# techn. Abnahme durch Team
+_TODO - Codereview, Kennzahlen zur Checkstyle, Findbugs usw. prüfen und die Unit-Tests usw. abnehmen lassen_
+
+# fachl. Abnahme durch Fachabteilung
+_TODO - Kurze Beschreibung wie die Fachabteilung das ganze im Testsystem testen kann. Hinweise zu Logins usw._
+- _Ggf. Feedback von der Fachabteilung und Änderungsbedarf_
+- _Kurze Dokumentation wie Deployment ins Abnahmesystem erfolgt_
+
+# Abnahme durch QA
+_TODO - Kurze Beschreibung wie die QA das ganze im Testsystem testen kann._
+- _Hinweise zu Modulen die neu sind oder auch geändert wurden, sowie Hinweise zu Modulen die durch die Auswirkungen indirekt betroffen sind._
+- _Ggf. Feedback von der Fachabteilung und Änderungsbedarf_
+- _Kurze Dokumentation wie Deployment ins Abnahmesystem erfolgt_
+
+== OFFEN - Rollout [Plan: 1h]
+# Aufgabe
+_TODO - Hier stehen Details zum Rollout_
+
+## Stand
+- [OFFEN] - DATE - Live Deploy
+- [OFFEN] - DATE - Tests
+
+
+# Live Deploy
+_TODO - Kurze Dokumentation wie Deployment ins Livesystem erfolgt_
+
+- Checkliste
+    - [OFFEN] - DATE - Info an Fachabteilung über Zeitfenster
+    - [OFFEN] - DATE - Vorarbeiten
+    - [OFFEN] - DATE - Umstellung
+    - [OFFEN] - DATE - Nacharbeiten
+    - [OFFEN] - DATE - Info an Fachabteilung das OK
+
+# Tests
+_TODO - Kurze Dokumentation von Live-Tests_
+
+== OFFEN - Dokumentation/Kommunikation [Plan: 2h]
+# Aufgabe
+_TODO - Hier stehen Details zu Dokumentation/Kommunikation_
+
+## Stand
+- [OFFEN] - DATE - Kommunikation
+- [OFFEN] - DATE - Dokumentation
+
+
+# Kommunikation
+_TODO - wichtige Meilensteine der Kommunikation im Projekt_
+
+# Dokumentation
+_TODO - Dokumentation im Changelog sowie den jeweiligen Dokumentationssystemen wie Jira, Confluence, Bugzilla usw._
+

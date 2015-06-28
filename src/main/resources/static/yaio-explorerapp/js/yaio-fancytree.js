@@ -1551,8 +1551,13 @@ function yaioRecalcMasterGanttBlock(basenode) {
 function yaioRecalcMasterGanttBlockFromTree() {
     // calc from children
     var masterNodeId = $("#masterTr").attr('data-value');
-    yaioRecalcMasterGanttBlockLine(masterNodeId, "plan");
-    yaioRecalcMasterGanttBlockLine(masterNodeId, "ist");
+    if (masterNodeId != undefined) {
+        console.log("yaioRecalcMasterGanttBlockFromTree calc for masterNodeId:", masterNodeId);
+        yaioRecalcMasterGanttBlockLine(masterNodeId, "plan");
+        yaioRecalcMasterGanttBlockLine(masterNodeId, "ist");
+    } else {
+        console.log("yaioRecalcMasterGanttBlockFromTree skip: no masterNodeId");
+    }
 }
 
 /**
@@ -2064,21 +2069,23 @@ function openJiraExportWindow(nodeId) {
  * <h4>FeatureDomain:</h4>
  *     GUI
  * <h4>FeatureDescription:</h4>
- *     open the clipboardwindow for the explorercontent 
+ *     open the clipboardwindow with generated checklist and gantt-markdown
  * <h4>FeatureResult:</h4>
  *   <ul>
- *     <li>GUI-result: opens clipboard window with checklist-converted node-content
+ *     <li>GUI-result: opens clipboard window with checklist/ganttmarkdown-converted node-content
  *   </ul> 
  * <h4>FeatureKeywords:</h4>
  *     GUI Convert
  */
-function yaioExportExplorerLinesAsCheckList() {
+function yaioExportExplorerLinesAsOverview() {
     // convert and secure
     var checkListSrc = convertExplorerLinesAsCheckList();
     checkListSrc = htmlEscapeText(checkListSrc);
+    var ganttSrc = convertExplorerLinesAsGanttMarkdown();
+    ganttSrc = htmlEscapeText(ganttSrc);
     
     // set clipboard-content
-    $( "#clipboard-content" ).html(checkListSrc);
+    $( "#clipboard-content" ).html(checkListSrc + "\n\n" +  ganttSrc);
     
     // show message
     $( "#clipboard-box" ).dialog({

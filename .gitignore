@@ -1,4 +1,7 @@
 /log.roo
+/.idea
 /.settings
 /target
 /node_modules
+/node
+/var/hsqldb/yaio.lck

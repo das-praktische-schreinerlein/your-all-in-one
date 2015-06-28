@@ -24,6 +24,7 @@ import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import de.yaio.core.node.BaseNode;
@@ -523,7 +524,9 @@ public class WikiImporter extends ImporterImpl {
                 }
 
                 // Id-Praefix des Vorgaengers extrahieren und an Masternode setzen
-                String idPraefixVorgaenger = "UNKNOWN";
+                String idPraefixVorgaenger = inputOptions.getStrDefaultMetaNodePraefix();
+                idPraefixVorgaenger = StringUtils.isNotEmpty(idPraefixVorgaenger) 
+                        ? idPraefixVorgaenger : ImportOptions.CONST_DEFAULT_META_NODE_PRAEFIX;
                 WikiStructLine vorgaengerWk = null;
                 if (wiki.startsWith(getWikiCharUe()) && ebene > 1) {
                     // Vorgaenger-UE vorhanden

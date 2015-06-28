@@ -332,6 +332,7 @@ public class ConverterUtils {
         WikiImportOptions inputOptions = new WikiImportOptions();
         inputOptions.setFlgReadList(true);
         inputOptions.setFlgReadUe(true);
+        inputOptions.setStrDefaultMetaNodePraefix(masterNode.getMetaNodePraefix());
         WikiImporter wikiImporter = new WikiImporter(inputOptions);
         
         parseNodesFromWiki(wikiImporter, inputOptions, masterNode, wikiSrc);

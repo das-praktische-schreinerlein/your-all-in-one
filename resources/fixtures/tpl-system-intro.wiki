@@ -70,10 +70,10 @@ Er bietet eine intuitive Web-GUI die von jedem modernen Browser unterstützt wir
     - **Projektexplorer zur Visualisierung und einfachen Navigation innerhalb der Daten**
     - **zweckmäßige Editoren** für die verschiedenen Informationen (Aufgaben, Konzepte...)
 - **hilfreiche Features direkt in die GUI integriert**
-    - **Markdown als Dokumentationsformat** mit speziellen Erweiterungen für **Prozess- und Sequenz-Diagramme**
+    - **Markdown als Dokumentationsformat** mit speziellen Erweiterungen für **Prozess- und Sequenz-Diagramme, sowie Mindmaps und Checklisten**
     - **W**hat**Y**ou**S**ee**I**s**W**hat**Y**ou**G**et-Editoren, Vorschau-Funktionen
     - Volltextsuche, Gantt-Ansicht
-    - Exporter und Importer für verschiedene Formate (Mindmap, Excel, Wiki, Html, Txt, Jira, ICal...)
+    - Exporter und Importer für verschiedene Formate (Mindmap, Excel, Wiki, Html, Txt, Jira, ICal, Checklisten...)
     - **Vorlese-Funktion, Diktat-Funktion** für moderne Browser wie Google-Chrome
 
 # Einfacher Aufbau!
@@ -105,6 +105,8 @@ Er bietet eine intuitive Web-GUI die von jedem modernen Browser unterstützt wir
 - Ein weiteres Ziel von D'Artagnan ist der Gebrauch als **Dokumentationssystem und DokuWiki**
 - Dazu kann man über die Info+UrlResNodes einen Informationsbaum aufbauen.
 - Umfangreichere Artikel lassen sich mit Markdown und automatischem **Syntaxhighlighting für Quellcodebereiche** strukturieren und formatieren.
+    - Mit dem integrierten Markdown-Editor lassen sich von der einfachen Notiz und Checkliste bis zum vollständigen Pflichtenheft oder Programmdokumentation , Alles was Text ist und Alles was etwas Formatierung benötigt, bearbeiten.
+    - Aber die Formatierung ist nicht nur auf die Standard-Formate des Markdown wie Fettdruck, Überschriften, Aufzählungen, Tabellen, Links und Bilder beschränkt, sondern, Nein man kann mit einer einfachen Syntax direkt aus dem Text auch Sequenz+Prozessdiagramme, Mindmaps und Checklisten mit farblicher Statushervorhebung generieren. Denn eine Skizze bzw. Diagramme und Ampelfarben sagen m,ehr als 100 Worte :-)
 - Unabhängig zur auf einen Knoten beschränkten Markdown-Formatierung, lassen sich die Knoten auch übergreifend im Baum mit zusätzlichen Layoutinformationen wie Rahmen usw. formatieren.
 - Diese Layoutinformationen wertet YAIO dann in der Darstellung im Explorer bzw. beim Export als Html-Seite aus und formatiert die Inhalte in ansprechender Weise.
 - Somit stellt das System **2 Layout-Formatierungsmechanismen** zur Verfügung, die einzeln aber auch im Zusammenspiel die **Erstellung umfangreicher Dokumentationen bzw. Webseiten** ermöglichen. Die Startseite+Hilfe von YAIO bzw. die Portalinhalte von http://www.your-all-in-one.de und http://www.your-it-fellow.de werden zum Beispiel vollständig über diese Mechanismen gepflegt und layoutet.

@@ -1,17 +1,53 @@
 # Installation
 
-## Requires
-- for building
-   - java 1.7
-   - maven
-   - node
-   - IDE (I built it with eclipse)
-- to use, take a look at http://www.your-all-in-one.de/yaio/static/lepetithow#h3_YAIO716
-   - java
-   - a browser
-   - freemind
+There are several ways to install your own D'Artagnan-Box.
 
-## Install from git
+## A) linux: use installer
+get the installer and start it on an system
+
+    git clone https://github.com/das-praktische-schreinerlein/yaioinstaller.git
+    sudo chmod 555 -R ./yaioinstaller
+    sudo ./yaioinstaller/install-yaiodemo/uninstall-allsteps-all-root-UBUNTU.sh
+    sudo ./yaioinstaller/install-yaiodemo/install-allsteps-all-root-UBUNTU.sh
+
+## B) linux/windows (with vagrant): use installer 
+download installer
+
+    mkdir yaiodemo
+    cd yaiodemo
+    mkdir datatransfer
+    cd datatransfer
+    git clone https://github.com/das-praktische-schreinerlein/yaioinstaller.git
+    cd ..
+
+start a new vagrantbox
+
+    vagrant up
+    vagrant ssh
+
+run installer on new vagrantbox
+
+    cd /vagrant/datatransfer/
+    sudo chmod 555 -R ./yaioinstaller
+    sudo ./yaioinstaller/install-yaiodemo/uninstall-allsteps-all-root-UBUNTU.sh
+    sudo ./yaioinstaller/install-yaiodemo/install-allsteps-all-root-UBUNTU.sh
+
+call your browser: http://IpOfTheVagrantBox:8666/demo.html
+    
+## C) Install from git (windows or linux with existing java1.7, maven, nodejs 10.XX)
+
+### Requires
+- for building
+    - java 1.7
+    - maven
+    - node
+    - IDE (I built it with eclipse)
+- to use, take a look at http://www.your-all-in-one.de/yaio/static/lepetithow#h3_YAIO716
+    - java
+    - a browser
+    - freemind
+
+### Step1: get sources
 
 get sources
 
@@ -29,7 +65,7 @@ install karma local
     npm install karma --save-dev
     npm install karma-phantomjs-launcher karma-jasmine karma-qunit karma-chrome-launcher karma-firefox-launcher plugin --save-dev
 
-## baseconfigure and build
+### Step2: baseconfigure and build
 config/applicationContext.xml
 
     <context:property-placeholder location="YOURAPPBASEDIR/config/application.properties"/>
@@ -59,7 +95,7 @@ generate without tests
 
     mvn -Dmaven.test.skip=true package
 
-## finish config
+### Step3: finish config
 
 configure accounts in config/security-apiusers.properties
 
@@ -67,7 +103,7 @@ Loglevel: config/log4j.properties
 
     log4j.appender.R.File=logs/yaio.log
 
-## run
+### Step4: run
 start
 
     cd YOURBASEDIR
@@ -75,7 +111,7 @@ start
 
 call your browser: http://localhost:8666/demo.html
 
-## Example for the batches
+### Step5: Example for the batches
 
 run example 
 

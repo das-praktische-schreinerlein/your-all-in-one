@@ -1,8 +1,317 @@
 
-= INFO - Spielwiese                                                                                                                                                 [NodeMeta: SysPlay,1,,] [NodeSys: SysPlay1,,,,]
+= INFO - Spielwiese                                                                                                                                             [NodeMeta: SysPlay,1,,] [NodeSys: SysPlay1,,,,]
 
+== LATE - Projektablauf                                                         [Plan:      1h 01.04.2015 00:00-30.04.2015 00:00]                              
 
-== OFFEN - SystemTests                                                                                                                                               [NodeMeta: SysTest,1,,][NodeSys: SysTest1,,,,]
+=== OFFEN - test1                                                               [Plan:      1h 25.04.2015 00:00-25.04.2015 00:00]                             
+
+=== OFFEN - test2                                                               [Plan:      1h]                                                              
+* OFFEN - test3  
+* OFFEN - test4  
+
+== WARNING - Ein Beispiel-Projekt
+# Aufgabe
+Ziel des Projektes ist es, Euch ein paar der Möglichkeiten von D'Artagnan zu auszuzeigen...
+
+# Stand
+Schaut euch die Teilaufgaben an... Soweit ich sehe sind wir im Verzug :-(
+
+# grundsätzliche Struktur
+Die Ursprungsplanung ging von 2 Teilprojekten mit verschiedenen Aufgaben aus.
+```yaiomindmap
+- Projektbaum
+  -- Teilprojekt 1
+    --- Aufgabe 1
+    --- Aufgabe 2
+    --- Aufgabe 3
+  -- Teilprojekt 2
+    --- Aufgabe 4
+    --- Aufgabe 5
+```
+
+=== WARNING - Teilprojekt 1                                                       
+# Aufgabe
+Das "Teilprojekt 1" soll die Aufgaben von "Teilprojekt 1" bündeln. Was denn sonst??
+
+# Stand
+Schaut bei den Einzelaufgaben nach
+* ERLEDIGT - Erledigte Teilaufgabe                                              [Ist: 100%  8h 04.03.2015 00:00-05.03.2015 00:00] [Plan:     10h 01.03.2015 00:00-10.03.2015 00:00]
+# Aufgabe
+Ganz viele wichtige Sachen
+
+# Stand
+Was zu erledigen war - gut so :-)
+
+# Doku
+Ganz viel wichtiges Zeugs
+* WARNING - In Terminverzug                                                     [Ist:  90%  3h 10.03.2015 00:00-04.04.2015 00:00] [Plan:      5h 10.03.2015 00:00-01.04.2015 00:00] 
+# Aufgabe
+Ganz viele wichtige Sachen
+
+# Stand
+Oops wir sind in Verzug! Hier müssen wir aktuell ranklotzen!!!
+
+# Doku
+Ganz viel wichtiges Zeugs
+* RUNNING - Wir arbeiten dran                                                   [Ist:  10%  1h 01.04.2015 00:00-04.04.2015 00:00] [Plan:     10h 01.04.2015 00:00-10.10.2025 00:00] 
+# Aufgabe
+Ganz viele wichtige Sachen
+
+# Stand
+Hier arbeiten wir aktuell und sind im Plan (kein Wunder ;-)
+
+# Doku
+Ganz viel wichtiges Zeugs
+
+=== LATE - Teilprojekt 2                  
+# Aufgabe
+Das "Teilprojekt 2" soll die Aufgaben von "Teilprojekt 2" bündeln. Erstaunlich oder??
+Es überschneidet sich übrigens mit "Teilprojekt 1".
+
+# Stand
+Schaut bei den Einzelaufgaben nach
+* LATE - Hätte eigentlich schon beginnen müssen                                 [Plan:      5h 10.03.2015 00:00-10.10.2025 00:00]  
+# Aufgabe
+Ganz viele wichtige Sachen
+
+# Stand
+UI,UI,UI auch hier hätten wir schon beginnen müssen...
+
+# Doku
+Ganz viel wichtiges Zeugs
+* OFFEN - Kommt im Anschluß                                                     [Plan:      5h 10.10.2025 00:00-11.10.2025 00:00]  
+# Aufgabe
+Ganz viele wichtige Sachen
+
+# Stand
+Ein Glück, da haben wir noch Zeit...
+
+# Doku
+Ganz viel wichtiges Zeugs
+
+=== DOKU - Projekt-Wiki 
+# Projekt-Wiki 
+In diesem Bereich werden wichtige Infos, Howtos, Links usw. abgespeichert
+* URLRES - Interessante Infos zum Projekt [ResLoc: http://http://www.your-all-in-one.de,Interessante Infos zum Projekt,]   
+* HOWTO - Layoutmöglichkeiten des Editors
+# Überschrift Ebene 1
+Das hier ist ganz normaler Fließtext.
+- Aufzählung Ebene 1
+    - Aufzählung Unterpunkt Ebene2 mit [Link + Label](http://daringfireball.net/projects/markdown/syntax) oder auch ein interner Link zur [YAIO-Spielwiese](yaio:SysPlay1).
+
+## Überschrift Ebene 2
+Ein schönes Feature ist der integrierte Diagramm-Editor.
+- Sequenz-Diagramme
+```mermaid
+sequenceDiagram
+    participant Du
+    participant D'Artagnan
+    Du->>D'Artagnan: Ich habe ein Problem
+    D'Artagnan->>D'Artagnan: denkt nach
+    D'Artagnan->>Du: Ich kann Dir helfen
+```
+- Prozess-Diagramme
+```mermaid
+graph LR
+    A[Du] -->|fragst| B(D'Artagnan)
+    B --> C{D'Artagnan überlegt<br>Kann ich helfen?}
+    C -->|na klar| D[Du bist glücklich]
+    C -->|ich versuchs| D
+```
+- Gantt-Diagramme
+```mermaid
+gantt
+    title Urlaubsplanung Sommer 2015
+    dateFormat  DD.MM.YYYY
+
+    section Urlaub1
+    Alpen1               :alpen1     , 01.07.2015     , 7d
+    Alpen2               :alpen2     , after alpen1   , 7d
+
+    section Urlaub/Ferien
+    Alpen Hüttentour     :alpen3     , after alpen2     , 6d
+    Sachsen              :sachsen    , after alpen3 , 3d
+    Ferienende Schule    :holend     , 27.08.2015     , 1d
+    Ötztal               :alpen4     , after sachsen    , 5d
+```
+- Mindmaps
+
+```yaiomindmap
+- Projektbaum
+  -- Teilprojekt 1
+    --- Aufgabe 1
+    --- Aufgabe 2
+    --- Aufgabe 3
+  -- Teilprojekt 2
+    --- Aufgabe 4
+    --- Aufgabe 5
+```
+
+### Überschrift Ebene 3
+So kann man Code-Blöcke oder ähnliches einbinden.
+```
+Masterplan
+  System
+     Default
+```        
+Das schöne ist, dass ein automatisches Syntaxhighlighting erfolgt, wenn er die Sprache erkennt.
+```
+    #!/bin/bash
+    // activate elements after 1 second
+    setTimeout(function() { 
+        // activate speech recognition and others
+        initLanguageSupport();
+        a = a + 1;
+```
+
+#### Überschrift Ebene 4
+
+Und auch die Einbindung von Bildern ist ganz einfach möglich :-)
+
+![Projektexplorer](/examples/help/hilfe-screen-projektexplorer-uebersicht.png "Übersicht Projektexplorer")
+
+Und immer wieder gerne gesehen: *Tabellen*
+
+Head1 | Head2 | Head3
+----|----|----
+Column1 | Column2 | Column3
+
+Und für ganz strukturierte Leute Checklisten:
+- **Aufgabenliste**
+    - [OFFEN] - Aufgabe
+    - [LATE] - Aufgabe
+    - [RUNNING] - Aufgabe
+    - [BLOCKED] - Aufgabe
+    - [WARNING] - Aufgabe
+    - [DONE] - Aufgabe
+
+- **Testergebnisse**
+    - [TESTOPEN] - Testergebnis
+    - [FAILED] - Testergebnis
+    - [PASSED] - Testergebnis
+
+# Referenzen
+- Die Markdown-Syntax orientiert sich an [http://daringfireball.net/projects/markdown/syntax](http://daringfireball.net/projects/markdown/syntax)
+- Die  Syntax der Prozess-Diagramme folgt http://knsv.github.io/mermaid/flowchart.html
+- Und die Syntax der Sequenz-Diagramme folgt http://knsv.github.io/mermaid/sequenceDiagram.html
+
+== OFFEN - SystemTests                                                                                                                                        [NodeMeta: SysTest,1,,] [NodeSys: SysTest1,,,,]
 Diese Aufgabe bitte nicht löschen, da hier Systemtests ausgeführt werden.
 
-== OFFEN - Hier kannst du tun und lassen was DU willst                                                                                                                                               [NodeMeta: BlaBla,1,,][NodeSys: BlaBla1,,,,]
+=== OFFEN - JavaUnitTest1 [NodeMeta: JUnitTest,1,,] [NodeSys: JavaUnitTest1,,,,]
+Diese Aufgabe bitte nicht löschen, da hier die Java-Unit-Tests ausgeführt werden.
+
+=== OFFEN - JsUnitTest1 [NodeMeta: JsUnitTest,1,,] [NodeSys: JsUnitTest1,,,,]
+Diese Aufgabe bitte nicht löschen, da hier die JavaScript-Unit-Tests ausgeführt werden.
+
+=== OFFEN - JsFuncTest1  [NodeMeta: JsFuncTest,1,,] [NodeSys: JsFuncTest1,,,,]
+Diese Aufgabe bitte nicht löschen, da hier die JavaScript-E2E-Tests ausgeführt werden.
+
+== OFFEN - Hier kannst du tun und lassen was DU willst                                                                                                        [NodeMeta: BlaBla,1,,] [NodeSys: BlaBla1,28.02.2015 19:48,12F6F45336510BCAF59548BB8FFF747A,31.03.2015 19:56,2]
+
+=== SYMLINK - Symlink auf: 'Hier kannst du tun und lassen was DU willst' [SymLink: BlaBla1,,]                                                                   [NodeMeta: BlaBla,2,,] [NodeSys: DT2015033119564425225,31.03.2015 19:56,5A25C18A35C9E3A941086032078F5BBA,31.03.2015 19:56,1]
+
+== OFFEN - Layout-Tests                                                                                                                                       [NodeMeta: SysLayTest,1,,] [NodeSys: SysLayoutTest1,,,,]
+
+=== OFFEN - Was ist möglich                                                                                                                                   [NodeMeta: SysLayTest,2,,] [NodeSys: SysLayoutTest2,,,,]
+# Überschrift Ebene 1
+Das hier ist ganz normaler Fließtext.
+- Aufzählung Ebene 1
+  - Aufzählung Unterpunkt Ebene2 mit [Link + Label](http://daringfireball.net/projects/markdown/syntax).
+
+## Überschrift Ebene 2
+## Überschrift Ebene 2
+Ein schönes Feature ist der integrierte Diagramm-Editor.
+- Sequenz-Diagramme
+```mermaid
+sequenceDiagram
+    participant Du
+    participant D'Artagnan
+    Du->>D'Artagnan: Ich habe ein Problem
+    D'Artagnan->>D'Artagnan: denkt nach
+    D'Artagnan->>Du: Ich kann Dir helfen
+```
+- Prozess-Diagramme
+```mermaid
+graph LR
+    A[Du] -->|fragst| B(D'Artagnan)
+    B --> C{D'Artagnan überlegt<br>Kann ich helfen?}
+    C -->|na klar| D[Du bist glücklich]
+    C -->|ich versuchs| D
+```
+- Gantt-Diagramme
+```mermaid
+gantt
+    title Urlaubsplanung Sommer 2015
+    dateFormat  DD.MM.YYYY
+
+    section Urlaub1
+    Alpen1               :alpen1     , 01.07.2015     , 7d
+    Alpen2               :alpen2     , after alpen1   , 7d
+
+    section Urlaub/Ferien
+    Alpen Hüttentour     :alpen3     , after alpen2     , 6d
+    Sachsen              :sachsen    , after alpen3 , 3d
+    Ferienende Schule    :holend     , 27.08.2015     , 1d
+    Ötztal               :alpen4     , after sachsen    , 5d
+```
+- Mindmaps
+
+```yaiomindmap
+- Projektbaum
+  -- Teilprojekt 1
+    --- Aufgabe 1
+    --- Aufgabe 2
+    --- Aufgabe 3
+  -- Teilprojekt 2
+    --- Aufgabe 4
+    --- Aufgabe 5
+```
+
+### Überschrift Ebene 3
+So kann man Code-Blöcke oder ähnliches einbinden.
+```
+Masterplan
+  System
+     Default
+```        
+Das schöne ist, dass ein automatisches Syntaxhighlighting erfolgt, wenn er die Sprache erkennt.
+```
+#!/bin/bash
+    // activate elements after 1 second
+    setTimeout(function() { 
+        // activate speech recognition and others
+        initLanguageSupport();
+        a = a + 1;
+```
+
+#### Überschrift Ebene 4
+
+Und auch die Einbindung von Bildern ist ganz einfach möglich :-)
+
+![Projektexplorer](/examples/help/hilfe-screen-projektexplorer-uebersicht.png "Übersicht Projektexplorer")
+
+Und immer wieder gerne gesehen: *Tabellen*
+
+Head1 | Head2 | Head3
+----|----|----
+Column1 | Column2 | Column3
+
+Und für ganz strukturierte Leute Checklisten:
+- **Aufgabenliste**
+    - [OFFEN] - Aufgabe
+    - [LATE] - Aufgabe
+    - [RUNNING] - Aufgabe
+    - [BLOCKED] - Aufgabe
+    - [WARNING] - Aufgabe
+    - [DONE] - Aufgabe
+
+- **Testergebnisse**
+    - [TESTOPEN] - Testergebnis
+    - [FAILED] - Testergebnis
+    - [PASSED] - Testergebnis
+
+# Referenzen
+- Die Markdown-Syntax orientiert sich an [http://daringfireball.net/projects/markdown/syntax](http://daringfireball.net/projects/markdown/syntax)
+- Die  Syntax der Prozess-Diagramme folgt http://knsv.github.io/mermaid/flowchart.html
+- Und die Syntax der Sequenz-Diagramme folgt http://knsv.github.io/mermaid/sequenceDiagram.html

@@ -7,50 +7,40 @@ module.exports = function(config) {
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '',
 
-
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['qunit', 'jasmine'], // jasmine, qunit
+    frameworks: ['jasmine'], // jasmine, qunit
 
 
     // list of files / patterns to load in the browser
     files: [
-        'src/main/resources/static/yaio-explorerapp/../js/jquery/jquery.min.js',
-        'src/main/resources/static/yaio-explorerapp/../js/jqueryui/jquery-ui.min.js',
-        'src/main/resources/static/yaio-explorerapp/../js/jqueryui/jquery.ui-contextmenu.min.js',
-        'src/main/resources/static/yaio-explorerapp/../js/jqueryui/jquery-ui-i18n.min.js',
-        'src/main/resources/static/yaio-explorerapp/../js/jqueryui/jquery-ui-sliderAccess.js',
-        'src/main/resources/static/yaio-explorerapp/../js/jqueryui/jquery-ui-timepicker-addon.js',
-        'src/main/resources/static/yaio-explorerapp/../js/jquery/jquery-lang.js',
+        // vendors
+        'src/main/resources/static/yaio-explorerapp/../dist/vendors-full.js',
+        // needs own script for loading plugins
         'src/main/resources/static/yaio-explorerapp/../js/fancytree/jquery.fancytree.js',
         'src/main/resources/static/yaio-explorerapp/../js/fancytree/jquery.fancytree.dnd.js',
         'src/main/resources/static/yaio-explorerapp/../js/fancytree/jquery.fancytree.edit.js',
         'src/main/resources/static/yaio-explorerapp/../js/fancytree/jquery.fancytree.gridnav.js',
         'src/main/resources/static/yaio-explorerapp/../js/fancytree/jquery.fancytree.table.js',
-        'src/main/resources/static/yaio-explorerapp/../js/angularjs/angular.js',
-        'src/main/resources/static/yaio-explorerapp/../js/angularjs/angular-animate.js',
-        'src/main/resources/static/yaio-explorerapp/../js/angularjs/angular-route.js',
-        'src/main/resources/static/yaio-explorerapp/../js/angularjs/angular-translate.js',
-        'src/main/resources/static/yaio-explorerapp/../js/angularjs/angular-translate-loader-static-files.js',
-        'src/main/resources/static/yaio-explorerapp/../js/marked/marked.js',
         'src/main/resources/static/yaio-explorerapp/../js/ace/ace.js',
         'src/main/resources/static/yaio-explorerapp/../js/ace/ext-spellcheck.js',
-        'src/main/resources/static/yaio-explorerapp/../js/strapdown/strapdown-toc.js',
-        'src/main/resources/static/yaio-explorerapp/../js/highlightjs/highlight.pack.js',
-        'src/main/resources/static/yaio-explorerapp/../js/toastr/toastr.min.js',
-        'src/main/resources/static/yaio-explorerapp/../js/mermaid/mermaid.full.js',
         'src/main/resources/static/yaio-explorerapp/../freemind-flash/flashobject.js',
-        'src/main/resources/static/yaio-explorerapp/../js/yaio/JMATAllIn.js',
-        'src/main/resources/static/yaio-explorerapp/js/jmat.js',
-        'src/main/resources/static/yaio-explorerapp/js/yaio-editorservice.js',
-        'src/main/resources/static/yaio-explorerapp/js/yaio-baseservice.js',
-        'src/main/resources/static/yaio-explorerapp/js/yaio-layout.js',
-        'src/main/resources/static/yaio-explorerapp/js/yaio-formatter.js',
-        'src/main/resources/static/yaio-explorerapp/js/yaio-markdowneditor.js',
-        'src/main/resources/static/yaio-explorerapp/js/yaio-fancytree.js',
-        'src/main/resources/static/yaio-explorerapp/js/yaio-explorerapp.js',
-        'src/main/resources/static/yaio-explorerapp/../js/angularjs/paging.js',
-        'src/test/static/jstests/yaio-explorerapp/**/*.js'
+        // yaio: files
+        'src/main/resources/static/yaio-explorerapp/../dist/yaio-support-full.js',
+        'src/main/resources/static/yaio-explorerapp/../dist/yaio-app-full.js',
+        'src/test/static/unit/resources/js/jasmine/jasmine-jquery.js',
+        'src/test/static/unit/jasmine-config.js',
+
+        // unit-tests
+        'src/test/static/unit/yaio-explorerapp/**/*_test.js',
+
+        // fixtures
+        {
+            pattern: 'src/test/static/unit/fixtures/**/*.html',
+            watched: true,
+            served: true,
+            included: false
+        },
     ],
 
 
@@ -68,7 +58,7 @@ module.exports = function(config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
+    reporters: ['story', 'progress'],
 
 
     // web server port
@@ -81,7 +71,7 @@ module.exports = function(config) {
 
     // level of logging
     // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-    logLevel: config.LOG_DEBUG,
+    logLevel: config.LOG_WARN,
 
 
     // enable / disable watching file and executing tests whenever any file changes
@@ -90,7 +80,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['PhantomJS', 'IE'], // 'PhantomJS', 'Chrome', 'Firefox'
+    browsers: ['PhantomJS'], // 'PhantomJS', 'Chrome', 'Firefox', 'IE'
 
 
     // Continuous Integration mode

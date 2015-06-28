@@ -2,18 +2,10 @@
 
 ## short term
 
-- **Neue Funktionen (YAIO2123)**
-    - Im/Export als JSON (YAIO2095)
-    - Copy/Move über GUI+JSON (YAIO2096)
-- **GUI (YAIO2124)**
-    - Kontextmenü über Icon öffnen (YAIO2092)
-    - neues Iconset als sprite einbinden (YAIO2093)
 - **Code-Verbesserungen (YAIO2125)**
-    - Java-Codeabdeckung für neue Java-Funktionen (YAIO2098)
-    - Layout-Tests (YAIO2100)
-    - Auswertung Checkstyle (YAIO2132)
-    - Auswertung Findbugs (YAIO1979)
-    - Seleniumtests als JUnit-Tests (YAIO2052)
+    - weitere Tests implementieren
+    - Codeclean
+    - Refactoring (Java, JS, CSS)
 
 ## mid term
 - **Dokumentation (YAIO1143)**
@@ -21,7 +13,13 @@
     - Code-Dokumentation Prio2-Klassen (YAIO1145)
     - Modellierung (YAIO644)
 - **Erweiterungen (YAIO1921)**
+    - Neue Funktionen(YAIO2123)
+        - Taskanlegen über Fixture-Import(YAIO2159)
+        - Im/Export als JSON(YAIO2095)
+        - Copy/Move über GUI+JSON(YAIO2096)
     - Ergonomie (YAIO1923)
+        - Kontextmenü über Icon öffnen (YAIO2092)
+        - neues Iconset als sprite einbinden (YAIO2093)
         - externe CSS-Styles definieren (YAIO1724)
         - DryRun-Modus für Import (YAIO1712)
         - OutputOptions im Cookie speichern (YAIO1674)
@@ -37,6 +35,10 @@
         - rekursive Aktualisierung CalcSum usw. (YAIO576)
         - Terminvererbung (YAIO1891)
 - **Code-Verbesserungen (YAIO1926)**
+    - Auswertung Checkstyle(YAIO2132)
+    - Auswertung Findbugs(YAIO1979)
+    - Java-Codeabdeckung für neue Java-Funktionen(YAIO2098)
+    - Layout-Tests(YAIO2100)
     - Optionen in Config auslagern (YAIO1638)
     - eigene JS-Klassen (YAIO1927)
     - DB-Zugriffe von BaseNodeDBService machen und nicht von BaseNode (YAIO1553)

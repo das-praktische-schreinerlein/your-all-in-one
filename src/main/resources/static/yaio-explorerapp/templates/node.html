@@ -335,6 +335,8 @@
                        <div class="gantt_bar"  id="gantt_bar_head" data-tooltip='tooltip.command.GanttRange' lang="tech">
                         <input type="text" placeholder="dd.mm.jjjj" name="ganttRangeStart" pattern="\d{2}\.\d{2}\.\d{4}"  maxsize="10" value="{{ yaioUtils.ganttOptions.ganttRangeStart }}" class="inputtype_date" id="inputGanttRangeStart" ng-model="yaioUtils.ganttOptions.ganttRangeStart" ng-change="recalcGanttBlocks()">
                         <a ng-click="recalcGanttBlocks();" class="button" translate="fancytree.table.headline.ganttrange">Zeitbereich</a> 
+                        <a ng-click="recalcGanttForIstOrPlan(true);" class="button" translate="fancytree.table.headline.recalcGanttIst">Ist</a> 
+                        <a ng-click="recalcGanttForIstOrPlan(false);" class="button" translate="fancytree.table.headline.recalcGanttPlan">Plan</a> 
                         <input type="text" placeholder="dd.mm.jjjj" name="ganttRangeEnde" pattern="\d{2}\.\d{2}\.\d{4}"  maxsize="10" value="{{ yaioUtils.ganttOptions.ganttRangeEnd }}" class="inputtype_date" style="text-align: right" id="inputGanttRangeEnde" ng-model="yaioUtils.ganttOptions.ganttRangeEnd" ng-change="recalcGanttBlocks()"></th>
                        </div>
                     </div>
@@ -398,8 +400,8 @@
              <li class="command" data-tooltip='tooltip.command.OpenLevel' lang="tech">
                 <a href="" ng-click="openSubNodes()" class="button command_switchlevel" translate="common.command.OpenTreeLevel">&Ouml;ffne bis Level</a>
                 <input type="range" min="0" max="10" value="" id="treeOpenLevel" ng-model="config.treeOpenLevel" ng-change="openSubNodes()" class="command_switchlevel_input"> </li>
-             <li class="command" data-tooltip='tooltip.command.ExportAsChecklist' lang="tech">
-                <a href="" ng-click="exportAsChecklist()" class="button command_exportaschecklist" translate="common.command.ExportAsChecklist">Export als Checklist</a></li>
+             <li class="command" data-tooltip='tooltip.command.ExportAsOverview' lang="tech">
+                <a href="" ng-click="exportAsOverview()" class="button command_exportasoverview" translate="common.command.ExportAsOverview">Export Übersicht</a></li>
           </ul>
         </div>
     

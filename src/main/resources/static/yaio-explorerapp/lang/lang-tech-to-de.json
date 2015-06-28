@@ -17,7 +17,7 @@
         "tooltip.hint.Gantt": "<b>Achtung!!!</b> Die Gantt-Darstellung ist nur eine grobe Verteilung der Plan/Ist-Stunden auf den gesamten Plan/Ist-Zeitraum. Aufwende ohne Zeitraum werden erstmal den Eltern mit Plan/Ist-Datum zugerechnet bzw. wenn das Element ohne Datum sichtbar wird, überhaupt nicht eingerechnet! Aufwende der Kindselemente werden über den gesamten Zeitraum des Elternelement verteilt und können sich somit völlig verschieben! Also Plan+Ist am besten immer mit Datum pflegen, sonst gibt es in der Gantt-Sicht 'komische' Effekte ;-)",
         "tooltip.command.DoSearch": "Benutzen Sie die Volltextsuche um einzelne Elemente unabhängig von der Position im Baum zu finden.<br>Das Suchergebnis ist nach der Position im Baum sortiert. Druck Klick auf die Icons in der 1. Spalte können Suie das gefundene Element direkt im Baum ansehen.",
         "tooltip.command.Export": "Exportieren Sie die aktuelle Node mit allen Kindselementen in verschiedene Formate", 
-        "tooltip.command.ExportAsChecklist": "Export als Markdown-Checkliste",
+        "tooltip.command.ExportAsOverview": "Export als Checklist+GanttMarkdown",
         "tooltip.command.ExportForm": "Konfigurieren Sie den Export selbst", 
         "tooltip.command.ExportDirect": "Benutzen Sie eionen vorkonfigurierten Export", 
         "tooltip.command.ExportWiki": "Exportieren Sie die aktuelle Node mit allen Kindselementen als Wiki zur Weiterbearbeitung und eventuellen Import in ein anderes D'Artagnan-System :-)", 

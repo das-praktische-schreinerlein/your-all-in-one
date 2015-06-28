@@ -55,18 +55,10 @@ Resume: Also, für jeden die passende Version, damit er sich überall und in jed
 
 ## short term
 
-- **Neue Funktionen (YAIO2123)**
-    - Im/Export als JSON (YAIO2095)
-    - Copy/Move über GUI+JSON (YAIO2096)
-- **GUI (YAIO2124)**
-    - Kontextmenü über Icon öffnen (YAIO2092)
-    - neues Iconset als sprite einbinden (YAIO2093)
 - **Code-Verbesserungen (YAIO2125)**
-    - Java-Codeabdeckung für neue Java-Funktionen (YAIO2098)
-    - Layout-Tests (YAIO2100)
-    - Auswertung Checkstyle (YAIO2132)
-    - Auswertung Findbugs (YAIO1979)
-    - Seleniumtests als JUnit-Tests (YAIO2052)
+    - weitere Tests implementieren
+    - Codeclean
+    - Refactoring (Java, JS, CSS)
 
 ## mid term
 - **Dokumentation (YAIO1143)**
@@ -74,7 +66,13 @@ Resume: Also, für jeden die passende Version, damit er sich überall und in jed
     - Code-Dokumentation Prio2-Klassen (YAIO1145)
     - Modellierung (YAIO644)
 - **Erweiterungen (YAIO1921)**
+    - Neue Funktionen(YAIO2123)
+        - Taskanlegen über Fixture-Import(YAIO2159)
+        - Im/Export als JSON(YAIO2095)
+        - Copy/Move über GUI+JSON(YAIO2096)
     - Ergonomie (YAIO1923)
+        - Kontextmenü über Icon öffnen (YAIO2092)
+        - neues Iconset als sprite einbinden (YAIO2093)
         - externe CSS-Styles definieren (YAIO1724)
         - DryRun-Modus für Import (YAIO1712)
         - OutputOptions im Cookie speichern (YAIO1674)
@@ -90,6 +88,10 @@ Resume: Also, für jeden die passende Version, damit er sich überall und in jed
         - rekursive Aktualisierung CalcSum usw. (YAIO576)
         - Terminvererbung (YAIO1891)
 - **Code-Verbesserungen (YAIO1926)**
+    - Auswertung Checkstyle(YAIO2132)
+    - Auswertung Findbugs(YAIO1979)
+    - Java-Codeabdeckung für neue Java-Funktionen(YAIO2098)
+    - Layout-Tests(YAIO2100)
     - Optionen in Config auslagern (YAIO1638)
     - eigene JS-Klassen (YAIO1927)
     - DB-Zugriffe von BaseNodeDBService machen und nicht von BaseNode (YAIO1553)
@@ -140,6 +142,18 @@ Resume: Also, für jeden die passende Version, damit er sich überall und in jed
 
 ** **INFO - Der Blick zurück...**                                     [DocLayout: DIV,changelog,Chnagelog,]                                                
 # Changelog
+
+## Changelog for release: feature-YAIO2118-improvements-201505-RELEASE
+- **GUI(YAIO2124)**
+    - Link für Auswahl des Ganttbereichs Plan/Ist für Masternode(YAIO2133)
+- **Code-Verbesserungen(YAIO2125)**
+    - Node-Abhängigkeiten über npm auflösen (YAIO2153)
+    - Analyse und Update der JS-Bibliotheken und Versionen (YAIO2158)
+    - Wechsel von qunit zu jasmin (YAIO2160)
+    - Einführung von protractor für e2e-Tests (YAIO2154)
+    - Einführung von grunt als Taskrunner (YAIO2155)
+    - Implementierung der Selenium-Tests als Protractor e2e-tests (YAIO2156)
+    - Concat/Minify der JS/CSS-Ressourcen (YAIO2157)
 
 ## Changelog for release: feature-YAIO2082-improvements-201504-RELEASE
 - **Neue Funktionen (YAIO2094)**

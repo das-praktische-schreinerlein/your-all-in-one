@@ -5,33 +5,28 @@
   <base href="/yaio-explorerapp/" target="_blank">
   <title>YAIO - D'Artagnan - Markdown-Hilfe</title>
 
-  <!-- reset -->
-  <link rel="stylesheet" type="text/css" media="all" href="css/reset.css" />
-
-  <!-- jquery-ui -->
-  <script src="../js/jquery/jquery.min.js" type="text/javascript"></script>
-
-  <!-- Markdown-Editor+Formatter -->
-  <script src="../js/marked/marked.js" type="text/javascript"></script>
-  <script src="../js/ace/ace.js" type="text/javascript"></script>
-
-  <!-- Syntaxhightlighter -->
-  <link rel="stylesheet" href="../css/highlightjs/default.css">
-  <script src="../js/highlightjs/highlight.pack.js"></script>
- 
-  <!-- mermaid -->
-  <script src="../js/mermaid/mermaid.full.js" charset="UTF-8"></script>
- 
-  <!-- yaio -->
-  <link rel="stylesheet" type="text/css" media="all" href="../css/yaio/style.css" />
-  <link rel="stylesheet" type="text/css" media="all" href="../css/yaio/main.css" />
+  <!-- styles: reset -->
+  <link rel="stylesheet" type="text/css" media="all" href="./css/reset.css" />
+  
+  <!-- styles: vendors -->
+  <link rel="stylesheet" type="text/css" media="all" href="../dist/vendors-full.css" />
   <link rel="stylesheet" type="text/css" media="print" href="../css/yaio/print.css" />
-  <script src="../js/yaio/JMATAllIn.js"></script>
 
-  <!-- yaio-explorer -->
-  <link rel="stylesheet" type="text/css" media="all" href="./css/style.css" />
+  <!-- styles: yaio-explorer -->
+  <link rel="stylesheet" type="text/css" media="all" href="../dist/yaio-app-full.css" />
   <link rel="stylesheet" type="text/css" media="print" href="./css/print.css" />
   <link rel="stylesheet" type="text/css" media="print" href="./css/print-dataonly.css" id="link_css_dataonly" disabled="true" />
+
+  <!-- scripts: vendors -->
+  <script  type="text/javascript" charset="UTF-8" src="../dist/vendors-full.js"></script>
+  <!-- scripts: Markdown-Editor+Formatter needs own script for loading plugins -->
+  <script type="text/javascript" charset="UTF-8" src="../js/ace/ace.js"></script>
+  <!-- scripts: freemind needs own script for loading plugins -->
+  <script type="text/javascript" charset="UTF-8" src="../freemind-flash/flashobject.js"></script>
+
+  <!-- scripts: yaio-support -->
+  <script  type="text/javascript" charset="UTF-8" src="../dist/yaio-support-full.js"></script>
+
   <style>
   .ui-dialog-buttonset {
       display: none;
@@ -52,7 +47,7 @@
 # Überschrift Ebene 1
 Das hier ist ganz normaler Fließtext.
 - Aufzählung Ebene 1
-  - Aufzählung Unterpunkt Ebene2 mit [Link + Label](http://daringfireball.net/projects/markdown/syntax).
+  - Aufzählung Unterpunkt Ebene2 mit [Link + Label](http://daringfireball.net/projects/markdown/syntax) oder auch ein interner Link zur [YAIO-Spielwiese](yaio:SysPlay1).
 
 ## Überschrift Ebene 2
 Ein schönes Feature ist der integrierte Diagramm-Editor.
@@ -72,6 +67,22 @@ graph LR
     B --> C{D'Artagnan überlegt<br>Kann ich helfen?}
     C -->|na klar| D[Du bist glücklich]
     C -->|ich versuchs| D
+```
+- Gantt-Diagramme
+```mermaid
+gantt
+    title Urlaubsplanung Sommer 2015
+    dateFormat  DD.MM.YYYY
+
+    section Urlaub1
+    Alpen1               :alpen1     , 01.07.2015     , 7d
+    Alpen2               :alpen2     , after alpen1   , 7d
+
+    section Urlaub/Ferien
+    Alpen Hüttentour     :alpen3     , after alpen2     , 6d
+    Sachsen              :sachsen    , after alpen3 , 3d
+    Ferienende Schule    :holend     , 27.08.2015     , 1d
+    Ötztal               :alpen4     , after sachsen    , 5d
 ```
 
 ### Überschrift Ebene 3
@@ -103,6 +114,20 @@ Head1 | Head2 | Head3
 ----|----|----
 Column1 | Column2 | Column3
 
+Und für ganz strukturierte Leute Checklisten:
+- **Aufgabenliste**
+    - [OFFEN] - Aufgabe
+    - [LATE] - Aufgabe
+    - [RUNNING] - Aufgabe
+    - [BLOCKED] - Aufgabe
+    - [WARNING] - Aufgabe
+    - [DONE] - Aufgabe
+
+- **Testergebnisse**
+    - [TESTOPEN] - Testergebnis
+    - [FAILED] - Testergebnis
+    - [PASSED] - Testergebnis
+
 ## Referenzen
 - Die Markdown-Syntax orientiert sich an [http://daringfireball.net/projects/markdown/syntax](http://daringfireball.net/projects/markdown/syntax)
 - Die  Syntax der Prozess-Diagramme folgt http://knsv.github.io/mermaid/flowchart.html
@@ -111,15 +136,7 @@ Column1 | Column2 | Column3
 
 </textarea>
 
-    </div>
-
-<!-- yaio-explorer -->
-<script src="js/jmat.js"></script>
-<script src="js/yaio-editorservice.js"></script>
-<script src="js/yaio-baseservice.js"></script>
-<script src="js/yaio-layout.js"></script>
-<script src="js/yaio-formatter.js" type="text/javascript"></script>
-<script src="js/yaio-markdowneditor.js" type="text/javascript"></script>
+</div>
 
 <!-- Tooltip -->
 <script type="text/javascript">
@@ -134,8 +151,11 @@ Column1 | Column2 | Column3
      // set preview-content
      $( "#wysiwhg-preview" ).html(descHtmlMarked);
 
-    // Syntaxhightlighter highlightjs
-    hljs.initHighlightingOnLoad();
+     // format markdown-extension
+     var flgDoMermaid = formatDescBlock("#wysiwhg-preview");
+     if (flgDoMermaid) {
+         formatMermaidGlobal();
+     }
 </script>
 
 </body>

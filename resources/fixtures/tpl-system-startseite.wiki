@@ -36,10 +36,10 @@ Aber schauen wir im Detail, was "Le petit D'Artagngan 3D" nun so alles bietet:
     - **Projektexplorer zur Visualisierung und einfachen Navigation innerhalb der Daten**
     - **zweckmäßige Editoren** für die verschiedenen Informationen (Aufgaben, Konzepte...)
 - **hilfreiche Features in der GUI integriert**
-    - **Markdown als Dokumentationsformat** mit speziellen Erweiterungen für **Prozess- und Sequenz-Diagramme**
+    - **Markdown als Dokumentationsformat** mit speziellen Erweiterungen für **Prozess- und Sequenz-Diagramme, sowie Mindmaps und Checklisten**
     - **W**hat**Y**ou**S**ee**I**s**W**hat**Y**ou**G**et-Editoren, Vorschau-Funktionen
     - Volltextsuche, Gantt-Ansicht
-    - Exporter und Importer für verschiedene Formate (Mindmap, Excel, Wiki, Html, Txt, Jira, ICal...)
+    - Exporter und Importer für verschiedene Formate (Mindmap, Excel, Wiki, Html, Txt, Jira, ICal, Checklisten...)
     - für moderne Browser wie Google-Chrome: **Vorlese-Funktion, Diktat-Funktion**
 - **Komponenten**
     - eigener Server von Kommandozeile aus startbar (Spring Boot, Jetty)
