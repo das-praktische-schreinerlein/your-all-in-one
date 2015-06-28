@@ -1,6 +1,6 @@
 # Changelog
 
-## Changelog for release: feature-YAIO2118-improvements-201505
+## Changelog for release: feature-YAIO2118-improvements-201505-RELEASE
 - **GUI(YAIO2124)**
     - Link für Auswahl des Ganttbereichs Plan/Ist für Masternode(YAIO2133)
 - **Code-Verbesserungen(YAIO2125)**

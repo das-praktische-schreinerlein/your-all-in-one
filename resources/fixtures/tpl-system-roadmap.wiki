@@ -143,7 +143,7 @@ Resume: Also, für jeden die passende Version, damit er sich überall und in jed
 ** **INFO - Der Blick zurück...**                                     [DocLayout: DIV,changelog,Chnagelog,]                                                
 # Changelog
 
-## Changelog for release: feature-YAIO2118-improvements-201505
+## Changelog for release: feature-YAIO2118-improvements-201505-RELEASE
 - **GUI(YAIO2124)**
     - Link für Auswahl des Ganttbereichs Plan/Ist für Masternode(YAIO2133)
 - **Code-Verbesserungen(YAIO2125)**
