@@ -1,0 +1,47 @@
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Collaboration
+ *
+ * <h4>FeatureDescription:</h4>
+ *     software for projectmanagement and documentation
+ * 
+ * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category collaboration
+ * @copyright Copyright (c) 2014, Michael Schreiner
+ * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+window.Yaio = {};
+window.YaioAppBase = function() {
+    'use strict';
+
+    // my own instance
+    var me = JsHelferlein.AppBase(YaioAppBaseConfig());
+
+    me._init = function () {
+        me._configureDefaultServices();
+    };
+    
+    me._configureDefaultServices = function() {
+        me.configureService("YaioBase", function() { return Yaio.BaseService(me); });
+        me.configureService("YaioLayout", function() { return Yaio.LayoutService(me); });
+        me.configureService("YaioEditor", function() { return Yaio.EditorService(me); });
+        me.configureService("YaioFormatter", function() { return Yaio.FormatterService(me); });
+        me.configureService("YaioMarkdownEditor", function() { return Yaio.MarkdownEditorService(me); });
+        me.configureService("YaioNodeData", function() { return Yaio.NodeDataService(me); });
+        me.configureService("YaioNodeDataRender", function() { return Yaio.NodeDataRenderService(me); });
+        me.configureService("YaioNodeGanttRender", function() { return Yaio.NodeGanttRenderService(me); });
+        me.configureService("YaioExplorerAction", function() { return Yaio.ExplorerActionService(me); });
+        me.configureService("YaioExplorerTree", function() { return Yaio.ExplorerTreeService(me); });
+        me.configureService("YaioExportedData", function() { return Yaio.ExportedDataService(me); });
+    };
+
+    // init all
+    me._init();
+
+    return me;
+};

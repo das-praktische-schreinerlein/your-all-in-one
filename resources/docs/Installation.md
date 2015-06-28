@@ -34,13 +34,12 @@ run installer on new vagrantbox
 
 call your browser: http://IpOfTheVagrantBox:8666/demo.html
     
-## C) Install from git (windows or linux with existing java1.7, maven, nodejs 10.XX)
+## C) Install from git (windows or linux with existing java1.7, maven)
 
 ### Requires
 - for building
     - java 1.7
     - maven
-    - node
     - IDE (I built it with eclipse)
 - to use, take a look at http://www.your-all-in-one.de/yaio/static/lepetithow#h3_YAIO716
     - java
@@ -59,11 +58,6 @@ Rechte
 
     chmod 755 sbin -R
     mkdir logs
-
-install karma local
-
-    npm install karma --save-dev
-    npm install karma-phantomjs-launcher karma-jasmine karma-qunit karma-chrome-launcher karma-firefox-launcher plugin --save-dev
 
 ### Step2: baseconfigure and build
 config/applicationContext.xml

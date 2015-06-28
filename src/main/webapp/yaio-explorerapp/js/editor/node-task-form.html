@@ -1,0 +1,112 @@
+        <!-- 
+        *************************
+            Form: edit/create TaskNode
+        ************************* 
+        -->
+        <div class="hidden container-yaio-editor-tasknode" id="containerFormYaioEditorTaskNode">
+          <h4 translate="editor.formTaskNode.ue">Task bearbeiten:</h4>
+          <p translate="editor.formTaskNode.intro" class="msg-form-intro" id="nodeFormTaskNodeIntro"></p>
+
+          <form with-errors class="hidden" id="nodeFormTaskNode" name="nodeFormTaskNode">
+            <!-- simulate hiddenfield -->
+            <input class="hidden" type="text" name="sysUID" ng-model="nodeForEdit.sysUID" id="inputSysUIDTaskNode" required ng-change="">
+            <input class="hidden" type="text" name="className" ng-model="nodeForEdit.className" id="inputClassNameTaskNode" required ng-change="">
+            <input class="hidden" type="text" name="mode" ng-model="nodeForEdit.mode" id="inputModeTaskNode" required ng-change="">
+
+            <fieldset>
+              <legend translate="editor.common.legend.Stammdaten">Stammdaten</legend>
+              
+              <!-- show textfield -->
+              <label for="name" translate="editor.common.label.name">Titel</label> 
+              <input type="text" name="name" class="inputtype_name" ng-model="nodeForEdit.name" id="inputNameTaskNode" required ng-change=""> 
+
+              <!-- show select -->
+              <label for="type" translate="editor.formTaskNode.label.type">Status</label> 
+              <select type="text" name="type" class="inputtype_type" ng-model="nodeForEdit.type" id="inputTypeTaskNode" required ng-change="doTypeChanged()"> 
+                  <option value="" translate="common.select.pleaseselect">Bitte wählen
+                  <option value="UNKNOWN" translate="common.select.TaskNodeType.UNKNOWN">Ungeplant
+                  <option value="OFFEN" translate="common.select.TaskNodeType.OFFEN">Offen
+                  <option value="LATE" translate="common.select.TaskNodeType.LATE">Start verspätet
+                  <option value="RUNNING" translate="common.select.TaskNodeType.RUNNING">in Bearbeitung
+                  <option value="WARNING" translate="common.select.TaskNodeType.WARNING">Ende überschritten
+                  <option value="ERLEDIGT" translate="common.select.TaskNodeType.ERLEDIGT">Erledigt
+                  <option value="VERWORFEN" translate="common.select.TaskNodeType.VERWORFEN">Verworfen
+              </select> 
+
+              <fielderrors for="name"></fielderrors>
+              <fielderrors for="type"></fielderrors>
+            </fieldset>
+
+            <fieldset>
+              <legend translate="editor.common.legend.Plan">Plan</legend>
+              
+              <!-- show textfield -->
+              <label for="planAufwand" translate="editor.common.label.planAufwand">Aufwand</label> 
+              <input type="text" placeholder="x.x"  name="planAufwand" class="inputtype_aufwand" ng-model="nodeForEdit.planAufwand" id="inputPlanAufwandTaskNode" ng-change="">
+
+              <!-- show textfield -->
+              <label for="planStart" translate="editor.common.label.planStart">Start</label> 
+              <input type="text" placeholder="dd.mm.jjjj" name="planStart" pattern="\d{2}\.\d{2}\.\d{4}"  maxsize="10" class="inputtype_date" ng-model="nodeForEdit.planStart" id="inputPlanStartTaskNode" ng-change=""> 
+
+              <!-- show textfield -->
+              <label for="planEnde" translate="editor.common.label.planEnde">Ende</label> 
+              <input type="text" placeholder="dd.mm.jjjj" name="planEnde" pattern="\d{2}\.\d{2}\.\d{4}"  maxsize="10" class="inputtype_date" ng-model="nodeForEdit.planEnde" id="inputPlanEndeTaskNode" ng-change=""> 
+
+              <fielderrors for="planAufwand"></fielderrors>
+              <fielderrors for="planStart"></fielderrors>
+              <fielderrors for="planEnde"></fielderrors>
+            </fieldset>
+
+            <fieldset>
+              <legend id="legendIstTaskForm"><span translate="editor.common.legend.Ist">Ist</span></legend>
+              <div class="formrow filter_IstTaskNode flg-hide-if-inputvalue-empty" id="formrow_inputIstTaskNode" inputids="inputIstAufwandTaskNode,inputIstStartTaskNode,inputIstEndeTaskNode,inputIstStandTaskNode">
+                <!-- show textfield -->
+                <label for="istAufwand" translate="editor.common.label.istAufwand">Aufwand</label> 
+                <input type="text" name="istAufwand" placeholder="x.x"  class="inputtype_aufwand" ng-model="nodeForEdit.istAufwand" id="inputIstAufwandTaskNode" ng-change=""> 
+
+                <!-- show textfield -->
+                <label for="istStart" translate="editor.common.label.istStart">Start</label> 
+                <input type="text" name="istStart" placeholder="dd.mm.jjjj" pattern="\d{2}\.\d{2}\.\d{4}"  maxsize="10" class="inputtype_date" ng-model="nodeForEdit.istStart" id="inputIstStartTaskNode" ng-change="">
+  
+                <!-- show textfield -->
+                <label for="istEnde" translate="editor.common.label.istEnde">Ende</label> 
+                <input type="text" name="istEnde" placeholder="dd.mm.jjjj" pattern="\d{2}\.\d{2}\.\d{4}"  maxsize="10" class="inputtype_date" ng-model="nodeForEdit.istEnde" id="inputIstEndeTaskNode" ng-change=""> 
+  
+                <!-- show textfield -->
+                <label for="istStand" translate="editor.common.label.istStand">Stand</label> 
+                <input type="number" min="0" max="100" placeholder="x.x" name="istStand" class="inputtype_stand" ng-model="nodeForEdit.istStand " id="inputIstStandTaskNode" ng-change="doIstStandChanged()"> 
+  
+                <fielderrors for="istAufwand"></fielderrors>
+                <fielderrors for="istStart"></fielderrors>
+                <fielderrors for="istEnde"></fielderrors>
+                <fielderrors for="istStand"></fielderrors>
+              </div>
+            </fieldset>
+            <script type="text/javascript">
+             // toggler for optional, empty elements
+             jMATService.getPageLayoutService().appendFormrowToggler("legendIstTaskForm", "filterIstTaskForm", "filter_IstTaskNode", "&nbsp;");
+            </script>
+
+            <fieldset>
+              <button ng-click="save('nodeFormTaskNode')" ng-disabled="nodeFormTaskNode.$invalid" class="btn btn-primary"translate="common.buttonSave">Save</button>
+              <button ng-click="discard()" class="btn btn-primary" translate="common.buttonDiscard">Discard</button>
+            </fieldset>
+
+            <fieldset>
+              <legend id="legendDescTaskForm"><span translate="editor.common.legend.Details">Details</span></legend>
+              <div class="formrow filter_DescTaskNode flg-hide-if-inputvalue-empty" id="formrow_inputDescTaskNode" inputids="inputNodeDescTaskNode">
+              
+                <!-- show textfield -->
+                <label for="nodeDesc" translate="editor.common.label.nodeDesc">Details</label> 
+                <textarea name="nodeDesc" class="textareatype_nodeDesc" ng-model="nodeForEdit.nodeDesc" id="inputNodeDescTaskNode" ng-change=""></textarea> 
+                <fielderrors for="nodeDesc"></fielderrors>
+                <fielderrors for="nodeDesc"></fielderrors>
+                <pre id="editorInputNodeDescTaskNode" class="pre_nodeDesc_editor"></pre> 
+              </div>
+            </fieldset>
+            <script type="text/javascript">
+            // toggler for optional, empty elements
+             jMATService.getPageLayoutService().appendFormrowToggler("legendDescTaskForm", "filterDescTaskForm", "filter_DescTaskNode", "&nbsp;");
+            </script>
+          </form>
+        </div>

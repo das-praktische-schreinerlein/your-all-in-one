@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+  <title>Sprachsteuerung</title>
+
+  <!-- styles: yaio-explorer -->
+  <link rel="stylesheet" type="text/css" media="all" href="../dist/yaio-support-full.supportversion.css" />
+
+  <!-- scripts: vendors -->
+  <script  type="text/javascript" charset="UTF-8" src="../dist/vendors-full.vendorversion.js"></script>
+
+  <!-- scripts: yaio-support -->
+  <script  type="text/javascript" charset="UTF-8" src="../dist/yaio-support-full.supportversion.js"></script>
+<style>
+#info {
+    font-size: 16px;
+}
+
+#div_start {
+    float: right;
+}
+
+#results {
+    font-size: 14px;
+    font-weight: bold;
+    border: 1px solid #ddd;
+    padding: 15px;
+    text-align: left;
+    min-height: 150px;
+}
+
+#start_button {
+    border: 0;
+    background-color: transparent;
+    padding: 0;
+}
+
+.interim {
+    width: 100%;
+    color: gray;
+    clear: both;
+    padding-top: 3px;
+}
+
+.final {
+    width: 100%;
+    clear: both;
+    color: black;
+    padding-top: 3px;
+}
+
+.button {
+    display: none;
+}
+</style>
+<style>
+a.c1 {
+    font-weight: normal;
+}
+</style>
+
+</head>
+<body>
+    <div class="blockContent" id="blockContent">
+        <div class="content" id="content">
+            <div class="txt-content" id="txt-content">
+                <div class="box jsh-hide-if-speechrecognition">
+                    <div id="info">Leider unterstützt Ihr Browser keine SpracheGenerierung :-(
+                    </div>
+                </div>
+                <div class="box jsh-show-if-speechrecognition">
+                    <div id="info">
+                        <p id="info-start-sr">Klicke auf das Microfon und spreche deinen Text.</p>
+                        <p id="info-speak-now-sr" style="display: none">Und los: Sprich !!!</p>
+                        <p id="info-no-speech-sr" style="display: none">
+                            Mmhh. Nichts erkannt. <a href="https://www.google.com/support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892">Mikrofon-Einstellungen</a>?
+                        </p>
+                        <p id="info-no-microphone-sr" style="display: none">
+                            Mmhh. Kein Mikrofon gefunden. Sind die <a href="https://www.google.com/support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892">Einstellungen</a> korrekt?
+                        </p>
+                        <p id="info-allow-sr" style="display: none">Klicke auf den "Erlauben"-Button im Seitenkopf.</p>
+                        <p id="info-denied-sr" style="display: none">Wenn du die Erlaubnis nicht gibst, funktioniert das ganze nicht.</p>
+                        <p id="info-blocked-sr" style="display: none">Zugriff auf das Mikrofon in gesperrt. Ändere dies in chrome://settings/contentExceptions#media-stream</p>
+                        <p id="info-upgrade-sr" style="display: none">
+                            Oopps. Die Web Speech API wird von diesem Browser nicht unterstützt. Upgrade to <a href="//www.google.com/chrome">Chrome 25</a> oder höher.
+                        </p>
+                    </div>
+                    <div id="div_start">
+                        <button id="button-start-sr">
+                            <img alt="Start" id="status-img-sr" src="https://www.google.com/intl/en/chrome/assets/common/images/content/mic.gif">
+                        </button>
+                    </div>
+                    <div id="results">
+                        <span class="interim" id="interim-span-sr"></span>
+                        <textarea class="final" id="final-textarea-sr" cols="30" rows="5"></textarea>
+                    </div>
+                    <input type="button" id="button-stop-sr" value="&Uuml;bernehmen">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    // configure App
+    window.jshAppBase = JsHelferlein.AppBase();
+    jshAppBase.publishDetectorStyles();
+    
+    // configure SpeechRecognition
+    var speechRecognitionHelper = jshAppBase.get("SpeechRecognitionHelper");
+    speechRecognitionHelper.initUi();
+    window.onbeforeunload = function (e) {
+        speechRecognitionHelper.stopRecognition();
+    };
+
+    // init
+    speechRecognitionHelper.initSrcFromOpener();
+</script>
+</body>
+</html>

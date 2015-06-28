@@ -1,0 +1,153 @@
+/*! yaio - v0.1.0 - 2015-07-27 *//*****************************************
+ *****************************************
+ * base
+ *****************************************
+ *****************************************/
+body {
+    background: none;
+/**
+    -webkit-transform: scale(0.9);
+    -moz-transform: scale(0.9);
+    -ms-transform: scale(0.9);
+    -o-transform: scale(0.9);
+    transform: scale(0.9);    
+    transform-origin: -10% -10%;
+**/
+    width: 1200px;
+}
+
+.page-div-center {
+    width: 100%;
+}
+.pageContent {
+    width: 100%;
+}
+#div_full {
+    width: 1150px !important;
+}
+@page { 
+    size:landscape; 
+}
+
+.blockPageFooter {
+    display: none;
+}
+
+/*****************************************
+ *****************************************
+ * explorer-elements
+ *****************************************
+ *****************************************/
+#menueTop {
+    display: none;
+}
+.box-portdesc-todonext {
+    display: none;
+}
+
+#containerInfoCommands {
+    display: none;
+}
+#containerNodeCommands {
+    display: none;
+}
+#containerTreeCommands {
+    display: none;
+}
+.button {
+    display: none;
+}
+.tabToggler {
+    display: none;
+}
+
+table#tree tbody tr td.container_field.fieldtype_actions, 
+table#masterTable thead tr#tab_header th:first-child + th + th +th,
+table#masterTable tbody tr td:first-child + td + td + td {
+    display: none;
+}
+
+.fieldtype_descToggler {
+    display: none;
+}
+
+.command-center {
+    display: none;
+}
+
+.fancytree-icon {
+    display: none;
+}
+.container-commands-desc {
+    display: none;
+}
+
+#searchcommand {
+    display: none;
+}
+
+
+/*****************************************
+ *****************************************
+ * export-elements
+ *****************************************
+ *****************************************/
+#menueFooter {
+    display: none;
+}
+.node-data-block {
+    /* show all whitespaces */
+    white-space: pre-wrap;
+    overflow: visible;
+}
+table.fancytree-ext-table tbody tr.fancytree-active, table.fancytree-ext-table.fancytree-treefocus tbody tr.fancytree-active {
+    outline: none;
+}
+table.fancytree-ext-table tbody tr.fancytree-active {
+    background-color: none;
+    outline: none;
+}
+table.fancytree-ext-table.fancytree-treefocus tbody tr.fancytree-active {
+    background-color: node;
+    outline: none;
+}
+
+
+#wysiwhg-box, #preview-box, div [class*="ui-dialog"], .ui-widget-overlay {
+    display: none;
+}
+
+
+/*****************************************
+ *****************************************
+ * formatter-elements
+ *****************************************
+ *****************************************/
+pre {
+    max-height: none;
+    /* show all whitespaces */
+    white-space: pre-wrap;
+    overflow: visible;
+}
+
+div.mermaid-source {
+    display: none;
+}
+div.yaiomindmap {
+    display: none !important;
+}
+div.yaiomindmap-source {
+    display: block !important;
+}
+div.servicesmermaid {
+    display: none;
+}
+div.servicesyaiomindmap {
+    display: none;
+}
+
+.container-toc-desc {
+}
+#sidebartoc {
+    display: none !important;
+}

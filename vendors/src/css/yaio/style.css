@@ -1,0 +1,1476 @@
+/**
+ * <h4>FeatureDomain:</h4>
+ *     WebApp
+ *
+ * <h4>FeatureDescription:</h4>
+ *     Teil der MatWeb-Framework Demo-Anwendung<br>
+ *     Basis-Styles fuer die Desktop-Version (Grund-Layout, Steuerungs-Styles, 
+ *     Effekte usw.)
+ * 
+ * @author Michael Schreiner <ich@michas-ausflugstipps.de>
+ * @category MatWeb-WebAppFramework-Demo
+ * @copyright Copyright (c) 2013, Michael Schreiner
+ * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+/*
+########################
+##
+## Base
+##
+########################
+*/
+td {
+    font-size: 9px;
+    color: black;
+}
+
+th {
+    font-size: 9px;
+    color: black;
+}
+
+h1 {
+    font-size: 16px;
+    color: white
+}
+
+h2 {
+    font-size: 15px;
+    color: black
+}
+
+option {
+    font-size: 10px;
+}
+
+.optionfavorite {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.optionactive {
+    font-size: 14px;
+    font-weight: bold;
+}
+.optionnorm {
+    font-size: 10px;
+    font-weight: normal;
+}
+
+input:active, input:focus, select:active, select:focus, textarea:active, textarea:focus {
+    background-color: #DEE9EF;
+}
+textarea, input, select {
+    border: 1px solid #8CACD3;
+    border-radius: 4px;
+    margin-bottom: 2px;
+}
+
+.clearboth {
+    clear: both;
+}
+/*
+########################
+##
+## Basis
+##
+########################
+*/
+
+/* Javascript verfuegbar */
+.display-if-js-inline {
+    display: none;
+}
+
+.display-if-js-block {
+    display: none;
+}
+
+/* Browser bietet GeoLocation-API */
+.display-if-jsgeo-inline {
+    display: none;
+}
+
+.display-if-jsgeo-block {
+    display: none;
+}
+
+/* Browser bietet SpeechRecognition-API */
+.display-if-jsspeechrecognition-inline {
+    display: none;
+}
+
+.display-if-jsspeechrecognition-block {
+    display: none;
+}
+
+/* Device ist Desktop-Rechner */
+.display-if-device-desktop-block {
+    display: block;
+}
+
+.display-if-device-desktop-inline {
+    display: inline;
+}
+
+/* Device ist NonDesktop-Rechner (Mobile. Pad...) */
+.display-if-device-nondesktop-block {
+    display: none;
+}
+
+.display-if-device-nondesktop-inline {
+    display: none;
+}
+
+/* Aktive Version (Desktop, Mobile) */
+.display-if-activeversion-desktop-block {
+    display: block;
+}
+
+.display-if-activeversion-desktop-inline {
+    display: inline;
+}
+
+.display-if-activeversion-mobile-block {
+    display: none;
+}
+
+.display-if-activeversion-mobile-inline {
+    display: none
+}
+
+/* Flags */
+.flg-display-loading {
+
+}
+
+.flg-icontext {
+
+}
+
+.flg-textonly {
+
+}
+
+.flg-icononly {
+
+}
+
+.display-if-browser-old-block {
+    display: none;
+}
+
+.display-if-browser-modern-block {
+    display: block;
+}
+
+/* Ausblenden */
+.hide-if-bookversion {
+}
+
+.hide-if-bookversion-block {
+}
+
+.hide-if-bookversion-inline {
+}
+
+.hide-if-printversion {
+}
+
+.hide-if-printversion-block {
+}
+
+.hide-if-printversion-inline {
+}
+
+/*
+########################
+## Basis: Defaults
+########################
+*/
+body {
+    background: url(./images/bg-berge3.jpg);
+    background-repeat: repeat-x;
+    background-color: #BDBDAD;
+    background-attachment: fixed;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    text-align: left;
+    color: black;
+}
+
+a {
+    color: #0645AD;
+    text-decoration: none;
+}
+
+.button {
+    height: 25px;
+    width: 150px;
+    padding: 2px;
+    border: 2px solid white; /*#336699;*/
+    border-radius: 4px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    background-color: #8CACD3;
+    background: #8cacd3; /* Old browsers */
+    background: -moz-linear-gradient(top, #8cacd3 0%, #2989d8 50%, #468ec9 51%, #7db9e8 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#8cacd3), color-stop(50%,#2989d8), color-stop(51%,#468ec9), color-stop(100%,#7db9e8)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #8cacd3 0%,#2989d8 50%,#468ec9 51%,#7db9e8 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #8cacd3 0%,#2989d8 50%,#468ec9 51%,#7db9e8 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #8cacd3 0%,#2989d8 50%,#468ec9 51%,#7db9e8 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #8cacd3 0%,#2989d8 50%,#468ec9 51%,#7db9e8 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8cacd3', endColorstr='#7db9e8',GradientType=0 ); /* IE6-9 */
+}
+
+.fx-bg-button-jump2search {
+    color: #0645AD;
+    background: #fcf1b5; /* Old browsers */
+    background: -moz-radial-gradient(center, ellipse cover,  #fcf1b5 31%, #fefcea 87%); /* FF3.6+ */
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(31%,#fcf1b5), color-stop(87%,#fefcea)); /* Chrome,Safari4+ */
+    background: -webkit-radial-gradient(center, ellipse cover,  #fcf1b5 31%,#fefcea 87%); /* Chrome10+,Safari5.1+ */
+    background: -o-radial-gradient(center, ellipse cover,  #fcf1b5 31%,#fefcea 87%); /* Opera 12+ */
+    background: -ms-radial-gradient(center, ellipse cover,  #fcf1b5 31%,#fefcea 87%); /* IE10+ */
+    background: radial-gradient(ellipse at center,  #fcf1b5 31%,#fefcea 87%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcf1b5', endColorstr='#fefcea',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+
+.fx-bg-button-jump2details {
+    color: #0645AD;
+    background: #fcf1b5; /* Old browsers */
+    background: -moz-radial-gradient(center, ellipse cover,  #fcf1b5 31%, #fefcea 87%); /* FF3.6+ */
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(31%,#fcf1b5), color-stop(87%,#fefcea)); /* Chrome,Safari4+ */
+    background: -webkit-radial-gradient(center, ellipse cover,  #fcf1b5 31%,#fefcea 87%); /* Chrome10+,Safari5.1+ */
+    background: -o-radial-gradient(center, ellipse cover,  #fcf1b5 31%,#fefcea 87%); /* Opera 12+ */
+    background: -ms-radial-gradient(center, ellipse cover,  #fcf1b5 31%,#fefcea 87%); /* IE10+ */
+    background: radial-gradient(ellipse at center,  #fcf1b5 31%,#fefcea 87%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcf1b5', endColorstr='#fefcea',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+
+.fx-bg-button-sitenav {
+    background: #8cacd3; /* Old browsers */
+    background: -moz-linear-gradient(top, #8cacd3 0%, #2989d8 50%, #468ec9 51%, #7db9e8 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#8cacd3), color-stop(50%,#2989d8), color-stop(51%,#468ec9), color-stop(100%,#7db9e8)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #8cacd3 0%,#2989d8 50%,#468ec9 51%,#7db9e8 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #8cacd3 0%,#2989d8 50%,#468ec9 51%,#7db9e8 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #8cacd3 0%,#2989d8 50%,#468ec9 51%,#7db9e8 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #8cacd3 0%,#2989d8 50%,#468ec9 51%,#7db9e8 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8cacd3', endColorstr='#7db9e8',GradientType=0 ); /* IE6-9 */
+}
+
+.fx-bg-change-content {
+    background-color: #FCEFB7; /*#FFFFCC;*/
+    background: #fcf1b5; /* Old browsers */
+    background: -moz-linear-gradient(left, #fcf1b5 0%, #fefcea 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%, #fcf1b5), color-stop(100%, #fefcea) ); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(left, #fcf1b5 0%, #fefcea 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(left, #fcf1b5 0%, #fefcea 100%);  /* Opera 11.10+ */
+    background: -ms-linear-gradient(left, #fcf1b5 0%, #fefcea 100%); /* IE10+ */
+    background: linear-gradient(to right, #fcf1b5 0%, #fefcea 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(  startColorstr='#fcf1b5', endColorstr='#fefcea', GradientType=1 ); /* IE6-9 */
+}
+
+.fx-bg-pageaction {
+    background-color: #F3F7FB; /*#FCEFB7; /*#FFFFCC;*/
+    background: #F3F7FB; /* Old browsers */
+    background: -moz-linear-gradient(left, #ffffff 0%, #dee9ef 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%, #ffffff), color-stop(100%, #dee9ef) ); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(left, #ffffff 0%, #dee9ef 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(left, #ffffff 0%, #dee9ef 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(left, #ffffff 0%, #dee9ef 100%); /* IE10+ */
+    background: linear-gradient(to right, #ffffff 0%, #dee9ef 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(  startColorstr='#ffffff', endColorstr='#dee9ef', GradientType=1 ); /* IE6-9 */
+}
+
+.fx-bg-typename {
+    background-color: #FCEFB7; /*#FFFFCC;*/
+    background: #fcf1b5; /* Old browsers */
+    background: -moz-linear-gradient(left, #fcf1b5 0%, #ffffff 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%, #fcf1b5), color-stop(100%, #ffffff) ); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(left, #fcf1b5 0%, #ffffff 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(left, #fcf1b5 0%, #ffffff 100%);  /* Opera 11.10+ */
+    background: -ms-linear-gradient(left, #fcf1b5 0%, #ffffff 100%); /* IE10+ */
+    background: linear-gradient(to right, #fcf1b5 0%, #ffffff 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(  startColorstr='#fcf1b5', endColorstr='#ffffff', GradientType=1 ); /* IE6-9 */
+}
+
+/*
+########################
+## Basis Box: allgmein
+########################
+*/
+.box {
+    clear: both;
+    float: left;
+    border: 2px solid #8CACD3; /*#FCEFB7; #336699;*/
+    border-radius: 10px;
+    width: 100%;
+    padding: 3px;
+    padding: 5px;
+    background-color: white; /* #FFFFCCwhite:*/
+    margin-top: 3px;
+    text-padding: 3px;
+    text-align: left;
+}
+
+.boxline {
+    clear: both;
+    float: left;
+    width: 100%;
+    margin-top: 1px;
+    margin-bottom: 1px;
+}
+
+.boxline-ue {
+    float: left;
+    font-size: 14px;
+    color: red;
+    font-weight: bold;
+    text-align: center;
+}
+.boxline-ue-startseite{
+    text-align: left;
+}
+.boxline-ue-search {
+    text-align: left;
+}
+
+.boxline-ue2 {
+    float: left;
+    font-size: 14px;
+    color: black;
+    font-weight: bold;
+    page-break-after: avoid;
+    page-break-inside: avoid;
+}
+
+.boxline-uecenter {
+    text-align: center;
+}
+
+.boxline-ue2center {
+    text-align: center;
+}
+
+
+/*
+########################
+# Loading
+########################
+*/
+.box-loading {
+    height: 150px;
+    width: 582px;
+    border: 2px solid #FF9933; /*#FCEFB7;*/
+    border-radius: 2px;
+    text-align: center;
+    background-color: white;
+    position: absolute;
+    top: 150px;
+    position: fixed;
+    font-weight: bold;
+}
+
+.box-loading-gif {
+    position: relative;
+    top: 50px;
+}
+
+.box-loading-msg {
+    position: relative;
+    top: 90px;
+    display: block;
+}
+
+.box-actioncontextmenue  {
+    display: none;
+    position: absolute;
+    float: right;
+    width: 200px;
+    z-index: 9;
+}
+
+/*
+########################
+# Warning
+########################
+*/
+.box-warning {
+    border: 2px solid red; /*#FCEFB7;*/
+    border-radius: 2px;
+    color: red;
+}
+
+
+/*
+########################
+# Toggler
+########################
+*/
+.blockToggler {
+   float: right;
+   display: block;
+}
+
+.togglecontainer {
+    float: left;
+}
+
+.togglecontainer-formfilter {
+    width: 100%;
+}
+
+.icon-blocktoggler {
+    border: none;
+    width: 19px;
+}
+
+
+.formrowContainer {
+    padding: 3px;
+}
+.formrowContainer {
+    margin-top: 3px;
+    border: 1px solid grey;
+    width: 98%;
+    float: left;
+}
+.formrowToggler {
+   display: inline;
+}
+
+.icon-formrowtoggler {
+    border: none;
+    width: 12px;
+}
+.togglecontainerSearchForm {
+    width: 100%;
+}
+
+/*
+##################
+## FormReset
+##################
+*/
+.formrowResetter {
+    display: inline;
+    float: right;
+    width: 15px;
+}
+
+.blockFormrowReset {
+
+}
+
+.icon-formrowreset {
+    border: none;
+    width: 15px;
+}
+
+/* immer ausschalten wegen problemen mit onchange */
+#blockFormRowReset4formrow_THEMA {
+    display: none
+}
+
+
+/*
+##################
+## Slider
+##################
+*/
+.divblockRangeSlider {
+    clear: both; 
+    width:  252px;
+    float: left;
+    display: inline;
+    margin-top: 6px;
+    margin-bottom: 4px;
+}
+
+.rangeSlider {
+    width: 250px;
+    font-size: 12px;
+}
+
+.divblockNumberRangeSlider {
+    
+}
+
+.numberRangeSlider {
+    
+}
+
+.divblockSelectRangeSlider {
+    width: 302px;
+}
+
+.selectRangeSlider {
+    width: 300px;
+}
+
+/*
+########################
+## Basis Box: Detailseite
+########################
+*/
+.box-detail {
+
+}
+
+.boxlinearea-typename{
+    float: left;
+    font-size: 14px;
+    color: red;
+    font-weight: bold;
+    width: 18%;
+}
+
+.boxlinearea-typename-tour {
+    width: 18%;
+}
+.boxlinearea-typename-image {
+    width: 10%;
+}
+.boxlinearea-typename-kategorie {
+    width: 13%;
+}
+.boxlinearea-typename-location {
+    width: 14%;
+}
+.boxlinearea-typename-info {
+    width: 10%;
+}
+
+.boxlinearea-name {
+    float: left;
+    font-size: 14px;
+    color: red;
+    font-weight: bold;
+    width: 90%;
+}
+
+.boxlinearea-detailname {
+    width: 75%;
+}
+
+.boxlinearea-detailname-tour {
+    width: 75%;
+}
+.boxlinearea-detailname-image {
+    width: 83%;
+}
+.boxlinearea-detailname-kategorie {
+    width: 80%;
+}
+.boxlinearea-detailname-location {
+    width: 79%;
+}
+.boxlinearea-detailname-info {
+    width: 83%;
+}
+
+.boxlinearea-todoicons {
+    width: 6%;
+    float: right;
+    vertical-align: middle;
+    text-align: right;
+}
+
+.boxlinearea-nextlink {
+    width: 20%;
+    float: right;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.a-boxname {
+    color: red;
+    font-size: 14px;
+}
+
+.a-boxname-id {
+    padding-left: 4px;
+    display: none;
+}
+
+.boxline .label {
+    float: left;
+    width: 20%;
+}
+
+.boxline .value {
+    float: left;
+    width: 80%;
+}
+
+.boxline-verortung {
+
+}
+
+.a-verortung {
+    color: #0645AD;
+}
+
+.boxblock {
+    clear: both;
+    float: left;
+    width: 100%;
+    margin-top: 1px;
+}
+
+.boxblock-text-center {
+    text-align: center;
+}
+
+.boxblock-text-blocksatz {
+    text-align: justify;
+}
+
+.boxblock-data {
+
+}
+
+.area-data-typ {
+    clear: both;
+    float: left;
+    width: 110px;
+}
+
+.area-data-details {
+    float: left;
+}
+
+.innerline {
+    clear: both;
+    float: left;
+    width: 100%;
+    margin-top: 1px;
+    margin-bottom: 1px;
+}
+
+.innerline-label {
+    float: left;
+    width: 25%;
+}
+
+.innerline .label {
+    float: left;
+    width: 25%;
+}
+
+.innerline-value {
+    float: left;
+    width: 75%;
+}
+
+.innerline .value {
+    float: left;
+    width: 75%;
+}
+
+.a-aktion {
+    font-size: 10px;
+    color: #0645AD;
+}
+
+.a-aktion-aktiv {
+    font-weight: bold
+}
+
+.a-aktion-ue-jump2search {
+    color: #0645AD;
+    margin: 2px;
+    /*height: 34px;*/
+    padding: 2px;
+    border: 2px solid #8CACD3; /*#336699;*/
+    border-radius: 4px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.icon-infopopup {
+
+}
+
+.a-detail-links {
+    margin: 2px;
+    /*height: 34px;*/
+    padding: 6px;
+    border: 2px solid #8CACD3; /*#336699;*/
+    border-radius: 4px;
+    text-align: center;
+    font-weight: bold;
+}
+
+
+/*
+########################
+##
+## Basis: Menue
+##
+########################
+*/
+.a-menue-top-norm {
+    font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+}
+
+.a-menue-top-norm-js {
+    font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+}
+
+.a-menue-nav-big-aktiv {
+    font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+}
+
+.a-menue-nav-big-norm {
+    font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    color: white;
+    text-align: center;
+}
+
+.a-menue-nav-big2-aktiv {
+    font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+}
+
+.a-menue-nav-aktiv {
+    font-family: Tahoma, Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    color: red;
+    text-align: left;
+    font-weight: bold;
+}
+
+.a-menue-nav-norm {
+    font-family: Tahoma, Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    color: #0645AD;
+    text-align: left;
+}
+
+.a-menue-nav-aktiv-js {
+    font-family: Tahoma, Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    color: red;
+    text-align: left;
+    font-weight: bold;
+}
+
+.a-menue-nav-norm-js {
+    font-family: Tahoma, Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    color: #0645AD;
+    text-align: left;
+}
+
+.a-menue-nav2-aktiv {
+    font-family: Tahoma, Arial, Helvetica, sans-serif;
+    font-size: 10px;
+    color: red;
+    text-align: right;
+    font-weight: bold;
+}
+
+.a-menue-nav2-norm {
+    font-family: Tahoma, Arial, Helvetica, sans-serif;
+    font-size: 10px;
+    color: #0645AD;
+    text-align: right;
+}
+
+.a-menue {
+    font-family: Tahoma, Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    color: #0645AD;
+    text-align: left;
+}
+
+.a-menue2 {
+    font-family: Tahoma, Arial, Helvetica, sans-serif;
+    font-size: 10px;
+    color: red;
+    text-align: right;
+}
+
+.ue-menue-re {
+    font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    color: white;
+    text-align: center;
+}
+
+.a-support {
+    font-family: Tahoma;
+    font-size: 13px;
+    color: white;
+    text-align: center;
+}
+
+.a-support-re-norm {
+    font-family: Tahoma, Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    color: #0645AD;
+    text-align: left;
+}
+
+.a-favorites-re-norm {
+    font-family: Tahoma, Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    color: #0645AD;
+    text-align: left;
+}
+
+.a-images-re-norm {
+    font-family: Tahoma, Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    color: #0645AD;
+    text-align: left;
+}
+
+/*
+########################
+##
+## Copyright usw.
+##
+########################
+*/
+.txt-copyrights {
+    width: 100%;
+    font-size: 10px;
+    color: black;
+    text-align: center;
+}
+
+.txt-copyrights a {
+    font-size: 10px;
+}
+
+.txt-lastupdate {
+    width: 100%;
+    font-size: 10px;
+    color: black;
+    text-align: center;
+}
+
+.a-lastupdate {
+    font-size: 10px;
+    color: #0645AD;
+}
+
+/*
+########################
+##
+## MouseOver-Fenster
+##
+########################
+*/
+td.mboxinfo {
+    font-size: 12px;
+    font-style: normal;
+    font-weight: bold;
+    color: #FFFFFF;
+    text-decoration: none;
+    background-color: #44AA44;
+}
+
+td.mboxinfoContent {
+    font-size: 12px;
+    font-style: normal;
+    font-weight: normal;
+    color: #000000;
+    text-decoration: none;
+    background-color: #f0fff0;
+}
+
+/*
+########################
+##
+## Page
+##
+########################
+*/
+.pageHead {
+    clear: both;
+    width: 924px;
+    text-align: center;
+    background-color: #3A9428;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.pageContent {
+    clear: both;
+    width: 890px;
+    text-align: left;
+    /*   font-size: 11px;*/
+    color: black
+}
+
+.pageContentPopup {
+    clear: both;
+    width: 550px;
+    text-align: left;
+    /*   font-size: 11px;*/
+    color: black
+}
+
+.blockMenue {
+    float: left;
+    width: 132px;
+    text-align: center;
+}
+
+.blockContent {
+    text-align: left;
+    width: 600px;
+    padding-left: 10px;
+    padding-right: 10px;
+    float: left;
+    display: inline; /* fix IE-Bug */
+}
+
+.blockSupport {
+    float: left;
+    width: 132px;
+    text-align: center;
+}
+
+.blockQRCode {
+    float: right;
+    background: white
+}
+
+.blockPageFooter {
+    clear: both;
+}
+
+/*
+########################
+## Top-Menue
+########################
+*/
+.menueTop {
+    clear: both;
+    text-align: center;
+    padding-bottom: 4px;
+    float: left;
+    display: inline; /* fix IE-Bug */
+    border: 4px solid #8CACD3;
+    border-radius: 2px;
+    background-color: #8CACD3;
+    width: 100%;
+    padding: 3px;
+    padding-bottom: 2px;
+}
+
+.menueTopDummy {
+    display: none;
+}
+
+
+.menueTopBox {
+    clear: both;
+    text-align: center;
+    padding-bottom: 2px;
+    z-index: 21;
+}
+
+ul.ulMenueTop {
+    float: left;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    background-color: #1650B0;
+    background: #1650b0; /* Old browsers */
+    background: -moz-linear-gradient(top, #1650b0 0%, #2989d8 50%, #468ec9 51%, #1650b0 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#1650b0), color-stop(50%,#2989d8), color-stop(51%,#468ec9), color-stop(100%,#1650b0)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #1650b0 0%,#2989d8 50%,#468ec9 51%,#1650b0 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #1650b0 0%,#2989d8 50%,#468ec9 51%,#1650b0 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #1650b0 0%,#2989d8 50%,#468ec9 51%,#1650b0 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #1650b0 0%,#2989d8 50%,#468ec9 51%,#1650b0 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1650b0', endColorstr='#1650b0',GradientType=0 ); /* IE6-9 */
+    width: 100%;
+}
+
+ul.ulMenueTop li {
+    list-style: none;
+    float: left;
+    margin: 1px;
+    padding-left: 3px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-right: 2px;
+    font-size: 14px;
+}
+
+ul.ulMenueTop li a {
+    color: white;
+}
+
+.menueTopMasterLink {
+    
+}
+
+.menueTopMasterLinkActive {
+    background-color: #FF9933;
+}
+
+/*************
+ *** MenueTop
+ *************/
+.menueTop {
+    z-index: 20;
+}
+
+.menueTopFavorites {
+    display: none;
+    z-index: 21;
+}
+
+div#menueTopFavorites {
+    position: relative;
+    display: none;
+    z-index: 21;
+    padding: 2px;
+}
+
+/* Korrektur fuer IE 5.x */
+/** default
+  * html div.divMenueTopFull {
+    width: 48.7em;
+    w\idth: 47.1em;
+  }
+**/
+div.divMenueTopFull div {
+    clear: left;
+}
+
+ul.ulMenueTopFull {
+    float: left;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    border: 1px solid grey;
+    background-color: #F9F9F9;
+}
+
+ul.ulMenueTopFull li {
+    list-style: none;
+    float: left;
+    width: 107px;
+    margin: 1px;
+    padding: 0;
+    text-align: left;
+    font-size: 14px;
+}
+
+ul.ulMenueTopFull li a {
+    color: red;
+}
+/* Korrektur fuer den IE 5 und 6 */
+/** default
+  * html ul.ulMenueTopFull li {
+    margin-bottom: -0.4em;
+}
+**/
+/* Korrektur fuer den IE 7 */
+/** default
+  *:first-child+html ul.ulMenueTopFull li {
+    margin-bottom: -0.1em;
+}
+**/
+ul.ulMenueTopFull li ul {
+    margin: 0;
+    padding-left: 16px;
+    /** default
+    position: absolute;
+    top: 1.7em;
+    left: -0.4em;
+**/
+}
+
+/* Korrektur fuer IE 5.x */
+/** default
+  * html ul.ulMenueTopFull li ul {
+    left: -1.5em;
+    lef\t: -0.4em;
+  }
+**/
+ul.ulMenueTopFull li ul li {
+    width: 91px;
+    list-style: square outside;
+    float: none;
+    display: list-item;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-left: -2px;
+    text-align: left;
+    font-size: 11px;
+    color: #0645AD;
+}
+
+ul.ulMenueTopFull li ul li a {
+    color: #0645AD;
+}
+
+ul.ulMenueTopFull a,ul.ulMenueTopFull span {
+    display: block;
+    /** default
+    padding: 0.2em 1em;
+    text-decoration: none;
+    font-weight: bold;
+    border: 1px solid black;
+    border-left-color: white; border-top-color: white;
+    color: maroon; background-color: #ccc;
+**/
+}
+
+/* nur fuer IE erforderlich */
+/** default
+  * html ul.ulMenueTopFull a, * html ul.ulMenueTopFull span {
+    width: 100%;
+    w\idth: 6.4em;
+  }
+**/
+ul.ulMenueTopFull a:hover,ul.ulMenueTopFull span,li a#aktuell {
+    border-color: white;
+    border-left-color: black;
+    border-top-color: black;
+    color: white;
+    background-color: gray;
+}
+
+li a .#aktuell { /* aktuelle Rubrik kennzeichnen */
+    color: maroon;
+    background-color: silver;
+}
+
+ul.ulMenueTopFull li ul span { /* aktuelle Unterseite kennzeichnen */
+    background-color: maroon;
+}
+
+
+/*
+########################
+## Nav-Menue
+########################
+*/
+.menueNav {
+    width: 132px;
+    float: left;
+}
+
+.menueNavServiceLeft {
+    margin-top: 30px;
+    width: 132px;
+    float: left;
+    display: none;
+}
+
+.menueNavServiceRight {
+    width: 132px;
+    float: left;
+}
+
+.menueNavBox {
+    float: left;
+    border: 2px solid #8CACD3; /*#FCEFB7; #336699;*/
+    border-radius: 2px;
+    width: 128px;
+}
+
+.menueNavLogo {
+    float: left;
+    width: 100%;
+    text-align: center;
+    background-color: #8CACD3;
+}
+
+.menueNavMasterLink {
+    float: left;
+    width: 100%;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    text-align: center;
+    background-color: #8CACD3; /*#FFFFCC;*/
+    background: #8cacd3; /* Old browsers */
+    background: -moz-linear-gradient(top, #8cacd3 0%, #2989d8 50%, #468ec9 51%, #7db9e8 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#8cacd3), color-stop(50%,#2989d8), color-stop(51%,#468ec9), color-stop(100%,#7db9e8)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #8cacd3 0%,#2989d8 50%,#468ec9 51%,#7db9e8 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #8cacd3 0%,#2989d8 50%,#468ec9 51%,#7db9e8 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #8cacd3 0%,#2989d8 50%,#468ec9 51%,#7db9e8 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #8cacd3 0%,#2989d8 50%,#468ec9 51%,#7db9e8 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8cacd3', endColorstr='#7db9e8',GradientType=0 ); /* IE6-9 */
+}
+
+.menueNavMasterLinkAktiv {
+    background-color: #FF9933;
+    background: #FF9933;
+}
+
+.menueNavLink1 {
+    float: left;
+    width: 100%;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    text-align: left;
+}
+
+.menueNavLink1LocNorm {
+    display: none;
+}
+.menueNavLink2 {
+    float: left;
+    text-align: center;
+    width: 100%;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    background-color: #FCEFB7; /*#FFFFCC;*/
+}
+
+ul.ulMenueNav {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+ul.ulMenueNav li {
+    list-style: none;
+    margin: 0;
+}
+
+ul.ulMenueNav li a {
+}
+
+ul.ulMenueNav li ul {
+    padding-left: 0;
+}
+
+ul.ulMenueNav li ul li {
+}
+
+/*
+########################
+## Footer-Menue
+########################
+*/
+.menueFooter {
+    clear: both;
+    text-align: center;
+    padding-bottom: 4px;
+    float: left;
+    display: inline; /* fix IE-Bug */
+    border: 4px solid #8CACD3;
+    border-radius: 2px;
+    background-color: #8CACD3;
+    width: 580px;
+    padding: 3px;
+    padding-bottom: 2px;
+    position: fixed;
+    bottom: 0px;
+}
+
+.menueFooterDummy {
+    height: 50px;
+}
+
+
+.menueFooterBox {
+    clear: both;
+    text-align: center;
+    padding-bottom: 2px;
+    z-index: 21;
+}
+
+ul.ulMenueFooter {
+    float: left;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    background-color: #1650B0;
+    background: #1650b0; /* Old browsers */
+    background: -moz-linear-gradient(top, #1650b0 0%, #2989d8 50%, #468ec9 51%, #1650b0 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#1650b0), color-stop(50%,#2989d8), color-stop(51%,#468ec9), color-stop(100%,#1650b0)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #1650b0 0%,#2989d8 50%,#468ec9 51%,#1650b0 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #1650b0 0%,#2989d8 50%,#468ec9 51%,#1650b0 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #1650b0 0%,#2989d8 50%,#468ec9 51%,#1650b0 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #1650b0 0%,#2989d8 50%,#468ec9 51%,#1650b0 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1650b0', endColorstr='#1650b0',GradientType=0 ); /* IE6-9 */
+    width: 100%;
+}
+
+ul.ulMenueFooter li {
+    list-style: none;
+    float: left;
+    margin: 1px;
+    padding-left: 3px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-right: 2px;
+    font-size: 14px;
+}
+
+ul.ulMenueFooter li a {
+    color: white;
+}
+
+.menueFooterMasterLink {
+}
+
+.menueFooterMasterLinkActive {
+    background-color: #FF9933;
+}
+
+.icon-menufooter {
+    width: 13px;
+    height: 13px;
+}
+
+.a-menue-footer-norm {
+    font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+}
+
+.a-menue-footer-norm-js {
+    font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+}
+
+
+.menueFooter {
+    z-index: 20;
+}
+
+
+
+/*
+########################
+# TOC
+########################
+*/
+.box-toc {
+    border: 2px solid #8CACD3; /*#FCEFB7; #336699;*/
+    border-radius: 2px;
+    width: 128px;
+    padding: 0px;
+    clear: both;
+    float: left;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    position: absolute;
+    position: fixed;
+}
+
+.box-toc-ue {
+    text-align: center;
+    background-color: #8CACD3;
+    font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    color: white;
+}
+
+.toclist {
+    padding-left: 20px;
+    padding-right: 5px;
+}
+/*
+########################
+## Menue-Rechts
+########################
+*/
+.menueRechts {
+    float: left;
+    width: 132px;
+    margin-bottom: 10px;
+}
+
+.menueRechtsBox {
+    float: left;
+    border: 2px solid #8CACD3;
+    /*#F3F7FB;/*#8CACD3; /*#FCEFB7; #336699;*/
+    border-radius: 2px;
+    width: 128px;
+}
+
+.menueRechtsUe {
+    text-align: center;
+    width: 100%;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    background-color: #8CACD3;
+    /*   background: url(./images/bg-blau-level1.gif);*/
+}
+
+/*
+########################
+## Support-Rechts
+########################
+*/
+.supportRechtsItem {
+    text-align: center;
+    width: 100%;
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+
+/*
+########################
+##
+## Content
+##
+########################
+*/
+.content {
+    clear: both;
+    float: left;
+    width: 580px;
+    padding: 3px;
+}
+
+/* Alt */
+.txt-content {
+    font-size: 11px;
+    color: black
+    z-index: 1;
+    clear: both;
+}
+
+.txt-content-little {
+    font-size: 8px;
+    color: black;
+    font-weight: bold;
+}
+
+.txt-lastupdate {
+    font-size: 12px;
+    color: black;
+    text-align: center;
+}

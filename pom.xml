@@ -10,7 +10,7 @@
     
     <!-- packaging jar or war and version -->
     <packaging>jar</packaging>
-    <version>feature-YAIO2118-improvements-201505-RELEASE</version>
+    <version>0.1.0-beta-feature-YAIO2137-improvements-201507-RELEASE</version>
     
     <!-- for spring boot -->
     <parent>
@@ -451,6 +451,10 @@
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
             </resource>
+            <resource>
+                <directory>src/main/generated-resources</directory>
+                <filtering>true</filtering>
+            </resource>
         </resources>
         <testResources>
             <testResource>
@@ -783,7 +787,7 @@
                 <artifactId>maven-ng-protractor</artifactId>
                 <version>${maven.ng.protractor.version}</version>
                 <configuration>
-                    <protractor>c:\Users\micha\AppData\Roaming\npm\protractor.cmd</protractor>
+                    <protractor>${basedir}/node_modules/.bin/protractor</protractor>
                     <configFile>${project.basedir}/protractor.yaio.conf.js</configFile>
                 </configuration>
                 <executions>

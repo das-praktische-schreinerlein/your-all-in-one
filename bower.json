@@ -1,0 +1,39 @@
+{
+  "name": "yaio",
+  "description": "YourAllInOne D'Artagnan",
+  "version": "0.0.1",
+  "authors": [
+    {
+      "name": "Michael Schreiner",
+      "email": "michael.schreiner@your-it-fellow.de",
+      "homepage": "http://www.your-it-fellow.de"
+    }
+  ],
+  "homepage": "http://www.your-all-in-one.de",
+  "dependencies": {
+    "ace-builds": "v1.1.8",
+    "angular": "1.2.23",
+    "angular-translate": "2.4.0",
+    "fancytree": "2.4.0",
+    "find-and-replace-dom-text": "0.4.3",
+    "highlightjs": "8.4.0",
+    "jquery": "1.11.1",
+    "jquery-lang-js": "#be9519db371f0f3131db13b357b9e54f2629df31",
+    "jquery-ui": "1.10.4",
+    "jqueryui-timepicker-addon": "1.4.5",
+    "marked": "0.3.3",
+    "mermaid": "0.4.0",
+    "slimbox2": "cbeyls/slimbox#2.05",
+    "strapdown": "ndossougbe/strapdown#0.4.1",
+    "toastr": "CodeSeven/toastr#2.1.0",
+    "ui-contextmenu": "1.7.0"
+  },
+  "exportsOverride": {
+    "x": {
+      "js": "**/*.js",
+      "css": "**/*.css"
+    }
+  },
+  "private": "true",
+  "devDependencies": {}
+}

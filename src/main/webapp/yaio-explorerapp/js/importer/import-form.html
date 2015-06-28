@@ -1,0 +1,23 @@
+      <!-- 
+      *************************
+      *    Form:   Import
+      ************************* 
+      -->
+      <div class="hidden box container-yaio-editor-import" id="containerFormYaioEditorImport">
+        <h4 translate="editor.formImport.ue">Daten importieren {{node.sysUID}}:</h4>
+        <p translate="editor.formImport.intro" class="msg-form-intro" id="nodeFormImportIntro"></p>
+
+        <form with-errors class="" id="nodeFormImport" name="nodeFormImport" method="post" enctype="multipart/form-data" target="_blank">
+
+          <fieldset>
+            <label for="file" class="label_file" translate="editor.formImport.label.file" required>file</label>
+            <input type="file" name="file" class="inputtype_file" id="inputfileImort">
+            <fielderrors for="file"></fielderrors>
+          </fieldset>
+
+          <fieldset>
+            <button ng-click="sendImport()" ng-disabled="nodeFormImport.$invalid" class="btn btn-primary" translate="common.buttonSend">Send</button>
+            <button ng-click="discardImport()" class="btn btn-primary" translate="common.buttonDiscard">Discard</button>
+          </fieldset>
+        </form>
+      </div>

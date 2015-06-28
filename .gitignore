@@ -1,7 +1,12 @@
-/log.roo
 /.idea
 /.settings
-/target
-/node_modules
+/bower
 /node
+/node_modules
+/src/main/generated-resources
+/tmp
+/target
 /var/hsqldb/yaio.lck
+/vendors/js
+/vendors/css
+/log.roo

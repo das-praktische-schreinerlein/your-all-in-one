@@ -1,0 +1,342 @@
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Collaboration
+ *
+ * <h4>FeatureDescription:</h4>
+ *     software for projectmanagement and documentation
+ * 
+ * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category collaboration
+ * @copyright Copyright (c) 2014, Michael Schreiner
+ * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+/*****************************************
+ *****************************************
+ * flowcharts (graph)
+ *****************************************
+ *****************************************/
+svg g.cluster rect {
+   fill: #CAF1F7;
+}
+
+/*****************************************
+ *****************************************
+ * sequence-diagram (sequence)
+ *****************************************
+ *****************************************/
+
+
+/*****************************************
+ *****************************************
+ * layout
+ *****************************************
+ *****************************************/
+div.mermaid {
+}
+
+div.mermaid svg{
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+div.mermaid-source {
+    display: none;
+}
+div.yaiomindmap {
+}
+div.yaiomindmap embed {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+div.yaiomindmap-source {
+    display: none;
+}
+div.servicesmermaid div, div.servicesyaiomindmap div {
+    padding: 5px;
+}
+div.servicesmermaid div a, div.servicesyaiomindmap div a {
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: #333;
+    font-size: 13px;
+    line-height: 1.42857;
+    width: auto;
+    padding: 5px;
+}
+
+/*****************************************
+ *****************************************
+ * pre-formating from bootstrap
+ *****************************************
+ *****************************************/
+/*!
+ * Bootstrap v3.1.1 (http://getbootstrap.com)
+ * Copyright 2011-2014 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+pre {
+    overflow: auto
+}
+
+code,kbd,pre,samp {
+    font-family: monospace, monospace;
+    font-size: 1em
+}
+
+pre,blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid
+}
+
+code,kbd,pre,samp {
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace
+}
+
+pre {
+    display: block;
+    padding: 9.5px;
+    margin: 0 0 10px;
+    font-size: 13px;
+    line-height: 1.42857143;
+    word-break: break-all;
+    word-wrap: break-word;
+    color: #333;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+pre code {
+    padding: 0;
+    font-size: inherit;
+    color: inherit;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -o-pre-wrap;
+    background-color: transparent;
+    border-radius: 0;
+    white-space: pre-line;
+    white-space: -moz-pre-line;
+    white-space: -o-pre-line;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+
+div.container-content-desc > ul, div.container-content-desc > ol {
+    white-space: normal;
+    word-wrap: normal;
+}
+/* set img from markdown without class to 1000px */
+div.container-content-desc img:not([class]) {
+    max-width: 1000px;
+    width: auto;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+div.container-content-desc svg:not([class]) {
+    width: 100%;
+    height: auto;
+}
+
+div.container-content-desc div.mermaid {
+    max-width: 1000px;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+.pre-wrap {
+    white-space: pre-line;
+    white-space: -moz-pre-line;
+    white-space: -o-pre-line;
+    word-wrap: break-word;
+}
+
+.pre-nowrap {
+    white-space: pre;
+    white-space: -moz-pre;
+    white-space: -o-pre;
+    word-wrap: normal;
+}
+
+/* Tabellen */
+div.container-content-desc table {
+    border: 1px solid #8CACD3;
+    margin-left: 30px;
+    border
+}
+div.container-content-desc td {
+    border: 1px solid #8CACD3;
+}
+div.container-content-desc th {
+    font-weight: bold;
+    background: #8CACD3;
+}
+div.container-content-desc tr {
+    font-weight: bold;
+    background: #DEE9EF;
+}
+
+
+/*****************************************
+ *****************************************
+ * node state
+ *****************************************
+ *****************************************/
+.node-state-INFO {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-DOKU {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-IDEE {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-HOWTO {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-URLRES {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-FILERES {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-IMAGERES {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-MAILRES {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-SYMLINK {
+    background-color: #FFC0CB; /*#33CCCC;*/
+}
+.node-state-OPEN {
+    background-color: #ADFF2F; /*#99FF66;*/
+}
+.node-state-OFFEN {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-RUNNING {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-LATE {
+    background-color: #FFD700; /*#F6F9AE; #FFFF66;*/
+}
+.node-state-VERSPAETET {
+    background-color: #FFD700; /*#F6F9AE; #FFFF66;*/
+}
+.node-state-SHORT {
+    background-color: #FF6347; /* #FCD2C9; /*#FF9966;*/
+}
+.node-state-UEBERFAELLIG {
+    background-color: #FF6347; /* #FCD2C9; /*#FF9966;*/
+}
+.node-state-WARNING {
+    background-color: #FF6347; /* #FCD2C9; /*#FF9966;*/
+}
+.node-state-DONE {
+    background-color: #E0F2FC; /*#B0E0E6;*/
+}
+.node-state-ERLEDIGT {
+    background-color: #E0F2FC; /*#B0E0E6;*/
+}
+.node-state-CANCELED {
+    background-color: #F5F5F5; /*#CCCCCC;*/
+}
+.node-state-VERWORFEN {
+    background-color: #F5F5F5; /*#CCCCCC;*/
+}
+.node-state-UNKNOWN {
+    background-color: #FFFFFF;
+}
+.node-state-UNBEKANNT {
+    background-color: #FFFFFF;
+}
+
+.node-state-EVENT_PLANED {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-EVENT_GEPLANT {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-EVENT_OPEN {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-EVENT_OFFEN {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-EVENT_RUNNING {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-EVENT_LATE {
+    background-color: #FFD700; /*#F6F9AE; #FFFF66;*/
+}
+.node-state-EVENT_VERSPAETET {
+    background-color: #FFD700; /*#F6F9AE; #FFFF66;*/
+}
+.node-state-EVENT_SHORT {
+    background-color: #FF6347; /* #FF6347; /* #FCD2C9; /*#FF9966;*/
+}
+.node-state-EVENT_UEBERFAELLIG {
+    background-color: #FF6347; /* #FCD2C9; /*#FF9966;*/
+}
+.node-state-EVENT_WARNING {
+    background-color: #FF6347; /* #FCD2C9; /*#FF9966;*/
+}
+.node-state-EVENT_DONE {
+    background-color: #E0F2FC; /*#B0E0E6;*/
+}
+.node-state-EVENT_ERLEDIGT {
+    background-color: #E0F2FC; /*#B0E0E6;*/
+}
+.node-state-EVENT_CANCELED {
+    background-color: #F5F5F5; /*#CCCCCC;*/
+}
+.node-state-EVENT_VERWORFEN {
+    background-color: #F5F5F5; /*#CCCCCC;*/
+}
+
+/*****************************************
+ *****************************************
+ * checklist-states
+ *****************************************
+ *****************************************/
+.checklist-state-OPEN {
+    background-color: #adff2f; 
+}
+.checklist-state-RUNNING {
+    background-color: #adff2f;
+}
+.checklist-state-LATE {
+    background-color: #ffd700;
+    font-weight: bold;
+}
+.checklist-state-BLOCKED {
+    background-color: #F3F940;
+    font-weight: bold;
+}
+.checklist-state-WARNING {
+    background-color: #ff6347;
+    font-weight: bold;
+}
+.checklist-state-DONE {
+    font-style: italic;
+}
+.checklist-test-TESTOPEN {
+    background-color: #F3F940; 
+}
+.checklist-test-PASSED {
+    font-style: italic;
+}
+.checklist-test-FAILED {
+    background-color: #ff6347; 
+    font-weight: bold;
+}

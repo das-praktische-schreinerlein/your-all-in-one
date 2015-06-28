@@ -1,8 +1,11 @@
 // configure
-var baseDir = "./src/test/static/e2e/";
-var testDir = baseDir;
 var baseUrl = 'http://yaio-playground.local';
 var chromeBin = 'C:/ProgrammePortable/PortableApps/PortableApps/GoogleChromePortable/App/Chrome-bin/chrome.exe';
+var downloadPath = 'd:/tmp/';
+
+// basics
+var baseDir = "./src/test/javascript/e2e/";
+var testDir = baseDir;
 
 // imports
 var ScreenShotReporter = require('protractor-screenshot-reporter');
@@ -16,32 +19,35 @@ exports.config = {
 
     // Capabilities to be passed to the webdriver instance.
     multiCapabilities: [
-        {
-            'browserName': 'chrome',
-            'chromeOptions': {
-                'binary': chromeBin,
-                args: [],
-                extensions: [],
-                prefs: {
-                    'download': {
-                        'prompt_for_download': false,
-                        'default_directory': 'd:/tmp/',
-                    },
-                },
-            },
-        },
-
+//        {
+//            'browserName': 'chrome',
+//            'chromeOptions': {
+//                'binary': chromeBin,
+//                args: [],
+//                extensions: [],
+//                prefs: {
+//                    'download': {
+//                        'prompt_for_download': false,
+//                        'default_directory': downloadPath,
+//                    },
+//                },
+//            },
+//        },
 //        {
 //                'browserName': 'firefox',
 //                profile.set_preference('browser.download.dir', download_path)
 //        },
+
 //        {
-//            // phantomjs buggy :-(
-//            'browserName': 'phantomjs',
-//            'phantomjs.binary.path': require('phantomjs').path,
-//             // Command line args to pass to ghostdriver, phantomjs's browser driver. See https://github.com/detro/ghostdriver#faq
-//            'phantomjs.ghostdriver.cli.args': ['--local-storage-path d:/tmp/', '--loglevel=DEBUG']
-//        }
+//            'browserName': 'iexplorer'
+//        },
+        {
+            // phantomjs buggy :-(
+            'browserName': 'phantomjs',
+            'phantomjs.binary.path': require('phantomjs').path,
+             // Command line args to pass to ghostdriver, phantomjs's browser driver. See https://github.com/detro/ghostdriver#faq
+            'phantomjs.ghostdriver.cli.args': ['--local-storage-path d:/tmp/', '--loglevel=DEBUG']
+        }
     ],
     
     getPageTimeout: 100000,
@@ -49,22 +55,26 @@ exports.config = {
 
     // Spec patterns are relative to the configuration file location passed
     suites: {
+        auth:          [testDir + '/auth/**/*Specs.js'],
         explorer:      [testDir + '/explorer/**/*Specs.js'],
-        guielements:   [testDir + '/explorer/**/guiElementsSpecs.js'],
-        login:         [testDir + '/login/**/*Specs.js'],
+          guielements: [testDir + '/explorer/**/guiElementsSpecs.js'],
+          nodeelements:[testDir + '/explorer/**/nodeElementsSpecs.js'],
+        exporter:      [testDir + '/exporter/**/*Specs.js'],
+        gantt:         [testDir + '/gantt/**/*Specs.js'],
+        importer:      [testDir + '/importer/**/*Specs.js'],
+        lang:          [testDir + '/lang/**/*Specs.js'],
         nodelifecycle: [testDir + '/nodelifecycle/**/*Specs.js'],
         search:        [testDir + '/search/**/*Specs.js'],
+        wysiwyg:       [testDir + '/wysiwyg/**/*Specs.js'],
+
         full:          [testDir + '/**/*Specs.js'],
-        //search:        ['tests/e2e/search/**/*Spec.js']
-        //formats:       ['tests/e2e/formats/**/*Spec.js']
-        //export:        ['tests/e2e/export/**/*Spec.js']
     },
 
     // Options to be passed to Jasmine-node.
     jasmineNodeOpts: {
         showColors: true, // Use colors in the command line report.
         defaultTimeoutInterval: 360000,
-//        isVerbose: true,
+        isVerbose: true,
         realtimeFailure: true,
         includeStackTrace: true,
         print: function() {}
@@ -97,12 +107,12 @@ exports.config = {
 
         // add ScreenshotReporter
 // sometimes buggy :-(
-//        jasmine.getEnv().addReporter(
-//            new ScreenShotReporter({
-//                baseDirectory: "target/protractor-reports/"
-//                }
-//            )
-//        );
+        jasmine.getEnv().addReporter(
+            new ScreenShotReporter({
+                baseDirectory: "target/protractor-reports/"
+                }
+            )
+        );
         
         // add logging
         browser.manage().logs().get('browser').then(function(browserLog) {
@@ -121,7 +131,8 @@ exports.config = {
 
     // specific YAIO-config
     params: {
-        downloadPath: "d:/tmp/",
+        downloadPath: downloadPath,
+        baseDir: baseDir,
         yaioConfig: {
             yaioBaseUrl    : baseUrl,
             yaioBaseAppUrl : baseUrl + '/yaio-explorerapp/yaio-explorerapp.html#',

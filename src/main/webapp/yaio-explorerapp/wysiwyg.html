@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>YAIO - D'Artagnan - Wysiwyg-Editor</title>
+
+  <!-- styles: reset -->
+  <link rel="stylesheet" type="text/css" media="all" href="../dist/yaio-reset.resetversion.css" />
+  
+  <!-- styles: vendors -->
+  <link rel="stylesheet" type="text/css" media="all" href="../dist/vendors-full.vendorversion.css" />
+  <link rel="stylesheet" type="text/css" media="print" href="../dist/vendors.vendorversion/yaio/print.css" />
+  <!-- style: fancytree needs own script for loading plugins -->
+  <link rel="stylesheet" type="text/css" media="all" href="../dist/vendors.vendorversion/fancytree/skin-win8/ui.fancytree.css">
+
+  <!-- styles: yaio-explorer -->
+  <link rel="stylesheet" type="text/css" media="all" href="../dist/yaio-app-full.appversion.css" />
+  <link rel="stylesheet" type="text/css" media="all" href="../dist/yaio-support-full.supportversion.css" />
+  <link rel="stylesheet" type="text/css" media="print" href="../dist/yaio-support-print.supportversion.css" />
+  <link rel="stylesheet" type="text/css" media="print" href="../dist/yaio-support-print-dataonly.supportversion.css" id="link_css_dataonly" disabled="true" />
+
+  <!-- scripts: vendors -->
+  <script  type="text/javascript" charset="UTF-8" src="../dist/vendors-full.vendorversion.js"></script>
+  <!-- scripts: Markdown-Editor+Formatter needs own script for loading plugins -->
+  <script type="text/javascript" charset="UTF-8" src="../dist/vendors.vendorversion/ace/ace.js"></script>
+  <!-- scripts: freemind needs own script for loading plugins -->
+  <script type="text/javascript" charset="UTF-8" src="../dist/vendors.vendorversion/freemind-flash/flashobject.js"></script>
+
+  <!-- scripts: yaio-support -->
+  <script  type="text/javascript" charset="UTF-8" src="../dist/yaio-support-full.supportversion.js"></script>
+
+  <style type="text/css">
+  #wysiwhg-print {
+      left: 0px;
+      background: white;
+  }
+  </style>
+</head>
+
+<body>
+<div align="center" class="page-div-center">
+    <!-- Hauptseite-->
+    <div class="pageContent" id="pageContent">
+
+        <!-- Content -->
+        <div class="blockContent" id="blockContent">
+            <div class="content" id="content">
+                <div class="txt-content" id="txt-content">
+
+                    <!-- Context -->
+                    <div class="content">
+                        <!-- Page: Content -->
+                        
+<div id="error-message" class="hidden">
+  <p>
+    <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>
+  </p>
+  <p id="error-message-text">
+  </p>
+</div>                        
+
+<div id="dialog-confirm" class="hidden">
+  <p>
+    <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>
+    
+  </p>
+  <p id="dialog-confirm-text">
+  </p>
+</div>                        
+
+<div id="help-box" class="hidden">
+  <p>
+    <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>
+  </p>
+  <iframe id="help-iframe" src="" ></iframe>
+</div>                        
+
+<div id="preview-box" class="hidden">
+  <div id="preview-content" class="container-content-desc">
+  </div>
+</div>                        
+
+<div id="wysiwhg-box" class="">
+  <pre id="wysiwhg-editor" class="container-wyswhg-editor"></pre>
+  <div id="wysiwhg-preview" class="container-wysiwhg-preview"></div>
+</div>                        
+
+<div id="markdownhelp-box" class="hidden">
+  <iframe id="markdownhelp-iframe" src="" ></iframe>
+</div>                        
+
+<div id="clipboard-box" class="hidden">
+  <textarea id="clipboard-content" class="clipboard-content-desc"></textarea>
+</div>                        
+
+<div id="workspace-box" class="hidden">
+  <textarea id="workspaceContent" class="workspace-content-desc"></textarea>
+</div>
+
+<div id="jsonuploader-box" class="hidden">
+   <input type="file" id="importJSONFile" name="importJSONFile" value="Import JSON" />                        
+</div>
+
+<div id="print-box">
+  <div id="wysiwhg-print" class="box field_nodeDesc container-content-desc"></div>
+</div>
+
+                    </div>
+                    
+                    
+                    <div class="blockPageFooter" id="blockPageFooter">
+                      <div class="blockQRCode" id="qrcode"></div>
+                      <div class="blockTxtFooter" id="blockTxtFooter">
+                        <div class="txt-lastupdate">2014-2015 by <a href="mailto:michael.schreiner@your-it-fellow.de" class="a-lastupdate">Micha</a> -&gt; <a href="http://www.your-all-in-one.de/yaio/static/impressum" class="a-lastupdate">Impressum</a></div>
+                        <div class="txt-copyrights">Copyright 
+                            <a href="http://www.your-all-in-one.de/yaio/static/impressum" >www.your-all-in-one.de</a></div>
+                        <div class="txt-copyrights">
+                           D'Artagnan funktioniert am Besten mit Mozilla-Firefox bzw. Gogle Chrome.
+                        </div>
+                        <div class="txt-copyrights">
+                            Die Applikation wurde unter Verwendung des <a href="https://github.com/spring-projects/spring-framework" target="_blank">Spring-Frameworks sowie der Unterprojekte Spring Boot, Spring-Roo, Spring-Security</a> implementiert.<br />
+                            F&uuml;r bestimmte Funktionen des Frontends wurde auf freie Bibliotheken der Projekte:
+                            <a href="http://jquery.com/" target="_blank">JQuery</a>,
+                            <a href="https://github.com/coolbloke1324/jquery-lang-js" target="_blank">JQuery-Lang</a>,
+                            <a href="http://jqueryui.com/" target="_blank">JQuery-UI</a>,
+                            <a href="https://github.com/chjj/marked" target="_blank">Marked</a>,
+                            <a href="https://github.com/ajaxorg/ace-builds" target="_blank">Ace</a>,
+                            <a href="https://highlightjs.org/" target="_blank">highlight.js</a>,
+                            <a href="https://code.google.com/p/markdown4j/" target="_blank">markdown4j</a>,
+                            <a href="http://paulrobertlloyd.com/2009/06/social_media_icons/" target="_blank">paulrobertlloyd.com</a>,
+                            <a href="http://www.digitalia.be/software/slimbox2" target="_blank">Slimbox2</a>
+                            <a href="https://github.com/knsv/mermaid" target="_blank">mermaid</a>,
+                            <a href="https://github.com/CodeSeven/toastr" target="_blank">Toastr</a>
+                            zugegriffen.<br />
+                        </div>
+                      </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- YaioAppBase -->
+<script type="text/javascript">
+window.yaioAppBase = YaioAppBase();
+yaioAppBase.publishDetectorStyles();
+</script>
+
+<!-- Tooltip -->
+<script type="text/javascript">
+
+    // display css_dataonly-link
+    $("#link_css_dataonly").prop("disabled", true);
+
+    // overload tooltip from title as seen on http://stackoverflow.com/questions/15734105/jquery-ui-tooltip-does-not-support-html-content
+    $("[data-tooltip]").each(function(i, e) {
+        var tag = $(e);
+        if (tag.is("[title]") === false) {
+            tag.attr("title", "");
+        }
+    });
+
+    $(document).tooltip({
+        items: "[data-tooltip]",
+        content: function () {
+            return $(this).attr("data-tooltip");
+        }
+    });
+</script>
+<script type="text/javascript">
+// override
+yaioAppBase.get('YaioMarkdownEditor').showWyswhgPreviewForTextareaId = function(textAreaId) {
+    // prepare descText
+    var descText = $("#" + textAreaId).val();
+    var descHtmlMarked = yaioAppBase.get('YaioFormatter').formatMarkdown(descText, true);
+
+    // set preview-content
+    $( "#wysiwhg-preview" ).html(descHtmlMarked);
+    $( "#wysiwhg-print" ).html(descHtmlMarked);
+
+    // do mermaid when preview visible
+    yaioAppBase.get('YaioFormatter').formatMermaidGlobal();
+    
+    // do syntax-highlight
+    yaioAppBase.get('YaioFormatter').formatDescBlock($("#wysiwhg-preview"));
+    yaioAppBase.get('YaioFormatter').formatDescBlock($("#wysiwhg-print"));
+};
+
+// open Wysiwyg
+yaioAppBase.get('YaioMarkdownEditor').openWysiwhgForTextareaId("workspaceContent");
+
+// disable OK-Button
+$(".ui-dialog-buttonset button").first().addClass("hidden");
+
+// add print
+$(".ui-dialog-buttonset").append($("<a href='' id='wysiwyg-printlink'" +
+        + " sdf='ojfvbhwjh'"
+        + " onclick=\"window.print(); return false;\">"
+        + "<span class='ui-button-text'>Print</span></a>"));
+$('#wysiwyg-printlink').addClass("ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only");
+$(".ui-dialog-buttonset").append($("<input type=\"checkbox\" onclick=\"yaioAppBase.get('YaioLayout').togglePrintLayout()\" checked id=\"checkboxPrintAll\"> All"));
+</script>
+</body>
+</html>
