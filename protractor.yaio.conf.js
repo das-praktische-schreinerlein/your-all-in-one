@@ -1,8 +1,11 @@
 // configure
-var baseDir = "./src/test/static/e2e/";
-var testDir = baseDir;
 var baseUrl = 'http://yaio-playground.local';
 var chromeBin = 'C:/ProgrammePortable/PortableApps/PortableApps/GoogleChromePortable/App/Chrome-bin/chrome.exe';
+var downloadPath = 'd:/tmp/';
+
+// basics
+var baseDir = "./src/test/static/e2e/";
+var testDir = baseDir;
 
 // imports
 var ScreenShotReporter = require('protractor-screenshot-reporter');
@@ -25,7 +28,7 @@ exports.config = {
                 prefs: {
                     'download': {
                         'prompt_for_download': false,
-                        'default_directory': 'd:/tmp/',
+                        'default_directory': downloadPath,
                     },
                 },
             },
@@ -121,7 +124,7 @@ exports.config = {
 
     // specific YAIO-config
     params: {
-        downloadPath: "d:/tmp/",
+        downloadPath: downloadPath,
         yaioConfig: {
             yaioBaseUrl    : baseUrl,
             yaioBaseAppUrl : baseUrl + '/yaio-explorerapp/yaio-explorerapp.html#',

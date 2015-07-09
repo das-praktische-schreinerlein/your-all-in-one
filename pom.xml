@@ -783,7 +783,7 @@
                 <artifactId>maven-ng-protractor</artifactId>
                 <version>${maven.ng.protractor.version}</version>
                 <configuration>
-                    <protractor>c:\Users\micha\AppData\Roaming\npm\protractor.cmd</protractor>
+                    <protractor>${basedir}/node_modules/.bin/protractor</protractor>
                     <configFile>${project.basedir}/protractor.yaio.conf.js</configFile>
                 </configuration>
                 <executions>
