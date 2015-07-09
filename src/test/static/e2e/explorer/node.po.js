@@ -37,14 +37,10 @@ var YAIONodePage = function() {
     me.inputPlanAufwandTaskNode = $('#inputPlanAufwandTaskNode');
     me.inputPlanStartTaskNode = $('#inputPlanStartTaskNode');
     me.inputPlanEndeTaskNode = $('#inputPlanEndeTaskNode');
-    me.filterDescTaskForm_Off = $('#filterDescTaskForm_Off');
-    me.inputNodeDescTaskNode = $('#inputNodeDescTaskNode');
     me.buttonSaveTask = $('#nodeFormTaskNode fieldset button[translate="common.buttonSave"]');
     
     // symlinkform
     me.inputNameSymLinkNode = $('#inputNameSymLinkNode');
-    me.filterDescSymLinkForm_Off = $('#filterDescSymLinkForm_Off');
-    me.inputNodeDescSymLinkNode = $('#inputNodeDescSymLinkNode');
     me.buttonSaveSymLink = $('#nodeFormSymLinkNode fieldset button[translate="common.buttonSave"]');
 
     // utils
@@ -195,11 +191,8 @@ var YAIONodePage = function() {
         protractor.utils.waitUntilElementPresent(me.uiDatePickerDay25, protractor.utils.CONST_WAIT_ELEMENT);
         me.uiDatePickerDay25.click();
         
-        // toggle desc
-        me.filterDescTaskForm_Off.click();
-        protractor.utils.waitUntilElementPresent(me.inputNodeDescTaskNode, protractor.utils.CONST_WAIT_ELEMENT);
-        expect(me.inputNodeDescTaskNode.getAttribute('id')).toEqual('inputNodeDescTaskNode');
-        // me.inputNodeDescTaskNode.sendKeys("fehlerhafte Tetsdaten");
+        // toggle and set desc
+        me.openAndEditDescForNodeType("Task", "fehlerhafte Task-Desc-Testdaten", true);
         
         // define SearchElement
         var eleNewTaskName = element(by.cssContainingText('span.fancytree-title2', taskName));
@@ -256,11 +249,8 @@ var YAIONodePage = function() {
             protractor.utils.waitUntilElementPresent(me.uiDatePickerDay25, protractor.utils.CONST_WAIT_ELEMENT);
             me.uiDatePickerDay25.click();
             
-            // toggle desc
-            me.filterDescTaskForm_Off.click();
-            protractor.utils.waitUntilElementPresent(me.inputNodeDescTaskNode, protractor.utils.CONST_WAIT_ELEMENT);
-            expect(me.inputNodeDescTaskNode.getAttribute('id')).toEqual('inputNodeDescTaskNode');
-            // me.inputNodeDescTaskNode.sendKeys("fehlerhafte Tetsdaten");
+            // reset desc
+            me.openAndEditDescForNodeType("Task", " - berichtigt");
 
             // submit form
             protractor.utils.waitUntilElementPresent(me.buttonSaveTask, protractor.utils.CONST_WAIT_ELEMENT);
@@ -298,17 +288,14 @@ var YAIONodePage = function() {
         // select Aufgabe
         expect(me.inputNameSymLinkNode.getAttribute('id')).toEqual('inputNameSymLinkNode');
         
-        // set symlinkdata and submit form
+        // set symlinkdata
         var nodeName = 'testsymlink' + new Date().getTime();
         me.inputNameSymLinkNode.clear().then(function () {
             me.inputNameSymLinkNode.sendKeys(nodeName);
         });
         
-        // toggle desc
-        me.filterDescSymLinkForm_Off.click();
-        protractor.utils.waitUntilElementPresent(me.inputNodeDescSymLinkNode, protractor.utils.CONST_WAIT_ELEMENT);
-        expect(me.inputNodeDescSymLinkNode.getAttribute('id')).toEqual('inputNodeDescSymLinkNode');
-        // me.inputNodeDescSymLinkNode.sendKeys("fehlerhafte Tetsdaten");
+        // set desc
+        me.openAndEditDescForNodeType("SymLink", "korrekte SymLink-Desc-Testdaten", true);
         
         // define SearchElement
         var eleNewSymLinkName = element(by.cssContainingText('span.fancytree-title2', nodeName));
@@ -332,6 +319,28 @@ var YAIONodePage = function() {
         
         return eleNewSymLinkName;
     };
+    
+    /**
+     * open desc-editor of forn and set new content (if flgToggle is set toggle before to open layer)
+     * @param   {String} nodeType    type of the node Task, SymLink...
+     * @param   {String} newText     new text to set
+     * @param   {Boolean} flgToggle  do open the layer
+     * @returns {Promise}
+     */
+    me.openAndEditDescForNodeType = function (nodeType, newText, flgToggle) {
+        var filterDescForm_Off = $('#filterDesc' + nodeType + 'Form_Off');
+        var editorInputNodeDesc = $('#editorInputNodeDesc' + nodeType + 'Node');
+        var inputAceElm = $('#editorInputNodeDesc' + nodeType + 'Node > textarea.ace_text-input');
+
+        // toggle and set desc
+        if (flgToggle) {
+            filterDescForm_Off.click();
+        }
+        protractor.utils.waitUntilElementPresent(editorInputNodeDesc, protractor.utils.CONST_WAIT_ELEMENT);
+        expect(editorInputNodeDesc.getAttribute('id')).toEqual('editorInputNodeDesc' + nodeType + 'Node');
+        browser.actions().doubleClick(editorInputNodeDesc).perform();
+        return inputAceElm.sendKeys(newText);
+    }
     
     /**
      * follow SymLinkNode and wait until parent present
