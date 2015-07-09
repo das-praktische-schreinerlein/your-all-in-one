@@ -46,7 +46,34 @@ describe('yaio explorer search', function() {
     /**
      * define tests
      */
-    it('should get initial searchpage with 20 Nodes and pagination but without searchwords', function doCheckInitialSearchPage() {
+    it('should open searchpage, change order, jump to last page and find first result of origin search as last element on the last page', function doCheckSearchPage() {
+        // get first element
+        var firstElementId;
+        return element.all(by.repeater('node in nodes | filter:search')).first().getAttribute('data-value')
+            .then( function getFirstElement(id) {
+                // get element id
+                firstElementId = id;
+            })
+            .then( function changeOrder() {
+                // do Search with alternate order
+                yaioSearchPage.selectSort.sendKeys('letzte Änderung aufsteigend');
+                return yaioSearchPage.buttonDoSearch.click();
+            })
+            .then(function getNewFirstElement() {
+                // extract id of new first Element
+                expect(element.all(by.repeater('node in nodes | filter:search')).first().getAttribute('data-value')).not.toEqual(firstElementId);
+            })
+            .then( function clickLastPage() {
+                // jump to last page
+                return yaioSearchPage.linkPaginationLastPage.click();
+            })
+            .then(function getLastElement() {
+                // last element should be original first element
+                expect(element.all(by.repeater('node in nodes | filter:search')).last().getAttribute('data-value')).toEqual(firstElementId);
+            });
+    });
+
+    it('should get initial searchpage with 20 Nodes and pagination > 7 but without searchwords', function doCheckInitialSearchPage() {
         // count visible nodes, pages, searchwords
         return yaioNodePage.getVisibleNodes()
             .then( function (nodes) {

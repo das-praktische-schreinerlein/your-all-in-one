@@ -15,9 +15,13 @@ var YAIOSearchPage = function() {
     // search form
     me.buttonDoSearch = $('[translate="common.command.DoSearch"]');
     me.inputFullText = $('#inputSearchOptionsFulltext');
+    me.selectSort = $('#inputSearchOptionsSearchSortt');
     
     // pagination
     me.paginationLinkStyles = "ul.pagination > li";
+    me.linkPaginationLastPage = $('ul.pagination > li:last-of-type > span');
+
+    // searchwords
     me.fieldSearchDataStyle = '.field_nodeSearchData > b';
     
     /**
