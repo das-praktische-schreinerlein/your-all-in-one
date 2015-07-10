@@ -29,8 +29,8 @@ describe('yaio explorer search', function() {
                 // open explorer
                 return yaioSearchPage.openSearchFromFrontPage();
             });
-        protractor.utils.waitUntilElementClickable(yaioSearchPage.buttonDoSearch, protractor.utils.CONST_WAIT_NODEHIRARCHY);
-        expect(yaioSearchPage.buttonDoSearch.isPresent()).toEqual(true);
+        protractor.utils.waitUntilElementClickable($(yaioSearchPage.buttonDoSearch), protractor.utils.CONST_WAIT_NODEHIRARCHY);
+        expect($(yaioSearchPage.buttonDoSearch).isPresent()).toEqual(true);
     });
 
     /**
@@ -56,8 +56,8 @@ describe('yaio explorer search', function() {
             })
             .then( function changeOrder() {
                 // do Search with alternate order
-                yaioSearchPage.selectSort.sendKeys('letzte Änderung aufsteigend');
-                return yaioSearchPage.buttonDoSearch.click();
+                $(yaioSearchPage.selectSort).sendKeys('letzte Änderung aufsteigend');
+                return $(yaioSearchPage.buttonDoSearch).click();
             })
             .then(function getNewFirstElement() {
                 // extract id of new first Element
@@ -65,7 +65,7 @@ describe('yaio explorer search', function() {
             })
             .then( function clickLastPage() {
                 // jump to last page
-                return yaioSearchPage.linkPaginationLastPage.click();
+                return $(yaioSearchPage.linkPaginationLastPage).click();
             })
             .then(function getLastElement() {
                 // last element should be original first element
@@ -116,8 +116,8 @@ describe('yaio explorer search', function() {
             })
             .then( function fillSearchForm() {
                 // do Search
-                yaioSearchPage.inputFullText.sendKeys('der');
-                return yaioSearchPage.buttonDoSearch.click();
+                $(yaioSearchPage.inputFullText).sendKeys('der');
+                return $(yaioSearchPage.buttonDoSearch).click();
             })
             .then( function calcPagination() {
                 // extract pagination
@@ -176,8 +176,8 @@ describe('yaio explorer search', function() {
         };
 
         // When
-        yaioSearchPage.inputFullText.sendKeys('der');
-        yaioSearchPage.buttonDoSearch.click();
+        $(yaioSearchPage.inputFullText).sendKeys('der');
+        $(yaioSearchPage.buttonDoSearch).click();
 
         // check first Node for "der" in desc
         return yaioNodePage.getVisibleNodes()

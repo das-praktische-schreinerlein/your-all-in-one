@@ -26,8 +26,8 @@ describe('yaio explorer exports', function() {
                 // open explorer
                 return yaioNodePage.openExplorerFromFrontPage();
             });
-        protractor.utils.waitUntilElementClickable(yaioNodePage.containerMasterdata, protractor.utils.CONST_WAIT_NODEHIRARCHY);
-        expect(yaioNodePage.containerMasterdata.isPresent()).toEqual(true);
+        protractor.utils.waitUntilElementClickable($(yaioNodePage.containerMasterdata), protractor.utils.CONST_WAIT_NODEHIRARCHY);
+        expect($(yaioNodePage.containerMasterdata).isPresent()).toEqual(true);
     });
 
     /**

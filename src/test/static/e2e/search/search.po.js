@@ -10,16 +10,16 @@ var YAIOSearchPage = function() {
     var me = this;
 
     // explorer-link
-    me.linkFrontpage = $('[translate="common.command.OpenFrontpage"]');
+    me.linkFrontpage = '[translate="common.command.OpenFrontpage"]';
 
     // search form
-    me.buttonDoSearch = $('[translate="common.command.DoSearch"]');
-    me.inputFullText = $('#inputSearchOptionsFulltext');
-    me.selectSort = $('#inputSearchOptionsSearchSortt');
+    me.buttonDoSearch = '[translate="common.command.DoSearch"]';
+    me.inputFullText = '#inputSearchOptionsFulltext';
+    me.selectSort = '#inputSearchOptionsSearchSortt';
     
     // pagination
     me.paginationLinkStyles = "ul.pagination > li";
-    me.linkPaginationLastPage = $('ul.pagination > li:last-of-type > span');
+    me.linkPaginationLastPage = 'ul.pagination > li:last-of-type > span';
 
     // searchwords
     me.fieldSearchDataStyle = '.field_nodeSearchData > b';
@@ -30,16 +30,15 @@ var YAIOSearchPage = function() {
      */
     me.openSearchFromFrontPage = function () {
         // expect frontPage
-        protractor.utils.waitUntilElementPresent(yaioFrontPage.fontContentLeft, protractor.utils.CONST_WAIT_ELEMENT);
-        expect(yaioFrontPage.fontContentLeft.getAttribute('id')).toEqual("front-content-left");
+        protractor.utils.waitUntilElementPresent($(yaioFrontPage.fontContentLeft), protractor.utils.CONST_WAIT_ELEMENT);
         
-        // open explorer-link
-        yaioFrontPage.linkSearch.click();
+        // open search-link
+        $(yaioFrontPage.linkSearch).click();
         
-        // expect SysPlay1
-        protractor.utils.waitUntilElementClickable(me.buttonDoSearch, protractor.utils.CONST_WAIT_ELEMENT);
-        expect(me.buttonDoSearch.isDisplayed()).toEqual(true);
-        return protractor.utils.waitUntilElementClickable(me.buttonDoSearch, protractor.utils.CONST_WAIT_ELEMENT);
+        // expect SearchButton
+        protractor.utils.waitUntilElementClickable($(me.buttonDoSearch), protractor.utils.CONST_WAIT_ELEMENT);
+        expect($(me.buttonDoSearch).isDisplayed()).toEqual(true);
+        return protractor.utils.waitUntilElementClickable($(me.buttonDoSearch), protractor.utils.CONST_WAIT_ELEMENT);
     };
     
     

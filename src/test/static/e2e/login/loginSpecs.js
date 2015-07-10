@@ -33,19 +33,19 @@ describe('yaio loginpage', function() {
      * define tests
      */
     it('should show login', function doShowLogin() {
-        expect(yaioLoginPage.username.getAttribute('id')).toEqual("username");
+        expect(yaioLoginPage.eleUsername.getAttribute('id')).toEqual("username");
     });
     
     it('should reject login with invalid credentials', function doRejectInvalidLogin() {
         // fill loginform with invalid credentials
-        yaioLoginPage.username.sendKeys('admin');
-        yaioLoginPage.password.sendKeys('blabla');
+        yaioLoginPage.eleUsername.sendKeys('admin');
+        yaioLoginPage.elePassword.sendKeys('blabla');
         
         // send login
-        yaioLoginPage.submit.click();
+        $(yaioLoginPage.submit).click();
     
         // expect login-error
-        expect(yaioLoginPage.errorMsg.getText()).toEqual("There was a problem logging in. Please try again.");
+        expect($(yaioLoginPage.errorMsg).getText()).toEqual("There was a problem logging in. Please try again.");
     });
     
     it('should show explorer after login', function doValidLogin() {
@@ -53,8 +53,8 @@ describe('yaio loginpage', function() {
         yaioLoginPage.submitValidLoginPage();
     
         // expect frontContent
-        protractor.utils.waitUntilElementPresent(yaioFrontPage.fontContentLeft, protractor.utils.CONST_WAIT_NODEHIRARCHY);
-        expect(yaioFrontPage.fontContentLeft.getAttribute('id')).toEqual("front-content-left");
+        protractor.utils.waitUntilElementPresent($(yaioFrontPage.fontContentLeft), protractor.utils.CONST_WAIT_NODEHIRARCHY);
+        expect($(yaioFrontPage.fontContentLeft).getAttribute('id')).toEqual("front-content-left");
     });
 });
 

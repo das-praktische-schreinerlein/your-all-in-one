@@ -6,12 +6,12 @@
 var YAIOLoginPage = function() {
     // login-form
     var me = this;
-    me.username = element(by.model('credentials.username'));
-    me.password = element(by.model('credentials.password'));
-    me.submit = $('[translate="loginform.button.login"]');
+    me.eleUsername = element(by.model('credentials.username'));
+    me.elePassword = element(by.model('credentials.password'));
+    me.submit = '[translate="loginform.button.login"]';
     
     // results
-    me.errorMsg = $('.alert-danger');
+    me.errorMsg = '.alert-danger';
     
     /**
      * open login-page
@@ -31,11 +31,11 @@ var YAIOLoginPage = function() {
      */
     me.submitValidLoginPage = function () {
         // fill loginform with invalid credentials
-        me.username.sendKeys('admin');
-        me.password.sendKeys('secret');
+        me.eleUsername.sendKeys('admin');
+        me.elePassword.sendKeys('secret');
         
         // send login
-        return me.submit.click();
+        return $(me.submit).click();
     };
 
     /**

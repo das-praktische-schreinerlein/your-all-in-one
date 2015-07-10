@@ -27,8 +27,8 @@ describe('yaio explorer guielements', function() {
                 // open explorer
                 return yaioNodePage.openExplorerFromFrontPage();
             });
-        protractor.utils.waitUntilElementClickable(yaioNodePage.containerMasterdata, protractor.utils.CONST_WAIT_NODEHIRARCHY);
-        expect(yaioNodePage.containerMasterdata.isPresent()).toEqual(true);
+        protractor.utils.waitUntilElementClickable($(yaioNodePage.containerMasterdata), protractor.utils.CONST_WAIT_NODEHIRARCHY);
+        expect($(yaioNodePage.containerMasterdata).isPresent()).toEqual(true);
     });
 
     /**
@@ -55,7 +55,7 @@ describe('yaio explorer guielements', function() {
             })
             .then( function doPpenTillLevel() {
                 // open hierarchy
-                return yaioNodePage.buttonOpenTilllevel.click();
+                return $(yaioNodePage.buttonOpenTilllevel).click();
             })
             .then( function () {
                 // count nodes
@@ -67,8 +67,8 @@ describe('yaio explorer guielements', function() {
             })
             .then( function () {
                 // increment (arrow_right)
-                yaioNodePage.inputOpenTilllevel.click();
-                return yaioNodePage.inputOpenTilllevel.sendKeys('\uE014');
+                $(yaioNodePage.inputOpenTilllevel).click();
+                return $(yaioNodePage.inputOpenTilllevel).sendKeys('\uE014');
             })
             .then( function () {
                 // count nodes
@@ -80,8 +80,8 @@ describe('yaio explorer guielements', function() {
             })
             .then( function () {
                 // dec level (arrow_left)
-                yaioNodePage.inputOpenTilllevel.click();
-                return yaioNodePage.inputOpenTilllevel.sendKeys('\uE012\uE012\uE012\uE012\uE012\uE012\uE012');
+                $(yaioNodePage.inputOpenTilllevel).click();
+                return $(yaioNodePage.inputOpenTilllevel).sendKeys('\uE012\uE012\uE012\uE012\uE012\uE012\uE012');
             })
             .then( function () {
                 // count nodes

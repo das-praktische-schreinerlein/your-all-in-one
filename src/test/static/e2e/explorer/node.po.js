@@ -17,31 +17,31 @@ var YAIONodePage = function() {
     me.jsFuncTestHierarchy = ['SysPlay1', 'SysTest1', 'JsFuncTest1'];
     
     // explorer-link
-    me.linkFrontpage = $('[translate="common.command.OpenFrontpage"]');
+    me.linkFrontpage = '[translate="common.command.OpenFrontpage"]';
     
     // mastercontainer
-    me.containerMasterdata = $('#masterdata');
-    me.expanderSysPlay1 = $('#expander' + me.sysplayId);
-    me.linkCreateChildJsFuncTest1 = $('#cmdCreate' + me.jsFuncTestId);
+    me.containerMasterdata = '#masterdata';
+    me.expanderSysPlay1 = '#expander' + me.sysplayId;
+    me.linkCreateChildJsFuncTest1 = '#cmdCreate' + me.jsFuncTestId;
     
     // gui-elements
-    me.buttonOpenTilllevel = $('a.command_switchlevel');
-    me.inputOpenTilllevel = $('#treeOpenLevel');
+    me.buttonOpenTilllevel = 'a.command_switchlevel';
+    me.inputOpenTilllevel = '#treeOpenLevel';
     
     // create form
-    me.inputCreateNodeType = $('#inputCreateNodeType');
+    me.inputCreateNodeType = '#inputCreateNodeType';
 
     // taskform
-    me.inputNameTaskNode = $('#inputNameTaskNode');
-    me.inputTypeTaskNode = $('#inputTypeTaskNode');
-    me.inputPlanAufwandTaskNode = $('#inputPlanAufwandTaskNode');
-    me.inputPlanStartTaskNode = $('#inputPlanStartTaskNode');
-    me.inputPlanEndeTaskNode = $('#inputPlanEndeTaskNode');
-    me.buttonSaveTask = $('#nodeFormTaskNode fieldset button[translate="common.buttonSave"]');
+    me.inputNameTaskNode = '#inputNameTaskNode';
+    me.inputTypeTaskNode = '#inputTypeTaskNode';
+    me.inputPlanAufwandTaskNode = '#inputPlanAufwandTaskNode';
+    me.inputPlanStartTaskNode = '#inputPlanStartTaskNode';
+    me.inputPlanEndeTaskNode = '#inputPlanEndeTaskNode';
+    me.buttonSaveTask = '#nodeFormTaskNode fieldset button[translate="common.buttonSave"]';
     
     // symlinkform
-    me.inputNameSymLinkNode = $('#inputNameSymLinkNode');
-    me.buttonSaveSymLink = $('#nodeFormSymLinkNode fieldset button[translate="common.buttonSave"]');
+    me.inputNameSymLinkNode = '#inputNameSymLinkNode';
+    me.buttonSaveSymLink = '#nodeFormSymLinkNode fieldset button[translate="common.buttonSave"]';
 
     // utils
     me.idUiDatePicker = "#ui-datepicker-div";
@@ -50,7 +50,7 @@ var YAIONodePage = function() {
     
     /**
      * open masterpage
-     * @returns {Browser}  - broser element
+     * @returns {Browser}  - browser element
      */
     me.openMasternode = function () {
         browser.get(browser.params.yaioConfig.yaioBaseAppUrl + '/show/MasterplanMasternode1');
@@ -63,16 +63,13 @@ var YAIONodePage = function() {
      */
     me.openExplorerFromFrontPage = function () {
         // expect frontPage
-        protractor.utils.waitUntilElementPresent(yaioFrontPage.fontContentLeft, protractor.utils.CONST_WAIT_ELEMENT);
-        expect(yaioFrontPage.fontContentLeft.getAttribute('id')).toEqual("front-content-left");
+        protractor.utils.waitUntilElementPresent($(yaioFrontPage.fontContentLeft), protractor.utils.CONST_WAIT_ELEMENT);
         
         // open explorer-link
-        yaioFrontPage.linkExplorer.click();
+        $(yaioFrontPage.linkExplorer).click();
         
         // expect SysPlay1
-        protractor.utils.waitUntilElementClickable(me.expanderSysPlay1, protractor.utils.CONST_WAIT_ELEMENT);
-        expect(me.expanderSysPlay1.getAttribute('id')).toEqual('expanderSysPlay1');
-        return protractor.utils.waitUntilElementClickable(me.expanderSysPlay1, protractor.utils.CONST_WAIT_ELEMENT);
+        return protractor.utils.waitUntilElementClickable($(me.expanderSysPlay1), protractor.utils.CONST_WAIT_ELEMENT);
 
     };
 
@@ -137,7 +134,6 @@ var YAIONodePage = function() {
         // load base for node
         var linkCmdCreateNodeForMe = $('#cmdCreateSymLink' + nodeId);
         protractor.utils.waitUntilElementClickable(linkCmdCreateNodeForMe, protractor.utils.CONST_WAIT_NODEHIRARCHY);
-        expect(linkCmdCreateNodeForMe.getAttribute('id')).toEqual('cmdCreateSymLink' + nodeId);
         
         // find symlink on nodeline
         var focusMe = linkCmdCreateNodeForMe.element(by.xpath("../../td[1]/span/span[2]/a"));
@@ -150,7 +146,6 @@ var YAIONodePage = function() {
     
             // wait till data is loaded
             protractor.utils.waitUntilElementPresent(linkCmdCreateNodeForMe, protractor.utils.CONST_WAIT_ELEMENT);
-            expect(linkCmdCreateNodeForMe.getAttribute('id')).toEqual('cmdCreateSymLink' + nodeId);
             
             // expect new Url
             expect(browser.getLocationAbsUrl()).toContain('show/' + nodeId);
@@ -168,26 +163,23 @@ var YAIONodePage = function() {
     me.openNodeEditorAndCreateTaskNode = function (parentId) {
         var linkCmdCreateNode = $('#cmdCreate' + parentId);
         protractor.utils.waitUntilElementClickable(linkCmdCreateNode, protractor.utils.CONST_WAIT_NODEHIRARCHY);
-        expect(linkCmdCreateNode.getAttribute('id')).toEqual('cmdCreate' + parentId);
 
         // create child for parentId
         linkCmdCreateNode.click();
-        protractor.utils.waitUntilElementPresent(me.inputCreateNodeType, protractor.utils.CONST_WAIT_ELEMENT);
-        expect(me.inputCreateNodeType.getAttribute('id')).toEqual('inputCreateNodeType');
+        protractor.utils.waitUntilElementPresent($(me.inputCreateNodeType), protractor.utils.CONST_WAIT_ELEMENT);
 
         // select Aufgabe
-        me.inputCreateNodeType.sendKeys('Aufgabe\n');
-        expect(me.inputNameTaskNode.getAttribute('id')).toEqual('inputNameTaskNode');
+        $(me.inputCreateNodeType).sendKeys('Aufgabe\n');
         
         // set taskdata and submit form
         var taskName = 'testask' + new Date().getTime();
-        me.inputNameTaskNode.sendKeys(taskName);
-        me.inputTypeTaskNode.sendKeys("+-- Offen\n");
-        me.inputPlanAufwandTaskNode.sendKeys("1");
-        me.inputPlanStartTaskNode.click();
+        $(me.inputNameTaskNode).sendKeys(taskName);
+        $(me.inputTypeTaskNode).sendKeys("+-- Offen\n");
+        $(me.inputPlanAufwandTaskNode).sendKeys("1");
+        $(me.inputPlanStartTaskNode).click();
         protractor.utils.waitUntilElementPresent(me.uiDatePickerDay1, protractor.utils.CONST_WAIT_ELEMENT);
         me.uiDatePickerDay1.click();
-        me.inputPlanEndeTaskNode.click();
+        $(me.inputPlanEndeTaskNode).click();
         protractor.utils.waitUntilElementPresent(me.uiDatePickerDay25, protractor.utils.CONST_WAIT_ELEMENT);
         me.uiDatePickerDay25.click();
         
@@ -198,15 +190,15 @@ var YAIONodePage = function() {
         var eleNewTaskName = element(by.cssContainingText('span.fancytree-title2', taskName));
 
         // submit form
-        protractor.utils.waitUntilElementPresent(me.buttonSaveTask, protractor.utils.CONST_WAIT_ELEMENT);
-        expect(me.buttonSaveTask.isDisplayed()).toEqual(true);
-        me.buttonSaveTask.click().then(function () {
+        var buttonSaveTask = $(me.buttonSaveTask);
+        protractor.utils.waitUntilElementPresent(buttonSaveTask, protractor.utils.CONST_WAIT_ELEMENT);
+        expect(buttonSaveTask.isDisplayed()).toEqual(true);
+        buttonSaveTask.click().then(function () {
             // wait for result
             browser.ignoreSynchronization = true;
     
             // wait till parent- data is loaded
             protractor.utils.waitUntilElementPresent(linkCmdCreateNode, protractor.utils.CONST_WAIT_NODEHIRARCHY);
-            expect(linkCmdCreateNode.getAttribute('id')).toEqual('cmdCreate' + parentId);
             
             // wait till data is loaded
             protractor.utils.waitUntilElementPresent(eleNewTaskName, protractor.utils.CONST_WAIT_ELEMENT);
@@ -235,17 +227,19 @@ var YAIONodePage = function() {
 
         linkCmdEditNode.click().then(function () {
             // set new taskdata and submit form
-            protractor.utils.waitUntilElementPresent(me.inputNameTaskNode, protractor.utils.CONST_WAIT_ELEMENT);
-            me.inputNameTaskNode.clear().then(function () {
-                me.inputNameTaskNode.sendKeys(taskName);
+            var inputNameTaskNode = $(me.inputNameTaskNode);
+            protractor.utils.waitUntilElementPresent(inputNameTaskNode, protractor.utils.CONST_WAIT_ELEMENT);
+            inputNameTaskNode.clear().then(function () {
+                inputNameTaskNode.sendKeys(taskName);
             });
-            me.inputPlanAufwandTaskNode.clear().then(function () {
-                me.inputPlanAufwandTaskNode.sendKeys("10");
+            var inputPlanAufwandTaskNode = $(me.inputPlanAufwandTaskNode);
+            inputPlanAufwandTaskNode.clear().then(function () {
+                inputPlanAufwandTaskNode.sendKeys("10");
             });
-            me.inputPlanStartTaskNode.click();
+            $(me.inputPlanStartTaskNode).click();
             protractor.utils.waitUntilElementPresent(me.uiDatePickerDay1, protractor.utils.CONST_WAIT_ELEMENT);
             me.uiDatePickerDay1.click();
-            me.inputPlanEndeTaskNode.click();
+            $(me.inputPlanEndeTaskNode).click();
             protractor.utils.waitUntilElementPresent(me.uiDatePickerDay25, protractor.utils.CONST_WAIT_ELEMENT);
             me.uiDatePickerDay25.click();
             
@@ -253,9 +247,10 @@ var YAIONodePage = function() {
             me.openAndEditDescForNodeType("Task", " - berichtigt");
 
             // submit form
-            protractor.utils.waitUntilElementPresent(me.buttonSaveTask, protractor.utils.CONST_WAIT_ELEMENT);
-            expect(me.buttonSaveTask.isDisplayed()).toEqual(true);
-            me.buttonSaveTask.click().then(function () {
+            var buttonSaveTask = $(me.buttonSaveTask);
+            protractor.utils.waitUntilElementPresent(buttonSaveTask, protractor.utils.CONST_WAIT_ELEMENT);
+            expect(buttonSaveTask.isDisplayed()).toEqual(true);
+            buttonSaveTask.click().then(function () {
                 // wait for result
                 browser.ignoreSynchronization = true;
         
@@ -282,16 +277,13 @@ var YAIONodePage = function() {
 
         // create child for parentId
         linkCmdCreateNode.click();
-        protractor.utils.waitUntilElementPresent(me.inputCreateNodeType, protractor.utils.CONST_WAIT_ELEMENT);
-        expect(me.inputCreateNodeType.getAttribute('id')).toEqual('inputCreateNodeType');
+        protractor.utils.waitUntilElementPresent($(me.inputCreateNodeType), protractor.utils.CONST_WAIT_ELEMENT);
 
-        // select Aufgabe
-        expect(me.inputNameSymLinkNode.getAttribute('id')).toEqual('inputNameSymLinkNode');
-        
         // set symlinkdata
         var nodeName = 'testsymlink' + new Date().getTime();
-        me.inputNameSymLinkNode.clear().then(function () {
-            me.inputNameSymLinkNode.sendKeys(nodeName);
+        var inputNameSymLinkNode = $(me.inputNameSymLinkNode);
+        inputNameSymLinkNode.clear().then(function () {
+            inputNameSymLinkNode.sendKeys(nodeName);
         });
         
         // set desc
@@ -301,15 +293,15 @@ var YAIONodePage = function() {
         var eleNewSymLinkName = element(by.cssContainingText('span.fancytree-title2', nodeName));
 
         // submit form
-        protractor.utils.waitUntilElementPresent(me.buttonSaveSymLink, protractor.utils.CONST_WAIT_ELEMENT);
-        expect(me.buttonSaveSymLink.isDisplayed()).toEqual(true);
-        me.buttonSaveSymLink.click().then(function () {
+        var buttonSaveSymLink = $(me.buttonSaveSymLink);
+        protractor.utils.waitUntilElementPresent(buttonSaveSymLink, protractor.utils.CONST_WAIT_ELEMENT);
+        expect(buttonSaveSymLink.isDisplayed()).toEqual(true);
+        buttonSaveSymLink.click().then(function () {
             // wait for result
             browser.ignoreSynchronization = true;
     
             // wait till parent- data is loaded
             protractor.utils.waitUntilElementPresent(linkCmdCreateNode, protractor.utils.CONST_WAIT_NODEHIRARCHY);
-            expect(linkCmdCreateNode.getAttribute('id')).toEqual('cmdCreateSymLink' + parentId);
             
             // wait till data is loaded
             protractor.utils.waitUntilElementPresent(eleNewSymLinkName, protractor.utils.CONST_WAIT_ELEMENT);
@@ -337,7 +329,6 @@ var YAIONodePage = function() {
             filterDescForm_Off.click();
         }
         protractor.utils.waitUntilElementPresent(editorInputNodeDesc, protractor.utils.CONST_WAIT_ELEMENT);
-        expect(editorInputNodeDesc.getAttribute('id')).toEqual('editorInputNodeDesc' + nodeType + 'Node');
         browser.actions().doubleClick(editorInputNodeDesc).perform();
         return inputAceElm.sendKeys(newText);
     }
@@ -352,7 +343,6 @@ var YAIONodePage = function() {
         // load base for node
         var linkCmdCreateNodeForMe = $('#cmdCreateSymLink' + nodeId);
         protractor.utils.waitUntilElementClickable(linkCmdCreateNodeForMe, protractor.utils.CONST_WAIT_NODEHIRARCHY);
-        expect(linkCmdCreateNodeForMe.getAttribute('id')).toEqual('cmdCreateSymLink' + nodeId);
         
         // load finder for parent
         var linkCmdCreateNodeForParent = $('#cmdCreateSymLink' + parentId);
@@ -368,11 +358,9 @@ var YAIONodePage = function() {
     
             // wait till parent- data is loaded
             protractor.utils.waitUntilElementPresent(linkCmdCreateNodeForParent, protractor.utils.CONST_WAIT_NODEHIRARCHY);
-            expect(linkCmdCreateNodeForParent.getAttribute('id')).toEqual('cmdCreateSymLink' + parentId);
             
             // wait till data is loaded
             protractor.utils.waitUntilElementPresent(linkCmdCreateNodeForMe, protractor.utils.CONST_WAIT_ELEMENT);
-            expect(linkCmdCreateNodeForMe.getAttribute('id')).toEqual('cmdCreateSymLink' + nodeId);
             
             // expect new Url
             expect(browser.getLocationAbsUrl()).toContain('activate/' + parentId);
@@ -430,7 +418,6 @@ var YAIONodePage = function() {
             // wait till data is loaded
             var checkElement = $('#cmdCreate' + checkId);
             protractor.utils.waitUntilElementClickable(checkElement, protractor.utils.CONST_WAIT_NODEHIRARCHY);
-            expect(me.linkCreateChildJsFuncTest1.getAttribute('id')).toEqual('cmdCreate' + checkId);
             
             // wait till data is loaded
             protractor.utils.waitThatElementIsNotPresent(linkCmdRemoveNode, protractor.utils.CONST_WAIT_ELEMENT);
