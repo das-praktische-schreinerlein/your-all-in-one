@@ -289,7 +289,7 @@ function yaioCreateFancyTree(treeId, masterNodeId, doneHandler) {
                 return true;
             },
             dragDrop: function(node, data) {
-                if (confirm("Wollen Sie die Node wirklich verschieben?")) {
+                if (window.confirm("Wollen Sie die Node wirklich verschieben?")) {
                     data.otherNode.moveTo(node, data.hitMode);
 
                     // check parent of the node
@@ -342,7 +342,7 @@ function yaioCreateFancyTree(treeId, masterNodeId, doneHandler) {
             save: function(event, data){
                 // unused because we use the yaioeditor
 
-                if (confirm("Wollen Sie den Titel wirklich ändern?")) {
+                if (window.confirm("Wollen Sie den Titel wirklich ändern?")) {
                     // Save data.input.val() or return false to keep editor open
                     yaioSaveNode(data);
                     // We return true, so ext-edit will set the current user input
@@ -393,7 +393,7 @@ function yaioCreateFancyTree(treeId, masterNodeId, doneHandler) {
                 node.editStart();
                 break;
             case "indent":
-                if (confirm("Wollen Sie die Node wirklich verschieben?")) {
+                if (window.confirm("Wollen Sie die Node wirklich verschieben?")) {
                     // move fancynode
                     refNode = node.getPrevSibling();
                     node.moveTo(refNode, "child");
@@ -416,7 +416,7 @@ function yaioCreateFancyTree(treeId, masterNodeId, doneHandler) {
                 
                 break;
             case "outdent":
-                if (confirm("Wollen Sie die Node wirklich verschieben?")) {
+                if (window.confirm("Wollen Sie die Node wirklich verschieben?")) {
                     // move fancynode
                     var newParent = node.getParent().getParent();
                     node.moveTo(node.getParent(), "after");
@@ -490,7 +490,7 @@ function yaioCreateFancyTree(treeId, masterNodeId, doneHandler) {
                 window.open('#/show/' + node.key, '_blank');
                 break;
             default:
-                alert("Unhandled command: " + data.cmd);
+                window.alert("Unhandled command: " + data.cmd);
                 return;
         }
   
@@ -1778,7 +1778,7 @@ function yaioMoveNode(node, newParentKey, newPos) {
 }
 
 function yaioRemoveNodeById(nodeId) {
-    if (confirm("Wollen Sie die Node wirklich l&ouml;schen?")) {
+    if (window.confirm("Wollen Sie die Node wirklich l&ouml;schen?")) {
         console.log("remove node:" + nodeId);
         // check for tree
         var treeId = "#tree";
@@ -1985,7 +1985,7 @@ function yaioDoRemoveNode(node, url) {
                         var violation = response.violations[idx];
                         logError("violations while remove node:" + node.key 
                                 + " field:" + violation.path + " message:" + violation.message, false);
-                        alert("cant remove node because: " + violation.path + " (" + violation.message + ")")
+                        window.alert("cant remove node because: " + violation.path + " (" + violation.message + ")")
                     }
                 }
             }

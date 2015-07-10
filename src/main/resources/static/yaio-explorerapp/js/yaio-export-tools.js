@@ -117,7 +117,7 @@ function calcColumns(nodeTDId, functionName, praefix, suffix) {
    
    // abschließender Fehlercheck
    if (errMsg) {
-      alert("Fehler aufgetreten: " + errMsg);
+      window.alert("Fehler aufgetreten: " + errMsg);
       return null;
    }
    
@@ -224,7 +224,7 @@ function doAllNodeToggler(flgShow, minEbene) {
         }
     } catch (e) {
         // anscheinend  nicht definiert
-        alert(e);
+        window.alert(e);
     }
 }
 
@@ -265,7 +265,7 @@ function doParentNodeToggler(myId, flgShow) {
         }
     } catch (e) {
         // anscheinend  nicht definiert
-        alert(e);
+        window.alert(e);
     }
 }
 
