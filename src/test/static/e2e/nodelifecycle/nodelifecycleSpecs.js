@@ -8,7 +8,7 @@ var YAIOLoginPage = require('../login/login.po.js');
 var YAIOFrontPage = require('../frontpage/frontpage.po.js');
 var YAIONodePage = require('../explorer/node.po.js');
 
-describe('yaio explorer', function() {
+describe('yaio explorer nodelifecycle', function() {
     // define vars
     var yaioLoginPage, yaioFrontPage, yaioNodePage;
 
@@ -20,13 +20,6 @@ describe('yaio explorer', function() {
         yaioLoginPage = new YAIOLoginPage();
         yaioFrontPage = new YAIOFrontPage();
         yaioNodePage = new YAIONodePage();
-        
-        // bypassing PhantomJS 1.9.7/GhostDriver window.confirm (or alert) bug.
-        // as WebDriver's switchTo().alert() is not implemented yet.
-        if (browser.browserName == "phantomjs") {
-            browser.executeScript('window.confirm = function() {return true;}');
-        }
-
         
         // do Login
         yaioLoginPage.doLogin()
@@ -129,7 +122,7 @@ describe('yaio explorer', function() {
                 return deferred.promise;
             })
             .then(function doneFollowSymLink(nodeId){
-                // delete this task
+                // delete this symlink
                 var deferred = protractor.promise.defer();
                 var deletedElement = yaioNodePage.deleteNodeById(nodeId, yaioNodePage.jsFuncTestId);
                 deletedElement.isPresent().then(function() {

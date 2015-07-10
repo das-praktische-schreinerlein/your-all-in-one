@@ -409,13 +409,23 @@ var YAIONodePage = function() {
         protractor.utils.waitUntilElementClickable(linkCmdRemoveNode, protractor.utils.CONST_WAIT_ELEMENT);
         expect(linkCmdRemoveNode.isDisplayed()).toEqual(true);
         
+        // bypassing PhantomJS 1.9.7/GhostDriver window.confirm (or alert) bug.
+        // as WebDriver's switchTo().alert() is not implemented yet.
+        if (browser.browserName === "phantomjs") {
+            browser.executeScript('window.alert = function(msg) {}');
+            browser.executeScript('window.confirm = function(msg) {console.error("confirm: " + msg); return true;}');
+        }
+
         linkCmdRemoveNode.click().then(function () {
             // wait for result
             browser.ignoreSynchronization = true;
             
-            // accept delete
-            var alertDialog = browser.switchTo().alert();
-            expect(alertDialog.accept()).toBe(null);
+            // switch to alert only if not phantomjs
+            if (browser.browserName !== "phantomjs") {
+                // accept delete
+                var alertDialog = browser.switchTo().alert();
+                expect(alertDialog.accept()).toBe(null);
+            }
     
             // wait till data is loaded
             var checkElement = $('#cmdCreate' + checkId);
