@@ -19,32 +19,35 @@ exports.config = {
 
     // Capabilities to be passed to the webdriver instance.
     multiCapabilities: [
-        {
-            'browserName': 'chrome',
-            'chromeOptions': {
-                'binary': chromeBin,
-                args: [],
-                extensions: [],
-                prefs: {
-                    'download': {
-                        'prompt_for_download': false,
-                        'default_directory': downloadPath,
-                    },
-                },
-            },
-        },
-
+//        {
+//            'browserName': 'chrome',
+//            'chromeOptions': {
+//                'binary': chromeBin,
+//                args: [],
+//                extensions: [],
+//                prefs: {
+//                    'download': {
+//                        'prompt_for_download': false,
+//                        'default_directory': downloadPath,
+//                    },
+//                },
+//            },
+//        },
 //        {
 //                'browserName': 'firefox',
 //                profile.set_preference('browser.download.dir', download_path)
 //        },
+
 //        {
-//            // phantomjs buggy :-(
-//            'browserName': 'phantomjs',
-//            'phantomjs.binary.path': require('phantomjs').path,
-//             // Command line args to pass to ghostdriver, phantomjs's browser driver. See https://github.com/detro/ghostdriver#faq
-//            'phantomjs.ghostdriver.cli.args': ['--local-storage-path d:/tmp/', '--loglevel=DEBUG']
-//        }
+//            'browserName': 'iexplorer'
+//        },
+        {
+            // phantomjs buggy :-(
+            'browserName': 'phantomjs',
+            'phantomjs.binary.path': require('phantomjs').path,
+             // Command line args to pass to ghostdriver, phantomjs's browser driver. See https://github.com/detro/ghostdriver#faq
+            'phantomjs.ghostdriver.cli.args': ['--local-storage-path d:/tmp/', '--loglevel=DEBUG']
+        }
     ],
     
     getPageTimeout: 100000,
@@ -67,7 +70,7 @@ exports.config = {
     jasmineNodeOpts: {
         showColors: true, // Use colors in the command line report.
         defaultTimeoutInterval: 360000,
-//        isVerbose: true,
+        isVerbose: true,
         realtimeFailure: true,
         includeStackTrace: true,
         print: function() {}
@@ -100,12 +103,12 @@ exports.config = {
 
         // add ScreenshotReporter
 // sometimes buggy :-(
-//        jasmine.getEnv().addReporter(
-//            new ScreenShotReporter({
-//                baseDirectory: "target/protractor-reports/"
-//                }
-//            )
-//        );
+        jasmine.getEnv().addReporter(
+            new ScreenShotReporter({
+                baseDirectory: "target/protractor-reports/"
+                }
+            )
+        );
         
         // add logging
         browser.manage().logs().get('browser').then(function(browserLog) {
