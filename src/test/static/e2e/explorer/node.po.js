@@ -221,6 +221,11 @@ var YAIONodePage = function() {
         protractor.utils.waitUntilElementClickable(linkCmdEditNode, protractor.utils.CONST_WAIT_ELEMENT);
         expect(linkCmdEditNode.isDisplayed()).toEqual(true);
 
+        if (browser.browserName === "phantomjs") {
+            //phantomjs breaks while nodeedit, so we return the current taskname-element 
+            return $("#title" + nodeId);
+        }
+        
         // define SearchElement
         var taskName = 'correct testask' + new Date().getTime();
         var eleNewTaskName = element(by.cssContainingText('span.fancytree-title2', taskName));
