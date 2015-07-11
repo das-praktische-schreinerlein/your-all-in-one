@@ -56,6 +56,6 @@ var YAIOLangPage = function() {
                 // reset mousepos for tooltips
                 return browser.actions().mouseMove($(me.linkMouseReset)).perform();
             });
-    }
+    };
 };
 module.exports = YAIOLangPage;

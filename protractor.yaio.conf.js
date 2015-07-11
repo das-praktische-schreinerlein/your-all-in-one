@@ -56,15 +56,15 @@ exports.config = {
     // Spec patterns are relative to the configuration file location passed
     suites: {
         explorer:      [testDir + '/explorer/**/*Specs.js'],
-        guielements:   [testDir + '/explorer/**/guiElementsSpecs.js'],
+          exports:     [testDir + '/explorer/**/exportsSpecs.js'],
+          guielements: [testDir + '/explorer/**/guiElementsSpecs.js'],
+          nodeelements:[testDir + '/explorer/**/nodeElementsSpecs.js'],
         lang:          [testDir + '/lang/**/*Specs.js'],
         login:         [testDir + '/login/**/*Specs.js'],
         nodelifecycle: [testDir + '/nodelifecycle/**/*Specs.js'],
         search:        [testDir + '/search/**/*Specs.js'],
+        wysiwyg:       [testDir + '/wysiwyg/**/*Specs.js'],
         full:          [testDir + '/**/*Specs.js'],
-        //search:        ['tests/e2e/search/**/*Spec.js']
-        //formats:       ['tests/e2e/formats/**/*Spec.js']
-        //export:        ['tests/e2e/export/**/*Spec.js']
     },
 
     // Options to be passed to Jasmine-node.

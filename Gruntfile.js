@@ -168,7 +168,7 @@ module.exports = function( grunt ){
                 // debug: true,
            
                 // Additional arguments that are passed to the webdriver command
-                args: { }
+                args: { suite: "full"}
             },
             e2e: {
                 options: {
@@ -189,13 +189,13 @@ module.exports = function( grunt ){
             },
             karma: {
                 // run when projectJsFiles or tests changed
-                files: ['<%= projectJsFiles %>', 'src/test/static/unit/yaio-explorerapp/**/*'],
-                tasks: ['karma:continuous:run']
+                files: ['<%= projectJsFiles %>', 'src/test/static/unit/**/*'],
+                tasks: ['dist', 'karma:continuous:run']
             },
             protractor: {
                 // run when any projectfiles or tests changed
-                files: ['src/main/resources/static/yaio-explorerapp/**/*.*', 'src/test/static/e2e/yaio-explorerapp/**/*'],
-                tasks: ['protractor:continuous']
+                files: ['src/main/resources/static/yaio-explorerapp/**/*.*', 'src/test/static/e2e/**/*'],
+                tasks: ['dist', 'protractor:continuous']
             }
         }
     });
