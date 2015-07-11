@@ -57,6 +57,7 @@ exports.config = {
     suites: {
         explorer:      [testDir + '/explorer/**/*Specs.js'],
         guielements:   [testDir + '/explorer/**/guiElementsSpecs.js'],
+        lang:          [testDir + '/lang/**/*Specs.js'],
         login:         [testDir + '/login/**/*Specs.js'],
         nodelifecycle: [testDir + '/nodelifecycle/**/*Specs.js'],
         search:        [testDir + '/search/**/*Specs.js'],
