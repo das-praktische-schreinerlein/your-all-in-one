@@ -89,10 +89,10 @@ yaioM.config(function($routeProvider) {
             templateUrl: 'templates/node.html' })
         .when('/search/:curPage?/:pageSize?/:searchSort?/:baseSysUID?/:fulltext?/', { 
             controller:  'NodeSearchCtrl',
-            templateUrl: 'templates/list-nodes.html' })
+            templateUrl: 'templates/node-search.html' })
         .when('/search/', { 
             controller:  'NodeSearchCtrl',
-            templateUrl: 'templates/list-nodes.html' })
+            templateUrl: 'templates/node-search.html' })
         .when('/login', {
             controller : 'AuthController',
             templateUrl: 'templates/login.html' })
