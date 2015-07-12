@@ -187,6 +187,11 @@ module.exports = function( grunt ){
             options: {
                 livereload: true
             },
+            dist: {
+                // run when any projectfiles or tests changed
+                files: ['src/main/resources/static/yaio-explorerapp/**/*.*', 'src/test/static/e2e/**/*'],
+                tasks: ['dist']
+            },
             karma: {
                 // run when projectJsFiles or tests changed
                 files: ['<%= projectJsFiles %>', 'src/test/static/unit/**/*'],
