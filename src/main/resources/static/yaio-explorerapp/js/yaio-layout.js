@@ -652,11 +652,11 @@ function yaioShowHelpSite(url) {
          var forElement = form.find("[name="+ forName + "]").first();
          if (forElement.length > 0) {
              // define link to label
-             link = "<a href=\"#\" " +
+             link = "<a href=\"#\" id='showPreview4" + forElement.attr('id') + "'" +
                     " onClick=\"showPreviewForTextareaId('" +
                        forElement.attr('id') + "'); return false;" +
                     "\" lang='tech' data-tooltip='tooltip.command.OpenPreview' class='button'>common.command.OpenPreview</a>";
-             link += "<a href=\"#\" " +
+             link += "<a href=\"#\" id='openMarkdownHelp4" + forElement.attr('id') + "'" +
                      " onClick=\"showMarkdownHelp(); return false;" +
                      "\" lang='tech' data-tooltip='tooltip.command.OpenMarkdownHelp' class='button'>common.command.OpenMarkdownHelp</a>";
              
@@ -690,7 +690,7 @@ function yaioShowHelpSite(url) {
          var forElement = form.find("[name="+ forName + "]").first();
          if (forElement.length > 0) {
              // define link to label
-             link = "<a href=\"#\" " +
+             link = "<a href=\"#\" id='openWysiwyg4" + forElement.attr('id') + "'" +
                  " onClick=\"openWysiwhgForTextareaId('" +
                      forElement.attr('id') + "'); return false;" +
                  "\" lang='tech' data-tooltip='tooltip.command.OpenWysiwygEditor' class='button'>common.command.OpenWysiwygEditor</a>";
