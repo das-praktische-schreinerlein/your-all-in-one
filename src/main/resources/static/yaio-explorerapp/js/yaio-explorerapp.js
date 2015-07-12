@@ -925,6 +925,25 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
         yaioExportExplorerLinesAsOverview();
         return false;
     }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Editor
+     * <h4>FeatureDescription:</h4>
+     *     create snapshot of GUI
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>snapshot
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     GUI Callback
+     */
+    $scope.snapshot = function() {
+        console.log("snapshot");
+        yaioSnapshot($scope.node);
+        return false;
+    }
+
     /**
      * <h4>FeatureDomain:</h4>
      *     Editor

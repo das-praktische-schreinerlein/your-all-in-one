@@ -36,6 +36,7 @@
     "common.command.OpenTreeLevel": "open till level",
     "common.command.OpenTreeView": "tree view",
     "common.command.Print": "Print",
+    "common.command.Snapshot": "Snapshot",
     "common.select.className.EventNode": "event",
     "common.select.className.InfoNode": "information",
     "common.select.className.SymLinkNode": "link",

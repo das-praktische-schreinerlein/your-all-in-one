@@ -36,6 +36,7 @@
     "common.command.OpenTreeLevel": "&Ouml;ffne bis Level",
     "common.command.OpenTreeView": "Baumansicht",
     "common.command.Print": "Drucken",
+    "common.command.Snapshot": "Snapshot",
     "common.select.className.EventNode": "Termin",
     "common.select.className.InfoNode": "Information",
     "common.select.className.SymLinkNode": "Verknüpfung",

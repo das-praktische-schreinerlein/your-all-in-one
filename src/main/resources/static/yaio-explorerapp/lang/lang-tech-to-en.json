@@ -62,6 +62,7 @@
         "tooltip.command.OpenTreeView": "Go over this link to the tree view of your data",
         "tooltip.command.Print": "Print the page in a custom print version Make best in the print preview landscape and a zoom level of 90%.",
         "tooltip.command.ShowGanttData": "Go here between the view of the raw data and a representation of a Gantt chart <br /> <br /> <b> Warning !!! </ b> The Gantt diagram is merely a rough distribution of the plan / actual hours for the entire plan / actual period. Aufwende without period are first / Actual date added to or if the item is no date is visible, not at all included parents with itinerary Aufwende of child elements are distributed over the entire period of the parent element and thus can move totally So plan + is always best to maintain with date, otherwise it is in the Gantt view 'ridiculous' effects;-) ",
+        "tooltip.command.Snapshot": "Snapshot as Markdown-todolist+GanttMarkdown",
         "tooltip.command.ToggleDesc": "Show the detailed description.",
         "tooltip.command.ToggleDescAll": "Show for all nodes in the detailed descriptions.",
         "tooltip.command.ToggleSys": "Show metadata to.",

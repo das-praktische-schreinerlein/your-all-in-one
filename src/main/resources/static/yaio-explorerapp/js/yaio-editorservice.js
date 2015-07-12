@@ -243,8 +243,9 @@ function yaioOpenNodeEditor(nodeId, mode) {
  *     GUI Editor
  * @param basenode - the node
  * @param mode - edit, create, createsymlink
+ * @param newNode - optional node to copy data from (for mode createsnapshot...)
  */
-function yaioOpenNodeEditorForNode(basenode, mode) {
+function yaioOpenNodeEditorForNode(basenode, mode, newNode) {
     // reset editor
     console.log("yaioOpenNodeEditor: reset editor");
     yaioResetNodeEditor();
@@ -255,7 +256,7 @@ function yaioOpenNodeEditorForNode(basenode, mode) {
         logError("error yaioOpenNodeEditor: basenode required", false);
         return null;
     }
-    var nodeId = basenode['id'];
+    var nodeId = basenode['sysUID'];
 
     // check mode    
     var fields = new Array();
@@ -312,8 +313,25 @@ function yaioOpenNodeEditorForNode(basenode, mode) {
                 symLinkRef: origBasenode.metaNodePraefix + "" + origBasenode.metaNodeNummer
         };
         console.log("yaioOpenNodeEditor mode=createsymlink for node:" + nodeId);
+    } else if (mode == "createsnapshot") {
+        // mode create
+        formSuffix = "InfoNode";
+        fieldSuffix = "InfoNode";
+        fields = fields.concat(configNodeTypeFields.CreateSnapshot.fields);
+
+        // new basenode
+        basenode = {
+                mode: "create",
+                sysUID: origBasenode.sysUID,
+                name: "Snapshot für: '" + origBasenode.name + "' vom " + formatGermanDateTime((new Date()).getTime()),
+                type: "INFO",
+                state: "INFO",
+                className: "InfoNode",
+                nodeDesc: newNode.nodeDesc
+        };
+        console.error("yaioOpenNodeEditor mode=createsnapshot for node:" + nodeId);
     } else {
-        logError("error yaioOpenNodeEditor: unknown mode" + mode 
+        logError("error yaioOpenNodeEditor: unknown mode=" + mode 
                 + " for nodeId:" + nodeId, false);
         return null;
     }

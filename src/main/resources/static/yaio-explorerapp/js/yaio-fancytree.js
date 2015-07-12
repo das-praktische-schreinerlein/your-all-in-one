@@ -67,6 +67,16 @@ var configNodeTypeFields = {
             { fieldName: "mode", type: "hidden", intern: true},
         ]
     },
+    CreateSnapshot: {
+        fields: [
+            { fieldName: "name", type: "input"},
+            { fieldName: "type", type: "hidden"},
+            { fieldName: "className", type: "hidden"},
+            { fieldName: "sysUID", type: "hidden"},
+            { fieldName: "nodeDesc", type: "textarea"},
+            { fieldName: "mode", type: "hidden", intern: true},
+        ]
+    },
     Common: {
         fields: [
             { fieldName: "className", type: "hidden"},
@@ -2098,6 +2108,30 @@ function yaioExportExplorerLinesAsOverview() {
         }
     });    
 }
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     GUI
+ * <h4>FeatureDescription:</h4>
+ *     open the nodeeditor with a new infornode with snaphot of current gui: checklist and gantt-markdown
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>GUI-result: open the nodeeditor for new infonode with checklist/ganttmarkdown-converted node-content
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Convert
+ */
+function yaioSnapshot(parentNode) {
+    // convert and secure
+    var checkListSrc = convertExplorerLinesAsCheckList();
+    checkListSrc = htmlEscapeText(checkListSrc);
+    var ganttSrc = convertExplorerLinesAsGanttMarkdown();
+    ganttSrc = htmlEscapeText(ganttSrc);
+
+    // open editor
+    yaioOpenNodeEditorForNode(parentNode, 'createsnapshot', {nodeDesc: checkListSrc + "\n\n" +  ganttSrc});
+}
+
 
 /**
  * <h4>FeatureDomain:</h4>
