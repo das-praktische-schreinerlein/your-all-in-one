@@ -8,6 +8,7 @@ var YAIOLoginPage = require('../login/login.po.js');
 var YAIOFrontPage = require('../frontpage/frontpage.po.js');
 var YAIONodePage = require('../explorer/node.po.js');
 var YAIOExportPage = require('../explorer/exports.po.js');
+var fs = require('fs');
 
 describe('yaio explorer exports', function() {
 
@@ -43,6 +44,108 @@ describe('yaio explorer exports', function() {
     /**
      * define tests
      */
+    it('should focus on a node, click on snapshot and open the info-editor with a sanpshot of children as checklist+gantt', function doSnapshotOfTestNode() {
+        // Given
+        var expectedMarkdownPartial = "#·Gantt:·Überschritten·-·Ein·Beispiel-Projekt·(Stand:XXX)";
+
+        // When and Then
+
+        // navigate to Node
+        return yaioNodePage.navigateToNode(yaioNodePage.jsFuncTestHierarchy)
+            .then(function doneNavigate(){
+                // focus on node
+                var deferred = protractor.promise.defer();
+                // call service-function
+                var link = yaioNodePage.focusOnNode(yaioNodePage.jsLayoutTestId);
+                link.getText().then(function() {
+                    deferred.fulfill(link);
+                });
+                
+                return deferred.promise;
+            })
+            .then(function clickExport() {
+                // click Export-Button
+                return $('[translate="common.command.Snapshot"]').click();
+            })
+            .then(function checkForm() {
+                // check form to create new infonode with snapshot
+                
+                // check nodetype
+                expect($('#inputTypeInfoNode').isDisplayed()).toEqual(true);
+                //expect($('#inputTypeInfoNode > option:selected').getText()).toEqual("Information");
+
+                // check name-data
+                expect($('#inputNameInfoNode').isDisplayed()).toEqual(true);
+                return $('#inputNameInfoNode').getAttribute('value')
+                    .then(function getData(content) {
+                        // normalize and check name-data
+                        content = content.replace(/vom .*?/g, "vom XXX");
+                        expect(content).toContain("Snapshot für: 'Ein Beispiel-Projekt' vom XXX");
+                    });
+            })
+            .then(function checkDescForm() {
+                // check desc-data
+                expect($('#editorInputNodeDescInfoNode').isDisplayed()).toEqual(true);
+                return $('#editorInputNodeDescInfoNode').getText()
+                    .then(function getData(content) {
+                        // normalize and check parts of desc-data
+                        content = content.replace(/\(Stand:.*?\)/g, "(Stand: XXX)");
+                        expectedMarkdownPartial = expectedMarkdownPartial.replace(/\(Stand:.*?\)/g, "(Stand: XXX)");
+                        expect(content).toContain(expectedMarkdownPartial);
+                    });
+            });
+    });
+
+    it('should focus on a node and export the children as checklist+gantt', function doExportOverrviewOfTestNode() {
+        // Given
+        var filePath = browser.params.baseDir + "explorer/exports.exportOverview.md";
+        var expectedMarkdown;
+
+        var checkClipboardHandlerText = function (clipboard) {
+            // check text content
+            return clipboard.getText()
+                .then(function getData(content) {
+                    // normalize and check data
+                    content = content.replace(/\(Stand: .*?\)/g, "(Stand: XXX)");
+                    expectedMarkdown = expectedMarkdown.replace(/\(Stand: .*?\)/g, "(Stand: XXX)");
+                    expect(content).toContain(expectedMarkdown);
+                });
+        };
+        
+        // When and Then
+
+        // navigate to Node
+        return yaioNodePage.navigateToNode(yaioNodePage.jsFuncTestHierarchy)
+            .then(function doneNavigate(){
+                // focus on node
+                var deferred = protractor.promise.defer();
+                // call service-function
+                var link = yaioNodePage.focusOnNode(yaioNodePage.jsLayoutTestId);
+                link.getText().then(function() {
+                    deferred.fulfill(link);
+                });
+                
+                return deferred.promise;
+            })
+            .then(function clickExport() {
+                // click Export-Button
+                return $('[translate="common.command.ExportAsOverview"]').click();
+            })
+            .then(function readFileContent() {
+                // read fixture
+                return fs.readFileSync(filePath, { encoding: 'utf8' });
+            })
+            .then (function setFileContent(content) {
+                // set data
+                expectedMarkdown = content;
+            })
+            .then(function checkClipboard() {
+                // check text-clipboard
+                var clipboardElement = yaioExportPage.checkAndCloseClipboard(checkClipboardHandlerText);
+                return clipboardElement.getText();
+            });
+    });
+
     it('should focus on a node and export the full Nodetree', function doShowDescOfTestNode() {
         // Given
         var expectedHtmlDocumentation = "Ein Beispiel-Projekt (SysPlay118)";
@@ -52,7 +155,7 @@ describe('yaio explorer exports', function() {
         // When and Then
 
         // navigate to Node
-        yaioNodePage.navigateToNode(yaioNodePage.jsFuncTestHierarchy)
+        return yaioNodePage.navigateToNode(yaioNodePage.jsFuncTestHierarchy)
             .then(function doneNavigate(){
                 // focus on node
                 var deferred = protractor.promise.defer();
@@ -88,16 +191,15 @@ describe('yaio explorer exports', function() {
         // When and Then
 
         // navigate to Node
-        yaioNodePage.navigateToNode(yaioNodePage.jsFuncTestHierarchy)
-        .then(function doneNavigate(){
-
-            var container = yaioNodePage.showDescForNode(yaioNodePage.jsFuncTestId, contentHandler);
-            container.getText().then(function() {
-                deferred.fulfill(container);
-            })
-            
-            return deferred.promise;
-        });
+        return yaioNodePage.navigateToNode(yaioNodePage.jsFuncTestHierarchy)
+            .then(function doneNavigate(){
+                var container = yaioNodePage.showDescForNode(yaioNodePage.jsFuncTestId, contentHandler);
+                container.getText().then(function() {
+                    deferred.fulfill(container);
+                })
+                
+                return deferred.promise;
+            });
     });
 });
 

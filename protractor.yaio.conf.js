@@ -129,6 +129,7 @@ exports.config = {
     // specific YAIO-config
     params: {
         downloadPath: downloadPath,
+        baseDir: baseDir,
         yaioConfig: {
             yaioBaseUrl    : baseUrl,
             yaioBaseAppUrl : baseUrl + '/yaio-explorerapp/yaio-explorerapp.html#',
