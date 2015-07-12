@@ -8,7 +8,7 @@ var YAIOLoginPage = require('../login/login.po.js');
 var YAIONodePage = require('../explorer/node.po.js');
 var YAIOLangPage = require('../lang/lang.po.js');
 
-describe('yaio langugae-packs', function() {
+describe('yaio language-packs', function() {
     // define vars
     var yaioLoginPage, yaioNodePage, yaioLangPage;
 

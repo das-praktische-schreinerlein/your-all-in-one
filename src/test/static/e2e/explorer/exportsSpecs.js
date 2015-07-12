@@ -108,10 +108,7 @@ describe('yaio explorer exports', function() {
         // When and Then
 
         // navigate to Node
-        return yaioNodePage.navigateToNode(yaioNodePage.jsFuncTestHierarchy)
-            .then(function doneNavigate(){
-                return yaioNodePage.focusOnNode(yaioNodePage.jsLayoutTestId).getText();
-            })
+        return browser.get(browser.params.yaioConfig.yaioBaseAppUrl + '/show/' + yaioNodePage.jsFuncTestId)
             .then(function clickExport() {
                 // click Export-Button
                 return $('[translate="common.command.ExportAsOverview"]').click();
@@ -140,10 +137,7 @@ describe('yaio explorer exports', function() {
         // When and Then
 
         // navigate to Node
-        return yaioNodePage.navigateToNode(yaioNodePage.jsFuncTestHierarchy)
-            .then(function doneNavigate(){
-                return yaioNodePage.focusOnNode(yaioNodePage.jsLayoutTestId).getText();
-            })
+        return browser.get(browser.params.yaioConfig.yaioBaseAppUrl + '/show/' + yaioNodePage.jsFuncTestId)
             .then(function doneFocusOnNode() {
                 // export as html documentation
                 return yaioExportPage.clickShortlinkExportAsHtmlDocumentation(expectedHtmlDocumentation);
