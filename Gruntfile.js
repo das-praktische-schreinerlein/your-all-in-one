@@ -201,7 +201,12 @@ module.exports = function( grunt ){
                 // run when any projectfiles or tests changed
                 files: ['src/main/resources/static/yaio-explorerapp/**/*.*', 'src/test/static/e2e/**/*'],
                 tasks: ['dist', 'protractor:continuous']
-            }
+            },
+            tests: {
+                // run when any projectfiles or tests changed
+                files: ['src/main/resources/static/yaio-explorerapp/**/*.*', 'src/test/static/e2e/**/*'],
+                tasks: ['dist', 'karma:unit', 'protractor:e2e']
+            },
         }
     });
 
