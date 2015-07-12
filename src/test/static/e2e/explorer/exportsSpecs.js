@@ -54,14 +54,7 @@ describe('yaio explorer exports', function() {
         return yaioNodePage.navigateToNode(yaioNodePage.jsFuncTestHierarchy)
             .then(function doneNavigate(){
                 // focus on node
-                var deferred = protractor.promise.defer();
-                // call service-function
-                var link = yaioNodePage.focusOnNode(yaioNodePage.jsLayoutTestId);
-                link.getText().then(function() {
-                    deferred.fulfill(link);
-                });
-                
-                return deferred.promise;
+                return yaioNodePage.focusOnNode(yaioNodePage.jsLayoutTestId).getText();
             })
             .then(function clickExport() {
                 // click Export-Button
@@ -117,15 +110,7 @@ describe('yaio explorer exports', function() {
         // navigate to Node
         return yaioNodePage.navigateToNode(yaioNodePage.jsFuncTestHierarchy)
             .then(function doneNavigate(){
-                // focus on node
-                var deferred = protractor.promise.defer();
-                // call service-function
-                var link = yaioNodePage.focusOnNode(yaioNodePage.jsLayoutTestId);
-                link.getText().then(function() {
-                    deferred.fulfill(link);
-                });
-                
-                return deferred.promise;
+                return yaioNodePage.focusOnNode(yaioNodePage.jsLayoutTestId).getText();
             })
             .then(function clickExport() {
                 // click Export-Button
@@ -157,15 +142,7 @@ describe('yaio explorer exports', function() {
         // navigate to Node
         return yaioNodePage.navigateToNode(yaioNodePage.jsFuncTestHierarchy)
             .then(function doneNavigate(){
-                // focus on node
-                var deferred = protractor.promise.defer();
-                // call service-function
-                var link = yaioNodePage.focusOnNode(yaioNodePage.jsLayoutTestId);
-                link.getText().then(function() {
-                    deferred.fulfill(link);
-                });
-                
-                return deferred.promise;
+                return yaioNodePage.focusOnNode(yaioNodePage.jsLayoutTestId).getText();
             })
             .then(function doneFocusOnNode() {
                 // export as html documentation
