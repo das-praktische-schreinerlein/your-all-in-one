@@ -57,7 +57,7 @@ describe('yaio wysiwyg', function() {
             .then(function openWysiwygEditor() {
                 // open wysiwyg-editor
                 browser.sleep(1000);
-                return $('#openWysiwyg4inputNodeDescTaskNode').click();
+                return $(yaioNodePage.openWysiwyg4inputNodeDescTaskNode).click();
             })
             .then(function sendMarkdown() {
                 // sendMarkdown

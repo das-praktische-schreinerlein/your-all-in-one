@@ -37,11 +37,17 @@ var YAIONodePage = function() {
     me.inputPlanAufwandTaskNode = '#inputPlanAufwandTaskNode';
     me.inputPlanStartTaskNode = '#inputPlanStartTaskNode';
     me.inputPlanEndeTaskNode = '#inputPlanEndeTaskNode';
+    me.openWysiwyg4inputNodeDescTaskNode = '#openWysiwyg4inputNodeDescTaskNode';
     me.buttonSaveTask = '#nodeFormTaskNode fieldset button[translate="common.buttonSave"]';
     
     // symlinkform
     me.inputNameSymLinkNode = '#inputNameSymLinkNode';
     me.buttonSaveSymLink = '#nodeFormSymLinkNode fieldset button[translate="common.buttonSave"]';
+
+    // infoform
+    me.inputNameInfoNode = '#inputNameInfoNode';
+    me.inputTypeInfoNode = '#inputTypeInfoNode';
+    me.editorInputNodeDescInfoNode = '#editorInputNodeDescInfoNode';
 
     // utils
     me.idUiDatePicker = "#ui-datepicker-div";

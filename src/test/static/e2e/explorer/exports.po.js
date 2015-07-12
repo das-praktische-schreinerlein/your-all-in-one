@@ -6,6 +6,9 @@ var fs = require('fs');
 
 var YAIOExportPage = function() {
     var me = this;
+    
+    me.linkSnapshot = '[translate="common.command.Snapshot"]';
+    me.linkExportOverview = '[translate="common.command.ExportAsOverview"]';
 
     /**
      * click export-link for node

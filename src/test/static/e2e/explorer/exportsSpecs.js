@@ -58,18 +58,18 @@ describe('yaio explorer exports', function() {
             })
             .then(function clickExport() {
                 // click Export-Button
-                return $('[translate="common.command.Snapshot"]').click();
+                return $(yaioExportPage.linkSnapshot).click();
             })
             .then(function checkForm() {
                 // check form to create new infonode with snapshot
                 
                 // check nodetype
-                expect($('#inputTypeInfoNode').isDisplayed()).toEqual(true);
+                expect($(yaioNodePage.inputTypeInfoNode).isDisplayed()).toEqual(true);
                 //expect($('#inputTypeInfoNode > option:selected').getText()).toEqual("Information");
 
                 // check name-data
-                expect($('#inputNameInfoNode').isDisplayed()).toEqual(true);
-                return $('#inputNameInfoNode').getAttribute('value')
+                expect($(yaioNodePage.inputNameInfoNode).isDisplayed()).toEqual(true);
+                return $(yaioNodePage.inputNameInfoNode).getAttribute('value')
                     .then(function getData(content) {
                         // normalize and check name-data
                         content = content.replace(/vom .*?/g, "vom XXX");
@@ -78,8 +78,8 @@ describe('yaio explorer exports', function() {
             })
             .then(function checkDescForm() {
                 // check desc-data
-                expect($('#editorInputNodeDescInfoNode').isDisplayed()).toEqual(true);
-                return $('#editorInputNodeDescInfoNode').getText()
+                expect($(yaioNodePage.editorInputNodeDescInfoNode).isDisplayed()).toEqual(true);
+                return $(yaioNodePage.editorInputNodeDescInfoNode).getText()
                     .then(function getData(content) {
                         // normalize and check parts of desc-data
                         content = content.replace(/\(Stand:.*?\)/g, "(Stand: XXX)");
@@ -108,10 +108,10 @@ describe('yaio explorer exports', function() {
         // When and Then
 
         // navigate to Node
-        return browser.get(browser.params.yaioConfig.yaioBaseAppUrl + '/show/' + yaioNodePage.jsFuncTestId)
+        return browser.get(browser.params.yaioConfig.yaioBaseAppUrl + '/show/' + yaioNodePage.jsLayoutTestId)
             .then(function clickExport() {
                 // click Export-Button
-                return $('[translate="common.command.ExportAsOverview"]').click();
+                return $(yaioExportPage.linkExportOverview).click();
             })
             .then(function readFileContent() {
                 // read fixture
@@ -137,7 +137,7 @@ describe('yaio explorer exports', function() {
         // When and Then
 
         // navigate to Node
-        return browser.get(browser.params.yaioConfig.yaioBaseAppUrl + '/show/' + yaioNodePage.jsFuncTestId)
+        return browser.get(browser.params.yaioConfig.yaioBaseAppUrl + '/show/' + yaioNodePage.jsLayoutTestId)
             .then(function doneFocusOnNode() {
                 // export as html documentation
                 return yaioExportPage.clickShortlinkExportAsHtmlDocumentation(expectedHtmlDocumentation);
