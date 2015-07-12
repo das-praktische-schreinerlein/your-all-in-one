@@ -564,12 +564,19 @@ function convertExplorerLinesAsCheckList() {
         var stateSpan = $(line).find("span.fancytree-title-state");
         var numberSpan = $(line).find("div.field_metanummer");
         var levelSpan = $(line).find("span.fancytree-node");
+        var istStandDiv = $(line).find("div.fieldtype_stand.field_istChildrenSumStand");
+        var istAufwandDiv = $(line).find("div.fieldtype_aufwand.field_istChildrenSumAufwand");
+        var planAufwandDiv = $(line).find("div.fieldtype_aufwand.field_planChildrenSumAufwand");
         
         // extract content
         var level = 0;
         var title = null;
         var state = null;
         var number = null;
+        var istStand = "0%";
+        var istAufwand = "0h";
+        var planAufwand = null;
+        var stand = "";
         if ($(levelSpan).size() > 0) {
             // extraxt level from intend
             var intend = $(levelSpan).css("margin-left").replace("px", "");
@@ -591,13 +598,29 @@ function convertExplorerLinesAsCheckList() {
             number = $(numberSpan).text();
         }
         
+        if ($(istAufwandDiv).size() > 0) {
+            istAufwand = $(istAufwandDiv).text();
+        }
+        if ($(planAufwandDiv).size() > 0) {
+            planAufwand = $(planAufwandDiv).text();
+        }
+        if ($(istStandDiv).size() > 0) {
+            istStand = $(istStandDiv).text();
+        }
+        
+        stand = istStand.trim() + " (" + istAufwand.trim();
+        if (planAufwand) {
+            stand  += "/" + planAufwand.trim();
+        }
+        stand += ")";
+        
         // if all set: generate checklist
-        console.log("state:" + state + " title:" + title + " number:" + number + " level:" + level);
+        console.log("state:" + state + " title:" + title + " number:" + number + " level:" + level + " stand:" + stand);
         if (title && state && number) {
             for (var idx = 0; idx < level; idx ++) {
                 checkList += "    ";
             }
-            checkList += "- [" + state + "] - [" + title + "](yaio:" + number + ")\n";
+            checkList += "- [" + state + "] - [" + title + "](yaio:" + number + ") " + stand + "\n";
         }
     });
     
