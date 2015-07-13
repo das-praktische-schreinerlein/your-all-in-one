@@ -12,6 +12,7 @@ var YAIOLoginPage = function() {
     
     // results
     me.errorMsg = '.alert-danger';
+    me.loginResult = '#front-content-left';
     
     /**
      * open login-page
@@ -27,7 +28,7 @@ var YAIOLoginPage = function() {
 
     /**
      * submit valid login-page
-     * @returns {Promise}  - promise on the submit-click
+     * @returns {Promise}
      */
     me.submitValidLoginPage = function () {
         // fill loginform with invalid credentials
@@ -40,7 +41,7 @@ var YAIOLoginPage = function() {
 
     /**
      * do valid login
-     * @returns {Promise}  - promise on the submit-click
+     * @returns {Promise}
      */
     me.doLogin = function () {
         me.openLoginPage();
@@ -49,7 +50,7 @@ var YAIOLoginPage = function() {
 
     /**
      * submit logout
-     * @returns {Promise}  - promise on the browser.get
+     * @returns {Promise}
      */
     me.doLogout = function () {
         browser.get(browser.params.yaioConfig.yaioBaseAppUrl + '/logout');
@@ -82,7 +83,7 @@ var YAIOLoginPage = function() {
                 console.error("session not ok: do login");
                 me.doLogin()
                     .then(function loginPassed() {
-                        protractor.utils.waitUntilElementPresent($('#front-content-left'), protractor.utils.CONST_WAIT_ELEMENT);
+                        protractor.utils.waitUntilElementPresent($(me.loginResult), protractor.utils.CONST_WAIT_ELEMENT);
                         defer.fulfill(true);
                     }, function loginFailed () {
                         console.error("login failed");
