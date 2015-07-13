@@ -55,9 +55,10 @@ describe('yaio explorer imports', function() {
                         defer.fulfill(true);
                     } else {
                         browser.ignoreSynchronization = false;
-                        console.error("upload failed");
+                        console.error("upload failed:" + source);
                         defer.reject(false);
-                    } 
+                    }
+                    expect(source).toContain('imported');
                 });
             // Return a promise so the caller can wait on it for the request to complete
             return defer.promise;
