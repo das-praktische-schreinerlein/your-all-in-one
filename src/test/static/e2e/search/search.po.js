@@ -26,7 +26,7 @@ var YAIOSearchPage = function() {
     
     /**
      * open search from frontpage and wait until present
-     * @returns {Promise}       browser.wait for element "#front-content-left"
+     * @returns {Promise}
      */
     me.openSearchFromFrontPage = function () {
         // expect frontPage
@@ -45,7 +45,7 @@ var YAIOSearchPage = function() {
     /**
      * get all resultlinks for linkStyle, click on the first and check that browserlocation changes
      * @param  linkStyle        css to filter the resultlinks
-     * @returns {Promise}       browser.wait for element "#front-content-left"
+     * @returns {Promise}
      */
     me.clickAndCheckSearchResLink = function(linkStyle) {
         var currentNodeUrl, currentNode;
