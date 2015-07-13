@@ -22,7 +22,7 @@ describe('yaio gantt', function() {
         yaioGanttPage = new YAIOGanttPage();
         
         // do Login
-        yaioLoginPage.doLogin()
+        yaioLoginPage.checkLogin()
             .then(function doneOpenExplorer() {
                 // open explorer
                 return yaioNodePage.openExplorerFromFrontPage();
@@ -30,6 +30,7 @@ describe('yaio gantt', function() {
         protractor.utils.waitUntilElementClickable($(yaioNodePage.containerMasterdata), protractor.utils.CONST_WAIT_NODEHIRARCHY);
         expect($(yaioNodePage.containerMasterdata).isPresent()).toEqual(true);
         browser.get(browser.params.yaioConfig.yaioBaseAppUrl + '/show/' + yaioNodePage.jsLayoutTestId);
+        protractor.utils.waitUntilElementClickable($(yaioNodePage.containerMasterdata), protractor.utils.CONST_WAIT_NODEHIRARCHY);
     });
 
     /**
@@ -37,9 +38,6 @@ describe('yaio gantt', function() {
      */
     afterEach(function() {
         browser.ignoreSynchronization = false;
-        
-        // do logout
-        yaioLoginPage.doLogout();
     });
     
     /**

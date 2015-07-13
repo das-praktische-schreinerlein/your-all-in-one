@@ -37,9 +37,6 @@ describe('yaio wysiwyg', function() {
      */
     afterEach(function() {
         browser.ignoreSynchronization = false;
-        
-        // do logout
-        yaioLoginPage.doLogout();
     });
     
     /**
@@ -52,7 +49,7 @@ describe('yaio wysiwyg', function() {
         
         // open page
         browser.get(browser.params.yaioConfig.yaioBaseAppUrl + '/show/' + yaioNodePage.jsFuncTestId);
-        
+        protractor.utils.waitUntilElementClickable($('#cmdEditJsFuncTest1'), protractor.utils.CONST_WAIT_NODEHIRARCHY);
         return $('#cmdEditJsFuncTest1').click()
             .then(function openWysiwygEditor() {
                 // open wysiwyg-editor
@@ -79,6 +76,7 @@ describe('yaio wysiwyg', function() {
         
         // check markdown
         browser.get(browser.params.yaioConfig.yaioBaseUrl + '/yaio-explorerapp/wysiwyg.html');
+        protractor.utils.waitUntilElementVisible($(yaioWysiwygPage.editorInput), protractor.utils.CONST_WAIT_NODEHIRARCHY);
         return yaioWysiwygPage.checkWysiwygContent(markdownText, expected)
             .then(function extendMarkdown() {
                 // extend markdown

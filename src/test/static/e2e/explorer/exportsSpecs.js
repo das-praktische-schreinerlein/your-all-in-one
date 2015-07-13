@@ -22,7 +22,7 @@ describe('yaio explorer exports', function() {
      */
     beforeEach(function() {
         // do Login
-        yaioLoginPage.doLogin()
+        yaioLoginPage.checkLogin()
             .then(function doneOpenExplorer() {
                 // open explorer
                 return yaioNodePage.openExplorerFromFrontPage();
@@ -36,15 +36,12 @@ describe('yaio explorer exports', function() {
      */
     afterEach(function() {
         browser.ignoreSynchronization = false;
-        
-        // do logout
-        yaioLoginPage.doLogout();
     });
     
     /**
      * define tests
      */
-    it('should focus on a node, click on snapshot and open the info-editor with a sanpshot of children as checklist+gantt', function doSnapshotOfTestNode() {
+    it('should focus on a node, click on snapshot and open the info-editor with a snapshot of children as checklist+gantt', function doSnapshotOfTestNode() {
         // Given
         var expectedMarkdownPartial = "#·Gantt:·Überschritten·-·Ein·Beispiel-Projekt·(Stand:XXX)";
 
@@ -58,10 +55,12 @@ describe('yaio explorer exports', function() {
             })
             .then(function clickExport() {
                 // click Export-Button
+                protractor.utils.waitUntilElementClickable($(yaioExportPage.linkSnapshot), protractor.utils.CONST_WAIT_NODEHIRARCHY);
                 return $(yaioExportPage.linkSnapshot).click();
             })
             .then(function checkForm() {
                 // check form to create new infonode with snapshot
+                protractor.utils.waitUntilElementVisible($(yaioNodePage.inputTypeInfoNode), protractor.utils.CONST_WAIT_NODEHIRARCHY);
                 
                 // check nodetype
                 expect($(yaioNodePage.inputTypeInfoNode).isDisplayed()).toEqual(true);
@@ -111,6 +110,7 @@ describe('yaio explorer exports', function() {
         return browser.get(browser.params.yaioConfig.yaioBaseAppUrl + '/show/' + yaioNodePage.jsLayoutTestId)
             .then(function clickExport() {
                 // click Export-Button
+                protractor.utils.waitUntilElementClickable($(yaioExportPage.linkExportOverview), protractor.utils.CONST_WAIT_NODEHIRARCHY);
                 return $(yaioExportPage.linkExportOverview).click();
             })
             .then(function readFileContent() {
@@ -140,6 +140,7 @@ describe('yaio explorer exports', function() {
         return browser.get(browser.params.yaioConfig.yaioBaseAppUrl + '/show/' + yaioNodePage.jsLayoutTestId)
             .then(function doneFocusOnNode() {
                 // export as html documentation
+                protractor.utils.waitUntilElementClickable($(yaioNodePage.containerMasterdata), protractor.utils.CONST_WAIT_NODEHIRARCHY);
                 return yaioExportPage.clickShortlinkExportAsHtmlDocumentation(expectedHtmlDocumentation);
             })
             .then(function doneExportAsHtmlDocumentation() {

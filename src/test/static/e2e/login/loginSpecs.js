@@ -19,6 +19,7 @@ describe('yaio loginpage', function() {
         yaioLoginPage = new YAIOLoginPage();
         yaioFrontPage = new YAIOFrontPage();
         
+        yaioLoginPage.doLogout();
         yaioLoginPage.openLoginPage();
     });
 
@@ -26,7 +27,6 @@ describe('yaio loginpage', function() {
      * cleanup after tests
      */
     afterEach(function() {
-        yaioLoginPage.doLogout();
     });
     
     /**

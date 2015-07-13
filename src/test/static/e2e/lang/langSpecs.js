@@ -22,14 +22,13 @@ describe('yaio language-packs', function() {
         yaioLangPage = new YAIOLangPage();
         
         // do Login
-        yaioLoginPage.doLogin()
+        yaioLoginPage.checkLogin()
             .then(function doneOpenExplorer() {
                 // open explorer
                 return yaioNodePage.openExplorerFromFrontPage();
             });
         protractor.utils.waitUntilElementClickable($(yaioNodePage.containerMasterdata), protractor.utils.CONST_WAIT_NODEHIRARCHY);
         expect($(yaioNodePage.containerMasterdata).isPresent()).toEqual(true);
-        browser.ignoreSynchronization = false;
     });
 
     /**
@@ -37,9 +36,6 @@ describe('yaio language-packs', function() {
      */
     afterEach(function() {
         browser.ignoreSynchronization = false;
-        
-        // do logout
-        yaioLoginPage.doLogout();
     });
     
     /**

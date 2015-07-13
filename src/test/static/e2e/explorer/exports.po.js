@@ -7,6 +7,8 @@ var fs = require('fs');
 var YAIOExportPage = function() {
     var me = this;
     
+    me.baseUrl = browser.params.yaioConfig.yaioBaseAppUrl + '/show/' + 'MasterplanMasternode1';
+
     me.linkSnapshot = '[translate="common.command.Snapshot"]';
     me.linkExportOverview = '[translate="common.command.ExportAsOverview"]';
 

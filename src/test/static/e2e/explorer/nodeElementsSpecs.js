@@ -22,7 +22,7 @@ describe('yaio explorer nodeelements', function() {
         yaioNodePage = new YAIONodePage();
         
         // do Login
-        yaioLoginPage.doLogin()
+        yaioLoginPage.checkLogin()
             .then(function doneOpenExplorer() {
                 // open explorer
                 return yaioNodePage.openExplorerFromFrontPage();
@@ -36,9 +36,6 @@ describe('yaio explorer nodeelements', function() {
      */
     afterEach(function() {
         browser.ignoreSynchronization = false;
-        
-        // do logout
-        yaioLoginPage.doLogout();
     });
     
     /**

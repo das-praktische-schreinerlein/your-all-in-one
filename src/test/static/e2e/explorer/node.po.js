@@ -18,6 +18,7 @@ var YAIONodePage = function() {
     
     // explorer-link
     me.linkFrontpage = '[translate="common.command.OpenFrontpage"]';
+    me.baseExplorerUrl = browser.params.yaioConfig.yaioBaseAppUrl + '/show/' + 'MasterplanMasternode1';
     
     // mastercontainer
     me.containerMasterdata = '#masterdata';

@@ -24,7 +24,7 @@ describe('yaio explorer search', function() {
         yaioSearchPage = new YAIOSearchPage();
         
         // do Login
-        yaioLoginPage.doLogin()
+        yaioLoginPage.checkLogin()
             .then(function doneOpenExplorer() {
                 // open explorer
                 return yaioSearchPage.openSearchFromFrontPage();
@@ -38,9 +38,6 @@ describe('yaio explorer search', function() {
      */
     afterEach(function() {
         browser.ignoreSynchronization = false;
-        
-        // do logout
-        yaioLoginPage.doLogout();
     });
     
     /**
