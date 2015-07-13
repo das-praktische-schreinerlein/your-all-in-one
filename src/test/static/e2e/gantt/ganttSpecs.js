@@ -29,7 +29,7 @@ describe('yaio gantt', function() {
             });
         protractor.utils.waitUntilElementClickable($(yaioNodePage.containerMasterdata), protractor.utils.CONST_WAIT_NODEHIRARCHY);
         expect($(yaioNodePage.containerMasterdata).isPresent()).toEqual(true);
-        browser.get(browser.params.yaioConfig.yaioBaseAppUrl + '/show/' + yaioNodePage.jsLayoutTestId);
+        browser.get(browser.params.yaioConfig.yaioBaseAppUrl + '/show/' + yaioGanttPage.ganttId);
         protractor.utils.waitUntilElementClickable($(yaioNodePage.containerMasterdata), protractor.utils.CONST_WAIT_NODEHIRARCHY);
     });
 
@@ -43,7 +43,9 @@ describe('yaio gantt', function() {
     /**
      * define tests
      */
-    it('should switch timeframe default/plan/ist', function doSwitchTimeFrame() {
+    it('should switch timeframe default/plan/ist and check that gantt-bars change', function doSwitchTimeFrame() {
+        var ganttId2 = 'DT2015061620443947716';
+        
         // switch to gantt
         return $(yaioGanttPage.linkTabTogglerGantt).click()
             .then(function showGantt()  {
@@ -58,7 +60,13 @@ describe('yaio gantt', function() {
             .then(function showData()  {
                 // show plan
                 expect($(yaioGanttPage.inputGanttRangeStart).getAttribute('value')).toBe("01.03.2015");
-                expect($(yaioGanttPage.inputGanttRangeEnde).getAttribute('value')).toBe("11.10.2025");
+                expect($(yaioGanttPage.inputGanttRangeEnde).getAttribute('value')).toBe("10.10.2025");
+                
+                // check gantt-lines
+                yaioGanttPage.checkGanttLine(yaioGanttPage.ganttId, {aufwand: "25h"}, {aufwand: "12h"});
+                yaioGanttPage.checkGanttLine(ganttId2, 
+                        {aufwand: "10h", style: "width: 1px; margin-left: 0px;"}, 
+                        {aufwand: "8h", style: "width: 0px; margin-left: 0px;"});
                 
                 // switch to ist
                 return $(yaioGanttPage.buttonRecalcGanttIst).click();
@@ -67,6 +75,12 @@ describe('yaio gantt', function() {
                 // show ist
                 expect($(yaioGanttPage.inputGanttRangeStart).getAttribute('value')).toBe("04.03.2015");
                 expect($(yaioGanttPage.inputGanttRangeEnde).getAttribute('value')).toBe("04.04.2015");
+
+                // check gantt-lines
+                yaioGanttPage.checkGanttLine(yaioGanttPage.ganttId, {aufwand: "12h"}, {aufwand: "12h"});
+                yaioGanttPage.checkGanttLine(ganttId2, 
+                        {aufwand: "7h", style: "width: 92px; margin-left: 0px;"}, 
+                        {aufwand: "8h", style: "width: 19px; margin-left: 0px;"});
             });
     });
 
