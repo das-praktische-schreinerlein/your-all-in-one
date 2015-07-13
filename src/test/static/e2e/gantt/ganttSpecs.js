@@ -22,15 +22,8 @@ describe('yaio gantt', function() {
         yaioGanttPage = new YAIOGanttPage();
         
         // do Login
-        yaioLoginPage.checkLogin()
-            .then(function doneOpenExplorer() {
-                // open explorer
-                return yaioNodePage.openExplorerFromFrontPage();
-            });
-        protractor.utils.waitUntilElementClickable($(yaioNodePage.containerMasterdata), protractor.utils.CONST_WAIT_NODEHIRARCHY);
-        expect($(yaioNodePage.containerMasterdata).isPresent()).toEqual(true);
-        browser.get(browser.params.yaioConfig.yaioBaseAppUrl + '/show/' + yaioGanttPage.ganttId);
-        protractor.utils.waitUntilElementClickable($(yaioNodePage.containerMasterdata), protractor.utils.CONST_WAIT_NODEHIRARCHY);
+        yaioLoginPage.checkLogin();
+        protractor.utils.waitUntilElementPresent($(yaioLoginPage.loginResult), protractor.utils.CONST_WAIT_NODEHIRARCHY);
     });
 
     /**
@@ -93,6 +86,8 @@ describe('yaio gantt', function() {
 
     it('should switch timeframe default/plan/ist and check that gantt-bars change', function doSwitchTimeFrame() {
         var subNodeId = 'DT2015061620443947716';
+        browser.get(browser.params.yaioConfig.yaioBaseAppUrl + '/show/' + yaioGanttPage.ganttId);
+        protractor.utils.waitUntilElementClickable($(yaioNodePage.containerMasterdata), protractor.utils.CONST_WAIT_NODEHIRARCHY);
         
         // switch to gantt
         return $(yaioGanttPage.linkTabTogglerGantt).click()
@@ -133,6 +128,9 @@ describe('yaio gantt', function() {
     });
 
     it('should switch to gantt-view and back', function doSwitchGantt() {
+        browser.get(browser.params.yaioConfig.yaioBaseAppUrl + '/show/' + yaioGanttPage.ganttId);
+        protractor.utils.waitUntilElementClickable($(yaioNodePage.containerMasterdata), protractor.utils.CONST_WAIT_NODEHIRARCHY);
+
         // Given
         expect($(yaioGanttPage.linkTabTogglerGantt).isDisplayed()).toBe(true);
         expect($(yaioGanttPage.linkTabTogglerData).isDisplayed()).toBe(false);
