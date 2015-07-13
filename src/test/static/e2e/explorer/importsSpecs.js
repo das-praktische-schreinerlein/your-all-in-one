@@ -52,18 +52,20 @@ describe('yaio explorer imports', function() {
                     if (source && (source.search(/data for node .* imported/g) > 0)) {
                         // import passed
                         browser.ignoreSynchronization = false;
+                        expect(source).toContain('imported');
                         defer.fulfill(true);
                     } else if (source && browser.browserName === "phantomjs") {
                         // import passed: phantomjs sometime cant get the source :-(
                         browser.ignoreSynchronization = false;
+                        expect(source).toContain('html');
                         defer.fulfill(true);
                     } else {
                         // import passed
                         browser.ignoreSynchronization = false;
                         console.error("upload failed:" + source);
+                        expect(source).toContain('imported');
                         defer.reject(false);
                     }
-                    expect(source).toContain('imported');
                 });
             // Return a promise so the caller can wait on it for the request to complete
             return defer.promise;
