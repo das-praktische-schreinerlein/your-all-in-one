@@ -22,13 +22,8 @@ describe('yaio wysiwyg', function() {
         yaioWysiwygPage = new YAIOWysiwygPage();
         
         // do Login
-        yaioLoginPage.doLogin()
-            .then(function doneOpenExplorer() {
-                // open explorer
-                return yaioNodePage.openExplorerFromFrontPage();
-            });
-        protractor.utils.waitUntilElementClickable($(yaioNodePage.containerMasterdata), protractor.utils.CONST_WAIT_NODEHIRARCHY);
-        expect($(yaioNodePage.containerMasterdata).isPresent()).toEqual(true);
+        yaioLoginPage.doLogin();
+        protractor.utils.waitUntilElementPresent($(yaioLoginPage.loginResult), protractor.utils.CONST_WAIT_NODEHIRARCHY);
         browser.ignoreSynchronization = true;
     });
 
@@ -45,7 +40,7 @@ describe('yaio wysiwyg', function() {
     it('should focus on node, open wysiwyg-editor and add markdown, close editor and open preview', function doCheckButtons() {
         // Given
         var markdownText = '# Ue1\n\n## Ue2\n';
-        var expected = '<p>Diese Aufgabe bitte nicht löschen, da hier die JavaScript-E2E-Tests ausgeführt werden.</p>\n<h1 id="undefined_5_ue1">Ue1</h1>\n<h2 id="undefined_6_ue2">Ue2</h2>\n';
+        var expected = '<p>Diese Aufgabe bitte nicht löschen, da hier die JavaScript-E2E-Tests ausgeführt werden.</p>\n<h1 id="undefined_1_ue1">Ue1</h1>\n<h2 id="undefined_2_ue2">Ue2</h2>\n';
         
         // open page
         browser.get(browser.params.yaioConfig.yaioBaseAppUrl + '/show/' + yaioNodePage.jsFuncTestId);
@@ -63,7 +58,7 @@ describe('yaio wysiwyg', function() {
             .then(function extendMarkdown() {
                 // extend markdown
                 markdownText = '\n### Ue3\n';
-                expected = '<p>Diese Aufgabe bitte nicht löschen, da hier die JavaScript-E2E-Tests ausgeführt werden.</p>\n<h1 id="undefined_7_ue1">Ue1</h1>\n<h2 id="undefined_8_ue2">Ue2</h2>\n<h3 id="undefined_9_ue3">Ue3</h3>';
+                expected = '<p>Diese Aufgabe bitte nicht löschen, da hier die JavaScript-E2E-Tests ausgeführt werden.</p>\n<h1 id="undefined_3_ue1">Ue1</h1>\n<h2 id="undefined_4_ue2">Ue2</h2>\n<h3 id="undefined_5_ue3">Ue3</h3>';
                 return yaioWysiwygPage.checkWysiwygContent(markdownText, expected);
             })
             .then(function closeMarkdown() {
@@ -76,7 +71,7 @@ describe('yaio wysiwyg', function() {
             })
             .then(function checkPreview() {
                 // check Preview
-                expected = '<p>Diese Aufgabe bitte nicht löschen, da hier die JavaScript-E2E-Tests ausgeführt werden.</p>\n<h1 id="undefined_10_ue1">Ue1</h1>\n<h2 id="undefined_11_ue2">Ue2</h2>\n<h3 id="undefined_12_ue3">Ue3</h3>';
+                expected = '<p>Diese Aufgabe bitte nicht löschen, da hier die JavaScript-E2E-Tests ausgeführt werden.</p>\n<h1 id="undefined_6_ue1">Ue1</h1>\n<h2 id="undefined_7_ue2">Ue2</h2>\n<h3 id="undefined_8_ue3">Ue3</h3>';
                 var editorPreview = $('#preview-content');
                 expect(editorPreview.getInnerHtml()).toContain(expected.trim());
             });
