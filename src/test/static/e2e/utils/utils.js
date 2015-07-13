@@ -9,7 +9,7 @@ var Utils = {
      * wait until element present in DOM
      * @param   {ElementFinder} elem     expected element
      * @param   {Integer}       timeout  timeout in milliseconds
-     * @returns {Promise}       browser.wait for elem
+     * @returns {Promise}
      */
     waitUntilElementPresent: function (elem, timeout) {
         var EC = protractor.ExpectedConditions;
@@ -21,7 +21,7 @@ var Utils = {
      * wait until element visible in DOM
      * @param   {ElementFinder} elem     expected element
      * @param   {Integer}       timeout  timeout in milliseconds
-     * @returns {Promise}       browser.wait for elem
+     * @returns {Promise}
      */
     waitUntilElementVisible: function (elem, timeout) {
         var EC = protractor.ExpectedConditions;
@@ -33,7 +33,7 @@ var Utils = {
      * wait until element is clickable in DOM
      * @param   {ElementFinder} elem     expected element
      * @param   {Integer}       timeout  timeout in milliseconds
-     * @returns {Promise}       browser.wait for elem
+     * @returns {Promise}
      */
     waitUntilElementClickable: function (elem, timeout) {
         var EC = protractor.ExpectedConditions;
@@ -44,7 +44,7 @@ var Utils = {
     /**
      * wait until alert is present
      * @param   {Integer}       timeout  timeout in milliseconds
-     * @returns {Promise}       browser.wait for elem
+     * @returns {Promise}
      */
     waitUntilAlertIsPresent: function (timeout) {
         var EC = protractor.ExpectedConditions;
@@ -57,7 +57,7 @@ var Utils = {
      * wait that element is not present in DOM
      * @param   {ElementFinder} elem     expected element
      * @param   {Integer}       timeout  timeout in milliseconds
-     * @returns {Promise}       browser.wait for elem
+     * @returns {Promise}
      */
     waitThatElementIsNotPresent: function (elem, timeout) {
         var EC = protractor.ExpectedConditions;
