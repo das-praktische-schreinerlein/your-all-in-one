@@ -14,8 +14,8 @@ var YAIOExportPage = function() {
 
     /**
      * click export-link for node
-     * @returns {JQuery}                 export-link as JQuery-Selector
-     * @returns {Promise}                promise on the exportLink-click
+     * @param   {Element} linkExportCommand   export-link
+     * @returns {Promise}
      */
     me.clickButtonExportNodeToClipboard = function (linkExportCommand) {
         protractor.utils.waitUntilElementClickable(linkExportCommand, protractor.utils.CONST_WAIT_ELEMENT);
@@ -26,7 +26,7 @@ var YAIOExportPage = function() {
     /**
      * click text-export-link for node
      * @param   {Integer}  nodeId        nodeId of the node to show
-     * @returns {Promise}                promise on the exportLink-click
+     * @returns {Promise}
      */
     me.clickButtonExportNodeToClipboardAsText = function (nodeId) {
         var linkExportCommand = $("div#commands_desc_" + nodeId + " a.button.command-desc-txtexport");
@@ -36,7 +36,7 @@ var YAIOExportPage = function() {
     /**
      * click jira-export-link for node
      * @param   {Integer}  nodeId        nodeId of the node to show
-     * @returns {Promise}                promise on the exportLink-click
+     * @returns {Promise}
      */
     me.clickButtonExportNodeToClipboardAsJira = function (nodeId) {
         var linkExportCommand = $("div#commands_desc_" + nodeId + " a.button.command-desc-jiraexport");
@@ -135,9 +135,9 @@ var YAIOExportPage = function() {
 
     /**
      * open Export-Menu, click export-link, check result and close export-menu
-     * @returns {JQuery} linkExportCommand   export-link as JQuery-Selector
+     * @param   {Element} linkExportCommand   export-link
      * @param   {Function} checkHandler      handler which is called to check the result (should return a promise)
-     * @returns {Promise}                    promise on the linkExportMenu-click
+     * @returns {Promise}
      */
     me.clickButtonExportAndCheck = function (linkExportCommand, checkHandler) {
         // look for element and click
@@ -168,9 +168,9 @@ var YAIOExportPage = function() {
 
     /**
      * open Export-Menu, click export-link, check result in new window and close export-menu
-     * @returns {JQuery} linkExportCommand   export-link as JQuery-Selector
+     * @param   {Element} linkExportCommand   export-link
      * @param   {Function} checkHandler      handler which is called to check the result (should return a promise)
-     * @returns {Promise}                    promise on the linkExportMenu-click
+     * @returns {Promise}
      */
     me.clickButtonExportAndCheckInNewWindow = function (linkExportCommand, checkHandler) {
         var newWindowCheckHandler = function () {
@@ -196,7 +196,7 @@ var YAIOExportPage = function() {
     /**
      * export node as html-Documentation-DirectLink and check against expected text
      * @param   {String} expectedText  export must contain this text
-     * @returns {Promise}              promise on the linkExportMenu-click
+     * @returns {Promise}
      */
     me.clickShortlinkExportAsHtmlDocumentation = function (expectedText) {
         // define export-button
@@ -214,10 +214,10 @@ var YAIOExportPage = function() {
 
     /**
      * export node by button, download and check the filecontent against expected text
-     * @returns {JQuery} linkExportCommand   export-link as JQuery-Selector
+     * @param   {Element} linkExportCommand   export-link
      * @param   {String} filename            static name of the exportfile
      * @param   {String} expectedText        export must contain this text
-     * @returns {Promise}                    promise on the linkExportMenu-click
+     * @returns {Promise}
      */
     me.clickButtonExportAndCheckFileDownload = function (linkExportCommand, fileName, expectedText) {
         // delete file
@@ -249,7 +249,7 @@ var YAIOExportPage = function() {
     /**
      * export node as ICal-DirectLink and check against expected text
      * @param   {String} expectedText  export must contain this text
-     * @returns {Promise}              promise on the linkExportMenu-click
+     * @returns {Promise}
      */
     me.clickShortlinkExportAsICal = function (expectedText) {
         // define export-button
@@ -260,7 +260,7 @@ var YAIOExportPage = function() {
     /**
      * export node as Mindmap-DirectLink and check against expected text
      * @param   {String} expectedText  export must contain this text
-     * @returns {Promise}              promise on the linkExportMenu-click
+     * @returns {Promise}
      */
     me.clickShortlinkExportAsMindmap = function (expectedText) {
         // define export-button
