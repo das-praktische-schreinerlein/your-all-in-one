@@ -42,7 +42,7 @@ describe('yaio wysiwyg', function() {
     /**
      * define tests
      */
-    it('should focus on node, open wysiwyg-editor and add markdown', function doCheckButtons() {
+    it('should focus on node, open wysiwyg-editor and add markdown, close editor and open preview', function doCheckButtons() {
         // Given
         var markdownText = '# Ue1\n\n## Ue2\n';
         var expected = '<p>Diese Aufgabe bitte nicht löschen, da hier die JavaScript-E2E-Tests ausgeführt werden.</p>\n<h1 id="undefined_5_ue1">Ue1</h1>\n<h2 id="undefined_6_ue2">Ue2</h2>\n';
@@ -65,8 +65,21 @@ describe('yaio wysiwyg', function() {
                 markdownText = '\n### Ue3\n';
                 expected = '<p>Diese Aufgabe bitte nicht löschen, da hier die JavaScript-E2E-Tests ausgeführt werden.</p>\n<h1 id="undefined_7_ue1">Ue1</h1>\n<h2 id="undefined_8_ue2">Ue2</h2>\n<h3 id="undefined_9_ue3">Ue3</h3>';
                 return yaioWysiwygPage.checkWysiwygContent(markdownText, expected);
+            })
+            .then(function closeMarkdown() {
+                // close markdown-editor
+                return $$('div.ui-dialog-buttonset button.ui-button.ui-button-text-only span.ui-button-text').first().click();
+            })
+            .then(function closeMarkdown() {
+                // open Preview
+                return $('#showPreview4inputNodeDescTaskNode').click();
+            })
+            .then(function checkPreview() {
+                // check Preview
+                expected = '<p>Diese Aufgabe bitte nicht löschen, da hier die JavaScript-E2E-Tests ausgeführt werden.</p>\n<h1 id="undefined_10_ue1">Ue1</h1>\n<h2 id="undefined_11_ue2">Ue2</h2>\n<h3 id="undefined_12_ue3">Ue3</h3>';
+                var editorPreview = $('#preview-content');
+                expect(editorPreview.getInnerHtml()).toContain(expected.trim());
             });
-        
     });
 
     it('should open wysiwyg-editor, submit markdown, add more markdown in a second step', function doCheckButtons() {
