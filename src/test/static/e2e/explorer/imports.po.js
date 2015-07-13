@@ -27,12 +27,13 @@ var YAIOImportPage = function() {
         // open upload
         return linkImportCommand.click()
             .then(function doneLinkCommand() {
-                // call checkHandler
+                // fill upload-form and submit
                 var absolutePath = path.resolve(__dirname, fileToUpload);
                 $(me.inputImportFile).sendKeys(absolutePath);
                 return $(me.buttonSend).click();
             })
             .then(function checkData() {
+                // call checkHandler
                 if (checkHandler) {
                     return checkHandler();
                 }
@@ -57,14 +58,14 @@ var YAIOImportPage = function() {
                     myHandles = handles;
                     return browser.switchTo().window(myHandles[1]);
                 }).then(function doneSwitchWindow() {
-                    // call checkHandler
+                    // call checkHandler for importwindow
                     return checkHandlerImportWindow();
                 }).then(function doneSwitchWindow() {
                     // close and go back to the main window
                     browser.driver.close();
                     return browser.switchTo().window(myHandles[0]);
                 }).then(function doneSwitchWindow() {
-                    // call checkHandler
+                    // call checkHandler for mainwindow
                     browser.refresh();
                     return checkHandlerMainWindow();
                 })
