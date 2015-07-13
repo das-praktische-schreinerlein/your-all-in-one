@@ -58,6 +58,7 @@ exports.config = {
         explorer:      [testDir + '/explorer/**/*Specs.js'],
           exports:     [testDir + '/explorer/**/exportsSpecs.js'],
           guielements: [testDir + '/explorer/**/guiElementsSpecs.js'],
+          imports:     [testDir + '/explorer/**/importsSpecs.js'],
           nodeelements:[testDir + '/explorer/**/nodeElementsSpecs.js'],
         gantt:         [testDir + '/gantt/**/*Specs.js'],
         lang:          [testDir + '/lang/**/*Specs.js'],
