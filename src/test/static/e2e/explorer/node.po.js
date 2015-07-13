@@ -28,6 +28,7 @@ var YAIONodePage = function() {
     // gui-elements
     me.buttonOpenTilllevel = 'a.command_switchlevel';
     me.inputOpenTilllevel = '#treeOpenLevel';
+    me.spanNodeName = 'span.fancytree-title2';
     
     // create form
     me.inputCreateNodeType = '#inputCreateNodeType';
@@ -66,7 +67,7 @@ var YAIONodePage = function() {
 
     /**
      * open explorer from frontpage and wait until present
-     * @returns {Promise}       browser.wait for element "#front-content-left"
+     * @returns {Promise}
      */
     me.openExplorerFromFrontPage = function () {
         // expect frontPage
@@ -83,7 +84,7 @@ var YAIONodePage = function() {
     /**
      * open node-hierarchy and wait until present
      * @param {Array} nodeIdHirarchy       array of nodeids to expand recursively
-     * @returns {Promise}                  promise on the cmdCreate if fullfilled
+     * @returns {Promise}
      */
     me.navigateToNode = function (nodeIdHirarchy) {
         var resultArr = [];
@@ -104,7 +105,7 @@ var YAIONodePage = function() {
      * expand with click on #expander{id} node and wait until present, if flag last is set then only check if #cmdCreate{id} is clickable
      * @param {Integer} id      id of the node to expand
      * @param {Boolean} last    flag if the node is the last of the hierarchy
-     * @returns {Promise}       browser.wait for element "#cmdCreate..."
+     * @returns {Promise}
      */
     me.expandNode = function (id, last) {
         // console.log("expandNode: check for " + '#expander' + id);
@@ -135,7 +136,7 @@ var YAIONodePage = function() {
     /**
      * focus on a node
      * @param   {String}  nodeId  id of the node to focus
-     * @returns {Promise}         browser.wait for element.clicl()
+     * @returns {Promise}
      */
     me.focusOnNode = function (nodeId) {
         // load base for node
@@ -194,7 +195,7 @@ var YAIONodePage = function() {
         me.openAndEditDescForNodeType("Task", "fehlerhafte Task-Desc-Testdaten", true);
         
         // define SearchElement
-        var eleNewTaskName = element(by.cssContainingText('span.fancytree-title2', taskName));
+        var eleNewTaskName = element(by.cssContainingText(me.spanNodeName, taskName));
 
         // submit form
         var buttonSaveTask = $(me.buttonSaveTask);
@@ -235,7 +236,7 @@ var YAIONodePage = function() {
         
         // define SearchElement
         var taskName = 'correct testask' + new Date().getTime();
-        var eleNewTaskName = element(by.cssContainingText('span.fancytree-title2', taskName));
+        var eleNewTaskName = element(by.cssContainingText(me.spanNodeName, taskName));
 
         linkCmdEditNode.click().then(function () {
             // set new taskdata and submit form
@@ -302,7 +303,7 @@ var YAIONodePage = function() {
         me.openAndEditDescForNodeType("SymLink", "korrekte SymLink-Desc-Testdaten", true);
         
         // define SearchElement
-        var eleNewSymLinkName = element(by.cssContainingText('span.fancytree-title2', nodeName));
+        var eleNewSymLinkName = element(by.cssContainingText(me.spanNodeName, nodeName));
 
         // submit form
         var buttonSaveSymLink = $(me.buttonSaveSymLink);
@@ -387,7 +388,7 @@ var YAIONodePage = function() {
     /**
      * extract NnodeId from TaskNameElement
      * @param   {Element} eleTaskName       tasknameElement
-     * @returns {Promise}                   promise to get nodeId 
+     * @returns {Promise}                   promise with nodeId 
      */
     me.extractNodeIdFromNodeNameElement = function (eleTaskName) {
         protractor.utils.waitUntilElementPresent(eleTaskName, protractor.utils.CONST_WAIT_ELEMENT);
@@ -519,7 +520,7 @@ var YAIONodePage = function() {
      * @return {[]}  visible treenode-spans
      */
     me.getVisibleNodes = function() { 
-        var nodes = $$(('span.fancytree-title2')); 
+        var nodes = $$((me.spanNodeName)); 
         return protractor.promise.filter(nodes, function(node) { 
                 return node.isDisplayed(); 
             }); 
