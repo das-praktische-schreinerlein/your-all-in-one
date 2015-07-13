@@ -88,7 +88,7 @@ describe('yaio explorer exports', function() {
             });
     });
 
-    it('should focus on a node and export the children as checklist+gantt', function doExportOverrviewOfTestNode() {
+    it('should open page and export the children as checklist+gantt', function doExportOverrviewOfTestNode() {
         // Given
         var filePath = browser.params.baseDir + "explorer/exports.exportOverview.md";
         var expectedMarkdown;
@@ -128,7 +128,7 @@ describe('yaio explorer exports', function() {
             });
     });
 
-    it('should focus on a node and export the full Nodetree', function doShowDescOfTestNode() {
+    it('should open page and export the full Nodetree', function doShowDescOfTestNode() {
         // Given
         var expectedHtmlDocumentation = "Ein Beispiel-Projekt (SysPlay118)";
         var expectedMindmap = '<node  id="SysPlay119" text="WARNING - Teilprojekt 1" ID="SysPlay119" TEXT="WARNING - Teilprojekt 1" background_color="#FF6347" BACKGROUND_COLOR="#FF6347" >';
