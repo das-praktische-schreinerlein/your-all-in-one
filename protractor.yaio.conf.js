@@ -55,17 +55,18 @@ exports.config = {
 
     // Spec patterns are relative to the configuration file location passed
     suites: {
+        auth:          [testDir + '/auth/**/*Specs.js'],
         explorer:      [testDir + '/explorer/**/*Specs.js'],
-          exports:     [testDir + '/explorer/**/exportsSpecs.js'],
           guielements: [testDir + '/explorer/**/guiElementsSpecs.js'],
-          imports:     [testDir + '/explorer/**/importsSpecs.js'],
           nodeelements:[testDir + '/explorer/**/nodeElementsSpecs.js'],
+        exporter:      [testDir + '/exporter/**/Specs.js'],
         gantt:         [testDir + '/gantt/**/*Specs.js'],
+        importer:      [testDir + '/importer/**/Specs.js'],
         lang:          [testDir + '/lang/**/*Specs.js'],
-        login:         [testDir + '/login/**/*Specs.js'],
         nodelifecycle: [testDir + '/nodelifecycle/**/*Specs.js'],
         search:        [testDir + '/search/**/*Specs.js'],
         wysiwyg:       [testDir + '/wysiwyg/**/*Specs.js'],
+
         full:          [testDir + '/**/*Specs.js'],
     },
 
