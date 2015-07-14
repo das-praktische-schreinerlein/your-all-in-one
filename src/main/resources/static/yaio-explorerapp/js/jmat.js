@@ -21,7 +21,7 @@
                 label + "<span class='icon-formrowtoggler icon-formrowtoggleron'>&nbsp;</span>", 
                 label + "<span class='icon-formrowtoggler icon-formrowtoggleroff'>&nbsp;</span>", "", "");
         jMATService.getJMSServiceObj().appendHtml(html,parentId, "formrowToggler");
-    }
+    };
 
     /**
      * show InputRow
@@ -34,7 +34,7 @@
         }
         eleInputRow.style.display = "inline-block";
         return true;
-    }
+    };
 
     /**
      * liefert Status eines Input-Elements
@@ -80,7 +80,7 @@
          }
 
         return state;
-    }
+    };
 
     
     JMSLayout.prototype.isInputRowsSet = function(className) {
@@ -99,5 +99,5 @@
            console.log("state=" + state + " for " + eleInputRow.id);
         }
         return state;
-     }
+     };
     

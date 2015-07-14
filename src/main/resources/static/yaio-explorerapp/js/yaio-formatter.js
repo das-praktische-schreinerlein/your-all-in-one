@@ -74,8 +74,8 @@ var checkListConfigs = {
     "checklist-test-FAILED": {
         styleClassPraefix: "checklist-test-",
         matchers: ["FAILED", "ERROR"]
-    },
-} 
+    }
+};
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -125,16 +125,16 @@ function formatMarkdown(descText, flgHighlightNow, headerPrefix) {
         var prot; 
         if (this.options.sanitize) {
           try {
-            var prot = decodeURIComponent(unescape(href))
+            prot = decodeURIComponent(unescape(href))
               .replace(/[^\w:]/g, '')
               .toLowerCase();
           } catch (e) {
             return '';
           }
-          if (prot.indexOf('javascript:') === 0) {
+          if (prot && prot.indexOf('javascript:') === 0) {
             return '';
           }
-          if (prot.indexOf('yaio:') === 0) {
+          if (prot && prot.indexOf('yaio:') === 0) {
               href = href.substr(5);
               href="/yaio-explorerapp/yaio-explorerapp.html#/showByAllIds/" + href;
           }
@@ -183,8 +183,8 @@ function formatMarkdown(descText, flgHighlightNow, headerPrefix) {
  *   </ul> 
  * <h4>FeatureKeywords:</h4>
  *     Layout
- * @param descText - the string to prepare
- * @return - prpeared text to format as markdown
+ * @param descText   the string to prepare
+ * @return {String}  prepared text to format as markdown
  */
 function prepareTextForMarkdown(descText) {
     // prepare descText
@@ -319,8 +319,8 @@ function formatMermaidGlobal() {
  *   </ul> 
  * <h4>FeatureKeywords:</h4>
  *     Layout
- * @param descText - the string to prepare
- * @return - prpeared text to format with mermaid
+ * @param descText   the string to prepare
+ * @return {String}  prepared text to format with mermaid
  */
 function prepareTextForMermaid(descText) {
     // prepare descText
@@ -340,8 +340,8 @@ function prepareTextForMermaid(descText) {
  *   </ul> 
  * <h4>FeatureKeywords:</h4>
  *     Convert
- * @param descText - the string to prepare
- * @return - markdown-text in jira-format
+ * @param descText  the string to prepare
+ * @return {String} markdown-text in jira-format
  */
 function convertMarkdownToJira(descText) {
     // prepare descText
@@ -369,8 +369,7 @@ function convertMarkdownToJira(descText) {
             tmpText = tmpText.replace(/\n# /g, "\nh1. ");
             
             // delete dummy \n
-            tmpText = tmpText.substr(1);;
-            
+            tmpText = tmpText.substr(1);
             newDescText += tmpText;
         } else {
             // code-block
@@ -510,7 +509,7 @@ function highlightCheckListForMatchers(descBlock, matchers, styleClass, style) {
  * <h4>FeatureKeywords:</h4>
  *     Convert
  * @param descBlock  - id-filter to identify the block to format
- * @param matchers   - matcher will call as stringfilter to identify checklist-entry
+ * @param matcherStr - matcher will call as stringfilter to identify checklist-entry
  * @param styleClass - styleClass to add to span for matcher found 
  * @param style      - style to add to new span for matcher found
  */
@@ -548,7 +547,7 @@ function highlightCheckListForMatcher(descBlock, matcherStr, styleClass, style) 
  *   </ul> 
  * <h4>FeatureKeywords:</h4>
  *     Convert
- * @return <String>      - checklist in yaio-markdown-format
+ * @return {String}  checklist in yaio-markdown-format
  */
 function convertExplorerLinesAsCheckList() {
     // get title
@@ -576,9 +575,8 @@ function convertExplorerLinesAsCheckList() {
         var istStand = "0%";
         var istAufwand = "0h";
         var planAufwand = null;
-        var stand = "";
         if ($(levelSpan).size() > 0) {
-            // extraxt level from intend
+            // extract level from intend
             var intend = $(levelSpan).css("margin-left").replace("px", "");
             level = parseInt(intend, 10) / 20;
         }
@@ -607,8 +605,8 @@ function convertExplorerLinesAsCheckList() {
         if ($(istStandDiv).size() > 0) {
             istStand = $(istStandDiv).text();
         }
-        
-        stand = istStand.trim() + " (" + istAufwand.trim();
+
+        var stand = istStand.trim() + " (" + istAufwand.trim();
         if (planAufwand) {
             stand  += "/" + planAufwand.trim();
         }
@@ -655,7 +653,7 @@ function extractCheckListStatefromStateSpan(block) {
  *   </ul> 
  * <h4>FeatureKeywords:</h4>
  *     Convert
- * @return <String>      - mermaid-gantt-markdown
+ * @return {String}    mermaid-gantt-markdown
  */
 function convertExplorerLinesAsGanttMarkdown() {
     // get title
@@ -682,8 +680,6 @@ function convertExplorerLinesAsGanttMarkdown() {
         // extract content
         var title = null;
         var number = null;
-        var start = null;
-        var end = null;
         if ($(titleSpan).size() > 0) {
             title = $(titleSpan).text();
         }
@@ -714,10 +710,10 @@ function convertExplorerLinesAsGanttMarkdown() {
  *   </ul> 
  * <h4>FeatureKeywords:</h4>
  *     Convert
- * @param title          - title of the line
- * @param number         - referenc
- * @param selector       - seletor to filter the element with jquery
- * @return <String>      - mermaid-gantt-markdown-line
+ * @param title          title of the line
+ * @param number         referenc
+ * @param selector       seletor to filter the element with jquery
+ * @return {String}      mermaid-gantt-markdown-line
  */
 function generateGanttMarkdownLineFromBlock(title, number, selector) {
     if ($(selector).size() > 0) {

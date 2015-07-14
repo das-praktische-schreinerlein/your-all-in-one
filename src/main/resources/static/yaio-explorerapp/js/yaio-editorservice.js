@@ -573,7 +573,7 @@ self.callUpdateTriggerForElement = function (element) {
         $(element).trigger('input');
         $(element).focus();
     }
-}
+};
 
 
 /*****************************************

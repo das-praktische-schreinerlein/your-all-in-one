@@ -136,7 +136,7 @@ function openWysiwhgForTextareaId(textAreaId) {
 
     // create  Editor
     var myParentId = "wysiwhg-editor";
-    var editor = createNodeDescEditorForNode(myParentId, textAreaId)
+    var editor = createNodeDescEditorForNode(myParentId, textAreaId);
 
     // reset intervallHandler for this parent
     var intervalHandler = $("#" + myParentId).data("aceEditor.intervalHandler");
@@ -226,7 +226,8 @@ function openWysiwhgForTextareaId(textAreaId) {
                       
                       i = files.length +1000;
                   }
-              }
+              };
+              
               // initFileUploader
               var fileDialog = document.getElementById('importJSONFile');
               fileDialog.addEventListener('change', handleImportJSONFileSelectHandler, false);

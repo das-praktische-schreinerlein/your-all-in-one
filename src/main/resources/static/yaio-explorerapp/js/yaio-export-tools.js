@@ -154,7 +154,7 @@ function calcColumns(nodeTDId, functionName, praefix, suffix) {
    
    // Funktionalitaet: gewünsche Aktion auf alle Zahlen ausführen
    var funcResult = 0;
-   for (index = 0; index < numbers.length; ++index) {
+   for (var index = 0; index < numbers.length; ++index) {
        // alert("funcResult +" +  numbers[index]);
        if (functionName == CONST_FUNCNAME_SUM) {
           funcResult += numbers[index]; 
@@ -277,7 +277,7 @@ function VolltextTreffer(inhalt, suchworte) {
         return true;
  
     // alle Suchworte iterieren
-    for ( i = 0; i < suchworte.length; i++) {
+    for (var i = 0; i < suchworte.length; i++) {
         if ( inhalt.indexOf(suchworte[i]) == -1) {
             // Wort nicht gefunden
             return false;
@@ -304,7 +304,7 @@ function doSearch(suchworte) {
             $.each(searchElements,
                 function(subIndex, subId) {
                     // Inhalt auslesen
-                    inhalt = $("#"+subId).text().toLowerCase();
+                    var inhalt = $("#"+subId).text().toLowerCase();
                     
                     // Volltextsuche
                     if (VolltextTreffer(inhalt, suchworte)) {
@@ -334,7 +334,7 @@ function doSearch(suchworte) {
 
 function startSearch() {
     // Suchworte auslesen
-    suchworte = $(".volltextsuchfeld").val().toLowerCase().split(" ");
+    var suchworte = $(".volltextsuchfeld").val().toLowerCase().split(" ");
 
     // alle Toggler schließen
     doAllNodeToggler(false, 0);
@@ -381,7 +381,7 @@ function openNode(nodeId) {
     doParentNodeToggler(masterId, true);
     
     // animated ScrollTo after intervall, because of time used for ToggleEffects
-    delayedFocus = window.setInterval(
+    var delayedFocus = window.setInterval(
         function() {
             // nach 0,1 Sekunden ausfuehren und Intervall loeschen
             $('html, body').animate({

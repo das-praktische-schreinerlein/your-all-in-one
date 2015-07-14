@@ -52,7 +52,7 @@ var configNodeTypeFields = {
     Create: {
         fields: [
             { fieldName: "className", type: "hidden"},
-            { fieldName: "sysUID", type: "hidden"},
+            { fieldName: "sysUID", type: "hidden"}
         ]
     },
     CreateSymlink: {
@@ -64,7 +64,7 @@ var configNodeTypeFields = {
             { fieldName: "symLinkRef", type: "input"},
             { fieldName: "symLinkName", type: "input"},
             { fieldName: "symLinkTags", type: "textarea"},
-            { fieldName: "mode", type: "hidden", intern: true},
+            { fieldName: "mode", type: "hidden", intern: true}
         ]
     },
     CreateSnapshot: {
@@ -74,7 +74,7 @@ var configNodeTypeFields = {
             { fieldName: "className", type: "hidden"},
             { fieldName: "sysUID", type: "hidden"},
             { fieldName: "nodeDesc", type: "textarea"},
-            { fieldName: "mode", type: "hidden", intern: true},
+            { fieldName: "mode", type: "hidden", intern: true}
         ]
     },
     Common: {
@@ -84,7 +84,7 @@ var configNodeTypeFields = {
             { fieldName: "mode", type: "hidden", intern: true},
             { fieldName: "type", type: "select"},
             { fieldName: "state", type: "select"},
-            { fieldName: "nodeDesc", type: "textarea"},
+            { fieldName: "nodeDesc", type: "textarea"}
         ]
     },
     TaskNode: {
@@ -96,7 +96,7 @@ var configNodeTypeFields = {
             { fieldName: "istEnde", type: "input", datatype: "date"},
             { fieldName: "planAufwand", type: "input"},
             { fieldName: "planStart", type: "input", datatype: "date"},
-            { fieldName: "planEnde", type: "input", datatype: "date"},
+            { fieldName: "planEnde", type: "input", datatype: "date"}
         ]
     },
     EventNode: {
@@ -108,7 +108,7 @@ var configNodeTypeFields = {
             { fieldName: "istEnde", type: "input", datatype: "datetime"},
             { fieldName: "planAufwand", type: "input"},
             { fieldName: "planStart", type: "input", datatype: "datetime"},
-            { fieldName: "planEnde", type: "input", datatype: "datetime"},
+            { fieldName: "planEnde", type: "input", datatype: "datetime"}
         ]
     },
     InfoNode: {
@@ -117,7 +117,7 @@ var configNodeTypeFields = {
             { fieldName: "docLayoutTagCommand", type: "select"},
             { fieldName: "docLayoutAddStyleClass", type: "input"},
             { fieldName: "docLayoutShortName", type: "input"},
-            { fieldName: "docLayoutFlgCloseDiv", type: "checkbox"},
+            { fieldName: "docLayoutFlgCloseDiv", type: "checkbox"}
         ]
     },
     UrlResNode: {
@@ -129,7 +129,7 @@ var configNodeTypeFields = {
             { fieldName: "docLayoutTagCommand", type: "select"},
             { fieldName: "docLayoutAddStyleClass", type: "input"},
             { fieldName: "docLayoutShortName", type: "input"},
-            { fieldName: "docLayoutFlgCloseDiv", type: "checkbox"},
+            { fieldName: "docLayoutFlgCloseDiv", type: "checkbox"}
         ]
     },
     SymLinkNode: {
@@ -138,7 +138,7 @@ var configNodeTypeFields = {
             { fieldName: "type", type: "hidden"},
             { fieldName: "symLinkRef", type: "input"},
             { fieldName: "symLinkName", type: "input"},
-            { fieldName: "symLinkTags", type: "textarea"},
+            { fieldName: "symLinkTags", type: "textarea"}
         ]
     }
 };
@@ -375,14 +375,14 @@ function yaioCreateFancyTree(treeId, masterNodeId, doneHandler) {
         },
         table: {
             indentation: 20,
-            nodeColumnIdx: 0,
+            nodeColumnIdx: 0
 //            checkboxColumnIdx: 0
         },
         gridnav: {
             autofocusInput: false,
             handleCursorKeys: true
-        },
-/**
+        }
+        /**
         click: function(event, data) {
             var node = data.node,
                 tt = $.ui.fancytree.getEventTargetType(event.originalEvent);
@@ -394,7 +394,7 @@ function yaioCreateFancyTree(treeId, masterNodeId, doneHandler) {
     }).on("nodeCommand", function(event, data){
         // Custom event handler that is triggered by keydown-handler and
         // context menu:
-        var refNode, moveMode,
+        var refNode,
             tree = $(this).fancytree("getTree"),
             node = tree.getActiveNode();
     
@@ -453,7 +453,7 @@ function yaioCreateFancyTree(treeId, masterNodeId, doneHandler) {
                     newParentKey = tree.options.masterNodeId;
                 }
                 // calc new position
-                var newPos = -2
+                var newPos = -2;
                 if (node.getPrevSibling() != null) {
                     newPos = node.getPrevSibling().data.basenode.sortPos - 2;
                 }
@@ -551,7 +551,7 @@ function yaioCreateFancyTree(treeId, masterNodeId, doneHandler) {
             {title: "In neuem Fenster", cmd: "focusNewWindow", uiIcon: "ui-icon-arrowreturn-1-e" },
             {title: "Export Jira", cmd: "asJira", uiIcon: "ui-icon-clipboard" },
             {title: "Export Txt", cmd: "asTxt", uiIcon: "ui-icon-clipboard" },
-            {title: "----"},
+            {title: "----"}
 //            {title: "Cut <kbd>Ctrl+X</kbd>", cmd: "cut", uiIcon: "ui-icon-scissors"},
 //            {title: "Copy <kbd>Ctrl-C</kbd>", cmd: "copy", uiIcon: "ui-icon-copy"},
 //            {title: "Paste as child<kbd>Ctrl+V</kbd>", cmd: "paste", uiIcon: "ui-icon-clipboard", disabled: true }
@@ -596,7 +596,7 @@ function yaioCreateFancyTree(treeId, masterNodeId, doneHandler) {
  * @param waitTime - millis to wait for next try if tree is not in state 
  * @param maxTries - maximum of tries till donehandlder will run if tree is not in state 
  * @param doneHandler - callback-function to run if tree is in state
- * @param doneHandler - name of the callback-function fpr logging
+ * @param name        - name of the callback-function fpr logging
  */
 function yaioDoOnFancyTreeState(treeId, state, waitTime, maxTries, doneHandler, name) {
     // check if donehandler
@@ -678,7 +678,7 @@ function postProcessNodeData(event, data) {
     var state = data.response.state;
     if (state == "OK") {
         // all fine
-        console.log("OK loading nodes:" + data.response.stateMsg)
+        console.log("OK loading nodes:" + data.response.stateMsg);
         
         var baseNode = data.response.node;
         if (data.response.childNodes) {
@@ -757,7 +757,6 @@ function renderDataBlock(basenode, fancynode) {
     console.log("renderDataBlock START: " + msg);
 
     // current datablock
-    var nodeDataBlock = "";
     var $table = $("<div class='container_data_table'/>");
     var $row = $("<div class='container_data_row'/>");
     $table.append($row);
@@ -1115,7 +1114,6 @@ function renderGanttBlock(basenode, fancynode) {
     console.log("renderGanttBlock START: " + msg);
 
     // current ganttblock
-    var nodeDataBlock = "";
     var $table = $("<div class='container_gantt_table' />");
     var $row = $("<div class='container_gantt_row'/>");
     $table.append($row);
@@ -1171,9 +1169,7 @@ function renderColumnsForNode(event, data, preventActionsColum) {
     var basenode = node.data.basenode;
     var nodestate = basenode.state;
     var statestyle = "node-state-" + nodestate;
-    var nodeTypeName = basenode.className;
-    
-    
+
     var colName = 0;
     var colData = 1;
     var colGantt = 2;
@@ -1256,7 +1252,7 @@ function renderColumnsForNode(event, data, preventActionsColum) {
         .append($("<span class='fancytree-title2' id='title" + basenode.sysUID + "'>" 
                 + htmlEscapeText(name) + "</span>"))
         ;
-    $nameEle.html($div)
+    $nameEle.html($div);
     //$tdList.eq(colName).find("span.fancytree-expander").addClass(statestyle);
     
     // render datablock
@@ -1348,10 +1344,6 @@ function renderColumnsForNode(event, data, preventActionsColum) {
         descText = descText.replace(/\<WLESC\>/g, "\\");
         descText = descText.replace(/\<WLTAB\>/g, "\t");
 
-        // Default Normal
-        var descHtmlPre = "<pre class='content-desc pre-wrap' id='content_desc_" + basenode.sysUID + "'>" 
-                        + htmlEscapeText(descText) + "</pre>";
-
         // prepare descText
         var descHtml = formatMarkdown(descText, false, basenode.sysUID);
         $divDesc.append("<div id='container_content_desc_" + basenode.sysUID + "' class='container-content-desc syntaxhighlighting-open'>" + descHtml + "</div>");
@@ -1398,8 +1390,7 @@ function renderColumnsForNode(event, data, preventActionsColum) {
 
     // calc nodeData
     yaioRecalcMasterGanttBlockFromTree();
-};
-
+}
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -1612,7 +1603,7 @@ function yaioRecalcMasterGanttBlockLine(masterNodeId, praefix) {
     
     // filter ganttblocks
     var filter = "div.gantt_" + praefix + "_bar, div.gantt_" + praefix + "ChildrenSum_bar";
-    var $ganttBars = $(filter).filter(function () { return $(this).parent().css('display') == 'block' })
+    var $ganttBars = $(filter).filter(function () { return $(this).parent().css('display') == 'block' });
     console.log("yaioRecalcMasterGanttBlock type=" + praefix + " found:" + $ganttBars.length + " for filter:" + filter);
     if ($ganttBars.length > 0) {
         $($ganttBars).each( function () {

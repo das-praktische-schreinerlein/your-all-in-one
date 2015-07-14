@@ -73,7 +73,7 @@ function addSpeechRecognitionToElements() {
                         " src='https://www.google.com/intl/en/chrome/assets/common/images/content/mic.gif'></a>";
                 
                 // set flag
-                $(label).attr("webkitSpeechRecognitionAdded", "true")
+                $(label).attr("webkitSpeechRecognitionAdded", "true");
                 console.log("addSpeechRecognitionToElements: add : " + forName + " for " + forElement.attr('id'));
             }
             return link;
@@ -144,7 +144,7 @@ function addSpeechSynthToElements() {
                        "\" lang='tech' data-tooltip='tooltip.command.OpenSpeechSynth' class='button'>common.command.OpenSpeechSynth</a>";
                 
                 // set flag
-                $(label).attr("speechSynthAdded", "true")
+                $(label).attr("speechSynthAdded", "true");
                 console.log("addSpeechSynthToElements: add : " + forName + " for " + forElement.attr('id'));
             }
             return link;
@@ -452,9 +452,9 @@ function yaioShowHelpSite(url) {
 
      // run the effect
      $( id ).toggle( selectedEffect, options, 500 );
- };
+ }
 
- function togglePrintLayout() {
+function togglePrintLayout() {
      if ($("#checkboxPrintAll").prop('checked')) {
          // print all
          $("#link_css_dataonly").attr("disabled", "disabled");
@@ -597,9 +597,9 @@ function yaioShowHelpSite(url) {
 
      // run the effect
      $( id ).toggle( selectedEffect, options, 500 );
- };
- 
- function hideFormRowTogglerIfSet(togglerId, className, state) {
+ }
+
+function hideFormRowTogglerIfSet(togglerId, className, state) {
      if (jMATService.getLayoutService().isInputRowsSet(className)) {
          // show all
          jMATService.getPageLayoutService().toggleFormrows(togglerId, className, true);
@@ -661,7 +661,7 @@ function yaioShowHelpSite(url) {
                      "\" lang='tech' data-tooltip='tooltip.command.OpenMarkdownHelp' class='button'>common.command.OpenMarkdownHelp</a>";
              
              // set flag
-             $(label).attr("previewAdded", "true")
+             $(label).attr("previewAdded", "true");
              console.log("addPreviewToElements: add : " + forName + " for " + forElement.attr('id'));
          }
          return link;
@@ -696,7 +696,7 @@ function yaioShowHelpSite(url) {
                  "\" lang='tech' data-tooltip='tooltip.command.OpenWysiwygEditor' class='button'>common.command.OpenWysiwygEditor</a>";
              
              // set flag
-             $(label).attr("wysiwhgAdded", "true")
+             $(label).attr("wysiwhgAdded", "true");
              console.log("addWysiwhgToElements: add : " + forName + " for " + forElement.attr('id'));
          }
          return link;
