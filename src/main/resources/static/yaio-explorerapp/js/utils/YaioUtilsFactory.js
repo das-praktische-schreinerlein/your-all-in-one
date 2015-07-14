@@ -28,7 +28,7 @@
  * <h4>FeatureKeywords:</h4>
  *     Utils
  */
-yaioM.factory('yaioUtils', function ($rootScope) {
+yaioM.factory('yaioUtils', function () {
     var ganttRangeStart = formatGermanDate((new Date()).getTime() - 90*24*60*60*1000); 
     var ganttRangeEnd = formatGermanDate((new Date()).getTime() + 90*24*60*60*1000);
     
@@ -65,9 +65,9 @@ yaioM.factory('yaioUtils', function ($rootScope) {
             var data = {
                  node: {
                      data: {
-                         basenode: node,
+                         basenode: node
                      },
-                     tr: trIdSelector,
+                     tr: trIdSelector
                  } 
             };
             

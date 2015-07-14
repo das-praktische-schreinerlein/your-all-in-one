@@ -33,7 +33,7 @@ yaioM.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $http
     $scope.yaioUtils = yaioUtils;
 
     // create search
-    $scope.nodes = new Array();
+    $scope.nodes = [];
     
     $scope.searchOptions = {
             curPage: 1,
@@ -110,7 +110,7 @@ yaioM.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $http
         }
         
         return event;
-    }
+    };
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -139,7 +139,7 @@ yaioM.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $http
         // no cache!!!
         console.log("load new Url:" + newUrl);
         $location.path(newUrl);
-    }
+    };
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -199,7 +199,6 @@ yaioM.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $http
         }, function(response) {
             // error handler
             var data = response.data;
-            var status = response.status;
             var header = response.header;
             var config = response.config;
             var message = "error loading nodes with url: " + searchNodeUrl;
@@ -207,7 +206,7 @@ yaioM.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $http
             message = "error data: " + data + " header:" + header + " config:" + config;
             logError(message, false);
         });
-    }
+    };
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -301,7 +300,7 @@ yaioM.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $http
                 $("#detail_sys_" + node.sysUID).after($html);
                 console.log("renderNodeLine: added searchdata to:" + "#detail_sys_" + node.sysUID + $("#detail_sys_" + node.sysUID).length);
             }, 10);
-    }
+    };
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -320,7 +319,7 @@ yaioM.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $http
             var node = $scope.nodes[idx];
             yaioRecalcGanttBlock(node);
         }
-    }
+    };
     
     // call authentificate 
     authorization.authentificate(function () {

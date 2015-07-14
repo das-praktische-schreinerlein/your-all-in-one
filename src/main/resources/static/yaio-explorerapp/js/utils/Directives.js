@@ -37,4 +37,4 @@ yaioM.directive('state', function(){
         template: '<span ng-show="value == \'RUNNING\'">laufend</span>' +
                   '<span ng-show="value != \'RUNNING\'">{{value}}</span>'
      };
-})
+});
