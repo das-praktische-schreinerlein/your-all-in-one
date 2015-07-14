@@ -67,10 +67,10 @@ yaioM.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $http
      * <h4>FeatureKeywords:</h4>
      *     GUI Callback
      */
-    $scope.discard = function(formName) {
+    $scope.discard = function() {
         yaioCloseNodeEditor();
         return false;
-    }
+    };
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -84,7 +84,7 @@ yaioM.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $http
      * <h4>FeatureKeywords:</h4>
      *     GUI Callback
      */
-    $scope.selectNewNodeType = function(formName) {
+    $scope.selectNewNodeType = function() {
         // hide all forms
         yaioHideAllNodeEditorForms();
         
@@ -110,7 +110,7 @@ yaioM.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $http
         // set mode
         $scope.nodeForEdit.mode = "create";
         return false;
-    }
+    };
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -129,7 +129,7 @@ yaioM.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $http
     $scope.doTypeChanged = function() {
         $scope.nodeForEdit.istStand = calcIstStandFromState($scope.nodeForEdit);
         return false;
-    }
+    };
     
     
     /**
@@ -156,7 +156,7 @@ yaioM.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $http
     $scope.doIstStandChanged = function() {
         $scope.nodeForEdit.type = calcTypeFromIstStand($scope.nodeForEdit);
         return false;
-    }
+    };
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -178,7 +178,7 @@ yaioM.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $http
             $scope.nodeForEdit.stand ="100";
         }
         return false;
-    }
+    };
     
     
     /**
@@ -288,7 +288,7 @@ yaioM.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $http
             var state = nodeResponse.data.state;
             if (state == "OK") {
                 // all fine
-                console.log("NodeSave - OK saved node:" + nodeResponse.data.stateMsg)
+                console.log("NodeSave - OK saved node:" + nodeResponse.data.stateMsg);
                 
                 // reload
                 var newUrl = '/show/' + nodeId 
@@ -357,7 +357,6 @@ yaioM.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $http
         }, function(response) {
             // error handler
             var data = response.data;
-            var status = response.status;
             var header = response.header;
             var config = response.config;
             var message = "error saving node with url: " + url;
