@@ -22,21 +22,24 @@
         ************************* 
         -->
         <div ng-include="'js/exporter/export-form.html'"></div>
-     </div>
+      </div>
 
-      <!-- 
-      *************************
-      * Import-Links
-      ************************* 
-      -->
-      <div ng-include="'js/importer/import-links.html'"></div>
-
-      <!-- 
-      *************************
-      *    Form:   import
-      ************************* 
-      -->
-      <div ng-include="'js/importer/import-form.html'"></div>
+      <!-- ImporterCtrl -->
+      <div ng-controller="ImporterCtrl">
+        <!-- 
+        *************************
+        * Import-Links
+        ************************* 
+        -->
+        <div ng-include="'js/importer/import-links.html'"></div>
+  
+        <!-- 
+        *************************
+        *    Form:   import
+        ************************* 
+        -->
+        <div ng-include="'js/importer/import-form.html'"></div>
+      </div>
     </div>
 
     <!-- 
@@ -98,7 +101,7 @@
     *****************************
     -->
     <div id="containerYaioEditor" class="container-yaio-editor">
-      <div id="containerBoxYaioEditor" class="box containerbox-yaio-editor">
+      <div id="containerBoxYaioEditor" class="box containerbox-yaio-editor" ng-controller="NodeEditorCtrl">
 
         <!-- 
         *************************
