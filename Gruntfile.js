@@ -122,8 +122,8 @@ module.exports = function( grunt ){
                     'src/main/resources/static/dist/<%= pkg.name %>-exports-<%= pkg.version %>-full.js': ['<%= projectSupportJsFiles %>', '<%= projectExportsJsFiles %>'],
                     'src/main/resources/static/dist/<%= pkg.name %>-exports-<%= pkg.version %>-full.css': ['<%= projectSupportCssFiles %>'],
 
-                    'src/test/static/testsupport-full.js': ['<%= vendorJsTestFiles %>'],
-                    'src/test/static/<%= pkg.name %>_tests-full.js': ['<%= projectUnitJsTestFiles %>', '<%= projectE2EJsTestFiles %>']
+//                    'src/test/static/testsupport-full.js': ['<%= vendorJsTestFiles %>'],
+//                    'src/test/static/<%= pkg.name %>_tests-full.js': ['<%= projectUnitJsTestFiles %>', '<%= projectE2EJsTestFiles %>']
                 },
             },
         },   
