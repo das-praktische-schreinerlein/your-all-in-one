@@ -5,7 +5,7 @@
 
 var path = require('path');
 
-var YAIOImportPage = function() {
+var YAIOImporterPage = function() {
     var me = this;
     
     me.linkImport = '[translate="common.command.Import"]';
@@ -73,4 +73,4 @@ var YAIOImportPage = function() {
         return me.clickButtonImportAndCheck(linkImportCommand, fileToUpload, newWindowCheckHandler);
     };
 };
-module.exports = YAIOImportPage;
+module.exports = YAIOImporterPage;

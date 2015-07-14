@@ -1,9 +1,9 @@
 /**
- * defines elements of the LoginPage of YAIO
+ * defines elements of the AuthPage of YAIO
  */
 'use strict';
 
-var YAIOLoginPage = function() {
+var YAIOAuthPage = function() {
     // login-form
     var me = this;
     me.eleUsername = element(by.model('credentials.username'));
@@ -18,7 +18,7 @@ var YAIOLoginPage = function() {
      * open login-page
      * @returns {Browser}  - browser element
      */
-    me.openLoginPage = function () {
+    me.openAuthPage = function () {
         browser.manage().window().setSize(
                 browser.params.yaioConfig.browserSize.width, 
                 browser.params.yaioConfig.browserSize.height);
@@ -30,7 +30,7 @@ var YAIOLoginPage = function() {
      * submit valid login-page
      * @returns {Promise}
      */
-    me.submitValidLoginPage = function () {
+    me.submitValidAuthPage = function () {
         // fill loginform with invalid credentials
         me.eleUsername.sendKeys('admin');
         me.elePassword.sendKeys('secret');
@@ -44,8 +44,8 @@ var YAIOLoginPage = function() {
      * @returns {Promise}
      */
     me.doLogin = function () {
-        me.openLoginPage();
-        return me.submitValidLoginPage();
+        me.openAuthPage();
+        return me.submitValidAuthPage();
     };
 
     /**
@@ -117,4 +117,4 @@ var YAIOLoginPage = function() {
         return defer.promise;
     };
 };
-module.exports = YAIOLoginPage;
+module.exports = YAIOAuthPage;

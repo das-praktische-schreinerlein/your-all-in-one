@@ -4,25 +4,25 @@
  */
 
 'use strict';
-var YAIOLoginPage = require('../login/login.po.js');
+var YAIOAuthPage = require('../auth/auth.po.js');
 var YAIOFrontPage = require('../frontpage/frontpage.po.js');
 var YAIONodePage = require('../explorer/node.po.js');
-var YAIOExportPage = require('../explorer/exports.po.js');
+var YAIOExporterPage = require('../exporter/exporter.po.js');
 var fs = require('fs');
 
-describe('yaio explorer exports', function() {
+describe('yaio exporter', function() {
 
-    var yaioLoginPage = new YAIOLoginPage();
+    var yaioAuthPage = new YAIOAuthPage();
     var yaioFrontPage = new YAIOFrontPage();
     var yaioNodePage = new YAIONodePage();
-    var yaioExportPage = new YAIOExportPage();
+    var yaioExporterPage = new YAIOExporterPage();
 
     /**
      * prepare tests
      */
     beforeEach(function() {
         // do Login
-        yaioLoginPage.checkLogin()
+        yaioAuthPage.checkLogin()
             .then(function doneOpenExplorer() {
                 // open explorer
                 return yaioNodePage.openExplorerFromFrontPage();
@@ -55,8 +55,8 @@ describe('yaio explorer exports', function() {
             })
             .then(function clickExport() {
                 // click Export-Button
-                protractor.utils.waitUntilElementClickable($(yaioExportPage.linkSnapshot), protractor.utils.CONST_WAIT_NODEHIRARCHY);
-                return $(yaioExportPage.linkSnapshot).click();
+                protractor.utils.waitUntilElementClickable($(yaioExporterPage.linkSnapshot), protractor.utils.CONST_WAIT_NODEHIRARCHY);
+                return $(yaioExporterPage.linkSnapshot).click();
             })
             .then(function checkForm() {
                 // check form to create new infonode with snapshot
@@ -90,7 +90,7 @@ describe('yaio explorer exports', function() {
 
     it('should open page and export the children as checklist+gantt', function doExportOverrviewOfTestNode() {
         // Given
-        var filePath = browser.params.baseDir + "explorer/exports.exportOverview.md";
+        var filePath = browser.params.baseDir + "exporter/exporter.exportOverview.md";
         var expectedMarkdown;
 
         var checkClipboardHandlerText = function (clipboard) {
@@ -110,8 +110,8 @@ describe('yaio explorer exports', function() {
         return browser.get(browser.params.yaioConfig.yaioBaseAppUrl + '/show/' + yaioNodePage.jsLayoutTestId)
             .then(function clickExport() {
                 // click Export-Button
-                protractor.utils.waitUntilElementClickable($(yaioExportPage.linkExportOverview), protractor.utils.CONST_WAIT_NODEHIRARCHY);
-                return $(yaioExportPage.linkExportOverview).click();
+                protractor.utils.waitUntilElementClickable($(yaioExporterPage.linkExportOverview), protractor.utils.CONST_WAIT_NODEHIRARCHY);
+                return $(yaioExporterPage.linkExportOverview).click();
             })
             .then(function readFileContent() {
                 // read fixture
@@ -123,7 +123,7 @@ describe('yaio explorer exports', function() {
             })
             .then(function checkClipboard() {
                 // check text-clipboard
-                var clipboardElement = yaioExportPage.checkAndCloseClipboard(checkClipboardHandlerText);
+                var clipboardElement = yaioExporterPage.checkAndCloseClipboard(checkClipboardHandlerText);
                 return clipboardElement.getText();
             });
     });
@@ -141,15 +141,15 @@ describe('yaio explorer exports', function() {
             .then(function doneFocusOnNode() {
                 // export as html documentation
                 protractor.utils.waitUntilElementClickable($(yaioNodePage.containerMasterdata), protractor.utils.CONST_WAIT_NODEHIRARCHY);
-                return yaioExportPage.clickShortlinkExportAsHtmlDocumentation(expectedHtmlDocumentation);
+                return yaioExporterPage.clickShortlinkExportAsHtmlDocumentation(expectedHtmlDocumentation);
             })
             .then(function doneExportAsHtmlDocumentation() {
                 // export as ICal 
-                return yaioExportPage.clickShortlinkExportAsMindmap(expectedMindmap);
+                return yaioExporterPage.clickShortlinkExportAsMindmap(expectedMindmap);
             })
             .then(function doneExportAsMindmap() {
                 // export as ICal 
-                return yaioExportPage.clickShortlinkExportAsICal(expectedICal);
+                return yaioExporterPage.clickShortlinkExportAsICal(expectedICal);
             });
     });
 
@@ -158,7 +158,7 @@ describe('yaio explorer exports', function() {
         var deferred = protractor.promise.defer();
         var expectedText = "Diese Aufgabe bitte nicht löschen, da hier die JavaScript-E2E-Tests ausgeführt werden.";
         var expectedHtml = "<p>" + expectedText + "</p>";
-        var contentHandler = yaioExportPage.createHandlerToCheckNodeExports(yaioNodePage.jsFuncTestId, expectedHtml, expectedText, expectedText);
+        var contentHandler = yaioExporterPage.createHandlerToCheckNodeExports(yaioNodePage.jsFuncTestId, expectedHtml, expectedText, expectedText);
 
         // When and Then
 

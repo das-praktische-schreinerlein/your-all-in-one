@@ -4,25 +4,25 @@
  */
 
 'use strict';
-var YAIOLoginPage = require('../login/login.po.js');
+var YAIOAuthPage = require('../auth/auth.po.js');
 var YAIOFrontPage = require('../frontpage/frontpage.po.js');
 var YAIONodePage = require('../explorer/node.po.js');
 
-describe('yaio explorer nodelifecycle', function() {
+describe('yaio nodelifecycle', function() {
     // define vars
-    var yaioLoginPage, yaioFrontPage, yaioNodePage;
+    var yaioAuthPage, yaioFrontPage, yaioNodePage;
 
     /**
      * prepare tests
      */
     beforeEach(function() {
         // initpages (reset elements)
-        yaioLoginPage = new YAIOLoginPage();
+        yaioAuthPage = new YAIOAuthPage();
         yaioFrontPage = new YAIOFrontPage();
         yaioNodePage = new YAIONodePage();
         
         // do Login
-        yaioLoginPage.checkLogin()
+        yaioAuthPage.checkLogin()
             .then(function doneOpenExplorer() {
                 // open explorer
                 return yaioNodePage.openExplorerFromFrontPage();

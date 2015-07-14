@@ -1,26 +1,26 @@
 /**
- * test the LoginPage of YAIO
+ * test the AuthPage of YAIO
  * 
  */
 'use strict';
 
-var YAIOLoginPage = require('./login.po.js');
+var YAIOAuthPage = require('../auth/auth.po.js');
 var YAIOFrontPage = require('../frontpage/frontpage.po.js');
 
-describe('yaio loginpage', function() {
+describe('yaio AuthPage', function() {
     // define vars
-    var yaioLoginPage, yaioFrontPage;
+    var yaioAuthPage, yaioFrontPage;
 
     /**
      * prepare tests
      */
     beforeEach(function() {
         // initpages (reset elements)
-        yaioLoginPage = new YAIOLoginPage();
+        yaioAuthPage = new YAIOAuthPage();
         yaioFrontPage = new YAIOFrontPage();
         
-        yaioLoginPage.doLogout();
-        yaioLoginPage.openLoginPage();
+        yaioAuthPage.doLogout();
+        yaioAuthPage.openAuthPage();
     });
 
     /**
@@ -33,24 +33,24 @@ describe('yaio loginpage', function() {
      * define tests
      */
     it('should show login', function doShowLogin() {
-        expect(yaioLoginPage.eleUsername.getAttribute('id')).toEqual("username");
+        expect(yaioAuthPage.eleUsername.getAttribute('id')).toEqual("username");
     });
     
     it('should reject login with invalid credentials', function doRejectInvalidLogin() {
         // fill loginform with invalid credentials
-        yaioLoginPage.eleUsername.sendKeys('admin');
-        yaioLoginPage.elePassword.sendKeys('blabla');
+        yaioAuthPage.eleUsername.sendKeys('admin');
+        yaioAuthPage.elePassword.sendKeys('blabla');
         
         // send login
-        $(yaioLoginPage.submit).click();
+        $(yaioAuthPage.submit).click();
     
         // expect login-error
-        expect($(yaioLoginPage.errorMsg).getText()).toEqual("There was a problem logging in. Please try again.");
+        expect($(yaioAuthPage.errorMsg).getText()).toEqual("There was a problem logging in. Please try again.");
     });
     
     it('should show explorer after login', function doValidLogin() {
         // fill loginform with valid credentials
-        yaioLoginPage.submitValidLoginPage();
+        yaioAuthPage.submitValidAuthPage();
     
         // expect frontContent
         protractor.utils.waitUntilElementPresent($(yaioFrontPage.fontContentLeft), protractor.utils.CONST_WAIT_NODEHIRARCHY);

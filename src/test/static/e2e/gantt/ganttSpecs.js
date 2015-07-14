@@ -4,26 +4,26 @@
  */
 
 'use strict';
-var YAIOLoginPage = require('../login/login.po.js');
+var YAIOAuthPage = require('../auth/auth.po.js');
 var YAIONodePage = require('../explorer/node.po.js');
 var YAIOGanttPage = require('../gantt/gantt.po.js');
 
 describe('yaio gantt', function() {
     // define vars
-    var yaioLoginPage, yaioNodePage, yaioGanttPage;
+    var yaioAuthPage, yaioNodePage, yaioGanttPage;
 
     /**
      * prepare tests
      */
     beforeEach(function() {
         // initpages (reset elements)
-        yaioLoginPage = new YAIOLoginPage();
+        yaioAuthPage = new YAIOAuthPage();
         yaioNodePage = new YAIONodePage();
         yaioGanttPage = new YAIOGanttPage();
         
         // do Login
-        yaioLoginPage.checkLogin();
-        protractor.utils.waitUntilElementPresent($(yaioLoginPage.loginResult), protractor.utils.CONST_WAIT_NODEHIRARCHY);
+        yaioAuthPage.checkLogin();
+        protractor.utils.waitUntilElementPresent($(yaioAuthPage.loginResult), protractor.utils.CONST_WAIT_NODEHIRARCHY);
     });
 
     /**

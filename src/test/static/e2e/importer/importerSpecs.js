@@ -4,23 +4,23 @@
  */
 
 'use strict';
-var YAIOLoginPage = require('../login/login.po.js');
+var YAIOAuthPage = require('../auth/auth.po.js');
 var YAIONodePage = require('../explorer/node.po.js');
-var YAIOImportPage = require('../explorer/imports.po.js');
+var YAIOImporterPage = require('../importer/importer.po.js');
 
-describe('yaio explorer imports', function() {
+describe('yaio importer', function() {
 
-    var yaioLoginPage = new YAIOLoginPage();
+    var yaioAuthPage = new YAIOAuthPage();
     var yaioNodePage = new YAIONodePage();
-    var yaioImportPage = new YAIOImportPage();
+    var yaioImporterPage = new YAIOImporterPage();
 
     /**
      * prepare tests
      */
     beforeEach(function() {
         // do Login
-        yaioLoginPage.checkLogin();
-        protractor.utils.waitUntilElementPresent($(yaioLoginPage.loginResult), protractor.utils.CONST_WAIT_NODEHIRARCHY);
+        yaioAuthPage.checkLogin();
+        protractor.utils.waitUntilElementPresent($(yaioAuthPage.loginResult), protractor.utils.CONST_WAIT_NODEHIRARCHY);
     });
 
     /**
@@ -36,11 +36,11 @@ describe('yaio explorer imports', function() {
     it('should focus on a node, click on import, upload file, reload page, delete new task', function doSnapshotOfTestNode() {
         // load page
         browser.get(browser.params.yaioConfig.yaioBaseAppUrl + '/show/' + yaioNodePage.jsFuncTestId);
-        protractor.utils.waitUntilElementClickable($(yaioImportPage.linkImport), protractor.utils.CONST_WAIT_NODEHIRARCHY);
+        protractor.utils.waitUntilElementClickable($(yaioImporterPage.linkImport), protractor.utils.CONST_WAIT_NODEHIRARCHY);
         
         // upload-file and new task
         var taskName = 'uploadtest';
-        var fileToUpload = 'import.upload.wiki';
+        var fileToUpload = 'importer.upload.wiki';
 
         // define checkhandler
         var checkHandlerImportWindow = function () {
@@ -72,7 +72,7 @@ describe('yaio explorer imports', function() {
         };
         var checkHandlerMainWindow = function () {
             // check mainwindow for new task
-            protractor.utils.waitUntilElementClickable($(yaioImportPage.linkImport), protractor.utils.CONST_WAIT_NODEHIRARCHY);
+            protractor.utils.waitUntilElementClickable($(yaioImporterPage.linkImport), protractor.utils.CONST_WAIT_NODEHIRARCHY);
             var eleNewTaskName = element(by.cssContainingText(yaioNodePage.spanNodeName, taskName));
             protractor.utils.waitUntilElementVisible(eleNewTaskName, protractor.utils.CONST_WAIT_NODEHIRARCHY);
             expect(eleNewTaskName.getText()).toBe(taskName)
@@ -80,8 +80,8 @@ describe('yaio explorer imports', function() {
         };
 
         // navigate to Node
-        return yaioImportPage.importFileAndCheckForNewTask(
-                $(yaioImportPage.linkImport), 
+        return yaioImporterPage.importFileAndCheckForNewTask(
+                $(yaioImporterPage.linkImport), 
                 fileToUpload,
                 checkHandlerImportWindow,
                 checkHandlerMainWindow)

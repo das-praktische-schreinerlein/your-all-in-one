@@ -4,27 +4,27 @@
  */
 
 'use strict';
-var YAIOLoginPage = require('../login/login.po.js');
+var YAIOAuthPage = require('../auth/auth.po.js');
 var YAIOFrontPage = require('../frontpage/frontpage.po.js');
 var YAIONodePage = require('../explorer/node.po.js');
 var YAIOSearchPage = require('../search/search.po.js');
 
-describe('yaio explorer search', function() {
+describe('yaio search', function() {
     // define vars
-    var yaioLoginPage, yaioFrontPage, yaioNodePage, yaioSearchPage;
+    var yaioAuthPage, yaioFrontPage, yaioNodePage, yaioSearchPage;
 
     /**
      * prepare tests
      */
     beforeEach(function() {
         // initpages (reset elements)
-        yaioLoginPage = new YAIOLoginPage();
+        yaioAuthPage = new YAIOAuthPage();
         yaioFrontPage = new YAIOFrontPage();
         yaioNodePage = new YAIONodePage();
         yaioSearchPage = new YAIOSearchPage();
         
         // do Login
-        yaioLoginPage.checkLogin()
+        yaioAuthPage.checkLogin()
             .then(function doneOpenExplorer() {
                 // open explorer
                 return yaioSearchPage.openSearchFromFrontPage();

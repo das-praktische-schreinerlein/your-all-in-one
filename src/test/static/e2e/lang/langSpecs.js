@@ -4,25 +4,25 @@
  */
 
 'use strict';
-var YAIOLoginPage = require('../login/login.po.js');
+var YAIOAuthPage = require('../auth/auth.po.js');
 var YAIONodePage = require('../explorer/node.po.js');
 var YAIOLangPage = require('../lang/lang.po.js');
 
 describe('yaio language-packs', function() {
     // define vars
-    var yaioLoginPage, yaioNodePage, yaioLangPage;
+    var yaioAuthPage, yaioNodePage, yaioLangPage;
 
     /**
      * prepare tests
      */
     beforeEach(function() {
         // initpages (reset elements)
-        yaioLoginPage = new YAIOLoginPage();
+        yaioAuthPage = new YAIOAuthPage();
         yaioNodePage = new YAIONodePage();
         yaioLangPage = new YAIOLangPage();
         
         // do Login
-        yaioLoginPage.checkLogin()
+        yaioAuthPage.checkLogin()
             .then(function doneOpenExplorer() {
                 // open explorer
                 return yaioNodePage.openExplorerFromFrontPage();

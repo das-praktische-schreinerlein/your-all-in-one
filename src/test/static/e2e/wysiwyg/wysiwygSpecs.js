@@ -4,26 +4,26 @@
  */
 
 'use strict';
-var YAIOLoginPage = require('../login/login.po.js');
+var YAIOAuthPage = require('../auth/auth.po.js');
 var YAIONodePage = require('../explorer/node.po.js');
 var YAIOWysiwygPage = require('../wysiwyg/wysiwyg.po.js');
 
 describe('yaio wysiwyg', function() {
     // define vars
-    var yaioLoginPage, yaioNodePage, yaioWysiwygPage;
+    var yaioAuthPage, yaioNodePage, yaioWysiwygPage;
 
     /**
      * prepare tests
      */
     beforeEach(function() {
         // initpages (reset elements)
-        yaioLoginPage = new YAIOLoginPage();
+        yaioAuthPage = new YAIOAuthPage();
         yaioNodePage = new YAIONodePage();
         yaioWysiwygPage = new YAIOWysiwygPage();
         
         // do Login
-        yaioLoginPage.doLogin();
-        protractor.utils.waitUntilElementPresent($(yaioLoginPage.loginResult), protractor.utils.CONST_WAIT_NODEHIRARCHY);
+        yaioAuthPage.doLogin();
+        protractor.utils.waitUntilElementPresent($(yaioAuthPage.loginResult), protractor.utils.CONST_WAIT_NODEHIRARCHY);
         browser.ignoreSynchronization = true;
     });
 

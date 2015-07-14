@@ -4,7 +4,7 @@
 'use strict';
 var fs = require('fs');
 
-var YAIOExportPage = function() {
+var YAIOExporterPage = function() {
     var me = this;
     
     me.baseUrl = browser.params.yaioConfig.yaioBaseAppUrl + '/show/' + 'MasterplanMasternode1';
@@ -268,4 +268,4 @@ var YAIOExportPage = function() {
         return me.clickButtonExportAndCheckFileDownload(linkExportCommand, "converted.mm", expectedText);
     };
 };
-module.exports = YAIOExportPage;
+module.exports = YAIOExporterPage;
