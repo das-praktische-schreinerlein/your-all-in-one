@@ -28,8 +28,7 @@
  * <h4>FeatureKeywords:</h4>
  *     GUI Configuration
  */
-yaioM.factory('OutputOptionsEditor', function($http) {
-    var node = {};
+yaioM.factory('OutputOptionsEditor', function() {
     var oOptions =  {};
     var url, target;
 
@@ -157,8 +156,8 @@ yaioM.factory('OutputOptionsEditor', function($http) {
          * <h4>FeatureKeywords:</h4>
          *     GUI Callback
          * @param sysUID - the sysUID of the current node
-         * @param url - the url to send
-         * @param target - the target window-name
+         * @param newUrl - the url to send
+         * @param newTarget - the target window-name
          */
         showOutputOptionsEditor: function(sysUID, newUrl, newTarget) {
             url = newUrl;
@@ -168,4 +167,4 @@ yaioM.factory('OutputOptionsEditor', function($http) {
             return false;
         }
     }
-})
+});

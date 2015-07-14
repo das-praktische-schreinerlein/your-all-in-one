@@ -50,4 +50,4 @@ yaioM.controller('FrontPageCtrl', function($rootScope, $scope, $location, $http,
             $scope.frontPageUrl = '/exports/htmlfrontpagefragment/' + nodeId;
         }
     });
-})
+});
