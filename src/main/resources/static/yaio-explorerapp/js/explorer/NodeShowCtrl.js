@@ -99,7 +99,7 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
                         var state = nodeResponse.data.state;
                         if (state == "OK") {
                             // all fine
-                            console.log("NodeShowCtrl - OK loading activenode:" + nodeResponse.data.stateMsg)
+                            console.log("NodeShowCtrl - OK loading activenode:" + nodeResponse.data.stateMsg);
                             
                             // create nodehierarchy
                             var nodeIdHierarchy = new Array();
@@ -123,7 +123,6 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
                     }, function(response) {
                         // error handler
                         var data = response.data;
-                        var status = response.status;
                         var header = response.header;
                         var config = response.config;
                         var message = "error loading activenode with url: " + activeNodeUrl;
@@ -159,7 +158,7 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
                     yaioCreateFancyTree("#tree", $scope.node.sysUID, activeNodeIdHandler);
                     
                     // load me
-                    $scope.yaioUtils.renderNodeLine(nodeResponse.data.node, "#masterTr")
+                    $scope.yaioUtils.renderNodeLine(nodeResponse.data.node, "#masterTr");
 
                     // recalc gantt
                     yaioRecalcMasterGanttBlock($scope.node);
@@ -171,7 +170,6 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
             }, function(response) {
                 // error handler
                 var data = response.data;
-                var status = response.status;
                 var header = response.header;
                 var config = response.config;
                 var message = "error loading node with url: " + curNodeUrl;
@@ -198,7 +196,7 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
         console.log("exportAsOverview");
         yaioExportExplorerLinesAsOverview();
         return false;
-    }
+    };
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -216,7 +214,7 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
         console.log("snapshot");
         yaioSnapshot($scope.node);
         return false;
-    }
+    };
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -230,11 +228,11 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
      * <h4>FeatureKeywords:</h4>
      *     GUI Callback
      */
-    $scope.openSubNodes = function(flgOpen) {
+    $scope.openSubNodes = function() {
         console.log("openSubNodes:" + " level:" + $scope.config.treeOpenLevel);
         yaioOpenSubNodesForTree("#tree", $scope.config.treeOpenLevel);
         return false;
-    }
+    };
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -252,7 +250,7 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
         yaioRecalcFancytreeGanttBlocks();
         yaioRecalcMasterGanttBlock($scope.node);
         return false;
-    }
+    };
 
     /**
      * <h4>FeatureDomain:</h4>
