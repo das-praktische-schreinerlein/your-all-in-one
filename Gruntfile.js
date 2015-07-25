@@ -70,6 +70,10 @@ module.exports = function( grunt ){
                'src/main/resources/static/yaio-explorerapp/../js/angularjs/paging.js',
         ],
         projectSupportJsFiles: [
+               'src/main/resources/static/yaio-explorerapp/js/jshelferlein/JsHelferlein.js',
+               'src/main/resources/static/yaio-explorerapp/js/jshelferlein/**/*.js',
+               'src/main/resources/static/yaio-explorerapp/js/YaioAppBaseConfig.js',
+               'src/main/resources/static/yaio-explorerapp/js/YaioAppBase.js',
                'src/main/resources/static/yaio-explorerapp/js/jmat.js',
                'src/main/resources/static/yaio-explorerapp/js/yaio-editorservice.js',
                'src/main/resources/static/yaio-explorerapp/js/yaio-baseservice.js',

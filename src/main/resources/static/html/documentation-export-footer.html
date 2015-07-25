@@ -4,18 +4,18 @@
     <div class="menueFooter" id="menueFooter">
         <div class="menueFooterBox">
             <ul id="ulMenueFooter" class="ulMenueFooter">
-                <li class="menueFooterMasterLink display-if-js-block command"><a class="a-menue-footer-norm button flg-textonly hidden" id="speechSynthLink" onclick="javascript:openSpeechSynth();return false;">Vorlesen</a></li>
-                <li class="menueFooterMasterLink display-if-js-block"><span class="button"><a onclick="window.print(); return true;" class="a-menue-footer-norm flg-textonly">Drucken</a><input type="checkbox" onclick="togglePrintLayout()" id="checkboxPrintAll"> All</span></li>
-                <li class="menueFooterMasterLink display-if-js-block command">
+                <li class="menueFooterMasterLink yaio-show-if-speechsynth command"><a class="a-menue-footer-norm button flg-textonly hidden" id="speechSynthLink" onclick="javascript:openSpeechSynth();return false;">Vorlesen</a></li>
+                <li class="menueFooterMasterLink yaio-show-if-javascript"><span class="button"><a onclick="window.print(); return true;" class="a-menue-footer-norm flg-textonly">Drucken</a><input type="checkbox" onclick="togglePrintLayout()" id="checkboxPrintAll"> All</span></li>
+                <li class="menueFooterMasterLink yaio-show-if-javascript command">
                    <a class="a-menue-footer-norm button flg-textonly" id="showSidebarTOCLink" onclick="javascript:toggleWithLinks('#showSidebarTOCLink', '#hideSidebarTOCLink', '#sidebartoc', '');return false;">Sidebar an</a>
                    <a class="a-menue-footer-norm button flg-textonly" style="display: none" id="hideSidebarTOCLink" onclick="javascript:toggleWithLinks('#showSidebarTOCLink', '#hideSidebarTOCLink', '#sidebartoc', '');return false;">Sidebar aus</a>
                 </li>
-                <li class="menueFooterMasterLink display-if-js-block command">
+                <li class="menueFooterMasterLink yaio-show-if-javascript command">
                    <a class="a-menue-footer-norm button flg-textonly" id="showGlobalTOCLink" onclick="javascript:toggleWithLinks('#showGlobalTOCLink', '#hideGlobalTOCLink', '#globtoc', '');return false;">TOC an</a>
                    <a class="a-menue-footer-norm button flg-textonly" style="display: none" id="hideGlobalTOCLink" onclick="javascript:toggleWithLinks('#showGlobalTOCLink', '#hideGlobalTOCLink', '#globtoc', '');return false;">TOC aus</a>
                 </li>
 <!--
-                <li class="menueFooterMasterLink display-if-js-block">
+                <li class="menueFooterMasterLink yaio-show-if-javascript">
                    <input type="text" style="width:200px" class="volltextsuchfeld" id="vlt_msglist">
                    <input type=button onclick="javascript:startSearch();" value="Suchen">
                    <input type=button onclick="javascript:resetSearch();doAllNodeToggler(true, 3);" value="Reset">
@@ -26,6 +26,12 @@
     </div>
     <div id="sidebartoc" class="sidebartoc documentation-sidebartoc"> </div>
     
+<!-- YaioAppBase -->
+<script type="text/javascript">
+window.yaioAppBase = YaioAppBase();
+yaioAppBase.publishDetectorStyles();
+</script>
+
 <script type="text/javascript">
     // alle OFFEN hervorheben
     var styles = {

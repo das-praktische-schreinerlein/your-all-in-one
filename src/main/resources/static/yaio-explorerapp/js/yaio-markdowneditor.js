@@ -198,8 +198,13 @@ function openWysiwhgForTextareaId(textAreaId) {
           "Vorschau": function () {
               showPreviewForTextareaId(textAreaId);
           },
-          "Vorlesen": function () {
-              openSpeechSynthWindow(document.getElementById('wysiwhg-preview'));
+          "Vorlesen": {
+              id: "Vorlesen",
+              text: "Vorlesen",
+              class: "jsh-show-inline-block-if-speechsynth",
+              click: function () {
+                  openSpeechSynthWindow(document.getElementById('wysiwhg-preview'));
+              }
           },
           "Load": function () {
               // define handler

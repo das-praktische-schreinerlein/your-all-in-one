@@ -45,7 +45,7 @@
  */
 function addSpeechRecognitionToElements() {
     // add speechrecognition if availiable
-    if (('webkitSpeechRecognition' in window)) {
+    if (yaioAppBase.getDetector('SpeechRecognitionDetector').isSupported()) {
         // add speechrecognition to nodeDesc+name
         $("label[for='nodeDesc'], label[for='name']").append(function (idx) {
             var link = "";
@@ -70,7 +70,7 @@ function addSpeechRecognitionToElements() {
                         "document.getElementById('" + forElement.attr('id') + "')); return false;" +
                     "\" lang='tech' data-tooltip='tooltip.command.OpenSpeechRecognition'>" +
                     "<img alt='Spracherkennung nutzen' style='width:25px'" +
-                        " src='https://www.google.com/intl/en/chrome/assets/common/images/content/mic.gif'></a>";
+                        " src='" + yaioAppBase.getService('SpeechRecognitionHelper').config.statusImgSrcStart + "'></a>";
                 
                 // set flag
                 $(label).attr("webkitSpeechRecognitionAdded", "true");
@@ -95,7 +95,7 @@ function addSpeechRecognitionToElements() {
  * @param target - target-element to update (HTML-Element)
  */
 function openSpeechRecognitionWindow(target) {
-    if (target == null) target = self;
+    if (target == null) { target = self; }
     target.focus();
     var speechrecognitionWindow = window.open('speechrecognition.html', "speechrecognition", "width=690,height=350,resizable=yes,dependent=yes,scrollbars=yes");
     speechrecognitionWindow.focus();
@@ -118,7 +118,7 @@ function openSpeechRecognitionWindow(target) {
  */
 function addSpeechSynthToElements() {
     // add speechSynth if availiable
-    if (('speechSynthesis' in window)) {
+    if (yaioAppBase.getDetector('SpeechSynthDetector').isSupported()) {
         // add speechrecognition to nodeDesc+name
         $("label[for='nodeDesc']").append(function (idx) {
             var link = "";
