@@ -57,7 +57,7 @@ yaioM.factory('yaioUtils', function () {
         },
         
         openNodeEditorForNode: function(node, mode) {
-            yaioOpenNodeEditorForNode(node, mode);
+            yaioAppBase.get('YaioEditorService').yaioOpenNodeEditorForNode(node, mode);
         },
         
         renderNodeLine: function(node, trIdSelector) {

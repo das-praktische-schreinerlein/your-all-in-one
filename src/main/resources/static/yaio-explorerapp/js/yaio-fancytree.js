@@ -333,7 +333,7 @@ function yaioCreateFancyTree(treeId, masterNodeId, doneHandler) {
             triggerStart: ["f2", "dblclick", "shift+click", "mac+enter"],
             beforeEdit: function(event, data){
                 // open yaio-editor
-                yaioOpenNodeEditor(data.node.key, 'edit');
+                yaioAppBase.get('YaioEditorService').yaioOpenNodeEditor(data.node.key, 'edit');
                 
                 // Return false to prevent edit mode
                 // dont use fancyeditor
@@ -485,7 +485,7 @@ function yaioCreateFancyTree(treeId, masterNodeId, doneHandler) {
                 yaioRemoveNodeById(node.key);
                 break;
             case "addChild":
-                yaioOpenNodeEditor(node.key, 'create');
+                yaioAppBase.get('YaioEditorService').yaioOpenNodeEditor(node.key, 'create');
                 break;
             case "asTxt":
                 openTxtExportWindow($('#container_content_desc_' + node.key).text());
@@ -1190,15 +1190,15 @@ function renderColumnsForNode(event, data, preventActionsColum) {
                             + " class='' "
                             + " data-tooltip='tooltip.command.ToggleSys' lang='tech'></a>"
                     + "</div>"
-                + "<a onclick=\"javascript: yaioOpenNodeEditor('" + basenode.sysUID + "', 'edit'); return false;\""
+                + "<a onclick=\"javascript: yaioAppBase.get('YaioEditorService').yaioOpenNodeEditor('" + basenode.sysUID + "', 'edit'); return false;\""
                         + " id='cmdEdit" + basenode.sysUID + "'"
                         + " class='yaio-icon-edit'"
                         + " lang='tech' data-tooltip='tooltip.command.NodeEdit'></a>"
-                + "<a onclick=\"javascript: yaioOpenNodeEditor('" + basenode.sysUID + "', 'create'); return false;\""
+                + "<a onclick=\"javascript: yaioAppBase.get('YaioEditorService').yaioOpenNodeEditor('" + basenode.sysUID + "', 'create'); return false;\""
                         + " id='cmdCreate" + basenode.sysUID + "'"
                         + " class='yaio-icon-create'"
                         + " lang='tech' data-tooltip='tooltip.command.NodeCreateChild'></a>"
-                + "<a onclick=\"javascript: yaioOpenNodeEditor('" + basenode.sysUID + "', 'createsymlink'); return false;\""
+                + "<a onclick=\"javascript: yaioAppBase.get('YaioEditorService').yaioOpenNodeEditor('" + basenode.sysUID + "', 'createsymlink'); return false;\""
                         + " id='cmdCreateSymLink" + basenode.sysUID + "'"
                         + " class='yaio-icon-createsymlink'"
                         + " lang='tech' data-tooltip='tooltip.command.NodeCreateSymLink'></a>"
@@ -2120,7 +2120,7 @@ function yaioSnapshot(parentNode) {
     ganttSrc = yaioAppBase.get('YaioBaseService').htmlEscapeText(ganttSrc);
 
     // open editor
-    yaioOpenNodeEditorForNode(parentNode, 'createsnapshot', {nodeDesc: checkListSrc + "\n\n" +  ganttSrc});
+    yaioAppBase.get('YaioEditorService').yaioOpenNodeEditorForNode(parentNode, 'createsnapshot', {nodeDesc: checkListSrc + "\n\n" +  ganttSrc});
 }
 
 

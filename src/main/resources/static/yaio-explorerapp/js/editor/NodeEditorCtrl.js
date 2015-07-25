@@ -68,7 +68,7 @@ yaioM.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $http
      *     GUI Callback
      */
     $scope.discard = function() {
-        yaioCloseNodeEditor();
+        yaioAppBase.get('YaioEditorService').yaioCloseNodeEditor();
         return false;
     };
     
@@ -86,7 +86,7 @@ yaioM.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $http
      */
     $scope.selectNewNodeType = function() {
         // hide all forms
-        yaioHideAllNodeEditorForms();
+        yaioAppBase.get('YaioEditorService').yaioHideAllNodeEditorForms();
         
         // display createform and select nodeform
         $("#containerFormYaioEditorCreate").css("display", "block");
@@ -117,7 +117,7 @@ yaioM.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $http
      *     Callback
      * <h4>FeatureDescription:</h4>
      *     callbackhandler to perform actions when type has changed<br>
-     *     calls calcIstStandFromState() for the node
+     *     calls yaioAppBase.get('YaioEditorService').calcIstStandFromState() for the node
      *     if ERLEDIGT || VERWORFEN || EVENT_ERLEDIGT || EVENT_VERWORFEN: update istStand=100
      * <h4>FeatureResult:</h4>
      *   <ul>
@@ -127,7 +127,7 @@ yaioM.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $http
      *     GUI Callback
      */
     $scope.doTypeChanged = function() {
-        $scope.nodeForEdit.istStand = calcIstStandFromState($scope.nodeForEdit);
+        $scope.nodeForEdit.istStand = yaioAppBase.get('YaioEditorService').calcIstStandFromState($scope.nodeForEdit);
         return false;
     };
     
@@ -154,7 +154,7 @@ yaioM.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $http
      *     GUI Callback
      */
     $scope.doIstStandChanged = function() {
-        $scope.nodeForEdit.type = calcTypeFromIstStand($scope.nodeForEdit);
+        $scope.nodeForEdit.type = yaioAppBase.get('YaioEditorService').calcTypeFromIstStand($scope.nodeForEdit);
         return false;
     };
     

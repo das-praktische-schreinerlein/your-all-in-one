@@ -34,8 +34,6 @@
  * Service-Funktions (layout)
  *****************************************
  *****************************************/
-'use strict';
-
 Yaio.BaseService = function(appBase) {
     // my own instance
     var me = JsHelferlein.ServiceBase(appBase);

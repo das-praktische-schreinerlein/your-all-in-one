@@ -30,6 +30,8 @@
  */
 
 (function () {
+    var testObj = yaioAppBase.get('YaioEditorService');
+    
     describe('Modul yaio-editorservice Service-Funktions (businesslogic calcIstStandFromState)', function () {
         var doCheckCalcIstStandFromState = function(basenode, state, stand) {
             // Given
@@ -38,7 +40,7 @@
             basenode.type = state;
             
             // When
-            var res = calcIstStandFromState(basenode);
+            var res = testObj.calcIstStandFromState(basenode);
             
             // Expected
             expect(res).toBe(stand);
@@ -79,7 +81,7 @@
             basenode.type = type;
             
             // When
-            var res = calcTypeFromIstStand(basenode);
+            var res = testObj.calcTypeFromIstStand(basenode);
             
             // Expected
             expect(res).toBe(resType);
