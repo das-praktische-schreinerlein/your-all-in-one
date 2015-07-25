@@ -32,6 +32,7 @@ window.YaioAppBase = function() {
         me.configureService("YaioEditorService", function() { return Yaio.EditorService(me); });
         me.configureService("YaioFormatterService", function() { return Yaio.FormatterService(me); });
         me.configureService("YaioMarkdownEditorService", function() { return Yaio.MarkdownEditorService(me); });
+        me.configureService("YaioExplorerTreeService", function() { return Yaio.ExplorerTreeService(me); });
     };
 
     // init all

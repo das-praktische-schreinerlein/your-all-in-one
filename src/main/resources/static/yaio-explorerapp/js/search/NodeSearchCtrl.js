@@ -317,7 +317,7 @@ yaioM.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $http
     $scope.recalcGanttBlocks = function() {
         for (var idx in $scope.nodes) {
             var node = $scope.nodes[idx];
-            yaioRecalcGanttBlock(node);
+            yaioAppBase.get('YaioExplorerTreeService').yaioRecalcGanttBlock(node);
         }
     };
     

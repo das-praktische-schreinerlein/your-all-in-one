@@ -72,7 +72,7 @@ yaioM.factory('yaioUtils', function () {
             };
             
             console.log("renderNodeLine nodeId=" + node.sysUID + " tr=" + $(trIdSelector).length);
-            renderColumnsForNode(null, data, true);
+            yaioAppBase.get('YaioExplorerTreeService').renderColumnsForNode(null, data, true);
         },
         
         ganttOptions: { 
