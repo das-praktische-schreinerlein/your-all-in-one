@@ -37,111 +37,7 @@ var CLIPBOARD = null;
  * Configuration
  *****************************************
  *****************************************/
-var CONST_MasterId = "MasterplanMasternode1";
-var loginUrl = "/yaio-explorerapp/yaio-explorerapp.html#/login";
-var baseUrl = "/nodes/";
-var showUrl = baseUrl + "show/";
-var symLinkUrl = baseUrl + "showsymlink/";
-var updateUrl = baseUrl + "update/";
-var createUrl = baseUrl + "create/";
-var moveUrl = baseUrl + "move/";
-var removeUrl = baseUrl + "delete/";
-
 var treeInstances = new Array();
-var configNodeTypeFields = {
-    Create: {
-        fields: [
-            { fieldName: "className", type: "hidden"},
-            { fieldName: "sysUID", type: "hidden"}
-        ]
-    },
-    CreateSymlink: {
-        fields: [
-            { fieldName: "name", type: "input"},
-            { fieldName: "type", type: "hidden"},
-            { fieldName: "className", type: "hidden"},
-            { fieldName: "sysUID", type: "hidden"},
-            { fieldName: "symLinkRef", type: "input"},
-            { fieldName: "symLinkName", type: "input"},
-            { fieldName: "symLinkTags", type: "textarea"},
-            { fieldName: "mode", type: "hidden", intern: true}
-        ]
-    },
-    CreateSnapshot: {
-        fields: [
-            { fieldName: "name", type: "input"},
-            { fieldName: "type", type: "hidden"},
-            { fieldName: "className", type: "hidden"},
-            { fieldName: "sysUID", type: "hidden"},
-            { fieldName: "nodeDesc", type: "textarea"},
-            { fieldName: "mode", type: "hidden", intern: true}
-        ]
-    },
-    Common: {
-        fields: [
-            { fieldName: "className", type: "hidden"},
-            { fieldName: "sysUID", type: "hidden"},
-            { fieldName: "mode", type: "hidden", intern: true},
-            { fieldName: "type", type: "select"},
-            { fieldName: "state", type: "select"},
-            { fieldName: "nodeDesc", type: "textarea"}
-        ]
-    },
-    TaskNode: {
-        fields: [
-            { fieldName: "name", type: "input"},
-            { fieldName: "istAufwand", type: "input"},
-            { fieldName: "istStand", type: "input"},
-            { fieldName: "istStart", type: "input", datatype: "date"},
-            { fieldName: "istEnde", type: "input", datatype: "date"},
-            { fieldName: "planAufwand", type: "input"},
-            { fieldName: "planStart", type: "input", datatype: "date"},
-            { fieldName: "planEnde", type: "input", datatype: "date"}
-        ]
-    },
-    EventNode: {
-        fields: [
-            { fieldName: "name", type: "input"},
-            { fieldName: "istAufwand", type: "input"},
-            { fieldName: "istStand", type: "input"},
-            { fieldName: "istStart", type: "input", datatype: "datetime"},
-            { fieldName: "istEnde", type: "input", datatype: "datetime"},
-            { fieldName: "planAufwand", type: "input"},
-            { fieldName: "planStart", type: "input", datatype: "datetime"},
-            { fieldName: "planEnde", type: "input", datatype: "datetime"}
-        ]
-    },
-    InfoNode: {
-        fields: [
-            { fieldName: "name", type: "textarea"},
-            { fieldName: "docLayoutTagCommand", type: "select"},
-            { fieldName: "docLayoutAddStyleClass", type: "input"},
-            { fieldName: "docLayoutShortName", type: "input"},
-            { fieldName: "docLayoutFlgCloseDiv", type: "checkbox"}
-        ]
-    },
-    UrlResNode: {
-        fields: [
-            { fieldName: "name", type: "input"},
-            { fieldName: "resLocRef", type: "input"},
-            { fieldName: "resLocName", type: "input"},
-            { fieldName: "resLocTags", type: "textarea"},
-            { fieldName: "docLayoutTagCommand", type: "select"},
-            { fieldName: "docLayoutAddStyleClass", type: "input"},
-            { fieldName: "docLayoutShortName", type: "input"},
-            { fieldName: "docLayoutFlgCloseDiv", type: "checkbox"}
-        ]
-    },
-    SymLinkNode: {
-        fields: [
-            { fieldName: "name", type: "input"},
-            { fieldName: "type", type: "hidden"},
-            { fieldName: "symLinkRef", type: "input"},
-            { fieldName: "symLinkName", type: "input"},
-            { fieldName: "symLinkTags", type: "textarea"}
-        ]
-    }
-};
 
 /*****************************************
  *****************************************
@@ -187,13 +83,13 @@ Yaio.ExplorerTreeService = function(appBase) {
         console.log("yaioCreateOrReloadFancyTree for id: " + treeId + " state=" + state + " caller: " + treeInstances[treeId]);
         if (state) {
             console.log("yaioCreateOrReloadFancyTree: flgYAIOFancyTreeLoaded is set: prepare reload=" 
-                    + showUrl + masterNodeId);
+                    + yaioAppBase.config.showUrl + masterNodeId);
             yaioAppBase.get('YaioExplorerTreeService').yaioDoOnFancyTreeState(treeId, "rendering_done", 1000, 5, function () {
                 // do reload if rendering done
                 console.log("yaioCreateOrReloadFancyTree: do reload=" 
-                        + showUrl + masterNodeId);
+                        + yaioAppBase.config.showUrl + masterNodeId);
                 var tree = $(treeId).fancytree("getTree");
-                tree.reload(showUrl + masterNodeId).done(function(){
+                tree.reload(yaioAppBase.config.showUrl + masterNodeId).done(function(){
                     console.log("yaioCreateOrReloadFancyTree reload tree done:" + masterNodeId);
     
                     // check if doneHandler
@@ -205,7 +101,7 @@ Yaio.ExplorerTreeService = function(appBase) {
             }, "yaioCreateOrReloadFancyTree.reloadHandler");
         } else {
             console.log("yaioCreateOrReloadFancyTree: flgYAIOFancyTreeLoaded not set:"
-                    + " create=" + showUrl + masterNodeId);
+                    + " create=" + yaioAppBase.config.showUrl + masterNodeId);
             yaioAppBase.get('YaioExplorerTreeService').yaioCreateFancyTree(treeId, masterNodeId, doneHandler);
         }
     }
@@ -249,7 +145,7 @@ Yaio.ExplorerTreeService = function(appBase) {
             titlesTabbable: true,     // Add all node titles to TAB chain
       
             source: { 
-                url: showUrl + masterNodeId, 
+                url: yaioAppBase.config.showUrl + masterNodeId, 
                 cache: false 
             },
           
@@ -262,9 +158,9 @@ Yaio.ExplorerTreeService = function(appBase) {
             lazyLoad: function(event, data) {
                 var node = data.node;
                 console.debug("yaioCreateFancyTree load data for " + node.key 
-                        + " from " + showUrl + node.key);
+                        + " from " + yaioAppBase.config.showUrl + node.key);
                 data.result = {
-                    url: showUrl + node.key,
+                    url: yaioAppBase.config.showUrl + node.key,
                     cache: false
                 };
             },
@@ -726,7 +622,7 @@ Yaio.ExplorerTreeService = function(appBase) {
                     buttons: {
                       "Neu anmelden": function() {
                         $( this ).dialog( "close" );
-                        window.location.assign(loginUrl);
+                        window.location.assign(yaioAppBase.config.loginUrl);
                       }
                     }
                 });    

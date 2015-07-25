@@ -201,18 +201,18 @@ yaioM.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $http
         // do extra for the different classNames
         // configure value mapping
         var fields = new Array();
-        fields = fields.concat(configNodeTypeFields.Common.fields);
+        fields = fields.concat(yaioAppBase.config.configNodeTypeFields.Common.fields);
         if ($scope.nodeForEdit.className == "TaskNode") {
-            fields = fields.concat(configNodeTypeFields.TaskNode.fields);
+            fields = fields.concat(yaioAppBase.config.configNodeTypeFields.TaskNode.fields);
             $scope.nodeForEdit.state = $scope.nodeForEdit.type;
         } else if ($scope.nodeForEdit.className == "EventNode") {
-            fields = fields.concat(configNodeTypeFields.EventNode.fields);
+            fields = fields.concat(yaioAppBase.config.configNodeTypeFields.EventNode.fields);
         } else if ($scope.nodeForEdit.className == "InfoNode") {
-            fields = fields.concat(configNodeTypeFields.InfoNode.fields);
+            fields = fields.concat(yaioAppBase.config.configNodeTypeFields.InfoNode.fields);
         } else if ($scope.nodeForEdit.className == "UrlResNode") {
-            fields = fields.concat(configNodeTypeFields.UrlResNode.fields);
+            fields = fields.concat(yaioAppBase.config.configNodeTypeFields.UrlResNode.fields);
         } else if ($scope.nodeForEdit.className == "SymLinkNode") {
-            fields = fields.concat(configNodeTypeFields.SymLinkNode.fields);
+            fields = fields.concat(yaioAppBase.config.configNodeTypeFields.SymLinkNode.fields);
         }
         
         // iterate fields an map to nodeObj
@@ -256,11 +256,11 @@ yaioM.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $http
         if (mode == "edit") {
             // mode update 
             method = "PATCH";
-            url = updateUrl + $scope.nodeForEdit.className + "/" + $scope.nodeForEdit.sysUID;
+            url = yaioAppBase.config.updateUrl + $scope.nodeForEdit.className + "/" + $scope.nodeForEdit.sysUID;
         } else if (mode == "create") {
             // mode create 
             method = "POST";
-            url = createUrl + $scope.nodeForEdit.className + "/" + $scope.nodeForEdit.sysUID;
+            url = yaioAppBase.config.createUrl + $scope.nodeForEdit.className + "/" + $scope.nodeForEdit.sysUID;
             
             // unset sysUID
             nodeObj["sysUID"] = null;

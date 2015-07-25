@@ -62,7 +62,7 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
     var curNodeUrl = restBaseUrl + nodeId;
 
     // save lastLocation for login
-    $rootScope.lastLocation = baseUrl + nodeId;
+    $rootScope.lastLocation = yaioAppBase.config.baseUrl + nodeId;
 
     // save nodeId for NodeEditor
     $rootScope.nodeId = nodeId;

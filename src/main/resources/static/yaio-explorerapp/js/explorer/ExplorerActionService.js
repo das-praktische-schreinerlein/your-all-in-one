@@ -76,7 +76,7 @@ Yaio.ExplorerActionService = function(appBase) {
                 + lstIdsHierarchy + " from keyPath:" + keyPath);
         
         // open Hierarchy
-        yaioAppBase.get('YaioExplorerActionService').openNodeHierarchy(treeId, lstIdsHierarchy);
+        me.openNodeHierarchy(treeId, lstIdsHierarchy);
     }
     
     
@@ -104,14 +104,14 @@ Yaio.ExplorerActionService = function(appBase) {
     
     me.yaioSaveNode = function(data) {
         var json = JSON.stringify({name: data.input.val()});
-        var url = updateUrl + data.node.key;
+        var url = yaioAppBase.config.updateUrl + data.node.key;
         doUpdateNode(data.node, url, json);
     }
     
     me.yaioMoveNode = function(node, newParentKey, newPos) {
         console.log("move node:" + node.key + " to:" + newParentKey + " Pos:" + newPos);
         var json = JSON.stringify({parentNode: newParentKey});
-        var url = moveUrl + node.key + "/" + newParentKey + "/" + newPos;
+        var url = yaioAppBase.config.moveUrl + node.key + "/" + newParentKey + "/" + newPos;
         yaioAppBase.get('YaioNodeDataService').yaioDoUpdateNode(node, url, json);
     }
     
@@ -133,7 +133,7 @@ Yaio.ExplorerActionService = function(appBase) {
                         + "' activeNode " + nodeId + " not found.", false);
                 return null;
             }
-            var url = removeUrl + nodeId;
+            var url = yaioAppBase.config.removeUrl + nodeId;
             yaioAppBase.get('YaioNodeDataService').yaioDoRemoveNode(treeNode, url);
         } else {
             // discard

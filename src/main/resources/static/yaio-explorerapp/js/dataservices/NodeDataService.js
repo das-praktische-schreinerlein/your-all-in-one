@@ -70,7 +70,7 @@ Yaio.NodeDataService = function(appBase) {
     
     me.yaioLoadSymLinkData = function(basenode, fancynode) {
         var msg = "symlink for node:" + basenode.sysUID + " symlink:" + basenode.symLinkRef + " fancynode:" + fancynode.key;
-        var url = symLinkUrl + basenode.symLinkRef;
+        var url = yaioAppBase.config.symLinkUrl + basenode.symLinkRef;
         console.log("load " + msg);
         $.ajax({
             headers : {
@@ -120,7 +120,7 @@ Yaio.NodeDataService = function(appBase) {
                             // load page for referenced node with full hierarchy
                             //firstNodeId = response.parentIdHierarchy.shift();
                             // we set it constant
-                            firstNodeId = CONST_MasterId;
+                            firstNodeId = yaioAppBase.config.CONST_MasterId;
                             
                             newUrl = '#/show/' + firstNodeId 
                                 + '/activate/' + response.node.sysUID;

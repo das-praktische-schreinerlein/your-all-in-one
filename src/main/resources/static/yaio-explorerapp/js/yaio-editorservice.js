@@ -120,10 +120,10 @@ Yaio.EditorService = function(appBase) {
         // reset data
         // configure value mapping
         var basenode = {};
-        for (var formName in configNodeTypeFields) {
+        for (var formName in yaioAppBase.config.configNodeTypeFields) {
             var fields = new Array();
-            fields = fields.concat(configNodeTypeFields.Common.fields);
-            fields = fields.concat(configNodeTypeFields[formName].fields);
+            fields = fields.concat(yaioAppBase.config.configNodeTypeFields.Common.fields);
+            fields = fields.concat(yaioAppBase.config.configNodeTypeFields[formName].fields);
             for (var idx in fields) {
                 var field = fields[idx];
                 me.yaioSetFormField(field, formName, basenode);
@@ -142,7 +142,7 @@ Yaio.EditorService = function(appBase) {
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     GUI Editor
-     * @param field - fieldconfig from configNodeTypeFields
+     * @param field - fieldconfig from yaioAppBase.config.configNodeTypeFields
      * @param fieldSuffix - sufix of the fieldName to identify the form (nodeclass of basenode)
      * @param basenode - the node to map the fieldvalue
      */
@@ -277,17 +277,17 @@ Yaio.EditorService = function(appBase) {
             // mode edit
             
             // configure value mapping
-            fields = fields.concat(configNodeTypeFields.Common.fields);
+            fields = fields.concat(yaioAppBase.config.configNodeTypeFields.Common.fields);
             if (basenode.className == "TaskNode") {
-                fields = fields.concat(configNodeTypeFields.TaskNode.fields);
+                fields = fields.concat(yaioAppBase.config.configNodeTypeFields.TaskNode.fields);
             } else if (basenode.className == "EventNode") {
-                fields = fields.concat(configNodeTypeFields.EventNode.fields);
+                fields = fields.concat(yaioAppBase.config.configNodeTypeFields.EventNode.fields);
             } else if (basenode.className == "InfoNode") {
-                fields = fields.concat(configNodeTypeFields.InfoNode.fields);
+                fields = fields.concat(yaioAppBase.config.configNodeTypeFields.InfoNode.fields);
             }  else if (basenode.className == "UrlResNode") {
-                fields = fields.concat(configNodeTypeFields.UrlResNode.fields);
+                fields = fields.concat(yaioAppBase.config.configNodeTypeFields.UrlResNode.fields);
             }  else if (basenode.className == "SymLinkNode") {
-                fields = fields.concat(configNodeTypeFields.SymLinkNode.fields);
+                fields = fields.concat(yaioAppBase.config.configNodeTypeFields.SymLinkNode.fields);
             }
             
             // set formSuffix
@@ -299,7 +299,7 @@ Yaio.EditorService = function(appBase) {
             // mode create
             formSuffix = "Create";
             fieldSuffix = "Create";
-            fields = fields.concat(configNodeTypeFields.Create.fields);
+            fields = fields.concat(yaioAppBase.config.configNodeTypeFields.Create.fields);
             
             // new basenode
             basenode = {
@@ -311,7 +311,7 @@ Yaio.EditorService = function(appBase) {
             // mode create
             formSuffix = "SymLinkNode";
             fieldSuffix = "SymLinkNode";
-            fields = fields.concat(configNodeTypeFields.CreateSymlink.fields);
+            fields = fields.concat(yaioAppBase.config.configNodeTypeFields.CreateSymlink.fields);
     
             // new basenode
             basenode = {
@@ -328,7 +328,7 @@ Yaio.EditorService = function(appBase) {
             // mode create
             formSuffix = "InfoNode";
             fieldSuffix = "InfoNode";
-            fields = fields.concat(configNodeTypeFields.CreateSnapshot.fields);
+            fields = fields.concat(yaioAppBase.config.configNodeTypeFields.CreateSnapshot.fields);
     
             // new basenode
             basenode = {
