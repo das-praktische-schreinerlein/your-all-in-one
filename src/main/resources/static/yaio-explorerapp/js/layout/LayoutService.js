@@ -55,7 +55,7 @@ Yaio.LayoutService = function(appBase) {
      */
     me.addSpeechRecognitionToElements = function() {
         // add speechrecognition if availiable
-        if (yaioAppBase.getDetector('SpeechRecognitionDetector').isSupported()) {
+        if (me.appBase.getDetector('SpeechRecognitionDetector').isSupported()) {
             // add speechrecognition to nodeDesc+name
             $("label[for='nodeDesc'], label[for='name']").append(function (idx) {
                 var link = "";
@@ -80,7 +80,7 @@ Yaio.LayoutService = function(appBase) {
                             "document.getElementById('" + forElement.attr('id') + "')); return false;" +
                         "\" lang='tech' data-tooltip='tooltip.command.OpenSpeechRecognition'>" +
                         "<img alt='Spracherkennung nutzen' style='width:25px'" +
-                            " src='" + yaioAppBase.getService('SpeechRecognitionHelper').config.statusImgSrcStart + "'></a>";
+                            " src='" + me.appBase.getService('SpeechRecognitionHelper').config.statusImgSrcStart + "'></a>";
                     
                     // set flag
                     $(label).attr("webkitSpeechRecognitionAdded", "true");
@@ -128,7 +128,7 @@ Yaio.LayoutService = function(appBase) {
      */
     me.addSpeechSynthToElements = function() {
         // add speechSynth if availiable
-        if (yaioAppBase.getDetector('SpeechSynthDetector').isSupported()) {
+        if (me.appBase.getDetector('SpeechSynthDetector').isSupported()) {
             // add speechrecognition to nodeDesc+name
             $("label[for='nodeDesc']").append(function (idx) {
                 var link = "";
@@ -449,7 +449,7 @@ Yaio.LayoutService = function(appBase) {
     
     me.yaioShowHelpSite = function(url) {
         // set messagetext
-        url += "?" + yaioAppBase.get('YaioBase').createXFrameAllowFrom();
+        url += "?" + me.appBase.get('YaioBase').createXFrameAllowFrom();
         console.log("yaioShowHelpSite:" + url);
         $("#help-iframe").attr('src',url);
         

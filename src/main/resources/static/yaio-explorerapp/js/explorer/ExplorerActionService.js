@@ -12,21 +12,21 @@ Yaio.ExplorerActionService = function(appBase) {
         // check for tree
         var tree = $(treeId).fancytree("getTree");
         if (! tree) {
-            yaioAppBase.get('YaioBase').logError("openHierarchy: error tree:'" + treeId + "' not found.", false);
+            me.appBase.get('YaioBase').logError("openHierarchy: error tree:'" + treeId + "' not found.", false);
             return;
         }
     
         // check for rootNode
         var rootNode = tree.rootNode;
         if (! rootNode) {
-            yaioAppBase.get('YaioBase').logError("openHierarchy: error for tree:'" + treeId 
+            me.appBase.get('YaioBase').logError("openHierarchy: error for tree:'" + treeId 
                         + "' rootNode not found.", false);
             return;
         }
         
         // check for lstIdsHierarchy
         if (! lstIdsHierarchy || lstIdsHierarchy.length <= 0) {
-            yaioAppBase.get('YaioBase').logError("openHierarchy: error for tree:'" + treeId 
+            me.appBase.get('YaioBase').logError("openHierarchy: error for tree:'" + treeId 
                         + "' lstIdsHierarchy is empty.", false);
             return;
         }
@@ -39,7 +39,7 @@ Yaio.ExplorerActionService = function(appBase) {
             firstNode = rootNode.mapChildren[firstNodeId];
         }
         if (! firstNode) {
-            yaioAppBase.get('YaioBase').logError("openHierarchy: error for tree:'" + treeId 
+            me.appBase.get('YaioBase').logError("openHierarchy: error for tree:'" + treeId 
                         + "' firstNode of:'" + lstIdsHierarchySave 
                         + "' not found on rootNode.", false);
             return;
@@ -56,14 +56,14 @@ Yaio.ExplorerActionService = function(appBase) {
         // check for tree
         var tree = $(treeId).fancytree("getTree");
         if (! tree) {
-            yaioAppBase.get('YaioBase').logError("openNodeHierarchyForNodeId: error tree:'" + treeId + "' not found.", false);
+            me.appBase.get('YaioBase').logError("openNodeHierarchyForNodeId: error tree:'" + treeId + "' not found.", false);
             return;
         }
         
         // check for activeNodeId
         var treeNode = tree.getNodeByKey(activeNodeId);
         if (! treeNode) {
-            yaioAppBase.get('YaioBase').logError("openNodeHierarchyForNodeId: error for tree:'" + treeId 
+            me.appBase.get('YaioBase').logError("openNodeHierarchyForNodeId: error for tree:'" + treeId 
                     + "' activeNode " + activeNodeId + " not found.", false);
             return null;
         }
@@ -83,14 +83,14 @@ Yaio.ExplorerActionService = function(appBase) {
     me.yaioOpenSubNodesForTree = function(treeId, level) {
         var tree = $(treeId).fancytree("getTree");
         if (! tree) {
-            yaioAppBase.get('YaioBase').logError("yaioOpenSubNodesForTree: error tree:'" + treeId + "' not found.", false);
+            me.appBase.get('YaioBase').logError("yaioOpenSubNodesForTree: error tree:'" + treeId + "' not found.", false);
             return;
         }
         
         // check for activeNodeId
         var treeNode = tree.rootNode;
         if (! treeNode) {
-            yaioAppBase.get('YaioBase').logError("yaioOpenSubNodesForTree: error rootnode for tree:'" + treeId 
+            me.appBase.get('YaioBase').logError("yaioOpenSubNodesForTree: error rootnode for tree:'" + treeId 
                     + " not found.", false);
             return null;
         }
@@ -104,15 +104,15 @@ Yaio.ExplorerActionService = function(appBase) {
     
     me.yaioSaveNode = function(data) {
         var json = JSON.stringify({name: data.input.val()});
-        var url = yaioAppBase.config.updateUrl + data.node.key;
+        var url = me.appBase.config.updateUrl + data.node.key;
         doUpdateNode(data.node, url, json);
     }
     
     me.yaioMoveNode = function(node, newParentKey, newPos) {
         console.log("move node:" + node.key + " to:" + newParentKey + " Pos:" + newPos);
         var json = JSON.stringify({parentNode: newParentKey});
-        var url = yaioAppBase.config.moveUrl + node.key + "/" + newParentKey + "/" + newPos;
-        yaioAppBase.get('YaioNodeData').yaioDoUpdateNode(node, url, json);
+        var url = me.appBase.config.moveUrl + node.key + "/" + newParentKey + "/" + newPos;
+        me.appBase.get('YaioNodeData').yaioDoUpdateNode(node, url, json);
     }
     
     me.yaioRemoveNodeById = function(nodeId) {
@@ -122,19 +122,19 @@ Yaio.ExplorerActionService = function(appBase) {
             var treeId = "#tree";
             var tree = $(treeId).fancytree("getTree");
             if (! tree) {
-                yaioAppBase.get('YaioBase').logError("yaioRemoveNode: error tree:'" + treeId + "' not found.", false);
+                me.appBase.get('YaioBase').logError("yaioRemoveNode: error tree:'" + treeId + "' not found.", false);
                 return;
             }
             
             // check for activeNodeId
             var treeNode = tree.getNodeByKey(nodeId);
             if (! treeNode) {
-                yaioAppBase.get('YaioBase').logError("yaioRemoveNode: error for tree:'" + treeId 
+                me.appBase.get('YaioBase').logError("yaioRemoveNode: error for tree:'" + treeId 
                         + "' activeNode " + nodeId + " not found.", false);
                 return null;
             }
-            var url = yaioAppBase.config.removeUrl + nodeId;
-            yaioAppBase.get('YaioNodeData').yaioDoRemoveNode(treeNode, url);
+            var url = me.appBase.config.removeUrl + nodeId;
+            me.appBase.get('YaioNodeData').yaioDoRemoveNode(treeNode, url);
         } else {
             // discard
             return false;
@@ -158,19 +158,19 @@ Yaio.ExplorerActionService = function(appBase) {
         // check vars
         if (! nodeId) {
             // tree not found
-            yaioAppBase.get('YaioBase').logError("error openJiraWindow: nodeId required", false);
+            me.appBase.get('YaioBase').logError("error openJiraWindow: nodeId required", false);
             return null;
         }
         // load node
         var tree = $("#tree").fancytree("getTree");
         if (!tree) {
             // tree not found
-            yaioAppBase.get('YaioBase').logError("error openJiraWindow: cant load tree for node:" + nodeId, false);
+            me.appBase.get('YaioBase').logError("error openJiraWindow: cant load tree for node:" + nodeId, false);
             return null;
         }
         var treeNode = tree.getNodeByKey(nodeId);
         if (! treeNode) {
-            yaioAppBase.get('YaioBase').logError("error openJiraWindow: cant load node:" + nodeId, false);
+            me.appBase.get('YaioBase').logError("error openJiraWindow: cant load node:" + nodeId, false);
             return null;
         }
         
@@ -185,8 +185,8 @@ Yaio.ExplorerActionService = function(appBase) {
         descText = descText.replace(/\<WLTAB\>/g, "\t");
         
         // convert and secure
-        var nodeDesc = yaioAppBase.get('YaioFormatter').convertMarkdownToJira(descText);
-        nodeDesc = yaioAppBase.get('YaioBase').htmlEscapeText(nodeDesc);
+        var nodeDesc = me.appBase.get('YaioFormatter').convertMarkdownToJira(descText);
+        nodeDesc = me.appBase.get('YaioBase').htmlEscapeText(nodeDesc);
         
         // set clipboard-content
         $( "#clipboard-content" ).html(nodeDesc);
@@ -218,10 +218,10 @@ Yaio.ExplorerActionService = function(appBase) {
      */
     me.yaioExportExplorerLinesAsOverview = function() {
         // convert and secure
-        var checkListSrc = yaioAppBase.get('YaioFormatter').convertExplorerLinesAsCheckList();
-        checkListSrc = yaioAppBase.get('YaioBase').htmlEscapeText(checkListSrc);
-        var ganttSrc = yaioAppBase.get('YaioFormatter').convertExplorerLinesAsGanttMarkdown();
-        ganttSrc = yaioAppBase.get('YaioBase').htmlEscapeText(ganttSrc);
+        var checkListSrc = me.appBase.get('YaioFormatter').convertExplorerLinesAsCheckList();
+        checkListSrc = me.appBase.get('YaioBase').htmlEscapeText(checkListSrc);
+        var ganttSrc = me.appBase.get('YaioFormatter').convertExplorerLinesAsGanttMarkdown();
+        ganttSrc = me.appBase.get('YaioBase').htmlEscapeText(ganttSrc);
         
         // set clipboard-content
         $( "#clipboard-content" ).html(checkListSrc + "\n\n" +  ganttSrc);
@@ -252,13 +252,13 @@ Yaio.ExplorerActionService = function(appBase) {
      */
     me.yaioSnapshot = function(parentNode) {
         // convert and secure
-        var checkListSrc = yaioAppBase.get('YaioFormatter').convertExplorerLinesAsCheckList();
-        checkListSrc = yaioAppBase.get('YaioBase').htmlEscapeText(checkListSrc);
-        var ganttSrc = yaioAppBase.get('YaioFormatter').convertExplorerLinesAsGanttMarkdown();
-        ganttSrc = yaioAppBase.get('YaioBase').htmlEscapeText(ganttSrc);
+        var checkListSrc = me.appBase.get('YaioFormatter').convertExplorerLinesAsCheckList();
+        checkListSrc = me.appBase.get('YaioBase').htmlEscapeText(checkListSrc);
+        var ganttSrc = me.appBase.get('YaioFormatter').convertExplorerLinesAsGanttMarkdown();
+        ganttSrc = me.appBase.get('YaioBase').htmlEscapeText(ganttSrc);
     
         // open editor
-        yaioAppBase.get('YaioEditor').yaioOpenNodeEditorForNode(parentNode, 'createsnapshot', {nodeDesc: checkListSrc + "\n\n" +  ganttSrc});
+        me.appBase.get('YaioEditor').yaioOpenNodeEditorForNode(parentNode, 'createsnapshot', {nodeDesc: checkListSrc + "\n\n" +  ganttSrc});
     }
     
     
@@ -277,7 +277,7 @@ Yaio.ExplorerActionService = function(appBase) {
      */
     me.openTxtExportWindow = function(content) {
         // secure
-        content = yaioAppBase.get('YaioBase').htmlEscapeText(content);
+        content = me.appBase.get('YaioBase').htmlEscapeText(content);
     
         // set clipboard-content
         $( "#clipboard-content" ).html(content);
@@ -319,12 +319,12 @@ Yaio.ExplorerActionService = function(appBase) {
                 if ($(descBlock).hasClass('syntaxhighlighting-open')) {
                     var flgDoMermaid = false;
                     console.log("toggleNodeDescContainer highlight for descBlock: " + $(descBlock).attr('id'));
-                    flgDoMermaid = yaioAppBase.get('YaioFormatter').formatDescBlock(descBlock) || flgDoMermaid;
+                    flgDoMermaid = me.appBase.get('YaioFormatter').formatDescBlock(descBlock) || flgDoMermaid;
                     console.log("toggleNodeDescContainer resulting flgDoMermaid: " + flgDoMermaid);
                     
                     // do Mermaid if found
                     if (flgDoMermaid) {
-                        yaioAppBase.get('YaioFormatter').formatMermaidGlobal();
+                        me.appBase.get('YaioFormatter').formatMermaidGlobal();
                     }
                 }
             } else {
@@ -344,13 +344,13 @@ Yaio.ExplorerActionService = function(appBase) {
            var flgDoMermaid = false;
            $("div.syntaxhighlighting-open").each(function (i, descBlock) {
                console.log("toggleAllNodeDescContainer highlight for descBlock: " + $(descBlock).attr('id'));
-               flgDoMermaid = yaioAppBase.get('YaioFormatter').formatDescBlock(descBlock) || flgDoMermaid;
+               flgDoMermaid = me.appBase.get('YaioFormatter').formatDescBlock(descBlock) || flgDoMermaid;
            });
            console.log("toggleAllNodeDescContainer resulting flgDoMermaid: " + flgDoMermaid);
            
            // mermaid all
            if (flgDoMermaid) {
-               yaioAppBase.get('YaioFormatter').formatMermaidGlobal();
+               me.appBase.get('YaioFormatter').formatMermaidGlobal();
            }
        } else {
            // hide all desc

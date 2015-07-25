@@ -136,7 +136,7 @@ Yaio.NodeGanttRenderService = function(appBase) {
                                      + label + ":" + "</span>"
                                    + "<span class='gantt_aufwand_value'" +
                                          " data-rangeaufwand='" + rangeAufwand + "'>" 
-                                     + yaioAppBase.get('YaioBase').formatNumbers(rangeAufwand, 0, "h") + "</span");
+                                     + me.appBase.get('YaioBase').formatNumbers(rangeAufwand, 0, "h") + "</span");
                     $div.attr("data-rangeaufwand", rangeAufwand);
                 }
                 
@@ -271,11 +271,11 @@ Yaio.NodeGanttRenderService = function(appBase) {
      *     GUI Tree Rendering
      */
     me.yaioShowGanttBlock = function() {
-        yaioAppBase.get('UIToggler').toggleTableBlock("#tabTogglerGantt");
-        yaioAppBase.get('UIToggler').toggleTableBlock("td.block_nodedata, th.block_nodedata");
+        me.appBase.get('UIToggler').toggleTableBlock("#tabTogglerGantt");
+        me.appBase.get('UIToggler').toggleTableBlock("td.block_nodedata, th.block_nodedata");
         setTimeout(function(){
-            yaioAppBase.get('UIToggler').toggleTableBlock("#tabTogglerData");
-            yaioAppBase.get('UIToggler').toggleTableBlock("td.block_nodegantt, th.block_nodegantt");
+            me.appBase.get('UIToggler').toggleTableBlock("#tabTogglerData");
+            me.appBase.get('UIToggler').toggleTableBlock("td.block_nodegantt, th.block_nodegantt");
         }, 400);
         // set it to none: force
         setTimeout(function(){
@@ -431,7 +431,7 @@ Yaio.NodeGanttRenderService = function(appBase) {
         var treeId = "#tree";
         var tree = $(treeId).fancytree("getTree");
         if ($(treeId).length <= 0 || !tree || tree == "undefined" ) {
-            yaioAppBase.get('YaioBase').logError("yaioRecalcMasterGanttBlock: error tree:'" + treeId + "' not found.", false);
+            me.appBase.get('YaioBase').logError("yaioRecalcMasterGanttBlock: error tree:'" + treeId + "' not found.", false);
             return;
         }
         
@@ -477,7 +477,7 @@ Yaio.NodeGanttRenderService = function(appBase) {
             $divLabel.html("<span class='gantt_aufwand_label'>" 
                     + praefix + "Sum:" + "</span>"
                     + "<span class='gantt_aufwand_value'" + ">" 
-                    + yaioAppBase.get('YaioBase').formatNumbers(sumRangeAufwand, 0, "h") + "</span");
+                    + me.appBase.get('YaioBase').formatNumbers(sumRangeAufwand, 0, "h") + "</span");
         } else {
             console.log("yaioRecalcMasterGanttBlock type=" + praefix + " hide gantt_aufwand_label because no calced rangeaufwand :" + sumRangeAufwand + " for " + masterNodeId);
         }

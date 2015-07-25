@@ -109,7 +109,7 @@ Yaio.FormatterService = function(appBase) {
         var renderer = new marked.Renderer();
         // my own code-handler
         renderer.code = function (code, language) {
-            code = yaioAppBase.get('YaioBase').htmlEscapeTextLazy(code);
+            code = me.appBase.get('YaioBase').htmlEscapeTextLazy(code);
             if (code.match(/^sequenceDiagram/) || code.match(/^graph/) || code.match(/^gantt/)) {
                 return '<div id="inlineMermaid' + (me._localHtmlId++) + '" class="mermaid">'+ me.prepareTextForMermaid(code ) + '</div>';
             } else if (language !== undefined 
@@ -206,7 +206,7 @@ Yaio.FormatterService = function(appBase) {
             noCode = newDescTextRest.slice(0, codeStart + 3);
             
             // replace <> but prevent <br> in noCode
-            noCode = yaioAppBase.get('YaioBase').htmlEscapeTextLazy(noCode);
+            noCode = me.appBase.get('YaioBase').htmlEscapeTextLazy(noCode);
             noCode = noCode.replace(/&lt;br&gt;/g, "<br>");
             newDescText += noCode;
             
@@ -236,7 +236,7 @@ Yaio.FormatterService = function(appBase) {
     
         // replace <> but prevent <br> in noCode
         noCode = newDescTextRest;
-        noCode = yaioAppBase.get('YaioBase').htmlEscapeTextLazy(noCode);
+        noCode = me.appBase.get('YaioBase').htmlEscapeTextLazy(noCode);
         noCode = noCode.replace(/&lt;br&gt;/g, "<br>");
         
         // add rest to newDescText
@@ -306,8 +306,8 @@ Yaio.FormatterService = function(appBase) {
      */
     me.formatMermaidGlobal = function() {
         mermaid.parseError = function(err,hash){
-            yaioAppBase.get('YaioBase').showToastMessage("error", "Oops! Ein Fehlerchen :-(", "Syntaxfehler bei Parsen des Diagrammcodes:" + err);
-    //        yaioAppBase.get('YaioBase').showModalErrorMessage(":" + err);
+            me.appBase.get('YaioBase').showToastMessage("error", "Oops! Ein Fehlerchen :-(", "Syntaxfehler bei Parsen des Diagrammcodes:" + err);
+    //        me.appBase.get('YaioBase').showModalErrorMessage(":" + err);
         };
         try {
             mermaid.init();
@@ -526,7 +526,7 @@ Yaio.FormatterService = function(appBase) {
         var descBlockId = $(descBlock).attr('id');
         console.log("highlightCheckListForMatcher matcherStr '" + matcherStr + "' for descBlock: " + descBlockId);
         $("#" + descBlockId + " li:contains('" + matcherStr + "'),h1:contains('" + matcherStr + "'),h2:contains('" + matcherStr + "')").each(function(index, value) {
-            var regEx = RegExp(yaioAppBase.get('YaioBase').escapeRegExp(matcherStr), 'gi');
+            var regEx = RegExp(me.appBase.get('YaioBase').escapeRegExp(matcherStr), 'gi');
             findAndReplaceDOMText($(value).get(0), {
                 find: regEx,
                 replace: function(portion) {
@@ -561,7 +561,7 @@ Yaio.FormatterService = function(appBase) {
     me.convertExplorerLinesAsCheckList = function() {
         // get title
         var title = $("#masterTr td.fieldtype_name").text();
-        var now = yaioAppBase.get('YaioBase').formatGermanDateTime((new Date()).getTime());
+        var now = me.appBase.get('YaioBase').formatGermanDateTime((new Date()).getTime());
     
         var checkList = "# Checklist: " + title + " (Stand: " + now + ")\n\n";
         
@@ -667,7 +667,7 @@ Yaio.FormatterService = function(appBase) {
     me.convertExplorerLinesAsGanttMarkdown = function() {
         // get title
         var title = $("#masterTr td.fieldtype_name").text();
-        var now = yaioAppBase.get('YaioBase').formatGermanDateTime((new Date()).getTime());
+        var now = me.appBase.get('YaioBase').formatGermanDateTime((new Date()).getTime());
     
         var ganttMarkdown = "# Gantt: " + title + " (Stand: " + now + ")\n\n"
             + "```mermaid\n"
