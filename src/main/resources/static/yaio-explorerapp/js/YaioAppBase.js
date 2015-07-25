@@ -23,20 +23,19 @@ window.YaioAppBase = function() {
 
     me._init = function () {
         me._configureDefaultServices();
-        me._configureDefaultDetectors();
     }
     
     me._configureDefaultServices = function() {
-        me.configureService("YaioBaseService", function() { return Yaio.BaseService(me); });
-        me.configureService("YaioLayoutService", function() { return Yaio.LayoutService(me); });
-        me.configureService("YaioEditorService", function() { return Yaio.EditorService(me); });
-        me.configureService("YaioFormatterService", function() { return Yaio.FormatterService(me); });
-        me.configureService("YaioMarkdownEditorService", function() { return Yaio.MarkdownEditorService(me); });
-        me.configureService("YaioNodeDataService", function() { return Yaio.NodeDataService(me); });
-        me.configureService("YaioNodeDataRenderService", function() { return Yaio.NodeDataRenderService(me); });
-        me.configureService("YaioNodeGanttRenderService", function() { return Yaio.NodeGanttRenderService(me); });
-        me.configureService("YaioExplorerActionService", function() { return Yaio.ExplorerActionService(me); });
-        me.configureService("YaioExplorerTreeService", function() { return Yaio.ExplorerTreeService(me); });
+        me.configureService("YaioBase", function() { return Yaio.BaseService(me); });
+        me.configureService("YaioLayout", function() { return Yaio.LayoutService(me); });
+        me.configureService("YaioEditor", function() { return Yaio.EditorService(me); });
+        me.configureService("YaioFormatter", function() { return Yaio.FormatterService(me); });
+        me.configureService("YaioMarkdownEditor", function() { return Yaio.MarkdownEditorService(me); });
+        me.configureService("YaioNodeData", function() { return Yaio.NodeDataService(me); });
+        me.configureService("YaioNodeDataRender", function() { return Yaio.NodeDataRenderService(me); });
+        me.configureService("YaioNodeGanttRender", function() { return Yaio.NodeGanttRenderService(me); });
+        me.configureService("YaioExplorerAction", function() { return Yaio.ExplorerActionService(me); });
+        me.configureService("YaioExplorerTree", function() { return Yaio.ExplorerTreeService(me); });
     };
 
     // init all

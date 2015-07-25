@@ -114,10 +114,10 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
                             nodeIdHierarchy.push(nodeResponse.data.node.sysUID);
                             
                             // open Hierarchy
-                            yaioAppBase.get('YaioExplorerActionService').openNodeHierarchy("#tree", nodeIdHierarchy);
+                            yaioAppBase.get('YaioExplorerAction').openNodeHierarchy("#tree", nodeIdHierarchy);
                         } else {
                             // error
-                            yaioAppBase.get('YaioBaseService').logError("error loading activenode:" + nodeResponse.data.stateMsg 
+                            yaioAppBase.get('YaioBase').logError("error loading activenode:" + nodeResponse.data.stateMsg 
                                     + " details:" + nodeResponse, false)
                         }
                     }, function(response) {
@@ -126,9 +126,9 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
                         var header = response.header;
                         var config = response.config;
                         var message = "error loading activenode with url: " + activeNodeUrl;
-                        yaioAppBase.get('YaioBaseService').logError(message, true);
+                        yaioAppBase.get('YaioBase').logError(message, true);
                         message = "error data: " + data + " header:" + header + " config:" + config;
-                        yaioAppBase.get('YaioBaseService').logError(message, false);
+                        yaioAppBase.get('YaioBase').logError(message, false);
                     });
                 }
             }
@@ -155,16 +155,16 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
                     $scope.nodeHierarchy = nodeHierarchy;
 
                     // load fencytree
-                    yaioAppBase.get('YaioExplorerTreeService').yaioCreateFancyTree("#tree", $scope.node.sysUID, activeNodeIdHandler);
+                    yaioAppBase.get('YaioExplorerTree').yaioCreateFancyTree("#tree", $scope.node.sysUID, activeNodeIdHandler);
                     
                     // load me
                     $scope.yaioUtils.renderNodeLine(nodeResponse.data.node, "#masterTr");
 
                     // recalc gantt
-                    yaioAppBase.get('YaioNodeGanttRenderService').yaioRecalcMasterGanttBlock($scope.node);
+                    yaioAppBase.get('YaioNodeGanttRender').yaioRecalcMasterGanttBlock($scope.node);
                 } else {
                     // error
-                    yaioAppBase.get('YaioBaseService').logError("error loading nodes:" + nodeResponse.data.stateMsg 
+                    yaioAppBase.get('YaioBase').logError("error loading nodes:" + nodeResponse.data.stateMsg 
                             + " details:" + nodeResponse, true)
                 }
             }, function(response) {
@@ -173,9 +173,9 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
                 var header = response.header;
                 var config = response.config;
                 var message = "error loading node with url: " + curNodeUrl;
-                yaioAppBase.get('YaioBaseService').logError(message, true);
+                yaioAppBase.get('YaioBase').logError(message, true);
                 message = "error data: " + data + " header:" + header + " config:" + config;
-                yaioAppBase.get('YaioBaseService').logError(message, false);
+                yaioAppBase.get('YaioBase').logError(message, false);
             });
         }
     });
@@ -194,7 +194,7 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
      */
     $scope.exportAsOverview = function() {
         console.log("exportAsOverview");
-        yaioAppBase.get('YaioExplorerActionService').yaioExportExplorerLinesAsOverview();
+        yaioAppBase.get('YaioExplorerAction').yaioExportExplorerLinesAsOverview();
         return false;
     };
 
@@ -212,7 +212,7 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
      */
     $scope.snapshot = function() {
         console.log("snapshot");
-        yaioAppBase.get('YaioExplorerActionService').yaioSnapshot($scope.node);
+        yaioAppBase.get('YaioExplorerAction').yaioSnapshot($scope.node);
         return false;
     };
 
@@ -230,7 +230,7 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
      */
     $scope.openSubNodes = function() {
         console.log("openSubNodes:" + " level:" + $scope.config.treeOpenLevel);
-        yaioAppBase.get('YaioExplorerActionService').yaioOpenSubNodesForTree("#tree", $scope.config.treeOpenLevel);
+        yaioAppBase.get('YaioExplorerAction').yaioOpenSubNodesForTree("#tree", $scope.config.treeOpenLevel);
         return false;
     };
 
@@ -247,8 +247,8 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
      *     GUI Callback
      */
     $scope.recalcGanttBlocks = function() {
-        yaioAppBase.get('YaioNodeGanttRenderService').yaioRecalcFancytreeGanttBlocks();
-        yaioAppBase.get('YaioNodeGanttRenderService').yaioRecalcMasterGanttBlock($scope.node);
+        yaioAppBase.get('YaioNodeGanttRender').yaioRecalcFancytreeGanttBlocks();
+        yaioAppBase.get('YaioNodeGanttRender').yaioRecalcMasterGanttBlock($scope.node);
         return false;
     };
 
@@ -268,8 +268,8 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
     $scope.recalcGanttForIstOrPlan = function(flgShowIst) {
         var start = flgShowIst ? $scope.node.istChildrenSumStart : $scope.node.planChildrenSumStart;
         var ende = flgShowIst ? $scope.node.istChildrenSumEnde : $scope.node.planChildrenSumEnde;
-        $("#inputGanttRangeStart").val(yaioAppBase.get('YaioBaseService').formatGermanDate(start)).trigger('input').triggerHandler("change");
-        $("#inputGanttRangeEnde").val(yaioAppBase.get('YaioBaseService').formatGermanDate(ende)).trigger('input').triggerHandler("change");
+        $("#inputGanttRangeStart").val(yaioAppBase.get('YaioBase').formatGermanDate(start)).trigger('input').triggerHandler("change");
+        $("#inputGanttRangeEnde").val(yaioAppBase.get('YaioBase').formatGermanDate(ende)).trigger('input').triggerHandler("change");
         return false;
     }
 });

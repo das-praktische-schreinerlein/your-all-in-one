@@ -30,7 +30,7 @@
  */
 
 (function () {
-    var testObj = yaioAppBase.get('YaioFormatterService');
+    var testObj = yaioAppBase.get('YaioFormatter');
     
     describe('Modul yaio-formatter Service-Funktions (Formatter formatMarkdown)', function doSuiteFormatMarkdown() {
         beforeEach(function (done) {

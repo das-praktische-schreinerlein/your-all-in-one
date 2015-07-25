@@ -37,20 +37,20 @@
 
 <script type="text/javascript">
     // format markdown-extension
-    var flgDoMermaid = yaioAppBase.get('YaioFormatterService').formatDescBlock("#front-content-intro");
+    var flgDoMermaid = yaioAppBase.get('YaioFormatter').formatDescBlock("#front-content-intro");
     if (flgDoMermaid) {
-        yaioAppBase.get('YaioFormatterService').formatMermaidGlobal();
+        yaioAppBase.get('YaioFormatter').formatMermaidGlobal();
     }
     
     // activate elements after 1 second
     setTimeout(function() { 
         // activate speech recognition
-        yaioAppBase.get('YaioLayoutService').addSpeechRecognitionToElements();
-        yaioAppBase.get('YaioLayoutService').addDatePickerToElements();
+        yaioAppBase.get('YaioLayout').addSpeechRecognitionToElements();
+        yaioAppBase.get('YaioLayout').addDatePickerToElements();
 
         // add resize event
         $( window ).resize(function() {
-            yaioAppBase.get('YaioLayoutService').setupAppSize();
+            yaioAppBase.get('YaioLayout').setupAppSize();
         });    
 
     }, 1000);
@@ -58,8 +58,8 @@
     // add TOC after 3 second
     setTimeout(function() { 
         // add TOC
-        yaioAppBase.get('YaioFormatterService').addTOCForBlock("#sidebartoc", "#front-content-intro", { toc: { topLink: "Seitenkopf"}});
-        yaioAppBase.get('YaioLayoutService').setupAppSize();
+        yaioAppBase.get('YaioFormatter').addTOCForBlock("#sidebartoc", "#front-content-intro", { toc: { topLink: "Seitenkopf"}});
+        yaioAppBase.get('YaioLayout').setupAppSize();
     }, 3000);
     
 

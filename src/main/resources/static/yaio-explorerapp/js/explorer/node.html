@@ -152,21 +152,21 @@
     // activate elements after 1 second
     setTimeout(function() { 
         // activate speech recognition and others
-        yaioAppBase.get('YaioLayoutService').addSpeechRecognitionToElements();
-        yaioAppBase.get('YaioLayoutService').addSpeechSynthToElements();
-        yaioAppBase.get('YaioLayoutService').addPreviewToElements();
-        yaioAppBase.get('YaioLayoutService').addWysiwhgToElements();
-        yaioAppBase.get('YaioLayoutService').addDatePickerToElements();
-        yaioAppBase.get('YaioLayoutService').addDocLayoutStyleSelectorToElements();
+        yaioAppBase.get('YaioLayout').addSpeechRecognitionToElements();
+        yaioAppBase.get('YaioLayout').addSpeechSynthToElements();
+        yaioAppBase.get('YaioLayout').addPreviewToElements();
+        yaioAppBase.get('YaioLayout').addWysiwhgToElements();
+        yaioAppBase.get('YaioLayout').addDatePickerToElements();
+        yaioAppBase.get('YaioLayout').addDocLayoutStyleSelectorToElements();
 //        alert($("#ulLanguage").attr("data-curlanguage"));
-//        yaioAppBase.get('YaioLayoutService').initLanguageSupport("{{currentLanguageKey}}");
+//        yaioAppBase.get('YaioLayout').initLanguageSupport("{{currentLanguageKey}}");
 
         //add resize event
         $( window ).resize(function() {
-                yaioAppBase.get('YaioLayoutService').setupAppSize();
+                yaioAppBase.get('YaioLayout').setupAppSize();
         });    
         $( window ).scroll(function() {
-            yaioAppBase.get('YaioLayoutService').setupAppSize();
+            yaioAppBase.get('YaioLayout').setupAppSize();
     });    
 
     }, 1000);

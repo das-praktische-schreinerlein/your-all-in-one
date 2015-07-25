@@ -68,7 +68,7 @@ yaioM.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $http
      *     GUI Callback
      */
     $scope.discard = function() {
-        yaioAppBase.get('YaioEditorService').yaioCloseNodeEditor();
+        yaioAppBase.get('YaioEditor').yaioCloseNodeEditor();
         return false;
     };
     
@@ -86,7 +86,7 @@ yaioM.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $http
      */
     $scope.selectNewNodeType = function() {
         // hide all forms
-        yaioAppBase.get('YaioEditorService').yaioHideAllNodeEditorForms();
+        yaioAppBase.get('YaioEditor').yaioHideAllNodeEditorForms();
         
         // display createform and select nodeform
         $("#containerFormYaioEditorCreate").css("display", "block");
@@ -117,7 +117,7 @@ yaioM.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $http
      *     Callback
      * <h4>FeatureDescription:</h4>
      *     callbackhandler to perform actions when type has changed<br>
-     *     calls yaioAppBase.get('YaioEditorService').calcIstStandFromState() for the node
+     *     calls yaioAppBase.get('YaioEditor').calcIstStandFromState() for the node
      *     if ERLEDIGT || VERWORFEN || EVENT_ERLEDIGT || EVENT_VERWORFEN: update istStand=100
      * <h4>FeatureResult:</h4>
      *   <ul>
@@ -127,7 +127,7 @@ yaioM.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $http
      *     GUI Callback
      */
     $scope.doTypeChanged = function() {
-        $scope.nodeForEdit.istStand = yaioAppBase.get('YaioEditorService').calcIstStandFromState($scope.nodeForEdit);
+        $scope.nodeForEdit.istStand = yaioAppBase.get('YaioEditor').calcIstStandFromState($scope.nodeForEdit);
         return false;
     };
     
@@ -154,7 +154,7 @@ yaioM.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $http
      *     GUI Callback
      */
     $scope.doIstStandChanged = function() {
-        $scope.nodeForEdit.type = yaioAppBase.get('YaioEditorService').calcTypeFromIstStand($scope.nodeForEdit);
+        $scope.nodeForEdit.type = yaioAppBase.get('YaioEditor').calcTypeFromIstStand($scope.nodeForEdit);
         return false;
     };
     
@@ -266,7 +266,7 @@ yaioM.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $http
             nodeObj["sysUID"] = null;
         } else {
             // unknown mode
-            yaioAppBase.get('YaioBaseService').logError("unknown mode=" + mode + " form formName=" + formName, false);
+            yaioAppBase.get('YaioBase').logError("unknown mode=" + mode + " form formName=" + formName, false);
             return null;
         }
 
@@ -343,9 +343,9 @@ yaioM.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $http
                         }
                     }
                 }
-                yaioAppBase.get('YaioBaseService').logError(message, false);
+                yaioAppBase.get('YaioBase').logError(message, false);
                 if (userMessage != "") {
-                    yaioAppBase.get('YaioBaseService').logError(userMessage, true);
+                    yaioAppBase.get('YaioBase').logError(userMessage, true);
                 }
                 
                 // Failed
@@ -360,9 +360,9 @@ yaioM.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $http
             var header = response.header;
             var config = response.config;
             var message = "error saving node with url: " + url;
-            yaioAppBase.get('YaioBaseService').logError(message, true);
+            yaioAppBase.get('YaioBase').logError(message, true);
             message = "error data: " + data + " header:" + header + " config:" + config;
-            yaioAppBase.get('YaioBaseService').logError(message, false);
+            yaioAppBase.get('YaioBase').logError(message, false);
         });
     };
 });

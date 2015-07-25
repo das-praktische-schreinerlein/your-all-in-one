@@ -110,7 +110,7 @@ Yaio.FormatterService = function(appBase) {
         var renderer = new marked.Renderer();
         // my own code-handler
         renderer.code = function (code, language) {
-            code = yaioAppBase.get('YaioBaseService').htmlEscapeTextLazy(code);
+            code = yaioAppBase.get('YaioBase').htmlEscapeTextLazy(code);
             if (code.match(/^sequenceDiagram/) || code.match(/^graph/) || code.match(/^gantt/)) {
                 return '<div id="inlineMermaid' + (me._localHtmlId++) + '" class="mermaid">'+ me.prepareTextForMermaid(code ) + '</div>';
             } else if (language !== undefined 
@@ -207,7 +207,7 @@ Yaio.FormatterService = function(appBase) {
             noCode = newDescTextRest.slice(0, codeStart + 3);
             
             // replace <> but prevent <br> in noCode
-            noCode = yaioAppBase.get('YaioBaseService').htmlEscapeTextLazy(noCode);
+            noCode = yaioAppBase.get('YaioBase').htmlEscapeTextLazy(noCode);
             noCode = noCode.replace(/&lt;br&gt;/g, "<br>");
             newDescText += noCode;
             
@@ -237,7 +237,7 @@ Yaio.FormatterService = function(appBase) {
     
         // replace <> but prevent <br> in noCode
         noCode = newDescTextRest;
-        noCode = yaioAppBase.get('YaioBaseService').htmlEscapeTextLazy(noCode);
+        noCode = yaioAppBase.get('YaioBase').htmlEscapeTextLazy(noCode);
         noCode = noCode.replace(/&lt;br&gt;/g, "<br>");
         
         // add rest to newDescText
@@ -307,8 +307,8 @@ Yaio.FormatterService = function(appBase) {
      */
     me.formatMermaidGlobal = function() {
         mermaid.parseError = function(err,hash){
-            yaioAppBase.get('YaioBaseService').showToastMessage("error", "Oops! Ein Fehlerchen :-(", "Syntaxfehler bei Parsen des Diagrammcodes:" + err);
-    //        yaioAppBase.get('YaioBaseService').showModalErrorMessage(":" + err);
+            yaioAppBase.get('YaioBase').showToastMessage("error", "Oops! Ein Fehlerchen :-(", "Syntaxfehler bei Parsen des Diagrammcodes:" + err);
+    //        yaioAppBase.get('YaioBase').showModalErrorMessage(":" + err);
         };
         try {
             mermaid.init();
@@ -421,7 +421,7 @@ Yaio.FormatterService = function(appBase) {
                 console.log("formatDescBlock mermaid descBlock: " + descBlockId + " block: " + blockId);
                 me.addServicesToDiagrammBlock(block, 'mermaid',
                         "<a href='' id='linkdownload" + blockId + "'  target='_blank'"
-                        +   " onclick=\"javascript: yaioAppBase.get('YaioBaseService').downloadAsFile($('#linkdownload" + blockId + "'), $('#" + blockId + "').html(), 'diagram.svg', 'image/svg+xml', 'utf-8'); return true;\">"
+                        +   " onclick=\"javascript: yaioAppBase.get('YaioBase').downloadAsFile($('#linkdownload" + blockId + "'), $('#" + blockId + "').html(), 'diagram.svg', 'image/svg+xml', 'utf-8'); return true;\">"
                         + "Download</a>");
                 flgDoMermaid = true;
             } else {
@@ -440,7 +440,7 @@ Yaio.FormatterService = function(appBase) {
                 console.log("formatDescBlock mermaid descBlock: " + descBlockId + " block: " + blockId);
                 me.addServicesToDiagrammBlock(block, 'mermaid',
                         "<a href='' id='linkdownload" + blockId + "'  target='_blank'"
-                        +   " onclick=\"javascript: yaioAppBase.get('YaioBaseService').downloadAsFile($('#linkdownload" + blockId + "'), $('#" + blockId + "').html(), 'diagram.svg', 'image/svg+xml', 'utf-8'); return true;\">"
+                        +   " onclick=\"javascript: yaioAppBase.get('YaioBase').downloadAsFile($('#linkdownload" + blockId + "'), $('#" + blockId + "').html(), 'diagram.svg', 'image/svg+xml', 'utf-8'); return true;\">"
                         + "Download</a>");
                 flgDoMermaid = true;
             } else if ($(block).hasClass("lang-yaiomindmap") || $(block).hasClass("yaiomindmap")) {
@@ -527,7 +527,7 @@ Yaio.FormatterService = function(appBase) {
         var descBlockId = $(descBlock).attr('id');
         console.log("highlightCheckListForMatcher matcherStr '" + matcherStr + "' for descBlock: " + descBlockId);
         $("#" + descBlockId + " li:contains('" + matcherStr + "'),h1:contains('" + matcherStr + "'),h2:contains('" + matcherStr + "')").each(function(index, value) {
-            var regEx = RegExp(yaioAppBase.get('YaioBaseService').escapeRegExp(matcherStr), 'gi');
+            var regEx = RegExp(yaioAppBase.get('YaioBase').escapeRegExp(matcherStr), 'gi');
             findAndReplaceDOMText($(value).get(0), {
                 find: regEx,
                 replace: function(portion) {
@@ -562,7 +562,7 @@ Yaio.FormatterService = function(appBase) {
     me.convertExplorerLinesAsCheckList = function() {
         // get title
         var title = $("#masterTr td.fieldtype_name").text();
-        var now = yaioAppBase.get('YaioBaseService').formatGermanDateTime((new Date()).getTime());
+        var now = yaioAppBase.get('YaioBase').formatGermanDateTime((new Date()).getTime());
     
         var checkList = "# Checklist: " + title + " (Stand: " + now + ")\n\n";
         
@@ -668,7 +668,7 @@ Yaio.FormatterService = function(appBase) {
     me.convertExplorerLinesAsGanttMarkdown = function() {
         // get title
         var title = $("#masterTr td.fieldtype_name").text();
-        var now = yaioAppBase.get('YaioBaseService').formatGermanDateTime((new Date()).getTime());
+        var now = yaioAppBase.get('YaioBase').formatGermanDateTime((new Date()).getTime());
     
         var ganttMarkdown = "# Gantt: " + title + " (Stand: " + now + ")\n\n"
             + "```mermaid\n"
@@ -755,8 +755,8 @@ Yaio.FormatterService = function(appBase) {
         $("#fallback" + blockId).before(
                 "<div class='services" + type + "' id='services" + blockId + "'><div>"
                 + downloadLink
-                + "<a href='#' style='display: none;' id='toggleorig" + blockId + "' onclick=\"yaioAppBase.get('YaioBaseService').toggleWithLinks('#toggleorig" + blockId + "', '#togglesource" + blockId + "', '#" + blockId + "', '#fallback" + blockId + "'); return false;\" target='_blank'>Diagramm</a>"
-                + "<a href='#' id='togglesource" + blockId + "' onclick=\"yaioAppBase.get('YaioBaseService').toggleWithLinks('#toggleorig" + blockId + "', '#togglesource" + blockId + "', '#" + blockId + "', '#fallback" + blockId + "'); return false;\" target='_blank'>Source</a>"
+                + "<a href='#' style='display: none;' id='toggleorig" + blockId + "' onclick=\"yaioAppBase.get('YaioBase').toggleWithLinks('#toggleorig" + blockId + "', '#togglesource" + blockId + "', '#" + blockId + "', '#fallback" + blockId + "'); return false;\" target='_blank'>Diagramm</a>"
+                + "<a href='#' id='togglesource" + blockId + "' onclick=\"yaioAppBase.get('YaioBase').toggleWithLinks('#toggleorig" + blockId + "', '#togglesource" + blockId + "', '#" + blockId + "', '#fallback" + blockId + "'); return false;\" target='_blank'>Source</a>"
                 + "</div></div>");
     }
     

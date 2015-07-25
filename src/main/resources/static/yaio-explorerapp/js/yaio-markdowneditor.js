@@ -86,7 +86,7 @@ Yaio.MarkdownEditorService = function(appBase) {
         var descText = $("#" + textAreaId).val();
     
         // prepare descText
-        var descHtmlMarked = yaioAppBase.get('YaioFormatterService').formatMarkdown(descText, true);
+        var descHtmlMarked = yaioAppBase.get('YaioFormatter').formatMarkdown(descText, true);
         me.showPreview(descHtmlMarked);
     }
     
@@ -104,21 +104,21 @@ Yaio.MarkdownEditorService = function(appBase) {
                 $( this ).dialog( "close" );
               },
               "Vorlesen": function () {
-                  yaioAppBase.get('YaioLayoutService').openSpeechSynthWindow(document.getElementById('preview-content'));
+                  yaioAppBase.get('YaioLayout').openSpeechSynthWindow(document.getElementById('preview-content'));
               }
             }
         });    
         
         // do mermaid when preview visible
-        yaioAppBase.get('YaioFormatterService').formatMermaidGlobal();
+        yaioAppBase.get('YaioFormatter').formatMermaidGlobal();
     
         // do syntax-highlight
-        yaioAppBase.get('YaioFormatterService').formatDescBlock($("#preview-content"));
+        yaioAppBase.get('YaioFormatter').formatDescBlock($("#preview-content"));
     }
     
     me.showMarkdownHelp = function() {
         // show message
-        var url = "/examples/markdownhelp/markdownhelp.html" + "?" + yaioAppBase.get('YaioBaseService').createXFrameAllowFrom();
+        var url = "/examples/markdownhelp/markdownhelp.html" + "?" + yaioAppBase.get('YaioBase').createXFrameAllowFrom();
         console.log("showMarkdownHelp:" + url);
         $("#markdownhelp-iframe").attr('src',url);
         $("#markdownhelp-box" ).dialog({
@@ -213,7 +213,7 @@ Yaio.MarkdownEditorService = function(appBase) {
                   text: "Vorlesen",
                   class: "jsh-show-inline-block-if-speechsynth",
                   click: function () {
-                      yaioAppBase.get('YaioLayoutService').openSpeechSynthWindow(document.getElementById('wysiwhg-preview'));
+                      yaioAppBase.get('YaioLayout').openSpeechSynthWindow(document.getElementById('wysiwhg-preview'));
                   }
               },
               "Load": function () {
@@ -261,7 +261,7 @@ Yaio.MarkdownEditorService = function(appBase) {
         // add export-link -> buggy to mix jquery and styles
         $(".ui-dialog-buttonset").append($("<a href='' id='wysiwyg-exportlink'" +
             + " sdf='ojfvbhwjh'"
-            + " onclick=\"yaioAppBase.get('YaioBaseService').downloadAsFile($('#wysiwyg-exportlink'), $('#" + textAreaId + "').val(), 'data.md', 'text/markdown', 'utf-8');\">"
+            + " onclick=\"yaioAppBase.get('YaioBase').downloadAsFile($('#wysiwyg-exportlink'), $('#" + textAreaId + "').val(), 'data.md', 'text/markdown', 'utf-8');\">"
             + "<span class='ui-button-text'>Export</span></a>"));
         $('#wysiwyg-exportlink').addClass("ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only");
     
@@ -270,16 +270,16 @@ Yaio.MarkdownEditorService = function(appBase) {
     me.showWyswhgPreviewForTextareaId = function(textAreaId) {
         // prepare descText
         var descText = $("#" + textAreaId).val();
-        var descHtmlMarked = yaioAppBase.get('YaioFormatterService').formatMarkdown(descText, true);
+        var descHtmlMarked = yaioAppBase.get('YaioFormatter').formatMarkdown(descText, true);
     
         // set preview-content
         $( "#wysiwhg-preview" ).html(descHtmlMarked);
     
         // do mermaid when preview visible
-        yaioAppBase.get('YaioFormatterService').formatMermaidGlobal();
+        yaioAppBase.get('YaioFormatter').formatMermaidGlobal();
         
         // do syntax-highlight
-        yaioAppBase.get('YaioFormatterService').formatDescBlock($("#wysiwhg-preview"));
+        yaioAppBase.get('YaioFormatter').formatDescBlock($("#wysiwhg-preview"));
     } 
 
     me._init();

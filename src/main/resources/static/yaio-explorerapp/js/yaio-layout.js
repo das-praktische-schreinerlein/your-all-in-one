@@ -76,7 +76,7 @@ Yaio.LayoutService = function(appBase) {
                 if (forElement.length > 0) {
                     // define link to label
                     link = "<a href=\"\" class=\"\"" +
-                        " onClick=\"yaioAppBase.get('YaioLayoutService').openSpeechRecognitionWindow(" +
+                        " onClick=\"yaioAppBase.get('YaioLayout').openSpeechRecognitionWindow(" +
                             "document.getElementById('" + forElement.attr('id') + "')); return false;" +
                         "\" lang='tech' data-tooltip='tooltip.command.OpenSpeechRecognition'>" +
                         "<img alt='Spracherkennung nutzen' style='width:25px'" +
@@ -149,7 +149,7 @@ Yaio.LayoutService = function(appBase) {
                 if (forElement.length > 0) {
                     // define link to label
                     link = "<a href=\"\" class=\"button\"" +
-                           " onClick=\"yaioAppBase.get('YaioLayoutService').openSpeechSynthWindow(" +
+                           " onClick=\"yaioAppBase.get('YaioLayout').openSpeechSynthWindow(" +
                             "document.getElementById('" + forElement.attr('id') + "')); return false;" +
                            "\" lang='tech' data-tooltip='tooltip.command.OpenSpeechSynth' class='button'>common.command.OpenSpeechSynth</a>";
                     
@@ -284,11 +284,11 @@ Yaio.LayoutService = function(appBase) {
             if (forElement.length > 0) {
                 // define link to label
                 link = "<a href=\"#\" id='showPreview4" + forElement.attr('id') + "'" +
-                       " onClick=\"yaioAppBase.get('YaioMarkdownEditorService').showPreviewForTextareaId('" +
+                       " onClick=\"yaioAppBase.get('YaioMarkdownEditor').showPreviewForTextareaId('" +
                           forElement.attr('id') + "'); return false;" +
                        "\" lang='tech' data-tooltip='tooltip.command.OpenPreview' class='button'>common.command.OpenPreview</a>";
                 link += "<a href=\"#\" id='openMarkdownHelp4" + forElement.attr('id') + "'" +
-                        " onClick=\"yaioAppBase.get('YaioMarkdownEditorService').showMarkdownHelp(); return false;" +
+                        " onClick=\"yaioAppBase.get('YaioMarkdownEditor').showMarkdownHelp(); return false;" +
                         "\" lang='tech' data-tooltip='tooltip.command.OpenMarkdownHelp' class='button'>common.command.OpenMarkdownHelp</a>";
                 
                 // set flag
@@ -322,7 +322,7 @@ Yaio.LayoutService = function(appBase) {
             if (forElement.length > 0) {
                 // define link to label
                 link = "<a href=\"#\" id='openWysiwyg4" + forElement.attr('id') + "'" +
-                    " onClick=\"yaioAppBase.get('YaioMarkdownEditorService').openWysiwhgForTextareaId('" +
+                    " onClick=\"yaioAppBase.get('YaioMarkdownEditor').openWysiwhgForTextareaId('" +
                         forElement.attr('id') + "'); return false;" +
                     "\" lang='tech' data-tooltip='tooltip.command.OpenWysiwygEditor' class='button'>common.command.OpenWysiwygEditor</a>";
                 
@@ -449,7 +449,7 @@ Yaio.LayoutService = function(appBase) {
     
     me.yaioShowHelpSite = function(url) {
         // set messagetext
-        url += "?" + yaioAppBase.get('YaioBaseService').createXFrameAllowFrom();
+        url += "?" + yaioAppBase.get('YaioBase').createXFrameAllowFrom();
         console.log("yaioShowHelpSite:" + url);
         $("#help-iframe").attr('src',url);
         

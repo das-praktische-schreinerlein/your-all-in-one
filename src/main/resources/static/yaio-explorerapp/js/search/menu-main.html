@@ -14,7 +14,7 @@
               <a href="" ng-click="yaioUtils.showHelpSite('/exports/documentation/SysInfo1')" target="help" class="button" translate="common.command.OpenInfo">Hilfe</a></li>
            <li class="command" data-tooltip='tooltip.command.Print' lang="tech">
               <a onclick="window.print(); return true;" class="button" translate="common.command.Print">Print</a>
-              <input type="checkbox" onclick="yaioAppBase.get('YaioLayoutService').togglePrintLayout()" checked id="checkboxPrintAll"> All</li>
+              <input type="checkbox" onclick="yaioAppBase.get('YaioLayout').togglePrintLayout()" checked id="checkboxPrintAll"> All</li>
            <li class="command" data-tooltip='tooltip.command.Logout' lang="tech" id="logout">
               <a href="/logout" class="button" translate="common.command.Logout">Logout</a></li>
         </ul>

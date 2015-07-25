@@ -171,25 +171,25 @@ yaioAppBase.publishDetectorStyles();
 </script>
 <script type="text/javascript">
 // override
-yaioAppBase.get('YaioMarkdownEditorService').showWyswhgPreviewForTextareaId = function(textAreaId) {
+yaioAppBase.get('YaioMarkdownEditor').showWyswhgPreviewForTextareaId = function(textAreaId) {
     // prepare descText
     var descText = $("#" + textAreaId).val();
-    var descHtmlMarked = yaioAppBase.get('YaioFormatterService').formatMarkdown(descText, true);
+    var descHtmlMarked = yaioAppBase.get('YaioFormatter').formatMarkdown(descText, true);
 
     // set preview-content
     $( "#wysiwhg-preview" ).html(descHtmlMarked);
     $( "#wysiwhg-print" ).html(descHtmlMarked);
 
     // do mermaid when preview visible
-    yaioAppBase.get('YaioFormatterService').formatMermaidGlobal();
+    yaioAppBase.get('YaioFormatter').formatMermaidGlobal();
     
     // do syntax-highlight
-    yaioAppBase.get('YaioFormatterService').formatDescBlock($("#wysiwhg-preview"));
-    yaioAppBase.get('YaioFormatterService').formatDescBlock($("#wysiwhg-print"));
+    yaioAppBase.get('YaioFormatter').formatDescBlock($("#wysiwhg-preview"));
+    yaioAppBase.get('YaioFormatter').formatDescBlock($("#wysiwhg-print"));
 } 
 
 // open Wysiwyg
-yaioAppBase.get('YaioMarkdownEditorService').openWysiwhgForTextareaId("workspaceContent");
+yaioAppBase.get('YaioMarkdownEditor').openWysiwhgForTextareaId("workspaceContent");
 
 // disable OK-Button
 $(".ui-dialog-buttonset button").first().addClass("hidden");
@@ -200,7 +200,7 @@ $(".ui-dialog-buttonset").append($("<a href='' id='wysiwyg-printlink'" +
         + " onclick=\"window.print(); return false;\">"
         + "<span class='ui-button-text'>Print</span></a>"));
 $('#wysiwyg-printlink').addClass("ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only");
-$(".ui-dialog-buttonset").append($("<input type=\"checkbox\" onclick=\"yaioAppBase.get('YaioLayoutService').togglePrintLayout()\" checked id=\"checkboxPrintAll\"> All"));
+$(".ui-dialog-buttonset").append($("<input type=\"checkbox\" onclick=\"yaioAppBase.get('YaioLayout').togglePrintLayout()\" checked id=\"checkboxPrintAll\"> All"));
 </script>
 </body>
 </html>

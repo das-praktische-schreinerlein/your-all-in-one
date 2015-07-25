@@ -30,7 +30,7 @@
  */
 
 (function () {
-    var testObj = yaioAppBase.get('YaioEditorService');
+    var testObj = yaioAppBase.get('YaioEditor');
     
     describe('Modul yaio-editorservice Service-Funktions (businesslogic calcIstStandFromState)', function () {
         var doCheckCalcIstStandFromState = function(basenode, state, stand) {

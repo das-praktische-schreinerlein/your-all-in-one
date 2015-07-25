@@ -29,8 +29,8 @@
  *     Utils
  */
 yaioM.factory('yaioUtils', function () {
-    var ganttRangeStart = yaioAppBase.get('YaioBaseService').formatGermanDate((new Date()).getTime() - 90*24*60*60*1000); 
-    var ganttRangeEnd = yaioAppBase.get('YaioBaseService').formatGermanDate((new Date()).getTime() + 90*24*60*60*1000);
+    var ganttRangeStart = yaioAppBase.get('YaioBase').formatGermanDate((new Date()).getTime() - 90*24*60*60*1000); 
+    var ganttRangeEnd = yaioAppBase.get('YaioBase').formatGermanDate((new Date()).getTime() + 90*24*60*60*1000);
     
     return {
         /**
@@ -48,16 +48,16 @@ yaioM.factory('yaioUtils', function () {
          */
         showHelpSite: function(url) {
             console.log("showHelpSite:" + " url:" + url);
-            yaioAppBase.get('YaioLayoutService').yaioShowHelpSite(url);
+            yaioAppBase.get('YaioLayout').yaioShowHelpSite(url);
             return false;
         },
         
         toggleSysContainerForNode: function(node) {
-            yaioAppBase.get('YaioExplorerActionService').toggleNodeSysContainer(node.sysUID);
+            yaioAppBase.get('YaioExplorerAction').toggleNodeSysContainer(node.sysUID);
         },
         
         openNodeEditorForNode: function(node, mode) {
-            yaioAppBase.get('YaioEditorService').yaioOpenNodeEditorForNode(node, mode);
+            yaioAppBase.get('YaioEditor').yaioOpenNodeEditorForNode(node, mode);
         },
         
         renderNodeLine: function(node, trIdSelector) {
@@ -72,7 +72,7 @@ yaioM.factory('yaioUtils', function () {
             };
             
             console.log("renderNodeLine nodeId=" + node.sysUID + " tr=" + $(trIdSelector).length);
-            yaioAppBase.get('YaioNodeDataRenderService').renderColumnsForNode(null, data, true);
+            yaioAppBase.get('YaioNodeDataRender').renderColumnsForNode(null, data, true);
         },
         
         ganttOptions: { 

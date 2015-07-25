@@ -30,7 +30,7 @@
  */
 
 (function () {
-    var testObj = yaioAppBase.get('YaioBaseService');
+    var testObj = yaioAppBase.get('YaioBase');
     
     describe('Modul yaio-baseservice Service-Funktions (htmlEscapeText)', function doSuiteHtmlEscapeText() {
         it( "check htmlEscapeText", function doTestHtmlEscapeText() {

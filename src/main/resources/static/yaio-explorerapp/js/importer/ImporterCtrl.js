@@ -100,7 +100,7 @@ yaioM.controller('ImporterCtrl', function($rootScope, $scope, $location, $http, 
         yaioAppBase.get('UIToggler').toggleElement("#containerFormYaioEditorImport");
         
         // update appsize
-        yaioAppBase.get('YaioLayoutService').setupAppSize();
+        yaioAppBase.get('YaioLayout').setupAppSize();
 
         console.log("showImportEditor done:" + " url:" + url);
         return false;

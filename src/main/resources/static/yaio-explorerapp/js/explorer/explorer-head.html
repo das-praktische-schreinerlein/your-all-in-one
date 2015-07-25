@@ -19,8 +19,8 @@
                     <!-- show name-header and data-toggler -->
                     <span  translate="fancytree.table.headline.name">Name</span>
                     <span style="display: inline-block; width: 300px;" data-tooltip='tooltip.command.ShowGanttData' lang="tech">
-                      <a onclick="yaioAppBase.get('YaioNodeGanttRenderService').yaioShowGanttBlock();return false;" id="tabTogglerGantt" class="button tabToggler" translate="fancytree.table.headline.tabTogglerGantt">Zeige Gantt</a>
-                      <a onclick="yaioAppBase.get('YaioNodeDataRenderService').yaioShowDataBlock();return false;" id="tabTogglerData" class="button tabToggler"  translate="fancytree.table.headline.tabTogglerData" style="display: none">Zeige Daten</a>
+                      <a onclick="yaioAppBase.get('YaioNodeGanttRender').yaioShowGanttBlock();return false;" id="tabTogglerGantt" class="button tabToggler" translate="fancytree.table.headline.tabTogglerGantt">Zeige Gantt</a>
+                      <a onclick="yaioAppBase.get('YaioNodeDataRender').yaioShowDataBlock();return false;" id="tabTogglerData" class="button tabToggler"  translate="fancytree.table.headline.tabTogglerData" style="display: none">Zeige Daten</a>
                     </span>
                     </th>
                   <th class="block_nodedata">
@@ -35,7 +35,7 @@
                       <div class="container_field fieldtype_additionaldata fieldtype_fromto field_planChildrenSum field_center" translate="fancytree.table.headline.planChildrenSum"> <br />Zeitraum</div>
                       <div class="container_field fieldtype_additionaldata fieldtype_descToggler toggler_show">
                          <br />
-                         <a lang="tech" data-tooltip='tooltip.command.ToggleDescAll' id="toggler_desc_all" onclick="yaioAppBase.get('YaioExplorerActionService').toggleAllNodeDescContainer(); return false;" href="#" class="toggler_hidden"></a>
+                         <a lang="tech" data-tooltip='tooltip.command.ToggleDescAll' id="toggler_desc_all" onclick="yaioAppBase.get('YaioExplorerAction').toggleAllNodeDescContainer(); return false;" href="#" class="toggler_hidden"></a>
                       </div>
                     </div></th>
                   <th class="block_nodegantt">
@@ -55,7 +55,7 @@
                     <span translate="fancytree.table.headline.actions"></span>
                     <br />
                     <div class="fieldtype_sysToggler toggler_show">
-                      <a lang="tech" data-tooltip='tooltip.command.ToggleSysAll' id="toggler_sys_all" onclick="yaioAppBase.get('YaioExplorerActionService').toggleAllNodeSysContainer(); return false;" href="#" class="toggler_hidden"></a>
+                      <a lang="tech" data-tooltip='tooltip.command.ToggleSysAll' id="toggler_sys_all" onclick="yaioAppBase.get('YaioExplorerAction').toggleAllNodeSysContainer(); return false;" href="#" class="toggler_hidden"></a>
                     </div>
                   </th>
                 </tr>

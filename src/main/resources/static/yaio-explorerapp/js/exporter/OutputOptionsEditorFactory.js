@@ -123,7 +123,7 @@ yaioM.factory('OutputOptionsEditor', function() {
 //                // sucess handler
 //                yaioAppBase.get('UIToggler').toggleElement("#containerFormYaioEditorOutputOptions");
 //                
-//                yaioAppBase.get('YaioBaseService').downloadAsFile(null, response.data, "test.xxx", "dummy", "dummy");
+//                yaioAppBase.get('YaioBase').downloadAsFile(null, response.data, "test.xxx", "dummy", "dummy");
 //                
 //                console.log("send done");
 //            }, function(response) {
@@ -133,9 +133,9 @@ yaioM.factory('OutputOptionsEditor', function() {
 //                var header = response.header;
 //                var config = response.config;
 //                var message = "error while do export with url: " + url;
-//                yaioAppBase.get('YaioBaseService').logError(message, true);
+//                yaioAppBase.get('YaioBase').logError(message, true);
 //                message = "error data: " + data + " header:" + header + " config:" + config;
-//                yaioAppBase.get('YaioBaseService').logError(message, false);
+//                yaioAppBase.get('YaioBase').logError(message, false);
 //            });
 
             var formId = "#nodeFormOutputOptions";
@@ -174,7 +174,7 @@ yaioM.factory('OutputOptionsEditor', function() {
             $(formId).trigger('input');
             
             // update appsize
-            yaioAppBase.get('YaioLayoutService').setupAppSize();
+            yaioAppBase.get('YaioLayout').setupAppSize();
 
             console.log("showOutputOptionsEditor done:" + " url:" + url);
             return false;
