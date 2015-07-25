@@ -52,6 +52,8 @@ module.exports = function( grunt ){
         projectJsFiles: [
                'src/main/resources/static/yaio-explorerapp/js/yaio-fancytree.js',
                'src/main/resources/static/yaio-explorerapp/js/yaio-explorerapp.js',
+               'src/main/resources/static/yaio-explorerapp/js/**/*Config.js',
+               'src/main/resources/static/yaio-explorerapp/js/**/*Service.js',
                'src/main/resources/static/yaio-explorerapp/js/utils/Constants.js',
                'src/main/resources/static/yaio-explorerapp/js/utils/Directives.js',
                'src/main/resources/static/yaio-explorerapp/js/utils/FormErrorHandlingUtils.js',

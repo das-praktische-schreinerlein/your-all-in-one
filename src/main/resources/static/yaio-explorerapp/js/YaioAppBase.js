@@ -32,6 +32,10 @@ window.YaioAppBase = function() {
         me.configureService("YaioEditorService", function() { return Yaio.EditorService(me); });
         me.configureService("YaioFormatterService", function() { return Yaio.FormatterService(me); });
         me.configureService("YaioMarkdownEditorService", function() { return Yaio.MarkdownEditorService(me); });
+        me.configureService("YaioNodeDataService", function() { return Yaio.NodeDataService(me); });
+        me.configureService("YaioNodeDataRenderService", function() { return Yaio.NodeDataRenderService(me); });
+        me.configureService("YaioNodeGanttRenderService", function() { return Yaio.NodeGanttRenderService(me); });
+        me.configureService("YaioExplorerActionService", function() { return Yaio.ExplorerActionService(me); });
         me.configureService("YaioExplorerTreeService", function() { return Yaio.ExplorerTreeService(me); });
     };
 

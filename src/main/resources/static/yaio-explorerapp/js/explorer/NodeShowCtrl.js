@@ -114,7 +114,7 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
                             nodeIdHierarchy.push(nodeResponse.data.node.sysUID);
                             
                             // open Hierarchy
-                            yaioAppBase.get('YaioExplorerTreeService').openNodeHierarchy("#tree", nodeIdHierarchy);
+                            yaioAppBase.get('YaioExplorerActionService').openNodeHierarchy("#tree", nodeIdHierarchy);
                         } else {
                             // error
                             yaioAppBase.get('YaioBaseService').logError("error loading activenode:" + nodeResponse.data.stateMsg 
@@ -161,7 +161,7 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
                     $scope.yaioUtils.renderNodeLine(nodeResponse.data.node, "#masterTr");
 
                     // recalc gantt
-                    yaioAppBase.get('YaioExplorerTreeService').yaioRecalcMasterGanttBlock($scope.node);
+                    yaioAppBase.get('YaioNodeGanttRenderService').yaioRecalcMasterGanttBlock($scope.node);
                 } else {
                     // error
                     yaioAppBase.get('YaioBaseService').logError("error loading nodes:" + nodeResponse.data.stateMsg 
@@ -194,7 +194,7 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
      */
     $scope.exportAsOverview = function() {
         console.log("exportAsOverview");
-        yaioAppBase.get('YaioExplorerTreeService').yaioExportExplorerLinesAsOverview();
+        yaioAppBase.get('YaioExplorerActionService').yaioExportExplorerLinesAsOverview();
         return false;
     };
 
@@ -212,7 +212,7 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
      */
     $scope.snapshot = function() {
         console.log("snapshot");
-        yaioAppBase.get('YaioExplorerTreeService').yaioSnapshot($scope.node);
+        yaioAppBase.get('YaioExplorerActionService').yaioSnapshot($scope.node);
         return false;
     };
 
@@ -230,7 +230,7 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
      */
     $scope.openSubNodes = function() {
         console.log("openSubNodes:" + " level:" + $scope.config.treeOpenLevel);
-        yaioAppBase.get('YaioExplorerTreeService').yaioOpenSubNodesForTree("#tree", $scope.config.treeOpenLevel);
+        yaioAppBase.get('YaioExplorerActionService').yaioOpenSubNodesForTree("#tree", $scope.config.treeOpenLevel);
         return false;
     };
 
@@ -247,8 +247,8 @@ yaioM.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http, 
      *     GUI Callback
      */
     $scope.recalcGanttBlocks = function() {
-        yaioAppBase.get('YaioExplorerTreeService').yaioRecalcFancytreeGanttBlocks();
-        yaioAppBase.get('YaioExplorerTreeService').yaioRecalcMasterGanttBlock($scope.node);
+        yaioAppBase.get('YaioNodeGanttRenderService').yaioRecalcFancytreeGanttBlocks();
+        yaioAppBase.get('YaioNodeGanttRenderService').yaioRecalcMasterGanttBlock($scope.node);
         return false;
     };
 
