@@ -812,7 +812,7 @@ Yaio.ExplorerTreeService = function(appBase) {
             // add commands
             var commands = "<div class='container-commands-desc' id='commands_desc_" + basenode.sysUID + "'"
                 + " data-tooltip='tooltip.command.TogglePreWrap' lang='tech' >" 
-                + "<input type='checkbox' id='cmd_toggle_content_desc_" + basenode.sysUID + "' onclick=\"yaioAppBase.get('YaioLayoutService').togglePreWrap('#content_desc_" + basenode.sysUID + "');yaioAppBase.get('YaioLayoutService').togglePreWrap('#container_content_desc_" + basenode.sysUID + "'); return true;\">"
+                + "<input type='checkbox' id='cmd_toggle_content_desc_" + basenode.sysUID + "' onclick=\"yaioAppBase.get('UIToggler').togglePreWrap('#content_desc_" + basenode.sysUID + "');yaioAppBase.get('UIToggler').togglePreWrap('#container_content_desc_" + basenode.sysUID + "'); return true;\">"
                 + "<span lang='tech'>im Originallayout anzeigen</span>"
         //        + "<input type='checkbox' id='cmd_toggle_content_desc_markdown_" + basenode.sysUID + "' onclick=\"toggleDescMarkdown('#container_content_desc_" + basenode.sysUID + "'); return true;\">"
         //        + "<span lang='tech'>Markdown</span>"

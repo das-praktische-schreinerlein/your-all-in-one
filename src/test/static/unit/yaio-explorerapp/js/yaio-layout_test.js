@@ -30,7 +30,7 @@
  */
 
 (function () {
-    var testObj = yaioAppBase.get('YaioLayoutService');
+    var testObj = yaioAppBase.get('UIToggler');
     
     describe('Modul yaio-layout Service-Funktions (layout)', function doSuiteLayout() {
         var originalTimeout;

@@ -20,8 +20,9 @@ JsHelferlein.AppBaseConfig = function() {
     // my own instance
     var me = JsHelferlein.ConfigBase();
     
-    me.defaultDetectorStyleNS = 'jsh-';
+    me.defaultDetectorStyleNS    = 'jsh-';
     me.additionalDetectorStyleNS = [];
-
+    me.appBaseVarName            = 'jsHelferlein';
+    
     return me;
 };

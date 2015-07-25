@@ -86,7 +86,7 @@ yaioM.factory('OutputOptionsEditor', function() {
          *     GUI Callback
          */
         discard: function() {
-            yaioAppBase.get('YaioLayoutService').toggleElement("#containerFormYaioEditorOutputOptions");
+            yaioAppBase.get('UIToggler').toggleElement("#containerFormYaioEditorOutputOptions");
             console.log("discard done");
             return false;
         },
@@ -121,7 +121,7 @@ yaioM.factory('OutputOptionsEditor', function() {
 //                    data: json
 //            }).then(function(response) {
 //                // sucess handler
-//                yaioAppBase.get('YaioLayoutService').toggleElement("#containerFormYaioEditorOutputOptions");
+//                yaioAppBase.get('UIToggler').toggleElement("#containerFormYaioEditorOutputOptions");
 //                
 //                yaioAppBase.get('YaioBaseService').downloadAsFile(null, response.data, "test.xxx", "dummy", "dummy");
 //                
@@ -140,7 +140,7 @@ yaioM.factory('OutputOptionsEditor', function() {
 
             var formId = "#nodeFormOutputOptions";
             $(formId).submit();
-            yaioAppBase.get('YaioLayoutService').toggleElement("#containerFormYaioEditorOutputOptions");
+            yaioAppBase.get('UIToggler').toggleElement("#containerFormYaioEditorOutputOptions");
             console.log("send done");
             return false;
         },
@@ -167,7 +167,7 @@ yaioM.factory('OutputOptionsEditor', function() {
             var formId = "#nodeFormOutputOptions";
             console.log("OutputOptionsEditor:" + " url:" + url);
             $("#containerFormYaioEditorOutputOptions").css("display", "none");
-            yaioAppBase.get('YaioLayoutService').toggleElement("#containerFormYaioEditorOutputOptions");
+            yaioAppBase.get('UIToggler').toggleElement("#containerFormYaioEditorOutputOptions");
             $(formId).attr("target", target);
             $(formId).attr("action", url);
             $(formId).trigger('form').triggerHandler("change");

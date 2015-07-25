@@ -20,19 +20,21 @@ window.YaioAppBaseConfig = function() {
     // my own instance
     var me = JsHelferlein.AppBaseConfig();
     
-    me.additionalDetectorStyleNS = ["yaio-"];
+    me.appBaseVarName               = 'yaioAppBase';
+    
+    me.additionalDetectorStyleNS    = ["yaio-"];
 
-    me.CONST_MasterId = "MasterplanMasternode1";
-    me.loginUrl = "/yaio-explorerapp/yaio-explorerapp.html#/login";
-    me.baseUrl = "/nodes/";
-    me.showUrl = me.baseUrl + "show/";
-    me.symLinkUrl = me.baseUrl + "showsymlink/";
-    me.updateUrl = me.baseUrl + "update/";
-    me.createUrl = me.baseUrl + "create/";
-    me.moveUrl = me.baseUrl + "move/";
-    me.removeUrl = me.baseUrl + "delete/";
+    me.CONST_MasterId               = "MasterplanMasternode1";
+    me.loginUrl                     = "/yaio-explorerapp/yaio-explorerapp.html#/login";
+    me.baseUrl                      = "/nodes/";
+    me.showUrl                      = me.baseUrl + "show/";
+    me.symLinkUrl                   = me.baseUrl + "showsymlink/";
+    me.updateUrl                    = me.baseUrl + "update/";
+    me.createUrl                    = me.baseUrl + "create/";
+    me.moveUrl                      = me.baseUrl + "move/";
+    me.removeUrl                    = me.baseUrl + "delete/";
 
-    me.configNodeTypeFields = {
+    me.configNodeTypeFields         = {
         Create: {
             fields: [
                 { fieldName: "className", type: "hidden"},

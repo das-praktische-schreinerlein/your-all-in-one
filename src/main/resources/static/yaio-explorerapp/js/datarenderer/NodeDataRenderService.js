@@ -189,11 +189,11 @@ Yaio.NodeDataRenderService = function(appBase) {
      *     GUI Tree Rendering
      */
     me.yaioShowDataBlock = function() {
-        yaioAppBase.get('YaioLayoutService').toggleTableBlock("#tabTogglerData");
-        yaioAppBase.get('YaioLayoutService').toggleTableBlock("td.block_nodegantt, th.block_nodegantt");
+        yaioAppBase.get('UIToggler').toggleTableBlock("#tabTogglerData");
+        yaioAppBase.get('UIToggler').toggleTableBlock("td.block_nodegantt, th.block_nodegantt");
         setTimeout(function(){
-            yaioAppBase.get('YaioLayoutService').toggleTableBlock("#tabTogglerGantt");
-            yaioAppBase.get('YaioLayoutService').toggleTableBlock("td.block_nodedata, th.block_nodedata");
+            yaioAppBase.get('UIToggler').toggleTableBlock("#tabTogglerGantt");
+            yaioAppBase.get('UIToggler').toggleTableBlock("td.block_nodedata, th.block_nodedata");
         }, 400);
         // set it to none: force
         setTimeout(function(){

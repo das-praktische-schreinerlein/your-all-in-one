@@ -119,6 +119,7 @@ JsHelferlein.AppBase = function(config) {
         me.configureService("jQuery", function() { return me.jQuery; });
         me.configureService("Logger", function() { return JsHelferlein.LoggerService(me); });
         me.configureService("DOMHelper", function() { return JsHelferlein.DOMHelperService(me); });
+        me.configureService("UIToggler", function() { return JsHelferlein.UIToggler(me); });
         me.configureService("SpeechSynthHelper", function() { return JsHelferlein.SpeechSynthHelperService(me); });
         me.configureService("SpeechRecognitionHelper", function() { return JsHelferlein.SpeechRecognitionHelperService(me); });
     };

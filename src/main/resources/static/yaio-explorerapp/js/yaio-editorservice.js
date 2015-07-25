@@ -367,7 +367,7 @@ Yaio.EditorService = function(appBase) {
         $("#containerBoxYaioEditor").css("display", "block");
         $("#containerFormYaioEditor" + formSuffix).css("display", "block");
         //$("#containerYaioEditor").css("display", "block");
-        yaioAppBase.get('YaioLayoutService').toggleElement("#containerYaioEditor");
+        yaioAppBase.get('UIToggler').toggleElement("#containerYaioEditor");
     
         // create Elements if not exists
         yaioAppBase.get('YaioLayoutService').createTogglerIfNotExists("legendIstTaskForm", "filterIstTaskForm", "filter_IstTaskNode");
@@ -416,7 +416,7 @@ Yaio.EditorService = function(appBase) {
      */
     me.yaioCloseNodeEditor = function() {
         console.log("close editor");
-        yaioAppBase.get('YaioLayoutService').toggleElement("#containerYaioEditor");
+        yaioAppBase.get('UIToggler').toggleElement("#containerYaioEditor");
         me.yaioResetNodeEditor();
     } 
     
