@@ -171,7 +171,7 @@ yaioAppBase.publishDetectorStyles();
 </script>
 <script type="text/javascript">
 // override
-function showWyswhgPreviewForTextareaId(textAreaId) {
+yaioAppBase.get('YaioMarkdownEditorService').showWyswhgPreviewForTextareaId = function(textAreaId) {
     // prepare descText
     var descText = $("#" + textAreaId).val();
     var descHtmlMarked = yaioAppBase.get('YaioFormatterService').formatMarkdown(descText, true);
@@ -189,7 +189,7 @@ function showWyswhgPreviewForTextareaId(textAreaId) {
 } 
 
 // open Wysiwyg
-openWysiwhgForTextareaId("workspaceContent");
+yaioAppBase.get('YaioMarkdownEditorService').openWysiwhgForTextareaId("workspaceContent");
 
 // disable OK-Button
 $(".ui-dialog-buttonset button").first().addClass("hidden");

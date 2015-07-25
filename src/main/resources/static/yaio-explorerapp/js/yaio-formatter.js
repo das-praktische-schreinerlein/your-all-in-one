@@ -769,7 +769,6 @@ Yaio.FormatterService = function(appBase) {
         $.fn.toc($(srcElement), settings);
     }
     
-    
     me._init();
     
     return me;

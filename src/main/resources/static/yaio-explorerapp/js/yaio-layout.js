@@ -653,11 +653,11 @@ function hideFormRowTogglerIfSet(togglerId, className, state) {
          if (forElement.length > 0) {
              // define link to label
              link = "<a href=\"#\" id='showPreview4" + forElement.attr('id') + "'" +
-                    " onClick=\"showPreviewForTextareaId('" +
+                    " onClick=\"yaioAppBase.get('YaioMarkdownEditorService').showPreviewForTextareaId('" +
                        forElement.attr('id') + "'); return false;" +
                     "\" lang='tech' data-tooltip='tooltip.command.OpenPreview' class='button'>common.command.OpenPreview</a>";
              link += "<a href=\"#\" id='openMarkdownHelp4" + forElement.attr('id') + "'" +
-                     " onClick=\"showMarkdownHelp(); return false;" +
+                     " onClick=\"yaioAppBase.get('YaioMarkdownEditorService').showMarkdownHelp(); return false;" +
                      "\" lang='tech' data-tooltip='tooltip.command.OpenMarkdownHelp' class='button'>common.command.OpenMarkdownHelp</a>";
              
              // set flag
@@ -691,7 +691,7 @@ function hideFormRowTogglerIfSet(togglerId, className, state) {
          if (forElement.length > 0) {
              // define link to label
              link = "<a href=\"#\" id='openWysiwyg4" + forElement.attr('id') + "'" +
-                 " onClick=\"openWysiwhgForTextareaId('" +
+                 " onClick=\"yaioAppBase.get('YaioMarkdownEditorService').openWysiwhgForTextareaId('" +
                      forElement.attr('id') + "'); return false;" +
                  "\" lang='tech' data-tooltip='tooltip.command.OpenWysiwygEditor' class='button'>common.command.OpenWysiwygEditor</a>";
              
