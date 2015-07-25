@@ -27,7 +27,8 @@
  * @copyright Copyright (c) 2014, Michael Schreiner
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-var yaioM = angular.module('yaioExplorerApp', ['ngAnimate', 'ngRoute', 'pascalprecht.translate']);
+var yaioApp = angular.module('yaioExplorerApp', ['ngAnimate', 'ngRoute', 'pascalprecht.translate']);
+
 /**
  * <h4>FeatureDomain:</h4>
  *     Configuration
@@ -42,7 +43,7 @@ var yaioM = angular.module('yaioExplorerApp', ['ngAnimate', 'ngRoute', 'pascalpr
  *     GUI Routing Configuration
  * @param $routeProvider - the $routeProvider-instance to add the new routes
  */
-yaioM.config(function($routeProvider) {
+yaioApp.config(function($routeProvider) {
     // configure routes
     $routeProvider
         .when('/show/:nodeId/activate/:activeNodeId', { 
@@ -88,7 +89,7 @@ yaioM.config(function($routeProvider) {
  *     GUI Configuration
  * @param $httpProvider - the $httpProvider to change the default-headers
  */
-yaioM.config(['$httpProvider', function($httpProvider) {
+yaioApp.config(['$httpProvider', function($httpProvider) {
     $httpProvider.defaults.headers.patch = {
         'Content-Type': 'application/json;charset=utf-8'
     }

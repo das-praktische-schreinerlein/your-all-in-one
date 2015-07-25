@@ -28,28 +28,28 @@
  * <h4>FeatureKeywords:</h4>
  *     GUI Configuration BusinessLogic
  */
-yaioM.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $http, $routeParams, setFormErrors, authorization, yaioUtils) {
+yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $http, $routeParams, setFormErrors, authorization, yaioUtils) {
     // include utils    
     $scope.yaioUtils = yaioUtils;
     
     // register pattern
-    $scope.CONST_PATTERN_CSSCLASS  = yaioM.CONST_PATTERN_CSSCLASS ;
-    $scope.CONST_PATTERN_NUMBERS  = yaioM.CONST_PATTERN_NUMBERS ;
-    $scope.CONST_PATTERN_TEXTCONST  = yaioM.CONST_PATTERN_TEXTCONST ;
-    $scope.CONST_PATTERN_TITLE  = yaioM.CONST_PATTERN_TITLE ;
-    $scope.CONST_PATTERN_SEG_TASK  = yaioM.CONST_PATTERN_SEG_TASK ;
-    $scope.CONST_PATTERN_SEG_HOURS  = yaioM.CONST_PATTERN_SEG_HOURS ;
-    $scope.CONST_PATTERN_SEG_STAND  = yaioM.CONST_PATTERN_SEG_STAND ;
-    $scope.CONST_PATTERN_SEG_DATUM  = yaioM.CONST_PATTERN_SEG_DATUM ;
-    $scope.CONST_PATTERN_SEG_STRING  = yaioM.CONST_PATTERN_SEG_STRING ;
-    $scope.CONST_PATTERN_SEG_FLAG  = yaioM.CONST_PATTERN_SEG_FLAG ;
-    $scope.CONST_PATTERN_SEG_INT  = yaioM.CONST_PATTERN_SEG_INT ;
-    $scope.CONST_PATTERN_SEG_UID  = yaioM.CONST_PATTERN_SEG_UID ;
-    $scope.CONST_PATTERN_SEG_ID  = yaioM.CONST_PATTERN_SEG_ID ;
-    $scope.CONST_PATTERN_SEG_TAGS  = yaioM.CONST_PATTERN_SEG_TAGS ;
-    $scope.CONST_PATTERN_SEG_PRAEFIX  = yaioM.CONST_PATTERN_SEG_PRAEFIX ;
-    $scope.CONST_PATTERN_SEG_CHECKSUM  = yaioM.CONST_PATTERN_SEG_CHECKSUM ;
-    $scope.CONST_PATTERN_SEG_TIME  = yaioM.CONST_PATTERN_SEG_TIME ;
+    $scope.CONST_PATTERN_CSSCLASS  = yaioApp.CONST_PATTERN_CSSCLASS ;
+    $scope.CONST_PATTERN_NUMBERS  = yaioApp.CONST_PATTERN_NUMBERS ;
+    $scope.CONST_PATTERN_TEXTCONST  = yaioApp.CONST_PATTERN_TEXTCONST ;
+    $scope.CONST_PATTERN_TITLE  = yaioApp.CONST_PATTERN_TITLE ;
+    $scope.CONST_PATTERN_SEG_TASK  = yaioApp.CONST_PATTERN_SEG_TASK ;
+    $scope.CONST_PATTERN_SEG_HOURS  = yaioApp.CONST_PATTERN_SEG_HOURS ;
+    $scope.CONST_PATTERN_SEG_STAND  = yaioApp.CONST_PATTERN_SEG_STAND ;
+    $scope.CONST_PATTERN_SEG_DATUM  = yaioApp.CONST_PATTERN_SEG_DATUM ;
+    $scope.CONST_PATTERN_SEG_STRING  = yaioApp.CONST_PATTERN_SEG_STRING ;
+    $scope.CONST_PATTERN_SEG_FLAG  = yaioApp.CONST_PATTERN_SEG_FLAG ;
+    $scope.CONST_PATTERN_SEG_INT  = yaioApp.CONST_PATTERN_SEG_INT ;
+    $scope.CONST_PATTERN_SEG_UID  = yaioApp.CONST_PATTERN_SEG_UID ;
+    $scope.CONST_PATTERN_SEG_ID  = yaioApp.CONST_PATTERN_SEG_ID ;
+    $scope.CONST_PATTERN_SEG_TAGS  = yaioApp.CONST_PATTERN_SEG_TAGS ;
+    $scope.CONST_PATTERN_SEG_PRAEFIX  = yaioApp.CONST_PATTERN_SEG_PRAEFIX ;
+    $scope.CONST_PATTERN_SEG_CHECKSUM  = yaioApp.CONST_PATTERN_SEG_CHECKSUM ;
+    $scope.CONST_PATTERN_SEG_TIME  = yaioApp.CONST_PATTERN_SEG_TIME ;
     
     // create node
     $scope.nodeForEdit = {};

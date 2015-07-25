@@ -28,7 +28,7 @@
  * <h4>FeatureKeywords:</h4>
  *     GUI Configuration
  */
-yaioM.controller('AuthController', function($rootScope, $scope, $location, $http, $routeParams, setFormErrors, OutputOptionsEditor, authorization) {
+yaioApp.controller('AuthController', function($rootScope, $scope, $location, $http, $routeParams, setFormErrors, OutputOptionsEditor, authorization) {
     $scope.credentials = {};
     
     $scope.login = function() {

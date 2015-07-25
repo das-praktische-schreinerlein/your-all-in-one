@@ -35,7 +35,7 @@
  * <h4>FeatureKeywords:</h4>
  *     GUI Configuration Taglibrary Errorhandling
  */
-yaioM.factory('setFormErrors', function() {
+yaioApp.factory('setFormErrors', function() {
     // Registered withErrors controllers
     var withErrorCtrls = [];
 
@@ -71,7 +71,7 @@ yaioM.factory('setFormErrors', function() {
  * <h4>FeatureKeywords:</h4>
  *     GUI Configuration Taglibrary Errorhandling
  */
-yaioM.directive('withErrors', ['setFormErrors', function(setFormErrors) {
+yaioApp.directive('withErrors', ['setFormErrors', function(setFormErrors) {
     return {
         restrict: 'A',
         require: 'withErrors',
@@ -166,13 +166,13 @@ function directiveFieldsWithErrors () {
  * <h4>FeatureKeywords:</h4>
  *     GUI Configuration Taglibrary Errorhandling
  */
-yaioM.directive('input', function() {
+yaioApp.directive('input', function() {
     return directiveFieldsWithErrors();
 });
-//yaioM.directive('select', function() {
+//yaioApp.directive('select', function() {
 //    return directiveFieldsWithErrors();
 //});
-//yaioM.directive('textarea', function() {
+//yaioApp.directive('textarea', function() {
 //    return directiveFieldsWithErrors();
 //});
 
@@ -189,7 +189,7 @@ yaioM.directive('input', function() {
  * <h4>FeatureKeywords:</h4>
  *     GUI Configuration Taglibrary Errorhandling
  */
-yaioM.directive('fielderrors', function() {
+yaioApp.directive('fielderrors', function() {
     return {
         restrict: 'E',
         replace: true,

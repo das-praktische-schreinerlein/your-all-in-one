@@ -28,7 +28,7 @@
  * <h4>FeatureKeywords:</h4>
  *     GUI Configuration
  */
-yaioM.controller('LanguageCtrl', ['$translate', '$scope', function ($translate, $scope, yaioUtils) {
+yaioApp.controller('LanguageCtrl', ['$translate', '$scope', function ($translate, $scope, yaioUtils) {
     // include utils    
     $scope.yaioUtils = yaioUtils;
 

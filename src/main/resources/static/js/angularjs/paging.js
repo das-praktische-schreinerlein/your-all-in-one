@@ -10,7 +10,7 @@
  * @element EA
  *
  */
-yaioM.directive('paging', function () {
+yaioApp.directive('paging', function () {
 
     // Assign null-able scope values from settings
     function setScopeValues(scope, attrs) {

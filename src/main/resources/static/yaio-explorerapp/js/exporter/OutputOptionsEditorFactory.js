@@ -28,7 +28,7 @@
  * <h4>FeatureKeywords:</h4>
  *     GUI Configuration
  */
-yaioM.factory('OutputOptionsEditor', function() {
+yaioApp.factory('OutputOptionsEditor', function() {
     var oOptions =  {};
     var url, target;
 

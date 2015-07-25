@@ -29,7 +29,7 @@
  *     GUI Configuration
  * @param $translateProvider - the $translateProvider to get text-resources
  */
-yaioM.config(function ($translateProvider) {
+yaioApp.config(function ($translateProvider) {
     $translateProvider.translations();
     
     $translateProvider.useStaticFilesLoader({

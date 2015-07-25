@@ -28,7 +28,7 @@
  * <h4>FeatureKeywords:</h4>
  *     Utils
  */
-yaioM.factory('yaioUtils', function () {
+yaioApp.factory('yaioUtils', function () {
     var ganttRangeStart = yaioAppBase.get('YaioBase').formatGermanDate((new Date()).getTime() - 90*24*60*60*1000); 
     var ganttRangeEnd = yaioAppBase.get('YaioBase').formatGermanDate((new Date()).getTime() + 90*24*60*60*1000);
     

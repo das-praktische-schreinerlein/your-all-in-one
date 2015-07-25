@@ -28,7 +28,7 @@
  * <h4>FeatureKeywords:</h4>
  *     GUI Configuration Taglibrary
  */
-yaioM.directive('state', function(){
+yaioApp.directive('state', function(){
     return {
         restrict: 'E', // own tag
         scope: {

@@ -28,7 +28,7 @@
  * <h4>FeatureKeywords:</h4>
  *     GUI Configuration
  */
-yaioM.factory('authorization', function ($rootScope, $http) {
+yaioApp.factory('authorization', function ($rootScope, $http) {
     return {
         authentificate: function(callback) {
             $http.get('/user/current').success(function(data) {
