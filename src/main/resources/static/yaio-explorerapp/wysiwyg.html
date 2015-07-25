@@ -200,7 +200,7 @@ $(".ui-dialog-buttonset").append($("<a href='' id='wysiwyg-printlink'" +
         + " onclick=\"window.print(); return false;\">"
         + "<span class='ui-button-text'>Print</span></a>"));
 $('#wysiwyg-printlink').addClass("ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only");
-$(".ui-dialog-buttonset").append($("<input type=\"checkbox\" onclick=\"togglePrintLayout()\" checked id=\"checkboxPrintAll\"> All"));
+$(".ui-dialog-buttonset").append($("<input type=\"checkbox\" onclick=\"yaioAppBase.get('YaioLayoutService').togglePrintLayout()\" checked id=\"checkboxPrintAll\"> All"));
 </script>
 </body>
 </html>

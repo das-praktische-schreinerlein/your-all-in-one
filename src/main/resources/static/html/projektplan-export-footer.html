@@ -11,12 +11,12 @@
                 <li class="menueFooterMasterLink yaio-show-if-javascript"><a href="#" class="a-menue-footer-norm button flg-textonly" onclick='javascript:jMATService.getPageLayoutService().doAllBlockToggler(true); return false;'><img class="icon-menufooter icon-blocktoggleron" src="/images/icon-up.gif"  title="Alles aufklappen" alt="Alles aufklappen">Alles auf</a></li>
                 <li class="menueFooterMasterLink yaio-show-if-javascript"><a href="#" class="a-menue-footer-norm button flg-textonly" onclick='javascript:jMATService.getPageLayoutService().doAllBlockToggler(false); return false;'><img class="icon-menufooter icon-blocktogglerof" src="/images/icon-down.gif" title="Alles zuklappen" alt="Alles zuklappen">Alles zu</a></li>
                 <li class="menueFooterMasterLink yaio-show-if-javascript command">
-                   <a class="a-menue-footer-norm button flg-textonly" id="showSidebarTOCLink" onclick="javascript:toggleWithLinks('#showSidebarTOCLink', '#hideSidebarTOCLink', '#sidebartoc', '');return false;">Sidebar an</a>
-                   <a class="a-menue-footer-norm button flg-textonly" style="display: none" id="hideSidebarTOCLink" onclick="javascript:toggleWithLinks('#showSidebarTOCLink', '#hideSidebarTOCLink', '#sidebartoc', '');return false;">Sidebar aus</a>
+                   <a class="a-menue-footer-norm button flg-textonly" id="showSidebarTOCLink" onclick="javascript:yaioAppBase.get('YaioBaseService').toggleWithLinks('#showSidebarTOCLink', '#hideSidebarTOCLink', '#sidebartoc', '');return false;">Sidebar an</a>
+                   <a class="a-menue-footer-norm button flg-textonly" style="display: none" id="hideSidebarTOCLink" onclick="javascript:yaioAppBase.get('YaioBaseService').toggleWithLinks('#showSidebarTOCLink', '#hideSidebarTOCLink', '#sidebartoc', '');return false;">Sidebar aus</a>
                 </li>
                 <li class="menueFooterMasterLink yaio-show-if-javascript command">
-                   <a class="a-menue-footer-norm button flg-textonly" id="showGlobalTOCLink" onclick="javascript:toggleWithLinks('#showGlobalTOCLink', '#hideGlobalTOCLink', '#globtoc', '');return false;">TOC an</a>
-                   <a class="a-menue-footer-norm button flg-textonly" style="display: none" id="hideGlobalTOCLink" onclick="javascript:toggleWithLinks('#showGlobalTOCLink', '#hideGlobalTOCLink', '#globtoc', '');return false;">TOC aus</a>
+                   <a class="a-menue-footer-norm button flg-textonly" id="showGlobalTOCLink" onclick="javascript:yaioAppBase.get('YaioBaseService').toggleWithLinks('#showGlobalTOCLink', '#hideGlobalTOCLink', '#globtoc', '');return false;">TOC an</a>
+                   <a class="a-menue-footer-norm button flg-textonly" style="display: none" id="hideGlobalTOCLink" onclick="javascript:yaioAppBase.get('YaioBaseService').toggleWithLinks('#showGlobalTOCLink', '#hideGlobalTOCLink', '#globtoc', '');return false;">TOC aus</a>
                 </li>
                 <li class="menueFooterMasterLink yaio-show-if-javascript">
                    <input type="text" style="width:200px" class="volltextsuchfeld" id="vlt_msglist">

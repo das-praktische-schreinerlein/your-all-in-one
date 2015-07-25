@@ -47,7 +47,7 @@ yaioM.controller('ImporterCtrl', function($rootScope, $scope, $location, $http, 
     $scope.sendImport = function() {
         var formId = "#nodeFormImport";
         $(formId).submit();
-        toggleElement("#containerFormYaioEditorImport");
+        yaioAppBase.get('YaioLayoutService').toggleElement("#containerFormYaioEditorImport");
 
         console.log("send done");
         return false;
@@ -66,7 +66,7 @@ yaioM.controller('ImporterCtrl', function($rootScope, $scope, $location, $http, 
      *     GUI Callback
      */
     $scope.discardImport = function() {
-        toggleElement("#containerFormYaioEditorImport");
+        yaioAppBase.get('YaioLayoutService').toggleElement("#containerFormYaioEditorImport");
         console.log("discard done");
         return false;
     },
@@ -97,10 +97,10 @@ yaioM.controller('ImporterCtrl', function($rootScope, $scope, $location, $http, 
         $(formId).trigger('input');
         console.log("ImportEditor:" + " url:" + url);
         $("#containerFormYaioEditorImport").css("display", "none");
-        toggleElement("#containerFormYaioEditorImport");
+        yaioAppBase.get('YaioLayoutService').toggleElement("#containerFormYaioEditorImport");
         
         // update appsize
-        setupAppSize();
+        yaioAppBase.get('YaioLayoutService').setupAppSize();
 
         console.log("showImportEditor done:" + " url:" + url);
         return false;

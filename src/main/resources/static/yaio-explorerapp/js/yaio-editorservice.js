@@ -367,29 +367,29 @@ Yaio.EditorService = function(appBase) {
         $("#containerBoxYaioEditor").css("display", "block");
         $("#containerFormYaioEditor" + formSuffix).css("display", "block");
         //$("#containerYaioEditor").css("display", "block");
-        toggleElement("#containerYaioEditor");
+        yaioAppBase.get('YaioLayoutService').toggleElement("#containerYaioEditor");
     
         // create Elements if not exists
-        createTogglerIfNotExists("legendIstTaskForm", "filterIstTaskForm", "filter_IstTaskNode");
-        createTogglerIfNotExists("legendDescTaskForm", "filterDescTaskForm", "filter_DescTaskNode");
-        createTogglerIfNotExists("legendIstEventForm", "filterIstEventForm", "filter_IstEventNode");
-        createTogglerIfNotExists("legendDescEventForm", "filterDescEventForm", "filter_DescEventNode");
-        createTogglerIfNotExists("legendLayoutInfoForm", "filterLayoutInfoForm", "filter_LayoutInfoNode");
-        createTogglerIfNotExists("legendDescInfoForm", "filterDescInfoForm", "filter_DescInfoNode");
-        createTogglerIfNotExists("legendLayoutUrlResForm", "filterLayoutUrlResForm", "filter_LayoutUrlResNode");
-        createTogglerIfNotExists("legendDescUrlResForm", "filterDescUrlResForm", "filter_DescUrlResNode");
-        createTogglerIfNotExists("legendDescSymLinkForm", "filterDescSymLinkForm", "filter_DescSymLinkNode");
+        yaioAppBase.get('YaioLayoutService').createTogglerIfNotExists("legendIstTaskForm", "filterIstTaskForm", "filter_IstTaskNode");
+        yaioAppBase.get('YaioLayoutService').createTogglerIfNotExists("legendDescTaskForm", "filterDescTaskForm", "filter_DescTaskNode");
+        yaioAppBase.get('YaioLayoutService').createTogglerIfNotExists("legendIstEventForm", "filterIstEventForm", "filter_IstEventNode");
+        yaioAppBase.get('YaioLayoutService').createTogglerIfNotExists("legendDescEventForm", "filterDescEventForm", "filter_DescEventNode");
+        yaioAppBase.get('YaioLayoutService').createTogglerIfNotExists("legendLayoutInfoForm", "filterLayoutInfoForm", "filter_LayoutInfoNode");
+        yaioAppBase.get('YaioLayoutService').createTogglerIfNotExists("legendDescInfoForm", "filterDescInfoForm", "filter_DescInfoNode");
+        yaioAppBase.get('YaioLayoutService').createTogglerIfNotExists("legendLayoutUrlResForm", "filterLayoutUrlResForm", "filter_LayoutUrlResNode");
+        yaioAppBase.get('YaioLayoutService').createTogglerIfNotExists("legendDescUrlResForm", "filterDescUrlResForm", "filter_DescUrlResNode");
+        yaioAppBase.get('YaioLayoutService').createTogglerIfNotExists("legendDescSymLinkForm", "filterDescSymLinkForm", "filter_DescSymLinkNode");
         
         // hide empty, optional elements
-        hideFormRowTogglerIfSet("filterIstTaskForm", "filter_IstTaskNode", false);
-        hideFormRowTogglerIfSet("filterDescTaskForm", "filter_DescTaskNode", false);
-        hideFormRowTogglerIfSet("filterIstEventForm", "filter_IstEventNode", false);
-        hideFormRowTogglerIfSet("filterDescEventForm", "filter_DescEventNode", false);
-        hideFormRowTogglerIfSet("filterLayoutInfoForm", "filter_LayoutInfoNode", false);
-        hideFormRowTogglerIfSet("filterDescInfoForm", "filter_DescInfoNode", false);
-        hideFormRowTogglerIfSet("filterLayoutUrlResForm", "filter_LayoutUrlResNode", false);
-        hideFormRowTogglerIfSet("filterDescUrlResForm", "filter_DescUrlResNode", false);
-        hideFormRowTogglerIfSet("filterDescSymLinkForm", "filter_DescSymLinkNode", false);
+        yaioAppBase.get('YaioLayoutService').hideFormRowTogglerIfSet("filterIstTaskForm", "filter_IstTaskNode", false);
+        yaioAppBase.get('YaioLayoutService').hideFormRowTogglerIfSet("filterDescTaskForm", "filter_DescTaskNode", false);
+        yaioAppBase.get('YaioLayoutService').hideFormRowTogglerIfSet("filterIstEventForm", "filter_IstEventNode", false);
+        yaioAppBase.get('YaioLayoutService').hideFormRowTogglerIfSet("filterDescEventForm", "filter_DescEventNode", false);
+        yaioAppBase.get('YaioLayoutService').hideFormRowTogglerIfSet("filterLayoutInfoForm", "filter_LayoutInfoNode", false);
+        yaioAppBase.get('YaioLayoutService').hideFormRowTogglerIfSet("filterDescInfoForm", "filter_DescInfoNode", false);
+        yaioAppBase.get('YaioLayoutService').hideFormRowTogglerIfSet("filterLayoutUrlResForm", "filter_LayoutUrlResNode", false);
+        yaioAppBase.get('YaioLayoutService').hideFormRowTogglerIfSet("filterDescUrlResForm", "filter_DescUrlResNode", false);
+        yaioAppBase.get('YaioLayoutService').hideFormRowTogglerIfSet("filterDescSymLinkForm", "filter_DescSymLinkNode", false);
     
         // create nodeDesc-editor
         yaioAppBase.get('YaioMarkdownEditorService').createNodeDescEditorForNode("editorInputNodeDescTaskNode", "inputNodeDescTaskNode");
@@ -399,7 +399,7 @@ Yaio.EditorService = function(appBase) {
         yaioAppBase.get('YaioMarkdownEditorService').createNodeDescEditorForNode("editorInputNodeDescSymLinkNode", "inputNodeDescSymLinkNode");
         
         // update appsize
-        setupAppSize();
+        yaioAppBase.get('YaioLayoutService').setupAppSize();
     }
     
     /**
@@ -416,7 +416,7 @@ Yaio.EditorService = function(appBase) {
      */
     me.yaioCloseNodeEditor = function() {
         console.log("close editor");
-        toggleElement("#containerYaioEditor");
+        yaioAppBase.get('YaioLayoutService').toggleElement("#containerYaioEditor");
         me.yaioResetNodeEditor();
     } 
     

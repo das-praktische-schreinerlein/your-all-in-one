@@ -40,7 +40,7 @@
  * # PrintLayout
  * ###########################
  */
-function togglePrintLayout() {
+function yaioAppBase.get('YaioLayoutService').togglePrintLayout() {
     if ($("#checkboxPrintAll").prop('checked')) {
         // print all
         $("#link_css_dataonly").attr("disabled", "disabled");

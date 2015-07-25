@@ -30,6 +30,8 @@
  */
 
 (function () {
+    var testObj = yaioAppBase.get('YaioLayoutService');
+    
     describe('Modul yaio-layout Service-Funktions (layout)', function doSuiteLayout() {
         var originalTimeout;
         beforeEach(function () {
@@ -49,7 +51,7 @@
             expect(isShown).toBe("block");
 
             // toggle Block is fixed to 1s
-            var res = toggleTableBlock("#testDiv");
+            var res = testObj.toggleTableBlock("#testDiv");
             
             // check for result after 2 seconds
             setTimeout(function () {

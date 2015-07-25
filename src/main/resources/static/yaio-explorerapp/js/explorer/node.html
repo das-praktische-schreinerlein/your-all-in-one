@@ -152,21 +152,21 @@
     // activate elements after 1 second
     setTimeout(function() { 
         // activate speech recognition and others
-        addSpeechRecognitionToElements();
-        addSpeechSynthToElements();
-        addPreviewToElements();
-        addWysiwhgToElements();
-        addDatePickerToElements();
-        addDocLayoutStyleSelectorToElements();
+        yaioAppBase.get('YaioLayoutService').addSpeechRecognitionToElements();
+        yaioAppBase.get('YaioLayoutService').addSpeechSynthToElements();
+        yaioAppBase.get('YaioLayoutService').addPreviewToElements();
+        yaioAppBase.get('YaioLayoutService').addWysiwhgToElements();
+        yaioAppBase.get('YaioLayoutService').addDatePickerToElements();
+        yaioAppBase.get('YaioLayoutService').addDocLayoutStyleSelectorToElements();
 //        alert($("#ulLanguage").attr("data-curlanguage"));
-//        initLanguageSupport("{{currentLanguageKey}}");
+//        yaioAppBase.get('YaioLayoutService').initLanguageSupport("{{currentLanguageKey}}");
 
         //add resize event
         $( window ).resize(function() {
-                setupAppSize();
+                yaioAppBase.get('YaioLayoutService').setupAppSize();
         });    
         $( window ).scroll(function() {
-            setupAppSize();
+            yaioAppBase.get('YaioLayoutService').setupAppSize();
     });    
 
     }, 1000);

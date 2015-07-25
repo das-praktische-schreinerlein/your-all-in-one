@@ -42,7 +42,7 @@ yaioM.config(function ($translateProvider) {
     
     // init
     $translateProvider.preferredLanguage(langKey);
-    initLanguageSupport(langKey);
+    yaioAppBase.get('YaioLayoutService').initLanguageSupport(langKey);
     $translateProvider.currentLanguageKey = langKey;
     
 

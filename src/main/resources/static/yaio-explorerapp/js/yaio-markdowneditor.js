@@ -104,7 +104,7 @@ Yaio.MarkdownEditorService = function(appBase) {
                 $( this ).dialog( "close" );
               },
               "Vorlesen": function () {
-                  openSpeechSynthWindow(document.getElementById('preview-content'));
+                  yaioAppBase.get('YaioLayoutService').openSpeechSynthWindow(document.getElementById('preview-content'));
               }
             }
         });    
@@ -213,7 +213,7 @@ Yaio.MarkdownEditorService = function(appBase) {
                   text: "Vorlesen",
                   class: "jsh-show-inline-block-if-speechsynth",
                   click: function () {
-                      openSpeechSynthWindow(document.getElementById('wysiwhg-preview'));
+                      yaioAppBase.get('YaioLayoutService').openSpeechSynthWindow(document.getElementById('wysiwhg-preview'));
                   }
               },
               "Load": function () {

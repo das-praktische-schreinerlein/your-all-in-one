@@ -1185,7 +1185,7 @@ function renderColumnsForNode(event, data, preventActionsColum) {
     if (! preventActionsColum) {
         $tdList.eq(colActions).html(
                 "<div class='fieldtype_sysToggler toggler_show'>"
-                    + "<a onclick=\"javascript: toggleNodeSysContainer('" + basenode.sysUID + "'); return false;\""
+                    + "<a onclick=\"javascript: yaioAppBase.get('YaioLayoutService').toggleNodeSysContainer('" + basenode.sysUID + "'); return false;\""
                             + " id='toggler_sys_" + basenode.sysUID + "'"
                             + " class='' "
                             + " data-tooltip='tooltip.command.ToggleSys' lang='tech'></a>"
@@ -1301,7 +1301,7 @@ function renderColumnsForNode(event, data, preventActionsColum) {
         // add  column
         $($nodeDataBlock).find("div.container_data_row").append(
                 $("<div />").html("<a href='#'" +
-                        " onclick=\"toggleNodeDescContainer('" + basenode.sysUID + "'); return false;\"" +
+                        " onclick=\"yaioAppBase.get('YaioLayoutService').toggleNodeDescContainer('" + basenode.sysUID + "'); return false;\"" +
                             " id='toggler_desc_" + basenode.sysUID + "'" +
                             " data-tooltip='tooltip.command.ToggleDesc' lang='tech'></a>")
                         .addClass("container_field")
@@ -1317,7 +1317,7 @@ function renderColumnsForNode(event, data, preventActionsColum) {
         // add commands
         var commands = "<div class='container-commands-desc' id='commands_desc_" + basenode.sysUID + "'"
             + " data-tooltip='tooltip.command.TogglePreWrap' lang='tech' >" 
-            + "<input type='checkbox' id='cmd_toggle_content_desc_" + basenode.sysUID + "' onclick=\"togglePreWrap('#content_desc_" + basenode.sysUID + "');togglePreWrap('#container_content_desc_" + basenode.sysUID + "'); return true;\">"
+            + "<input type='checkbox' id='cmd_toggle_content_desc_" + basenode.sysUID + "' onclick=\"yaioAppBase.get('YaioLayoutService').togglePreWrap('#content_desc_" + basenode.sysUID + "');yaioAppBase.get('YaioLayoutService').togglePreWrap('#container_content_desc_" + basenode.sysUID + "'); return true;\">"
             + "<span lang='tech'>im Originallayout anzeigen</span>"
     //        + "<input type='checkbox' id='cmd_toggle_content_desc_markdown_" + basenode.sysUID + "' onclick=\"toggleDescMarkdown('#container_content_desc_" + basenode.sysUID + "'); return true;\">"
     //        + "<span lang='tech'>Markdown</span>"
@@ -1329,7 +1329,7 @@ function renderColumnsForNode(event, data, preventActionsColum) {
             +   "\" lang='tech' data-tooltip='tooltip.command.OpenTxtExportWindow'>common.command.OpenTxtExportWindow</a>";
         if ('speechSynthesis' in window) {
             // Synthesis support. Make your web apps talk!
-            commands += "<a class=\"button\" onClick=\"openSpeechSynthWindow(" 
+            commands += "<a class=\"button\" onClick=\"yaioAppBase.get('YaioLayoutService').openSpeechSynthWindow(" 
                 +   "document.getElementById('container_content_desc_" + basenode.sysUID + "')); return false;" 
                 +   "\" lang='tech' data-tooltip='tooltip.command.OpenSpeechSynth'>common.command.OpenSpeechSynth</a>";
  
@@ -1383,10 +1383,10 @@ function renderColumnsForNode(event, data, preventActionsColum) {
     }
     
     // toogle sys
-    toggleNodeSysContainer(basenode.sysUID);
+    yaioAppBase.get('YaioLayoutService').toggleNodeSysContainer(basenode.sysUID);
     
     // toogle desc
-    toggleNodeDescContainer(basenode.sysUID);
+    yaioAppBase.get('YaioLayoutService').toggleNodeDescContainer(basenode.sysUID);
 
     // calc nodeData
     yaioRecalcMasterGanttBlockFromTree();
@@ -1408,11 +1408,11 @@ function renderColumnsForNode(event, data, preventActionsColum) {
  *     GUI Tree Rendering
  */
 function yaioShowDataBlock() {
-    toggleTableBlock("#tabTogglerData");
-    toggleTableBlock("td.block_nodegantt, th.block_nodegantt");
+    yaioAppBase.get('YaioLayoutService').toggleTableBlock("#tabTogglerData");
+    yaioAppBase.get('YaioLayoutService').toggleTableBlock("td.block_nodegantt, th.block_nodegantt");
     setTimeout(function(){
-        toggleTableBlock("#tabTogglerGantt");
-        toggleTableBlock("td.block_nodedata, th.block_nodedata");
+        yaioAppBase.get('YaioLayoutService').toggleTableBlock("#tabTogglerGantt");
+        yaioAppBase.get('YaioLayoutService').toggleTableBlock("td.block_nodedata, th.block_nodedata");
     }, 400);
     // set it to none: force
     setTimeout(function(){
@@ -1437,11 +1437,11 @@ function yaioShowDataBlock() {
  *     GUI Tree Rendering
  */
 function yaioShowGanttBlock() {
-    toggleTableBlock("#tabTogglerGantt");
-    toggleTableBlock("td.block_nodedata, th.block_nodedata");
+    yaioAppBase.get('YaioLayoutService').toggleTableBlock("#tabTogglerGantt");
+    yaioAppBase.get('YaioLayoutService').toggleTableBlock("td.block_nodedata, th.block_nodedata");
     setTimeout(function(){
-        toggleTableBlock("#tabTogglerData");
-        toggleTableBlock("td.block_nodegantt, th.block_nodegantt");
+        yaioAppBase.get('YaioLayoutService').toggleTableBlock("#tabTogglerData");
+        yaioAppBase.get('YaioLayoutService').toggleTableBlock("td.block_nodegantt, th.block_nodegantt");
     }, 400);
     // set it to none: force
     setTimeout(function(){

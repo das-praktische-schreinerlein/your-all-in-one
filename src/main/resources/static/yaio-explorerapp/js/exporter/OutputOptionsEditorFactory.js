@@ -86,7 +86,7 @@ yaioM.factory('OutputOptionsEditor', function() {
          *     GUI Callback
          */
         discard: function() {
-            toggleElement("#containerFormYaioEditorOutputOptions");
+            yaioAppBase.get('YaioLayoutService').toggleElement("#containerFormYaioEditorOutputOptions");
             console.log("discard done");
             return false;
         },
@@ -121,7 +121,7 @@ yaioM.factory('OutputOptionsEditor', function() {
 //                    data: json
 //            }).then(function(response) {
 //                // sucess handler
-//                toggleElement("#containerFormYaioEditorOutputOptions");
+//                yaioAppBase.get('YaioLayoutService').toggleElement("#containerFormYaioEditorOutputOptions");
 //                
 //                yaioAppBase.get('YaioBaseService').downloadAsFile(null, response.data, "test.xxx", "dummy", "dummy");
 //                
@@ -140,7 +140,7 @@ yaioM.factory('OutputOptionsEditor', function() {
 
             var formId = "#nodeFormOutputOptions";
             $(formId).submit();
-            toggleElement("#containerFormYaioEditorOutputOptions");
+            yaioAppBase.get('YaioLayoutService').toggleElement("#containerFormYaioEditorOutputOptions");
             console.log("send done");
             return false;
         },
@@ -167,14 +167,14 @@ yaioM.factory('OutputOptionsEditor', function() {
             var formId = "#nodeFormOutputOptions";
             console.log("OutputOptionsEditor:" + " url:" + url);
             $("#containerFormYaioEditorOutputOptions").css("display", "none");
-            toggleElement("#containerFormYaioEditorOutputOptions");
+            yaioAppBase.get('YaioLayoutService').toggleElement("#containerFormYaioEditorOutputOptions");
             $(formId).attr("target", target);
             $(formId).attr("action", url);
             $(formId).trigger('form').triggerHandler("change");
             $(formId).trigger('input');
             
             // update appsize
-            setupAppSize();
+            yaioAppBase.get('YaioLayoutService').setupAppSize();
 
             console.log("showOutputOptionsEditor done:" + " url:" + url);
             return false;

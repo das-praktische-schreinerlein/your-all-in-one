@@ -45,12 +45,12 @@
     // activate elements after 1 second
     setTimeout(function() { 
         // activate speech recognition
-        addSpeechRecognitionToElements();
-        addDatePickerToElements();
+        yaioAppBase.get('YaioLayoutService').addSpeechRecognitionToElements();
+        yaioAppBase.get('YaioLayoutService').addDatePickerToElements();
 
         // add resize event
         $( window ).resize(function() {
-                setupAppSize();
+            yaioAppBase.get('YaioLayoutService').setupAppSize();
         });    
 
     }, 1000);
@@ -59,7 +59,7 @@
     setTimeout(function() { 
         // add TOC
         yaioAppBase.get('YaioFormatterService').addTOCForBlock("#sidebartoc", "#front-content-intro", { toc: { topLink: "Seitenkopf"}});
-        setupAppSize();
+        yaioAppBase.get('YaioLayoutService').setupAppSize();
     }, 3000);
     
 

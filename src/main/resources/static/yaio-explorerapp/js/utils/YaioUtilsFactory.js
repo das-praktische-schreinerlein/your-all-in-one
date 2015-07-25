@@ -48,12 +48,12 @@ yaioM.factory('yaioUtils', function () {
          */
         showHelpSite: function(url) {
             console.log("showHelpSite:" + " url:" + url);
-            yaioShowHelpSite(url);
+            yaioAppBase.get('YaioLayoutService').yaioShowHelpSite(url);
             return false;
         },
         
         toggleSysContainerForNode: function(node) {
-            toggleNodeSysContainer(node.sysUID);
+            yaioAppBase.get('YaioLayoutService').toggleNodeSysContainer(node.sysUID);
         },
         
         openNodeEditorForNode: function(node, mode) {
