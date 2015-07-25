@@ -50,9 +50,13 @@ module.exports = function( grunt ){
               'src/main/resources/static/yaio-explorerapp/../css/yaio/main.css'
         ],
         projectJsFiles: [
+            // services
+            'src/main/resources/static/yaio-explorerapp/js/datarenderer/*.js',
+            'src/main/resources/static/yaio-explorerapp/js/dataservices/*.js',
+            'src/main/resources/static/yaio-explorerapp/js/explorer/ExplorerActionService.js',
+            'src/main/resources/static/yaio-explorerapp/js/explorer/ExplorerTreeService.js',
+            // angular
             'src/main/resources/static/yaio-explorerapp/js/YaioApp.js',
-            'src/main/resources/static/yaio-explorerapp/js/**/*Config.js',
-            'src/main/resources/static/yaio-explorerapp/js/**/*Service.js',
             'src/main/resources/static/yaio-explorerapp/js/utils/Constants.js',
             'src/main/resources/static/yaio-explorerapp/js/utils/Directives.js',
             'src/main/resources/static/yaio-explorerapp/js/utils/FormErrorHandlingUtils.js',
@@ -66,7 +70,6 @@ module.exports = function( grunt ){
             'src/main/resources/static/yaio-explorerapp/js/importer/ImporterCtrl.js',
             'src/main/resources/static/yaio-explorerapp/js/exporter/OutputOptionsCtrl.js',
             'src/main/resources/static/yaio-explorerapp/js/exporter/OutputOptionsEditorFactory.js',
-            'src/main/resources/static/yaio-explorerapp/js/explorer/ExplorerTreeService.js',
             'src/main/resources/static/yaio-explorerapp/js/explorer/NodeShowCtrl.js',
             'src/main/resources/static/yaio-explorerapp/js/search/NodeSearchCtrl.js',
             'src/main/resources/static/yaio-explorerapp/../js/angularjs/paging.js'
