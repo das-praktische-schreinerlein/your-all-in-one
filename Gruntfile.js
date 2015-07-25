@@ -87,7 +87,7 @@ module.exports = function( grunt ){
             'src/main/resources/static/yaio-explorerapp/js/wysiwyg/MarkdownEditorService.js'
         ],
         projectExportsJsFiles: [
-            'src/main/resources/static/yaio-explorerapp/js/yaio-export-tools.js',
+            'src/main/resources/static/yaio-explorerapp/js/utils/ExportedDataService.js',
         ],
         projectCssFiles: [
               'src/main/resources/static/yaio-explorerapp/css/style.css',

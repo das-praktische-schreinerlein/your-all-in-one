@@ -36,6 +36,7 @@ window.YaioAppBase = function() {
         me.configureService("YaioNodeGanttRender", function() { return Yaio.NodeGanttRenderService(me); });
         me.configureService("YaioExplorerAction", function() { return Yaio.ExplorerActionService(me); });
         me.configureService("YaioExplorerTree", function() { return Yaio.ExplorerTreeService(me); });
+        me.configureService("YaioExportedData", function() { return Yaio.ExportedDataService(me); });
     };
 
     // init all

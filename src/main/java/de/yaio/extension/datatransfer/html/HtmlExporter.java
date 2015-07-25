@@ -526,7 +526,7 @@ public class HtmlExporter extends WikiExporter {
                     String tdId = "td_" + curNode.getSysUID() + "_" + zaehler;
                     String tdContent = lstContent[zaehler];
                     tdContent = tdContent.replaceAll("=SUMCOL=",
-                        "<script>calcColumns('" + tdId + "', 'SUM', '', '');</script>");
+                        "<script>yaioAppBase.get('YaioExportedData').calcColumns('" + tdId + "', 'SUM', '', '');</script>");
 
                     // TD-Spalte erzeugen
                     res += "<td class='"
@@ -788,7 +788,7 @@ public class HtmlExporter extends WikiExporter {
             // Symlink
             SymLinkNode symlinkNode = (SymLinkNode) curNode;
             blockName = name + " (" + curNode.getWorkingId() + ")"
-                + " &gt; " + "<a onclick=\"javascript:openNode('" 
+                + " &gt; " + "<a onclick=\"javascript:yaioAppBase.get('YaioExportedData').openNode('" 
                 +    symlinkNode.getSymLinkRef() + "');return false;\""
                 + " class='a-node-symlink'>"
                 + symlinkNode.getSymLinkRef() + symlinkNode.getSymLinkName() + "</a>";
