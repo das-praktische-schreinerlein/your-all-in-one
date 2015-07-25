@@ -491,12 +491,12 @@ function togglePrintLayout() {
              if ($(descBlock).hasClass('syntaxhighlighting-open')) {
                  var flgDoMermaid = false;
                  console.log("toggleNodeDescContainer highlight for descBlock: " + $(descBlock).attr('id'));
-                 flgDoMermaid = formatDescBlock(descBlock) || flgDoMermaid;
+                 flgDoMermaid = yaioAppBase.get('YaioFormatterService').formatDescBlock(descBlock) || flgDoMermaid;
                  console.log("toggleNodeDescContainer resulting flgDoMermaid: " + flgDoMermaid);
                  
                  // do Mermaid if found
                  if (flgDoMermaid) {
-                     formatMermaidGlobal();
+                     yaioAppBase.get('YaioFormatterService').formatMermaidGlobal();
                  }
              }
          } else {
@@ -516,13 +516,13 @@ function togglePrintLayout() {
          var flgDoMermaid = false;
          $("div.syntaxhighlighting-open").each(function (i, descBlock) {
              console.log("toggleAllNodeDescContainer highlight for descBlock: " + $(descBlock).attr('id'));
-             flgDoMermaid = formatDescBlock(descBlock) || flgDoMermaid;
+             flgDoMermaid = yaioAppBase.get('YaioFormatterService').formatDescBlock(descBlock) || flgDoMermaid;
          });
          console.log("toggleAllNodeDescContainer resulting flgDoMermaid: " + flgDoMermaid);
          
          // mermaid all
          if (flgDoMermaid) {
-             formatMermaidGlobal();
+             yaioAppBase.get('YaioFormatterService').formatMermaidGlobal();
          }
      } else {
          // hide all desc

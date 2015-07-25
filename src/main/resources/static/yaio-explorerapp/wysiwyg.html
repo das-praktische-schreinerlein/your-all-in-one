@@ -174,18 +174,18 @@ yaioAppBase.publishDetectorStyles();
 function showWyswhgPreviewForTextareaId(textAreaId) {
     // prepare descText
     var descText = $("#" + textAreaId).val();
-    var descHtmlMarked = formatMarkdown(descText, true);
+    var descHtmlMarked = yaioAppBase.get('YaioFormatterService').formatMarkdown(descText, true);
 
     // set preview-content
     $( "#wysiwhg-preview" ).html(descHtmlMarked);
     $( "#wysiwhg-print" ).html(descHtmlMarked);
 
     // do mermaid when preview visible
-    formatMermaidGlobal();
+    yaioAppBase.get('YaioFormatterService').formatMermaidGlobal();
     
     // do syntax-highlight
-    formatDescBlock($("#wysiwhg-preview"));
-    formatDescBlock($("#wysiwhg-print"));
+    yaioAppBase.get('YaioFormatterService').formatDescBlock($("#wysiwhg-preview"));
+    yaioAppBase.get('YaioFormatterService').formatDescBlock($("#wysiwhg-print"));
 } 
 
 // open Wysiwyg

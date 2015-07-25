@@ -43,14 +43,14 @@ yaioAppBase.publishDetectorStyles();
 </script>
 <script type="text/javascript">
     // format markdown-extension
-    var flgDoMermaid = formatDescBlock("#div_full");
+    var flgDoMermaid = yaioAppBase.get('YaioFormatterService').formatDescBlock("#div_full");
     if (flgDoMermaid) {
-        formatMermaidGlobal();
+        yaioAppBase.get('YaioFormatterService').formatMermaidGlobal();
     }
     
     // add TOC
-    addTOCForBlock("#globtoc", "#div_full", { toc: { hide: true, minDeep: 2}});
-    addTOCForBlock("#sidebartoc", "#div_full", { toc: { hide: true, minDeep: 2}});
+    yaioAppBase.get('YaioFormatterService').addTOCForBlock("#globtoc", "#div_full", { toc: { hide: true, minDeep: 2}});
+    yaioAppBase.get('YaioFormatterService').addTOCForBlock("#sidebartoc", "#div_full", { toc: { hide: true, minDeep: 2}});
 
     // toggleAll after mermaid!!!
     // alle Bloecke toggeln

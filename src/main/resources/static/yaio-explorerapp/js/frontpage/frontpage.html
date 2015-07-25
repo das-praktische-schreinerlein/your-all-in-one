@@ -37,9 +37,9 @@
 
 <script type="text/javascript">
     // format markdown-extension
-    var flgDoMermaid = formatDescBlock("#front-content-intro");
+    var flgDoMermaid = yaioAppBase.get('YaioFormatterService').formatDescBlock("#front-content-intro");
     if (flgDoMermaid) {
-        formatMermaidGlobal();
+        yaioAppBase.get('YaioFormatterService').formatMermaidGlobal();
     }
     
     // activate elements after 1 second
@@ -58,7 +58,7 @@
     // add TOC after 3 second
     setTimeout(function() { 
         // add TOC
-        addTOCForBlock("#sidebartoc", "#front-content-intro", { toc: { topLink: "Seitenkopf"}});
+        yaioAppBase.get('YaioFormatterService').addTOCForBlock("#sidebartoc", "#front-content-intro", { toc: { topLink: "Seitenkopf"}});
         setupAppSize();
     }, 3000);
     

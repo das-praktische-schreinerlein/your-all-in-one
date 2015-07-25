@@ -30,6 +30,8 @@
  */
 
 (function () {
+    var testObj = yaioAppBase.get('YaioFormatterService');
+    
     describe('Modul yaio-formatter Service-Funktions (Formatter formatMarkdown)', function doSuiteFormatMarkdown() {
         beforeEach(function (done) {
             // load async
@@ -41,8 +43,8 @@
                 done();
             }, 1000);
             
-            // set localHtmlId
-            localHtmlId = 1;
+            // set _localHtmlId
+            testObj._localHtmlId = 1;
         });
     
         afterEach(function () {
@@ -54,7 +56,7 @@
             var expected = $("#markdown_expected").html().trim();
             
             // When
-            var res = formatMarkdown(src, false).trim();
+            var res = testObj.formatMarkdown(src, false).trim();
             // should be regenerated to get browser-specific attr-order
             var reGeneratedRes = $("<div>" + res + "</div>").html(); 
             
@@ -74,8 +76,8 @@
                 done();
             }, 1000);
             
-            // set localHtmlId
-            localHtmlId = 1;
+            // set _localHtmlId
+            testObj._localHtmlId = 1;
         });
     
         afterEach(function () {
@@ -84,11 +86,11 @@
         it( "should convert html-listentries to formatted checklist (highlightCheckList)", function doTestHighlightCheckList() {
             // Given
             var src = $("#markdown_src").val();
-            var checkSrc = $("#checklist_src").html(formatMarkdown(src, false));
+            var checkSrc = $("#checklist_src").html(testObj.formatMarkdown(src, false));
             var expected = $("#checklist_expected").html().trim();
             
             // When
-            highlightCheckList("#checklist_src");
+            testObj.highlightCheckList("#checklist_src");
             var res = $("#checklist_src").html().trim();
             
             // Then
@@ -114,7 +116,7 @@
                     "<ul><li>[TEST1] - xyz</li><li>[TEST3] - xyz</li></ul>", 
                     "<ul><li><span class=\"style1\">[TEST1]</span> - xyz</li><li>[TEST3] - xyz</li></ul>", 
                     function() {
-                        highlightCheckListForMatchers($("#test"), ["TEST1", "TEST2"], "style1");
+                        testObj.highlightCheckListForMatchers($("#test"), ["TEST1", "TEST2"], "style1");
             });
         });
 
@@ -123,7 +125,7 @@
                     "<ul><li>[TEST1] - xyz</li><li>[TEST3] - xyz</li></ul>", 
                     "<ul><li><span class=\"style1\">[TEST1]</span> - xyz</li><li>[TEST3] - xyz</li></ul>", 
                     function() {
-                        highlightCheckListForMatcher($("#test"), "[TEST1]", "style1");
+                        testObj.highlightCheckListForMatcher($("#test"), "[TEST1]", "style1");
             });
         });
     });
@@ -139,8 +141,8 @@
                 done();
             }, 1000);
             
-            // set localHtmlId
-            localHtmlId = 1;
+            // set _localHtmlId
+            testObj._localHtmlId = 1;
         });
 
         it( "should extract checklist from fancytree-table (convertExplorerLinesAsCheckList)", function doTestConvertExplorerLinesAsCheckList() {
@@ -148,7 +150,7 @@
             var expected = $("#extractchecklist_expected").html().trim();
             
             // When
-            var res = convertExplorerLinesAsCheckList().trim();
+            var res = testObj.convertExplorerLinesAsCheckList().trim();
 
             // generalize
             res = res.replace(/\(Stand: .*?\)/g, "(Stand: XXX)");
@@ -170,8 +172,8 @@
                 done();
             }, 1000);
             
-            // set localHtmlId
-            localHtmlId = 1;
+            // set _localHtmlId
+            testObj._localHtmlId = 1;
         });
 
         it( "should extract ganttMarkdown from fancytree-table (convertExplorerLinesAsGanttMarkdown)", function doTestConvertExplorerLinesAsCheckList() {
@@ -179,7 +181,7 @@
             var expected = $("#extractganttmarkdown_expected").html().trim();
             
             // When
-            var res = convertExplorerLinesAsGanttMarkdown().trim();
+            var res = testObj.convertExplorerLinesAsGanttMarkdown().trim();
             
             // generalize
             res = res.replace(/\(Stand: .*?\)/g, "(Stand: XXX)");
@@ -201,8 +203,8 @@
                 done();
             }, 1000);
             
-            // set localHtmlId
-            localHtmlId = 1;
+            // set _localHtmlId
+            testObj._localHtmlId = 1;
         });
 
         it( "should convert markdown to jira (convertMarkdownToJira)", function doTestConvertMarkdownToJira() {
@@ -211,7 +213,7 @@
             var expected = $("#markdown2jira_expected").val().trim();
             
             // When
-            var res = convertMarkdownToJira(src).trim();
+            var res = testObj.convertMarkdownToJira(src).trim();
             
             // Then
             expect(res).toBe(expected);
@@ -229,8 +231,8 @@
                 done();
             }, 1000);
             
-            // set localHtmlId
-            localHtmlId = 1;
+            // set _localHtmlId
+            testObj._localHtmlId = 1;
         });
 
         it( "should pepare markdown by replacing html-tags outside code and mask empty lines (prepareTextForMarkdown)", function doTestPrepareTextForMarkdown() {
@@ -239,7 +241,7 @@
             var expected = $("#markdownPrepare_expected").html().trim();
             
             // When
-            var res = prepareTextForMarkdown(src).trim();
+            var res = testObj.prepareTextForMarkdown(src).trim();
             var reGeneratedRes = $("<div>" + res.trim() + "</div>").html(); 
             var reGeneratedExpected = $("<div>" + expected.trim() + "</div>").html(); 
             
@@ -260,8 +262,8 @@
                 done();
             }, 1000);
             
-            // set localHtmlId
-            localHtmlId = 1;
+            // set _localHtmlId
+            testObj._localHtmlId = 1;
         });
 
         it( "should render TOC and show it if minDeep reached (addTOCForBlock)", function doTestAddTOCForBlockFull() {
@@ -270,7 +272,7 @@
             var expectedDisplay = "block";
             
             // When
-            addTOCForBlock("#addTOCForBlockFilled", "#addTOCForBlock_src", { toc: { hide: false, minDeep: 2}});
+            testObj.addTOCForBlock("#addTOCForBlockFilled", "#addTOCForBlock_src", { toc: { hide: false, minDeep: 2}});
             var res = $("#addTOCForBlockFilled").html();
             var display = $("#addTOCForBlockFilled").css("display");
             
@@ -290,7 +292,7 @@
             var expectedDisplay = "none";
             
             // When
-            addTOCForBlock("#addTOCForBlockEmpty", "#addTOCForBlock_src", { toc: { hide: false, minDeep: 6}});
+            testObj.addTOCForBlock("#addTOCForBlockEmpty", "#addTOCForBlock_src", { toc: { hide: false, minDeep: 6}});
             var display = $("#addTOCForBlockEmpty").css("display");
             
             // Then

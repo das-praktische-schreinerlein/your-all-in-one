@@ -76,7 +76,7 @@ function showPreviewForTextareaId(textAreaId) {
     var descText = $("#" + textAreaId).val();
 
     // prepare descText
-    var descHtmlMarked = formatMarkdown(descText, true);
+    var descHtmlMarked = yaioAppBase.get('YaioFormatterService').formatMarkdown(descText, true);
     showPreview(descHtmlMarked);
 }
 
@@ -100,10 +100,10 @@ function showPreview(content) {
     });    
     
     // do mermaid when preview visible
-    formatMermaidGlobal();
+    yaioAppBase.get('YaioFormatterService').formatMermaidGlobal();
 
     // do syntax-highlight
-    formatDescBlock($("#preview-content"));
+    yaioAppBase.get('YaioFormatterService').formatDescBlock($("#preview-content"));
 }
 
 function showMarkdownHelp() {
@@ -260,16 +260,16 @@ function openWysiwhgForTextareaId(textAreaId) {
 function showWyswhgPreviewForTextareaId(textAreaId) {
     // prepare descText
     var descText = $("#" + textAreaId).val();
-    var descHtmlMarked = formatMarkdown(descText, true);
+    var descHtmlMarked = yaioAppBase.get('YaioFormatterService').formatMarkdown(descText, true);
 
     // set preview-content
     $( "#wysiwhg-preview" ).html(descHtmlMarked);
 
     // do mermaid when preview visible
-    formatMermaidGlobal();
+    yaioAppBase.get('YaioFormatterService').formatMermaidGlobal();
     
     // do syntax-highlight
-    formatDescBlock($("#wysiwhg-preview"));
+    yaioAppBase.get('YaioFormatterService').formatDescBlock($("#wysiwhg-preview"));
 } 
 
 

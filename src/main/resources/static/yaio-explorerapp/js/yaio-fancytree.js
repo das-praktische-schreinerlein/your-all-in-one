@@ -1345,7 +1345,7 @@ function renderColumnsForNode(event, data, preventActionsColum) {
         descText = descText.replace(/\<WLTAB\>/g, "\t");
 
         // prepare descText
-        var descHtml = formatMarkdown(descText, false, basenode.sysUID);
+        var descHtml = yaioAppBase.get('YaioFormatterService').formatMarkdown(descText, false, basenode.sysUID);
         $divDesc.append("<div id='container_content_desc_" + basenode.sysUID + "' class='container-content-desc syntaxhighlighting-open'>" + descHtml + "</div>");
 
         // append to datablock
@@ -2047,7 +2047,7 @@ function openJiraExportWindow(nodeId) {
     descText = descText.replace(/\<WLTAB\>/g, "\t");
     
     // convert and secure
-    var nodeDesc = convertMarkdownToJira(descText);
+    var nodeDesc = yaioAppBase.get('YaioFormatterService').convertMarkdownToJira(descText);
     nodeDesc = yaioAppBase.get('YaioBaseService').htmlEscapeText(nodeDesc);
     
     // set clipboard-content
@@ -2080,9 +2080,9 @@ function openJiraExportWindow(nodeId) {
  */
 function yaioExportExplorerLinesAsOverview() {
     // convert and secure
-    var checkListSrc = convertExplorerLinesAsCheckList();
+    var checkListSrc = yaioAppBase.get('YaioFormatterService').convertExplorerLinesAsCheckList();
     checkListSrc = yaioAppBase.get('YaioBaseService').htmlEscapeText(checkListSrc);
-    var ganttSrc = convertExplorerLinesAsGanttMarkdown();
+    var ganttSrc = yaioAppBase.get('YaioFormatterService').convertExplorerLinesAsGanttMarkdown();
     ganttSrc = yaioAppBase.get('YaioBaseService').htmlEscapeText(ganttSrc);
     
     // set clipboard-content
@@ -2114,9 +2114,9 @@ function yaioExportExplorerLinesAsOverview() {
  */
 function yaioSnapshot(parentNode) {
     // convert and secure
-    var checkListSrc = convertExplorerLinesAsCheckList();
+    var checkListSrc = yaioAppBase.get('YaioFormatterService').convertExplorerLinesAsCheckList();
     checkListSrc = yaioAppBase.get('YaioBaseService').htmlEscapeText(checkListSrc);
-    var ganttSrc = convertExplorerLinesAsGanttMarkdown();
+    var ganttSrc = yaioAppBase.get('YaioFormatterService').convertExplorerLinesAsGanttMarkdown();
     ganttSrc = yaioAppBase.get('YaioBaseService').htmlEscapeText(ganttSrc);
 
     // open editor
