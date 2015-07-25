@@ -53,7 +53,7 @@ yaioM.factory('yaioUtils', function () {
         },
         
         toggleSysContainerForNode: function(node) {
-            yaioAppBase.get('YaioLayoutService').toggleNodeSysContainer(node.sysUID);
+            yaioAppBase.get('YaioExplorerActionService').toggleNodeSysContainer(node.sysUID);
         },
         
         openNodeEditorForNode: function(node, mode) {
@@ -72,7 +72,7 @@ yaioM.factory('yaioUtils', function () {
             };
             
             console.log("renderNodeLine nodeId=" + node.sysUID + " tr=" + $(trIdSelector).length);
-            yaioAppBase.get('YaioExplorerTreeService').renderColumnsForNode(null, data, true);
+            yaioAppBase.get('YaioNodeDataRenderService').renderColumnsForNode(null, data, true);
         },
         
         ganttOptions: { 

@@ -294,6 +294,109 @@ Yaio.ExplorerActionService = function(appBase) {
         });    
     }
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Layout Toggler
+     * <h4>FeatureDescription:</h4>
+     *     Toggle the "#detail_desc_" for the specified id with a slide. 
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>Updates DOM
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     GUI Tree Rendering
+     * @param id - sysUID of the node 
+     */
+   me.toggleNodeDescContainer = function(id) {
+        $("#detail_desc_" + id).slideToggle(1000,function() {
+            // show/hide toggler
+            if ($("#detail_desc_" + id).css("display") == "block") {
+                // desc is now shown
+                $("#toggler_desc_" + id).addClass('toggler_show').removeClass('toggler_hidden');
+   
+                // check if syntaxhighlighting to do
+                var descBlock = $("#container_content_desc_" + id);
+                if ($(descBlock).hasClass('syntaxhighlighting-open')) {
+                    var flgDoMermaid = false;
+                    console.log("toggleNodeDescContainer highlight for descBlock: " + $(descBlock).attr('id'));
+                    flgDoMermaid = yaioAppBase.get('YaioFormatterService').formatDescBlock(descBlock) || flgDoMermaid;
+                    console.log("toggleNodeDescContainer resulting flgDoMermaid: " + flgDoMermaid);
+                    
+                    // do Mermaid if found
+                    if (flgDoMermaid) {
+                        yaioAppBase.get('YaioFormatterService').formatMermaidGlobal();
+                    }
+                }
+            } else {
+                // desc is now hidden
+                $("#toggler_desc_" + id).addClass('toggler_hidden').removeClass('toggler_show');
+            }
+       });
+   }
+   
+   me.toggleAllNodeDescContainer = function() {
+       if ($("#toggler_desc_all").hasClass('toggler_hidden')) {
+           // show all desc
+           $("div.field_nodeDesc").slideDown(1000);
+           $("div.fieldtype_descToggler > a").addClass('toggler_show').removeClass('toggler_hidden');
+  
+           // check if syntaxhighlighting to do
+           var flgDoMermaid = false;
+           $("div.syntaxhighlighting-open").each(function (i, descBlock) {
+               console.log("toggleAllNodeDescContainer highlight for descBlock: " + $(descBlock).attr('id'));
+               flgDoMermaid = yaioAppBase.get('YaioFormatterService').formatDescBlock(descBlock) || flgDoMermaid;
+           });
+           console.log("toggleAllNodeDescContainer resulting flgDoMermaid: " + flgDoMermaid);
+           
+           // mermaid all
+           if (flgDoMermaid) {
+               yaioAppBase.get('YaioFormatterService').formatMermaidGlobal();
+           }
+       } else {
+           // hide all desc
+           $("div.field_nodeDesc").slideUp(1000);
+           $("div.fieldtype_descToggler > a").addClass('toggler_hidden').removeClass('toggler_show');
+       }
+   }
+    
+    /**
+    * <h4>FeatureDomain:</h4>
+    *     Layout Toggler
+    * <h4>FeatureDescription:</h4>
+    *     Toggle the "#detail_sys_" for the specified id with a slide. 
+    * <h4>FeatureResult:</h4>
+    *   <ul>
+    *     <li>Updates DOM
+    *   </ul> 
+    * <h4>FeatureKeywords:</h4>
+    *     GUI Tree Rendering
+    * @param id - sysUID of the node 
+    */
+   me.toggleNodeSysContainer = function(id) {
+       $("#detail_sys_" + id).slideToggle(1000,function() {
+           // show/hide toggler
+           if ($("#detail_sys_" + id).css("display") == "block") {
+               // desc is now shown
+               $("#toggler_sys_" + id).addClass('toggler_show').removeClass('toggler_hidden');
+           } else {
+               // desc is now hidden
+               $("#toggler_sys_" + id).addClass('toggler_hidden').removeClass('toggler_show');
+           }
+       });
+   }
+  
+   me.toggleAllNodeSysContainer = function() {
+       if ($("#toggler_sys_all").hasClass('toggler_hidden')) {
+           // show all sys
+           $("div.field_nodeSys").slideDown(1000);
+           $("div.fieldtype_sysToggler > a").addClass('toggler_show').removeClass('toggler_hidden');
+       } else {
+           // hide all sys
+           $("div.field_nodeSys").slideUp(1000);
+           $("div.fieldtype_sysToggler > a").addClass('toggler_hidden').removeClass('toggler_show');
+       }
+   }
+  
     me._init();
     
     return me;

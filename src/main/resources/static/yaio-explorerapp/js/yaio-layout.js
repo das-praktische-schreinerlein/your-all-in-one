@@ -37,7 +37,7 @@ Yaio.LayoutService = function(appBase) {
      * initialize the object
      */
     me._init = function() {
-    }
+    };
 
 
     /**
@@ -111,7 +111,7 @@ Yaio.LayoutService = function(appBase) {
         speechrecognitionWindow.focus();
         if (speechrecognitionWindow.opener == null) { speechrecognitionWindow.opener = self; }
         speechrecognitionWindow.opener.targetElement = target;
-    }
+    };
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -160,7 +160,7 @@ Yaio.LayoutService = function(appBase) {
                 return link;
             });
         }
-    }
+    };
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -182,7 +182,7 @@ Yaio.LayoutService = function(appBase) {
         speechsynthWindow.focus();
         if (speechsynthWindow.opener == null) { speechsynthWindow.opener = self; }
         speechsynthWindow.opener.targetElement = target;
-    }
+    };
     
     
     /**
@@ -213,7 +213,7 @@ Yaio.LayoutService = function(appBase) {
         $.timepicker.setDefaults($.timepicker.regional['de']);    
         $('input.inputtype_date').datepicker();
         $('input.inputtype_datetime').datetimepicker();
-    }
+    };
     
     
     /**
@@ -261,42 +261,78 @@ Yaio.LayoutService = function(appBase) {
             }
             
         });
-    }
+    };
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     WebGUI
-     * <h4>FeatureDescription:</h4>
-     *     layout-servicefunctions
-     *      
-     * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
-     * @category collaboration
-     * @copyright Copyright (c) 2014, Michael Schreiner
-     * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
-     */
+    me.addPreviewToElements = function() {
+        // add preview to nodeDesc
+        $("label[for='nodeDesc']").append(function (idx) {
+            var link = "";
+            var label = this;
+            
+            // check if already set
+            if ($(label).attr("previewAdded")) {
+                console.error("addPreviewElements: SKIP because already added: " + $(label).attr("for"));
+                return link;
+            }
+   
+            // get corresponding form
+            var forName = $(label).attr("for");
+            var form = $(label).closest("form");
+            
+            // get for-element byName from form
+            var forElement = form.find("[name="+ forName + "]").first();
+            if (forElement.length > 0) {
+                // define link to label
+                link = "<a href=\"#\" id='showPreview4" + forElement.attr('id') + "'" +
+                       " onClick=\"yaioAppBase.get('YaioMarkdownEditorService').showPreviewForTextareaId('" +
+                          forElement.attr('id') + "'); return false;" +
+                       "\" lang='tech' data-tooltip='tooltip.command.OpenPreview' class='button'>common.command.OpenPreview</a>";
+                link += "<a href=\"#\" id='openMarkdownHelp4" + forElement.attr('id') + "'" +
+                        " onClick=\"yaioAppBase.get('YaioMarkdownEditorService').showMarkdownHelp(); return false;" +
+                        "\" lang='tech' data-tooltip='tooltip.command.OpenMarkdownHelp' class='button'>common.command.OpenMarkdownHelp</a>";
+                
+                // set flag
+                $(label).attr("previewAdded", "true");
+                console.log("addPreviewToElements: add : " + forName + " for " + forElement.attr('id'));
+            }
+            return link;
+        });
+    };
     
-    me.togglePreWrap = function(element) {
-        var classNoWrap = "pre-nowrap";
-        var classWrap = "pre-wrap";
-        var flgClassNoWrap = "flg-pre-nowrap";
-        var flgClassWrap = "flg-pre-wrap";
-        var codeChilden = $(element).find("code");
-        
-        // remove/add class if element no has class
-        if ($(element).hasClass(flgClassNoWrap)) {
-            $(element).removeClass(flgClassNoWrap).addClass(flgClassWrap);
-            console.log("togglePreWrap for id:" + element + " set " + classWrap);
-            // wrap code-blocks too
-            $(codeChilden).removeClass(classNoWrap).addClass(classWrap);
-            $(codeChilden).parent().removeClass(classNoWrap).addClass(classWrap);
-        } else {
-            $(element).removeClass(flgClassWrap).addClass(flgClassNoWrap);
-            console.log("togglePreWrap for id:" + element + " set " + classNoWrap);
-            // wrap code-blocks too
-            $(codeChilden).removeClass(classWrap).addClass(classNoWrap);
-            $(codeChilden).parent().removeClass(classNoWrap).addClass(classWrap);
-       }
-    }
+     
+     
+    me.addWysiwhgToElements = function() {
+        // add preview to nodeDesc
+        $("label[for='nodeDesc']").append(function (idx) {
+            var link = "";
+            var label = this;
+            
+            // check if already set
+            if ($(label).attr("wysiwhgAdded")) {
+                console.error("addWysiwhgElements: SKIP because already added: " + $(label).attr("for"));
+                return link;
+            }
+   
+            // get corresponding form
+            var forName = $(label).attr("for");
+            var form = $(label).closest("form");
+            
+            // get for-element byName from form
+            var forElement = form.find("[name="+ forName + "]").first();
+            if (forElement.length > 0) {
+                // define link to label
+                link = "<a href=\"#\" id='openWysiwyg4" + forElement.attr('id') + "'" +
+                    " onClick=\"yaioAppBase.get('YaioMarkdownEditorService').openWysiwhgForTextareaId('" +
+                        forElement.attr('id') + "'); return false;" +
+                    "\" lang='tech' data-tooltip='tooltip.command.OpenWysiwygEditor' class='button'>common.command.OpenWysiwygEditor</a>";
+                
+                // set flag
+                $(label).attr("wysiwhgAdded", "true");
+                console.log("addWysiwhgToElements: add : " + forName + " for " + forElement.attr('id'));
+            }
+            return link;
+        });
+    };
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -325,7 +361,7 @@ Yaio.LayoutService = function(appBase) {
     
         // change to de
         window.lang.change(langKey);
-    }
+    };
     
     me.setupAppSize = function() {
         var height = window.innerHeight;
@@ -409,7 +445,7 @@ Yaio.LayoutService = function(appBase) {
                     + " max-height:" + $(ele).css("max-height")
                     );
         }
-    }
+    };
     
     me.yaioShowHelpSite = function(url) {
         // set messagetext
@@ -432,183 +468,8 @@ Yaio.LayoutService = function(appBase) {
                 }
             }
         });    
-    }
+    };
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Layout Toggler
-     * <h4>FeatureDescription:</h4>
-     *     Toggle the specified ojects with a fade. 
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>Updates DOM
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Tree Rendering
-     * @param id - JQuery-Filter (html.id, style, objectlist...) 
-     */
-    me.toggleTableBlock = function(id) {
-        // get effect type from
-        var selectedEffect = "fade";
-   
-        // most effect types need no options passed by default
-        var options = {};
-        // some effects have required parameters
-        if ( selectedEffect === "scale" ) {
-          options = { percent: 0 };
-        } else if ( selectedEffect === "size" ) {
-          options = { to: { width: 200, height: 60 } };
-        }
-   
-        // run the effect
-        $( id ).toggle( selectedEffect, options, 500 );
-    }
-    
-    me.togglePrintLayout = function() {
-         if ($("#checkboxPrintAll").prop('checked')) {
-             // print all
-             $("#link_css_dataonly").attr("disabled", "disabled");
-             $("#link_css_dataonly").prop("disabled", true);
-         } else  {
-             // print data only
-             $("#link_css_dataonly").removeAttr("disabled");
-             $("#link_css_dataonly").prop("disabled", false);
-         }
-     }
-     
-     /**
-      * <h4>FeatureDomain:</h4>
-      *     Layout Toggler
-      * <h4>FeatureDescription:</h4>
-      *     Toggle the "#detail_desc_" for the specified id with a slide. 
-      * <h4>FeatureResult:</h4>
-      *   <ul>
-      *     <li>Updates DOM
-      *   </ul> 
-      * <h4>FeatureKeywords:</h4>
-      *     GUI Tree Rendering
-      * @param id - sysUID of the node 
-      */
-    me.toggleNodeDescContainer = function(id) {
-         $("#detail_desc_" + id).slideToggle(1000,function() {
-             // show/hide toggler
-             if ($("#detail_desc_" + id).css("display") == "block") {
-                 // desc is now shown
-                 $("#toggler_desc_" + id).addClass('toggler_show').removeClass('toggler_hidden');
-    
-                 // check if syntaxhighlighting to do
-                 var descBlock = $("#container_content_desc_" + id);
-                 if ($(descBlock).hasClass('syntaxhighlighting-open')) {
-                     var flgDoMermaid = false;
-                     console.log("toggleNodeDescContainer highlight for descBlock: " + $(descBlock).attr('id'));
-                     flgDoMermaid = yaioAppBase.get('YaioFormatterService').formatDescBlock(descBlock) || flgDoMermaid;
-                     console.log("toggleNodeDescContainer resulting flgDoMermaid: " + flgDoMermaid);
-                     
-                     // do Mermaid if found
-                     if (flgDoMermaid) {
-                         yaioAppBase.get('YaioFormatterService').formatMermaidGlobal();
-                     }
-                 }
-             } else {
-                 // desc is now hidden
-                 $("#toggler_desc_" + id).addClass('toggler_hidden').removeClass('toggler_show');
-             }
-        });
-    }
-    
-    me.toggleAllNodeDescContainer = function() {
-        if ($("#toggler_desc_all").hasClass('toggler_hidden')) {
-            // show all desc
-            $("div.field_nodeDesc").slideDown(1000);
-            $("div.fieldtype_descToggler > a").addClass('toggler_show').removeClass('toggler_hidden');
-   
-            // check if syntaxhighlighting to do
-            var flgDoMermaid = false;
-            $("div.syntaxhighlighting-open").each(function (i, descBlock) {
-                console.log("toggleAllNodeDescContainer highlight for descBlock: " + $(descBlock).attr('id'));
-                flgDoMermaid = yaioAppBase.get('YaioFormatterService').formatDescBlock(descBlock) || flgDoMermaid;
-            });
-            console.log("toggleAllNodeDescContainer resulting flgDoMermaid: " + flgDoMermaid);
-            
-            // mermaid all
-            if (flgDoMermaid) {
-                yaioAppBase.get('YaioFormatterService').formatMermaidGlobal();
-            }
-        } else {
-            // hide all desc
-            $("div.field_nodeDesc").slideUp(1000);
-            $("div.fieldtype_descToggler > a").addClass('toggler_hidden').removeClass('toggler_show');
-        }
-    }
-     
-     /**
-     * <h4>FeatureDomain:</h4>
-     *     Layout Toggler
-     * <h4>FeatureDescription:</h4>
-     *     Toggle the "#detail_sys_" for the specified id with a slide. 
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>Updates DOM
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Tree Rendering
-     * @param id - sysUID of the node 
-     */
-    me.toggleNodeSysContainer = function(id) {
-        $("#detail_sys_" + id).slideToggle(1000,function() {
-            // show/hide toggler
-            if ($("#detail_sys_" + id).css("display") == "block") {
-                // desc is now shown
-                $("#toggler_sys_" + id).addClass('toggler_show').removeClass('toggler_hidden');
-            } else {
-                // desc is now hidden
-                $("#toggler_sys_" + id).addClass('toggler_hidden').removeClass('toggler_show');
-            }
-        });
-    }
-   
-    me.toggleAllNodeSysContainer = function() {
-        if ($("#toggler_sys_all").hasClass('toggler_hidden')) {
-            // show all sys
-            $("div.field_nodeSys").slideDown(1000);
-            $("div.fieldtype_sysToggler > a").addClass('toggler_show').removeClass('toggler_hidden');
-        } else {
-            // hide all sys
-            $("div.field_nodeSys").slideUp(1000);
-            $("div.fieldtype_sysToggler > a").addClass('toggler_hidden').removeClass('toggler_show');
-        }
-    }
-   
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Layout Toggler
-     * <h4>FeatureDescription:</h4>
-     *     Toggle the specified ojects with a drop. 
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>Updates DOM
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Tree Rendering
-     * @param id - JQuery-Filter (html.id, style, objectlist...) 
-     */
-    me.toggleElement = function(id) {
-        // get effect type from
-        var selectedEffect = "drop";
-   
-        // most effect types need no options passed by default
-        var options = {};
-        // some effects have required parameters
-        if ( selectedEffect === "scale" ) {
-          options = { percent: 0 };
-        } else if ( selectedEffect === "size" ) {
-          options = { to: { width: 200, height: 60 } };
-        }
-   
-        // run the effect
-        $( id ).toggle( selectedEffect, options, 500 );
-    }
-   
     me.hideFormRowTogglerIfSet = function(togglerId, className, state) {
         if (jMATService.getLayoutService().isInputRowsSet(className)) {
             // show all
@@ -623,7 +484,7 @@ Yaio.LayoutService = function(appBase) {
             $("#" + togglerId + "_Off").css('display', 'block');
             jMATService.getPageLayoutService().toggleFormrows(togglerId, className, state);
         }
-    }
+    };
      
     me.createTogglerIfNotExists = function(parentId, toggleId, className) {
         var $ele = $("#" + toggleId + "_On");
@@ -638,81 +499,20 @@ Yaio.LayoutService = function(appBase) {
                     + " toggleEleId=" + toggleId
                     + " className=" + className);
         }
-    }
+    };
      
-     
-    
-    me.addPreviewToElements = function() {
-        // add preview to nodeDesc
-        $("label[for='nodeDesc']").append(function (idx) {
-            var link = "";
-            var label = this;
-            
-            // check if already set
-            if ($(label).attr("previewAdded")) {
-                console.error("addPreviewElements: SKIP because already added: " + $(label).attr("for"));
-                return link;
-            }
-   
-            // get corresponding form
-            var forName = $(label).attr("for");
-            var form = $(label).closest("form");
-            
-            // get for-element byName from form
-            var forElement = form.find("[name="+ forName + "]").first();
-            if (forElement.length > 0) {
-                // define link to label
-                link = "<a href=\"#\" id='showPreview4" + forElement.attr('id') + "'" +
-                       " onClick=\"yaioAppBase.get('YaioMarkdownEditorService').showPreviewForTextareaId('" +
-                          forElement.attr('id') + "'); return false;" +
-                       "\" lang='tech' data-tooltip='tooltip.command.OpenPreview' class='button'>common.command.OpenPreview</a>";
-                link += "<a href=\"#\" id='openMarkdownHelp4" + forElement.attr('id') + "'" +
-                        " onClick=\"yaioAppBase.get('YaioMarkdownEditorService').showMarkdownHelp(); return false;" +
-                        "\" lang='tech' data-tooltip='tooltip.command.OpenMarkdownHelp' class='button'>common.command.OpenMarkdownHelp</a>";
-                
-                // set flag
-                $(label).attr("previewAdded", "true");
-                console.log("addPreviewToElements: add : " + forName + " for " + forElement.attr('id'));
-            }
-            return link;
-        });
-    }
-    
-     
-     
-    me.addWysiwhgToElements = function() {
-        // add preview to nodeDesc
-        $("label[for='nodeDesc']").append(function (idx) {
-            var link = "";
-            var label = this;
-            
-            // check if already set
-            if ($(label).attr("wysiwhgAdded")) {
-                console.error("addWysiwhgElements: SKIP because already added: " + $(label).attr("for"));
-                return link;
-            }
-   
-            // get corresponding form
-            var forName = $(label).attr("for");
-            var form = $(label).closest("form");
-            
-            // get for-element byName from form
-            var forElement = form.find("[name="+ forName + "]").first();
-            if (forElement.length > 0) {
-                // define link to label
-                link = "<a href=\"#\" id='openWysiwyg4" + forElement.attr('id') + "'" +
-                    " onClick=\"yaioAppBase.get('YaioMarkdownEditorService').openWysiwhgForTextareaId('" +
-                        forElement.attr('id') + "'); return false;" +
-                    "\" lang='tech' data-tooltip='tooltip.command.OpenWysiwygEditor' class='button'>common.command.OpenWysiwygEditor</a>";
-                
-                // set flag
-                $(label).attr("wysiwhgAdded", "true");
-                console.log("addWysiwhgToElements: add : " + forName + " for " + forElement.attr('id'));
-            }
-            return link;
-        });
-    }
-    
+    me.togglePrintLayout = function() {
+        if ($("#checkboxPrintAll").prop('checked')) {
+            // print all
+            $("#link_css_dataonly").attr("disabled", "disabled");
+            $("#link_css_dataonly").prop("disabled", true);
+        } else  {
+            // print data only
+            $("#link_css_dataonly").removeAttr("disabled");
+            $("#link_css_dataonly").prop("disabled", false);
+        }
+    };
+
     me._init();
     
     return me;
