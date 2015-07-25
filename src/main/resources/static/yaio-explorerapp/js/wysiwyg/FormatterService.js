@@ -17,7 +17,6 @@
 
 'use strict';
 
-/* require 'yaio-basesservice' */
 /* require '/js/highlightjs' */
 /* require '/js/jquery' */
 /* require '/js/marked' */
