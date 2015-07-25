@@ -86,7 +86,7 @@ yaioM.factory('OutputOptionsEditor', function() {
          *     GUI Callback
          */
         discard: function() {
-            yaioCloseOutputOptionsEditor();
+            toggleElement("#containerFormYaioEditorOutputOptions");
             console.log("discard done");
             return false;
         },
@@ -121,7 +121,7 @@ yaioM.factory('OutputOptionsEditor', function() {
 //                    data: json
 //            }).then(function(response) {
 //                // sucess handler
-//                yaioCloseOutputOptionsEditor();
+//                toggleElement("#containerFormYaioEditorOutputOptions");
 //                
 //                downloadAsFile(null, response.data, "test.xxx", "dummy", "dummy");
 //                
@@ -138,8 +138,9 @@ yaioM.factory('OutputOptionsEditor', function() {
 //                logError(message, false);
 //            });
 
-            yaioSendOutputOptionsEditor();
-            yaioCloseOutputOptionsEditor();
+            var formId = "#nodeFormOutputOptions";
+            $(formId).submit();
+            toggleElement("#containerFormYaioEditorOutputOptions");
             console.log("send done");
             return false;
         },
@@ -162,7 +163,19 @@ yaioM.factory('OutputOptionsEditor', function() {
         showOutputOptionsEditor: function(sysUID, newUrl, newTarget) {
             url = newUrl;
             target = newTarget;
-            yaioOpenOutputOptionsEditor(sysUID, url, target);
+            
+            var formId = "#nodeFormOutputOptions";
+            console.log("OutputOptionsEditor:" + " url:" + url);
+            $("#containerFormYaioEditorOutputOptions").css("display", "none");
+            toggleElement("#containerFormYaioEditorOutputOptions");
+            $(formId).attr("target", target);
+            $(formId).attr("action", url);
+            $(formId).trigger('form').triggerHandler("change");
+            $(formId).trigger('input');
+            
+            // update appsize
+            setupAppSize();
+
             console.log("showOutputOptionsEditor done:" + " url:" + url);
             return false;
         }
