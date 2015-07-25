@@ -29,8 +29,9 @@
  *     Utils
  */
 yaioApp.factory('yaioUtils', function () {
-    var ganttRangeStart = yaioAppBase.get('YaioBase').formatGermanDate((new Date()).getTime() - 90*24*60*60*1000); 
-    var ganttRangeEnd = yaioAppBase.get('YaioBase').formatGermanDate((new Date()).getTime() + 90*24*60*60*1000);
+    var appBase = yaioAppBase;
+    var ganttRangeStart = appBase.get('YaioBase').formatGermanDate((new Date()).getTime() - 90*24*60*60*1000); 
+    var ganttRangeEnd = appBase.get('YaioBase').formatGermanDate((new Date()).getTime() + 90*24*60*60*1000);
     
     return {
         /**
@@ -48,16 +49,16 @@ yaioApp.factory('yaioUtils', function () {
          */
         showHelpSite: function(url) {
             console.log("showHelpSite:" + " url:" + url);
-            yaioAppBase.get('YaioLayout').yaioShowHelpSite(url);
+            appBase.get('YaioLayout').yaioShowHelpSite(url);
             return false;
         },
         
         toggleSysContainerForNode: function(node) {
-            yaioAppBase.get('YaioExplorerAction').toggleNodeSysContainer(node.sysUID);
+            appBase.get('YaioExplorerAction').toggleNodeSysContainer(node.sysUID);
         },
         
         openNodeEditorForNode: function(node, mode) {
-            yaioAppBase.get('YaioEditor').yaioOpenNodeEditorForNode(node, mode);
+            appBase.get('YaioEditor').yaioOpenNodeEditorForNode(node, mode);
         },
         
         renderNodeLine: function(node, trIdSelector) {
@@ -72,12 +73,25 @@ yaioApp.factory('yaioUtils', function () {
             };
             
             console.log("renderNodeLine nodeId=" + node.sysUID + " tr=" + $(trIdSelector).length);
-            yaioAppBase.get('YaioNodeDataRender').renderColumnsForNode(null, data, true);
+            appBase.get('YaioNodeDataRender').renderColumnsForNode(null, data, true);
         },
         
         ganttOptions: { 
             ganttRangeStart: ganttRangeStart, 
             ganttRangeEnd: ganttRangeEnd
+        },
+        
+        getAppBase: function() {
+            return appBase;
+        },
+
+        getService: function(service) {
+            return appBase.get(service);
+        },
+
+        getConfig: function() {
+            return appBase.config;
         }
+        
     };
 });

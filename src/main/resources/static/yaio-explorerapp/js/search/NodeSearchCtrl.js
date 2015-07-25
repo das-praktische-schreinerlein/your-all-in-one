@@ -193,7 +193,7 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ht
                 $scope.$broadcast("NodeListReady");
             } else {
                 // error
-                yaioAppBase.get('YaioBase').logError("error loading nodes:" + nodeResponse.data.stateMsg 
+                yaioUtils.getService('YaioBase').logError("error loading nodes:" + nodeResponse.data.stateMsg 
                         + " details:" + nodeResponse, true)
             }
         }, function(response) {
@@ -202,9 +202,9 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ht
             var header = response.header;
             var config = response.config;
             var message = "error loading nodes with url: " + searchNodeUrl;
-            yaioAppBase.get('YaioBase').logError(message, true);
+            yaioUtils.getService('YaioBase').logError(message, true);
             message = "error data: " + data + " header:" + header + " config:" + config;
-            yaioAppBase.get('YaioBase').logError(message, false);
+            yaioUtils.getService('YaioBase').logError(message, false);
         });
     };
     
@@ -233,7 +233,7 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ht
                     parentStr = parentNode.name + " --> " + parentStr;
                     parentNode = parentNode.parentNode;
                 }
-                parentStr = "<b>" + yaioAppBase.get('YaioBase').htmlEscapeText(parentStr) + "</b>";
+                parentStr = "<b>" + yaioUtils.getService('YaioBase').htmlEscapeText(parentStr) + "</b>";
                 
                 // extract search words
                 var searchExtract = "";
@@ -251,7 +251,7 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ht
                     descText = descText.toLowerCase();
                     
                     for (var idx in searchWords) {
-                        searchWord = yaioAppBase.get('YaioBase').escapeRegExp(searchWords[idx]);
+                        searchWord = yaioUtils.getService('YaioBase').escapeRegExp(searchWords[idx]);
 
                         // split by searchwords
                         searchResults = descText.toLowerCase().split(searchWord.toLowerCase());
@@ -272,7 +272,7 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ht
                                 splitText = searchResults[idx2].substr(0, splitLength);
                                 console.log("found " + searchWord + " after use " + splitLength + " extracted:" + splitText);
                                 searchExtract += "<b>"+ searchWord + "</b>" 
-                                    + yaioAppBase.get('YaioBase').htmlEscapeText(splitText) + "...";
+                                    + yaioUtils.getService('YaioBase').htmlEscapeText(splitText) + "...";
                             }
                             if (idx2 < searchResults.length) {
                                 splitLength = (searchResults[idx2].length > 50 ? 50 : searchResults[idx2].length);
@@ -281,7 +281,7 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ht
                                         searchResults[idx2].length);
                                 console.log("found " + searchWord + " before use " + splitLength + " extracted:" + splitText);
                                 searchExtract += "..." 
-                                    + yaioAppBase.get('YaioBase').htmlEscapeText(splitText);
+                                    + yaioUtils.getService('YaioBase').htmlEscapeText(splitText);
                             }
                         }
                     }
@@ -317,7 +317,7 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ht
     $scope.recalcGanttBlocks = function() {
         for (var idx in $scope.nodes) {
             var node = $scope.nodes[idx];
-            yaioAppBase.get('YaioNodeGanttRender').yaioRecalcGanttBlock(node);
+            yaioUtils.getService('YaioNodeGanttRender').yaioRecalcGanttBlock(node);
         }
     };
     

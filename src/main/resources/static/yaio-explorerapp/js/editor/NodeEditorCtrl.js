@@ -68,7 +68,7 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ht
      *     GUI Callback
      */
     $scope.discard = function() {
-        yaioAppBase.get('YaioEditor').yaioCloseNodeEditor();
+        yaioUtils.getService('YaioEditor').yaioCloseNodeEditor();
         return false;
     };
     
@@ -86,7 +86,7 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ht
      */
     $scope.selectNewNodeType = function() {
         // hide all forms
-        yaioAppBase.get('YaioEditor').yaioHideAllNodeEditorForms();
+        yaioUtils.getService('YaioEditor').yaioHideAllNodeEditorForms();
         
         // display createform and select nodeform
         $("#containerFormYaioEditorCreate").css("display", "block");
@@ -117,7 +117,7 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ht
      *     Callback
      * <h4>FeatureDescription:</h4>
      *     callbackhandler to perform actions when type has changed<br>
-     *     calls yaioAppBase.get('YaioEditor').calcIstStandFromState() for the node
+     *     calls yaioUtils.getService('YaioEditor').calcIstStandFromState() for the node
      *     if ERLEDIGT || VERWORFEN || EVENT_ERLEDIGT || EVENT_VERWORFEN: update istStand=100
      * <h4>FeatureResult:</h4>
      *   <ul>
@@ -127,7 +127,7 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ht
      *     GUI Callback
      */
     $scope.doTypeChanged = function() {
-        $scope.nodeForEdit.istStand = yaioAppBase.get('YaioEditor').calcIstStandFromState($scope.nodeForEdit);
+        $scope.nodeForEdit.istStand = yaioUtils.getService('YaioEditor').calcIstStandFromState($scope.nodeForEdit);
         return false;
     };
     
@@ -154,7 +154,7 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ht
      *     GUI Callback
      */
     $scope.doIstStandChanged = function() {
-        $scope.nodeForEdit.type = yaioAppBase.get('YaioEditor').calcTypeFromIstStand($scope.nodeForEdit);
+        $scope.nodeForEdit.type = yaioUtils.getService('YaioEditor').calcTypeFromIstStand($scope.nodeForEdit);
         return false;
     };
     
@@ -201,18 +201,18 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ht
         // do extra for the different classNames
         // configure value mapping
         var fields = new Array();
-        fields = fields.concat(yaioAppBase.config.configNodeTypeFields.Common.fields);
+        fields = fields.concat(yaioUtils.getConfig().configNodeTypeFields.Common.fields);
         if ($scope.nodeForEdit.className == "TaskNode") {
-            fields = fields.concat(yaioAppBase.config.configNodeTypeFields.TaskNode.fields);
+            fields = fields.concat(yaioUtils.getConfig().configNodeTypeFields.TaskNode.fields);
             $scope.nodeForEdit.state = $scope.nodeForEdit.type;
         } else if ($scope.nodeForEdit.className == "EventNode") {
-            fields = fields.concat(yaioAppBase.config.configNodeTypeFields.EventNode.fields);
+            fields = fields.concat(yaioUtils.getConfig().configNodeTypeFields.EventNode.fields);
         } else if ($scope.nodeForEdit.className == "InfoNode") {
-            fields = fields.concat(yaioAppBase.config.configNodeTypeFields.InfoNode.fields);
+            fields = fields.concat(yaioUtils.getConfig().configNodeTypeFields.InfoNode.fields);
         } else if ($scope.nodeForEdit.className == "UrlResNode") {
-            fields = fields.concat(yaioAppBase.config.configNodeTypeFields.UrlResNode.fields);
+            fields = fields.concat(yaioUtils.getConfig().configNodeTypeFields.UrlResNode.fields);
         } else if ($scope.nodeForEdit.className == "SymLinkNode") {
-            fields = fields.concat(yaioAppBase.config.configNodeTypeFields.SymLinkNode.fields);
+            fields = fields.concat(yaioUtils.getConfig().configNodeTypeFields.SymLinkNode.fields);
         }
         
         // iterate fields an map to nodeObj
@@ -256,17 +256,17 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ht
         if (mode == "edit") {
             // mode update 
             method = "PATCH";
-            url = yaioAppBase.config.updateUrl + $scope.nodeForEdit.className + "/" + $scope.nodeForEdit.sysUID;
+            url = yaioUtils.getConfig().updateUrl + $scope.nodeForEdit.className + "/" + $scope.nodeForEdit.sysUID;
         } else if (mode == "create") {
             // mode create 
             method = "POST";
-            url = yaioAppBase.config.createUrl + $scope.nodeForEdit.className + "/" + $scope.nodeForEdit.sysUID;
+            url = yaioUtils.getConfig().createUrl + $scope.nodeForEdit.className + "/" + $scope.nodeForEdit.sysUID;
             
             // unset sysUID
             nodeObj["sysUID"] = null;
         } else {
             // unknown mode
-            yaioAppBase.get('YaioBase').logError("unknown mode=" + mode + " form formName=" + formName, false);
+            yaioUtils.getService('YaioBase').logError("unknown mode=" + mode + " form formName=" + formName, false);
             return null;
         }
 
@@ -343,9 +343,9 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ht
                         }
                     }
                 }
-                yaioAppBase.get('YaioBase').logError(message, false);
+                yaioUtils.getService('YaioBase').logError(message, false);
                 if (userMessage != "") {
-                    yaioAppBase.get('YaioBase').logError(userMessage, true);
+                    yaioUtils.getService('YaioBase').logError(userMessage, true);
                 }
                 
                 // Failed
@@ -360,9 +360,9 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ht
             var header = response.header;
             var config = response.config;
             var message = "error saving node with url: " + url;
-            yaioAppBase.get('YaioBase').logError(message, true);
+            yaioUtils.getService('YaioBase').logError(message, true);
             message = "error data: " + data + " header:" + header + " config:" + config;
-            yaioAppBase.get('YaioBase').logError(message, false);
+            yaioUtils.getService('YaioBase').logError(message, false);
         });
     };
 });
