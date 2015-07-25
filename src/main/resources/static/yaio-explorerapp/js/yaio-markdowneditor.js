@@ -108,7 +108,7 @@ function showPreview(content) {
 
 function showMarkdownHelp() {
     // show message
-    var url = "/examples/markdownhelp/markdownhelp.html" + "?" + createXFrameAllowFrom();
+    var url = "/examples/markdownhelp/markdownhelp.html" + "?" + yaioAppBase.get('YaioBaseService').createXFrameAllowFrom();
     console.log("showMarkdownHelp:" + url);
     $("#markdownhelp-iframe").attr('src',url);
     $("#markdownhelp-box" ).dialog({
@@ -251,7 +251,7 @@ function openWysiwhgForTextareaId(textAreaId) {
     // add export-link -> buggy to mix jquery and styles
     $(".ui-dialog-buttonset").append($("<a href='' id='wysiwyg-exportlink'" +
         + " sdf='ojfvbhwjh'"
-        + " onclick=\"downloadAsFile($('#wysiwyg-exportlink'), $('#" + textAreaId + "').val(), 'data.md', 'text/markdown', 'utf-8');\">"
+        + " onclick=\"yaioAppBase.get('YaioBaseService').downloadAsFile($('#wysiwyg-exportlink'), $('#" + textAreaId + "').val(), 'data.md', 'text/markdown', 'utf-8');\">"
         + "<span class='ui-button-text'>Export</span></a>"));
     $('#wysiwyg-exportlink').addClass("ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only");
 

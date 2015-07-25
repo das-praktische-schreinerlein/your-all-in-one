@@ -693,7 +693,7 @@ function postProcessNodeData(event, data) {
         }
     } else {
         // error
-        logError("error loading nodes:" + data.response.stateMsg, true)
+        yaioAppBase.get('YaioBaseService').logError("error loading nodes:" + data.response.stateMsg, true)
     }
     
     data.result = list;
@@ -726,7 +726,7 @@ function yaioFancyTreeLoadError(e, data) {
         data.message = "Custom error: " + data.message;
         data.details = "An error occured during loading: " + error;
     }
-    showToastMessage("error", "Oops! Ein Fehlerchen beim Laden :-(", 
+    yaioAppBase.get('YaioBaseService').showToastMessage("error", "Oops! Ein Fehlerchen beim Laden :-(", 
             "Es ist ein Fehler beim Nachladen aufgetreten:" + data.message 
             + " Details:" + data.details);
   }
@@ -762,7 +762,7 @@ function renderDataBlock(basenode, fancynode) {
     $table.append($row);
     
     // default fields
-    $row.append($("<div />").html(htmlEscapeText(basenode.metaNodePraefix + basenode.metaNodeNummer))
+    $row.append($("<div />").html(yaioAppBase.get('YaioBaseService').htmlEscapeText(basenode.metaNodePraefix + basenode.metaNodeNummer))
             .addClass("container_field")
             .addClass("fieldtype_basedata")
             .addClass("fieldtype_metanummer")
@@ -778,7 +778,7 @@ function renderDataBlock(basenode, fancynode) {
     if (basenode.className == "TaskNode" || basenode.className == "EventNode") {
         // TaskNode
         $row.append(
-                $("<div />").html("&nbsp;" + formatNumbers(basenode.istChildrenSumStand, 0, "%"))
+                $("<div />").html("&nbsp;" + yaioAppBase.get('YaioBaseService').formatNumbers(basenode.istChildrenSumStand, 0, "%"))
                         .addClass("container_field")
                         .addClass("fieldtype_additionaldata")
                         .addClass("fieldtype_stand")
@@ -786,7 +786,7 @@ function renderDataBlock(basenode, fancynode) {
                         .addClass(statestyle)
                         ); 
         $row.append(
-                $("<div />").html("&nbsp;" + formatNumbers(basenode.istChildrenSumAufwand, 1, "h"))
+                $("<div />").html("&nbsp;" + yaioAppBase.get('YaioBaseService').formatNumbers(basenode.istChildrenSumAufwand, 1, "h"))
                         .addClass("container_field")
                         .addClass("fieldtype_additionaldata")
                         .addClass("fieldtype_aufwand")
@@ -794,8 +794,8 @@ function renderDataBlock(basenode, fancynode) {
                         .addClass(statestyle)
                         );
         $row.append(
-                $("<div />").html("&nbsp;" + formatGermanDate(basenode.istChildrenSumStart)
-                        + "-" + formatGermanDate(basenode.istChildrenSumEnde))
+                $("<div />").html("&nbsp;" + yaioAppBase.get('YaioBaseService').formatGermanDate(basenode.istChildrenSumStart)
+                        + "-" + yaioAppBase.get('YaioBaseService').formatGermanDate(basenode.istChildrenSumEnde))
                          .addClass("container_field")
                          .addClass("fieldtype_additionaldata")
                          .addClass("fieldtype_fromto")
@@ -803,7 +803,7 @@ function renderDataBlock(basenode, fancynode) {
                          .addClass(statestyle)
                          );
         $row.append(
-                $("<div />").html("&nbsp;" + formatNumbers(basenode.planChildrenSumAufwand, 1, "h"))
+                $("<div />").html("&nbsp;" + yaioAppBase.get('YaioBaseService').formatNumbers(basenode.planChildrenSumAufwand, 1, "h"))
                          .addClass("container_field")
                          .addClass("fieldtype_additionaldata")
                          .addClass("fieldtype_aufwand")
@@ -811,8 +811,8 @@ function renderDataBlock(basenode, fancynode) {
                          .addClass(statestyle)
                          );
         $row.append(
-                $("<div />").html("&nbsp;" + formatGermanDate(basenode.planChildrenSumStart)
-                         + "-" + formatGermanDate(basenode.planChildrenSumEnde))
+                $("<div />").html("&nbsp;" + yaioAppBase.get('YaioBaseService').formatGermanDate(basenode.planChildrenSumStart)
+                         + "-" + yaioAppBase.get('YaioBaseService').formatGermanDate(basenode.planChildrenSumEnde))
                          .addClass("container_field")
                          .addClass("fieldtype_additionaldata")
                          .addClass("fieldtype_fromto")
@@ -826,8 +826,8 @@ function renderDataBlock(basenode, fancynode) {
         if (basenode.className == "UrlResNode") {
             // url
             $row.append(
-                    $("<div />").html("<a href='" + htmlEscapeText(basenode.resLocRef) + "' target='_blank'>" 
-                                     + htmlEscapeText(basenode.resLocRef) + "</a>")
+                    $("<div />").html("<a href='" + yaioAppBase.get('YaioBaseService').htmlEscapeText(basenode.resLocRef) + "' target='_blank'>" 
+                                     + yaioAppBase.get('YaioBaseService').htmlEscapeText(basenode.resLocRef) + "</a>")
                               .addClass("container_field")
                               .addClass("fieldtype_additionaldata")
                               .addClass("fieldtype_url")
@@ -850,7 +850,7 @@ function renderDataBlock(basenode, fancynode) {
             if (basenode.docLayoutTagCommand) {
                 $row.append(
                         $("<div lang='tech' />").html("Tag: " 
-                                    + htmlEscapeText(basenode.docLayoutTagCommand))
+                                    + yaioAppBase.get('YaioBaseService').htmlEscapeText(basenode.docLayoutTagCommand))
                                 .addClass("container_field")
                                 .addClass("fieldtype_additionaldata")
                                 .addClass("fieldtype_docLayoutTagCommand")
@@ -860,7 +860,7 @@ function renderDataBlock(basenode, fancynode) {
             if (basenode.docLayoutAddStyleClass) {
                 $row.append(
                         $("<div lang='tech' />").html("Style: " 
-                                    + htmlEscapeText(basenode.docLayoutAddStyleClass))
+                                    + yaioAppBase.get('YaioBaseService').htmlEscapeText(basenode.docLayoutAddStyleClass))
                                 .addClass("container_field")
                                 .addClass("fieldtype_additionaldata")
                                 .addClass("fieldtype_docLayoutAddStyleClass")
@@ -870,7 +870,7 @@ function renderDataBlock(basenode, fancynode) {
             if (basenode.docLayoutShortName) {
                 $row.append(
                         $("<div lang='tech' />").html("Kurzname: " 
-                                    + htmlEscapeText(basenode.docLayoutShortName))
+                                    + yaioAppBase.get('YaioBaseService').htmlEscapeText(basenode.docLayoutShortName))
                                 .addClass("container_field")
                                 .addClass("fieldtype_additionaldata")
                                 .addClass("fieldtype_docLayoutShortName")
@@ -1024,7 +1024,7 @@ function fillGanttBlock(basenode, type, label, $divLine) {
                                  + label + ":" + "</span>"
                                + "<span class='gantt_aufwand_value'" +
                                      " data-rangeaufwand='" + rangeAufwand + "'>" 
-                                 + formatNumbers(rangeAufwand, 0, "h") + "</span");
+                                 + yaioAppBase.get('YaioBaseService').formatNumbers(rangeAufwand, 0, "h") + "</span");
                 $div.attr("data-rangeaufwand", rangeAufwand);
             }
             
@@ -1250,7 +1250,7 @@ function renderColumnsForNode(event, data, preventActionsColum) {
                     )
         .append("&nbsp;")
         .append($("<span class='fancytree-title2' id='title" + basenode.sysUID + "'>" 
-                + htmlEscapeText(name) + "</span>"))
+                + yaioAppBase.get('YaioBaseService').htmlEscapeText(name) + "</span>"))
         ;
     $nameEle.html($div);
     //$tdList.eq(colName).find("span.fancytree-expander").addClass(statestyle);
@@ -1263,7 +1263,7 @@ function renderColumnsForNode(event, data, preventActionsColum) {
     var $row = $("<div class='togglecontainer field_nodeSys' id='detail_sys_" + basenode.sysUID + "' />");
     $nodeDataBlock.append($row);
     $row.append(
-            $("<div lang='tech' />").html("Stand: " + formatGermanDateTime(basenode.sysChangeDate))
+            $("<div lang='tech' />").html("Stand: " + yaioAppBase.get('YaioBaseService').formatGermanDateTime(basenode.sysChangeDate))
                     .addClass("container_field")
                     .addClass("fieldtype_basedata")
                     .addClass("fieldtype_sysChangeDate")
@@ -1277,7 +1277,7 @@ function renderColumnsForNode(event, data, preventActionsColum) {
                     .addClass("field_sysChangeCount")
                     );
     $row.append(
-            $("<div lang='tech' />").html("angelegt: " + formatGermanDateTime(basenode.sysCreateDate))
+            $("<div lang='tech' />").html("angelegt: " + yaioAppBase.get('YaioBaseService').formatGermanDateTime(basenode.sysCreateDate))
                     .addClass("container_field")
                     .addClass("fieldtype_basedata")
                     .addClass("fieldtype_sysCreateDate")
@@ -1597,7 +1597,7 @@ function yaioRecalcMasterGanttBlockLine(masterNodeId, praefix) {
     var treeId = "#tree";
     var tree = $(treeId).fancytree("getTree");
     if ($(treeId).length <= 0 || !tree || tree == "undefined" ) {
-        logError("yaioRecalcMasterGanttBlock: error tree:'" + treeId + "' not found.", false);
+        yaioAppBase.get('YaioBaseService').logError("yaioRecalcMasterGanttBlock: error tree:'" + treeId + "' not found.", false);
         return;
     }
     
@@ -1644,7 +1644,7 @@ function yaioRecalcMasterGanttBlockLine(masterNodeId, praefix) {
                 + praefix + "Sum:" + "</span>"
               + "<span class='gantt_aufwand_value'" +
                     ">" 
-                + formatNumbers(sumRangeAufwand, 0, "h") + "</span");
+                + yaioAppBase.get('YaioBaseService').formatNumbers(sumRangeAufwand, 0, "h") + "</span");
     } else {
         console.log("yaioRecalcMasterGanttBlock type=" + praefix + " hide gantt_aufwand_label because no calced rangeaufwand :" + sumRangeAufwand + " for " + masterNodeId);
     }
@@ -1675,21 +1675,21 @@ function openNodeHierarchy(treeId, lstIdsHierarchy) {
     // check for tree
     var tree = $(treeId).fancytree("getTree");
     if (! tree) {
-        logError("openHierarchy: error tree:'" + treeId + "' not found.", false);
+        yaioAppBase.get('YaioBaseService').logError("openHierarchy: error tree:'" + treeId + "' not found.", false);
         return;
     }
 
     // check for rootNode
     var rootNode = tree.rootNode;
     if (! rootNode) {
-        logError("openHierarchy: error for tree:'" + treeId 
+        yaioAppBase.get('YaioBaseService').logError("openHierarchy: error for tree:'" + treeId 
                     + "' rootNode not found.", false);
         return;
     }
     
     // check for lstIdsHierarchy
     if (! lstIdsHierarchy || lstIdsHierarchy.length <= 0) {
-        logError("openHierarchy: error for tree:'" + treeId 
+        yaioAppBase.get('YaioBaseService').logError("openHierarchy: error for tree:'" + treeId 
                     + "' lstIdsHierarchy is empty.", false);
         return;
     }
@@ -1702,7 +1702,7 @@ function openNodeHierarchy(treeId, lstIdsHierarchy) {
         firstNode = rootNode.mapChildren[firstNodeId];
     }
     if (! firstNode) {
-        logError("openHierarchy: error for tree:'" + treeId 
+        yaioAppBase.get('YaioBaseService').logError("openHierarchy: error for tree:'" + treeId 
                     + "' firstNode of:'" + lstIdsHierarchySave 
                     + "' not found on rootNode.", false);
         return;
@@ -1719,14 +1719,14 @@ function openNodeHierarchyForNodeId(treeId, activeNodeId) {
     // check for tree
     var tree = $(treeId).fancytree("getTree");
     if (! tree) {
-        logError("openNodeHierarchyForNodeId: error tree:'" + treeId + "' not found.", false);
+        yaioAppBase.get('YaioBaseService').logError("openNodeHierarchyForNodeId: error tree:'" + treeId + "' not found.", false);
         return;
     }
     
     // check for activeNodeId
     var treeNode = tree.getNodeByKey(activeNodeId);
     if (! treeNode) {
-        logError("openNodeHierarchyForNodeId: error for tree:'" + treeId 
+        yaioAppBase.get('YaioBaseService').logError("openNodeHierarchyForNodeId: error for tree:'" + treeId 
                 + "' activeNode " + activeNodeId + " not found.", false);
         return null;
     }
@@ -1746,14 +1746,14 @@ function openNodeHierarchyForNodeId(treeId, activeNodeId) {
 function yaioOpenSubNodesForTree(treeId, level) {
     var tree = $(treeId).fancytree("getTree");
     if (! tree) {
-        logError("yaioOpenSubNodesForTree: error tree:'" + treeId + "' not found.", false);
+        yaioAppBase.get('YaioBaseService').logError("yaioOpenSubNodesForTree: error tree:'" + treeId + "' not found.", false);
         return;
     }
     
     // check for activeNodeId
     var treeNode = tree.rootNode;
     if (! treeNode) {
-        logError("yaioOpenSubNodesForTree: error rootnode for tree:'" + treeId 
+        yaioAppBase.get('YaioBaseService').logError("yaioOpenSubNodesForTree: error rootnode for tree:'" + treeId 
                 + " not found.", false);
         return null;
     }
@@ -1785,14 +1785,14 @@ function yaioRemoveNodeById(nodeId) {
         var treeId = "#tree";
         var tree = $(treeId).fancytree("getTree");
         if (! tree) {
-            logError("yaioRemoveNode: error tree:'" + treeId + "' not found.", false);
+            yaioAppBase.get('YaioBaseService').logError("yaioRemoveNode: error tree:'" + treeId + "' not found.", false);
             return;
         }
         
         // check for activeNodeId
         var treeNode = tree.getNodeByKey(nodeId);
         if (! treeNode) {
-            logError("yaioRemoveNode: error for tree:'" + treeId 
+            yaioAppBase.get('YaioBaseService').logError("yaioRemoveNode: error for tree:'" + treeId 
                     + "' activeNode " + nodeId + " not found.", false);
             return null;
         }
@@ -1834,7 +1834,7 @@ function yaioDoUpdateNode(node, url, json) {
                         openNodeHierarchy("#tree", response.parentIdHierarchy);
                     });
                 } else {
-                    logError("got no hierarchy for:" + node.key 
+                    yaioAppBase.get('YaioBaseService').logError("got no hierarchy for:" + node.key 
                             + " hierarchy:" + response.parentIdHierarchy, true);
                 }
             } else {
@@ -1845,18 +1845,18 @@ function yaioDoUpdateNode(node, url, json) {
                     message = message +  " violations: ";
                     for (var idx in response.violations) {
                         var violation = response.violations[idx];
-                        logError("violations while save node:" + node.key 
+                        yaioAppBase.get('YaioBaseService').logError("violations while save node:" + node.key 
                                 + " field:" + violation.path + " message:" + violation.message, false);
                         message = message +  violation.path + " (" + violation.message + "),";
                     }
                 }
-                logError(message, true)
+                yaioAppBase.get('YaioBaseService').logError(message, true)
             }
         },
         error : function(jqXHR, textStatus, errorThrown) {
             // log the error to the console
-            logError("The following error occured: " + textStatus + " " + errorThrown, true);
-            logError("cant save node:" + node.key + " error:" + textStatus)
+            yaioAppBase.get('YaioBaseService').logError("The following error occured: " + textStatus + " " + errorThrown, true);
+            yaioAppBase.get('YaioBaseService').logError("cant save node:" + node.key + " error:" + textStatus)
         },
         complete : function() {
             console.log("update node:" + node.key + "' ran");
@@ -1897,7 +1897,7 @@ function yaioLoadSymLinkData(basenode, fancynode) {
                     }
                     var treeNode = tree.getNodeByKey(basenode.sysUID);
                     if (! treeNode) {
-                        logError("error yaioLoadSymLinkData: cant load node - " + msg, false);
+                        yaioAppBase.get('YaioBaseService').logError("error yaioLoadSymLinkData: cant load node - " + msg, false);
                         return null;
                     }
                     
@@ -1932,16 +1932,16 @@ function yaioLoadSymLinkData(basenode, fancynode) {
 
                     console.log("renderSymLinkDataBLock done:" + msg);
                 } else {
-                    logError("ERROR got no " + msg, true);
+                    yaioAppBase.get('YaioBaseService').logError("ERROR got no " + msg, true);
                 }
             } else {
-                logError("ERROR cant load  " + msg + " error:" + response.stateMsg, true);
+                yaioAppBase.get('YaioBaseService').logError("ERROR cant load  " + msg + " error:" + response.stateMsg, true);
             }
         },
         error : function(jqXHR, textStatus, errorThrown) {
             // log the error to the console
-            logError("ERROR  " + msg + " The following error occured: " + textStatus + " " + errorThrown, false);
-            logError("cant load " + msg + " error:" + textStatus, true)
+            yaioAppBase.get('YaioBaseService').logError("ERROR  " + msg + " The following error occured: " + textStatus + " " + errorThrown, false);
+            yaioAppBase.get('YaioBaseService').logError("cant load " + msg + " error:" + textStatus, true)
         },
         complete : function() {
             console.log("completed load " + msg);
@@ -1974,17 +1974,17 @@ function yaioDoRemoveNode(node, url) {
                         openNodeHierarchy("#tree", response.parentIdHierarchy);
                     });
                 } else {
-                    logError("got no hierarchy for:" + node.key 
+                    yaioAppBase.get('YaioBaseService').logError("got no hierarchy for:" + node.key 
                             + " hierarchy:" + response.parentIdHierarchy, true);
                 }
             } else {
-                logError("cant remove node:" + node.key + " error:" + response.stateMsg, false);
+                yaioAppBase.get('YaioBaseService').logError("cant remove node:" + node.key + " error:" + response.stateMsg, false);
                 // check for violations
                 if (response.violations) {
                     // iterate violations
                     for (var idx in response.violations) {
                         var violation = response.violations[idx];
-                        logError("violations while remove node:" + node.key 
+                        yaioAppBase.get('YaioBaseService').logError("violations while remove node:" + node.key 
                                 + " field:" + violation.path + " message:" + violation.message, false);
                         window.alert("cant remove node because: " + violation.path + " (" + violation.message + ")")
                     }
@@ -1993,8 +1993,8 @@ function yaioDoRemoveNode(node, url) {
         },
         error : function(jqXHR, textStatus, errorThrown) {
             // log the error to the console
-            logError("The following error occured: " + textStatus + " " + errorThrown, false);
-            logError("cant remove node:" + node.key + " error:" + textStatus, true)
+            yaioAppBase.get('YaioBaseService').logError("The following error occured: " + textStatus + " " + errorThrown, false);
+            yaioAppBase.get('YaioBaseService').logError("cant remove node:" + node.key + " error:" + textStatus, true)
         },
         complete : function() {
             console.log("remove node:" + node.key + "' ran");
@@ -2020,19 +2020,19 @@ function openJiraExportWindow(nodeId) {
     // check vars
     if (! nodeId) {
         // tree not found
-        logError("error openJiraWindow: nodeId required", false);
+        yaioAppBase.get('YaioBaseService').logError("error openJiraWindow: nodeId required", false);
         return null;
     }
     // load node
     var tree = $("#tree").fancytree("getTree");
     if (!tree) {
         // tree not found
-        logError("error openJiraWindow: cant load tree for node:" + nodeId, false);
+        yaioAppBase.get('YaioBaseService').logError("error openJiraWindow: cant load tree for node:" + nodeId, false);
         return null;
     }
     var treeNode = tree.getNodeByKey(nodeId);
     if (! treeNode) {
-        logError("error openJiraWindow: cant load node:" + nodeId, false);
+        yaioAppBase.get('YaioBaseService').logError("error openJiraWindow: cant load node:" + nodeId, false);
         return null;
     }
     
@@ -2048,7 +2048,7 @@ function openJiraExportWindow(nodeId) {
     
     // convert and secure
     var nodeDesc = convertMarkdownToJira(descText);
-    nodeDesc = htmlEscapeText(nodeDesc);
+    nodeDesc = yaioAppBase.get('YaioBaseService').htmlEscapeText(nodeDesc);
     
     // set clipboard-content
     $( "#clipboard-content" ).html(nodeDesc);
@@ -2081,9 +2081,9 @@ function openJiraExportWindow(nodeId) {
 function yaioExportExplorerLinesAsOverview() {
     // convert and secure
     var checkListSrc = convertExplorerLinesAsCheckList();
-    checkListSrc = htmlEscapeText(checkListSrc);
+    checkListSrc = yaioAppBase.get('YaioBaseService').htmlEscapeText(checkListSrc);
     var ganttSrc = convertExplorerLinesAsGanttMarkdown();
-    ganttSrc = htmlEscapeText(ganttSrc);
+    ganttSrc = yaioAppBase.get('YaioBaseService').htmlEscapeText(ganttSrc);
     
     // set clipboard-content
     $( "#clipboard-content" ).html(checkListSrc + "\n\n" +  ganttSrc);
@@ -2115,9 +2115,9 @@ function yaioExportExplorerLinesAsOverview() {
 function yaioSnapshot(parentNode) {
     // convert and secure
     var checkListSrc = convertExplorerLinesAsCheckList();
-    checkListSrc = htmlEscapeText(checkListSrc);
+    checkListSrc = yaioAppBase.get('YaioBaseService').htmlEscapeText(checkListSrc);
     var ganttSrc = convertExplorerLinesAsGanttMarkdown();
-    ganttSrc = htmlEscapeText(ganttSrc);
+    ganttSrc = yaioAppBase.get('YaioBaseService').htmlEscapeText(ganttSrc);
 
     // open editor
     yaioOpenNodeEditorForNode(parentNode, 'createsnapshot', {nodeDesc: checkListSrc + "\n\n" +  ganttSrc});
@@ -2139,7 +2139,7 @@ function yaioSnapshot(parentNode) {
  */
 function openTxtExportWindow(content) {
     // secure
-    content = htmlEscapeText(content);
+    content = yaioAppBase.get('YaioBaseService').htmlEscapeText(content);
 
     // set clipboard-content
     $( "#clipboard-content" ).html(content);

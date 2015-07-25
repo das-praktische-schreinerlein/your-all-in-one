@@ -16,10 +16,20 @@
  */
 'use strict';
 
+window.Yaio = {};
 window.YaioAppBase = function() {
     // my own instance
     var me = JsHelferlein.AppBase(YaioAppBaseConfig());
+
+    me._init = function () {
+        me._configureDefaultServices();
+        me._configureDefaultDetectors();
+    }
     
+    me._configureDefaultServices = function() {
+        me.configureService("YaioBaseService", function() { return Yaio.BaseService(me); });
+    };
+
     // init all
     me._init();
 

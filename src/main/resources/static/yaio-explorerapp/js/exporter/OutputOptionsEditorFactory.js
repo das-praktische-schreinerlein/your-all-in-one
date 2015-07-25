@@ -123,7 +123,7 @@ yaioM.factory('OutputOptionsEditor', function() {
 //                // sucess handler
 //                toggleElement("#containerFormYaioEditorOutputOptions");
 //                
-//                downloadAsFile(null, response.data, "test.xxx", "dummy", "dummy");
+//                yaioAppBase.get('YaioBaseService').downloadAsFile(null, response.data, "test.xxx", "dummy", "dummy");
 //                
 //                console.log("send done");
 //            }, function(response) {
@@ -133,9 +133,9 @@ yaioM.factory('OutputOptionsEditor', function() {
 //                var header = response.header;
 //                var config = response.config;
 //                var message = "error while do export with url: " + url;
-//                logError(message, true);
+//                yaioAppBase.get('YaioBaseService').logError(message, true);
 //                message = "error data: " + data + " header:" + header + " config:" + config;
-//                logError(message, false);
+//                yaioAppBase.get('YaioBaseService').logError(message, false);
 //            });
 
             var formId = "#nodeFormOutputOptions";

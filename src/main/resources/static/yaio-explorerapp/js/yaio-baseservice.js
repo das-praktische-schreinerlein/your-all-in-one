@@ -34,202 +34,219 @@
  * Service-Funktions (layout)
  *****************************************
  *****************************************/
+'use strict';
 
- function toggleWithLinks(link1, link2, id1, id2) {
-     if ($(id1).css("display") != "none") {
-         $(id1).css("display", "none");
-         $(link1).css("display", "inline");
-         $(id2).css("display", "block");
-         $(link2).css("display", "none");
-     } else {
-         $(id2).css("display", "none");
-         $(link2).css("display", "inline");
-         $(id1).css("display", "block");
-         $(link1).css("display", "none");
+Yaio.BaseService = function(appBase) {
+    // my own instance
+    var me = JsHelferlein.ServiceBase(appBase);
+
+    /**
+     * initialize the object
+     */
+    me._init = function() {
+    }
+
+    me.toggleWithLinks = function(link1, link2, id1, id2) {
+         if ($(id1).css("display") != "none") {
+             $(id1).css("display", "none");
+             $(link1).css("display", "inline");
+             $(id2).css("display", "block");
+             $(link2).css("display", "none");
+         } else {
+             $(id2).css("display", "none");
+             $(link2).css("display", "inline");
+             $(id1).css("display", "block");
+             $(link1).css("display", "none");
+         }
+         return false;     
      }
-     return false;     
- }
-
- function showModalErrorMessage(message) {
-     // set messagetext
-     $( "#error-message-text" ).html(message);
-     
-     // show message
-     $( "#error-message" ).dialog({
-         modal: true,
-         buttons: {
-           Ok: function() {
-             $( this ).dialog( "close" );
-           }
-         }
-     });    
- }
-
- function showModalConfirmDialog(message, yesHandler, noHandler) {
-     // set messagetext
-     $( "#dialog-confirm-text" ).html(message);
-     
-     // show message
-     
-     $( "#dialog-confirm" ).dialog({
-         resizable: false,
-         height:140,
-         modal: true,
-         buttons: {
-           "Ja": function() {
-             $( this ).dialog( "close" );
-             if (yesHandler) {
-                 yesHandler();
+    
+     me.showModalErrorMessage = function(message) {
+         // set messagetext
+         $( "#error-message-text" ).html(message);
+         
+         // show message
+         $( "#error-message" ).dialog({
+             modal: true,
+             buttons: {
+               Ok: function() {
+                 $( this ).dialog( "close" );
+               }
              }
-           },
-           "Abbrechen": function() {
-             $( this ).dialog( "close" );
-             if (noHandler) {
-                 noHandler();
+         });    
+     }
+    
+     me.showModalConfirmDialog = function(message, yesHandler, noHandler) {
+         // set messagetext
+         $( "#dialog-confirm-text" ).html(message);
+         
+         // show message
+         
+         $( "#dialog-confirm" ).dialog({
+             resizable: false,
+             height:140,
+             modal: true,
+             buttons: {
+               "Ja": function() {
+                 $( this ).dialog( "close" );
+                 if (yesHandler) {
+                     yesHandler();
+                 }
+               },
+               "Abbrechen": function() {
+                 $( this ).dialog( "close" );
+                 if (noHandler) {
+                     noHandler();
+                 }
+               }
              }
-           }
-         }
-     });
- }
-
-
-/*****************************************
- *****************************************
- * Service-Funktions (logging)
- *****************************************
- *****************************************/
- function showToastMessage(type, title, message) {
-     // show message
-     toastr.options = {
-             "closeButton": true,
-             "debug": false,
-             "newestOnTop": true,
-             "progressBar": true,
-             "positionClass": "toast-top-right",
-             "preventDuplicates": false,
-             "showDuration": "300",
-             "hideDuration": "1000",
-             "timeOut": "10000",
-             "extendedTimeOut": "1000",
-             "showEasing": "swing",
-             "hideEasing": "linear",
-             "showMethod": "fadeIn",
-             "hideMethod": "fadeOut"
-     };
-     toastr[type](htmlEscapeText(message), title);
- }
-
-
-
-function logError(message, flgShowDialog) {
-    console.error(message);
-    if (flgShowDialog) {
-        showToastMessage("error", "Oops! Ein Fehlerchen :-(", htmlEscapeText(message));
-//        showModalErrorMessage(htmlEscapeText(message));
+         });
+     }
+    
+    
+    /*****************************************
+     *****************************************
+     * Service-Funktions (logging)
+     *****************************************
+     *****************************************/
+     me.showToastMessage = function(type, title, message) {
+         // show message
+         toastr.options = {
+                 "closeButton": true,
+                 "debug": false,
+                 "newestOnTop": true,
+                 "progressBar": true,
+                 "positionClass": "toast-top-right",
+                 "preventDuplicates": false,
+                 "showDuration": "300",
+                 "hideDuration": "1000",
+                 "timeOut": "10000",
+                 "extendedTimeOut": "1000",
+                 "showEasing": "swing",
+                 "hideEasing": "linear",
+                 "showMethod": "fadeIn",
+                 "hideMethod": "fadeOut"
+         };
+         toastr[type](me.htmlEscapeText(message), title);
+     }
+    
+    
+    
+    me.logError = function(message, flgShowDialog) {
+        console.error(message);
+        if (flgShowDialog) {
+            me.showToastMessage("error", "Oops! Ein Fehlerchen :-(", me.htmlEscapeText(message));
+    //        me.showModalErrorMessage(me.htmlEscapeText(message));
+        }
     }
-}
-
-/*****************************************
- *****************************************
- * Service-Funktions (data)
- *****************************************
- *****************************************/
-
-function htmlEscapeText(text) {
-    if ((text != "undefined") && (text != "") && (text != null)) {
-        text = text.replace(/&/g, "&amp;");
-        text = text.replace(/</g, "&lt;");
-        text = text.replace(/>/g, "&gt;");
-        text = text.replace(/"/g, "&quot;");
-        text = text.replace(/'/g, "&#x27;");
-        text = text.replace(/\//g, "&#x2F;");
+    
+    /*****************************************
+     *****************************************
+     * Service-Funktions (data)
+     *****************************************
+     *****************************************/
+    
+    me.htmlEscapeText = function(text) {
+        if ((text != "undefined") && (text != "") && (text != null)) {
+            text = text.replace(/&/g, "&amp;");
+            text = text.replace(/</g, "&lt;");
+            text = text.replace(/>/g, "&gt;");
+            text = text.replace(/"/g, "&quot;");
+            text = text.replace(/'/g, "&#x27;");
+            text = text.replace(/\//g, "&#x2F;");
+        }
+        return text;
     }
-    return text;
-}
-
-function htmlEscapeTextLazy(text) {
-    if ((text != "undefined") && (text != "") && (text != null)) {
-        text = text.replace(/</g, "&lt;");
-        text = text.replace(/>/g, "&gt;");
+    
+    me.htmlEscapeTextLazy = function(text) {
+        if ((text != "undefined") && (text != "") && (text != null)) {
+            text = text.replace(/</g, "&lt;");
+            text = text.replace(/>/g, "&gt;");
+        }
+        return text;
     }
-    return text;
-}
-
-function formatGermanDateTime(millis) {
-    if (millis == null) {
-       return "";
+    
+    me.formatGermanDateTime = function(millis) {
+        if (millis == null) {
+           return "";
+        }
+        var date = new Date(millis);
+        return me.padNumber(date.getDate(), 2)
+            + "." + me.padNumber(date.getMonth() + 1, 2)
+            + "." + date.getFullYear()
+            + " " + me.padNumber(date.getHours(), 2)
+            + ":" + me.padNumber(date.getMinutes(), 2);
     }
-    var date = new Date(millis);
-    return padNumber(date.getDate(), 2)
-        + "." + padNumber(date.getMonth() + 1, 2)
-        + "." + date.getFullYear()
-        + " " + padNumber(date.getHours(), 2)
-        + ":" + padNumber(date.getMinutes(), 2);
-}
-function formatGermanDate(millis) {
-    if (millis == null) {
-       return "";
+    me.formatGermanDate = function(millis) {
+        if (millis == null) {
+           return "";
+        }
+        var date = new Date(millis);
+        return me.padNumber(date.getDate(), 2)
+            + "." + me.padNumber(date.getMonth() + 1, 2)
+            + "." + date.getFullYear();
     }
-    var date = new Date(millis);
-    return padNumber(date.getDate(), 2)
-        + "." + padNumber(date.getMonth() + 1, 2)
-        + "." + date.getFullYear();
-}
-function padNumber(number, count) {
-    var r = String(number);
-    while ( r.length < count) {
-    r = '0' + r;
-    }
-    return r;
-} 
-function formatNumbers(number, nachkomma, suffix) {
-   if (number == null) {
-       return "";
-   }
-   
-   return (number.toFixed(nachkomma)) + suffix;
-}
-
- function downloadAsFile($link, data, fileName, mime, encoding) {
-    if (mime == "undefind") {
-        mime = "application/text";
-    }
-    if (encoding == "undefind") {
-        mime = "uft-8";
-    }
-    // data URI
-    var dataURI = 'data:' + mime + ';charset=' + encoding + ','
-            + encodeURIComponent(data);
-
-    // set link
-    var flgSafeMode = 0;
-    if (   (navigator.userAgent.indexOf("Trident") >= 0) 
-        || (navigator.userAgent.indexOf("MSIE") >= 0)
-        || flgSafeMode) {
-       // IE or SafeMode
-       var popup = window.open("");
-       if (! popup) {
-           // warn message
-           logError("Leider kann der Download nicht angezeigt werden, da Ihr Popup-Blocker aktiv ist. Beachten Sie die Hinweise im Kopf des Browsers. ", true);
-       } else {
-           // set data to document
-           $(popup.document.body).html("<pre>" + htmlEscapeTextLazy(data) + "</pre>");
+    me.padNumber = function(number, count) {
+        var r = String(number);
+        while ( r.length < count) {
+        r = '0' + r;
+        }
+        return r;
+    } 
+    me.formatNumbers = function(number, nachkomma, suffix) {
+       if (number == null) {
+           return "";
        }
-       return false;
-   } else {
-        // all expect IE
-        $link.attr({
-            'download' : fileName,
-            'href' : dataURI,
-            'target' : '_blank'
-        });
-   }
-}
-
-function createXFrameAllowFrom() {
-    return "x-frames-allow-from=" + window.location.hostname;
-}
-
-function escapeRegExp(str) {
-    return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
-}
+       
+       return (number.toFixed(nachkomma)) + suffix;
+    }
+    
+    me.downloadAsFile = function($link, data, fileName, mime, encoding) {
+        if (mime == "undefind") {
+            mime = "application/text";
+        }
+        if (encoding == "undefind") {
+            mime = "uft-8";
+        }
+        // data URI
+        var dataURI = 'data:' + mime + ';charset=' + encoding + ','
+                + encodeURIComponent(data);
+    
+        // set link
+        var flgSafeMode = 0;
+        if (   (navigator.userAgent.indexOf("Trident") >= 0) 
+            || (navigator.userAgent.indexOf("MSIE") >= 0)
+            || flgSafeMode) {
+           // IE or SafeMode
+           var popup = window.open("");
+           if (! popup) {
+               // warn message
+               me.logError("Leider kann der Download nicht angezeigt werden, da Ihr Popup-Blocker aktiv ist. Beachten Sie die Hinweise im Kopf des Browsers. ", true);
+           } else {
+               // set data to document
+               $(popup.document.body).html("<pre>" + me.htmlEscapeTextLazy(data) + "</pre>");
+           }
+           return false;
+       } else {
+            // all expect IE
+            $link.attr({
+                'download' : fileName,
+                'href' : dataURI,
+                'target' : '_blank'
+            });
+       }
+    }
+    
+    me.createXFrameAllowFrom = function() {
+        return "x-frames-allow-from=" + window.location.hostname;
+    }
+    
+    me.escapeRegExp = function(str) {
+        return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+    };
+    
+    
+    me._init();
+    
+    return me;
+};

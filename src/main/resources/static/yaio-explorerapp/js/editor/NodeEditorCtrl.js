@@ -266,7 +266,7 @@ yaioM.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $http
             nodeObj["sysUID"] = null;
         } else {
             // unknown mode
-            logError("unknown mode=" + mode + " form formName=" + formName, false);
+            yaioAppBase.get('YaioBaseService').logError("unknown mode=" + mode + " form formName=" + formName, false);
             return null;
         }
 
@@ -343,9 +343,9 @@ yaioM.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $http
                         }
                     }
                 }
-                logError(message, false);
+                yaioAppBase.get('YaioBaseService').logError(message, false);
                 if (userMessage != "") {
-                    logError(userMessage, true);
+                    yaioAppBase.get('YaioBaseService').logError(userMessage, true);
                 }
                 
                 // Failed
@@ -360,9 +360,9 @@ yaioM.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $http
             var header = response.header;
             var config = response.config;
             var message = "error saving node with url: " + url;
-            logError(message, true);
+            yaioAppBase.get('YaioBaseService').logError(message, true);
             message = "error data: " + data + " header:" + header + " config:" + config;
-            logError(message, false);
+            yaioAppBase.get('YaioBaseService').logError(message, false);
         });
     };
 });

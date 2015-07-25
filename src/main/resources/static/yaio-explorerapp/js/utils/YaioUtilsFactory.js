@@ -29,8 +29,8 @@
  *     Utils
  */
 yaioM.factory('yaioUtils', function () {
-    var ganttRangeStart = formatGermanDate((new Date()).getTime() - 90*24*60*60*1000); 
-    var ganttRangeEnd = formatGermanDate((new Date()).getTime() + 90*24*60*60*1000);
+    var ganttRangeStart = yaioAppBase.get('YaioBaseService').formatGermanDate((new Date()).getTime() - 90*24*60*60*1000); 
+    var ganttRangeEnd = yaioAppBase.get('YaioBaseService').formatGermanDate((new Date()).getTime() + 90*24*60*60*1000);
     
     return {
         /**

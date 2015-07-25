@@ -100,7 +100,7 @@ function formatMarkdown(descText, flgHighlightNow, headerPrefix) {
     var renderer = new marked.Renderer();
     // my own code-handler
     renderer.code = function (code, language) {
-        code = htmlEscapeTextLazy(code);
+        code = yaioAppBase.get('YaioBaseService').htmlEscapeTextLazy(code);
         if (code.match(/^sequenceDiagram/) || code.match(/^graph/) || code.match(/^gantt/)) {
             return '<div id="inlineMermaid' + (localHtmlId++) + '" class="mermaid">'+ prepareTextForMermaid(code ) + '</div>';
         } else if (language !== undefined 
@@ -197,7 +197,7 @@ function prepareTextForMarkdown(descText) {
         noCode = newDescTextRest.slice(0, codeStart + 3);
         
         // replace <> but prevent <br> in noCode
-        noCode = htmlEscapeTextLazy(noCode);
+        noCode = yaioAppBase.get('YaioBaseService').htmlEscapeTextLazy(noCode);
         noCode = noCode.replace(/&lt;br&gt;/g, "<br>");
         newDescText += noCode;
         
@@ -227,7 +227,7 @@ function prepareTextForMarkdown(descText) {
 
     // replace <> but prevent <br> in noCode
     noCode = newDescTextRest;
-    noCode = htmlEscapeTextLazy(noCode);
+    noCode = yaioAppBase.get('YaioBaseService').htmlEscapeTextLazy(noCode);
     noCode = noCode.replace(/&lt;br&gt;/g, "<br>");
     
     // add rest to newDescText
@@ -297,8 +297,8 @@ function formatYaioMindmap(block) {
  */
 function formatMermaidGlobal() {
     mermaid.parseError = function(err,hash){
-        showToastMessage("error", "Oops! Ein Fehlerchen :-(", "Syntaxfehler bei Parsen des Diagrammcodes:" + err);
-//        showModalErrorMessage(":" + err);
+        yaioAppBase.get('YaioBaseService').showToastMessage("error", "Oops! Ein Fehlerchen :-(", "Syntaxfehler bei Parsen des Diagrammcodes:" + err);
+//        yaioAppBase.get('YaioBaseService').showModalErrorMessage(":" + err);
     };
     try {
         mermaid.init();
@@ -411,7 +411,7 @@ function formatDescBlock(descBlock) {
             console.log("formatDescBlock mermaid descBlock: " + descBlockId + " block: " + blockId);
             addServicesToDiagrammBlock(block, 'mermaid',
                     "<a href='' id='linkdownload" + blockId + "'  target='_blank'"
-                    +   " onclick=\"javascript: downloadAsFile($('#linkdownload" + blockId + "'), $('#" + blockId + "').html(), 'diagram.svg', 'image/svg+xml', 'utf-8'); return true;\">"
+                    +   " onclick=\"javascript: yaioAppBase.get('YaioBaseService').downloadAsFile($('#linkdownload" + blockId + "'), $('#" + blockId + "').html(), 'diagram.svg', 'image/svg+xml', 'utf-8'); return true;\">"
                     + "Download</a>");
             flgDoMermaid = true;
         } else {
@@ -430,7 +430,7 @@ function formatDescBlock(descBlock) {
             console.log("formatDescBlock mermaid descBlock: " + descBlockId + " block: " + blockId);
             addServicesToDiagrammBlock(block, 'mermaid',
                     "<a href='' id='linkdownload" + blockId + "'  target='_blank'"
-                    +   " onclick=\"javascript: downloadAsFile($('#linkdownload" + blockId + "'), $('#" + blockId + "').html(), 'diagram.svg', 'image/svg+xml', 'utf-8'); return true;\">"
+                    +   " onclick=\"javascript: yaioAppBase.get('YaioBaseService').downloadAsFile($('#linkdownload" + blockId + "'), $('#" + blockId + "').html(), 'diagram.svg', 'image/svg+xml', 'utf-8'); return true;\">"
                     + "Download</a>");
             flgDoMermaid = true;
         } else if ($(block).hasClass("lang-yaiomindmap") || $(block).hasClass("yaiomindmap")) {
@@ -517,7 +517,7 @@ function highlightCheckListForMatcher(descBlock, matcherStr, styleClass, style) 
     var descBlockId = $(descBlock).attr('id');
     console.log("highlightCheckListForMatcher matcherStr '" + matcherStr + "' for descBlock: " + descBlockId);
     $("#" + descBlockId + " li:contains('" + matcherStr + "'),h1:contains('" + matcherStr + "'),h2:contains('" + matcherStr + "')").each(function(index, value) {
-        var regEx = RegExp(escapeRegExp(matcherStr), 'gi');
+        var regEx = RegExp(yaioAppBase.get('YaioBaseService').escapeRegExp(matcherStr), 'gi');
         findAndReplaceDOMText($(value).get(0), {
             find: regEx,
             replace: function(portion) {
@@ -552,7 +552,7 @@ function highlightCheckListForMatcher(descBlock, matcherStr, styleClass, style) 
 function convertExplorerLinesAsCheckList() {
     // get title
     var title = $("#masterTr td.fieldtype_name").text();
-    var now = formatGermanDateTime((new Date()).getTime());
+    var now = yaioAppBase.get('YaioBaseService').formatGermanDateTime((new Date()).getTime());
 
     var checkList = "# Checklist: " + title + " (Stand: " + now + ")\n\n";
     
@@ -658,7 +658,7 @@ function extractCheckListStatefromStateSpan(block) {
 function convertExplorerLinesAsGanttMarkdown() {
     // get title
     var title = $("#masterTr td.fieldtype_name").text();
-    var now = formatGermanDateTime((new Date()).getTime());
+    var now = yaioAppBase.get('YaioBaseService').formatGermanDateTime((new Date()).getTime());
 
     var ganttMarkdown = "# Gantt: " + title + " (Stand: " + now + ")\n\n"
         + "```mermaid\n"
@@ -745,8 +745,8 @@ function addServicesToDiagrammBlock(block, type, downloadLink) {
     $("#fallback" + blockId).before(
             "<div class='services" + type + "' id='services" + blockId + "'><div>"
             + downloadLink
-            + "<a href='#' style='display: none;' id='toggleorig" + blockId + "' onclick=\"toggleWithLinks('#toggleorig" + blockId + "', '#togglesource" + blockId + "', '#" + blockId + "', '#fallback" + blockId + "'); return false;\" target='_blank'>Diagramm</a>"
-            + "<a href='#' id='togglesource" + blockId + "' onclick=\"toggleWithLinks('#toggleorig" + blockId + "', '#togglesource" + blockId + "', '#" + blockId + "', '#fallback" + blockId + "'); return false;\" target='_blank'>Source</a>"
+            + "<a href='#' style='display: none;' id='toggleorig" + blockId + "' onclick=\"yaioAppBase.get('YaioBaseService').toggleWithLinks('#toggleorig" + blockId + "', '#togglesource" + blockId + "', '#" + blockId + "', '#fallback" + blockId + "'); return false;\" target='_blank'>Diagramm</a>"
+            + "<a href='#' id='togglesource" + blockId + "' onclick=\"yaioAppBase.get('YaioBaseService').toggleWithLinks('#toggleorig" + blockId + "', '#togglesource" + blockId + "', '#" + blockId + "', '#fallback" + blockId + "'); return false;\" target='_blank'>Source</a>"
             + "</div></div>");
 }
 
