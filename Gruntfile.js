@@ -1,5 +1,29 @@
 var path = require('path');
 
+
+function patchFileSlimbox2(content, srcpath) {
+    var newContent = content;
+    console.log("patchFileSlimbox2:" + srcpath);
+    newContent = newContent.replace(/\t/g,"    ");
+    newContent = newContent.replace("middle = win.scrollTop() + (win.height() / 2);", "middle = win.scrollTop() + (window.innerHeight / 2);");
+    return newContent;
+}
+function patchFileFancytree(content, srcpath) {
+    var newContent = content;
+    console.log("patchFileFancytree:" + srcpath);
+    newContent = newContent.replace(/@version .*?\n/, "@version @VERSION\n");
+    newContent = newContent.replace(/@date .*?\n/, "@date @DATE\n");
+    return newContent;
+}
+function patchFileJQueryLang(content, srcpath) {
+    var newContent = content;
+    console.log("patchFileJQueryLang:" + srcpath);
+    newContent = newContent.replace(/'placeholder'\n\t*];/, "'placeholder', 'data-tooltip'\n\t\t];");
+    return newContent;
+}
+
+
+
 module.exports = function( grunt ){
    // configure tasks
     grunt.initConfig({
@@ -155,21 +179,68 @@ module.exports = function( grunt ){
             }
         },
         
+        clean: ["bower/_dest", "vendors"],
         copy: {
-            main: {
+            all: {
+                options: {
+                    process: function (content, srcpath) {
+                        if (srcpath.search('slimbox2.') > 0) {
+                            return patchFileSlimbox2(content, srcpath);
+                        } else if (srcpath.search('fancytree') > 0) {
+                            return patchFileFancytree(content, srcpath);
+                        } else if (srcpath.search('jquery-lang') > 0) {
+                            return patchFileJQueryLang(content, srcpath);
+                        }
+                        return content;
+                    }
+                },
                 files: [
-                    // includes files within path
+                    //"ace-builds": "v1.1.8", // OK
+                    //"angular": "1.2.23", // OK
+                    //"angular-translate": "2.4.0", // OK
+                    //"fancytree": "2.4.0", // ToDo Patch
+                    //"find-and-replace-dom-text": "0.4.3",  // OK
+                    //"highlightjs": "8.4.0",  // OK
+                    //"jquery": "1.11.1", //OK
+                    //"jquery-lang-js": "#be9519db371f0f3131db13b357b9e54f2629df31 == 2.4.0", // OK
+                    //"jquery-ui": "1.10.4", // OK
+                    //"jqueryui-timepicker-addon": "1.4.5", // OK
+                    //"marked": "0.3.3", // TODO Patch
+                    //"mermaid": "0.4.0", // TODO Patch
+                    //"slimbox2": "cbeyls/slimbox#2.05", // Done Patch
+                    //"strapdown": "ndossougbe/strapdown#0.4.1", // ToDo Patch
+                    //"toastr": "CodeSeven/toastr#2.1.0", // OK
+                    //"ui-contextmenu": "1.7.0" // OK
+
+                    // JS
+                    {expand: true, cwd: 'bower/_src/ace-builds/src-min-noconflict', src: ['**'], dest: 'vendors/js/ace/', flatten: false},
                     {expand: true, cwd: 'bower/_src/angular', src: ['*.js'], dest: 'vendors/js/angularjs/', flatten: false},
                     {expand: true, cwd: 'bower/_src/angular-translate', src: ['*.js'], dest: 'vendors/js/angularjs/', flatten: false},
+                    {expand: true, cwd: 'bower/_src/fancytree/dist/', src: ['skin*/*.*', '*.js'], dest: 'vendors/js/fancytree/', flatten: false},
+                    {expand: true, cwd: 'bower/_src/fancytree/dist/', src: ['src/*.js'], dest: 'vendors/js/fancytree/', flatten: true},
+                    {expand: true, cwd: 'bower/_src/find-and-replace-dom-text/src', src: ['findAndReplaceDOMText.js'], dest: 'vendors/js/findandreplacedomtext/', flatten: false},
+                    {expand: true, cwd: 'bower/_src/highlightjs/', src: ['**/highlight.pack.js'], dest: 'vendors/js/highlightjs/', flatten: true},
                     {expand: true, cwd: 'bower/_src/jquery/dist', src: ['*.js'], dest: 'vendors/js/jquery/', flatten: false},
                     {expand: true, cwd: 'bower/_src/jquery-lang-js/js', src: ['*.js'], dest: 'vendors/js/jquery/', flatten: false},
                     {expand: true, cwd: 'bower/_src/jquery-ui', src: ['**/jquery-ui.min.js', '**/jquery-ui-i18n.min.js'], dest: 'vendors/js/jqueryui/', flatten: true},
-                    {expand: true, cwd: 'bower/_src/jquery-lang', src: ['js/*.js'], dest: 'vendors/js/jqueryui/', flatten: true},
                     {expand: true, cwd: 'bower/_src/jqueryui-timepicker-addon', src: ['dist/*.js'], dest: 'vendors/js/jqueryui/', flatten: true},
+                    {expand: true, cwd: 'bower/_src/marked', src: ['lib/marked.js'], dest: 'vendors/js/marked/', flatten: true},
+                    {expand: true, cwd: 'bower/_src/mermaid', src: ['dist/mermaid-legacy.full.js'], dest: 'vendors/js/mermaid/', flatten: true, filter: 'isFile'
+                        ,rename: function(dest, src) {
+                            return dest + src.replace('-legacy.full.js','.full.js');
+                          }
+                    },
+                    {expand: true, cwd: 'bower/_src/slimbox2', src: ['js/slimbox2.js'], dest: 'vendors/js/slimbox2/', flatten: true},
+                    {expand: true, cwd: 'bower/_src/strapdown', src: ['src/js/strapdown-toc.js'], dest: 'vendors/js/strapdown/', flatten: true},
+                    {expand: true, cwd: 'bower/_src/toastr', src: ['build/toastr.min.js'], dest: 'vendors/js/toastr/', flatten: true},
                     {expand: true, cwd: 'bower/_src/ui-contextmenu', src: ['**/*.js'], dest: 'vendors/js/jqueryui/', flatten: true},
-                    {expand: true, cwd: 'bower/_src/fancytree/dist/', src: ['skin*', '*.js'], dest: 'vendors/js/fancytree/', flatten: false},
-                    {expand: true, cwd: 'bower/_src/fancytree/dist/', src: ['src/*.js'], dest: 'vendors/js/fancytree/', flatten: true},
-                    {expand: true, cwd: 'bower/_src/ace-builds/src-min', src: ['**'], dest: 'vendors/js/ace/', flatten: false},
+                    // CSS
+                    {expand: true, cwd: 'bower/_src/highlightjs/', src: ['**/default.css'], dest: 'vendors/css/highlightjs/', flatten: true},
+                    {expand: true, cwd: 'bower/_src/jquery-ui', src: ['**/jquery-ui.css'], dest: 'vendors/css/jqueryui/', flatten: true},
+                    {expand: true, cwd: 'bower/_src/jqueryui-timepicker-addon', src: ['dist/jquery-ui-timepicker-addon.css'], dest: 'vendors/css/jqueryui/', flatten: true},
+                    {expand: true, cwd: 'bower/_src/mermaid', src: ['dist/mermaid.css'], dest: 'vendors/css/mermaid/', flatten: true, filter: 'isFile'},
+                    {expand: true, cwd: 'bower/_src/slimbox2', src: ['**/slimbox2.css'], dest: 'vendors/css/slimbox2/', flatten: true, filter: 'isFile'},
+                    {expand: true, cwd: 'bower/_src/toastr', src: ['toastr.css'], dest: 'vendors/css/toastr/', flatten: true, filter: 'isFile'}
                 ],
             },
         },
@@ -309,7 +380,7 @@ module.exports = function( grunt ){
     });
 
     // register tasks
-    grunt.registerTask('vendors',   ['bower', 'copy']);
+    grunt.registerTask('vendors',   ['clean', 'bower', 'copy']);
     grunt.registerTask('default',   ['jshint']);
     grunt.registerTask('dist',      ['concat:full']);
     grunt.registerTask('unit-test', ['dist', 'karma:continuous:start', 'watch:karma']);
@@ -317,6 +388,7 @@ module.exports = function( grunt ){
 
     // load grunt tasks
     grunt.loadNpmTasks('grunt-bower-task');
+    grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-jshint');
