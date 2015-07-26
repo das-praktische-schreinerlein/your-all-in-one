@@ -89,7 +89,7 @@ Yaio.LayoutService = function(appBase) {
                 return link;
             });
         }
-    }
+    };
     
     /**
      * <h4>FeatureDomain:</h4>

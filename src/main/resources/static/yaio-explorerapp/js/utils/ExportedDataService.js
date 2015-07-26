@@ -43,7 +43,7 @@ Yaio.ExportedDataService = function(appBase) {
      * initialize the object
      */
     me._init = function() {
-    }
+    };
     /*
      * ###########################
      * # PrintLayout
@@ -59,7 +59,7 @@ Yaio.ExportedDataService = function(appBase) {
             $("#link_css_dataonly").removeAttr("disabled");
             $("#link_css_dataonly").prop("disabled", false);
         }
-    }
+    };
     
     /*
      * ###########################
@@ -68,13 +68,13 @@ Yaio.ExportedDataService = function(appBase) {
      */
     me.openSpeechSynth = function() {
          var target = document.getElementById('div_full');
-         if (target == null) target = self;
+         if (target == null) { target = self; }
          target.focus();
          var speechsynthWindow = window.open('/yaio-explorerapp/speechsynth.html', "speechsynth", "width=690,height=350,resizable=yes,dependent=yes,scrollbars=yes");
          speechsynthWindow.focus();
          if (speechsynthWindow.opener == null) { speechsynthWindow.opener = self; }
          speechsynthWindow.opener.targetElement = target;
-     }
+     };
     
     /*
      * ###########################
@@ -174,7 +174,7 @@ Yaio.ExportedDataService = function(appBase) {
        //alert("funcResult:" + funcResult);
        var text = (praefix ? praefix : "") + funcResult + (suffix ? suffix : "");
        elemNodeTD.html(funcResult);
-    }
+    };
     
     /*
      * ######################
@@ -235,7 +235,7 @@ Yaio.ExportedDataService = function(appBase) {
             // anscheinend  nicht definiert
             window.alert(e);
         }
-    }
+    };
     
     me.doParentNodeToggler = function(myId, flgShow) {
         try {
@@ -276,15 +276,16 @@ Yaio.ExportedDataService = function(appBase) {
             // anscheinend  nicht definiert
             window.alert(e);
         }
-    }
+    };
     
     
     /* Um einen Volltext-Treffer zu haben, müssen alle Worte im durchsuchten Text vorkommen. */
     me.VolltextTreffer = function(inhalt, suchworte) {
         // Wenn keine Suchzeichenkette als gefnden kennzeichnen
-        if ( suchworte.length == 0 )
+        if ( suchworte.length == 0 ) {
             return true;
-     
+        }
+
         // alle Suchworte iterieren
         for (var i = 0; i < suchworte.length; i++) {
             if ( inhalt.indexOf(suchworte[i]) == -1) {
@@ -295,7 +296,7 @@ Yaio.ExportedDataService = function(appBase) {
      
         // alle Worte gefunden
         return true;
-    }
+    };
     
     me.doSearch = function(suchworte) {
         // Suche auf alle Node-Elemente ausführen
@@ -339,7 +340,7 @@ Yaio.ExportedDataService = function(appBase) {
                 }
             }
         );
-    }
+    };
     
     me.startSearch = function() {
         // Suchworte auslesen
@@ -350,7 +351,7 @@ Yaio.ExportedDataService = function(appBase) {
         
         // Suche ausfuehren
         me.doSearch(suchworte);
-    }
+    };
     
     me.resetSearch = function() {
         // Suchworte leeren
@@ -358,7 +359,7 @@ Yaio.ExportedDataService = function(appBase) {
         
         // suche ausfuehren
         me.startSearch();
-    }
+    };
     
     me.initSearch = function() {
         // Volltextsuche
@@ -373,7 +374,7 @@ Yaio.ExportedDataService = function(appBase) {
                 me.startSearch();
             }
         );
-    }
+    };
     
     /*
      * ######################
@@ -401,7 +402,7 @@ Yaio.ExportedDataService = function(appBase) {
             }, 
             100
         );
-    }
+    };
 
     me._init();
     

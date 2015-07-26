@@ -24,7 +24,7 @@ JsHelferlein.UIToggler = function(appBase) {
      * initialize the object
      */
     me._init = function() {
-    }
+    };
 
     // init all
     me._init();
@@ -57,7 +57,7 @@ JsHelferlein.UIToggler = function(appBase) {
    
         // run the effect
         $( id ).toggle( selectedEffect, options, 500 );
-    }
+    };
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -92,7 +92,7 @@ JsHelferlein.UIToggler = function(appBase) {
             $(codeChilden).removeClass(classWrap).addClass(classNoWrap);
             $(codeChilden).parent().removeClass(classNoWrap).addClass(classWrap);
        }
-    }
+    };
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -122,7 +122,7 @@ JsHelferlein.UIToggler = function(appBase) {
    
         // run the effect
         $( id ).toggle( selectedEffect, options, 500 );
-    }
+    };
    
     me._init();
 

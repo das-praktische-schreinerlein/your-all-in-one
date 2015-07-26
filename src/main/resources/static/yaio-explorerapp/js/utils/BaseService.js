@@ -42,7 +42,7 @@ Yaio.BaseService = function(appBase) {
      * initialize the object
      */
     me._init = function() {
-    }
+    };
 
     me.toggleWithLinks = function(link1, link2, id1, id2) {
          if ($(id1).css("display") != "none") {
@@ -57,7 +57,7 @@ Yaio.BaseService = function(appBase) {
              $(link1).css("display", "none");
          }
          return false;     
-     }
+     };
     
      me.showModalErrorMessage = function(message) {
          // set messagetext
@@ -72,7 +72,7 @@ Yaio.BaseService = function(appBase) {
                }
              }
          });    
-     }
+     };
     
      me.showModalConfirmDialog = function(message, yesHandler, noHandler) {
          // set messagetext
@@ -99,7 +99,7 @@ Yaio.BaseService = function(appBase) {
                }
              }
          });
-     }
+     };
     
     
     /*****************************************
@@ -126,7 +126,7 @@ Yaio.BaseService = function(appBase) {
                  "hideMethod": "fadeOut"
          };
          toastr[type](me.htmlEscapeText(message), title);
-     }
+     };
     
     
     
@@ -136,7 +136,7 @@ Yaio.BaseService = function(appBase) {
             me.showToastMessage("error", "Oops! Ein Fehlerchen :-(", me.htmlEscapeText(message));
     //        me.showModalErrorMessage(me.htmlEscapeText(message));
         }
-    }
+    };
     
     /*****************************************
      *****************************************
@@ -154,7 +154,7 @@ Yaio.BaseService = function(appBase) {
             text = text.replace(/\//g, "&#x2F;");
         }
         return text;
-    }
+    };
     
     me.htmlEscapeTextLazy = function(text) {
         if ((text != "undefined") && (text != "") && (text != null)) {
@@ -162,7 +162,7 @@ Yaio.BaseService = function(appBase) {
             text = text.replace(/>/g, "&gt;");
         }
         return text;
-    }
+    };
     
     me.formatGermanDateTime = function(millis) {
         if (millis == null) {
@@ -174,7 +174,7 @@ Yaio.BaseService = function(appBase) {
             + "." + date.getFullYear()
             + " " + me.padNumber(date.getHours(), 2)
             + ":" + me.padNumber(date.getMinutes(), 2);
-    }
+    };
     me.formatGermanDate = function(millis) {
         if (millis == null) {
            return "";
@@ -183,21 +183,21 @@ Yaio.BaseService = function(appBase) {
         return me.padNumber(date.getDate(), 2)
             + "." + me.padNumber(date.getMonth() + 1, 2)
             + "." + date.getFullYear();
-    }
+    };
     me.padNumber = function(number, count) {
         var r = String(number);
         while ( r.length < count) {
         r = '0' + r;
         }
         return r;
-    } 
+    };
     me.formatNumbers = function(number, nachkomma, suffix) {
        if (number == null) {
            return "";
        }
        
        return (number.toFixed(nachkomma)) + suffix;
-    }
+    };
     
     me.downloadAsFile = function($link, data, fileName, mime, encoding) {
         if (mime == "undefind") {
@@ -233,11 +233,11 @@ Yaio.BaseService = function(appBase) {
                 'target' : '_blank'
             });
        }
-    }
+    };
     
     me.createXFrameAllowFrom = function() {
         return "x-frames-allow-from=" + window.location.hostname;
-    }
+    };
     
     me.escapeRegExp = function(str) {
         return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");

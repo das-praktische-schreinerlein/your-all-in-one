@@ -24,7 +24,7 @@ JsHelferlein.DetectorBase = function(appBase, config, defaultConfig) {
         // check Config
         me.appBase = appBase;
         me.config = appBase.checkConfig(config, defaultConfig);
-    }
+    };
 
     me.isSupported = function() {
         return false;

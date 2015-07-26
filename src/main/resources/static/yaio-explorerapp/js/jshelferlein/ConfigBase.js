@@ -30,7 +30,7 @@ JsHelferlein.ConfigBase = function() {
         }
         
         return true;
-    }
+    };
 
     return me;
 };

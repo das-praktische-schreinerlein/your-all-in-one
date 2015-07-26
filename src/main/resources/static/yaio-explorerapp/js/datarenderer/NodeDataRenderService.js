@@ -1,3 +1,33 @@
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Collaboration
+ *
+ * <h4>FeatureDescription:</h4>
+ *     software for projectmanagement and documentation
+ * 
+ * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category collaboration
+ * @copyright Copyright (c) 2014, Michael Schreiner
+ * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+'use strict';
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     WebGUI
+ * <h4>FeatureDescription:</h4>
+ *     servicefunctions for data-rendering
+ *      
+ * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category collaboration
+ * @copyright Copyright (c) 2014, Michael Schreiner
+ * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ */
 Yaio.NodeDataRenderService = function(appBase) {
     // my own instance
     var me = JsHelferlein.ServiceBase(appBase);
@@ -6,7 +36,7 @@ Yaio.NodeDataRenderService = function(appBase) {
      * initialize the object
      */
     me._init = function() {
-    }
+    };
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -256,7 +286,7 @@ Yaio.NodeDataRenderService = function(appBase) {
     
         // calc nodeData
         me.appBase.get('YaioNodeGanttRender').yaioRecalcMasterGanttBlockFromTree();
-    }
+    };
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -420,7 +450,7 @@ Yaio.NodeDataRenderService = function(appBase) {
         console.log("renderDataBlock DONE: " + msg);
     
         return $table;
-    }
+    };
     
 
     /**
@@ -450,7 +480,7 @@ Yaio.NodeDataRenderService = function(appBase) {
             $("#tabTogglerData").css("display", "none");
             $("td.block_nodegantt, th.block_nodegantt").css("display", "none");
         }, 400);
-    }
+    };
 
     me._init();
     

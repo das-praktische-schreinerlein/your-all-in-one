@@ -26,7 +26,7 @@ JsHelferlein.AppBase = function(config) {
 
         me._configureDefaultServices();
         me._configureDefaultDetectors();
-    }
+    };
     
     // vars
     me.serviceConfigs = [];

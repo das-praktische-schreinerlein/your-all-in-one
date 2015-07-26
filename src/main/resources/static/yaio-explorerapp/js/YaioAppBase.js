@@ -23,7 +23,7 @@ window.YaioAppBase = function() {
 
     me._init = function () {
         me._configureDefaultServices();
-    }
+    };
     
     me._configureDefaultServices = function() {
         me.configureService("YaioBase", function() { return Yaio.BaseService(me); });

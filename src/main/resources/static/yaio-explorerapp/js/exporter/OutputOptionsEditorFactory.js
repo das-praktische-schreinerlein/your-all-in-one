@@ -179,5 +179,5 @@ yaioApp.factory('OutputOptionsEditor', function(yaioUtils) {
             console.log("showOutputOptionsEditor done:" + " url:" + url);
             return false;
         }
-    }
+    };
 });

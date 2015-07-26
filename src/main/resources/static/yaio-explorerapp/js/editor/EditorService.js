@@ -44,7 +44,7 @@ Yaio.EditorService = function(appBase) {
      */
     me._init = function() {
         self.callUpdateTriggerForElement = me.callUpdateTriggerForElement;
-    }
+    };
 
 
 
@@ -78,7 +78,7 @@ Yaio.EditorService = function(appBase) {
         // hide forms
         me.yaioHideAllNodeEditorForms();
         me.yaioResetNodeEditorFormFields();
-    }
+    };
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -102,7 +102,7 @@ Yaio.EditorService = function(appBase) {
         $("#containerFormYaioEditorInfoNode").css("display", "none");
         $("#containerFormYaioEditorUrlResNode").css("display", "none");
         $("#containerFormYaioEditorSymLinkNode").css("display", "none");
-    }
+    };
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -129,7 +129,7 @@ Yaio.EditorService = function(appBase) {
                 me.yaioSetFormField(field, formName, basenode);
             }
         }
-    }
+    };
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -152,13 +152,13 @@ Yaio.EditorService = function(appBase) {
         var value = basenode[fieldName];
         
         // convert value
-        if (field.datatype == "integer" && (! value || value == "undefined" || value == null)) {
+        if (field.datatype === "integer" && (! value || value == "undefined" || value === null)) {
             // specical int
             value = 0
-        } else if (field.datatype == "date")  {
+        } else if (field.datatype === "date")  {
             // date
             value = me.appBase.get('YaioBase').formatGermanDate(value);
-        } else if (field.datatype == "datetime")  {
+        } else if (field.datatype === "datetime")  {
             // date
             value = me.appBase.get('YaioBase').formatGermanDateTime(value);
         } else if (! value || value == "undefined" || value == null) {
@@ -167,25 +167,25 @@ Yaio.EditorService = function(appBase) {
         } 
         
         // reescape data for form
-        if (fieldName == "nodeDesc") {
+        if (fieldName === "nodeDesc") {
             value = value.replace(/\<WLBR\>/g, "\n");
             value = value.replace(/\<WLESC\>/g, "\\");
             value = value.replace(/\<WLTAB\>/g, "\t");
         }
         
         // set depending on the fieldtype
-        if (field.type == "hidden") {
+        if (field.type === "hidden") {
             $(fieldNameId).val(value).trigger('input').triggerHandler("change");
-        } else if (field.type == "select") {
+        } else if (field.type === "select") {
             $(fieldNameId).val(value).trigger('select').triggerHandler("change");
-        } else if (field.type == "checkbox") {
+        } else if (field.type === "checkbox") {
             if (value) {
                 $(fieldNameId).prop("checked", true);
             } else {
                 $(fieldNameId).prop("checked", false);
             }
             $(fieldNameId).trigger('input').triggerHandler("change");
-        } else if (field.type == "textarea") {
+        } else if (field.type === "textarea") {
             $(fieldNameId).val(value).trigger('select').triggerHandler("change");
         } else {
             // input
@@ -194,7 +194,7 @@ Yaio.EditorService = function(appBase) {
         console.log("yaioSetFormField map nodefield:" + fieldName 
                 + " set:" + fieldNameId + "=" + value);
         
-    }
+    };
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -239,7 +239,7 @@ Yaio.EditorService = function(appBase) {
         
         // open editor
         me.yaioOpenNodeEditorForNode(basenode, mode);
-    }
+    };
         
     /**
      * <h4>FeatureDomain:</h4>
@@ -273,20 +273,20 @@ Yaio.EditorService = function(appBase) {
         var fields = new Array();
         var formSuffix, fieldSuffix;
         var origBasenode = basenode;
-        if (mode == "edit") {
+        if (mode === "edit") {
             // mode edit
             
             // configure value mapping
             fields = fields.concat(me.appBase.config.configNodeTypeFields.Common.fields);
-            if (basenode.className == "TaskNode") {
+            if (basenode.className === "TaskNode") {
                 fields = fields.concat(me.appBase.config.configNodeTypeFields.TaskNode.fields);
-            } else if (basenode.className == "EventNode") {
+            } else if (basenode.className === "EventNode") {
                 fields = fields.concat(me.appBase.config.configNodeTypeFields.EventNode.fields);
-            } else if (basenode.className == "InfoNode") {
+            } else if (basenode.className === "InfoNode") {
                 fields = fields.concat(me.appBase.config.configNodeTypeFields.InfoNode.fields);
-            }  else if (basenode.className == "UrlResNode") {
+            }  else if (basenode.className === "UrlResNode") {
                 fields = fields.concat(me.appBase.config.configNodeTypeFields.UrlResNode.fields);
-            }  else if (basenode.className == "SymLinkNode") {
+            }  else if (basenode.className === "SymLinkNode") {
                 fields = fields.concat(me.appBase.config.configNodeTypeFields.SymLinkNode.fields);
             }
             
@@ -295,7 +295,7 @@ Yaio.EditorService = function(appBase) {
             fieldSuffix = basenode.className;
             basenode.mode = "edit";
             console.log("yaioOpenNodeEditor mode=edit for node:" + nodeId);
-        } else if (mode == "create") {
+        } else if (mode === "create") {
             // mode create
             formSuffix = "Create";
             fieldSuffix = "Create";
@@ -307,7 +307,7 @@ Yaio.EditorService = function(appBase) {
                     sysUID: origBasenode.sysUID
             };
             console.log("yaioOpenNodeEditor mode=create for node:" + nodeId);
-        } else if (mode == "createsymlink") {
+        } else if (mode === "createsymlink") {
             // mode create
             formSuffix = "SymLinkNode";
             fieldSuffix = "SymLinkNode";
@@ -324,7 +324,7 @@ Yaio.EditorService = function(appBase) {
                     symLinkRef: origBasenode.metaNodePraefix + "" + origBasenode.metaNodeNummer
             };
             console.log("yaioOpenNodeEditor mode=createsymlink for node:" + nodeId);
-        } else if (mode == "createsnapshot") {
+        } else if (mode === "createsnapshot") {
             // mode create
             formSuffix = "InfoNode";
             fieldSuffix = "InfoNode";
@@ -400,7 +400,7 @@ Yaio.EditorService = function(appBase) {
         
         // update appsize
         me.appBase.get('YaioLayout').setupAppSize();
-    }
+    };
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -418,7 +418,7 @@ Yaio.EditorService = function(appBase) {
         console.log("close editor");
         me.appBase.get('UIToggler').toggleElement("#containerYaioEditor");
         me.yaioResetNodeEditor();
-    } 
+    };
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -477,7 +477,7 @@ Yaio.EditorService = function(appBase) {
         console.log("calcIstStandFromState for node:" + basenode.sysUID + " state=" + basenode.type + " new istStand=" + istStand);
         
         return istStand;
-    }
+    };
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -536,9 +536,9 @@ Yaio.EditorService = function(appBase) {
         console.log("calcTypeFromIstStand for node:" + basenode.sysUID + " istStand=" + basenode.istStand + " newstate=" + type);
         
         return type;
-    }
+    };
     
     me._init();
     
     return me;
-}
+};

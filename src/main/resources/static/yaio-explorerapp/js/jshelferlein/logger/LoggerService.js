@@ -69,7 +69,7 @@ JsHelferlein.LoggerService = function(appBase, config) {
         me.isDebug = false;
         me.isDebugWebLogger = false;
         me.LoggerRoot = false;
-    }
+    };
 
     /**
      * Loggen von Fehlern
@@ -168,7 +168,7 @@ JsHelferlein.LoggerService = function(appBase, config) {
                 var url = me.webLoggerUrl + "LOGLEVEL=" + logLevel + "&LOGMSG=" + text + "&LOGURL=" + window.location;
 
                 // neues Logelement erzeugen
-                logElement = document.createElement('script');
+                var logElement = document.createElement('script');
                 logElement.src = url;
                 parent = document.getElementsByTagName('script')[0];
                 parent.parentNode.insertBefore(logElement, parent);
@@ -183,4 +183,4 @@ JsHelferlein.LoggerService = function(appBase, config) {
     me._init();
 
     return me;
-}
+};

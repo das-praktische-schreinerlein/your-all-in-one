@@ -83,12 +83,12 @@ yaioApp.directive('withErrors', ['setFormErrors', function(setFormErrors) {
             };
 
             this.setErrorsFor = function(fieldName, errors) {
-                if (!(fieldName in controls)) return;
+                if (!(fieldName in controls)) { return; }
                 return controls[fieldName].setErrors(errors);
             };
 
             this.clearErrorsFor = function(fieldName, errors) {
-                if (!(fieldName in controls)) return;
+                if (!(fieldName in controls)) { return; }
                 return controls[fieldName].clearErrors(errors);
             };
         }],
@@ -123,7 +123,7 @@ function directiveFieldsWithErrors () {
             var withErrorsCtrl = ctrls[1];
             var fieldName = attrs.name;
 
-            if (!ngModelCtrl || !withErrorsCtrl) return;
+            if (!ngModelCtrl || !withErrorsCtrl) { return; }
 
             // Watch for model changes and set errors if any
             scope.$watch(attrs.ngModel, function() {
@@ -142,15 +142,15 @@ function directiveFieldsWithErrors () {
             function errorMessagesFor(ngModelCtrl) {
                 return Object.keys(ngModelCtrl.$error).
                 map(function(key) {
-                    if (ngModelCtrl.$error[key]) return errorMessages[key];
-                    else return null;
+                    if (ngModelCtrl.$error[key]) { return errorMessages[key]; }
+                    else { return null; }
                 }).
                 filter(function(msg) {
                     return msg !== null;
                 });
             }
         }
-    }  
+    };
 }
 
 /**

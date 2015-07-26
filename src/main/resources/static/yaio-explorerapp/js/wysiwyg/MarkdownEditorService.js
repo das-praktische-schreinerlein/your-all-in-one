@@ -37,7 +37,7 @@ Yaio.MarkdownEditorService = function(appBase) {
      * initialize the object
      */
     me._init = function() {
-    }
+    };
 
     me.createNodeDescEditorForNode = function(parentId, textAreaId) {
         var editor = ace.edit(parentId);
@@ -80,7 +80,7 @@ Yaio.MarkdownEditorService = function(appBase) {
         $("#" + parentId).data("aceEditor", editor);
         
         return editor;
-    }
+    };
     
     me.showPreviewForTextareaId = function(textAreaId) {
         var descText = $("#" + textAreaId).val();
@@ -88,7 +88,7 @@ Yaio.MarkdownEditorService = function(appBase) {
         // prepare descText
         var descHtmlMarked = me.appBase.get('YaioFormatter').formatMarkdown(descText, true);
         me.showPreview(descHtmlMarked);
-    }
+    };
     
         
     me.showPreview = function(content) {
@@ -114,7 +114,7 @@ Yaio.MarkdownEditorService = function(appBase) {
     
         // do syntax-highlight
         me.appBase.get('YaioFormatter').formatDescBlock($("#preview-content"));
-    }
+    };
     
     me.showMarkdownHelp = function() {
         // show message
@@ -135,7 +135,7 @@ Yaio.MarkdownEditorService = function(appBase) {
                 } 
             }
         });    
-    }
+    };
     
     
     me.openWysiwhgForTextareaId = function(textAreaId) {
@@ -265,7 +265,7 @@ Yaio.MarkdownEditorService = function(appBase) {
             + "<span class='ui-button-text'>Export</span></a>"));
         $('#wysiwyg-exportlink').addClass("ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only");
     
-    }
+    };
     
     me.showWyswhgPreviewForTextareaId = function(textAreaId) {
         // prepare descText
@@ -280,7 +280,7 @@ Yaio.MarkdownEditorService = function(appBase) {
         
         // do syntax-highlight
         me.appBase.get('YaioFormatter').formatDescBlock($("#wysiwhg-preview"));
-    } 
+    };
 
     me._init();
     

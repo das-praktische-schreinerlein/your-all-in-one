@@ -52,7 +52,7 @@ Yaio.ExplorerTreeService = function(appBase) {
      * initialize the object
      */
     me._init = function() {
-    }
+    };
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -104,7 +104,7 @@ Yaio.ExplorerTreeService = function(appBase) {
                     + " create=" + me.appBase.config.showUrl + masterNodeId);
             me.appBase.get('YaioExplorerTree').yaioCreateFancyTree(treeId, masterNodeId, doneHandler);
         }
-    }
+    };
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -475,7 +475,7 @@ Yaio.ExplorerTreeService = function(appBase) {
                 }, 100);
             }
         });
-    }
+    };
     
     /*****************************************
      *****************************************
@@ -521,7 +521,7 @@ Yaio.ExplorerTreeService = function(appBase) {
                 doneHandler();
             } 
         }
-    }
+    };
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -557,7 +557,7 @@ Yaio.ExplorerTreeService = function(appBase) {
         }
         
         return datanode;
-    } 
+    };
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -602,7 +602,7 @@ Yaio.ExplorerTreeService = function(appBase) {
         }
         
         data.result = list;
-    }
+    };
     
     
     me.yaioFancyTreeLoadError = function(e, data) {
@@ -634,7 +634,7 @@ Yaio.ExplorerTreeService = function(appBase) {
         me.appBase.get('YaioBase').showToastMessage("error", "Oops! Ein Fehlerchen beim Laden :-(", 
                 "Es ist ein Fehler beim Nachladen aufgetreten:" + data.message 
                 + " Details:" + data.details);
-      }
+    };
     
     
     me._init();

@@ -24,7 +24,7 @@ JsHelferlein.CookieHelperService = function(appBase) {
      * initialize the object
      */
     me._init = function() {
-    }
+    };
 
     /**
      * Cookie erzeugen

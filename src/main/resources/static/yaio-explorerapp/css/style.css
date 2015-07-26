@@ -99,7 +99,6 @@ a.toggler_hidden {
   display: inline-block;
   vertical-align: top;
   background-repeat: no-repeat;
-  background-position: left;
   background-image: url("../../js/fancytree/skin-lion/icons.gif");
   background-position: 0px 0px;
 }
@@ -1252,7 +1251,6 @@ body .ui-tooltip {
     color: #FFFFFF;
     font-size: 12px;
     padding-bottom: 0;
-    text-align: left;
     padding-left: 20px;
     text-align: left;
 }

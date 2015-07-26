@@ -166,19 +166,17 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ht
 
         // no empty fulltext for webservice -> we use there another route 
         if ($scope.searchOptions.fulltext && $scope.searchOptions.fulltext.length > 0) {
-            uri = uri + encodeURI($scope.searchOptions.fulltext)
-            + '/';
+            uri = uri + encodeURI($scope.searchOptions.fulltext) + '/';
         }
 
         // load data
-        var searchNodeUrl = '/nodes/search'
-                            + uri;
+        var searchNodeUrl = '/nodes/search' + uri;
         $http.get(searchNodeUrl).then(function(nodeResponse) {
             // success handler
             
             // check response
             var state = nodeResponse.data.state;
-            if (state == "OK") {
+            if (state === "OK") {
                 // all fine
                 console.log("NodeSearchCtrl - OK loading nodes:" + nodeResponse.data.stateMsg + " searchNodeUrl=" + searchNodeUrl);
                 
@@ -193,8 +191,7 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ht
                 $scope.$broadcast("NodeListReady");
             } else {
                 // error
-                yaioUtils.getService('YaioBase').logError("error loading nodes:" + nodeResponse.data.stateMsg 
-                        + " details:" + nodeResponse, true)
+                yaioUtils.getService('YaioBase').logError("error loading nodes:" + nodeResponse.data.stateMsg + " details:" + nodeResponse, true);
             }
         }, function(response) {
             // error handler

@@ -24,7 +24,7 @@ JsHelferlein.SpeechSynthHelperService = function(appBase, config) {
      * initialize the object
      */
     me._init = function() {
-    }
+    };
 
     me.initSrcFromOpener = function() {
         // Text vom Opener holen
@@ -34,7 +34,7 @@ JsHelferlein.SpeechSynthHelperService = function(appBase, config) {
                 document.getElementById(me.config.finalTextareaId).value = $(opener.targetElement).val();
             }
         }
-    }
+    };
     
     me.initUi = function() {
         if (me.appBase.getDetector('SpeechSynthDetector').isSupported()) {
@@ -57,7 +57,7 @@ JsHelferlein.SpeechSynthHelperService = function(appBase, config) {
             document.getElementById(me.config.buttonResumeId).setAttribute('disabled', 'disabled');
         }
         me._splitOrSpeakText(document.getElementById(me.config.finalTextareaId).value, me.config.splitChars, 0, 150);
-    }
+    };
 
     me.pauseSpeech = function() {
         window.speechSynthesis.pause();
@@ -67,7 +67,7 @@ JsHelferlein.SpeechSynthHelperService = function(appBase, config) {
         if (me.config.isSet('buttonResumeId')) {
             document.getElementById(me.config.buttonResumeId).removeAttribute('disabled');
         }
-    }
+    };
     
     me.resumeSpeech = function() {
         window.speechSynthesis.resume();
@@ -77,13 +77,13 @@ JsHelferlein.SpeechSynthHelperService = function(appBase, config) {
         if (me.config.isSet('buttonResumeId')) {
             document.getElementById(me.config.buttonResumeId).setAttribute('disabled', 'disabled');
         }
-    }
+    };
 
     me.stopSpeech = function() {
         for (var i=1; i < 100; i++) {
             window.speechSynthesis.cancel(); // if it errors, this clears out the error.
         }
-    }
+    };
 
     me._initVoices = function() {
         // inspired by http://www.sitepoint.com/talking-web-pages-and-the-speech-synthesis-api/
@@ -126,7 +126,7 @@ JsHelferlein.SpeechSynthHelperService = function(appBase, config) {
         if (me.config.isSet('buttonStopId')) {
             document.getElementById(me.config.buttonStopId).onclick = me.stopSpeech;
         }
-    }
+    };
     
     me._disableControllerElements = function() {
         if (me.config.isSet('buttonStartId')) {
@@ -141,7 +141,7 @@ JsHelferlein.SpeechSynthHelperService = function(appBase, config) {
         if (me.config.isSet('buttonStopId')) {
             document.getElementById(me.config.buttonStopId).setAttribute('disabled', 'disabled');
         }
-    }
+    };
     
     me._createSpeaker = function() {
         var msg = new SpeechSynthesisUtterance();
@@ -163,23 +163,23 @@ JsHelferlein.SpeechSynthHelperService = function(appBase, config) {
         };
         msg.onerror = function(event) {
             me.appBase.get("Logger").logError('Errored ' + event);
-        }
+        };
         msg.onpause = function (event) {
             me.appBase.get("Logger").logDebug('paused ' + event);
-        }
+        };
         msg.onboundary = function (event) {
             me.appBase.get("Logger").logDebug('onboundary ' + event);
-        }
+        };
 
         return msg;
-    }
+    };
 
     me._speakText = function(text) {
         var speaker = me._createSpeaker();
         me.appBase.get("Logger").logDebug("say text: " + text);
         speaker.text = text;
         window.speechSynthesis.speak(speaker);
-    }
+    };
 
     me._splitOrSpeakText = function(text, splitterStr, ebene, maxLength) {
         // inspired by http://stackoverflow.com/questions/21947730/chrome-speech-synthesis-with-longer-texts
@@ -211,7 +211,7 @@ JsHelferlein.SpeechSynthHelperService = function(appBase, config) {
                     me.appBase.get("Logger").logDebug("split by word:'" + splitWord + "' text:''" + text + "' nextText:'" + nextText + "'");
                 }
                 wordIndex++;
-            } while (wordIndex < splitWords.length && text.length > maxLength)
+            } while (wordIndex < splitWords.length && text.length > maxLength);
             
             // fallback if text > maxLength
             if (text.length > maxLength) {
@@ -247,15 +247,15 @@ JsHelferlein.SpeechSynthHelperService = function(appBase, config) {
         for (var i=0;i< sentences.length;i++) {
             if (sentences[i].length > maxLength) {
                 // sentence  > maxLength: split it with next splitChar
-                me.appBase.get("Logger").logDebug("split new " +  i + " sentences[i]:" + sentences[i])
+                me.appBase.get("Logger").logDebug("split new " +  i + " sentences[i]:" + sentences[i]);
                 me._splitOrSpeakText(sentences[i], splitterStr, ebene+1);
             } else {
                 // sentence ok: say it
-                me.appBase.get("Logger").logDebug("say i: " + i + " sentences[i]:" + sentences[i])
+                me.appBase.get("Logger").logDebug("say i: " + i + " sentences[i]:" + sentences[i]);
                 me._speakText(sentences[i] + splitter);
             }
         }
-    }
+    };
 
     // init all
     me._init();

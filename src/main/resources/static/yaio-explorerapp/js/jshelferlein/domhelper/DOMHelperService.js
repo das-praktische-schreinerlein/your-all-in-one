@@ -24,7 +24,7 @@ JsHelferlein.DOMHelperService = function(appBase) {
      * initialize the object
      */
     me._init = function() {
-    }
+    };
 
     /**
      * fuegt ein Style an

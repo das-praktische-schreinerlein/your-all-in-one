@@ -95,15 +95,15 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ht
         console.log("selectNewNodeType open form #containerFormYaioEditor" + className);
 
         // special fields
-        if (className == "SymLinkNode") {
+        if (className === "SymLinkNode") {
             $scope.nodeForEdit["type"] = "SYMLINK";
-        } else if (className == "InfoNode") {
+        } else if (className === "InfoNode") {
             $scope.nodeForEdit["type"] = "INFO";
-        } else if (className == "UrlResNode") {
+        } else if (className === "UrlResNode") {
             $scope.nodeForEdit["type"] = "URLRES";
-        } else if (className == "TaskNode") {
+        } else if (className === "TaskNode") {
             $scope.nodeForEdit["type"] = "OFFEN";
-        } else if (className == "EventNode") {
+        } else if (className === "EventNode") {
             $scope.nodeForEdit["type"] = "EVENT_PLANED";
         }
 
@@ -172,8 +172,8 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ht
      *     GUI Callback
      */
     $scope.doTaskNodeTypeChanged = function() {
-        if (   $scope.nodeForEdit.type =="ERLEDIGT"
-            || $scope.nodeForEdit.type =="VERWORFEN"
+        if (   $scope.nodeForEdit.type === "ERLEDIGT"
+            || $scope.nodeForEdit.type === "VERWORFEN"
             ) {
             $scope.nodeForEdit.stand ="100";
         }
@@ -202,16 +202,16 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ht
         // configure value mapping
         var fields = new Array();
         fields = fields.concat(yaioUtils.getConfig().configNodeTypeFields.Common.fields);
-        if ($scope.nodeForEdit.className == "TaskNode") {
+        if ($scope.nodeForEdit.className === "TaskNode") {
             fields = fields.concat(yaioUtils.getConfig().configNodeTypeFields.TaskNode.fields);
             $scope.nodeForEdit.state = $scope.nodeForEdit.type;
-        } else if ($scope.nodeForEdit.className == "EventNode") {
+        } else if ($scope.nodeForEdit.className === "EventNode") {
             fields = fields.concat(yaioUtils.getConfig().configNodeTypeFields.EventNode.fields);
-        } else if ($scope.nodeForEdit.className == "InfoNode") {
+        } else if ($scope.nodeForEdit.className === "InfoNode") {
             fields = fields.concat(yaioUtils.getConfig().configNodeTypeFields.InfoNode.fields);
-        } else if ($scope.nodeForEdit.className == "UrlResNode") {
+        } else if ($scope.nodeForEdit.className === "UrlResNode") {
             fields = fields.concat(yaioUtils.getConfig().configNodeTypeFields.UrlResNode.fields);
-        } else if ($scope.nodeForEdit.className == "SymLinkNode") {
+        } else if ($scope.nodeForEdit.className === "SymLinkNode") {
             fields = fields.concat(yaioUtils.getConfig().configNodeTypeFields.SymLinkNode.fields);
         }
         
@@ -224,23 +224,23 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ht
             if (field.intern) {
                 // ignore intern
                 continue;
-            } if (field.type == "checkbox" && ! value) {
+            } if (field.type === "checkbox" && ! value) {
                 value = "";
             }
             
             // convert values
-            if (field.datatype == "date" && value) {
+            if (field.datatype === "date" && value) {
                 console.log("map nodefield date pre:" + fieldName + "=" + value);
-                var lstDate=value.split(".");
-                var newDate=new Date(lstDate[1]+"/"+lstDate[0]+"/"+lstDate[2]);
+                var lstDate = value.split(".");
+                var newDate = new Date(lstDate[1]+"/"+lstDate[0]+"/"+lstDate[2]);
                 value = newDate.getTime();
                 console.log("map nodefield date post:" + fieldName + "=" + newDate + "->" + value);
-            } if (field.datatype == "datetime" && value) {
+            } if (field.datatype === "datetime" && value) {
                 console.log("map nodefield datetime pre:" + fieldName + "=" + value);
-                var lstDateTime=value.split(" ");
+                var lstDateTime = value.split(" ");
                 var lstDate = lstDateTime[0].split(".");
                 var lstTime = lstDateTime[1];
-                var newDate=new Date(lstDate[1]+"/"+lstDate[0]+"/"+lstDate[2] + " " + lstTime[1] + ":00");
+                var newDate = new Date(lstDate[1]+"/"+lstDate[0]+"/"+lstDate[2] + " " + lstTime[1] + ":00");
                 value = newDate.getTime();
                 console.log("map nodefield datetime post:" + fieldName + "=" + newDate + "->" + value);
             }
@@ -253,11 +253,11 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ht
         // branch depending on mode
         var method, url;
         var mode =  $scope.nodeForEdit["mode"];
-        if (mode == "edit") {
+        if (mode === "edit") {
             // mode update 
             method = "PATCH";
             url = yaioUtils.getConfig().updateUrl + $scope.nodeForEdit.className + "/" + $scope.nodeForEdit.sysUID;
-        } else if (mode == "create") {
+        } else if (mode === "create") {
             // mode create 
             method = "POST";
             url = yaioUtils.getConfig().createUrl + $scope.nodeForEdit.className + "/" + $scope.nodeForEdit.sysUID;
@@ -286,7 +286,7 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ht
             
             // check response
             var state = nodeResponse.data.state;
-            if (state == "OK") {
+            if (state === "OK") {
                 // all fine
                 console.log("NodeSave - OK saved node:" + nodeResponse.data.stateMsg);
                 
@@ -314,19 +314,19 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ht
                         var violation = violations[idx];
                         
                         // TODO crud hack
-                        if (violation.path == "state") {
+                        if (violation.path === "state") {
                             violation.path = "type";
-                        } else if (violation.path == "planValidRange") {
+                        } else if (violation.path === "planValidRange") {
                             violation.path = "planStart";
-                        } else if (violation.path == "planStartValid") {
+                        } else if (violation.path === "planStartValid") {
                             violation.path = "planStart";
-                        } else if (violation.path == "planEndeValid") {
+                        } else if (violation.path === "planEndeValid") {
                             violation.path = "planEnde";
-                        } else if (violation.path == "istValidRange") {
+                        } else if (violation.path === "istValidRange") {
                             violation.path = "istStart";
-                        } else if (violation.path == "istStartValid") {
+                        } else if (violation.path === "istStartValid") {
                             violation.path = "istStart";
-                        } else if (violation.path == "istEndeValid") {
+                        } else if (violation.path === "istEndeValid") {
                             violation.path = "istEnde";
                         }
                         fieldErrors[violation.path] = [violation.message];

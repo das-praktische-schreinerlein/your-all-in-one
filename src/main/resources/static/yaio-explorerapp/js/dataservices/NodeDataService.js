@@ -1,3 +1,33 @@
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Collaboration
+ *
+ * <h4>FeatureDescription:</h4>
+ *     software for projectmanagement and documentation
+ * 
+ * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category collaboration
+ * @copyright Copyright (c) 2014, Michael Schreiner
+ * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+'use strict';
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     WebGUI
+ * <h4>FeatureDescription:</h4>
+ *     servicefunctions for data-services
+ *      
+ * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category collaboration
+ * @copyright Copyright (c) 2014, Michael Schreiner
+ * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ */
 Yaio.NodeDataService = function(appBase) {
     // my own instance
     var me = JsHelferlein.ServiceBase(appBase);
@@ -6,7 +36,7 @@ Yaio.NodeDataService = function(appBase) {
      * initialize the object
      */
     me._init = function() {
-    }
+    };
     
     /*****************************************
      *****************************************
@@ -66,7 +96,7 @@ Yaio.NodeDataService = function(appBase) {
                 console.log("update node:" + node.key + "' ran");
             }
         });
-    }
+    };
     
     me.yaioLoadSymLinkData = function(basenode, fancynode) {
         var msg = "symlink for node:" + basenode.sysUID + " symlink:" + basenode.symLinkRef + " fancynode:" + fancynode.key;
@@ -151,7 +181,7 @@ Yaio.NodeDataService = function(appBase) {
                 console.log("completed load " + msg);
             }
         });
-    }
+    };
     
     
     me.yaioDoRemoveNode = function(node, url) {
@@ -204,7 +234,7 @@ Yaio.NodeDataService = function(appBase) {
                 console.log("remove node:" + node.key + "' ran");
             }
         });
-    }
+    };
 
     me._init();
     

@@ -54,7 +54,7 @@ yaioApp.controller('AuthController', function($rootScope, $scope, $location, $ht
             $location.path("/login");
             $scope.error = true;
             $rootScope.authenticated = false;
-        })
+        });
     };
     
     $scope.logout = function() {

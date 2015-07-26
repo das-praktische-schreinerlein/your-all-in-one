@@ -1,3 +1,33 @@
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Collaboration
+ *
+ * <h4>FeatureDescription:</h4>
+ *     software for projectmanagement and documentation
+ *
+ * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category collaboration
+ * @copyright Copyright (c) 2014, Michael Schreiner
+ * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+'use strict';
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     WebGUI
+ * <h4>FeatureDescription:</h4>
+ *     servicefunctions for explorer-actions
+ *
+ * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category collaboration
+ * @copyright Copyright (c) 2014, Michael Schreiner
+ * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ */
 Yaio.ExplorerActionService = function(appBase) {
     // my own instance
     var me = JsHelferlein.ServiceBase(appBase);
@@ -6,7 +36,7 @@ Yaio.ExplorerActionService = function(appBase) {
      * initialize the object
      */
     me._init = function() {
-    }
+    };
     
     me.openNodeHierarchy = function(treeId, lstIdsHierarchy) {
         // check for tree
@@ -50,7 +80,7 @@ Yaio.ExplorerActionService = function(appBase) {
         opts.openHierarchy = lstIdsHierarchy;
         opts.activateLastNode = true;
         firstNode.setExpanded(true, opts);
-    }
+    };
     
     me.openNodeHierarchyForNodeId = function(treeId, activeNodeId) {
         // check for tree
@@ -77,7 +107,7 @@ Yaio.ExplorerActionService = function(appBase) {
         
         // open Hierarchy
         me.openNodeHierarchy(treeId, lstIdsHierarchy);
-    }
+    };
     
     
     me.yaioOpenSubNodesForTree = function(treeId, level) {
@@ -100,20 +130,20 @@ Yaio.ExplorerActionService = function(appBase) {
         opts.recursively = true;
         console.log("yaioOpenSubNodesForTree setExpanded:" + " level:" + level);
         treeNode.setExpanded(true, opts);
-    }
+    };
     
     me.yaioSaveNode = function(data) {
         var json = JSON.stringify({name: data.input.val()});
         var url = me.appBase.config.updateUrl + data.node.key;
         doUpdateNode(data.node, url, json);
-    }
+    };
     
     me.yaioMoveNode = function(node, newParentKey, newPos) {
         console.log("move node:" + node.key + " to:" + newParentKey + " Pos:" + newPos);
         var json = JSON.stringify({parentNode: newParentKey});
         var url = me.appBase.config.moveUrl + node.key + "/" + newParentKey + "/" + newPos;
         me.appBase.get('YaioNodeData').yaioDoUpdateNode(node, url, json);
-    }
+    };
     
     me.yaioRemoveNodeById = function(nodeId) {
         if (window.confirm("Wollen Sie die Node wirklich l&ouml;schen?")) {
@@ -139,7 +169,7 @@ Yaio.ExplorerActionService = function(appBase) {
             // discard
             return false;
         }
-    }
+    };
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -201,7 +231,7 @@ Yaio.ExplorerActionService = function(appBase) {
               }
             }
         });    
-    }
+    };
     
     
     /**
@@ -236,7 +266,7 @@ Yaio.ExplorerActionService = function(appBase) {
               }
             }
         });    
-    }
+    };
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -259,7 +289,7 @@ Yaio.ExplorerActionService = function(appBase) {
     
         // open editor
         me.appBase.get('YaioEditor').yaioOpenNodeEditorForNode(parentNode, 'createsnapshot', {nodeDesc: checkListSrc + "\n\n" +  ganttSrc});
-    }
+    };
     
     
     /**
@@ -292,7 +322,7 @@ Yaio.ExplorerActionService = function(appBase) {
               }
             }
         });    
-    }
+    };
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -331,71 +361,71 @@ Yaio.ExplorerActionService = function(appBase) {
                 // desc is now hidden
                 $("#toggler_desc_" + id).addClass('toggler_hidden').removeClass('toggler_show');
             }
-       });
-   }
+        });
+    };
    
-   me.toggleAllNodeDescContainer = function() {
-       if ($("#toggler_desc_all").hasClass('toggler_hidden')) {
-           // show all desc
-           $("div.field_nodeDesc").slideDown(1000);
-           $("div.fieldtype_descToggler > a").addClass('toggler_show').removeClass('toggler_hidden');
-  
-           // check if syntaxhighlighting to do
-           var flgDoMermaid = false;
-           $("div.syntaxhighlighting-open").each(function (i, descBlock) {
-               console.log("toggleAllNodeDescContainer highlight for descBlock: " + $(descBlock).attr('id'));
-               flgDoMermaid = me.appBase.get('YaioFormatter').formatDescBlock(descBlock) || flgDoMermaid;
-           });
-           console.log("toggleAllNodeDescContainer resulting flgDoMermaid: " + flgDoMermaid);
+    me.toggleAllNodeDescContainer = function() {
+        if ($("#toggler_desc_all").hasClass('toggler_hidden')) {
+            // show all desc
+            $("div.field_nodeDesc").slideDown(1000);
+            $("div.fieldtype_descToggler > a").addClass('toggler_show').removeClass('toggler_hidden');
+   
+            // check if syntaxhighlighting to do
+            var flgDoMermaid = false;
+            $("div.syntaxhighlighting-open").each(function (i, descBlock) {
+                console.log("toggleAllNodeDescContainer highlight for descBlock: " + $(descBlock).attr('id'));
+                flgDoMermaid = me.appBase.get('YaioFormatter').formatDescBlock(descBlock) || flgDoMermaid;
+            });
+            console.log("toggleAllNodeDescContainer resulting flgDoMermaid: " + flgDoMermaid);
            
-           // mermaid all
-           if (flgDoMermaid) {
+            // mermaid all
+            if (flgDoMermaid) {
                me.appBase.get('YaioFormatter').formatMermaidGlobal();
-           }
-       } else {
-           // hide all desc
-           $("div.field_nodeDesc").slideUp(1000);
-           $("div.fieldtype_descToggler > a").addClass('toggler_hidden').removeClass('toggler_show');
-       }
-   }
+            }
+        } else {
+            // hide all desc
+            $("div.field_nodeDesc").slideUp(1000);
+            $("div.fieldtype_descToggler > a").addClass('toggler_hidden').removeClass('toggler_show');
+        }
+    };
     
     /**
-    * <h4>FeatureDomain:</h4>
-    *     Layout Toggler
-    * <h4>FeatureDescription:</h4>
-    *     Toggle the "#detail_sys_" for the specified id with a slide. 
-    * <h4>FeatureResult:</h4>
-    *   <ul>
-    *     <li>Updates DOM
-    *   </ul> 
-    * <h4>FeatureKeywords:</h4>
-    *     GUI Tree Rendering
-    * @param id - sysUID of the node 
+     * <h4>FeatureDomain:</h4>
+     *     Layout Toggler
+     * <h4>FeatureDescription:</h4>
+     *     Toggle the "#detail_sys_" for the specified id with a slide. 
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>Updates DOM
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     GUI Tree Rendering
+     * @param id - sysUID of the node 
     */
-   me.toggleNodeSysContainer = function(id) {
-       $("#detail_sys_" + id).slideToggle(1000,function() {
-           // show/hide toggler
-           if ($("#detail_sys_" + id).css("display") == "block") {
-               // desc is now shown
-               $("#toggler_sys_" + id).addClass('toggler_show').removeClass('toggler_hidden');
-           } else {
-               // desc is now hidden
-               $("#toggler_sys_" + id).addClass('toggler_hidden').removeClass('toggler_show');
-           }
-       });
-   }
+    me.toggleNodeSysContainer = function(id) {
+        $("#detail_sys_" + id).slideToggle(1000,function() {
+            // show/hide toggler
+            if ($("#detail_sys_" + id).css("display") == "block") {
+                // desc is now shown
+                $("#toggler_sys_" + id).addClass('toggler_show').removeClass('toggler_hidden');
+            } else {
+                // desc is now hidden
+                $("#toggler_sys_" + id).addClass('toggler_hidden').removeClass('toggler_show');
+            }
+        });
+    };
   
-   me.toggleAllNodeSysContainer = function() {
-       if ($("#toggler_sys_all").hasClass('toggler_hidden')) {
-           // show all sys
-           $("div.field_nodeSys").slideDown(1000);
-           $("div.fieldtype_sysToggler > a").addClass('toggler_show').removeClass('toggler_hidden');
-       } else {
-           // hide all sys
-           $("div.field_nodeSys").slideUp(1000);
-           $("div.fieldtype_sysToggler > a").addClass('toggler_hidden').removeClass('toggler_show');
-       }
-   }
+    me.toggleAllNodeSysContainer = function() {
+        if ($("#toggler_sys_all").hasClass('toggler_hidden')) {
+            // show all sys
+            $("div.field_nodeSys").slideDown(1000);
+            $("div.fieldtype_sysToggler > a").addClass('toggler_show').removeClass('toggler_hidden');
+        }  else {
+            // hide all sys
+            $("div.field_nodeSys").slideUp(1000);
+            $("div.fieldtype_sysToggler > a").addClass('toggler_hidden').removeClass('toggler_show');
+        }
+    };
   
     me._init();
     

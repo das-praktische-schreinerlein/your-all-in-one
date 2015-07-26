@@ -120,7 +120,6 @@ pre code {
     white-space: pre-wrap;
     white-space: -moz-pre-wrap;
     white-space: -o-pre-wrap;
-    word-wrap: break-word;
     background-color: transparent;
     border-radius: 0;
     white-space: pre-line;
@@ -199,7 +198,6 @@ div.container-content-desc tr {
     border: 2px solid #8CACD3;
     border-radius: 10px;
     width: 100%;
-    padding: 3px;
     padding: 5px;
     background-color: white;
     margin-top: 3px;
@@ -219,7 +217,6 @@ div.container-content-desc tr {
     border: 2px solid #8CACD3;
     border-radius: 10px;
     width: 200px;
-    padding: 3px;
     padding: 5px;
     background-color: white;
     margin-top: 3px;

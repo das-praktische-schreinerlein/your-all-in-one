@@ -24,7 +24,7 @@ JsHelferlein.SpeechSynthDetector = function(appBase, config) {
      * initialize the object
      */
     me._init = function() {
-    }
+    };
 
     /**
      * liefert zurueck ob der Browser SpeechSynth unterstuetzt

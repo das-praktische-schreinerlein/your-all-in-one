@@ -24,7 +24,7 @@ JsHelferlein.JavascriptDetector = function(appBase, config) {
      * initialize the object
      */
     me._init = function() {
-    }
+    };
 
     me.isSupported = function() {
         return true;

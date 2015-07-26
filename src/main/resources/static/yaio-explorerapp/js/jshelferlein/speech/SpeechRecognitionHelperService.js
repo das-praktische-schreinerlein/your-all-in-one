@@ -24,7 +24,7 @@ JsHelferlein.SpeechRecognitionHelperService = function(appBase, config) {
      * initialize the object
      */
     me._init = function() {
-    }
+    };
     
     var final_transcript = '';
     var recognizing = false;
@@ -91,7 +91,7 @@ JsHelferlein.SpeechRecognitionHelperService = function(appBase, config) {
         if (me.config.isSet('buttonResumeId')) {
             document.getElementById(me.config.buttonResumeId).setAttribute('disabled', 'disabled');
         }
-    }
+    };
 
     me.pauseRecognition = function() {
         window.speechSynthesis.pause();
@@ -101,7 +101,7 @@ JsHelferlein.SpeechRecognitionHelperService = function(appBase, config) {
         if (me.config.isSet('buttonResumeId')) {
             document.getElementById(me.config.buttonResumeId).removeAttribute('disabled');
         }
-    }
+    };
     
     me.resumeRecognition = function() {
         window.speechSynthesis.resume();
@@ -111,11 +111,11 @@ JsHelferlein.SpeechRecognitionHelperService = function(appBase, config) {
         if (me.config.isSet('buttonResumeId')) {
             document.getElementById(me.config.buttonResumeId).setAttribute('disabled', 'disabled');
         }
-    }
+    };
 
     me.stopRecognition = function() {
         me.addResult2Opener(true);
-    }
+    };
 
     me._initRecognition = function() {
         // Erkennung aktivieren
@@ -218,7 +218,7 @@ JsHelferlein.SpeechRecognitionHelperService = function(appBase, config) {
         if (me.config.isSet('buttonStopId')) {
             document.getElementById(me.config.buttonStopId).onclick = me.stopRecognition;
         }
-    }
+    };
     
     me._disableControllerElements = function() {
         if (me.config.isSet('buttonStartId')) {
@@ -233,7 +233,7 @@ JsHelferlein.SpeechRecognitionHelperService = function(appBase, config) {
         if (me.config.isSet('buttonStopId')) {
             document.getElementById(me.config.buttonStopId).setAttribute('disabled', 'disabled');
         }
-    }
+    };
 
     me._showInfo = function(s) {
         if (s) {
@@ -246,16 +246,16 @@ JsHelferlein.SpeechRecognitionHelperService = function(appBase, config) {
         } else {
             info.style.visibility = 'hidden';
         }
-    }
+    };
 
     me._linebreak = function(s) {
         return s.replace(two_line, '<p></p>').replace(one_line, '<br>');
-    }
+    };
     me._capitalize = function(s) {
         return s.replace(first_char, function(m) {
             return m.toUpperCase();
         });
-    }
+    };
     
     // init all
     me._init();

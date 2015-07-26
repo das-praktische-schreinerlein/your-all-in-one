@@ -41,7 +41,7 @@ Yaio.FormatterService = function(appBase) {
      * initialize the object
      */
     me._init = function() {
-    }
+    };
 
 
     me._localHtmlId = 1;
@@ -178,7 +178,7 @@ Yaio.FormatterService = function(appBase) {
         var descHtmlMarked = marked(descText);
         
         return descHtmlMarked;
-    }
+    };
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -243,7 +243,7 @@ Yaio.FormatterService = function(appBase) {
         newDescText += noCode;
         
         return newDescText;
-    }
+    };
     
     
     /**
@@ -289,7 +289,7 @@ Yaio.FormatterService = function(appBase) {
         fo.addVariable("max_alpha_buttons",100);
         fo.addVariable("scaleTooltips","false");
         fo.write(blockId);
-    }
+    };
     
     
     /**
@@ -314,7 +314,7 @@ Yaio.FormatterService = function(appBase) {
         } catch (ex) {
             console.error("formatMermaidGlobal error:" + ex);
         }
-    }
+    };
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -336,7 +336,7 @@ Yaio.FormatterService = function(appBase) {
         var newDescText = descText;
         newDescText = newDescText.replace(/\n\.\n/g, "\n\n");
         return newDescText;
-    }
+    };
         
     /**
      * <h4>FeatureDomain:</h4>
@@ -387,7 +387,7 @@ Yaio.FormatterService = function(appBase) {
         }
         
         return newDescText;
-    }
+    };
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -456,7 +456,7 @@ Yaio.FormatterService = function(appBase) {
         me.highlightCheckList(descBlock);
         
         return flgDoMermaid;
-    }
+    };
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -480,7 +480,7 @@ Yaio.FormatterService = function(appBase) {
             var matchers = me.checkListConfigs[idx].matchers;
             me.highlightCheckListForMatchers(descBlock, matchers, idx, '');
         }
-    }
+    };
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -504,7 +504,7 @@ Yaio.FormatterService = function(appBase) {
         for (var idx in matchers) {
             me.highlightCheckListForMatcher(descBlock, "[" + matchers[idx] + "]", styleClass, style);
         }
-    }
+    };
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -542,7 +542,7 @@ Yaio.FormatterService = function(appBase) {
                 }
             });
         });
-    }
+    };
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -632,7 +632,7 @@ Yaio.FormatterService = function(appBase) {
         });
         
         return checkList;
-    }
+    };
     
     me.extractCheckListStatefromStateSpan = function(block) {
         // iterate all configs
@@ -648,7 +648,7 @@ Yaio.FormatterService = function(appBase) {
             }
         }
         return null;
-    }
+    };
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -705,7 +705,7 @@ Yaio.FormatterService = function(appBase) {
         ganttMarkdown += ganttMarkdownPlan + ganttMarkdownIst  + "```\n";
         
         return ganttMarkdown;
-    }
+    };
     
     
     /**
@@ -741,7 +741,7 @@ Yaio.FormatterService = function(appBase) {
             }
         }
         return "";
-    }
+    };
     
     me.addServicesToDiagrammBlock = function(block, type, downloadLink) {
         var content = $(block).html();
@@ -757,7 +757,7 @@ Yaio.FormatterService = function(appBase) {
                 + "<a href='#' style='display: none;' id='toggleorig" + blockId + "' onclick=\"yaioAppBase.get('YaioBase').toggleWithLinks('#toggleorig" + blockId + "', '#togglesource" + blockId + "', '#" + blockId + "', '#fallback" + blockId + "'); return false;\" target='_blank'>Diagramm</a>"
                 + "<a href='#' id='togglesource" + blockId + "' onclick=\"yaioAppBase.get('YaioBase').toggleWithLinks('#toggleorig" + blockId + "', '#togglesource" + blockId + "', '#" + blockId + "', '#fallback" + blockId + "'); return false;\" target='_blank'>Source</a>"
                 + "</div></div>");
-    }
+    };
     
     
     me.addTOCForBlock = function(tocElement, srcElement, settings) {
@@ -766,7 +766,7 @@ Yaio.FormatterService = function(appBase) {
         settings.toc = settings.toc || { };
         settings.toc.dest = $(tocElement);
         $.fn.toc($(srcElement), settings);
-    }
+    };
     
     me._init();
     

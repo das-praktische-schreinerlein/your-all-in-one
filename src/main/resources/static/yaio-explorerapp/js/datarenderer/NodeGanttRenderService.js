@@ -1,3 +1,33 @@
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Collaboration
+ *
+ * <h4>FeatureDescription:</h4>
+ *     software for projectmanagement and documentation
+ * 
+ * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category collaboration
+ * @copyright Copyright (c) 2014, Michael Schreiner
+ * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+'use strict';
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     WebGUI
+ * <h4>FeatureDescription:</h4>
+ *     servicefunctions for gantt-rendering
+ *      
+ * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category collaboration
+ * @copyright Copyright (c) 2014, Michael Schreiner
+ * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ */
 Yaio.NodeGanttRenderService = function(appBase) {
     // my own instance
     var me = JsHelferlein.ServiceBase(appBase);
@@ -148,7 +178,7 @@ Yaio.NodeGanttRenderService = function(appBase) {
         } else {
             console.log("fillGanttBlock SKIP no planDates: " + msg);
         }
-    }
+    };
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -198,7 +228,7 @@ Yaio.NodeGanttRenderService = function(appBase) {
         me.fillGanttBlock(basenode, type, label, $divLine);
         
         return $divLine;
-    }
+    };
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -252,7 +282,7 @@ Yaio.NodeGanttRenderService = function(appBase) {
         console.log("renderGanttBlock DONE: " + msg);
     
         return $table;
-    }
+    };
     
     
     /**
@@ -282,7 +312,7 @@ Yaio.NodeGanttRenderService = function(appBase) {
             $("#tabTogglerGantt").css("display", "none");
             $("td.block_nodedata, th.block_nodedata").css("display", "none");
         }, 400);
-    }
+    };
     
     
     /**
@@ -322,7 +352,7 @@ Yaio.NodeGanttRenderService = function(appBase) {
     
         // recalc gantt tree
         me.yaioRecalcMasterGanttBlockFromTree()
-    }
+    };
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -345,7 +375,7 @@ Yaio.NodeGanttRenderService = function(appBase) {
             });
         }
         me.yaioRecalcMasterGanttBlockFromTree()
-    }
+    };
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -367,7 +397,7 @@ Yaio.NodeGanttRenderService = function(appBase) {
     
         // calc from tree
         me.yaioRecalcMasterGanttBlockFromTree()
-    }
+    };
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -393,7 +423,7 @@ Yaio.NodeGanttRenderService = function(appBase) {
         } else {
             console.log("yaioRecalcMasterGanttBlockFromTree skip: no masterNodeId");
         }
-    }
+    };
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -481,7 +511,7 @@ Yaio.NodeGanttRenderService = function(appBase) {
         } else {
             console.log("yaioRecalcMasterGanttBlock type=" + praefix + " hide gantt_aufwand_label because no calced rangeaufwand :" + sumRangeAufwand + " for " + masterNodeId);
         }
-    }
+    };
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -502,7 +532,7 @@ Yaio.NodeGanttRenderService = function(appBase) {
         me.fillGanttBlock(basenode, "planChildrenSum", "PlanSum", null);
         me.fillGanttBlock(basenode, "ist", "Ist", null);
         me.fillGanttBlock(basenode, "istChildrenSum", "IstSum", null);
-    }
+    };
     
 
     me._init();

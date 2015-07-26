@@ -24,7 +24,7 @@ JsHelferlein.ServiceBase = function(appBase, config, defaultConfig) {
         // check Config
         me.appBase = appBase;
         me.config = appBase.checkConfig(config, defaultConfig);
-    }
+    };
 
     me._init();
     
