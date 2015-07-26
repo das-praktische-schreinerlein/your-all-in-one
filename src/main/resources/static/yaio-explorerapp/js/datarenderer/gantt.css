@@ -1,0 +1,93 @@
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Collaboration
+ *
+ * <h4>FeatureDescription:</h4>
+ *     software for projectmanagement and documentation
+ * 
+ * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category collaboration
+ * @copyright Copyright (c) 2014, Michael Schreiner
+ * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+/*****************************************
+ *****************************************
+ * gantt
+ *****************************************
+ *****************************************/
+.gantt_aufwand {
+    width: 100px;
+    float: left;
+    margin-right: 10px;
+    line-height: 1em;
+}
+.gantt_aufwand_label {
+    display: inline-block;
+    float: left;
+}
+.gantt_aufwand_value {
+    display: inline-block;
+    float: right;
+}
+.gantt_bar {
+    height: 10px;
+    float: left;
+    border: 1px solid #8CACD3; /*#FCEFB7; #336699;*/
+    border-radius: 4px;
+}
+.gantt_plan_container {
+    display: none;
+}
+.gantt_plan_bar {
+    background: yellow;
+}
+.gantt_planChildrenSum_bar {
+    background: yellow;
+}
+.gantt_plan_aufwand {
+    background: yellow;
+}
+.gantt_planChildrenSum_aufwand {
+    background: yellow;
+}
+
+.gantt_ist_container {
+    display: none;
+}
+.gantt_ist_bar {
+    background: green;
+}
+.gantt_istChildrenSum_bar {
+    background: yellow;
+}
+
+
+#gantt_container_head {
+  font-size:11px;
+  height: 30px;
+}
+#gantt_aufwand_head {
+    height: 30px;
+}
+#gantt_bar_head {
+    border-top: none;
+    border-bottom: none;
+    border-radius: 0px;
+    width: 450px;
+    height: 30px;
+    text-align: center
+}
+#inputGanttRangeStart {
+    float: left;
+    margin-left: 5px;
+}
+#inputGanttRangeEnde {
+    float: right;
+    margin-right: 5px;
+}
+

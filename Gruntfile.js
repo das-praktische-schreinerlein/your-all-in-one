@@ -117,10 +117,24 @@ module.exports = function( grunt ){
         ],
         projectCssFiles: [
               'src/main/resources/static/yaio-explorerapp/css/style.css',
-              'src/main/resources/static/yaio-explorerapp/css/formatter.css'
+              'src/main/resources/static/yaio-explorerapp/js/layout/base.css',
+              'src/main/resources/static/yaio-explorerapp/js/layout/support.css',
+              'src/main/resources/static/yaio-explorerapp/js/layout/toc.css',
+              'src/main/resources/static/yaio-explorerapp/js/layout/yaio.css',
+              'src/main/resources/static/yaio-explorerapp/js/explorer/explorer.css',
+              'src/main/resources/static/yaio-explorerapp/js/datarenderer/gantt.css',
+              'src/main/resources/static/yaio-explorerapp/js/datarenderer/data.css',
+              'src/main/resources/static/yaio-explorerapp/js/search/search.css',
+              'src/main/resources/static/yaio-explorerapp/js/editor/editor.css',
+              'src/main/resources/static/yaio-explorerapp/js/exporter/exporter.css',
+              'src/main/resources/static/yaio-explorerapp/js/lang/lang.css',
+              'src/main/resources/static/yaio-explorerapp/js/auth/auth.css',
+              'src/main/resources/static/yaio-explorerapp/js/frontpage/frontpage.css',
+              'src/main/resources/static/yaio-explorerapp/js/wysiwyg/formatter.css'
         ],
         projectSupportCssFiles: [
-            'src/main/resources/static/yaio-explorerapp/css/formatter.css'
+            'src/main/resources/static/yaio-explorerapp/js/layout/toc.css',
+            'src/main/resources/static/yaio-explorerapp/js/wysiwyg/formatter.css'
         ],
         vendorJsTestFiles: [
               'src/test/static/unit/resources/js/jasmine/jasmine-jquery.js',
@@ -225,7 +239,7 @@ module.exports = function( grunt ){
                     {expand: true, cwd: 'bower/_src/jquery-ui', src: ['**/jquery-ui.min.js', '**/jquery-ui-i18n.min.js'], dest: 'vendors/js/jqueryui/', flatten: true},
                     {expand: true, cwd: 'bower/_src/jqueryui-timepicker-addon', src: ['dist/*.js'], dest: 'vendors/js/jqueryui/', flatten: true},
                     {expand: true, cwd: 'bower/_src/marked', src: ['lib/marked.js'], dest: 'vendors/js/marked/', flatten: true},
-                    {expand: true, cwd: 'bower/_src/mermaid', src: ['dist/mermaid-legacy.full.js'], dest: 'vendors/js/mermaid/', flatten: true, filter: 'isFile'
+                    {expand: true, cwd: 'bower/_src/mermaid', src: ['dist/mermaid.full.js'], dest: 'vendors/js/mermaid/', flatten: true, filter: 'isFile'
                         ,rename: function(dest, src) {
                             return dest + src.replace('-legacy.full.js','.full.js');
                           }

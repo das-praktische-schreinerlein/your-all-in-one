@@ -1,0 +1,124 @@
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Collaboration
+ *
+ * <h4>FeatureDescription:</h4>
+ *     software for projectmanagement and documentation
+ * 
+ * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category collaboration
+ * @copyright Copyright (c) 2014, Michael Schreiner
+ * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+/*****************************************
+ *****************************************
+ * help
+ *****************************************
+ *****************************************/
+#help-iframe {
+    width: 750px;
+    height: 500px;
+    overflow: auto;
+}
+#help-box {
+    width: 800px;
+    height: 550px;
+}
+
+/*****************************************
+ *****************************************
+ * markdownhelp
+ *****************************************
+ *****************************************/
+#markdownhelp-iframe {
+    width: 1200px;
+    height: 500px;
+    overflow: auto;
+}
+#markdownhelp-box {
+    width: 1250px;
+    height: 550px;
+}
+
+
+/*****************************************
+ *****************************************
+ * preview
+ *****************************************
+ *****************************************/
+#preview-content {
+    width: 1000px;
+    height: 600px;
+    overflow: auto;
+}
+#preview-box {
+    width: 1050px;
+    height: 650px;
+}
+#preview-content svg:not([class]) {
+    width: 100%;
+    height: auto;
+}
+
+#preview-content div.mermaid {
+    max-width: 950px;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+/*****************************************
+ *****************************************
+ * wysiwhg
+ *****************************************
+ *****************************************/
+#wysiwhg-preview {
+    float: left;
+    width: 560px;
+    height: 600px;
+    overflow: auto;
+    padding-left: 10px;
+}
+#wysiwhg-preview svg:not([class]) {
+    width: 100%;
+    height: auto;
+}
+
+#wysiwhg-preview div.mermaid {
+    max-width: 550px;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+#wysiwhg-editor {
+    float: left;
+    width: 570px;
+    height: 600px;
+    max-height: 600px;
+    overflow: auto;
+}
+#wysiwhg-box {
+    width: 1180px;
+    height: 650px;
+}
+
+/*****************************************
+ *****************************************
+ * clipboard
+ *****************************************
+ *****************************************/
+#clipboard-content {
+    width: 670px;
+    height: 600px;
+    overflow: auto;
+}
+#clipboard-box {
+    width: 750px;
+    height: 650px;
+}
+ 
