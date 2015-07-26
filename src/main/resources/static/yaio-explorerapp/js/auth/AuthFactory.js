@@ -14,7 +14,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-'use strict';
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -29,6 +28,8 @@
  *     GUI Configuration
  */
 yaioApp.factory('authorization', function ($rootScope, $http) {
+    'use strict';
+
     return {
         authentificate: function(callback) {
             $http.get('/user/current').success(function(data) {

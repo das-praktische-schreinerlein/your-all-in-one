@@ -14,7 +14,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-'use strict';
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -29,6 +28,8 @@
  *     Utils
  */
 yaioApp.factory('yaioUtils', function () {
+    'use strict';
+
     var appBase = yaioAppBase;
     var ganttRangeStart = appBase.get('YaioBase').formatGermanDate((new Date()).getTime() - 90*24*60*60*1000); 
     var ganttRangeEnd = appBase.get('YaioBase').formatGermanDate((new Date()).getTime() + 90*24*60*60*1000);

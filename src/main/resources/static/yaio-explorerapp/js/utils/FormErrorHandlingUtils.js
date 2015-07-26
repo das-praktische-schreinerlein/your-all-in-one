@@ -14,7 +14,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-'use strict';
 
 /***************************************
  ***************************************
@@ -36,6 +35,8 @@
  *     GUI Configuration Taglibrary Errorhandling
  */
 yaioApp.factory('setFormErrors', function() {
+    'use strict';
+
     // Registered withErrors controllers
     var withErrorCtrls = [];
 
@@ -72,6 +73,8 @@ yaioApp.factory('setFormErrors', function() {
  *     GUI Configuration Taglibrary Errorhandling
  */
 yaioApp.directive('withErrors', ['setFormErrors', function(setFormErrors) {
+    'use strict';
+
     return {
         restrict: 'A',
         require: 'withErrors',
@@ -114,6 +117,8 @@ yaioApp.directive('withErrors', ['setFormErrors', function(setFormErrors) {
  *     GUI Configuration Taglibrary Errorhandling
  */
 function directiveFieldsWithErrors () {
+    'use strict';
+
     return {
         restrict: 'E',
         require: ['?ngModel', '?^withErrors'],
@@ -167,6 +172,8 @@ function directiveFieldsWithErrors () {
  *     GUI Configuration Taglibrary Errorhandling
  */
 yaioApp.directive('input', function() {
+    'use strict';
+
     return directiveFieldsWithErrors();
 });
 //yaioApp.directive('select', function() {
@@ -190,6 +197,8 @@ yaioApp.directive('input', function() {
  *     GUI Configuration Taglibrary Errorhandling
  */
 yaioApp.directive('fielderrors', function() {
+    'use strict';
+
     return {
         restrict: 'E',
         replace: true,

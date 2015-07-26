@@ -14,7 +14,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-'use strict';
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -29,6 +28,8 @@
  *     GUI Configuration
  */
 yaioApp.controller('AuthController', function($rootScope, $scope, $location, $http, $routeParams, setFormErrors, OutputOptionsEditor, authorization) {
+    'use strict';
+
     $scope.credentials = {};
     
     $scope.login = function() {

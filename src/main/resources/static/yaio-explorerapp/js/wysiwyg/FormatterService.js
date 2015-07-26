@@ -15,8 +15,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-'use strict';
-
 /* require '/js/highlightjs' */
 /* require '/js/jquery' */
 /* require '/js/marked' */
@@ -34,6 +32,8 @@
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 Yaio.FormatterService = function(appBase) {
+    'use strict';
+
     // my own instance
     var me = JsHelferlein.ServiceBase(appBase);
 

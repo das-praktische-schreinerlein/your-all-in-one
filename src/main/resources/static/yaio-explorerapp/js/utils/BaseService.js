@@ -15,8 +15,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-'use strict';
-
 /**
  * <h4>FeatureDomain:</h4>
  *     WebGUI
@@ -35,6 +33,8 @@
  *****************************************
  *****************************************/
 Yaio.BaseService = function(appBase) {
+    'use strict';
+
     // my own instance
     var me = JsHelferlein.ServiceBase(appBase);
 

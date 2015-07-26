@@ -14,7 +14,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-'use strict';
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -44,6 +43,8 @@ var yaioApp = angular.module('yaioExplorerApp', ['ngAnimate', 'ngRoute', 'pascal
  * @param $routeProvider - the $routeProvider-instance to add the new routes
  */
 yaioApp.config(function($routeProvider) {
+    'use strict';
+
     // configure routes
     $routeProvider
         .when('/show/:nodeId/activate/:activeNodeId', { 
@@ -90,6 +91,8 @@ yaioApp.config(function($routeProvider) {
  * @param $httpProvider - the $httpProvider to change the default-headers
  */
 yaioApp.config(['$httpProvider', function($httpProvider) {
+    'use strict';
+
     $httpProvider.defaults.headers.patch = {
         'Content-Type': 'application/json;charset=utf-8'
     }

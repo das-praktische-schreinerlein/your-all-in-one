@@ -14,7 +14,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-'use strict';
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -29,7 +28,9 @@
  *     GUI Configuration
  */
 yaioApp.controller('LanguageCtrl', ['$translate', '$scope', function ($translate, $scope, yaioUtils) {
-    // include utils    
+    'use strict';
+
+    // include utils
     $scope.yaioUtils = yaioUtils;
 
     // define languageutils

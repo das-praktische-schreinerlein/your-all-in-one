@@ -14,7 +14,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-'use strict';
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -30,6 +29,8 @@
  * @param $translateProvider - the $translateProvider to get text-resources
  */
 yaioApp.config(function ($translateProvider) {
+    'use strict';
+
     $translateProvider.translations();
     
     $translateProvider.useStaticFilesLoader({
