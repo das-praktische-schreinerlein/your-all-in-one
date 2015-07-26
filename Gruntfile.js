@@ -1,3 +1,5 @@
+var path = require('path');
+
 module.exports = function( grunt ){
    // configure tasks
     grunt.initConfig({
@@ -106,6 +108,71 @@ module.exports = function( grunt ){
         projectE2EJsTestFiles: [
               'src/test/static/e2e/yaio-explorerapp/**/*_test.js'
         ],
+        
+        bower: {
+            install: {
+              options: {
+                    targetDir: './bower/_dest',
+                    layout: //'byType', // 'byComponent'
+                        function(type, component, source) {
+                            // map type
+                            var extractedType = source.replace(/.*\.(.*)?/, "$1");
+                            var renamedType = "js";
+                            if (extractedType == 'js') renamedType = 'js';
+                            else if (extractedType == 'css') renamedType = 'css';
+
+                            // map compontent
+                            if (component.search('fancytree') >= 0) {
+                                // copy all fancytree to js
+                                renamedType = "js";
+                            } else if (component.search('ace-builds') >= 0) {
+                                // map ace
+                                component = "ace";
+                            } else if (component.search('jquery-ui') >= 0) {
+                                // map jqueryui
+                                component = "jqueryui";
+                            } else if (component.search('jqueryui') >= 0) {
+                                // map jqueryui
+                                component = "jqueryui";
+                            } else if (component.search('ui-contextmenu') >= 0) {
+                                // map jqueryui
+                                component = "jqueryui";
+                            } else if (component.search('jquery-lang') >= 0) {
+                                // map jquery
+                                component = "jquery";
+                            } else if (component.search('angular') >= 0) {
+                                // map angularjs
+                                component = "angularjs";
+                            }
+                            return path.join(renamedType, component);
+                        },
+                    install: true,
+                    verbose: true,
+                    cleanTargetDir: true,
+                    cleanBowerDir: false,
+                    bowerOptions: {}
+                }
+            }
+        },
+        
+        copy: {
+            main: {
+                files: [
+                    // includes files within path
+                    {expand: true, cwd: 'bower/_src/angular', src: ['*.js'], dest: 'vendors/js/angularjs/', flatten: false},
+                    {expand: true, cwd: 'bower/_src/angular-translate', src: ['*.js'], dest: 'vendors/js/angularjs/', flatten: false},
+                    {expand: true, cwd: 'bower/_src/jquery/dist', src: ['*.js'], dest: 'vendors/js/jquery/', flatten: false},
+                    {expand: true, cwd: 'bower/_src/jquery-lang-js/js', src: ['*.js'], dest: 'vendors/js/jquery/', flatten: false},
+                    {expand: true, cwd: 'bower/_src/jquery-ui', src: ['**/jquery-ui.min.js', '**/jquery-ui-i18n.min.js'], dest: 'vendors/js/jqueryui/', flatten: true},
+                    {expand: true, cwd: 'bower/_src/jquery-lang', src: ['js/*.js'], dest: 'vendors/js/jqueryui/', flatten: true},
+                    {expand: true, cwd: 'bower/_src/jqueryui-timepicker-addon', src: ['dist/*.js'], dest: 'vendors/js/jqueryui/', flatten: true},
+                    {expand: true, cwd: 'bower/_src/ui-contextmenu', src: ['**/*.js'], dest: 'vendors/js/jqueryui/', flatten: true},
+                    {expand: true, cwd: 'bower/_src/fancytree/dist/', src: ['skin*', '*.js'], dest: 'vendors/js/fancytree/', flatten: false},
+                    {expand: true, cwd: 'bower/_src/fancytree/dist/', src: ['src/*.js'], dest: 'vendors/js/fancytree/', flatten: true},
+                    {expand: true, cwd: 'bower/_src/ace-builds/src-min', src: ['**'], dest: 'vendors/js/ace/', flatten: false},
+                ],
+            },
+        },
 
         // concat files
         concat: {
@@ -217,22 +284,47 @@ module.exports = function( grunt ){
                 files: ['src/main/resources/static/yaio-explorerapp/**/*.*', 'src/test/static/e2e/**/*', 'src/test/static/unit/**/*'],
                 tasks: ['dist', 'karma:unit', 'protractor:e2e']
             }
-        }
+        },
+        wiredep: {
+
+            task: {
+
+              // Point to the files that should be updated when
+              // you run `grunt wiredep`
+              src: [
+                'src/main/resources/static/html/**/*.html',
+                'src/main/resources/static/yaio-explorerapp/*.html',
+//                'app/styles/main.scss',  // .scss & .sass support...
+//                'app/config.yml'         // and .yml & .yaml support out of the box!
+              ],
+
+              options: {
+                // See wiredep's configuration documentation for the options
+                // you may pass:
+
+                // https://github.com/taptapship/wiredep#configuration
+              }
+            }
+          }
     });
 
     // register tasks
+    grunt.registerTask('vendors',   ['bower', 'copy']);
     grunt.registerTask('default',   ['jshint']);
     grunt.registerTask('dist',      ['concat:full']);
     grunt.registerTask('unit-test', ['dist', 'karma:continuous:start', 'watch:karma']);
     grunt.registerTask('e2e-test',  ['dist', 'protractor:continuous', 'watch:protractor']);
 
     // load grunt tasks
+    grunt.loadNpmTasks('grunt-bower-task');
+    grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-jsdoc');
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-protractor-runner');
+    grunt.loadNpmTasks('grunt-wiredep');
 //  grunt.loadNpmTasks('grunt-contrib-clean');
 //  grunt.loadNpmTasks('grunt-contrib-compass');
 //  grunt.loadNpmTasks('grunt-contrib-copy');
