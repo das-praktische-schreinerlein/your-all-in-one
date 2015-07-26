@@ -467,7 +467,9 @@ Yaio.NodeGanttRenderService = function(appBase) {
         
         // filter ganttblocks
         var filter = "div.gantt_" + praefix + "_bar, div.gantt_" + praefix + "ChildrenSum_bar";
-        var $ganttBars = $(filter).filter(function () { return $(this).parent().css('display') == 'block' });
+        var $ganttBars = $(filter).filter(function () { 
+            return $(this).parent().css('display') == 'block'; 
+        });
         console.log("yaioRecalcMasterGanttBlock type=" + praefix + " found:" + $ganttBars.length + " for filter:" + filter);
         if ($ganttBars.length > 0) {
             $($ganttBars).each( function () {
