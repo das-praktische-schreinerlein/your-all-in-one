@@ -1,7 +1,11 @@
-/log.roo
 /.idea
 /.settings
-/target
-/node_modules
+/bower
 /node
+/node_modules
+/src/main/resources/static/yaio-explorerapp/.idea
+/src/main/resources/static/yaio-explorerapp/.settings
+/target
 /var/hsqldb/yaio.lck
+/vendors
+/log.roo
