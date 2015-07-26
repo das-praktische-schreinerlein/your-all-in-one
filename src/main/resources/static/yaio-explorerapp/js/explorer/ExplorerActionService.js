@@ -135,7 +135,7 @@ Yaio.ExplorerActionService = function(appBase) {
     me.yaioSaveNode = function(data) {
         var json = JSON.stringify({name: data.input.val()});
         var url = me.appBase.config.updateUrl + data.node.key;
-        doUpdateNode(data.node, url, json);
+        me.appBase.get('YaioNodeData').yaioDoUpdateNode(data.node, url, json);
     };
     
     me.yaioMoveNode = function(node, newParentKey, newPos) {

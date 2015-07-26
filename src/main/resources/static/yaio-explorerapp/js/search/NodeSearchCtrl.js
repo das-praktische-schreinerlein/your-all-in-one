@@ -35,25 +35,30 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ht
 
     // create search
     $scope.nodes = [];
-    
+
     $scope.searchOptions = {
-            curPage: 1,
-            pageSize: 20,
-            searchSort: 'lastChangeDown',
-            baseSysUID: "MasterplanMasternode1",
-            fulltext: "",
-            total: 0
+        curPage: 1,
+        pageSize: 20,
+        searchSort: 'lastChangeDown',
+        baseSysUID: "MasterplanMasternode1",
+        fulltext: "",
+        total: 0
     };
-    if ($routeParams.curPage)
-        $scope.searchOptions.curPage = decodeURI($routeParams.curPage); 
-    if ($routeParams.pageSize)
-        $scope.searchOptions.pageSize = decodeURI($routeParams.pageSize); 
-    if ($routeParams.searchSort)
-        $scope.searchOptions.searchSort = decodeURI($routeParams.searchSort); 
-    if ($routeParams.baseSysUID)
-        $scope.searchOptions.baseSysUID = decodeURI($routeParams.baseSysUID); 
-    if ($routeParams.fulltext)
-        $scope.searchOptions.fulltext = decodeURI($routeParams.fulltext); 
+    if ($routeParams.curPage) {
+        $scope.searchOptions.curPage = decodeURI($routeParams.curPage);
+    }
+    if ($routeParams.pageSize) {
+        $scope.searchOptions.pageSize = decodeURI($routeParams.pageSize);
+    }
+    if ($routeParams.searchSort) {
+        $scope.searchOptions.searchSort = decodeURI($routeParams.searchSort);
+    }
+    if ($routeParams.baseSysUID) {
+        $scope.searchOptions.baseSysUID = decodeURI($routeParams.baseSysUID);
+    }
+    if ($routeParams.fulltext) {
+        $scope.searchOptions.fulltext = decodeURI($routeParams.fulltext);
+    }
     console.log("NodeSearchCtrl - processing");
     
     // pagination has to wait for event
@@ -243,9 +248,9 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ht
                     var searchWord, searchResults, splitLength, splitText;
 
                     var descText = node.nodeDesc;
-                    descText = descText.replace(/\<WLBR\>/g, "\n");
-                    descText = descText.replace(/\<WLESC\>/g, "\\");
-                    descText = descText.replace(/\<WLTAB\>/g, "\t");
+                    descText = descText.replace(/<WLBR>/g, "\n");
+                    descText = descText.replace(/<WLESC>/g, "\\");
+                    descText = descText.replace(/<WLTAB>/g, "\t");
                     descText = descText.toLowerCase();
                     
                     for (var idx in searchWords) {

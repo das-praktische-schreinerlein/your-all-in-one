@@ -176,7 +176,7 @@ Yaio.LayoutService = function(appBase) {
      * @param target - target-element to update (HTML-Element)
      */
     me.openSpeechSynthWindow = function(target) {
-        if (target == null) target = self;
+        if (target == null) { target = self; }
         target.focus();
         var speechsynthWindow = window.open('speechsynth.html', "speechsynth", "width=690,height=350,resizable=yes,dependent=yes,scrollbars=yes");
         speechsynthWindow.focus();

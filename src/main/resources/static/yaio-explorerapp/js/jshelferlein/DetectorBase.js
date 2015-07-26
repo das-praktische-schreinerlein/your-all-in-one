@@ -35,8 +35,9 @@ JsHelferlein.DetectorBase = function(appBase, config, defaultConfig) {
         var styles = me.generateStyles();
         me.appBase.get('DOMHelper').insertStyleBeforeScript(styles);
         me.appBase.get('DOMHelper').appendStyleAtEnd(styles);
-        if (me.appBase.get('Logger') && me.appBase.get('Logger').isDebug)
+        if (me.appBase.get('Logger') && me.appBase.get('Logger').isDebug) {
             me.appBase.get('Logger').logDebug("JsHelferlein.DetectorBase.publishDetectorStyles " + styles);
+        }
     };
 
     me.generateStyles = function() {

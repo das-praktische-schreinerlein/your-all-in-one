@@ -212,22 +212,23 @@ JsHelferlein.SpeechSynthHelperService = function(appBase, config) {
                     me.appBase.get("Logger").logDebug("split by word:'" + splitWord + "' text:''" + text + "' nextText:'" + nextText + "'");
                 }
                 wordIndex++;
-            } while (wordIndex < splitWords.length && text.length > maxLength);
+            } while (wordIndex < me.config.splitWords.length && text.length > maxLength);
             
             // fallback if text > maxLength
             if (text.length > maxLength) {
                 // attempt to split a " " before maxLength
                 var posSpace = text.indexOf(" ");
+                var text1, text2;
                 if ((posSpace <= 0 || posSpace > maxLength)) {
                     // not " " before maxLength -> do it hard
-                    var text1 = text.substr(0, maxLength);
-                    var text2 = text.substr(maxLength);
+                    text1 = text.substr(0, maxLength);
+                    text2 = text.substr(maxLength);
                     me.appBase.get("Logger").logDebug("split texthard text1:'" + text1 + "' text2:''" + text2 + "'");
                     sentences = [text1, text2];
                 } else {
                     // split at space   
-                    var text1 = text.substr(0, posSpace);
-                    var text2 = text.substr(posSpace);
+                    text1 = text.substr(0, posSpace);
+                    text2 = text.substr(posSpace);
                     me.appBase.get("Logger").logDebug("split space text1:'" + text1 + "' text2:''" + text2 + "'");
                     sentences = [text1, text2];
                 }

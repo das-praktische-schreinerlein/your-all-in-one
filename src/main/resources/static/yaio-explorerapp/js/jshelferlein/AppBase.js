@@ -53,7 +53,7 @@ JsHelferlein.AppBase = function(config) {
         if (! me.services.hasOwnProperty(serviceName)) {
             if (me.serviceConfigs.hasOwnProperty(serviceName)) {
                 var constr = me.getServiceConfig(serviceName);
-                me.setService(serviceName, constr(me))
+                me.setService(serviceName, constr(me));
             }
         }
         return me.services[serviceName];
@@ -111,8 +111,9 @@ JsHelferlein.AppBase = function(config) {
         }
         me.get('DOMHelper').insertStyleBeforeScript(styles);
         me.get('DOMHelper').appendStyleAtEnd(styles);
-        if (me.get('Logger') && me.get('Logger').isDebug)
+        if (me.get('Logger') && me.get('Logger').isDebug) {
             me.get('Logger').logDebug("JsHelferlein.AppBase.publishDetectorStyles " + styles);
+        }
     };
     
     me._configureDefaultServices = function() {

@@ -154,7 +154,7 @@ Yaio.EditorService = function(appBase) {
         // convert value
         if (field.datatype === "integer" && (! value || value == "undefined" || value === null)) {
             // specical int
-            value = 0
+            value = 0;
         } else if (field.datatype === "date")  {
             // date
             value = me.appBase.get('YaioBase').formatGermanDate(value);
@@ -509,12 +509,12 @@ Yaio.EditorService = function(appBase) {
             if (basenode.istStand == "0") {
                 // 0: OFFEN
                 type = "OFFEN"; 
-            } else if (basenode.istStand == 100 && basenode.type != "VERWORFEN") {
+            } else if (basenode.istStand == 100 && basenode.type !== "VERWORFEN") {
                 // 100: ERLEDIGT if not VERWORFEN already
                 type = "ERLEDIGT"; 
             } else if (basenode.istStand < 100 && basenode.istStand > 0) {
                 // 0<istStand<100: RUNNING if not WARNING already
-                if (basenode.type != "WARNING") {
+                if (basenode.type !== "WARNING") {
                     type = "RUNNING"; 
                 }
             }
@@ -523,12 +523,12 @@ Yaio.EditorService = function(appBase) {
             if (basenode.istStand == "0") {
                 // 0: EVENT_PLANED
                 type = "EVENT_PLANED"; 
-            } else if (basenode.istStand == 100 && basenode.type != "EVENT_VERWORFEN") {
+            } else if (basenode.istStand == 100 && basenode.type !== "EVENT_VERWORFEN") {
                 // 100: EVENT_ERLEDIGT if not EVENT_VERWORFEN already
                 type = "EVENT_ERLEDIGT"; 
             } else if (basenode.istStand < 100 && basenode.istStand > 0) {
                 // 0<istStand<100: EVENT_RUNNING if not EVENT_WARNING already
-                if (basenode.type != "EVENT_WARNING") {
+                if (basenode.type !== "EVENT_WARNING") {
                     type = "EVENT_RUNNING"; 
                 }
             }

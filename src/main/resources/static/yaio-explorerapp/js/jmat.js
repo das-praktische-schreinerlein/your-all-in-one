@@ -46,12 +46,12 @@
 
         if (eleInput.nodeName.toUpperCase() == "SELECT") {
             // Select-Box
-            if (eleInput.value && (eleInput.value != "search_all.php")) {
+            if (eleInput.value && (eleInput.value !== "search_all.php")) {
                 state = true;
             } else {
                 // Multiselect auswerten
                 for (var i = 0; i < eleInput.length; i++) {
-                    if (eleInput.options[i].selected && eleInput.options[i].value && (eleInput.options[i].value != "search_all.php")) {
+                    if (eleInput.options[i].selected && eleInput.options[i].value && (eleInput.options[i].value !== "search_all.php")) {
                         state = true;
                         i = eleInput.length + 1;
                     }

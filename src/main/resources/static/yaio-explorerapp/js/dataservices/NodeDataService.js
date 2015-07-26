@@ -84,13 +84,13 @@ Yaio.NodeDataService = function(appBase) {
                             message = message +  violation.path + " (" + violation.message + "),";
                         }
                     }
-                    me.appBase.get('YaioBase').logError(message, true)
+                    me.appBase.get('YaioBase').logError(message, true);
                 }
             },
             error : function(jqXHR, textStatus, errorThrown) {
                 // log the error to the console
                 me.appBase.get('YaioBase').logError("The following error occured: " + textStatus + " " + errorThrown, true);
-                me.appBase.get('YaioBase').logError("cant save node:" + node.key + " error:" + textStatus)
+                me.appBase.get('YaioBase').logError("cant save node:" + node.key + " error:" + textStatus);
             },
             complete : function() {
                 console.log("update node:" + node.key + "' ran");
@@ -120,7 +120,7 @@ Yaio.NodeDataService = function(appBase) {
                         var tree = $("#tree").fancytree("getTree");
                         if (!tree) {
                             // tree not found
-                            logErrorerror("error yaioLoadSymLinkData: cant load tree - " + msg, false);
+                            me.appBase.get('YaioBase').logError("error yaioLoadSymLinkData: cant load tree - " + msg, false);
                             return null;
                         }
                         var rootNode = tree.rootNode;
@@ -175,7 +175,7 @@ Yaio.NodeDataService = function(appBase) {
             error : function(jqXHR, textStatus, errorThrown) {
                 // log the error to the console
                 me.appBase.get('YaioBase').logError("ERROR  " + msg + " The following error occured: " + textStatus + " " + errorThrown, false);
-                me.appBase.get('YaioBase').logError("cant load " + msg + " error:" + textStatus, true)
+                me.appBase.get('YaioBase').logError("cant load " + msg + " error:" + textStatus, true);
             },
             complete : function() {
                 console.log("completed load " + msg);
@@ -220,7 +220,7 @@ Yaio.NodeDataService = function(appBase) {
                             var violation = response.violations[idx];
                             me.appBase.get('YaioBase').logError("violations while remove node:" + node.key 
                                     + " field:" + violation.path + " message:" + violation.message, false);
-                            window.alert("cant remove node because: " + violation.path + " (" + violation.message + ")")
+                            window.alert("cant remove node because: " + violation.path + " (" + violation.message + ")");
                         }
                     }
                 }
@@ -228,7 +228,7 @@ Yaio.NodeDataService = function(appBase) {
             error : function(jqXHR, textStatus, errorThrown) {
                 // log the error to the console
                 me.appBase.get('YaioBase').logError("The following error occured: " + textStatus + " " + errorThrown, false);
-                me.appBase.get('YaioBase').logError("cant remove node:" + node.key + " error:" + textStatus, true)
+                me.appBase.get('YaioBase').logError("cant remove node:" + node.key + " error:" + textStatus, true);
             },
             complete : function() {
                 console.log("remove node:" + node.key + "' ran");

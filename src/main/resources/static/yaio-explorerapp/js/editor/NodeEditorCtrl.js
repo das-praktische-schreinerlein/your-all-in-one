@@ -230,18 +230,21 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ht
             }
             
             // convert values
+            var lstDate, newDate;
             if (field.datatype === "date" && value) {
                 console.log("map nodefield date pre:" + fieldName + "=" + value);
-                var lstDate = value.split(".");
-                var newDate = new Date(lstDate[1]+"/"+lstDate[0]+"/"+lstDate[2]);
+                lstDate = value.split(".");
+                newDate = new Date(lstDate[1]+"/"+lstDate[0]+"/"+lstDate[2]);
                 value = newDate.getTime();
                 console.log("map nodefield date post:" + fieldName + "=" + newDate + "->" + value);
             } if (field.datatype === "datetime" && value) {
                 console.log("map nodefield datetime pre:" + fieldName + "=" + value);
                 var lstDateTime = value.split(" ");
-                var lstDate = lstDateTime[0].split(".");
-                var lstTime = lstDateTime[1];
-                var newDate = new Date(lstDate[1]+"/"+lstDate[0]+"/"+lstDate[2] + " " + lstTime[1] + ":00");
+                lstDate = lstDateTime[0].split(".");
+                var strTime = lstDateTime[1];
+                var newDateTimeStr = lstDate[1]+"/"+lstDate[0]+"/"+lstDate[2] + " " + strTime + ":00";
+                console.log("map nodefield datetime run:" + fieldName + "=" + newDateTimeStr);
+                newDate = new Date(newDateTimeStr);
                 value = newDate.getTime();
                 console.log("map nodefield datetime post:" + fieldName + "=" + newDate + "->" + value);
             }

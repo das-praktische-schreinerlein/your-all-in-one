@@ -119,7 +119,7 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http
                         } else {
                             // error
                             yaioUtils.getService('YaioBase').logError("error loading activenode:" + nodeResponse.data.stateMsg 
-                                    + " details:" + nodeResponse, false)
+                                    + " details:" + nodeResponse, false);
                         }
                     }, function(response) {
                         // error handler
@@ -131,7 +131,7 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http
                         message = "error data: " + data + " header:" + header + " config:" + config;
                         yaioUtils.getService('YaioBase').logError(message, false);
                     });
-                }
+                };
             }
 
             // load data
@@ -166,7 +166,7 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http
                 } else {
                     // error
                     yaioUtils.getService('YaioBase').logError("error loading nodes:" + nodeResponse.data.stateMsg 
-                            + " details:" + nodeResponse, true)
+                            + " details:" + nodeResponse, true);
                 }
             }, function(response) {
                 // error handler
@@ -272,5 +272,5 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http
         $("#inputGanttRangeStart").val(yaioUtils.getService('YaioBase').formatGermanDate(start)).trigger('input').triggerHandler("change");
         $("#inputGanttRangeEnde").val(yaioUtils.getService('YaioBase').formatGermanDate(ende)).trigger('input').triggerHandler("change");
         return false;
-    }
+    };
 });

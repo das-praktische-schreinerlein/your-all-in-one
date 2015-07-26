@@ -105,5 +105,5 @@ yaioApp.controller('ImporterCtrl', function($rootScope, $scope, $location, $http
 
         console.log("showImportEditor done:" + " url:" + url);
         return false;
-    };
+    }
 });

@@ -143,24 +143,10 @@ module.exports = function( grunt ){
         jshint: {
             files: [
                 'GruntFile.js',
-                '<%= projectJsFiles %>',
-                '<%= projectJsTestFiles %>'
+                'src/main/resources/static/yaio-explorerapp/js/**/*.js'
             ],
             options: {
-                ignores: [
-                    'src/main/resources/static/yaio-explorerapp/../js/**/*'
-                ],
-                curly: true,
-                eqeqeq: true,
-                eqnull: true,
-                browser: true,
-                globals: {
-                    jQuery: true,
-                    $: true
-                },
-                // ignore errors
-                '-W014': true, // [W014] Bad line breaking before '+'
-                '-W033': true // [W033] Missing semicolon
+                jshintrc: true
             }
         },
         // karma
@@ -230,7 +216,7 @@ module.exports = function( grunt ){
                 // run when any projectfiles or tests changed
                 files: ['src/main/resources/static/yaio-explorerapp/**/*.*', 'src/test/static/e2e/**/*', 'src/test/static/unit/**/*'],
                 tasks: ['dist', 'karma:unit', 'protractor:e2e']
-            },
+            }
         }
     });
 

@@ -35,10 +35,11 @@ JsHelferlein.CookieHelperService = function(appBase) {
      */
     me.writeCookie = function(name,value,days, path) {
         // wie lange gueltig??
+        var expires;
         if (days) {
             var date = new Date();
             date.setTime(date.getTime()+(days*24*60*60*1000));
-            var expires = "; expires="+date.toGMTString();
+            expires = "; expires="+date.toGMTString();
         } else {
             expires = "";
         }

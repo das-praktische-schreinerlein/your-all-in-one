@@ -35,7 +35,7 @@
     "maxdepth"      : 10,    // {int} Max depth of nested blocks (within functions)
     "maxstatements" : 50,    // {int} Max number statements per function
     "maxcomplexity" : 50,    // {int} Max cyclomatic complexity per function
-    "maxlen"        : 120,    // {int} Max number of characters per line
+    "maxlen"        : false,    // {int} Max number of characters per line
 //    "varstmt"       : false,    // true: Disallow any var statements. Only `let` and `const` are allowed.
 
     // Relaxing
@@ -89,5 +89,6 @@
     "yui"           : false,    // Yahoo User Interface
 
     // Custom Globals
-    "globals"       : {"$": true, "ace": true, "marked": true, "hightlighjs": true, "JsHelferlein": true, "Yaio": true, "yaioApp": true, "YaioAppBase": true, "yaioAppBase": true}        // additional predefined global variables
+    "globals"       : {"$": true, "ace": true, "angular": true, "findAndReplaceDOMText": true, "FlashObject": true, "hightlighjs": true, "hljs": true, "Lang": true, "marked": true, "mermaid": true, "speechSynthesis": true, "SpeechSynthesisUtterance": true, "toastr": true, "webkitSpeechRecognition": true,
+                      "JMSLayout": true, "JMATPageLayout": true, "ToggleEffect": true, "jMATService": true, "JsHelferlein": true, "Yaio": true, "YaioAppBase": true, "YaioAppBaseConfig": true, "yaioApp": true, "yaioAppBase": true}        // additional predefined global variables
 }

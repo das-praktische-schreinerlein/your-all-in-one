@@ -152,7 +152,7 @@ Yaio.MarkdownEditorService = function(appBase) {
         var intervalHandler = $("#" + myParentId).data("aceEditor.intervalHandler");
         if (intervalHandler != "undefined") {
             console.log("openWysiwhgForTextareaId: clear old Interval : " + intervalHandler + " for " + myParentId);
-            clearInterval(intervalHandler)
+            clearInterval(intervalHandler);
         }
         // create new intervalHandler: check every 5 second if there is a change und update all
         $("#" + myParentId).data("aceEditor.flgChanged", "false");
