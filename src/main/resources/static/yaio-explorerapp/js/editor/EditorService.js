@@ -168,9 +168,9 @@ Yaio.EditorService = function(appBase) {
         
         // reescape data for form
         if (fieldName === "nodeDesc") {
-            value = value.replace(/\<WLBR\>/g, "\n");
-            value = value.replace(/\<WLESC\>/g, "\\");
-            value = value.replace(/\<WLTAB\>/g, "\t");
+            value = value.replace(/<WLBR>/g, "\n");
+            value = value.replace(/<WLESC>/g, "\\");
+            value = value.replace(/<WLTAB>/g, "\t");
         }
         
         // set depending on the fieldtype

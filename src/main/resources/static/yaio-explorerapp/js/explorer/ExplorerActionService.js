@@ -210,9 +210,9 @@ Yaio.ExplorerActionService = function(appBase) {
         if (! descText) {
             descText = "";
         }
-        descText = descText.replace(/\<WLBR\>/g, "\n");
-        descText = descText.replace(/\<WLESC\>/g, "\\");
-        descText = descText.replace(/\<WLTAB\>/g, "\t");
+        descText = descText.replace(/<WLBR>/g, "\n");
+        descText = descText.replace(/<WLESC>/g, "\\");
+        descText = descText.replace(/<WLTAB>/g, "\t");
         
         // convert and secure
         var nodeDesc = me.appBase.get('YaioFormatter').convertMarkdownToJira(descText);

@@ -270,7 +270,7 @@ Yaio.NodeGanttRenderService = function(appBase) {
             $div = me.createGanttBlock(basenode, "planChildrenSum", statestyle, "PlanSum");
             $row.append($div);
             
-            // create isst and add stytestyle
+            // create ist and add statestyle
             $div = me.createGanttBlock(basenode, "ist", statestyle, "Ist");
             $row.append($div);
             $div = me.createGanttBlock(basenode, "istChildrenSum", statestyle, "IstSum");
@@ -351,7 +351,7 @@ Yaio.NodeGanttRenderService = function(appBase) {
         }
     
         // recalc gantt tree
-        me.yaioRecalcMasterGanttBlockFromTree()
+        me.yaioRecalcMasterGanttBlockFromTree();
     };
     
     /**
@@ -374,7 +374,7 @@ Yaio.NodeGanttRenderService = function(appBase) {
                 me.yaioRecalcGanttBlock(node.data.basenode);
             });
         }
-        me.yaioRecalcMasterGanttBlockFromTree()
+        me.yaioRecalcMasterGanttBlockFromTree();
     };
     
     /**
@@ -396,7 +396,7 @@ Yaio.NodeGanttRenderService = function(appBase) {
         me.yaioRecalcGanttBlock(basenode);
     
         // calc from tree
-        me.yaioRecalcMasterGanttBlockFromTree()
+        me.yaioRecalcMasterGanttBlockFromTree();
     };
     
     /**

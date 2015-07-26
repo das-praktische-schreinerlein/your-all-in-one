@@ -598,7 +598,7 @@ Yaio.ExplorerTreeService = function(appBase) {
             }
         } else {
             // error
-            me.appBase.get('YaioBase').logError("error loading nodes:" + data.response.stateMsg, true)
+            me.appBase.get('YaioBase').logError("error loading nodes:" + data.response.stateMsg, true);
         }
         
         data.result = list;

@@ -236,9 +236,9 @@ Yaio.NodeDataRenderService = function(appBase) {
             
             // append content
             var descText = basenode.nodeDesc;
-            descText = descText.replace(/\<WLBR\>/g, "\n");
-            descText = descText.replace(/\<WLESC\>/g, "\\");
-            descText = descText.replace(/\<WLTAB\>/g, "\t");
+            descText = descText.replace(/<WLBR>/g, "\n");
+            descText = descText.replace(/<WLESC>/g, "\\");
+            descText = descText.replace(/<WLTAB>/g, "\t");
     
             // prepare descText
             var descHtml = me.appBase.get('YaioFormatter').formatMarkdown(descText, false, basenode.sysUID);

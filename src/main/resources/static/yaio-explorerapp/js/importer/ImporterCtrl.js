@@ -52,7 +52,7 @@ yaioApp.controller('ImporterCtrl', function($rootScope, $scope, $location, $http
 
         console.log("send done");
         return false;
-    },
+    };
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -70,7 +70,7 @@ yaioApp.controller('ImporterCtrl', function($rootScope, $scope, $location, $http
         yaioUtils.getService('UIToggler').toggleElement("#containerFormYaioEditorImport");
         console.log("discard done");
         return false;
-    },
+    };
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -105,5 +105,5 @@ yaioApp.controller('ImporterCtrl', function($rootScope, $scope, $location, $http
 
         console.log("showImportEditor done:" + " url:" + url);
         return false;
-    }
+    };
 });
