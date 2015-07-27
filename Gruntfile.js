@@ -5,6 +5,7 @@ var destBase = 'src/main/generated-resources/static/';
 var bowerSrcBase = 'bower/_src/';
 var vendorSrcBase = 'vendors/src/';
 var vendorDestBase = 'vendors/';
+var archivSrcBase = 'vendors/archiv/';
 var testSrcBase = 'src/test/javascript/';
 
 function patchFileSlimbox2(content, srcpath) {
@@ -287,6 +288,27 @@ module.exports = function( grunt ){
                     {expand: true, cwd: vendorSrcBase + 'css/', src: ['slimbox2/**'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/', flatten: false},
                     {expand: true, cwd: vendorSrcBase + 'css/', src: ['yaio/**'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/', flatten: false}
                 ]
+            },
+            archiv2dist: {
+                files: [
+                    {expand: true, cwd: archivSrcBase, src: ['**'], dest: destBase + 'dist/', flatten: false}
+                ]
+            },
+            dist2archiv: {
+                files: [
+                        {expand: true, cwd: destBase + 'dist/', 
+                            src: [
+                                'vendors-<%= pkg.vendorversion %>/**',
+                                'vendors-full-<%= pkg.vendorversion %>.js',
+                                'vendors-full-<%= pkg.vendorversion %>.css',
+                                '<%= pkg.name %>-reset-<%= pkg.resetversion %>.css',
+                                '<%= pkg.name %>-exports-full-<%= pkg.exportsversion %>.js',
+                                '<%= pkg.name %>-exports-full-<%= pkg.exportsversion %>.css',
+                                '<%= pkg.name %>-exports-print-<%= pkg.exportsversion %>.css',
+                                '<%= pkg.name %>-exports-print-dataonly-<%= pkg.exportsversion %>.css'
+                                ], dest: archivSrcBase, flatten: false},
+                    {expand: true, cwd: archivSrcBase, src: ['**'], dest: destBase + 'dist/', flatten: false}
+                ]
             }
         },
 
@@ -469,7 +491,7 @@ module.exports = function( grunt ){
     // register tasks
     grunt.registerTask('default',   ['jshint']);
     grunt.registerTask('vendors',   ['clean:bower', 'bower', 'copy:bower2vendors']);
-    grunt.registerTask('dist',      ['vendors', 'clean:dist', 'concat:full', 'copy:vendors2dist', 'replace:yaiores2dist']);
+    grunt.registerTask('dist',      ['vendors', 'clean:dist', 'copy:archiv2dist', 'concat:full', 'copy:vendors2dist', 'replace:yaiores2dist', 'copy:dist2archiv']);
     grunt.registerTask('unit-test', ['dist', 'karma:continuous:start', 'watch:karma']);
     grunt.registerTask('e2e-test',  ['dist', 'protractor:continuous', 'watch:protractor']);
 
