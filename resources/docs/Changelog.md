@@ -1,5 +1,16 @@
 # Changelog
 
+## Changelog for release: feature-YAIO2137-improvements-201507-RELEASE
+- **GUI (YAIO2143)**
+    - Link für Infonode mit Snapshot des Checkliste/Gantt-Overview für der Node (YAIO2161)
+- **Code-Verbesserungen (YAIO2144)**
+    - Erweiterung der e2e-Tests (YAIO2162)
+    - Fix der e2e-Tests für phantomjs (YAIO2163)
+    - Refactoring der ExplorerApp (YAIO2164)
+    - Modularisierung der ExplorerApp (YAIO2165)
+    - Verbesserung der Paket-Struktur (YAIO2166)
+    - Semantic-Versionierung der Js/App+Assets einführen (YAIO2167)
+
 ## Changelog for release: feature-YAIO2118-improvements-201505-RELEASE
 - **GUI(YAIO2124)**
     - Link für Auswahl des Ganttbereichs Plan/Ist für Masternode(YAIO2133)

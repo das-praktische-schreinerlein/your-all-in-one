@@ -2,11 +2,6 @@
 
 ## short term
 
-- **Code-Verbesserungen (YAIO2125)**
-    - weitere Tests implementieren
-    - Codeclean
-    - Refactoring (Java, JS, CSS)
-
 ## mid term
 - **Dokumentation (YAIO1143)**
     - Projektplanung (YAIO643)
