@@ -3,12 +3,15 @@
 
 var packageConfig = require('./package.json');
 
+var distSrcPath = 'src/main/generated-resources/static/dist/';
+var testSrcPath = 'src/test/javascript/';
+
 module.exports = function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '',
-
+    
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     frameworks: ['jasmine'], // jasmine, qunit
@@ -17,28 +20,28 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
         // vendors
-        'src/main/resources/static/dist/vendors-full.' + packageConfig.vendorversion + '.js',
+        distSrcPath + 'vendors-full.' + packageConfig.vendorversion + '.js',
         // needs own script for loading plugins
-        'src/main/resources/static/dist/vendors.' + packageConfig.vendorversion + '/fancytree/jquery.fancytree.js',
-        'src/main/resources/static/dist/vendors.' + packageConfig.vendorversion + '/fancytree/jquery.fancytree.dnd.js',
-        'src/main/resources/static/dist/vendors.' + packageConfig.vendorversion + '/fancytree/jquery.fancytree.edit.js',
-        'src/main/resources/static/dist/vendors.' + packageConfig.vendorversion + '/fancytree/jquery.fancytree.gridnav.js',
-        'src/main/resources/static/dist/vendors.' + packageConfig.vendorversion + '/fancytree/jquery.fancytree.table.js',
-        'src/main/resources/static/dist/vendors.' + packageConfig.vendorversion + '/ace/ace.js',
-        'src/main/resources/static/dist/vendors.' + packageConfig.vendorversion + '/ace/ext-spellcheck.js',
-        'src/main/resources/static/dist/vendors.' + packageConfig.vendorversion + '/freemind-flash/flashobject.js',
+        distSrcPath + 'vendors.' + packageConfig.vendorversion + '/fancytree/jquery.fancytree.js',
+        distSrcPath + 'vendors.' + packageConfig.vendorversion + '/fancytree/jquery.fancytree.dnd.js',
+        distSrcPath + 'vendors.' + packageConfig.vendorversion + '/fancytree/jquery.fancytree.edit.js',
+        distSrcPath + 'vendors.' + packageConfig.vendorversion + '/fancytree/jquery.fancytree.gridnav.js',
+        distSrcPath + 'vendors.' + packageConfig.vendorversion + '/fancytree/jquery.fancytree.table.js',
+        distSrcPath + 'vendors.' + packageConfig.vendorversion + '/ace/ace.js',
+        distSrcPath + 'vendors.' + packageConfig.vendorversion + '/ace/ext-spellcheck.js',
+        distSrcPath + 'vendors.' + packageConfig.vendorversion + '/freemind-flash/flashobject.js',
         // yaio: files
-        'src/main/resources/static/dist/yaio-support-full.' + packageConfig.supportversion + '.js',
-        'src/main/resources/static/dist/yaio-app-full.' + packageConfig.appversion + '.js',
-        'src/test/static/unit/resources/js/jasmine/jasmine-jquery.js',
-        'src/test/static/unit/jasmine-config.js',
+        distSrcPath + 'yaio-support-full.' + packageConfig.supportversion + '.js',
+        distSrcPath + 'yaio-app-full.' + packageConfig.appversion + '.js',
+        testSrcPath + 'unit/resources/js/jasmine/jasmine-jquery.js',
+        testSrcPath + 'unit/jasmine-config.js',
 
         // unit-tests
-        'src/test/static/unit/yaio-explorerapp/**/*_test.js',
+        testSrcPath + 'unit/yaio-explorerapp/**/*_test.js',
 
         // fixtures
         {
-            pattern: 'src/test/static/unit/fixtures/**/*.html',
+            pattern: testSrcPath + 'unit/fixtures/**/*.html',
             watched: true,
             served: true,
             included: false

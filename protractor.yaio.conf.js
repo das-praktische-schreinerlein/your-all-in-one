@@ -4,7 +4,7 @@ var chromeBin = 'C:/ProgrammePortable/PortableApps/PortableApps/GoogleChromePort
 var downloadPath = 'd:/tmp/';
 
 // basics
-var baseDir = "./src/test/static/e2e/";
+var baseDir = "./src/test/javascript/e2e/";
 var testDir = baseDir;
 
 // imports

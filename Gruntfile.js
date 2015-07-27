@@ -1,10 +1,11 @@
 var path = require('path');
 
-var srcBase = 'src/main/resources/static/';
-var destBase = 'src/main/resources/static/';
+var srcBase = 'src/main/webapp/';
+var destBase = 'src/main/generated-resources/static/';
 var bowerSrcBase = 'bower/_src/';
+var vendorSrcBase = 'vendors/src/';
 var vendorDestBase = 'vendors/';
-var testSrcBase = 'src/test/static/';
+var testSrcBase = 'src/test/javascript/';
 
 function patchFileSlimbox2(content, srcpath) {
     var newContent = content;
@@ -38,48 +39,47 @@ module.exports = function( grunt ){
 
         // define files
         vendorJsFiles: [
-              srcBase + 'js/jquery/jquery.min.js',
-              srcBase + 'js/jqueryui/jquery-ui.min.js',
-              srcBase + 'js/jqueryui/jquery.ui-contextmenu.min.js',
-              srcBase + 'js/jqueryui/jquery-ui-i18n.min.js',
-              srcBase + 'js/jqueryui/jquery-ui-sliderAccess.js',
-              srcBase + 'js/jqueryui/jquery-ui-timepicker-addon.js',
-              srcBase + 'js/jquery/jquery-lang.js',
+              vendorSrcBase + 'js/jquery/jquery.min.js',
+              vendorSrcBase + 'js/jqueryui/jquery-ui.min.js',
+              vendorSrcBase + 'js/jqueryui/jquery.ui-contextmenu.min.js',
+              vendorSrcBase + 'js/jqueryui/jquery-ui-i18n.min.js',
+              vendorSrcBase + 'js/jqueryui/jquery-ui-sliderAccess.js',
+              vendorSrcBase + 'js/jqueryui/jquery-ui-timepicker-addon.js',
+              vendorSrcBase + 'js/jquery/jquery-lang.js',
 // loaded standalone because of plugins
-//              srcBase + 'js/fancytree/jquery.fancytree.js',
-//              srcBase + 'js/fancytree/jquery.fancytree.dnd.js',
-//              srcBase + 'js/fancytree/jquery.fancytree.edit.js',
-//              srcBase + 'js/fancytree/jquery.fancytree.gridnav.js',
-//              srcBase + 'js/fancytree/jquery.fancytree.table.js',
-              srcBase + 'js/angularjs/angular.js',
-              srcBase + 'js/angularjs/angular-animate.js',
-              srcBase + 'js/angularjs/angular-route.js',
-              srcBase + 'js/angularjs/angular-translate.js',
-              srcBase + 'js/angularjs/angular-translate-loader-static-files.js',
-              srcBase + 'js/marked/marked.js',
+//              vendorSrcBase + 'js/fancytree/jquery.fancytree.js',
+//              vendorSrcBase + 'js/fancytree/jquery.fancytree.dnd.js',
+//              vendorSrcBase + 'js/fancytree/jquery.fancytree.edit.js',
+//              vendorSrcBase + 'js/fancytree/jquery.fancytree.gridnav.js',
+//              vendorSrcBase + 'js/fancytree/jquery.fancytree.table.js',
+              vendorSrcBase + 'js/angularjs/angular.js',
+              vendorSrcBase + 'js/angularjs/angular-animate.js',
+              vendorSrcBase + 'js/angularjs/angular-route.js',
+              vendorSrcBase + 'js/angularjs/angular-translate.js',
+              vendorSrcBase + 'js/angularjs/angular-translate-loader-static-files.js',
+              vendorSrcBase + 'js/marked/marked.js',
 // loaded standalone because of plugins
-//              srcBase + 'js/ace/ace.js',
-//              srcBase + 'js/ace/ext-spellcheck.js',
-              srcBase + 'js/strapdown/strapdown-toc.js',
-              srcBase + 'js/highlightjs/highlight.pack.js',
-              srcBase + 'js/toastr/toastr.min.js',
-              srcBase + 'js/mermaid/mermaid.full.js',
-              srcBase + 'js/findandreplacedomtext/findAndReplaceDOMText.js',
+//              vendorSrcBase + 'js/ace/ace.js',
+//              vendorSrcBase + 'js/ace/ext-spellcheck.js',
+              vendorSrcBase + 'js/strapdown/strapdown-toc.js',
+              vendorSrcBase + 'js/highlightjs/highlight.pack.js',
+              vendorSrcBase + 'js/toastr/toastr.min.js',
+              vendorSrcBase + 'js/mermaid/mermaid.full.js',
+              vendorSrcBase + 'js/findandreplacedomtext/findAndReplaceDOMText.js',
 // loaded standalone because of plugins
-              srcBase + 'freemind-flash/flashobject.js',
-              srcBase + 'js/yaio/JMATAllIn.js',
+              vendorSrcBase + 'freemind-flash/flashobject.js',
+              vendorSrcBase + 'js/yaio/JMATAllIn.js',
         ],
         vendorCssFiles: [
-              srcBase + 'css/reset.css',
-              srcBase + 'css/jqueryui//jquery-ui.css',
-              srcBase + 'css/jqueryui//jquery-ui-timepicker-addon.css',
+              vendorSrcBase + 'css/jqueryui//jquery-ui.css',
+              vendorSrcBase + 'css/jqueryui//jquery-ui-timepicker-addon.css',
 // loaded standalone because of plugins
-//              srcBase + 'js/fancytree/skin-win8/ui.fancytree.css',
-              srcBase + 'css/highlightjs/default.css',
-              srcBase + 'css/toastr/toastr.css',
-              srcBase + 'css/mermaid/mermaid.css',
-              srcBase + 'css/yaio/style.css',
-              srcBase + 'css/yaio/main.css'
+//              vendorSrcBase + 'js/fancytree/skin-win8/ui.fancytree.css',
+              vendorSrcBase + 'css/highlightjs/default.css',
+              vendorSrcBase + 'css/toastr/toastr.css',
+              vendorSrcBase + 'css/mermaid/mermaid.css',
+              vendorSrcBase + 'css/yaio/style.css',
+              vendorSrcBase + 'css/yaio/main.css'
         ],
         projectJsFiles: [
             // services
@@ -210,8 +210,8 @@ module.exports = function( grunt ){
         },
         
         clean: {
-            bower: ["bower/_dest", "vendors"],
-            dist:  ["src/main/resources/static/dist"]
+            bower: ["bower/_dest", "vendors/js", "vendors/css"],
+            dist:  [destBase + "dist"]
         },
         copy: {
             bower2vendors: {
@@ -278,13 +278,20 @@ module.exports = function( grunt ){
             },
             vendors2dist: {
                 files: [
-                    {expand: true, cwd: srcBase + 'js/', src: ['fancytree/**'], dest: destBase + 'dist/vendors.<%= pkg.vendorversion %>/', flatten: false},
-                    {expand: true, cwd: srcBase + 'js/', src: ['ace/**'], dest: destBase + 'dist/vendors.<%= pkg.vendorversion %>/', flatten: false},
-                    {expand: true, cwd: srcBase + '', src: ['freemind-flash/**'], dest: destBase + 'dist/vendors.<%= pkg.vendorversion %>/', flatten: false},
-                    {expand: true, cwd: srcBase + 'js/', src: ['yaio/**'], dest: destBase + 'dist/vendors.<%= pkg.vendorversion %>/', flatten: false},
-                    {expand: true, cwd: srcBase + 'js/', src: ['slimbox2/**'], dest: destBase + 'dist/vendors.<%= pkg.vendorversion %>/', flatten: false},
-                    {expand: true, cwd: srcBase + 'css/', src: ['slimbox2/**'], dest: destBase + 'dist/vendors.<%= pkg.vendorversion %>/', flatten: false},
-                    {expand: true, cwd: srcBase + 'css/', src: ['yaio/**'], dest: destBase + 'dist/vendors.<%= pkg.vendorversion %>/', flatten: false}
+                    {expand: true, cwd: vendorSrcBase + 'js', src: ['fancytree/**'], dest: destBase + 'dist/vendors.<%= pkg.vendorversion %>/', flatten: false},
+                    {expand: true, cwd: vendorSrcBase + 'js/', src: ['ace/**'], dest: destBase + 'dist/vendors.<%= pkg.vendorversion %>/', flatten: false},
+                    {expand: true, cwd: vendorSrcBase + '', src: ['freemind-flash/**'], dest: destBase + 'dist/vendors.<%= pkg.vendorversion %>/', flatten: false},
+                    {expand: true, cwd: vendorSrcBase + 'js/', src: ['yaio/**'], dest: destBase + 'dist/vendors.<%= pkg.vendorversion %>/', flatten: false},
+                    {expand: true, cwd: vendorSrcBase + 'js/', src: ['slimbox2/**'], dest: destBase + 'dist/vendors.<%= pkg.vendorversion %>/', flatten: false},
+                    {expand: true, cwd: vendorSrcBase + 'css/', src: ['slimbox2/**'], dest: destBase + 'dist/vendors.<%= pkg.vendorversion %>/', flatten: false},
+                    {expand: true, cwd: vendorSrcBase + 'css/', src: ['yaio/**'], dest: destBase + 'dist/vendors.<%= pkg.vendorversion %>/', flatten: false}
+                ]
+            },
+            yaiores2dist: {
+                files: [
+                    {expand: true, cwd: srcBase + 'pages/', src: ['*.html'], dest: destBase, flatten: false},
+                    {expand: true, cwd: srcBase, src: ['yaio-explorerapp/**/*.html', 'yaio-explorerapp/**/*.json'], dest: destBase, flatten: false},
+                    {expand: true, cwd: srcBase, src: ['html/*.html'], dest: destBase, flatten: false}
                 ]
             }
         },
@@ -398,7 +405,7 @@ module.exports = function( grunt ){
             },
             tests: {
                 // run when any projectfiles or tests changed
-                files: [srcBase + 'yaio-explorerapp/**/*.*', testSrcBase + 'e2e/**/*', 'src/test/static/unit/**/*'],
+                files: [srcBase + 'yaio-explorerapp/**/*.*', testSrcBase + 'e2e/**/*', testSrcBase + 'unit/**/*'],
                 tasks: ['dist', 'karma:unit', 'protractor:e2e']
             }
         },
@@ -409,8 +416,10 @@ module.exports = function( grunt ){
               // Point to the files that should be updated when
               // you run `grunt wiredep`
               src: [
-                srcBase + 'html/**/*.html',
-                srcBase + 'yaio-explorerapp/*.html',
+                destBase + 'html/**/*.html',
+                destBase + 'yaio-explorerapp/*.html',
+                destBase + 'dist/yaio-*.css',
+                destBase + 'dist/yaio-*.js',
 //                'app/styles/main.scss',  // .scss & .sass support...
 //                'app/config.yml'         // and .yml & .yaml support out of the box!
               ],
@@ -428,7 +437,7 @@ module.exports = function( grunt ){
     // register tasks
     grunt.registerTask('default',   ['jshint']);
     grunt.registerTask('vendors',   ['clean:bower', 'bower', 'copy:bower2vendors']);
-    grunt.registerTask('dist',      ['vendors', 'clean:dist', 'concat:full', 'copy:vendors2dist']);
+    grunt.registerTask('dist',      ['vendors', 'clean:dist', 'concat:full', 'copy:vendors2dist', 'copy:yaiores2dist']);
     grunt.registerTask('unit-test', ['dist', 'karma:continuous:start', 'watch:karma']);
     grunt.registerTask('e2e-test',  ['dist', 'protractor:continuous', 'watch:protractor']);
 

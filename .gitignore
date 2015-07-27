@@ -3,9 +3,9 @@
 /bower
 /node
 /node_modules
-/src/main/resources/static/yaio-explorerapp/.idea
-/src/main/resources/static/yaio-explorerapp/.settings
+/src/main/generated-resources
 /target
 /var/hsqldb/yaio.lck
-/vendors
+/vendors/js
+/vendors/css
 /log.roo
