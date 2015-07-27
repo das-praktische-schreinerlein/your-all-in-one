@@ -279,16 +279,47 @@ module.exports = function( grunt ){
             },
             vendors2dist: {
                 files: [
-                    {expand: true, cwd: vendorSrcBase + 'js', src: ['fancytree/**'], dest: destBase + 'dist/vendors.<%= pkg.vendorversion %>/', flatten: false},
-                    {expand: true, cwd: vendorSrcBase + 'js/', src: ['ace/**'], dest: destBase + 'dist/vendors.<%= pkg.vendorversion %>/', flatten: false},
-                    {expand: true, cwd: vendorSrcBase + '', src: ['freemind-flash/**'], dest: destBase + 'dist/vendors.<%= pkg.vendorversion %>/', flatten: false},
-                    {expand: true, cwd: vendorSrcBase + 'js/', src: ['yaio/**'], dest: destBase + 'dist/vendors.<%= pkg.vendorversion %>/', flatten: false},
-                    {expand: true, cwd: vendorSrcBase + 'js/', src: ['slimbox2/**'], dest: destBase + 'dist/vendors.<%= pkg.vendorversion %>/', flatten: false},
-                    {expand: true, cwd: vendorSrcBase + 'css/', src: ['slimbox2/**'], dest: destBase + 'dist/vendors.<%= pkg.vendorversion %>/', flatten: false},
-                    {expand: true, cwd: vendorSrcBase + 'css/', src: ['yaio/**'], dest: destBase + 'dist/vendors.<%= pkg.vendorversion %>/', flatten: false}
+                    {expand: true, cwd: vendorSrcBase + 'js', src: ['fancytree/**'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/', flatten: false},
+                    {expand: true, cwd: vendorSrcBase + 'js/', src: ['ace/**'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/', flatten: false},
+                    {expand: true, cwd: vendorSrcBase + '', src: ['freemind-flash/**'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/', flatten: false},
+                    {expand: true, cwd: vendorSrcBase + 'js/', src: ['yaio/**'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/', flatten: false},
+                    {expand: true, cwd: vendorSrcBase + 'js/', src: ['slimbox2/**'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/', flatten: false},
+                    {expand: true, cwd: vendorSrcBase + 'css/', src: ['slimbox2/**'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/', flatten: false},
+                    {expand: true, cwd: vendorSrcBase + 'css/', src: ['yaio/**'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/', flatten: false}
                 ]
-            },
+            }
+        },
+
+        replace: {
             yaiores2dist: {
+                options: {
+                    patterns: [
+                        {
+                            match: /[-.]appversion\.(css|js)/g,
+                            replacement: "-<%= pkg.appversion %>.$1"
+                        },
+                        {
+                            match: /[-.]exportsversion\.(css|js)/g,
+                            replacement: "-<%= pkg.exportsversion %>.$1"
+                        },
+                        {
+                            match: /[-.]supportversion\.(css|js)/g,
+                            replacement: "-<%= pkg.supportversion %>.$1"
+                        },
+                        {
+                            match: /[-.]resetversion\.(css|js)/g,
+                            replacement: "-<%= pkg.resetversion %>.$1"
+                        },
+                        {
+                            match: /vendors[-.]vendorversion\//g,
+                            replacement: "vendors-<%= pkg.vendorversion %>/"
+                        },
+                        {
+                            match: /[-.]vendorversion\.(css|js)/g,
+                            replacement: "-<%= pkg.vendorversion %>.$1"
+                        },
+                    ]
+                },
                 files: [
                     {expand: true, cwd: srcBase + 'pages/', src: ['*.html'], dest: destBase, flatten: false},
                     {expand: true, cwd: srcBase, src: ['yaio-explorerapp/**/*.html', 'yaio-explorerapp/**/*.json'], dest: destBase, flatten: false},
@@ -305,25 +336,25 @@ module.exports = function( grunt ){
             },            
             full: {
                 files: {
-                    '<%= destBase %>dist/vendors-full.<%= pkg.vendorversion %>.js': ['<%= vendorJsFiles %>'],
-                    '<%= destBase %>dist/vendors-full.<%= pkg.vendorversion %>.css': ['<%= vendorCssFiles %>'],
+                    '<%= destBase %>dist/vendors-full-<%= pkg.vendorversion %>.js': ['<%= vendorJsFiles %>'],
+                    '<%= destBase %>dist/vendors-full-<%= pkg.vendorversion %>.css': ['<%= vendorCssFiles %>'],
 
-                    '<%= destBase %>dist/<%= pkg.name %>-reset.<%= pkg.resetversion %>.css': ['<%= projectResetCssFiles %>'],
+                    '<%= destBase %>dist/<%= pkg.name %>-reset-<%= pkg.resetversion %>.css': ['<%= projectResetCssFiles %>'],
 
-                    '<%= destBase %>dist/<%= pkg.name %>-app-full.<%= pkg.appversion %>.js': ['<%= projectJsFiles %>'],
-                    '<%= destBase %>dist/<%= pkg.name %>-app-full.<%= pkg.appversion %>.css': ['<%= projectCssFiles %>'],
-                    '<%= destBase %>dist/<%= pkg.name %>-app-print.<%= pkg.appversion %>.css': ['<%= projectPrintCssFiles %>'],
-                    '<%= destBase %>dist/<%= pkg.name %>-app-print-dataonly.<%= pkg.appversion %>.css': ['<%= projectPrintDataOnlyCssFiles %>'],
+                    '<%= destBase %>dist/<%= pkg.name %>-app-full-<%= pkg.appversion %>.js': ['<%= projectJsFiles %>'],
+                    '<%= destBase %>dist/<%= pkg.name %>-app-full-<%= pkg.appversion %>.css': ['<%= projectCssFiles %>'],
+                    '<%= destBase %>dist/<%= pkg.name %>-app-print-<%= pkg.appversion %>.css': ['<%= projectPrintCssFiles %>'],
+                    '<%= destBase %>dist/<%= pkg.name %>-app-print-dataonly-<%= pkg.appversion %>.css': ['<%= projectPrintDataOnlyCssFiles %>'],
 
-                    '<%= destBase %>dist/<%= pkg.name %>-support-full.<%= pkg.supportversion %>.js': ['<%= projectSupportJsFiles %>'],
-                    '<%= destBase %>dist/<%= pkg.name %>-support-full.<%= pkg.supportversion %>.css': ['<%= projectSupportCssFiles %>'],
-                    '<%= destBase %>dist/<%= pkg.name %>-support-print.<%= pkg.supportversion %>.css': ['<%= projectPrintCssFiles %>'],
-                    '<%= destBase %>dist/<%= pkg.name %>-support-print-dataonly.<%= pkg.supportversion %>.css': ['<%= projectPrintDataOnlyCssFiles %>'],
+                    '<%= destBase %>dist/<%= pkg.name %>-support-full-<%= pkg.supportversion %>.js': ['<%= projectSupportJsFiles %>'],
+                    '<%= destBase %>dist/<%= pkg.name %>-support-full-<%= pkg.supportversion %>.css': ['<%= projectSupportCssFiles %>'],
+                    '<%= destBase %>dist/<%= pkg.name %>-support-print-<%= pkg.supportversion %>.css': ['<%= projectPrintCssFiles %>'],
+                    '<%= destBase %>dist/<%= pkg.name %>-support-print-dataonly-<%= pkg.supportversion %>.css': ['<%= projectPrintDataOnlyCssFiles %>'],
 
-                    '<%= destBase %>dist/<%= pkg.name %>-exports-full.<%= pkg.exportsversion %>.js': ['<%= projectSupportJsFiles %>', '<%= projectExportsJsFiles %>'],
-                    '<%= destBase %>dist/<%= pkg.name %>-exports-full.<%= pkg.exportsversion %>.css': ['<%= projectSupportCssFiles %>'],
-                    '<%= destBase %>dist/<%= pkg.name %>-exports-print.<%= pkg.exportsversion %>.css': ['<%= projectPrintCssFiles %>'],
-                    '<%= destBase %>dist/<%= pkg.name %>-exports-print-dataonly.<%= pkg.exportsversion %>.css': ['<%= projectPrintDataOnlyCssFiles %>']
+                    '<%= destBase %>dist/<%= pkg.name %>-exports-full-<%= pkg.exportsversion %>.js': ['<%= projectSupportJsFiles %>', '<%= projectExportsJsFiles %>'],
+                    '<%= destBase %>dist/<%= pkg.name %>-exports-full-<%= pkg.exportsversion %>.css': ['<%= projectSupportCssFiles %>'],
+                    '<%= destBase %>dist/<%= pkg.name %>-exports-print-<%= pkg.exportsversion %>.css': ['<%= projectPrintCssFiles %>'],
+                    '<%= destBase %>dist/<%= pkg.name %>-exports-print-dataonly-<%= pkg.exportsversion %>.css': ['<%= projectPrintDataOnlyCssFiles %>']
 
 //                    testSrcBase + 'testsupport-full.js': ['<%= vendorJsTestFiles %>'],
 //                    testSrcBase + '<%= pkg.name %>_tests-full.js': ['<%= projectUnitJsTestFiles %>', '<%= projectE2EJsTestFiles %>']
@@ -438,7 +469,7 @@ module.exports = function( grunt ){
     // register tasks
     grunt.registerTask('default',   ['jshint']);
     grunt.registerTask('vendors',   ['clean:bower', 'bower', 'copy:bower2vendors']);
-    grunt.registerTask('dist',      ['vendors', 'clean:dist', 'concat:full', 'copy:vendors2dist', 'copy:yaiores2dist']);
+    grunt.registerTask('dist',      ['vendors', 'clean:dist', 'concat:full', 'copy:vendors2dist', 'replace:yaiores2dist']);
     grunt.registerTask('unit-test', ['dist', 'karma:continuous:start', 'watch:karma']);
     grunt.registerTask('e2e-test',  ['dist', 'protractor:continuous', 'watch:protractor']);
 
@@ -452,6 +483,7 @@ module.exports = function( grunt ){
     grunt.loadNpmTasks('grunt-jsdoc');
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-protractor-runner');
+    grunt.loadNpmTasks('grunt-replace');
     grunt.loadNpmTasks('grunt-wiredep');
 //  grunt.loadNpmTasks('grunt-contrib-clean');
 //  grunt.loadNpmTasks('grunt-contrib-compass');
