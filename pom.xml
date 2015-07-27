@@ -10,7 +10,7 @@
     
     <!-- packaging jar or war and version -->
     <packaging>jar</packaging>
-    <version>0.0.1-beta-feature-YAIO2137-improvements-201507-RC</version>
+    <version>0.1.0-beta-feature-YAIO2137-improvements-201507-RELEASE</version>
     
     <!-- for spring boot -->
     <parent>
