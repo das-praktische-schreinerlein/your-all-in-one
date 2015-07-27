@@ -1,6 +1,8 @@
 // Karma configuration
 // Generated on Sat Apr 25 2015 10:40:30 GMT+0200 (Mitteleuropäische Sommerzeit)
 
+var packageConfig = require('./package.json');
+
 module.exports = function(config) {
   config.set({
 
@@ -15,19 +17,19 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
         // vendors
-        'src/main/resources/static/yaio-explorerapp/../dist/vendors-full.js',
+        'src/main/resources/static/dist/vendors-full.' + packageConfig.vendorversion + '.js',
         // needs own script for loading plugins
-        'src/main/resources/static/yaio-explorerapp/../js/fancytree/jquery.fancytree.js',
-        'src/main/resources/static/yaio-explorerapp/../js/fancytree/jquery.fancytree.dnd.js',
-        'src/main/resources/static/yaio-explorerapp/../js/fancytree/jquery.fancytree.edit.js',
-        'src/main/resources/static/yaio-explorerapp/../js/fancytree/jquery.fancytree.gridnav.js',
-        'src/main/resources/static/yaio-explorerapp/../js/fancytree/jquery.fancytree.table.js',
-        'src/main/resources/static/yaio-explorerapp/../js/ace/ace.js',
-        'src/main/resources/static/yaio-explorerapp/../js/ace/ext-spellcheck.js',
-        'src/main/resources/static/yaio-explorerapp/../freemind-flash/flashobject.js',
+        'src/main/resources/static/dist/vendors.' + packageConfig.vendorversion + '/fancytree/jquery.fancytree.js',
+        'src/main/resources/static/dist/vendors.' + packageConfig.vendorversion + '/fancytree/jquery.fancytree.dnd.js',
+        'src/main/resources/static/dist/vendors.' + packageConfig.vendorversion + '/fancytree/jquery.fancytree.edit.js',
+        'src/main/resources/static/dist/vendors.' + packageConfig.vendorversion + '/fancytree/jquery.fancytree.gridnav.js',
+        'src/main/resources/static/dist/vendors.' + packageConfig.vendorversion + '/fancytree/jquery.fancytree.table.js',
+        'src/main/resources/static/dist/vendors.' + packageConfig.vendorversion + '/ace/ace.js',
+        'src/main/resources/static/dist/vendors.' + packageConfig.vendorversion + '/ace/ext-spellcheck.js',
+        'src/main/resources/static/dist/vendors.' + packageConfig.vendorversion + '/freemind-flash/flashobject.js',
         // yaio: files
-        'src/main/resources/static/yaio-explorerapp/../dist/yaio-support-full.js',
-        'src/main/resources/static/yaio-explorerapp/../dist/yaio-app-full.js',
+        'src/main/resources/static/dist/yaio-support-full.' + packageConfig.supportversion + '.js',
+        'src/main/resources/static/dist/yaio-app-full.' + packageConfig.appversion + '.js',
         'src/test/static/unit/resources/js/jasmine/jasmine-jquery.js',
         'src/test/static/unit/jasmine-config.js',
 

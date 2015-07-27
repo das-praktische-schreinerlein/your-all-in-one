@@ -32,48 +32,48 @@ module.exports = function( grunt ){
 
         // define files
         vendorJsFiles: [
-              'src/main/resources/static/yaio-explorerapp/../js/jquery/jquery.min.js',
-              'src/main/resources/static/yaio-explorerapp/../js/jqueryui/jquery-ui.min.js',
-              'src/main/resources/static/yaio-explorerapp/../js/jqueryui/jquery.ui-contextmenu.min.js',
-              'src/main/resources/static/yaio-explorerapp/../js/jqueryui/jquery-ui-i18n.min.js',
-              'src/main/resources/static/yaio-explorerapp/../js/jqueryui/jquery-ui-sliderAccess.js',
-              'src/main/resources/static/yaio-explorerapp/../js/jqueryui/jquery-ui-timepicker-addon.js',
-              'src/main/resources/static/yaio-explorerapp/../js/jquery/jquery-lang.js',
+              'src/main/resources/static/js/jquery/jquery.min.js',
+              'src/main/resources/static/js/jqueryui/jquery-ui.min.js',
+              'src/main/resources/static/js/jqueryui/jquery.ui-contextmenu.min.js',
+              'src/main/resources/static/js/jqueryui/jquery-ui-i18n.min.js',
+              'src/main/resources/static/js/jqueryui/jquery-ui-sliderAccess.js',
+              'src/main/resources/static/js/jqueryui/jquery-ui-timepicker-addon.js',
+              'src/main/resources/static/js/jquery/jquery-lang.js',
 // loaded standalone because of plugins
-//              'src/main/resources/static/yaio-explorerapp/../js/fancytree/jquery.fancytree.js',
-//              'src/main/resources/static/yaio-explorerapp/../js/fancytree/jquery.fancytree.dnd.js',
-//              'src/main/resources/static/yaio-explorerapp/../js/fancytree/jquery.fancytree.edit.js',
-//              'src/main/resources/static/yaio-explorerapp/../js/fancytree/jquery.fancytree.gridnav.js',
-//              'src/main/resources/static/yaio-explorerapp/../js/fancytree/jquery.fancytree.table.js',
-              'src/main/resources/static/yaio-explorerapp/../js/angularjs/angular.js',
-              'src/main/resources/static/yaio-explorerapp/../js/angularjs/angular-animate.js',
-              'src/main/resources/static/yaio-explorerapp/../js/angularjs/angular-route.js',
-              'src/main/resources/static/yaio-explorerapp/../js/angularjs/angular-translate.js',
-              'src/main/resources/static/yaio-explorerapp/../js/angularjs/angular-translate-loader-static-files.js',
-              'src/main/resources/static/yaio-explorerapp/../js/marked/marked.js',
+//              'src/main/resources/static/js/fancytree/jquery.fancytree.js',
+//              'src/main/resources/static/js/fancytree/jquery.fancytree.dnd.js',
+//              'src/main/resources/static/js/fancytree/jquery.fancytree.edit.js',
+//              'src/main/resources/static/js/fancytree/jquery.fancytree.gridnav.js',
+//              'src/main/resources/static/js/fancytree/jquery.fancytree.table.js',
+              'src/main/resources/static/js/angularjs/angular.js',
+              'src/main/resources/static/js/angularjs/angular-animate.js',
+              'src/main/resources/static/js/angularjs/angular-route.js',
+              'src/main/resources/static/js/angularjs/angular-translate.js',
+              'src/main/resources/static/js/angularjs/angular-translate-loader-static-files.js',
+              'src/main/resources/static/js/marked/marked.js',
 // loaded standalone because of plugins
-//              'src/main/resources/static/yaio-explorerapp/../js/ace/ace.js',
-//              'src/main/resources/static/yaio-explorerapp/../js/ace/ext-spellcheck.js',
-              'src/main/resources/static/yaio-explorerapp/../js/strapdown/strapdown-toc.js',
-              'src/main/resources/static/yaio-explorerapp/../js/highlightjs/highlight.pack.js',
-              'src/main/resources/static/yaio-explorerapp/../js/toastr/toastr.min.js',
-              'src/main/resources/static/yaio-explorerapp/../js/mermaid/mermaid.full.js',
-              'src/main/resources/static/yaio-explorerapp/../js/findandreplacedomtext/findAndReplaceDOMText.js',
+//              'src/main/resources/static/js/ace/ace.js',
+//              'src/main/resources/static/js/ace/ext-spellcheck.js',
+              'src/main/resources/static/js/strapdown/strapdown-toc.js',
+              'src/main/resources/static/js/highlightjs/highlight.pack.js',
+              'src/main/resources/static/js/toastr/toastr.min.js',
+              'src/main/resources/static/js/mermaid/mermaid.full.js',
+              'src/main/resources/static/js/findandreplacedomtext/findAndReplaceDOMText.js',
 // loaded standalone because of plugins
-              'src/main/resources/static/yaio-explorerapp/../freemind-flash/flashobject.js',
-              'src/main/resources/static/yaio-explorerapp/../js/yaio/JMATAllIn.js',
+              'src/main/resources/static/freemind-flash/flashobject.js',
+              'src/main/resources/static/js/yaio/JMATAllIn.js',
         ],
         vendorCssFiles: [
-              'src/main/resources/static/yaio-explorerapp/../css/reset.css',
-              'src/main/resources/static/yaio-explorerapp/../css/jqueryui//jquery-ui.css',
-              'src/main/resources/static/yaio-explorerapp/../css/jqueryui//jquery-ui-timepicker-addon.css',
+              'src/main/resources/static/css/reset.css',
+              'src/main/resources/static/css/jqueryui//jquery-ui.css',
+              'src/main/resources/static/css/jqueryui//jquery-ui-timepicker-addon.css',
 // loaded standalone because of plugins
-//              'src/main/resources/static/yaio-explorerapp/../js/fancytree/skin-win8/ui.fancytree.css',
-              'src/main/resources/static/yaio-explorerapp/../css/highlightjs/default.css',
-              'src/main/resources/static/yaio-explorerapp/../css/toastr/toastr.css',
-              'src/main/resources/static/yaio-explorerapp/../css/mermaid/mermaid.css',
-              'src/main/resources/static/yaio-explorerapp/../css/yaio/style.css',
-              'src/main/resources/static/yaio-explorerapp/../css/yaio/main.css'
+//              'src/main/resources/static/js/fancytree/skin-win8/ui.fancytree.css',
+              'src/main/resources/static/css/highlightjs/default.css',
+              'src/main/resources/static/css/toastr/toastr.css',
+              'src/main/resources/static/css/mermaid/mermaid.css',
+              'src/main/resources/static/css/yaio/style.css',
+              'src/main/resources/static/css/yaio/main.css'
         ],
         projectJsFiles: [
             // services
@@ -98,7 +98,7 @@ module.exports = function( grunt ){
             'src/main/resources/static/yaio-explorerapp/js/exporter/OutputOptionsEditorFactory.js',
             'src/main/resources/static/yaio-explorerapp/js/explorer/NodeShowCtrl.js',
             'src/main/resources/static/yaio-explorerapp/js/search/NodeSearchCtrl.js',
-            'src/main/resources/static/yaio-explorerapp/../js/angularjs/paging.js'
+            'src/main/resources/static/js/angularjs/paging.js'
         ],
         projectSupportJsFiles: [
             'src/main/resources/static/yaio-explorerapp/js/jmat.js',
@@ -133,8 +133,19 @@ module.exports = function( grunt ){
               'src/main/resources/static/yaio-explorerapp/js/wysiwyg/formatter.css'
         ],
         projectSupportCssFiles: [
+            'src/main/resources/static/yaio-explorerapp/js/layout/base.css',
+            'src/main/resources/static/yaio-explorerapp/js/layout/support.css',
             'src/main/resources/static/yaio-explorerapp/js/layout/toc.css',
             'src/main/resources/static/yaio-explorerapp/js/wysiwyg/formatter.css'
+        ],
+        projectPrintCssFiles: [
+            'src/main/resources/static/yaio-explorerapp/js/layout/print.css',
+        ],
+        projectPrintDataOnlyCssFiles: [
+            'src/main/resources/static/yaio-explorerapp/js/layout/print-dataonly.css',
+        ],
+        projectResetCssFiles: [
+            'src/main/resources/static/yaio-explorerapp/js/layout/reset.css',
         ],
         vendorJsTestFiles: [
               'src/test/static/unit/resources/js/jasmine/jasmine-jquery.js',
@@ -195,7 +206,7 @@ module.exports = function( grunt ){
         
         clean: ["bower/_dest", "vendors"],
         copy: {
-            all: {
+            bower2vendors: {
                 options: {
                     process: function (content, srcpath) {
                         if (srcpath.search('slimbox2.') > 0) {
@@ -257,6 +268,17 @@ module.exports = function( grunt ){
                     {expand: true, cwd: 'bower/_src/toastr', src: ['toastr.css'], dest: 'vendors/css/toastr/', flatten: true, filter: 'isFile'}
                 ],
             },
+            vendors2dist: {
+                files: [
+                    {expand: true, cwd: 'src/main/resources/static/js/', src: ['fancytree/**'], dest: 'src/main/resources/static/dist/vendors.<%= pkg.vendorversion %>/', flatten: false},
+                    {expand: true, cwd: 'src/main/resources/static/js/', src: ['ace/**'], dest: 'src/main/resources/static/dist/vendors.<%= pkg.vendorversion %>/', flatten: false},
+                    {expand: true, cwd: 'src/main/resources/static/', src: ['freemind-flash/**'], dest: 'src/main/resources/static/dist/vendors.<%= pkg.vendorversion %>/', flatten: false},
+                    {expand: true, cwd: 'src/main/resources/static/js/', src: ['yaio/**'], dest: 'src/main/resources/static/dist/vendors.<%= pkg.vendorversion %>/', flatten: false},
+                    {expand: true, cwd: 'src/main/resources/static/js/', src: ['slimbox2/**'], dest: 'src/main/resources/static/dist/vendors.<%= pkg.vendorversion %>/', flatten: false},
+                    {expand: true, cwd: 'src/main/resources/static/css/', src: ['slimbox2/**'], dest: 'src/main/resources/static/dist/vendors.<%= pkg.vendorversion %>/', flatten: false},
+                    {expand: true, cwd: 'src/main/resources/static/css/', src: ['yaio/**'], dest: 'src/main/resources/static/dist/vendors.<%= pkg.vendorversion %>/', flatten: false}
+                ]
+            }
         },
 
         // concat files
@@ -267,23 +289,25 @@ module.exports = function( grunt ){
             },            
             full: {
                 files: {
-                    'src/main/resources/static/dist/vendors-full.js': ['<%= vendorJsFiles %>'],
-                    'src/main/resources/static/dist/vendors-full.css': ['<%= vendorCssFiles %>'],
+                    'src/main/resources/static/dist/vendors-full.<%= pkg.vendorversion %>.js': ['<%= vendorJsFiles %>'],
+                    'src/main/resources/static/dist/vendors-full.<%= pkg.vendorversion %>.css': ['<%= vendorCssFiles %>'],
 
-                    'src/main/resources/static/dist/<%= pkg.name %>-app-full.js': ['<%= projectJsFiles %>'],
-                    'src/main/resources/static/dist/<%= pkg.name %>-app-full.css': ['<%= projectCssFiles %>'],
-                    'src/main/resources/static/dist/<%= pkg.name %>-app-<%= pkg.version %>-full.js': ['<%= projectJsFiles %>'],
-                    'src/main/resources/static/dist/<%= pkg.name %>-app-<%= pkg.version %>-full.css': ['<%= projectCssFiles %>'],
+                    'src/main/resources/static/dist/<%= pkg.name %>-reset.<%= pkg.resetversion %>.css': ['<%= projectResetCssFiles %>'],
 
-                    'src/main/resources/static/dist/<%= pkg.name %>-support-full.js': ['<%= projectSupportJsFiles %>'],
-                    'src/main/resources/static/dist/<%= pkg.name %>-support-full.css': ['<%= projectSupportCssFiles %>'],
-                    'src/main/resources/static/dist/<%= pkg.name %>-support-<%= pkg.version %>-full.js': ['<%= projectSupportJsFiles %>'],
-                    'src/main/resources/static/dist/<%= pkg.name %>-support-<%= pkg.version %>-full.css': ['<%= projectSupportCssFiles %>'],
+                    'src/main/resources/static/dist/<%= pkg.name %>-app-full.<%= pkg.appversion %>.js': ['<%= projectJsFiles %>'],
+                    'src/main/resources/static/dist/<%= pkg.name %>-app-full.<%= pkg.appversion %>.css': ['<%= projectCssFiles %>'],
+                    'src/main/resources/static/dist/<%= pkg.name %>-app-print.<%= pkg.appversion %>.css': ['<%= projectPrintCssFiles %>'],
+                    'src/main/resources/static/dist/<%= pkg.name %>-app-print-dataonly.<%= pkg.appversion %>.css': ['<%= projectPrintDataOnlyCssFiles %>'],
 
-                    'src/main/resources/static/dist/<%= pkg.name %>-exports-full.js': ['<%= projectSupportJsFiles %>', '<%= projectExportsJsFiles %>'],
-                    'src/main/resources/static/dist/<%= pkg.name %>-exports-full.css': ['<%= projectSupportCssFiles %>'],
-                    'src/main/resources/static/dist/<%= pkg.name %>-exports-<%= pkg.version %>-full.js': ['<%= projectSupportJsFiles %>', '<%= projectExportsJsFiles %>'],
-                    'src/main/resources/static/dist/<%= pkg.name %>-exports-<%= pkg.version %>-full.css': ['<%= projectSupportCssFiles %>'],
+                    'src/main/resources/static/dist/<%= pkg.name %>-support-full.<%= pkg.supportversion %>.js': ['<%= projectSupportJsFiles %>'],
+                    'src/main/resources/static/dist/<%= pkg.name %>-support-full.<%= pkg.supportversion %>.css': ['<%= projectSupportCssFiles %>'],
+                    'src/main/resources/static/dist/<%= pkg.name %>-support-print.<%= pkg.supportversion %>.css': ['<%= projectPrintCssFiles %>'],
+                    'src/main/resources/static/dist/<%= pkg.name %>-support-print-dataonly.<%= pkg.supportversion %>.css': ['<%= projectPrintDataOnlyCssFiles %>'],
+
+                    'src/main/resources/static/dist/<%= pkg.name %>-exports-full.<%= pkg.exportsversion %>.js': ['<%= projectSupportJsFiles %>', '<%= projectExportsJsFiles %>'],
+                    'src/main/resources/static/dist/<%= pkg.name %>-exports-full.<%= pkg.exportsversion %>.css': ['<%= projectSupportCssFiles %>'],
+                    'src/main/resources/static/dist/<%= pkg.name %>-exports-print.<%= pkg.exportsversion %>.css': ['<%= projectPrintCssFiles %>'],
+                    'src/main/resources/static/dist/<%= pkg.name %>-exports-print-dataonly.<%= pkg.exportsversion %>.css': ['<%= projectPrintDataOnlyCssFiles %>']
 
 //                    'src/test/static/testsupport-full.js': ['<%= vendorJsTestFiles %>'],
 //                    'src/test/static/<%= pkg.name %>_tests-full.js': ['<%= projectUnitJsTestFiles %>', '<%= projectE2EJsTestFiles %>']
@@ -394,9 +418,9 @@ module.exports = function( grunt ){
     });
 
     // register tasks
-    grunt.registerTask('vendors',   ['clean', 'bower', 'copy']);
+    grunt.registerTask('vendors',   ['clean', 'bower', 'copy:bower2vendors']);
     grunt.registerTask('default',   ['jshint']);
-    grunt.registerTask('dist',      ['concat:full']);
+    grunt.registerTask('dist',      ['concat:full', 'copy:vendors2dist']);
     grunt.registerTask('unit-test', ['dist', 'karma:continuous:start', 'watch:karma']);
     grunt.registerTask('e2e-test',  ['dist', 'protractor:continuous', 'watch:protractor']);
 

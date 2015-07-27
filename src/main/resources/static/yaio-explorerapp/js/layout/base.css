@@ -99,7 +99,7 @@ a.toggler_hidden {
   display: inline-block;
   vertical-align: top;
   background-repeat: no-repeat;
-  background-image: url("../../js/fancytree/skin-lion/icons.gif");
+  background-image: url("../../dist/vendors.vendorversion/fancytree/skin-lion/icons.gif");
   background-position: 0px 0px;
 }
 a.yaio-icon-center,

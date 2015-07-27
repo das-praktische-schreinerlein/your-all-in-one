@@ -252,7 +252,7 @@ Yaio.FormatterService = function(appBase) {
      * <h4>FeatureDescription:</h4>
      *     format the block-content as mindmap. 
      *     <ul>
-     *     <li>creates a FlashObject /freemind-flash/visorFreemind.swf
+     *     <li>creates a FlashObject /dist/vendors.vendorversion/freemind-flash/visorFreemind.swf
      *     <li>Calls /converters/mindmap with the html-content of the block
      *     <li>insert the returning flash-object into block-element 
      *     
@@ -270,7 +270,7 @@ Yaio.FormatterService = function(appBase) {
         var url = "/converters/mindmap?source=" + encodeURIComponent(content);
         console.log("formatYaioMindmap " + blockId + " url:" + url);
         
-        var fo = new FlashObject("/freemind-flash/visorFreemind.swf", "visorFreeMind", "100%", "100%", 6, "#9999ff");
+        var fo = new FlashObject("/dist/vendors.vendorversion/freemind-flash/visorFreemind.swf", "visorFreeMind", "100%", "100%", 6, "#9999ff");
         fo.addParam("quality", "high");
         fo.addParam("bgcolor", "#a0a0f0");
         fo.addVariable("openUrl", "_blank");

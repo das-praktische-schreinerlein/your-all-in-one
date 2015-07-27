@@ -2,6 +2,11 @@
   "name": "yaio",
   "description": "YourAllInOne D'Artagnan",
   "version": "0.1.0",
+  "appversion": "appversion",
+  "vendorversion": "vendorversion",
+  "supportversion": "supportversion",
+  "resetversion": "resetversion",
+  "exportsversion": "exportsversion",
   "private": "true",
   "engines": {
     "node": "v0.10.35",

@@ -6,26 +6,26 @@
   <title>YAIO - D'Artagnan - Markdown-Hilfe</title>
 
   <!-- styles: reset -->
-  <link rel="stylesheet" type="text/css" media="all" href="./css/reset.css" />
-  
+  <link rel="stylesheet" type="text/css" media="all" href="../dist/yaio-reset.resetversion.css" />
+
   <!-- styles: vendors -->
-  <link rel="stylesheet" type="text/css" media="all" href="../dist/vendors-full.css" />
-  <link rel="stylesheet" type="text/css" media="print" href="../css/yaio/print.css" />
+  <link rel="stylesheet" type="text/css" media="all" href="../dist/vendors-full.vendorversion.css" />
+  <link rel="stylesheet" type="text/css" media="print" href="../dist/vendors.vendorversion/yaio/print.css" />
 
   <!-- styles: yaio-explorer -->
-  <link rel="stylesheet" type="text/css" media="all" href="../dist/yaio-app-full.css" />
-  <link rel="stylesheet" type="text/css" media="print" href="./css/print.css" />
-  <link rel="stylesheet" type="text/css" media="print" href="./css/print-dataonly.css" id="link_css_dataonly" disabled="true" />
+  <link rel="stylesheet" type="text/css" media="all" href="../dist/yaio-support-full.supportversion.css" />
+  <link rel="stylesheet" type="text/css" media="print" href="../dist/yaio-support-print.supportversion.css" />
+  <link rel="stylesheet" type="text/css" media="print" href="../yaio-support-print-dataonly.supportversion.css" id="link_css_dataonly" disabled="true" />
 
   <!-- scripts: vendors -->
-  <script  type="text/javascript" charset="UTF-8" src="../dist/vendors-full.js"></script>
+  <script  type="text/javascript" charset="UTF-8" src="../dist/vendors-full.vendorversion.js"></script>
   <!-- scripts: Markdown-Editor+Formatter needs own script for loading plugins -->
-  <script type="text/javascript" charset="UTF-8" src="../js/ace/ace.js"></script>
+  <script type="text/javascript" charset="UTF-8" src="../dist/vendors.vendorversion/ace/ace.js"></script>
   <!-- scripts: freemind needs own script for loading plugins -->
-  <script type="text/javascript" charset="UTF-8" src="../freemind-flash/flashobject.js"></script>
+  <script type="text/javascript" charset="UTF-8" src="../dist/vendors.vendorversion/freemind-flash/flashobject.js"></script>
 
   <!-- scripts: yaio-support -->
-  <script  type="text/javascript" charset="UTF-8" src="../dist/yaio-support-full.js"></script>
+  <script  type="text/javascript" charset="UTF-8" src="../dist/yaio-support-full.supportversion.js"></script>
 
   <style>
   .ui-dialog-buttonset {
@@ -138,23 +138,28 @@ Und für ganz strukturierte Leute Checklisten:
 
 </div>
 
-<!-- Tooltip -->
+<!-- YaioAppBase -->
+<script type="text/javascript">
+window.yaioAppBase = YaioAppBase();
+yaioAppBase.publishDetectorStyles();
+</script>
+
 <script type="text/javascript">
 
      // create  Editor
      var myParentId = "wysiwhg-editor";
-     var editor = createNodeDescEditorForNode(myParentId, "markdownExample")
+     var editor = yaioAppBase.get('YaioMarkdownEditor').createNodeDescEditorForNode(myParentId, "markdownExample")
 
      var descText = $("#markdownExample").val();
-     var descHtmlMarked = formatMarkdown(descText, true);
+     var descHtmlMarked = yaioAppBase.get('YaioFormatter').formatMarkdown(descText, true);
 
      // set preview-content
      $( "#wysiwhg-preview" ).html(descHtmlMarked);
 
      // format markdown-extension
-     var flgDoMermaid = formatDescBlock("#wysiwhg-preview");
+     var flgDoMermaid = yaioAppBase.get('YaioFormatter').formatDescBlock("#wysiwhg-preview");
      if (flgDoMermaid) {
-         formatMermaidGlobal();
+         yaioAppBase.get('YaioFormatter').formatMermaidGlobal();
      }
 </script>
 
