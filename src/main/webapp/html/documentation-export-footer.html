@@ -1,0 +1,76 @@
+    </div>
+
+    <div class="menueFooterDummy" id="menueFooterDummy"> </div>
+    <div class="menueFooter" id="menueFooter">
+        <div class="menueFooterBox">
+            <ul id="ulMenueFooter" class="ulMenueFooter">
+                <li class="menueFooterMasterLink yaio-show-if-speechsynth command"><a class="a-menue-footer-norm button flg-textonly hidden" id="speechSynthLink" onclick="javascript:yaioAppBase.get('YaioExportedData').openSpeechSynth();return false;">Vorlesen</a></li>
+                <li class="menueFooterMasterLink yaio-show-if-javascript"><span class="button"><a onclick="window.print(); return true;" class="a-menue-footer-norm flg-textonly">Drucken</a><input type="checkbox" onclick="yaioAppBase.get('YaioExportedData').togglePrintLayout()" id="checkboxPrintAll"> All</span></li>
+                <li class="menueFooterMasterLink yaio-show-if-javascript command">
+                   <a class="a-menue-footer-norm button flg-textonly" id="showSidebarTOCLink" onclick="javascript:yaioAppBase.get('YaioBase').toggleWithLinks('#showSidebarTOCLink', '#hideSidebarTOCLink', '#sidebartoc', '');return false;">Sidebar an</a>
+                   <a class="a-menue-footer-norm button flg-textonly" style="display: none" id="hideSidebarTOCLink" onclick="javascript:yaioAppBase.get('YaioBase').toggleWithLinks('#showSidebarTOCLink', '#hideSidebarTOCLink', '#sidebartoc', '');return false;">Sidebar aus</a>
+                </li>
+                <li class="menueFooterMasterLink yaio-show-if-javascript command">
+                   <a class="a-menue-footer-norm button flg-textonly" id="showGlobalTOCLink" onclick="javascript:yaioAppBase.get('YaioBase').toggleWithLinks('#showGlobalTOCLink', '#hideGlobalTOCLink', '#globtoc', '');return false;">TOC an</a>
+                   <a class="a-menue-footer-norm button flg-textonly" style="display: none" id="hideGlobalTOCLink" onclick="javascript:yaioAppBase.get('YaioBase').toggleWithLinks('#showGlobalTOCLink', '#hideGlobalTOCLink', '#globtoc', '');return false;">TOC aus</a>
+                </li>
+<!--
+                <li class="menueFooterMasterLink yaio-show-if-javascript">
+                   <input type="text" style="width:200px" class="volltextsuchfeld" id="vlt_msglist">
+                   <input type=button onclick="javascript:yaioAppBase.get('YaioExportedData').startSearch();" value="Suchen">
+                   <input type=button onclick="javascript:yaioAppBase.get('YaioExportedData').resetSearch();yaioAppBase.get('YaioExportedData').doAllNodeToggler(true, 3);" value="Reset">
+                </li>
+ -->
+             </ul>
+        </div>
+    </div>
+    <div id="sidebartoc" class="sidebartoc documentation-sidebartoc"> </div>
+    
+<!-- YaioAppBase -->
+<script type="text/javascript">
+window.yaioAppBase = YaioAppBase();
+yaioAppBase.publishDetectorStyles();
+</script>
+
+<script type="text/javascript">
+    // alle OFFEN hervorheben
+    var styles = {
+        "color": "red",
+        "font-size": "13px",
+        "font-weight": "bold"
+    };
+    $( "span:contains('OFFEN')" ).css( styles );
+</script>
+<script type="text/javascript">
+    // format markdown-extension
+    var flgDoMermaid = yaioAppBase.get('YaioFormatter').formatDescBlock("#div_full");
+    if (flgDoMermaid) {
+        yaioAppBase.get('YaioFormatter').formatMermaidGlobal();
+    }
+    
+    // add TOC
+    yaioAppBase.get('YaioFormatter').addTOCForBlock("#globtoc", "#div_full", { toc: { hide: true, minDeep: 2}});
+    yaioAppBase.get('YaioFormatter').addTOCForBlock("#sidebartoc", "#div_full", { toc: { hide: true, minDeep: 2}});
+
+    // toggleAll after mermaid!!!
+    // alle Bloecke toggeln
+    //jMATService.getPageLayoutService().doAllBlockToggler(false);
+    yaioAppBase.get('YaioExportedData').togglePrintLayout();
+    delayedOptimize = window.setInterval(
+            function() {
+                // nach 2 Sekunden ausfuehren und Intervall loeschen
+                /*
+                jMATService.getLayoutService().toggleBlock(
+                        'node_2_childrencontainer',
+                        'node_2_childrencontainer',
+                        function () {
+                            new ToggleEffect('node_2_childrencontainer').doEffect();
+                        }
+                );
+                */
+                yaioAppBase.get('YaioExportedData').doAllNodeToggler(true, 100);
+                yaioAppBase.get('YaioExportedData').initSearch();
+                window.clearInterval(delayedOptimize);
+            }, 2000);
+</script>
+</body></html>
