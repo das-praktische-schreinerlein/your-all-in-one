@@ -352,6 +352,38 @@ module.exports = function( grunt ){
                 files: [
                     {expand: true, cwd: destBase, src: ['**/*.html', '**/*.css', '**/*.js'], dest: destBase, flatten: false}
                 ]
+            },
+            versionOnRes: {
+                options: {
+                    patterns: [
+                        {
+                            match: /dist\/yaio-exports-(.*)[-.](exportsversion|\d+\.\d+\.\d+)?\.(css|js)/g,
+                            replacement: "dist\/yaio-exports-$1-<%= pkg.exportsversion %>.$3"
+                        },
+                        {
+                            match: /dist\/yaio-reset[-.](resetversion|\d+\.\d+\.\d+)?\.(css|js)/g,
+                            replacement: "dist\/yaio-reset-<%= pkg.resetversion %>.$2"
+                        },
+                        {
+                            match: /dist\/yaio-support-(.*)[-.](supportversion|\d+\.\d+\.\d+)?\.(css|js)/g,
+                            replacement: "dist\/yaio-support-$1-<%= pkg.supportversion %>.$3"
+                        },
+                        {
+                            match: /dist\/vendors-(.*)[-.](vendorversion|\d+\.\d+\.\d+)?\.(css|js)/g,
+                            replacement: "dist\/vendors-$1-<%= pkg.vendorversion %>.$3"
+                        },
+                        {
+                            match: /dist\/vendors[-.](vendorversion|\d+\.\d+\.\d+)?\//g,
+                            replacement: "dist\/vendors-<%= pkg.vendorversion %>/"
+                        }
+                    ]
+                },
+                files: [
+                    {expand: true, 
+                        src: ['resources/projektplan-export-header.html', 
+                              'resources/examples/markdownhelp/markdownhelp.html'], 
+                        dest: '', flatten: false}
+                ]
             }
         },
 
@@ -496,7 +528,7 @@ module.exports = function( grunt ){
     // register tasks
     grunt.registerTask('default',   ['jshint']);
     grunt.registerTask('vendors',   ['clean:bower', 'bower', 'copy:bower2vendors']);
-    grunt.registerTask('dist',      ['vendors', 'clean:dist', 'copy:archiv2dist', 'concat:full', 'copy:vendors2dist', 'copy:yaiores2dist', 'replace:versionOnDist', 'copy:dist2archiv']);
+    grunt.registerTask('dist',      ['vendors', 'clean:dist', 'copy:archiv2dist', 'concat:full', 'copy:vendors2dist', 'copy:yaiores2dist', 'replace:versionOnDist', 'replace:versionOnRes', 'copy:dist2archiv']);
     grunt.registerTask('unit-test', ['dist', 'karma:continuous:start', 'watch:karma']);
     grunt.registerTask('e2e-test',  ['dist', 'protractor:continuous', 'watch:protractor']);
 
