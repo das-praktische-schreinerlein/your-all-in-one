@@ -309,11 +309,18 @@ module.exports = function( grunt ){
                                 ], dest: archivSrcBase, flatten: false},
                     {expand: true, cwd: archivSrcBase, src: ['**'], dest: destBase + 'dist/', flatten: false}
                 ]
+            },
+            yaiores2dist: {
+                files: [
+                    {expand: true, cwd: srcBase + 'pages/', src: ['*.html'], dest: destBase, flatten: false},
+                    {expand: true, cwd: srcBase, src: ['yaio-explorerapp/**/*.html', 'yaio-explorerapp/**/*.json'], dest: destBase, flatten: false},
+                    {expand: true, cwd: srcBase, src: ['html/*.html'], dest: destBase, flatten: false}
+                ]
             }
         },
 
         replace: {
-            yaiores2dist: {
+            versionOnDist: {
                 options: {
                     patterns: [
                         {
@@ -343,9 +350,7 @@ module.exports = function( grunt ){
                     ]
                 },
                 files: [
-                    {expand: true, cwd: srcBase + 'pages/', src: ['*.html'], dest: destBase, flatten: false},
-                    {expand: true, cwd: srcBase, src: ['yaio-explorerapp/**/*.html', 'yaio-explorerapp/**/*.json'], dest: destBase, flatten: false},
-                    {expand: true, cwd: srcBase, src: ['html/*.html'], dest: destBase, flatten: false}
+                    {expand: true, cwd: destBase, src: ['**/*.html', '**/*.css', '**/*.js'], dest: destBase, flatten: false}
                 ]
             }
         },
@@ -491,7 +496,7 @@ module.exports = function( grunt ){
     // register tasks
     grunt.registerTask('default',   ['jshint']);
     grunt.registerTask('vendors',   ['clean:bower', 'bower', 'copy:bower2vendors']);
-    grunt.registerTask('dist',      ['vendors', 'clean:dist', 'copy:archiv2dist', 'concat:full', 'copy:vendors2dist', 'replace:yaiores2dist', 'copy:dist2archiv']);
+    grunt.registerTask('dist',      ['vendors', 'clean:dist', 'copy:archiv2dist', 'concat:full', 'copy:vendors2dist', 'copy:yaiores2dist', 'replace:versionOnDist', 'copy:dist2archiv']);
     grunt.registerTask('unit-test', ['dist', 'karma:continuous:start', 'watch:karma']);
     grunt.registerTask('e2e-test',  ['dist', 'protractor:continuous', 'watch:protractor']);
 
