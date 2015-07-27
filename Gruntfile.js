@@ -104,7 +104,8 @@ module.exports = function( grunt ){
             srcBase + 'yaio-explorerapp/js/exporter/OutputOptionsEditorFactory.js',
             srcBase + 'yaio-explorerapp/js/explorer/NodeShowCtrl.js',
             srcBase + 'yaio-explorerapp/js/search/NodeSearchCtrl.js',
-            srcBase + 'js/angularjs/paging.js'
+            // !!!! paging is vendor but patched :-(
+            vendorSrcBase + 'js/angularjs/paging.js'
         ],
         projectSupportJsFiles: [
             srcBase + 'yaio-explorerapp/js/jmat.js',
