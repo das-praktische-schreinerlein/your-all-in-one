@@ -204,7 +204,10 @@ module.exports = function( grunt ){
             }
         },
         
-        clean: ["bower/_dest", "vendors"],
+        clean: {
+            bower: ["bower/_dest", "vendors"],
+            dist:  ["src/main/resources/static/dist"]
+        },
         copy: {
             bower2vendors: {
                 options: {
@@ -418,9 +421,9 @@ module.exports = function( grunt ){
     });
 
     // register tasks
-    grunt.registerTask('vendors',   ['clean', 'bower', 'copy:bower2vendors']);
+    grunt.registerTask('vendors',   ['clean:bower', 'bower', 'copy:bower2vendors']);
     grunt.registerTask('default',   ['jshint']);
-    grunt.registerTask('dist',      ['concat:full', 'copy:vendors2dist']);
+    grunt.registerTask('dist',      ['clean:dist', 'concat:full', 'copy:vendors2dist']);
     grunt.registerTask('unit-test', ['dist', 'karma:continuous:start', 'watch:karma']);
     grunt.registerTask('e2e-test',  ['dist', 'protractor:continuous', 'watch:protractor']);
 
