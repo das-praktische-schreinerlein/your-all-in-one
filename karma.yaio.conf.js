@@ -20,19 +20,19 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
         // vendors
-        distSrcPath + 'vendors-full.' + packageConfig.vendorversion + '.js',
+        distSrcPath + 'vendors-full-' + packageConfig.vendorversion + '.js',
         // needs own script for loading plugins
-        distSrcPath + 'vendors.' + packageConfig.vendorversion + '/fancytree/jquery.fancytree.js',
-        distSrcPath + 'vendors.' + packageConfig.vendorversion + '/fancytree/jquery.fancytree.dnd.js',
-        distSrcPath + 'vendors.' + packageConfig.vendorversion + '/fancytree/jquery.fancytree.edit.js',
-        distSrcPath + 'vendors.' + packageConfig.vendorversion + '/fancytree/jquery.fancytree.gridnav.js',
-        distSrcPath + 'vendors.' + packageConfig.vendorversion + '/fancytree/jquery.fancytree.table.js',
-        distSrcPath + 'vendors.' + packageConfig.vendorversion + '/ace/ace.js',
-        distSrcPath + 'vendors.' + packageConfig.vendorversion + '/ace/ext-spellcheck.js',
-        distSrcPath + 'vendors.' + packageConfig.vendorversion + '/freemind-flash/flashobject.js',
+        distSrcPath + 'vendors-' + packageConfig.vendorversion + '/fancytree/jquery.fancytree.js',
+        distSrcPath + 'vendors-' + packageConfig.vendorversion + '/fancytree/jquery.fancytree.dnd.js',
+        distSrcPath + 'vendors-' + packageConfig.vendorversion + '/fancytree/jquery.fancytree.edit.js',
+        distSrcPath + 'vendors-' + packageConfig.vendorversion + '/fancytree/jquery.fancytree.gridnav.js',
+        distSrcPath + 'vendors-' + packageConfig.vendorversion + '/fancytree/jquery.fancytree.table.js',
+        distSrcPath + 'vendors-' + packageConfig.vendorversion + '/ace/ace.js',
+        distSrcPath + 'vendors-' + packageConfig.vendorversion + '/ace/ext-spellcheck.js',
+        distSrcPath + 'vendors-' + packageConfig.vendorversion + '/freemind-flash/flashobject.js',
         // yaio: files
-        distSrcPath + 'yaio-support-full.' + packageConfig.supportversion + '.js',
-        distSrcPath + 'yaio-app-full.' + packageConfig.appversion + '.js',
+        distSrcPath + 'yaio-support-full-' + packageConfig.supportversion + '.js',
+        distSrcPath + 'yaio-app-full-' + packageConfig.appversion + '.js',
         testSrcPath + 'unit/resources/js/jasmine/jasmine-jquery.js',
         testSrcPath + 'unit/jasmine-config.js',
 
