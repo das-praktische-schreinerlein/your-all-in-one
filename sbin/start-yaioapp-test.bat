@@ -25,9 +25,9 @@ rem init config
 call %YAIOCONFIGPATH%\config-yaio.bat %YAIOSCRIPTPATH%
 
 rem init webdriver
-set CMD=%YAIOBASEPATH%../node_modules/.bin/webdriver-manager update --ie
-echo "update webdriver %CMD%"
-call %CMD%
+rem set CMD=%YAIOBASEPATH%../node_modules/.bin/webdriver-manager update --ie
+rem echo "update webdriver %CMD%"
+rem call %CMD%
 
 rem start webdriver
 set CMD=%YAIOBASEPATH%../node_modules/.bin/webdriver-manager start
