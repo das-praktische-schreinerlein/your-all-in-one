@@ -122,7 +122,6 @@ module.exports = function( grunt ){
             srcBase + 'yaio-explorerapp/js/utils/ExportedDataService.js',
         ],
         projectCssFiles: [
-              srcBase + 'yaio-explorerapp/css/style.css',
               srcBase + 'yaio-explorerapp/js/layout/base.css',
               srcBase + 'yaio-explorerapp/js/layout/support.css',
               srcBase + 'yaio-explorerapp/js/layout/toc.css',
