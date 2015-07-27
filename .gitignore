@@ -4,6 +4,7 @@
 /node
 /node_modules
 /src/main/generated-resources
+/tmp
 /target
 /var/hsqldb/yaio.lck
 /vendors/js
