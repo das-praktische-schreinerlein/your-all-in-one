@@ -210,10 +210,10 @@ public class ConverterUtils {
         
         // check headerFile
         if (headerFile == null) {
-            headerFile = "/static/html/projektplan-export-header.html";
+            headerFile = "/static/exporttemplates/projektplan-export-header.html";
         }
         if (footerFile == null) {
-            footerFile = "/static/html/projektplan-export-footer.html";
+            footerFile = "/static/exporttemplates/projektplan-export-footer.html";
         }
         // run export
         res = this.exportNode(basenode, exporter, oOptions, ".html", response);

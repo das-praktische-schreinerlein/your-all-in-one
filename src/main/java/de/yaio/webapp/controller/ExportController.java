@@ -683,8 +683,8 @@ public class ExportController {
         
         // generate
         String res = converterUtils.commonExportNodeAsHtml(sysUID, oOptions, response, 
-                        "/static/html/documentation-export-header.html", 
-                        "/static/html/documentation-export-footer.html");
+                        "/static/exporttemplates/documentation-export-header.html", 
+                        "/static/exporttemplates/documentation-export-footer.html");
         // replace static pathes...
         for (String pattern : PostProcessorReplacements_documentation.keySet()) {
             res = res.replace(pattern, PostProcessorReplacements_documentation.get(pattern));

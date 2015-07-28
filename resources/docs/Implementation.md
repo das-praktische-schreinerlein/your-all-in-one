@@ -44,7 +44,7 @@
 - functionality
     - Explorer-App with TreeView, Editor, Wysiwyg-Markdown-Editor...
 - packages
-    - src/main/webapp/yaio-explorerapp/
+    - src/main/web/yaio-explorerapp/
 - use external Libs
     - App-Framwork [AngularJS](https://angularjs.org/)
     - Layout-Framework [JQuery](https://github.com/jquery/jquery)
@@ -62,9 +62,9 @@
 - functionality
     - formatting of all markdown-sources: Markdown-Formatter, Diagramm-Formatter, Checklists, Wysiwyg-Markdown-Editor
 - packages
-    - src/main/webapp/yaio-explorerapp/js/layout/
-    - src/main/webapp/yaio-explorerapp/js/wysiwyg/
-    - src/main/webapp/yaio-explorerapp/wysiwyg.html
+    - src/main/web/yaio-explorerapp/js/layout/
+    - src/main/web/yaio-explorerapp/js/wysiwyg/
+    - src/main/web/yaio-explorerapp/wysiwyg.html
 - use external Libs
     - Layout-Framework [JQuery](https://github.com/jquery/jquery)
     - Html-Editor [Ace](https://github.com/ajaxorg/ace-builds)

@@ -1,4 +1,6 @@
-/*! yaio - v0.1.0 - 2015-07-27 */'use strict';
+/*! yaio-v0.1.0 exports-0.1.0 */
+
+'use strict';
 
 
     /**
