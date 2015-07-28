@@ -1,6 +1,7 @@
 var path = require('path');
 
-var srcBase = 'src/main/webapp/';
+var srcBase = 'src/main/web/';
+var tplSrcBase = 'src/main/web/';
 var destBase = 'src/main/generated-resources/static/';
 var bowerSrcBase = 'bower/_src/';
 var vendorSrcBase = 'vendors/src/';
@@ -213,7 +214,7 @@ module.exports = function( grunt ){
         
         clean: {
             bower: ["bower/_dest", "vendors/js", "vendors/css"],
-            dist:  [destBase + "dist"]
+            dist:  [destBase]
         },
         copy: {
             bower2vendors: {
@@ -314,7 +315,7 @@ module.exports = function( grunt ){
                 files: [
                     {expand: true, cwd: srcBase + 'pages/', src: ['*.html'], dest: destBase, flatten: false},
                     {expand: true, cwd: srcBase, src: ['yaio-explorerapp/**/*.html', 'yaio-explorerapp/**/*.json'], dest: destBase, flatten: false},
-                    {expand: true, cwd: srcBase, src: ['html/*.html'], dest: destBase, flatten: false}
+                    {expand: true, cwd: tplSrcBase, src: ['exporttemplates/*.html'], dest: destBase, flatten: false}
                 ]
             }
         },
@@ -391,32 +392,61 @@ module.exports = function( grunt ){
         concat: {
             options: {
                 stripBanners: true,
-                banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %> */',
+                banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %> */\n\n',
             },            
-            full: {
+            vendors: {
+                options: {
+                    stripBanners: true,
+                    banner: '/*! <%= pkg.name %>-v<%= pkg.version %> vendors-<%= pkg.vendorversion %> */\n\n',
+                },            
                 files: {
                     '<%= destBase %>dist/vendors-full-<%= pkg.vendorversion %>.js': ['<%= vendorJsFiles %>'],
                     '<%= destBase %>dist/vendors-full-<%= pkg.vendorversion %>.css': ['<%= vendorCssFiles %>'],
-
+                },
+            },
+            reset: {
+                options: {
+                    stripBanners: true,
+                    banner: '/*! <%= pkg.name %>-v<%= pkg.version %> reset-<%= pkg.resetversion %> */\n\n',
+                },            
+                files: {
                     '<%= destBase %>dist/<%= pkg.name %>-reset-<%= pkg.resetversion %>.css': ['<%= projectResetCssFiles %>'],
-
+                },
+            },
+            app: {
+                options: {
+                    stripBanners: true,
+                    banner: '/*! <%= pkg.name %>-v<%= pkg.version %> app-<%= pkg.appversion %> */\n\n',
+                },            
+                files: {
                     '<%= destBase %>dist/<%= pkg.name %>-app-full-<%= pkg.appversion %>.js': ['<%= projectJsFiles %>'],
                     '<%= destBase %>dist/<%= pkg.name %>-app-full-<%= pkg.appversion %>.css': ['<%= projectCssFiles %>'],
                     '<%= destBase %>dist/<%= pkg.name %>-app-print-<%= pkg.appversion %>.css': ['<%= projectPrintCssFiles %>'],
                     '<%= destBase %>dist/<%= pkg.name %>-app-print-dataonly-<%= pkg.appversion %>.css': ['<%= projectPrintDataOnlyCssFiles %>'],
-
+                },
+            },
+            support: {
+                options: {
+                    stripBanners: true,
+                    banner: '/*! <%= pkg.name %>-v<%= pkg.version %> support-<%= pkg.supportversion %> */\n\n',
+                },            
+                files: {
                     '<%= destBase %>dist/<%= pkg.name %>-support-full-<%= pkg.supportversion %>.js': ['<%= projectSupportJsFiles %>'],
                     '<%= destBase %>dist/<%= pkg.name %>-support-full-<%= pkg.supportversion %>.css': ['<%= projectSupportCssFiles %>'],
                     '<%= destBase %>dist/<%= pkg.name %>-support-print-<%= pkg.supportversion %>.css': ['<%= projectPrintCssFiles %>'],
                     '<%= destBase %>dist/<%= pkg.name %>-support-print-dataonly-<%= pkg.supportversion %>.css': ['<%= projectPrintDataOnlyCssFiles %>'],
-
+                },
+            },
+            exports: {
+                options: {
+                    stripBanners: true,
+                    banner: '/*! <%= pkg.name %>-v<%= pkg.version %> exports-<%= pkg.exportsversion %> */\n\n',
+                },            
+                files: {
                     '<%= destBase %>dist/<%= pkg.name %>-exports-full-<%= pkg.exportsversion %>.js': ['<%= projectSupportJsFiles %>', '<%= projectExportsJsFiles %>'],
                     '<%= destBase %>dist/<%= pkg.name %>-exports-full-<%= pkg.exportsversion %>.css': ['<%= projectSupportCssFiles %>'],
                     '<%= destBase %>dist/<%= pkg.name %>-exports-print-<%= pkg.exportsversion %>.css': ['<%= projectPrintCssFiles %>'],
                     '<%= destBase %>dist/<%= pkg.name %>-exports-print-dataonly-<%= pkg.exportsversion %>.css': ['<%= projectPrintDataOnlyCssFiles %>']
-
-//                    testSrcBase + 'testsupport-full.js': ['<%= vendorJsTestFiles %>'],
-//                    testSrcBase + '<%= pkg.name %>_tests-full.js': ['<%= projectUnitJsTestFiles %>', '<%= projectE2EJsTestFiles %>']
                 },
             },
         },   
@@ -528,7 +558,7 @@ module.exports = function( grunt ){
     // register tasks
     grunt.registerTask('default',   ['jshint']);
     grunt.registerTask('vendors',   ['clean:bower', 'bower', 'copy:bower2vendors']);
-    grunt.registerTask('dist',      ['vendors', 'clean:dist', 'copy:archiv2dist', 'concat:full', 'copy:vendors2dist', 'copy:yaiores2dist', 'replace:versionOnDist', 'replace:versionOnRes', 'copy:dist2archiv']);
+    grunt.registerTask('dist',      ['vendors', 'clean:dist', 'copy:archiv2dist', 'concat', 'copy:vendors2dist', 'copy:yaiores2dist', 'replace:versionOnDist', 'replace:versionOnRes', 'copy:dist2archiv']);
     grunt.registerTask('unit-test', ['dist', 'karma:continuous:start', 'watch:karma']);
     grunt.registerTask('e2e-test',  ['dist', 'protractor:continuous', 'watch:protractor']);
 
