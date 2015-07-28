@@ -24,13 +24,13 @@ YAIOCONFIGPATH=${YAIOSCRIPTPATH}../config/
 # init config
 . ${YAIOCONFIGPATH}/config-yaio.sh ${YAIOSCRIPTPATH}
 
-rem init webdriver
-CMD=${YAIOBASEPATH}../node_modules/.bin/webdriver-manager update --ie
+# init webdriver
+CMD="${YAIOBASEPATH}../node_modules/.bin/webdriver-manager update --ie"
 echo "update webdriver ${CMD}"
 ${CMD}
 
-rem start webdriver
-CMD=${YAIOBASEPATH}../node_modules/.bin/webdriver-manager start
+# start webdriver
+CMD="${YAIOBASEPATH}../node_modules/.bin/webdriver-manager start"
 echo "start webdriver ${CMD}"
 ${CMD} &
 
