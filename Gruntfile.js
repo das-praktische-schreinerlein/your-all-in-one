@@ -12,23 +12,45 @@ var testSrcBase = 'src/test/javascript/';
 function patchFileSlimbox2(content, srcpath) {
     var newContent = content;
     console.log("patchFileSlimbox2:" + srcpath);
+    newContent = newContent.replace(/\/\*\!/g,"    /*!");
     newContent = newContent.replace(/\t/g,"    ");
-    newContent = newContent.replace("middle = win.scrollTop() + (win.height() / 2);", "middle = win.scrollTop() + (window.innerHeight / 2);");
+    newContent = newContent.replace("middle = win.scrollTop() + (win.height() / 2);",
+                                    "middle = win.scrollTop() + (window.innerHeight / 2);");
     return newContent;
 }
 function patchFileFancytree(content, srcpath) {
     var newContent = content;
     console.log("patchFileFancytree:" + srcpath);
-    newContent = newContent.replace(/@version .*?\n/, "@version @VERSION\n");
-    newContent = newContent.replace(/@date .*?\n/, "@date @DATE\n");
+    newContent = newContent.replace(/@version .*?\n/, 
+                                    "@version @VERSION\n");
+    newContent = newContent.replace(/@date .*?\n/,
+                                    "@date @DATE\n");
+    return newContent;
+}
+function patchFileJQuery(content, srcpath) {
+    var newContent = content;
+    console.log("patchFileJQuery:" + srcpath);
+    newContent = newContent.replace(/\/\/# sourceMappingURL=jquery.min.map/
+                                  , "");
     return newContent;
 }
 function patchFileJQueryLang(content, srcpath) {
     var newContent = content;
     console.log("patchFileJQueryLang:" + srcpath);
-    newContent = newContent.replace(/'placeholder'\n\t*];/, "'placeholder', 'data-tooltip'\n\t\t];");
+    newContent = newContent.replace(/'placeholder'\n\t*];/
+                                  , "'placeholder',\n\t\t'data-tooltip'\n\t];");
     return newContent;
 }
+function patchFileHighlightJsLang(content, srcpath) {
+    var newContent = content;
+    console.log("patchFileHighlightJsLang:" + srcpath);
+    newContent = newContent.replace(/\.hljs-annotation,\n.diff .hljs-header,/,
+                                     ".hljs-annotation,\n.hljs-template_comment,\n.diff .hljs-header,");
+    return newContent;
+}
+
+
+
 
 
 
@@ -41,44 +63,44 @@ module.exports = function( grunt ){
 
         // define files
         vendorJsFiles: [
-              vendorSrcBase + 'js/jquery/jquery.min.js',
-              vendorSrcBase + 'js/jqueryui/jquery-ui.min.js',
-              vendorSrcBase + 'js/jqueryui/jquery.ui-contextmenu.min.js',
-              vendorSrcBase + 'js/jqueryui/jquery-ui-i18n.min.js',
-              vendorSrcBase + 'js/jqueryui/jquery-ui-sliderAccess.js',
-              vendorSrcBase + 'js/jqueryui/jquery-ui-timepicker-addon.js',
-              vendorSrcBase + 'js/jquery/jquery-lang.js',
+              vendorDestBase + 'js/jquery/jquery.min.js',
+              vendorDestBase + 'js/jqueryui/jquery-ui.min.js',
+              vendorDestBase + 'js/jqueryui/jquery.ui-contextmenu.min.js',
+              vendorDestBase + 'js/jqueryui/jquery-ui-i18n.min.js',
+              vendorDestBase + 'js/jqueryui/jquery-ui-sliderAccess.js',
+              vendorDestBase + 'js/jqueryui/jquery-ui-timepicker-addon.js',
+              vendorDestBase + 'js/jquery/jquery-lang.js',
 // loaded standalone because of plugins
 //              vendorSrcBase + 'js/fancytree/jquery.fancytree.js',
 //              vendorSrcBase + 'js/fancytree/jquery.fancytree.dnd.js',
 //              vendorSrcBase + 'js/fancytree/jquery.fancytree.edit.js',
 //              vendorSrcBase + 'js/fancytree/jquery.fancytree.gridnav.js',
 //              vendorSrcBase + 'js/fancytree/jquery.fancytree.table.js',
-              vendorSrcBase + 'js/angularjs/angular.js',
-              vendorSrcBase + 'js/angularjs/angular-animate.js',
-              vendorSrcBase + 'js/angularjs/angular-route.js',
-              vendorSrcBase + 'js/angularjs/angular-translate.js',
-              vendorSrcBase + 'js/angularjs/angular-translate-loader-static-files.js',
+              vendorDestBase + 'js/angularjs/angular.js',
+              vendorDestBase + 'js/angularjs/angular-animate.js',
+              vendorDestBase + 'js/angularjs/angular-route.js',
+              vendorDestBase + 'js/angularjs/angular-translate.js',
+              vendorDestBase + 'js/angularjs/angular-translate-loader-static-files.js',
               vendorSrcBase + 'js/marked/marked.js',
 // loaded standalone because of plugins
 //              vendorSrcBase + 'js/ace/ace.js',
 //              vendorSrcBase + 'js/ace/ext-spellcheck.js',
               vendorSrcBase + 'js/strapdown/strapdown-toc.js',
-              vendorSrcBase + 'js/highlightjs/highlight.pack.js',
-              vendorSrcBase + 'js/toastr/toastr.min.js',
+              vendorDestBase + 'js/highlightjs/highlight.pack.js',
+              vendorDestBase + 'js/toastr/toastr.min.js',
               vendorSrcBase + 'js/mermaid/mermaid.full.js',
-              vendorSrcBase + 'js/findandreplacedomtext/findAndReplaceDOMText.js',
+              vendorDestBase + 'js/findandreplacedomtext/findAndReplaceDOMText.js',
 // loaded standalone because of plugins
               vendorSrcBase + 'freemind-flash/flashobject.js',
               vendorSrcBase + 'js/yaio/JMATAllIn.js',
         ],
         vendorCssFiles: [
-              vendorSrcBase + 'css/jqueryui//jquery-ui.css',
-              vendorSrcBase + 'css/jqueryui//jquery-ui-timepicker-addon.css',
+              vendorDestBase + 'css/jqueryui/jquery-ui.css',
+              vendorDestBase + 'css/jqueryui/jquery-ui-timepicker-addon.css',
 // loaded standalone because of plugins
 //              vendorSrcBase + 'js/fancytree/skin-win8/ui.fancytree.css',
-              vendorSrcBase + 'css/highlightjs/default.css',
-              vendorSrcBase + 'css/toastr/toastr.css',
+              vendorDestBase + 'css/highlightjs/default.css',
+              vendorDestBase + 'css/toastr/toastr.css',
               vendorSrcBase + 'css/mermaid/mermaid.css',
               vendorSrcBase + 'css/yaio/style.css',
               vendorSrcBase + 'css/yaio/main.css'
@@ -141,6 +163,7 @@ module.exports = function( grunt ){
               srcBase + 'yaio-explorerapp/js/wysiwyg/formatter.css'
         ],
         projectSupportCssFiles: [
+            srcBase + 'yaio-explorerapp/js/layout/jquery-ui.css',
             srcBase + 'yaio-explorerapp/js/layout/base.css',
             srcBase + 'yaio-explorerapp/js/layout/support.css',
             srcBase + 'yaio-explorerapp/js/layout/toc.css',
@@ -224,8 +247,12 @@ module.exports = function( grunt ){
                             return patchFileSlimbox2(content, srcpath);
                         } else if (srcpath.search('fancytree') > 0) {
                             return patchFileFancytree(content, srcpath);
+                        } else if (srcpath.search('highlightjs') > 0) {
+                            return patchFileHighlightJsLang(content, srcpath);
                         } else if (srcpath.search('jquery-lang') > 0) {
                             return patchFileJQueryLang(content, srcpath);
+                        } else if (srcpath.search('jquery') > 0) {
+                            return patchFileJQuery(content, srcpath);
                         }
                         return content;
                     }
@@ -250,16 +277,20 @@ module.exports = function( grunt ){
 
                     // JS
                     {expand: true, cwd: bowerSrcBase + 'ace-builds/src-min-noconflict', src: ['**'], dest: 'vendors/js/ace/', flatten: false},
-                    {expand: true, cwd: bowerSrcBase + 'angular', src: ['*.js'], dest: vendorDestBase + 'js/angularjs/', flatten: false},
+                    {expand: true, cwd: bowerSrcBase + 'angular', src: ['angular.js'], dest: vendorDestBase + 'js/angularjs/', flatten: false},
+                    {expand: true, cwd: bowerSrcBase + 'angular-paging', src: ['paging.js'], dest: vendorDestBase + 'js/angularjs/', flatten: false},
+                    {expand: true, cwd: bowerSrcBase + 'angular-animate', src: ['angular-animate.js'], dest: vendorDestBase + 'js/angularjs/', flatten: false},
+                    {expand: true, cwd: bowerSrcBase + 'angular-route', src: ['angular-route.js'], dest: vendorDestBase + 'js/angularjs/', flatten: false},
                     {expand: true, cwd: bowerSrcBase + 'angular-translate', src: ['*.js'], dest: vendorDestBase + 'js/angularjs/', flatten: false},
+                    {expand: true, cwd: bowerSrcBase + 'angular-translate-loader-static-files', src: ['angular-translate-loader-static-files.js'], dest: vendorDestBase + 'js/angularjs/', flatten: false},
                     {expand: true, cwd: bowerSrcBase + 'fancytree/dist/', src: ['skin*/*.*', '*.js'], dest: vendorDestBase + 'js/fancytree/', flatten: false},
                     {expand: true, cwd: bowerSrcBase + 'fancytree/dist/', src: ['src/*.js'], dest: vendorDestBase + 'js/fancytree/', flatten: true},
                     {expand: true, cwd: bowerSrcBase + 'find-and-replace-dom-text/src', src: ['findAndReplaceDOMText.js'], dest: vendorDestBase + 'js/findandreplacedomtext/', flatten: false},
                     {expand: true, cwd: bowerSrcBase + 'highlightjs/', src: ['**/highlight.pack.js'], dest: vendorDestBase + 'js/highlightjs/', flatten: true},
-                    {expand: true, cwd: bowerSrcBase + 'jquery/dist', src: ['*.js'], dest: vendorDestBase + 'js/jquery/', flatten: false},
-                    {expand: true, cwd: bowerSrcBase + 'jquery-lang-js/js', src: ['*.js'], dest: vendorDestBase + 'js/jquery/', flatten: false},
+                    {expand: true, cwd: bowerSrcBase + 'jquery/dist', src: ['jquery.min.js'], dest: vendorDestBase + 'js/jquery/', flatten: false},
+                    {expand: true, cwd: bowerSrcBase + 'jquery-lang-js/js', src: ['jquery-lang.js'], dest: vendorDestBase + 'js/jquery/', flatten: false},
                     {expand: true, cwd: bowerSrcBase + 'jquery-ui', src: ['**/jquery-ui.min.js', '**/jquery-ui-i18n.min.js'], dest: vendorDestBase + 'js/jqueryui/', flatten: true},
-                    {expand: true, cwd: bowerSrcBase + 'jqueryui-timepicker-addon', src: ['dist/*.js'], dest: vendorDestBase + 'js/jqueryui/', flatten: true},
+                    {expand: true, cwd: bowerSrcBase + 'jqueryui-timepicker-addon', src: ['dist/jquery-ui-sliderAccess.js', 'dist/jquery-ui-timepicker-addon.js'], dest: vendorDestBase + 'js/jqueryui/', flatten: true},
                     {expand: true, cwd: bowerSrcBase + 'marked', src: ['lib/marked.js'], dest: vendorDestBase + 'js/marked/', flatten: true},
                     {expand: true, cwd: bowerSrcBase + 'mermaid', src: ['dist/mermaid.full.js'], dest: vendorDestBase + 'js/mermaid/', flatten: true, filter: 'isFile'
                         ,rename: function(dest, src) {
@@ -269,7 +300,7 @@ module.exports = function( grunt ){
                     {expand: true, cwd: bowerSrcBase + 'slimbox2', src: ['js/slimbox2.js'], dest: vendorDestBase + 'js/slimbox2/', flatten: true},
                     {expand: true, cwd: bowerSrcBase + 'strapdown', src: ['src/js/strapdown-toc.js'], dest: vendorDestBase + 'js/strapdown/', flatten: true},
                     {expand: true, cwd: bowerSrcBase + 'toastr', src: ['build/toastr.min.js'], dest: vendorDestBase + 'js/toastr/', flatten: true},
-                    {expand: true, cwd: bowerSrcBase + 'ui-contextmenu', src: ['**/*.js'], dest: vendorDestBase + 'js/jqueryui/', flatten: true},
+                    {expand: true, cwd: bowerSrcBase + 'ui-contextmenu', src: ['jquery.ui-contextmenu.min.js'], dest: vendorDestBase + 'js/jqueryui/', flatten: true},
                     // CSS
                     {expand: true, cwd: bowerSrcBase + 'highlightjs/', src: ['**/default.css'], dest: vendorDestBase + 'css/highlightjs/', flatten: true},
                     {expand: true, cwd: bowerSrcBase + 'jquery-ui', src: ['**/jquery-ui.css'], dest: vendorDestBase + 'css/jqueryui/', flatten: true},
