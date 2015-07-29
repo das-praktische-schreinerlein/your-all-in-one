@@ -2,8 +2,8 @@
 
 var Utils = {
     
-    CONST_WAIT_ELEMENT: 2000,
-    CONST_WAIT_NODEHIRARCHY: 10000,
+    CONST_WAIT_ELEMENT: 4000,
+    CONST_WAIT_NODEHIRARCHY: 20000,
     
     /**
      * wait until element present in DOM
