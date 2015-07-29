@@ -118,6 +118,7 @@ JsHelferlein.AppBase = function(config) {
     
     me._configureDefaultServices = function() {
         me.jQuery = $;
+        me.$ = me.jQuery;
         me.configureService("jQuery", function() { return me.jQuery; });
         me.configureService("Logger", function() { return JsHelferlein.LoggerService(me); });
         me.configureService("DOMHelper", function() { return JsHelferlein.DOMHelperService(me); });

@@ -30,9 +30,9 @@ JsHelferlein.SpeechSynthHelperService = function(appBase, config) {
     me.initSrcFromOpener = function() {
         // Text vom Opener holen
         if (opener && opener.targetElement) {
-            document.getElementById(me.config.finalTextareaId).value = $(opener.targetElement).text();
+            document.getElementById(me.config.finalTextareaId).value = me.$(opener.targetElement).text();
             if (! document.getElementById(me.config.finalTextareaId).value) {
-                document.getElementById(me.config.finalTextareaId).value = $(opener.targetElement).val();
+                document.getElementById(me.config.finalTextareaId).value = me.$(opener.targetElement).val();
             }
         }
     };

@@ -57,7 +57,7 @@ JsHelferlein.UIToggler = function(appBase) {
         }
    
         // run the effect
-        $( id ).toggle( selectedEffect, options, 500 );
+        me.$( id ).toggle( selectedEffect, options, 500 );
     };
     
     /**
@@ -77,21 +77,21 @@ JsHelferlein.UIToggler = function(appBase) {
         var classWrap = "pre-wrap";
         var flgClassNoWrap = "flg-pre-nowrap";
         var flgClassWrap = "flg-pre-wrap";
-        var codeChilden = $(element).find("code");
+        var codeChilden = me.$(element).find("code");
         
         // remove/add class if element no has class
-        if ($(element).hasClass(flgClassNoWrap)) {
-            $(element).removeClass(flgClassNoWrap).addClass(flgClassWrap);
+        if (me.$(element).hasClass(flgClassNoWrap)) {
+            me.$(element).removeClass(flgClassNoWrap).addClass(flgClassWrap);
             console.log("togglePreWrap for id:" + element + " set " + classWrap);
             // wrap code-blocks too
-            $(codeChilden).removeClass(classNoWrap).addClass(classWrap);
-            $(codeChilden).parent().removeClass(classNoWrap).addClass(classWrap);
+            me.$(codeChilden).removeClass(classNoWrap).addClass(classWrap);
+            me.$(codeChilden).parent().removeClass(classNoWrap).addClass(classWrap);
         } else {
-            $(element).removeClass(flgClassWrap).addClass(flgClassNoWrap);
+            me.$(element).removeClass(flgClassWrap).addClass(flgClassNoWrap);
             console.log("togglePreWrap for id:" + element + " set " + classNoWrap);
             // wrap code-blocks too
-            $(codeChilden).removeClass(classWrap).addClass(classNoWrap);
-            $(codeChilden).parent().removeClass(classNoWrap).addClass(classWrap);
+            me.$(codeChilden).removeClass(classWrap).addClass(classNoWrap);
+            me.$(codeChilden).parent().removeClass(classNoWrap).addClass(classWrap);
        }
     };
     
@@ -122,7 +122,7 @@ JsHelferlein.UIToggler = function(appBase) {
         }
    
         // run the effect
-        $( id ).toggle( selectedEffect, options, 500 );
+        me.$( id ).toggle( selectedEffect, options, 500 );
     };
    
     me._init();

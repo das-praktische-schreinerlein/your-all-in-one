@@ -65,15 +65,15 @@ Yaio.EditorService = function(appBase) {
         console.log("yaioResetNodeEditor: show tree, hide editor");
         
         // show full tree
-        $("#containerYaioTree").css("width", "100%");
+        me.$("#containerYaioTree").css("width", "100%");
         
         // hide editor-container
-        $("#containerYaioEditor").css("width", "100%");
-        $("#containerYaioEditor").css("display", "none");
+        me.$("#containerYaioEditor").css("width", "100%");
+        me.$("#containerYaioEditor").css("display", "none");
         
         // hide editor-box
-        $("#containerBoxYaioEditor").css("width", "100%");
-        $("#containerBoxYaioEditor").css("display", "none");
+        me.$("#containerBoxYaioEditor").css("width", "100%");
+        me.$("#containerBoxYaioEditor").css("display", "none");
         
         // hide forms
         me.yaioHideAllNodeEditorForms();
@@ -96,12 +96,12 @@ Yaio.EditorService = function(appBase) {
         // reset editor
         console.log("yaioHideAllNodeEditorForms: hide forms");
         // hide forms
-        $("#containerFormYaioEditorCreate").css("display", "none");
-        $("#containerFormYaioEditorTaskNode").css("display", "none");
-        $("#containerFormYaioEditorEventNode").css("display", "none");
-        $("#containerFormYaioEditorInfoNode").css("display", "none");
-        $("#containerFormYaioEditorUrlResNode").css("display", "none");
-        $("#containerFormYaioEditorSymLinkNode").css("display", "none");
+        me.$("#containerFormYaioEditorCreate").css("display", "none");
+        me.$("#containerFormYaioEditorTaskNode").css("display", "none");
+        me.$("#containerFormYaioEditorEventNode").css("display", "none");
+        me.$("#containerFormYaioEditorInfoNode").css("display", "none");
+        me.$("#containerFormYaioEditorUrlResNode").css("display", "none");
+        me.$("#containerFormYaioEditorSymLinkNode").css("display", "none");
     };
     
     /**
@@ -175,21 +175,21 @@ Yaio.EditorService = function(appBase) {
         
         // set depending on the fieldtype
         if (field.type === "hidden") {
-            $(fieldNameId).val(value).trigger('input').triggerHandler("change");
+            me.$(fieldNameId).val(value).trigger('input').triggerHandler("change");
         } else if (field.type === "select") {
-            $(fieldNameId).val(value).trigger('select').triggerHandler("change");
+            me.$(fieldNameId).val(value).trigger('select').triggerHandler("change");
         } else if (field.type === "checkbox") {
             if (value) {
-                $(fieldNameId).prop("checked", true);
+                me.$(fieldNameId).prop("checked", true);
             } else {
-                $(fieldNameId).prop("checked", false);
+                me.$(fieldNameId).prop("checked", false);
             }
-            $(fieldNameId).trigger('input').triggerHandler("change");
+            me.$(fieldNameId).trigger('input').triggerHandler("change");
         } else if (field.type === "textarea") {
-            $(fieldNameId).val(value).trigger('select').triggerHandler("change");
+            me.$(fieldNameId).val(value).trigger('select').triggerHandler("change");
         } else {
             // input
-            $(fieldNameId).val(value).trigger('input');
+            me.$(fieldNameId).val(value).trigger('input');
         }
         console.log("yaioSetFormField map nodefield:" + fieldName 
                 + " set:" + fieldNameId + "=" + value);
@@ -222,7 +222,7 @@ Yaio.EditorService = function(appBase) {
             return null;
         }
         // load node
-        var tree = $("#tree").fancytree("getTree");
+        var tree = me.$("#tree").fancytree("getTree");
         if (!tree) {
             // tree not found
             me.appBase.get('YaioBase').logError("error yaioOpenNodeEditor: cant load tree for node:" + nodeId, false);
@@ -354,19 +354,19 @@ Yaio.EditorService = function(appBase) {
         }
         
         // show editor
-        var width = $("#box_data").width();
+        var width = me.$("#box_data").width();
         console.log("yaioOpenNodeEditor show editor: " + formSuffix 
                 + " for node:" + nodeId);
     
         // set width
-        $("#containerYaioEditor").css("width", "900px");
-        $("#containerBoxYaioEditor").css("width", "900px");
-        $("#containerYaioTree").css("width", (width - $("#containerYaioEditor").width() - 30) + "px");
+        me.$("#containerYaioEditor").css("width", "900px");
+        me.$("#containerBoxYaioEditor").css("width", "900px");
+        me.$("#containerYaioTree").css("width", (width - me.$("#containerYaioEditor").width() - 30) + "px");
         
         // display editor and form for the formSuffix
-        $("#containerBoxYaioEditor").css("display", "block");
-        $("#containerFormYaioEditor" + formSuffix).css("display", "block");
-        //$("#containerYaioEditor").css("display", "block");
+        me.$("#containerBoxYaioEditor").css("display", "block");
+        me.$("#containerFormYaioEditor" + formSuffix).css("display", "block");
+        //me.$("#containerYaioEditor").css("display", "block");
         me.appBase.get('UIToggler').toggleElement("#containerYaioEditor");
     
         // create Elements if not exists
@@ -437,10 +437,10 @@ Yaio.EditorService = function(appBase) {
      */
     me.callUpdateTriggerForElement = function(element) {
         if (element != null) {
-            $(element).trigger('input').triggerHandler("change");
-            $(element).trigger('select').triggerHandler("change");
-            $(element).trigger('input');
-            $(element).focus();
+            me.$(element).trigger('input').triggerHandler("change");
+            me.$(element).trigger('select').triggerHandler("change");
+            me.$(element).trigger('input');
+            me.$(element).focus();
         }
     };
     

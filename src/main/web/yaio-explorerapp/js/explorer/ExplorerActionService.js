@@ -40,7 +40,7 @@ Yaio.ExplorerActionService = function(appBase) {
     
     me.openNodeHierarchy = function(treeId, lstIdsHierarchy) {
         // check for tree
-        var tree = $(treeId).fancytree("getTree");
+        var tree = me.$(treeId).fancytree("getTree");
         if (! tree) {
             me.appBase.get('YaioBase').logError("openHierarchy: error tree:'" + treeId + "' not found.", false);
             return;
@@ -84,7 +84,7 @@ Yaio.ExplorerActionService = function(appBase) {
     
     me.openNodeHierarchyForNodeId = function(treeId, activeNodeId) {
         // check for tree
-        var tree = $(treeId).fancytree("getTree");
+        var tree = me.$(treeId).fancytree("getTree");
         if (! tree) {
             me.appBase.get('YaioBase').logError("openNodeHierarchyForNodeId: error tree:'" + treeId + "' not found.", false);
             return;
@@ -111,7 +111,7 @@ Yaio.ExplorerActionService = function(appBase) {
     
     
     me.yaioOpenSubNodesForTree = function(treeId, level) {
-        var tree = $(treeId).fancytree("getTree");
+        var tree = me.$(treeId).fancytree("getTree");
         if (! tree) {
             me.appBase.get('YaioBase').logError("yaioOpenSubNodesForTree: error tree:'" + treeId + "' not found.", false);
             return;
@@ -150,7 +150,7 @@ Yaio.ExplorerActionService = function(appBase) {
             console.log("remove node:" + nodeId);
             // check for tree
             var treeId = "#tree";
-            var tree = $(treeId).fancytree("getTree");
+            var tree = me.$(treeId).fancytree("getTree");
             if (! tree) {
                 me.appBase.get('YaioBase').logError("yaioRemoveNode: error tree:'" + treeId + "' not found.", false);
                 return;
@@ -192,7 +192,7 @@ Yaio.ExplorerActionService = function(appBase) {
             return null;
         }
         // load node
-        var tree = $("#tree").fancytree("getTree");
+        var tree = me.$("#tree").fancytree("getTree");
         if (!tree) {
             // tree not found
             me.appBase.get('YaioBase').logError("error openJiraWindow: cant load tree for node:" + nodeId, false);
@@ -219,15 +219,15 @@ Yaio.ExplorerActionService = function(appBase) {
         nodeDesc = me.appBase.get('YaioBase').htmlEscapeText(nodeDesc);
         
         // set clipboard-content
-        $( "#clipboard-content" ).html(nodeDesc);
+        me.$( "#clipboard-content" ).html(nodeDesc);
         
         // show message
-        $( "#clipboard-box" ).dialog({
+        me.$( "#clipboard-box" ).dialog({
             modal: true,
             width: "700px",
             buttons: {
               Ok: function() {
-                $( this ).dialog( "close" );
+                me.$( this ).dialog( "close" );
               }
             }
         });    
@@ -254,15 +254,15 @@ Yaio.ExplorerActionService = function(appBase) {
         ganttSrc = me.appBase.get('YaioBase').htmlEscapeText(ganttSrc);
         
         // set clipboard-content
-        $( "#clipboard-content" ).html(checkListSrc + "\n\n" +  ganttSrc);
+        me.$( "#clipboard-content" ).html(checkListSrc + "\n\n" +  ganttSrc);
         
         // show message
-        $( "#clipboard-box" ).dialog({
+        me.$( "#clipboard-box" ).dialog({
             modal: true,
             width: "700px",
             buttons: {
               Ok: function() {
-                $( this ).dialog( "close" );
+                me.$( this ).dialog( "close" );
               }
             }
         });    
@@ -310,15 +310,15 @@ Yaio.ExplorerActionService = function(appBase) {
         content = me.appBase.get('YaioBase').htmlEscapeText(content);
     
         // set clipboard-content
-        $( "#clipboard-content" ).html(content);
+        me.$( "#clipboard-content" ).html(content);
         
         // show message
-        $( "#clipboard-box" ).dialog({
+        me.$( "#clipboard-box" ).dialog({
             modal: true,
             width: "700px",
             buttons: {
               Ok: function() {
-                $( this ).dialog( "close" );
+                me.$( this ).dialog( "close" );
               }
             }
         });    
@@ -338,17 +338,17 @@ Yaio.ExplorerActionService = function(appBase) {
      * @param id - sysUID of the node 
      */
    me.toggleNodeDescContainer = function(id) {
-        $("#detail_desc_" + id).slideToggle(1000,function() {
+        me.$("#detail_desc_" + id).slideToggle(1000,function() {
             // show/hide toggler
-            if ($("#detail_desc_" + id).css("display") == "block") {
+            if (me.$("#detail_desc_" + id).css("display") == "block") {
                 // desc is now shown
-                $("#toggler_desc_" + id).addClass('toggler_show').removeClass('toggler_hidden');
+                me.$("#toggler_desc_" + id).addClass('toggler_show').removeClass('toggler_hidden');
    
                 // check if syntaxhighlighting to do
-                var descBlock = $("#container_content_desc_" + id);
-                if ($(descBlock).hasClass('syntaxhighlighting-open')) {
+                var descBlock = me.$("#container_content_desc_" + id);
+                if (me.$(descBlock).hasClass('syntaxhighlighting-open')) {
                     var flgDoMermaid = false;
-                    console.log("toggleNodeDescContainer highlight for descBlock: " + $(descBlock).attr('id'));
+                    console.log("toggleNodeDescContainer highlight for descBlock: " + me.$(descBlock).attr('id'));
                     flgDoMermaid = me.appBase.get('YaioFormatter').formatDescBlock(descBlock) || flgDoMermaid;
                     console.log("toggleNodeDescContainer resulting flgDoMermaid: " + flgDoMermaid);
                     
@@ -359,21 +359,21 @@ Yaio.ExplorerActionService = function(appBase) {
                 }
             } else {
                 // desc is now hidden
-                $("#toggler_desc_" + id).addClass('toggler_hidden').removeClass('toggler_show');
+                me.$("#toggler_desc_" + id).addClass('toggler_hidden').removeClass('toggler_show');
             }
         });
     };
    
     me.toggleAllNodeDescContainer = function() {
-        if ($("#toggler_desc_all").hasClass('toggler_hidden')) {
+        if (me.$("#toggler_desc_all").hasClass('toggler_hidden')) {
             // show all desc
-            $("div.field_nodeDesc").slideDown(1000);
-            $("div.fieldtype_descToggler > a").addClass('toggler_show').removeClass('toggler_hidden');
+            me.$("div.field_nodeDesc").slideDown(1000);
+            me.$("div.fieldtype_descToggler > a").addClass('toggler_show').removeClass('toggler_hidden');
    
             // check if syntaxhighlighting to do
             var flgDoMermaid = false;
-            $("div.syntaxhighlighting-open").each(function (i, descBlock) {
-                console.log("toggleAllNodeDescContainer highlight for descBlock: " + $(descBlock).attr('id'));
+            me.$("div.syntaxhighlighting-open").each(function (i, descBlock) {
+                console.log("toggleAllNodeDescContainer highlight for descBlock: " + me.$(descBlock).attr('id'));
                 flgDoMermaid = me.appBase.get('YaioFormatter').formatDescBlock(descBlock) || flgDoMermaid;
             });
             console.log("toggleAllNodeDescContainer resulting flgDoMermaid: " + flgDoMermaid);
@@ -384,8 +384,8 @@ Yaio.ExplorerActionService = function(appBase) {
             }
         } else {
             // hide all desc
-            $("div.field_nodeDesc").slideUp(1000);
-            $("div.fieldtype_descToggler > a").addClass('toggler_hidden').removeClass('toggler_show');
+            me.$("div.field_nodeDesc").slideUp(1000);
+            me.$("div.fieldtype_descToggler > a").addClass('toggler_hidden').removeClass('toggler_show');
         }
     };
     
@@ -403,27 +403,27 @@ Yaio.ExplorerActionService = function(appBase) {
      * @param id - sysUID of the node 
     */
     me.toggleNodeSysContainer = function(id) {
-        $("#detail_sys_" + id).slideToggle(1000,function() {
+        me.$("#detail_sys_" + id).slideToggle(1000,function() {
             // show/hide toggler
-            if ($("#detail_sys_" + id).css("display") == "block") {
+            if (me.$("#detail_sys_" + id).css("display") == "block") {
                 // desc is now shown
-                $("#toggler_sys_" + id).addClass('toggler_show').removeClass('toggler_hidden');
+                me.$("#toggler_sys_" + id).addClass('toggler_show').removeClass('toggler_hidden');
             } else {
                 // desc is now hidden
-                $("#toggler_sys_" + id).addClass('toggler_hidden').removeClass('toggler_show');
+                me.$("#toggler_sys_" + id).addClass('toggler_hidden').removeClass('toggler_show');
             }
         });
     };
   
     me.toggleAllNodeSysContainer = function() {
-        if ($("#toggler_sys_all").hasClass('toggler_hidden')) {
+        if (me.$("#toggler_sys_all").hasClass('toggler_hidden')) {
             // show all sys
-            $("div.field_nodeSys").slideDown(1000);
-            $("div.fieldtype_sysToggler > a").addClass('toggler_show').removeClass('toggler_hidden');
+            me.$("div.field_nodeSys").slideDown(1000);
+            me.$("div.fieldtype_sysToggler > a").addClass('toggler_show').removeClass('toggler_hidden');
         }  else {
             // hide all sys
-            $("div.field_nodeSys").slideUp(1000);
-            $("div.fieldtype_sysToggler > a").addClass('toggler_hidden').removeClass('toggler_show');
+            me.$("div.field_nodeSys").slideUp(1000);
+            me.$("div.fieldtype_sysToggler > a").addClass('toggler_hidden').removeClass('toggler_show');
         }
     };
   

@@ -265,8 +265,8 @@ Yaio.FormatterService = function(appBase) {
      * @param block - jquery-html-element with the content to convert to mindmap 
      */
     me.formatYaioMindmap = function(block) {
-        var content = $(block).html();
-        var blockId = $(block).attr('id');
+        var content = me.$(block).html();
+        var blockId = me.$(block).attr('id');
         var url = "/converters/mindmap?source=" + encodeURIComponent(content);
         console.log("formatYaioMindmap " + blockId + " url:" + url);
         
@@ -406,21 +406,21 @@ Yaio.FormatterService = function(appBase) {
      */
     me.formatDescBlock = function(descBlock) {
         var flgDoMermaid = false;
-        var descBlockId = $(descBlock).attr('id');
+        var descBlockId = me.$(descBlock).attr('id');
     
         console.log("formatDescBlock highlight for descBlock: " + descBlockId);
         // remove trigger-flag
-        $(descBlock).removeClass('syntaxhighlighting-open');
+        me.$(descBlock).removeClass('syntaxhighlighting-open');
         
         // higlight code-blocks
-        $("#" + descBlockId + " code").each(function(i, block) {
-            var blockId = $(block).attr('id');
-            if ($(block).hasClass("lang-mermaid") || $(block).hasClass("mermaid")) {
+        me.$("#" + descBlockId + " code").each(function(i, block) {
+            var blockId = me.$(block).attr('id');
+            if (me.$(block).hasClass("lang-mermaid") || me.$(block).hasClass("mermaid")) {
                 // mermaid: no highlight
                 console.log("formatDescBlock mermaid descBlock: " + descBlockId + " block: " + blockId);
                 me.addServicesToDiagrammBlock(block, 'mermaid',
                         "<a href='' id='linkdownload" + blockId + "'  target='_blank'"
-                        +   " onclick=\"javascript: yaioAppBase.get('YaioBase').downloadAsFile($('#linkdownload" + blockId + "'), $('#" + blockId + "').html(), 'diagram.svg', 'image/svg+xml', 'utf-8'); return true;\">"
+                        +   " onclick=\"javascript: yaioAppBase.get('YaioBase').downloadAsFile(yaioAppBase.$('#linkdownload" + blockId + "'), yaioAppBase.$('#" + blockId + "').html(), 'diagram.svg', 'image/svg+xml', 'utf-8'); return true;\">"
                         + "Download</a>");
                 flgDoMermaid = true;
             } else {
@@ -431,21 +431,21 @@ Yaio.FormatterService = function(appBase) {
         });
     
         // mermaid/mindmap div-blocks
-        $("#" + descBlockId + " div").each(function(i, block) {
-            var blockId = $(block).attr('id');
-            if (   ($(block).hasClass("lang-mermaid") || $(block).hasClass("mermaid")) 
-                && ! $(block).attr("data-processed")) {
+        me.$("#" + descBlockId + " div").each(function(i, block) {
+            var blockId = me.$(block).attr('id');
+            if (   (me.$(block).hasClass("lang-mermaid") || me.$(block).hasClass("mermaid")) 
+                && ! me.$(block).attr("data-processed")) {
                 // mermaid: no highlight
                 console.log("formatDescBlock mermaid descBlock: " + descBlockId + " block: " + blockId);
                 me.addServicesToDiagrammBlock(block, 'mermaid',
                         "<a href='' id='linkdownload" + blockId + "'  target='_blank'"
-                        +   " onclick=\"javascript: yaioAppBase.get('YaioBase').downloadAsFile($('#linkdownload" + blockId + "'), $('#" + blockId + "').html(), 'diagram.svg', 'image/svg+xml', 'utf-8'); return true;\">"
+                        +   " onclick=\"javascript: yaioAppBase.get('YaioBase').downloadAsFile(yaioAppBase.$('#linkdownload" + blockId + "'), yaioAppBase.$('#" + blockId + "').html(), 'diagram.svg', 'image/svg+xml', 'utf-8'); return true;\">"
                         + "Download</a>");
                 flgDoMermaid = true;
-            } else if ($(block).hasClass("lang-yaiomindmap") || $(block).hasClass("yaiomindmap")) {
+            } else if (me.$(block).hasClass("lang-yaiomindmap") || me.$(block).hasClass("yaiomindmap")) {
                 // mindmap: no highlight
                 console.log("formatDescBlock yaiomindmap for descBlock: " + descBlockId + " block: " + blockId);
-                var content = $(block).html();
+                var content = me.$(block).html();
                 var url = "/converters/mindmap?source=" + encodeURIComponent(content);
                 me.addServicesToDiagrammBlock(block, 'yaiomindmap', "<a href='" + url + "' id='download" + blockId + "' target='_blank'>Download</a>");
                 me.formatYaioMindmap(block);
@@ -472,7 +472,7 @@ Yaio.FormatterService = function(appBase) {
      * @param descBlock - id-filter to identify the block to format
      */
     me.highlightCheckList = function(descBlock) {
-        var descBlockId = $(descBlock).attr('id');
+        var descBlockId = me.$(descBlock).attr('id');
         console.log("highlightCheckList highlight for descBlock: " + descBlockId);
     
         // tests
@@ -499,7 +499,7 @@ Yaio.FormatterService = function(appBase) {
      * @param style      - style to add to new span for matcher found
      */
     me.highlightCheckListForMatchers = function(descBlock, matchers, styleClass, style) {
-        var descBlockId = $(descBlock).attr('id');
+        var descBlockId = me.$(descBlock).attr('id');
         console.log("highlightCheckListForMatchers matchers '" + matchers + "' for descBlock: " + descBlockId);
         for (var idx in matchers) {
             me.highlightCheckListForMatcher(descBlock, "[" + matchers[idx] + "]", styleClass, style);
@@ -523,11 +523,11 @@ Yaio.FormatterService = function(appBase) {
      * @param style      - style to add to new span for matcher found
      */
     me.highlightCheckListForMatcher = function(descBlock, matcherStr, styleClass, style) {
-        var descBlockId = $(descBlock).attr('id');
+        var descBlockId = me.$(descBlock).attr('id');
         console.log("highlightCheckListForMatcher matcherStr '" + matcherStr + "' for descBlock: " + descBlockId);
-        $("#" + descBlockId + " li:contains('" + matcherStr + "'),h1:contains('" + matcherStr + "'),h2:contains('" + matcherStr + "')").each(function(index, value) {
+        me.$("#" + descBlockId + " li:contains('" + matcherStr + "'),h1:contains('" + matcherStr + "'),h2:contains('" + matcherStr + "')").each(function(index, value) {
             var regEx = RegExp(me.appBase.get('YaioBase').escapeRegExp(matcherStr), 'gi');
-            findAndReplaceDOMText($(value).get(0), {
+            findAndReplaceDOMText(me.$(value).get(0), {
                 find: regEx,
                 replace: function(portion) {
                     var el = document.createElement('span');
@@ -560,21 +560,21 @@ Yaio.FormatterService = function(appBase) {
      */
     me.convertExplorerLinesAsCheckList = function() {
         // get title
-        var title = $("#masterTr td.fieldtype_name").text();
+        var title = me.$("#masterTr td.fieldtype_name").text();
         var now = me.appBase.get('YaioBase').formatGermanDateTime((new Date()).getTime());
     
         var checkList = "# Checklist: " + title + " (Stand: " + now + ")\n\n";
         
         // iterate all nodelines
-        $("table.fancytree-ext-table tr").each(function(i, line) {
+        me.$("table.fancytree-ext-table tr").each(function(i, line) {
             // extract data
-            var titleSpan = $(line).find("span.fancytree-title2");
-            var stateSpan = $(line).find("span.fancytree-title-state");
-            var numberSpan = $(line).find("div.field_metanummer");
-            var levelSpan = $(line).find("span.fancytree-node");
-            var istStandDiv = $(line).find("div.fieldtype_stand.field_istChildrenSumStand");
-            var istAufwandDiv = $(line).find("div.fieldtype_aufwand.field_istChildrenSumAufwand");
-            var planAufwandDiv = $(line).find("div.fieldtype_aufwand.field_planChildrenSumAufwand");
+            var titleSpan = me.$(line).find("span.fancytree-title2");
+            var stateSpan = me.$(line).find("span.fancytree-title-state");
+            var numberSpan = me.$(line).find("div.field_metanummer");
+            var levelSpan = me.$(line).find("span.fancytree-node");
+            var istStandDiv = me.$(line).find("div.fieldtype_stand.field_istChildrenSumStand");
+            var istAufwandDiv = me.$(line).find("div.fieldtype_aufwand.field_istChildrenSumAufwand");
+            var planAufwandDiv = me.$(line).find("div.fieldtype_aufwand.field_planChildrenSumAufwand");
             
             // extract content
             var level = 0;
@@ -584,35 +584,35 @@ Yaio.FormatterService = function(appBase) {
             var istStand = "0%";
             var istAufwand = "0h";
             var planAufwand = null;
-            if ($(levelSpan).size() > 0) {
+            if (me.$(levelSpan).size() > 0) {
                 // extract level from intend
-                var intend = $(levelSpan).css("margin-left").replace("px", "");
+                var intend = me.$(levelSpan).css("margin-left").replace("px", "");
                 level = parseInt(intend, 10) / 20;
             }
-            if ($(stateSpan).size() > 0) {
+            if (me.$(stateSpan).size() > 0) {
                 // extract state from style
-                var idx = me.extractCheckListStatefromStateSpan($(stateSpan));
+                var idx = me.extractCheckListStatefromStateSpan(me.$(stateSpan));
                 if (idx) {
                     state = idx;
                     state = state.replace("checklist-state-", "");
                     state = state.replace("checklist-test-", "");
                 }
             }
-            if ($(titleSpan).size() > 0) {
-                title = $(titleSpan).text();
+            if (me.$(titleSpan).size() > 0) {
+                title = me.$(titleSpan).text();
             }
-            if ($(numberSpan).size() > 0) {
-                number = $(numberSpan).text();
+            if (me.$(numberSpan).size() > 0) {
+                number = me.$(numberSpan).text();
             }
             
-            if ($(istAufwandDiv).size() > 0) {
-                istAufwand = $(istAufwandDiv).text();
+            if (me.$(istAufwandDiv).size() > 0) {
+                istAufwand = me.$(istAufwandDiv).text();
             }
-            if ($(planAufwandDiv).size() > 0) {
-                planAufwand = $(planAufwandDiv).text();
+            if (me.$(planAufwandDiv).size() > 0) {
+                planAufwand = me.$(planAufwandDiv).text();
             }
-            if ($(istStandDiv).size() > 0) {
-                istStand = $(istStandDiv).text();
+            if (me.$(istStandDiv).size() > 0) {
+                istStand = me.$(istStandDiv).text();
             }
     
             var stand = istStand.trim() + " (" + istAufwand.trim();
@@ -666,7 +666,7 @@ Yaio.FormatterService = function(appBase) {
      */
     me.convertExplorerLinesAsGanttMarkdown = function() {
         // get title
-        var title = $("#masterTr td.fieldtype_name").text();
+        var title = me.$("#masterTr td.fieldtype_name").text();
         var now = me.appBase.get('YaioBase').formatGermanDateTime((new Date()).getTime());
     
         var ganttMarkdown = "# Gantt: " + title + " (Stand: " + now + ")\n\n"
@@ -679,21 +679,21 @@ Yaio.FormatterService = function(appBase) {
         var ganttMarkdownIst  = "";
         
         // iterate all nodelines
-        $("table.fancytree-ext-table tr").each(function(i, line) {
+        me.$("table.fancytree-ext-table tr").each(function(i, line) {
             // extract data
-            var titleSpan = $(line).find("span.fancytree-title2");
-            var numberSpan = $(line).find("div.field_metanummer");
-            var startEndPlanDiv = $(line).find("div.fieldtype_fromto.field_planChildrenSum");
-            var startEndIstDiv = $(line).find("div.fieldtype_fromto.field_istChildrenSum");
+            var titleSpan = me.$(line).find("span.fancytree-title2");
+            var numberSpan = me.$(line).find("div.field_metanummer");
+            var startEndPlanDiv = me.$(line).find("div.fieldtype_fromto.field_planChildrenSum");
+            var startEndIstDiv = me.$(line).find("div.fieldtype_fromto.field_istChildrenSum");
             
             // extract content
             var title = null;
             var number = null;
-            if ($(titleSpan).size() > 0) {
-                title = $(titleSpan).text();
+            if (me.$(titleSpan).size() > 0) {
+                title = me.$(titleSpan).text();
             }
-            if ($(numberSpan).size() > 0) {
-                number = $(numberSpan).text();
+            if (me.$(numberSpan).size() > 0) {
+                number = me.$(numberSpan).text();
             }
             ganttMarkdownPlan += me.generateGanttMarkdownLineFromBlock(title, number, startEndPlanDiv);
             ganttMarkdownIst += me.generateGanttMarkdownLineFromBlock(title, number, startEndIstDiv);
@@ -725,9 +725,9 @@ Yaio.FormatterService = function(appBase) {
      * @return {String}      mermaid-gantt-markdown-line
      */
     me.generateGanttMarkdownLineFromBlock = function(title, number, selector) {
-        if ($(selector).size() > 0) {
+        if (me.$(selector).size() > 0) {
             // extract dates
-            var dates = $(selector).html().replace(/\&nbsp\;/g, ' ').split("-");
+            var dates = me.$(selector).html().replace(/\&nbsp\;/g, ' ').split("-");
             if (dates.length != 2) {
                 return "";
             }
@@ -744,14 +744,14 @@ Yaio.FormatterService = function(appBase) {
     };
     
     me.addServicesToDiagrammBlock = function(block, type, downloadLink) {
-        var content = $(block).html();
-        var blockId = $(block).attr('id');
+        var content = me.$(block).html();
+        var blockId = me.$(block).attr('id');
     
         // add source
-        $(block).before("<div class='" + type + "-source' id='fallback" + blockId + "'>"
+        me.$(block).before("<div class='" + type + "-source' id='fallback" + blockId + "'>"
                 + "<pre>" + content + "</pre></div>");
         // add service-links
-        $("#fallback" + blockId).before(
+        me.$("#fallback" + blockId).before(
                 "<div class='services" + type + "' id='services" + blockId + "'><div>"
                 + downloadLink
                 + "<a href='#' style='display: none;' id='toggleorig" + blockId + "' onclick=\"yaioAppBase.get('YaioBase').toggleWithLinks('#toggleorig" + blockId + "', '#togglesource" + blockId + "', '#" + blockId + "', '#fallback" + blockId + "'); return false;\" target='_blank'>Diagramm</a>"
@@ -764,8 +764,8 @@ Yaio.FormatterService = function(appBase) {
         // add TOC
         settings = settings || { toc: {}};
         settings.toc = settings.toc || { };
-        settings.toc.dest = $(tocElement);
-        $.fn.toc($(srcElement), settings);
+        settings.toc.dest = me.$(tocElement);
+        me.$.fn.toc(me.$(srcElement), settings);
     };
     
     me._init();

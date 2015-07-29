@@ -66,10 +66,10 @@ Yaio.NodeGanttRenderService = function(appBase) {
     
         // get divs
         if (! $divLine) {
-            $divLine = $("#gantt_" + type + "_container_" + basenode.sysUID);
+            $divLine = me.$("#gantt_" + type + "_container_" + basenode.sysUID);
         }
-        var $divLabel = $($divLine).find("#gantt_" + type + "_aufwand_" + basenode.sysUID);
-        var $div = $($divLine).find("#gantt_" + type + "_bar_" + basenode.sysUID);
+        var $divLabel = me.$($divLine).find("#gantt_" + type + "_aufwand_" + basenode.sysUID);
+        var $div = me.$($divLine).find("#gantt_" + type + "_bar_" + basenode.sysUID);
         
         // reset
         $divLabel.html("");
@@ -79,8 +79,8 @@ Yaio.NodeGanttRenderService = function(appBase) {
         $div.attr("data-rangeaufwand", 0);
     
         // set range
-        var dateRangeStartStr = $("#inputGanttRangeStart").val();
-        var dateRangeEndStr = $("#inputGanttRangeEnde").val();
+        var dateRangeStartStr = me.$("#inputGanttRangeStart").val();
+        var dateRangeEndStr = me.$("#inputGanttRangeEnde").val();
         if (dateRangeEndStr == null || dateRangeEndStr == null) {
             console.error("fillGanttBlock range is not set correctly: " 
                     + dateRangeStartStr + "-" + dateRangeEndStr + " " + msg);
@@ -208,18 +208,18 @@ Yaio.NodeGanttRenderService = function(appBase) {
         var msg = "ganttblock for node:" + basenode.sysUID;
     
         // create line
-        var $divLine = $("<div id='gantt_" + type + "_container_" + basenode.sysUID + "'" +
+        var $divLine = me.$("<div id='gantt_" + type + "_container_" + basenode.sysUID + "'" +
                 " class ='gantt_container gantt_" + type + "_container'" +
                 " lang='tech' data-tooltip='tooltip.hint.Gantt'/>");
         
         // create aufwand
-        var $divLabel = $("<div id='gantt_" + type + "_aufwand_" + basenode.sysUID + "'" +
+        var $divLabel = me.$("<div id='gantt_" + type + "_aufwand_" + basenode.sysUID + "'" +
                 " class ='gantt_aufwand ganttblock_" + type + "_aufwand' />");
         $divLabel.addClass(addStyle);
         $divLine.append($divLabel);
         
         // create gantt
-        var $div = $("<div id='gantt_" +type + "_bar_" + basenode.sysUID + "'" +
+        var $div = me.$("<div id='gantt_" +type + "_bar_" + basenode.sysUID + "'" +
                 " class ='gantt_bar gantt_" +type + "_bar' />");
         $div.addClass(addStyle);
         $divLine.append($div);
@@ -256,8 +256,8 @@ Yaio.NodeGanttRenderService = function(appBase) {
         console.log("renderGanttBlock START: " + msg);
     
         // current ganttblock
-        var $table = $("<div class='container_gantt_table' />");
-        var $row = $("<div class='container_gantt_row'/>");
+        var $table = me.$("<div class='container_gantt_table' />");
+        var $row = me.$("<div class='container_gantt_row'/>");
         $table.append($row);
         
         if (basenode.className == "TaskNode" || basenode.className == "EventNode") {
@@ -309,8 +309,8 @@ Yaio.NodeGanttRenderService = function(appBase) {
         }, 400);
         // set it to none: force
         setTimeout(function(){
-            $("#tabTogglerGantt").css("display", "none");
-            $("td.block_nodedata, th.block_nodedata").css("display", "none");
+            me.$("#tabTogglerGantt").css("display", "none");
+            me.$("td.block_nodedata, th.block_nodedata").css("display", "none");
         }, 400);
     };
     
@@ -337,17 +337,17 @@ Yaio.NodeGanttRenderService = function(appBase) {
         if (flgMeOnly) {
             console.debug("yaioActivateGanttBlock: activate gantt - only own data for " + node.key);
             // I'm expanded: show only my own data
-            $("#gantt_istChildrenSum_container_" + node.key).css("display", "none");
-            $("#gantt_planChildrenSum_container_" + node.key).css("display", "none");
-            $("#gantt_ist_container_" + node.key).css("display", "block");
-            $("#gantt_plan_container_" + node.key).css("display", "block");
+            me.$("#gantt_istChildrenSum_container_" + node.key).css("display", "none");
+            me.$("#gantt_planChildrenSum_container_" + node.key).css("display", "none");
+            me.$("#gantt_ist_container_" + node.key).css("display", "block");
+            me.$("#gantt_plan_container_" + node.key).css("display", "block");
         } else {
             // I'm collapsed: show me and my childsum
             console.debug("yaioActivateGanttBlock: activate gantt - sum data of me+children for " + node.key);
-            $("#gantt_ist_container_" + node.key).css("display", "none");
-            $("#gantt_plan_container_" + node.key).css("display", "none");
-            $("#gantt_istChildrenSum_container_" + node.key).css("display", "block");
-            $("#gantt_planChildrenSum_container_" + node.key).css("display", "block");
+            me.$("#gantt_ist_container_" + node.key).css("display", "none");
+            me.$("#gantt_plan_container_" + node.key).css("display", "none");
+            me.$("#gantt_istChildrenSum_container_" + node.key).css("display", "block");
+            me.$("#gantt_planChildrenSum_container_" + node.key).css("display", "block");
         }
     
         // recalc gantt tree
@@ -368,9 +368,9 @@ Yaio.NodeGanttRenderService = function(appBase) {
      *     Gantt
      */
     me.yaioRecalcFancytreeGanttBlocks = function() {
-        if ($("#tree").length > 0) {
+        if (me.$("#tree").length > 0) {
             // tree exists
-            $("#tree").fancytree("getRootNode").visit(function(node){
+            me.$("#tree").fancytree("getRootNode").visit(function(node){
                 me.yaioRecalcGanttBlock(node.data.basenode);
             });
         }
@@ -415,7 +415,7 @@ Yaio.NodeGanttRenderService = function(appBase) {
      */
     me.yaioRecalcMasterGanttBlockFromTree = function() {
         // calc from children
-        var masterNodeId = $("#masterTr").attr('data-value');
+        var masterNodeId = me.$("#masterTr").attr('data-value');
         if (masterNodeId != undefined) {
             console.log("yaioRecalcMasterGanttBlockFromTree calc for masterNodeId:", masterNodeId);
             me.yaioRecalcMasterGanttBlockLine(masterNodeId, "plan");
@@ -449,7 +449,7 @@ Yaio.NodeGanttRenderService = function(appBase) {
     
         // init with aufwand of the masternode
         var masterBarId = "#gantt_" + praefix + "_bar_" + masterNodeId;
-        var $masterBar = $(masterBarId);
+        var $masterBar = me.$(masterBarId);
         if ($masterBar.length > 0) {
             sumRangeAufwand = parseFloat($masterBar.attr("data-rangeaufwand"));
             console.log("yaioRecalcMasterGanttBlock type=" + praefix + " found masterrangeaufwand :" + sumRangeAufwand + " for " + masterBarId);
@@ -459,27 +459,27 @@ Yaio.NodeGanttRenderService = function(appBase) {
         
         // check for tree
         var treeId = "#tree";
-        var tree = $(treeId).fancytree("getTree");
-        if ($(treeId).length <= 0 || !tree || tree == "undefined" ) {
+        var tree = me.$(treeId).fancytree("getTree");
+        if (me.$(treeId).length <= 0 || !tree || tree == "undefined" ) {
             me.appBase.get('YaioBase').logError("yaioRecalcMasterGanttBlock: error tree:'" + treeId + "' not found.", false);
             return;
         }
         
         // filter ganttblocks
         var filter = "div.gantt_" + praefix + "_bar, div.gantt_" + praefix + "ChildrenSum_bar";
-        var $ganttBars = $(filter).filter(function () { 
-            return $(this).parent().css('display') == 'block'; 
+        var $ganttBars = me.$(filter).filter(function () { 
+            return me.$(this).parent().css('display') == 'block'; 
         });
         console.log("yaioRecalcMasterGanttBlock type=" + praefix + " found:" + $ganttBars.length + " for filter:" + filter);
         if ($ganttBars.length > 0) {
-            $($ganttBars).each( function () {
+            me.$($ganttBars).each( function () {
                 // check if node is visible
                 var nodeId = this.id;
                 nodeId = nodeId.replace(/gantt_(.*)bar_/, "");
                 var treeNode = tree.getNodeByKey(nodeId);
                 if (treeNode && treeNode.isVisible()) {
                     // node is visible: calc
-                    var rangeAufwand = $(this).attr("data-rangeaufwand");
+                    var rangeAufwand = me.$(this).attr("data-rangeaufwand");
                     if (this.id.indexOf(masterNodeId) <= 0) {
                         console.log("yaioRecalcMasterGanttBlock type=" + praefix + " found rangeaufwand :" + rangeAufwand + " for " + this.id);
                         sumRangeAufwand += parseFloat(rangeAufwand);
@@ -500,9 +500,9 @@ Yaio.NodeGanttRenderService = function(appBase) {
     
         // update masterBlock
         var type = praefix + "ChildrenSum";
-        var $divLine = $("#gantt_" + type + "_container_" + masterNodeId);
-        var $divLabel = $($divLine).find("#gantt_" + type + "_aufwand_" + masterNodeId);
-        var $div = $($divLine).find("#gantt_" + type + "_bar_" + masterNodeId);
+        var $divLine = me.$("#gantt_" + type + "_container_" + masterNodeId);
+        var $divLabel = me.$($divLine).find("#gantt_" + type + "_aufwand_" + masterNodeId);
+        var $div = me.$($divLine).find("#gantt_" + type + "_bar_" + masterNodeId);
         $divLabel.html("");
         if (sumRangeAufwand > 0)  {
             console.log("yaioRecalcMasterGanttBlock type=" + praefix + " set gantt_aufwand_label with calced rangeaufwand :" + sumRangeAufwand + " for " + masterNodeId);

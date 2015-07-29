@@ -72,10 +72,10 @@ Yaio.NodeDataRenderService = function(appBase) {
         var colActions = 3;
         
         // get tdlist
-        var $tdList = $(node.tr).find(">td");
+        var $tdList = me.$(node.tr).find(">td");
     
         // add stateclasss to tr
-        $(node.tr).addClass("container_nodeline");
+        me.$(node.tr).addClass("container_nodeline");
         
         // add fields
         if (! preventActionsColum) {
@@ -140,12 +140,12 @@ Yaio.NodeDataRenderService = function(appBase) {
     
         // insert state before name-span
         var $nameEle = $tdList.eq(colName).find("span.fancytree-title");
-        var $div = $("<div style='disply: block-inline' />")
-            .append($("<span class='" + statestyle + " fancytree-title-state' lang='de' id='titleState" + basenode.sysUID + "'/>")
+        var $div = me.$("<div style='disply: block-inline' />")
+            .append(me.$("<span class='" + statestyle + " fancytree-title-state' lang='de' id='titleState" + basenode.sysUID + "'/>")
                         .html(basenode.state + " ")
                         )
             .append("&nbsp;")
-            .append($("<span class='fancytree-title2' id='title" + basenode.sysUID + "'>" 
+            .append(me.$("<span class='fancytree-title2' id='title" + basenode.sysUID + "'>" 
                     + me.appBase.get('YaioBase').htmlEscapeText(name) + "</span>"))
             ;
         $nameEle.html($div);
@@ -156,31 +156,31 @@ Yaio.NodeDataRenderService = function(appBase) {
         
         // add SysData
         // create sys row
-        var $row = $("<div class='togglecontainer field_nodeSys' id='detail_sys_" + basenode.sysUID + "' />");
+        var $row = me.$("<div class='togglecontainer field_nodeSys' id='detail_sys_" + basenode.sysUID + "' />");
         $nodeDataBlock.append($row);
         $row.append(
-                $("<div lang='tech' />").html("Stand: " + me.appBase.get('YaioBase').formatGermanDateTime(basenode.sysChangeDate))
+                me.$("<div lang='tech' />").html("Stand: " + me.appBase.get('YaioBase').formatGermanDateTime(basenode.sysChangeDate))
                         .addClass("container_field")
                         .addClass("fieldtype_basedata")
                         .addClass("fieldtype_sysChangeDate")
                         .addClass("field_sysChangeDate")
                         );
         $row.append(
-                $("<div lang='tech' />").html(" (V " + basenode.sysChangeCount + ")")
+                me.$("<div lang='tech' />").html(" (V " + basenode.sysChangeCount + ")")
                         .addClass("container_field")
                         .addClass("fieldtype_basedata")
                         .addClass("fieldtype_sysChangeCount")
                         .addClass("field_sysChangeCount")
                         );
         $row.append(
-                $("<div lang='tech' />").html("angelegt: " + me.appBase.get('YaioBase').formatGermanDateTime(basenode.sysCreateDate))
+                me.$("<div lang='tech' />").html("angelegt: " + me.appBase.get('YaioBase').formatGermanDateTime(basenode.sysCreateDate))
                         .addClass("container_field")
                         .addClass("fieldtype_basedata")
                         .addClass("fieldtype_sysCreateDate")
                         .addClass("field_sysCreateDate")
                         ); 
         $row.append(
-                $("<div lang='tech' />").html("Kinder: " + basenode.statChildNodeCount 
+                me.$("<div lang='tech' />").html("Kinder: " + basenode.statChildNodeCount 
                         + " Workflows: " + basenode.statWorkflowCount
                         + " ToDos: " + basenode.statWorkflowTodoCount)
                         .addClass("container_field")
@@ -192,11 +192,11 @@ Yaio.NodeDataRenderService = function(appBase) {
         // add nodeDesc if set
         if (basenode.nodeDesc != "" && basenode.nodeDesc != null) {
             // columncount
-            //var columnCount = $(">td", $nodedataBlock).length;
+            //var columnCount = me.$(">td", $nodedataBlock).length;
             
             // add  column
-            $($nodeDataBlock).find("div.container_data_row").append(
-                    $("<div />").html("<a href='#'" +
+            me.$($nodeDataBlock).find("div.container_data_row").append(
+                    me.$("<div />").html("<a href='#'" +
                             " onclick=\"yaioAppBase.get('YaioExplorerAction').toggleNodeDescContainer('" + basenode.sysUID + "'); return false;\"" +
                                 " id='toggler_desc_" + basenode.sysUID + "'" +
                                 " data-tooltip='tooltip.command.ToggleDesc' lang='tech'></a>")
@@ -207,7 +207,7 @@ Yaio.NodeDataRenderService = function(appBase) {
                             );
             
             // create desc row
-            var $divDesc = $("<div class='togglecontainer' id='detail_desc_" + basenode.sysUID + "' />");
+            var $divDesc = me.$("<div class='togglecontainer' id='detail_desc_" + basenode.sysUID + "' />");
             $divDesc.addClass("field_nodeDesc");
     
             // add commands
@@ -221,7 +221,7 @@ Yaio.NodeDataRenderService = function(appBase) {
             commands += "<a class=\"button command-desc-jiraexport\" onClick=\"yaioAppBase.get('YaioExplorerAction').openJiraExportWindow('"+ basenode.sysUID + "'); return false;" 
                 +   "\" lang='tech' data-tooltip='tooltip.command.OpenJiraExportWindow'>common.command.OpenJiraExportWindow</a>";
             commands += "<a class=\"button command-desc-txtexport\" onClick=\"yaioAppBase.get('YaioExplorerAction').openTxtExportWindow(" 
-                +   "$('#container_content_desc_" + basenode.sysUID + "').text()); return false;" 
+                +   "yaioAppBase.$('#container_content_desc_" + basenode.sysUID + "').text()); return false;" 
                 +   "\" lang='tech' data-tooltip='tooltip.command.OpenTxtExportWindow'>common.command.OpenTxtExportWindow</a>";
             if ('speechSynthesis' in window) {
                 // Synthesis support. Make your web apps talk!
@@ -248,10 +248,10 @@ Yaio.NodeDataRenderService = function(appBase) {
             $nodeDataBlock.append($divDesc);
     
             // disable draggable for td.block_nodedata
-            $( "#tree" ).draggable({ cancel: "td.block_nodedata" });
+            me.$( "#tree" ).draggable({ cancel: "td.block_nodedata" });
             
             // enable selction
-            $("td.block_nodedata").enableSelection();
+            me.$("td.block_nodedata").enableSelection();
         }
         
         // add nodeData
@@ -261,16 +261,16 @@ Yaio.NodeDataRenderService = function(appBase) {
         var settings = {
                 toc: {}
         };
-        settings.toc.dest = $("#toc_desc_" + basenode.sysUID);
+        settings.toc.dest = me.$("#toc_desc_" + basenode.sysUID);
         settings.toc.minDeep = 2;
-        $.fn.toc($("#container_content_desc_" + basenode.sysUID), settings);
+        me.$.fn.toc(me.$("#container_content_desc_" + basenode.sysUID), settings);
     
         // add gantt
         var $nodeGanttBlock = me.appBase.get('YaioNodeGanttRender').renderGanttBlock(basenode, node);
         $tdList.eq(colGantt).html($nodeGanttBlock).addClass("block_nodegantt");
     
         // set visibility of data/gantt-block
-        if ($("#tabTogglerGantt").css("display") != "none") {
+        if (me.$("#tabTogglerGantt").css("display") != "none") {
             $tdList.eq(colData).css("display", "table-cell");
             $tdList.eq(colGantt).css("display", "none");
         } else {
@@ -313,19 +313,19 @@ Yaio.NodeDataRenderService = function(appBase) {
         console.log("renderDataBlock START: " + msg);
     
         // current datablock
-        var $table = $("<div class='container_data_table'/>");
-        var $row = $("<div class='container_data_row'/>");
+        var $table = me.$("<div class='container_data_table'/>");
+        var $row = me.$("<div class='container_data_row'/>");
         $table.append($row);
         
         // default fields
-        $row.append($("<div />").html(me.appBase.get('YaioBase').htmlEscapeText(basenode.metaNodePraefix + basenode.metaNodeNummer))
+        $row.append(me.$("<div />").html(me.appBase.get('YaioBase').htmlEscapeText(basenode.metaNodePraefix + basenode.metaNodeNummer))
                 .addClass("container_field")
                 .addClass("fieldtype_basedata")
                 .addClass("fieldtype_metanummer")
                 .addClass("field_metanummer")
                 );
             
-        $row.append($("<div lang='tech' />").html(basenode.className)
+        $row.append(me.$("<div lang='tech' />").html(basenode.className)
                .addClass("container_field")
                .addClass("fieldtype_basedata")
                .addClass("fieldtype_type")
@@ -334,7 +334,7 @@ Yaio.NodeDataRenderService = function(appBase) {
         if (basenode.className == "TaskNode" || basenode.className == "EventNode") {
             // TaskNode
             $row.append(
-                    $("<div />").html("&nbsp;" + me.appBase.get('YaioBase').formatNumbers(basenode.istChildrenSumStand, 0, "%"))
+                    me.$("<div />").html("&nbsp;" + me.appBase.get('YaioBase').formatNumbers(basenode.istChildrenSumStand, 0, "%"))
                             .addClass("container_field")
                             .addClass("fieldtype_additionaldata")
                             .addClass("fieldtype_stand")
@@ -342,7 +342,7 @@ Yaio.NodeDataRenderService = function(appBase) {
                             .addClass(statestyle)
                             ); 
             $row.append(
-                    $("<div />").html("&nbsp;" + me.appBase.get('YaioBase').formatNumbers(basenode.istChildrenSumAufwand, 1, "h"))
+                    me.$("<div />").html("&nbsp;" + me.appBase.get('YaioBase').formatNumbers(basenode.istChildrenSumAufwand, 1, "h"))
                             .addClass("container_field")
                             .addClass("fieldtype_additionaldata")
                             .addClass("fieldtype_aufwand")
@@ -350,7 +350,7 @@ Yaio.NodeDataRenderService = function(appBase) {
                             .addClass(statestyle)
                             );
             $row.append(
-                    $("<div />").html("&nbsp;" + me.appBase.get('YaioBase').formatGermanDate(basenode.istChildrenSumStart)
+                    me.$("<div />").html("&nbsp;" + me.appBase.get('YaioBase').formatGermanDate(basenode.istChildrenSumStart)
                             + "-" + me.appBase.get('YaioBase').formatGermanDate(basenode.istChildrenSumEnde))
                              .addClass("container_field")
                              .addClass("fieldtype_additionaldata")
@@ -359,7 +359,7 @@ Yaio.NodeDataRenderService = function(appBase) {
                              .addClass(statestyle)
                              );
             $row.append(
-                    $("<div />").html("&nbsp;" + me.appBase.get('YaioBase').formatNumbers(basenode.planChildrenSumAufwand, 1, "h"))
+                    me.$("<div />").html("&nbsp;" + me.appBase.get('YaioBase').formatNumbers(basenode.planChildrenSumAufwand, 1, "h"))
                              .addClass("container_field")
                              .addClass("fieldtype_additionaldata")
                              .addClass("fieldtype_aufwand")
@@ -367,7 +367,7 @@ Yaio.NodeDataRenderService = function(appBase) {
                              .addClass(statestyle)
                              );
             $row.append(
-                    $("<div />").html("&nbsp;" + me.appBase.get('YaioBase').formatGermanDate(basenode.planChildrenSumStart)
+                    me.$("<div />").html("&nbsp;" + me.appBase.get('YaioBase').formatGermanDate(basenode.planChildrenSumStart)
                              + "-" + me.appBase.get('YaioBase').formatGermanDate(basenode.planChildrenSumEnde))
                              .addClass("container_field")
                              .addClass("fieldtype_additionaldata")
@@ -382,7 +382,7 @@ Yaio.NodeDataRenderService = function(appBase) {
             if (basenode.className == "UrlResNode") {
                 // url
                 $row.append(
-                        $("<div />").html("<a href='" + me.appBase.get('YaioBase').htmlEscapeText(basenode.resLocRef) + "' target='_blank'>" 
+                        me.$("<div />").html("<a href='" + me.appBase.get('YaioBase').htmlEscapeText(basenode.resLocRef) + "' target='_blank'>" 
                                          + me.appBase.get('YaioBase').htmlEscapeText(basenode.resLocRef) + "</a>")
                                   .addClass("container_field")
                                   .addClass("fieldtype_additionaldata")
@@ -395,7 +395,7 @@ Yaio.NodeDataRenderService = function(appBase) {
             if (   basenode.docLayoutTagCommand || basenode.docLayoutShortName
                 || basenode.docLayoutAddStyleClass || basenode.docLayoutFlgCloseDiv) {
                     $row.append(
-                            $("<div lang='tech' />").html("Layout ")
+                            me.$("<div lang='tech' />").html("Layout ")
                                     .addClass("container_field")
                                     .addClass("fieldtype_additionaldata")
                                     .addClass("fieldtype_ueDocLayout")
@@ -405,7 +405,7 @@ Yaio.NodeDataRenderService = function(appBase) {
                 // check which docLayout is set    
                 if (basenode.docLayoutTagCommand) {
                     $row.append(
-                            $("<div lang='tech' />").html("Tag: " 
+                            me.$("<div lang='tech' />").html("Tag: " 
                                         + me.appBase.get('YaioBase').htmlEscapeText(basenode.docLayoutTagCommand))
                                     .addClass("container_field")
                                     .addClass("fieldtype_additionaldata")
@@ -415,7 +415,7 @@ Yaio.NodeDataRenderService = function(appBase) {
                 }
                 if (basenode.docLayoutAddStyleClass) {
                     $row.append(
-                            $("<div lang='tech' />").html("Style: " 
+                            me.$("<div lang='tech' />").html("Style: " 
                                         + me.appBase.get('YaioBase').htmlEscapeText(basenode.docLayoutAddStyleClass))
                                     .addClass("container_field")
                                     .addClass("fieldtype_additionaldata")
@@ -425,7 +425,7 @@ Yaio.NodeDataRenderService = function(appBase) {
                 }
                 if (basenode.docLayoutShortName) {
                     $row.append(
-                            $("<div lang='tech' />").html("Kurzname: " 
+                            me.$("<div lang='tech' />").html("Kurzname: " 
                                         + me.appBase.get('YaioBase').htmlEscapeText(basenode.docLayoutShortName))
                                     .addClass("container_field")
                                     .addClass("fieldtype_additionaldata")
@@ -435,7 +435,7 @@ Yaio.NodeDataRenderService = function(appBase) {
                 }
                 if (basenode.docLayoutFlgCloseDiv) {
                     $row.append(
-                            $("<div lang='tech' />").html("Block schlie&szligen!")
+                            me.$("<div lang='tech' />").html("Block schlie&szligen!")
                                     .addClass("container_field")
                                     .addClass("fieldtype_additionaldata")
                                     .addClass("fieldtype_docLayoutFlgCloseDiv")
@@ -477,8 +477,8 @@ Yaio.NodeDataRenderService = function(appBase) {
         }, 400);
         // set it to none: force
         setTimeout(function(){
-            $("#tabTogglerData").css("display", "none");
-            $("td.block_nodegantt, th.block_nodegantt").css("display", "none");
+            me.$("#tabTogglerData").css("display", "none");
+            me.$("td.block_nodegantt, th.block_nodegantt").css("display", "none");
         }, 400);
     };
 

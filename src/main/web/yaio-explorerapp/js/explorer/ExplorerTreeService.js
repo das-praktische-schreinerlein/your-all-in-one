@@ -88,7 +88,7 @@ Yaio.ExplorerTreeService = function(appBase) {
                 // do reload if rendering done
                 console.log("yaioCreateOrReloadFancyTree: do reload=" 
                         + me.appBase.config.showUrl + masterNodeId);
-                var tree = $(treeId).fancytree("getTree");
+                var tree = me.$(treeId).fancytree("getTree");
                 tree.reload(me.appBase.config.showUrl + masterNodeId).done(function(){
                     console.log("yaioCreateOrReloadFancyTree reload tree done:" + masterNodeId);
     
@@ -128,7 +128,7 @@ Yaio.ExplorerTreeService = function(appBase) {
     me.yaioCreateFancyTree = function(treeId, masterNodeId, doneHandler) {
         treeInstances[treeId] = {};
         treeInstances[treeId].state = "loading";
-        $(treeId).fancytree({
+        me.$(treeId).fancytree({
             
             // errorHandler
             loadError: function (e,data) { 
@@ -274,7 +274,7 @@ Yaio.ExplorerTreeService = function(appBase) {
                     // Editor was removed
                     if( data.save ) {
                         // Since we started an async request, mark the node as preliminary
-                        $(data.node.span).addClass("pending");
+                        me.$(data.node.span).addClass("pending");
                     }
                 }
             },
@@ -290,7 +290,7 @@ Yaio.ExplorerTreeService = function(appBase) {
             /**
             click: function(event, data) {
                 var node = data.node,
-                    tt = $.ui.fancytree.getEventTargetType(event.originalEvent);
+                    tt = me.$.ui.fancytree.getEventTargetType(event.originalEvent);
                 if (tt == undefined) {
                     return true;
                 }
@@ -300,7 +300,7 @@ Yaio.ExplorerTreeService = function(appBase) {
             // Custom event handler that is triggered by keydown-handler and
             // context menu:
             var refNode,
-                tree = $(this).fancytree("getTree"),
+                tree = me.$(this).fancytree("getTree"),
                 node = tree.getActiveNode();
         
             switch( data.cmd ) {
@@ -393,7 +393,7 @@ Yaio.ExplorerTreeService = function(appBase) {
                     me.appBase.get('YaioEditor').yaioOpenNodeEditor(node.key, 'create');
                     break;
                 case "asTxt":
-                    me.appBase.get('YaioExplorerAction').openTxtExportWindow($('#container_content_desc_' + node.key).text());
+                    me.appBase.get('YaioExplorerAction').openTxtExportWindow(me.$('#container_content_desc_' + node.key).text());
                     break;
                 case "asJira":
                     me.appBase.get('YaioExplorerAction').openJiraExportWindow(node.key);
@@ -415,21 +415,21 @@ Yaio.ExplorerTreeService = function(appBase) {
         
             if( c === "N" && e.ctrlKey && e.shiftKey) {
                 cmd = "addChild";
-            } else if( e.which === $.ui.keyCode.DELETE ) {
+            } else if( e.which === me.$.ui.keyCode.DELETE ) {
                 cmd = "remove";
-            } else if( e.which === $.ui.keyCode.F2 ) {
+            } else if( e.which === me.$.ui.keyCode.F2 ) {
                 cmd = "rename";
-            } else if( e.which === $.ui.keyCode.UP && e.ctrlKey ) {
+            } else if( e.which === me.$.ui.keyCode.UP && e.ctrlKey ) {
                 cmd = "moveUp";
-            } else if( e.which === $.ui.keyCode.DOWN && e.ctrlKey ) {
+            } else if( e.which === me.$.ui.keyCode.DOWN && e.ctrlKey ) {
                 cmd = "moveDown";
-            } else if( e.which === $.ui.keyCode.RIGHT && e.ctrlKey ) {
+            } else if( e.which === me.$.ui.keyCode.RIGHT && e.ctrlKey ) {
                 cmd = "indent";
-            } else if( e.which === $.ui.keyCode.LEFT && e.ctrlKey ) {
+            } else if( e.which === me.$.ui.keyCode.LEFT && e.ctrlKey ) {
                 cmd = "outdent";
             }
             if( cmd ){
-                $(this).trigger("nodeCommand", {cmd: cmd});
+                me.$(this).trigger("nodeCommand", {cmd: cmd});
                 return false;
             }
         });
@@ -443,7 +443,7 @@ Yaio.ExplorerTreeService = function(appBase) {
         /*
          * Context menu (https://github.com/mar10/jquery-ui-contextmenu)
          */
-        $(treeId).contextmenu({
+        me.$(treeId).contextmenu({
             delegate: "span.fancytree-node",
             menu: [
                 {title: "Bearbeiten <kbd>[F2]</kbd>", cmd: "rename", uiIcon: "ui-icon-pencil" },
@@ -462,8 +462,8 @@ Yaio.ExplorerTreeService = function(appBase) {
     //            {title: "Paste as child<kbd>Ctrl+V</kbd>", cmd: "paste", uiIcon: "ui-icon-clipboard", disabled: true }
               ],
             beforeOpen: function(event, ui) {
-                var node = $.ui.fancytree.getNode(ui.target);
-                $("#tree").contextmenu("enableEntry", "paste", !!CLIPBOARD);
+                var node = me.$.ui.fancytree.getNode(ui.target);
+                me.$("#tree").contextmenu("enableEntry", "paste", !!CLIPBOARD);
                 node.setActive();
             },
             select: function(event, ui) {
@@ -471,7 +471,7 @@ Yaio.ExplorerTreeService = function(appBase) {
                 // delay the event, so the menu can close and the click event does
                 // not interfere with the edit control
                 setTimeout(function(){
-                    $(that).trigger("nodeCommand", {cmd: ui.cmd});
+                    me.$(that).trigger("nodeCommand", {cmd: ui.cmd});
                 }, 100);
             }
         });
@@ -614,14 +614,14 @@ Yaio.ExplorerTreeService = function(appBase) {
             // check if http-form result
             if (error.status == 401) {
                 // reload loginseite
-                $( "#error-message-text" ).html("Sie wurden vom System abgemeldet.");
+                me.$( "#error-message-text" ).html("Sie wurden vom System abgemeldet.");
                 
                 // show message
-                $( "#error-message" ).dialog({
+                me.$( "#error-message" ).dialog({
                     modal: true,
                     buttons: {
                       "Neu anmelden": function() {
-                        $( this ).dialog( "close" );
+                        me.$( this ).dialog( "close" );
                         window.location.assign(me.appBase.config.loginUrl);
                       }
                     }

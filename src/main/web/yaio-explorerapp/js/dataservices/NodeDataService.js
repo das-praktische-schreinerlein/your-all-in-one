@@ -46,7 +46,7 @@ Yaio.NodeDataService = function(appBase) {
     me.yaioDoUpdateNode = function(node, url, json) {
         var msg = "update for node:" + node.key;
         console.log("yaioDoUpdateNode START: " + msg + "url: "+ url + " with:" + json);
-        $.ajax({
+        me.$.ajax({
             headers : {
                 'Accept' : 'application/json',
                 'Content-Type' : 'application/json'
@@ -60,7 +60,7 @@ Yaio.NodeDataService = function(appBase) {
                     console.log("OK saved node:" + node.key + " load:" + response.parentIdHierarchy);
                     if (response.parentIdHierarchy && response.parentIdHierarchy.length > 0) {
                         // reload tree
-                        var tree = $("#tree").fancytree("getTree");
+                        var tree = me.$("#tree").fancytree("getTree");
                         tree.reload().done(function(){
                             // handler when done
                             console.log("reload tree done:" + response.parentIdHierarchy);
@@ -102,7 +102,7 @@ Yaio.NodeDataService = function(appBase) {
         var msg = "symlink for node:" + basenode.sysUID + " symlink:" + basenode.symLinkRef + " fancynode:" + fancynode.key;
         var url = me.appBase.config.symLinkUrl + basenode.symLinkRef;
         console.log("load " + msg);
-        $.ajax({
+        me.$.ajax({
             headers : {
                 'Accept' : 'application/json',
                 'Content-Type' : 'application/json'
@@ -117,7 +117,7 @@ Yaio.NodeDataService = function(appBase) {
                         var $nodeDataBlock = me.appBase.get('YaioNodeDataRender').renderDataBlock(response.node, fancynode);
                         
                         // load referring node
-                        var tree = $("#tree").fancytree("getTree");
+                        var tree = me.$("#tree").fancytree("getTree");
                         if (!tree) {
                             // tree not found
                             me.appBase.get('YaioBase').logError("error yaioLoadSymLinkData: cant load tree - " + msg, false);
@@ -139,7 +139,7 @@ Yaio.NodeDataService = function(appBase) {
                         var newUrl = '#/show/' + tree.options.masterNodeId 
                             + '/activate/' + response.node.sysUID;
                         
-                        // check if node-hiarchy exists (same tree)
+                        // check if node-hierarchy exists (same tree)
                         var firstNodeId, firstNode;
                         var lstIdsHierarchy = new Array().concat(response.parentIdHierarchy);
                         while (! firstNode && lstIdsHierarchy.length > 0) {
@@ -156,13 +156,13 @@ Yaio.NodeDataService = function(appBase) {
                                 + '/activate/' + response.node.sysUID;
                         }
     
-                        $(treeNode.tr).find("div.container_data_row").append(
+                        me.$(treeNode.tr).find("div.container_data_row").append(
                                 "<a href='" + newUrl + "'" 
                                    + " data-tooltip='Springe zum verkn&uuml;pften Element'"
                                    + " class='button'>OPEN</a>");
                         
                         // add datablock of referenced node
-                        $(treeNode.tr).find("div.container_data_table").append($nodeDataBlock.html());
+                        me.$(treeNode.tr).find("div.container_data_table").append($nodeDataBlock.html());
     
                         console.log("renderSymLinkDataBLock done:" + msg);
                     } else {
@@ -187,7 +187,7 @@ Yaio.NodeDataService = function(appBase) {
     me.yaioDoRemoveNode = function(node, url) {
         var msg = "remove node:" + node.key;
         console.log("yaioDoRemoveNode START: " + msg + " with:" + url);
-        $.ajax({
+        me.$.ajax({
             headers : {
                 'Accept' : 'application/json',
                 'Content-Type' : 'application/json'
@@ -200,7 +200,7 @@ Yaio.NodeDataService = function(appBase) {
                     console.log("OK removed node:" + node.key + " load:" + response.parentIdHierarchy);
                     if (response.parentIdHierarchy && response.parentIdHierarchy.length >= 0) {
                         // reload tree
-                        var tree = $("#tree").fancytree("getTree");
+                        var tree = me.$("#tree").fancytree("getTree");
                         tree.reload().done(function(){
                             // handler when done
                             console.log("reload tree done:" + response.parentIdHierarchy);
