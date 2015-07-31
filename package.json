@@ -27,7 +27,6 @@
     "grunt-karma": "v0.11.0",
     "grunt-protractor-runner": "v2.0.0",
     "grunt-replace": "0.9.2",
-    "grunt-wiredep": "2.0.0",
     "jasmine-core": "2.2.0",
     "jasmine-spec-reporter": "<2.0.0",
     "karma": "0.12.31",

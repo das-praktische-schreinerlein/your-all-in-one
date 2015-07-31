@@ -306,6 +306,7 @@ module.exports = function( grunt ){
             dist:  [destBase]
         },
         copy: {
+            // copy bower-text resources (js/css/html-files) to dest and patch them
             bower2vendors: {
                 options: {
                     process: function (content, srcpath) {
@@ -344,7 +345,7 @@ module.exports = function( grunt ){
                     //"ui-contextmenu": "1.7.0" // OK
 
                     // JS
-                    {expand: true, cwd: bowerSrcBase + 'ace-builds/src-min-noconflict', src: ['**'], dest: 'vendors/js/ace/', flatten: false},
+                    {expand: true, cwd: bowerSrcBase + 'ace-builds/src-min-noconflict', src: ['**'], dest: vendorDestBase + 'js/ace/', flatten: false},
                     {expand: true, cwd: bowerSrcBase + 'angular', src: ['angular.js'], dest: vendorDestBase + 'js/angularjs/', flatten: false},
                     {expand: true, cwd: bowerSrcBase + 'angular-paging', src: ['paging.js'], dest: vendorDestBase + 'js/angularjs/', flatten: false},
                     {expand: true, cwd: bowerSrcBase + 'angular-animate', src: ['angular-animate.js'], dest: vendorDestBase + 'js/angularjs/', flatten: false},
@@ -378,12 +379,14 @@ module.exports = function( grunt ){
                     {expand: true, cwd: bowerSrcBase + 'toastr', src: ['toastr.css'], dest: vendorDestBase + 'css/toastr/', flatten: true, filter: 'isFile'}
                 ],
             },
+            // copy bower-binary resources (png...-files) to dest
             bowerbin2vendors: {
                 files: [
                     {expand: true, cwd: bowerSrcBase + 'fancytree/dist/', src: ['skin*/*.png', 'skin*/*.gif', 'skin*/*.jpg'], dest: vendorDestBase + 'js/fancytree/', flatten: false},
                     {expand: true, cwd: bowerSrcBase + 'jquery-ui/themes/smoothness', src: ['images/*.*'], dest: vendorDestBase + 'css/jqueryui/', flatten: false},
                 ],
             },
+            // copy vendor-files which must exists in specific pathes to dist
             vendors2dist: {
                 files: [
                     {expand: true, cwd: vendorDestBase + 'css', src: ['jqueryui/images/*.*'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/', flatten: false},
@@ -396,11 +399,13 @@ module.exports = function( grunt ){
                     {expand: true, cwd: vendorSrcBase + 'css/', src: ['yaio/**'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/', flatten: false}
                 ]
             },
+            // copy archiv to dist
             archiv2dist: {
                 files: [
                     {expand: true, cwd: archivSrcBase, src: ['**'], dest: destBase + 'dist/', flatten: false}
                 ]
             },
+            // copy files which must excists in specifc version (because exports include them) from dist to archiv
             dist2archiv: {
                 files: [
                         {expand: true, cwd: destBase + 'dist/', 
@@ -417,6 +422,7 @@ module.exports = function( grunt ){
                     {expand: true, cwd: archivSrcBase, src: ['**'], dest: destBase + 'dist/', flatten: false}
                 ]
             },
+            // copy the yaio.sources to dist
             yaiores2dist: {
                 files: [
                     {expand: true, cwd: srcBase + 'pages/', src: ['*.html'], dest: destBase, flatten: false},
@@ -427,6 +433,7 @@ module.exports = function( grunt ){
         },
 
         replace: {
+            // replace all version-placeholders in dist
             versionOnDist: {
                 options: {
                     patterns: [
@@ -461,6 +468,7 @@ module.exports = function( grunt ){
                 ]
             },
             versionOnRes: {
+                // replace all version-placeholders in static resourcefolder
                 options: {
                     patterns: [
                         {
@@ -494,7 +502,7 @@ module.exports = function( grunt ){
             }
         },
 
-        // concat files
+        // concat files to create app-includes
         concat: {
             options: {
                 stripBanners: true,
@@ -567,7 +575,7 @@ module.exports = function( grunt ){
                 jshintrc: true
             }
         },
-        // karma
+        // unit-tests with karma
         karma: {
             options: {
                 configFile: 'karma.yaio.conf.js',
@@ -583,7 +591,7 @@ module.exports = function( grunt ){
                 background: true
             }
         },
-        // protractor
+        // e2e-tests with protractor
         protractor: {
             options: {
                 // Location of your protractor config file
@@ -610,7 +618,7 @@ module.exports = function( grunt ){
                 }
             }
         },
-        // watch
+        // watcher to support dev-process (start specific actions if sourcefiles change)
         watch: {
             options: {
                 livereload: true
@@ -635,30 +643,7 @@ module.exports = function( grunt ){
                 files: [srcBase + 'yaio-explorerapp/**/*.*', testSrcBase + 'e2e/**/*', testSrcBase + 'unit/**/*'],
                 tasks: ['dist', 'karma:unit', 'protractor:e2e']
             }
-        },
-        wiredep: {
-
-            task: {
-
-              // Point to the files that should be updated when
-              // you run `grunt wiredep`
-              src: [
-                destBase + 'html/**/*.html',
-                destBase + 'yaio-explorerapp/*.html',
-                destBase + 'dist/yaio-*.css',
-                destBase + 'dist/yaio-*.js',
-//                'app/styles/main.scss',  // .scss & .sass support...
-//                'app/config.yml'         // and .yml & .yaml support out of the box!
-              ],
-
-              options: {
-                // See wiredep's configuration documentation for the options
-                // you may pass:
-
-                // https://github.com/taptapship/wiredep#configuration
-              }
-            }
-          }
+        }
     });
 
     // register tasks
@@ -679,9 +664,4 @@ module.exports = function( grunt ){
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-protractor-runner');
     grunt.loadNpmTasks('grunt-replace');
-    grunt.loadNpmTasks('grunt-wiredep');
-//  grunt.loadNpmTasks('grunt-contrib-clean');
-//  grunt.loadNpmTasks('grunt-contrib-compass');
-//  grunt.loadNpmTasks('grunt-contrib-copy');
-//  grunt.loadNpmTasks('grunt-karma-sonar');
 };
