@@ -352,8 +352,11 @@ module.exports = function( grunt ){
                     {expand: true, cwd: bowerSrcBase + 'angular-route', src: ['angular-route.js'], dest: vendorDestBase + 'js/angularjs/', flatten: false},
                     {expand: true, cwd: bowerSrcBase + 'angular-translate', src: ['*.js'], dest: vendorDestBase + 'js/angularjs/', flatten: false},
                     {expand: true, cwd: bowerSrcBase + 'angular-translate-loader-static-files', src: ['angular-translate-loader-static-files.js'], dest: vendorDestBase + 'js/angularjs/', flatten: false},
-                    {expand: true, cwd: bowerSrcBase + 'fancytree/dist/', src: ['skin*/*.js', 'skin*/*.css', '*.js'], dest: vendorDestBase + 'js/fancytree/', flatten: false},
-                    {expand: true, cwd: bowerSrcBase + 'fancytree/dist/', src: ['src/*.js'], dest: vendorDestBase + 'js/fancytree/', flatten: true},
+                    {expand: true, cwd: bowerSrcBase + 'fancytree/dist/', src: ['skin-win8/*.js', 'skin-win8/*.css', 'jquery.fancytree.js'], dest: vendorDestBase + 'js/fancytree/', flatten: false},
+                    {expand: true, cwd: bowerSrcBase + 'fancytree/dist/src', src: ['jquery.fancytree.dnd.js',
+                                                                                   'jquery.fancytree.edit.js',
+                                                                                   'jquery.fancytree.gridnav.js',
+                                                                                   'jquery.fancytree.table.js'], dest: vendorDestBase + 'js/fancytree/', flatten: true},
                     {expand: true, cwd: bowerSrcBase + 'find-and-replace-dom-text/src', src: ['findAndReplaceDOMText.js'], dest: vendorDestBase + 'js/findandreplacedomtext/', flatten: false},
                     {expand: true, cwd: bowerSrcBase + 'highlightjs/', src: ['**/highlight.pack.js'], dest: vendorDestBase + 'js/highlightjs/', flatten: true},
                     {expand: true, cwd: bowerSrcBase + 'jquery/dist', src: ['jquery.min.js'], dest: vendorDestBase + 'js/jquery/', flatten: false},
@@ -382,7 +385,8 @@ module.exports = function( grunt ){
             // copy bower-binary resources (png...-files) to dest
             bowerbin2vendors: {
                 files: [
-                    {expand: true, cwd: bowerSrcBase + 'fancytree/dist/', src: ['skin*/*.png', 'skin*/*.gif', 'skin*/*.jpg'], dest: vendorDestBase + 'js/fancytree/', flatten: false},
+                    {expand: true, cwd: bowerSrcBase + 'fancytree/dist/', src: ['skin-win8/*.png', 'skin-win8/*.gif'], dest: vendorDestBase + 'js/fancytree/', flatten: false},
+                    {expand: true, cwd: bowerSrcBase + 'fancytree/dist/', src: ['skin-lion/*.png', 'skin-lion/*.gif'], dest: vendorDestBase + 'js/fancytree/', flatten: false},
                     {expand: true, cwd: bowerSrcBase + 'jquery-ui/themes/smoothness', src: ['images/*.*'], dest: vendorDestBase + 'css/jqueryui/', flatten: false},
                 ],
             },
@@ -390,7 +394,13 @@ module.exports = function( grunt ){
             vendors2dist: {
                 files: [
                     {expand: true, cwd: vendorDestBase + 'css', src: ['jqueryui/images/*.*'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/', flatten: false},
-                    {expand: true, cwd: vendorSrcBase + 'js', src: ['fancytree/**'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/', flatten: false},
+                    {expand: true, cwd: vendorSrcBase + 'js/fancytree', src: ['jquery.fancytree.js',
+                                                                              'jquery.fancytree.dnd.js',
+                                                                              'jquery.fancytree.edit.js',
+                                                                              'jquery.fancytree.gridnav.js',
+                                                                              'jquery.fancytree.table.js',
+                                                                              'skin-lion/*.*',
+                                                                              'skin-win8/*.*'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/fancytree/', flatten: false},
                     {expand: true, cwd: vendorSrcBase + 'js/', src: ['ace/**'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/', flatten: false},
                     {expand: true, cwd: vendorSrcBase + '', src: ['freemind-flash/**'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/', flatten: false},
                     {expand: true, cwd: vendorSrcBase + 'js/', src: ['yaio/**'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/', flatten: false},
