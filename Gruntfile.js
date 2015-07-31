@@ -1,5 +1,36 @@
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Collaboration
+ *
+ * <h4>FeatureDescription:</h4>
+ *     software for projectmanagement and documentation
+ * 
+ * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category collaboration
+ * @copyright Copyright (c) 2014, Michael Schreiner
+ * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+/**
+ * <h4>FeatureDomain:</h4>
+ *     WebGUI
+ * <h4>FeatureDescription:</h4>
+ *     taskconfiguration
+ *      
+ * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category collaboration
+ * @copyright Copyright (c) 2014, Michael Schreiner
+ * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ */
 var path = require('path');
 
+/**
+ * baseconfig
+ **/
 var srcBase = 'src/main/web/';
 var tplSrcBase = 'src/main/web/';
 var destBase = 'src/main/generated-resources/static/';
@@ -9,51 +40,87 @@ var vendorDestBase = 'vendors/';
 var archivSrcBase = 'vendors/archiv/';
 var testSrcBase = 'src/test/javascript/';
 
+/**
+ * patches
+ **/
+function checkWebResOnly(srcpath) {
+    if (srcpath.search(/\.js|\.css|\.html/) < 0) {
+        return false;
+    }
+    return true;
+}
 function patchFileSlimbox2(content, srcpath) {
+    if (! checkWebResOnly(srcpath)) {
+        return content;
+    }
     var newContent = content;
     console.log("patchFileSlimbox2:" + srcpath);
-    newContent = newContent.replace(/\/\*\!/g,"    /*!");
-    newContent = newContent.replace(/\t/g,"    ");
+    newContent = newContent.replace(/\/\*\!/g,
+                                    "    /*!");
+    newContent = newContent.replace(/\t/g,
+                                    "    ");
     newContent = newContent.replace("middle = win.scrollTop() + (win.height() / 2);",
                                     "middle = win.scrollTop() + (window.innerHeight / 2);");
     return newContent;
 }
 function patchFileFancytree(content, srcpath) {
+    if (! checkWebResOnly(srcpath)) {
+        return content;
+    }
     var newContent = content;
     console.log("patchFileFancytree:" + srcpath);
-    newContent = newContent.replace(/@version .*?\n/, 
+    newContent = newContent.replace(/@version .*?\n/g, 
                                     "@version @VERSION\n");
-    newContent = newContent.replace(/@date .*?\n/,
+    newContent = newContent.replace(/@date .*?\n/g,
                                     "@date @DATE\n");
     return newContent;
 }
 function patchFileJQuery(content, srcpath) {
+    if (! checkWebResOnly(srcpath)) {
+        return content;
+    }
     var newContent = content;
     console.log("patchFileJQuery:" + srcpath);
-    newContent = newContent.replace(/\/\/# sourceMappingURL=jquery.min.map/
-                                  , "");
+    newContent = newContent.replace(/\/\/# sourceMappingURL=jquery.min.map/g,
+                                    "");
+    return newContent;
+}
+function patchFileJQueryUi(content, srcpath) {
+    if (! checkWebResOnly(srcpath)) {
+        return content;
+    }
+    var newContent = content;
+    console.log("patchFileJQueryUi:" + srcpath);
+    newContent = newContent.replace(/url\(images\//g,
+                                    "url(vendors-vendorversion/jqueryui/images/");
     return newContent;
 }
 function patchFileJQueryLang(content, srcpath) {
+    if (! checkWebResOnly(srcpath)) {
+        return content;
+    }
     var newContent = content;
     console.log("patchFileJQueryLang:" + srcpath);
-    newContent = newContent.replace(/'placeholder'\n\t*];/
-                                  , "'placeholder',\n\t\t'data-tooltip'\n\t];");
+    newContent = newContent.replace(/'placeholder'\n\t*];/g,
+                                    "'placeholder',\n\t\t'data-tooltip'\n\t];");
     return newContent;
 }
 function patchFileHighlightJsLang(content, srcpath) {
+    if (! checkWebResOnly(srcpath)) {
+        return content;
+    }
     var newContent = content;
     console.log("patchFileHighlightJsLang:" + srcpath);
-    newContent = newContent.replace(/\.hljs-annotation,\n.diff .hljs-header,/,
+    newContent = newContent.replace(/\.hljs-annotation,\n.diff .hljs-header,/g,
                                      ".hljs-annotation,\n.hljs-template_comment,\n.diff .hljs-header,");
     return newContent;
 }
 
 
 
-
-
-
+/**
+ * configure tasks
+ **/
 module.exports = function( grunt ){
    // configure tasks
     grunt.initConfig({
@@ -163,7 +230,6 @@ module.exports = function( grunt ){
               srcBase + 'yaio-explorerapp/js/wysiwyg/formatter.css'
         ],
         projectSupportCssFiles: [
-            srcBase + 'yaio-explorerapp/js/layout/jquery-ui.css',
             srcBase + 'yaio-explorerapp/js/layout/base.css',
             srcBase + 'yaio-explorerapp/js/layout/support.css',
             srcBase + 'yaio-explorerapp/js/layout/toc.css',
@@ -251,6 +317,8 @@ module.exports = function( grunt ){
                             return patchFileHighlightJsLang(content, srcpath);
                         } else if (srcpath.search('jquery-lang') > 0) {
                             return patchFileJQueryLang(content, srcpath);
+                        } else if (srcpath.search('jquery-ui') > 0) {
+                            return patchFileJQueryUi(content, srcpath);
                         } else if (srcpath.search('jquery') > 0) {
                             return patchFileJQuery(content, srcpath);
                         }
@@ -283,7 +351,7 @@ module.exports = function( grunt ){
                     {expand: true, cwd: bowerSrcBase + 'angular-route', src: ['angular-route.js'], dest: vendorDestBase + 'js/angularjs/', flatten: false},
                     {expand: true, cwd: bowerSrcBase + 'angular-translate', src: ['*.js'], dest: vendorDestBase + 'js/angularjs/', flatten: false},
                     {expand: true, cwd: bowerSrcBase + 'angular-translate-loader-static-files', src: ['angular-translate-loader-static-files.js'], dest: vendorDestBase + 'js/angularjs/', flatten: false},
-                    {expand: true, cwd: bowerSrcBase + 'fancytree/dist/', src: ['skin*/*.*', '*.js'], dest: vendorDestBase + 'js/fancytree/', flatten: false},
+                    {expand: true, cwd: bowerSrcBase + 'fancytree/dist/', src: ['skin*/*.js', 'skin*/*.css', '*.js'], dest: vendorDestBase + 'js/fancytree/', flatten: false},
                     {expand: true, cwd: bowerSrcBase + 'fancytree/dist/', src: ['src/*.js'], dest: vendorDestBase + 'js/fancytree/', flatten: true},
                     {expand: true, cwd: bowerSrcBase + 'find-and-replace-dom-text/src', src: ['findAndReplaceDOMText.js'], dest: vendorDestBase + 'js/findandreplacedomtext/', flatten: false},
                     {expand: true, cwd: bowerSrcBase + 'highlightjs/', src: ['**/highlight.pack.js'], dest: vendorDestBase + 'js/highlightjs/', flatten: true},
@@ -303,15 +371,22 @@ module.exports = function( grunt ){
                     {expand: true, cwd: bowerSrcBase + 'ui-contextmenu', src: ['jquery.ui-contextmenu.min.js'], dest: vendorDestBase + 'js/jqueryui/', flatten: true},
                     // CSS
                     {expand: true, cwd: bowerSrcBase + 'highlightjs/', src: ['**/default.css'], dest: vendorDestBase + 'css/highlightjs/', flatten: true},
-                    {expand: true, cwd: bowerSrcBase + 'jquery-ui', src: ['**/jquery-ui.css'], dest: vendorDestBase + 'css/jqueryui/', flatten: true},
+                    {expand: true, cwd: bowerSrcBase + 'jquery-ui/themes/smoothness', src: ['jquery-ui.css'], dest: vendorDestBase + 'css/jqueryui/', flatten: false},
                     {expand: true, cwd: bowerSrcBase + 'jqueryui-timepicker-addon', src: ['dist/jquery-ui-timepicker-addon.css'], dest: vendorDestBase + 'css/jqueryui/', flatten: true},
                     {expand: true, cwd: bowerSrcBase + 'mermaid', src: ['dist/mermaid.css'], dest: vendorDestBase + 'css/mermaid/', flatten: true, filter: 'isFile'},
                     {expand: true, cwd: bowerSrcBase + 'slimbox2', src: ['**/slimbox2.css'], dest: vendorDestBase + 'css/slimbox2/', flatten: true, filter: 'isFile'},
                     {expand: true, cwd: bowerSrcBase + 'toastr', src: ['toastr.css'], dest: vendorDestBase + 'css/toastr/', flatten: true, filter: 'isFile'}
                 ],
             },
+            bowerbin2vendors: {
+                files: [
+                    {expand: true, cwd: bowerSrcBase + 'fancytree/dist/', src: ['skin*/*.png', 'skin*/*.gif', 'skin*/*.jpg'], dest: vendorDestBase + 'js/fancytree/', flatten: false},
+                    {expand: true, cwd: bowerSrcBase + 'jquery-ui/themes/smoothness', src: ['images/*.*'], dest: vendorDestBase + 'css/jqueryui/', flatten: false},
+                ],
+            },
             vendors2dist: {
                 files: [
+                    {expand: true, cwd: vendorDestBase + 'css', src: ['jqueryui/images/*.*'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/', flatten: false},
                     {expand: true, cwd: vendorSrcBase + 'js', src: ['fancytree/**'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/', flatten: false},
                     {expand: true, cwd: vendorSrcBase + 'js/', src: ['ace/**'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/', flatten: false},
                     {expand: true, cwd: vendorSrcBase + '', src: ['freemind-flash/**'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/', flatten: false},
@@ -588,7 +663,7 @@ module.exports = function( grunt ){
 
     // register tasks
     grunt.registerTask('default',   ['jshint']);
-    grunt.registerTask('vendors',   ['clean:bower', 'bower', 'copy:bower2vendors']);
+    grunt.registerTask('vendors',   ['clean:bower', 'bower', 'copy:bower2vendors', 'copy:bowerbin2vendors']);
     grunt.registerTask('dist',      ['vendors', 'clean:dist', 'copy:archiv2dist', 'concat', 'copy:vendors2dist', 'copy:yaiores2dist', 'replace:versionOnDist', 'replace:versionOnRes', 'copy:dist2archiv']);
     grunt.registerTask('unit-test', ['dist', 'karma:continuous:start', 'watch:karma']);
     grunt.registerTask('e2e-test',  ['dist', 'protractor:continuous', 'watch:protractor']);
