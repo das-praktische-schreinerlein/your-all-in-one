@@ -83,13 +83,13 @@ Yaio.ExplorerTreeService = function(appBase) {
         console.log("yaioCreateOrReloadFancyTree for id: " + treeId + " state=" + state + " caller: " + treeInstances[treeId]);
         if (state) {
             console.log("yaioCreateOrReloadFancyTree: flgYAIOFancyTreeLoaded is set: prepare reload=" 
-                    + me.appBase.config.showUrl + masterNodeId);
+                    + me.appBase.config.restShowUrl + masterNodeId);
             me.appBase.get('YaioExplorerTree').yaioDoOnFancyTreeState(treeId, "rendering_done", 1000, 5, function () {
                 // do reload if rendering done
                 console.log("yaioCreateOrReloadFancyTree: do reload=" 
-                        + me.appBase.config.showUrl + masterNodeId);
+                        + me.appBase.config.restShowUrl + masterNodeId);
                 var tree = me.$(treeId).fancytree("getTree");
-                tree.reload(me.appBase.config.showUrl + masterNodeId).done(function(){
+                tree.reload(me.appBase.config.restShowUrl + masterNodeId).done(function(){
                     console.log("yaioCreateOrReloadFancyTree reload tree done:" + masterNodeId);
     
                     // check if doneHandler
@@ -101,7 +101,7 @@ Yaio.ExplorerTreeService = function(appBase) {
             }, "yaioCreateOrReloadFancyTree.reloadHandler");
         } else {
             console.log("yaioCreateOrReloadFancyTree: flgYAIOFancyTreeLoaded not set:"
-                    + " create=" + me.appBase.config.showUrl + masterNodeId);
+                    + " create=" + me.appBase.config.restShowUrl + masterNodeId);
             me.appBase.get('YaioExplorerTree').yaioCreateFancyTree(treeId, masterNodeId, doneHandler);
         }
     };
@@ -145,7 +145,7 @@ Yaio.ExplorerTreeService = function(appBase) {
             titlesTabbable: true,     // Add all node titles to TAB chain
       
             source: { 
-                url: me.appBase.config.showUrl + masterNodeId, 
+                url: me.appBase.config.restShowUrl + masterNodeId, 
                 cache: false 
             },
           
@@ -158,9 +158,9 @@ Yaio.ExplorerTreeService = function(appBase) {
             lazyLoad: function(event, data) {
                 var node = data.node;
                 console.debug("yaioCreateFancyTree load data for " + node.key 
-                        + " from " + me.appBase.config.showUrl + node.key);
+                        + " from " + me.appBase.config.restShowUrl + node.key);
                 data.result = {
-                    url: me.appBase.config.showUrl + node.key,
+                    url: me.appBase.config.restShowUrl + node.key,
                     cache: false
                 };
             },

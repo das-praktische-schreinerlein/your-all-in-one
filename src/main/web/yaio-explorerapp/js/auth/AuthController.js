@@ -27,13 +27,16 @@
  * <h4>FeatureKeywords:</h4>
  *     GUI Configuration
  */
-yaioApp.controller('AuthController', function($rootScope, $scope, $location, $http, $routeParams, setFormErrors, OutputOptionsEditor, authorization) {
+yaioApp.controller('AuthController', function($rootScope, $scope, $location, $http, $routeParams, setFormErrors, OutputOptionsEditor, authorization, yaioUtils) {
     'use strict';
+
+    // include utils
+    $scope.yaioUtils = yaioUtils;
 
     $scope.credentials = {};
     
     $scope.login = function() {
-        $http.post('/login', $.param($scope.credentials), {
+        $http.post(yaioUtils.getConfig().restLoginUrl, $.param($scope.credentials), {
             headers : {
                 "content-type" : "application/x-www-form-urlencoded"
             }
@@ -43,27 +46,27 @@ yaioApp.controller('AuthController', function($rootScope, $scope, $location, $ht
                     if ($rootScope.lastLocation) {
                         $location.path($rootScope.lastLocation);
                     } else {
-                        $location.path("/");
+                        $location.path(yaioUtils.getConfig().appRootUrl);
                     }
                     $scope.error = false;
                 } else {
-                    $location.path("/login");
+                    $location.path(yaioUtils.getConfig().appLoginUrl);
                     $scope.error = true;
                 }
             });
         }).error(function(data) {
-            $location.path("/login");
+            $location.path(yaioUtils.getConfig().appLoginUrl);
             $scope.error = true;
             $rootScope.authenticated = false;
         });
     };
     
     $scope.logout = function() {
-        $http.post('/logout', {}).success(function() {
+        $http.post(yaioUtils.getConfig().restLogoutUrl, {}).success(function() {
             $rootScope.authenticated = false;
-            $location.path("/");
+            $location.path(yaioUtils.getConfig().appRootUrl);
         }).error(function(data) {
-            $location.path("/");
+            $location.path(yaioUtils.getConfig().appRootUrl);
             $rootScope.authenticated = false;
         });
     };

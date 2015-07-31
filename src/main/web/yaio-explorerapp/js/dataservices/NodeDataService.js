@@ -100,7 +100,7 @@ Yaio.NodeDataService = function(appBase) {
     
     me.yaioLoadSymLinkData = function(basenode, fancynode) {
         var msg = "symlink for node:" + basenode.sysUID + " symlink:" + basenode.symLinkRef + " fancynode:" + fancynode.key;
-        var url = me.appBase.config.symLinkUrl + basenode.symLinkRef;
+        var url = me.appBase.config.restSymLinkUrl + basenode.symLinkRef;
         console.log("load " + msg);
         me.$.ajax({
             headers : {

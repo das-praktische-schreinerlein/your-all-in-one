@@ -27,12 +27,12 @@
  * <h4>FeatureKeywords:</h4>
  *     GUI Configuration
  */
-yaioApp.factory('authorization', function ($rootScope, $http) {
+yaioApp.factory('authorization', function ($rootScope, $http, yaioUtils) {
     'use strict';
 
     return {
         authentificate: function(callback) {
-            $http.get('/user/current').success(function(data) {
+            $http.get(yaioUtils.getConfig().restCheckUserUrl).success(function(data) {
                 console.log("authentificate: success " + data);
                 if (data) {
                     $rootScope.authenticated = true;

@@ -38,16 +38,16 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http
 
     // check parameter - set default if empty
     var baseUrl = '/show/';
-    var restBaseUrl = '/nodes/show/';
+    var restBaseUrl = yaioUtils.getConfig().restShowUrl;
     var nodeId = $routeParams.nodeId;
     var nodeByAllId = $routeParams.nodeByAllId;
     if (nodeByAllId != null && nodeByAllId != "" && nodeByAllId) {
         nodeId = nodeByAllId;
         baseUrl = '/showByAllIds/';
-        restBaseUrl = '/nodes/showsymlink/';
+        restBaseUrl = yaioUtils.getConfig().restSymLinkUrl;
     }
     if (nodeId == null || nodeId == "" || ! nodeId) {
-        nodeId = "MasterplanMasternode1";
+        nodeId = yaioUtils.getConfig().CONST_MasterId;
     }
 
     // create node
@@ -63,7 +63,7 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http
     var curNodeUrl = restBaseUrl + nodeId;
 
     // save lastLocation for login
-    $rootScope.lastLocation = yaioUtils.getConfig().baseUrl + nodeId;
+    $rootScope.lastLocation = baseUrl + nodeId;
 
     // save nodeId for NodeEditor
     $rootScope.nodeId = nodeId;
@@ -73,7 +73,7 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http
         // check authentification
         if (! $rootScope.authenticated) {
             console.log("showControl: not authentification: " + $rootScope.authenticated);
-            $location.path("/login");
+            $location.path(yaioUtils.getConfig().appLoginUrl);
             $scope.error = false;
         } else {
             // do Search
@@ -91,7 +91,7 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http
                  *     GUI Callback
                  */
                 activeNodeIdHandler = function() {
-                    var activeNodeUrl = '/nodes/show/' + activeNodeId;
+                    var activeNodeUrl = yaioUtils.getConfig().restShowUrl + activeNodeId;
                     console.log("start loading activenode:" + activeNodeId);
                     $http.get(activeNodeUrl).then(function(nodeResponse) {
                         // success handler

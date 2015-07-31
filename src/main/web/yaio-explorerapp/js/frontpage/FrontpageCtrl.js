@@ -44,11 +44,11 @@ yaioApp.controller('FrontPageCtrl', function($rootScope, $scope, $location, $htt
     authorization.authentificate(function () {
         // check authentification
         if (! $rootScope.authenticated) {
-            $location.path("/login");
+            $location.path(yaioUtils.getConfig().appLoginUrl);
             $scope.error = false;
         } else {
             // load data
-            $scope.frontPageUrl = '/exports/htmlfrontpagefragment/' + nodeId;
+            $scope.frontPageUrl = yaioUtils.getConfig().restExportsBaseUrl + 'htmlfrontpagefragment/' + nodeId;
         }
     });
 });

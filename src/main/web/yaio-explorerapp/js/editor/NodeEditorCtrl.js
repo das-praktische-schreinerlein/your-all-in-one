@@ -260,11 +260,11 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ht
         if (mode === "edit") {
             // mode update 
             method = "PATCH";
-            url = yaioUtils.getConfig().updateUrl + $scope.nodeForEdit.className + "/" + $scope.nodeForEdit.sysUID;
+            url = yaioUtils.getConfig().restUpdateUrl + $scope.nodeForEdit.className + "/" + $scope.nodeForEdit.sysUID;
         } else if (mode === "create") {
             // mode create 
             method = "POST";
-            url = yaioUtils.getConfig().createUrl + $scope.nodeForEdit.className + "/" + $scope.nodeForEdit.sysUID;
+            url = yaioUtils.getConfig().restCreateUrl + $scope.nodeForEdit.className + "/" + $scope.nodeForEdit.sysUID;
             
             // unset sysUID
             nodeObj["sysUID"] = null;

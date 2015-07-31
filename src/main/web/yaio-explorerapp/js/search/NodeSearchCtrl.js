@@ -162,7 +162,7 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ht
      *     GUI Callback Fulltextsearch
      */
     $scope.doFulltextSearch = function() {
-        var uri = '/' + encodeURI($scope.searchOptions.curPage)
+        var uri = encodeURI($scope.searchOptions.curPage)
                 + '/' + encodeURI($scope.searchOptions.pageSize)
                 + '/' + encodeURI($scope.searchOptions.searchSort)
                 + '/' + encodeURI($scope.searchOptions.baseSysUID)
@@ -176,7 +176,7 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ht
         }
 
         // load data
-        var searchNodeUrl = '/nodes/search' + uri;
+        var searchNodeUrl = yaioUtils.getConfig().restSearchUrl + uri;
         $http.get(searchNodeUrl).then(function(nodeResponse) {
             // success handler
             
@@ -328,7 +328,7 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ht
     authorization.authentificate(function () {
         // check authentification
         if (! $rootScope.authenticated) {
-            $location.path("/login");
+            $location.path(yaioUtils.getConfig().appLoginUrl);
             $scope.error = false;
         } else {
             // do Search
