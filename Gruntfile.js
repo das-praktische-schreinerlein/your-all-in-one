@@ -73,6 +73,7 @@ function patchFileFancytree(content, srcpath) {
                                     "@version @VERSION\n");
     newContent = newContent.replace(/@date .*?\n/g,
                                     "@date @DATE\n");
+    
     return newContent;
 }
 function patchFileJQuery(content, srcpath) {
@@ -369,7 +370,7 @@ module.exports = function( grunt ){
                             return dest + src.replace('-legacy.full.js','.full.js');
                           }
                     },
-                    {expand: true, cwd: bowerSrcBase + 'slimbox2', src: ['js/slimbox2.js'], dest: vendorDestBase + 'js/slimbox2/', flatten: true},
+                    {expand: true, cwd: bowerSrcBase + 'slimbox2', src: ['js/*.js'], dest: vendorDestBase + 'js/slimbox2/', flatten: true},
                     {expand: true, cwd: bowerSrcBase + 'strapdown', src: ['src/js/strapdown-toc.js'], dest: vendorDestBase + 'js/strapdown/', flatten: true},
                     {expand: true, cwd: bowerSrcBase + 'toastr', src: ['build/toastr.min.js'], dest: vendorDestBase + 'js/toastr/', flatten: true},
                     {expand: true, cwd: bowerSrcBase + 'ui-contextmenu', src: ['jquery.ui-contextmenu.min.js'], dest: vendorDestBase + 'js/jqueryui/', flatten: true},
