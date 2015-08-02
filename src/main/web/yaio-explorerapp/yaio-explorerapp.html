@@ -20,6 +20,8 @@
 
   <!-- scripts: vendors -->
   <script  type="text/javascript" charset="UTF-8" src="../dist/vendors-full.vendorversion.js"></script>
+  <!-- scripts: mermaid needs own script for loading plugins -->
+  <script type="text/javascript" charset="UTF-8" src="../dist/vendors.vendorversion/mermaid/mermaid.full.js"></script>
   <!-- scripts: fancytree needs own script for loading plugins -->
   <script type="text/javascript" charset="UTF-8" src="../dist/vendors.vendorversion/fancytree/jquery.fancytree.js"></script>
   <script type="text/javascript" charset="UTF-8" src="../dist/vendors.vendorversion/fancytree/jquery.fancytree.dnd.js"></script>
@@ -185,6 +187,7 @@
 <script type="text/javascript">
 window.yaioAppBase = YaioAppBase();
 yaioAppBase.publishDetectorStyles();
+mermaid.initialize({startOnLoad:false});
 </script>
 
 <!-- Tooltip -->

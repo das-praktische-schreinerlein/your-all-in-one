@@ -1538,7 +1538,6 @@ button.toast-close-button {
 
 /* Sequence Diagram variables */
 /* Gantt chart variables */
-/* mermaid 0.4 */
 .mermaid .label {
   color: #333333;
 }
@@ -1553,10 +1552,10 @@ button.toast-close-button {
   stroke: #333333;
 }
 .cluster rect {
-  fill: #ffffde;
-  rx: 40;
-  stroke: #aaaa33;
-  stroke-width: 1px;
+  fill: #ffffde !important;
+  rx: 4 !important;
+  stroke: #aaaa33 !important;
+  stroke-width: 1px !important;
 }
 .cluster text {
   fill: #333333;
@@ -1791,6 +1790,10 @@ text.actor {
 text {
   font-family: 'trebuchet ms', verdana, arial;
   font-size: 14px;
+}
+
+.mermaid {
+  width:1200px;
 }
 
 /*

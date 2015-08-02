@@ -156,7 +156,8 @@ module.exports = function( grunt ){
               vendorDestBase + 'js/strapdown/strapdown-toc.js',
               vendorDestBase + 'js/highlightjs/highlight.pack.js',
               vendorDestBase + 'js/toastr/toastr.min.js',
-              vendorSrcBase + 'js/mermaid/mermaid.full.js',
+// loaded standalone because of problems
+//              vendorDestBase + 'js/mermaid/mermaid.full.js',
               vendorDestBase + 'js/findandreplacedomtext/findAndReplaceDOMText.js',
 // loaded standalone because of plugins
               vendorSrcBase + 'freemind-flash/flashobject.js',
@@ -169,7 +170,7 @@ module.exports = function( grunt ){
 //              vendorDestBase + 'js/fancytree/skin-win8/ui.fancytree.css',
               vendorDestBase + 'css/highlightjs/default.css',
               vendorDestBase + 'css/toastr/toastr.css',
-              vendorSrcBase + 'css/mermaid/mermaid.css',
+              vendorDestBase + 'css/mermaid/mermaid.css',
               vendorSrcBase + 'css/yaio/style.css',
               vendorSrcBase + 'css/yaio/main.css'
         ],
@@ -365,6 +366,13 @@ module.exports = function( grunt ){
                     {expand: true, cwd: bowerSrcBase + 'jquery-ui', src: ['**/jquery-ui.min.js', '**/jquery-ui-i18n.min.js'], dest: vendorDestBase + 'js/jqueryui/', flatten: true},
                     {expand: true, cwd: bowerSrcBase + 'jqueryui-timepicker-addon', src: ['dist/jquery-ui-sliderAccess.js', 'dist/jquery-ui-timepicker-addon.js'], dest: vendorDestBase + 'js/jqueryui/', flatten: true},
                     {expand: true, cwd: bowerSrcBase + 'marked', src: ['lib/marked.js'], dest: vendorDestBase + 'js/marked/', flatten: true},
+                    // mermaid 0.5
+                    {expand: true, cwd: bowerSrcBase + 'mermaid', src: ['dist/mermaid.js'], dest: vendorDestBase + 'js/mermaid/', flatten: true, filter: 'isFile'
+                        ,rename: function(dest, src) {
+                            return dest + src.replace('mermaid.js','mermaid.full.js');
+                          }
+                    },
+                    // mermaid 0.4
                     {expand: true, cwd: bowerSrcBase + 'mermaid', src: ['dist/mermaid.full.js'], dest: vendorDestBase + 'js/mermaid/', flatten: true, filter: 'isFile'
                         ,rename: function(dest, src) {
                             return dest + src.replace('-legacy.full.js','.full.js');
@@ -395,6 +403,7 @@ module.exports = function( grunt ){
             vendors2dist: {
                 files: [
                     // vendors
+                    {expand: true, cwd: vendorDestBase + 'js/mermaid', src: ['*.js'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/mermaid/', flatten: false},
                     {expand: true, cwd: vendorDestBase + 'css', src: ['jqueryui/images/*.*'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/', flatten: false},
                     {expand: true, cwd: vendorDestBase + 'js/fancytree', src: ['jquery.fancytree.js',
                                                                               'jquery.fancytree.dnd.js',
