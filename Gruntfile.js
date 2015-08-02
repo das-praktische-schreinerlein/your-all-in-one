@@ -151,8 +151,8 @@ module.exports = function( grunt ){
               vendorDestBase + 'js/angularjs/angular-translate-loader-static-files.js',
               vendorDestBase + 'js/marked/marked.js',
 // loaded standalone because of plugins
-//              vendorSrcBase + 'js/ace/ace.js',
-//              vendorSrcBase + 'js/ace/ext-spellcheck.js',
+//              vendorDestBase + 'js/ace/ace.js',
+//              vendorDestBase + 'js/ace/ext-spellcheck.js',
               vendorDestBase + 'js/strapdown/strapdown-toc.js',
               vendorDestBase + 'js/highlightjs/highlight.pack.js',
               vendorDestBase + 'js/toastr/toastr.min.js',
