@@ -197,6 +197,7 @@ JsHelferlein.AppBase = function(config) {
     
     me._configureDefaultServices = function() {
         me.jQuery = $;
+        me.$ = me.jQuery;
         me.configureService("jQuery", function() { return me.jQuery; });
         me.configureService("Logger", function() { return JsHelferlein.LoggerService(me); });
         me.configureService("DOMHelper", function() { return JsHelferlein.DOMHelperService(me); });
@@ -330,6 +331,8 @@ JsHelferlein.ServiceBase = function(appBase, config, defaultConfig) {
         // check Config
         me.appBase = appBase;
         me.config = appBase.checkConfig(config, defaultConfig);
+        me.jQuery = appBase.jQuery;
+        me.$ = me.jQuery;
     };
 
     me._init();
@@ -872,9 +875,9 @@ JsHelferlein.SpeechRecognitionHelperService = function(appBase, config) {
     me.initSrcFromOpener = function() {
         // Text vom Opener holen
         if (opener && opener.targetElement) {
-            document.getElementById(me.config.finalTextareaId).value = $(opener.targetElement).text();
+            document.getElementById(me.config.finalTextareaId).value = me.$(opener.targetElement).text();
             if (! document.getElementById(me.config.finalTextareaId).value) {
-                document.getElementById(me.config.finalTextareaId).value = $(opener.targetElement).val();
+                document.getElementById(me.config.finalTextareaId).value = me.$(opener.targetElement).val();
             }
         }
     };
@@ -1182,9 +1185,9 @@ JsHelferlein.SpeechSynthHelperService = function(appBase, config) {
     me.initSrcFromOpener = function() {
         // Text vom Opener holen
         if (opener && opener.targetElement) {
-            document.getElementById(me.config.finalTextareaId).value = $(opener.targetElement).text();
+            document.getElementById(me.config.finalTextareaId).value = me.$(opener.targetElement).text();
             if (! document.getElementById(me.config.finalTextareaId).value) {
-                document.getElementById(me.config.finalTextareaId).value = $(opener.targetElement).val();
+                document.getElementById(me.config.finalTextareaId).value = me.$(opener.targetElement).val();
             }
         }
     };
@@ -1458,7 +1461,7 @@ JsHelferlein.UIToggler = function(appBase) {
         }
    
         // run the effect
-        $( id ).toggle( selectedEffect, options, 500 );
+        me.$( id ).toggle( selectedEffect, options, 500 );
     };
     
     /**
@@ -1478,21 +1481,21 @@ JsHelferlein.UIToggler = function(appBase) {
         var classWrap = "pre-wrap";
         var flgClassNoWrap = "flg-pre-nowrap";
         var flgClassWrap = "flg-pre-wrap";
-        var codeChilden = $(element).find("code");
+        var codeChilden = me.$(element).find("code");
         
         // remove/add class if element no has class
-        if ($(element).hasClass(flgClassNoWrap)) {
-            $(element).removeClass(flgClassNoWrap).addClass(flgClassWrap);
+        if (me.$(element).hasClass(flgClassNoWrap)) {
+            me.$(element).removeClass(flgClassNoWrap).addClass(flgClassWrap);
             console.log("togglePreWrap for id:" + element + " set " + classWrap);
             // wrap code-blocks too
-            $(codeChilden).removeClass(classNoWrap).addClass(classWrap);
-            $(codeChilden).parent().removeClass(classNoWrap).addClass(classWrap);
+            me.$(codeChilden).removeClass(classNoWrap).addClass(classWrap);
+            me.$(codeChilden).parent().removeClass(classNoWrap).addClass(classWrap);
         } else {
-            $(element).removeClass(flgClassWrap).addClass(flgClassNoWrap);
+            me.$(element).removeClass(flgClassWrap).addClass(flgClassNoWrap);
             console.log("togglePreWrap for id:" + element + " set " + classNoWrap);
             // wrap code-blocks too
-            $(codeChilden).removeClass(classWrap).addClass(classNoWrap);
-            $(codeChilden).parent().removeClass(classNoWrap).addClass(classWrap);
+            me.$(codeChilden).removeClass(classWrap).addClass(classNoWrap);
+            me.$(codeChilden).parent().removeClass(classNoWrap).addClass(classWrap);
        }
     };
     
@@ -1523,7 +1526,7 @@ JsHelferlein.UIToggler = function(appBase) {
         }
    
         // run the effect
-        $( id ).toggle( selectedEffect, options, 500 );
+        me.$( id ).toggle( selectedEffect, options, 500 );
     };
    
     me._init();
@@ -1542,13 +1545,26 @@ window.YaioAppBaseConfig = function() {
 
     me.CONST_MasterId               = "MasterplanMasternode1";
     me.loginUrl                     = "/yaio-explorerapp/yaio-explorerapp.html#/login";
-    me.baseUrl                      = "/nodes/";
-    me.showUrl                      = me.baseUrl + "show/";
-    me.symLinkUrl                   = me.baseUrl + "showsymlink/";
-    me.updateUrl                    = me.baseUrl + "update/";
-    me.createUrl                    = me.baseUrl + "create/";
-    me.moveUrl                      = me.baseUrl + "move/";
-    me.removeUrl                    = me.baseUrl + "delete/";
+    
+    // App urls
+    me.appRootUrl                   = "/";
+    me.appLoginUrl                  = me.appRootUrl + "login";
+    
+    // REST login
+    me.restLoginUrl                 = "/login";
+    me.restLogoutUrl                = "/logout";
+    me.restCheckUserUrl             = "/user/current";
+    
+    // REST actions
+    me.restBaseUrl                  = "/nodes/";
+    me.restShowUrl                  = me.restBaseUrl + "show/";
+    me.restSymLinkUrl               = me.restBaseUrl + "showsymlink/";
+    me.restUpdateUrl                = me.restBaseUrl + "update/";
+    me.restCreateUrl                = me.restBaseUrl + "create/";
+    me.restMoveUrl                  = me.restBaseUrl + "move/";
+    me.restRemoveUrl                = me.restBaseUrl + "delete/";
+    me.restSearchUrl                = me.restBaseUrl + "search/";
+    me.restExportsBaseUrl           = "/exports/";
 
     me.configNodeTypeFields         = {
         Create: {
@@ -1707,30 +1723,30 @@ Yaio.BaseService = function(appBase) {
     };
 
     me.toggleWithLinks = function(link1, link2, id1, id2) {
-         if ($(id1).css("display") != "none") {
-             $(id1).css("display", "none");
-             $(link1).css("display", "inline");
-             $(id2).css("display", "block");
-             $(link2).css("display", "none");
+         if (me.$(id1).css("display") != "none") {
+             me.$(id1).css("display", "none");
+             me.$(link1).css("display", "inline");
+             me.$(id2).css("display", "block");
+             me.$(link2).css("display", "none");
          } else {
-             $(id2).css("display", "none");
-             $(link2).css("display", "inline");
-             $(id1).css("display", "block");
-             $(link1).css("display", "none");
+             me.$(id2).css("display", "none");
+             me.$(link2).css("display", "inline");
+             me.$(id1).css("display", "block");
+             me.$(link1).css("display", "none");
          }
          return false;     
      };
     
      me.showModalErrorMessage = function(message) {
          // set messagetext
-         $( "#error-message-text" ).html(message);
+         me.$( "#error-message-text" ).html(message);
          
          // show message
-         $( "#error-message" ).dialog({
+         me.$( "#error-message" ).dialog({
              modal: true,
              buttons: {
                Ok: function() {
-                 $( this ).dialog( "close" );
+                 me.$( this ).dialog( "close" );
                }
              }
          });    
@@ -1738,23 +1754,23 @@ Yaio.BaseService = function(appBase) {
     
      me.showModalConfirmDialog = function(message, yesHandler, noHandler) {
          // set messagetext
-         $( "#dialog-confirm-text" ).html(message);
+         me.$( "#dialog-confirm-text" ).html(message);
          
          // show message
          
-         $( "#dialog-confirm" ).dialog({
+         me.$( "#dialog-confirm" ).dialog({
              resizable: false,
              height:140,
              modal: true,
              buttons: {
                "Ja": function() {
-                 $( this ).dialog( "close" );
+                 me.$( this ).dialog( "close" );
                  if (yesHandler) {
                      yesHandler();
                  }
                },
                "Abbrechen": function() {
-                 $( this ).dialog( "close" );
+                 me.$( this ).dialog( "close" );
                  if (noHandler) {
                      noHandler();
                  }
@@ -1884,7 +1900,7 @@ Yaio.BaseService = function(appBase) {
                me.logError("Leider kann der Download nicht angezeigt werden, da Ihr Popup-Blocker aktiv ist. Beachten Sie die Hinweise im Kopf des Browsers. ", true);
            } else {
                // set data to document
-               $(popup.document.body).html("<pre>" + me.htmlEscapeTextLazy(data) + "</pre>");
+               me.$(popup.document.body).html("<pre>" + me.htmlEscapeTextLazy(data) + "</pre>");
            }
            return false;
        } else {
@@ -1960,15 +1976,15 @@ Yaio.EditorService = function(appBase) {
         console.log("yaioResetNodeEditor: show tree, hide editor");
         
         // show full tree
-        $("#containerYaioTree").css("width", "100%");
+        me.$("#containerYaioTree").css("width", "100%");
         
         // hide editor-container
-        $("#containerYaioEditor").css("width", "100%");
-        $("#containerYaioEditor").css("display", "none");
+        me.$("#containerYaioEditor").css("width", "100%");
+        me.$("#containerYaioEditor").css("display", "none");
         
         // hide editor-box
-        $("#containerBoxYaioEditor").css("width", "100%");
-        $("#containerBoxYaioEditor").css("display", "none");
+        me.$("#containerBoxYaioEditor").css("width", "100%");
+        me.$("#containerBoxYaioEditor").css("display", "none");
         
         // hide forms
         me.yaioHideAllNodeEditorForms();
@@ -1991,12 +2007,12 @@ Yaio.EditorService = function(appBase) {
         // reset editor
         console.log("yaioHideAllNodeEditorForms: hide forms");
         // hide forms
-        $("#containerFormYaioEditorCreate").css("display", "none");
-        $("#containerFormYaioEditorTaskNode").css("display", "none");
-        $("#containerFormYaioEditorEventNode").css("display", "none");
-        $("#containerFormYaioEditorInfoNode").css("display", "none");
-        $("#containerFormYaioEditorUrlResNode").css("display", "none");
-        $("#containerFormYaioEditorSymLinkNode").css("display", "none");
+        me.$("#containerFormYaioEditorCreate").css("display", "none");
+        me.$("#containerFormYaioEditorTaskNode").css("display", "none");
+        me.$("#containerFormYaioEditorEventNode").css("display", "none");
+        me.$("#containerFormYaioEditorInfoNode").css("display", "none");
+        me.$("#containerFormYaioEditorUrlResNode").css("display", "none");
+        me.$("#containerFormYaioEditorSymLinkNode").css("display", "none");
     };
     
     /**
@@ -2070,21 +2086,21 @@ Yaio.EditorService = function(appBase) {
         
         // set depending on the fieldtype
         if (field.type === "hidden") {
-            $(fieldNameId).val(value).trigger('input').triggerHandler("change");
+            me.$(fieldNameId).val(value).trigger('input').triggerHandler("change");
         } else if (field.type === "select") {
-            $(fieldNameId).val(value).trigger('select').triggerHandler("change");
+            me.$(fieldNameId).val(value).trigger('select').triggerHandler("change");
         } else if (field.type === "checkbox") {
             if (value) {
-                $(fieldNameId).prop("checked", true);
+                me.$(fieldNameId).prop("checked", true);
             } else {
-                $(fieldNameId).prop("checked", false);
+                me.$(fieldNameId).prop("checked", false);
             }
-            $(fieldNameId).trigger('input').triggerHandler("change");
+            me.$(fieldNameId).trigger('input').triggerHandler("change");
         } else if (field.type === "textarea") {
-            $(fieldNameId).val(value).trigger('select').triggerHandler("change");
+            me.$(fieldNameId).val(value).trigger('select').triggerHandler("change");
         } else {
             // input
-            $(fieldNameId).val(value).trigger('input');
+            me.$(fieldNameId).val(value).trigger('input');
         }
         console.log("yaioSetFormField map nodefield:" + fieldName 
                 + " set:" + fieldNameId + "=" + value);
@@ -2117,7 +2133,7 @@ Yaio.EditorService = function(appBase) {
             return null;
         }
         // load node
-        var tree = $("#tree").fancytree("getTree");
+        var tree = me.$("#tree").fancytree("getTree");
         if (!tree) {
             // tree not found
             me.appBase.get('YaioBase').logError("error yaioOpenNodeEditor: cant load tree for node:" + nodeId, false);
@@ -2249,19 +2265,19 @@ Yaio.EditorService = function(appBase) {
         }
         
         // show editor
-        var width = $("#box_data").width();
+        var width = me.$("#box_data").width();
         console.log("yaioOpenNodeEditor show editor: " + formSuffix 
                 + " for node:" + nodeId);
     
         // set width
-        $("#containerYaioEditor").css("width", "900px");
-        $("#containerBoxYaioEditor").css("width", "900px");
-        $("#containerYaioTree").css("width", (width - $("#containerYaioEditor").width() - 30) + "px");
+        me.$("#containerYaioEditor").css("width", "900px");
+        me.$("#containerBoxYaioEditor").css("width", "900px");
+        me.$("#containerYaioTree").css("width", (width - me.$("#containerYaioEditor").width() - 30) + "px");
         
         // display editor and form for the formSuffix
-        $("#containerBoxYaioEditor").css("display", "block");
-        $("#containerFormYaioEditor" + formSuffix).css("display", "block");
-        //$("#containerYaioEditor").css("display", "block");
+        me.$("#containerBoxYaioEditor").css("display", "block");
+        me.$("#containerFormYaioEditor" + formSuffix).css("display", "block");
+        //me.$("#containerYaioEditor").css("display", "block");
         me.appBase.get('UIToggler').toggleElement("#containerYaioEditor");
     
         // create Elements if not exists
@@ -2332,10 +2348,10 @@ Yaio.EditorService = function(appBase) {
      */
     me.callUpdateTriggerForElement = function(element) {
         if (element != null) {
-            $(element).trigger('input').triggerHandler("change");
-            $(element).trigger('select').triggerHandler("change");
-            $(element).trigger('input');
-            $(element).focus();
+            me.$(element).trigger('input').triggerHandler("change");
+            me.$(element).trigger('select').triggerHandler("change");
+            me.$(element).trigger('input');
+            me.$(element).focus();
         }
     };
     
@@ -2479,19 +2495,19 @@ Yaio.LayoutService = function(appBase) {
         // add speechrecognition if availiable
         if (me.appBase.getDetector('SpeechRecognitionDetector').isSupported()) {
             // add speechrecognition to nodeDesc+name
-            $("label[for='nodeDesc'], label[for='name']").append(function (idx) {
+            me.$("label[for='nodeDesc'], label[for='name']").append(function (idx) {
                 var link = "";
                 var label = this;
                 
                 // check if already set
-                if ($(label).attr("webkitSpeechRecognitionAdded")) {
-                    console.error("addSpeechRecognitionToElements: SKIP because already added: " + $(label).attr("for"));
+                if (me.$(label).attr("webkitSpeechRecognitionAdded")) {
+                    console.error("addSpeechRecognitionToElements: SKIP because already added: " + me.$(label).attr("for"));
                     return link;
                 }
     
                 // get corresponding form
-                var forName = $(label).attr("for");
-                var form = $(label).closest("form");
+                var forName = me.$(label).attr("for");
+                var form = me.$(label).closest("form");
                 
                 // get for-element byName from form
                 var forElement = form.find("[name="+ forName + "]").first();
@@ -2505,7 +2521,7 @@ Yaio.LayoutService = function(appBase) {
                             " src='" + me.appBase.getService('SpeechRecognitionHelper').config.statusImgSrcStart + "'></a>";
                     
                     // set flag
-                    $(label).attr("webkitSpeechRecognitionAdded", "true");
+                    me.$(label).attr("webkitSpeechRecognitionAdded", "true");
                     console.log("addSpeechRecognitionToElements: add : " + forName + " for " + forElement.attr('id'));
                 }
                 return link;
@@ -2552,19 +2568,19 @@ Yaio.LayoutService = function(appBase) {
         // add speechSynth if availiable
         if (me.appBase.getDetector('SpeechSynthDetector').isSupported()) {
             // add speechrecognition to nodeDesc+name
-            $("label[for='nodeDesc']").append(function (idx) {
+            me.$("label[for='nodeDesc']").append(function (idx) {
                 var link = "";
                 var label = this;
                 
                 // check if already set
-                if ($(label).attr("speechSynthAdded")) {
-                    console.error("addSpeechSynthToElements: SKIP because already added: " + $(label).attr("for"));
+                if (me.$(label).attr("speechSynthAdded")) {
+                    console.error("addSpeechSynthToElements: SKIP because already added: " + me.$(label).attr("for"));
                     return link;
                 }
     
                 // get corresponding form
-                var forName = $(label).attr("for");
-                var form = $(label).closest("form");
+                var forName = me.$(label).attr("for");
+                var form = me.$(label).closest("form");
                 
                 // get for-element byName from form
                 var forElement = form.find("[name="+ forName + "]").first();
@@ -2576,7 +2592,7 @@ Yaio.LayoutService = function(appBase) {
                            "\" lang='tech' data-tooltip='tooltip.command.OpenSpeechSynth' class='button'>common.command.OpenSpeechSynth</a>";
                     
                     // set flag
-                    $(label).attr("speechSynthAdded", "true");
+                    me.$(label).attr("speechSynthAdded", "true");
                     console.log("addSpeechSynthToElements: add : " + forName + " for " + forElement.attr('id'));
                 }
                 return link;
@@ -2621,8 +2637,8 @@ Yaio.LayoutService = function(appBase) {
      */
     me.addDatePickerToElements = function() {
         // add datepicker to all dateinput
-        $.datepicker.setDefaults($.datepicker.regional['de']);
-        $.timepicker.regional['de'] = {
+        me.$.datepicker.setDefaults(me.$.datepicker.regional['de']);
+        me.$.timepicker.regional['de'] = {
                 timeOnlyTitle: 'Uhrzeit auswählen',
                 timeText: 'Zeit',
                 hourText: 'Stunde',
@@ -2632,9 +2648,9 @@ Yaio.LayoutService = function(appBase) {
                 closeText: 'Auswählen',
                 ampm: false
               };
-        $.timepicker.setDefaults($.timepicker.regional['de']);    
-        $('input.inputtype_date').datepicker();
-        $('input.inputtype_datetime').datetimepicker();
+        me.$.timepicker.setDefaults(me.$.timepicker.regional['de']);    
+        me.$('input.inputtype_date').datepicker();
+        me.$('input.inputtype_datetime').datetimepicker();
     };
     
     
@@ -2652,34 +2668,34 @@ Yaio.LayoutService = function(appBase) {
      */
     me.addDocLayoutStyleSelectorToElements = function() {
         // iterate over docLayoutSDtyleClass-elements
-        $("input.inputtype_docLayoutAddStyleClass").each(function () {
+        me.$("input.inputtype_docLayoutAddStyleClass").each(function () {
             // add select only if id id set
             var ele = this;
-            var id = $(ele).attr("id");
+            var id = me.$(ele).attr("id");
             if (id) {
                 // add select
-                var $select = $("<select id='" + id + "_select' lang='tech' />");
+                var $select = me.$("<select id='" + id + "_select' lang='tech' />");
                 
                 // append values
-                $select.append($("<option value=''>Standardstyle</option>"));
-                $select.append($("<option value='row-label-value'>row-label-value</option>"));
-                $select.append($("<option value='row-label-value'>row-label-value</option>"));
-                $select.append($("<option value='row-boldlabel-value'>row-boldlabel-value</option>"));
-                $select.append($("<option value='row-value-only-full'>row-value-only-full</option>"));
-                $select.append($("<option value='row-label-only-full'>row-label-only-full</option>"));
+                $select.append(me.$("<option value=''>Standardstyle</option>"));
+                $select.append(me.$("<option value='row-label-value'>row-label-value</option>"));
+                $select.append(me.$("<option value='row-label-value'>row-label-value</option>"));
+                $select.append(me.$("<option value='row-boldlabel-value'>row-boldlabel-value</option>"));
+                $select.append(me.$("<option value='row-value-only-full'>row-value-only-full</option>"));
+                $select.append(me.$("<option value='row-label-only-full'>row-label-only-full</option>"));
                 
                 // add changehandler
                 $select.change(function() {
                     // set new value
-                    var style = $(this).val();
-                    $(ele).val(style);
+                    var style = me.$(this).val();
+                    me.$(ele).val(style);
                     
                     // call updatetrigger
                     window.callUpdateTriggerForElement(ele);
                 });
                 
                 // insert select after input
-                $(ele).after($select);
+                me.$(ele).after($select);
             }
             
         });
@@ -2687,19 +2703,19 @@ Yaio.LayoutService = function(appBase) {
     
     me.addPreviewToElements = function() {
         // add preview to nodeDesc
-        $("label[for='nodeDesc']").append(function (idx) {
+        me.$("label[for='nodeDesc']").append(function (idx) {
             var link = "";
             var label = this;
             
             // check if already set
-            if ($(label).attr("previewAdded")) {
-                console.error("addPreviewElements: SKIP because already added: " + $(label).attr("for"));
+            if (me.$(label).attr("previewAdded")) {
+                console.error("addPreviewElements: SKIP because already added: " + me.$(label).attr("for"));
                 return link;
             }
    
             // get corresponding form
-            var forName = $(label).attr("for");
-            var form = $(label).closest("form");
+            var forName = me.$(label).attr("for");
+            var form = me.$(label).closest("form");
             
             // get for-element byName from form
             var forElement = form.find("[name="+ forName + "]").first();
@@ -2714,7 +2730,7 @@ Yaio.LayoutService = function(appBase) {
                         "\" lang='tech' data-tooltip='tooltip.command.OpenMarkdownHelp' class='button'>common.command.OpenMarkdownHelp</a>";
                 
                 // set flag
-                $(label).attr("previewAdded", "true");
+                me.$(label).attr("previewAdded", "true");
                 console.log("addPreviewToElements: add : " + forName + " for " + forElement.attr('id'));
             }
             return link;
@@ -2725,19 +2741,19 @@ Yaio.LayoutService = function(appBase) {
      
     me.addWysiwhgToElements = function() {
         // add preview to nodeDesc
-        $("label[for='nodeDesc']").append(function (idx) {
+        me.$("label[for='nodeDesc']").append(function (idx) {
             var link = "";
             var label = this;
             
             // check if already set
-            if ($(label).attr("wysiwhgAdded")) {
-                console.error("addWysiwhgElements: SKIP because already added: " + $(label).attr("for"));
+            if (me.$(label).attr("wysiwhgAdded")) {
+                console.error("addWysiwhgElements: SKIP because already added: " + me.$(label).attr("for"));
                 return link;
             }
    
             // get corresponding form
-            var forName = $(label).attr("for");
-            var form = $(label).closest("form");
+            var forName = me.$(label).attr("for");
+            var form = me.$(label).closest("form");
             
             // get for-element byName from form
             var forElement = form.find("[name="+ forName + "]").first();
@@ -2749,7 +2765,7 @@ Yaio.LayoutService = function(appBase) {
                     "\" lang='tech' data-tooltip='tooltip.command.OpenWysiwygEditor' class='button'>common.command.OpenWysiwygEditor</a>";
                 
                 // set flag
-                $(label).attr("wysiwhgAdded", "true");
+                me.$(label).attr("wysiwhgAdded", "true");
                 console.log("addWysiwhgToElements: add : " + forName + " for " + forElement.attr('id'));
             }
             return link;
@@ -2790,14 +2806,14 @@ Yaio.LayoutService = function(appBase) {
         var width = window.innerWidth;
         
         // YAIO-editor
-        var ele = $("#containerBoxYaioEditor");
+        var ele = me.$("#containerBoxYaioEditor");
         if (ele.length > 0) {
             // we are relative to the tree
-            var paddingToHead = $("#containerYaioTree").position().top;
-            var left = $("#containerYaioTree").position().left + $("#containerYaioTree").width + 2;
+            var paddingToHead = me.$("#containerYaioTree").position().top;
+            var left = me.$("#containerYaioTree").position().left + me.$("#containerYaioTree").width + 2;
     
             // set posTop as scrollTop burt never < paddingToHead
-            var posTop = $(window).scrollTop();
+            var posTop = me.$(window).scrollTop();
             if (posTop < paddingToHead) {
                 posTop = paddingToHead;
             }
@@ -2805,66 +2821,66 @@ Yaio.LayoutService = function(appBase) {
             // calc maxHeight = windHeight - 20 (puffer)
             var maxHeight = height - 20;
             // sub topPos - Scollpos
-            maxHeight = maxHeight - (posTop - $(window).scrollTop());
+            maxHeight = maxHeight - (posTop - me.$(window).scrollTop());
     
             // set values
-            $(ele).css("position", "absolute");
-            $(ele).css("max-height", maxHeight);
-            $(ele).css("top", posTop);
-            $(ele).css("left", left);
+            me.$(ele).css("position", "absolute");
+            me.$(ele).css("max-height", maxHeight);
+            me.$(ele).css("top", posTop);
+            me.$(ele).css("left", left);
             
             console.log("setup size containerBoxYaioEditor width:" + window.innerWidth 
                     + " height:" + window.innerHeight 
-                    + " scrollTop:" + $(window).scrollTop()
-                    + " offset.top" + $(ele).offset().top
+                    + " scrollTop:" + me.$(window).scrollTop()
+                    + " offset.top" + me.$(ele).offset().top
                     + " top:" + posTop
-                    + " max-height:" + $(ele).css("max-height")
+                    + " max-height:" + me.$(ele).css("max-height")
                     );
         }
         
         // Export-editor
-        ele = $("#containerFormYaioEditorOutputOptions");
+        ele = me.$("#containerFormYaioEditorOutputOptions");
         if (ele.length > 0) {
-            $(ele).css("max-height", height-$(ele).offset().top);
+            me.$(ele).css("max-height", height-me.$(ele).offset().top);
             console.log("setup size containerFormYaioEditorOutputOptions width:" + window.innerWidth 
                     + " height:" + window.innerHeight 
-                    + " scrollTop:" + $(window).scrollTop()
-                    + " offset.top" + $(ele).offset().top
-                    + " max-height:" + $(ele).css("max-height")
+                    + " scrollTop:" + me.$(window).scrollTop()
+                    + " offset.top" + me.$(ele).offset().top
+                    + " max-height:" + me.$(ele).css("max-height")
                     );
         }
         // Import-editor
-        ele = $("#containerFormYaioEditorImport");
+        ele = me.$("#containerFormYaioEditorImport");
         if (ele.length > 0) {
-            $(ele).css("max-height", height-$(ele).offset().top);
+            me.$(ele).css("max-height", height-me.$(ele).offset().top);
             console.log("setup size containerFormYaioEditorImport width:" + window.innerWidth 
                     + " height:" + window.innerHeight 
-                    + " scrollTop:" + $(window).scrollTop()
-                    + " offset.top" + $(ele).offset().top
-                    + " max-height:" + $(ele).css("max-height")
+                    + " scrollTop:" + me.$(window).scrollTop()
+                    + " offset.top" + me.$(ele).offset().top
+                    + " max-height:" + me.$(ele).css("max-height")
                     );
         }
     
         // Frontpage
-        ele = $("#front-content-intro");
+        ele = me.$("#front-content-intro");
         if (0 && ele.length > 0) {
-            var maxHeight = height-$(ele).offset().top;
+            var maxHeight = height-me.$(ele).offset().top;
             
             // sub todonextbox
-            if ($('#box_todonext').length > 0 ) {
-                if ($('#box_todonext').height > 0) {
-                    maxHeight = maxHeight - $('#box_todonext').height;
+            if (me.$('#box_todonext').length > 0 ) {
+                if (me.$('#box_todonext').height > 0) {
+                    maxHeight = maxHeight - me.$('#box_todonext').height;
                 } else {
                     // sometime height is not set: then default
                     maxHeight = maxHeight - 100;
                 }
             }
-            $(ele).css("max-height", maxHeight);
+            me.$(ele).css("max-height", maxHeight);
             console.log("setup size front-content-intro width:" + window.innerWidth 
                     + " height:" + window.innerHeight 
-                    + " scrollTop:" + $(window).scrollTop()
-                    + " offset.top" + $(ele).offset().top
-                    + " max-height:" + $(ele).css("max-height")
+                    + " scrollTop:" + me.$(window).scrollTop()
+                    + " offset.top" + me.$(ele).offset().top
+                    + " max-height:" + me.$(ele).css("max-height")
                     );
         }
     };
@@ -2873,20 +2889,20 @@ Yaio.LayoutService = function(appBase) {
         // set messagetext
         url += "?" + me.appBase.get('YaioBase').createXFrameAllowFrom();
         console.log("yaioShowHelpSite:" + url);
-        $("#help-iframe").attr('src',url);
+        me.$("#help-iframe").attr('src',url);
         
         // show message
-        $( "#help-box" ).dialog({
+        me.$( "#help-box" ).dialog({
             modal: true,
             width: "800px",
             buttons: {
               "Schliessen": function() {
-                $( this ).dialog( "close" );
+                me.$( this ).dialog( "close" );
               },
               "Eigenes Fenster": function() {
                   var helpFenster = window.open(url, "help", "width=750,height=500,scrollbars=yes,resizable=yes");
                   helpFenster.focus();
-                  $( this ).dialog( "close" );
+                  me.$( this ).dialog( "close" );
                 }
             }
         });    
@@ -2898,18 +2914,18 @@ Yaio.LayoutService = function(appBase) {
             jMATService.getPageLayoutService().toggleFormrows(togglerId, className, true);
             
             // hide toggler
-            $("#" + togglerId + "_On").css('display', 'none');
-            $("#" + togglerId + "_Off").css('display', 'none');
+            me.$("#" + togglerId + "_On").css('display', 'none');
+            me.$("#" + togglerId + "_Off").css('display', 'none');
         } else {
             // show or hide ??
-            $("#" + togglerId + "_On").css('display', 'none');
-            $("#" + togglerId + "_Off").css('display', 'block');
+            me.$("#" + togglerId + "_On").css('display', 'none');
+            me.$("#" + togglerId + "_Off").css('display', 'block');
             jMATService.getPageLayoutService().toggleFormrows(togglerId, className, state);
         }
     };
      
     me.createTogglerIfNotExists = function(parentId, toggleId, className) {
-        var $ele = $("#" + toggleId + "_On");
+        var $ele = me.$("#" + toggleId + "_On");
         if ($ele.length <= 0) {
             // create toggler
             console.log("createTogglerIfNotExists link not exists: create new toggler parent=" + parentId 
@@ -2924,14 +2940,14 @@ Yaio.LayoutService = function(appBase) {
     };
      
     me.togglePrintLayout = function() {
-        if ($("#checkboxPrintAll").prop('checked')) {
+        if (me.$("#checkboxPrintAll").prop('checked')) {
             // print all
-            $("#link_css_dataonly").attr("disabled", "disabled");
-            $("#link_css_dataonly").prop("disabled", true);
+            me.$("#link_css_dataonly").attr("disabled", "disabled");
+            me.$("#link_css_dataonly").prop("disabled", true);
         } else  {
             // print data only
-            $("#link_css_dataonly").removeAttr("disabled");
-            $("#link_css_dataonly").prop("disabled", false);
+            me.$("#link_css_dataonly").removeAttr("disabled");
+            me.$("#link_css_dataonly").prop("disabled", false);
         }
     };
 
@@ -3191,8 +3207,8 @@ Yaio.FormatterService = function(appBase) {
      * @param block - jquery-html-element with the content to convert to mindmap 
      */
     me.formatYaioMindmap = function(block) {
-        var content = $(block).html();
-        var blockId = $(block).attr('id');
+        var content = me.$(block).html();
+        var blockId = me.$(block).attr('id');
         var url = "/converters/mindmap?source=" + encodeURIComponent(content);
         console.log("formatYaioMindmap " + blockId + " url:" + url);
         
@@ -3332,21 +3348,21 @@ Yaio.FormatterService = function(appBase) {
      */
     me.formatDescBlock = function(descBlock) {
         var flgDoMermaid = false;
-        var descBlockId = $(descBlock).attr('id');
+        var descBlockId = me.$(descBlock).attr('id');
     
         console.log("formatDescBlock highlight for descBlock: " + descBlockId);
         // remove trigger-flag
-        $(descBlock).removeClass('syntaxhighlighting-open');
+        me.$(descBlock).removeClass('syntaxhighlighting-open');
         
         // higlight code-blocks
-        $("#" + descBlockId + " code").each(function(i, block) {
-            var blockId = $(block).attr('id');
-            if ($(block).hasClass("lang-mermaid") || $(block).hasClass("mermaid")) {
+        me.$("#" + descBlockId + " code").each(function(i, block) {
+            var blockId = me.$(block).attr('id');
+            if (me.$(block).hasClass("lang-mermaid") || me.$(block).hasClass("mermaid")) {
                 // mermaid: no highlight
                 console.log("formatDescBlock mermaid descBlock: " + descBlockId + " block: " + blockId);
                 me.addServicesToDiagrammBlock(block, 'mermaid',
                         "<a href='' id='linkdownload" + blockId + "'  target='_blank'"
-                        +   " onclick=\"javascript: yaioAppBase.get('YaioBase').downloadAsFile($('#linkdownload" + blockId + "'), $('#" + blockId + "').html(), 'diagram.svg', 'image/svg+xml', 'utf-8'); return true;\">"
+                        +   " onclick=\"javascript: yaioAppBase.get('YaioBase').downloadAsFile(yaioAppBase.$('#linkdownload" + blockId + "'), yaioAppBase.$('#" + blockId + "').html(), 'diagram.svg', 'image/svg+xml', 'utf-8'); return true;\">"
                         + "Download</a>");
                 flgDoMermaid = true;
             } else {
@@ -3357,21 +3373,21 @@ Yaio.FormatterService = function(appBase) {
         });
     
         // mermaid/mindmap div-blocks
-        $("#" + descBlockId + " div").each(function(i, block) {
-            var blockId = $(block).attr('id');
-            if (   ($(block).hasClass("lang-mermaid") || $(block).hasClass("mermaid")) 
-                && ! $(block).attr("data-processed")) {
+        me.$("#" + descBlockId + " div").each(function(i, block) {
+            var blockId = me.$(block).attr('id');
+            if (   (me.$(block).hasClass("lang-mermaid") || me.$(block).hasClass("mermaid")) 
+                && ! me.$(block).attr("data-processed")) {
                 // mermaid: no highlight
                 console.log("formatDescBlock mermaid descBlock: " + descBlockId + " block: " + blockId);
                 me.addServicesToDiagrammBlock(block, 'mermaid',
                         "<a href='' id='linkdownload" + blockId + "'  target='_blank'"
-                        +   " onclick=\"javascript: yaioAppBase.get('YaioBase').downloadAsFile($('#linkdownload" + blockId + "'), $('#" + blockId + "').html(), 'diagram.svg', 'image/svg+xml', 'utf-8'); return true;\">"
+                        +   " onclick=\"javascript: yaioAppBase.get('YaioBase').downloadAsFile(yaioAppBase.$('#linkdownload" + blockId + "'), yaioAppBase.$('#" + blockId + "').html(), 'diagram.svg', 'image/svg+xml', 'utf-8'); return true;\">"
                         + "Download</a>");
                 flgDoMermaid = true;
-            } else if ($(block).hasClass("lang-yaiomindmap") || $(block).hasClass("yaiomindmap")) {
+            } else if (me.$(block).hasClass("lang-yaiomindmap") || me.$(block).hasClass("yaiomindmap")) {
                 // mindmap: no highlight
                 console.log("formatDescBlock yaiomindmap for descBlock: " + descBlockId + " block: " + blockId);
-                var content = $(block).html();
+                var content = me.$(block).html();
                 var url = "/converters/mindmap?source=" + encodeURIComponent(content);
                 me.addServicesToDiagrammBlock(block, 'yaiomindmap', "<a href='" + url + "' id='download" + blockId + "' target='_blank'>Download</a>");
                 me.formatYaioMindmap(block);
@@ -3398,7 +3414,7 @@ Yaio.FormatterService = function(appBase) {
      * @param descBlock - id-filter to identify the block to format
      */
     me.highlightCheckList = function(descBlock) {
-        var descBlockId = $(descBlock).attr('id');
+        var descBlockId = me.$(descBlock).attr('id');
         console.log("highlightCheckList highlight for descBlock: " + descBlockId);
     
         // tests
@@ -3425,7 +3441,7 @@ Yaio.FormatterService = function(appBase) {
      * @param style      - style to add to new span for matcher found
      */
     me.highlightCheckListForMatchers = function(descBlock, matchers, styleClass, style) {
-        var descBlockId = $(descBlock).attr('id');
+        var descBlockId = me.$(descBlock).attr('id');
         console.log("highlightCheckListForMatchers matchers '" + matchers + "' for descBlock: " + descBlockId);
         for (var idx in matchers) {
             me.highlightCheckListForMatcher(descBlock, "[" + matchers[idx] + "]", styleClass, style);
@@ -3449,11 +3465,11 @@ Yaio.FormatterService = function(appBase) {
      * @param style      - style to add to new span for matcher found
      */
     me.highlightCheckListForMatcher = function(descBlock, matcherStr, styleClass, style) {
-        var descBlockId = $(descBlock).attr('id');
+        var descBlockId = me.$(descBlock).attr('id');
         console.log("highlightCheckListForMatcher matcherStr '" + matcherStr + "' for descBlock: " + descBlockId);
-        $("#" + descBlockId + " li:contains('" + matcherStr + "'),h1:contains('" + matcherStr + "'),h2:contains('" + matcherStr + "')").each(function(index, value) {
+        me.$("#" + descBlockId + " li:contains('" + matcherStr + "'),h1:contains('" + matcherStr + "'),h2:contains('" + matcherStr + "')").each(function(index, value) {
             var regEx = RegExp(me.appBase.get('YaioBase').escapeRegExp(matcherStr), 'gi');
-            findAndReplaceDOMText($(value).get(0), {
+            findAndReplaceDOMText(me.$(value).get(0), {
                 find: regEx,
                 replace: function(portion) {
                     var el = document.createElement('span');
@@ -3486,21 +3502,21 @@ Yaio.FormatterService = function(appBase) {
      */
     me.convertExplorerLinesAsCheckList = function() {
         // get title
-        var title = $("#masterTr td.fieldtype_name").text();
+        var title = me.$("#masterTr td.fieldtype_name").text();
         var now = me.appBase.get('YaioBase').formatGermanDateTime((new Date()).getTime());
     
         var checkList = "# Checklist: " + title + " (Stand: " + now + ")\n\n";
         
         // iterate all nodelines
-        $("table.fancytree-ext-table tr").each(function(i, line) {
+        me.$("table.fancytree-ext-table tr").each(function(i, line) {
             // extract data
-            var titleSpan = $(line).find("span.fancytree-title2");
-            var stateSpan = $(line).find("span.fancytree-title-state");
-            var numberSpan = $(line).find("div.field_metanummer");
-            var levelSpan = $(line).find("span.fancytree-node");
-            var istStandDiv = $(line).find("div.fieldtype_stand.field_istChildrenSumStand");
-            var istAufwandDiv = $(line).find("div.fieldtype_aufwand.field_istChildrenSumAufwand");
-            var planAufwandDiv = $(line).find("div.fieldtype_aufwand.field_planChildrenSumAufwand");
+            var titleSpan = me.$(line).find("span.fancytree-title2");
+            var stateSpan = me.$(line).find("span.fancytree-title-state");
+            var numberSpan = me.$(line).find("div.field_metanummer");
+            var levelSpan = me.$(line).find("span.fancytree-node");
+            var istStandDiv = me.$(line).find("div.fieldtype_stand.field_istChildrenSumStand");
+            var istAufwandDiv = me.$(line).find("div.fieldtype_aufwand.field_istChildrenSumAufwand");
+            var planAufwandDiv = me.$(line).find("div.fieldtype_aufwand.field_planChildrenSumAufwand");
             
             // extract content
             var level = 0;
@@ -3510,35 +3526,35 @@ Yaio.FormatterService = function(appBase) {
             var istStand = "0%";
             var istAufwand = "0h";
             var planAufwand = null;
-            if ($(levelSpan).size() > 0) {
+            if (me.$(levelSpan).size() > 0) {
                 // extract level from intend
-                var intend = $(levelSpan).css("margin-left").replace("px", "");
+                var intend = me.$(levelSpan).css("margin-left").replace("px", "");
                 level = parseInt(intend, 10) / 20;
             }
-            if ($(stateSpan).size() > 0) {
+            if (me.$(stateSpan).size() > 0) {
                 // extract state from style
-                var idx = me.extractCheckListStatefromStateSpan($(stateSpan));
+                var idx = me.extractCheckListStatefromStateSpan(me.$(stateSpan));
                 if (idx) {
                     state = idx;
                     state = state.replace("checklist-state-", "");
                     state = state.replace("checklist-test-", "");
                 }
             }
-            if ($(titleSpan).size() > 0) {
-                title = $(titleSpan).text();
+            if (me.$(titleSpan).size() > 0) {
+                title = me.$(titleSpan).text();
             }
-            if ($(numberSpan).size() > 0) {
-                number = $(numberSpan).text();
+            if (me.$(numberSpan).size() > 0) {
+                number = me.$(numberSpan).text();
             }
             
-            if ($(istAufwandDiv).size() > 0) {
-                istAufwand = $(istAufwandDiv).text();
+            if (me.$(istAufwandDiv).size() > 0) {
+                istAufwand = me.$(istAufwandDiv).text();
             }
-            if ($(planAufwandDiv).size() > 0) {
-                planAufwand = $(planAufwandDiv).text();
+            if (me.$(planAufwandDiv).size() > 0) {
+                planAufwand = me.$(planAufwandDiv).text();
             }
-            if ($(istStandDiv).size() > 0) {
-                istStand = $(istStandDiv).text();
+            if (me.$(istStandDiv).size() > 0) {
+                istStand = me.$(istStandDiv).text();
             }
     
             var stand = istStand.trim() + " (" + istAufwand.trim();
@@ -3592,7 +3608,7 @@ Yaio.FormatterService = function(appBase) {
      */
     me.convertExplorerLinesAsGanttMarkdown = function() {
         // get title
-        var title = $("#masterTr td.fieldtype_name").text();
+        var title = me.$("#masterTr td.fieldtype_name").text();
         var now = me.appBase.get('YaioBase').formatGermanDateTime((new Date()).getTime());
     
         var ganttMarkdown = "# Gantt: " + title + " (Stand: " + now + ")\n\n"
@@ -3605,21 +3621,21 @@ Yaio.FormatterService = function(appBase) {
         var ganttMarkdownIst  = "";
         
         // iterate all nodelines
-        $("table.fancytree-ext-table tr").each(function(i, line) {
+        me.$("table.fancytree-ext-table tr").each(function(i, line) {
             // extract data
-            var titleSpan = $(line).find("span.fancytree-title2");
-            var numberSpan = $(line).find("div.field_metanummer");
-            var startEndPlanDiv = $(line).find("div.fieldtype_fromto.field_planChildrenSum");
-            var startEndIstDiv = $(line).find("div.fieldtype_fromto.field_istChildrenSum");
+            var titleSpan = me.$(line).find("span.fancytree-title2");
+            var numberSpan = me.$(line).find("div.field_metanummer");
+            var startEndPlanDiv = me.$(line).find("div.fieldtype_fromto.field_planChildrenSum");
+            var startEndIstDiv = me.$(line).find("div.fieldtype_fromto.field_istChildrenSum");
             
             // extract content
             var title = null;
             var number = null;
-            if ($(titleSpan).size() > 0) {
-                title = $(titleSpan).text();
+            if (me.$(titleSpan).size() > 0) {
+                title = me.$(titleSpan).text();
             }
-            if ($(numberSpan).size() > 0) {
-                number = $(numberSpan).text();
+            if (me.$(numberSpan).size() > 0) {
+                number = me.$(numberSpan).text();
             }
             ganttMarkdownPlan += me.generateGanttMarkdownLineFromBlock(title, number, startEndPlanDiv);
             ganttMarkdownIst += me.generateGanttMarkdownLineFromBlock(title, number, startEndIstDiv);
@@ -3651,9 +3667,9 @@ Yaio.FormatterService = function(appBase) {
      * @return {String}      mermaid-gantt-markdown-line
      */
     me.generateGanttMarkdownLineFromBlock = function(title, number, selector) {
-        if ($(selector).size() > 0) {
+        if (me.$(selector).size() > 0) {
             // extract dates
-            var dates = $(selector).html().replace(/\&nbsp\;/g, ' ').split("-");
+            var dates = me.$(selector).html().replace(/\&nbsp\;/g, ' ').split("-");
             if (dates.length != 2) {
                 return "";
             }
@@ -3670,14 +3686,14 @@ Yaio.FormatterService = function(appBase) {
     };
     
     me.addServicesToDiagrammBlock = function(block, type, downloadLink) {
-        var content = $(block).html();
-        var blockId = $(block).attr('id');
+        var content = me.$(block).html();
+        var blockId = me.$(block).attr('id');
     
         // add source
-        $(block).before("<div class='" + type + "-source' id='fallback" + blockId + "'>"
+        me.$(block).before("<div class='" + type + "-source' id='fallback" + blockId + "'>"
                 + "<pre>" + content + "</pre></div>");
         // add service-links
-        $("#fallback" + blockId).before(
+        me.$("#fallback" + blockId).before(
                 "<div class='services" + type + "' id='services" + blockId + "'><div>"
                 + downloadLink
                 + "<a href='#' style='display: none;' id='toggleorig" + blockId + "' onclick=\"yaioAppBase.get('YaioBase').toggleWithLinks('#toggleorig" + blockId + "', '#togglesource" + blockId + "', '#" + blockId + "', '#fallback" + blockId + "'); return false;\" target='_blank'>Diagramm</a>"
@@ -3690,8 +3706,8 @@ Yaio.FormatterService = function(appBase) {
         // add TOC
         settings = settings || { toc: {}};
         settings.toc = settings.toc || { };
-        settings.toc.dest = $(tocElement);
-        $.fn.toc($(srcElement), settings);
+        settings.toc.dest = me.$(tocElement);
+        me.$.fn.toc(me.$(srcElement), settings);
     };
     
     me._init();
@@ -3752,22 +3768,22 @@ Yaio.MarkdownEditorService = function(appBase) {
         // editor.setOption("spellcheck", true);
         
         // set value
-        editor.setValue($("#" + textAreaId).val());
+        editor.setValue(me.$("#" + textAreaId).val());
         
         // set eventhandler to update corresponding textarea
         editor.getSession().on('change', function(e) {
             // update textarea for angular
-            $("#" + textAreaId).val(editor.getValue()).trigger('select').triggerHandler("change");
+            me.$("#" + textAreaId).val(editor.getValue()).trigger('select').triggerHandler("change");
         });
         
         // set editor as data-attr on parent
-        $("#" + parentId).data("aceEditor", editor);
+        me.$("#" + parentId).data("aceEditor", editor);
         
         return editor;
     };
     
     me.showPreviewForTextareaId = function(textAreaId) {
-        var descText = $("#" + textAreaId).val();
+        var descText = me.$("#" + textAreaId).val();
     
         // prepare descText
         var descHtmlMarked = me.appBase.get('YaioFormatter').formatMarkdown(descText, true);
@@ -3777,15 +3793,15 @@ Yaio.MarkdownEditorService = function(appBase) {
         
     me.showPreview = function(content) {
         // set preview-content
-        $( "#preview-content" ).html(content);
+        me.$( "#preview-content" ).html(content);
         
         // show message
-        $( "#preview-box" ).dialog({
+        me.$( "#preview-box" ).dialog({
             modal: true,
             width: "1050px",
             buttons: {
               Ok: function() {
-                $( this ).dialog( "close" );
+                me.$( this ).dialog( "close" );
               },
               "Vorlesen": function () {
                   me.appBase.get('YaioLayout').openSpeechSynthWindow(document.getElementById('preview-content'));
@@ -3797,25 +3813,25 @@ Yaio.MarkdownEditorService = function(appBase) {
         me.appBase.get('YaioFormatter').formatMermaidGlobal();
     
         // do syntax-highlight
-        me.appBase.get('YaioFormatter').formatDescBlock($("#preview-content"));
+        me.appBase.get('YaioFormatter').formatDescBlock(me.$("#preview-content"));
     };
     
     me.showMarkdownHelp = function() {
         // show message
         var url = "/examples/markdownhelp/markdownhelp.html" + "?" + me.appBase.get('YaioBase').createXFrameAllowFrom();
         console.log("showMarkdownHelp:" + url);
-        $("#markdownhelp-iframe").attr('src',url);
-        $("#markdownhelp-box" ).dialog({
+        me.$("#markdownhelp-iframe").attr('src',url);
+        me.$("#markdownhelp-box" ).dialog({
             modal: true,
             width: "1200px",
             buttons: {
                 "Schliessen": function() {
-                  $( this ).dialog( "close" );
+                  me.$( this ).dialog( "close" );
                 },
                 "Eigenes Fenster": function() {
                     var helpFenster = window.open(url, "markdownhelp", "width=1200,height=500,scrollbars=yes,resizable=yes");
                     helpFenster.focus();
-                    $( this ).dialog( "close" );
+                    me.$( this ).dialog( "close" );
                 } 
             }
         });    
@@ -3825,7 +3841,7 @@ Yaio.MarkdownEditorService = function(appBase) {
     me.openWysiwhgForTextareaId = function(textAreaId) {
         // get existing parentEditor
         var parentEditorId = "editor" + textAreaId.charAt(0).toUpperCase() + textAreaId.substring(1);
-        var parentEditor = $("#" + parentEditorId).data("aceEditor");
+        var parentEditor = me.$("#" + parentEditorId).data("aceEditor");
         console.log("found parentEditor on:" + parentEditorId);
     
         // create  Editor
@@ -3833,16 +3849,16 @@ Yaio.MarkdownEditorService = function(appBase) {
         var editor = me.createNodeDescEditorForNode(myParentId, textAreaId);
     
         // reset intervallHandler for this parent
-        var intervalHandler = $("#" + myParentId).data("aceEditor.intervalHandler");
+        var intervalHandler = me.$("#" + myParentId).data("aceEditor.intervalHandler");
         if (intervalHandler != "undefined") {
             console.log("openWysiwhgForTextareaId: clear old Interval : " + intervalHandler + " for " + myParentId);
             clearInterval(intervalHandler);
         }
         // create new intervalHandler: check every 5 second if there is a change und update all
-        $("#" + myParentId).data("aceEditor.flgChanged", "false");
+        me.$("#" + myParentId).data("aceEditor.flgChanged", "false");
         intervalHandler = setInterval(function(){ 
             // check if something changed
-            if ($("#" + myParentId).data("aceEditor.flgChanged") != "true") {
+            if (me.$("#" + myParentId).data("aceEditor.flgChanged") != "true") {
                 // nothing changed
                 return;
             }
@@ -3850,11 +3866,11 @@ Yaio.MarkdownEditorService = function(appBase) {
             console.log("openWysiwhgForTextareaId: updateData : " + " for " + myParentId);
     
             // reset flag
-            $("#" + myParentId).data("aceEditor.flgChanged", "false");
+            me.$("#" + myParentId).data("aceEditor.flgChanged", "false");
     
             // update textarea for angular
             var value = editor.getValue();
-            $("#" + textAreaId).val(value).trigger('select').triggerHandler("change");
+            me.$("#" + textAreaId).val(value).trigger('select').triggerHandler("change");
             console.log("openWysiwhgForTextareaId: updatetextAreaId: " + textAreaId);
     
             // update preview
@@ -3866,23 +3882,23 @@ Yaio.MarkdownEditorService = function(appBase) {
             }
         }, 5000);
         console.log("openWysiwhgForTextareaId: setIntervall : " + intervalHandler + " for " + myParentId);
-        $("#" + myParentId).data("aceEditor.intervalHandler", intervalHandler);
+        me.$("#" + myParentId).data("aceEditor.intervalHandler", intervalHandler);
         
         // set update-event
         editor.getSession().on('change', function(e) {
-            $("#" + myParentId).data("aceEditor.flgChanged", "true");
+            me.$("#" + myParentId).data("aceEditor.flgChanged", "true");
         });
         
         // init preview
         me.showWyswhgPreviewForTextareaId(textAreaId);
     
         // show message
-        $( "#wysiwhg-box" ).dialog({
+        me.$( "#wysiwhg-box" ).dialog({
             modal: true,
             width: "1200px",
             buttons: {
               Ok: function() {
-                $( this ).dialog( "close" );
+                me.$( this ).dialog( "close" );
                 console.log("openWysiwhgForTextareaId: clearMyInterval : " + intervalHandler + " for " + myParentId);
                 clearInterval(intervalHandler);
               },
@@ -3917,7 +3933,7 @@ Yaio.MarkdownEditorService = function(appBase) {
                               
                               // set new content (textarea+editor)
                               editor.setValue(data);
-                              $("#" + myParentId).data("aceEditor.flgChanged", "true");
+                              me.$("#" + myParentId).data("aceEditor.flgChanged", "true");
                           };
                           
                           // read the file
@@ -3930,12 +3946,12 @@ Yaio.MarkdownEditorService = function(appBase) {
                   // initFileUploader
                   var fileDialog = document.getElementById('importJSONFile');
                   fileDialog.addEventListener('change', handleImportJSONFileSelectHandler, false);
-                  $( "#jsonuploader-box" ).dialog({
+                  me.$( "#jsonuploader-box" ).dialog({
                       modal: true,
                       width: "200px",
                       buttons: {
                         "Schließen": function() {
-                          $( this ).dialog( "close" );
+                          me.$( this ).dialog( "close" );
                         }
                       }
                   });
@@ -3943,27 +3959,27 @@ Yaio.MarkdownEditorService = function(appBase) {
             }
         });
         // add export-link -> buggy to mix jquery and styles
-        $(".ui-dialog-buttonset").append($("<a href='' id='wysiwyg-exportlink'" +
+        me.$(".ui-dialog-buttonset").append(me.$("<a href='' id='wysiwyg-exportlink'" +
             + " sdf='ojfvbhwjh'"
-            + " onclick=\"yaioAppBase.get('YaioBase').downloadAsFile($('#wysiwyg-exportlink'), $('#" + textAreaId + "').val(), 'data.md', 'text/markdown', 'utf-8');\">"
+            + " onclick=\"yaioAppBase.get('YaioBase').downloadAsFile(yaioAppBase.$('#wysiwyg-exportlink'), yaioAppBase.$('#" + textAreaId + "').val(), 'data.md', 'text/markdown', 'utf-8');\">"
             + "<span class='ui-button-text'>Export</span></a>"));
-        $('#wysiwyg-exportlink').addClass("ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only");
+        me.$('#wysiwyg-exportlink').addClass("ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only");
     
     };
     
     me.showWyswhgPreviewForTextareaId = function(textAreaId) {
         // prepare descText
-        var descText = $("#" + textAreaId).val();
+        var descText = me.$("#" + textAreaId).val();
         var descHtmlMarked = me.appBase.get('YaioFormatter').formatMarkdown(descText, true);
     
         // set preview-content
-        $( "#wysiwhg-preview" ).html(descHtmlMarked);
+        me.$( "#wysiwhg-preview" ).html(descHtmlMarked);
     
         // do mermaid when preview visible
         me.appBase.get('YaioFormatter').formatMermaidGlobal();
         
         // do syntax-highlight
-        me.appBase.get('YaioFormatter').formatDescBlock($("#wysiwhg-preview"));
+        me.appBase.get('YaioFormatter').formatDescBlock(me.$("#wysiwhg-preview"));
     };
 
     me._init();
@@ -4006,14 +4022,14 @@ Yaio.ExportedDataService = function(appBase) {
      * ###########################
      */
     me.togglePrintLayout = function() {
-        if ($("#checkboxPrintAll").prop('checked')) {
+        if (me.$("#checkboxPrintAll").prop('checked')) {
             // print all
-            $("#link_css_dataonly").attr("disabled", "disabled");
-            $("#link_css_dataonly").prop("disabled", true);
+            me.$("#link_css_dataonly").attr("disabled", "disabled");
+            me.$("#link_css_dataonly").prop("disabled", true);
         } else  {
             // print data only
-            $("#link_css_dataonly").removeAttr("disabled");
-            $("#link_css_dataonly").prop("disabled", false);
+            me.$("#link_css_dataonly").removeAttr("disabled");
+            me.$("#link_css_dataonly").prop("disabled", false);
         }
     };
     
@@ -4059,7 +4075,7 @@ Yaio.ExportedDataService = function(appBase) {
        if (! errMsg && ! nodeTDId) { 
            errMsg = "Parameter nodeTDId required"; 
        } else {
-           elemNodeTD = $("#" + nodeTDId);
+           elemNodeTD = me.$("#" + nodeTDId);
        }
        
        // TABLE-Element einlesen
@@ -4067,7 +4083,7 @@ Yaio.ExportedDataService = function(appBase) {
            errMsg = "HTMLElement nodeTDId not found"; 
        } else {
            idxCol = elemNodeTD.attr('cellIndex');
-           elemNodeTABLE = $(elemNodeTD).closest('table');
+           elemNodeTABLE = me.$(elemNodeTD).closest('table');
        }
     
        // IDX einlesen
@@ -4089,8 +4105,8 @@ Yaio.ExportedDataService = function(appBase) {
        // Funktionalitaet: alle x-Spalten iterieren und Zahlen extrahieren
        var filterTD = "td:nth-child(" + (idxCol + 1) + ")";
        var numbers = new Array();
-       $(elemNodeTABLE).children("tbody").children("tr").children(filterTD).each(function (i) {
-           var col = $(this);
+       me.$(elemNodeTABLE).children("tbody").children("tr").children(filterTD).each(function (i) {
+           var col = me.$(this);
     
            // mich selbst herauslassen 
            if (col.attr('id') == nodeTDId) {
@@ -4196,18 +4212,18 @@ Yaio.ExportedDataService = function(appBase) {
     me.doParentNodeToggler = function(myId, flgShow) {
         try {
             // Parent-Container einlesen (Child)
-            var parents = $("#" + myId).parents();
+            var parents = me.$("#" + myId).parents();
             if (parents) {
                 parents.map( 
                     function () {
                         // Toggler visible setzen, wenn gefunden
-                        var parentId = $(this).attr("id");
+                        var parentId = me.$(this).attr("id");
                         if (parentId) {
                             var nodeIdMatcher = parentId.match(/node_(.*)_childrencontainer/);
                             if (nodeIdMatcher && nodeIdMatcher.length > 0) {
                                 // Toggler aktivieren
                                 var togglerId = parentId;
-                                if (! $(this).is(":visible")) {
+                                if (! me.$(this).is(":visible")) {
                                     jMATService.getLayoutService().togglerBlockShow(
                                         togglerId, togglerId, function () { 
                                             var togEf = new ToggleEffect(togglerId); 
@@ -4219,9 +4235,9 @@ Yaio.ExportedDataService = function(appBase) {
     
                                 // Element anzeigen
                                 var nodeId = nodeIdMatcher[1];
-                                var master = $("#node_" + nodeId + "_master");
-                                if (master && ! $(master).is(":visible") ) {
-                                    $(master).show();                                
+                                var master = me.$("#node_" + nodeId + "_master");
+                                if (master && ! me.$(master).is(":visible") ) {
+                                    me.$(master).show();                                
                                 }
                             }
                         }
@@ -4256,21 +4272,21 @@ Yaio.ExportedDataService = function(appBase) {
     
     me.doSearch = function(suchworte) {
         // Suche auf alle Node-Elemente ausführen
-        $(".node-block").each(
+        me.$(".node-block").each(
             function(index, value) {
                 var flgFound = false;
                 
                 // Datenelemente konfigurieren
                 var searchElements = new Array();
-                searchElements.push($("#" + $(value).attr("id") + " > div:eq(1)").attr("id")); // Desc
-                searchElements.push($("#" + $(value).attr("id") + " > div:first > div:first > div:first > div:eq(1)").attr("id")); // Name
-                searchElements.push($("#" + $(value).attr("id") + " > div:first > div:eq(1)").attr("id")); // Status 
+                searchElements.push(me.$("#" + me.$(value).attr("id") + " > div:eq(1)").attr("id")); // Desc
+                searchElements.push(me.$("#" + me.$(value).attr("id") + " > div:first > div:first > div:first > div:eq(1)").attr("id")); // Name
+                searchElements.push(me.$("#" + me.$(value).attr("id") + " > div:first > div:eq(1)").attr("id")); // Status 
     
                 // alle Datenelemente iterieren
-                $.each(searchElements,
+                me.$.each(searchElements,
                     function(subIndex, subId) {
                         // Inhalt auslesen
-                        var inhalt = $("#"+subId).text().toLowerCase();
+                        var inhalt = me.$("#"+subId).text().toLowerCase();
                         
                         // Volltextsuche
                         if (me.VolltextTreffer(inhalt, suchworte)) {
@@ -4283,16 +4299,16 @@ Yaio.ExportedDataService = function(appBase) {
                 
                 // Elemente je nach Status der SubElemente ein/ausblenden
                 if (flgFound) {
-                    if ( !$(value).is(":visible") ) {
+                    if ( !me.$(value).is(":visible") ) {
                         // Element aktivieren
-                        $(value).show();
+                        me.$(value).show();
                     }  
     
                     // Eltern oeffnen
-                    me.doParentNodeToggler($(value).attr("id"), true);
+                    me.doParentNodeToggler(me.$(value).attr("id"), true);
                 } else {
                     // Element deaktivieren
-                    $(value).hide();
+                    me.$(value).hide();
                 }
             }
         );
@@ -4300,7 +4316,7 @@ Yaio.ExportedDataService = function(appBase) {
     
     me.startSearch = function() {
         // Suchworte auslesen
-        var suchworte = $(".volltextsuchfeld").val().toLowerCase().split(" ");
+        var suchworte = me.$(".volltextsuchfeld").val().toLowerCase().split(" ");
     
         // alle Toggler schließen
         me.doAllNodeToggler(false, 0);
@@ -4311,7 +4327,7 @@ Yaio.ExportedDataService = function(appBase) {
     
     me.resetSearch = function() {
         // Suchworte leeren
-        $(".volltextsuchfeld").val('');
+        me.$(".volltextsuchfeld").val('');
         
         // suche ausfuehren
         me.startSearch();
@@ -4319,7 +4335,7 @@ Yaio.ExportedDataService = function(appBase) {
     
     me.initSearch = function() {
         // Volltextsuche
-        $(".volltextsuchfeld").keyup(
+        me.$(".volltextsuchfeld").keyup(
             function(event) {
                 // nur ausfuehren wenn enter
                 if(event.keyCode != 13) {
@@ -4341,7 +4357,7 @@ Yaio.ExportedDataService = function(appBase) {
         var masterId = "node_" + nodeId + "_master";
         
         // Node aktivieren
-        $("#" + masterId).show();
+        me.$("#" + masterId).show();
         
         // openParent-Nodes
         me.doParentNodeToggler(masterId, true);
@@ -4350,8 +4366,8 @@ Yaio.ExportedDataService = function(appBase) {
         var delayedFocus = window.setInterval(
             function() {
                 // nach 0,1 Sekunden ausfuehren und Intervall loeschen
-                $('html, body').animate({
-                    scrollTop: $("#" + masterId).offset().top
+                me.$('html, body').animate({
+                    scrollTop: me.$("#" + masterId).offset().top
                     }, 
                     1000);
                 window.clearInterval(delayedFocus);

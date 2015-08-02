@@ -139,21 +139,21 @@ module.exports = function( grunt ){
               vendorDestBase + 'js/jqueryui/jquery-ui-timepicker-addon.js',
               vendorDestBase + 'js/jquery/jquery-lang.js',
 // loaded standalone because of plugins
-//              vendorSrcBase + 'js/fancytree/jquery.fancytree.js',
-//              vendorSrcBase + 'js/fancytree/jquery.fancytree.dnd.js',
-//              vendorSrcBase + 'js/fancytree/jquery.fancytree.edit.js',
-//              vendorSrcBase + 'js/fancytree/jquery.fancytree.gridnav.js',
-//              vendorSrcBase + 'js/fancytree/jquery.fancytree.table.js',
+//              vendorDestBase + 'js/fancytree/jquery.fancytree.js',
+//              vendorDestBase + 'js/fancytree/jquery.fancytree.dnd.js',
+//              vendorDestBase + 'js/fancytree/jquery.fancytree.edit.js',
+//              vendorDestBase + 'js/fancytree/jquery.fancytree.gridnav.js',
+//              vendorDestBase + 'js/fancytree/jquery.fancytree.table.js',
               vendorDestBase + 'js/angularjs/angular.js',
               vendorDestBase + 'js/angularjs/angular-animate.js',
               vendorDestBase + 'js/angularjs/angular-route.js',
               vendorDestBase + 'js/angularjs/angular-translate.js',
               vendorDestBase + 'js/angularjs/angular-translate-loader-static-files.js',
-              vendorSrcBase + 'js/marked/marked.js',
+              vendorDestBase + 'js/marked/marked.js',
 // loaded standalone because of plugins
 //              vendorSrcBase + 'js/ace/ace.js',
 //              vendorSrcBase + 'js/ace/ext-spellcheck.js',
-              vendorSrcBase + 'js/strapdown/strapdown-toc.js',
+              vendorDestBase + 'js/strapdown/strapdown-toc.js',
               vendorDestBase + 'js/highlightjs/highlight.pack.js',
               vendorDestBase + 'js/toastr/toastr.min.js',
               vendorSrcBase + 'js/mermaid/mermaid.full.js',
@@ -166,7 +166,7 @@ module.exports = function( grunt ){
               vendorDestBase + 'css/jqueryui/jquery-ui.css',
               vendorDestBase + 'css/jqueryui/jquery-ui-timepicker-addon.css',
 // loaded standalone because of plugins
-//              vendorSrcBase + 'js/fancytree/skin-win8/ui.fancytree.css',
+//              vendorDestBase + 'js/fancytree/skin-win8/ui.fancytree.css',
               vendorDestBase + 'css/highlightjs/default.css',
               vendorDestBase + 'css/toastr/toastr.css',
               vendorSrcBase + 'css/mermaid/mermaid.css',
@@ -197,7 +197,7 @@ module.exports = function( grunt ){
             srcBase + 'yaio-explorerapp/js/explorer/NodeShowCtrl.js',
             srcBase + 'yaio-explorerapp/js/search/NodeSearchCtrl.js',
             // !!!! paging is vendor but patched :-(
-            vendorSrcBase + 'js/angularjs/paging.js'
+            vendorDestBase + 'js/angularjs/paging.js'
         ],
         projectSupportJsFiles: [
             srcBase + 'yaio-explorerapp/js/jmat.js',
@@ -395,7 +395,7 @@ module.exports = function( grunt ){
             vendors2dist: {
                 files: [
                     {expand: true, cwd: vendorDestBase + 'css', src: ['jqueryui/images/*.*'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/', flatten: false},
-                    {expand: true, cwd: vendorSrcBase + 'js/fancytree', src: ['jquery.fancytree.js',
+                    {expand: true, cwd: vendorDestBase + 'js/fancytree', src: ['jquery.fancytree.js',
                                                                               'jquery.fancytree.dnd.js',
                                                                               'jquery.fancytree.edit.js',
                                                                               'jquery.fancytree.gridnav.js',
@@ -405,8 +405,8 @@ module.exports = function( grunt ){
                     {expand: true, cwd: vendorSrcBase + 'js/', src: ['ace/**'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/', flatten: false},
                     {expand: true, cwd: vendorSrcBase + '', src: ['freemind-flash/**'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/', flatten: false},
                     {expand: true, cwd: vendorSrcBase + 'js/', src: ['yaio/**'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/', flatten: false},
-                    {expand: true, cwd: vendorSrcBase + 'js/', src: ['slimbox2/**'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/', flatten: false},
-                    {expand: true, cwd: vendorSrcBase + 'css/', src: ['slimbox2/**'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/', flatten: false},
+                    {expand: true, cwd: vendorDestBase + 'js/', src: ['slimbox2/**'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/', flatten: false},
+                    {expand: true, cwd: vendorDestBase + 'css/', src: ['slimbox2/**'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/', flatten: false},
                     {expand: true, cwd: vendorSrcBase + 'css/', src: ['yaio/**'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/', flatten: false}
                 ]
             },
