@@ -403,8 +403,7 @@ module.exports = function( grunt ){
             vendors2dist: {
                 files: [
                     // vendors
-                    {expand: true, cwd: vendorDestBase + 'js/mermaid', src: ['*.js'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/mermaid/', flatten: false},
-                    {expand: true, cwd: vendorDestBase + 'css', src: ['jqueryui/images/*.*'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/', flatten: false},
+                    {expand: true, cwd: vendorDestBase + 'js/', src: ['ace/**'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/', flatten: false},
                     {expand: true, cwd: vendorDestBase + 'js/fancytree', src: ['jquery.fancytree.js',
                                                                               'jquery.fancytree.dnd.js',
                                                                               'jquery.fancytree.edit.js',
@@ -412,10 +411,11 @@ module.exports = function( grunt ){
                                                                               'jquery.fancytree.table.js',
                                                                               'skin-lion/*.*',
                                                                               'skin-win8/*.*'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/fancytree/', flatten: false},
+                    {expand: true, cwd: vendorDestBase + 'css', src: ['jqueryui/images/*.*'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/', flatten: false},
+                    {expand: true, cwd: vendorDestBase + 'js/mermaid', src: ['*.js'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/mermaid/', flatten: false},
                     {expand: true, cwd: vendorDestBase + 'js/', src: ['slimbox2/**'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/', flatten: false},
                     {expand: true, cwd: vendorDestBase + 'css/', src: ['slimbox2/**'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/', flatten: false},
                     // yaio-intern vendors
-                    {expand: true, cwd: vendorSrcBase + 'js/', src: ['ace/**'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/', flatten: false},
                     {expand: true, cwd: vendorSrcBase + '', src: ['freemind-flash/**'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/', flatten: false},
                     {expand: true, cwd: vendorSrcBase + 'js/', src: ['yaio/**'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/', flatten: false},
                     {expand: true, cwd: vendorSrcBase + 'css/', src: ['yaio/**'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/', flatten: false}
