@@ -103,9 +103,14 @@ Yaio.MarkdownEditorService = function(appBase) {
               Ok: function() {
                 me.$( this ).dialog( "close" );
               },
-              "Vorlesen": function () {
-                  me.appBase.get('YaioLayout').openSpeechSynthWindow(document.getElementById('preview-content'));
-              }
+              "Vorlesen": {
+                  id: "Vorlesen",
+                  text: "Vorlesen",
+                  class: "jsh-show-inline-block-if-speechsynth",
+                  click: function () {
+                      me.appBase.get('YaioLayout').openSpeechSynthWindow(document.getElementById('preview-content'));
+                  }
+              },
             }
         });    
         
