@@ -29,6 +29,7 @@
         "tooltip.command.ExportWikiDirect": "Export the current node with all child elements as a wiki for further processing and eventual import into another D'Artagnan system:-)",
         "tooltip.command.ExportMindmapDirect": ". Export the current node with all child elements of a mind map for FreeMind 0.92",
         "tooltip.command.ExportCsvDirect": "Export the current node with all child elements as csv version",
+        "tooltip.command.ExportJsonDirect": "Export the current node with all child elements as json version",
         "tooltip.command.ExportHtmlDirect": "Export the current node with all child elements as HTML version for browsing.",
         "tooltip.command.ExportHtmlDocumentationDirect": "Export the current node with all child elements as HTML-documentation version for browsing.",
         "tooltip.command.ExportICalDirect": "Export events+tasks of the current node with all child elements as iCal version for your Thunderbird / Outlook Calendar.  You can use this link as external ICal-calendar in Outlook or Thunderbird.",

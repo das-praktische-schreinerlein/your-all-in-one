@@ -26,6 +26,7 @@
     "common.command.ExportExcelDirect": "Excel",
     "common.command.ExportMindmapDirect": "Mindmap",
     "common.command.ExportCsvDirect": "Csv",
+    "common.command.ExportJsonDirect": "Json",
     "common.command.ExportPplDirect": "PPL",
     "common.command.Import": "Wiki-Import",
     "common.command.Logout": "Logout",

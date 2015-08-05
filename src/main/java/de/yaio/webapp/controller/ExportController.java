@@ -41,6 +41,7 @@ import de.yaio.extension.datatransfer.csv.CSVExporter;
 import de.yaio.extension.datatransfer.excel.ExcelExporter;
 import de.yaio.extension.datatransfer.excel.ExcelOutputOptions;
 import de.yaio.extension.datatransfer.ical.ICalExporter;
+import de.yaio.extension.datatransfer.json.JSONFullExporter;
 import de.yaio.extension.datatransfer.mindmap.MindMapExporter;
 import de.yaio.extension.datatransfer.ppl.PPLExporter;
 import de.yaio.extension.datatransfer.wiki.WikiExporter;
@@ -265,6 +266,36 @@ public class ExportController {
         return res;
     }
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
+     *     Request to read the node for sysUID and return it in json-format with all children
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>String - json-format of the node
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice Query
+     * @param sysUID - sysUID to export
+     * @param response - the response-Obj to set contenttype and headers
+     * @return String - csv-format of the node
+     */
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.GET, 
+                    value = "/json/{sysUID}", 
+                    produces = "application/json")
+    public String exportNodeAsJson(@PathVariable(value = "sysUID") final String sysUID, 
+                                  final HttpServletResponse response) {
+        // configure
+        Exporter exporter = new JSONFullExporter();
+        OutputOptions oOptions = new OutputOptionsImpl();
+        
+        // run
+        String res = converterUtils.exportNode(sysUID, exporter, oOptions, ".json", response);
+        return res;
+    }
+    
     /**
      * <h4>FeatureDomain:</h4>
      *     Webservice
