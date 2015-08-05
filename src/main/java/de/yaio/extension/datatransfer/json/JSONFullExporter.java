@@ -85,6 +85,62 @@ public class JSONFullExporter extends ExporterImpl {
             this.node = node;
             this.parentIdHierarchy = parentIdHierarchy;
         }
+
+        /**
+         * @return the {@link JSONFullExporter.JSONResponse#state}
+         */
+        public final String getState() {
+            return this.state;
+        }
+
+        /**
+         * @param state the {@link JSONFullExporter.JSONResponse#state} to set
+         */
+        public final void setState(final String state) {
+            this.state = state;
+        }
+
+        /**
+         * @return the {@link JSONFullExporter.JSONResponse#stateMsg}
+         */
+        public final String getStateMsg() {
+            return this.stateMsg;
+        }
+
+        /**
+         * @param stateMsg the {@link JSONFullExporter.JSONResponse#stateMsg} to set
+         */
+        public final void setStateMsg(final String stateMsg) {
+            this.stateMsg = stateMsg;
+        }
+
+        /**
+         * @return the {@link JSONFullExporter.JSONResponse#node}
+         */
+        public final DataDomain getNode() {
+            return this.node;
+        }
+
+        /**
+         * @param node the {@link JSONFullExporter.JSONResponse#node} to set
+         */
+        public final void setNode(final DataDomain node) {
+            this.node = node;
+        }
+
+        /**
+         * @return the {@link JSONFullExporter.JSONResponse#parentIdHierarchy}
+         */
+        public final List<String> getParentIdHierarchy() {
+            return this.parentIdHierarchy;
+        }
+
+        /**
+         * @param parentIdHierarchy the {@link JSONFullExporter.JSONResponse#parentIdHierarchy} to set
+         */
+        public final void setParentIdHierarchy(final List<String> parentIdHierarchy) {
+            this.parentIdHierarchy = parentIdHierarchy;
+        }
     }
 
     // Jackson
