@@ -239,7 +239,7 @@ var YAIOExporterPage = function() {
                 });
         };
         
-        if (browser.browserName === "phantomjs") {
+        if (browser.browserName === "phantomjs" || browser.browserName === "iexplorer" || browser.browserName === "firefox") {
             downloadCheckHandler = null;
         }
         
