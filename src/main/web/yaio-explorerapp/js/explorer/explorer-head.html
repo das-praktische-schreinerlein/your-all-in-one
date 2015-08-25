@@ -13,53 +13,7 @@
               <col class="block_nodegantt"></col>
               <col class="container_field fieldtype_actions"></col>
               </colgroup>
-              <thead>
-                <tr id="tab_header"> 
-                  <th id="tab_name_haeder">
-                    <!-- show name-header and data-toggler -->
-                    <span  translate="fancytree.table.headline.name">Name</span>
-                    <span style="display: inline-block; width: 300px;" data-tooltip='tooltip.command.ShowGanttData' lang="tech">
-                      <a onclick="yaioAppBase.get('YaioNodeGanttRender').yaioShowGanttBlock();return false;" id="tabTogglerGantt" class="button tabToggler" translate="fancytree.table.headline.tabTogglerGantt">Zeige Gantt</a>
-                      <a onclick="yaioAppBase.get('YaioNodeDataRender').yaioShowDataBlock();return false;" id="tabTogglerData" class="button tabToggler"  translate="fancytree.table.headline.tabTogglerData" style="display: none">Zeige Daten</a>
-                    </span>
-                    </th>
-                  <th class="block_nodedata">
-                    <!-- show workflow-header -->
-                    <div class="container_data_row">
-                      <div class="container_field fieldtype_basedata fieldtype_metanummer field_metanummer field_center" translate="fancytree.table.headline.metanummer">Nr.<br />&nbsp;</div>
-                      <div class="container_field fieldtype_basedata fieldtype_type field_type field_center" translate="fancytree.table.headline.type">Typ<br />&nbsp;</div>
-                      <div class="container_field fieldtype_additionaldata fieldtype_stand field_istChildrenSumStand field_center" translate="fancytree.table.headline.istChildrenSumStand">Ist<br />Stand</div>
-                      <div class="container_field fieldtype_additionaldata fieldtype_aufwand field_istChildrenSumAufwand field_center" translate="fancytree.table.headline.istChildrenSumAufwand"> <br />Aufwand</div>
-                      <div class="container_field fieldtype_additionaldata fieldtype_fromto field_istChildrenSum field_center" translate="fancytree.table.headline.istChildrenSum"> <br />Zeitraum</div>
-                      <div class="container_field fieldtype_additionaldata fieldtype_aufwand field_planChildrenSumAufwand field_center" translate="fancytree.table.headline.planChildrenSumAufwand">Plan<br />Aufwand</div>
-                      <div class="container_field fieldtype_additionaldata fieldtype_fromto field_planChildrenSum field_center" translate="fancytree.table.headline.planChildrenSum"> <br />Zeitraum</div>
-                      <div class="container_field fieldtype_additionaldata fieldtype_descToggler toggler_show">
-                         <br />
-                         <a lang="tech" data-tooltip='tooltip.command.ToggleDescAll' id="toggler_desc_all" onclick="yaioAppBase.get('YaioExplorerAction').toggleAllNodeDescContainer(); return false;" href="#" class="toggler_hidden"></a>
-                      </div>
-                    </div></th>
-                  <th class="block_nodegantt">
-                    <!-- show gantt-header -->
-                    <div class="gantt_container"  id="gantt_container_head">
-                       <div class="gantt_aufwand" id="gantt_aufwand_head"  translate="fancytree.table.headline.ganttaufwand">Aufwand</div>
-                       <div class="gantt_bar"  id="gantt_bar_head" data-tooltip='tooltip.command.GanttRange' lang="tech">
-                        <input type="text" placeholder="dd.mm.jjjj" name="ganttRangeStart" pattern="\d{2}\.\d{2}\.\d{4}"  maxsize="10" value="{{ yaioUtils.ganttOptions.ganttRangeStart }}" class="inputtype_date" id="inputGanttRangeStart" ng-model="yaioUtils.ganttOptions.ganttRangeStart" ng-change="recalcGanttBlocks()">
-                        <a ng-click="recalcGanttBlocks();" class="button" translate="fancytree.table.headline.ganttrange">Zeitbereich</a> 
-                        <a ng-click="recalcGanttForIstOrPlan(true);" class="button" translate="fancytree.table.headline.recalcGanttIst">Ist</a> 
-                        <a ng-click="recalcGanttForIstOrPlan(false);" class="button" translate="fancytree.table.headline.recalcGanttPlan">Plan</a> 
-                        <input type="text" placeholder="dd.mm.jjjj" name="ganttRangeEnde" pattern="\d{2}\.\d{2}\.\d{4}"  maxsize="10" value="{{ yaioUtils.ganttOptions.ganttRangeEnd }}" class="inputtype_date" style="text-align: right" id="inputGanttRangeEnde" ng-model="yaioUtils.ganttOptions.ganttRangeEnd" ng-change="recalcGanttBlocks()"></th>
-                       </div>
-                    </div>
-                  <th  >
-                    <!-- show actions-header -->
-                    <span translate="fancytree.table.headline.actions"></span>
-                    <br />
-                    <div class="fieldtype_sysToggler toggler_show">
-                      <a lang="tech" data-tooltip='tooltip.command.ToggleSysAll' id="toggler_sys_all" onclick="yaioAppBase.get('YaioExplorerAction').toggleAllNodeSysContainer(); return false;" href="#" class="toggler_hidden"></a>
-                    </div>
-                  </th>
-                </tr>
-              </thead>
+              <thead ng-include="'js/explorer/explorer-table-head.html'"></thead>
               <tbody>
                 <tr id="masterTr" data-value="{{node.sysUID}}">
                   <td><div class="entry node-state-{{node.state}}"><b><span translate="{{node.state}}">{{node.state}}</span> - {{node.name}}</b></div></td>
@@ -74,12 +28,12 @@
                      <a ng-click="yaioUtils.openNodeEditorForNode(node, 'edit');"
                         id='cmdEdit{{node.sysUID}}' class='yaio-icon-edit'
                         lang='tech' data-tooltip='tooltip.command.NodeEdit'></a>
-                    <a ng-click="yaioUtils.openNodeEditorForNode(node, 'create');"
-                       id='cmdCreate{{ node.sysUID }}' class='yaio-icon-create'
-                       lang='tech' data-tooltip='tooltip.command.NodeCreateChild'></a>
-                    <a ng-click="yaioUtils.openNodeEditorForNode(node, 'createsymlink');"
-                       id='cmdCreateSymLink{{ node.sysUID }}' class='yaio-icon-createsymlink'
-                       lang='tech' data-tooltip='tooltip.command.NodeCreateSymLink'></a>
+                     <a ng-click="yaioUtils.openNodeEditorForNode(node, 'create');"
+                        id='cmdCreate{{ node.sysUID }}' class='yaio-icon-create'
+                        lang='tech' data-tooltip='tooltip.command.NodeCreateChild'></a>
+                     <a ng-click="yaioUtils.openNodeEditorForNode(node, 'createsymlink');"
+                        id='cmdCreateSymLink{{ node.sysUID }}' class='yaio-icon-createsymlink'
+                        lang='tech' data-tooltip='tooltip.command.NodeCreateSymLink'></a>
                   </td>
                 </tr>
               </tbody>
