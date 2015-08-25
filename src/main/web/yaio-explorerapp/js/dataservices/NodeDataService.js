@@ -38,6 +38,15 @@ Yaio.NodeDataService = function(appBase) {
     me._init = function() {
     };
     
+    
+    me.loadNodeData = function(nodeId) {
+        console.log("load data for node:" + nodeId);
+        return { 
+            url: me.appBase.config.restShowUrl + nodeId, 
+            cache: false 
+        };
+    };
+    
     /*****************************************
      *****************************************
      * Service-Funktions (webservice)

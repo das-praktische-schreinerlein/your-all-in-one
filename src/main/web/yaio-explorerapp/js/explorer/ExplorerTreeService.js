@@ -54,6 +54,10 @@ Yaio.ExplorerTreeService = function(appBase) {
     me._init = function() {
     };
 
+    me.sourceHandler = function(nodeId) {
+        return me.appBase.get('YaioNodeData').loadNodeData(nodeId);
+    };
+
     /**
      * <h4>FeatureDomain:</h4>
      *     Initialisation
@@ -89,6 +93,8 @@ Yaio.ExplorerTreeService = function(appBase) {
                 console.log("yaioCreateOrReloadFancyTree: do reload=" 
                         + me.appBase.config.restShowUrl + masterNodeId);
                 var tree = me.$(treeId).fancytree("getTree");
+                // TODO
+                alert("TODO RELOAD");
                 tree.reload(me.appBase.config.restShowUrl + masterNodeId).done(function(){
                     console.log("yaioCreateOrReloadFancyTree reload tree done:" + masterNodeId);
     
@@ -144,10 +150,7 @@ Yaio.ExplorerTreeService = function(appBase) {
             checkbox: true,
             titlesTabbable: true,     // Add all node titles to TAB chain
       
-            source: { 
-                url: me.appBase.config.restShowUrl + masterNodeId, 
-                cache: false 
-            },
+            source: me.sourceHandler(masterNodeId),
           
             // set state of the tree for callback, when tree is created
             loadChildren: function(event, data) {
@@ -159,10 +162,7 @@ Yaio.ExplorerTreeService = function(appBase) {
                 var node = data.node;
                 console.debug("yaioCreateFancyTree load data for " + node.key 
                         + " from " + me.appBase.config.restShowUrl + node.key);
-                data.result = {
-                    url: me.appBase.config.restShowUrl + node.key,
-                    cache: false
-                };
+                data.result = me.sourceHandler(node.key);
             },
       
             // callback if expanded-state of node changed, to show the matching gantt (only node or + childsum)
