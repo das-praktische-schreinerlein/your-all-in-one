@@ -36,8 +36,9 @@ JsHelferlein.SpeechSynthDetector = function(appBase, config) {
                 return true;
             }
         } catch (ex) {
-            if (me.appBase.get("Logger") && me.appBase.get("Logger").isError) {
-                me.appBase.get("Logger").logError("JsHelferlein.SpeechSynthHelper.isSpeechSynthSupported Exception: " + ex);
+            var svcLogger = me.appBase.get("Logger");
+            if (svcLogger && svcLogger.isError) {
+                svcLogger.logError("JsHelferlein.SpeechSynthHelper.isSpeechSynthSupported Exception: " + ex);
             }
         }
         return false;

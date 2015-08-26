@@ -65,8 +65,9 @@ JsHelferlein.SpeechRecognitionHelperService = function(appBase, config) {
             me._initRecognition();
             me._initControllerElements();
         } else {
-            if (me.appBase.get("Logger") && me.appBase.get("Logger").isWarning) {
-                me.appBase.get("Logger").logWarning("JsHelferlein.SpeechRecognitionHelper.initUi: speechsynth not suppoorted");
+            var svcLogger = me.appBase.get("Logger");
+            if (svcLogger && svcLogger.isWarning) {
+                svcLogger.logWarning("JsHelferlein.SpeechRecognitionHelper.initUi: speechsynth not suppoorted");
             }
             me._disableControllerElements();
         }

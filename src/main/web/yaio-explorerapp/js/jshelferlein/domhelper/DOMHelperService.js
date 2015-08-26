@@ -136,6 +136,7 @@ JsHelferlein.DOMHelperService = function(appBase) {
      * @param force - auch wenn schon belegt, ueberschreiben
      */
     me.addLinkOnClickEvent = function(classNames, event, force){
+        var svcLogger = me.appBase.get("Logger");
         try {
             // alle Klassen iterieren
             for (var i = 0; i < classNames.length; i++) {
@@ -147,30 +148,24 @@ JsHelferlein.DOMHelperService = function(appBase) {
                     var link = links[j];
                     if ((! link.onclick) || force) {
                         // entweder nicht definiert, oder Force
-                        if (me.appBase.get("Logger") && me.appBase.get("Logger").isDebug) {
-                            me.appBase.get("Logger").logDebug(
-                                "DOMHelper.addLinkOnClickEvent set a.onclick() for "
-                                + className
-                                + " Id:" + link.id
-                                + " with event");
+                        if (svcLogger && svcLogger.isDebug) {
+                            svcLogger.logDebug("DOMHelper.addLinkOnClickEvent set a.onclick() for "
+                                + className + " Id:" + link.id + " with event");
                         }
                         link.onclickold = link.onclick;
                         link.onclick = event;
                     } else {
                         // nicht definiert
-                        if (me.appBase.get("Logger") && me.appBase.get("Logger").isDebug) {
-                            me.appBase.get("Logger").logDebug(
-                                "DOMHelper.addLinkOnClickEvent cant set a.onclick() for "
-                                + className
-                                + " Id:" + link.id
-                                + " with event already defined");
+                        if (svcLogger && svcLogger.isDebug) {
+                            svcLogger.logDebug("DOMHelper.addLinkOnClickEvent cant set a.onclick() for "
+                                + className + " Id:" + link.id + " with event already defined");
                         }
                     }
                 }
             }
         } catch (ex) {
-            if (me.appBase.get("Logger") && me.appBase.get("Logger").isError) {
-                me.appBase.get("Logger").logError("DOMHelper.addLinkOnClickEvent set a.onclick() Exception: " + ex);
+            if (svcLogger && svcLogger.isError) {
+                svcLogger.logError("DOMHelper.addLinkOnClickEvent set a.onclick() Exception: " + ex);
             }
         }
     };

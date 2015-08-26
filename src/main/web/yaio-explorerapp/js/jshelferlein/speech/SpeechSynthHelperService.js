@@ -42,8 +42,9 @@ JsHelferlein.SpeechSynthHelperService = function(appBase, config) {
             me._initVoices();
             me._initControllerElements();
         } else {
-            if (me.appBase.get("Logger") && me.appBase.get("Logger").isWarning) {
-                me.appBase.get("Logger").logWarning("JsHelferlein.SpeechSynthHelper.initUi: speechsynth not suppoorted");
+            var svcLogger = me.appBase.get("Logger");
+            if (svcLogger && svcLogger.isWarning) {
+                svcLogger.logWarning("JsHelferlein.SpeechSynthHelper.initUi: speechsynth not suppoorted");
             }
             me._disableControllerElements();
         }
@@ -146,6 +147,7 @@ JsHelferlein.SpeechSynthHelperService = function(appBase, config) {
     
     me._createSpeaker = function() {
         var msg = new SpeechSynthesisUtterance();
+        var svcLogger = me.appBase.get("Logger");
         
         var selectedVoice = me.voices.options[me.voices.selectedIndex];
         msg.voice = selectedVoice.getAttribute('data-voice-uri'); // Note: some voices don't support altering params
@@ -157,33 +159,35 @@ JsHelferlein.SpeechSynthHelperService = function(appBase, config) {
         
         // create handler
         msg.onstart = function (event) {
-            me.appBase.get("Logger").logDebug("started:" + msg.text);
+            svcLogger.logDebug("started:" + msg.text);
         };
         msg.onend = function(event) {
-            me.appBase.get("Logger").logDebug('Finished in ' + event.elapsedTime + ' seconds.');
+            svcLogger.logDebug('Finished in ' + event.elapsedTime + ' seconds.');
         };
         msg.onerror = function(event) {
-            me.appBase.get("Logger").logError('Errored ' + event);
+            svcLogger.logError('Errored ' + event);
         };
         msg.onpause = function (event) {
-            me.appBase.get("Logger").logDebug('paused ' + event);
+            svcLogger.logDebug('paused ' + event);
         };
         msg.onboundary = function (event) {
-            me.appBase.get("Logger").logDebug('onboundary ' + event);
+            svcLogger.logDebug('onboundary ' + event);
         };
 
         return msg;
     };
 
     me._speakText = function(text) {
+        var svcLogger = me.appBase.get("Logger");
         var speaker = me._createSpeaker();
-        me.appBase.get("Logger").logDebug("say text: " + text);
+        svcLogger.logDebug("say text: " + text);
         speaker.text = text;
         window.speechSynthesis.speak(speaker);
     };
 
     me._splitOrSpeakText = function(text, splitterStr, ebene, maxLength) {
         // inspired by http://stackoverflow.com/questions/21947730/chrome-speech-synthesis-with-longer-texts
+        var svcLogger = me.appBase.get("Logger");
 
         // set default maxLength if not set
         if (! (maxLength > 100)) {
@@ -209,7 +213,7 @@ JsHelferlein.SpeechSynthHelperService = function(appBase, config) {
                     nextText = text.substr(pos) + nextText;
                     text = text.substr(0, pos);
                     pos = text.lastIndexOf(splitWord);
-                    me.appBase.get("Logger").logDebug("split by word:'" + splitWord + "' text:''" + text + "' nextText:'" + nextText + "'");
+                    svcLogger.logDebug("split by word:'" + splitWord + "' text:''" + text + "' nextText:'" + nextText + "'");
                 }
                 wordIndex++;
             } while (wordIndex < me.config.splitWords.length && text.length > maxLength);
@@ -223,13 +227,13 @@ JsHelferlein.SpeechSynthHelperService = function(appBase, config) {
                     // not " " before maxLength -> do it hard
                     text1 = text.substr(0, maxLength);
                     text2 = text.substr(maxLength);
-                    me.appBase.get("Logger").logDebug("split texthard text1:'" + text1 + "' text2:''" + text2 + "'");
+                    svcLogger.logDebug("split texthard text1:'" + text1 + "' text2:''" + text2 + "'");
                     sentences = [text1, text2];
                 } else {
                     // split at space   
                     text1 = text.substr(0, posSpace);
                     text2 = text.substr(posSpace);
-                    me.appBase.get("Logger").logDebug("split space text1:'" + text1 + "' text2:''" + text2 + "'");
+                    svcLogger.logDebug("split space text1:'" + text1 + "' text2:''" + text2 + "'");
                     sentences = [text1, text2];
                 }
             } else {
@@ -241,7 +245,7 @@ JsHelferlein.SpeechSynthHelperService = function(appBase, config) {
             sentences.push(nextText);
         } else {
             // split text by splitter
-            me.appBase.get("Logger").logDebug("split by:'" + splitter + "' ebene:" + ebene);
+            svcLogger.logDebug("split by:'" + splitter + "' ebene:" + ebene);
             sentences = text.split(splitter);
         }
         
@@ -249,11 +253,11 @@ JsHelferlein.SpeechSynthHelperService = function(appBase, config) {
         for (var i=0;i< sentences.length;i++) {
             if (sentences[i].length > maxLength) {
                 // sentence  > maxLength: split it with next splitChar
-                me.appBase.get("Logger").logDebug("split new " +  i + " sentences[i]:" + sentences[i]);
+                svcLogger.logDebug("split new " +  i + " sentences[i]:" + sentences[i]);
                 me._splitOrSpeakText(sentences[i], splitterStr, ebene+1);
             } else {
                 // sentence ok: say it
-                me.appBase.get("Logger").logDebug("say i: " + i + " sentences[i]:" + sentences[i]);
+                svcLogger.logDebug("say i: " + i + " sentences[i]:" + sentences[i]);
                 me._speakText(sentences[i] + splitter);
             }
         }
