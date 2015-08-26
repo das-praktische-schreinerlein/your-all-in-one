@@ -253,62 +253,32 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ht
             console.log("map nodefield:" + fieldName + "=" + value);
         }
         
-        
-        // branch depending on mode
-        var method, url;
-        var mode =  $scope.nodeForEdit["mode"];
-        if (mode === "edit") {
-            // mode update 
-            method = "PATCH";
-            url = yaioUtils.getConfig().restUpdateUrl + $scope.nodeForEdit.className + "/" + $scope.nodeForEdit.sysUID;
-        } else if (mode === "create") {
-            // mode create 
-            method = "POST";
-            url = yaioUtils.getConfig().restCreateUrl + $scope.nodeForEdit.className + "/" + $scope.nodeForEdit.sysUID;
-            
-            // unset sysUID
-            nodeObj["sysUID"] = null;
-        } else {
-            // unknown mode
-            yaioUtils.getService('YaioBase').logError("unknown mode=" + mode + " form formName=" + formName, false);
-            return null;
-        }
-
-        // define json for common fields
-        var json = JSON.stringify(nodeObj);
-        
-        // create url
-        console.log("NodeSave - url::" + url + " data:" + json);
-        
-        // do http
-        $http({
-                method: method,
-                url: url,
-                data: json
-        }).then(function(nodeResponse) {
+        // save node
+        var yaioSaveNodeSuccessHandler = function(nodeObj, options, yaioNodeActionResponse) {
             // sucess handler
+            var msg = "yaioSaveNodeSuccessHandler node: " + options.mode + ' ' + nodeObj['sysUID'];
             
             // check response
-            var state = nodeResponse.data.state;
+            var state = yaioNodeActionResponse.state;
             if (state === "OK") {
                 // all fine
-                console.log("NodeSave - OK saved node:" + nodeResponse.data.stateMsg);
+                console.log(msg + " OK saved node:" + yaioNodeActionResponse.stateMsg);
                 
                 // reload
                 var newUrl = '/show/' + nodeId 
-                    + '/activate/' + nodeResponse.data.node.sysUID; //$scope.nodeForEdit.sysUID
-                console.log("reload:" + newUrl);
+                    + '/activate/' + yaioNodeActionResponse.node.sysUID; //$scope.nodeForEdit.sysUID
+                console.log(msg + " RELOAD:" + newUrl);
                 
                 // no cache!!!
                 $location.path(newUrl + "?" + (new Date()).getTime());
             } else {
                 // error
-                var message = "error saving node:" + nodeResponse.data.stateMsg 
+                var message = "error saving node:" + yaioNodeActionResponse.stateMsg 
                         + " details:" + nodeResponse;
-                var userMessage = "error saving node:" + nodeResponse.data.stateMsg;
+                var userMessage = "error saving node:" + yaioNodeActionResponse.stateMsg;
                 
                 // map violations
-                var violations = nodeResponse.data.violations;
+                var violations = yaioNodeActionResponse.violations;
                 var fieldErrors = {};
                 if (violations && violations.length > 0) {
                     message = message + " violations: ";
@@ -337,10 +307,10 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ht
                         message = message + violation.path + ":" + violation.message + ", ";
 
                         // find formelement
-                        var $formField = $('#' + formName).find('*[name="' + violation.path + '"]');
+                        var $formField = $('#' + options.formName).find('*[name="' + violation.path + '"]');
                         if (($formField.length > 0) && ($formField.is(':visible'))) {
                             // formfield is shown by showErrors
-                            console.log("map violation " + violation + " = " + violation.path + ":" + violation.message + " to " + formName + " id=" + $($formField).attr('id'));
+                            console.log(msg + " MAP violation " + violation + " = " + violation.path + ":" + violation.message + " to " + options.formName + " id=" + $($formField).attr('id'));
                         } else {
                             // another error: show userMessage
                             userMessage += "<br>" + violation.path + ":" + violation.message;
@@ -354,19 +324,35 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ht
                 
                 // Failed
                 setFormErrors({
-                    formName: formName,
+                    formName: options.formName,
                     fieldErrors: fieldErrors
                 });
+                
+                console.log(msg + " DONE");
             }
-        }, function(response) {
-            // error handler
-            var data = response.data;
-            var header = response.header;
-            var config = response.config;
-            var message = "error saving node with url: " + url;
-            yaioUtils.getService('YaioBase').logError(message, true);
-            message = "error data: " + data + " header:" + header + " config:" + config;
-            yaioUtils.getService('YaioBase').logError(message, false);
-        });
+        };
+        
+        // call save
+        var options = {
+                mode: $scope.nodeForEdit["mode"],
+                formName: formName,
+                className: $scope.nodeForEdit.className,
+                sysUID: $scope.nodeForEdit.sysUID
+            };
+        return yaioUtils.getService('YaioNodeData').yaioDoSaveNode(nodeObj, options)
+            .then(function(angularReponse) {
+                    return yaioSaveNodeSuccessHandler(nodeObj, options, angularReponse.data);
+                }, function(angularReponse) {
+                    // error handler
+                    var data = angularReponse.data;
+                    var header = angularReponse.header;
+                    var config = angularReponse.config;
+                    var message = "error saving node " + msg;
+                    yaioUtils.getService('YaioBase').logError(message, true);
+                    message = "error data: " + data + " header:" + header + " config:" + config;
+                    yaioUtils.getService('YaioBase').logError(message, false);
+            });
     };
+    
+    
 });

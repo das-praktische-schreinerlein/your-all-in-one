@@ -27,13 +27,18 @@
  * <h4>FeatureKeywords:</h4>
  *     Utils
  */
-yaioApp.factory('yaioUtils', function () {
+yaioApp.factory('yaioUtils', ['$location', '$http', '$rootScope', function ($location, $http, $rootScope) {
     'use strict';
 
     var appBase = yaioAppBase;
     var ganttRangeStart = appBase.get('YaioBase').formatGermanDate((new Date()).getTime() - 90*24*60*60*1000); 
     var ganttRangeEnd = appBase.get('YaioBase').formatGermanDate((new Date()).getTime() + 90*24*60*60*1000);
-    
+
+    // set angular to appbase
+    appBase.configureService("Angular.$location", function() { return $location; });
+    appBase.configureService("Angular.$http", function() { return $http; });
+    appBase.configureService("Angular.$rootScope", function() { return $rootScope; });
+
     return {
         /**
          * <h4>FeatureDomain:</h4>
@@ -95,4 +100,4 @@ yaioApp.factory('yaioUtils', function () {
         }
         
     };
-});
+}]);

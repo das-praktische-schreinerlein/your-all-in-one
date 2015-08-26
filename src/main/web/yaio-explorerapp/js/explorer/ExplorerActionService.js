@@ -134,15 +134,13 @@ Yaio.ExplorerActionService = function(appBase) {
     
     me.yaioSaveNode = function(data) {
         var json = JSON.stringify({name: data.input.val()});
-        var url = me.appBase.config.restUpdateUrl + data.node.key;
-        me.appBase.get('YaioNodeData').yaioDoUpdateNode(data.node, url, json);
+        me.appBase.get('YaioNodeData').yaioDoUpdateNode(data.node, json);
     };
     
     me.yaioMoveNode = function(node, newParentKey, newPos) {
         console.log("move node:" + node.key + " to:" + newParentKey + " Pos:" + newPos);
         var json = JSON.stringify({parentNode: newParentKey});
-        var url = me.appBase.config.restMoveUrl+ node.key + "/" + newParentKey + "/" + newPos;
-        me.appBase.get('YaioNodeData').yaioDoUpdateNode(node, url, json);
+        me.appBase.get('YaioNodeData').yaioDoMoveNode(node, newParentKey, newPos, json);
     };
     
     me.yaioRemoveNodeById = function(nodeId) {
@@ -163,8 +161,7 @@ Yaio.ExplorerActionService = function(appBase) {
                         + "' activeNode " + nodeId + " not found.", false);
                 return null;
             }
-            var url = me.appBase.config.restRemoveUrl + nodeId;
-            me.appBase.get('YaioNodeData').yaioDoRemoveNode(treeNode, url);
+            me.appBase.get('YaioNodeData').yaioDoRemoveNode(nodeId);
         } else {
             // discard
             return false;
