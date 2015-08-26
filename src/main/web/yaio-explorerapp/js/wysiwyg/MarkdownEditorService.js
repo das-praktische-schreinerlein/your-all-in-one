@@ -92,6 +92,8 @@ Yaio.MarkdownEditorService = function(appBase) {
     
         
     me.showPreview = function(content) {
+        var svcYaioFormatter = me.appBase.get('YaioFormatter');
+
         // set preview-content
         me.$( "#preview-content" ).html(content);
         
@@ -115,10 +117,10 @@ Yaio.MarkdownEditorService = function(appBase) {
         });    
         
         // do mermaid when preview visible
-        me.appBase.get('YaioFormatter').formatMermaidGlobal();
+        svcYaioFormatter.formatMermaidGlobal();
     
         // do syntax-highlight
-        me.appBase.get('YaioFormatter').formatDescBlock(me.$("#preview-content"));
+        svcYaioFormatter.formatDescBlock(me.$("#preview-content"));
     };
     
     me.showMarkdownHelp = function() {
@@ -273,18 +275,20 @@ Yaio.MarkdownEditorService = function(appBase) {
     };
     
     me.showWyswhgPreviewForTextareaId = function(textAreaId) {
+        var svcYaioFormatter = me.appBase.get('YaioFormatter');
+        
         // prepare descText
         var descText = me.$("#" + textAreaId).val();
-        var descHtmlMarked = me.appBase.get('YaioFormatter').formatMarkdown(descText, true);
+        var descHtmlMarked = svcYaioFormatter.formatMarkdown(descText, true);
     
         // set preview-content
         me.$( "#wysiwhg-preview" ).html(descHtmlMarked);
     
         // do mermaid when preview visible
-        me.appBase.get('YaioFormatter').formatMermaidGlobal();
+        svcYaioFormatter.formatMermaidGlobal();
         
         // do syntax-highlight
-        me.appBase.get('YaioFormatter').formatDescBlock(me.$("#wysiwhg-preview"));
+        svcYaioFormatter.formatDescBlock(me.$("#wysiwhg-preview"));
     };
 
     me._init();
