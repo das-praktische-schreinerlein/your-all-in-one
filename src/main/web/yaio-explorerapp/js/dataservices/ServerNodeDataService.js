@@ -207,9 +207,58 @@ Yaio.ServerNodeDataService = function(appBase) {
         // do http
         console.log(msg + " CALL url:" + url);
         return ajaxCall();
-    }
-    
+    };
 
+    me._yaioCallLogin = function(credentials) {
+        var msg = "_yaioCallLogin for credentials:" + credentials;
+        console.log(msg + " START");
+
+        // load data
+        var url = me.appBase.config.restLoginUrl;
+        var ajaxCall = function () {
+            return me.appBase.get('Angular.$http').post(url, $.param(credentials),
+                {
+                    headers : {
+                        "content-type" : "application/x-www-form-urlencoded"
+                    }
+                });
+        }
+        
+        // do http
+        console.log(msg + " CALL url:" + url);
+        return ajaxCall();
+    };
+    
+    me._yaioCallLogout = function(session) {
+        var msg = "_yaioCallLogout for session" + session;
+        console.log(msg + " START");
+
+        // load data
+        var url = me.appBase.config.restLogoutUrl;
+        var ajaxCall = function () {
+            return me.appBase.get('Angular.$http').post(url, $.param({}));
+        }
+        
+        // do http
+        console.log(msg + " CALL url:" + url);
+        return ajaxCall();
+    };
+    
+    me._yaioCallCheckUser = function(session) {
+        var msg = "_yaioCallCheckUser for session:" + session;
+        console.log(msg + " START");
+
+        // load data
+        var url = me.appBase.config.restCheckUserUrl;
+        var ajaxCall = function () {
+            return me.appBase.get('Angular.$http').get(url);
+        }
+        
+        // do http
+        console.log(msg + " CALL url:" + url);
+        return ajaxCall();
+    };
+    
     me._init();
     
     return me;

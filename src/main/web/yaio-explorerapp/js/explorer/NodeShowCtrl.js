@@ -102,7 +102,7 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http
                         // handle success
                         $scope.loadCurrentNodeIdSuccessHandler(nodeId, loadOptions, angularResponse.data);
                     }, function error(angularResponse) {
-                        // error handler
+                        // handle error
                         var data = angularResponse.data;
                         var header = angularResponse.header;
                         var config = angularResponse.config;

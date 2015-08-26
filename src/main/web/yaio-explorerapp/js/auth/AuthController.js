@@ -36,39 +36,41 @@ yaioApp.controller('AuthController', function($rootScope, $scope, $location, $ht
     $scope.credentials = {};
     
     $scope.login = function() {
-        $http.post(yaioUtils.getConfig().restLoginUrl, $.param($scope.credentials), {
-            headers : {
-                "content-type" : "application/x-www-form-urlencoded"
-            }
-        }).success(function(data) {
-            authorization.authentificate(function() {
-                if ($rootScope.authenticated) {
-                    if ($rootScope.lastLocation) {
-                        $location.path($rootScope.lastLocation);
-                    } else {
-                        $location.path(yaioUtils.getConfig().appRootUrl);
-                    }
-                    $scope.error = false;
-                } else {
+        return yaioUtils.getService('YaioNodeData').yaioDoLogin($scope.credentials)
+            .then(function success(data) {
+                    // handle success
+                    authorization.authentificate(function() {
+                        if ($rootScope.authenticated) {
+                            if ($rootScope.lastLocation) {
+                                $location.path($rootScope.lastLocation);
+                            } else {
+                                $location.path(yaioUtils.getConfig().appRootUrl);
+                            }
+                            $scope.error = false;
+                        } else {
+                            $location.path(yaioUtils.getConfig().appLoginUrl);
+                            $scope.error = true;
+                        }
+                    });
+                }, function error(data) {
+                    // handle error
                     $location.path(yaioUtils.getConfig().appLoginUrl);
                     $scope.error = true;
-                }
+                    $rootScope.authenticated = false;
             });
-        }).error(function(data) {
-            $location.path(yaioUtils.getConfig().appLoginUrl);
-            $scope.error = true;
-            $rootScope.authenticated = false;
-        });
     };
     
     $scope.logout = function() {
-        $http.post(yaioUtils.getConfig().restLogoutUrl, {}).success(function() {
-            $rootScope.authenticated = false;
-            $location.path(yaioUtils.getConfig().appRootUrl);
-        }).error(function(data) {
-            $location.path(yaioUtils.getConfig().appRootUrl);
-            $rootScope.authenticated = false;
-        });
+        return yaioUtils.getService('YaioNodeData').yaioDoLogout()
+            .then(function success(data) {
+                // handle success
+                $rootScope.authenticated = false;
+                $location.path(yaioUtils.getConfig().appRootUrl);
+            }, function error(data) {
+                // handle error
+                $location.path(yaioUtils.getConfig().appRootUrl);
+                $rootScope.authenticated = false;
+            });
     };
 });
 

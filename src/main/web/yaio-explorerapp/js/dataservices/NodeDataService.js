@@ -106,6 +106,24 @@ Yaio.NodeDataService = function(appBase) {
         return me._yaioCallFulltextSearch(searchOptions);
     };
     
+    me.yaioDoLogin = function(credentials) {
+        var msg = "yaioDoLogin for credentials:" + credentials;
+        console.log(msg + " START");
+        return me._yaioCallLogin(credentials);
+    };
+    
+    me.yaioDoLogout = function(session) {
+        var msg = "yaioDoLogout for session" + session;
+        console.log(msg + " START");
+        return me._yaioCallLogout(session);
+    };
+    
+    me.yaioDoCheckUser = function(session) {
+        var msg = "yaioDoCheckUser for session:" + session;
+        console.log(msg + " START");
+        return me._yaioCallCheckUser(session);
+    };
+    
     me._yaioCallLoadSymLinkData = function(basenode, fancynode) {
         if (me.appBase.get("Logger")) {
             me.appBase.get("Logger").logError("NodeDataService not implemented");
@@ -294,6 +312,26 @@ Yaio.NodeDataService = function(appBase) {
         throw "NodeDataService not implemented";
     };
 
+    me._yaioCallLogin = function(credentials) {
+        if (me.appBase.get("Logger")) {
+            me.appBase.get("Logger").logError("NodeDataService not implemented");
+        }
+        throw "NodeDataService not implemented";
+    };
+
+    me._yaioCallLogout = function() {
+        if (me.appBase.get("Logger")) {
+            me.appBase.get("Logger").logError("NodeDataService not implemented");
+        }
+        throw "NodeDataService not implemented";
+    };
+
+    me._yaioCallCheckUser = function() {
+        if (me.appBase.get("Logger")) {
+            me.appBase.get("Logger").logError("NodeDataService not implemented");
+        }
+        throw "NodeDataService not implemented";
+    };
 
     me._init();
     
