@@ -39,24 +39,26 @@ Yaio.ExplorerActionService = function(appBase) {
     };
     
     me.openNodeHierarchy = function(treeId, lstIdsHierarchy) {
+        var svcYaioBase = me.appBase.get('YaioBase');
+
         // check for tree
         var tree = me.$(treeId).fancytree("getTree");
         if (! tree) {
-            me.appBase.get('YaioBase').logError("openHierarchy: error tree:'" + treeId + "' not found.", false);
+            svcYaioBase.logError("openHierarchy: error tree:'" + treeId + "' not found.", false);
             return;
         }
     
         // check for rootNode
         var rootNode = tree.rootNode;
         if (! rootNode) {
-            me.appBase.get('YaioBase').logError("openHierarchy: error for tree:'" + treeId 
+            svcYaioBase.logError("openHierarchy: error for tree:'" + treeId 
                         + "' rootNode not found.", false);
             return;
         }
         
         // check for lstIdsHierarchy
         if (! lstIdsHierarchy || lstIdsHierarchy.length <= 0) {
-            me.appBase.get('YaioBase').logError("openHierarchy: error for tree:'" + treeId 
+            svcYaioBase.logError("openHierarchy: error for tree:'" + treeId 
                         + "' lstIdsHierarchy is empty.", false);
             return;
         }
@@ -69,7 +71,7 @@ Yaio.ExplorerActionService = function(appBase) {
             firstNode = rootNode.mapChildren[firstNodeId];
         }
         if (! firstNode) {
-            me.appBase.get('YaioBase').logError("openHierarchy: error for tree:'" + treeId 
+            svcYaioBase.logError("openHierarchy: error for tree:'" + treeId 
                         + "' firstNode of:'" + lstIdsHierarchySave 
                         + "' not found on rootNode.", false);
             return;
@@ -83,17 +85,19 @@ Yaio.ExplorerActionService = function(appBase) {
     };
     
     me.openNodeHierarchyForNodeId = function(treeId, activeNodeId) {
+        var svcYaioBase = me.appBase.get('YaioBase');
+
         // check for tree
         var tree = me.$(treeId).fancytree("getTree");
         if (! tree) {
-            me.appBase.get('YaioBase').logError("openNodeHierarchyForNodeId: error tree:'" + treeId + "' not found.", false);
+            svcYaioBase.logError("openNodeHierarchyForNodeId: error tree:'" + treeId + "' not found.", false);
             return;
         }
         
         // check for activeNodeId
         var treeNode = tree.getNodeByKey(activeNodeId);
         if (! treeNode) {
-            me.appBase.get('YaioBase').logError("openNodeHierarchyForNodeId: error for tree:'" + treeId 
+            svcYaioBase.logError("openNodeHierarchyForNodeId: error for tree:'" + treeId 
                     + "' activeNode " + activeNodeId + " not found.", false);
             return null;
         }
@@ -111,16 +115,18 @@ Yaio.ExplorerActionService = function(appBase) {
     
     
     me.yaioOpenSubNodesForTree = function(treeId, level) {
+        var svcYaioBase = me.appBase.get('YaioBase');
+
         var tree = me.$(treeId).fancytree("getTree");
         if (! tree) {
-            me.appBase.get('YaioBase').logError("yaioOpenSubNodesForTree: error tree:'" + treeId + "' not found.", false);
+            svcYaioBase.logError("yaioOpenSubNodesForTree: error tree:'" + treeId + "' not found.", false);
             return;
         }
         
         // check for activeNodeId
         var treeNode = tree.rootNode;
         if (! treeNode) {
-            me.appBase.get('YaioBase').logError("yaioOpenSubNodesForTree: error rootnode for tree:'" + treeId 
+            svcYaioBase.logError("yaioOpenSubNodesForTree: error rootnode for tree:'" + treeId 
                     + " not found.", false);
             return null;
         }
@@ -144,20 +150,22 @@ Yaio.ExplorerActionService = function(appBase) {
     };
     
     me.yaioRemoveNodeById = function(nodeId) {
+        var svcYaioBase = me.appBase.get('YaioBase');
+
         if (window.confirm("Wollen Sie die Node wirklich l&ouml;schen?")) {
             console.log("remove node:" + nodeId);
             // check for tree
             var treeId = "#tree";
             var tree = me.$(treeId).fancytree("getTree");
             if (! tree) {
-                me.appBase.get('YaioBase').logError("yaioRemoveNode: error tree:'" + treeId + "' not found.", false);
+                svcYaioBase.logError("yaioRemoveNode: error tree:'" + treeId + "' not found.", false);
                 return;
             }
             
             // check for activeNodeId
             var treeNode = tree.getNodeByKey(nodeId);
             if (! treeNode) {
-                me.appBase.get('YaioBase').logError("yaioRemoveNode: error for tree:'" + treeId 
+                svcYaioBase.logError("yaioRemoveNode: error for tree:'" + treeId 
                         + "' activeNode " + nodeId + " not found.", false);
                 return null;
             }
@@ -182,22 +190,24 @@ Yaio.ExplorerActionService = function(appBase) {
      * @param nodeId - id of the node
      */
     me.openJiraExportWindow = function(nodeId) {
+        var svcYaioBase = me.appBase.get('YaioBase');
+
         // check vars
         if (! nodeId) {
             // tree not found
-            me.appBase.get('YaioBase').logError("error openJiraWindow: nodeId required", false);
+            svcYaioBase.logError("error openJiraWindow: nodeId required", false);
             return null;
         }
         // load node
         var tree = me.$("#tree").fancytree("getTree");
         if (!tree) {
             // tree not found
-            me.appBase.get('YaioBase').logError("error openJiraWindow: cant load tree for node:" + nodeId, false);
+            svcYaioBase.logError("error openJiraWindow: cant load tree for node:" + nodeId, false);
             return null;
         }
         var treeNode = tree.getNodeByKey(nodeId);
         if (! treeNode) {
-            me.appBase.get('YaioBase').logError("error openJiraWindow: cant load node:" + nodeId, false);
+            svcYaioBase.logError("error openJiraWindow: cant load node:" + nodeId, false);
             return null;
         }
         
@@ -213,7 +223,7 @@ Yaio.ExplorerActionService = function(appBase) {
         
         // convert and secure
         var nodeDesc = me.appBase.get('YaioFormatter').convertMarkdownToJira(descText);
-        nodeDesc = me.appBase.get('YaioBase').htmlEscapeText(nodeDesc);
+        nodeDesc = svcYaioBase.htmlEscapeText(nodeDesc);
         
         // set clipboard-content
         me.$( "#clipboard-content" ).html(nodeDesc);
@@ -244,11 +254,14 @@ Yaio.ExplorerActionService = function(appBase) {
      *     GUI Convert
      */
     me.yaioExportExplorerLinesAsOverview = function() {
+        var svcYaioBase = me.appBase.get('YaioBase');
+        var svcYaioFormatter = me.appBase.get('YaioFormatter');
+
         // convert and secure
-        var checkListSrc = me.appBase.get('YaioFormatter').convertExplorerLinesAsCheckList();
-        checkListSrc = me.appBase.get('YaioBase').htmlEscapeText(checkListSrc);
-        var ganttSrc = me.appBase.get('YaioFormatter').convertExplorerLinesAsGanttMarkdown();
-        ganttSrc = me.appBase.get('YaioBase').htmlEscapeText(ganttSrc);
+        var checkListSrc = svcYaioFormatter.convertExplorerLinesAsCheckList();
+        checkListSrc = svcYaioBase.htmlEscapeText(checkListSrc);
+        var ganttSrc = svcYaioFormatter.convertExplorerLinesAsGanttMarkdown();
+        ganttSrc = svcYaioBase.htmlEscapeText(ganttSrc);
         
         // set clipboard-content
         me.$( "#clipboard-content" ).html(checkListSrc + "\n\n" +  ganttSrc);
@@ -278,11 +291,14 @@ Yaio.ExplorerActionService = function(appBase) {
      *     GUI Convert
      */
     me.yaioSnapshot = function(parentNode) {
+        var svcYaioBase = me.appBase.get('YaioBase');
+        var svcYaioFormatter = me.appBase.get('YaioFormatter');
+
         // convert and secure
-        var checkListSrc = me.appBase.get('YaioFormatter').convertExplorerLinesAsCheckList();
-        checkListSrc = me.appBase.get('YaioBase').htmlEscapeText(checkListSrc);
-        var ganttSrc = me.appBase.get('YaioFormatter').convertExplorerLinesAsGanttMarkdown();
-        ganttSrc = me.appBase.get('YaioBase').htmlEscapeText(ganttSrc);
+        var checkListSrc = svcYaioFormatter.convertExplorerLinesAsCheckList();
+        checkListSrc = svcYaioBase.htmlEscapeText(checkListSrc);
+        var ganttSrc = svcYaioFormatter.convertExplorerLinesAsGanttMarkdown();
+        ganttSrc = svcYaioBase.htmlEscapeText(ganttSrc);
     
         // open editor
         me.appBase.get('YaioEditor').yaioOpenNodeEditorForNode(parentNode, 'createsnapshot', {nodeDesc: checkListSrc + "\n\n" +  ganttSrc});
@@ -334,7 +350,8 @@ Yaio.ExplorerActionService = function(appBase) {
      *     GUI Tree Rendering
      * @param id - sysUID of the node 
      */
-   me.toggleNodeDescContainer = function(id) {
+    me.toggleNodeDescContainer = function(id) {
+        var svcYaioFormatter = me.appBase.get('YaioFormatter');
         me.$("#detail_desc_" + id).slideToggle(1000,function() {
             // show/hide toggler
             if (me.$("#detail_desc_" + id).css("display") == "block") {
@@ -346,12 +363,12 @@ Yaio.ExplorerActionService = function(appBase) {
                 if (me.$(descBlock).hasClass('syntaxhighlighting-open')) {
                     var flgDoMermaid = false;
                     console.log("toggleNodeDescContainer highlight for descBlock: " + me.$(descBlock).attr('id'));
-                    flgDoMermaid = me.appBase.get('YaioFormatter').formatDescBlock(descBlock) || flgDoMermaid;
+                    flgDoMermaid = svcYaioFormatter.formatDescBlock(descBlock) || flgDoMermaid;
                     console.log("toggleNodeDescContainer resulting flgDoMermaid: " + flgDoMermaid);
                     
                     // do Mermaid if found
                     if (flgDoMermaid) {
-                        me.appBase.get('YaioFormatter').formatMermaidGlobal();
+                        svcYaioFormatter.formatMermaidGlobal();
                     }
                 }
             } else {
