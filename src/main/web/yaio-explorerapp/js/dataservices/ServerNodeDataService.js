@@ -63,6 +63,8 @@ Yaio.ServerNodeDataService = function(appBase) {
     };
 
     me._yaioCallPatchNode = function(fancynode, url, json) {
+        var svcYaioBase = me.appBase.get('YaioBase');
+
         var msg = "_yaioCallPatchNode for fancynode:" + fancynode.key;
         console.log(msg + " CALL: " + "url: "+ url + " with:" + json);
         return me.$.ajax({
@@ -75,8 +77,8 @@ Yaio.ServerNodeDataService = function(appBase) {
             data : json,
             error : function(jqXHR, textStatus, errorThrown) {
                 // log the error to the console
-                me.appBase.get('YaioBase').logError("The following error occured: " + textStatus + " " + errorThrown, true);
-                me.appBase.get('YaioBase').logError("cant save fancynode:" + fancynode.key + " error:" + textStatus);
+                svcYaioBase.logError("The following error occured: " + textStatus + " " + errorThrown, true);
+                svcYaioBase.logError("cant save fancynode:" + fancynode.key + " error:" + textStatus);
             },
             complete : function() {
                 console.log("update fancynode:" + fancynode.key + "' ran");
@@ -85,6 +87,8 @@ Yaio.ServerNodeDataService = function(appBase) {
     };
     
     me._yaioCallLoadSymLinkData = function(basenode, fancynode) {
+        var svcYaioBase = me.appBase.get('YaioBase');
+
         var msg = "_yaioCallLoadSymLinkData for node:" + basenode.sysUID + " symlink:" + basenode.symLinkRef + " fancynode:" + fancynode.key;
         console.log(msg + " START");
         var url = me.appBase.config.restSymLinkUrl + basenode.symLinkRef;
@@ -97,8 +101,8 @@ Yaio.ServerNodeDataService = function(appBase) {
             type : 'GET',
             error : function(jqXHR, textStatus, errorThrown) {
                 // log the error to the console
-                me.appBase.get('YaioBase').logError("ERROR  " + msg + " The following error occured: " + textStatus + " " + errorThrown, false);
-                me.appBase.get('YaioBase').logError("cant load " + msg + " error:" + textStatus, true);
+                svcYaioBase.logError("ERROR  " + msg + " The following error occured: " + textStatus + " " + errorThrown, false);
+                svcYaioBase.logError("cant load " + msg + " error:" + textStatus, true);
             },
             complete : function() {
                 console.log("completed load " + msg);
@@ -107,6 +111,8 @@ Yaio.ServerNodeDataService = function(appBase) {
     }
     
     me._yaioCallRemoveNode = function(nodeId) {
+        var svcYaioBase = me.appBase.get('YaioBase');
+
         var msg = "_yaioCallRemoveNode node:" + nodeId;
         var url = me.appBase.config.restRemoveUrl + nodeId;
         console.log(msg + " START: with:" + url);
@@ -119,8 +125,8 @@ Yaio.ServerNodeDataService = function(appBase) {
             type: 'DELETE',
             error: function(jqXHR, textStatus, errorThrown) {
                 // log the error to the console
-                me.appBase.get('YaioBase').logError("The following error occured: " + textStatus + " " + errorThrown, false);
-                me.appBase.get('YaioBase').logError("cant remove node:" + nodeId + " error:" + textStatus, true);
+                svcYaioBase.logError("The following error occured: " + textStatus + " " + errorThrown, false);
+                svcYaioBase.logError("cant remove node:" + nodeId + " error:" + textStatus, true);
             },
             complete: function() {
                 console.log("remove node:" + nodeId + "' ran");
@@ -129,6 +135,8 @@ Yaio.ServerNodeDataService = function(appBase) {
     };
 
     me._yaioCallSaveNode = function(nodeObj, options) {
+        var svcYaioBase = me.appBase.get('YaioBase');
+
         var formName, mode, className, sysUID; 
         var msg = "_yaioCallSaveNode node: " + options.mode + ' ' + nodeObj['sysUID'];
         console.log(msg + " START");
@@ -156,7 +164,7 @@ Yaio.ServerNodeDataService = function(appBase) {
             }
         } else {
             // unknown mode
-            me.appBase.get('YaioBase').logError("unknown mode=" + options.mode + " form formName=" + options.formName, false);
+            svcYaioBase.logError("unknown mode=" + options.mode + " form formName=" + options.formName, false);
             return null;
         }
 
