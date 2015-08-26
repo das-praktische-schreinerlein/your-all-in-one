@@ -183,7 +183,32 @@ Yaio.ServerNodeDataService = function(appBase) {
         // do http
         console.log(msg + " CALL url:" + url);
         return ajaxCall();
+    };
+    
+    me._yaioCallFulltextSearch = function(searchOptions) {
+        var msg = "_yaioCallFulltextSearch searchOptions: " + searchOptions;
+        var uri = encodeURI(searchOptions.curPage)
+            + '/' + encodeURI(searchOptions.pageSize)
+            + '/' + encodeURI(searchOptions.searchSort)
+            + '/' + encodeURI(searchOptions.baseSysUID)
+            + '/';
+
+        // no empty fulltext for webservice -> we use there another route 
+        if (searchOptions.fulltext && searchOptions.fulltext.length > 0) {
+            uri = uri + encodeURI(searchOptions.fulltext) + '/';
+        }
+
+        // load data
+        var url = me.appBase.config.restSearchUrl + uri;
+        var ajaxCall = function () {
+            return me.appBase.get('Angular.$http').get(url);
+        }
+        
+        // do http
+        console.log(msg + " CALL url:" + url);
+        return ajaxCall();
     }
+    
 
     me._init();
     

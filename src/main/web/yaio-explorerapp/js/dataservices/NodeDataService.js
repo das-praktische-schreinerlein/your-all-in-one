@@ -100,6 +100,12 @@ Yaio.NodeDataService = function(appBase) {
         return me._yaioCallLoadNodeById(nodeId, options);
     };
     
+    me.yaioDoFulltextSearch = function(searchOptions) {
+        var msg = "yaioDoFulltextSearch for searchOptions:" + searchOptions;
+        console.log(msg + " START");
+        return me._yaioCallFulltextSearch(searchOptions);
+    };
+    
     me._yaioCallLoadSymLinkData = function(basenode, fancynode) {
         if (me.appBase.get("Logger")) {
             me.appBase.get("Logger").logError("NodeDataService not implemented");
@@ -280,6 +286,14 @@ Yaio.NodeDataService = function(appBase) {
         }
         throw "NodeDataService not implemented";
     };
+    
+    me._yaioCallFulltextSearch = function(searchOptions) {
+        if (me.appBase.get("Logger")) {
+            me.appBase.get("Logger").logError("NodeDataService not implemented");
+        }
+        throw "NodeDataService not implemented";
+    };
+
 
     me._init();
     

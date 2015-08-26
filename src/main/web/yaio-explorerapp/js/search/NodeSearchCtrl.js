@@ -146,7 +146,7 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ht
         console.log("load new Url:" + newUrl);
         $location.path(newUrl);
     };
-
+    
     /**
      * <h4>FeatureDomain:</h4>
      *     GUI
@@ -170,47 +170,46 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ht
         // save lastLocation for login
         $rootScope.lastLocation = '/search' + uri + encodeURI($scope.searchOptions.fulltext) + '/';
 
-        // no empty fulltext for webservice -> we use there another route 
-        if ($scope.searchOptions.fulltext && $scope.searchOptions.fulltext.length > 0) {
-            uri = uri + encodeURI($scope.searchOptions.fulltext) + '/';
-        }
-
-        // load data
-        var searchNodeUrl = yaioUtils.getConfig().restSearchUrl + uri;
-        $http.get(searchNodeUrl).then(function(nodeResponse) {
-            // success handler
-            
-            // check response
-            var state = nodeResponse.data.state;
-            if (state === "OK") {
-                // all fine
-                console.log("NodeSearchCtrl - OK loading nodes:" + nodeResponse.data.stateMsg + " searchNodeUrl=" + searchNodeUrl);
-                
-                // add nodes to scope
-                $scope.nodes = nodeResponse.data.nodes;
-                
-                // set count
-                $scope.searchOptions.total = nodeResponse.data.count;
-                
-                // set event for paginantion
-                $scope.NodeListReady = true;
-                $scope.$broadcast("NodeListReady");
-            } else {
-                // error
-                yaioUtils.getService('YaioBase').logError("error loading nodes:" + nodeResponse.data.stateMsg + " details:" + nodeResponse, true);
-            }
-        }, function(response) {
-            // error handler
-            var data = response.data;
-            var header = response.header;
-            var config = response.config;
-            var message = "error loading nodes with url: " + searchNodeUrl;
-            yaioUtils.getService('YaioBase').logError(message, true);
-            message = "error data: " + data + " header:" + header + " config:" + config;
-            yaioUtils.getService('YaioBase').logError(message, false);
-        });
+        // search data
+        var searchOptions = $scope.searchOptions;
+        return yaioUtils.getService('YaioNodeData').yaioDoFulltextSearch(searchOptions)
+            .then(function(angularResponse) {
+                // success handler
+                $scope.doFulltextSearchSuccessHandler(searchOptions, angularResponse.data)
+            }, function(angularResponse) {
+                // error handler
+                var data = angularResponse.data;
+                var header = angularResponse.header;
+                var config = angularResponse.config;
+                var message = "error loading nodes with searchOptions: " + searchOptions;
+                yaioUtils.getService('YaioBase').logError(message, true);
+                message = "error data: " + data + " header:" + header + " config:" + config;
+                yaioUtils.getService('YaioBase').logError(message, false);
+            });
     };
     
+    $scope.doFulltextSearchSuccessHandler = function(searchOptions, yaioNodeSearchResponse) {
+        // check response
+        var state = yaioNodeSearchResponse.state;
+        if (state === "OK") {
+            // all fine
+            console.log("NodeSearchCtrl - OK loading nodes:" + yaioNodeSearchResponse.stateMsg + " searchOptions=" + searchOptions);
+            
+            // add nodes to scope
+            $scope.nodes = yaioNodeSearchResponse.nodes;
+            
+            // set count
+            $scope.searchOptions.total = yaioNodeSearchResponse.count;
+            
+            // set event for paginantion
+            $scope.NodeListReady = true;
+            $scope.$broadcast("NodeListReady");
+        } else {
+            // error
+            yaioUtils.getService('YaioBase').logError("error loading nodes:" + yaioNodeSearchResponse.stateMsg + " details:" + yaioNodeSearchResponse, true);
+        }
+    }
+
     /**
      * <h4>FeatureDomain:</h4>
      *     GUI
