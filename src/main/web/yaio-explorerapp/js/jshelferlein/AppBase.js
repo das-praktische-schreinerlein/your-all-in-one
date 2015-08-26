@@ -120,11 +120,20 @@ JsHelferlein.AppBase = function(config) {
         me.jQuery = $;
         me.$ = me.jQuery;
         me.configureService("jQuery", function() { return me.jQuery; });
-        me.configureService("Logger", function() { return JsHelferlein.LoggerService(me); });
-        me.configureService("DOMHelper", function() { return JsHelferlein.DOMHelperService(me); });
-        me.configureService("UIToggler", function() { return JsHelferlein.UIToggler(me); });
-        me.configureService("SpeechSynthHelper", function() { return JsHelferlein.SpeechSynthHelperService(me); });
-        me.configureService("SpeechRecognitionHelper", function() { return JsHelferlein.SpeechRecognitionHelperService(me); });
+        
+        // configure instances
+        me.configureService("JsHelferlein.LoggerService", function() { return JsHelferlein.LoggerService(me); });
+        me.configureService("JsHelferlein.DOMHelperService", function() { return JsHelferlein.DOMHelperService(me); });
+        me.configureService("JsHelferlein.UIToggler", function() { return JsHelferlein.UIToggler(me); });
+        me.configureService("JsHelferlein.SpeechSynthHelperService", function() { return JsHelferlein.SpeechSynthHelperService(me); });
+        me.configureService("JsHelferlein.SpeechRecognitionHelperService", function() { return JsHelferlein.SpeechRecognitionHelperService(me); });
+        
+        // configure aliases
+        me.configureService("Logger", function() { return me.get("JsHelferlein.LoggerService"); });
+        me.configureService("DOMHelper", function() { return me.get("JsHelferlein.DOMHelperService"); });
+        me.configureService("UIToggler", function() { return me.get("JsHelferlein.UIToggler"); });
+        me.configureService("SpeechSynthHelper", function() { return me.get("JsHelferlein.SpeechSynthHelperService"); });
+        me.configureService("SpeechRecognitionHelper", function() { return me.get("JsHelferlein.SpeechRecognitionHelperService"); });
     };
 
     me._configureDefaultDetectors = function() {
