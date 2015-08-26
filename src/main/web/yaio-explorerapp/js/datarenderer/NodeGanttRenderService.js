@@ -301,11 +301,13 @@ Yaio.NodeGanttRenderService = function(appBase) {
      *     GUI Tree Rendering
      */
     me.yaioShowGanttBlock = function() {
-        me.appBase.get('UIToggler').toggleTableBlock("#tabTogglerGantt");
-        me.appBase.get('UIToggler').toggleTableBlock("td.block_nodedata, th.block_nodedata");
+        var svcUIToggler = me.appBase.get('UIToggler');
+        
+        svcUIToggler.toggleTableBlock("#tabTogglerGantt");
+        svcUIToggler.toggleTableBlock("td.block_nodedata, th.block_nodedata");
         setTimeout(function(){
-            me.appBase.get('UIToggler').toggleTableBlock("#tabTogglerData");
-            me.appBase.get('UIToggler').toggleTableBlock("td.block_nodegantt, th.block_nodegantt");
+            svcUIToggler.toggleTableBlock("#tabTogglerData");
+            svcUIToggler.toggleTableBlock("td.block_nodegantt, th.block_nodegantt");
         }, 400);
         // set it to none: force
         setTimeout(function(){
