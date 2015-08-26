@@ -38,12 +38,8 @@ Yaio.NodeDataService = function(appBase) {
     me._init = function() {
     };
     
-    
     me.loadNodeData = function(nodeId) {
-        if (me.appBase.get("Logger")) {
-            me.appBase.get("Logger").logError("NodeDataService.loadNodeData not implemented");
-        }
-        throw "loadNodeData not implemented";
+        me.logNotImplemented();
     };
     
     /*****************************************
@@ -125,13 +121,11 @@ Yaio.NodeDataService = function(appBase) {
     };
     
     me._yaioCallLoadSymLinkData = function(basenode, fancynode) {
-        if (me.appBase.get("Logger")) {
-            me.appBase.get("Logger").logError("NodeDataService not implemented");
-        }
-        throw "NodeDataService not implemented";
+        me.logNotImplemented();
     };
     
     me._yaioLoadSymLinkDataSuccessHandler = function(basenode, fancynode, yaioNodeActionResponse, textStatus, jqXhr) {
+        var svcYaioBase = me.appBase.get('YaioBase');
         var msg = "_yaioLoadSymLinkDataSuccessHandler for fancynode:" + fancynode.key;
         console.log(msg + " OK done!" + yaioNodeActionResponse.state);
         if (yaioNodeActionResponse.state == "OK") {
@@ -142,7 +136,7 @@ Yaio.NodeDataService = function(appBase) {
                 var tree = me.$("#tree").fancytree("getTree");
                 if (!tree) {
                     // tree not found
-                    me.appBase.get('YaioBase').logError("error yaioLoadSymLinkData: cant load tree - " + msg, false);
+                    svcYaioBase.logError("error yaioLoadSymLinkData: cant load tree - " + msg, false);
                     return null;
                 }
                 var rootNode = tree.rootNode;
@@ -153,7 +147,7 @@ Yaio.NodeDataService = function(appBase) {
                 }
                 var treeNode = tree.getNodeByKey(basenode.sysUID);
                 if (! treeNode) {
-                    me.appBase.get('YaioBase').logError("error yaioLoadSymLinkData: cant load node - " + msg, false);
+                    svcYaioBase.logError("error yaioLoadSymLinkData: cant load node - " + msg, false);
                     return null;
                 }
                 
@@ -188,35 +182,27 @@ Yaio.NodeDataService = function(appBase) {
 
                 console.log(msg + " DONE");
             } else {
-                me.appBase.get('YaioBase').logError("ERROR got no " + msg, true);
+                svcYaioBase.logError("ERROR got no " + msg, true);
             }
         } else {
-            me.appBase.get('YaioBase').logError("ERROR cant load  " + msg + " error:" + yaioNodeActionResponse.stateMsg, true);
+            svcYaioBase.logError("ERROR cant load  " + msg + " error:" + yaioNodeActionResponse.stateMsg, true);
         }
     };
     
     me._yaioCallUpdateNode = function(fancynode, json) {
-        if (me.appBase.get("Logger")) {
-            me.appBase.get("Logger").logError("NodeDataService not implemented");
-        }
-        throw "NodeDataService not implemented";
+        me.logNotImplemented();
     };
     
     me._yaioCallMoveNode = function(fancynode, newParentKey, newPos, json) {
-        if (me.appBase.get("Logger")) {
-            me.appBase.get("Logger").logError("NodeDataService not implemented");
-        }
-        throw "NodeDataService not implemented";
+        me.logNotImplemented();
     };
     
     me._yaioCallPatchNode = function(fancynode, url, json) {
-        if (me.appBase.get("Logger")) {
-            me.appBase.get("Logger").logError("NodeDataService not implemented");
-        }
-        throw "NodeDataService not implemented";
+        me.logNotImplemented();
     };
     
     me._yaioPatchNodeSuccessHandler = function(fancynode, yaioNodeActionResponse, textStatus, jqXhr) {
+        var svcYaioBase = me.appBase.get('YaioBase');
         var msg = "_yaioPatchNodeSuccessHandler for fancynode:" + fancynode.key;
         console.log(msg + " OK done!" + yaioNodeActionResponse.state);
         if (yaioNodeActionResponse.state == "OK") {
@@ -231,7 +217,7 @@ Yaio.NodeDataService = function(appBase) {
                     me.appBase.get('YaioExplorerAction').openNodeHierarchy("#tree", yaioNodeActionResponse.parentIdHierarchy);
                 });
             } else {
-                me.appBase.get('YaioBase').logError("got no hierarchy for:" + fancynode.key 
+                svcYaioBase.logError("got no hierarchy for:" + fancynode.key 
                         + " hierarchy:" + yaioNodeActionResponse.parentIdHierarchy, true);
             }
         } else {
@@ -242,23 +228,21 @@ Yaio.NodeDataService = function(appBase) {
                 message = message +  " violations: ";
                 for (var idx in yaioNodeActionResponse.violations) {
                     var violation = yaioNodeActionResponse.violations[idx];
-                    me.appBase.get('YaioBase').logError("violations while save fancynode:" + fancynode.key 
+                    svcYaioBase.logError("violations while save fancynode:" + fancynode.key 
                             + " field:" + violation.path + " message:" + violation.message, false);
                     message = message +  violation.path + " (" + violation.message + "),";
                 }
             }
-            me.appBase.get('YaioBase').logError(message, true);
+            svcYaioBase.logError(message, true);
         }
     };
 
     me._yaioCallRemoveNode = function(nodeId) {
-        if (me.appBase.get("Logger")) {
-            me.appBase.get("Logger").logError("NodeDataService not implemented");
-        }
-        throw "NodeDataService not implemented";
+        me.logNotImplemented();
     };
 
     me._yaioRemoveNodeSuccessHandler = function(nodeId, yaioNodeActionResponse, textStatus, jqXhr) {
+        var svcYaioBase = me.appBase.get('YaioBase');
         var msg = "_yaioRemoveNodeSuccessHandler for nodeId:" + nodeId;
         console.log(msg + " OK done!" + yaioNodeActionResponse.state);
         if (yaioNodeActionResponse.state == "OK") {
@@ -273,17 +257,17 @@ Yaio.NodeDataService = function(appBase) {
                     me.appBase.get('YaioExplorerAction').openNodeHierarchy("#tree", yaioNodeActionResponse.parentIdHierarchy);
                 });
             } else {
-                me.appBase.get('YaioBase').logError("got no hierarchy for:" + nodeId
+                svcYaioBase.logError("got no hierarchy for:" + nodeId
                         + " hierarchy:" + yaioNodeActionResponse.parentIdHierarchy, true);
             }
         } else {
-            me.appBase.get('YaioBase').logError("cant remove node:" + nodeId + " error:" + yaioNodeActionResponse.stateMsg, false);
+            svcYaioBase.logError("cant remove node:" + nodeId + " error:" + yaioNodeActionResponse.stateMsg, false);
             // check for violations
             if (yaioNodeActionResponse.violations) {
                 // iterate violations
                 for (var idx in yaioNodeActionResponse.violations) {
                     var violation = yaioNodeActionResponse.violations[idx];
-                    me.appBase.get('YaioBase').logError("violations while remove node:" + nodeId 
+                    svcYaioBase.logError("violations while remove node:" + nodeId 
                             + " field:" + violation.path + " message:" + violation.message, false);
                     window.alert("cant remove node because: " + violation.path + " (" + violation.message + ")");
                 }
@@ -292,45 +276,27 @@ Yaio.NodeDataService = function(appBase) {
     };
     
     me._yaioCallSaveNode = function(nodeObj, options) {
-        if (me.appBase.get("Logger")) {
-            me.appBase.get("Logger").logError("NodeDataService not implemented");
-        }
-        throw "NodeDataService not implemented";
+        me.logNotImplemented();
     };
 
     me._yaioCallLoadNodeById = function(nodeId, options) {
-        if (me.appBase.get("Logger")) {
-            me.appBase.get("Logger").logError("NodeDataService not implemented");
-        }
-        throw "NodeDataService not implemented";
+        me.logNotImplemented();
     };
     
     me._yaioCallFulltextSearch = function(searchOptions) {
-        if (me.appBase.get("Logger")) {
-            me.appBase.get("Logger").logError("NodeDataService not implemented");
-        }
-        throw "NodeDataService not implemented";
+        me.logNotImplemented();
     };
 
     me._yaioCallLogin = function(credentials) {
-        if (me.appBase.get("Logger")) {
-            me.appBase.get("Logger").logError("NodeDataService not implemented");
-        }
-        throw "NodeDataService not implemented";
+        me.logNotImplemented();
     };
 
     me._yaioCallLogout = function() {
-        if (me.appBase.get("Logger")) {
-            me.appBase.get("Logger").logError("NodeDataService not implemented");
-        }
-        throw "NodeDataService not implemented";
+        me.logNotImplemented();
     };
 
     me._yaioCallCheckUser = function() {
-        if (me.appBase.get("Logger")) {
-            me.appBase.get("Logger").logError("NodeDataService not implemented");
-        }
-        throw "NodeDataService not implemented";
+        me.logNotImplemented();
     };
 
     me._init();
