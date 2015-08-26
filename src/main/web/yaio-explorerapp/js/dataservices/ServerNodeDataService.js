@@ -139,7 +139,9 @@ Yaio.ServerNodeDataService = function(appBase) {
             method = "PATCH";
             url = me.appBase.config.restUpdateUrl + options.className + "/" + options.sysUID;
             ajaxCall = function () {
-                return me.appBase.get('Angular.$http').patch(url, nodeObj);
+                // hack because shortcut .patch not exists yet in angular-version
+                var http = me.appBase.get('Angular.$http');
+                return http({method: method, url: url, data: nodeObj});
             }
         } else if (options.mode === "create") {
             // mode create 
@@ -161,13 +163,27 @@ Yaio.ServerNodeDataService = function(appBase) {
         // define json for common fields
         var json = JSON.stringify(nodeObj);
         
-        // create url
-        console.log(msg + " CALL url::" + url + " data:" + json);
-        
         // do http
+        console.log(msg + " CALL url:" + url + " data:" + json);
         return ajaxCall();
     };
 
+    me._yaioCallLoadNodeById = function(nodeId, options) {
+        var msg = "_yaioCallLoadNodeById node: " + nodeId + " options:" + options;
+        console.log(msg + " START");
+        var restBaseUrl = me.appBase.config.restShowUrl;
+        if (options.flgNodeByAllId) {
+            restBaseUrl = me.appBase.config.restSymLinkUrl;
+        }
+        var url = restBaseUrl + nodeId;
+        var ajaxCall = function () {
+            return me.appBase.get('Angular.$http').get(url);
+        }
+        
+        // do http
+        console.log(msg + " CALL url:" + url);
+        return ajaxCall();
+    }
 
     me._init();
     

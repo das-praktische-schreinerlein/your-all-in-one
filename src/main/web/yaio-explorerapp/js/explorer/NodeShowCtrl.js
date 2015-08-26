@@ -38,13 +38,13 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http
 
     // check parameter - set default if empty
     var baseUrl = '/show/';
-    var restBaseUrl = yaioUtils.getConfig().restShowUrl;
     var nodeId = $routeParams.nodeId;
     var nodeByAllId = $routeParams.nodeByAllId;
+    var flgNodeByAllId = false;
     if (nodeByAllId != null && nodeByAllId != "" && nodeByAllId) {
         nodeId = nodeByAllId;
         baseUrl = '/showByAllIds/';
-        restBaseUrl = yaioUtils.getConfig().restSymLinkUrl;
+        flgNodeByAllId = true;
     }
     if (nodeId == null || nodeId == "" || ! nodeId) {
         nodeId = yaioUtils.getConfig().CONST_MasterId;
@@ -54,20 +54,12 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http
     $scope.node = {};
     $scope.config = {treeOpenLevel: 1};
     
-    // check activeNodeId
-    var activeNodeIdHandler;
-    var activeNodeId = $routeParams.activeNodeId;
-
-    console.log("NodeShowCtrl - processing nodeId=" + nodeId + " activeNodeId=" + activeNodeId);
-
-    var curNodeUrl = restBaseUrl + nodeId;
-
     // save lastLocation for login
     $rootScope.lastLocation = baseUrl + nodeId;
 
     // save nodeId for NodeEditor
     $rootScope.nodeId = nodeId;
-    
+
     // call authentificate 
     authorization.authentificate(function () {
         // check authentification
@@ -76,111 +68,113 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $http
             $location.path(yaioUtils.getConfig().appLoginUrl);
             $scope.error = false;
         } else {
-            // do Search
+            // configure data load
+            var loadOptions = {
+                flgNodeByAllId: flgNodeByAllId
+            };
+
+            // check for activeNodeId if set
+            var activeNodeId = $routeParams.activeNodeId;
             if (activeNodeId) {
-                /**
-                 * <h4>FeatureDomain:</h4>
-                 *     GUI
-                 * <h4>FeatureDescription:</h4>
-                 *     callbackhandler to load activeNodeId and open the nodehierarchy
-                 * <h4>FeatureResult:</h4>
-                 *   <ul>
-                 *     <li>updates nodetree
-                 *   </ul> 
-                 * <h4>FeatureKeywords:</h4>
-                 *     GUI Callback
-                 */
-                activeNodeIdHandler = function() {
-                    var activeNodeUrl = yaioUtils.getConfig().restShowUrl + activeNodeId;
+                loadOptions.loadActiveNodeIdHandler = function() {
                     console.log("start loading activenode:" + activeNodeId);
-                    $http.get(activeNodeUrl).then(function(nodeResponse) {
-                        // success handler
-                        
-                        // check response
-                        var state = nodeResponse.data.state;
-                        if (state == "OK") {
-                            // all fine
-                            console.log("NodeShowCtrl - OK loading activenode:" + nodeResponse.data.stateMsg);
-                            
-                            // create nodehierarchy
-                            var nodeIdHierarchy = new Array();
-                            var parentNode = nodeResponse.data.node.parentNode;
-                            while (parentNode != null && parentNode != "" && parentNode != "undefined") {
-                                nodeIdHierarchy.push(parentNode.sysUID);
-                                parentNode = parentNode.parentNode;
-                            }
-                            nodeIdHierarchy.reverse();
-                            
-                            // add me 
-                            nodeIdHierarchy.push(nodeResponse.data.node.sysUID);
-                            
-                            // open Hierarchy
-                            yaioUtils.getService('YaioExplorerAction').openNodeHierarchy("#tree", nodeIdHierarchy);
-                        } else {
-                            // error
-                            yaioUtils.getService('YaioBase').logError("error loading activenode:" + nodeResponse.data.stateMsg 
-                                    + " details:" + nodeResponse, false);
-                        }
-                    }, function(response) {
-                        // error handler
-                        var data = response.data;
-                        var header = response.header;
-                        var config = response.config;
-                        var message = "error loading activenode with url: " + activeNodeUrl;
-                        yaioUtils.getService('YaioBase').logError(message, true);
-                        message = "error data: " + data + " header:" + header + " config:" + config;
-                        yaioUtils.getService('YaioBase').logError(message, false);
-                    });
+                    return yaioUtils.getService('YaioNodeData').yaioDoLoadNodeById(activeNodeId, {})
+                        .then(function sucess(angularResponse) {
+                                // handle success
+                                $scope.loadActiveNodeIdSuccessHandler(activeNodeId, {}, angularResponse.data);
+                            }, function error(angularResponse) {
+                                // handle error
+                                var data = angularResponse.data;
+                                var header = angularResponse.header;
+                                var config = angularResponse.config;
+                                var message = "error loading activenode with url: " + activeNodeUrl;
+                                yaioUtils.getService('YaioBase').logError(message, true);
+                                message = "error data: " + data + " header:" + header + " config:" + config;
+                                yaioUtils.getService('YaioBase').logError(message, false);
+                        });
                 };
             }
 
             // load data
-            $http.get(curNodeUrl).then(function(nodeResponse) {
-                // success handler
-                
-                // check response
-                var state = nodeResponse.data.state;
-                if (state == "OK") {
-                    // all fine
-                    console.log("NodeShowCtrl - OK loading nodes:" + nodeResponse.data.stateMsg);
-                    $scope.node = nodeResponse.data.node;
-                    
-                    // create nodehierarchy
-                    var nodeHierarchy = new Array();
-                    var parentNode = nodeResponse.data.node.parentNode;
-                    while (parentNode != null && parentNode != "" && parentNode != "undefined") {
-                        nodeHierarchy.push(parentNode);
-                        parentNode = parentNode.parentNode;
-                    }
-                    nodeHierarchy.reverse();
-                    $scope.nodeHierarchy = nodeHierarchy;
-
-                    // load fencytree
-                    yaioUtils.getService('YaioExplorerTree').yaioCreateFancyTree("#tree", $scope.node.sysUID, activeNodeIdHandler);
-                    
-                    // load me
-                    $scope.yaioUtils.renderNodeLine(nodeResponse.data.node, "#masterTr");
-
-                    // recalc gantt
-                    yaioUtils.getService('YaioNodeGanttRender').yaioRecalcMasterGanttBlock($scope.node);
-                } else {
-                    // error
-                    yaioUtils.getService('YaioBase').logError("error loading nodes:" + nodeResponse.data.stateMsg 
-                            + " details:" + nodeResponse, true);
-                }
-            }, function(response) {
-                // error handler
-                var data = response.data;
-                var header = response.header;
-                var config = response.config;
-                var message = "error loading node with url: " + curNodeUrl;
-                yaioUtils.getService('YaioBase').logError(message, true);
-                message = "error data: " + data + " header:" + header + " config:" + config;
-                yaioUtils.getService('YaioBase').logError(message, false);
-            });
+            console.log("NodeShowCtrl - processing nodeId=" + nodeId + " activeNodeId=" + activeNodeId);
+            return yaioUtils.getService('YaioNodeData').yaioDoLoadNodeById(nodeId, loadOptions)
+                .then(function sucess(angularResponse) {
+                        // handle success
+                        $scope.loadCurrentNodeIdSuccessHandler(nodeId, loadOptions, angularResponse.data);
+                    }, function error(angularResponse) {
+                        // error handler
+                        var data = angularResponse.data;
+                        var header = angularResponse.header;
+                        var config = angularResponse.config;
+                        var message = "error loading node with url: " + curNodeUrl;
+                        yaioUtils.getService('YaioBase').logError(message, true);
+                        message = "error data: " + data + " header:" + header + " config:" + config;
+                        yaioUtils.getService('YaioBase').logError(message, false);
+                });
         }
     });
     
+    $scope.loadActiveNodeIdSuccessHandler = function(nodeId, options, yaioNodeActionResponse) {
+        // check response
+        var state = yaioNodeActionResponse.state;
+        if (state == "OK") {
+            // all fine
+            console.log("NodeShowCtrl - OK loading activenode:" + yaioNodeActionResponse.stateMsg);
+            
+            // create nodehierarchy
+            var nodeIdHierarchy = new Array();
+            var parentNode = yaioNodeActionResponse.node.parentNode;
+            while (parentNode != null && parentNode != "" && parentNode != "undefined") {
+                nodeIdHierarchy.push(parentNode.sysUID);
+                parentNode = parentNode.parentNode;
+            }
+            nodeIdHierarchy.reverse();
+            
+            // add me 
+            nodeIdHierarchy.push(yaioNodeActionResponse.node.sysUID);
+            
+            // open Hierarchy
+            yaioUtils.getService('YaioExplorerAction').openNodeHierarchy("#tree", nodeIdHierarchy);
+        } else {
+            // error
+            yaioUtils.getService('YaioBase').logError("error loading activenode:" + yaioNodeActionResponse.stateMsg 
+                    + " details:" + yaioNodeActionResponse, false);
+        }
+    };
+
+    $scope.loadCurrentNodeIdSuccessHandler = function(nodeId, options, yaioNodeActionResponse) {
+        // check response
+        var state = yaioNodeActionResponse.state;
+        if (state == "OK") {
+            // all fine
+            console.log("NodeShowCtrl - OK loading nodes:" + yaioNodeActionResponse.stateMsg);
+            $scope.node = yaioNodeActionResponse.node;
+            
+            // create nodehierarchy
+            var nodeHierarchy = new Array();
+            var parentNode = yaioNodeActionResponse.node.parentNode;
+            while (parentNode != null && parentNode != "" && parentNode != "undefined") {
+                nodeHierarchy.push(parentNode);
+                parentNode = parentNode.parentNode;
+            }
+            nodeHierarchy.reverse();
+            $scope.nodeHierarchy = nodeHierarchy;
+
+            // load fencytree
+            yaioUtils.getService('YaioExplorerTree').yaioCreateFancyTree("#tree", $scope.node.sysUID, options.loadActiveNodeIdHandler);
+            
+            // load me
+            $scope.yaioUtils.renderNodeLine(yaioNodeActionResponse.node, "#masterTr");
+
+            // recalc gantt
+            yaioUtils.getService('YaioNodeGanttRender').yaioRecalcMasterGanttBlock($scope.node);
+        } else {
+            // error
+            yaioUtils.getService('YaioBase').logError("error loading nodes:" + yaioNodeActionResponse.stateMsg 
+                    + " details:" + yaioNodeActionResponse, true);
+        }
+    }
+
     /**
      * <h4>FeatureDomain:</h4>
      *     Editor

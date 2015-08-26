@@ -340,10 +340,11 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ht
                 sysUID: $scope.nodeForEdit.sysUID
             };
         return yaioUtils.getService('YaioNodeData').yaioDoSaveNode(nodeObj, options)
-            .then(function(angularReponse) {
+            .then(function success(angularReponse) {
+                    // handle success
                     return yaioSaveNodeSuccessHandler(nodeObj, options, angularReponse.data);
-                }, function(angularReponse) {
-                    // error handler
+                }, function error(angularReponse) {
+                    // handle error
                     var data = angularReponse.data;
                     var header = angularReponse.header;
                     var config = angularReponse.config;

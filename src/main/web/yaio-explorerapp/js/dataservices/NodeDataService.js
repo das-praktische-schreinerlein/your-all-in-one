@@ -94,6 +94,12 @@ Yaio.NodeDataService = function(appBase) {
         return me._yaioCallSaveNode(nodeObj, options);
     };
     
+    me.yaioDoLoadNodeById = function(nodeId, options) {
+        var msg = "yaioDoLoadNodeById for node:" + nodeId;
+        console.log(msg + " START");
+        return me._yaioCallLoadNodeById(nodeId, options);
+    };
+    
     me._yaioCallLoadSymLinkData = function(basenode, fancynode) {
         if (me.appBase.get("Logger")) {
             me.appBase.get("Logger").logError("NodeDataService not implemented");
@@ -262,6 +268,13 @@ Yaio.NodeDataService = function(appBase) {
     };
     
     me._yaioCallSaveNode = function(nodeObj, options) {
+        if (me.appBase.get("Logger")) {
+            me.appBase.get("Logger").logError("NodeDataService not implemented");
+        }
+        throw "NodeDataService not implemented";
+    };
+
+    me._yaioCallLoadNodeById = function(nodeId, options) {
         if (me.appBase.get("Logger")) {
             me.appBase.get("Logger").logError("NodeDataService not implemented");
         }
