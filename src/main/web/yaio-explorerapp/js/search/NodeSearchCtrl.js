@@ -201,7 +201,7 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
             // set count
             $scope.searchOptions.total = yaioNodeSearchResponse.count;
             
-            // set event for paginantion
+            // set event for pagination
             $scope.NodeListReady = true;
             $scope.$broadcast("NodeListReady");
         } else {
