@@ -27,7 +27,7 @@
  * <h4>FeatureKeywords:</h4>
  *     GUI Configuration
  */
-yaioApp.controller('FrontPageCtrl', function($rootScope, $scope, $location, $http, $routeParams, setFormErrors, OutputOptionsEditor, authorization, yaioUtils) {
+yaioApp.controller('FrontPageCtrl', function($rootScope, $scope, $location, $routeParams, setFormErrors, OutputOptionsEditor, authorization, yaioUtils) {
     'use strict';
 
     // include utils

@@ -27,7 +27,7 @@
  * <h4>FeatureKeywords:</h4>
  *     GUI Configuration BusinessLogic
  */
-yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $http, $routeParams, setFormErrors, authorization, yaioUtils) {
+yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $routeParams, setFormErrors, authorization, yaioUtils) {
     'use strict';
 
     // include utils

@@ -27,7 +27,7 @@
  * <h4>FeatureKeywords:</h4>
  *     GUI Configuration
  */
-yaioApp.factory('authorization', function ($rootScope, $http, yaioUtils) {
+yaioApp.factory('authorization', function ($rootScope, yaioUtils) {
     'use strict';
 
     return {
