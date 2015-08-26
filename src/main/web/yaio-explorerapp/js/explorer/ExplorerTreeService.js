@@ -62,60 +62,6 @@ Yaio.ExplorerTreeService = function(appBase) {
      * <h4>FeatureDomain:</h4>
      *     Initialisation
      * <h4>FeatureDescription:</h4>
-     *     create an fancytree on the html-element treeId and inits it with the data
-     *     of masterNodeId<br>
-     *     if the tree already exists it will only reload the tree<br>
-     *     after init of the tree the doneHandler will be executed  
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>updates html-element treeId with a fancytree
-     *     <li>calls doneHandler
-     *     <li>updates global var treeInstances[treeId]
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Tree
-     * @param treeId - id of the html-element containing the tree
-     * @param masterNodeId - the node.sysUID to load
-     * @param doneHandler - callback-function when tree is created
-     */
-    me.yaioCreateOrReloadFancyTree = function(treeId, masterNodeId, doneHandler){
-        // check if already loaded
-        var state = null;
-        if (treeInstances[treeId]) {
-            state = treeInstances[treeId].state;
-        }
-        console.log("yaioCreateOrReloadFancyTree for id: " + treeId + " state=" + state + " caller: " + treeInstances[treeId]);
-        if (state) {
-            console.log("yaioCreateOrReloadFancyTree: flgYAIOFancyTreeLoaded is set: prepare reload=" 
-                    + me.appBase.config.restShowUrl + masterNodeId);
-            me.appBase.get('YaioExplorerTree').yaioDoOnFancyTreeState(treeId, "rendering_done", 1000, 5, function () {
-                // do reload if rendering done
-                console.log("yaioCreateOrReloadFancyTree: do reload=" 
-                        + me.appBase.config.restShowUrl + masterNodeId);
-                var tree = me.$(treeId).fancytree("getTree");
-                // TODO
-                alert("TODO RELOAD");
-                tree.reload(me.appBase.config.restShowUrl + masterNodeId).done(function(){
-                    console.log("yaioCreateOrReloadFancyTree reload tree done:" + masterNodeId);
-    
-                    // check if doneHandler
-                    if (doneHandler) {
-                        console.log("yaioCreateOrReloadFancyTree call doneHandler");
-                        doneHandler();
-                    }
-                });
-            }, "yaioCreateOrReloadFancyTree.reloadHandler");
-        } else {
-            console.log("yaioCreateOrReloadFancyTree: flgYAIOFancyTreeLoaded not set:"
-                    + " create=" + me.appBase.config.restShowUrl + masterNodeId);
-            me.appBase.get('YaioExplorerTree').yaioCreateFancyTree(treeId, masterNodeId, doneHandler);
-        }
-    };
-    
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Initialisation
-     * <h4>FeatureDescription:</h4>
      *     creates an fancytree on the html-element treeId and inits it with the data
      *     of masterNodeId<br>
      *     after init of the tree the doneHandler will be executed  
@@ -160,8 +106,7 @@ Yaio.ExplorerTreeService = function(appBase) {
             // lazy load the children
             lazyLoad: function(event, data) {
                 var node = data.node;
-                console.debug("yaioCreateFancyTree load data for " + node.key 
-                        + " from " + me.appBase.config.restShowUrl + node.key);
+                console.debug("yaioCreateFancyTree load data for " + node.key);
                 data.result = me.sourceHandler(node.key);
             },
       
@@ -297,6 +242,8 @@ Yaio.ExplorerTreeService = function(appBase) {
             },
     **/
         }).on("nodeCommand", function(event, data){
+            var svcYaioExplorerAction = me.appBase.get('YaioExplorerAction');
+            
             // Custom event handler that is triggered by keydown-handler and
             // context menu:
             var refNode,
@@ -322,7 +269,7 @@ Yaio.ExplorerTreeService = function(appBase) {
                         }
                         
                         // move yaioNode
-                        me.appBase.get('YaioExplorerAction').yaioMoveNode(node, newParentKey, 9999);
+                        svcYaioExplorerAction.yaioMoveNode(node, newParentKey, 9999);
                         return true;
                     } else {
                         // discard
@@ -343,7 +290,7 @@ Yaio.ExplorerTreeService = function(appBase) {
                             newParentKey = tree.options.masterNodeId;
                         }
                         // move yaioNode
-                        me.appBase.get('YaioExplorerAction').yaioMoveNode(node, newParentKey, 9999);
+                        svcYaioExplorerAction.yaioMoveNode(node, newParentKey, 9999);
                         return true;
                     } else {
                         // discard
@@ -366,7 +313,7 @@ Yaio.ExplorerTreeService = function(appBase) {
                     node.moveTo(node.getPrevSibling(), "before");
                     node.setActive();
                     
-                    me.appBase.get('YaioExplorerAction').yaioMoveNode(node, newParentKey, newPos);
+                    svcYaioExplorerAction.yaioMoveNode(node, newParentKey, newPos);
                     break;
                 case "moveDown":
                     // check parent
@@ -384,19 +331,19 @@ Yaio.ExplorerTreeService = function(appBase) {
                     node.moveTo(node.getNextSibling(), "after");
                     node.setActive();
     
-                    me.appBase.get('YaioExplorerAction').yaioMoveNode(node, newParentKey, newPos);
+                    svcYaioExplorerAction.yaioMoveNode(node, newParentKey, newPos);
                     break;
                 case "remove":
-                    me.appBase.get('YaioExplorerAction').yaioRemoveNodeById(node.key);
+                    svcYaioExplorerAction.yaioRemoveNodeById(node.key);
                     break;
                 case "addChild":
                     me.appBase.get('YaioEditor').yaioOpenNodeEditor(node.key, 'create');
                     break;
                 case "asTxt":
-                    me.appBase.get('YaioExplorerAction').openTxtExportWindow(me.$('#container_content_desc_' + node.key).text());
+                    svcYaioExplorerAction.openTxtExportWindow(me.$('#container_content_desc_' + node.key).text());
                     break;
                 case "asJira":
-                    me.appBase.get('YaioExplorerAction').openJiraExportWindow(node.key);
+                    svcYaioExplorerAction.openJiraExportWindow(node.key);
                     break;
                 case "focus":
                     window.location = '#/show/' + node.key;
@@ -436,8 +383,8 @@ Yaio.ExplorerTreeService = function(appBase) {
         
         // check if donehandler
         if (doneHandler) {
-            me.appBase.get('YaioExplorerTree').yaioDoOnFancyTreeState(treeId, "rendering_done", 1000, 5, doneHandler, 
-                    "yaioCreateFancyTree.doneHandler");
+            me.appBase.get('YaioExplorerTree').yaioDoOnFancyTreeState(treeId, 
+                    "rendering_done", 1000, 5, doneHandler, "yaioCreateFancyTree.doneHandler");
         }
     
         /*
@@ -470,9 +417,9 @@ Yaio.ExplorerTreeService = function(appBase) {
                 var that = this;
                 // delay the event, so the menu can close and the click event does
                 // not interfere with the edit control
-                setTimeout(function(){
-                    me.$(that).trigger("nodeCommand", {cmd: ui.cmd});
-                }, 100);
+                setTimeout(function() { 
+                        me.$(that).trigger("nodeCommand", {cmd: ui.cmd}); 
+                    }, 100);
             }
         });
     };
