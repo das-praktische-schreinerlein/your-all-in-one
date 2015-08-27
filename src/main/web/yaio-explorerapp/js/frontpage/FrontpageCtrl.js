@@ -48,7 +48,7 @@ yaioApp.controller('FrontPageCtrl', function($rootScope, $scope, $location, $rou
             $scope.error = false;
         } else {
             // load data
-            $scope.frontPageUrl = yaioUtils.getConfig().restExportsBaseUrl + 'htmlfrontpagefragment/' + nodeId;
+            $scope.frontPageUrl = yaioUtils.getService('YaioAccessManager').getAvailiableNodeAction('frontpagebaseurl', nodeId, false);
         }
     });
 });
