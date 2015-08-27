@@ -26,7 +26,7 @@
  * @copyright Copyright (c) 2014, Michael Schreiner
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-Yaio.PermissionManagerService = function(appBase, config, defaultConfig) {
+Yaio.AccessManagerService = function(appBase, config, defaultConfig) {
     'use strict';
 
     // my own instance
@@ -88,6 +88,9 @@ Yaio.PermissionManagerService = function(appBase, config, defaultConfig) {
     me.getAvailiableNodeAction = function(key, nodeId, flgMaster) {
         if (key === 'delete' && flgMaster) {
             return false;
+        }
+        if (key === 'frontpagebaseurl') {
+            return me.availiableNodeActions[key] + nodeId;
         }
         return me.availiableNodeActions[key];
     };

@@ -52,6 +52,10 @@ Yaio.ServerNodeDataService = function(appBase) {
      * Service-Funktions (webservice)
      *****************************************
      *****************************************/
+    me._createAccessManager = function() {
+        return me.appBase.get("Yaio.ServerAccessManagerService");
+    };
+    
     me._yaioCallUpdateNode = function(fancynode, json) {
         var url = me.appBase.config.restUpdateUrl + fancynode.key;
         return me._yaioCallPatchNode(fancynode, url, json);

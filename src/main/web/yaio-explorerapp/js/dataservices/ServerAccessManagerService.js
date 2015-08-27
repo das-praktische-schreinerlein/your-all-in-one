@@ -26,16 +26,17 @@
  * @copyright Copyright (c) 2014, Michael Schreiner
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-Yaio.ServerPermissionManagerService = function(appBase, config, defaultConfig) {
+Yaio.ServerAccessManagerService = function(appBase, config, defaultConfig) {
     'use strict';
 
     // my own instance
-    var me = Yaio.PermissionManagerService(appBase, config, defaultConfig);
+    var me = Yaio.AccessManagerService(appBase, config, defaultConfig);
 
     /**
      * initialize the object
      */
     me._init = function() {
+        // urls
         me.setAvailiableNodeAction('show', me.appBase.config.restShowUrl);
         me.setAvailiableNodeAction('createsymlink', me.appBase.config.restSymLinkUrl);
         me.setAvailiableNodeAction('edit', me.appBase.config.restUpdateUrl);
@@ -43,13 +44,18 @@ Yaio.ServerPermissionManagerService = function(appBase, config, defaultConfig) {
         me.setAvailiableNodeAction('mode', me.appBase.config.restMoveUrl);
         me.setAvailiableNodeAction('remove', me.appBase.config.restRemoveUrl);
         me.setAvailiableNodeAction('search', me.appBase.config.restSearchUrl);
-        me.setAvailiableNodeAction('showsysdata', true);
-        me.setAvailiableNodeAction('print', true);
         me.setAvailiableNodeAction('syshelp', me.appBase.config.restExportsBaseUrl + 'documentation/SysHelp1');
         me.setAvailiableNodeAction('sysinfo', me.appBase.config.restExportsBaseUrl + 'documentation/SysInfo1');
+        me.setAvailiableNodeAction('frontpagebaseurl', me.appBase.config.restExportsBaseUrl + 'htmlfrontpagefragment/');
+        
+        // flags
+        me.setAvailiableNodeAction('showsysdata', true);
+        me.setAvailiableNodeAction('print', true);
 
+        // import-forms
         me.setAvailiableImportForm('ImportWiki', '/imports/wiki/');
 
+        // export-forms
         me.setAvailiableExportForm('ExportWiki', me.appBase.config.restExportsBaseUrl + 'wikiuseoptions/');
         me.setAvailiableExportForm('ExportMindmap', me.appBase.config.restExportsBaseUrl + 'mindmapuseoptions/');
         me.setAvailiableExportForm('ExportICal', me.appBase.config.restExportsBaseUrl + 'icaluseoptions/');
@@ -57,6 +63,7 @@ Yaio.ServerPermissionManagerService = function(appBase, config, defaultConfig) {
         me.setAvailiableExportForm('ExportExcel', me.appBase.config.restExportsBaseUrl + 'exceluseoptions/');
         me.setAvailiableExportForm('ExportCsv', me.appBase.config.restExportsBaseUrl + 'csvuseoptions/');
 
+        // export-links
         me.setAvailiableExportLink('ExportWikiDirect', me.appBase.config.restExportsBaseUrl + 'wiki/');
         me.setAvailiableExportLink('ExportMindmapDirect', me.appBase.config.restExportsBaseUrl + 'mindmap/');
         me.setAvailiableExportLink('ExportHtmlDirect', me.appBase.config.restExportsBaseUrl + 'html/');

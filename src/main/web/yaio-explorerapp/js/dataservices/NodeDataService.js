@@ -36,14 +36,14 @@ Yaio.NodeDataService = function(appBase, config, defaultConfig) {
      * initialize the object
      */
     me._init = function() {
-        me.permissionManager = null;
+        me.AccessManager = null;
     };
     
-    me.getPermissionManager = function() {
-        if (! me.permissionManager) {
-            me.permissionManager = me._createPermissionManager();
+    me.getAccessManager = function() {
+        if (! me.AccessManager) {
+            me.AccessManager = me._createAccessManager();
         }
-        return me.permissionManager;
+        return me.AccessManager;
     };
     
     /*****************************************
@@ -128,8 +128,8 @@ Yaio.NodeDataService = function(appBase, config, defaultConfig) {
         return me._yaioCallCheckUser(session);
     };
     
-    me._createPermissionManager = function() {
-        return me.appBase.get("Yaio.ServerPermissionManagerService");
+    me._createAccessManager = function() {
+        me.logNotImplemented();
     };
     
     me._yaioCallLoadSymLinkData = function(basenode, fancynode) {
