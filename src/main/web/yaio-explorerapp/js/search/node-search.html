@@ -118,7 +118,10 @@
                     <span translate="fancytree.table.headline.actions"></span>
                     <br />
                     <div class="fieldtype_sysToggler toggler_show">
-                      <a lang="tech" data-tooltip='tooltip.command.ToggleSysAll' id="toggler_sys_all" onclick="yaioAppBase.get('YaioExplorerAction').toggleAllNodeSysContainer(); return false;" href="#" class="toggler_hidden"></a>
+                      <a lang="tech" data-tooltip='tooltip.command.ToggleSysAll' id="toggler_sys_all" 
+                         onclick="yaioAppBase.get('YaioExplorerAction').toggleAllNodeSysContainer(); return false;" 
+                         href="#" class="toggler_hidden"
+                         ng-if="yaioUtils.getService('YaioPermissionManager').getAvailiableNodeAction('showsysdata', null, true)"></a>
                     </div>
                   </th>
                 </tr>
@@ -135,8 +138,9 @@
                   <td class="container_field fieldtype_actions" >
                     <div class='fieldtype_sysToggler toggler_show'>
                         <a ng-click="yaioUtils.toggleSysContainerForNode(node);"
-                                id='toggler_sys_{{node.sysUID }}'
-                                class='' data-tooltip='tooltip.command.ToggleSys' lang='tech'></a>
+                           ng-if="yaioUtils.getService('YaioPermissionManager').getAvailiableNodeAction('showsysdata', node.sysUID, true)"
+                           id='toggler_sys_{{node.sysUID }}'
+                           class='' data-tooltip='tooltip.command.ToggleSys' lang='tech'></a>
                      </div>
                   </td>
                 </tr>

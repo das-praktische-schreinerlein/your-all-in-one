@@ -33,6 +33,7 @@ window.YaioAppBase = function() {
         me.configureService("Yaio.EditorService", function() { return Yaio.EditorService(me); });
         me.configureService("Yaio.FormatterService", function() { return Yaio.FormatterService(me); });
         me.configureService("Yaio.MarkdownEditorService", function() { return Yaio.MarkdownEditorService(me); });
+        me.configureService("Yaio.ServerPermissionManagerService", function() { return Yaio.ServerPermissionManagerService(me); });
         me.configureService("Yaio.ServerNodeDataService_Local", function() { return Yaio.ServerNodeDataService(me); });
         me.configureService("Yaio.NodeDataRenderService", function() { return Yaio.NodeDataRenderService(me); });
         me.configureService("Yaio.NodeGanttRenderService", function() { return Yaio.NodeGanttRenderService(me); });
@@ -50,6 +51,7 @@ window.YaioAppBase = function() {
         // use NodeDataService with aliases 
         me.configureService("YaioServerNodeData_Local", function() { return me.get("Yaio.ServerNodeDataService_Local"); });
         me.configureService("YaioNodeData", function() { return me.get("YaioServerNodeData_Local"); });
+        me.configureService("YaioPermissionManager", function() { return me.get("YaioNodeData").getPermissionManager(); });
         
         me.configureService("YaioNodeDataRender", function() { return me.get("Yaio.NodeDataRenderService"); });
         me.configureService("YaioNodeGanttRender", function() { return me.get("Yaio.NodeGanttRenderService"); });

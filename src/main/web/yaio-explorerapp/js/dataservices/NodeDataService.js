@@ -26,20 +26,24 @@
  * @copyright Copyright (c) 2014, Michael Schreiner
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-Yaio.NodeDataService = function(appBase) {
+Yaio.NodeDataService = function(appBase, config, defaultConfig) {
     'use strict';
 
     // my own instance
-    var me = JsHelferlein.ServiceBase(appBase);
+    var me = JsHelferlein.ServiceBase(appBase, config, defaultConfig);
 
     /**
      * initialize the object
      */
     me._init = function() {
+        me.permissionManager = null;
     };
     
-    me.loadNodeData = function(nodeId) {
-        me.logNotImplemented();
+    me.getPermissionManager = function() {
+        if (! me.permissionManager) {
+            me.permissionManager = me._createPermissionManager();
+        }
+        return me.permissionManager;
     };
     
     /*****************************************
@@ -47,6 +51,10 @@ Yaio.NodeDataService = function(appBase) {
      * Service-Funktions (webservice)
      *****************************************
      *****************************************/
+    me.loadNodeData = function(nodeId) {
+        me.logNotImplemented();
+    };
+    
     me.yaioLoadSymLinkData = function(basenode, fancynode) {
         var msg = "yaioLoadSymLinkData for node:" + basenode.sysUID + " symlink:" + basenode.symLinkRef + " fancynode:" + fancynode.key;
         console.log(msg + " START");
@@ -118,6 +126,10 @@ Yaio.NodeDataService = function(appBase) {
         var msg = "yaioDoCheckUser for session:" + session;
         console.log(msg + " START");
         return me._yaioCallCheckUser(session);
+    };
+    
+    me._createPermissionManager = function() {
+        return me.appBase.get("Yaio.ServerPermissionManagerService");
     };
     
     me._yaioCallLoadSymLinkData = function(basenode, fancynode) {

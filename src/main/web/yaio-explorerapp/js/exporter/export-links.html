@@ -3,37 +3,25 @@
         *    Export Links
         ************************* 
         -->
-        <ul class="commands exporttypes">
-          <a onclick="jMATService.getPageLayoutService().toggleElementOnPosition('actioncontextmenue-export', event); return false;" href="#" class="button exporttype hide-if-printversion" data-tooltip='tooltip.command.Export' lang="tech" translate="common.command.Export">Exporte...</a>
-          <div id="actioncontextmenue-export" class="box exporttype box-actioncontextmenue hide-if-printversion">
-            <ul class="exporttypelist">
-              <li><span data-tooltip='tooltip.command.ExportForm' lang="tech" translate="common.command.ExportForm">Konfigurierbar</span>
-                <ul class="exporttypelist">
-                   <li class="exporttype" data-tooltip='tooltip.command.ExportWiki' lang="tech"><a ng-click="outputOptionsEditor.showOutputOptionsEditor(node.sysUID, yaioUtils.getConfig().restExportsBaseUrl + 'wikiuseoptions/' + node.sysUID, '');" class="button exporttype_wiki" target="_blank" translate="common.command.ExportWiki">Wiki</a></li>
-                   <li class="exporttype" data-tooltip='tooltip.command.ExportMindmap' lang="tech"><a ng-click="outputOptionsEditor.showOutputOptionsEditor(node.sysUID, yaioUtils.getConfig().restExportsBaseUrl + 'mindmapuseoptions/' + node.sysUID, '_blank');" class="button exporttype_mindmap" target="_blank" translate="common.command.ExportMindmap">Mindmap</a></li>
-                   <li class="exporttype" data-tooltip='tooltip.command.ExportICal' lang="tech"><a ng-click="outputOptionsEditor.showOutputOptionsEditor(node.sysUID, yaioUtils.getConfig().restExportsBaseUrl + 'icaluseoptions/' + node.sysUID, '_blank');" class="button exporttype_ical" target="_blank" translate="common.command.ExportICal">ICal/VCard</a></li>
-                   <li class="exporttype" data-tooltip='tooltip.command.ExportHtml' lang="tech"><a ng-click="outputOptionsEditor.showOutputOptionsEditor(node.sysUID, yaioUtils.getConfig().restExportsBaseUrl + 'htmluseoptions/' + node.sysUID, '_blank');" class="button exporttype_html" target="_blank" translate="common.command.ExportHtml">Html</a></li>
-                   <li class="exporttype" data-tooltip='tooltip.command.ExportExcel' lang="tech"><a ng-click="outputOptionsEditor.showOutputOptionsEditor(node.sysUID, yaioUtils.getConfig().restExportsBaseUrl + 'exceluseoptions/' + node.sysUID, '_blank');" class="button exporttype_excel" target="_blank" translate="common.command.ExportExcel">Excel</a></li>
-                   <li class="exporttype" data-tooltip='tooltip.command.ExportCsv' lang="tech"><a ng-click="outputOptionsEditor.showOutputOptionsEditor(node.sysUID, yaioUtils.getConfig().restExportsBaseUrl + 'csvuseoptions/' + node.sysUID, '_blank');" class="button exporttype_csv" target="_blank" translate="common.command.ExportCsv">Csv</a></li>
-                </ul>
-              </li>
-              <li><span data-tooltip='tooltip.command.ExportDirect' lang="tech" translate="common.command.ExportDirect">Schnelllinks</span>
-                <ul class="exporttypelist">
-                   <li class="exporttype" data-tooltip='tooltip.command.ExportWikiDirect' lang="tech"><a href="{{yaioUtils.getConfig().restExportsBaseUrl}}wiki/{{node.sysUID}}" target="_blank" class="button exporttype_wiki" target="_blank" translate="common.command.ExportWikiDirect">Wiki</a></li>
-                   <li class="exporttype" data-tooltip='tooltip.command.ExportMindmapDirect' lang="tech"><a href="{{yaioUtils.getConfig().restExportsBaseUrl}}mindmap/{{node.sysUID}}" target="_blank" class="button exporttype_mindmap" target="_blank" translate="common.command.ExportMindmapDirect">Mindmap</a></li>
-                   <li class="exporttype" data-tooltip='tooltip.command.ExportHtmlDirect' lang="tech"><a href="{{yaioUtils.getConfig().restExportsBaseUrl}}html/{{node.sysUID}}" target="_blank" class="button exporttype_html" target="_blank" translate="common.command.ExportHtmlDirect">Html</a></li>
-                   <li class="exporttype" data-tooltip='tooltip.command.ExportHtmlDocumentationDirect' lang="tech"><a href="{{yaioUtils.getConfig().restExportsBaseUrl}}documentation/{{node.sysUID}}" target="_blank" class="button exporttype_html" target="_blank" translate="common.command.ExportHtmlDocumentationDirect">Html-Documentation</a></li>
-                   <li class="exporttype" data-tooltip='tooltip.command.ExportICalDirect' lang="tech"><a href="{{yaioUtils.getConfig().restExportsBaseUrl}}ical/{{node.sysUID}}" target="_blank" class="button exporttype_ical" target="_blank" translate="common.command.ExportICalDirect">ICal/VCard</a></li>
-                   <li class="exporttype" data-tooltip='tooltip.command.ExportICalEventsDirect' lang="tech"><a href="{{yaioUtils.getConfig().restExportsBaseUrl}}icalevents/{{node.sysUID}}" target="_blank" class="button exporttype_ical" target="_blank" translate="common.command.ExportICalEventsDirect">ICal Events</a></li>
-                   <li class="exporttype" data-tooltip='tooltip.command.ExportICalTasksDirect' lang="tech"><a href="{{yaioUtils.getConfig().restExportsBaseUrl}}icaltasks/{{node.sysUID}}" target="_blank" class="button exporttype_ical" target="_blank" translate="common.command.ExportICalTasksDirect">ICal Tasks</a></li>
-                   <li class="exporttype" data-tooltip='tooltip.command.ExportICalTasksTodosDirect' lang="tech"><a href="{{yaioUtils.getConfig().restExportsBaseUrl}}icaltaskstodo/{{node.sysUID}}" target="_blank" class="button exporttype_ical" target="_blank" translate="common.command.ExportICalTasksTodoDirect">ICal Tasks Todo</a></li>
-                   <li class="exporttype" data-tooltip='tooltip.command.ExportICalTasksLateDirect' lang="tech"><a href="{{yaioUtils.getConfig().restExportsBaseUrl}}icaltaskslate/{{node.sysUID}}" target="_blank" class="button exporttype_ical" target="_blank" translate="common.command.ExportICalTasksLateDirect">ICal Tasks Late</a></li>
-                   <li class="exporttype" data-tooltip='tooltip.command.ExportExcelDirect' lang="tech"><a href="{{yaioUtils.getConfig().restExportsBaseUrl}}excel/{{node.sysUID}}" target="_blank" class="button exporttype_excel" target="_blank" translate="common.command.ExportExcelDirect">Excel</a></li>
-                   <li class="exporttype" data-tooltip='tooltip.command.ExportCsvDirect' lang="tech"><a href="{{yaioUtils.getConfig().restExportsBaseUrl}}csv/{{node.sysUID}}" target="_blank" class="button exporttype_csv" target="_blank" translate="common.command.ExportCsvDirect">Csv</a></li>
-                   <li class="exporttype" data-tooltip='tooltip.command.ExportJsonDirect' lang="tech"><a href="{{yaioUtils.getConfig().restExportsBaseUrl}}json/{{node.sysUID}}" target="_blank" class="button exporttype_json" target="_blank" translate="common.command.ExportJsonDirect">Json</a></li>
-                   <li class="exporttype" data-tooltip='tooltip.command.ExportPplDirect' lang="tech"><a href="{{yaioUtils.getConfig().restExportsBaseUrl}}ppl/{{node.sysUID}}" target="_blank" class="button exporttype_ppl" target="_blank" translate="common.command.ExportPplDirect">PPL</a></li>
-                </ul>
-              </li>
-            </ul>
-          </div>
+        <ul class="commands exporttypes" ng-if="(yaioUtils.getService('YaioPermissionManager').getAvailiableExportFormKeys().length + yaioUtils.getService('YaioPermissionManager').getAvailiableExportLinkKeys().length) > 0">
+          <li>
+            <a onclick="jMATService.getPageLayoutService().toggleElementOnPosition('actioncontextmenue-export', event); return false;" href="#" class="button exporttype hide-if-printversion" data-tooltip='tooltip.command.Export' lang="tech" translate="common.command.Export">Exporte...</a>
+            <div id="actioncontextmenue-export" class="box exporttype box-actioncontextmenue hide-if-printversion">
+              <ul class="exporttypelist">
+                <li ng-if="yaioUtils.getService('YaioPermissionManager').getAvailiableExportFormKeys().length > 0">
+                  <span data-tooltip='tooltip.command.ExportForm' lang="tech" translate="common.command.ExportForm">Konfigurierbar</span>
+                  <ul class="exporttypelist" ng-repeat="key in yaioUtils.getService('YaioPermissionManager').getAvailiableExportFormKeys()">
+                     <li class="exporttype" data-tooltip="tooltip.command.{{key}}" lang="tech"><a ng-click="outputOptionsEditor.showOutputOptionsEditor(node.sysUID, yaioUtils.getService('YaioPermissionManager').getAvailiableExportForm(key, node.sysUID) + node.sysUID, '');" class="button exporttype_{{key}}" target="_blank" translate="common.command.{{key}}">{{key}}</a></li>
+                  </ul>
+                </li>
+                
+                <li ng-if="yaioUtils.getService('YaioPermissionManager').getAvailiableExportLinkKeys().length > 0">
+                  <span data-tooltip='tooltip.command.ExportDirect' lang="tech" translate="common.command.ExportDirect">Schnelllinks</span>
+                  <ul class="exporttypelist" ng-repeat="key in yaioUtils.getService('YaioPermissionManager').getAvailiableExportLinkKeys()">
+                     <li class="exporttype" data-tooltip="tooltip.command.{{key}}" lang="tech"><a href="{{yaioUtils.getService('YaioPermissionManager').getAvailiableExportLink(key, node.sysUID)}}{{node.sysUID}}" class="button exporttype_{{key}}" target="_blank" translate="common.command.{{key}}">{{key}}</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          <li>
         </ul>

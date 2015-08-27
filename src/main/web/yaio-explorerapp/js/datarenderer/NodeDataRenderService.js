@@ -63,6 +63,7 @@ Yaio.NodeDataRenderService = function(appBase) {
         var svcYaioBase = me.appBase.get('YaioBase');
         var svcYaioExplorerAction = me.appBase.get('YaioExplorerAction');
         var svcYaioNodeGanttRender = me.appBase.get('YaioNodeGanttRender');
+        var svcYaioPermissionManager = me.appBase.get('YaioPermissionManager');
         
         // extract nodedata
         var node = data.node;
@@ -83,33 +84,47 @@ Yaio.NodeDataRenderService = function(appBase) {
         
         // add fields
         if (! preventActionsColum) {
-            $tdList.eq(colActions).html(
-                    "<div class='fieldtype_sysToggler toggler_show'>"
-                        + "<a onclick=\"javascript: yaioAppBase.get('YaioExplorerAction').toggleNodeSysContainer('" + basenode.sysUID + "'); return false;\""
-                                + " id='toggler_sys_" + basenode.sysUID + "'"
-                                + " class='' "
-                                + " data-tooltip='tooltip.command.ToggleSys' lang='tech'></a>"
-                        + "</div>"
-                    + "<a onclick=\"javascript: yaioAppBase.get('YaioEditor').yaioOpenNodeEditor('" + basenode.sysUID + "', 'edit'); return false;\""
-                            + " id='cmdEdit" + basenode.sysUID + "'"
-                            + " class='yaio-icon-edit'"
-                            + " lang='tech' data-tooltip='tooltip.command.NodeEdit'></a>"
-                    + "<a onclick=\"javascript: yaioAppBase.get('YaioEditor').yaioOpenNodeEditor('" + basenode.sysUID + "', 'create'); return false;\""
-                            + " id='cmdCreate" + basenode.sysUID + "'"
-                            + " class='yaio-icon-create'"
-                            + " lang='tech' data-tooltip='tooltip.command.NodeCreateChild'></a>"
-                    + "<a onclick=\"javascript: yaioAppBase.get('YaioEditor').yaioOpenNodeEditor('" + basenode.sysUID + "', 'createsymlink'); return false;\""
-                            + " id='cmdCreateSymLink" + basenode.sysUID + "'"
-                            + " class='yaio-icon-createsymlink'"
-                            + " lang='tech' data-tooltip='tooltip.command.NodeCreateSymLink'></a>"
-                    + "<a onclick=\"javascript: yaioAppBase.get('YaioExplorerAction').yaioRemoveNodeById('" + basenode.sysUID + "'); return false;\""
-                            + " id='cmdRemove" + basenode.sysUID + "'"
-                            + " class='yaio-icon-remove'"
-                            + " lang='tech' data-tooltip='tooltip.command.NodeDelete'></a>"
-                    ).addClass("container_field")
-                     .addClass("fieldtype_actions")
-                     //.addClass(statestyle)
-                     ;
+            // generate actions
+            var actionHtml = "";
+            if (svcYaioPermissionManager.getAvailiableNodeAction('showsysdata', basenode.sysUID, false)) {
+                actionHtml += "<div class='fieldtype_sysToggler toggler_show'>"
+                    + "<a onclick=\"javascript: yaioAppBase.get('YaioExplorerAction').toggleNodeSysContainer('" + basenode.sysUID + "'); return false;\""
+                            + " id='toggler_sys_" + basenode.sysUID + "'"
+                            + " class='' "
+                            + " data-tooltip='tooltip.command.ToggleSys' lang='tech'></a>"
+                    + "</div>";
+            }
+            if (svcYaioPermissionManager.getAvailiableNodeAction('edit', basenode.sysUID, false)) {
+                actionHtml += "<a onclick=\"javascript: yaioAppBase.get('YaioEditor').yaioOpenNodeEditor('" + basenode.sysUID + "', 'edit'); return false;\""
+                    + " id='cmdEdit" + basenode.sysUID + "'"
+                    + " class='yaio-icon-edit'"
+                    + " lang='tech' data-tooltip='tooltip.command.NodeEdit'></a>";
+            }
+            if (svcYaioPermissionManager.getAvailiableNodeAction('create', basenode.sysUID, false)) {
+                actionHtml += "<a onclick=\"javascript: yaioAppBase.get('YaioEditor').yaioOpenNodeEditor('" + basenode.sysUID + "', 'create'); return false;\""
+                    + " id='cmdCreate" + basenode.sysUID + "'"
+                    + " class='yaio-icon-create'"
+                    + " lang='tech' data-tooltip='tooltip.command.NodeCreateChild'></a>";
+            }
+            if (svcYaioPermissionManager.getAvailiableNodeAction('createsymlink', basenode.sysUID, false)) {
+                actionHtml += "<a onclick=\"javascript: yaioAppBase.get('YaioEditor').yaioOpenNodeEditor('" + basenode.sysUID + "', 'createsymlink'); return false;\""
+                    + " id='cmdCreateSymLink" + basenode.sysUID + "'"
+                    + " class='yaio-icon-createsymlink'"
+                    + " lang='tech' data-tooltip='tooltip.command.NodeCreateSymLink'></a>";
+            }
+            if (svcYaioPermissionManager.getAvailiableNodeAction('remove', basenode.sysUID, false)) {
+                actionHtml += "<a onclick=\"javascript: yaioAppBase.get('YaioExplorerAction').yaioRemoveNodeById('" + basenode.sysUID + "'); return false;\""
+                    + " id='cmdRemove" + basenode.sysUID + "'"
+                    + " class='yaio-icon-remove'"
+                    + " lang='tech' data-tooltip='tooltip.command.NodeDelete'></a>";
+            }
+            
+            // add actions
+            $tdList.eq(colActions).html(actionHtml)
+                .addClass("container_field")
+                .addClass("fieldtype_actions")
+                //.addClass(statestyle)
+                ;
         }
     
         // replace checkbox by center-command

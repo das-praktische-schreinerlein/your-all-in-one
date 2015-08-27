@@ -37,6 +37,9 @@ JsHelferlein.AppBase = function(config) {
     me.config = {};
 
     me.configureService = function(serviceName, constrCallBack) {
+        while (me.services.indexOf(serviceName) !== -1) {
+            me.services.splice(items.indexOf(serviceName), 1);
+        }
         return me.serviceConfigs[serviceName] = constrCallBack;
     };
 
@@ -51,6 +54,7 @@ JsHelferlein.AppBase = function(config) {
 
     me.getService = function(serviceName) {
         if (! me.services.hasOwnProperty(serviceName)) {
+console.log("create new instance of:" + serviceName);
             if (me.serviceConfigs.hasOwnProperty(serviceName)) {
                 var constr = me.getServiceConfig(serviceName);
                 me.setService(serviceName, constr(me));
@@ -59,8 +63,8 @@ JsHelferlein.AppBase = function(config) {
         return me.services[serviceName];
     };
     
-    me.set = function (serviceName) {
-        return me.setService(serviceName);
+    me.set = function (serviceName, serviceInstance) {
+        return me.setService(serviceName, serviceInstance);
     };
 
     me.get = function (serviceName) {
