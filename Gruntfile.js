@@ -206,6 +206,7 @@ module.exports = function( grunt ){
             srcBase + 'yaio-explorerapp/js/jshelferlein/**/*.js',
             srcBase + 'yaio-explorerapp/js/YaioAppBaseConfig.js',
             srcBase + 'yaio-explorerapp/js/YaioAppBase.js',
+            srcBase + 'yaio-explorerapp/js/utils/PromiseHelperService.js',
             srcBase + 'yaio-explorerapp/js/utils/BaseService.js',
             srcBase + 'yaio-explorerapp/js/editor/EditorService.js',
             srcBase + 'yaio-explorerapp/js/layout/LayoutService.js',
@@ -448,7 +449,7 @@ module.exports = function( grunt ){
             yaiores2dist: {
                 files: [
                     {expand: true, cwd: srcBase + 'pages/', src: ['*.html'], dest: destBase, flatten: false},
-                    {expand: true, cwd: srcBase, src: ['yaio-explorerapp/**/*.html', 'yaio-explorerapp/**/*.json'], dest: destBase, flatten: false},
+                    {expand: true, cwd: srcBase, src: ['yaio-explorerapp/**/*.html', 'yaio-explorerapp/**/*.json', 'yaio-explorerapp/static/**'], dest: destBase, flatten: false},
                     {expand: true, cwd: tplSrcBase, src: ['exporttemplates/*.html'], dest: destBase, flatten: false}
                 ]
             }
@@ -486,7 +487,7 @@ module.exports = function( grunt ){
                     ]
                 },
                 files: [
-                    {expand: true, cwd: destBase, src: ['**/*.html', '**/*.css', '**/*.js'], dest: destBase, flatten: false}
+                    {expand: true, cwd: destBase, src: ['**/*.html', '**/*.css', '**/*.js', 'yaio-explorerapp/static/**'], dest: destBase, flatten: false}
                 ]
             },
             versionOnRes: {
