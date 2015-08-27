@@ -40,13 +40,9 @@ Yaio.StaticNodeDataService = function(appBase) {
     me._init = function() {
     };
     
-    
     me.loadNodeData = function(nodeId) {
         console.log("load data for node:" + nodeId);
-        return { 
-            url: me.appBase.config.restShowUrl + nodeId, 
-            cache: false 
-        };
+        return me._getNodeActionResponseById(nodeId);
     };
     
     /*****************************************
@@ -58,15 +54,44 @@ Yaio.StaticNodeDataService = function(appBase) {
         return me.appBase.get("Yaio.StaticAccessManagerService");
     };
     
+    me._getNodeDataById = function(nodeId) {
+        return window.yaioStaticJSON.node;
+    }
+    me._getParentIdHierarchyById = function(nodeId) {
+        return window.yaioStaticJSON.parentIdHierarchy;
+    }
+    
+    me._getNodeActionResponseById = function(nodeId) {
+        // extract data
+        var nodeData = me._getNodeDataById(nodeId);
+        var parentIdHierarchy = me._getParentIdHierarchyById(nodeId);
+        
+        // create response
+        var nodeActionResponse = {
+            state: "OK",
+            stateMsg: "node '" +  nodeId + "' found",
+            node: nodeData,
+            parentIdHierarchy: parentIdHierarchy
+        };
+        if (! nodeData || ! parentIdHierarchy) {
+            nodeActionResponse.state = "ERROR",
+            nodeActionResponse.stateMsg = "node '" +  nodeId + "' not found";
+        }
+
+        return nodeActionResponse;
+    }
+
     me._yaioCallLoadNodeById = function(nodeId, options) {
         var msg = "_yaioCallLoadNodeById node: " + nodeId + " options:" + options;
         console.log(msg + " START");
+        
+        // mock the ajax-request
         var promiseHelper = me.appBase.get("YaioPromiseHelper").createAngularPromiseHelper();
         var ajaxCall = function () {
             return promiseHelper.getHttpPromiseMock();
         }
         var angularResponse = {
-            data: window.yaioStaticJSON,
+            data: me._getNodeActionResponseById(nodeId)
         };
         promiseHelper.resolve(angularResponse);
         

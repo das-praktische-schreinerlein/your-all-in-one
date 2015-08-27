@@ -38,6 +38,8 @@ window.YaioAppBase = function() {
         me.configureService("Yaio.ServerNodeDataService_Local", function() { return Yaio.ServerNodeDataService(me); });
         me.configureService("Yaio.StaticAccessManagerService", function() { return Yaio.StaticAccessManagerService(me); });
         me.configureService("Yaio.StaticNodeDataService", function() { return Yaio.StaticNodeDataService(me); });
+        me.configureService("Yaio.FileAccessManagerService", function() { return Yaio.FileAccessManagerService(me); });
+        me.configureService("Yaio.FileNodeDataService", function() { return Yaio.FileNodeDataService(me); });
         me.configureService("Yaio.NodeDataRenderService", function() { return Yaio.NodeDataRenderService(me); });
         me.configureService("Yaio.NodeGanttRenderService", function() { return Yaio.NodeGanttRenderService(me); });
         me.configureService("Yaio.ExplorerActionService", function() { return Yaio.ExplorerActionService(me); });
@@ -54,6 +56,7 @@ window.YaioAppBase = function() {
 
         // use NodeDataService with aliases 
         me.configureService("YaioStaticNodeData", function() { return me.get("Yaio.StaticNodeDataService"); });
+        me.configureService("YaioFileNodeData", function() { return me.get("Yaio.FileNodeDataService"); });
         me.configureService("YaioServerNodeData_Local", function() { return me.get("Yaio.ServerNodeDataService_Local"); });
 //        me.configureService("YaioNodeData", function() { return me.get("YaioStaticNodeData"); });
         me.configureService("YaioNodeData", function() { return me.get("YaioServerNodeData_Local"); });
