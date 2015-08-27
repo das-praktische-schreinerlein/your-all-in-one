@@ -3,19 +3,19 @@
       * Import-Links
       ************************* 
       -->
-      <ul class="commands importttypes" ng-if="yaioUtils.getService('YaioPermissionManager').getAvailiableImportFormKeys().length > 0">
-        <li ng-if="yaioUtils.getService('YaioPermissionManager').getAvailiableImportFormKeys().length == 1">
-            <ul class="importtypelist" ng-repeat="key in yaioUtils.getService('YaioPermissionManager').getAvailiableImportFormKeys()">
+      <ul class="commands importttypes" ng-if="yaioUtils.getService('YaioAccessManager').getAvailiableImportFormKeys().length > 0">
+        <li ng-if="yaioUtils.getService('YaioAccessManager').getAvailiableImportFormKeys().length == 1">
+            <ul class="importtypelist" ng-repeat="key in yaioUtils.getService('YaioAccessManager').getAvailiableImportFormKeys()">
                <li class="importtype" data-tooltip="tooltip.command.{{key}}" lang="tech">
-                 <a ng-click="showImportEditor(node.sysUID, yaioUtils.getService('YaioPermissionManager').getAvailiableImportForm(key) + node.sysUID, '_blank');" class="button import import{{key}}" target="_blank" translate="common.command.{{key}}" target="_blank" translate="common.command.{{key}}">{{key}}</a></li>
+                 <a ng-click="showImportEditor(node.sysUID, yaioUtils.getService('YaioAccessManager').getAvailiableImportForm(key) + node.sysUID, '_blank');" class="button import import{{key}}" target="_blank" translate="common.command.{{key}}" target="_blank" translate="common.command.{{key}}">{{key}}</a></li>
             </ul>
         </li>
-        <li ng-if="yaioUtils.getService('YaioPermissionManager').getAvailiableImportFormKeys().length > 1">
+        <li ng-if="yaioUtils.getService('YaioAccessManager').getAvailiableImportFormKeys().length > 1">
           <a onclick="jMATService.getPageLayoutService().toggleElementOnPosition('actioncontextmenue-import', event); return false;" href="#" class="button importtype hide-if-printversion" data-tooltip='tooltip.command.Import' lang="tech" translate="common.command.Import">Importe...</a>
           <div id="actioncontextmenue-import" class="box importtype box-actioncontextmenue hide-if-printversion">
-            <ul class="importtypelist" ng-repeat="key in yaioUtils.getService('YaioPermissionManager').getAvailiableImportFormKeys()">
+            <ul class="importtypelist" ng-repeat="key in yaioUtils.getService('YaioAccessManager').getAvailiableImportFormKeys()">
                <li class="importtype" data-tooltip="tooltip.command.{{key}}" lang="tech">
-                 <a ng-click="showImportEditor(node.sysUID, yaioUtils.getService('YaioPermissionManager').getAvailiableImportForm(key) + node.sysUID, '_blank');" class="button import import{{key}}" target="_blank" translate="common.command.{{key}}" target="_blank" translate="common.command.{{key}}">{{key}}</a></li>
+                 <a ng-click="showImportEditor(node.sysUID, yaioUtils.getService('YaioAccessManager').getAvailiableImportForm(key) + node.sysUID, '_blank');" class="button import import{{key}}" target="_blank" translate="common.command.{{key}}" target="_blank" translate="common.command.{{key}}">{{key}}</a></li>
             </ul>
           </div>
         </li>

@@ -3,22 +3,22 @@
         *    Export Links
         ************************* 
         -->
-        <ul class="commands exporttypes" ng-if="(yaioUtils.getService('YaioPermissionManager').getAvailiableExportFormKeys().length + yaioUtils.getService('YaioPermissionManager').getAvailiableExportLinkKeys().length) > 0">
+        <ul class="commands exporttypes" ng-if="(yaioUtils.getService('YaioAccessManager').getAvailiableExportFormKeys().length + yaioUtils.getService('YaioAccessManager').getAvailiableExportLinkKeys().length) > 0">
           <li>
             <a onclick="jMATService.getPageLayoutService().toggleElementOnPosition('actioncontextmenue-export', event); return false;" href="#" class="button exporttype hide-if-printversion" data-tooltip='tooltip.command.Export' lang="tech" translate="common.command.Export">Exporte...</a>
             <div id="actioncontextmenue-export" class="box exporttype box-actioncontextmenue hide-if-printversion">
               <ul class="exporttypelist">
-                <li ng-if="yaioUtils.getService('YaioPermissionManager').getAvailiableExportFormKeys().length > 0">
+                <li ng-if="yaioUtils.getService('YaioAccessManager').getAvailiableExportFormKeys().length > 0">
                   <span data-tooltip='tooltip.command.ExportForm' lang="tech" translate="common.command.ExportForm">Konfigurierbar</span>
-                  <ul class="exporttypelist" ng-repeat="key in yaioUtils.getService('YaioPermissionManager').getAvailiableExportFormKeys()">
-                     <li class="exporttype" data-tooltip="tooltip.command.{{key}}" lang="tech"><a ng-click="outputOptionsEditor.showOutputOptionsEditor(node.sysUID, yaioUtils.getService('YaioPermissionManager').getAvailiableExportForm(key, node.sysUID) + node.sysUID, '');" class="button exporttype_{{key}}" target="_blank" translate="common.command.{{key}}">{{key}}</a></li>
+                  <ul class="exporttypelist" ng-repeat="key in yaioUtils.getService('YaioAccessManager').getAvailiableExportFormKeys()">
+                     <li class="exporttype" data-tooltip="tooltip.command.{{key}}" lang="tech"><a ng-click="outputOptionsEditor.showOutputOptionsEditor(node.sysUID, yaioUtils.getService('YaioAccessManager').getAvailiableExportForm(key, node.sysUID) + node.sysUID, '');" class="button exporttype_{{key}}" target="_blank" translate="common.command.{{key}}">{{key}}</a></li>
                   </ul>
                 </li>
                 
-                <li ng-if="yaioUtils.getService('YaioPermissionManager').getAvailiableExportLinkKeys().length > 0">
+                <li ng-if="yaioUtils.getService('YaioAccessManager').getAvailiableExportLinkKeys().length > 0">
                   <span data-tooltip='tooltip.command.ExportDirect' lang="tech" translate="common.command.ExportDirect">Schnelllinks</span>
-                  <ul class="exporttypelist" ng-repeat="key in yaioUtils.getService('YaioPermissionManager').getAvailiableExportLinkKeys()">
-                     <li class="exporttype" data-tooltip="tooltip.command.{{key}}" lang="tech"><a href="{{yaioUtils.getService('YaioPermissionManager').getAvailiableExportLink(key, node.sysUID)}}{{node.sysUID}}" class="button exporttype_{{key}}" target="_blank" translate="common.command.{{key}}">{{key}}</a></li>
+                  <ul class="exporttypelist" ng-repeat="key in yaioUtils.getService('YaioAccessManager').getAvailiableExportLinkKeys()">
+                     <li class="exporttype" data-tooltip="tooltip.command.{{key}}" lang="tech"><a href="{{yaioUtils.getService('YaioAccessManager').getAvailiableExportLink(key, node.sysUID)}}{{node.sysUID}}" class="button exporttype_{{key}}" target="_blank" translate="common.command.{{key}}">{{key}}</a></li>
                   </ul>
                 </li>
               </ul>

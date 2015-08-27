@@ -47,7 +47,7 @@
                     <br />
                     <div class="fieldtype_sysToggler toggler_show">
                       <a lang="tech" data-tooltip='tooltip.command.ToggleSysAll' id="toggler_sys_all" 
-                         ng-if="yaioUtils.getService('YaioPermissionManager').getAvailiableNodeAction('showsysdata', null, true)"
+                         ng-if="yaioUtils.getService('YaioAccessManager').getAvailiableNodeAction('showsysdata', null, true)"
                          onclick="yaioAppBase.get('YaioExplorerAction').toggleAllNodeSysContainer(); return false;" 
                          href="#" class="toggler_hidden"></a>
                     </div>
