@@ -27,7 +27,7 @@
  * <h4>FeatureKeywords:</h4>
  *     Utils
  */
-yaioApp.factory('yaioUtils', ['$location', '$http', '$rootScope', function ($location, $http, $rootScope) {
+yaioApp.factory('yaioUtils', ['$location', '$http', '$rootScope', '$q', function ($location, $http, $rootScope, $q) {
     'use strict';
 
     var appBase = yaioAppBase;
@@ -38,6 +38,7 @@ yaioApp.factory('yaioUtils', ['$location', '$http', '$rootScope', function ($loc
     appBase.configureService("Angular.$location", function() { return $location; });
     appBase.configureService("Angular.$http", function() { return $http; });
     appBase.configureService("Angular.$rootScope", function() { return $rootScope; });
+    appBase.configureService("Angular.$q", function() { return $q; });
 
     return {
         /**
