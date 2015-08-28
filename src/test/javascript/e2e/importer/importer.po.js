@@ -8,7 +8,7 @@ var path = require('path');
 var YAIOImporterPage = function() {
     var me = this;
     
-    me.linkImport = '[translate="common.command.Import"]';
+    me.linkImport = '[translate="common.command.ImportWiki"]';
     me.inputImportFile = '#inputfileImort';
     me.buttonSend = 'form#nodeFormImport button:first-of-type';
     
