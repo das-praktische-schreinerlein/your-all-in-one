@@ -32,14 +32,17 @@ Yaio.FileNodeDataService = function(appBase) {
     // my own instance
     var me = Yaio.StaticNodeDataService(appBase);
     
-    me.nodeList = {};
-
     /**
      * initialize the object
      */
     me._init = function() {
     };
     
+    me.loadStaticJson = function() {
+        me._convertStaticNodeData(window.yaioFileJSON.node, window.yaioFileJSON.parentIdHierarchy);
+        me.flgDataLoaded = true;
+    }
+
     /*****************************************
      *****************************************
      * Service-Funktions (webservice)
@@ -48,13 +51,6 @@ Yaio.FileNodeDataService = function(appBase) {
     me._createAccessManager = function() {
         return me.appBase.get("Yaio.FileAccessManagerService");
     };
-    
-    me._getNodeDataById = function(nodeId) {
-        return window.yaioFileJSON.node;
-    }
-    me._getParentIdHierarchyById = function(nodeId) {
-        return window.yaioFileJSON.parentIdHierarchy;
-    }
     
     me._init();
     

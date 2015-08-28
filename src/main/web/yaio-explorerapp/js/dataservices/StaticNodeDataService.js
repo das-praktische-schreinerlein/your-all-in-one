@@ -33,6 +33,8 @@ Yaio.StaticNodeDataService = function(appBase) {
     var me = Yaio.NodeDataService(appBase);
     
     me.nodeList = {};
+    me.parentIdHirarchies = {};
+    me.flgDataLoaded = false;
 
     /**
      * initialize the object
@@ -41,9 +43,23 @@ Yaio.StaticNodeDataService = function(appBase) {
     };
     
     me.loadNodeData = function(nodeId) {
+        // use promise as described on https://github.com/mar10/fancytree/wiki/TutorialLoadData#user-content-use-a-deferred-promise
         console.log("load data for node:" + nodeId);
-        return me._getNodeActionResponseById(nodeId);
+        var nodeActionResponse = me._getNodeActionResponseById(nodeId);
+        var fancyTreeResponse = { response: nodeActionResponse};
+        me.appBase.get('YaioExplorerTree').postProcessNodeData({}, fancyTreeResponse);
+        
+        var dfd = new $.Deferred();
+        var res = dfd.promise();
+        dfd.resolve(fancyTreeResponse.result);
+
+        return res;
     };
+    
+    me.loadStaticJson = function() {
+        me._convertStaticNodeData(window.yaioStaticJSON.node, window.yaioStaticJSON.parentIdHierarchy);
+        me.flgDataLoaded = true;
+    }
     
     /*****************************************
      *****************************************
@@ -54,24 +70,65 @@ Yaio.StaticNodeDataService = function(appBase) {
         return me.appBase.get("Yaio.StaticAccessManagerService");
     };
     
+    me._convertStaticNodeData = function (node, parentIdHirarchy) {
+        if (! node) {
+            return;
+        }
+        if (! node.sysUID) {
+            return;
+        }
+        if (! parentIdHirarchy) {
+            parentIdHirarchy = [];
+        }
+
+        me.nodeList[node.sysUID] = node;
+        me.parentIdHirarchies[node.sysUID] = parentIdHirarchy;
+        
+        var newParentIdHirarchy = parentIdHirarchy.slice();
+        newParentIdHirarchy.push(node.sysUID);
+        for (var i = 0; i < node.childNodes.length; i++) {
+            var childNode = node.childNodes[i];
+            me._convertStaticNodeData(childNode, newParentIdHirarchy);
+            node.childNodes[i] = childNode.sysUID;
+        }
+    }
+    
     me._getNodeDataById = function(nodeId) {
-        return window.yaioStaticJSON.node;
+        return me.nodeList[nodeId];
     }
     me._getParentIdHierarchyById = function(nodeId) {
-        return window.yaioStaticJSON.parentIdHierarchy;
+        return me.parentIdHirarchies[nodeId];
+    }
+    me._getChildNodesById = function(nodeId) {
+        // check for node
+        var node = me.nodeList[nodeId];
+        if (! node) {
+            return [];
+        }
+        
+        // read nodes for childNodeIds
+        var childNodes = [];
+        for (var i = 0; i < node.childNodes.length; i++) {
+            var childNodeId = node.childNodes[i];
+            childNodes.push(me.nodeList[node.childNodes[i]]);
+        }
+        
+        return childNodes;
     }
     
     me._getNodeActionResponseById = function(nodeId) {
         // extract data
         var nodeData = me._getNodeDataById(nodeId);
         var parentIdHierarchy = me._getParentIdHierarchyById(nodeId);
+        var childNodes = me._getChildNodesById(nodeId);
         
         // create response
         var nodeActionResponse = {
             state: "OK",
             stateMsg: "node '" +  nodeId + "' found",
             node: nodeData,
-            parentIdHierarchy: parentIdHierarchy
+            parentIdHierarchy: parentIdHierarchy,
+            childNodes: childNodes
         };
         if (! nodeData || ! parentIdHierarchy) {
             nodeActionResponse.state = "ERROR",

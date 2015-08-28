@@ -159,15 +159,27 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
             }
             nodeHierarchy.reverse();
             $scope.nodeHierarchy = nodeHierarchy;
-
-            // load fencytree
-            yaioUtils.getService('YaioExplorerTree').yaioCreateFancyTree("#tree", $scope.node.sysUID, options.loadActiveNodeIdHandler);
             
-            // load me
-            $scope.yaioUtils.renderNodeLine(yaioNodeActionResponse.node, "#masterTr");
+            // load only when templates loaded, because we need some time for rendering angular :-(
+            var tries = 20;
+            var templateIsLoadedTimer;
+            var templateIsLoadedHandler = function() {
+                tries--
+                var loaded = $("#masterTr").length;
+                if (loaded || tries <= 0) {
+                    clearInterval(templateIsLoadedTimer);
+                    
+                    // load fencytree
+                    yaioUtils.getService('YaioExplorerTree').yaioCreateFancyTree("#tree", $scope.node.sysUID, options.loadActiveNodeIdHandler);
+                    
+                    // load me
+                    $scope.yaioUtils.renderNodeLine(yaioNodeActionResponse.node, "#masterTr");
 
-            // recalc gantt
-            yaioUtils.getService('YaioNodeGanttRender').yaioRecalcMasterGanttBlock($scope.node);
+                    // recalc gantt
+                    yaioUtils.getService('YaioNodeGanttRender').yaioRecalcMasterGanttBlock($scope.node);
+                }
+            };
+            templateIsLoadedTimer = setInterval(templateIsLoadedHandler, 100);
         } else {
             // error
             yaioUtils.getService('YaioBase').logError("error loading nodes:" + yaioNodeActionResponse.stateMsg 
