@@ -64,6 +64,7 @@ Yaio.ServerAccessManagerService = function(appBase, config, defaultConfig) {
         me.setAvailiableExportForm('ExportCsv', me.appBase.config.restExportsBaseUrl + 'csvuseoptions/');
 
         // export-links
+        me.setAvailiableExportLink('ExportYaioAppDirect', me.appBase.config.restExportsBaseUrl + 'yaioapp/');
         me.setAvailiableExportLink('ExportWikiDirect', me.appBase.config.restExportsBaseUrl + 'wiki/');
         me.setAvailiableExportLink('ExportMindmapDirect', me.appBase.config.restExportsBaseUrl + 'mindmap/');
         me.setAvailiableExportLink('ExportHtmlDirect', me.appBase.config.restExportsBaseUrl + 'html/');
