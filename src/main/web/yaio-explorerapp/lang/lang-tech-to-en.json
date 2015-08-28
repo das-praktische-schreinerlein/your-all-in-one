@@ -26,6 +26,7 @@
         "tooltip.command.ExportHtml": "Export the current node with all child elements as HTML version for browsing.",
         "tooltip.command.ExportICal": "Export the current node with all child elements as iCal version for your Thunderbird / Outlook Calendar.",
         "tooltip.command.ExportExcel": ". <b> Warning BETA !!! </ b> Export the current node with all child elements of an Excel version",
+        "tooltip.command.ExportYaioAppDirect": "Export the current node with all child elements as a wiki for further processing as YaioOfflineApp.", 
         "tooltip.command.ExportWikiDirect": "Export the current node with all child elements as a wiki for further processing and eventual import into another D'Artagnan system:-)",
         "tooltip.command.ExportMindmapDirect": ". Export the current node with all child elements of a mind map for FreeMind 0.92",
         "tooltip.command.ExportCsvDirect": "Export the current node with all child elements as csv version",

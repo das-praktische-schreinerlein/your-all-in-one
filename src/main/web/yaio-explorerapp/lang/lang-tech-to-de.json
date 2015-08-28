@@ -26,6 +26,7 @@
         "tooltip.command.ExportHtml": "Exportieren Sie die aktuelle Node mit allen Kindselementen als Html-Version zum browsen.", 
         "tooltip.command.ExportICal": "Exportieren Sie die Termine+Aufgaben der aktuellen Node als ICal-Version für Ihren Thunderbird/Outlook-Kalender. Sie können diesen Link dort auch direkt als WebCalender verknüpfen.", 
         "tooltip.command.ExportExcel": "<b>Achtung BETA!!!</b> Exportieren Sie die aktuelle Node mit allen Kindselementen als Excel-Version.",
+        "tooltip.command.ExportYaioAppDirect": "Exportieren Sie die aktuelle Node mit allen Kindselementen als YaioOfflineApp zur Ansicht in einem Offline D'Artagnan-System :-)", 
         "tooltip.command.ExportWikiDirect": "Exportieren Sie die aktuelle Node mit allen Kindselementen als Wiki zur Weiterbearbeitung und eventuellen Import in ein anderes D'Artagnan-System :-)", 
         "tooltip.command.ExportMindmapDirect": "Exportieren Sie die aktuelle Node mit allen Kindselementen als Mindmap für FreeMind 0.92.", 
         "tooltip.command.ExportCsvDirect": "Exportieren Sie die aktuelle Node mit allen Kindselementen als Csv-Version.", 

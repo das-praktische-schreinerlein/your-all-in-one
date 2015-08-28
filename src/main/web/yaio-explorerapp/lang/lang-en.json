@@ -15,6 +15,7 @@
     "common.command.ExportMindmap": "mindmap",
     "common.command.ExportCsv": "csv",
     "common.command.ExportDirect": "Shortlinks",
+    "common.command.ExportYaioAppDirect": "Yaio Offline App",
     "common.command.ExportWikiDirect": "Wiki",
     "common.command.ExportHtmlDirect": "HTML",
     "common.command.ExportHtmlDocumentationDirect": "HTML documentation",
