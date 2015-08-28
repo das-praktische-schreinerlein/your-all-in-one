@@ -61,9 +61,8 @@ public class ConverterController {
         try {
                 OutputOptions oOptions = new OutputOptionsImpl();
                 BaseNode masterNode = converterUtils.parseInlineNodesFromString(source);
-                String headerFile = "/static/exporttemplates/projektplan-export-header.html";
-                String footerFile = "/static/exporttemplates/projektplan-export-footer.html";
-                return converterUtils.commonExportNodeAsHtml(masterNode, oOptions, response, headerFile, footerFile);
+                String tplFile = "/static/exporttemplates/projektplan-export.html";
+                return converterUtils.commonExportNodeAsHtml(masterNode, oOptions, response, tplFile);
             } catch (Exception e) {
                 e.printStackTrace();
                 return new NodeActionResponse(

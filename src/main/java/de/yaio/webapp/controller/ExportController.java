@@ -585,7 +585,7 @@ public class ExportController {
                                    final HttpServletResponse response) {
         // configure
         OutputOptions oOptions = new OutputOptionsImpl();
-        return converterUtils.commonExportNodeAsHtml(sysUID, oOptions, response, null, null);
+        return converterUtils.commonExportNodeAsHtml(sysUID, oOptions, response, null);
     }
 
     /**
@@ -614,7 +614,7 @@ public class ExportController {
         OutputOptions oOptions = new OutputOptionsImpl();
         oOptions.setFlgProcessDocLayout(true);
         oOptions.setMaxUeEbene(-1);
-        return converterUtils.commonExportNodeAsHtml(sysUID, oOptions, response, "", "");
+        return converterUtils.commonExportNodeAsHtml(sysUID, oOptions, response, "");
     }
 
     /**
@@ -644,7 +644,7 @@ public class ExportController {
         OutputOptions oOptions = new OutputOptionsImpl();
         oOptions.setFlgProcessDocLayout(true);
         oOptions.setMaxUeEbene(-1);
-        String res = converterUtils.commonExportNodeAsHtml(sysUID, oOptions, response, "", "");
+        String res = converterUtils.commonExportNodeAsHtml(sysUID, oOptions, response, "");
         
         // replace urls to frontpage
         res = res.replaceAll("\"/exports/documentation/", 
@@ -679,7 +679,7 @@ public class ExportController {
     public String exportNodeAsHtml(@PathVariable(value = "sysUID") final String sysUID,
                                    @ModelAttribute final EmptyOutputOptionsImpl oOptions,
                                    final HttpServletResponse response) {
-        return converterUtils.commonExportNodeAsHtml(sysUID, oOptions, response, null, null);
+        return converterUtils.commonExportNodeAsHtml(sysUID, oOptions, response, null);
     }
 
     /**
@@ -714,12 +714,41 @@ public class ExportController {
         
         // generate
         String res = converterUtils.commonExportNodeAsHtml(sysUID, oOptions, response, 
-                        "/static/exporttemplates/documentation-export-header.html", 
-                        "/static/exporttemplates/documentation-export-footer.html");
+                        "/static/exporttemplates/documentation-export.html");
         // replace static pathes...
         for (String pattern : PostProcessorReplacements_documentation.keySet()) {
             res = res.replace(pattern, PostProcessorReplacements_documentation.get(pattern));
         }
+        return res;
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
+     *     Request to read the node for sysUID and return it in yaioOfflineApp-html-format with all children
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>String - yaioOfflineApp-html-format of the node
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice Query
+     * @param sysUID - sysUID to export
+     * @param response - the response-Obj to set contenttype and headers
+     * @return String - yaioOfflineApp-html-format of the node
+     */
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.GET, 
+                    value = "/yaioapp/{sysUID}", 
+                    produces = "text/html")
+    public String exportNodeAsYaioApp(@PathVariable(value = "sysUID") final String sysUID, 
+                                                final HttpServletResponse response) {
+        String res = converterUtils.commonExportNodeAsYaioApp(sysUID, response, null);
+        // replace static pathes...
+        for (String pattern : PostProcessorReplacements_documentation.keySet()) {
+            res = res.replace(pattern, PostProcessorReplacements_documentation.get(pattern));
+        }
+        
         return res;
     }
 

@@ -5,7 +5,7 @@
 
     <!-- styles: reset -->
     <link rel="stylesheet" type="text/css" media="all" href="./dist/yaio-reset.resetversion.css" />
-  
+
     <!-- styles: vendors -->
     <link rel="stylesheet" type="text/css" media="all" href="./dist/vendors-full.vendorversion.css" />
     <link rel="stylesheet" type="text/css" media="print" href="./dist/vendors.vendorversion/yaio/print.css" />
@@ -31,7 +31,7 @@ body {
 }
 
 .node-block {
-    width: 100%;
+    width: 1300px;
     clear: both;
     float: left;
 }
@@ -91,6 +91,7 @@ body {
  * Node-Elemente
  */
 .node-data-block {
+    overflow: auto;
 }
 .node-area-stateshort {
     vertical-align: top;
@@ -353,7 +354,6 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6, h7, h8 {
-    color: black;
     padding-top: 5px;
     border-top: 1px dotted green; 
     clear: both;
@@ -465,6 +465,11 @@ h1, h2, h3, h4, h5, h6, h7, h8 {
 .p-portdesc-ue {
 /**    display: none;**/
 }
+.p-portdesc-desc {
+    margin-left: 30px;
+    width: 640px;
+}
+
 .li-portdesc-ue-faehigkeiten {
     font-weight: bold;
     width: 150px;
@@ -486,99 +491,6 @@ h1, h2, h3, h4, h5, h6, h7, h8 {
 }
 
 
-
-/* Documentation */
-/** specials **/
-.a-biglink {
-   font-size: 15px;
-   font-weight: bold;
-}
-.p-portdesc-desc-biglink {
-   text-align: center;
-   margin-left: 0px;
-}
-
-
-
-/** Styles der Faehigkeiten **/
-.li-portdesc-faehigkeiten {
-    margin: 0;
-    list-style: none;
-    width: 30%;
-    float: left;
-    border-right: 1px dotted #008000;
-    border-top: 0px;
-    border-bottom: 0px;
-    height: 120px;
-}
-.li-portdesc-faehigkeiten:nth-of-type(1) {
-}
-.li-portdesc-faehigkeiten:last-child {
-    border-right:0px;
-}
-.li-portdesc-ue-faehigkeiten {
-    display: inline-block;
-    font-size: 20px;
-    font-weight: bold;
-    text-align: center;
-    vertical-align: top;
-    width: 100%;
-}
-.li-portdesc-ue-faehigkeiten a {
-    display: inline-block;
-    font-size: 20px;
-    font-weight: bold;
-    text-align: center;
-    vertical-align: top;
-    width: 100%;
-}
-.li-portdesc-desc-faehigkeiten {
-    display: inline-block;
-    text-align: center;
-    vertical-align: top;
-    width: 100%;
-}
-/** Styles fuer Management **/
-.box-portdesc-management {
-    background: #DEE9EF;
-}
-
-.li-portdesc-management {
-    list-style: none;
-    margin-left: 40px;
-}
-.li-portdesc-ue-management {
-    color: black;
-    display: inline-block;
-    text-align: left;
-    width: 150px;
-    font-weight: bold;
-}
-.li-portdesc-desc-management {
-    display: inline-block;
-    width: 450px;
-    vertical-align: top;
-    line-height: 15px;
-}
-
-/** Features **/
-.li-portdesc-ue-istohne {
-    font-weight: bold;
-}
-.li-portdesc-ue-bereiche {
-    font-weight: bold;
-}
-.li-portdesc-ue-features {
-    font-weight: bold;
-}
-.li-portdesc-ue-ausgabeformate {
-    font-weight: bold;
-}
-.li-portdesc-ue-sichten {
-    font-weight: bold;
-}
-
-
 /*  my own additional print.css  */
 @media print {
     a[href^="http"]:after, a[href^="file"]:after {
@@ -588,6 +500,40 @@ h1, h2, h3, h4, h5, h6, h7, h8 {
         font-style:italic;
         size:80%;
     } 
+}
+
+/** markdowndesc-styles **/
+div.node-block-desc-set {
+    white-space: normal;
+    word-wrap: normal;
+}
+div.node-block-desc-set > h1, 
+div.node-block-desc-set > h2, 
+div.node-block-desc-set > h3, 
+div.node-block-desc-set > h4, 
+div.node-block-desc-set > h5, 
+div.node-block-desc-set > h6, 
+div.node-block-desc-set > h7, 
+div.node-block-desc-set > h8 {
+    color: black;
+}
+pre {
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: #333;
+    display: block;
+    font-size: 13px;
+    line-height: 1.42857;
+    margin: 0 0 10px;
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 9.5px;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+code, kbd, pre, samp {
+    font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
 }
 
 /****************
@@ -603,32 +549,24 @@ h1, h2, h3, h4, h5, h6, h7, h8 {
     width: 640px;
 }
 
+.menueFooter {
+    color: #ff9933;
+    width: 710px;
+}
+ul.ulMenueFooter li {
+    float: left;
+    font-size: 14px;
+    list-style: outside none none;
+    margin: 1px;
+    padding: 4px 2px 4px 2px;
+}
+
 /* set img from markdown without class to 600px */
 img:not([class]) {
     max-width: 600px;
     width: auto;
     height: auto;
     display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.menueFooter {
-    color: #ff9933;
-    width: 710px;
-}
-ul.ulMenueFooter li {
-    float: right;
-}
-
-/* mermaid */
-svg:not([class]) {
-    width: 100%;
-    height: auto;
-}
-div.mermaid, code.mermaid {
-    max-width: 950px;
-    height: auto;
     margin-left: auto;
     margin-right: auto;
 }
@@ -653,4 +591,91 @@ div.mermaid, code.mermaid {
 </head>
 <body>
     <div id="div_full" style="width: 100%">
-       <div id="globtoc" class="globtoc documentation-globtoc"> </div>
+       <div id="globtoc" class="globtoc projectplan-globtoc"> </div>
+
+       <!-- REPLACECONTENT_START -->
+       <!-- REPLACECONTENT_END -->
+
+    </div>
+
+    <div class="menueFooterDummy" id="menueFooterDummy"> </div>
+    <div class="menueFooter" id="menueFooter">
+        <div class="menueFooterBox">
+            <ul id="ulMenueFooter" class="ulMenueFooter">
+                <li class="menueFooterMasterLink yaio-show-if-speechsynth command"><a class="a-menue-footer-norm button flg-textonly hidden" id="speechSynthLink" onclick="javascript:yaioAppBase.get('YaioExportedData').openSpeechSynth();return false;">Vorlesen</a></li>
+                <li class="menueFooterMasterLink yaio-show-if-javascript"><span class="button"><a onclick="window.print(); return true;" class="a-menue-footer-norm flg-textonly">Drucken</a><input type="checkbox" onclick="yaioAppBase.get('YaioExportedData').togglePrintLayout()" id="checkboxPrintAll"> All</span></li>
+                <li class="menueFooterMasterLink yaio-show-if-javascript"><a href="#" class="a-menue-footer-norm button flg-textonly" onclick="javascript:yaioAppBase.get('YaioExportedData').doAllNodeToggler(true, getElementById('inputNodeEbene').value); return false;"><img class="icon-menufooter icon-blocktoggleron" src="/images/icon-up.gif"  title="Bis 4 aufklappen" alt="Bis  aufklappen">Nodes bis <input type=text value="4" id="inputNodeEbene" size=2> auf</a></li>
+                <li class="menueFooterMasterLink yaio-show-if-javascript"><a href="#" class="a-menue-footer-norm button flg-textonly" onclick="javascript:yaioAppBase.get('YaioExportedData').doAllNodeToggler(true, 100); return false;"><img class="icon-menufooter icon-blocktoggleron" src="/images/icon-up.gif"  title="Alles aufklappen" alt="Alles aufklappen">Alle Nodes auf</a></li>
+                <li class="menueFooterMasterLink yaio-show-if-javascript"><a href="#" class="a-menue-footer-norm button flg-textonly" onclick="javascript:jMATService.getPageLayoutService().doAllBlockToggler(true); return false;"><img class="icon-menufooter icon-blocktoggleron" src="/images/icon-up.gif"  title="Alles aufklappen" alt="Alles aufklappen">Alles auf</a></li>
+                <li class="menueFooterMasterLink yaio-show-if-javascript"><a href="#" class="a-menue-footer-norm button flg-textonly" onclick="javascript:jMATService.getPageLayoutService().doAllBlockToggler(false); return false;"><img class="icon-menufooter icon-blocktogglerof" src="/images/icon-down.gif" title="Alles zuklappen" alt="Alles zuklappen">Alles zu</a></li>
+                <li class="menueFooterMasterLink yaio-show-if-javascript command">
+                   <a class="a-menue-footer-norm button flg-textonly" id="showSidebarTOCLink" onclick="javascript:yaioAppBase.get('YaioBase').toggleWithLinks('#showSidebarTOCLink', '#hideSidebarTOCLink', '#sidebartoc', '');return false;">Sidebar an</a>
+                   <a class="a-menue-footer-norm button flg-textonly" style="display: none" id="hideSidebarTOCLink" onclick="javascript:yaioAppBase.get('YaioBase').toggleWithLinks('#showSidebarTOCLink', '#hideSidebarTOCLink', '#sidebartoc', '');return false;">Sidebar aus</a>
+                </li>
+                <li class="menueFooterMasterLink yaio-show-if-javascript command">
+                   <a class="a-menue-footer-norm button flg-textonly" id="showGlobalTOCLink" onclick="javascript:yaioAppBase.get('YaioBase').toggleWithLinks('#showGlobalTOCLink', '#hideGlobalTOCLink', '#globtoc', '');return false;">TOC an</a>
+                   <a class="a-menue-footer-norm button flg-textonly" style="display: none" id="hideGlobalTOCLink" onclick="javascript:yaioAppBase.get('YaioBase').toggleWithLinks('#showGlobalTOCLink', '#hideGlobalTOCLink', '#globtoc', '');return false;">TOC aus</a>
+                </li>
+                <li class="menueFooterMasterLink yaio-show-if-javascript">
+                   <input type="text" style="width:200px" class="volltextsuchfeld" id="vlt_msglist">
+                   <input type=button onclick="javascript:yaioAppBase.get('YaioExportedData').startSearch();" value="Suchen">
+                   <input type=button onclick="javascript:yaioAppBase.get('YaioExportedData').resetSearch();yaioAppBase.get('YaioExportedData').doAllNodeToggler(true, 3);" value="Reset">
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="sidebartoc" class="sidebartoc documentation-sidebartoc"> </div>
+
+<!-- YaioAppBase -->
+<script type="text/javascript">
+window.yaioAppBase = YaioAppBase();
+yaioAppBase.publishDetectorStyles();
+</script>
+
+<script type="text/javascript">
+    // alle OFFEN hervorheben
+    var styles = {
+        "color": "red",
+        "font-size": "13px",
+        "font-weight": "bold"
+    };
+    $( "span:contains('OFFEN')" ).css( styles );
+</script>
+<script type="text/javascript">
+    // format markdown-extension
+    var flgDoMermaid = yaioAppBase.get('YaioFormatter').formatDescBlock("#div_full");
+    if (flgDoMermaid) {
+        yaioAppBase.get('YaioFormatter').formatMermaidGlobal();
+    }
+
+    // add TOC
+    yaioAppBase.get('YaioFormatter').addTOCForBlock("#globtoc", "#div_full", { toc: { hide: true, minDeep: 2}});
+    yaioAppBase.get('YaioFormatter').addTOCForBlock("#sidebartoc", "#div_full", { toc: { hide: true, minDeep: 2}});
+
+    // toggleAll after mermaid!!!
+    jMATService.getPageLayoutService().doAllBlockToggler(false);
+    delayedOptimize = window.setInterval(
+            function() {
+                // nach 2 Sekunden ausfuehren und Intervall loeschen
+                /*
+                jMATService.getLayoutService().toggleBlock(
+                        'node_2_childrencontainer',
+                        'node_2_childrencontainer',
+                        function () {
+                            new ToggleEffect('node_2_childrencontainer').doEffect();
+                        }
+                );
+                */
+                yaioAppBase.get('YaioExportedData').doAllNodeToggler(true, 3);
+                yaioAppBase.get('YaioExportedData').initSearch();
+                window.clearInterval(delayedOptimize);
+            }, 2000);
+</script>
+<script type="text/javascript">
+    // show speechSynthLink
+    if (('speechSynthesis' in window)) {
+        $("#speechSynthLink").show(0);
+    }
+    
+</script>
+</body></html>

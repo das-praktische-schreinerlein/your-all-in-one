@@ -18,6 +18,8 @@ package de.yaio.webapp.controller;
 
 import java.io.InputStream;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -29,7 +31,9 @@ import org.springframework.stereotype.Service;
 import de.yaio.core.node.BaseNode;
 import de.yaio.datatransfer.exporter.Exporter;
 import de.yaio.datatransfer.exporter.OutputOptions;
+import de.yaio.datatransfer.exporter.OutputOptionsImpl;
 import de.yaio.extension.datatransfer.html.HtmlExporter;
+import de.yaio.extension.datatransfer.json.JSONFullExporter;
 import de.yaio.extension.datatransfer.ppl.PPLImporter;
 import de.yaio.extension.datatransfer.wiki.InlineWikiImporter;
 import de.yaio.extension.datatransfer.wiki.WikiImportOptions;
@@ -155,15 +159,13 @@ public class ConverterUtils {
      * @param sysUID - sysUID to export
      * @param oOptions - the outputOptions 
      * @param response - the response-Obj to set contenttype and headers
-     * @param pHeaderFile - path to headerFile-resource (if null=defaultfile will used; if empty=ignored)
-     * @param pFooterFile - path to footerFile-resource (if null=defaultfile will used; if empty=ignored)
+     * @param pTplFile - path to tplFile-resource (if null=defaultfile will used; if empty=ignored)
      * @return String - html-format of the node
      */
     public String commonExportNodeAsHtml(final String sysUID,
                                          final OutputOptions oOptions,
                                          final HttpServletResponse response,
-                                         final String pHeaderFile,
-                                         final String pFooterFile) {
+                                         final String pTplFile) {
         try {
             // read node
             BaseNode node = BaseNode.findBaseNode(sysUID);
@@ -171,7 +173,7 @@ public class ConverterUtils {
                 node.initChildNodesFromDB(-1);
             }
             
-            return commonExportNodeAsHtml(node, oOptions, response, pHeaderFile, pFooterFile);
+            return commonExportNodeAsHtml(node, oOptions, response, pTplFile);
         } catch (Exception e) {
             e.printStackTrace();
             return "";
@@ -193,38 +195,39 @@ public class ConverterUtils {
      * @param basenode - basenode to export
      * @param oOptions - the outputOptions 
      * @param response - the response-Obj to set contenttype and headers
-     * @param pHeaderFile - path to headerFile-resource (if null=defaultfile will used; if empty=ignored)
-     * @param pFooterFile - path to footerFile-resource (if null=defaultfile will used; if empty=ignored)
+     * @param pTplFile - path to tplFile-resource (if null=defaultfile will used; if empty=ignored)
      * @return String - html-format of the node
      * @throws Exception - IOException and Parser-Exceptions possible
      */
     public String commonExportNodeAsHtml(final BaseNode basenode,
                                          final OutputOptions oOptions,
                                          final HttpServletResponse response,
-                                         final String pHeaderFile,
-                                         final String pFooterFile) throws Exception {
+                                         final String pTplFile) throws Exception {
         Exporter exporter = new HtmlExporter();
         String res = "";
-        String headerFile = pHeaderFile;
-        String footerFile = pFooterFile;
+        String tplFile = pTplFile;
         
-        // check headerFile
-        if (headerFile == null) {
-            headerFile = "/static/exporttemplates/projektplan-export-header.html";
-        }
-        if (footerFile == null) {
-            footerFile = "/static/exporttemplates/projektplan-export-footer.html";
+        // check tplFile
+        if (tplFile == null) {
+            tplFile = "/static/exporttemplates/projektplan-export.html";
         }
         // run export
         res = this.exportNode(basenode, exporter, oOptions, ".html", response);
-        if (headerFile != "" && footerFile != "") {
-            // read header
-            InputStream in = this.getClass().getResourceAsStream(headerFile);
-            res = IOUtils.toString(in) + res;
-
-            // add footer
-            in = this.getClass().getResourceAsStream(footerFile);
-            res = res + IOUtils.toString(in);
+        if (tplFile != "") {
+            // read tpl
+            InputStream in = this.getClass().getResourceAsStream(tplFile);
+            String content = IOUtils.toString(in);
+            Pattern pattern = Pattern.compile("\\<\\!-- REPLACECONTENT_START --\\>.*<\\!-- REPLACECONTENT_END --\\>", 
+                            Pattern.DOTALL);
+            String replacement = "<!-- REPLACECONTENT_START -->" + res + "<!-- REPLACECONTENT_END -->";
+            Matcher matcher = pattern.matcher(content);
+            StringBuffer buffer = new StringBuffer();
+            while (matcher.find()) {
+                matcher.appendReplacement(buffer, "");
+                buffer.append(replacement);
+            }
+            matcher.appendTail(buffer);
+            res =  buffer.toString();
         }
 
         // set baseref 
@@ -250,6 +253,97 @@ public class ConverterUtils {
         return res;
     }
     
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
+     *     read the node for sysUID, return it in Json-format with all children<br>
+     *     include it into the yaioOfflineApp and set contect-header on response-obj
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>String - yaioOfflineApp-html-format of the node
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice Query
+     * @param sysUID - basenode to export
+     * @param response - the response-Obj to set contenttype and headers
+     * @param pTplFile - path to tplFile-resource (if null=defaultfile will used; if empty=ignored)
+     * @return String - html-format of the node
+     * @throws Exception - IOException and Parser-Exceptions possible
+     */
+    public String commonExportNodeAsYaioApp(final String sysUID,
+                                         final HttpServletResponse response,
+                                         final String pTplFile) {
+        // configure
+        Exporter exporter = new JSONFullExporter();
+        OutputOptions oOptions = new OutputOptionsImpl();
+        String tplFile = pTplFile;
+        if (tplFile == null) {
+            tplFile = "/static/yaio-explorerapp/yaio-explorerapp.html";
+        }
+
+        // run export
+        String res = "";
+        
+        try {
+            res = this.exportNode(sysUID, exporter, oOptions, ".json", response);
+
+            if (tplFile != "") {
+                // read tpl
+                InputStream in = this.getClass().getResourceAsStream(tplFile);
+                String content = IOUtils.toString(in);
+
+                Pattern pattern = Pattern.compile("\\<\\!-- INCLUDESTATICJSON_SNIP --\\>.*\\<\\!-- INCLUDESTATICJSON_SNAP --\\>",
+                                Pattern.DOTALL);
+                String replacement = "<!-- INCLUDESTATICJSON_SNIP -->\n"
+                                + "<script type=\"text/javascript\">\n" 
+                                + "window.yaioUseStaticJson = true;\n"
+                                + "window.yaioStaticJSON = " + res.replaceAll("/", "\\\\/") + ";\n"
+                                + "</script>\n"
+                                + "<!-- INCLUDESTATICJSON_SNAP -->\n";
+                Matcher matcher = pattern.matcher(content);
+                StringBuffer buffer = new StringBuffer();
+                while (matcher.find()) {
+                    matcher.appendReplacement(buffer, "");
+                    buffer.append(replacement);
+                }
+                matcher.appendTail(buffer);
+                res =  buffer.toString();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+
+        // set baseref 
+        String baseref = null;
+        if (oOptions.isFlgUsePublicBaseRef()) {
+            // set baseref to publicbaseref if outputoption is set
+            baseref = System.getProperty("yaio.exportcontroller.replace.publicbaseref");
+        }
+        if (StringUtils.isEmpty(baseref)) {
+            // set baseref to default baseref if already empty but property defined
+            baseref = System.getProperty("yaio.exportcontroller.replace.baseref");
+        }
+        if (StringUtils.isNotEmpty(baseref)) {
+            // replace inactive baseref if baseref is set
+//            res = res.replace("<!--<base href=\"/\" />-->", 
+//                              "<base href=\"" + baseref + "/yaio-explorerapp/yaio-explorerapp.html\" />");
+            res = res.replaceAll("=\"../dist/", 
+                            "=\"" + baseref + "/yaio-explorerapp/../dist/");
+            res = res.replaceAll("yaioAppBase.config.resBaseUrl = \"\";", 
+                            "yaioAppBase.config.resBaseUrl = \"" + baseref + "/yaio-explorerapp/\";");
+            
+
+        }
+
+        // change headers to display html in browser
+        response.setContentType("text/html");
+        response.setHeader("Content-Disposition", "");
+        
+        return res;
+    }
+
     /**
      * <h4>FeatureDomain:</h4>
      *     WikiImporter
