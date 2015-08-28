@@ -57,8 +57,7 @@ Yaio.StaticNodeDataService = function(appBase) {
     };
     
     me.loadStaticJson = function() {
-        me._convertStaticNodeData(window.yaioStaticJSON.node, window.yaioStaticJSON.parentIdHierarchy);
-        me.flgDataLoaded = true;
+        me._loadStaticJson(window.yaioStaticJSON.node, window.yaioStaticJSON.parentIdHierarchy);
     }
     
     /*****************************************
@@ -70,6 +69,34 @@ Yaio.StaticNodeDataService = function(appBase) {
         return me.appBase.get("Yaio.StaticAccessManagerService");
     };
     
+    me._loadStaticJson = function(node, parentIdHirarchy) {
+        var masterNode = node;
+        var masterParentIdHirarchy = [];
+        
+        // create Masternode if not exists 
+        if (node.sysUID != me.appBase.config.CONST_MasterId) {
+            masterNode = {
+                "className": "TaskNode",
+                "name": "Masterplan",
+                "ebene": 0,
+                "nodeDesc": "Masternode of the Masterplan",
+                "sysUID": me.appBase.config.CONST_MasterId,
+                "sysChangeCount": 9,
+                "sysCreateDate": 1411717226471,
+                "sysChangeDate": 1429887836887,
+                "metaNodePraefix": "Masterplan",
+                "metaNodeNummer": "1",
+                "state": "RUNNING",
+                "type": "RUNNING",
+                "workflowState": "RUNNING",
+                "sortPos": 0,
+                "childNodes": [node]
+            };
+        }
+        me._convertStaticNodeData(masterNode, masterParentIdHirarchy);
+        me.flgDataLoaded = true;
+    }
+
     me._convertStaticNodeData = function (node, parentIdHirarchy) {
         if (! node) {
             return;

@@ -39,8 +39,7 @@ Yaio.FileNodeDataService = function(appBase) {
     };
     
     me.loadStaticJson = function() {
-        me._convertStaticNodeData(window.yaioFileJSON.node, window.yaioFileJSON.parentIdHierarchy);
-        me.flgDataLoaded = true;
+        me._loadStaticJson(window.yaioFileJSON.node, window.yaioFileJSON.parentIdHierarchy);
     }
 
     /*****************************************
