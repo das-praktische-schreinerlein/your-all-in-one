@@ -34,7 +34,7 @@ yaioApp.config(function ($translateProvider) {
     $translateProvider.translations();
     
     $translateProvider.useStaticFilesLoader({
-        prefix: 'lang/lang-',
+        prefix: yaioAppBase.config.resBaseUrl + 'lang/lang-',
         suffix: '.json'
       });
 

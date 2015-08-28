@@ -354,8 +354,8 @@ Yaio.LayoutService = function(appBase) {
         //Define the de language pack as a dynamic pack to be loaded on demand
         //if the user asks to change to that language. We pass the two-letter language
         //code and the path to the language pack js file
-        window.lang.dynamic('de', 'lang/lang-tech-to-de.json');
-        window.lang.dynamic('en', 'lang/lang-tech-to-en.json');
+        window.lang.dynamic('de', me.appBase.config.resBaseUrl + 'lang/lang-tech-to-de.json');
+        window.lang.dynamic('en', me.appBase.config.resBaseUrl + 'lang/lang-tech-to-en.json');
         window.lang.loadPack('de');
         window.lang.loadPack('en');
     

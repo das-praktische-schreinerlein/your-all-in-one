@@ -23,6 +23,8 @@ window.YaioAppBaseConfig = function() {
     
     me.appBaseVarName               = 'yaioAppBase';
     
+    me.resBaseUrl                   = "";
+    
     me.additionalDetectorStyleNS    = ["yaio-"];
 
     me.CONST_MasterId               = "MasterplanMasternode1";

@@ -44,36 +44,38 @@ var yaioApp = angular.module('yaioExplorerApp', ['ngAnimate', 'ngRoute', 'pascal
  */
 yaioApp.config(function($routeProvider) {
     'use strict';
+    
+    var resBaseUrl = yaioAppBase.config.resBaseUrl;
 
     // configure routes
     $routeProvider
         .when('/show/:nodeId/activate/:activeNodeId', { 
             controller:  'NodeShowCtrl',
-            templateUrl: 'js/explorer/node.html' })
+            templateUrl: resBaseUrl + 'js/explorer/node.html' })
         .when('/showByAllIds/:nodeByAllId', { 
             controller:  'NodeShowCtrl',
-            templateUrl: 'js/explorer/node.html' })
+            templateUrl: resBaseUrl + 'js/explorer/node.html' })
         .when('/show/:nodeId', { 
             controller:  'NodeShowCtrl',
-            templateUrl: 'js/explorer/node.html' })
+            templateUrl: resBaseUrl + 'js/explorer/node.html' })
         .when('/search/:curPage?/:pageSize?/:searchSort?/:baseSysUID?/:fulltext?/', { 
             controller:  'NodeSearchCtrl',
-            templateUrl: 'js/search/node-search.html' })
+            templateUrl: resBaseUrl + 'js/search/node-search.html' })
         .when('/search/', { 
             controller:  'NodeSearchCtrl',
-            templateUrl: 'js/search/node-search.html' })
+            templateUrl: resBaseUrl + 'js/search/node-search.html' })
         .when('/login', {
             controller : 'AuthController',
-            templateUrl: 'js/auth/login.html' })
+            templateUrl: resBaseUrl + 'js/auth/login.html' })
         .when('/logout', {
             controller : 'AuthController',
-            templateUrl: 'js/auth/login.html' })
+            templateUrl: resBaseUrl + 'js/auth/login.html' })
         .when('/frontpage/:nodeId', { 
             controller:  'FrontPageCtrl',
-            templateUrl: 'js/frontpage/frontpage.html' })
+            templateUrl: resBaseUrl + 'js/frontpage/frontpage.html' })
         .when('/', { 
             controller:  'FrontPageCtrl',
-            templateUrl: 'js/frontpage/frontpage.html' })
+            templateUrl: resBaseUrl + 'js/frontpage/frontpage.html' })
         .otherwise({ redirectTo: '/'});
 });
 

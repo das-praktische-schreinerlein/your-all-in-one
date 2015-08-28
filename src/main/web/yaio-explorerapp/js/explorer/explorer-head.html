@@ -13,7 +13,7 @@
               <col class="block_nodegantt"></col>
               <col class="container_field fieldtype_actions"></col>
               </colgroup>
-              <thead ng-include="'js/explorer/explorer-table-head.html'"></thead>
+              <thead ng-include="yaioUtils.getConfig().resBaseUrl + 'js/explorer/explorer-table-head.html'"></thead>
               <tbody>
                 <tr id="masterTr" data-value="{{node.sysUID}}">
                   <td><div class="entry node-state-{{node.state}}"><b><span translate="{{node.state}}">{{node.state}}</span> - {{node.name}}</b></div></td>
