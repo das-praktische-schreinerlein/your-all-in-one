@@ -42,12 +42,12 @@ describe('yaio language-packs', function() {
      * define tests
      */
     it('should check the homepage-button text and tooltip, switch to En-Version and back', function doCheckButton() {
-        return yaioLangPage.switchLanguageAndCheckTexts($(yaioLangPage.linkFrontpage), $(yaioLangPage.linkSwitchLangDe), "Zur Startseite", "Zurück zur Startseite.")
+        return yaioLangPage.switchLanguageAndCheckTexts($(yaioLangPage.linkFrontpage), $(yaioLangPage.linkSwitchLangDe), "Startseite", "Zurück zur Startseite.")
             .then(function checkEn() {
                 return yaioLangPage.switchLanguageAndCheckTexts($(yaioLangPage.linkFrontpage), $(yaioLangPage.linkSwitchLangEn), "Home", "Back to the homepage.");
             })
             .then(function checkDe2() {
-                return yaioLangPage.switchLanguageAndCheckTexts($(yaioLangPage.linkFrontpage), $(yaioLangPage.linkSwitchLangDe), "Zur Startseite", "Zurück zur Startseite.");
+                return yaioLangPage.switchLanguageAndCheckTexts($(yaioLangPage.linkFrontpage), $(yaioLangPage.linkSwitchLangDe), "Startseite", "Zurück zur Startseite.");
             });
     });
 

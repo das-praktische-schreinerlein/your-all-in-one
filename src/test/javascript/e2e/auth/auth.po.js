@@ -91,7 +91,7 @@ var YAIOAuthPage = function() {
                     })
             } else {
                 // open Frontpage
-                browser.get(browser.params.yaioConfig.yaioBaseAppUrl)
+                browser.get(browser.params.yaioConfig.yaioBaseAppUrl + "/frontpage")
                     .then(function () {
                         defer.fulfill(true);
                     });
