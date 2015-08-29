@@ -23,7 +23,7 @@ Yaio.ServerNodeDataServiceConfig = function(urlBase, name, desc) {
     
     me.urlBase                      = urlBase || ("http://" + window.location.host + (window.location.port ? ":" + window.location.port : ""));
     me.name                         = name || ("Server: " + window.location.host);
-    me.desc                         = name || ("Daten werden vom aktuellen Server " + window.location.host + " geladen.");
+    me.desc                         = desc || ("Daten werden vom aktuellen Server " + window.location.host + " geladen.");
     
     // REST login
     me.restLoginUrl                 = me.urlBase + "/login";

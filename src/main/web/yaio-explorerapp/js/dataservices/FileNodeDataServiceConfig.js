@@ -23,7 +23,7 @@ Yaio.FileNodeDataServiceConfig = function(urlBase, name, desc) {
     
     me.urlBase                      = urlBase || window.location.host;
     me.name                         = name || ("Dateiupload");
-    me.desc                         = name || ("Daten werden aus einer Yaio-JSON-Datei geladen.");
+    me.desc                         = desc || ("Daten werden aus einer Yaio-JSON-Datei geladen.");
 
     return me;
 };
