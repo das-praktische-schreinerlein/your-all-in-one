@@ -219,6 +219,8 @@ public class ConverterUtils {
             // read tpl
             InputStream in = this.getClass().getResourceAsStream(tplFile);
             String content = IOUtils.toString(in);
+            in.close();
+
             Pattern pattern = Pattern.compile("\\<\\!-- REPLACECONTENT_START --\\>.*<\\!-- REPLACECONTENT_END --\\>", 
                             Pattern.DOTALL);
             String replacement = "<!-- REPLACECONTENT_START -->" + res + "<!-- REPLACECONTENT_END -->";
@@ -270,14 +272,14 @@ public class ConverterUtils {
      * @param sysUID - basenode to export
      * @param response - the response-Obj to set contenttype and headers
      * @param pTplFile - path to tplFile-resource (if null=defaultfile will used; if empty=ignored)
-     * @param flgSetBaseRef - if set baseref will be set
+     * @param flgExport - if set it will be prepared as export (baseref will be set and static is default datasource)
      * @return String - html-format of the node
      * @throws Exception - IOException and Parser-Exceptions possible
      */
     public String commonExportNodeAsYaioApp(final String sysUID,
                                          final HttpServletResponse response,
                                          final String pTplFile,
-                                         final boolean flgSetBaseRef) {
+                                         final boolean flgExport) {
         // configure
         Exporter exporter = new JSONFullExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
@@ -296,12 +298,13 @@ public class ConverterUtils {
                 // read tpl
                 InputStream in = this.getClass().getResourceAsStream(tplFile);
                 String content = IOUtils.toString(in);
+                in.close();
 
                 // Include static json
                 Pattern pattern = Pattern.compile("\\<\\!-- INCLUDESTATICJSON_SNIP --\\>.*\\<\\!-- INCLUDESTATICJSON_SNAP --\\>", Pattern.DOTALL);
                 String replacement = "<!-- INCLUDESTATICJSON_SNIP -->\n"
                                 + "<script type=\"text/javascript\">\n" 
-                                + "window.yaioUseStaticJson = true;\n"
+                                + "window.yaioUseStaticJson = " + (flgExport ? "true" : " false") + ";\n"
                                 + "window.yaioStaticJSON = " + res.replaceAll("/", "\\\\/") + ";\n"
                                 + "</script>\n"
                                 + "<!-- INCLUDESTATICJSON_SNAP -->\n";
@@ -355,7 +358,7 @@ public class ConverterUtils {
             // set baseref to default baseref if already empty but property defined
             baseref = System.getProperty("yaio.exportcontroller.replace.baseref");
         }
-        if (flgSetBaseRef && StringUtils.isNotEmpty(baseref)) {
+        if (flgExport && StringUtils.isNotEmpty(baseref)) {
             // replace inactive baseref if baseref is set
 //            res = res.replace("<!--<base href=\"/\" />-->", 
 //                              "<base href=\"" + baseref + "/yaio-explorerapp/yaio-explorerapp.html\" />");
