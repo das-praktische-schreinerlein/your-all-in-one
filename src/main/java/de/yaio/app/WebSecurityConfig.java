@@ -57,11 +57,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                    // disable csrf-protection
                    .csrf().disable()
                    .headers()
-                        .frameOptions().disable();
+//                        .frameOptions().disable();
 //                        .addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsMode.ALLOW_FROM))
 //                        .addHeaderWriter(new XFrameOptionsHeaderWriter(new WhiteListedAllowFromStrategy(WebSecurityConfig.getAllowedDomainList())));
                         // allow include as Frame for sameorigin
-//                        .addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsMode.SAMEORIGIN));
+                        .addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsMode.SAMEORIGIN));
         }
     }    
 
@@ -165,12 +165,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                    .csrf().disable()
                    //.csrf().csrfTokenRepository(csrfTokenRepository());
                    .headers()
-                        .frameOptions().disable()
+//                        .frameOptions()
+//                        .disable()
 //                        .addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsMode.ALLOW_FROM))
 //                        .addHeaderWriter(new XFrameOptionsHeaderWriter(new WhiteListedAllowFromStrategy(WebSecurityConfig.getAllowedDomainList())))
                         // allow include as Frame for sameorigin
-//                        .addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsMode.SAMEORIGIN))
-//                 .and()
+                        .addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsMode.SAMEORIGIN))
+                 .and()
                    // add CsrfHeaderFilter because angular uses another Header
                    .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class);
         }
