@@ -40,4 +40,22 @@
 .box-portdesc-nextactions li a {
     font-size: 15px;
     font-weight: bold;
-} 
+}
+
+ul.datasourcelist li {
+    width: 100%;
+    list-style: outside none none;
+    min-height: 30px;
+}
+ul.datasourcelist li div.dsname {
+    float: left;
+    width: 28%;
+    max-width: 200px;
+}
+ul.datasourcelist li div a.button {
+    width: 90%;
+    margin: 10px;
+}
+ul.datasourcelist li div.dsdesc {
+    width: 68%;
+}

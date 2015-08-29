@@ -26,11 +26,11 @@
  * @copyright Copyright (c) 2014, Michael Schreiner
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-Yaio.ServerNodeDataService = function(appBase) {
+Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
     'use strict';
 
     // my own instance
-    var me = Yaio.NodeDataService(appBase);
+    var me = Yaio.NodeDataService(appBase, config, defaultConfig);
 
     /**
      * initialize the object
@@ -42,7 +42,7 @@ Yaio.ServerNodeDataService = function(appBase) {
     me.loadNodeData = function(nodeId) {
         console.log("load data for node:" + nodeId);
         return { 
-            url: me.appBase.config.restShowUrl + nodeId, 
+            url: me.config.restShowUrl + nodeId, 
             cache: false 
         };
     };
@@ -53,16 +53,16 @@ Yaio.ServerNodeDataService = function(appBase) {
      *****************************************
      *****************************************/
     me._createAccessManager = function() {
-        return me.appBase.get("Yaio.ServerAccessManagerService");
+        return Yaio.ServerAccessManagerService(me.appBase, me.config);
     };
     
     me._yaioCallUpdateNode = function(fancynode, json) {
-        var url = me.appBase.config.restUpdateUrl + fancynode.key;
+        var url = me.config.restUpdateUrl + fancynode.key;
         return me._yaioCallPatchNode(fancynode, url, json);
     };
     
     me._yaioCallMoveNode = function(fancynode, newParentKey, newPos, json) {
-        var url = me.appBase.config.restMoveUrl+ fancynode.key + "/" + newParentKey + "/" + newPos;
+        var url = me.config.restMoveUrl+ fancynode.key + "/" + newParentKey + "/" + newPos;
         return me._yaioCallPatchNode(fancynode, url, json);
     };
 
@@ -95,7 +95,7 @@ Yaio.ServerNodeDataService = function(appBase) {
 
         var msg = "_yaioCallLoadSymLinkData for node:" + basenode.sysUID + " symlink:" + basenode.symLinkRef + " fancynode:" + fancynode.key;
         console.log(msg + " START");
-        var url = me.appBase.config.restSymLinkUrl + basenode.symLinkRef;
+        var url = me.config.restSymLinkUrl + basenode.symLinkRef;
         return me.$.ajax({
             headers : {
                 'Accept' : 'application/json',
@@ -118,7 +118,7 @@ Yaio.ServerNodeDataService = function(appBase) {
         var svcYaioBase = me.appBase.get('YaioBase');
 
         var msg = "_yaioCallRemoveNode node:" + nodeId;
-        var url = me.appBase.config.restRemoveUrl + nodeId;
+        var url = me.config.restRemoveUrl + nodeId;
         console.log(msg + " START: with:" + url);
         return me.$.ajax({
             headers: {
@@ -149,7 +149,7 @@ Yaio.ServerNodeDataService = function(appBase) {
         if (options.mode === "edit") {
             // mode update 
             method = "PATCH";
-            url = me.appBase.config.restUpdateUrl + options.className + "/" + options.sysUID;
+            url = me.config.restUpdateUrl + options.className + "/" + options.sysUID;
             ajaxCall = function () {
                 // hack because shortcut .patch not exists yet in angular-version
                 var http = me.appBase.get('Angular.$http');
@@ -158,7 +158,7 @@ Yaio.ServerNodeDataService = function(appBase) {
         } else if (options.mode === "create") {
             // mode create 
             method = "POST";
-            url = me.appBase.config.restCreateUrl + options.className + "/" + options.sysUID;
+            url = me.config.restCreateUrl + options.className + "/" + options.sysUID;
             
             // unset sysUID
             nodeObj["sysUID"] = null;
@@ -183,9 +183,9 @@ Yaio.ServerNodeDataService = function(appBase) {
     me._yaioCallLoadNodeById = function(nodeId, options) {
         var msg = "_yaioCallLoadNodeById node: " + nodeId + " options:" + options;
         console.log(msg + " START");
-        var restBaseUrl = me.appBase.config.restShowUrl;
+        var restBaseUrl = me.config.restShowUrl;
         if (options.flgNodeByAllId) {
-            restBaseUrl = me.appBase.config.restSymLinkUrl;
+            restBaseUrl = me.config.restSymLinkUrl;
         }
         var url = restBaseUrl + nodeId;
         var ajaxCall = function () {
@@ -211,7 +211,7 @@ Yaio.ServerNodeDataService = function(appBase) {
         }
 
         // load data
-        var url = me.appBase.config.restSearchUrl + uri;
+        var url = me.config.restSearchUrl + uri;
         var ajaxCall = function () {
             return me.appBase.get('Angular.$http').get(url);
         }
@@ -226,7 +226,7 @@ Yaio.ServerNodeDataService = function(appBase) {
         console.log(msg + " START");
 
         // load data
-        var url = me.appBase.config.restLoginUrl;
+        var url = me.config.restLoginUrl;
         var ajaxCall = function () {
             return me.appBase.get('Angular.$http').post(url, $.param(credentials),
                 {
@@ -246,7 +246,7 @@ Yaio.ServerNodeDataService = function(appBase) {
         console.log(msg + " START");
 
         // load data
-        var url = me.appBase.config.restLogoutUrl;
+        var url = me.config.restLogoutUrl;
         var ajaxCall = function () {
             return me.appBase.get('Angular.$http').post(url, $.param({}));
         }
@@ -261,7 +261,7 @@ Yaio.ServerNodeDataService = function(appBase) {
         console.log(msg + " START");
 
         // load data
-        var url = me.appBase.config.restCheckUserUrl;
+        var url = me.config.restCheckUserUrl;
         var ajaxCall = function () {
             return me.appBase.get('Angular.$http').get(url);
         }

@@ -15,9 +15,10 @@
       <div class='boxline boxline-ue2 h2-portdesc h2-portdesc-sourceselector' id='ue_sourceselector' translate="sourceselector.ue">Datasource</div>
       <div class='togglecontainer togglecontainer-sourceselector' id='details_sourceselector'>
         <span translate="sourceselector.desc"></span><br>
-        <ul class="datasourcelist" ng-repeat="key in yaioUtils.getConfig().datasourcenames">
+        <ul class="datasourcelist" ng-repeat="key in yaioUtils.getConfig().datasources">
            <li class="datasource">
-                <a ng-click="switchDataSource(key);" class="button">{{key}}</a></li>
+                <div class="dsname"><a ng-click="switchDataSource(key);" class="button">{{yaioUtils.getService(key).config.name}}</a></div>
+                <div class="dsdesc">{{yaioUtils.getService(key).config.desc}}</div></li>
         </ul>
       </div>
   </div>

@@ -26,11 +26,11 @@
  * @copyright Copyright (c) 2014, Michael Schreiner
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-Yaio.StaticNodeDataService = function(appBase) {
+Yaio.StaticNodeDataService = function(appBase, config, defaultConfig) {
     'use strict';
 
     // my own instance
-    var me = Yaio.NodeDataService(appBase);
+    var me = Yaio.NodeDataService(appBase, config, defaultConfig);
     
     me.nodeList = {};
     me.parentIdHirarchies = {};
@@ -69,7 +69,7 @@ Yaio.StaticNodeDataService = function(appBase) {
      *****************************************
      *****************************************/
     me._createAccessManager = function() {
-        return me.appBase.get("Yaio.StaticAccessManagerService");
+        return Yaio.StaticAccessManagerService(me.appBase, me.config);
     };
     
     me._loadStaticJson = function(node, parentIdHirarchy) {

@@ -37,17 +37,17 @@ Yaio.ServerAccessManagerService = function(appBase, config, defaultConfig) {
      */
     me._init = function() {
         // urls
-        me.setAvailiableNodeAction('show', me.appBase.config.restShowUrl);
-        me.setAvailiableNodeAction('createsymlink', me.appBase.config.restSymLinkUrl);
-        me.setAvailiableNodeAction('edit', me.appBase.config.restUpdateUrl);
-        me.setAvailiableNodeAction('create', me.appBase.config.restCreateUrl);
-        me.setAvailiableNodeAction('mode', me.appBase.config.restMoveUrl);
-        me.setAvailiableNodeAction('remove', me.appBase.config.restRemoveUrl);
-        me.setAvailiableNodeAction('search', me.appBase.config.restSearchUrl);
-        me.setAvailiableNodeAction('syshelp', me.appBase.config.restExportsBaseUrl + 'documentation/SysHelp1');
-        me.setAvailiableNodeAction('sysinfo', me.appBase.config.restExportsBaseUrl + 'documentation/SysInfo1');
-        me.setAvailiableNodeAction('frontpagebaseurl', me.appBase.config.restExportsBaseUrl + 'htmlfrontpagefragment/');
-        me.setAvailiableNodeAction('logout', me.appBase.config.restLogoutUrl);
+        me.setAvailiableNodeAction('show', me.config.restShowUrl);
+        me.setAvailiableNodeAction('createsymlink', me.config.restSymLinkUrl);
+        me.setAvailiableNodeAction('edit', me.config.restUpdateUrl);
+        me.setAvailiableNodeAction('create', me.config.restCreateUrl);
+        me.setAvailiableNodeAction('mode', me.config.restMoveUrl);
+        me.setAvailiableNodeAction('remove', me.config.restRemoveUrl);
+        me.setAvailiableNodeAction('search', me.config.restSearchUrl);
+        me.setAvailiableNodeAction('syshelp', me.config.restExportsBaseUrl + 'documentation/SysHelp1');
+        me.setAvailiableNodeAction('sysinfo', me.config.restExportsBaseUrl + 'documentation/SysInfo1');
+        me.setAvailiableNodeAction('frontpagebaseurl', me.config.restExportsBaseUrl + 'htmlfrontpagefragment/');
+        me.setAvailiableNodeAction('logout', me.config.restLogoutUrl);
         
         // flags
         me.setAvailiableNodeAction('showsysdata', true);
@@ -57,28 +57,28 @@ Yaio.ServerAccessManagerService = function(appBase, config, defaultConfig) {
         me.setAvailiableImportForm('ImportWiki', '/imports/wiki/');
 
         // export-forms
-        me.setAvailiableExportForm('ExportWiki', me.appBase.config.restExportsBaseUrl + 'wikiuseoptions/');
-        me.setAvailiableExportForm('ExportMindmap', me.appBase.config.restExportsBaseUrl + 'mindmapuseoptions/');
-        me.setAvailiableExportForm('ExportICal', me.appBase.config.restExportsBaseUrl + 'icaluseoptions/');
-        me.setAvailiableExportForm('ExportHtml', me.appBase.config.restExportsBaseUrl + 'htmluseoptions/');
-        me.setAvailiableExportForm('ExportExcel', me.appBase.config.restExportsBaseUrl + 'exceluseoptions/');
-        me.setAvailiableExportForm('ExportCsv', me.appBase.config.restExportsBaseUrl + 'csvuseoptions/');
+        me.setAvailiableExportForm('ExportWiki', me.config.restExportsBaseUrl + 'wikiuseoptions/');
+        me.setAvailiableExportForm('ExportMindmap', me.config.restExportsBaseUrl + 'mindmapuseoptions/');
+        me.setAvailiableExportForm('ExportICal', me.config.restExportsBaseUrl + 'icaluseoptions/');
+        me.setAvailiableExportForm('ExportHtml', me.config.restExportsBaseUrl + 'htmluseoptions/');
+        me.setAvailiableExportForm('ExportExcel', me.config.restExportsBaseUrl + 'exceluseoptions/');
+        me.setAvailiableExportForm('ExportCsv', me.config.restExportsBaseUrl + 'csvuseoptions/');
 
         // export-links
-        me.setAvailiableExportLink('ExportYaioAppDirect', me.appBase.config.restExportsBaseUrl + 'yaioapp/');
-        me.setAvailiableExportLink('ExportWikiDirect', me.appBase.config.restExportsBaseUrl + 'wiki/');
-        me.setAvailiableExportLink('ExportMindmapDirect', me.appBase.config.restExportsBaseUrl + 'mindmap/');
-        me.setAvailiableExportLink('ExportHtmlDirect', me.appBase.config.restExportsBaseUrl + 'html/');
-        me.setAvailiableExportLink('ExportHtmlDocumentationDirect', me.appBase.config.restExportsBaseUrl + 'documentation/');
-        me.setAvailiableExportLink('ExportICalDirect', me.appBase.config.restExportsBaseUrl + 'ical/');
-        me.setAvailiableExportLink('ExportICalEventsDirect', me.appBase.config.restExportsBaseUrl + 'icalevents/');
-        me.setAvailiableExportLink('ExportICalTasksDirect', me.appBase.config.restExportsBaseUrl + 'icaltasks/');
-        me.setAvailiableExportLink('ExportICalTasksTodoDirect', me.appBase.config.restExportsBaseUrl + 'icaltaskstodo/');
-        me.setAvailiableExportLink('ExportICalTasksLateDirect', me.appBase.config.restExportsBaseUrl + 'icaltaskslate/');
-        me.setAvailiableExportLink('ExportExcelDirect', me.appBase.config.restExportsBaseUrl + 'excel/');
-        me.setAvailiableExportLink('ExportCsvDirect', me.appBase.config.restExportsBaseUrl + 'csv/');
-        me.setAvailiableExportLink('ExportJsonDirect', me.appBase.config.restExportsBaseUrl + 'json/');
-        me.setAvailiableExportLink('ExportPplDirect', me.appBase.config.restExportsBaseUrl + 'ppl/');
+        me.setAvailiableExportLink('ExportYaioAppDirect', me.config.restExportsBaseUrl + 'yaioapp/');
+        me.setAvailiableExportLink('ExportWikiDirect', me.config.restExportsBaseUrl + 'wiki/');
+        me.setAvailiableExportLink('ExportMindmapDirect', me.config.restExportsBaseUrl + 'mindmap/');
+        me.setAvailiableExportLink('ExportHtmlDirect', me.config.restExportsBaseUrl + 'html/');
+        me.setAvailiableExportLink('ExportHtmlDocumentationDirect', me.config.restExportsBaseUrl + 'documentation/');
+        me.setAvailiableExportLink('ExportICalDirect', me.config.restExportsBaseUrl + 'ical/');
+        me.setAvailiableExportLink('ExportICalEventsDirect', me.config.restExportsBaseUrl + 'icalevents/');
+        me.setAvailiableExportLink('ExportICalTasksDirect', me.config.restExportsBaseUrl + 'icaltasks/');
+        me.setAvailiableExportLink('ExportICalTasksTodoDirect', me.config.restExportsBaseUrl + 'icaltaskstodo/');
+        me.setAvailiableExportLink('ExportICalTasksLateDirect', me.config.restExportsBaseUrl + 'icaltaskslate/');
+        me.setAvailiableExportLink('ExportExcelDirect', me.config.restExportsBaseUrl + 'excel/');
+        me.setAvailiableExportLink('ExportCsvDirect', me.config.restExportsBaseUrl + 'csv/');
+        me.setAvailiableExportLink('ExportJsonDirect', me.config.restExportsBaseUrl + 'json/');
+        me.setAvailiableExportLink('ExportPplDirect', me.config.restExportsBaseUrl + 'ppl/');
     };
 
     me._init();

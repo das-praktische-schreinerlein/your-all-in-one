@@ -37,7 +37,6 @@ Yaio.StaticAccessManagerService = function(appBase, config, defaultConfig) {
      */
     me._init = function() {
         // urls
-        me.setAvailiableNodeAction('show', me.appBase.config.restShowUrl);
         me.setAvailiableNodeAction('frontpagebaseurl', me.appBase.config.resBaseUrl + 'static/');
         me.setAvailiableNodeAction('syshelp', me.appBase.config.resBaseUrl + 'static/SysHelp1.html');
         me.setAvailiableNodeAction('sysinfo', me.appBase.config.resBaseUrl + 'static/SysInfo1.html');

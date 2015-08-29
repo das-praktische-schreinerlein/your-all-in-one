@@ -30,9 +30,7 @@ window.YaioAppBaseConfig = function() {
     me.CONST_MasterId               = "MasterplanMasternode1";
     me.loginUrl                     = "/yaio-explorerapp/yaio-explorerapp.html#/login";
     
-    me.datasourcenames = [];
-    me.datasources = {};
-    me.datasource = {};
+    me.datasources = [];
     
     // App urls
     me.appRootUrl                   = "/";
@@ -40,22 +38,6 @@ window.YaioAppBaseConfig = function() {
     me.appFrontpageUrl              = me.appRootUrl + "frontpage";
     me.appLoginUrl                  = me.appRootUrl + "login";
     
-    // REST login
-    me.restLoginUrl                 = "/login";
-    me.restLogoutUrl                = "/logout";
-    me.restCheckUserUrl             = "/user/current";
-    
-    // REST actions
-    me.restBaseUrl                  = "/nodes/";
-    me.restShowUrl                  = me.restBaseUrl + "show/";
-    me.restSymLinkUrl               = me.restBaseUrl + "showsymlink/";
-    me.restUpdateUrl                = me.restBaseUrl + "update/";
-    me.restCreateUrl                = me.restBaseUrl + "create/";
-    me.restMoveUrl                  = me.restBaseUrl + "move/";
-    me.restRemoveUrl                = me.restBaseUrl + "delete/";
-    me.restSearchUrl                = me.restBaseUrl + "search/";
-    me.restExportsBaseUrl           = "/exports/";
-
     me.configNodeTypeFields         = {
         Create: {
             fields: [
