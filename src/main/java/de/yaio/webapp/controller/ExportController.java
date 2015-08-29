@@ -743,7 +743,7 @@ public class ExportController {
                     produces = "text/html")
     public String exportNodeAsYaioApp(@PathVariable(value = "sysUID") final String sysUID, 
                                                 final HttpServletResponse response) {
-        String res = converterUtils.commonExportNodeAsYaioApp(sysUID, response, null);
+        String res = converterUtils.commonExportNodeAsYaioApp(sysUID, response, null, true);
         // replace static pathes...
         for (String pattern : PostProcessorReplacements_documentation.keySet()) {
             res = res.replace(pattern, PostProcessorReplacements_documentation.get(pattern));
