@@ -30,8 +30,14 @@ window.YaioAppBaseConfig = function() {
     me.CONST_MasterId               = "MasterplanMasternode1";
     me.loginUrl                     = "/yaio-explorerapp/yaio-explorerapp.html#/login";
     
+    me.datasourcenames = [];
+    me.datasources = {};
+    me.datasource = {};
+    
     // App urls
     me.appRootUrl                   = "/";
+    me.appSourceSelectorUrl         = me.appRootUrl + "sourceselector";
+    me.appFrontpageUrl              = me.appRootUrl + "frontpage";
     me.appLoginUrl                  = me.appRootUrl + "login";
     
     // REST login

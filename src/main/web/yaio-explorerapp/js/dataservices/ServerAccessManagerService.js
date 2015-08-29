@@ -47,6 +47,7 @@ Yaio.ServerAccessManagerService = function(appBase, config, defaultConfig) {
         me.setAvailiableNodeAction('syshelp', me.appBase.config.restExportsBaseUrl + 'documentation/SysHelp1');
         me.setAvailiableNodeAction('sysinfo', me.appBase.config.restExportsBaseUrl + 'documentation/SysInfo1');
         me.setAvailiableNodeAction('frontpagebaseurl', me.appBase.config.restExportsBaseUrl + 'htmlfrontpagefragment/');
+        me.setAvailiableNodeAction('logout', me.appBase.config.restLogoutUrl);
         
         // flags
         me.setAvailiableNodeAction('showsysdata', true);

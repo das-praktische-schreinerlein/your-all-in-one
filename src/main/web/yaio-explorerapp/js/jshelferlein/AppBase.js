@@ -37,8 +37,16 @@ JsHelferlein.AppBase = function(config) {
     me.config = {};
 
     me.configureService = function(serviceName, constrCallBack) {
-        while (me.services.indexOf(serviceName) !== -1) {
-            me.services.splice(items.indexOf(serviceName), 1);
+        console.log("configureService: set new serviceconfig:" + serviceName);
+        // delete all instances
+        if (me.services[serviceName]) {
+            console.log("configureService: delete instance for serviceconfig:" + serviceName);
+            me.services[serviceName] = null;
+            me.services.splice(me.services.indexOf(serviceName), 1);
+        }
+        if (me.services.hasOwnProperty(serviceName)) {
+            console.log("configureService: delete instance for serviceconfig:" + serviceName);
+            me.services.splice(me.services.indexOf(serviceName), 1);
         }
         return me.serviceConfigs[serviceName] = constrCallBack;
     };
@@ -53,7 +61,7 @@ JsHelferlein.AppBase = function(config) {
     };
 
     me.getService = function(serviceName) {
-        if (! me.services.hasOwnProperty(serviceName)) {
+        if (! me.services[serviceName]) {
 console.log("create new instance of:" + serviceName);
             if (me.serviceConfigs.hasOwnProperty(serviceName)) {
                 var constr = me.getServiceConfig(serviceName);

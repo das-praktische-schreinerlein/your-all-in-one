@@ -73,9 +73,15 @@ yaioApp.config(function($routeProvider) {
         .when('/frontpage/:nodeId', { 
             controller:  'FrontPageCtrl',
             templateUrl: resBaseUrl + 'js/frontpage/frontpage.html' })
-        .when('/', { 
+        .when('/frontpage', { 
             controller:  'FrontPageCtrl',
             templateUrl: resBaseUrl + 'js/frontpage/frontpage.html' })
+        .when('/sourceselect', { 
+            controller:  'SourceSelectorCtrl',
+            templateUrl: resBaseUrl + 'js/sourceselector/sourceselector.html' })
+        .when('/', { 
+            controller:  'SourceSelectorCtrl',
+            templateUrl: resBaseUrl + 'js/sourceselector/sourceselector.html' })
         .otherwise({ redirectTo: '/'});
 });
 

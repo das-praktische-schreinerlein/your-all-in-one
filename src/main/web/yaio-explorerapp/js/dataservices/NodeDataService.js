@@ -55,6 +55,9 @@ Yaio.NodeDataService = function(appBase, config, defaultConfig) {
         me.logNotImplemented();
     };
     
+    me.loadStaticJson = function() {
+    }
+    
     me.yaioLoadSymLinkData = function(basenode, fancynode) {
         var msg = "yaioLoadSymLinkData for node:" + basenode.sysUID + " symlink:" + basenode.symLinkRef + " fancynode:" + fancynode.key;
         console.log(msg + " START");

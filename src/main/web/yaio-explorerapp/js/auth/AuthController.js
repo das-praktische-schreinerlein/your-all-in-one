@@ -44,7 +44,7 @@ yaioApp.controller('AuthController', function($rootScope, $scope, $location, $ro
                             if ($rootScope.lastLocation) {
                                 $location.path($rootScope.lastLocation);
                             } else {
-                                $location.path(yaioUtils.getConfig().appRootUrl);
+                                $location.path(yaioUtils.getConfig().appFrontpageUrl);
                             }
                             $scope.error = false;
                         } else {

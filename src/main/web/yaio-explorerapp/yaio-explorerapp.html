@@ -207,6 +207,10 @@ window.yaioAppBase = YaioAppBase();
 yaioAppBase.config.resBaseUrl = "";
 
 // configure datasource
+// CONFIGUREDATASOURCES_SNIP
+yaioAppBase.config.datasources.push("YaioStaticNodeData");
+yaioAppBase.config.datasources.push("YaioServerNodeData_Local");
+// CONFIGUREDATASOURCES_SNAP
 var myUrl = window.location.href;
 if (myUrl.search("SOURCE=FILE") > 0) {
     // load file

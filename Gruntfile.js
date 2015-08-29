@@ -197,6 +197,7 @@ module.exports = function( grunt ){
             srcBase + 'yaio-explorerapp/js/exporter/OutputOptionsEditorFactory.js',
             srcBase + 'yaio-explorerapp/js/explorer/NodeShowCtrl.js',
             srcBase + 'yaio-explorerapp/js/search/NodeSearchCtrl.js',
+            srcBase + 'yaio-explorerapp/js/sourceselector/SourceSelectorCtrl.js',
             // !!!! paging is vendor but patched :-(
             vendorDestBase + 'js/angularjs/paging.js'
         ],
@@ -227,6 +228,7 @@ module.exports = function( grunt ){
               srcBase + 'yaio-explorerapp/js/search/search.css',
               srcBase + 'yaio-explorerapp/js/editor/editor.css',
               srcBase + 'yaio-explorerapp/js/exporter/exporter.css',
+              srcBase + 'yaio-explorerapp/js/sourceselector/sourceselector.css',
               srcBase + 'yaio-explorerapp/js/lang/lang.css',
               srcBase + 'yaio-explorerapp/js/auth/auth.css',
               srcBase + 'yaio-explorerapp/js/frontpage/frontpage.css',

@@ -5,7 +5,7 @@
           -->
         <ul class="commands command-info">
            <li class="command" data-tooltip='tooltip.command.OpenFrontpage' lang="tech">
-              <a href="#/" class="button" translate="common.command.OpenFrontpage">Startseite</a></li>
+              <a href="#/frontpage" class="button" translate="common.command.OpenFrontpage">Startseite</a></li>
            <li class="command" data-tooltip='tooltip.command.OpenSearchView' lang="tech"
                ng-if="yaioUtils.getService('YaioAccessManager').getAvailiableNodeAction('search', null, false)">
               <a href="#/search/" class="button" translate="common.command.OpenSearchView">Open Searchview</a></li>
@@ -21,6 +21,9 @@
                ng-if="yaioUtils.getService('YaioAccessManager').getAvailiableNodeAction('print', null, false)">
               <a onclick="window.print(); return true;" class="button" translate="common.command.Print">Print</a>
               <input type="checkbox" onclick="yaioAppBase.get('YaioLayout').togglePrintLayout()" checked id="checkboxPrintAll"> All</li>
-           <li class="command" data-tooltip='tooltip.command.Logout' lang="tech" id="logout">
-              <a href="/logout" class="button" translate="common.command.Logout">Logout</a></li>
+           <li class="command" data-tooltip='tooltip.command.OpenSourceSelect' lang="tech">
+              <a href="#/sourceselect" class="button" translate="common.command.OpenSourceSelect">Datenquelle</a></li>
+           <li class="command" data-tooltip='tooltip.command.Logout' lang="tech" id="logout"
+               ng-if="yaioUtils.getService('YaioAccessManager').getAvailiableNodeAction('logout', null, false)">
+              <a href="{{yaioUtils.getService('YaioAccessManager').getAvailiableNodeAction('logout', null, false)}}" class="button" translate="common.command.Logout">Logout</a></li>
         </ul>

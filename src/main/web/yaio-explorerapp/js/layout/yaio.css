@@ -93,7 +93,7 @@
 }
 #containerInfoCommands {
     float: right;
-    width: 440px;
+    width: 490px;
 }
 #containerTreeCommands {
     float: left;
@@ -140,4 +140,3 @@ ul.nodecommands {
     width: 60px;
     padding: 0px;
 }
-
