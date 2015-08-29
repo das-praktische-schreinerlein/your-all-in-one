@@ -44,16 +44,21 @@ describe('yaio search', function() {
      * define tests
      */
     it('should open searchpage, change order, jump to last page and find first result of origin search as last element on the last page', function doCheckSearchPage() {
-        // get first element
         var firstElementId;
-        return element.all(by.repeater('node in nodes | filter:search')).first().getAttribute('data-value')
+        // set defined order
+        $(yaioSearchPage.selectSort).sendKeys('nodeNummer absteigend');
+        return $(yaioSearchPage.buttonDoSearch).click()
+            .then( function getFirstElement() {
+                // get first element
+                return element.all(by.repeater('node in nodes | filter:search')).first().getAttribute('data-value')
+            })
             .then( function getFirstElement(id) {
                 // get element id
                 firstElementId = id;
             })
-            .then( function changeOrder() {
+            .then( function changeOrder2() {
                 // do Search with alternate order
-                $(yaioSearchPage.selectSort).sendKeys('letzte Änderung aufsteigend');
+                $(yaioSearchPage.selectSort).sendKeys('NodeNummer aufsteigend');
                 return $(yaioSearchPage.buttonDoSearch).click();
             })
             .then(function getNewFirstElement() {
