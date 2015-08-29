@@ -18,6 +18,7 @@ package de.yaio.webapp.controller;
 
 import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,6 +29,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
+import de.yaio.app.Configurator;
 import de.yaio.core.node.BaseNode;
 import de.yaio.datatransfer.exporter.Exporter;
 import de.yaio.datatransfer.exporter.OutputOptions;
@@ -268,12 +270,14 @@ public class ConverterUtils {
      * @param sysUID - basenode to export
      * @param response - the response-Obj to set contenttype and headers
      * @param pTplFile - path to tplFile-resource (if null=defaultfile will used; if empty=ignored)
+     * @param flgSetBaseRef - if set baseref will be set
      * @return String - html-format of the node
      * @throws Exception - IOException and Parser-Exceptions possible
      */
     public String commonExportNodeAsYaioApp(final String sysUID,
                                          final HttpServletResponse response,
-                                         final String pTplFile) {
+                                         final String pTplFile,
+                                         final boolean flgSetBaseRef) {
         // configure
         Exporter exporter = new JSONFullExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
@@ -293,8 +297,8 @@ public class ConverterUtils {
                 InputStream in = this.getClass().getResourceAsStream(tplFile);
                 String content = IOUtils.toString(in);
 
-                Pattern pattern = Pattern.compile("\\<\\!-- INCLUDESTATICJSON_SNIP --\\>.*\\<\\!-- INCLUDESTATICJSON_SNAP --\\>",
-                                Pattern.DOTALL);
+                // Include static json
+                Pattern pattern = Pattern.compile("\\<\\!-- INCLUDESTATICJSON_SNIP --\\>.*\\<\\!-- INCLUDESTATICJSON_SNAP --\\>", Pattern.DOTALL);
                 String replacement = "<!-- INCLUDESTATICJSON_SNIP -->\n"
                                 + "<script type=\"text/javascript\">\n" 
                                 + "window.yaioUseStaticJson = true;\n"
@@ -303,6 +307,32 @@ public class ConverterUtils {
                                 + "<!-- INCLUDESTATICJSON_SNAP -->\n";
                 Matcher matcher = pattern.matcher(content);
                 StringBuffer buffer = new StringBuffer();
+                while (matcher.find()) {
+                    matcher.appendReplacement(buffer, "");
+                    buffer.append(replacement);
+                }
+                matcher.appendTail(buffer);
+                content =  buffer.toString();
+
+                // include yaioinstances
+                res = "";
+                for (String name : Configurator.getInstance().getKnownYaioInstances().keySet()) {
+                    Map<String, String> yaioInstance = Configurator.getInstance().getKnownYaioInstances().get(name);
+                    String url = yaioInstance.get(Configurator.CONST_PROPNAME_YAIOINSTANCES_URL);
+                    String desc = yaioInstance.get(Configurator.CONST_PROPNAME_YAIOINSTANCES_DESC);
+                    res += "// add " + url + "\n";
+                    res += "yaioAppBase.configureService(\"Yaio.ServerNodeDataService_" + url + "\", function() { return Yaio.ServerNodeDataService(yaioAppBase, Yaio.ServerNodeDataServiceConfig(\"" + url + "\", \"" + name + "\",  \"" + desc + "\")); });\n";
+                    res += "yaioAppBase.configureService(\"YaioServerNodeData_" + url + "\", function() { return yaioAppBase.get(\"Yaio.ServerNodeDataService_" + url + "\"); });\n";
+                    res += "yaioAppBase.config.datasources.push(\"YaioServerNodeData_" + url + "\");\n";
+                }
+                pattern = Pattern.compile("\\/\\/ CONFIGUREDATASOURCES_SNIP.*\\/\\/ CONFIGUREDATASOURCES_SNAP", Pattern.DOTALL);
+                replacement = "// CONFIGUREDATASOURCES_SNIP\n"
+                                + "yaioAppBase.config.datasources.push(\"YaioStaticNodeData\");\n" 
+                                + "yaioAppBase.config.datasources.push(\"YaioServerNodeData_Local\");\n" 
+                                + "\n" + res + "\n"
+                                + "// CONFIGUREDATASOURCES_SNIP\n";
+                matcher = pattern.matcher(content);
+                buffer = new StringBuffer();
                 while (matcher.find()) {
                     matcher.appendReplacement(buffer, "");
                     buffer.append(replacement);
@@ -325,7 +355,7 @@ public class ConverterUtils {
             // set baseref to default baseref if already empty but property defined
             baseref = System.getProperty("yaio.exportcontroller.replace.baseref");
         }
-        if (StringUtils.isNotEmpty(baseref)) {
+        if (flgSetBaseRef && StringUtils.isNotEmpty(baseref)) {
             // replace inactive baseref if baseref is set
 //            res = res.replace("<!--<base href=\"/\" />-->", 
 //                              "<base href=\"" + baseref + "/yaio-explorerapp/yaio-explorerapp.html\" />");
