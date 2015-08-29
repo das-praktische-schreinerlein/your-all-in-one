@@ -54,7 +54,6 @@ ul.datasourcelist li div.dsname {
 }
 ul.datasourcelist li div a.button {
     width: 90%;
-    margin: 10px;
 }
 ul.datasourcelist li div.dsdesc {
     width: 68%;

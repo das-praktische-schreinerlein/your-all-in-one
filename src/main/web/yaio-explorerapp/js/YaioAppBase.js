@@ -34,9 +34,9 @@ window.YaioAppBase = function() {
         me.configureService("Yaio.EditorService", function() { return Yaio.EditorService(me); });
         me.configureService("Yaio.FormatterService", function() { return Yaio.FormatterService(me); });
         me.configureService("Yaio.MarkdownEditorService", function() { return Yaio.MarkdownEditorService(me); });
-        me.configureService("Yaio.ServerNodeDataService_Local", function() { return Yaio.ServerNodeDataService(me, new Yaio.ServerNodeDataServiceConfig()); });
-        me.configureService("Yaio.StaticNodeDataService", function() { return Yaio.StaticNodeDataService(me, new Yaio.StaticNodeDataServiceConfig()); });
-        me.configureService("Yaio.FileNodeDataService", function() { return Yaio.FileNodeDataService(me, new Yaio.FileNodeDataServiceConfig()); });
+        me.configureService("Yaio.ServerNodeDataService_Local", function() { return Yaio.ServerNodeDataService(me, Yaio.ServerNodeDataServiceConfig()); });
+        me.configureService("Yaio.StaticNodeDataService", function() { return Yaio.StaticNodeDataService(me, Yaio.StaticNodeDataServiceConfig()); });
+        me.configureService("Yaio.FileNodeDataService", function() { return Yaio.FileNodeDataService(me, Yaio.FileNodeDataServiceConfig()); });
         me.configureService("Yaio.NodeDataRenderService", function() { return Yaio.NodeDataRenderService(me); });
         me.configureService("Yaio.NodeGanttRenderService", function() { return Yaio.NodeGanttRenderService(me); });
         me.configureService("Yaio.ExplorerActionService", function() { return Yaio.ExplorerActionService(me); });
