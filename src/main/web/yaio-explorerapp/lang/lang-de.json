@@ -209,7 +209,7 @@
     "loginform.hint.logindata": "Bitte melden Sie sich mit Ihren Logindaten an.<br>Falls Sie noch keine zugesandt bekommen haben, wenden Sie sich an ich@your-all-one.de.<br>Viel Spaß!!",
     "loginform.legend.Login": "Anmeldung",
     "sourceselector.desc": "Wählen Sie die Datenquelle für die YaioApp mit der Sie arbeiten möchten:",
-    "sourceselector.ue": "Auswahl der Datenquelle.",
+    "sourceselector.ue": "Auswahl der Datenquelle",
     "todonext.command.Logout": "Logout vom Server",
     "todonext.command.OpenFrontpage": "Zurück zur Startseite",
     "todonext.command.OpenHelp": "Zur Hilfseite",
