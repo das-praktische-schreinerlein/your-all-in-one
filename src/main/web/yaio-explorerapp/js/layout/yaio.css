@@ -87,6 +87,9 @@
     float: left;
     padding: 3px;
 }
+#containerMasterUe {
+    float: left;
+}
 #containerNodeCommands {
     float: right;
     width: 480px;
