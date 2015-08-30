@@ -289,10 +289,17 @@ public class ConverterUtils {
         }
 
         // run export
-        String res = "";
+        String res = "{ state: \"OK\","
+                   + " stateMsg: \"node found\","
+                   + " node: { sysUID: \"Dummynode\", name: \"Dummynode\", className:\"TaskNode\", childNodes: []},"
+                   + " parentIdHierarchy: [],"
+                   + " childNodes: []}";
         
         try {
-            res = this.exportNode(sysUID, exporter, oOptions, ".json", response);
+            
+            if (! StringUtils.isEmpty(sysUID)) {
+                res = this.exportNode(sysUID, exporter, oOptions, ".json", response);
+            }
 
             if (tplFile != "") {
                 // read tpl

@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import de.yaio.app.Configurator;
+
 /**
  * <h4>FeatureDomain:</h4>
  *     Webservice
@@ -60,7 +62,8 @@ public class BaseAppController {
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, produces = "text/html")
     public String exportNodeAsYaioApp(final HttpServletResponse response) {
-        String res = converterUtils.commonExportNodeAsYaioApp("Sys1", response, "/static/yaio-explorerapp/yaio-explorerapp.html", false);
+        String sysUID = System.getProperty(Configurator.CONST_PROPNAME_YAIOEXPORT_STATIC_MASTERID);
+        String res = converterUtils.commonExportNodeAsYaioApp(sysUID, response, "/static/yaio-explorerapp/yaio-explorerapp.html", false);
         
         return res;
     }

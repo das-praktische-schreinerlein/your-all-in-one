@@ -82,6 +82,10 @@ public class Configurator {
     public static final String CONST_PROPNAME_YAIOINSTANCES_URL = 
                     "yaio.knowninstances.url";
     
+    /** property: masterid to export for static datasource */
+    public static final String CONST_PROPNAME_YAIOEXPORT_STATIC_MASTERID = 
+                    "yaio.staticdatasource.mastersysuid";
+    
 
     /** property: file location of the spring-application-config **/
     public static final String CONST_PROPNAME_APPLICATIONCONFIG_PATH = 
