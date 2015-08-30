@@ -51,10 +51,22 @@
 }
 
 ul.datasourcelist li {
-    width: 100%;
+    width: 90%;
     list-style: outside none none;
     min-height: 30px;
+    padding-bottom: 5px;
 }
+
+ul.datasourcelist li.datasourceactive {
+    background: #cbe8f6;
+    outline: 1px solid #26a0da;
+}
+
+ul.datasourcelist li:hover {
+    background: #cbe8f6;
+    outline: 1px solid black;
+}
+
 ul.datasourcelist li div.dsname {
     float: left;
     width: 28%;
