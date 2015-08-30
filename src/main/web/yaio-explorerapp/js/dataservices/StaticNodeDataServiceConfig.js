@@ -22,7 +22,7 @@ Yaio.StaticNodeDataServiceConfig = function(urlBase, name, desc) {
     var me = JsHelferlein.ConfigBase();
     
     me.urlBase                      = "";
-    me.name                         = name || "Statische InApp-Daten ";
+    me.name                         = name || "Statische InApp-Daten";
     me.desc                         = desc || "Die statisch in der App hinterlegten Daten werden geladen.";
     return me;
 };
