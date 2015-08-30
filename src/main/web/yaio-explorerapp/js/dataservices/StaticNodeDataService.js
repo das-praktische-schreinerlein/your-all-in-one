@@ -111,6 +111,7 @@ Yaio.StaticNodeDataService = function(appBase, config, defaultConfig) {
             parentIdHirarchy = [];
         }
 
+        // TODO: create a copy of the node
         me.nodeList[node.sysUID] = node;
         me.parentIdHirarchies[node.sysUID] = parentIdHirarchy;
         

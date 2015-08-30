@@ -301,15 +301,15 @@ Yaio.LayoutService = function(appBase) {
     
      
      
-    me.addWysiwhgToElements = function() {
+    me.addWysiwygToElements = function() {
         // add preview to nodeDesc
         me.$("label[for='nodeDesc']").append(function (idx) {
             var link = "";
             var label = this;
             
             // check if already set
-            if (me.$(label).attr("wysiwhgAdded")) {
-                console.error("addWysiwhgElements: SKIP because already added: " + me.$(label).attr("for"));
+            if (me.$(label).attr("wysiwygAdded")) {
+                console.error("addWysiwygElements: SKIP because already added: " + me.$(label).attr("for"));
                 return link;
             }
    
@@ -322,13 +322,13 @@ Yaio.LayoutService = function(appBase) {
             if (forElement.length > 0) {
                 // define link to label
                 link = "<a href=\"#\" id='openWysiwyg4" + forElement.attr('id') + "'" +
-                    " onClick=\"yaioAppBase.get('YaioMarkdownEditor').openWysiwhgForTextareaId('" +
+                    " onClick=\"yaioAppBase.get('YaioMarkdownEditor').openWysiwygForTextareaId('" +
                         forElement.attr('id') + "'); return false;" +
                     "\" lang='tech' data-tooltip='tooltip.command.OpenWysiwygEditor' class='button'>common.command.OpenWysiwygEditor</a>";
                 
                 // set flag
-                me.$(label).attr("wysiwhgAdded", "true");
-                console.log("addWysiwhgToElements: add : " + forName + " for " + forElement.attr('id'));
+                me.$(label).attr("wysiwygAdded", "true");
+                console.log("addWysiwygToElements: add : " + forName + " for " + forElement.attr('id'));
             }
             return link;
         });

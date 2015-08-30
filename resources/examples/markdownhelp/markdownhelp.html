@@ -6,28 +6,28 @@
   <title>YAIO - D'Artagnan - Markdown-Hilfe</title>
 
   <!-- styles: reset -->
-  <link rel="stylesheet" type="text/css" media="all" href="../dist/yaio-reset.resetversion.css" />
+  <link rel="stylesheet" type="text/css" media="all" href="../dist/yaio-reset-0.1.0.css" />
 
   <!-- styles: vendors -->
-  <link rel="stylesheet" type="text/css" media="all" href="../dist/vendors-full.vendorversion.css" />
-  <link rel="stylesheet" type="text/css" media="print" href="../dist/vendors.vendorversion/yaio/print.css" />
+  <link rel="stylesheet" type="text/css" media="all" href="../dist/vendors-full-0.1.0.css" />
+  <link rel="stylesheet" type="text/css" media="print" href="../dist/vendors-0.1.0/yaio/print.css" />
 
   <!-- styles: yaio-explorer -->
-  <link rel="stylesheet" type="text/css" media="all" href="../dist/yaio-support-full.supportversion.css" />
-  <link rel="stylesheet" type="text/css" media="print" href="../dist/yaio-support-print.supportversion.css" />
+  <link rel="stylesheet" type="text/css" media="all" href="../dist/yaio-support-full-0.1.0.css" />
+  <link rel="stylesheet" type="text/css" media="print" href="../dist/yaio-support-print-0.1.0.css" />
   <link rel="stylesheet" type="text/css" media="print" href="../yaio-support-print-dataonly.supportversion.css" id="link_css_dataonly" disabled="true" />
 
   <!-- scripts: vendors -->
-  <script  type="text/javascript" charset="UTF-8" src="../dist/vendors-full.vendorversion.js"></script>
+  <script  type="text/javascript" charset="UTF-8" src="../dist/vendors-full-0.1.0.js"></script>
   <!-- scripts: mermaid needs own script for loading plugins -->
-  <script type="text/javascript" charset="UTF-8" src="../dist/vendors.vendorversion/mermaid/mermaid.full.js"></script>
+  <script type="text/javascript" charset="UTF-8" src="../dist/vendors-0.1.0/mermaid/mermaid.full.js"></script>
   <!-- scripts: Markdown-Editor+Formatter needs own script for loading plugins -->
-  <script type="text/javascript" charset="UTF-8" src="../dist/vendors.vendorversion/ace/ace.js"></script>
+  <script type="text/javascript" charset="UTF-8" src="../dist/vendors-0.1.0/ace/ace.js"></script>
   <!-- scripts: freemind needs own script for loading plugins -->
-  <script type="text/javascript" charset="UTF-8" src="../dist/vendors.vendorversion/freemind-flash/flashobject.js"></script>
+  <script type="text/javascript" charset="UTF-8" src="../dist/vendors-0.1.0/freemind-flash/flashobject.js"></script>
 
   <!-- scripts: yaio-support -->
-  <script  type="text/javascript" charset="UTF-8" src="../dist/yaio-support-full.supportversion.js"></script>
+  <script  type="text/javascript" charset="UTF-8" src="../dist/yaio-support-full-0.1.0.js"></script>
 
   <style>
   .ui-dialog-buttonset {
@@ -40,9 +40,9 @@
 <body>
     <div id="div_full" style="width: 100%">
                         
-    <div id="wysiwhg-box" class="">
-      <pre id="wysiwhg-editor" class="container-wyswhg-editor"></pre>
-      <div id="wysiwhg-preview" class="container-wysiwhg-preview"></div>
+    <div id="wysiwyg-box" class="">
+      <pre id="wysiwyg-editor" class="container-wyswhg-editor"></pre>
+      <div id="wysiwyg-preview" class="container-wysiwyg-preview"></div>
     </div>
                         
 <textarea id="markdownExample" class="hidden">
@@ -149,17 +149,17 @@ yaioAppBase.publishDetectorStyles();
 <script type="text/javascript">
 
      // create  Editor
-     var myParentId = "wysiwhg-editor";
+     var myParentId = "wysiwyg-editor";
      var editor = yaioAppBase.get('YaioMarkdownEditor').createNodeDescEditorForNode(myParentId, "markdownExample")
 
      var descText = $("#markdownExample").val();
      var descHtmlMarked = yaioAppBase.get('YaioFormatter').formatMarkdown(descText, true);
 
      // set preview-content
-     $( "#wysiwhg-preview" ).html(descHtmlMarked);
+     $( "#wysiwyg-preview" ).html(descHtmlMarked);
 
      // format markdown-extension
-     var flgDoMermaid = yaioAppBase.get('YaioFormatter').formatDescBlock("#wysiwhg-preview");
+     var flgDoMermaid = yaioAppBase.get('YaioFormatter').formatDescBlock("#wysiwyg-preview");
      if (flgDoMermaid) {
          yaioAppBase.get('YaioFormatter').formatMermaidGlobal();
      }

@@ -32,7 +32,7 @@
   <script  type="text/javascript" charset="UTF-8" src="../dist/yaio-support-full.supportversion.js"></script>
 
   <style type="text/css">
-  #wysiwhg-print {
+  #wysiwyg-print {
       left: 0px;
       background: white;
   }
@@ -82,9 +82,9 @@
   </div>
 </div>                        
 
-<div id="wysiwhg-box" class="">
-  <pre id="wysiwhg-editor" class="container-wyswhg-editor"></pre>
-  <div id="wysiwhg-preview" class="container-wysiwhg-preview"></div>
+<div id="wysiwyg-box" class="">
+  <pre id="wysiwyg-editor" class="container-wyswhg-editor"></pre>
+  <div id="wysiwyg-preview" class="container-wysiwyg-preview"></div>
 </div>                        
 
 <div id="markdownhelp-box" class="hidden">
@@ -99,12 +99,12 @@
   <textarea id="workspaceContent" class="workspace-content-desc"></textarea>
 </div>
 
-<div id="jsonuploader-box" class="hidden">
-   <input type="file" id="importJSONFile" name="importJSONFile" value="Import JSON" />                        
+<div id="wysiwygmarkdownuploader-box" class="hidden">
+   <input type="file" id="wysiwygImportMarkdownFile" name="wysiwygImportMarkdownFile" value="Import Markdown" />
 </div>
 
 <div id="print-box">
-  <div id="wysiwhg-print" class="box field_nodeDesc container-content-desc"></div>
+  <div id="wysiwyg-print" class="box field_nodeDesc container-content-desc"></div>
 </div>
 
                     </div>
@@ -179,19 +179,19 @@ yaioAppBase.get('YaioMarkdownEditor').showWyswhgPreviewForTextareaId = function(
     var descHtmlMarked = yaioAppBase.get('YaioFormatter').formatMarkdown(descText, true);
 
     // set preview-content
-    $( "#wysiwhg-preview" ).html(descHtmlMarked);
-    $( "#wysiwhg-print" ).html(descHtmlMarked);
+    $( "#wysiwyg-preview" ).html(descHtmlMarked);
+    $( "#wysiwyg-print" ).html(descHtmlMarked);
 
     // do mermaid when preview visible
     yaioAppBase.get('YaioFormatter').formatMermaidGlobal();
     
     // do syntax-highlight
-    yaioAppBase.get('YaioFormatter').formatDescBlock($("#wysiwhg-preview"));
-    yaioAppBase.get('YaioFormatter').formatDescBlock($("#wysiwhg-print"));
+    yaioAppBase.get('YaioFormatter').formatDescBlock($("#wysiwyg-preview"));
+    yaioAppBase.get('YaioFormatter').formatDescBlock($("#wysiwyg-print"));
 };
 
 // open Wysiwyg
-yaioAppBase.get('YaioMarkdownEditor').openWysiwhgForTextareaId("workspaceContent");
+yaioAppBase.get('YaioMarkdownEditor').openWysiwygForTextareaId("workspaceContent");
 
 // disable OK-Button
 $(".ui-dialog-buttonset button").first().addClass("hidden");

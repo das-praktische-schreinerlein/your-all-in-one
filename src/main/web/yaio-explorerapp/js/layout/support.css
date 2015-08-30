@@ -74,35 +74,35 @@
 
 /*****************************************
  *****************************************
- * wysiwhg
+ * wysiwyg
  *****************************************
  *****************************************/
-#wysiwhg-preview {
+#wysiwyg-preview {
     float: left;
     width: 560px;
     height: 600px;
     overflow: auto;
     padding-left: 10px;
 }
-#wysiwhg-preview svg:not([class]) {
+#wysiwyg-preview svg:not([class]) {
     width: 100%;
     height: auto;
 }
 
-#wysiwhg-preview div.mermaid {
+#wysiwyg-preview div.mermaid {
     max-width: 550px;
     height: auto;
     margin-left: auto;
     margin-right: auto;
 }
-#wysiwhg-editor {
+#wysiwyg-editor {
     float: left;
     width: 570px;
     height: 600px;
     max-height: 600px;
     overflow: auto;
 }
-#wysiwhg-box {
+#wysiwyg-box {
     width: 1180px;
     height: 650px;
 }
