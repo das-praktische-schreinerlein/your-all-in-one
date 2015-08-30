@@ -66,7 +66,10 @@ var YAIOImporterPage = function() {
                     return browser.switchTo().window(myHandles[0]);
                 }).then(function doneSwitchWindow() {
                     // call checkHandler for mainwindow
-                    browser.refresh();
+                    browser.ignoreSynchronization = true;
+                    return browser.refresh();
+                }).then(function doneReferesh() {
+                    browser.ignoreSynchronization = false;
                     return checkHandlerMainWindow();
                 })
         }
