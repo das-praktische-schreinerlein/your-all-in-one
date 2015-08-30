@@ -39,7 +39,59 @@ Yaio.FileNodeDataService = function(appBase, config, defaultConfig) {
     };
     
     me.loadStaticJson = function() {
-        me._loadStaticJson(window.yaioFileJSON.node, window.yaioFileJSON.parentIdHierarchy);
+        // return promise
+        var dfd = new $.Deferred();
+        var res = dfd.promise();
+        
+        // define handler
+        var handleLoadJSONFileSelectHandler = function handleLoadJSONFileSelect(evt) {
+            var files = evt.target.files; // FileList object
+
+            // Loop through the FileList.
+            for (var i = 0, numFiles = files.length; i < numFiles; i++) {
+                var file = files[i];
+                var reader = new FileReader();
+
+                // config reader
+                reader.onload = function(res) {
+                    console.log("read fileName:" + file.name);
+                    var data = res.target.result;
+                    
+                    // read content as json
+                    var yaioNodeActionResult = JSON.parse(res.target.result);
+                    window.yaioFileJSON.node = yaioNodeActionResult.node;
+                    window.yaioFileJSON.parentIdHierarchy = yaioNodeActionResult.parentIdHierarchy;
+                    
+                    // load content
+                    me._loadStaticJson(window.yaioFileJSON.node, window.yaioFileJSON.parentIdHierarchy);
+                    
+                    // set new name
+                    me.config.name = "Dateiupload: " + file.name;
+
+                    dfd.resolve("OK");
+                };
+                
+                // read the file
+                reader.readAsText(file);
+                
+                i = files.length +1000;
+            }
+        };
+        
+        // initFileUploader
+        var fileDialog = document.getElementById('yaioLoadJSONFile');
+        fileDialog.addEventListener('change', handleLoadJSONFileSelectHandler, false);
+        me.$( "#yaioloadjsonuploader-box" ).dialog({
+            modal: true,
+            width: "200px",
+            buttons: {
+              "Schließen": function() {
+                me.$( this ).dialog( "close" );
+              }
+            }
+        });
+        
+        return res;
     }
 
     /*****************************************

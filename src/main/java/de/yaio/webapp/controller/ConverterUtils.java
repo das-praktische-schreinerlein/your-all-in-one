@@ -338,6 +338,7 @@ public class ConverterUtils {
                 pattern = Pattern.compile("\\/\\/ CONFIGUREDATASOURCES_SNIP.*\\/\\/ CONFIGUREDATASOURCES_SNAP", Pattern.DOTALL);
                 replacement = "// CONFIGUREDATASOURCES_SNIP\n"
                                 + "yaioAppBase.config.datasources.push(\"YaioStaticNodeData\");\n" 
+                                + "yaioAppBase.config.datasources.push(\"YaioFileNodeData\");\n" 
                                 + "yaioAppBase.config.datasources.push(\"YaioServerNodeData_Local\");\n" 
                                 + "\n" + res + "\n"
                                 + "// CONFIGUREDATASOURCES_SNIP\n";

@@ -122,11 +122,11 @@
 </div>
 
 <div id="wysiwygmarkdownuploader-box" class="hidden">
-   <input type="file" id="wysiwygImportMarkdownFile" name="wysiwygImportMarkdownFile" value="Import Markdown" />
+   <input type="file" id="wysiwygImportMarkdownFile" name="wysiwygImportMarkdownFile" value="Load Markdown" />
 </div>
 
-<div id="yaiojsonuploader-box" class="hidden">
-   <input type="file" id="yaioImportJSONFile" name="yaioImportJSONFile" value="Import YaioJSON" />
+<div id="yaioloadjsonuploader-box" class="hidden">
+   <input type="file" id="yaioLoadJSONFile" name="yaioLoadJSONFile" value="Load YaioJSON" />
 </div>
 
 <!-- INCLUDESTATICJSON_SNIP -->
@@ -213,6 +213,7 @@ yaioAppBase.config.resBaseUrl = "";
 // configure datasource
 // CONFIGUREDATASOURCES_SNIP
 yaioAppBase.config.datasources.push("YaioStaticNodeData");
+yaioAppBase.config.datasources.push("YaioFileNodeData");
 yaioAppBase.config.datasources.push("YaioServerNodeData_Local");
 // CONFIGUREDATASOURCES_SNAP
 var myUrl = window.location.href;

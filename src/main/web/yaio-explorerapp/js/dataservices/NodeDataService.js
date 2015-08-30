@@ -56,6 +56,11 @@ Yaio.NodeDataService = function(appBase, config, defaultConfig) {
     };
     
     me.loadStaticJson = function() {
+        // return promise
+        var dfd = new $.Deferred();
+        var res = dfd.promise();
+        dfd.resolve("OK");
+        return res;
     }
     
     me.yaioLoadSymLinkData = function(basenode, fancynode) {

@@ -57,10 +57,17 @@ Yaio.StaticNodeDataService = function(appBase, config, defaultConfig) {
     };
     
     me.loadStaticJson = function() {
+        // load data
         me.nodeList = {};
         me.parentIdHirarchies = {};
         me.flgDataLoaded = false;
         me._loadStaticJson(window.yaioStaticJSON.node, window.yaioStaticJSON.parentIdHierarchy);
+        
+        // return promise
+        var dfd = new $.Deferred();
+        var res = dfd.promise();
+        dfd.resolve("OK");
+        return res;
     }
     
     /*****************************************

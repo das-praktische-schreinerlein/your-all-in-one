@@ -36,7 +36,13 @@ yaioApp.controller('SourceSelectorCtrl', function($rootScope, $scope, $location,
     $scope.switchDataSource = function(datasourceKey) {
         yaioUtils.getAppBase().configureService("YaioNodeData", function() { return yaioAppBase.get(datasourceKey);});
         yaioUtils.getAppBase().configureService("YaioAccessManager", function() { return yaioAppBase.get("YaioNodeData").getAccessManager(); });
-        yaioUtils.getAppBase().get("YaioNodeData").loadStaticJson();
-        $location.path(yaioUtils.getConfig().appFrontpageUrl);
+        
+        // load data and open frontpage if succeed
+        yaioUtils.getAppBase().get("YaioNodeData").loadStaticJson().then(function success() {
+            console.log("success loadStaticJson");
+            $location.path(yaioUtils.getConfig().appFrontpageUrl);
+            yaioAppBase.get("Angular.$location").path(yaioAppBase.config.appFrontpageUrl);
+            console.log("success loadStaticJson done:" + yaioUtils.getConfig().appFrontpageUrl);
+        });
     }
 });
