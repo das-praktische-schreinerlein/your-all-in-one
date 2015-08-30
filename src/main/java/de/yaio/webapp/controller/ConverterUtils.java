@@ -337,7 +337,7 @@ public class ConverterUtils {
                 }
                 pattern = Pattern.compile("\\/\\/ CONFIGUREDATASOURCES_SNIP.*\\/\\/ CONFIGUREDATASOURCES_SNAP", Pattern.DOTALL);
                 replacement = "// CONFIGUREDATASOURCES_SNIP\n"
-                                + "yaioAppBase.configureService(\"Yaio.StaticNodeDataService\", function() { return Yaio.StaticNodeDataService(me, Yaio.StaticNodeDataServiceConfig(\"\", \"Statische InApp-Daten für '" + sysUID + "'\", \"Die statisch in der App hinterlegten Daten werden geladen.\")); });\n"
+                                + "yaioAppBase.configureService(\"Yaio.StaticNodeDataService\", function() { return Yaio.StaticNodeDataService(yaioAppBase, Yaio.StaticNodeDataServiceConfig(\"\", \"Statische InApp-Daten für '" + sysUID + "'\", \"Die statisch in der App hinterlegten Daten werden geladen.\")); });\n"
                                 + "yaioAppBase.config.datasources.push(\"YaioStaticNodeData\");\n" 
                                 + "yaioAppBase.config.datasources.push(\"YaioFileNodeData\");\n" 
                                 + "yaioAppBase.config.datasources.push(\"YaioServerNodeData_Local\");\n" 
