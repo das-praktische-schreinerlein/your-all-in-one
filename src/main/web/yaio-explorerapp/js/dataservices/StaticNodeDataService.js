@@ -61,7 +61,7 @@ Yaio.StaticNodeDataService = function(appBase, config, defaultConfig) {
         me.nodeList = {};
         me.parentIdHirarchies = {};
         me.flgDataLoaded = false;
-        me._loadStaticJson(window.yaioStaticJSON.node, window.yaioStaticJSON.parentIdHierarchy);
+        me._loadStaticJson(JSON.stringify(window.yaioStaticJSON));
         
         // return promise
         var dfd = new $.Deferred();
@@ -79,12 +79,13 @@ Yaio.StaticNodeDataService = function(appBase, config, defaultConfig) {
         return Yaio.StaticAccessManagerService(me.appBase, me.config);
     };
     
-    me._loadStaticJson = function(node, parentIdHirarchy) {
-        var masterNode = node;
+    me._loadStaticJson = function(json) {
+        var yaioNodeActionReponse = JSON.parse(json);
+        var masterNode = yaioNodeActionReponse.node;
         var masterParentIdHirarchy = [];
         
         // create Masternode if not exists 
-        if (node.sysUID != me.appBase.config.CONST_MasterId) {
+        if (masterNode.sysUID != me.appBase.config.CONST_MasterId) {
             masterNode = {
                 "className": "TaskNode",
                 "name": "Masterplan",
@@ -100,7 +101,7 @@ Yaio.StaticNodeDataService = function(appBase, config, defaultConfig) {
                 "type": "RUNNING",
                 "workflowState": "RUNNING",
                 "sortPos": 0,
-                "childNodes": [node]
+                "childNodes": [yaioNodeActionReponse.node]
             };
         }
         me._convertStaticNodeData(masterNode, masterParentIdHirarchy);

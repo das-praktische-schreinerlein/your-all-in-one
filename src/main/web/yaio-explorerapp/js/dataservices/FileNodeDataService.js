@@ -57,13 +57,11 @@ Yaio.FileNodeDataService = function(appBase, config, defaultConfig) {
                     console.log("read fileName:" + file.name);
                     var data = res.target.result;
                     
-                    // read content as json
-                    var yaioNodeActionResult = JSON.parse(res.target.result);
-                    window.yaioFileJSON.node = yaioNodeActionResult.node;
-                    window.yaioFileJSON.parentIdHierarchy = yaioNodeActionResult.parentIdHierarchy;
+                    // set content as json
+                    window.yaioFileJSON = res.target.result;
                     
                     // load content
-                    me._loadStaticJson(window.yaioFileJSON.node, window.yaioFileJSON.parentIdHierarchy);
+                    me._loadStaticJson(window.yaioFileJSON);
                     
                     // set new name
                     me.config.name = "Dateiupload: " + file.name;
