@@ -70,6 +70,9 @@ yaioApp.config(function($routeProvider) {
         .when('/logout', {
             controller : 'AuthController',
             templateUrl: resBaseUrl + 'js/auth/login.html' })
+        .when('/logout/:logout', {
+            controller : 'AuthController',
+            templateUrl: resBaseUrl + 'js/auth/login.html' })
         .when('/frontpage/:nodeId', { 
             controller:  'FrontPageCtrl',
             templateUrl: resBaseUrl + 'js/frontpage/frontpage.html' })

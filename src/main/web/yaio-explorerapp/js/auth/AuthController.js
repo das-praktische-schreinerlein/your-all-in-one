@@ -72,5 +72,10 @@ yaioApp.controller('AuthController', function($rootScope, $scope, $location, $ro
                 $rootScope.authenticated = false;
             });
     };
+    
+    
+    if ($routeParams.logout) {
+        $scope.logout();
+    };
 });
 

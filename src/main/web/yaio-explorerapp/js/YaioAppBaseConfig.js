@@ -37,6 +37,7 @@ window.YaioAppBaseConfig = function() {
     me.appSourceSelectorUrl         = me.appRootUrl + "sourceselector";
     me.appFrontpageUrl              = me.appRootUrl + "frontpage";
     me.appLoginUrl                  = me.appRootUrl + "login";
+    me.appLogoutUrl                 = me.appRootUrl + "logout/logout";
     
     me.configNodeTypeFields         = {
         Create: {
