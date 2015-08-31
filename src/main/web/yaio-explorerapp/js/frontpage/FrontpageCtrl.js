@@ -40,6 +40,8 @@ yaioApp.controller('FrontPageCtrl', function($rootScope, $scope, $location, $rou
     }
     console.log("FrontPageCtrl - processing nodeId=" + nodeId);
     
+    $scope.frontpageNodeId = nodeId;
+    
     // call authentificate 
     authorization.authentificate(function () {
         // check authentification
