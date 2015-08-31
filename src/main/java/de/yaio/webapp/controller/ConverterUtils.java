@@ -340,7 +340,8 @@ public class ConverterUtils {
                                 + "yaioAppBase.configureService(\"Yaio.StaticNodeDataService\", function() { return Yaio.StaticNodeDataService(yaioAppBase, Yaio.StaticNodeDataServiceConfig(\"\", \"Statische InApp-Daten für '" + sysUID + "'\", \"Die statisch in der App hinterlegten Daten werden geladen.\")); });\n"
                                 + "yaioAppBase.config.datasources.push(\"YaioStaticNodeData\");\n" 
                                 + "yaioAppBase.config.datasources.push(\"YaioFileNodeData\");\n" 
-                                + "yaioAppBase.config.datasources.push(\"YaioServerNodeData_Local\");\n" 
+                                // skip localhost-server on export 
+                                + (!flgExport ? "yaioAppBase.config.datasources.push(\"YaioServerNodeData_Local\");\n" : "") 
                                 + "\n" + res + "\n"
                                 + "// CONFIGUREDATASOURCES_SNIP\n";
                 matcher = pattern.matcher(content);
