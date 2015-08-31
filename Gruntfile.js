@@ -149,6 +149,7 @@ module.exports = function( grunt ){
               vendorDestBase + 'js/angularjs/angular-route.js',
               vendorDestBase + 'js/angularjs/angular-translate.js',
               vendorDestBase + 'js/angularjs/angular-translate-loader-static-files.js',
+              vendorDestBase + 'js/angularjs/update-meta.js',
               vendorDestBase + 'js/marked/marked.js',
 // loaded standalone because of plugins
 //              vendorDestBase + 'js/ace/ace.js',
@@ -357,6 +358,7 @@ module.exports = function( grunt ){
                     {expand: true, cwd: bowerSrcBase + 'angular-route', src: ['angular-route.js'], dest: vendorDestBase + 'js/angularjs/', flatten: false},
                     {expand: true, cwd: bowerSrcBase + 'angular-translate', src: ['*.js'], dest: vendorDestBase + 'js/angularjs/', flatten: false},
                     {expand: true, cwd: bowerSrcBase + 'angular-translate-loader-static-files', src: ['angular-translate-loader-static-files.js'], dest: vendorDestBase + 'js/angularjs/', flatten: false},
+                    {expand: true, cwd: bowerSrcBase + 'angular-update-meta/dist', src: ['update-meta.js'], dest: vendorDestBase + 'js/angularjs/', flatten: false},
                     {expand: true, cwd: bowerSrcBase + 'fancytree/dist/', src: ['skin-win8/*.js', 'skin-win8/*.css', 'jquery.fancytree.js'], dest: vendorDestBase + 'js/fancytree/', flatten: false},
                     {expand: true, cwd: bowerSrcBase + 'fancytree/dist/src', src: ['jquery.fancytree.dnd.js',
                                                                                    'jquery.fancytree.edit.js',
