@@ -44,10 +44,11 @@ Yaio.ServerAccessManagerService = function(appBase, config, defaultConfig) {
         me.setAvailiableNodeAction('move', me.config.restMoveUrl);
         me.setAvailiableNodeAction('remove', me.config.restRemoveUrl);
         me.setAvailiableNodeAction('search', me.config.restSearchUrl);
+
         me.setAvailiableNodeAction('syshelp', me.config.restExportsBaseUrl + 'documentation/SysHelp1');
         me.setAvailiableNodeAction('sysinfo', me.config.restExportsBaseUrl + 'documentation/SysInfo1');
         me.setAvailiableNodeAction('frontpagebaseurl', me.config.restExportsBaseUrl + 'htmlfrontpagefragment/');
-        me.setAvailiableNodeAction('logout', "#/logout");
+        me.setAvailiableNodeAction('logout', "#/logout/logout");
 //        me.setAvailiableNodeAction('logout', me.config.restLogoutUrl);
         
         // flags
