@@ -37,7 +37,7 @@ Yaio.StaticAccessManagerService = function(appBase, config, defaultConfig) {
      */
     me._init = function() {
         // urls
-        me.setAvailiableNodeAction('createsymlink', true);
+        // we have problems with sysUID and nodeRef me.setAvailiableNodeAction('createsymlink', true);
         me.setAvailiableNodeAction('edit', true);
         me.setAvailiableNodeAction('create', true);
         me.setAvailiableNodeAction('move', true);
