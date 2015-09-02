@@ -39,6 +39,7 @@ Yaio.AccessManagerService = function(appBase, config, defaultConfig) {
         me.masterNodeId;
         me.availiableExportForms = {};
         me.availiableExportLinks = {};
+        me.availiableStaticExportLinks = {};
         me.availiableImportForms = {};
         me.availiableNodeActions = {};
         me.nodeActions = {};
@@ -67,6 +68,18 @@ Yaio.AccessManagerService = function(appBase, config, defaultConfig) {
     
     me.setAvailiableExportLink = function(key, url) {
         return me.availiableExportLinks[key] = url;
+    };
+
+    me.getAvailiableStaticExportLinkKeys = function(nodeId, flgMaster) {
+        return Object.keys(me.availiableStaticExportLinks);
+    };
+    
+    me.getAvailiableStaticExportLink = function(key, nodeId, flgMaster) {
+        return me.availiableStaticExportLinks[key];
+    };
+    
+    me.setAvailiableStaticExportLink = function(key, url) {
+        return me.availiableStaticExportLinks[key] = url;
     };
 
     me.getAvailiableImportFormKeys = function(nodeId, flgMaster) {

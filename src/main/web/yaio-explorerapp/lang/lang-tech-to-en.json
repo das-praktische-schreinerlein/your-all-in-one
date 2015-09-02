@@ -40,6 +40,7 @@
         "tooltip.command.ExportICalTasksLateDirect": "Export late tasks of the current node with all child elements as iCal version for your Thunderbird / Outlook Calendar.  You can use this link as external ICal-calendar in Outlook or Thunderbird.",
         "tooltip.command.ExportExcelDirect": ". <b> Warning BETA !!! </ b> Export the current node with all child elements of an Excel version",
         "tooltip.command.ExportPplDirect": ". Export the current node with all child elements as PPL for eventual import into another D'Artagnan system :-).",
+        "tooltip.command.ExportStaticJsonDirect": ". Export the current node with all child elements as JSON for eventual import into another D'Artagnan system :-).",
         "tooltip.command.GanttRange": "You choose here the time domain, for which the Gantt chart to dargstellt <br /> <br /> <b> Warning !!! </ b>. Gantt diagram is merely a rough distribution of the plan / actual hours period. Aufwende without period are not included. Aufwende the child elements over the entire period of the parent element distributed over the entire plan / and thus can be v totally move. ",
         "tooltip.command.Import": "For a subtree import and anhngen at this node",
         "tooltip.command.ImportWiki": "For a subtree of a Wiki-file import and anhngen at this node",

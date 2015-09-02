@@ -70,6 +70,10 @@ Yaio.StaticNodeDataService = function(appBase, config, defaultConfig) {
         return res;
     }
     
+    me.exportNodeActionResponseJSONById = function(nodeId) {
+        return JSON.stringify(me._exportNodeActionResponseById(nodeId))
+    }
+    
     /*****************************************
      *****************************************
      * Service-Funktions (webservice)
@@ -132,15 +136,18 @@ Yaio.StaticNodeDataService = function(appBase, config, defaultConfig) {
         }
     }
     
-    me._getNodeDataById = function(nodeId) {
+    me._getNodeDataById = function(nodeId, flgCopy) {
+        if (flgCopy) {
+            return JSON.parse(JSON.stringify(me._getNodeDataById(nodeId, false)));
+        }
         return me.nodeList[nodeId];
     }
     me._getParentIdHierarchyById = function(nodeId) {
         return me.parentIdHirarchies[nodeId];
     }
-    me._getChildNodesById = function(nodeId) {
+    me._getChildNodesById = function(nodeId, flgCopy) {
         // check for node
-        var node = me.nodeList[nodeId];
+        var node = me._getNodeDataById(nodeId, false);
         if (! node) {
             return [];
         }
@@ -149,7 +156,7 @@ Yaio.StaticNodeDataService = function(appBase, config, defaultConfig) {
         var childNodes = [];
         for (var i = 0; i < node.childNodes.length; i++) {
             var childNodeId = node.childNodes[i];
-            childNodes.push(me.nodeList[node.childNodes[i]]);
+            childNodes.push(me._getNodeDataById(node.childNodes[i], flgCopy));
         }
         
         return childNodes;
@@ -175,6 +182,39 @@ Yaio.StaticNodeDataService = function(appBase, config, defaultConfig) {
         }
 
         return nodeActionResponse;
+    }
+
+    me._exportNodeActionResponseById = function(nodeId) {
+        // extract data
+        var nodeData = me._exportNodeJSONById(nodeId);
+        var parentIdHierarchy = me._getParentIdHierarchyById(nodeId, true);
+        
+        // create response
+        var nodeActionResponse = {
+            state: "OK",
+            stateMsg: "node '" +  nodeId + "' found",
+            node: nodeData,
+            parentIdHierarchy: parentIdHierarchy
+        };
+        if (! nodeData || ! parentIdHierarchy) {
+            nodeActionResponse.state = "ERROR",
+            nodeActionResponse.stateMsg = "node '" +  nodeId + "' not found";
+        }
+
+        return nodeActionResponse;
+    }
+
+    me._exportNodeJSONById = function(nodeId) {
+        // extract data
+        var node = me._getNodeDataById(nodeId, true);
+        var childNodes = [];
+        for (var i = 0; i < node.childNodes.length; i++) {
+            var childNodeId = node.childNodes[i];
+            childNodes.push(me._exportNodeJSONById(node.childNodes[i]));
+        }
+        node.childNodes = childNodes;
+
+        return node;
     }
 
     me._yaioCallLoadNodeById = function(nodeId, options) {

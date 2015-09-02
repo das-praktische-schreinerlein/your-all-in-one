@@ -68,6 +68,10 @@ yaioApp.factory('yaioUtils', ['$location', '$http', '$rootScope', '$q', function
             appBase.get('YaioEditor').yaioOpenNodeEditorForNode(node, mode);
         },
         
+        downloadAsFile: function(domId, content, filename, mime, encoding) {
+            return appBase.getService('YaioBase').downloadAsFile(appBase.$(domId), content, filename, mime, encoding);
+        },
+        
         renderNodeLine: function(node, trIdSelector) {
             // load me
             var data = {

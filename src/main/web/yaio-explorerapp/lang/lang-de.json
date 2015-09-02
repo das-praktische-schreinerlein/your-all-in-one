@@ -29,6 +29,7 @@
     "common.command.ExportCsvDirect": "Csv",
     "common.command.ExportJsonDirect": "Json",
     "common.command.ExportPplDirect": "PPL",
+    "common.command.ExportStaticJsonDirect": "JSON",
     "common.command.Import": "Importe...",
     "common.command.ImportWiki": "Wiki-Import",
     "common.command.Logout": "Logout",
