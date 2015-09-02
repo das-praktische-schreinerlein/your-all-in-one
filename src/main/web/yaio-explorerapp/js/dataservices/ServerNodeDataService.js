@@ -141,7 +141,6 @@ Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
     me._yaioCallSaveNode = function(nodeObj, options) {
         var svcYaioBase = me.appBase.get('YaioBase');
 
-        var formName, mode, className, sysUID; 
         var msg = "_yaioCallSaveNode node: " + options.mode + ' ' + nodeObj['sysUID'];
         console.log(msg + " START");
         // branch depending on mode

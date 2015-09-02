@@ -41,7 +41,7 @@ Yaio.ServerAccessManagerService = function(appBase, config, defaultConfig) {
         me.setAvailiableNodeAction('createsymlink', me.config.restSymLinkUrl);
         me.setAvailiableNodeAction('edit', me.config.restUpdateUrl);
         me.setAvailiableNodeAction('create', me.config.restCreateUrl);
-        me.setAvailiableNodeAction('mode', me.config.restMoveUrl);
+        me.setAvailiableNodeAction('move', me.config.restMoveUrl);
         me.setAvailiableNodeAction('remove', me.config.restRemoveUrl);
         me.setAvailiableNodeAction('search', me.config.restSearchUrl);
         me.setAvailiableNodeAction('syshelp', me.config.restExportsBaseUrl + 'documentation/SysHelp1');
