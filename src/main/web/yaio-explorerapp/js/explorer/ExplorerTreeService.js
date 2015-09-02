@@ -149,6 +149,10 @@ Yaio.ExplorerTreeService = function(appBase) {
                     return true;
                 },
                 dragDrop: function(node, data) {
+                    // check permission
+                    if (! me.appBase.get('YaioAccessManager').getAvailiableNodeAction('move', node.key, false)) {
+                        return false;
+                    }
                     if (window.confirm("Wollen Sie die Node wirklich verschieben?")) {
                         data.otherNode.moveTo(node, data.hitMode);
     
@@ -182,6 +186,10 @@ Yaio.ExplorerTreeService = function(appBase) {
             edit: {
                 triggerStart: ["f2", "dblclick", "shift+click", "mac+enter"],
                 beforeEdit: function(event, data){
+                    // check permission
+                    if (! me.appBase.get('YaioAccessManager').getAvailiableNodeAction('edit', data.node.key, false)) {
+                        return false;
+                    }
                     // open yaio-editor
                     me.appBase.get('YaioEditor').yaioOpenNodeEditor(data.node.key, 'edit');
                     
@@ -202,16 +210,16 @@ Yaio.ExplorerTreeService = function(appBase) {
                 save: function(event, data){
                     // unused because we use the yaioeditor
     
-                    if (window.confirm("Wollen Sie den Titel wirklich ändern?")) {
-                        // Save data.input.val() or return false to keep editor open
-                        me.appBase.get('YaioExplorerAction').yaioSaveNode(data);
-                        // We return true, so ext-edit will set the current user input
-                        // as title
-                        return true;
-                    } else {
-                        // discard
-                        return false;
-                    }
+//                    if (window.confirm("Wollen Sie den Titel wirklich ändern?")) {
+//                        // Save data.input.val() or return false to keep editor open
+//                        me.appBase.get('YaioExplorerAction').yaioSaveNode(data);
+//                        // We return true, so ext-edit will set the current user input
+//                        // as title
+//                        return true;
+//                    } else {
+//                        // discard
+//                        return false;
+//                    }
                 },
                 close: function(event, data){
                     // unused because we use the yaioeditor
@@ -255,6 +263,9 @@ Yaio.ExplorerTreeService = function(appBase) {
                     node.editStart();
                     break;
                 case "indent":
+                    if (! me.appBase.get('YaioAccessManager').getAvailiableNodeAction('move', node.key, false)) {
+                        return false;
+                    }
                     if (window.confirm("Wollen Sie die Node wirklich verschieben?")) {
                         // move fancynode
                         refNode = node.getPrevSibling();
@@ -278,6 +289,9 @@ Yaio.ExplorerTreeService = function(appBase) {
                     
                     break;
                 case "outdent":
+                    if (! me.appBase.get('YaioAccessManager').getAvailiableNodeAction('move', node.key, false)) {
+                        return false;
+                    }
                     if (window.confirm("Wollen Sie die Node wirklich verschieben?")) {
                         // move fancynode
                         var newParent = node.getParent().getParent();
@@ -298,6 +312,9 @@ Yaio.ExplorerTreeService = function(appBase) {
                     }
                     break;
                 case "moveUp":
+                    if (! me.appBase.get('YaioAccessManager').getAvailiableNodeAction('move', node.key, false)) {
+                        return false;
+                    }
                     // check parent
                     var newParent = node.getParent();
                     var newParentKey = node.getParent().key;
@@ -316,6 +333,9 @@ Yaio.ExplorerTreeService = function(appBase) {
                     svcYaioExplorerAction.yaioMoveNode(node, newParentKey, newPos);
                     break;
                 case "moveDown":
+                    if (! me.appBase.get('YaioAccessManager').getAvailiableNodeAction('move', node.key, false)) {
+                        return false;
+                    }
                     // check parent
                     var newParent = node.getParent();
                     var newParentKey = node.getParent().key;
@@ -334,9 +354,15 @@ Yaio.ExplorerTreeService = function(appBase) {
                     svcYaioExplorerAction.yaioMoveNode(node, newParentKey, newPos);
                     break;
                 case "remove":
+                    if (! me.appBase.get('YaioAccessManager').getAvailiableNodeAction('remove', node.key, false)) {
+                        return false;
+                    }
                     svcYaioExplorerAction.yaioRemoveNodeById(node.key);
                     break;
                 case "addChild":
+                    if (! me.appBase.get('YaioAccessManager').getAvailiableNodeAction('create', node.key, false)) {
+                        return false;
+                    }
                     me.appBase.get('YaioEditor').yaioOpenNodeEditor(node.key, 'create');
                     break;
                 case "asTxt":
