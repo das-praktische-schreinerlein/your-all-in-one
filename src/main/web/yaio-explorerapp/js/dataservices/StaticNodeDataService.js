@@ -33,7 +33,6 @@ Yaio.StaticNodeDataService = function(appBase, config, defaultConfig) {
     var me = Yaio.NodeDataService(appBase, config, defaultConfig);
     
     me.nodeList = [];
-    me.parentIdHirarchies = [];
     me.flgDataLoaded = false;
     me.curUId = 1;
 
@@ -83,7 +82,6 @@ Yaio.StaticNodeDataService = function(appBase, config, defaultConfig) {
     
     me._loadStaticJson = function(json) {
         me.nodeList = [];
-        me.parentIdHirarchies = [];
         me.flgDataLoaded = false;
 
         var yaioNodeActionReponse = JSON.parse(json);
@@ -125,9 +123,7 @@ Yaio.StaticNodeDataService = function(appBase, config, defaultConfig) {
             parentIdHirarchy = [];
         }
 
-        // TODO: create a copy of the node
         me.nodeList[node.sysUID] = node;
-        me.parentIdHirarchies[node.sysUID] = parentIdHirarchy;
         
         var newParentIdHirarchy = parentIdHirarchy.slice();
         newParentIdHirarchy.push(node.sysUID);
@@ -154,7 +150,14 @@ Yaio.StaticNodeDataService = function(appBase, config, defaultConfig) {
         if (flgCopy) {
             return JSON.parse(JSON.stringify(me._getParentIdHierarchyById(nodeId, false)));
         }
-        return me.parentIdHirarchies[nodeId];
+        
+        var parentIdHirarchy = [];
+        var node = me._getNodeDataById(nodeId, false);
+        if (node && node.parentId && node.parentId != "" && node.parentId != "undefined") {
+            parentIdHirarchy = me._getParentIdHierarchyById(node.parentId, true);
+            parentIdHirarchy.push(node.parentId);
+        }
+        return parentIdHirarchy;
     }
     me._getChildNodesById = function(nodeId, flgCopy) {
         // check for node
@@ -247,9 +250,6 @@ Yaio.StaticNodeDataService = function(appBase, config, defaultConfig) {
 
             // update parentIdHierarchy
             console.log(msg + " use newparent:" + newPos, parent)
-            var parentIdHirarchy = me._getParentIdHierarchyById(parent.sysUID, true);
-            parentIdHirarchy.push(parent.sysUID);
-            me.parentIdHirarchies[fancynode.key] = parentIdHirarchy;
             
             // set new parentId
             node.parentId = parent.sysUID;
@@ -331,8 +331,6 @@ Yaio.StaticNodeDataService = function(appBase, config, defaultConfig) {
         // delete from list
         me.nodeList[nodeId] = null;
         me.nodeList.splice(me.nodeList.indexOf(nodeId), 1);
-        me.parentIdHirarchies[nodeId] = null;
-        me.parentIdHirarchies.splice(me.parentIdHirarchies.indexOf(nodeId), 1);
     }
 
     me._yaioCallLoadSymLinkData = function(basenode, fancynode) {
@@ -408,11 +406,6 @@ Yaio.StaticNodeDataService = function(appBase, config, defaultConfig) {
             
             // add to parent
             parent.childNodes.push(node['sysUID']);
-            
-            // add parentIdHierarchy
-            var parentIdHirarchy = me._getParentIdHierarchyById(parent.sysUID, true);
-            parentIdHirarchy.push(parent.sysUID);
-            me.parentIdHirarchies[node['sysUID']] = parentIdHirarchy;
         } else {
             // unknown mode
             svcYaioBase.logError("unknown mode=" + options.mode + " form formName=" + options.formName, false);
