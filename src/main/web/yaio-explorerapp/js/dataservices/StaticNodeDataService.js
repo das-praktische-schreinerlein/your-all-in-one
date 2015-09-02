@@ -230,10 +230,61 @@ Yaio.StaticNodeDataService = function(appBase, config, defaultConfig) {
         return node;
     }
 
-//    me._yaioCallMoveNode = function(fancynode, newParentKey, newPos, json) {
-//        var url = me.config.restMoveUrl+ fancynode.key + "/" + newParentKey + "/" + newPos;
-//        return me._yaioCallPatchNode(fancynode, url, json);
-//    };
+    me._yaioCallMoveNode = function(fancynode, newParentKey, newPos, json) {
+        var node = me._getNodeDataById(fancynode.key, false);
+        var parent = me._getNodeDataById(newParentKey, false);
+        var oldParent = me._getNodeDataById(node.parentId, false);
+        
+        if (node.parentId != newParentKey) {
+            // delete node form old parent and add to new with sortPos after last
+            oldParent.childNodes.splice(oldParent.childNodes.indexOf(node.sysUID), 1);
+            if (parent.childNodes.length > 0) {
+                newPos = parent.childNodes[parent.childNodes.length-1].sortPos + 5;
+            }
+            node.sortPos = newPos;
+            parent.childNodes.push(node.sysUID);
+            
+            // update parentIdHierarchy
+            var parentIdHirarchy = me._getParentIdHierarchyById(parent.sysUID, true);
+            parentIdHirarchy.push(parent.sysUID);
+            me.parentIdHirarchies[node['sysUID']] = parentIdHirarchy;
+        } else {
+            // change sortPos
+            
+            // delete node from childList 
+            parent.childNodes.splice(parent.childNodes.indexOf(node.sysUID), 1);
+            node.sortPos = newPos;
+            
+            // calc index where to add
+            var addIdx = -1;
+            for (var idx = 0; idx < parent.childNodes.length; idx++) {
+                var curNode = me._getNodeDataById(parent.childNodes[idx], false);
+                if (addIdx >= 0) {
+                    // pos already found: add 5 to every following node
+                    curNode.sortPos = curNode.sortPos + 5;
+                } else if (curNode.sortPos > node.sortPos) {
+                    // set id to add the node
+                    addIdx = idx;
+                    // pos found: add 5 to every following node
+                    curNode.sortPos = curNode.sortPos + 5;
+                }
+            }
+            if (addIdx < 0) {
+                addIdx = parent.childNodes.length;
+            }
+            // add node at addIdx
+            parent.childNodes.splice(addIdx, 0, node.sysUID);
+        }
+
+        // create response for
+        var nodeActionResponse = me._getNodeActionResponseById(node.sysUID);
+
+        var dfd = new $.Deferred();
+        var res = dfd.promise();
+        dfd.resolve(nodeActionResponse);
+
+        return res;
+    };
 
     me._yaioCallRemoveNode = function(nodeId) {
         var node = me._getNodeDataById(nodeId, false);

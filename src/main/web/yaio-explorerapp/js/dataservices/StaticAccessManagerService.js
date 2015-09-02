@@ -37,15 +37,15 @@ Yaio.StaticAccessManagerService = function(appBase, config, defaultConfig) {
      */
     me._init = function() {
         // urls
-        me.setAvailiableNodeAction('frontpagebaseurl', me.appBase.config.resBaseUrl + 'static/');
-        me.setAvailiableNodeAction('syshelp', me.appBase.config.resBaseUrl + 'static/SysHelp1.html');
-        me.setAvailiableNodeAction('sysinfo', me.appBase.config.resBaseUrl + 'static/SysInfo1.html');
-        
         me.setAvailiableNodeAction('createsymlink', true);
         me.setAvailiableNodeAction('edit', true);
         me.setAvailiableNodeAction('create', true);
-//        me.setAvailiableNodeAction('move', true);
+        me.setAvailiableNodeAction('move', true);
         me.setAvailiableNodeAction('remove', true);
+        
+        me.setAvailiableNodeAction('frontpagebaseurl', me.appBase.config.resBaseUrl + 'static/');
+        me.setAvailiableNodeAction('syshelp', me.appBase.config.resBaseUrl + 'static/SysHelp1.html');
+        me.setAvailiableNodeAction('sysinfo', me.appBase.config.resBaseUrl + 'static/SysInfo1.html');
         
         me.setAvailiableStaticExportLink('ExportStaticJsonDirect', me.appBase.config.appRootUrl + 'staticexporter/json/');
         
