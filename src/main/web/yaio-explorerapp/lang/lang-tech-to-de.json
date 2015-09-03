@@ -43,6 +43,7 @@
         "tooltip.command.ExportStaticJsonDirect": "Exportieren Sie die aktuelle Node mit allen Kindselementen als JSON zum Import in ein anderes D'Artagnan-System :-)",
         "tooltip.command.GanttRange": "Wählen Sie hier den Zeitbereich aus, für welchen das Gantt-Diagramm dargstellt werden soll. <br /><br /><b>Achtung!!!</b> Die Gantt-Darstellung ist nur eine grobe Verteilung der Plan/Ist-Stunden auf den gesamten Plan/Ist-Zeitraum. Aufwende ohne Zeitraum werden nicht eingerechnet. Aufwende der Kindselemente werden über den gesamten Zeitraum des Elternelement verteilt und können sich somit völlig verschieben.", 
         "tooltip.command.Import": "Einen Teilbaum importieren und an diese Node anhängen",
+        "tooltip.command.ImportJson": "Einen Teilbaum aus einer JSON-Datei importieren und an diese Node anhängen",
         "tooltip.command.ImportWiki": "Einen Teilbaum aus einer Wiki-Datei importieren und an diese Node anhängen",
         "tooltip.command.Logout": "Vom System abmelden.", 
         "tooltip.command.NodeCreateChild": "Erzeuge ein neues KindsElement",
