@@ -70,7 +70,7 @@ public class AdminController {
         // find the parentnode
         BaseNode node = BaseNode.findBaseNode(sysUID);
         if (node == null) {
-            return response.stateMsg;
+            return response.getStateMsg();
         }
         
         try {
