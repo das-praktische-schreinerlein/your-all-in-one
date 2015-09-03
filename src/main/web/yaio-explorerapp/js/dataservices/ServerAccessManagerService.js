@@ -57,6 +57,7 @@ Yaio.ServerAccessManagerService = function(appBase, config, defaultConfig) {
 
         // import-forms
         me.setAvailiableImportForm('ImportWiki', '/imports/wiki/');
+        me.setAvailiableImportForm('ImportJson', '/imports/json/');
 
         // export-forms
         me.setAvailiableExportForm('ExportWiki', me.config.restExportsBaseUrl + 'wikiuseoptions/');
