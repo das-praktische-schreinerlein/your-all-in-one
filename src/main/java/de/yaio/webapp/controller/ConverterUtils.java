@@ -36,8 +36,11 @@ import de.yaio.datatransfer.exporter.OutputOptions;
 import de.yaio.datatransfer.exporter.OutputOptionsImpl;
 import de.yaio.extension.datatransfer.html.HtmlExporter;
 import de.yaio.extension.datatransfer.json.JSONFullExporter;
+import de.yaio.extension.datatransfer.json.JSONFullImporter;
+import de.yaio.extension.datatransfer.json.JSONResponse;
 import de.yaio.extension.datatransfer.ppl.PPLImporter;
 import de.yaio.extension.datatransfer.wiki.InlineWikiImporter;
+import de.yaio.extension.datatransfer.wiki.WikiExporter;
 import de.yaio.extension.datatransfer.wiki.WikiImportOptions;
 import de.yaio.extension.datatransfer.wiki.WikiImporter;
 import de.yaio.extension.datatransfer.wiki.WikiImporter.WikiStructLine;
@@ -60,7 +63,7 @@ public class ConverterUtils {
 
     // Logger
     private static final Logger LOGGER =
-            Logger.getLogger(ExportController.class);
+            Logger.getLogger(ConverterUtils.class);
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -514,4 +517,87 @@ public class ConverterUtils {
         PPLImporter pplImporter = new PPLImporter(null);
         pplImporter.extractNodesFromLines(masterNode, pplSource, "\t");
     }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     WikiImporter
+     * <h4>FeatureDescription:</h4>
+     *     parse jsonSrc with JsonImporter and WikiImportOptions, and add it to the masternode
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>adds children from jsonSrc to masterNode
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     JsonImporter
+     * @param inputOptions - importOptions for wikiImporter
+     * @param masterNode - baseNode to add the children
+     * @param jsonSrc - jsonSrc to parse with JsonImporter
+     * @throws Exception - ParserExceptions possible
+     */
+    protected void parseNodesFromJson(final WikiImportOptions inputOptions,
+                                      final BaseNode masterNode, 
+                                      final String jsonSrc) throws Exception {
+        // extract 
+        JSONFullImporter jsonImporter = new JSONFullImporter(inputOptions);
+        JSONResponse response = jsonImporter.parseJSONResponse(jsonSrc);
+        LOGGER.info("parse Response:" + response);
+        BaseNode baseNode = (BaseNode) response.getNode();
+        LOGGER.info("parse Response.node:" + baseNode);
+        if ("MasterplanMasternode1".equals(baseNode.getSysUID()) 
+            || masterNode.getSysUID().equals(baseNode.getSysUID())) {
+            // dont import masternode and parents twice: copy children
+            for (BaseNode childNode : baseNode.getChildNodes()) {
+                childNode.setParentNode(masterNode);
+                LOGGER.info("add Child:" + childNode.getNameForLogger());
+            }
+        } else {
+            // add masternode
+            baseNode.setParentNode(masterNode);
+        }
+        LOGGER.info("masterNode after json:" + masterNode.getBaseNodeService().visualizeNodeHierarchy("", masterNode));
+        //if inoutOptions resetSysUID(masterNode, true);
+    }
+    
+    public void parseValidatedNodesFromJson(final WikiImportOptions inputOptions,
+                                    final BaseNode masterNode, 
+                                    final String jsonSrc) throws Exception {
+        // parse json to dummy-masternode
+        BaseNode tmpMasterNode = createTemporaryMasternode("dummy", masterNode.getMetaNodePraefix(), masterNode.getMetaNodeNummer());
+        this.parseNodesFromJson(inputOptions, tmpMasterNode, jsonSrc);
+        LOGGER.info("tmpMasterNode after json:" + tmpMasterNode.getBaseNodeService().visualizeNodeHierarchy("", tmpMasterNode));
+        
+        // export as wiki
+        Exporter exporter = new WikiExporter();
+        OutputOptions oOptions = new OutputOptionsImpl();
+        String wikiSrc = exporter.getMasterNodeResult(tmpMasterNode, oOptions);
+        
+        // import from wiki
+        WikiImportOptions tmpInputOptions = new WikiImportOptions();
+        inputOptions.setFlgReadList(true);
+        inputOptions.setFlgReadUe(true);
+        inputOptions.setStrDefaultMetaNodePraefix(masterNode.getMetaNodePraefix());
+        WikiImporter wikiImporter = new WikiImporter(tmpInputOptions);
+        this.parseNodesFromWiki(wikiImporter, tmpInputOptions, masterNode, wikiSrc);
+        LOGGER.info("masternode after wiki:" + masterNode.getBaseNodeService().visualizeNodeHierarchy("", masterNode));
+    }
+    
+    public BaseNode createTemporaryMasternode(String sysUID, String nodePraefix, String nodeNummer) {
+        BaseNode tmpMasterNode = new BaseNode();
+        tmpMasterNode.setSysUID(sysUID);
+        tmpMasterNode.setMetaNodePraefix(nodePraefix);
+        tmpMasterNode.setMetaNodeNummer(nodeNummer);
+        tmpMasterNode.setEbene(0);
+        return tmpMasterNode;
+    }
+
+    protected void resetSysUID(final BaseNode node, boolean childrenOnly) {
+        LOGGER.info("resetSysUID:" + node.getNameForLogger());
+        if (!childrenOnly) {
+            node.setSysUID(null);
+        }
+        for (BaseNode childNode : node.getChildNodes()) {
+            resetSysUID(childNode, false);
+        }
+    }
+    
 }

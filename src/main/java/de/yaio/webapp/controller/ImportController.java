@@ -31,6 +31,8 @@ import org.springframework.web.multipart.MultipartFile;
 import de.yaio.core.node.BaseNode;
 import de.yaio.extension.datatransfer.jpa.JPAExporter;
 import de.yaio.extension.datatransfer.ppl.PPLImporter;
+import de.yaio.extension.datatransfer.wiki.WikiImportOptions;
+import de.yaio.extension.datatransfer.wiki.WikiImporter;
 import de.yaio.rest.controller.NodeActionResponse;
 import de.yaio.rest.controller.NodeRestController;
 
@@ -83,7 +85,7 @@ public class ImportController {
         // find the parentnode
         BaseNode node = BaseNode.findBaseNode(parentSysUID);
         if (node == null) {
-            return response.stateMsg;
+            return response.getStateMsg();
         }
         
         // check file
@@ -102,14 +104,102 @@ public class ImportController {
                 node.initChildNodesFromDB(0);
                 
                 // create dummy masternode
-                BaseNode masterNode = new BaseNode();
-                masterNode.setSysUID(parentSysUID);
-                masterNode.setMetaNodePraefix(node.getMetaNodePraefix());
-                masterNode.setMetaNodeNummer(node.getMetaNodeNummer());
-                masterNode.setEbene(0);
+                BaseNode masterNode = converterUtils.createTemporaryMasternode(
+                                parentSysUID, node.getMetaNodePraefix(), node.getMetaNodeNummer());
                 
-                // parse Wiki
-                converterUtils.parseNodesFromString(masterNode, wikiSrc);
+                // Parser+Options anlegen
+                WikiImportOptions inputOptions = new WikiImportOptions();
+                inputOptions.setFlgReadList(true);
+                inputOptions.setFlgReadUe(true);
+                inputOptions.setStrDefaultMetaNodePraefix(masterNode.getMetaNodePraefix());
+                WikiImporter wikiImporter = new WikiImporter(inputOptions);
+                converterUtils.parseNodesFromWiki(wikiImporter, inputOptions, masterNode, wikiSrc);
+                
+                // JPA-Exporter
+                JPAExporter jpaExporter = new JPAExporter();
+                jpaExporter.getMasterNodeResult(masterNode, null);
+                
+                // create new response
+                response = NodeRestController.createResponseObj(
+                                node, "data for node '" + parentSysUID + "' imported");
+                
+                // add children
+                response.childNodes = new ArrayList<BaseNode>(node.getChildNodes());
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return new NodeActionResponse(
+                    "ERROR", 
+                    "You failed to upload data to node '" 
+                        + parentSysUID + "' => " + e, 
+                    null, null, null, null).getStateMsg();
+            }
+        } else {
+            return new NodeActionResponse(
+                    "ERROR", 
+                    "You failed to upload to node '" 
+                        + parentSysUID + "' because the file was empty.", 
+                     null, null, null, null).getStateMsg();
+        }            
+        
+        return response.getStateMsg();
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
+     *     Request to import the uploaded json-file from param "file" to the 
+     *     node parentSysUID returning a simple message
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice Query
+     * @param parentSysUID - sysUID to append the new nodes
+     * @param file - the uploaded file stream with the data to import
+     * @return text-message
+     */
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, 
+                    value = "/json/{parentSysUID}", 
+                    produces = "text/html")
+    public String importNodeAsJson(@PathVariable(value = "parentSysUID") final String parentSysUID,
+                                   @RequestParam("file") final MultipartFile file) {
+        NodeActionResponse response = new NodeActionResponse(
+                        "ERROR", "node '" + parentSysUID + "' doesnt exists", 
+                        null, null, null, null);
+
+        // find the parentnode
+        BaseNode node = BaseNode.findBaseNode(parentSysUID);
+        if (node == null) {
+            return response.getStateMsg();
+        }
+        
+        // check file
+        if (!file.isEmpty()) {
+            try {
+                // copy to tmpFile
+                File tmpFile = File.createTempFile("upload", "json");
+                tmpFile.deleteOnExit();
+                file.transferTo(tmpFile);
+                
+                // read filecontent + delete
+                String jsonSrc = PPLImporter.readFromInput(tmpFile);
+                tmpFile.delete();
+
+                // read the childnodes only 1 level
+                node.initChildNodesFromDB(0);
+                
+                // create dummy masternode
+                BaseNode masterNode = converterUtils.createTemporaryMasternode(
+                                parentSysUID, node.getMetaNodePraefix(), node.getMetaNodeNummer());
+                
+                // Parser+Options anlegen
+                WikiImportOptions inputOptions = new WikiImportOptions();
+                inputOptions.setStrDefaultMetaNodePraefix(masterNode.getMetaNodePraefix());
+                converterUtils.parseNodesFromJson(inputOptions, masterNode, jsonSrc);
                 
                 // JPA-Exporter
                 JPAExporter jpaExporter = new JPAExporter();
