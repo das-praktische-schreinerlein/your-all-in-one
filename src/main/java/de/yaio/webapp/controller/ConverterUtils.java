@@ -520,7 +520,7 @@ public class ConverterUtils {
 
     /**
      * <h4>FeatureDomain:</h4>
-     *     WikiImporter
+     *     JsonImporter
      * <h4>FeatureDescription:</h4>
      *     parse jsonSrc with JsonImporter and WikiImportOptions, and add it to the masternode
      * <h4>FeatureResult:</h4>
@@ -564,11 +564,29 @@ public class ConverterUtils {
         //if inoutOptions resetSysUID(masterNode, true);
     }
     
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     JsonImporter
+     * <h4>FeatureDescription:</h4>
+     *     parse jsonSrc with JsonImporter, export as wiki and reimport from wiki to ensure valid syntax, 
+     *     and add it to the masternode
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>adds children from jsonSrc to masterNode
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     JsonImporter
+     * @param inputOptions - importOptions for wikiImporter
+     * @param masterNode - baseNode to add the children
+     * @param jsonSrc - jsonSrc to parse with JsonImporter
+     * @throws Exception - ParserExceptions possible
+     */
     public void parseValidatedNodesFromJson(final WikiImportOptions inputOptions,
                                     final BaseNode masterNode, 
                                     final String jsonSrc) throws Exception {
         // parse json to dummy-masternode
-        BaseNode tmpMasterNode = createTemporaryMasternode("dummy", masterNode.getMetaNodePraefix(), masterNode.getMetaNodeNummer());
+        BaseNode tmpMasterNode = 
+             createTemporaryMasternode("dummy", masterNode.getMetaNodePraefix(), masterNode.getMetaNodeNummer());
         this.parseNodesFromJson(inputOptions, tmpMasterNode, jsonSrc);
         
         // export as wiki
@@ -588,7 +606,23 @@ public class ConverterUtils {
         }
     }
     
-    public BaseNode createTemporaryMasternode(String sysUID, String nodePraefix, String nodeNummer) {
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Importer
+     * <h4>FeatureDescription:</h4>
+     *     create a masternode for import (temporary)
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returns BaseNode
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Importer
+     * @param sysUID         sysUID
+     * @param nodePraefix    metaNodePraefix
+     * @param nodeNummer     metaNodeNumber
+     * @return               the Basenode to use as masternode 
+     */
+    public BaseNode createTemporaryMasternode(final String sysUID, final String nodePraefix, final String nodeNummer) {
         BaseNode tmpMasterNode = new BaseNode();
         tmpMasterNode.setSysUID(sysUID);
         tmpMasterNode.setMetaNodePraefix(nodePraefix);
@@ -597,7 +631,7 @@ public class ConverterUtils {
         return tmpMasterNode;
     }
 
-    protected void resetSysUID(final BaseNode node, boolean childrenOnly) {
+    protected void resetSysUID(final BaseNode node, final boolean childrenOnly) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("resetSysUID:" + node.getNameForLogger());
         }
