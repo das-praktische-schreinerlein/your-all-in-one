@@ -124,6 +124,7 @@ Yaio.StaticNodeDataService = function(appBase, config, defaultConfig) {
         }
 
         me.nodeList[node.sysUID] = node;
+        me.nodeList.push(node.sysUID);
         
         var newParentIdHirarchy = parentIdHirarchy.slice();
         newParentIdHirarchy.push(node.sysUID);
@@ -406,6 +407,9 @@ Yaio.StaticNodeDataService = function(appBase, config, defaultConfig) {
             
             // add to parent
             parent.childNodes.push(node['sysUID']);
+            
+            // add to nodeList
+            me.nodeList.push(node['sysUID']);
         } else {
             // unknown mode
             svcYaioBase.logError("unknown mode=" + options.mode + " form formName=" + options.formName, false);
@@ -429,6 +433,61 @@ Yaio.StaticNodeDataService = function(appBase, config, defaultConfig) {
         }
         var angularResponse = {
             data: me._getNodeActionResponseById(node['sysUID'])
+        };
+        console.log(msg + " response:", angularResponse);
+        promiseHelper.resolve(angularResponse);
+
+        return ajaxCall();
+    };
+
+    me._yaioCallFulltextSearch = function(searchOptions) {
+        var msg = "_yaioCallFulltextSearch searchOptions: " + searchOptions;
+//            + '/' + encodeURI(searchOptions.searchSort)
+//            uri = uri + encodeURI(searchOptions.fulltext) + '/';
+        // search ids
+        var nodeId, node, flgFound, content;
+        var searchResultIds = [];
+        var suchworte = searchOptions.fulltext.toLowerCase().split(" ");
+        for (var idx = 0; idx < me.nodeList.length; idx++) {
+            nodeId = me.nodeList[idx];
+            node = me._getNodeDataById(nodeId, true);
+            content = node.nodeDesc + " " + node.name + " " + node.state;
+
+            // Volltextsuche
+            flgFound = false;
+            if (me.appBase.get("YaioExportedData").VolltextTreffer(content.toLowerCase(), suchworte)) {
+                // words found
+                searchResultIds.push(nodeId);
+            }
+        }
+        
+        // paginate and read current searchresults
+        var start = (searchOptions.curPage - 1) * searchOptions.pageSize;
+        var ende = start + searchOptions.pageSize;
+        if (ende >= searchResultIds.length) {
+            ende = searchResultIds.length;
+        }
+        var curSearchResultIds = searchResultIds.slice((searchOptions.curPage - 1) * searchOptions.pageSize, ende);
+        var searchResult = [];
+        for (var idx = 0; idx < curSearchResultIds.length; idx++) {
+            nodeId = curSearchResultIds[idx];
+            searchResult.push(me._getNodeDataById(nodeId, true));
+        }
+        
+        // mock the ajax-request
+        var promiseHelper = me.appBase.get("YaioPromiseHelper").createAngularPromiseHelper();
+        var ajaxCall = function () {
+            return promiseHelper.getHttpPromiseMock();
+        }
+        var angularResponse = {
+            data: { 
+                state: "OK", 
+                stateMsg: "search done",
+                nodes: searchResult,
+                curPage: searchOptions.curPage,
+                pageSize: searchOptions.pageSize,
+                count: searchResultIds.length
+            }
         };
         console.log(msg + " response:", angularResponse);
         promiseHelper.resolve(angularResponse);
