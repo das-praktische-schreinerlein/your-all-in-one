@@ -523,6 +523,25 @@ public class BaseNodeService extends NodeServiceImpl {
     
     /**
      * <h4>FeatureDomain:</h4>
+     *     Tests
+     * <h4>FeatureDescription:</h4>
+     *     generate a node hierarchy of node.getNameForLogger recursively intending with spaces
+     * <h4>FeatureKeywords:</h4>
+     *     NameUtil
+     * @param praefix  intending spaces
+     * @param node     node to generate hierarchy for
+     * @return - resulting node hierarchy
+     */
+    public String visualizeNodeHierarchy(String praefix, DataDomain node) {
+        String res = praefix + node.getNameForLogger() + "\n";
+        for (DataDomain childNode : node.getChildNodes()) {
+            res += visualizeNodeHierarchy(praefix + "  ", childNode);
+        }
+        return res;
+    }
+    
+    /**
+     * <h4>FeatureDomain:</h4>
      *     BusinessLogic
      * <h4>FeatureDescription:</h4>
      *     returns the data to create a checksum from
