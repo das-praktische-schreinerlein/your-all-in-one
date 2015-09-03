@@ -540,15 +540,21 @@ public class ConverterUtils {
         // extract 
         JSONFullImporter jsonImporter = new JSONFullImporter(inputOptions);
         JSONResponse response = jsonImporter.parseJSONResponse(jsonSrc);
-        LOGGER.info("parse Response:" + response);
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("parse Response:" + response);
+        }
         BaseNode baseNode = (BaseNode) response.getNode();
-        LOGGER.info("parse Response.node:" + baseNode);
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("parse Response.node:" + baseNode);
+        }
         if ("MasterplanMasternode1".equals(baseNode.getSysUID()) 
             || masterNode.getSysUID().equals(baseNode.getSysUID())) {
             // dont import masternode and parents twice: copy children
             for (BaseNode childNode : baseNode.getChildNodes()) {
                 childNode.setParentNode(masterNode);
-                LOGGER.info("add Child:" + childNode.getNameForLogger());
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("add Child:" + childNode.getNameForLogger());
+                }
             }
         } else {
             // add masternode
@@ -564,7 +570,6 @@ public class ConverterUtils {
         // parse json to dummy-masternode
         BaseNode tmpMasterNode = createTemporaryMasternode("dummy", masterNode.getMetaNodePraefix(), masterNode.getMetaNodeNummer());
         this.parseNodesFromJson(inputOptions, tmpMasterNode, jsonSrc);
-        LOGGER.info("tmpMasterNode after json:" + tmpMasterNode.getBaseNodeService().visualizeNodeHierarchy("", tmpMasterNode));
         
         // export as wiki
         Exporter exporter = new WikiExporter();
@@ -578,7 +583,9 @@ public class ConverterUtils {
         inputOptions.setStrDefaultMetaNodePraefix(masterNode.getMetaNodePraefix());
         WikiImporter wikiImporter = new WikiImporter(tmpInputOptions);
         this.parseNodesFromWiki(wikiImporter, tmpInputOptions, masterNode, wikiSrc);
-        LOGGER.info("masternode after wiki:" + masterNode.getBaseNodeService().visualizeNodeHierarchy("", masterNode));
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("masternode after wiki:" + masterNode.getBaseNodeService().visualizeNodeHierarchy("", masterNode));
+        }
     }
     
     public BaseNode createTemporaryMasternode(String sysUID, String nodePraefix, String nodeNummer) {
@@ -591,7 +598,9 @@ public class ConverterUtils {
     }
 
     protected void resetSysUID(final BaseNode node, boolean childrenOnly) {
-        LOGGER.info("resetSysUID:" + node.getNameForLogger());
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("resetSysUID:" + node.getNameForLogger());
+        }
         if (!childrenOnly) {
             node.setSysUID(null);
         }

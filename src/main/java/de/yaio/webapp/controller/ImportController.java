@@ -199,7 +199,7 @@ public class ImportController {
                 // Parser+Options anlegen
                 WikiImportOptions inputOptions = new WikiImportOptions();
                 inputOptions.setStrDefaultMetaNodePraefix(masterNode.getMetaNodePraefix());
-                converterUtils.parseNodesFromJson(inputOptions, masterNode, jsonSrc);
+                converterUtils.parseValidatedNodesFromJson(inputOptions, masterNode, jsonSrc);
                 
                 // JPA-Exporter
                 JPAExporter jpaExporter = new JPAExporter();
