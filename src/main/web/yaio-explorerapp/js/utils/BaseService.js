@@ -165,7 +165,7 @@ Yaio.BaseService = function(appBase) {
     };
     
     me.formatGermanDateTime = function(millis) {
-        if (millis == null) {
+        if (millis == null || millis == "undefined" || millis == "") {
            return "";
         }
         var date = new Date(millis);
@@ -176,7 +176,7 @@ Yaio.BaseService = function(appBase) {
             + ":" + me.padNumber(date.getMinutes(), 2);
     };
     me.formatGermanDate = function(millis) {
-        if (millis == null) {
+        if (millis == null || millis == "undefined" || millis == "") {
            return "";
         }
         var date = new Date(millis);
@@ -192,7 +192,7 @@ Yaio.BaseService = function(appBase) {
         return r;
     };
     me.formatNumbers = function(number, nachkomma, suffix) {
-       if (number == null) {
+       if (number == null || number == "undefined" || number == "") {
            return "";
        }
        

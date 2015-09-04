@@ -32,9 +32,7 @@ Yaio.StaticNodeDataService = function(appBase, config, defaultConfig) {
     // my own instance
     var me = Yaio.NodeDataService(appBase, config, defaultConfig);
     
-    me.nodeList = [];
     me.flgDataLoaded = false;
-    me.curUId = 1;
 
     /**
      * initialize the object
@@ -222,7 +220,7 @@ Yaio.StaticNodeDataService = function(appBase, config, defaultConfig) {
     };
 
     me._yaioCallRemoveNode = function(nodeId) {
-        var node = me.getNodeDataById(nodeId, true);
+        var node = me._getNodeDataById(nodeId, true);
         me.appBase.get("YaioStaticNodeDataStore").removeNodeById(nodeId);
         
         // create response for parent
