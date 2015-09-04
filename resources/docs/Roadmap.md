@@ -10,7 +10,6 @@
 - **Erweiterungen (YAIO1921)**
     - Neue Funktionen(YAIO2123)
         - Taskanlegen über Fixture-Import(YAIO2159)
-        - Im/Export als JSON(YAIO2095)
         - Copy/Move über GUI+JSON(YAIO2096)
     - Ergonomie (YAIO1923)
         - Kontextmenü über Icon öffnen (YAIO2092)
@@ -35,7 +34,6 @@
     - Java-Codeabdeckung für neue Java-Funktionen(YAIO2098)
     - Layout-Tests(YAIO2100)
     - Optionen in Config auslagern (YAIO1638)
-    - eigene JS-Klassen (YAIO1927)
     - DB-Zugriffe von BaseNodeDBService machen und nicht von BaseNode (YAIO1553)
     - checksum+version per json uebertragen, beim speichern kontrollieren und ggf. Warnung (YAIO1541)
     - für Formular eigene Angular-Directive (Tag mit Layout, ganze Form-Elemente, ganze Forms) (YAIO1550)

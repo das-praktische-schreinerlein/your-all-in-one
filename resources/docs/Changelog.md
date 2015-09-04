@@ -1,5 +1,34 @@
 # Changelog
 
+## Changelog for release: feature-YAIO2168-improvements-201508-RELEASE
+- **neue Funktionen (YAIO2174)**
+    - added StaticNodeDataService to use YaioApp without Server (YAIO2176)
+        - added json-export of static data (YAIO2177)
+        - added save, create, remove for static-datasource (YAIO2178)
+        - added move for static datasources (YAIO2179)
+        - added search for static datasource (YAIO2180)
+        - introduced staticdatastore for better structure (YAIO2181)
+        - added FileLoader for YaioJson (YAIO2183)
+    - added sourceselector to switch between server, static, file (YAIO2182)
+    - Server (YAIO2184)
+        - added export as yaioOfflineApp (YAIO2185)
+        - added json-import to server (YAIO2186)
+        - added json-export from server (YAIO2175)
+- **Code-Verbesserungen (YAIO2187)**
+    - codeclean (YAIO2188)
+    - fork vendors with yaio-patches on github and use them (YAIO2189)
+    - Verbesserungen YaioApp (YAIO2190)
+        - modular contentloading (YAIO2191)
+        - modularize templates (YAIO2192)
+        - configure services by name and use aliases for usage (YAIO2193)
+        - introduce NodeDataService-interface and implementation (YAIO2194)
+        - added accessmanager to configure urls and check permissions (YAIO2195)
+- **Bugfixes (YAIO2196)**
+    - bugfix: hide speechsynth if not availiable (YAIO2197)
+    - fixed tests for iexplorer, firefox (YAIO2198)
+    - fixed logout (YAIO2199)
+
+
 ## Changelog for release: feature-YAIO2137-improvements-201507-RELEASE
 - **GUI (YAIO2143)**
     - Link für Infonode mit Snapshot des Checkliste/Gantt-Overview für der Node (YAIO2161)
