@@ -81,7 +81,7 @@ Yaio.ExportedDataService = function(appBase) {
      * # Kalkulation
      * ###########################
      */
-    const CONST_FUNCNAME_SUM = "SUM";
+    me.CONST_FUNCNAME_SUM = "SUM";
     
     me.calcColumns = function(nodeTDId, functionName, praefix, suffix) {
        // Variablen belegen
@@ -96,8 +96,8 @@ Yaio.ExportedDataService = function(appBase) {
        if (! errMsg && ! functionName) { 
            errMsg = "Parameter functionName required"; 
        } else {
-           if (functionName != CONST_FUNCNAME_SUM) {
-              errMsg = "Parameter functionName must be [" + CONST_FUNCNAME_SUM + "]"; 
+           if (functionName != me.CONST_FUNCNAME_SUM) {
+              errMsg = "Parameter functionName must be [" + me.CONST_FUNCNAME_SUM + "]"; 
            }
        }
        if (! errMsg && ! nodeTDId) { 
@@ -165,7 +165,7 @@ Yaio.ExportedDataService = function(appBase) {
        var funcResult = 0;
        for (var index = 0; index < numbers.length; ++index) {
            // alert("funcResult +" +  numbers[index]);
-           if (functionName == CONST_FUNCNAME_SUM) {
+           if (functionName == me.CONST_FUNCNAME_SUM) {
               funcResult += numbers[index]; 
            }
        }
