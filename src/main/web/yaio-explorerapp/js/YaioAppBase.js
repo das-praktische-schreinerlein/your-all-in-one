@@ -35,6 +35,7 @@ window.YaioAppBase = function() {
         me.configureService("Yaio.FormatterService", function() { return Yaio.FormatterService(me); });
         me.configureService("Yaio.MarkdownEditorService", function() { return Yaio.MarkdownEditorService(me); });
         me.configureService("Yaio.ServerNodeDataService_Local", function() { return Yaio.ServerNodeDataService(me, Yaio.ServerNodeDataServiceConfig()); });
+        me.configureService("Yaio.StaticNodeDataStoreService", function() { return Yaio.StaticNodeDataStoreService(me); });
         me.configureService("Yaio.StaticNodeDataService", function() { return Yaio.StaticNodeDataService(me, Yaio.StaticNodeDataServiceConfig()); });
         me.configureService("Yaio.FileNodeDataService", function() { return Yaio.FileNodeDataService(me, Yaio.FileNodeDataServiceConfig()); });
         me.configureService("Yaio.NodeDataRenderService", function() { return Yaio.NodeDataRenderService(me); });
@@ -52,6 +53,7 @@ window.YaioAppBase = function() {
         me.configureService("YaioMarkdownEditor", function() { return me.get("Yaio.MarkdownEditorService"); });
 
         // use NodeDataService with aliases 
+        me.configureService("YaioStaticNodeDataStore", function() { return me.get("Yaio.StaticNodeDataStoreService"); });
         me.configureService("YaioStaticNodeData", function() { return me.get("Yaio.StaticNodeDataService"); });
         me.configureService("YaioFileNodeData", function() { return me.get("Yaio.FileNodeDataService"); });
         me.configureService("YaioServerNodeData_Local", function() { return me.get("Yaio.ServerNodeDataService_Local"); });
