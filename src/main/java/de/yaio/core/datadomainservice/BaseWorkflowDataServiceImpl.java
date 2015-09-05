@@ -37,9 +37,7 @@ import de.yaio.core.datadomain.PlanDependencieData.PredecessorDependencieType;
 import de.yaio.core.node.EventNode;
 import de.yaio.core.node.TaskNode;
 import de.yaio.core.nodeservice.BaseNodeService;
-import de.yaio.core.nodeservice.EventNodeService;
 import de.yaio.core.nodeservice.NodeService;
-import de.yaio.core.nodeservice.TaskNodeService;
 import de.yaio.utils.Calculator;
 import de.yaio.utils.DataUtils;
 import de.yaio.utils.PredecessorCalculator;
@@ -124,7 +122,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
         // Check if node is compatibel
         if (!BaseWorkflowData.class.isInstance(node)) {
                 throw new IllegalArgumentException();
-            }
+        }
         
         // Roll
         this.recalcWorkflowData((BaseWorkflowData) node);
@@ -195,9 +193,14 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
         if (ExtendedWorkflowData.class.isInstance(node)) {
             // init with own Workflowdata
             PlanData planData = (ExtendedWorkflowData) node;
+            // TODO switch from Plan to PlanCalc
+//            PlanCalcData planCalcData = (ExtendedWorkflowData) node;
             IstData istData = (ExtendedWorkflowData) node;
 
             planChildrenSumData.setPlanChildrenSumAufwand(planData.getPlanAufwand());
+            // TODO switch from Plan to PlanCalc
+//            planChildrenSumData.setPlanChildrenSumStart(planCalcData.getPlanCalcStart());
+//            planChildrenSumData.setPlanChildrenSumEnde(planCalcData.getPlanCalcEnde());
             planChildrenSumData.setPlanChildrenSumStart(planData.getPlanStart());
             planChildrenSumData.setPlanChildrenSumEnde(planData.getPlanEnde());
             istChildrenSumData.setIstChildrenSumAufwand(istData.getIstAufwand());
@@ -519,182 +522,12 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
         } else if (EventNode.class.isInstance(baseNode)) {
            // Event
            return baseNode.getBaseNodeService().getStateForWorkflowState(baseNode);
-//           return this.getRecalcedEventState((ExtendedWorkflowData) baseNode);
         } else if (TaskNode.class.isInstance(baseNode)) {
            // Task
             return baseNode.getBaseNodeService().getStateForWorkflowState(baseNode);
-//           return this.getRecalcedTaskState((ExtendedWorkflowData) baseNode);
         }
         
         return BaseNodeService.CONST_NODETYPE_IDENTIFIER_UNKNOWN;
-    }
-
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     BusinessLogic
-     * <h4>FeatureDescription:</h4>
-     *     return the recalced state for a EventNode (uses Plan/IstChildrenSum)
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue String - recalced state
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     BsuinessLogic
-     * @param baseNode - node to process
-     * @return recalced state
-     * @throws Exception - parser/format-Exceptions possible
-     */
-    public String getRecalcedEventState(final ExtendedWorkflowData baseNode) {
-        // Status aus den Plan/Istzahlen extrahieren
-        String newState = baseNode.getState();
-
-        // alles außer Infos betrachten
-        if (newState == null 
-            || BaseNodeService.CONST_NODETYPE_IDENTIFIER_UNKNOWN.equalsIgnoreCase(newState)
-            || baseNode.isWFStatus(newState)) {
-            // Status zuruecksetzen
-            newState = BaseNodeService.CONST_NODETYPE_IDENTIFIER_UNKNOWN;
-
-            if (baseNode.getIstChildrenSumStand() != null 
-                && (baseNode.getIstChildrenSumStand() >= Calculator.CONST_DOUBLE_100)) {
-                // falls Stand=100 DONE
-                newState = EventNodeService.CONST_NODETYPE_IDENTIFIER_EVENT_DONE;
-            } else if ((baseNode.getPlanAufwand() != null 
-                           && (baseNode.getPlanAufwand() >= Calculator.CONST_DOUBLE_NULL))
-                       || (baseNode.getPlanChildrenSumAufwand() != null 
-                           && (baseNode.getPlanChildrenSumAufwand() >= Calculator.CONST_DOUBLE_NULL))) {
-                // noch nicht erledigt
-                if ((baseNode.getIstAufwand() != null 
-                        && (baseNode.getIstAufwand() >= Calculator.CONST_DOUBLE_NULL))
-                    || (baseNode.getIstChildrenSumAufwand() != null 
-                        && (baseNode.getIstChildrenSumAufwand() >= Calculator.CONST_DOUBLE_NULL))
-                    || (baseNode.getIstChildrenSumStand() != null 
-                        && (baseNode.getIstChildrenSumStand() >= Calculator.CONST_DOUBLE_NULL))
-                    ) {
-                    // wurde schon begonnen
-                    newState = EventNodeService.CONST_NODETYPE_IDENTIFIER_EVENT_RUNNNING;
-
-                    // Termin pruefen
-                    Date now = new Date();
-                    Date myPlanEnde = baseNode.getPlanChildrenSumEnde();
-                    if (myPlanEnde != null && now.after(myPlanEnde)) {
-                        // verspaetet: haette schon beeendet sein muessen
-                        newState = EventNodeService.CONST_NODETYPE_IDENTIFIER_EVENT_SHORT;
-                        if (LOGGER.isDebugEnabled()) {
-                            LOGGER.debug("Short node:" + baseNode.getNameForLogger() 
-                                    + " Stand:" + baseNode.getIstChildrenSumStand() 
-                                    + " myPlanEnde:" + myPlanEnde);
-                        }
-                    }
-                } else {
-                    // noch nicht begonnen:
-                    newState = EventNodeService.CONST_NODETYPE_IDENTIFIER_EVENT_PLANED;
-
-                    // Termin pruefen
-                    Date now = new Date();
-                    Date myPlanStart = baseNode.getPlanChildrenSumStart();
-                    if (myPlanStart != null && now.after(myPlanStart)) {
-                        // verspaetet: haette schon beginnen muessen
-                        newState = EventNodeService.CONST_NODETYPE_IDENTIFIER_EVENT_LATE;
-                    }
-                }
-            }
-        }
-        return newState;
-    }
-    
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     BusinessLogic
-     * <h4>FeatureDescription:</h4>
-     *     return the recalced state for a TaskNode (uses Plan/IstChildrenSum)
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue String - recalced state
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     BsuinessLogic
-     * @param baseNode - node to process
-     * @return recalced state
-     * @throws Exception - parser/format-Exceptions possible
-     */
-    public String getRecalcedTaskState(final ExtendedWorkflowData baseNode) {
-        // Status aus den Plan/Istzahlen extrahieren
-        String newState = baseNode.getState();
-        
-        LOGGER.debug("WFStatus: state = " + baseNode.isWFStatus(newState)  //$NON-NLS-1$
-                        + " Class" + baseNode.getClass().getName()); //$NON-NLS-1$
-
-        // alles außer Infos betrachten
-        if (newState == null 
-            || BaseNodeService.CONST_NODETYPE_IDENTIFIER_UNKNOWN.equalsIgnoreCase(newState)
-            || baseNode.isWFStatus(newState)) {
-            // Status zuruecksetzen
-            newState = BaseNodeService.CONST_NODETYPE_IDENTIFIER_UNKNOWN;
-            
-            if (baseNode.getIstChildrenSumStand() != null 
-                    && (baseNode.getIstChildrenSumStand() >= Calculator.CONST_DOUBLE_100)) {
-                // falls Stand=100 DONE
-                newState = TaskNodeService.CONST_NODETYPE_IDENTIFIER_DONE;
-            } else if ((baseNode.getPlanAufwand() != null 
-                           && (baseNode.getPlanAufwand() >= Calculator.CONST_DOUBLE_NULL))
-                       || (baseNode.getPlanChildrenSumAufwand() != null 
-                           && (baseNode.getPlanChildrenSumAufwand() >= Calculator.CONST_DOUBLE_NULL))
-                       || (baseNode.getIstAufwand() != null 
-                           && (baseNode.getIstAufwand() >= Calculator.CONST_DOUBLE_NULL))
-                       || (baseNode.getIstChildrenSumAufwand() != null 
-                           && (baseNode.getIstChildrenSumAufwand() >= Calculator.CONST_DOUBLE_NULL))
-                       || (baseNode.getIstChildrenSumStand() != null 
-                           && (baseNode.getIstChildrenSumStand() >= Calculator.CONST_DOUBLE_NULL))
-                       ) {
-                // noch nicht erledigt
-                if ((baseNode.getIstAufwand() != null 
-                        && (baseNode.getIstAufwand() >= Calculator.CONST_DOUBLE_NULL))
-                    || (baseNode.getIstChildrenSumAufwand() != null 
-                        && (baseNode.getIstChildrenSumAufwand() >= Calculator.CONST_DOUBLE_NULL))
-                    || (baseNode.getIstChildrenSumStand() != null 
-                        && (baseNode.getIstChildrenSumStand() >= Calculator.CONST_DOUBLE_NULL))
-                    ) {
-                    // wurde schon begonnen
-                    newState = TaskNodeService.CONST_NODETYPE_IDENTIFIER_RUNNNING;
-
-                    // Termin pruefen
-                    Date now = new Date();
-                    Date myPlanEnde = baseNode.getPlanChildrenSumEnde();
-                    if (myPlanEnde != null && now.after(myPlanEnde)) {
-                        // verspaetet: haette schon beeendet sein muessen
-                        newState = TaskNodeService.CONST_NODETYPE_IDENTIFIER_SHORT;
-                        if (LOGGER.isDebugEnabled()) {
-                            LOGGER.debug("Short node:" + baseNode.getNameForLogger()
-                                    + " Stand:" + baseNode.getIstChildrenSumStand() 
-                                    + " myPlanEnde:" + myPlanEnde);
-                        }
-                    }
-                } else {
-                    // noch nicht begonnen:
-                    newState = TaskNodeService.CONST_NODETYPE_IDENTIFIER_OPEN;
-
-                    // Termin pruefen
-                    Date now = new Date();
-                    Date myPlanStart = baseNode.getPlanChildrenSumStart();
-                    if (myPlanStart == null) {
-                        myPlanStart = baseNode.getPlanStart();
-                    }
-                    if (myPlanStart != null && now.after(myPlanStart)) {
-                        // verspaetet: haette schon beginnen muessen
-                        newState = TaskNodeService.CONST_NODETYPE_IDENTIFIER_LATE;
-                    }
-                }
-            }
-        }
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("new NodeState " 
-                    + " Stand:" + baseNode.getIstChildrenSumStand() 
-                    + " Aufwand:" + baseNode.getPlanChildrenSumAufwand() 
-                    + " state" + newState +  " for node:" + baseNode.getNameForLogger());
-        }
-        return newState;
     }
 
     /**
@@ -763,10 +596,8 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
                         // Termin pruefen
                         Date now = new Date();
                         Date myPlanStart = baseNode.getPlanStart();
-                        // TODO parentPlanStart
-//                        if (myPlanStart == null) {
-//                            myPlanStart = baseNode.getPlanStart();
-//                        }
+                        // TODO switch from Plan to PlanCalc
+//                        Date myPlanStart = baseNode.getPlanCalcStart();
                         if (myPlanStart != null && now.after(myPlanStart)) {
                             // verspaetet: haette schon beginnen muessen
                             newState = WorkflowState.LATE;
@@ -775,6 +606,8 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
                     
                     // Termin pruefen
                     Date now = new Date();
+                    // TODO switch from Plan to PlanCalc
+//                  Date myPlanEnde = baseNode.getPlanCalcEnde();
                     Date myPlanEnde = baseNode.getPlanEnde();
                     if (myPlanEnde != null && now.after(myPlanEnde)) {
                         // verspaetet: haette schon beeendet sein muessen
@@ -809,6 +642,8 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
             return curStart;
         }
 
+        // TODO switch from Plan to PlanCalc
+//        return node.getPlanCalcStart();
         return node.getPlanStart();
     }
 
@@ -816,6 +651,8 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
     public Date calcCurrentEnde(final ExtendedWorkflowData node) {
         // wenn belegt IST-Daten benutzen, sonst Plandaten
         Date curEnde = node.getIstEnde();
+        // TODO switch from Plan to PlanCalc
+//        Date curPlanEnde = node.getPlanCalcEnde();
         Date curPlanEnde = node.getPlanEnde();
         Date curIstStart = node.getIstStart();
         Date curIstEnde = node.getIstEnde();
