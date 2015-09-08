@@ -12,7 +12,7 @@
                 <li ng-if="yaioUtils.getService('YaioAccessManager').getAvailiableExportFormKeys().length > 0">
                   <span data-tooltip='tooltip.command.ExportForm' lang="tech" translate="common.command.ExportForm">Konfigurierbar</span>
                   <ul class="exporttypelist" ng-repeat="key in yaioUtils.getService('YaioAccessManager').getAvailiableExportFormKeys()">
-                     <li class="exporttype" data-tooltip="tooltip.command.{{key}}" lang="tech"><a ng-click="outputOptionsEditor.showOutputOptionsEditor(node.sysUID, yaioUtils.getService('YaioAccessManager').getAvailiableExportForm(key, node.sysUID) + node.sysUID, '');" class="button exporttype_{{key}}" target="_blank" translate="common.command.{{key}}" id="link{{key}}">{{key}}</a></li>
+                     <li class="exporttype" data-tooltip="tooltip.command.{{key}}" lang="tech"><a ng-click="outputOptionsEditor.showOutputOptionsEditor(node.sysUID, yaioUtils.getService('YaioAccessManager').getAvailiableExportForm(key, node.sysUID) + node.sysUID, '_blank');" class="button exporttype_{{key}}" target="_blank" translate="common.command.{{key}}" id="link{{key}}">{{key}}</a></li>
                   </ul>
                 </li>
                 
