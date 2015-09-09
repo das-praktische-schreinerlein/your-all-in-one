@@ -27,7 +27,7 @@
  * <h4>FeatureKeywords:</h4>
  *     GUI Configuration
  */
-yaioApp.controller('SourceSelectorCtrl', function($rootScope, $scope, $location, yaioUtils) {
+yaioApp.controller('SourceSelectorCtrl', function($rootScope, $scope, $location, $routeParams, yaioUtils) {
     'use strict';
 
     // include utils
@@ -44,5 +44,11 @@ yaioApp.controller('SourceSelectorCtrl', function($rootScope, $scope, $location,
             yaioAppBase.get("Angular.$location").path(yaioAppBase.config.appFrontpageUrl);
             console.log("success loadStaticJson done:" + yaioUtils.getConfig().appFrontpageUrl);
         });
+    };
+    
+    var dataSources = yaioUtils.getConfig().datasources;
+    var dataSourceName = $routeParams.newds;
+    if (dataSources.indexOf(dataSourceName) >= 0) {
+        $scope.switchDataSource(dataSourceName);
     }
 });

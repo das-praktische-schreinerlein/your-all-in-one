@@ -82,6 +82,9 @@ yaioApp.config(function($routeProvider) {
         .when('/sourceselect', { 
             controller:  'SourceSelectorCtrl',
             templateUrl: resBaseUrl + 'js/sourceselector/sourceselector.html' })
+        .when('/sourceselect/:newds', { 
+            controller:  'SourceSelectorCtrl',
+            templateUrl: resBaseUrl + 'js/sourceselector/sourceselector.html' })
         .when('/', { 
             controller:  'SourceSelectorCtrl',
             templateUrl: resBaseUrl + 'js/sourceselector/sourceselector.html' })
