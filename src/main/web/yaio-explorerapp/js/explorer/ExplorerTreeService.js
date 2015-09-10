@@ -97,6 +97,14 @@ Yaio.ExplorerTreeService = function(appBase) {
             titlesTabbable: true,     // Add all node titles to TAB chain
       
             source: me.sourceHandler(masterNodeId),
+            
+            // defaultoptions for ajax-request
+            ajax: {
+                xhrFields : {
+                    // for CORS
+                    withCredentials : true
+                }
+            },
           
             // set state of the tree for callback, when tree is created
             loadChildren: function(event, data) {

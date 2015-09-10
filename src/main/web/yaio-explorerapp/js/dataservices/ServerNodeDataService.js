@@ -38,7 +38,6 @@ Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
     me._init = function() {
     };
     
-    
     me.loadNodeData = function(nodeId) {
         console.log("load data for node:" + nodeId);
         return { 
@@ -76,6 +75,10 @@ Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
                 'Accept' : 'application/json',
                 'Content-Type' : 'application/json'
             },
+            xhrFields : {
+                // for CORS
+                withCredentials : true
+            },
             url : url,
             type : 'PATCH',
             data : json,
@@ -97,9 +100,13 @@ Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
         console.log(msg + " START");
         var url = me.config.restSymLinkUrl + basenode.symLinkRef;
         return me.$.ajax({
-            headers : {
+            headers: {
                 'Accept' : 'application/json',
                 'Content-Type' : 'application/json'
+            },
+            xhrFields : {
+                // for CORS
+                withCredentials : true
             },
             url : url,
             type : 'GET',
@@ -124,6 +131,10 @@ Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
             headers: {
                 'Accept' : 'application/json',
                 'Content-Type' : 'application/json'
+            },
+            xhrFields : {
+                // for CORS
+                withCredentials : true
             },
             url: url,
             type: 'DELETE',
