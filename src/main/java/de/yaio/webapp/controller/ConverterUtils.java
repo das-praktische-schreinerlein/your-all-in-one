@@ -377,7 +377,7 @@ public class ConverterUtils {
 //                              "<base href=\"" + baseref + "/yaio-explorerapp/yaio-explorerapp.html\" />");
             res = res.replaceAll("=\"../dist/", 
                             "=\"" + baseref + "/yaio-explorerapp/../dist/");
-            res = res.replaceAll("yaioAppBase.config.resBaseUrl = \"\";", 
+            res = res.replaceAll("yaioAppBase.config.resBaseUrl = .*?;", 
                             "yaioAppBase.config.resBaseUrl = \"" + baseref + "/yaio-explorerapp/\";");
             
 
