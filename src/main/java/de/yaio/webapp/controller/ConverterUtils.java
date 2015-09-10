@@ -17,6 +17,7 @@
 package de.yaio.webapp.controller;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -298,6 +299,7 @@ public class ConverterUtils {
                    + " parentIdHierarchy: [],"
                    + " childNodes: []}";
         
+        List<String> addResBaseUrls = new ArrayList<String>();
         try {
             
             if (! StringUtils.isEmpty(sysUID)) {
@@ -337,6 +339,7 @@ public class ConverterUtils {
                     res += "yaioAppBase.configureService(\"Yaio.ServerNodeDataService_" + url + "\", function() { return Yaio.ServerNodeDataService(yaioAppBase, Yaio.ServerNodeDataServiceConfig(\"" + url + "\", \"" + name + "\",  \"" + desc + "\")); });\n";
                     res += "yaioAppBase.configureService(\"YaioServerNodeData_" + url + "\", function() { return yaioAppBase.get(\"Yaio.ServerNodeDataService_" + url + "\"); });\n";
                     res += "yaioAppBase.config.datasources.push(\"YaioServerNodeData_" + url + "\");\n";
+                    addResBaseUrls.add(url);
                 }
                 pattern = Pattern.compile("\\/\\/ CONFIGUREDATASOURCES_SNIP.*\\/\\/ CONFIGUREDATASOURCES_SNAP", Pattern.DOTALL);
                 replacement = "// CONFIGUREDATASOURCES_SNIP\n"
@@ -361,6 +364,16 @@ public class ConverterUtils {
             return "";
         }
 
+        // add additional resBaseUrls for CORS
+        String addResBase = "";
+        if (addResBaseUrls.size() > 0) {
+            addResBase = "yaioAppBase.config.addResBaseUrls = ['";
+            addResBase += StringUtils.join(addResBaseUrls, "', '");
+            addResBase += "'];";
+            res = res.replaceAll("yaioAppBase.config.resBaseUrl = (.*?);", 
+                                 "yaioAppBase.config.resBaseUrl = $1;\n" + addResBase + "\n");
+        }
+
         // set baseref 
         String baseref = null;
         if (oOptions.isFlgUsePublicBaseRef()) {
@@ -378,7 +391,7 @@ public class ConverterUtils {
             res = res.replaceAll("=\"../dist/", 
                             "=\"" + baseref + "/yaio-explorerapp/../dist/");
             res = res.replaceAll("yaioAppBase.config.resBaseUrl = .*?;", 
-                            "yaioAppBase.config.resBaseUrl = \"" + baseref + "/yaio-explorerapp/\";");
+                                 "yaioAppBase.config.resBaseUrl = \"" + baseref + "/yaio-explorerapp/\";\n" + addResBase + "\n");
             
 
         }
