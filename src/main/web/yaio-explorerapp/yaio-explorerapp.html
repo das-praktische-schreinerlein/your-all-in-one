@@ -222,11 +222,11 @@ var myUrl = window.location.href;
 if (myUrl.search("dsn=YaioStaticNodeData") > 0 || window.yaioUseStaticJson) {
     // load static
     yaioAppBase.configureService("YaioNodeData", function() { return yaioAppBase.get("YaioStaticNodeData"); });
-    yaioAppBase.get("YaioNodeData").loadStaticJson();
 } else if (yaioAppBase.config.datasources.indexOf("YaioServerNodeData_Local") > 0) {
     // default: local server
     yaioAppBase.configureService("YaioNodeData", function() { return yaioAppBase.get("YaioServerNodeData_Local"); });
 }
+yaioAppBase.get("YaioNodeData").loadStaticJson();
 
 // init
 yaioAppBase.publishDetectorStyles();
