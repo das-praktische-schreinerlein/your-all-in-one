@@ -59,7 +59,7 @@ window.YaioAppBase = function() {
         me.configureService("YaioStaticNodeData", function() { return me.get("Yaio.StaticNodeDataService"); });
         me.configureService("YaioFileNodeData", function() { return me.get("Yaio.FileNodeDataService"); });
         me.configureService("YaioServerNodeData_Local", function() { return me.get("Yaio.ServerNodeDataService_Local"); });
-        me.configureService("YaioNodeData", function() { return me.get("YaioServerNodeData_Local"); });
+        me.configureService("YaioNodeData", function() { return me.get("YaioStaticNodeData_Local"); });
         me.configureService("YaioAccessManager", function() { return me.get("YaioNodeData").getAccessManager(); });
         
         me.configureService("YaioNodeDataRender", function() { return me.get("Yaio.NodeDataRenderService"); });
