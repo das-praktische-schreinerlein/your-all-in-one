@@ -348,7 +348,7 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
                     var data = angularReponse.data;
                     var header = angularReponse.header;
                     var config = angularReponse.config;
-                    var message = "error saving node " + msg;
+                    var message = "error saving node " + nodeObj.sysUID;
                     yaioUtils.getService('YaioBase').logError(message, true);
                     message = "error data: " + data + " header:" + header + " config:" + config;
                     yaioUtils.getService('YaioBase').logError(message, false);
