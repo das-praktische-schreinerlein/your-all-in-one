@@ -95,6 +95,30 @@ yaioApp.config(function($routeProvider) {
  * <h4>FeatureDomain:</h4>
  *     Configuration
  * <h4>FeatureDescription:</h4>
+ *     configures $sceDelegateProvider - adds resourcewhitelist
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>updates $sceDelegateProvider
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Configuration
+ * @param $sceDelegateProvider - the $sceDelegateProvider to change the resource-whitelist...
+ */
+yaioApp.config(function($sceDelegateProvider) {
+    var resBaseUrl = yaioAppBase.config.resBaseUrl;
+    if (resBaseUrl && resBaseUrl != "") {
+        $sceDelegateProvider.resourceUrlWhitelist([
+           // Allow same origin resource loads.
+           'self',
+           // Allow loading from our assets domain.  Notice the difference between * and **.
+           resBaseUrl + '**']);
+    }
+});
+    
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Configuration
+ * <h4>FeatureDescription:</h4>
  *     configures $httpProvider - adds default-headers for patch-requests
  * <h4>FeatureResult:</h4>
  *   <ul>
