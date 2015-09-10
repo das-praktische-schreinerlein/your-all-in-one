@@ -210,6 +210,7 @@ module.exports = function( grunt ){
             srcBase + 'yaio-explorerapp/js/YaioAppBase.js',
             srcBase + 'yaio-explorerapp/js/utils/PromiseHelperService.js',
             srcBase + 'yaio-explorerapp/js/utils/BaseService.js',
+            srcBase + 'yaio-explorerapp/js/utils/FileService.js',
             srcBase + 'yaio-explorerapp/js/editor/EditorService.js',
             srcBase + 'yaio-explorerapp/js/layout/LayoutService.js',
             srcBase + 'yaio-explorerapp/js/wysiwyg/FormatterService.js',

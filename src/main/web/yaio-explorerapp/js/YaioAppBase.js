@@ -30,6 +30,7 @@ window.YaioAppBase = function() {
         // instances
         me.configureService("Yaio.PromiseHelperService", function() { return Yaio.PromiseHelperService(me); });
         me.configureService("Yaio.BaseService", function() { return Yaio.BaseService(me); });
+        me.configureService("Yaio.FileService", function() { return Yaio.FileService(me); });
         me.configureService("Yaio.LayoutService", function() { return Yaio.LayoutService(me); });
         me.configureService("Yaio.EditorService", function() { return Yaio.EditorService(me); });
         me.configureService("Yaio.FormatterService", function() { return Yaio.FormatterService(me); });
@@ -47,6 +48,7 @@ window.YaioAppBase = function() {
         // aliases
         me.configureService("YaioPromiseHelper", function() { return me.get("Yaio.PromiseHelperService"); });
         me.configureService("YaioBase", function() { return me.get("Yaio.BaseService"); });
+        me.configureService("YaioFile", function() { return me.get("Yaio.FileService"); });
         me.configureService("YaioLayout", function() { return me.get("Yaio.LayoutService"); });
         me.configureService("YaioEditor", function() { return me.get("Yaio.EditorService"); });
         me.configureService("YaioFormatter", function() { return me.get("Yaio.FormatterService"); });

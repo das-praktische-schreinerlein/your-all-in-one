@@ -29,7 +29,7 @@
 
 /*****************************************
  *****************************************
- * Service-Funktions (layout)
+ * Service-Funktions (base)
  *****************************************
  *****************************************/
 Yaio.BaseService = function(appBase) {
@@ -192,47 +192,11 @@ Yaio.BaseService = function(appBase) {
         return r;
     };
     me.formatNumbers = function(number, nachkomma, suffix) {
-       if (number == null || number == "undefined" || number == "") {
+       if (number == null || number == "undefined") {
            return "";
        }
        
        return (number.toFixed(nachkomma)) + suffix;
-    };
-    
-    me.downloadAsFile = function($link, data, fileName, mime, encoding) {
-        if (mime == "undefind") {
-            mime = "application/text";
-        }
-        if (encoding == "undefind") {
-            mime = "uft-8";
-        }
-        // data URI
-        var dataURI = 'data:' + mime + ';charset=' + encoding + ','
-                + encodeURIComponent(data);
-    
-        // set link
-        var flgSafeMode = 0;
-        if (   (navigator.userAgent.indexOf("Trident") >= 0) 
-            || (navigator.userAgent.indexOf("MSIE") >= 0)
-            || flgSafeMode) {
-           // IE or SafeMode
-           var popup = window.open("");
-           if (! popup) {
-               // warn message
-               me.logError("Leider kann der Download nicht angezeigt werden, da Ihr Popup-Blocker aktiv ist. Beachten Sie die Hinweise im Kopf des Browsers. ", true);
-           } else {
-               // set data to document
-               me.$(popup.document.body).html("<pre>" + me.htmlEscapeTextLazy(data) + "</pre>");
-           }
-           return false;
-       } else {
-            // all expect IE
-            $link.attr({
-                'download' : fileName,
-                'href' : dataURI,
-                'target' : '_blank'
-            });
-       }
     };
     
     me.createXFrameAllowFrom = function() {
@@ -243,6 +207,9 @@ Yaio.BaseService = function(appBase) {
         return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
     };
     
+    me.getURLParameter = function(name) {
+        return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
+    }
     
     me._init();
     

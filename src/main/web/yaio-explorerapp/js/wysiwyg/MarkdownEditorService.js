@@ -125,7 +125,7 @@ Yaio.MarkdownEditorService = function(appBase) {
     
     me.showMarkdownHelp = function() {
         // show message
-        var url = "/examples/markdownhelp/markdownhelp.html" + "?" + me.appBase.get('YaioBase').createXFrameAllowFrom();
+        var url = "/examples/markdownhelp/markdownhelp.html";
         console.log("showMarkdownHelp:" + url);
         me.$("#markdownhelp-iframe").attr('src',url);
         me.$("#markdownhelp-box" ).dialog({
@@ -268,7 +268,7 @@ Yaio.MarkdownEditorService = function(appBase) {
         // add export-link -> buggy to mix jquery and styles
         me.$(".ui-dialog-buttonset").append(me.$("<a href='' id='wysiwyg-exportlink'" +
             + " sdf='ojfvbhwjh'"
-            + " onclick=\"yaioAppBase.get('YaioBase').downloadAsFile(yaioAppBase.$('#wysiwyg-exportlink'), yaioAppBase.$('#" + textAreaId + "').val(), 'data.md', 'text/markdown', 'utf-8');\">"
+            + " onclick=\"yaioAppBase.get('YaioFile').downloadAsFile(yaioAppBase.$('#wysiwyg-exportlink'), yaioAppBase.$('#" + textAreaId + "').val(), 'data.md', 'text/markdown', 'utf-8');\">"
             + "<span class='ui-button-text'>Export</span></a>"));
         me.$('#wysiwyg-exportlink').addClass("ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only");
     
