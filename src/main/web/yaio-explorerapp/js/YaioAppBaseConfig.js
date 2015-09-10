@@ -30,6 +30,8 @@ window.YaioAppBaseConfig = function() {
     me.CONST_MasterId               = "MasterplanMasternode1";
     me.loginUrl                     = "/yaio-explorerapp/yaio-explorerapp.html#/login";
     
+    me.exportStaticDocumentationUrl = "/yaio-explorerapp/yaio-staticapp.html?mode=documentatuion&template=";
+    
     me.datasources = [];
     
     // App urls

@@ -45,8 +45,8 @@ Yaio.StaticAccessManagerService = function(appBase, config, defaultConfig) {
         me.setAvailiableNodeAction('search', true);
         
         me.setAvailiableNodeAction('frontpagebaseurl', me.appBase.config.resBaseUrl + 'static/');
-        me.setAvailiableNodeAction('syshelp', me.appBase.config.resBaseUrl + 'static/SysHelp1.html');
-        me.setAvailiableNodeAction('sysinfo', me.appBase.config.resBaseUrl + 'static/SysInfo1.html');
+        me.setAvailiableNodeAction('syshelp', me.appBase.config.exportStaticDocumentationUrl + 'SysHelp1');
+        me.setAvailiableNodeAction('sysinfo', me.appBase.config.exportStaticDocumentationUrl + 'SysInfo1');
         
         me.setAvailiableStaticExportLink('ExportStaticJsonDirect', me.appBase.config.appRootUrl + 'staticexporter/json/');
         

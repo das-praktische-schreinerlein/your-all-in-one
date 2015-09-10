@@ -449,7 +449,6 @@ Yaio.LayoutService = function(appBase) {
     
     me.yaioShowHelpSite = function(url) {
         // set messagetext
-        url += "?" + me.appBase.get('YaioBase').createXFrameAllowFrom();
         console.log("yaioShowHelpSite:" + url);
         me.$("#help-iframe").attr('src',url);
         
