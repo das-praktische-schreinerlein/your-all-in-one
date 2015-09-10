@@ -211,7 +211,10 @@ window.yaioFileJSON =
 <script type="text/javascript">
 // create app
 window.yaioAppBase = YaioAppBase();
-yaioAppBase.config.resBaseUrl = "";
+
+// reconfigure baseurls
+yaioAppBase.config.resBaseUrl = yaioAppBase.get("YaioBase").getBaseRefFromUrl(window.location.href) + "/";
+yaioAppBase.config.initResBasedUrls();
 
 // configure datasource
 // CONFIGUREDATASOURCES_SNIP

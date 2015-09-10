@@ -211,6 +211,14 @@ Yaio.BaseService = function(appBase) {
         return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
     }
     
+    me.getBaseRefFromUrl = function(url) {
+        var withoutAncor = url.split('#')[0];
+        var withoutParams = withoutAncor.split('?')[0];
+        var withoutFile = withoutParams.split('/');
+        withoutFile.splice(-1, 1);
+        return withoutFile.join('/');
+    }
+    
     me._init();
     
     return me;

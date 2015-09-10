@@ -28,10 +28,7 @@ window.YaioAppBaseConfig = function() {
     me.additionalDetectorStyleNS    = ["yaio-"];
 
     me.CONST_MasterId               = "MasterplanMasternode1";
-    me.loginUrl                     = "/yaio-explorerapp/yaio-explorerapp.html#/login";
-    
-    me.exportStaticDocumentationUrl = "/yaio-explorerapp/yaio-staticapp.html?mode=documentatuion&template=";
-    
+
     me.datasources = [];
     
     // App urls
@@ -135,6 +132,13 @@ window.YaioAppBaseConfig = function() {
             ]
         }
     };
+    
+    me.initResBasedUrls = function () {
+        me.loginUrl                     = me.resBaseUrl + "../yaio-explorerapp/yaio-explorerapp.html#/login";
+        me.exportStaticDocumentationUrl = me.resBaseUrl + "../yaio-explorerapp/yaio-staticapp.html?mode=documentatuion&template=";
+    };
+    
+    me.initResBasedUrls();
 
     return me;
 };
