@@ -106,12 +106,21 @@ yaioApp.config(function($routeProvider) {
  */
 yaioApp.config(function($sceDelegateProvider) {
     var resBaseUrl = yaioAppBase.config.resBaseUrl;
+    var whitelist = [
+        // Allow same origin resource loads.
+        'self',
+        // Allow loading from our assets domain.  Notice the difference between * and **.
+        resBaseUrl + '**'];
+    
+    // configure additional resBaseUrls for CORS
+    if (yaioAppBase.config.addResBaseUrls && yaioAppBase.config.addResBaseUrls.length  > 0) {
+        for (var idx = 0; idx < yaioAppBase.config.addResBaseUrls.length; idx++) {
+            whitelist.push(yaioAppBase.config.addResBaseUrls[idx] + "/**");
+        }
+    }
+    
     if (resBaseUrl && resBaseUrl != "") {
-        $sceDelegateProvider.resourceUrlWhitelist([
-           // Allow same origin resource loads.
-           'self',
-           // Allow loading from our assets domain.  Notice the difference between * and **.
-           resBaseUrl + '**']);
+        $sceDelegateProvider.resourceUrlWhitelist(whitelist);
     }
 });
     
@@ -131,6 +140,7 @@ yaioApp.config(function($sceDelegateProvider) {
 yaioApp.config(['$httpProvider', function($httpProvider) {
     'use strict';
 
+    $httpProvider.defaults.withCredentials = true;
     $httpProvider.defaults.headers.patch = {
         'Content-Type': 'application/json;charset=utf-8'
     };

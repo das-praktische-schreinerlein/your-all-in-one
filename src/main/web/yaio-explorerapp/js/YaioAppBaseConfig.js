@@ -24,6 +24,7 @@ window.YaioAppBaseConfig = function() {
     me.appBaseVarName               = 'yaioAppBase';
     
     me.resBaseUrl                   = "";
+    me.addResBaseUrls               = []; // additional resBaseUrls for CORS
     
     me.additionalDetectorStyleNS    = ["yaio-"];
 
