@@ -163,7 +163,7 @@ Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
             ajaxCall = function () {
                 // hack because shortcut .patch not exists yet in angular-version
                 var http = me.appBase.get('Angular.$http');
-                return http({method: method, url: url, data: nodeObj});
+                return http({method: method, url: url, data: nodeObj, withCredentials: true});
             }
         } else if (options.mode === "create") {
             // mode create 
@@ -174,7 +174,7 @@ Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
             nodeObj["sysUID"] = null;
 
             ajaxCall = function () {
-                return me.appBase.get('Angular.$http').post(url, nodeObj);
+                return me.appBase.get('Angular.$http').post(url, nodeObj, {withCredentials: true});
             }
         } else {
             // unknown mode
