@@ -1,6 +1,5 @@
 package de.yaio.app;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +9,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -18,7 +18,6 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
-import org.springframework.security.web.header.writers.frameoptions.WhiteListedAllowFromStrategy;
 import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
 import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter.XFrameOptionsMode;
 import org.springframework.security.web.util.AntPathRequestMatcher;
@@ -36,7 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private static final Logger logger = Logger.getLogger(WebSecurityConfig.class);
     
     /**
-     * configure API-Configuration
+     * configure API-Configuration for Export per HttpBasic-Auth (ICal-Clients..)
      */
     @EnableWebSecurity
     @Configuration
@@ -48,8 +47,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     // authentification
                     .httpBasic()
                 .and()
-                    .requestMatcher(new AntPathRequestMatcher("/exports/**", "GET"))
-                        .authorizeRequests()
+                        // secure path
+                        .requestMatcher(new AntPathRequestMatcher("/exports/**", "GET"))
+                            .authorizeRequests()
                         // secure API webservice
                         .anyRequest()
                             .authenticated()
@@ -66,7 +66,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }    
 
     /**
-     * configure API-Configuration
+     * configure API-Configuration for Import per HttpBasic-Auth (ICal-Clients..)
      */
     @EnableWebSecurity
     @Configuration
@@ -78,10 +78,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     // authentification
                     .httpBasic()
                 .and()
+                    // secure path
                     .requestMatcher(new AntPathRequestMatcher("/imports/**", "POST"))
                         .authorizeRequests()
-                        // secure API webservice
-                        .anyRequest()
+                    // secure API webservice
+                    .anyRequest()
                             .authenticated()
                 .and()
                    // disable csrf-protection
@@ -90,7 +91,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }    
 
     /**
-     * configure API-Configuration
+     * configure API-Configuration for Admin per HttpBasic-Auth
      */
     @EnableWebSecurity
     @Configuration
@@ -102,6 +103,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     // authentification
                     .httpBasic()
                 .and()
+                    // secure path
                     .requestMatcher(new AntPathRequestMatcher("/admin/**", "GET"))
                         .authorizeRequests()
                         // secure API webservice
@@ -114,7 +116,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }    
 
     /**
-     * configure API-Configuration
+     * configure API-Configuration for Form-Auth (REST-API, Browsers..)
      */
     @EnableWebSecurity
     @Configuration
@@ -143,6 +145,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and() 
                     // authorize Requests
                     .authorizeRequests()
+                        // allow CORS-Options Request
+                        .antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
+                        // secure path
                         .antMatchers("/js/**", "/css/**", "/yaio-explorerapp/**", "/dist/**",
                                      "/converters/**", "/yaio-explorerapp/yaio-explorerapp.html",
                                      "/freemind-flash/**",
