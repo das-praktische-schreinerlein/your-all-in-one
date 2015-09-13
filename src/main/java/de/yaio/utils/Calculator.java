@@ -103,7 +103,7 @@ public class Calculator {
                     WorkflowState a2 = (WorkflowState) arg2;
                     
                     // compare the workflowstates by their order
-                    res = (a1.ordinal() >= a2.ordinal() ? a1 : a2);
+                    res = a1.ordinal() >= a2.ordinal() ? a1 : a2;
                     
                     // special case: if DONE && OPEN -> RUNNING
                     if (a1 == WorkflowState.DONE && a2 == WorkflowState.OPEN) {
@@ -310,5 +310,44 @@ public class Calculator {
         }
 
         return result;
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Tools - Calculation
+     * <h4>FeatureDescription:</h4>
+     *     check if the value is a valid aufwand (!= null and >= CONST_DOUBLE_NULL)
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue boolean - result of the check
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Calculator
+     * @param arg1 - value1 for check
+     * @return - result of the check
+     */
+    public static boolean isAufwand(final Double arg1) {
+        if (arg1 != null && arg1 >= Calculator.CONST_DOUBLE_NULL)  {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Tools - Calculation
+     * <h4>FeatureDescription:</h4>
+     *     check if the value is a valid stand (!= null and >= CONST_DOUBLE_NULL)
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue boolean - result of the check
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Calculator
+     * @param arg1 - value1 for check
+     * @return - result of the check
+     */
+    public static boolean isStand(final Double arg1) {
+        return isAufwand(arg1);
     }
 }

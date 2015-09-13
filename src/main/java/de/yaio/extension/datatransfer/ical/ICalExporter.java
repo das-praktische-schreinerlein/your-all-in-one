@@ -313,10 +313,10 @@ public class ICalExporter extends WikiExporter {
                         + TF.format(curNode.getSysChangeDate()) + "Z" + "\n";
         res += "UID:" + curNode.getSysUID() + "\n";
         
-        String Id = "";
-        Id += (curNode.getMetaNodePraefix() != null ? curNode.getMetaNodePraefix() : "");
-        Id += (curNode.getMetaNodeNummer() != null ? curNode.getMetaNodeNummer() : "");
-        res += "SUMMARY:" + Id  + ": " + name + "\n";
+        String id = "";
+        id += curNode.getMetaNodePraefix() != null ? curNode.getMetaNodePraefix() : "";
+        id += curNode.getMetaNodeNummer() != null ? curNode.getMetaNodeNummer() : "";
+        res += "SUMMARY:" + id  + ": " + name + "\n";
         res += "CATEGORIES:Planung\n";
         Date dateStart = curNode.getCurrentStart();
         Date dateEnde = curNode.getPlanEnde();
@@ -444,10 +444,10 @@ public class ICalExporter extends WikiExporter {
                         + TF.format(curNode.getSysChangeDate()) + "Z" + "\n";
         res += "UID:" + curNode.getSysUID() + "\n";
 
-        String Id = "";
-        Id += (curNode.getMetaNodePraefix() != null ? curNode.getMetaNodePraefix() : "");
-        Id += (curNode.getMetaNodeNummer() != null ? curNode.getMetaNodeNummer() : "");
-        res += "SUMMARY:" + Id  + ": " + name + "\n";
+        String id = "";
+        id += curNode.getMetaNodePraefix() != null ? curNode.getMetaNodePraefix() : "";
+        id += curNode.getMetaNodeNummer() != null ? curNode.getMetaNodeNummer() : "";
+        res += "SUMMARY:" + id  + ": " + name + "\n";
         res += "CATEGORIES:Planung\n";
         Date dateStart = curNode.getCurrentStart();
         Date dateEnde = curNode.getCurrentEnde();
@@ -522,6 +522,45 @@ public class ICalExporter extends WikiExporter {
     @Override
     public String getMasterNodeResult(final DataDomain masterNode, 
             final OutputOptions oOptions) throws Exception {
+        String icalRes = getCalHeader(masterNode, oOptions);
+
+        // Daten berechnen
+        if (oOptions.isFlgRecalc()) {
+            masterNode.recalcData(NodeService.CONST_RECURSE_DIRECTION_CHILDREN);
+        }
+        icalRes += super.getMasterNodeResult(masterNode, oOptions);
+        
+        // Footer anhaengen
+        icalRes += getCalFooter(masterNode, oOptions);
+        
+        // Hack wegen UFT8-Sonderzeichen
+        // escape non latin
+        StringBuilder sb = FormatterImpl.escapeNonLatin(icalRes, new StringBuilder());
+        icalRes = sb.toString();
+        icalRes = icalRes.replaceAll("\n", "\r\n");
+        
+        
+        return icalRes;
+    }
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     DataExport
+     *     Presentation
+     * <h4>FeatureDescription:</h4>
+     *     get header for a ICal-calendar
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue String - header for ICal-calendar
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Layout
+     * @param masterNode - node for output
+     * @param oOptions - options for output (formatter)
+     * @return - header for ICal-calendar
+     */
+    public String getCalHeader(final DataDomain masterNode, 
+            final OutputOptions oOptions) {
         String icalRes = "BEGIN:VCALENDAR\n";
         icalRes += "PRODID:-//Mozilla.org/NONSGML Mozilla Calendar V1.1//EN\n";
         icalRes += "VERSION:2.0\n";
@@ -546,22 +585,29 @@ public class ICalExporter extends WikiExporter {
         icalRes += "END:STANDARD\n";
         icalRes += "END:VTIMEZONE\n";
 
-        // Daten berechnen
-        if (oOptions.isFlgRecalc()) {
-            masterNode.recalcData(NodeService.CONST_RECURSE_DIRECTION_CHILDREN);
-        }
-        icalRes += super.getMasterNodeResult(masterNode, oOptions);
-        
-        // Footer anhaengen
-        icalRes += "END:VCALENDAR\n";
-        
-        // Hack wegen UFT8-Sonderzeichen
-        // escape non latin
-        StringBuilder sb = FormatterImpl.escapeNonLatin(icalRes, new StringBuilder());
-        icalRes = sb.toString();
-        icalRes = icalRes.replaceAll("\n", "\r\n");
-        
-        
+        return icalRes;
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     DataExport
+     *     Presentation
+     * <h4>FeatureDescription:</h4>
+     *     get footer for a ICal-calendar
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue String - footer for ICal-calendar
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Layout
+     * @param masterNode - node for output
+     * @param oOptions - options for output (formatter)
+     * @return - footer for ICal-calendar
+     */
+    public String getCalFooter(final DataDomain masterNode, 
+                                  final OutputOptions oOptions) {
+        String icalRes = "END:VCALENDAR\n";
+
         return icalRes;
     }
 }
