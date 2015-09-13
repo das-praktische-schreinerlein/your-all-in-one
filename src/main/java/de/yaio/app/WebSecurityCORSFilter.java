@@ -38,19 +38,21 @@ import org.springframework.stereotype.Component;
 public class WebSecurityCORSFilter implements Filter {
 
     @Override
-    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
+    public void doFilter(final ServletRequest req, final ServletResponse res, 
+                         final FilterChain chain) throws IOException, ServletException {
         HttpServletResponse response = (HttpServletResponse) res;
-        response.setHeader("Access-Control-Allow-Origin", ((HttpServletRequest)req).getHeader("Origin"));
+        response.setHeader("Access-Control-Allow-Origin", ((HttpServletRequest) req).getHeader("Origin"));
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PUT, PATCH");
         response.setHeader("Access-Control-Allow-Credentials", "true");
         response.setHeader("Access-Control-Max-Age", "3600");
-        response.setHeader("Access-Control-Allow-Headers", "accept, Authorization, content-type, cookie, origin, x-requested-with");
+        response.setHeader("Access-Control-Allow-Headers", 
+                        "accept, Authorization, content-type, cookie, origin, x-requested-with");
         chain.doFilter(req, res);
     }
 
     @Override
-    public void init(FilterConfig filterConfig) {}
+    public void init(final FilterConfig filterConfig) { }
 
     @Override
-    public void destroy() {}
+    public void destroy() { }
 }
