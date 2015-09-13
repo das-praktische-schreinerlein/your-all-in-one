@@ -23,6 +23,7 @@ import java.util.Map;
 
 import javax.persistence.TypedQuery;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import de.yaio.core.node.BaseNode;
@@ -30,6 +31,7 @@ import de.yaio.core.node.TaskNode;
 import de.yaio.core.nodeservice.BaseNodeService;
 import de.yaio.core.nodeservice.NodeService;
 import de.yaio.core.nodeservice.TaskNodeService;
+import de.yaio.datatransfer.exporter.OutputOptions;
 
 
 /**
@@ -157,6 +159,27 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
         return query.getResultList();
     }
     
+    @SuppressWarnings("unchecked")
+    @Override
+    public long countExtendedSearchBaseNodes(final String fulltext, final OutputOptions oOptions) {
+        TypedQuery<Long> query = 
+                        (TypedQuery<Long>) this.createExtendedSearchQuery(true, fulltext, oOptions, null);
+        return query.getSingleResult();
+    }
+    
+    
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<BaseNode> findExtendedSearchBaseNodeEntries(final String fulltext, final OutputOptions oOptions,
+                    final String sortConfig, final int firstResult, final int maxResults) {
+        TypedQuery<BaseNode> query = 
+                        (TypedQuery<BaseNode>) this.createExtendedSearchQuery(false, fulltext, oOptions, sortConfig);
+        query.setFirstResult(firstResult);
+        query.setMaxResults(maxResults);
+        
+        return query.getResultList();
+    }
+
     @Override
     public List<BaseNode> findSymLinkBaseNode(final String symLinkRef) {
         return BaseNode.entityManager().createQuery(
@@ -274,42 +297,67 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
         }
     }
     
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    protected TypedQuery createFulltextQuery(final boolean flgCount, final String pfulltext, final String sortConfig) {
-        // setup class
-        Class resClass = BaseNode.class;
-        if (flgCount) {
-            resClass = Long.class;
+    
+    protected List<DBFilter> createMapFilter(final String fieldName, final Map<String, String> queryParams) {
+        int idx = 0;
+        List<DBFilter> dbFilters = new ArrayList<DBFilter>();
+        if (queryParams != null) {
+            for (String state : queryParams.keySet()) {
+                String sql = "(lower(" + fieldName + ") = lower(:mapFilter" + fieldName + idx + ")";
+                List<DBFilter.Parameter> parameters = new ArrayList<DBFilter.Parameter>();
+                parameters.add(new DBFilter.Parameter("mapFilter" + fieldName + idx, state));
+                dbFilters.add(new DBFilter(sql, parameters));
+                idx++;
+            }
+        }
+        return dbFilters;
+    }
+    
+    protected List<DBFilter> createOutputOptionsFilter(final OutputOptions oOptions) {
+        List<DBFilter> dbFilters = new ArrayList<DBFilter>();
+        if (oOptions == null) {
+            return dbFilters;
         }
 
+        // create filters for maps
+        dbFilters.addAll(createMapFilter("state", oOptions.getMapStateFilter()));
+        dbFilters.addAll(createMapFilter("className", oOptions.getMapClassFilter()));
+        dbFilters.addAll(createMapFilter("type", oOptions.getMapTypeFilter()));
+        
+        // create filter for ebene
+        String sql = "(ebene <= " + oOptions.getMaxEbene() + ")";
+        List<DBFilter.Parameter> parameters = new ArrayList<DBFilter.Parameter>();
+        parameters.add(new DBFilter.Parameter("ltmaxEbene", "" + oOptions.getMaxEbene()));
+        dbFilters.add(new DBFilter(sql, parameters));
+
+        return dbFilters;
+    }
+
+    protected List<DBFilter> createFulltextFilter(final String pfulltext) {
+        List<DBFilter> dbFilters = new ArrayList<DBFilter>();
+
         // tokenize words
-        String filter = "";
         String[] searchWords = null;
-        if (pfulltext != null && pfulltext.length() > 0) {
+        if (!StringUtils.isEmpty(pfulltext)) {
             String fulltext = pfulltext.replace("  ", " ");
             searchWords = fulltext.split(" ");
-            if (searchWords.length > 0) {
-                int idx = 0;
-                filter = " where (lower(name) like lower(:fulltext" + idx + ")"
+            for (int idx = 0; idx < searchWords.length; idx++) {
+                String sql = "(lower(name) like lower(:fulltext" + idx + ")"
                                 + " or lower(node_desc) like lower(:fulltext" + idx + ")"
                                 + " or lower(sym_link_ref) like lower(:fulltext" + idx + ")"
                                 + " or lower(sym_link_name) like lower(:fulltext" + idx + ")"
                                 + " or lower(res_loc_name) like lower(:fulltext" + idx + ")"
                                 + " or lower(res_loc_ref) like lower(:fulltext" + idx + ")"
                                 + ")";
-                for (; idx < searchWords.length; idx++) {
-                    filter += " and (lower(name) like lower(:fulltext" + idx + ")"
-                                    + " or lower(node_desc) like lower(:fulltext" + idx + ")"
-                                    + " or lower(sym_link_ref) like lower(:fulltext" + idx + ")"
-                                    + " or lower(sym_link_name) like lower(:fulltext" + idx + ")"
-                                    + " or lower(res_loc_name) like lower(:fulltext" + idx + ")"
-                                    + " or lower(res_loc_ref) like lower(:fulltext" + idx + ")"
-                                    + ")";
-                }
+                List<DBFilter.Parameter> parameters = new ArrayList<DBFilter.Parameter>();
+                parameters.add(new DBFilter.Parameter("fulltext" + idx, "%" + searchWords[idx] + "%"));
+                dbFilters.add(new DBFilter(sql, parameters));
             }
         }
-
+        return dbFilters;
+    }
+    
+    protected String createSort(final String sortConfig) {
         // setup sort
         String sort = "";
         if (sortConfig != null) {
@@ -325,27 +373,63 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
         // setup order
         String order = "asc";
         
+        return " order by " + sort 
+            + " ebene " + order 
+            + ", parent_node " + order 
+            + ", sort_pos " + order;
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    protected TypedQuery createFulltextQuery(final boolean flgCount, final String pfulltext, final String sortConfig) {
+        return createExtendedSearchQuery(flgCount, pfulltext, null, sortConfig);
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    protected TypedQuery createExtendedSearchQuery(final boolean flgCount, final String pfulltext, 
+                                                   final OutputOptions oOptions, final String sortConfig) {
+        // setup class
+        Class resClass = BaseNode.class;
+        if (flgCount) {
+            resClass = Long.class;
+        }
+        
+        // create filter
+        List<DBFilter> dbFilters = new ArrayList();
+        dbFilters.addAll(createFulltextFilter(pfulltext));
+        dbFilters.addAll(createOutputOptionsFilter(oOptions));
+        String filter = "";
+        if (dbFilters.size() > 0) {
+            List<String>sqlList = new ArrayList<String>();
+            for (DBFilter dbFilter : dbFilters) {
+                sqlList.add(dbFilter.getSql());
+            }
+            filter = " where " + StringUtils.join(sqlList, " and ");
+        }
+
+        // create sort
+        String sort = createSort(sortConfig);
+        
         // setup select
         String select = "SELECT o FROM BaseNode o"
                       + filter
-                      + " order by " + sort 
-                      + " ebene " + order 
-                      + ", parent_node " + order 
-                      + ", sort_pos " + order;
+                      + sort;
         if (flgCount) {
             select = "SELECT COUNT(o) FROM BaseNode o"
                    + filter;
         }
+        
+        LOGGER.info(select);
         
         // create query
         TypedQuery query = BaseNode.entityManager().createQuery(
                         select, resClass);
         
         // add parameters
-        if (searchWords != null && searchWords.length > 0) {
-            int idx = 0;
-            for (; idx < searchWords.length; idx++) {
-                query.setParameter("fulltext" + idx, "%" + searchWords[idx] + "%");
+        if (dbFilters.size() > 0) {
+            for (DBFilter dbFilter : dbFilters) {
+                for (DBFilter.Parameter parameter : dbFilter.getParameters()) {
+                    query.setParameter(parameter.getName(), parameter.getValue());
+                }
             }
         }
         
