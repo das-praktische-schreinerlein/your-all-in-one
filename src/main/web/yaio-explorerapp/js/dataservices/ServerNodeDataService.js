@@ -258,7 +258,7 @@ Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
         // load data
         var url = me.config.restLogoutUrl;
         var ajaxCall = function () {
-            return me.appBase.get('Angular.$http').post(url, $.param({}));
+            return me.appBase.get('Angular.$http').post(url, $.param({}, {withCredentials: true}));
         }
         
         // do http
