@@ -23,6 +23,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import de.yaio.core.datadomain.DataDomain;
@@ -30,7 +31,6 @@ import de.yaio.core.node.BaseNode;
 import de.yaio.core.node.EventNode;
 import de.yaio.core.node.InfoNode;
 import de.yaio.core.node.TaskNode;
-import de.yaio.core.nodeservice.NodeService;
 import de.yaio.datatransfer.exporter.OutputOptions;
 import de.yaio.datatransfer.exporter.formatter.DescDataFormatterImpl;
 import de.yaio.datatransfer.exporter.formatter.Formatter;
@@ -295,12 +295,14 @@ public class ICalExporter extends WikiExporter {
                 + " (" + curNode.getParentNameHirarchry(" <- ", false) + ")";
         }
         //name = name.replaceAll("\"", "'");
-        name = name.replaceAll("<WLESC>", "\\");
+        name = name.replaceAll("<WLESC>", "\\\\");
         name = name.replaceAll("<WLTAB>", "\t");
 
         // Felder einlesen
         StringBuffer descFull = new StringBuffer();
-        this.formatNodeDataDomains(curNode, descFull, genOutputOptionsForDescArea(oOptions));
+        OutputOptions descOOptions = genOutputOptionsForDescArea(oOptions);
+        descOOptions.setFlgReEscapeDesc(true);
+        this.formatNodeDataDomains(curNode, descFull, descOOptions);
         String statusName = "IN-PROCESS";
 
         // Result erzeugen
@@ -342,7 +344,7 @@ public class ICalExporter extends WikiExporter {
 
         if (descFull != null && descFull.length() > 0 && oOptions.isFlgShowDesc()) {
             // Html-Escapen
-            String tmpDesc = descFull.toString().replaceAll("\n", "\\n");
+            String tmpDesc = descFull.toString().replaceAll("\n", "\\\\n");
             res += "DESCRIPTION:" + tmpDesc + "\n";
         } else {
             res += "DESCRIPTION:\n";
@@ -426,12 +428,14 @@ public class ICalExporter extends WikiExporter {
                 + " (" + curNode.getParentNameHirarchry(" <- ", false) + ")";
         }
         //name = name.replaceAll("\"", "'");
-        name = name.replaceAll("<WLESC>", "\\");
+        name = name.replaceAll("<WLESC>", "\\\\");
         name = name.replaceAll("<WLTAB>", "\t");
 
         // Felder einlesen
         StringBuffer descFull = new StringBuffer();
-        this.formatNodeDataDomains(curNode, descFull, genOutputOptionsForDescArea(oOptions));
+        OutputOptions descOOptions = genOutputOptionsForDescArea(oOptions);
+        descOOptions.setFlgReEscapeDesc(true);
+        this.formatNodeDataDomains(curNode, descFull, descOOptions);
         String statusName = "CONFIRMED";
 
         // Result erzeugen
@@ -494,9 +498,10 @@ public class ICalExporter extends WikiExporter {
             res += "STATUS:" + statusName + "\n";
         }
 
-        if (descFull != null && descFull.length() > 0 && oOptions.isFlgShowDesc()) {
+        if (!StringUtils.isEmpty(descFull) && oOptions.isFlgShowDesc()) {
             // Html-Escapen
-            String tmpDesc = descFull.toString().replaceAll("\n", "\\n");
+            String tmpDesc = descFull.toString();
+            tmpDesc = tmpDesc.replaceAll("\n", "\\\\n");
             res += "DESCRIPTION:" + tmpDesc + "\n";
         } else {
             res += "DESCRIPTION:\n";
