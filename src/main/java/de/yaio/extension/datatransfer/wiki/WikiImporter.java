@@ -429,7 +429,7 @@ public class WikiImporter extends ImporterImpl {
             Map<String, Object> mpStates = null;
             if (inputOptions.strReadIfStatusInListOnly != null) {
                 mpStates = new HashMap<String, Object>();
-                String [] arrStatusFilter = 
+                String[] arrStatusFilter = 
                         inputOptions.strReadIfStatusInListOnly.split(",");
                 for (int zaehler = 0; zaehler < arrStatusFilter.length; zaehler++) {
                     mpStates.put(arrStatusFilter[zaehler], arrStatusFilter[zaehler]);

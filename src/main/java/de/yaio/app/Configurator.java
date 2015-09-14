@@ -379,7 +379,7 @@ public class Configurator {
                     + " / " + urlName + "=" + url
                     + " / " + descName + "=" + desc);
             }
-            if (! StringUtils.isEmpty(name) && ! StringUtils.isEmpty(url)) {
+            if (!StringUtils.isEmpty(name) && !StringUtils.isEmpty(url)) {
                 Map<String, String> data = new HashMap<String, String>();
                 data.put(CONST_PROPNAME_YAIOINSTANCES_NAME, name);
                 data.put(CONST_PROPNAME_YAIOINSTANCES_DESC, desc);

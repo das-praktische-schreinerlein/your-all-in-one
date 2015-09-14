@@ -132,7 +132,7 @@ public class DataUtils {
         Map<String, String> mpStates = null;
         if (!StringUtils.isEmpty(csvString)) {
             mpStates = new HashMap<String, String>();
-            String [] arrStatusFilter = csvString.split(",");
+            String[] arrStatusFilter = csvString.split(",");
             for (int zaehler = 0; zaehler < arrStatusFilter.length; zaehler++) {
                 mpStates.put(arrStatusFilter[zaehler], arrStatusFilter[zaehler]);
             }

@@ -146,7 +146,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     // authorize Requests
                     .authorizeRequests()
                         // allow CORS-Options Request
-                        .antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
+                        .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         // secure path
                         .antMatchers("/js/**", "/css/**", "/yaio-explorerapp/**", "/dist/**",
                                      "/converters/**", "/yaio-explorerapp/yaio-explorerapp.html",

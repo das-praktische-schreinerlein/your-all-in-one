@@ -16,6 +16,7 @@
  */
 package de.yaio.datatransfer.exporter.formatter;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import de.yaio.core.datadomain.DataDomain;
@@ -99,9 +100,9 @@ public class SymLinkDataFormatterImpl extends FormatterImpl implements SymLinkDa
         String symLinkTags = node.getSymLinkTags();
 
         // Ausgabe erzeugen
-        if ((symLinkRef != null && symLinkRef.length() > 0)
-            || (symLinkName != null && symLinkName.length() > 0)
-            || (symLinkTags != null && symLinkTags.length() > 0)
+        if (!StringUtils.isEmpty(symLinkRef)
+            || !StringUtils.isEmpty(symLinkName)
+            || !StringUtils.isEmpty(symLinkTags)
             ) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Do: SymLinkDataFormatter for Node:" + node.getNameForLogger());

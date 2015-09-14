@@ -302,7 +302,7 @@ public class ConverterUtils {
         List<String> addResBaseUrls = new ArrayList<String>();
         try {
             
-            if (! StringUtils.isEmpty(sysUID)) {
+            if (!StringUtils.isEmpty(sysUID)) {
                 res = this.exportNode(sysUID, exporter, oOptions, ".json", response);
             }
 

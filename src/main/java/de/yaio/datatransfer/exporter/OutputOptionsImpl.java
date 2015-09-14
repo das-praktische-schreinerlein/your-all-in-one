@@ -319,7 +319,7 @@ public class OutputOptionsImpl implements OutputOptions {
     }
     
     public int manageIntValues(final Integer value) {
-        return (value != null ? value : 0);
+        return value != null ? value : 0;
     }
     
     

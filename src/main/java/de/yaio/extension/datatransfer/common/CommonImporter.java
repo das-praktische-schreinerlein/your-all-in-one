@@ -309,7 +309,7 @@ public class CommonImporter {
         // read data
         DataDomain jpaNode = 
                         jpaImporter.getBaseNodeBySysUID(exportSysUID);
-        BaseNode baseNode = ((BaseNode) jpaNode);
+        BaseNode baseNode = (BaseNode) jpaNode;
         if (baseNode == null) {
             throw new IllegalArgumentException("node not found sysUID=" + exportSysUID);
         }

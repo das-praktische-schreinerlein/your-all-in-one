@@ -16,6 +16,7 @@
  */
 package de.yaio.datatransfer.exporter.formatter;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import de.yaio.core.datadomain.DataDomain;
@@ -100,10 +101,10 @@ public class DocLayoutDataFormatterImpl extends FormatterImpl implements DocLayo
         String docLayoutFlgCloseDiv = node.getDocLayoutFlgCloseDiv();
 
         // Ausgabe erzeugen
-        if ((docLayoutTagCommand != null && docLayoutTagCommand.length() > 0)
-            || (docLayoutAddStyleClass != null && docLayoutAddStyleClass.length() > 0)
-            || (docLayoutShortName != null && docLayoutShortName.length() > 0)
-            || (docLayoutFlgCloseDiv != null && docLayoutFlgCloseDiv.length() > 0)
+        if (!StringUtils.isEmpty(docLayoutTagCommand)
+            || !StringUtils.isEmpty(docLayoutAddStyleClass)
+            || !StringUtils.isEmpty(docLayoutShortName)
+            || !StringUtils.isEmpty(docLayoutFlgCloseDiv)
             ) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Do: DocLayoutDataFormatter for Node:" + node.getNameForLogger());

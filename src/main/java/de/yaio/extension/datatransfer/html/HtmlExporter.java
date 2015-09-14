@@ -242,8 +242,7 @@ public class HtmlExporter extends WikiExporter {
                 
                 String command = this.getDocLayoutTagCommand(node);
                 String docLayoutFlgCloseDiv = node.getDocLayoutFlgCloseDiv();
-                docLayoutFlgCloseDiv = 
-                        (docLayoutFlgCloseDiv == null ? "" : docLayoutFlgCloseDiv);
+                docLayoutFlgCloseDiv = docLayoutFlgCloseDiv == null ? "" : docLayoutFlgCloseDiv;
 
                 //eventuelle Tabelle starten
                 if (CONST_LAYOUT_TAG_TR.equalsIgnoreCase(command)) {
@@ -360,9 +359,9 @@ public class HtmlExporter extends WikiExporter {
         // Layout konfigurieren
         String layoutCommand = this.getDocLayoutTagCommand(curNode);
         String addStyle = curNode.getDocLayoutAddStyleClass();
-        addStyle = (addStyle == null ? "" : addStyle);
+        addStyle = addStyle == null ? "" : addStyle;
         String shortName = curNode.getDocLayoutShortName();
-        shortName = (shortName == null ? "" : shortName);
+        shortName = shortName == null ? "" : shortName;
 
         // Layout-Result erzeugen
         res = "";
@@ -397,7 +396,7 @@ public class HtmlExporter extends WikiExporter {
             // check for UrlRes
             if (UrlResNode.class.isInstance(curNode)) {
                 // URLRes
-                UrlResNode urlResNode = ((UrlResNode) curNode);
+                UrlResNode urlResNode = (UrlResNode) curNode;
                 
                 // set label
                 String label = urlResNode.getResLocName();

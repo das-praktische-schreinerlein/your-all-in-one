@@ -16,6 +16,7 @@
  */
 package de.yaio.datatransfer.exporter.formatter;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import de.yaio.core.datadomain.DataDomain;
@@ -99,9 +100,9 @@ public class ResLocDataFormatterImpl extends FormatterImpl implements ResLocData
         String resLocTags = node.getResLocTags();
 
         // Ausgabe erzeugen
-        if ((resLocRef != null && resLocRef.length() > 0)
-            || (resLocName != null && resLocName.length() > 0)
-            || (resLocTags != null && resLocTags.length() > 0)
+        if (!StringUtils.isEmpty(resLocRef)
+            || !StringUtils.isEmpty(resLocName)
+            || !StringUtils.isEmpty(resLocTags)
             ) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Do: ResLocDataFormatter for Node:" + node.getNameForLogger());
