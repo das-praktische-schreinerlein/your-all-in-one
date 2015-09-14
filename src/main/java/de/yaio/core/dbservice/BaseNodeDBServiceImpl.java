@@ -301,13 +301,14 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
         int idx = 0;
         List<DBFilter> dbFilters = new ArrayList<DBFilter>();
         if (queryParams != null) {
+            List<String> sqlList = new ArrayList<String>();
+            List<DBFilter.Parameter> parameters = new ArrayList<DBFilter.Parameter>();
             for (String state : queryParams.keySet()) {
-                String sql = "(lower(" + fieldName + ") = lower(:mapFilter" + fieldName + idx + ")";
-                List<DBFilter.Parameter> parameters = new ArrayList<DBFilter.Parameter>();
+                sqlList.add("(lower(" + fieldName + ") = lower(:mapFilter" + fieldName + idx + ")");
                 parameters.add(new DBFilter.Parameter("mapFilter" + fieldName + idx, state));
-                dbFilters.add(new DBFilter(sql, parameters));
                 idx++;
             }
+            dbFilters.add(new DBFilter("(" + StringUtils.join(sqlList, " or ") + ")", parameters));
         }
         return dbFilters;
     }
