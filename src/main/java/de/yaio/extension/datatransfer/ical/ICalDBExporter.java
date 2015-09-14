@@ -18,7 +18,6 @@
 package de.yaio.extension.datatransfer.ical;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.collections.MapUtils;
 import org.apache.log4j.Logger;
@@ -29,10 +28,10 @@ import de.yaio.core.node.BaseNode;
 import de.yaio.core.node.EventNode;
 import de.yaio.core.node.InfoNode;
 import de.yaio.core.node.TaskNode;
-import de.yaio.core.nodeservice.NodeService;
 import de.yaio.datatransfer.exporter.OutputOptions;
 import de.yaio.datatransfer.exporter.OutputOptionsImpl;
 import de.yaio.datatransfer.exporter.formatter.FormatterImpl;
+import de.yaio.utils.Calculator;
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -136,7 +135,7 @@ public class ICalDBExporter extends ICalExporter {
         List<BaseNode> matchingNodes = dbService.findExtendedSearchBaseNodeEntries(null, oOptions, null, 0, 99999);
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("node:" + parentNode.getWorkingId() 
-                + " iterate matchimng nodes for search:" + matchingNodes.size());
+                + " iterate matching nodes for search:" + matchingNodes.size());
         }
         
         // iterate nodes found
@@ -169,6 +168,19 @@ public class ICalDBExporter extends ICalExporter {
                     LOGGER.debug("curNode:" + curNode.getNameForLogger() 
                         + " ignore: no WF-Status but " + curNodeStatus);
                 }
+                continue;
+            }
+            
+            // skip if no aufwand and children with workflow
+            if (curTaskNode.getStatWorkflowCount() > 1 
+                && !Calculator.isAufwand(curTaskNode.getPlanAufwand())
+                && !Calculator.isAufwand(curTaskNode.getIstAufwand())
+                && !Calculator.isStand(curTaskNode.getIstStand())) {
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("curNode:" + curNode.getNameForLogger() 
+                        + " ignore: hasWorkflowChildren and no own aufwand/stand");
+                }
+                continue;
             }
             
             // generate nodeData
