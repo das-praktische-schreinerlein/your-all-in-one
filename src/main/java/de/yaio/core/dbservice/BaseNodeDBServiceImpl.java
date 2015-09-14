@@ -304,7 +304,7 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
             List<String> sqlList = new ArrayList<String>();
             List<DBFilter.Parameter> parameters = new ArrayList<DBFilter.Parameter>();
             for (String state : queryParams.keySet()) {
-                sqlList.add("(lower(" + fieldName + ") = lower(:mapFilter" + fieldName + idx + ")");
+                sqlList.add("(" + "lower(" + fieldName + ") = lower(:mapFilter" + fieldName + idx + ")" + ")");
                 parameters.add(new DBFilter.Parameter("mapFilter" + fieldName + idx, state));
                 idx++;
             }
@@ -321,13 +321,13 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
 
         // create filters for maps
         dbFilters.addAll(createMapFilter("state", searchOptions.getMapStateFilter()));
-        dbFilters.addAll(createMapFilter("className", searchOptions.getMapClassFilter()));
+        dbFilters.addAll(createMapFilter("dtype", searchOptions.getMapClassFilter()));
         dbFilters.addAll(createMapFilter("type", searchOptions.getMapTypeFilter()));
         
         // create filter for ebene
-        String sql = "(ebene <= " + searchOptions.getMaxEbene() + ")";
+        String sql = "(ebene <= :ltmaxEbene)";
         List<DBFilter.Parameter> parameters = new ArrayList<DBFilter.Parameter>();
-        parameters.add(new DBFilter.Parameter("ltmaxEbene", "" + searchOptions.getMaxEbene()));
+        parameters.add(new DBFilter.Parameter("ltmaxEbene", new Integer(searchOptions.getMaxEbene())));
         dbFilters.add(new DBFilter(sql, parameters));
 
         return dbFilters;

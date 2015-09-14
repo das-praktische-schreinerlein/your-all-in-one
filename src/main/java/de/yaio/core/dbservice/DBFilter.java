@@ -37,12 +37,12 @@ public class DBFilter {
      */
     public static class Parameter {
         protected String name;
-        protected String value;
+        protected Object value;
         /**
          * @param name  name of the parameter
          * @param value value of the parameter
          */
-        public Parameter(final String name, final String value) {
+        public Parameter(final String name, final Object value) {
             super();
             this.name = name;
             this.value = value;
@@ -57,7 +57,7 @@ public class DBFilter {
         /**
          * @return the {@link DBFilter.Parameter#value}
          */
-        public final String getValue() {
+        public final Object getValue() {
             return this.value;
         }
     }
