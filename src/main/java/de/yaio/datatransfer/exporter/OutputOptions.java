@@ -16,7 +16,7 @@
  */
 package de.yaio.datatransfer.exporter;
 
-import java.util.Map;
+import de.yaio.core.dbservice.SearchOptions;
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -30,7 +30,7 @@ import java.util.Map;
  * @copyright Copyright (c) 2014, Michael Schreiner
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-public interface OutputOptions {
+public interface OutputOptions extends SearchOptions {
     boolean isFlgDoIntend();
     void setFlgDoIntend(boolean flgDoIntend);
     boolean isFlgIntendSum();
@@ -71,8 +71,6 @@ public interface OutputOptions {
     boolean isFlgUsePublicBaseRef();
     void setFlgUsePublicBaseRef(boolean flgUsePublicBaseRef);
 
-    int getMaxEbene();
-    void setMaxEbene(Integer maxEbene);
     int getMaxUeEbene();
     void setMaxUeEbene(Integer maxUeEbene);
     int getIntend();
@@ -83,15 +81,6 @@ public interface OutputOptions {
     void setIntendSys(Integer intendSys);
     boolean isFlgTrimDesc();
     void setFlgTrimDesc(boolean flgTrimDesc);
-
-    String getStrReadIfStatusInListOnly();
-    void setStrReadIfStatusInListOnly(String strReadIfStatusInListOnly);
-
-    String getStrClassFilter();
-    void setStrClassFilter(String strClassFilter);
-    
-    String getStrTypeFilter();
-    void setStrTypeFilter(String strTypeFilter);
 
     int getIntendFuncArea();
     void setIntendFuncArea(Integer intendPlanToPos);
@@ -107,9 +96,15 @@ public interface OutputOptions {
     void setFlgShowDescWithUe(boolean flgShowDescWithUe);
     boolean isFlgShowDescInNextLine();
     void setFlgShowDescInNextLine(boolean flgShowDescInNextLine);
+
+    String getStrReadIfStatusInListOnly();
+    void setStrReadIfStatusInListOnly(String strReadIfStatusInListOnly);
+
+    String getStrClassFilter();
+    void setStrClassFilter(String strClassFilter);
     
-    Map<String, String> getMapClassFilter();
-    Map<String, String> getMapTypeFilter();
-    Map<String, String> getMapStateFilter();
+    String getStrTypeFilter();
+    void setStrTypeFilter(String strTypeFilter);
+
     void initFilterMaps();
 }

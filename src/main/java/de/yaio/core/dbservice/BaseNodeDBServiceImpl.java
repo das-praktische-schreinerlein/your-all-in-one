@@ -31,7 +31,6 @@ import de.yaio.core.node.TaskNode;
 import de.yaio.core.nodeservice.BaseNodeService;
 import de.yaio.core.nodeservice.NodeService;
 import de.yaio.core.nodeservice.TaskNodeService;
-import de.yaio.datatransfer.exporter.OutputOptions;
 
 
 /**
@@ -161,19 +160,19 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
     
     @SuppressWarnings("unchecked")
     @Override
-    public long countExtendedSearchBaseNodes(final String fulltext, final OutputOptions oOptions) {
+    public long countExtendedSearchBaseNodes(final String fulltext, final SearchOptions searchOptions) {
         TypedQuery<Long> query = 
-                        (TypedQuery<Long>) this.createExtendedSearchQuery(true, fulltext, oOptions, null);
+                        (TypedQuery<Long>) this.createExtendedSearchQuery(true, fulltext, searchOptions, null);
         return query.getSingleResult();
     }
     
     
     @SuppressWarnings("unchecked")
     @Override
-    public List<BaseNode> findExtendedSearchBaseNodeEntries(final String fulltext, final OutputOptions oOptions,
+    public List<BaseNode> findExtendedSearchBaseNodeEntries(final String fulltext, final SearchOptions searchOptions,
                     final String sortConfig, final int firstResult, final int maxResults) {
-        TypedQuery<BaseNode> query = 
-                        (TypedQuery<BaseNode>) this.createExtendedSearchQuery(false, fulltext, oOptions, sortConfig);
+        TypedQuery<BaseNode> query = (TypedQuery<BaseNode>) this.createExtendedSearchQuery(
+                        false, fulltext, searchOptions, sortConfig);
         query.setFirstResult(firstResult);
         query.setMaxResults(maxResults);
         
@@ -313,21 +312,21 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
         return dbFilters;
     }
     
-    protected List<DBFilter> createOutputOptionsFilter(final OutputOptions oOptions) {
+    protected List<DBFilter> createSearchOptionsFilter(final SearchOptions searchOptions) {
         List<DBFilter> dbFilters = new ArrayList<DBFilter>();
-        if (oOptions == null) {
+        if (searchOptions == null) {
             return dbFilters;
         }
 
         // create filters for maps
-        dbFilters.addAll(createMapFilter("state", oOptions.getMapStateFilter()));
-        dbFilters.addAll(createMapFilter("className", oOptions.getMapClassFilter()));
-        dbFilters.addAll(createMapFilter("type", oOptions.getMapTypeFilter()));
+        dbFilters.addAll(createMapFilter("state", searchOptions.getMapStateFilter()));
+        dbFilters.addAll(createMapFilter("className", searchOptions.getMapClassFilter()));
+        dbFilters.addAll(createMapFilter("type", searchOptions.getMapTypeFilter()));
         
         // create filter for ebene
-        String sql = "(ebene <= " + oOptions.getMaxEbene() + ")";
+        String sql = "(ebene <= " + searchOptions.getMaxEbene() + ")";
         List<DBFilter.Parameter> parameters = new ArrayList<DBFilter.Parameter>();
-        parameters.add(new DBFilter.Parameter("ltmaxEbene", "" + oOptions.getMaxEbene()));
+        parameters.add(new DBFilter.Parameter("ltmaxEbene", "" + searchOptions.getMaxEbene()));
         dbFilters.add(new DBFilter(sql, parameters));
 
         return dbFilters;
@@ -379,24 +378,23 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
             + ", sort_pos " + order;
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    protected TypedQuery createFulltextQuery(final boolean flgCount, final String pfulltext, final String sortConfig) {
+    protected TypedQuery<?> createFulltextQuery(final boolean flgCount, final String pfulltext, 
+                    final String sortConfig) {
         return createExtendedSearchQuery(flgCount, pfulltext, null, sortConfig);
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    protected TypedQuery createExtendedSearchQuery(final boolean flgCount, final String pfulltext, 
-                                                   final OutputOptions oOptions, final String sortConfig) {
+    protected TypedQuery<?> createExtendedSearchQuery(final boolean flgCount, final String pfulltext, 
+                                                   final SearchOptions searchOptions, final String sortConfig) {
         // setup class
-        Class resClass = BaseNode.class;
+        Class<?> resClass = BaseNode.class;
         if (flgCount) {
             resClass = Long.class;
         }
         
         // create filter
-        List<DBFilter> dbFilters = new ArrayList();
+        List<DBFilter> dbFilters = new ArrayList<DBFilter>();
         dbFilters.addAll(createFulltextFilter(pfulltext));
-        dbFilters.addAll(createOutputOptionsFilter(oOptions));
+        dbFilters.addAll(createSearchOptionsFilter(searchOptions));
         String filter = "";
         if (dbFilters.size() > 0) {
             List<String>sqlList = new ArrayList<String>();
@@ -417,12 +415,10 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
             select = "SELECT COUNT(o) FROM BaseNode o"
                    + filter;
         }
-        
         LOGGER.info(select);
         
         // create query
-        TypedQuery query = BaseNode.entityManager().createQuery(
-                        select, resClass);
+        TypedQuery<?> query = BaseNode.entityManager().createQuery(select, resClass);
         
         // add parameters
         if (dbFilters.size() > 0) {
