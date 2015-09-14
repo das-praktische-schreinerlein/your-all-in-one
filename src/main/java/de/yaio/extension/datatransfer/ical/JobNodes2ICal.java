@@ -16,6 +16,7 @@
  */
 package de.yaio.extension.datatransfer.ical;
 
+import de.yaio.app.Configurator;
 import de.yaio.extension.datatransfer.wiki.JobNodes2Wiki;
 
 /**
@@ -53,7 +54,20 @@ public class JobNodes2ICal extends JobNodes2Wiki {
 
     @Override
     public void createExporter() {
-        exporter = new ICalExporter();
+        String sourceType = "";
+        try {
+            sourceType = Configurator.getInstance().getCommandLine().getOptionValue(
+                            "sourcetype", "");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if ("jpa".equalsIgnoreCase(sourceType)) {
+            // from jpa: use dbExporter
+            exporter = new ICalDBExporter();
+        } else {
+            // all other
+            exporter = new ICalExporter();
+        }
     }
 
     /**

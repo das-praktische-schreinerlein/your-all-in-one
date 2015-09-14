@@ -524,10 +524,6 @@ public class ICalExporter extends WikiExporter {
             final OutputOptions oOptions) throws Exception {
         String icalRes = getCalHeader(masterNode, oOptions);
 
-        // Daten berechnen
-        if (oOptions.isFlgRecalc()) {
-            masterNode.recalcData(NodeService.CONST_RECURSE_DIRECTION_CHILDREN);
-        }
         icalRes += super.getMasterNodeResult(masterNode, oOptions);
         
         // Footer anhaengen
@@ -538,7 +534,6 @@ public class ICalExporter extends WikiExporter {
         StringBuilder sb = FormatterImpl.escapeNonLatin(icalRes, new StringBuilder());
         icalRes = sb.toString();
         icalRes = icalRes.replaceAll("\n", "\r\n");
-        
         
         return icalRes;
     }

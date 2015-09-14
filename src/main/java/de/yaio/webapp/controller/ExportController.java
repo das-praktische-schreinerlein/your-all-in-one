@@ -40,7 +40,7 @@ import de.yaio.datatransfer.exporter.OutputOptionsImpl;
 import de.yaio.extension.datatransfer.csv.CSVExporter;
 import de.yaio.extension.datatransfer.excel.ExcelExporter;
 import de.yaio.extension.datatransfer.excel.ExcelOutputOptions;
-import de.yaio.extension.datatransfer.ical.ICalExporter;
+import de.yaio.extension.datatransfer.ical.ICalDBExporter;
 import de.yaio.extension.datatransfer.json.JSONFullExporter;
 import de.yaio.extension.datatransfer.mindmap.MindMapExporter;
 import de.yaio.extension.datatransfer.ppl.PPLExporter;
@@ -382,7 +382,7 @@ public class ExportController {
     public String exportNodeAsICal(@PathVariable(value = "sysUID") final String sysUID, 
                                    final HttpServletResponse response) {
         // configure
-        Exporter exporter = new ICalExporter();
+        Exporter exporter = new ICalDBExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
         
         // run
@@ -413,7 +413,7 @@ public class ExportController {
     public String exportNodeAsICalOnlyEvents(@PathVariable(value = "sysUID") final String sysUID, 
                                              final HttpServletResponse response) {
         // configure
-        Exporter exporter = new ICalExporter();
+        Exporter exporter = new ICalDBExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
         
         oOptions.setStrClassFilter("EventNode");
@@ -446,7 +446,7 @@ public class ExportController {
     public String exportNodeAsICalOnlyTasks(@PathVariable(value = "sysUID") final String sysUID, 
                                             final HttpServletResponse response) {
         // configure
-        Exporter exporter = new ICalExporter();
+        Exporter exporter = new ICalDBExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
         
         oOptions.setStrClassFilter("TaskNode");
@@ -480,7 +480,7 @@ public class ExportController {
     public String exportNodeAsICalOnlyTasksTodo(@PathVariable(value = "sysUID") final String sysUID, 
                                                 final HttpServletResponse response) {
         // configure
-        Exporter exporter = new ICalExporter();
+        Exporter exporter = new ICalDBExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
         
         oOptions.setStrClassFilter("TaskNode");
@@ -515,7 +515,7 @@ public class ExportController {
     public String exportNodeAsICalOnlyTasksLate(@PathVariable(value = "sysUID") final String sysUID, 
                                                 final HttpServletResponse response) {
         // configure
-        Exporter exporter = new ICalExporter();
+        Exporter exporter = new ICalDBExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
         
         oOptions.setStrClassFilter("TaskNode");
@@ -553,7 +553,7 @@ public class ExportController {
                                    @ModelAttribute final EmptyOutputOptionsImpl oOptions,
                                    final HttpServletResponse response) {
         // configure
-        Exporter exporter = new ICalExporter();
+        Exporter exporter = new ICalDBExporter();
         
         // run
         String res = converterUtils.exportNode(sysUID, exporter, oOptions, ".ics", response);

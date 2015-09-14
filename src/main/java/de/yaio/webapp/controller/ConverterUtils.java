@@ -92,7 +92,7 @@ public class ConverterUtils {
         // find a specific node
         try {
             BaseNode node = BaseNode.findBaseNode(sysUID);
-            if (node != null) {
+            if (node != null && !exporter.hasOwnNodeReader()) {
                 node.initChildNodesFromDB(-1);
             }
             

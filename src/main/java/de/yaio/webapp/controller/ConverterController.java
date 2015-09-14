@@ -29,7 +29,7 @@ import de.yaio.core.node.BaseNode;
 import de.yaio.datatransfer.exporter.Exporter;
 import de.yaio.datatransfer.exporter.OutputOptions;
 import de.yaio.datatransfer.exporter.OutputOptionsImpl;
-import de.yaio.extension.datatransfer.ical.ICalExporter;
+import de.yaio.extension.datatransfer.ical.ICalDBExporter;
 import de.yaio.extension.datatransfer.mindmap.MindMapExporter;
 import de.yaio.rest.controller.NodeActionResponse;
 
@@ -78,7 +78,7 @@ public class ConverterController {
                     produces = "application/ical")
     public String convertToICal(@RequestParam(value = "source") final String source, 
                                 final HttpServletResponse response) {
-        Exporter exporter = new ICalExporter();
+        Exporter exporter = new ICalDBExporter();
         return commonComnvertSource(exporter, ".ics", source, response);
     }
 
