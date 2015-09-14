@@ -920,7 +920,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     @JsonIgnore
     public String getParentNameHirarchry(final String pdelimiter, 
                                          final boolean directionForward) {
-        return getBaseNodeService().getParentNameHirarchry(this, pdelimiter, directionForward);
+        return getBaseNodeService().getParentNameHirarchie(this, pdelimiter, directionForward);
     }
     
     @Override
