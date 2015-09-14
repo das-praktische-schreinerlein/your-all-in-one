@@ -157,8 +157,7 @@ public class WikiExporter extends ExporterImpl {
         DataDomain masterNode = pMasterNode;
         // Parameter pruefen
         if (masterNode == null) {
-            throw new IllegalArgumentException("Masternode must not be null: '" 
-        + masterNode + "'");
+            throw new IllegalArgumentException("Masternode must not be null: '" + masterNode + "'");
         }
 
         // Mastennode falls leer löschen
@@ -166,8 +165,7 @@ public class WikiExporter extends ExporterImpl {
         if (masterChilds.size() == 1) {
             masterNode = (DataDomain) masterChilds.values().toArray()[0];
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("set ParentNode empty for new Masternode " 
-                        + masterNode.getNameForLogger());
+                LOGGER.debug("set ParentNode empty for new Masternode " + masterNode.getNameForLogger());
             }
             masterNode.setParentNode(null);
         }
