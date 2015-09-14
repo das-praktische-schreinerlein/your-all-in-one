@@ -224,4 +224,22 @@ public interface NodeService {
      * @return list of the parents, start with my own parent (not baseNode)
      */
     List<BaseNode> getParentHierarchy(final DataDomain baseNode);
+    
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Persistence
+     * <h4>FeatureDescription:</h4>
+     *     check if parentSysUID exists in parent-hierarchy
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue boolean - true/false weather parentSysUID exists or not in hierarchy
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Persistence
+     * @param baseNode node
+     * @param parentSysUID sysUID to search
+     * @return list of the parents, start with my own parent (not baseNode)
+     */
+    public boolean hasParent(final DataDomain baseNode, final String parentSysUID);
 }
