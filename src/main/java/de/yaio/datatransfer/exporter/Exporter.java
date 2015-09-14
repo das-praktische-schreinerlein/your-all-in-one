@@ -227,4 +227,19 @@ public interface Exporter {
     boolean isNodeMatchingFilter(DataDomain node, OutputOptions oOptions)
                     throws Exception;
 
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     DataExport
+     *     Presentation
+     * <h4>FeatureDescription:</h4>
+     *     check weather the exporter reads the nodes by its own or needs an ready node hierarchy
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue boolean - true/false = reads the nodes by its own
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Praesentation Filter
+     * @return - true/false = reads the nodes by its own
+     */
+    boolean hasOwnNodeReader();
 }

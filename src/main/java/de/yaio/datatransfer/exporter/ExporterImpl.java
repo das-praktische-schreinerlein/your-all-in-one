@@ -424,4 +424,9 @@ public class ExporterImpl implements Exporter {
 
         return flgMatchesClass && flgMatchesState && flgMatchesType;
     }
+
+    @Override
+    public boolean hasOwnNodeReader() {
+        return false;
+    }
 }
