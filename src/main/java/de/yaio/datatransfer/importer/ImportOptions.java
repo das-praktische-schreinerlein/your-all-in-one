@@ -32,7 +32,7 @@ import java.util.Map;
  */
 public interface ImportOptions {
     
-    public static final String CONST_DEFAULT_META_NODE_PRAEFIX = "UNKNOWN";
+    static final String CONST_DEFAULT_META_NODE_PRAEFIX = "UNKNOWN";
     
     
     boolean isFlgParseDesc();
