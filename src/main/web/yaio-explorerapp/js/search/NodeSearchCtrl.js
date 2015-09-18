@@ -42,7 +42,9 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
         searchSort: 'lastChangeDown',
         baseSysUID: "MasterplanMasternode1",
         fulltext: "",
-        total: 0
+        total: 0,
+        strWorkflowStateFilter: "",
+        strClassFilter: ""
     };
     if ($routeParams.curPage) {
         $scope.searchOptions.curPage = decodeURI($routeParams.curPage);
@@ -58,6 +60,12 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
     }
     if ($routeParams.fulltext) {
         $scope.searchOptions.fulltext = decodeURI($routeParams.fulltext);
+    }
+    if ($routeParams.strWorkflowStateFilter) {
+        $scope.searchOptions.strWorkflowStateFilter = decodeURI($routeParams.strWorkflowStateFilter);
+    }
+    if ($routeParams.strClassFilter) {
+        $scope.searchOptions.strClassFilter = decodeURI($routeParams.strClassFilter);
     }
     console.log("NodeSearchCtrl - processing");
     
@@ -132,13 +140,8 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
      */
     $scope.doNewFulltextSearch = function() {
         $scope.searchOptions.curPage = 1;
-        var newUrl = '/search'
-            + '/' + encodeURI($scope.searchOptions.curPage)
-            + '/' + encodeURI($scope.searchOptions.pageSize)
-            + '/' + encodeURI($scope.searchOptions.searchSort)
-            + '/' + encodeURI($scope.searchOptions.baseSysUID)
-            + '/' + encodeURI($scope.searchOptions.fulltext)
-            + '/';
+        var newUrl = $scope.createSearchUri($scope.searchOptions);
+
         // save lastLocation for login
         $rootScope.lastLocation = newUrl;
 
@@ -146,6 +149,19 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
         console.log("load new Url:" + newUrl);
         $location.path(newUrl);
     };
+    
+    $scope.createSearchUri = function(searchOptions) {
+        var newUrl = '/search'
+            + '/' + encodeURI(searchOptions.curPage)
+            + '/' + encodeURI(searchOptions.pageSize)
+            + '/' + encodeURI(searchOptions.searchSort)
+            + '/' + encodeURI(searchOptions.baseSysUID)
+            + '/' + encodeURI(searchOptions.fulltext)
+            + '/' + encodeURI(searchOptions.strClassFilter)
+            + '/' + encodeURI(searchOptions.strWorkflowStateFilter)
+            + '/';
+        return newUrl;
+    }
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -162,13 +178,8 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
      *     GUI Callback Fulltextsearch
      */
     $scope.doFulltextSearch = function() {
-        var uri = encodeURI($scope.searchOptions.curPage)
-                + '/' + encodeURI($scope.searchOptions.pageSize)
-                + '/' + encodeURI($scope.searchOptions.searchSort)
-                + '/' + encodeURI($scope.searchOptions.baseSysUID)
-                + '/';
         // save lastLocation for login
-        $rootScope.lastLocation = '/search' + uri + encodeURI($scope.searchOptions.fulltext) + '/';
+        $rootScope.lastLocation = $scope.createSearchUri($scope.searchOptions);
 
         // search data
         var searchOptions = $scope.searchOptions;

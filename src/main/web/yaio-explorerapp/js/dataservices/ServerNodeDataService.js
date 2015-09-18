@@ -222,7 +222,7 @@ Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
         
         // copy availiable serverSearchOptions
         var serverSearchOptions = {};
-        var searchFields = ["strTypeFilter", "strReadIfStatusInListOnly", "maxEbene", "strClassFilter"];
+        var searchFields = ["strTypeFilter", "strReadIfStatusInListOnly", "maxEbene", "strClassFilter", "strWorkflowStateFilter"];
         var searchField;
         for (var idx = 0; idx < searchFields.length; idx++) {
             searchField = searchFields[idx];
