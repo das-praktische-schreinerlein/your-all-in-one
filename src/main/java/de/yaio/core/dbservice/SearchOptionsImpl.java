@@ -16,8 +16,12 @@
  */
 package de.yaio.core.dbservice;
 
+import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.collections.MapUtils;
+
+import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
 import de.yaio.utils.DataUtils;
 
 /**
@@ -38,10 +42,12 @@ public class SearchOptionsImpl implements SearchOptions {
     protected String strReadIfStatusInListOnly = "";
     protected String strClassFilter = "";
     protected String strTypeFilter = "";
-    
+    protected String strWorkflowStateFilter = "";
+
     protected Map<String, String> mpClassFilter = null;
     protected Map<String, String> mpTypeFilter = null;
     protected Map<String, String> mpStateFilter = null;
+    protected Map<String, WorkflowState> mpWorkflowStateFilter = null;
 
     public SearchOptionsImpl() {
         super();
@@ -82,6 +88,20 @@ public class SearchOptionsImpl implements SearchOptions {
         this.strTypeFilter = strTypeFilter;
         this.mpTypeFilter = DataUtils.initMapFromCsvString(this.strTypeFilter);
     }
+    public String getStrWorkflowStateFilter() {
+        return strWorkflowStateFilter;
+    }
+    public void setStrWorkflowStateFilter(final String strWorkflowStateFilter) {
+        this.strWorkflowStateFilter = strWorkflowStateFilter;
+        this.mpWorkflowStateFilter = new HashMap<String, WorkflowState>();
+        Map<String, String> tmp = DataUtils.initMapFromCsvString(this.strWorkflowStateFilter);
+        if (MapUtils.isEmpty(tmp)) {
+            return;
+        }
+        for (String state : tmp.keySet()) {
+            this.mpWorkflowStateFilter.put(state, WorkflowState.valueOf(state));
+        }
+    }
     
     @Override
     public Map<String, String> getMapClassFilter() {
@@ -95,11 +115,16 @@ public class SearchOptionsImpl implements SearchOptions {
     public Map<String, String> getMapStateFilter() {
         return this.mpStateFilter;
     };
+    @Override
+    public Map<String, WorkflowState> getMapWorkflowStateFilter() {
+        return this.mpWorkflowStateFilter;
+    };
     
     public void initFilterMaps() {
         this.setStrReadIfStatusInListOnly(this.getStrReadIfStatusInListOnly());
         this.setStrClassFilter(this.getStrClassFilter());
         this.setStrTypeFilter(this.getStrTypeFilter());
+        this.setStrWorkflowStateFilter(this.getStrWorkflowStateFilter());
     }
     
     public void resetDefaults() {
@@ -107,17 +132,20 @@ public class SearchOptionsImpl implements SearchOptions {
         this.setStrReadIfStatusInListOnly("");
         this.setStrClassFilter("");
         this.setStrTypeFilter("");
+        this.setStrWorkflowStateFilter("");
     }
 
     @Override
     public String toString() {
-        return "SearchOptionsImpl [maxEbene=" + this.maxEbene 
-                        + ", strReadIfStatusInListOnly=" + this.strReadIfStatusInListOnly 
-                        + ", strClassFilter=" + this.strClassFilter 
-                        + ", strTypeFilter=" + this.strTypeFilter 
-                        + ", mpStateFilter=" + this.mpStateFilter 
-                        + ", mpClassFilter=" + this.mpClassFilter 
-                        + ", mpTypeFilter=" + this.mpTypeFilter 
+        return "SearchOptionsImpl [maxEbene=" + this.maxEbene
+                        + ", strReadIfStatusInListOnly=" + this.strReadIfStatusInListOnly
+                        + ", strClassFilter=" + this.strClassFilter
+                        + ", strTypeFilter=" + this.strTypeFilter
+                        + ", strWorkflowStateFilter=" + this.strWorkflowStateFilter
+                        + ", mpStateFilter=" + this.mpStateFilter
+                        + ", mpClassFilter=" + this.mpClassFilter
+                        + ", mpTypeFilter=" + this.mpTypeFilter
+                        + ", mpWorkflowStateFilter=" + this.mpWorkflowStateFilter
                         + "]";
     }
 

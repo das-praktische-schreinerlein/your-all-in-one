@@ -16,8 +16,12 @@
  */
 package de.yaio.datatransfer.exporter;
 
+import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.collections.MapUtils;
+
+import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
 import de.yaio.utils.DataUtils;
 
 /**
@@ -68,10 +72,12 @@ public class OutputOptionsImpl implements OutputOptions {
     protected String strReadIfStatusInListOnly = "";
     protected String strClassFilter = "";
     protected String strTypeFilter = "";
+    protected String strWorkflowStateFilter = "";
     
     protected Map<String, String> mpClassFilter = null;
     protected Map<String, String> mpTypeFilter = null;
     protected Map<String, String> mpStateFilter = null;
+    protected Map<String, WorkflowState> mpWorkflowStateFilter = null;
 
     public OutputOptionsImpl() {
         super();
@@ -317,26 +323,48 @@ public class OutputOptionsImpl implements OutputOptions {
         this.strTypeFilter = strTypeFilter;
         this.mpTypeFilter = DataUtils.initMapFromCsvString(this.strTypeFilter);
     }
+    public String getStrWorkflowStateFilter() {
+        return strWorkflowStateFilter;
+    }
+    public void setStrWorkflowStateFilter(final String strWorkflowStateFilter) {
+        this.strWorkflowStateFilter = strWorkflowStateFilter;
+        this.mpWorkflowStateFilter = new HashMap<String, WorkflowState>();
+        Map<String, String> tmp = DataUtils.initMapFromCsvString(this.strWorkflowStateFilter);
+        if (MapUtils.isEmpty(tmp)) {
+            return;
+        }
+        for (String state : tmp.keySet()) {
+            this.mpWorkflowStateFilter.put(state, WorkflowState.valueOf(state));
+        }
+    }
     
     public int manageIntValues(final Integer value) {
         return value != null ? value : 0;
     }
     
     
+    @Override
     public Map<String, String> getMapClassFilter() {
         return this.mpClassFilter;
     };
+    @Override
     public Map<String, String> getMapTypeFilter() {
         return this.mpTypeFilter;
     };
+    @Override
     public Map<String, String> getMapStateFilter() {
         return this.mpStateFilter;
+    };
+    @Override
+    public Map<String, WorkflowState> getMapWorkflowStateFilter() {
+        return this.mpWorkflowStateFilter;
     };
     
     public void initFilterMaps() {
         this.setStrReadIfStatusInListOnly(this.getStrReadIfStatusInListOnly());
         this.setStrClassFilter(this.getStrClassFilter());
         this.setStrTypeFilter(this.getStrTypeFilter());
+        this.setStrWorkflowStateFilter(this.getStrWorkflowStateFilter());
     }
     
     public void setAllFlgShow(final boolean value) {
@@ -391,6 +419,7 @@ public class OutputOptionsImpl implements OutputOptions {
         this.setStrReadIfStatusInListOnly("");
         this.setStrClassFilter("");
         this.setStrTypeFilter("");
+        this.setStrWorkflowStateFilter("");
     }
 
     @Override
@@ -427,9 +456,11 @@ public class OutputOptionsImpl implements OutputOptions {
                         + ", strReadIfStatusInListOnly=" + this.strReadIfStatusInListOnly 
                         + ", strClassFilter=" + this.strClassFilter 
                         + ", strTypeFilter=" + this.strTypeFilter 
+                        + ", strWorkflowStateFilter=" + this.strWorkflowStateFilter
                         + ", mpStateFilter=" + this.mpStateFilter 
                         + ", mpClassFilter=" + this.mpClassFilter 
                         + ", mpTypeFilter=" + this.mpTypeFilter 
+                        + ", mpWorkflowStateFilter=" + this.mpWorkflowStateFilter
                         + "]";
     }
 }

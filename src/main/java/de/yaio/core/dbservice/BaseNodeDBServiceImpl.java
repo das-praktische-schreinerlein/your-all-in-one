@@ -17,15 +17,20 @@
 package de.yaio.core.dbservice;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.persistence.TypedQuery;
 
+import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
+import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
 import de.yaio.core.node.BaseNode;
 import de.yaio.core.node.TaskNode;
 import de.yaio.core.nodeservice.BaseNodeService;
@@ -297,15 +302,31 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
     }
     
     
-    protected List<DBFilter> createMapFilter(final String fieldName, final Map<String, String> queryParams) {
+    protected List<DBFilter> createMapStringFilter(final String fieldName, final Set<String> values) {
         int idx = 0;
         List<DBFilter> dbFilters = new ArrayList<DBFilter>();
-        if (queryParams != null) {
+        if (values != null) {
             List<String> sqlList = new ArrayList<String>();
             List<DBFilter.Parameter> parameters = new ArrayList<DBFilter.Parameter>();
-            for (String state : queryParams.keySet()) {
-                sqlList.add("(" + "lower(" + fieldName + ") = lower(:mapFilter" + fieldName + idx + ")" + ")");
-                parameters.add(new DBFilter.Parameter("mapFilter" + fieldName + idx, state));
+            for (String value : values) {
+                sqlList.add("(" + "lower(" + fieldName + ") = lower(:mapStringFilter" + fieldName + idx + ")" + ")");
+                parameters.add(new DBFilter.Parameter("mapStringFilter" + fieldName + idx, value));
+                idx++;
+            }
+            dbFilters.add(new DBFilter("(" + StringUtils.join(sqlList, " or ") + ")", parameters));
+        }
+        return dbFilters;
+    }
+
+    protected List<DBFilter> createMapIntFilter(final String fieldName, final Set<Integer> values) {
+        int idx = 0;
+        List<DBFilter> dbFilters = new ArrayList<DBFilter>();
+        if (values != null) {
+            List<String> sqlList = new ArrayList<String>();
+            List<DBFilter.Parameter> parameters = new ArrayList<DBFilter.Parameter>();
+            for (Integer value : values) {
+                sqlList.add("(" + fieldName + " = :mapIntFilter" + fieldName + idx + ")");
+                parameters.add(new DBFilter.Parameter("mapIntFilter" + fieldName + idx, value));
                 idx++;
             }
             dbFilters.add(new DBFilter("(" + StringUtils.join(sqlList, " or ") + ")", parameters));
@@ -320,9 +341,23 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
         }
 
         // create filters for maps
-        dbFilters.addAll(createMapFilter("state", searchOptions.getMapStateFilter()));
-        dbFilters.addAll(createMapFilter("dtype", searchOptions.getMapClassFilter()));
-        dbFilters.addAll(createMapFilter("type", searchOptions.getMapTypeFilter()));
+        dbFilters.addAll(createMapStringFilter("state", 
+                        searchOptions.getMapStateFilter() != null ? searchOptions.getMapStateFilter().keySet() : null));
+        dbFilters.addAll(createMapStringFilter("dtype", 
+                        searchOptions.getMapClassFilter() != null ? searchOptions.getMapClassFilter().keySet() : null));
+        dbFilters.addAll(createMapStringFilter("type", 
+                        searchOptions.getMapTypeFilter() != null ? searchOptions.getMapTypeFilter().keySet() : null));
+        
+        // create filter for wfstate (convert enum to integer)
+        Map<String, WorkflowState> wfStateMap = searchOptions.getMapWorkflowStateFilter();
+        if (MapUtils.isNotEmpty(wfStateMap)) {
+            List<WorkflowState> wfStates = Arrays.asList(WorkflowState.values());
+            Set<Integer>wfStateValues = new HashSet<Integer>();
+            for (WorkflowState state : wfStateMap.values()) {
+                wfStateValues.add(wfStates.indexOf(state));
+            }
+            dbFilters.addAll(createMapIntFilter("workflow_state", wfStateValues));
+        }
         
         // create filter for ebene
         String sql = "(ebene <= :ltmaxEbene)";

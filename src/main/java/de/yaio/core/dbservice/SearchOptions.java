@@ -18,6 +18,8 @@ package de.yaio.core.dbservice;
 
 import java.util.Map;
 
+import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
+
 /**
  * <h4>FeatureDomain:</h4>
  *     DatenExport
@@ -34,6 +36,7 @@ public interface SearchOptions {
     int getMaxEbene();
     void setMaxEbene(Integer maxEbene);
 
+    Map<String, WorkflowState> getMapWorkflowStateFilter();
     Map<String, String> getMapClassFilter();
     Map<String, String> getMapTypeFilter();
     Map<String, String> getMapStateFilter();
