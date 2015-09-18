@@ -162,7 +162,7 @@ Yaio.StaticNodeDataStoreService = function(appBase, config, defaultConfig) {
             
             // merge orig and new node
             var orig = me.getNodeDataById(node['sysUID'], false);
-            for(var prop in node){
+            for (var prop in node){
                 orig[prop] = node[prop];
             }
             node = orig;
