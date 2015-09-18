@@ -219,11 +219,27 @@ Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
         if (searchOptions.fulltext && searchOptions.fulltext.length > 0) {
             uri = uri + encodeURI(searchOptions.fulltext) + '/';
         }
+        
+        // copy availiable serverSearchOptions
+        var serverSearchOptions = {};
+        var searchFields = ["strTypeFilter", "strReadIfStatusInListOnly", "maxEbene", "strClassFilter"];
+        var searchField;
+        for (var idx = 0; idx < searchFields.length; idx++) {
+            searchField = searchFields[idx];
+            if (searchOptions.hasOwnProperty(searchField)) {
+                serverSearchOptions[searchField] = searchOptions[searchField];
+            }
+        }
 
         // load data
         var url = me.config.restSearchUrl + uri;
         var ajaxCall = function () {
-            return me.appBase.get('Angular.$http').get(url);
+            return me.appBase.get('Angular.$http').post(url, serverSearchOptions, {
+                    withCredentials: true,
+                    headers : {
+                        "content-type" : "application/json;charset=utf-8"
+                    }
+                });
         }
         
         // do http
@@ -258,7 +274,7 @@ Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
         // load data
         var url = me.config.restLogoutUrl;
         var ajaxCall = function () {
-            return me.appBase.get('Angular.$http').post(url, $.param({}, {withCredentials: true}));
+            return me.appBase.get('Angular.$http').post(url, $.param({}), {withCredentials: true});
         }
         
         // do http

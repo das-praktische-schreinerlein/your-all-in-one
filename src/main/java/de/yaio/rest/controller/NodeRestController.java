@@ -37,6 +37,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import de.yaio.core.dbservice.BaseNodeDBService;
 import de.yaio.core.dbservice.BaseNodeDBServiceImpl;
+import de.yaio.core.dbservice.SearchOptions;
+import de.yaio.core.dbservice.SearchOptionsImpl;
 import de.yaio.core.node.BaseNode;
 import de.yaio.core.node.EventNode;
 import de.yaio.core.node.InfoNode;
@@ -123,10 +125,12 @@ public class NodeRestController {
      * @param sortConfig - use sort
      * @param sysUID - sysUID to filter as perentNode
      * @param fulltext - fulltext search string
+     * @param searchOptions searchoptions (additional filter...)
      * @return NodeSearchResponse (OK, FAILED, ERROR) with matching nodes
      */
-    public NodeSearchResponse commonSearchNode(final Long curPage,
-          final Long pageSize, final String sortConfig, final String sysUID, final String fulltext) {
+    public NodeSearchResponse commonSearchNode(final Long curPage, final Long pageSize, 
+                                               final String sortConfig, final String sysUID, final String fulltext, 
+                                               final SearchOptions searchOptions) {
         // create default response
         NodeSearchResponse response = new NodeSearchResponse(
                         "OK", "no node found", 
@@ -137,12 +141,12 @@ public class NodeRestController {
         BaseNode node = BaseNode.findBaseNode(sysUID);
         if (node != null) {
             // search nodes
-            List<BaseNode> resultList = baseNodeDBService.findFulltextBaseNodeEntries(fulltext,
+            List<BaseNode> resultList = baseNodeDBService.findExtendedSearchBaseNodeEntries(fulltext, searchOptions,
                             sortConfig, (curPage.intValue() - 1) * pageSize.intValue(), 
                             pageSize.intValue());
 
             // create response
-            response.setCount(baseNodeDBService.countFulltextBaseNodes(fulltext));
+            response.setCount(baseNodeDBService.countExtendedSearchBaseNodes(fulltext, searchOptions));
             
             // add node
             response.setNodes(resultList);
@@ -180,9 +184,39 @@ public class NodeRestController {
                                                  @PathVariable(value = "sortConfig") final String sortConfig,
                                                  @PathVariable(value = "sysUID") final String sysUID,
                                                  @PathVariable(value = "fulltext") final String fulltext) {
-        return commonSearchNode(curPage, pageSize, sortConfig, sysUID, fulltext);
+        return commonSearchNode(curPage, pageSize, sortConfig, sysUID, fulltext, null);
     }
     
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
+     *     Request to search childnodes of sysUID and return them as JSON
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>NodeResponse (OK, ERROR) with matching nodes
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice Query
+     * @param curPage - current page in result to display
+     * @param pageSize - max items per page
+     * @param sortConfig - use sort
+     * @param sysUID - sysUID to filter as perentNode
+     * @param fulltext - fulltext search string
+     * @param searchOptions   searchOptions
+     * @return NodeSearchResponse (OK, FAILED, ERROR) with matching nodes
+     */
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, 
+                    value = "/search/{curPage}/{pageSize}/{sortConfig}/{sysUID}/{fulltext}/")
+    public NodeSearchResponse searchNodeExtended(@PathVariable(value = "curPage") final Long curPage,
+                                                 @PathVariable(value = "pageSize") final Long pageSize,
+                                                 @PathVariable(value = "sortConfig") final String sortConfig,
+                                                 @PathVariable(value = "sysUID") final String sysUID,
+                                                 @PathVariable(value = "fulltext") final String fulltext,
+                                                 @RequestBody final SearchOptionsImpl searchOptions) {
+        return commonSearchNode(curPage, pageSize, sortConfig, sysUID, fulltext, searchOptions);
+    }
 
     /**
      * <h4>FeatureDomain:</h4>
@@ -199,16 +233,18 @@ public class NodeRestController {
      * @param pageSize - max items per page
      * @param sortConfig - use sort
      * @param sysUID - sysUID to filter as perentNode
+     * @param searchOptions   searchOptions
      * @return NodeSearchResponse (OK, FAILED, ERROR) with matching nodes
      */
     @ResponseBody
-    @RequestMapping(method = RequestMethod.GET, 
+    @RequestMapping(method = RequestMethod.POST, 
                     value = "/search/{curPage}/{pageSize}/{sortConfig}/{sysUID}/")
     public NodeSearchResponse searchNode(@PathVariable(value = "curPage") final Long curPage,
                                          @PathVariable(value = "pageSize") final Long pageSize,
                                          @PathVariable(value = "sortConfig") final String sortConfig,
-                                         @PathVariable(value = "sysUID") final String sysUID) {
-        return commonSearchNode(curPage, pageSize, sortConfig, sysUID, "");
+                                         @PathVariable(value = "sysUID") final String sysUID,
+                                         @RequestBody final SearchOptionsImpl searchOptions) {
+        return commonSearchNode(curPage, pageSize, sortConfig, sysUID, "", searchOptions);
     }
 
     /**
