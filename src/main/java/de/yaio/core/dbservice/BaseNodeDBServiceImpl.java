@@ -70,10 +70,10 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
         CONST_AVAILIABLE_SORTS.put("planEndeDown", "planEnde desc");
         CONST_AVAILIABLE_SORTS.put("planStartUp", "planStart asc");
         CONST_AVAILIABLE_SORTS.put("planStartDown", "planStart desc");
-        CONST_AVAILIABLE_SORTS.put("planChildrenEndeUp", "planChildrenSumEnde asc");
-        CONST_AVAILIABLE_SORTS.put("planChildrenEndeDown", "planChildrenSumEnde desc");
-        CONST_AVAILIABLE_SORTS.put("planChildrenStartUp", "planChildrenSumStart asc");
-        CONST_AVAILIABLE_SORTS.put("planChildrenStartDown", "planChildrenSumStart desc");
+        CONST_AVAILIABLE_SORTS.put("planChildrenSumEndeUp", "planChildrenSumEnde asc");
+        CONST_AVAILIABLE_SORTS.put("planChildrenSumEndeDown", "planChildrenSumEnde desc");
+        CONST_AVAILIABLE_SORTS.put("planChildrenSumStartUp", "planChildrenSumStart asc");
+        CONST_AVAILIABLE_SORTS.put("planChildrenSumStartDown", "planChildrenSumStart desc");
         CONST_AVAILIABLE_SORTS.put("typeUp", "type asc");
         CONST_AVAILIABLE_SORTS.put("typeDown", "type desc");
         CONST_AVAILIABLE_SORTS.put("workflowStateUp", "workflowState asc");
