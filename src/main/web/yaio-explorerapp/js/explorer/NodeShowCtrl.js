@@ -173,7 +173,7 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
                     yaioUtils.getService('YaioExplorerTree').yaioCreateFancyTree("#tree", $scope.node.sysUID, options.loadActiveNodeIdHandler);
                     
                     // load me
-                    $scope.yaioUtils.renderNodeLine(yaioNodeActionResponse.node, "#masterTr");
+                    $scope.yaioUtils.renderNodeLine(yaioNodeActionResponse.node, "#masterTr", false);
 
                     // recalc gantt
                     yaioUtils.getService('YaioNodeGanttRender').yaioRecalcMasterGanttBlock($scope.node);

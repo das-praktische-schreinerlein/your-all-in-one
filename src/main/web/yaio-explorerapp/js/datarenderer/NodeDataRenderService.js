@@ -59,7 +59,7 @@ Yaio.NodeDataRenderService = function(appBase) {
      * @param data - the fancytreenode-data (basenode = data.node.data.basenode, tr = data.node.tr)
      * @param preventActionsColum - dont replace Action-column
      */
-    me.renderColumnsForNode = function(event, data, preventActionsColum) {
+    me.renderColumnsForNode = function(event, data, preventActionsColum, flgRenderMinimum) {
         var svcYaioBase = me.appBase.get('YaioBase');
         var svcYaioExplorerAction = me.appBase.get('YaioExplorerAction');
         var svcYaioNodeGanttRender = me.appBase.get('YaioNodeGanttRender');
@@ -83,7 +83,7 @@ Yaio.NodeDataRenderService = function(appBase) {
         me.$(node.tr).addClass("container_nodeline");
         
         // add fields
-        if (! preventActionsColum) {
+        if (!preventActionsColum && !flgRenderMinimum) {
             // generate actions
             var actionHtml = "";
             if (svcYaioAccessManager.getAvailiableNodeAction('showsysdata', basenode.sysUID, false)) {
@@ -209,7 +209,7 @@ Yaio.NodeDataRenderService = function(appBase) {
                         ); 
         
         // add nodeDesc if set
-        if (basenode.nodeDesc != "" && basenode.nodeDesc != null) {
+        if (basenode.nodeDesc != "" && basenode.nodeDesc != null && !flgRenderMinimum) {
             // columncount
             //var columnCount = me.$(">td", $nodedataBlock).length;
             
@@ -276,25 +276,29 @@ Yaio.NodeDataRenderService = function(appBase) {
         // add nodeData
         $tdList.eq(colData).html($nodeDataBlock).addClass("block_nodedata");
         
-        // add TOC
-        var settings = {
-                toc: {}
-        };
-        settings.toc.dest = me.$("#toc_desc_" + basenode.sysUID);
-        settings.toc.minDeep = 2;
-        me.$.fn.toc(me.$("#container_content_desc_" + basenode.sysUID), settings);
+        if (!flgRenderMinimum) {
+            // add TOC
+            var settings = {
+                    toc: {}
+            };
+            settings.toc.dest = me.$("#toc_desc_" + basenode.sysUID);
+            settings.toc.minDeep = 2;
+            me.$.fn.toc(me.$("#container_content_desc_" + basenode.sysUID), settings);
+        }
     
         // add gantt
-        var $nodeGanttBlock = svcYaioNodeGanttRender.renderGanttBlock(basenode, node);
-        $tdList.eq(colGantt).html($nodeGanttBlock).addClass("block_nodegantt");
-    
-        // set visibility of data/gantt-block
-        if (me.$("#tabTogglerGantt").css("display") != "none") {
-            $tdList.eq(colData).css("display", "table-cell");
-            $tdList.eq(colGantt).css("display", "none");
-        } else {
-            $tdList.eq(colGantt).css("display", "table-cell");
-            $tdList.eq(colData).css("display", "none");
+        if (!flgRenderMinimum) {
+            var $nodeGanttBlock = svcYaioNodeGanttRender.renderGanttBlock(basenode, node);
+            $tdList.eq(colGantt).html($nodeGanttBlock).addClass("block_nodegantt");
+        
+            // set visibility of data/gantt-block
+            if (me.$("#tabTogglerGantt").css("display") != "none") {
+                $tdList.eq(colData).css("display", "table-cell");
+                $tdList.eq(colGantt).css("display", "none");
+            } else {
+                $tdList.eq(colGantt).css("display", "table-cell");
+                $tdList.eq(colData).css("display", "none");
+            }
         }
         
         // toogle sys
@@ -304,7 +308,9 @@ Yaio.NodeDataRenderService = function(appBase) {
         svcYaioExplorerAction.toggleNodeDescContainer(basenode.sysUID);
     
         // calc nodeData
-        svcYaioNodeGanttRender.yaioRecalcMasterGanttBlockFromTree();
+        if (!flgRenderMinimum) {
+            svcYaioNodeGanttRender.yaioRecalcMasterGanttBlockFromTree();
+        }
     };
 
     /**

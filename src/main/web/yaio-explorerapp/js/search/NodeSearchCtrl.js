@@ -88,13 +88,7 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
      */
     $scope.nextPageAct = function(text, page){
         console.log(text, page);
-        var newUrl = '/search'
-            + '/' + encodeURI(page)
-            + '/' + encodeURI($scope.searchOptions.pageSize)
-            + '/' + encodeURI($scope.searchOptions.searchSort)
-            + '/' + encodeURI($scope.searchOptions.baseSysUID)
-            + '/' + encodeURI($scope.searchOptions.fulltext)
-            + '/';
+        var newUrl = $scope.createSearchUri($scope.searchOptions, page);
         
         // save lastLocation for login
         $rootScope.lastLocation = newUrl;
@@ -140,7 +134,7 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
      */
     $scope.doNewFulltextSearch = function() {
         $scope.searchOptions.curPage = 1;
-        var newUrl = $scope.createSearchUri($scope.searchOptions);
+        var newUrl = $scope.createSearchUri($scope.searchOptions, $scope.searchOptions.curPage);
 
         // save lastLocation for login
         $rootScope.lastLocation = newUrl;
@@ -150,9 +144,9 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
         $location.path(newUrl);
     };
     
-    $scope.createSearchUri = function(searchOptions) {
+    $scope.createSearchUri = function(searchOptions, page) {
         var newUrl = '/search'
-            + '/' + encodeURI(searchOptions.curPage)
+            + '/' + encodeURI(page)
             + '/' + encodeURI(searchOptions.pageSize)
             + '/' + encodeURI(searchOptions.searchSort)
             + '/' + encodeURI(searchOptions.baseSysUID)
@@ -179,7 +173,7 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
      */
     $scope.doFulltextSearch = function() {
         // save lastLocation for login
-        $rootScope.lastLocation = $scope.createSearchUri($scope.searchOptions);
+        $rootScope.lastLocation = $scope.createSearchUri($scope.searchOptions, $scope.searchOptions.curPage);
 
         // search data
         var searchOptions = $scope.searchOptions;
@@ -236,7 +230,7 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
     $scope.renderNodeLine = function(node) {
         // we need a timeout to put the tr into DOM
         setTimeout(function(){
-                $scope.yaioUtils.renderNodeLine(node, "#tr" + node.sysUID);
+                $scope.yaioUtils.renderNodeLine(node, "#tr" + node.sysUID, false);
                 console.log("renderNodeLine: done to:" + "#tr" + node.sysUID + $("#detail_sys_" + node.sysUID).length);
 
                 // render hierarchy

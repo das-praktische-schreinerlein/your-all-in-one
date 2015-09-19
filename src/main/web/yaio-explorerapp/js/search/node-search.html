@@ -66,7 +66,29 @@
             show-prev-next="true"
             paging-action="nextPageAct('Paging Clicked', page)">
           </paging><!--  
-     --></div>
+     -->
+          <br>
+          <div class="fulltextline" data-tooltip='tooltip.command.DoSearch' lang="tech">
+             <select name="strClassFilter" class="inputtype_select" id="inputSearchOptionsStrClassFilter" ng-model="searchOptions.strClassFilter">
+                  <option value="" translate="common.select.all">Alle
+                  <option translate="common.select.className.TaskNode" value="TaskNode">Task
+                  <option translate="common.select.className.EventNode" value="EventNode">Event
+                  <option translate="common.select.className.InfoNode" value="InfoNode">Info
+                  <option translate="common.select.className.UrlResNode" value="UrlResNode">UrlRes
+                  <option translate="common.select.className.SymLinkNode" value="SymLinkNode">Symlink
+             </select>
+             <select name="strWorkflowStateFilter" class="inputtype_select" id="inputSearchOptionsStrWorkflowStateFilter" ng-model="searchOptions.strWorkflowStateFilter">
+                  <option value="" translate="common.select.all">Alle
+                  <option value="NOTPLANED" translate="common.select.TaskNodeType.UNKNOWN">Ungeplant
+                  <option value="OPEN" translate="common.select.TaskNodeType.OFFEN">Offen
+                  <option value="LATE" translate="common.select.TaskNodeType.LATE">Start verspätet
+                  <option value="RUNNING" translate="common.select.TaskNodeType.RUNNING">in Bearbeitung
+                  <option value="WARNING" translate="common.select.TaskNodeType.WARNING">Ende überschritten
+                  <option value="DONE" translate="common.select.TaskNodeType.ERLEDIGT">Erledigt
+                  <option value="CANCELED" translate="common.select.TaskNodeType.VERWORFEN">Verworfen
+             </select>
+          </div>
+        </div>
 
           <!-- 
           *****************************

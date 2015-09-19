@@ -79,6 +79,9 @@ yaioApp.config(function($routeProvider) {
         .when('/frontpage', { 
             controller:  'FrontPageCtrl',
             templateUrl: resBaseUrl + 'js/frontpage/frontpage.html' })
+        .when('/dashboard', { 
+            controller:  'DashboardCtrl',
+            templateUrl: resBaseUrl + 'js/dashboard/dashboard.html' })
         .when('/sourceselect', { 
             controller:  'SourceSelectorCtrl',
             templateUrl: resBaseUrl + 'js/sourceselector/sourceselector.html' })

@@ -72,7 +72,7 @@ yaioApp.factory('yaioUtils', ['$location', '$http', '$rootScope', '$q', function
             return appBase.getService('YaioFile').downloadAsFile(appBase.$(domId), content, filename, mime, encoding);
         },
         
-        renderNodeLine: function(node, trIdSelector) {
+        renderNodeLine: function(node, trIdSelector, flgMinimum) {
             // load me
             var data = {
                  node: {
@@ -84,7 +84,7 @@ yaioApp.factory('yaioUtils', ['$location', '$http', '$rootScope', '$q', function
             };
             
             console.log("renderNodeLine nodeId=" + node.sysUID + " tr=" + $(trIdSelector).length);
-            appBase.get('YaioNodeDataRender').renderColumnsForNode(null, data, true);
+            appBase.get('YaioNodeDataRender').renderColumnsForNode(null, data, true, flgMinimum);
         },
         
         ganttOptions: { 
