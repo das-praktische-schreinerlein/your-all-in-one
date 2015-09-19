@@ -66,10 +66,14 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
         CONST_AVAILIABLE_SORTS.put("nameDown", "name desc");
         CONST_AVAILIABLE_SORTS.put("nodeNumberUp", "metaNodePraefix asc, metaNodeNummer asc");
         CONST_AVAILIABLE_SORTS.put("nodeNumberDown", "metaNodePraefix desc, metaNodeNummer desc");
-        CONST_AVAILIABLE_SORTS.put("planEndeUp", "planChildrenSumEnde asc");
-        CONST_AVAILIABLE_SORTS.put("planEndeDown", "planChildrenSumEnde desc");
-        CONST_AVAILIABLE_SORTS.put("planStartUp", "planChildrenSumStart asc");
-        CONST_AVAILIABLE_SORTS.put("planStartDown", "planChildrenSumStart desc");
+        CONST_AVAILIABLE_SORTS.put("planEndeUp", "planEnde asc");
+        CONST_AVAILIABLE_SORTS.put("planEndeDown", "planEnde desc");
+        CONST_AVAILIABLE_SORTS.put("planStartUp", "planStart asc");
+        CONST_AVAILIABLE_SORTS.put("planStartDown", "planStart desc");
+        CONST_AVAILIABLE_SORTS.put("planChildrenEndeUp", "planChildrenSumEnde asc");
+        CONST_AVAILIABLE_SORTS.put("planChildrenEndeDown", "planChildrenSumEnde desc");
+        CONST_AVAILIABLE_SORTS.put("planChildrenStartUp", "planChildrenSumStart asc");
+        CONST_AVAILIABLE_SORTS.put("planChildrenStartDown", "planChildrenSumStart desc");
         CONST_AVAILIABLE_SORTS.put("typeUp", "type asc");
         CONST_AVAILIABLE_SORTS.put("typeDown", "type desc");
         CONST_AVAILIABLE_SORTS.put("workflowStateUp", "workflowState asc");
