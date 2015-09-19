@@ -192,6 +192,7 @@ module.exports = function( grunt ){
             srcBase + 'yaio-explorerapp/js/lang/LanguageConfig.js',
             srcBase + 'yaio-explorerapp/js/lang/LanguageCtrl.js',
             srcBase + 'yaio-explorerapp/js/frontpage/FrontpageCtrl.js',
+            srcBase + 'yaio-explorerapp/js/dashboard/*.js',
             srcBase + 'yaio-explorerapp/js/editor/NodeEditorCtrl.js',
             srcBase + 'yaio-explorerapp/js/importer/ImporterCtrl.js',
             srcBase + 'yaio-explorerapp/js/exporter/OutputOptionsCtrl.js',
@@ -235,6 +236,7 @@ module.exports = function( grunt ){
               srcBase + 'yaio-explorerapp/js/lang/lang.css',
               srcBase + 'yaio-explorerapp/js/auth/auth.css',
               srcBase + 'yaio-explorerapp/js/frontpage/frontpage.css',
+              srcBase + 'yaio-explorerapp/js/dashboard/*.css',
               srcBase + 'yaio-explorerapp/js/wysiwyg/formatter.css'
         ],
         projectSupportCssFiles: [
