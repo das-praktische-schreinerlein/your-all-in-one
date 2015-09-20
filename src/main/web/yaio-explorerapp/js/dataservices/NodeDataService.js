@@ -91,6 +91,15 @@ Yaio.NodeDataService = function(appBase, config, defaultConfig) {
             });
     };
     
+    me.yaioDoCopyNode = function(fancynode, newParentKey, json) {
+        var msg = "yaioDoCopyNode for fancynode:" + fancynode.key + " newParentKey:" + newParentKey;
+        console.log(msg + " START");
+        return me._yaioCallCopyNode(fancynode, newParentKey, json)
+            .done(function(yaioNodeActionResponse, textStatus, jqXhr ) {
+                me._yaioPatchNodeSuccessHandler(fancynode, yaioNodeActionResponse, textStatus, jqXhr);
+            });
+    };
+    
     me.yaioDoRemoveNode = function(nodeId) {
         var msg = "yaioDoRemoveNode for nodeId:" + nodeId;
         console.log(msg + " START");
@@ -214,6 +223,10 @@ Yaio.NodeDataService = function(appBase, config, defaultConfig) {
     };
     
     me._yaioCallMoveNode = function(fancynode, newParentKey, newPos, json) {
+        me.logNotImplemented();
+    };
+    
+    me._yaioCallCopyNode = function(fancynode, newParentKey, json) {
         me.logNotImplemented();
     };
     
