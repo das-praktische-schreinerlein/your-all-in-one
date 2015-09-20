@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import de.yaio.core.node.BaseNode;
+import de.yaio.extension.datatransfer.common.DatatransferUtils;
 import de.yaio.extension.datatransfer.jpa.JPAExporter;
 import de.yaio.extension.datatransfer.ppl.PPLImporter;
 import de.yaio.extension.datatransfer.wiki.WikiImportOptions;
@@ -56,6 +57,9 @@ public class ImportController {
     @Autowired
     protected ConverterUtils converterUtils;
     
+    @Autowired
+    protected DatatransferUtils datatransferUtils;
+
     /**
      * <h4>FeatureDomain:</h4>
      *     Webservice
@@ -104,7 +108,7 @@ public class ImportController {
                 node.initChildNodesFromDB(0);
                 
                 // create dummy masternode
-                BaseNode masterNode = converterUtils.createTemporaryMasternode(
+                BaseNode masterNode = datatransferUtils.createTemporaryMasternode(
                                 parentSysUID, node.getMetaNodePraefix(), node.getMetaNodeNummer());
                 
                 // Parser+Options anlegen
@@ -113,7 +117,7 @@ public class ImportController {
                 inputOptions.setFlgReadUe(true);
                 inputOptions.setStrDefaultMetaNodePraefix(masterNode.getMetaNodePraefix());
                 WikiImporter wikiImporter = new WikiImporter(inputOptions);
-                converterUtils.parseNodesFromWiki(wikiImporter, inputOptions, masterNode, wikiSrc);
+                datatransferUtils.parseNodesFromWiki(wikiImporter, inputOptions, masterNode, wikiSrc);
                 
                 // JPA-Exporter
                 JPAExporter jpaExporter = new JPAExporter();
@@ -193,13 +197,13 @@ public class ImportController {
                 node.initChildNodesFromDB(0);
                 
                 // create dummy masternode
-                BaseNode masterNode = converterUtils.createTemporaryMasternode(
+                BaseNode masterNode = datatransferUtils.createTemporaryMasternode(
                                 parentSysUID, node.getMetaNodePraefix(), node.getMetaNodeNummer());
                 
                 // Parser+Options anlegen
                 WikiImportOptions inputOptions = new WikiImportOptions();
                 inputOptions.setStrDefaultMetaNodePraefix(masterNode.getMetaNodePraefix());
-                converterUtils.parseValidatedNodesFromJson(inputOptions, masterNode, jsonSrc);
+                datatransferUtils.parseValidatedNodesFromJson(inputOptions, masterNode, jsonSrc);
                 
                 // JPA-Exporter
                 JPAExporter jpaExporter = new JPAExporter();

@@ -29,6 +29,7 @@ import de.yaio.core.node.BaseNode;
 import de.yaio.datatransfer.exporter.Exporter;
 import de.yaio.datatransfer.exporter.OutputOptions;
 import de.yaio.datatransfer.exporter.OutputOptionsImpl;
+import de.yaio.extension.datatransfer.common.DatatransferUtils;
 import de.yaio.extension.datatransfer.ical.ICalDBExporter;
 import de.yaio.extension.datatransfer.mindmap.MindMapExporter;
 import de.yaio.rest.controller.NodeActionResponse;
@@ -52,6 +53,9 @@ public class ConverterController {
     @Autowired
     protected ConverterUtils converterUtils;
     
+    @Autowired
+    protected DatatransferUtils datatransferUtils;
+
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
                     value = "/html",
@@ -60,7 +64,7 @@ public class ConverterController {
                                  final HttpServletResponse response) {
         try {
                 OutputOptions oOptions = new OutputOptionsImpl();
-                BaseNode masterNode = converterUtils.parseInlineNodesFromString(source);
+                BaseNode masterNode = datatransferUtils.parseInlineNodesFromString(source);
                 String tplFile = "/static/exporttemplates/projektplan-export.html";
                 return converterUtils.commonExportNodeAsHtml(masterNode, oOptions, response, tplFile);
             } catch (Exception e) {
@@ -100,7 +104,7 @@ public class ConverterController {
         try {
             OutputOptions oOptions = new OutputOptionsImpl();
 
-            BaseNode masterNode = converterUtils.parseInlineNodesFromString(source);
+            BaseNode masterNode = datatransferUtils.parseInlineNodesFromString(source);
             String res = converterUtils.exportNode(masterNode, exporter, oOptions, extension, response);
             return res;
 
