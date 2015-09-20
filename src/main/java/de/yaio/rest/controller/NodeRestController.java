@@ -18,7 +18,6 @@ package de.yaio.rest.controller;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -28,7 +27,6 @@ import javax.validation.ConstraintViolationException;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,7 +44,7 @@ import de.yaio.core.node.SymLinkNode;
 import de.yaio.core.node.TaskNode;
 import de.yaio.core.node.UrlResNode;
 import de.yaio.core.nodeservice.BaseNodeService;
-import de.yaio.utils.Calculator;
+import de.yaio.extension.datatransfer.common.DatatransferUtils;
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -69,6 +67,9 @@ public class NodeRestController {
             Logger.getLogger(NodeRestController.class);
     
 
+    //@Autowired TODO: failed on unitstest...
+    protected DatatransferUtils datatransferUtils = new DatatransferUtils();
+    
     /**
      * <h4>FeatureDomain:</h4>
      *     Webservice
@@ -396,230 +397,6 @@ public class NodeRestController {
     }
     
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     map the nodeData from newNode to origNode
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>boolean flgChange - true if data changed
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param origNode - 
-     * @param newNode - the new node created from request-data
-     * @return true if data changed
-     * @throws IllegalAccessException - thrown if class of origNode!=newNode
-     */
-    public boolean mapNodeData(final BaseNode origNode, final BaseNode newNode) 
-                    throws IllegalAccessException {
-        boolean flgChange = false;
-        
-        // check class
-        if (!origNode.getClassName().equals(newNode.getClassName())) {
-            // class differ!!
-            throw new IllegalAccessException("cant map origNode (" + origNode.getClassName() + "):" 
-                            + origNode.getSysUID() + " with newNode:" + newNode.getClassName());
-        }
-        
-        // common-fields
-
-        // check for new name
-        if (Calculator.compareValues(
-                        origNode.getName(), newNode.getName()) 
-                        != Calculator.CONST_COMPARE_EQ) {
-            origNode.setName(newNode.getName());
-            flgChange = true;
-        }
-        // check for type
-        if (Calculator.compareValues(
-                        origNode.getType(), newNode.getType()) 
-                        != Calculator.CONST_COMPARE_EQ) {
-            origNode.setType(newNode.getType());
-            flgChange = true;
-        }
-        // check for nodeDesc
-        if (Calculator.compareValues(
-                        origNode.getNodeDesc(), newNode.getNodeDesc()) 
-                        != Calculator.CONST_COMPARE_EQ) {
-            origNode.setNodeDesc(newNode.getNodeDesc());
-            flgChange = true;
-        }
-        
-        // check for special nodedata recursively
-        
-        // Task+EventNodes
-        if (TaskNode.class.isInstance(origNode) 
-            || EventNode.class.isInstance(origNode)) {
-            TaskNode newTaskNode = (TaskNode) newNode;
-            TaskNode origTaskNode = (TaskNode) origNode;
-            
-            // get state from type
-            origNode.setState(origNode.getType());
-            // check for Plan aufwand
-            if (Calculator.compareValues(
-                            origTaskNode.getPlanAufwand(), newTaskNode.getPlanAufwand()) 
-                            != Calculator.CONST_COMPARE_EQ) {
-                origTaskNode.setPlanAufwand(newTaskNode.getPlanAufwand());
-                flgChange = true;
-            }
-            // check for Plan datestart
-            if (Calculator.compareValues(
-                            origTaskNode.getPlanStart(), newTaskNode.getPlanStart()) 
-                            != Calculator.CONST_COMPARE_EQ) {
-                origTaskNode.setPlanStart(newTaskNode.getPlanStart());
-                flgChange = true;
-            }
-            // check for Plan dateend
-            if (Calculator.compareValues(
-                            origTaskNode.getPlanEnde(), newTaskNode.getPlanEnde()) 
-                            != Calculator.CONST_COMPARE_EQ) {
-                origTaskNode.setPlanEnde(newTaskNode.getPlanEnde());
-                flgChange = true;
-            }
-            // check for Ist stand
-            if (Calculator.compareValues(
-                            origTaskNode.getIstStand(), newTaskNode.getIstStand()) 
-                            != Calculator.CONST_COMPARE_EQ) {
-                origTaskNode.setIstStand(newTaskNode.getIstStand());
-                flgChange = true;
-            }
-            // check for Ist aufwand
-            if (Calculator.compareValues(
-                            origTaskNode.getIstAufwand(), newTaskNode.getIstAufwand()) 
-                            != Calculator.CONST_COMPARE_EQ) {
-                origTaskNode.setIstAufwand(newTaskNode.getIstAufwand());
-                flgChange = true;
-            }
-            // check for Ist datestart
-            if (Calculator.compareValues(
-                            origTaskNode.getIstStart(), newTaskNode.getIstStart()) 
-                            != Calculator.CONST_COMPARE_EQ) {
-                origTaskNode.setIstStart(newTaskNode.getIstStart());
-                flgChange = true;
-            }
-            // check for Ist dateend
-            if (Calculator.compareValues(
-                            origTaskNode.getIstEnde(), newTaskNode.getIstEnde()) 
-                            != Calculator.CONST_COMPARE_EQ) {
-                origTaskNode.setIstEnde(newTaskNode.getIstEnde());
-                flgChange = true;
-            }
-        }
-        
-        // InfoNodes
-        if (InfoNode.class.isInstance(origNode)) {
-            InfoNode newInfoNode = (InfoNode) newNode;
-            InfoNode origInfoNode = (InfoNode) origNode;
-
-            // get state from type
-            origNode.setState(origNode.getType());
-            // check for DocLayoutTagCommand
-            if (Calculator.compareValues(
-                            origInfoNode.getDocLayoutTagCommand(), newInfoNode.getDocLayoutTagCommand()) 
-                            != Calculator.CONST_COMPARE_EQ) {
-                origInfoNode.setDocLayoutTagCommand(newInfoNode.getDocLayoutTagCommand());
-                flgChange = true;
-            }
-            // check for DocLayoutShortName
-            if (Calculator.compareValues(
-                            origInfoNode.getDocLayoutShortName(), newInfoNode.getDocLayoutShortName()) 
-                            != Calculator.CONST_COMPARE_EQ) {
-                origInfoNode.setDocLayoutShortName(newInfoNode.getDocLayoutShortName());
-                flgChange = true;
-            }
-            // check for DocLayoutAddStyleClass
-            if (Calculator.compareValues(
-                            origInfoNode.getDocLayoutAddStyleClass(), newInfoNode.getDocLayoutAddStyleClass()) 
-                            != Calculator.CONST_COMPARE_EQ) {
-                origInfoNode.setDocLayoutAddStyleClass(newInfoNode.getDocLayoutAddStyleClass());
-                flgChange = true;
-            }
-            // check for DocLayoutFlgCloseDiv
-            if (Calculator.compareValues(
-                            origInfoNode.getDocLayoutFlgCloseDiv(), newInfoNode.getDocLayoutFlgCloseDiv()) 
-                            != Calculator.CONST_COMPARE_EQ) {
-                origInfoNode.setDocLayoutFlgCloseDiv(newInfoNode.getDocLayoutFlgCloseDiv());
-                flgChange = true;
-            }
-        }
-
-        // UrlResNode
-        if (UrlResNode.class.isInstance(origNode)) {
-            UrlResNode newUrlResNode = (UrlResNode) newNode;
-            UrlResNode origUrlResNode = (UrlResNode) origNode;
-
-            // get state from type
-            origNode.setState(origNode.getType());
-
-            // check for ResLocRef
-            if (Calculator.compareValues(
-                            origUrlResNode.getResLocRef(), newUrlResNode.getResLocRef())
-                            != Calculator.CONST_COMPARE_EQ) {
-                origUrlResNode.setResLocRef(newUrlResNode.getResLocRef());
-                flgChange = true;
-            }
-            // check for ResLocName
-            if (Calculator.compareValues(
-                            origUrlResNode.getResLocName(), newUrlResNode.getResLocName()) 
-                            != Calculator.CONST_COMPARE_EQ) {
-                origUrlResNode.setResLocName(newUrlResNode.getResLocName());
-                flgChange = true;
-            }
-            // check for ResLocTags
-            if (Calculator.compareValues(
-                            origUrlResNode.getResLocTags(), newUrlResNode.getResLocTags()) 
-                            != Calculator.CONST_COMPARE_EQ) {
-                origUrlResNode.setResLocTags(newUrlResNode.getResLocTags());
-                flgChange = true;
-            }
-        }
-        
-        // SymLinkNode
-        if (SymLinkNode.class.isInstance(origNode)) {
-            SymLinkNode newUrlResNode = (SymLinkNode) newNode;
-            SymLinkNode origUrlResNode = (SymLinkNode) origNode;
-
-            // get state from type
-            origNode.setState(origNode.getType());
-
-            // check for ResLocRef
-            if (Calculator.compareValues(
-                            origUrlResNode.getSymLinkRef(), newUrlResNode.getSymLinkRef()) 
-                            != Calculator.CONST_COMPARE_EQ) {
-                origUrlResNode.setSymLinkRef(newUrlResNode.getSymLinkRef());
-                flgChange = true;
-            }
-            // check for SymLinkName
-            if (Calculator.compareValues(
-                            origUrlResNode.getSymLinkName(), newUrlResNode.getSymLinkName()) 
-                            != Calculator.CONST_COMPARE_EQ) {
-                origUrlResNode.setSymLinkName(newUrlResNode.getSymLinkName());
-                flgChange = true;
-            }
-            // check for SymLinkTags
-            if (Calculator.compareValues(
-                            origUrlResNode.getSymLinkTags(), newUrlResNode.getSymLinkTags()) 
-                            != Calculator.CONST_COMPARE_EQ) {
-                origUrlResNode.setSymLinkTags(newUrlResNode.getSymLinkTags());
-                flgChange = true;
-            }
-        }
-        
-        // validate
-        Set<ConstraintViolation<BaseNode>> violations = newNode.validateMe();
-        if (violations.size() > 0) {
-            ConstraintViolationException ex = new ConstraintViolationException(
-                            "error while validating newNode" + newNode.getNameForLogger(), 
-                            new HashSet<ConstraintViolation<?>>(violations));
-            throw ex;
-        }
-
-        return flgChange;
-    }
-    
-    
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -671,7 +448,7 @@ public class NodeRestController {
 
         try {
             // map data
-            flgChange = mapNodeData(node, newNode);
+            flgChange = datatransferUtils.mapNodeData(node, newNode);
 
             // check for needed update
             if (flgChange) {
@@ -760,7 +537,7 @@ public class NodeRestController {
             
             // init some vars and map NodeData
             newNode.setEbene(parentNode.getEbene() + 1);
-            mapNodeData(newNode, newNode);
+            datatransferUtils.mapNodeData(newNode, newNode);
             
             // add new Node
             newNode.setParentNode(parentNode);
@@ -1098,7 +875,6 @@ public class NodeRestController {
      * @param newSortPos - the new position in the list
      * @return NodeResponse (OK, ERROR) with the node for sysUID
      */
-    @Transactional
     @ResponseBody
     @RequestMapping(method = RequestMethod.PATCH, 
                     value = "/move/{sysUID}/{newParentSysUID}/{newSortPos}")
@@ -1125,57 +901,10 @@ public class NodeRestController {
                             null, null, null, null);
             return response;
         }
-        // map the data
-        boolean flgChangedParent = false;
-        boolean flgChangedPosition = false;
 
         try {
-            // read children for old parent
-            BaseNode oldParent = node.getParentNode();
-            oldParent.initChildNodesFromDB(0);
-
-            // read children for both parents
-            newParent.initChildNodesFromDB(0);
-
-            // check for new parent
-            if (newParent.getSysUID() != oldParent.getSysUID()) {
-                // reset sortpos
-                node.setSortPos(null);
-                flgChangedPosition = true;
-
-                // set new parent
-                flgChangedParent = true;
-                node.setParentNode(newParent);
-            } else {
-                // check if position changed
-                if (node.getSortPos().intValue() != newSortPos.intValue()) {
-                    flgChangedPosition = true;
-                }
-            }
-
-            // check for needed update
-            if (flgChangedParent || flgChangedPosition) {
-                // recalc the position
-                newParent.getBaseNodeService().moveChildToSortPos(newParent, node, newSortPos);
-                
-                // save children of newParent
-                newParent.saveChildNodesToDB(0, true);
-
-                // recalc and save
-                updateMeAndMyParents(node);
-                
-                // renew old parent only if changed
-                if (flgChangedParent) {
-                    // renew oldParent
-                    oldParent = BaseNode.findBaseNode(oldParent.getSysUID());
-                    
-                    // recalc old parent
-                    updateMeAndMyParents(oldParent);
-                }
-            } else {
-                // read children for node
-                node.initChildNodesFromDB(0);
-            }
+            // move node
+            datatransferUtils.moveNode(node, newParent, newSortPos);
 
             // create response
             response = createResponseObj(node, "node '" + sysUID 
@@ -1190,6 +919,70 @@ public class NodeRestController {
             LOGGER.error("error moving node '" + node);
             response = new NodeActionResponse(
                             "ERROR", "error while moving node '" + sysUID + "':" + ex, 
+                            null, null, null, null);
+        }
+        
+        return response;
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
+     *     Request to copy the node sysUID to newParentSysUID and return it with children as JSON
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>NodeResponse (OK, ERROR) with the node for sysUID
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice Query
+     * @param sysUID - sysUID to filter
+     * @param newParentSysUID - sysUID of the new parent
+     * @param newSortPos - the new position in the list
+     * @return NodeResponse (OK, ERROR) with the node for sysUID
+     */
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.PATCH, 
+                    value = "/copy/{sysUID}/{newParentSysUID}")
+    public NodeActionResponse copyNode(@PathVariable(value = "sysUID") final String sysUID,
+                                       @PathVariable(value = "newParentSysUID") final String newParentSysUID) {
+        // create default response
+        NodeActionResponse response = new NodeActionResponse(
+                        "ERROR", "node '" + sysUID + "' doesnt exists", 
+                        null, null, null, null);
+
+        // find a specific node
+        BaseNode node = BaseNode.findBaseNode(sysUID);
+        if (node == null) {
+            return response;
+        }
+        
+        // check new parent
+        BaseNode newParent = BaseNode.findBaseNode(newParentSysUID);
+        if (newParent == null) {
+            response = new NodeActionResponse(
+                            "ERROR", "new parentNode '" + newParentSysUID 
+                            + "' for node '" + sysUID + "' doesnt exists", 
+                            null, null, null, null);
+            return response;
+        }
+        try {
+            // copy node
+            datatransferUtils.copyNode(node, newParent);
+
+            // create response
+            response = createResponseObj(node, "node '" + sysUID 
+                            + "' copied to " + newParentSysUID);
+
+        } catch (Throwable ex) {
+            // errorhandling
+            ex.printStackTrace();
+            LOGGER.error("error while copying node  '" 
+                         + sysUID + "' to '" + newParentSysUID + "'" 
+                         + ":", ex);
+            LOGGER.error("error copying node '" + node);
+            response = new NodeActionResponse(
+                            "ERROR", "error while copying node '" + sysUID + "':" + ex, 
                             null, null, null, null);
         }
         
