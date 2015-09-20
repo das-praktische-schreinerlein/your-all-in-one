@@ -149,6 +149,12 @@ Yaio.ExplorerActionService = function(appBase) {
         me.appBase.get('YaioNodeData').yaioDoMoveNode(node, newParentKey, newPos, json);
     };
     
+    me.yaioCopyNode = function(node, newParentKey) {
+        console.log("copy node:" + node.key + " to:" + newParentKey);
+        var json = JSON.stringify({parentNode: newParentKey});
+        me.appBase.get('YaioNodeData').yaioDoCopyNode(node, newParentKey, json);
+    };
+
     me.yaioRemoveNodeById = function(nodeId) {
         var svcYaioBase = me.appBase.get('YaioBase');
 

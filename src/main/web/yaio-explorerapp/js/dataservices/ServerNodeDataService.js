@@ -65,6 +65,11 @@ Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
         return me._yaioCallPatchNode(fancynode, url, json);
     };
 
+    me._yaioCallCopyNode = function(fancynode, newParentKey, json) {
+        var url = me.config.restCopyUrl+ fancynode.key + "/" + newParentKey;
+        return me._yaioCallPatchNode(fancynode, url, json);
+    };
+
     me._yaioCallPatchNode = function(fancynode, url, json) {
         var svcYaioBase = me.appBase.get('YaioBase');
 

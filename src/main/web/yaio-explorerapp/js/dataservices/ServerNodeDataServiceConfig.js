@@ -37,6 +37,7 @@ Yaio.ServerNodeDataServiceConfig = function(urlBase, name, desc) {
     me.restUpdateUrl                = me.restBaseUrl + "update/";
     me.restCreateUrl                = me.restBaseUrl + "create/";
     me.restMoveUrl                  = me.restBaseUrl + "move/";
+    me.restCopyUrl                  = me.restBaseUrl + "copy/";
     me.restRemoveUrl                = me.restBaseUrl + "delete/";
     me.restSearchUrl                = me.restBaseUrl + "search/";
     me.restExportsBaseUrl           = me.urlBase + "/exports/";
