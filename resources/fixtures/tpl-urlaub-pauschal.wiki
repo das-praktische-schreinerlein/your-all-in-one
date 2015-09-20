@@ -1,4 +1,4 @@
-* **OFFEN - Urlaub JAHR.MONAT SHORTNAME**
+* **OFFEN - Urlaub Pauschal JAHR.MONAT SHORTNAME**
 # Urlaub JAHR.MONAT SHORTNAME
 - Flug nach XX mit Übernachtung in Hotel und Mietwagen
 

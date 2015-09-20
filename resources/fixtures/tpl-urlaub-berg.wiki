@@ -1,4 +1,4 @@
-* **OFFEN - Urlaub JAHR.MONAT SHORTNAME**
+* **OFFEN - Urlaub Berg JAHR.MONAT SHORTNAME**
 # Urlaub JAHR.MONAT SHORTNAME
 - Fahrt nach XX mit Übernachtung im Auto und Hütten
 
