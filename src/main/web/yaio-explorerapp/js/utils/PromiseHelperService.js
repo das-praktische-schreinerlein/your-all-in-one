@@ -66,8 +66,8 @@ Yaio.PromiseHelperService = function(appBase) {
             //this.$rootScope.$apply();
         };
       
-        PromiseHelper.prototype.reject = function () {
-            this._deferred.reject();
+        PromiseHelper.prototype.reject = function (data) {
+            this._deferred.reject(data);
             //this.$rootScope.$apply();
         };
       

@@ -63,6 +63,51 @@ Yaio.NodeDataService = function(appBase, config, defaultConfig) {
         return res;
     }
     
+    me.yaioDoLoadAvailiableTemplates = function() {
+        var msg = "yaioDoLoadTemplates";
+        console.log(msg + " START");
+
+        var promiseHelper = me.appBase.get("YaioPromiseHelper").createAngularPromiseHelper();
+        var ajaxCall = function () {
+            return promiseHelper.getHttpPromiseMock();
+        }
+        var angularResponse = {
+            data: {systemTemplates: [], ownTemplates: []}
+        };
+
+        var systemTemplateId = 'DT2015092013474737613'; 
+        var ownTemplateId = 'DT2015092013474737613'; 
+        me.yaioDoLoadNodeById(systemTemplateId, {})
+            .then(function sucess(systemAngularResponse) {
+                // handle success: systemTemplates
+                if (! ownTemplateId) {
+                    // return only mine
+                    angularResponse.data = {systemTemplates: systemAngularResponse.data.childNodes, ownTemplates: []};
+                    console.log(msg + " response:", angularResponse);
+                    promiseHelper.resolve(angularResponse);
+                }
+                
+                // load own templates
+                me.yaioDoLoadNodeById(ownTemplateId, {})
+                    .then(function sucess(ownAngularResponse) {
+                        // handle success: ownTemplates
+                        angularResponse.data = {systemTemplates: systemAngularResponse.data.childNodes, 
+                            ownTemplates: ownAngularResponse.data.childNodes};
+                        console.log(msg + " response:", angularResponse);
+                        promiseHelper.resolve(angularResponse);
+                    }, function error() {
+                        console.log(msg + "error response:", angularResponse);
+                        promiseHelper.reject(angularResponse);
+                    });
+            }, function error() {
+                console.log(msg + "error response:", angularResponse);
+                promiseHelper.reject(angularResponse);
+            });
+        
+
+        return ajaxCall();
+    };
+    
     me.yaioLoadSymLinkData = function(basenode, fancynode) {
         var msg = "yaioLoadSymLinkData for node:" + basenode.sysUID + " symlink:" + basenode.symLinkRef + " fancynode:" + fancynode.key;
         console.log(msg + " START");

@@ -56,6 +56,9 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
     $scope.nodeForEdit = {};
     var nodeId = $rootScope.nodeId;
     
+    $scope.availiableSystemTemplates = [];
+    $scope.availiableOwnTemplates = [];
+    
     /**
      * <h4>FeatureDomain:</h4>
      *     Editor
@@ -113,6 +116,36 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
         return false;
     };
     
+    
+    $scope.selectCreateFromTemplate = function(formName) {
+        // create new node by template
+        var newParentKey = $scope.nodeForEdit.sysUID;
+        if ($scope.nodeForEdit.createFromTemplate && $scope.nodeForEdit.createFromTemplate != "") {
+            var json = JSON.stringify({parentNode: newParentKey});
+            yaioUtils.getService('YaioNodeData').yaioDoCopyNode({key: $scope.nodeForEdit.createFromTemplate, sysUID: $scope.nodeForEdit.createFromTemplate}, newParentKey, json);
+            yaioUtils.getService('YaioEditor').yaioCloseNodeEditor();
+            return false;
+        }
+    }
+    
+    $scope.loadAvailiableTemplates = function() {
+        yaioUtils.getService('YaioNodeData').yaioDoLoadAvailiableTemplates()
+            .then(function sucess(angularResponse) {
+                    // handle success
+                    $scope.availiableSystemTemplates = angularResponse.data.systemTemplates;
+                    $scope.availiableOwnTemplates = angularResponse.data.ownTemplates;
+                }, function error(angularResponse) {
+                    // handle error
+                    var data = angularResponse.data;
+                    var header = angularResponse.header;
+                    var config = angularResponse.config;
+                    var message = "error loading node-templates";
+                    yaioUtils.getService('YaioBase').logError(message, true);
+                    message = "error data: " + data + " header:" + header + " config:" + config;
+                    yaioUtils.getService('YaioBase').logError(message, false);
+            });
+    }
+
     /**
      * <h4>FeatureDomain:</h4>
      *     Callback
@@ -355,5 +388,6 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
             });
     };
     
-    
+    // init
+    $scope.loadAvailiableTemplates();
 });
