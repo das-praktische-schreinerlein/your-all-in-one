@@ -267,6 +267,14 @@ Yaio.ExplorerTreeService = function(appBase) {
                 node = tree.getActiveNode();
         
             switch( data.cmd ) {
+                case "edit":
+                    // check permission
+                    if (! me.appBase.get('YaioAccessManager').getAvailiableNodeAction('edit', node.key, false)) {
+                        return false;
+                    }
+                    // open yaio-editor
+                    me.appBase.get('YaioEditor').yaioOpenNodeEditor(node.key, 'edit');
+                    return true;
                 case "cut":
                     if (! me.appBase.get('YaioAccessManager').getAvailiableNodeAction('move', node.key, false)) {
                         return false;
@@ -482,23 +490,28 @@ Yaio.ExplorerTreeService = function(appBase) {
         me.$(treeId).contextmenu({
             delegate: "span.fancytree-node",
             menu: [
-                {title: "Bearbeiten <kbd>[F2]</kbd>", cmd: "rename", uiIcon: "ui-icon-pencil" },
-                {title: "Löschen <kbd>[Del]</kbd>", cmd: "remove", uiIcon: "ui-icon-trash" },
+                {title: "Bearbeiten <kbd>[F2]</kbd>", cmd: "edit", uiIcon: "ui-icon-pencil", disabled: true },
+                {title: "Löschen <kbd>[Del]</kbd>", cmd: "remove", uiIcon: "ui-icon-trash", disabled: true },
                 {title: "----"},
     //            {title: "New sibling <kbd>[Ctrl+N]</kbd>", cmd: "addSibling", uiIcon: "ui-icon-plus" },
-                {title: "Kind zeugen", cmd: "addChild", uiIcon: "ui-icon-plus" },
+                {title: "Kind zeugen", cmd: "addChild", uiIcon: "ui-icon-plus", disabled: true},
                 {title: "----"},
                 {title: "Focus", cmd: "focus", uiIcon: "ui-icon-arrowreturn-1-e" },
                 {title: "In neuem Fenster", cmd: "focusNewWindow", uiIcon: "ui-icon-arrowreturn-1-e" },
                 {title: "Export Jira", cmd: "asJira", uiIcon: "ui-icon-clipboard" },
                 {title: "Export Txt", cmd: "asTxt", uiIcon: "ui-icon-clipboard" },
                 {title: "----"},
-                {title: "Cut <kbd>Ctrl+X</kbd>", cmd: "cut", uiIcon: "ui-icon-scissors"},
-                {title: "Copy <kbd>Ctrl-C</kbd>", cmd: "copy", uiIcon: "ui-icon-copy"},
+                {title: "Cut <kbd>Ctrl+X</kbd>", cmd: "cut", uiIcon: "ui-icon-scissors", disabled: true},
+                {title: "Copy <kbd>Ctrl-C</kbd>", cmd: "copy", uiIcon: "ui-icon-copy", disabled: true},
                 {title: "Paste as child<kbd>Ctrl+V</kbd>", cmd: "paste", uiIcon: "ui-icon-clipboard", disabled: true}
               ],
             beforeOpen: function(event, ui) {
                 var node = me.$.ui.fancytree.getNode(ui.target);
+                me.$("#tree").contextmenu("enableEntry", "edit", !!me.appBase.get('YaioAccessManager').getAvailiableNodeAction('edit', node.key, false));
+                me.$("#tree").contextmenu("enableEntry", "remove", !!me.appBase.get('YaioAccessManager').getAvailiableNodeAction('remove', node.key, false));
+                me.$("#tree").contextmenu("enableEntry", "addChild", !!me.appBase.get('YaioAccessManager').getAvailiableNodeAction('create', node.key, false));
+                me.$("#tree").contextmenu("enableEntry", "cut", !!me.appBase.get('YaioAccessManager').getAvailiableNodeAction('move', node.key, false));
+                me.$("#tree").contextmenu("enableEntry", "copy", !!me.appBase.get('YaioAccessManager').getAvailiableNodeAction('copy', node.key, false));
                 me.$("#tree").contextmenu("enableEntry", "paste", !!me.clipboardNode);
                 node.setActive();
             },
