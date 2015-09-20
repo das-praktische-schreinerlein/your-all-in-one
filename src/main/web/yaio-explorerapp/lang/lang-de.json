@@ -222,6 +222,7 @@
     "loginform.legend.Login": "Anmeldung",
     "sourceselector.desc": "Wählen Sie die Datenquelle für die YaioApp mit der Sie arbeiten möchten:",
     "sourceselector.ue": "Auswahl der Datenquelle",
+    "label.dashboard.eventsOpen": "Termine - laufen oder starten demnächst",
     "label.dashboard.todosOpen": "Offene Aufgaben - starten demnächst",
     "label.dashboard.todosWarning": "Verspätete Aufgaben - Termin überschritten",
     "label.dashboard.todosLate": "Verspätete Aufgaben - noch nicht begonnen",

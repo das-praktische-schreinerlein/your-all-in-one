@@ -15,6 +15,7 @@
 </div>
 
 <div id="dashboard-content-current">
+    <div ng-include="yaioUtils.getConfig().resBaseUrl + 'js/dashboard/dashboard-events-open.html'" id="dashboard-events-open" ng-controller="DashBoardNodeSearchCtrl"></div>
     <div ng-include="yaioUtils.getConfig().resBaseUrl + 'js/dashboard/dashboard-todos-warning.html'" id="dashboard-todos-warning" ng-controller="DashBoardNodeSearchCtrl"></div>
     <div ng-include="yaioUtils.getConfig().resBaseUrl + 'js/dashboard/dashboard-todos-late.html'" id="dashboard-todos-late" ng-controller="DashBoardNodeSearchCtrl"></div>
     <div ng-include="yaioUtils.getConfig().resBaseUrl + 'js/dashboard/dashboard-todos-open.html'" id="dashboard-todos-open" ng-controller="DashBoardNodeSearchCtrl"></div>
