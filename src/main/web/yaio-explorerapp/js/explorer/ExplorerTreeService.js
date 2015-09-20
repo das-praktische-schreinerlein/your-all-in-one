@@ -28,8 +28,6 @@
  */
 
 
-var CLIPBOARD = null;
-
 /*****************************************
  *****************************************
  * Configuration
@@ -51,6 +49,8 @@ Yaio.ExplorerTreeService = function(appBase) {
     /**
      * initialize the object
      */
+    me.clipboardNode = null;
+    me.pasteMode = null;
     me._init = function() {
     };
 
@@ -267,8 +267,74 @@ Yaio.ExplorerTreeService = function(appBase) {
                 node = tree.getActiveNode();
         
             switch( data.cmd ) {
-                case "rename":
-                    node.editStart();
+                case "cut":
+                    if (! me.appBase.get('YaioAccessManager').getAvailiableNodeAction('move', node.key, false)) {
+                        return false;
+                    }
+                    me.clipboardNode = node;
+                    me.pasteMode = data.cmd;
+                    break;
+                case "copy":
+                    if (! me.appBase.get('YaioAccessManager').getAvailiableNodeAction('copy', node.key, false)) {
+                        return false;
+                    }
+                    me.clipboardNode = node;
+                    me.pasteMode = data.cmd;
+                    break;
+                case "paste":
+                    if (!me.clipboardNode ) {
+                        me.appBase.get('YaioBase').logError("Clipoard is empty.", true);
+                        break;
+                    }
+                    var newParent = node;
+                    var node = me.clipboardNode.toDict(true);
+                    if (me.pasteMode == "cut" ) {
+                        if (! me.appBase.get('YaioAccessManager').getAvailiableNodeAction('move', node.key, false)) {
+                            return false;
+                        }
+                        // Cut mode: check for recursion and remove source
+                        if(newParent.isDescendantOf(node) ) {
+                            me.appBase.get('YaioBase').logError("Cannot move a node to it's sub node.", true);
+                            return;
+                        }
+                        if (window.confirm("Wollen Sie die Node und Ihre Subnodes wirklich hierher verschieben?")) {
+                            // map rootnode to masterNodeId 
+                            var newParentKey = newParent.key;
+                            if (newParent.isRootNode() || newParentKey == "undefined" || ! newParent) {
+                                newParentKey = tree.options.masterNodeId;
+                            }
+                            // move yaioNode
+                            svcYaioExplorerAction.yaioMoveNode(node, newParentKey, 9999);
+                            me.clipboardNode = me.pasteMode = null;
+                            return true;
+                        } else {
+                            // discard
+                            return false;
+                        }
+                    } else {
+                        // Copy mode: prevent duplicate keys:
+                        if (! me.appBase.get('YaioAccessManager').getAvailiableNodeAction('copy', node.key, false)) {
+                            return false;
+                        }
+                        if(newParent.isDescendantOf(node) ) {
+                            me.appBase.get('YaioBase').logError("Cannot copy a node to it's sub node.", true);
+                            return;
+                        }
+                        if (window.confirm("Wollen Sie die Node und Ihre Subnodes wirklich hierher kopieren?")) {
+                            // map rootnode to masterNodeId 
+                            var newParentKey = newParent.key;
+                            if (newParent.isRootNode() || newParentKey == "undefined" || ! newParent) {
+                                newParentKey = tree.options.masterNodeId;
+                            }
+                            // copy yaioNode
+                            svcYaioExplorerAction.yaioCopyNode(node, newParentKey);
+                            me.clipboardNode = me.pasteMode = null;
+                            return true;
+                        } else {
+                            // discard
+                            return false;
+                        }
+                    }
                     break;
                 case "indent":
                     if (! me.appBase.get('YaioAccessManager').getAvailiableNodeAction('move', node.key, false)) {
@@ -277,9 +343,6 @@ Yaio.ExplorerTreeService = function(appBase) {
                     if (window.confirm("Wollen Sie die Node wirklich verschieben?")) {
                         // move fancynode
                         refNode = node.getPrevSibling();
-                        node.moveTo(refNode, "child");
-                        refNode.setExpanded();
-                        node.setActive();
                         
                         // map rootnode to masterNodeId 
                         var newParentKey = refNode.key;
@@ -303,8 +366,6 @@ Yaio.ExplorerTreeService = function(appBase) {
                     if (window.confirm("Wollen Sie die Node wirklich verschieben?")) {
                         // move fancynode
                         var newParent = node.getParent().getParent();
-                        node.moveTo(node.getParent(), "after");
-                        node.setActive();
                         
                         // map rootnode to masterNodeId 
                         var newParentKey = newParent.key;
@@ -335,9 +396,6 @@ Yaio.ExplorerTreeService = function(appBase) {
                         newPos = node.getPrevSibling().data.basenode.sortPos - 2;
                     }
     
-                    node.moveTo(node.getPrevSibling(), "before");
-                    node.setActive();
-                    
                     svcYaioExplorerAction.yaioMoveNode(node, newParentKey, newPos);
                     break;
                 case "moveDown":
@@ -355,9 +413,6 @@ Yaio.ExplorerTreeService = function(appBase) {
                     if (node.getNextSibling() != null) {
                         newPos = node.getNextSibling().data.basenode.sortPos + 2;
                     }
-    
-                    node.moveTo(node.getNextSibling(), "after");
-                    node.setActive();
     
                     svcYaioExplorerAction.yaioMoveNode(node, newParentKey, newPos);
                     break;
@@ -437,14 +492,14 @@ Yaio.ExplorerTreeService = function(appBase) {
                 {title: "In neuem Fenster", cmd: "focusNewWindow", uiIcon: "ui-icon-arrowreturn-1-e" },
                 {title: "Export Jira", cmd: "asJira", uiIcon: "ui-icon-clipboard" },
                 {title: "Export Txt", cmd: "asTxt", uiIcon: "ui-icon-clipboard" },
-                {title: "----"}
-    //            {title: "Cut <kbd>Ctrl+X</kbd>", cmd: "cut", uiIcon: "ui-icon-scissors"},
-    //            {title: "Copy <kbd>Ctrl-C</kbd>", cmd: "copy", uiIcon: "ui-icon-copy"},
-    //            {title: "Paste as child<kbd>Ctrl+V</kbd>", cmd: "paste", uiIcon: "ui-icon-clipboard", disabled: true }
+                {title: "----"},
+                {title: "Cut <kbd>Ctrl+X</kbd>", cmd: "cut", uiIcon: "ui-icon-scissors"},
+                {title: "Copy <kbd>Ctrl-C</kbd>", cmd: "copy", uiIcon: "ui-icon-copy"},
+                {title: "Paste as child<kbd>Ctrl+V</kbd>", cmd: "paste", uiIcon: "ui-icon-clipboard", disabled: true}
               ],
             beforeOpen: function(event, ui) {
                 var node = me.$.ui.fancytree.getNode(ui.target);
-                me.$("#tree").contextmenu("enableEntry", "paste", !!CLIPBOARD);
+                me.$("#tree").contextmenu("enableEntry", "paste", !!me.clipboardNode);
                 node.setActive();
             },
             select: function(event, ui) {
