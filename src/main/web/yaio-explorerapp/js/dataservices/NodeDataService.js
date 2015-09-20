@@ -75,14 +75,15 @@ Yaio.NodeDataService = function(appBase, config, defaultConfig) {
             data: {systemTemplates: [], ownTemplates: []}
         };
 
-        var systemTemplateId = 'DT2015092013474737613'; 
-        var ownTemplateId = 'DT2015092013474737613'; 
-        me.yaioDoLoadNodeById(systemTemplateId, {})
+        var systemTemplateId = me.getAccessManager().getAvailiableNodeAction('systemTemplateId'); 
+        var ownTemplateId = me.getAccessManager().getAvailiableNodeAction('ownTemplateId');
+        if (systemTemplateId) {
+            me.yaioDoLoadNodeById(systemTemplateId, {})
             .then(function sucess(systemAngularResponse) {
                 // handle success: systemTemplates
+                angularResponse.data = {systemTemplates: systemAngularResponse.data.childNodes, ownTemplates: []};
                 if (! ownTemplateId) {
                     // return only mine
-                    angularResponse.data = {systemTemplates: systemAngularResponse.data.childNodes, ownTemplates: []};
                     console.log(msg + " response:", angularResponse);
                     promiseHelper.resolve(angularResponse);
                 }
@@ -97,13 +98,16 @@ Yaio.NodeDataService = function(appBase, config, defaultConfig) {
                         promiseHelper.resolve(angularResponse);
                     }, function error() {
                         console.log(msg + "error response:", angularResponse);
-                        promiseHelper.reject(angularResponse);
+                        promiseHelper.resolve(angularResponse);
                     });
             }, function error() {
                 console.log(msg + "error response:", angularResponse);
-                promiseHelper.reject(angularResponse);
+                promiseHelper.resolve(angularResponse);
             });
-        
+        } else  {
+            // no templates configured
+            promiseHelper.resolve(angularResponse);
+        }
 
         return ajaxCall();
     };

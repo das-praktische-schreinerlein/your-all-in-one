@@ -53,6 +53,10 @@ Yaio.ServerAccessManagerService = function(appBase, config, defaultConfig) {
         me.setAvailiableNodeAction('logout', "#/logout/logout");
 //        me.setAvailiableNodeAction('logout', me.config.restLogoutUrl);
         
+        // configure parentIds of the available templates
+        me.setAvailiableNodeAction('ownTemplateId', "OwnTempl1");
+        me.setAvailiableNodeAction('systemTemplateId', "SysTempl1");
+
         // flags
         me.setAvailiableNodeAction('showsysdata', true);
         me.setAvailiableNodeAction('print', true);
