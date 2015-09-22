@@ -73,7 +73,8 @@
      -->
           <br>
           <div class="fulltextline" data-tooltip='tooltip.command.DoSearch' lang="tech">
-             <select name="strClassFilter" class="inputtype_select" id="inputSearchOptionsStrClassFilter" ng-model="searchOptions.strClassFilter">
+             <span lang='tech' translate="editor.common.label.type">Typ</span>
+             <select name="strClassFilter" class="inputtype_select use_select2 inputtype_select_class" id="inputSearchOptionsStrClassFilter" ng-model="searchOptions.arrClassFilter" multiple="multiple">
                   <option value="" translate="common.select.all">Alle
                   <option translate="common.select.className.TaskNode" value="TaskNode">Task
                   <option translate="common.select.className.EventNode" value="EventNode">Event
@@ -81,7 +82,8 @@
                   <option translate="common.select.className.UrlResNode" value="UrlResNode">UrlRes
                   <option translate="common.select.className.SymLinkNode" value="SymLinkNode">Symlink
              </select>
-             <select name="strWorkflowStateFilter" class="inputtype_select" id="inputSearchOptionsStrWorkflowStateFilter" ng-model="searchOptions.strWorkflowStateFilter">
+             <span lang='tech' translate="editor.common.label.state">Status</span>
+             <select name="strWorkflowStateFilter" class="inputtype_select use_select2 inputtype_select_state" id="inputSearchOptionsStrWorkflowStateFilter" ng-model="searchOptions.arrWorkflowStateFilter" multiple="multiple">
                   <option value="" translate="common.select.all">Alle
                   <option value="NOTPLANED" translate="common.select.TaskNodeType.UNKNOWN">Ungeplant
                   <option value="OPEN" translate="common.select.TaskNodeType.OFFEN">Offen
@@ -195,7 +197,8 @@
         });    
         $( window ).scroll(function() {
             yaioAppBase.get('YaioLayout').setupAppSize();
-    });    
+        });
+        $(".use_select2").select2();
 
     }, 1000);
     

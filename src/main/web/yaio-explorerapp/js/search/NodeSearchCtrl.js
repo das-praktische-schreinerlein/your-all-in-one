@@ -44,7 +44,9 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
         fulltext: "",
         total: 0,
         strWorkflowStateFilter: "",
-        strClassFilter: ""
+        arrWorkflowStateFilter: [],
+        strClassFilter: "",
+        arrClassFilter: []
     };
     if ($routeParams.curPage) {
         $scope.searchOptions.curPage = decodeURI($routeParams.curPage);
@@ -63,9 +65,11 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
     }
     if ($routeParams.strWorkflowStateFilter) {
         $scope.searchOptions.strWorkflowStateFilter = decodeURI($routeParams.strWorkflowStateFilter);
+        $scope.searchOptions.arrWorkflowStateFilter = $scope.searchOptions.strWorkflowStateFilter.split(",");
     }
     if ($routeParams.strClassFilter) {
         $scope.searchOptions.strClassFilter = decodeURI($routeParams.strClassFilter);
+        $scope.searchOptions.arrClassFilter = $scope.searchOptions.strClassFilter.split(",");
     }
     console.log("NodeSearchCtrl - processing");
     
@@ -151,8 +155,8 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
             + '/' + encodeURI(searchOptions.searchSort)
             + '/' + encodeURI(searchOptions.baseSysUID)
             + '/' + encodeURI(searchOptions.fulltext)
-            + '/' + encodeURI(searchOptions.strClassFilter)
-            + '/' + encodeURI(searchOptions.strWorkflowStateFilter)
+            + '/' + encodeURI(searchOptions.arrClassFilter.join(","))
+            + '/' + encodeURI(searchOptions.arrWorkflowStateFilter.join(","))
             + '/';
         return newUrl;
     }
@@ -173,6 +177,8 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
      */
     $scope.doFulltextSearch = function() {
         // save lastLocation for login
+        $scope.searchOptions.strClassFilter = $scope.searchOptions.arrClassFilter.join(",");
+        $scope.searchOptions.strWorkflowStateFilter = $scope.searchOptions.arrWorkflowStateFilter.join(",");
         $rootScope.lastLocation = $scope.createSearchUri($scope.searchOptions, $scope.searchOptions.curPage);
 
         // search data

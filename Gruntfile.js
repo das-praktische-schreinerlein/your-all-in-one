@@ -156,6 +156,7 @@ module.exports = function( grunt ){
 //              vendorDestBase + 'js/ace/ext-spellcheck.js',
               vendorDestBase + 'js/strapdown/strapdown-toc.js',
               vendorDestBase + 'js/highlightjs/highlight.pack.js',
+              vendorDestBase + 'js/select2/select2.full.min.js',
               vendorDestBase + 'js/toastr/toastr.min.js',
 // loaded standalone because of problems
 //              vendorDestBase + 'js/mermaid/mermaid.full.js',
@@ -170,6 +171,7 @@ module.exports = function( grunt ){
 // loaded standalone because of plugins
 //              vendorDestBase + 'js/fancytree/skin-win8/ui.fancytree.css',
               vendorDestBase + 'css/highlightjs/default.css',
+              vendorDestBase + 'css/select2/select2.min.css',
               vendorDestBase + 'css/toastr/toastr.css',
               vendorDestBase + 'css/mermaid/mermaid.css',
               vendorSrcBase + 'css/yaio/style.css',
@@ -337,23 +339,6 @@ module.exports = function( grunt ){
                     }
                 },
                 files: [
-                    //"ace-builds": "v1.1.8", // OK
-                    //"angular": "1.2.23", // OK
-                    //"angular-translate": "2.4.0", // OK
-                    //"fancytree": "2.4.0", // ToDo Patch
-                    //"find-and-replace-dom-text": "0.4.3",  // OK
-                    //"highlightjs": "8.4.0",  // OK
-                    //"jquery": "1.11.1", //OK
-                    //"jquery-lang-js": "#be9519db371f0f3131db13b357b9e54f2629df31 == 2.4.0", // OK
-                    //"jquery-ui": "1.10.4", // OK
-                    //"jqueryui-timepicker-addon": "1.4.5", // OK
-                    //"marked": "0.3.3", // TODO Patch
-                    //"mermaid": "0.4.0", // TODO Patch
-                    //"slimbox2": "cbeyls/slimbox#2.05", // Done Patch
-                    //"strapdown": "ndossougbe/strapdown#0.4.1", // ToDo Patch
-                    //"toastr": "CodeSeven/toastr#2.1.0", // OK
-                    //"ui-contextmenu": "1.7.0" // OK
-
                     // JS
                     {expand: true, cwd: bowerSrcBase + 'ace-builds/src-min-noconflict', src: ['**'], dest: vendorDestBase + 'js/ace/', flatten: false},
                     {expand: true, cwd: bowerSrcBase + 'angular', src: ['angular.js'], dest: vendorDestBase + 'js/angularjs/', flatten: false},
@@ -387,6 +372,7 @@ module.exports = function( grunt ){
                             return dest + src.replace('-legacy.full.js','.full.js');
                           }
                     },
+                    {expand: true, cwd: bowerSrcBase + 'select2', src: ['dist/js/select2.full.min.js'], dest: vendorDestBase + 'js/select2/', flatten: true},
                     {expand: true, cwd: bowerSrcBase + 'slimbox2', src: ['js/*.js'], dest: vendorDestBase + 'js/slimbox2/', flatten: true},
                     {expand: true, cwd: bowerSrcBase + 'strapdown', src: ['src/js/strapdown-toc.js'], dest: vendorDestBase + 'js/strapdown/', flatten: true},
                     {expand: true, cwd: bowerSrcBase + 'toastr', src: ['build/toastr.min.js'], dest: vendorDestBase + 'js/toastr/', flatten: true},
@@ -396,6 +382,7 @@ module.exports = function( grunt ){
                     {expand: true, cwd: bowerSrcBase + 'jquery-ui/themes/smoothness', src: ['jquery-ui.css'], dest: vendorDestBase + 'css/jqueryui/', flatten: false},
                     {expand: true, cwd: bowerSrcBase + 'jqueryui-timepicker-addon', src: ['dist/jquery-ui-timepicker-addon.css'], dest: vendorDestBase + 'css/jqueryui/', flatten: true},
                     {expand: true, cwd: bowerSrcBase + 'mermaid', src: ['dist/mermaid.css'], dest: vendorDestBase + 'css/mermaid/', flatten: true, filter: 'isFile'},
+                    {expand: true, cwd: bowerSrcBase + 'select2', src: ['dist/css/select2.min.css'], dest: vendorDestBase + 'css/select2/', flatten: true},
                     {expand: true, cwd: bowerSrcBase + 'slimbox2', src: ['**/slimbox2.css'], dest: vendorDestBase + 'css/slimbox2/', flatten: true, filter: 'isFile'},
                     {expand: true, cwd: bowerSrcBase + 'toastr', src: ['toastr.css'], dest: vendorDestBase + 'css/toastr/', flatten: true, filter: 'isFile'}
                 ],
