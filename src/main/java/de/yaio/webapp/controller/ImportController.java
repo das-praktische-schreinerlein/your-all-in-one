@@ -54,6 +54,9 @@ import de.yaio.rest.controller.NodeRestController;
 @RequestMapping("/imports")
 public class ImportController {
     
+    /** API-Version **/
+    public static final String API_VERSION = "1.0.0";
+
     @Autowired
     protected ConverterUtils converterUtils;
     

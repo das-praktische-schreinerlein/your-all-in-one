@@ -63,7 +63,10 @@ import de.yaio.extension.datatransfer.wiki.WikiExporter;
 @RequestMapping("/exports")
 public class ExportController {
     
-    /** replaceent to do after processing a node in documentation-context **/
+    /** API-Version **/
+    public static final String API_VERSION = "1.0.0";
+
+                    /** replacements to do after processing a node in documentation-context **/
     public static final Map<String, String> PostProcessorReplacements_documentation = 
                     new LinkedHashMap<String, String>();
     

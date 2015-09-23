@@ -62,6 +62,9 @@ import de.yaio.extension.datatransfer.common.DatatransferUtils;
 @RequestMapping("/nodes")
 public class NodeRestController {
     
+    /** API-Version **/
+    public static final String API_VERSION = "1.0.0";
+
     // Logger
     private static final Logger LOGGER =
             Logger.getLogger(NodeRestController.class);

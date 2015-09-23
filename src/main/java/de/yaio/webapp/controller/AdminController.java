@@ -44,6 +44,9 @@ import de.yaio.rest.controller.NodeActionResponse;
 @RequestMapping("/admin")
 public class AdminController {
     
+    /** API-Version **/
+    public static final String API_VERSION = "1.0.0";
+
     /**
      * <h4>FeatureDomain:</h4>
      *     Webservice

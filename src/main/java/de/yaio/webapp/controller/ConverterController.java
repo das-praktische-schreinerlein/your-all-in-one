@@ -50,6 +50,9 @@ import de.yaio.rest.controller.NodeActionResponse;
 @Controller
 @RequestMapping("/converters")
 public class ConverterController {
+    /** API-Version **/
+    public static final String API_VERSION = "1.0.0";
+
     @Autowired
     protected ConverterUtils converterUtils;
     
