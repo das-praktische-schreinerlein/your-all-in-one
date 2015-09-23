@@ -221,18 +221,36 @@ Yaio.StaticNodeDataStoreService = function(appBase, config, defaultConfig) {
         var nodeId, node, flgFound, content;
         var searchResultIds = [];
         var suchworte = searchOptions.fulltext.toLowerCase().split(" ");
+        var classes = searchOptions.strClassFilter.split(",");
+        var states = searchOptions.strWorkflowStateFilter.split(",");
         for (var idx = 0; idx < me.nodeList.length; idx++) {
             nodeId = me.nodeList[idx];
             node = me.getNodeDataById(nodeId, true);
             content = node.nodeDesc + " " + node.name + " " + node.state;
 
-            // Volltextsuche
             flgFound = false;
-            if (me.appBase.get("YaioExportedData").VolltextTreffer(content.toLowerCase(), suchworte)) {
-                // words found
-                searchResultIds.push(nodeId);
+            // Fulltext
+            if (suchworte.length > 0 && !me.appBase.get("YaioExportedData").VolltextTreffer(content.toLowerCase(), suchworte)) {
+                // words not found
+                continue;
             }
+            // Classfilter
+            if (states.length > 0 && !me.appBase.get("YaioExportedData").VolltextTreffer(node.workflowState, states)) {
+                // words not found
+                continue;
+            }
+            // Workflowstate-Filter
+            if (states.length > 0 && !me.appBase.get("YaioExportedData").VolltextTreffer(node.className, classes)) {
+                // words not found
+                continue;
+            }
+            
+            // no filter or all machtes
+            searchResultIds.push(nodeId);
+            flgFound = true;
         }
+        
+        // sort TODO
         
         // paginate and read current searchresults
         var start = (searchOptions.curPage - 1) * searchOptions.pageSize;
