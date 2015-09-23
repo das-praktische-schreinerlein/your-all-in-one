@@ -34,11 +34,54 @@ Yaio.StaticNodeDataStoreService = function(appBase, config, defaultConfig) {
     
     me.nodeList = [];
     me.curUId = 1;
+    me.mapWorkflowStates = [];
+    me.mapSorts = [];
 
     /**
      * initialize the object
      */
     me._init = function() {
+        me.mapWorkflowStates['UNKNOWN'] = 'NOTPLANED';
+        me.mapWorkflowStates['OPEN'] = 'OPEN';
+        me.mapWorkflowStates['LATE'] = 'LATE';
+        me.mapWorkflowStates['RUNNING'] = 'RUNNING';
+        me.mapWorkflowStates['WARNING'] = 'WARNING';
+        me.mapWorkflowStates['ERLEDIGT'] = 'DONE';
+        me.mapWorkflowStates['VERWORFEN'] = 'CANCELED';
+        me.mapWorkflowStates['EVENT_UNKNOWN'] = 'NOTPLANED';
+        me.mapWorkflowStates['EVENT_PLANED'] = 'OPEN';
+        me.mapWorkflowStates['EVENT_CONFIRMED'] = 'OPEN';
+        me.mapWorkflowStates['EVENT_LATE'] = 'LATE';
+        me.mapWorkflowStates['EVENT_RUNNING'] = 'RUNNING';
+        me.mapWorkflowStates['EVENT_SHORT'] = 'WARNING';
+        me.mapWorkflowStates['EVENT_ERLEDIGT'] = 'DONE';
+        me.mapWorkflowStates['EVENT_VERWORFEN'] = 'CANCELED';
+
+        me.mapSorts["default"] = "ebene asc";
+        me.mapSorts["createdUp"] = "sysCreateDate asc";
+        me.mapSorts["createdDown"] = "sysCreateDate desc";
+        me.mapSorts["istEndeUp"] = "istChildrenSumEnde asc";
+        me.mapSorts["istEndeDown"] = "istChildrenSumEnde desc";
+        me.mapSorts["istStartUp"] = "istChildrenSumStart asc";
+        me.mapSorts["istStartDown"] = "istChildrenSumStart desc";
+        me.mapSorts["lastChangeUp"] = "sysChangeDate asc";
+        me.mapSorts["lastChangeDown"] = "sysChangeDate desc";
+        me.mapSorts["nameUp"] = "name asc";
+        me.mapSorts["nameDown"] = "name desc";
+        me.mapSorts["nodeNumberUp"] = "metaNodePraefix asc, metaNodeNummer asc";
+        me.mapSorts["nodeNumberDown"] = "metaNodePraefix desc, metaNodeNummer desc";
+        me.mapSorts["planEndeUp"] = "planEnde asc";
+        me.mapSorts["planEndeDown"] = "planEnde desc";
+        me.mapSorts["planStartUp"] = "planStart asc";
+        me.mapSorts["planStartDown"] = "planStart desc";
+        me.mapSorts["planChildrenSumEndeUp"] = "planChildrenSumEnde asc";
+        me.mapSorts["planChildrenSumEndeDown"] = "planChildrenSumEnde desc";
+        me.mapSorts["planChildrenSumStartUp"] = "planChildrenSumStart asc";
+        me.mapSorts["planChildrenSumStartDown"] = "planChildrenSumStart desc";
+        me.mapSorts["typeUp"] = "type asc";
+        me.mapSorts["typeDown"] = "type desc";
+        me.mapSorts["workflowStateUp"] = "workflowState asc";
+        me.mapSorts["workflowStateDown"] = "workflowState desc";
     };
     
     me.resetNodeList = function() {
@@ -203,7 +246,7 @@ Yaio.StaticNodeDataStoreService = function(appBase, config, defaultConfig) {
         node['sysChangeDate'] = now.getTime();
         node['sysChangeCount'] = (node['sysChangeCount'] > 0 ? node['sysChangeCount']+1 : 1);
         node['state'] = node['type'];
-        node['workflowState'] = node['state'];
+        node['workflowState'] = me.mapWorkflowStates[node['state']];
         
         // save node
         console.log(msg + " save node:", node)
@@ -216,7 +259,7 @@ Yaio.StaticNodeDataStoreService = function(appBase, config, defaultConfig) {
 
     me.fulltextSearch = function(searchOptions) {
         var msg = "fulltextSearch searchOptions: " + searchOptions;
-//            + '/' + encodeURI(searchOptions.searchSort)
+
         // search ids
         var nodeId, node, flgFound, content;
         var searchResultIds = [];
@@ -250,20 +293,26 @@ Yaio.StaticNodeDataStoreService = function(appBase, config, defaultConfig) {
             flgFound = true;
         }
         
-        // sort TODO
+        // read all data and sort
+        var searchConfig = [];
+        searchConfig.push(me.mapSorts[searchOptions.searchSort]);
+        searchConfig.push("ebene asc");
+        searchConfig.push("parentNode asc");
+        searchConfig.push("sortPos asc");
+        var tmpSearchResult = [];
+        for (var idx = 0; idx < searchResultIds.length; idx++) {
+            nodeId = searchResultIds[idx];
+            tmpSearchResult.push(me.getNodeDataById(nodeId, true));
+        }
+        me.orderBy(tmpSearchResult, searchConfig);
         
         // paginate and read current searchresults
         var start = (searchOptions.curPage - 1) * searchOptions.pageSize;
         var ende = start + searchOptions.pageSize;
-        if (ende >= searchResultIds.length) {
-            ende = searchResultIds.length;
+        if (ende >= tmpSearchResult.length) {
+            ende = tmpSearchResult.length;
         }
-        var curSearchResultIds = searchResultIds.slice((searchOptions.curPage - 1) * searchOptions.pageSize, ende);
-        var searchResult = [];
-        for (var idx = 0; idx < curSearchResultIds.length; idx++) {
-            nodeId = curSearchResultIds[idx];
-            searchResult.push(me.getNodeDataById(nodeId, true));
-        }
+        var searchResult = tmpSearchResult.slice((searchOptions.curPage - 1) * searchOptions.pageSize, ende);
         
         var searchResponse = { 
             state: "OK", 
@@ -276,6 +325,44 @@ Yaio.StaticNodeDataStoreService = function(appBase, config, defaultConfig) {
         console.log(msg + " response:", searchResponse);
 
         return searchResponse;
+    };
+
+    me.dynamicSort = function (property) {
+        var sortOrder = 1;
+        if (property.search(" desc") > 0) {
+            sortOrder = -1;
+        }
+        property = property.replace(/( desc)|( asc)$/, "").trim();
+        return function (a,b) {
+            var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+            result = result * sortOrder;
+            // sort null and undefined to last
+            if (result == -1 && (a[property] == null || a[property] === "undefined")) {
+                result = 1;
+            } else if (result == 1 && (b[property] == null || b[property] === "undefined")) {
+                result = -1;
+            }
+//            console.log("dynamicSort: " + sortOrder + " " + property + " a:" + a[property] + " b:" + b[property] + " res:" +  result * sortOrder);
+            return result;
+        }
+    };
+    
+    me.dynamicSortMultiple = function (props) {
+        return function (obj1, obj2) {
+            var i = 0, result = 0, numberOfProperties = props.length;
+            /* try getting a different result from 0 (equal)
+             * as long as we have extra properties to compare
+             */
+            while(result === 0 && i < numberOfProperties) {
+                result = me.dynamicSort(props[i])(obj1, obj2);
+                i++;
+            }
+            return result;
+        }
+    };
+    
+    me.orderBy = function(list, sortConfig) {
+        list.sort(me.dynamicSortMultiple(sortConfig));
     };
 
     
