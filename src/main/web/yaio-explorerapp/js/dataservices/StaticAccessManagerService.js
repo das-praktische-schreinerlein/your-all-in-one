@@ -43,7 +43,7 @@ Yaio.StaticAccessManagerService = function(appBase, config, defaultConfig) {
         me.setAvailiableNodeAction('move', true);
         me.setAvailiableNodeAction('remove', true);
         me.setAvailiableNodeAction('search', true);
-        me.setAvailiableNodeAction('dashboard', false);
+        me.setAvailiableNodeAction('dashboard', "#/dashboard");
         
         me.setAvailiableNodeAction('frontpagebaseurl', me.appBase.config.resBaseUrl + 'static/');
         me.setAvailiableNodeAction('syshelp', me.appBase.config.exportStaticDocumentationUrl + 'SysHelp1');
