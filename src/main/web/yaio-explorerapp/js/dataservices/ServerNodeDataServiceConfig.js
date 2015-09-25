@@ -21,7 +21,7 @@ Yaio.ServerNodeDataServiceConfig = function(urlBase, name, desc) {
     // my own instance
     var me = JsHelferlein.ConfigBase();
     
-    me.urlBase                      = urlBase || ("http://" + window.location.host + (window.location.port ? ":" + window.location.port : ""));
+    me.urlBase                      = urlBase || (window.location.protocol + "//" + window.location.hostname + (window.location.port ? ":" + window.location.port : ""));
     me.name                         = name || ("Server: " + window.location.host);
     me.desc                         = desc || ("Daten werden vom aktuellen Server " + window.location.host + " geladen.");
     
