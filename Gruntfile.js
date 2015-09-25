@@ -665,9 +665,11 @@ module.exports = function( grunt ){
     });
 
     // register tasks
-    grunt.registerTask('default',   ['jshint']);
+    grunt.registerTask('default',   ['distfull']);
     grunt.registerTask('vendors',   ['clean:bower', 'bower', 'copy:bower2vendors', 'copy:bowerbin2vendors']);
-    grunt.registerTask('dist',      ['vendors', 'clean:dist', 'copy:archiv2dist', 'concat', 'copy:vendors2dist', 'copy:yaiores2dist', 'replace:versionOnDist', 'replace:versionOnRes', 'copy:dist2archiv']);
+    grunt.registerTask('distfull',  ['vendors', 'clean:dist', 'copy:archiv2dist', 'concat', 'copy:vendors2dist', 'copy:yaiores2dist', 'replace:versionOnDist', 'replace:versionOnRes', 'copy:dist2archiv']);
+    grunt.registerTask('distyaio',  ['concat', 'copy:yaiores2dist', 'replace:versionOnDist', 'replace:versionOnRes', 'copy:dist2archiv']);
+    grunt.registerTask('dist',      ['distfull']);
     grunt.registerTask('unit-test', ['dist', 'karma:continuous:start', 'watch:karma']);
     grunt.registerTask('e2e-test',  ['dist', 'protractor:continuous', 'watch:protractor']);
 
