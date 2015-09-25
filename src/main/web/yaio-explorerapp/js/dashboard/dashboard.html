@@ -18,6 +18,7 @@
     <div ng-include="yaioUtils.getConfig().resBaseUrl + 'js/dashboard/dashboard-events-open.html'" id="dashboard-events-open" ng-controller="DashBoardNodeSearchCtrl"></div>
     <div ng-include="yaioUtils.getConfig().resBaseUrl + 'js/dashboard/dashboard-todos-warning.html'" id="dashboard-todos-warning" ng-controller="DashBoardNodeSearchCtrl"></div>
     <div ng-include="yaioUtils.getConfig().resBaseUrl + 'js/dashboard/dashboard-todos-late.html'" id="dashboard-todos-late" ng-controller="DashBoardNodeSearchCtrl"></div>
+    <div ng-include="yaioUtils.getConfig().resBaseUrl + 'js/dashboard/dashboard-todos-running.html'" id="dashboard-todos-running" ng-controller="DashBoardNodeSearchCtrl"></div>
     <div ng-include="yaioUtils.getConfig().resBaseUrl + 'js/dashboard/dashboard-todos-open.html'" id="dashboard-todos-open" ng-controller="DashBoardNodeSearchCtrl"></div>
     <div ng-include="yaioUtils.getConfig().resBaseUrl + 'js/dashboard/dashboard-last-changed.html'" id="dashboard-last-changed" ng-controller="DashBoardNodeSearchCtrl"></div>
 </div>
@@ -49,6 +50,7 @@
     setTimeout(function() { 
         // add TOC
         yaioAppBase.get('YaioFormatter').addTOCForBlock("#sidebartoc", "#front-content-intro", { toc: { topLink: "Seitenkopf"}});
+        jMATService.getPageLayoutService().doAllBlockToggler(false);
         yaioAppBase.get('YaioLayout').setupAppSize();
     }, 3000);
     
