@@ -224,6 +224,7 @@
     "sourceselector.ue": "Auswahl der Datenquelle",
     "label.dashboard.eventsOpen": "Termine - laufen oder starten demnächst",
     "label.dashboard.todosOpen": "Offene Aufgaben - starten demnächst",
+    "label.dashboard.todosRunning": "Laufende Aufgaben - werden bearbeitet",
     "label.dashboard.todosWarning": "Verspätete Aufgaben - Termin überschritten",
     "label.dashboard.todosLate": "Verspätete Aufgaben - noch nicht begonnen",
     "label.dashboard.lastChanged": "Zuletzt geändert",

@@ -217,6 +217,7 @@
     "fancytree.table.headline.type": "type<br />&nbsp;</ div>",
     "label.dashboard.eventsOpen": "Upcoming events",
     "label.dashboard.todosOpen": "Open todos - start next",
+    "label.dashboard.todosOpen": "Running todos - working on",
     "label.dashboard.todosWarning": "Late todos - not ended yet",
     "label.dashboard.todosLate": "Late todos - not started yet",
     "label.dashboard.lastChanged": "Last changed",
