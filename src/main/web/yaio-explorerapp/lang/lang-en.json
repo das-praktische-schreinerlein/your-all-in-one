@@ -128,6 +128,7 @@
     "editor.common.label.symLinkRef": "reference",
     "editor.common.label.symLinkTags": "tags",
     "editor.common.label.type": "type",
+    "editor.common.label.notPraefix": "ignore nodeprefixes",
     "editor.common.legend.Details": "Remarks",
     "editor.common.legend.Ist": "required effort, schedule and status",
     "editor.common.legend.Layout": "Layout Commands documentation for export",

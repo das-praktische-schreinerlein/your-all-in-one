@@ -69,6 +69,9 @@ public class OutputOptionsImpl implements OutputOptions {
     protected boolean flgRecalc = false;
     protected boolean flgProcessDocLayout = false;
     protected boolean flgUsePublicBaseRef = false;
+
+    
+    protected String strNotNodePraefix = "";
     protected String strReadIfStatusInListOnly = "";
     protected String strClassFilter = "";
     protected String strTypeFilter = "";
@@ -109,6 +112,7 @@ public class OutputOptionsImpl implements OutputOptions {
         this.flgRecalc = baseOptions.isFlgRecalc();
         this.flgProcessDocLayout = baseOptions.isFlgProcessDocLayout();
         this.flgUsePublicBaseRef = baseOptions.isFlgUsePublicBaseRef();
+        this.strNotNodePraefix = baseOptions.getStrNotNodePraefix();
         this.strReadIfStatusInListOnly = baseOptions.getStrReadIfStatusInListOnly();
         this.strClassFilter = baseOptions.getStrClassFilter();
         this.strTypeFilter = baseOptions.getStrTypeFilter();
@@ -302,6 +306,17 @@ public class OutputOptionsImpl implements OutputOptions {
     public void setFlgShowDescInNextLine(final boolean flgShowDescInNextLine) {
         this.flgShowDescInNextLine = flgShowDescInNextLine;
     }
+
+    @Override
+    public String getStrNotNodePraefix() {
+        return this.strNotNodePraefix;
+    }
+
+    @Override
+    public void setStrNotNodePraefix(final String strNotNodePraefix) {
+        this.strNotNodePraefix = strNotNodePraefix;
+    }
+    
     public String getStrReadIfStatusInListOnly() {
         return strReadIfStatusInListOnly;
     }
@@ -416,6 +431,7 @@ public class OutputOptionsImpl implements OutputOptions {
         this.flgRecalc = false;
         this.flgProcessDocLayout = false;
         this.flgUsePublicBaseRef = false;
+        this.setStrNotNodePraefix("");
         this.setStrReadIfStatusInListOnly("");
         this.setStrClassFilter("");
         this.setStrTypeFilter("");
@@ -453,6 +469,7 @@ public class OutputOptionsImpl implements OutputOptions {
                         + ", flgRecalc=" + this.flgRecalc 
                         + ", flgProcessDocLayout=" + this.flgProcessDocLayout
                         + ", flgUsePublicBaseRef=" + this.flgUsePublicBaseRef
+                        + ", strNotNodePraefix=" + this.strNotNodePraefix
                         + ", strReadIfStatusInListOnly=" + this.strReadIfStatusInListOnly 
                         + ", strClassFilter=" + this.strClassFilter 
                         + ", strTypeFilter=" + this.strTypeFilter 

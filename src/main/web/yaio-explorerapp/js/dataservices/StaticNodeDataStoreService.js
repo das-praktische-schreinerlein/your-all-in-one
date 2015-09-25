@@ -266,6 +266,7 @@ Yaio.StaticNodeDataStoreService = function(appBase, config, defaultConfig) {
         var suchworte = searchOptions.fulltext.toLowerCase().split(" ");
         var classes = searchOptions.strClassFilter.split(",");
         var states = searchOptions.strWorkflowStateFilter.split(",");
+        var notPraefix = searchOptions.strNotNodePraefix.split(" ");
         for (var idx = 0; idx < me.nodeList.length; idx++) {
             nodeId = me.nodeList[idx];
             node = me.getNodeDataById(nodeId, true);
@@ -278,13 +279,19 @@ Yaio.StaticNodeDataStoreService = function(appBase, config, defaultConfig) {
                 continue;
             }
             // Classfilter
-            if (states.length > 0 && !me.appBase.get("YaioExportedData").VolltextTreffer(node.workflowState, states)) {
+            if (classes.length > 0 && !me.appBase.get("YaioExportedData").VolltextTreffer(node.workflowState, classes)) {
                 // words not found
                 continue;
             }
             // Workflowstate-Filter
-            if (states.length > 0 && !me.appBase.get("YaioExportedData").VolltextTreffer(node.className, classes)) {
+            if (states.length > 0 && !me.appBase.get("YaioExportedData").VolltextTreffer(node.className, states)) {
                 // words not found
+                continue;
+            }
+            // NotNodePraefix-Filter
+            if (notPraefix.length > 0 && me.appBase.get("YaioExportedData").VolltextTreffer(node.metaNodePraefix, notPraefix, true, true)) {
+                // blacklisted praefixes found
+                console.log("ignore nodeId " + nodeId + " because of " + node.metaNodePraefix);
                 continue;
             }
             

@@ -396,6 +396,25 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
         return dbFilters;
     }
     
+    protected List<DBFilter> createNotNodePraefixilter(final String pfulltext) {
+        List<DBFilter> dbFilters = new ArrayList<DBFilter>();
+
+        // tokenize words
+        String[] searchWords = null;
+        if (!StringUtils.isEmpty(pfulltext)) {
+            String fulltext = pfulltext.replace("  ", " ");
+            searchWords = fulltext.split(" ");
+            for (int idx = 0; idx < searchWords.length; idx++) {
+                String sql = "not (lower(meta_node_praefix) like lower(:notnodepraefix" + idx + ")"
+                                + ")";
+                List<DBFilter.Parameter> parameters = new ArrayList<DBFilter.Parameter>();
+                parameters.add(new DBFilter.Parameter("notnodepraefix" + idx, searchWords[idx]));
+                dbFilters.add(new DBFilter(sql, parameters));
+            }
+        }
+        return dbFilters;
+    }
+
     protected String createSort(final String sortConfig) {
         // setup sort
         String sort = "";
@@ -434,6 +453,7 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
         // create filter
         List<DBFilter> dbFilters = new ArrayList<DBFilter>();
         dbFilters.addAll(createFulltextFilter(pfulltext));
+        dbFilters.addAll(createNotNodePraefixilter(searchOptions.getStrNotNodePraefix()));
         dbFilters.addAll(createSearchOptionsFilter(searchOptions));
         String filter = "";
         if (dbFilters.size() > 0) {

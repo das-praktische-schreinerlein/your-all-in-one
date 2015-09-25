@@ -43,6 +43,7 @@ yaioApp.controller('DashBoardNodeSearchCtrl', function($rootScope, $scope, yaioU
         baseSysUID: "MasterplanMasternode1",
         fulltext: "",
         total: 0,
+        strNotNodePraefix: "Sys* *Templ MyStart MyHelp JsUnitTest JsFuncTest JUnitTest",
         strWorkflowStateFilter: "",
         strClassFilter: ""
     };
@@ -56,6 +57,7 @@ yaioApp.controller('DashBoardNodeSearchCtrl', function($rootScope, $scope, yaioU
             + '/' + encodeURI($scope.searchOptions.fulltext)
             + '/' + encodeURI($scope.searchOptions.strClassFilter)
             + '/' + encodeURI($scope.searchOptions.strWorkflowStateFilter)
+            + '/' + encodeURI($scope.searchOptions.strNotNodePraefix)
             + '/';
         return newUrl;
     }

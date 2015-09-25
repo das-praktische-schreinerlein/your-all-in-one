@@ -280,22 +280,47 @@ Yaio.ExportedDataService = function(appBase) {
     
     
     /* Um einen Volltext-Treffer zu haben, müssen alle Worte im durchsuchten Text vorkommen. */
-    me.VolltextTreffer = function(inhalt, suchworte) {
-        // Wenn keine Suchzeichenkette als gefnden kennzeichnen
-        if ( suchworte.length == 0 ) {
+    me.VolltextTreffer = function(inhalt, suchworte, flgUseWildCards, flgUseOr) {
+        // Wenn keine Suchzeichenkette als gefunden kennzeichnen
+        if (suchworte.length == 0) {
             return true;
         }
 
         // alle Suchworte iterieren
+        var suchwortFound = true;
         for (var i = 0; i < suchworte.length; i++) {
-            if ( inhalt.indexOf(suchworte[i]) == -1) {
-                // Wort nicht gefunden
-                return false;
+            // extract patterns
+            var patterns = [suchworte[i]];
+            if (flgUseWildCards) {
+                patterns = suchworte[i].split("*");
+            }
+            // iterate patterns
+            suchwortFound = true;
+            for (var pi = 0; pi < patterns.length; pi++) {
+                var pattern = patterns[pi];
+                if (! pattern || pattern == "") {
+                    continue;
+                }
+                // check pattern
+                if (inhalt.indexOf(pattern) == -1) {
+                    // pattern not found
+                    if (! flgUseOr) {
+                        // we use AND and 1 pattern not found: the looser takes it all
+                        return false;
+                    }
+                    suchwortFound = false;
+                    continue;
+                }
+            }
+
+            if (flgUseOr && suchwortFound) {
+                // we use OR and 1 full word found: the winner takes it all
+                return true;
             }
         }
      
         // alle Worte gefunden
-        return true;
+        return suchwortFound;
     };
     
     me.doSearch = function(suchworte) {

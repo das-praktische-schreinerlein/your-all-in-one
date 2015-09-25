@@ -38,6 +38,7 @@ import de.yaio.utils.DataUtils;
  */
 public class SearchOptionsImpl implements SearchOptions {
     protected Integer maxEbene = 9999;
+    protected String strNotNodePraefix = "";
 
     protected String strReadIfStatusInListOnly = "";
     protected String strClassFilter = "";
@@ -56,6 +57,7 @@ public class SearchOptionsImpl implements SearchOptions {
     public SearchOptionsImpl(final SearchOptions baseOptions) {
         super();
         this.maxEbene = baseOptions.getMaxEbene();
+        this.strNotNodePraefix = baseOptions.getStrNotNodePraefix();
     }
 
     @Override
@@ -67,6 +69,16 @@ public class SearchOptionsImpl implements SearchOptions {
         this.maxEbene = maxEbene;
     }
 
+    @Override
+    public String getStrNotNodePraefix() {
+        return this.strNotNodePraefix;
+    }
+
+    @Override
+    public void setStrNotNodePraefix(final String strNotNodePraefix) {
+        this.strNotNodePraefix = strNotNodePraefix;
+    }
+    
     public String getStrReadIfStatusInListOnly() {
         return strReadIfStatusInListOnly;
     }
@@ -129,6 +141,7 @@ public class SearchOptionsImpl implements SearchOptions {
     
     public void resetDefaults() {
         this.maxEbene = 0;
+        this.setStrNotNodePraefix("");
         this.setStrReadIfStatusInListOnly("");
         this.setStrClassFilter("");
         this.setStrTypeFilter("");
@@ -138,6 +151,7 @@ public class SearchOptionsImpl implements SearchOptions {
     @Override
     public String toString() {
         return "SearchOptionsImpl [maxEbene=" + this.maxEbene
+                        + ", strNotNodePraefix=" + this.strNotNodePraefix
                         + ", strReadIfStatusInListOnly=" + this.strReadIfStatusInListOnly
                         + ", strClassFilter=" + this.strClassFilter
                         + ", strTypeFilter=" + this.strTypeFilter

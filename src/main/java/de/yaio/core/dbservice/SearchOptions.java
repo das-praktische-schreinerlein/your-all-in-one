@@ -35,6 +35,8 @@ import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
 public interface SearchOptions {
     int getMaxEbene();
     void setMaxEbene(Integer maxEbene);
+    String getStrNotNodePraefix();
+    void setStrNotNodePraefix(String strNotNodePraefix);
 
     Map<String, WorkflowState> getMapWorkflowStateFilter();
     Map<String, String> getMapClassFilter();

@@ -43,6 +43,7 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
         baseSysUID: "MasterplanMasternode1",
         fulltext: "",
         total: 0,
+        strNotNodePraefix: "Sys* *Templ MyStart MyHelp JsUnitTest JsFuncTest JUnitTest",
         strWorkflowStateFilter: "",
         arrWorkflowStateFilter: [],
         strClassFilter: "",
@@ -62,6 +63,9 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
     }
     if ($routeParams.fulltext) {
         $scope.searchOptions.fulltext = decodeURI($routeParams.fulltext);
+    }
+    if ($routeParams.strNotNodePraefix) {
+        $scope.searchOptions.strNotNodePraefix = decodeURI($routeParams.strNotNodePraefix);
     }
     if ($routeParams.strWorkflowStateFilter) {
         $scope.searchOptions.strWorkflowStateFilter = decodeURI($routeParams.strWorkflowStateFilter);
@@ -157,6 +161,7 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
             + '/' + encodeURI(searchOptions.fulltext)
             + '/' + encodeURI(searchOptions.arrClassFilter.join(","))
             + '/' + encodeURI(searchOptions.arrWorkflowStateFilter.join(","))
+            + '/' + encodeURI(searchOptions.strNotNodePraefix)
             + '/';
         return newUrl;
     }

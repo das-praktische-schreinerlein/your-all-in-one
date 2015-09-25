@@ -227,13 +227,17 @@ Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
         
         // copy availiable serverSearchOptions
         var serverSearchOptions = {};
-        var searchFields = ["strTypeFilter", "strReadIfStatusInListOnly", "maxEbene", "strClassFilter", "strWorkflowStateFilter"];
+        var searchFields = ["strTypeFilter", "strReadIfStatusInListOnly", "maxEbene", "strClassFilter", "strWorkflowStateFilter", "strNotNodePraefix"];
         var searchField;
         for (var idx = 0; idx < searchFields.length; idx++) {
             searchField = searchFields[idx];
             if (searchOptions.hasOwnProperty(searchField)) {
                 serverSearchOptions[searchField] = searchOptions[searchField];
             }
+        }
+        if (serverSearchOptions.hasOwnProperty("strNotNodePraefix")) {
+            // replace * with sql %
+            serverSearchOptions.strNotNodePraefix = serverSearchOptions.strNotNodePraefix.replace(/\*/g, "%");
         }
 
         // load data
