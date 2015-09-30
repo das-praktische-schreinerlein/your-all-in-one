@@ -113,33 +113,10 @@ ul.commands li {
     list-style: none;
     float: left;   
 }
-ul.exporttypes {
-    float: right;
-}
 .box-actioncontextmenue  {
     display: none;
     position: absolute;
     float: right;
     width: 150px;
     z-index: 9;
-}
-ul.exporttypelist {
-    padding-left: 1px;
-    margin: 0px;
-}
-ul.exporttypelist li {
-    padding-left: 1px;
-    margin: 0px;
-}
-ul.nodecommands {
-    float: left;
-}
-.command_switchlevel {
-    vertical-align: top;
-}
-.command_switchlevel_input {
-    vertical-align: top;
-    height: 20px;
-    width: 60px;
-    padding: 0px;
 }

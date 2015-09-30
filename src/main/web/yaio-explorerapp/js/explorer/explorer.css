@@ -193,3 +193,21 @@ td input[type=input] {
   width: 40px;
 }
 
+
+/*****************************************
+ *****************************************
+ * fancytree
+ *****************************************
+ *****************************************/
+ul.nodecommands {
+    float: left;
+}
+.command_switchlevel {
+    vertical-align: top;
+}
+.command_switchlevel_input {
+    vertical-align: top;
+    height: 20px;
+    width: 260px;
+    padding: 0px;
+}
