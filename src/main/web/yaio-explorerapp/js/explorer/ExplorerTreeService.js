@@ -51,6 +51,7 @@ Yaio.ExplorerTreeService = function(appBase) {
      */
     me.clipboardNode = null;
     me.pasteMode = null;
+    me.nodeFilter = {};
     me._init = function() {
     };
 
@@ -637,8 +638,13 @@ Yaio.ExplorerTreeService = function(appBase) {
             var baseNode = data.response.node;
             if (data.response.childNodes) {
                  // iterate childnodes
-                for (var zaehler =0; zaehler < data.response.childNodes.length; zaehler++) {
+                for (var zaehler = 0; zaehler < data.response.childNodes.length; zaehler++) {
                     var childBaseNode = data.response.childNodes[zaehler];
+                    
+                    if (! me.filterNodeData(childBaseNode)) {
+                        continue;
+                    }
+                    
                     var datanode = me.appBase.get('YaioExplorerTree').createFancyDataFromNodeData(childBaseNode);
                     console.debug("add childnode for " + baseNode.sysUID 
                             + " = " + childBaseNode.sysUID + " " + childBaseNode.name);
@@ -653,6 +659,51 @@ Yaio.ExplorerTreeService = function(appBase) {
         data.result = list;
     };
     
+    
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Initialisation
+     * <h4>FeatureDescription:</h4>
+     *     checks if the node passes the current nodefilter
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>return boolean: check passes or not
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     GUI Tree
+     * @param node - nodedata from serverresponse (java de.yaio.rest.controller.NodeActionReponse)
+     * @return check passes or not
+     */
+    me.filterNodeData = function(node) {
+        if (! me.nodeFilter) {
+            // no filter
+            return true;
+        }
+        
+        // check filter
+        if (me.nodeFilter.classNames && !me.nodeFilter.classNames[node.className]) {
+            console.log("filterNodeData: skip node by className:" + node.className);
+            return false;
+        }
+        if (me.nodeFilter.workflowStates && !me.nodeFilter.workflowStates[node.workflowState]) {
+            console.log("filterNodeData: skip node by workflowState:" + node.workflowState);
+            return false;
+        }
+        
+        return true;
+    }
+
+    me.setNodeFilter = function(nodeFilter) {
+        me.nodeFilter = nodeFilter || {};
+        if (! me.nodeFilter) {
+            // no filter
+            return;
+        }
+        
+        // filter existing nodes
+        ;
+    }
     
     me.yaioFancyTreeLoadError = function(e, data) {
         var error = data.error;

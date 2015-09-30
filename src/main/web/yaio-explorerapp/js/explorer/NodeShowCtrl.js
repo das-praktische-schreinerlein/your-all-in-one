@@ -35,11 +35,18 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
 
     // register the editor
     $scope.outputOptionsEditor = OutputOptionsEditor;
+    
+    // register filterOptions
+    $scope.filterOptions = {};
+    if ($routeParams.workflowState && $routeParams.workflowState != "?") {
+        $scope.filterOptions.strWorkflowStateFilter = $routeParams.workflowState;
+    }
 
     // check parameter - set default if empty
     var baseUrl = '/show/';
     var nodeId = $routeParams.nodeId;
     var nodeByAllId = $routeParams.nodeByAllId;
+    var activeNodeId = $routeParams.activeNodeId;
     var flgNodeByAllId = false;
     if (nodeByAllId != null && nodeByAllId != "" && nodeByAllId) {
         nodeId = nodeByAllId;
@@ -72,9 +79,11 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
             var loadOptions = {
                 flgNodeByAllId: flgNodeByAllId
             };
+            
+            // configure filter
+            $scope.setExplorerFilter();
 
             // check for activeNodeId if set
-            var activeNodeId = $routeParams.activeNodeId;
             if (activeNodeId) {
                 loadOptions.loadActiveNodeIdHandler = function() {
                     console.log("start loading activenode:" + activeNodeId);
@@ -279,4 +288,36 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
         $("#inputGanttRangeEnde").val(yaioUtils.getService('YaioBase').formatGermanDate(ende)).trigger('input').triggerHandler("change");
         return false;
     };
+    
+    $scope.changeExplorerFilter = function() {
+        var msg = "changeExplorerFilter node: " + nodeId;
+        var newUrl = '/show/' + nodeId 
+            + '/' + $scope.filterOptions.strWorkflowStateFilter + "/";
+        if (activeNodeId) {
+            newUrl = newUrl + 'activate/' + activeNodeId + '/';
+        }
+        
+        // no cache!!!
+        newUrl = newUrl +  "?" + (new Date()).getTime();
+        console.log(msg + " RELOAD:" + newUrl);
+        $location.path(newUrl);
+    };
+    
+    $scope.setExplorerFilter = function() {
+        // set new filter
+        var nodeFilter = yaioUtils.getService('YaioExplorerTree').nodeFilter || {};
+        nodeFilter.workflowStates = null;
+        if ($scope.filterOptions.strWorkflowStateFilter) {
+            var arrWorkflowStateFilter = $scope.filterOptions.strWorkflowStateFilter.split(",");
+            if (arrWorkflowStateFilter.length > 0) {
+                nodeFilter.workflowStates = {};
+                for (var i=0; i < arrWorkflowStateFilter.length; i++) {
+                    nodeFilter.workflowStates[arrWorkflowStateFilter[i]] = arrWorkflowStateFilter[i];
+                }
+            }
+        }
+        console.log("setExplorerFilter: set filter:", nodeFilter);
+        yaioUtils.getService('YaioExplorerTree').setNodeFilter(nodeFilter);
+    }
+    
 });

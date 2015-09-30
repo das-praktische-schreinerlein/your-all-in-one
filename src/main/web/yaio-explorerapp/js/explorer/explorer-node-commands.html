@@ -12,4 +12,12 @@
              <li class="command" data-tooltip='tooltip.command.Snapshot' lang="tech"
                  ng-if="yaioUtils.getService('YaioAccessManager').getAvailiableNodeAction('createsymlink', node.sysUID, true)">
                 <a href="" ng-click="snapshot()" class="button command_snapshot" translate="common.command.Snapshot">Snapshot</a></li>
+             <li class="command" data-tooltip='tooltip.command.NodeFilter' lang="tech">
+                <span lang='tech' translate="editor.common.label.state">Status</span>
+                <select name="strWorkflowStateFilter" ng-change="changeExplorerFilter()" class="inputtype_select" id="inputFilterOptionsStrWorkflowStateFilter" ng-model="filterOptions.strWorkflowStateFilter">
+                    <option value="" translate="common.select.all">Alle
+                    <option value="OPEN,RUNNING" translate="common.select.NodeFilter.WorkflowState.OPEN_RUNNING">Todo planned
+                    <option value="LATE,WARNING" translate="common.select.NodeFilter.WorkflowState.LATE_WARNING">Todo warning
+                    <option value="OPEN,RUNNING,LATE,WARNING" translate="common.select.NodeFilter.WorkflowState.ALL_TODOS">all Todos
+               </select></li>
           </ul>
