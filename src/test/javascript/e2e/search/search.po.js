@@ -16,6 +16,7 @@ var YAIOSearchPage = function() {
     me.buttonDoSearch = '[translate="common.command.DoSearch"]';
     me.inputFullText = '#inputSearchOptionsFulltext';
     me.selectSort = '#inputSearchOptionsSearchSortt';
+    me.inputSearchOptionsStrNotNodePraefix = '#inputSearchOptionsStrNotNodePraefix';
     
     // pagination
     me.paginationLinkStyles = "ul.pagination > li";
@@ -34,6 +35,13 @@ var YAIOSearchPage = function() {
         
         // open search-link
         $(yaioFrontPage.linkSearch).click();
+
+        // expect SearchButton
+        protractor.utils.waitUntilElementClickable($(me.buttonDoSearch), protractor.utils.CONST_WAIT_ELEMENT);
+        expect($(me.buttonDoSearch).isDisplayed()).toEqual(true);
+
+        // reload with static url because we want no hidden searchresult (defaults of SearchOptionsStrNotNodePraefix)
+        browser.get(browser.params.yaioConfig.yaioBaseAppUrl + '/search/1/20/lastChangeDown/MasterplanMasternode1////blablub/');
         
         // expect SearchButton
         protractor.utils.waitUntilElementClickable($(me.buttonDoSearch), protractor.utils.CONST_WAIT_ELEMENT);
