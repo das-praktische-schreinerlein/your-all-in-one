@@ -49,13 +49,19 @@ yaioApp.config(function($routeProvider) {
 
     // configure routes
     $routeProvider
-        .when('/show/:nodeId/activate/:activeNodeId', { 
+        .when('/show/:nodeId/activate/:activeNodeId/:dummy?', { 
             controller:  'NodeShowCtrl',
             templateUrl: resBaseUrl + 'js/explorer/node.html' })
-        .when('/showByAllIds/:nodeByAllId', { 
+        .when('/show/:nodeId/:workflowState?/activate/:activeNodeId/:dummy?', { 
+            controller:  'NodeShowCtrl',
+            templateUrl: resBaseUrl + 'js/explorer/node.html' })
+        .when('/show/:nodeId/:workflowState?/:dummy?', { 
             controller:  'NodeShowCtrl',
             templateUrl: resBaseUrl + 'js/explorer/node.html' })
         .when('/show/:nodeId', { 
+            controller:  'NodeShowCtrl',
+            templateUrl: resBaseUrl + 'js/explorer/node.html' })
+        .when('/showByAllIds/:nodeByAllId', { 
             controller:  'NodeShowCtrl',
             templateUrl: resBaseUrl + 'js/explorer/node.html' })
         .when('/search/:curPage?/:pageSize?/:searchSort?/:baseSysUID?/:fulltext?/:strClassFilter?/:strWorkflowStateFilter?/:strNotNodePraefix?/', { 

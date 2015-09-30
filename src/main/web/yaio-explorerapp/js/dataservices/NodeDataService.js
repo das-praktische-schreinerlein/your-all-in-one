@@ -231,7 +231,7 @@ Yaio.NodeDataService = function(appBase, config, defaultConfig) {
                 
                 // append Link in current hierarchy to referenced node
                 var newUrl = '#/show/' + tree.options.masterNodeId 
-                    + '/activate/' + yaioNodeActionResponse.node.sysUID;
+                    + '/activate/' + yaioNodeActionResponse.node.sysUID + '/';
                 
                 // check if node-hierarchy exists (same tree)
                 var firstNodeId, firstNode;
@@ -247,7 +247,7 @@ Yaio.NodeDataService = function(appBase, config, defaultConfig) {
                     firstNodeId = me.appBase.config.CONST_MasterId;
                     
                     newUrl = '#/show/' + firstNodeId 
-                        + '/activate/' + yaioNodeActionResponse.node.sysUID;
+                        + '/activate/' + yaioNodeActionResponse.node.sysUID + '/';
                 }
 
                 me.$(treeNode.tr).find("div.container_data_row").append(

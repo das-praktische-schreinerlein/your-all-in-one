@@ -299,7 +299,7 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
                 
                 // reload
                 var newUrl = '/show/' + nodeId 
-                    + '/activate/' + yaioNodeActionResponse.node.sysUID; //$scope.nodeForEdit.sysUID
+                    + '/activate/' + yaioNodeActionResponse.node.sysUID + '/'; //$scope.nodeForEdit.sysUID
                 console.log(msg + " RELOAD:" + newUrl);
                 
                 // no cache!!!
