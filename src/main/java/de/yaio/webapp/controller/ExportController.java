@@ -388,6 +388,9 @@ public class ExportController {
         Exporter exporter = new ICalDBExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
         
+        // exclude system-nodes
+        oOptions.setStrNotNodePraefix(System.getProperty("yaio.exportcontroller.excludenodepraefix", ""));
+        
         // run
         String res = converterUtils.exportNode(sysUID, exporter, oOptions, ".ics", response);
         return res;
@@ -419,6 +422,8 @@ public class ExportController {
         Exporter exporter = new ICalDBExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
         
+        // exclude system-nodes
+        oOptions.setStrNotNodePraefix(System.getProperty("yaio.exportcontroller.excludenodepraefix", ""));
         oOptions.setStrClassFilter("EventNode");
         
         // run
@@ -452,6 +457,8 @@ public class ExportController {
         Exporter exporter = new ICalDBExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
         
+        // exclude system-nodes
+        oOptions.setStrNotNodePraefix(System.getProperty("yaio.exportcontroller.excludenodepraefix", ""));
         oOptions.setStrClassFilter("TaskNode");
         
         // run
@@ -486,6 +493,8 @@ public class ExportController {
         Exporter exporter = new ICalDBExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
         
+        // exclude system-nodes
+        oOptions.setStrNotNodePraefix(System.getProperty("yaio.exportcontroller.excludenodepraefix", ""));
         oOptions.setStrClassFilter("TaskNode");
         oOptions.setStrTypeFilter("OFFEN,RUNNING,LATE,WARNING");
         
@@ -521,6 +530,8 @@ public class ExportController {
         Exporter exporter = new ICalDBExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
         
+        // exclude system-nodes
+        oOptions.setStrNotNodePraefix(System.getProperty("yaio.exportcontroller.excludenodepraefix", ""));
         oOptions.setStrClassFilter("TaskNode");
         oOptions.setStrTypeFilter("LATE,WARNING");
         
