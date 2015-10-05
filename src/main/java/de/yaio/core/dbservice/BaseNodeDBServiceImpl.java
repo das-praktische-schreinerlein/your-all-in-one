@@ -396,7 +396,7 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
         return dbFilters;
     }
     
-    protected List<DBFilter> createNotNodePraefixilter(final String pfulltext) {
+    protected List<DBFilter> createNotNodePraefixFilter(final String pfulltext) {
         List<DBFilter> dbFilters = new ArrayList<DBFilter>();
 
         // tokenize words
@@ -411,6 +411,18 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
                 parameters.add(new DBFilter.Parameter("notnodepraefix" + idx, searchWords[idx]));
                 dbFilters.add(new DBFilter(sql, parameters));
             }
+        }
+        return dbFilters;
+    }
+
+    protected List<DBFilter> createConcreteTodosOnlyFilter(final Integer pFlgConcreteTodosOnly) {
+        List<DBFilter> dbFilters = new ArrayList<DBFilter>();
+
+        // tokenize words
+        if (pFlgConcreteTodosOnly != null && pFlgConcreteTodosOnly > 0) {
+            String sql = "planAufwand > 0";
+            List<DBFilter.Parameter> parameters = new ArrayList<DBFilter.Parameter>();
+            dbFilters.add(new DBFilter(sql, parameters));
         }
         return dbFilters;
     }
@@ -431,8 +443,9 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
         // setup order
         String order = "asc";
         
-        return " order by " + sort 
-            + " ebene " + order 
+        return " order by " + sort
+            + " statWorkflowTodoCount asc"
+            + ", ebene desc"
             + ", parent_node " + order 
             + ", sort_pos " + order;
     }
@@ -453,8 +466,9 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
         // create filter
         List<DBFilter> dbFilters = new ArrayList<DBFilter>();
         dbFilters.addAll(createFulltextFilter(pfulltext));
-        dbFilters.addAll(createNotNodePraefixilter(searchOptions.getStrNotNodePraefix()));
+        dbFilters.addAll(createNotNodePraefixFilter(searchOptions.getStrNotNodePraefix()));
         dbFilters.addAll(createSearchOptionsFilter(searchOptions));
+        dbFilters.addAll(createConcreteTodosOnlyFilter(searchOptions.getFlgConcreteToDosOnly()));
         String filter = "";
         if (dbFilters.size() > 0) {
             List<String>sqlList = new ArrayList<String>();

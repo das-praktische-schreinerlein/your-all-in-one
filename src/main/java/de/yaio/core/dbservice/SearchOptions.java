@@ -37,6 +37,8 @@ public interface SearchOptions {
     void setMaxEbene(Integer maxEbene);
     String getStrNotNodePraefix();
     void setStrNotNodePraefix(String strNotNodePraefix);
+    int getFlgConcreteToDosOnly();
+    void setFlgConcreteToDosOnly(Integer flgConcreteToDosOnly);
 
     Map<String, WorkflowState> getMapWorkflowStateFilter();
     Map<String, String> getMapClassFilter();

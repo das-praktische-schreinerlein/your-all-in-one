@@ -47,6 +47,7 @@ public class OutputOptionsImpl implements OutputOptions {
     protected Integer intend = 2;
     protected Integer intendLi = 2;
     protected Integer intendSys = 160;
+    protected Integer flgConcreteToDosOnly = 0;
     protected boolean flgTrimDesc = true;
     protected boolean flgReEscapeDesc = true;
     protected boolean flgShowDescWithUe = false;
@@ -97,6 +98,7 @@ public class OutputOptionsImpl implements OutputOptions {
         this.intend = baseOptions.getIntend();
         this.intendLi = baseOptions.getIntendLi();
         this.intendSys = baseOptions.getIntendSys();
+        this.flgConcreteToDosOnly = baseOptions.getFlgConcreteToDosOnly();
         this.flgTrimDesc = baseOptions.isFlgTrimDesc();
         this.flgShowType = baseOptions.isFlgShowType();
         this.flgShowState = baseOptions.isFlgShowState();
@@ -276,6 +278,15 @@ public class OutputOptionsImpl implements OutputOptions {
         this.intendSys = intendSys;
     }
 
+    @Override
+    public int getFlgConcreteToDosOnly() {
+        return manageIntValues(flgConcreteToDosOnly);
+    }
+    @Override
+    public void setFlgConcreteToDosOnly(Integer flgConcreteToDosOnly) {
+        this.flgConcreteToDosOnly = flgConcreteToDosOnly;
+    }
+
     public boolean isFlgTrimDesc() {
         return flgTrimDesc;
     }
@@ -409,6 +420,7 @@ public class OutputOptionsImpl implements OutputOptions {
         this.intend = 0;
         this.intendLi = 0;
         this.intendSys = 0;
+        this.flgConcreteToDosOnly = 0;
         this.flgTrimDesc = false;
         this.flgReEscapeDesc = false;
 
@@ -449,6 +461,7 @@ public class OutputOptionsImpl implements OutputOptions {
                         + ", intend=" + this.intend 
                         + ", intendLi=" + this.intendLi 
                         + ", intendSys=" + this.intendSys
+                        + ", flgConcreteToDosOnly=" + this.flgConcreteToDosOnly
                         + ", flgTrimDesc=" + this.flgTrimDesc
                         + ", flgReEscapeDesc=" + this.flgReEscapeDesc
                         + ", flgShowState=" + this.flgShowState

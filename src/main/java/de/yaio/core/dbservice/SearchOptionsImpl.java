@@ -38,6 +38,7 @@ import de.yaio.utils.DataUtils;
  */
 public class SearchOptionsImpl implements SearchOptions {
     protected Integer maxEbene = 9999;
+    protected Integer flgConcreteToDosOnly = 0;
     protected String strNotNodePraefix = "";
 
     protected String strReadIfStatusInListOnly = "";
@@ -67,6 +68,15 @@ public class SearchOptionsImpl implements SearchOptions {
     @Override
     public void setMaxEbene(final Integer maxEbene) {
         this.maxEbene = maxEbene;
+    }
+
+    @Override
+    public int getFlgConcreteToDosOnly() {
+        return manageIntValues(flgConcreteToDosOnly);
+    }
+    @Override
+    public void setFlgConcreteToDosOnly(Integer flgConcreteToDosOnly) {
+        this.flgConcreteToDosOnly = flgConcreteToDosOnly;
     }
 
     @Override
@@ -141,6 +151,7 @@ public class SearchOptionsImpl implements SearchOptions {
     
     public void resetDefaults() {
         this.maxEbene = 0;
+        this.flgConcreteToDosOnly = 0;
         this.setStrNotNodePraefix("");
         this.setStrReadIfStatusInListOnly("");
         this.setStrClassFilter("");
@@ -151,6 +162,7 @@ public class SearchOptionsImpl implements SearchOptions {
     @Override
     public String toString() {
         return "SearchOptionsImpl [maxEbene=" + this.maxEbene
+                        + ", flgConcreteToDosOnly=" + this.flgConcreteToDosOnly
                         + ", strNotNodePraefix=" + this.strNotNodePraefix
                         + ", strReadIfStatusInListOnly=" + this.strReadIfStatusInListOnly
                         + ", strClassFilter=" + this.strClassFilter
