@@ -37,6 +37,8 @@ import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
 public class EventNodeService extends TaskNodeService {
 
     // Daten
+    /** nodetype-identifier for parser/formatter on Eventnode Ist=0 and planstart=null */
+    public static final String CONST_NODETYPE_IDENTIFIER_EVENT_NOTPLANED = "EVENT_NOTPLANED";
     /** nodetype-identifier for parser/formatter on Eventnode Ist=0 and planstart>today */
     public static final String CONST_NODETYPE_IDENTIFIER_EVENT_PLANED = "EVENT_PLANED";
     /** nodetype-identifier for parser/formatter on Eventnode Ist=0 and planstart>today */
@@ -61,7 +63,7 @@ public class EventNodeService extends TaskNodeService {
 
     static {
         // define WorkflowStates
-        CONST_MAP_STATE_WORKFLOWSTATE.put(BaseNodeService.CONST_NODETYPE_IDENTIFIER_UNKNOWN, WorkflowState.NOTPLANED);
+        CONST_MAP_STATE_WORKFLOWSTATE.put(CONST_NODETYPE_IDENTIFIER_EVENT_NOTPLANED, WorkflowState.NOTPLANED);
         CONST_MAP_STATE_WORKFLOWSTATE.put(CONST_NODETYPE_IDENTIFIER_EVENT_PLANED, WorkflowState.OPEN);
         CONST_MAP_STATE_WORKFLOWSTATE.put(CONST_NODETYPE_IDENTIFIER_EVENT_RUNNNING, WorkflowState.RUNNING);
         CONST_MAP_STATE_WORKFLOWSTATE.put(CONST_NODETYPE_IDENTIFIER_EVENT_LATE, WorkflowState.LATE);
@@ -74,6 +76,8 @@ public class EventNodeService extends TaskNodeService {
         }
 
         // Defaults
+        CONST_MAP_NODETYPE_IDENTIFIER.put(CONST_NODETYPE_IDENTIFIER_EVENT_NOTPLANED, 
+                        CONST_NODETYPE_IDENTIFIER_EVENT_NOTPLANED);
         CONST_MAP_NODETYPE_IDENTIFIER.put(CONST_NODETYPE_IDENTIFIER_EVENT_PLANED, 
                         CONST_NODETYPE_IDENTIFIER_EVENT_PLANED);
         CONST_MAP_NODETYPE_IDENTIFIER.put(CONST_NODETYPE_IDENTIFIER_EVENT_RUNNNING, 
@@ -84,6 +88,9 @@ public class EventNodeService extends TaskNodeService {
         CONST_MAP_NODETYPE_IDENTIFIER.put(CONST_NODETYPE_IDENTIFIER_EVENT_CANCELED, 
                         CONST_NODETYPE_IDENTIFIER_EVENT_CANCELED);
         // Abarten
+        CONST_MAP_NODETYPE_IDENTIFIER.put("EVENT_UNGEPLANT", CONST_NODETYPE_IDENTIFIER_EVENT_NOTPLANED);
+        CONST_MAP_NODETYPE_IDENTIFIER.put("EVENT_NOTPLANED", CONST_NODETYPE_IDENTIFIER_EVENT_NOTPLANED);
+        CONST_MAP_NODETYPE_IDENTIFIER.put("EVENT_NOPLAN", CONST_NODETYPE_IDENTIFIER_EVENT_NOTPLANED);
         CONST_MAP_NODETYPE_IDENTIFIER.put("EVENT_PLANED", CONST_NODETYPE_IDENTIFIER_EVENT_PLANED);
         CONST_MAP_NODETYPE_IDENTIFIER.put("EVENT_GREPLANT", CONST_NODETYPE_IDENTIFIER_EVENT_PLANED);
         CONST_MAP_NODETYPE_IDENTIFIER.put("EVENT_OPEN", CONST_NODETYPE_IDENTIFIER_EVENT_PLANED);
@@ -140,7 +147,9 @@ public class EventNodeService extends TaskNodeService {
     
     @Override
     public boolean isWFStatus(final String state) {
-        if (CONST_NODETYPE_IDENTIFIER_EVENT_PLANED.equalsIgnoreCase(state)) {
+        if (CONST_NODETYPE_IDENTIFIER_EVENT_NOTPLANED.equalsIgnoreCase(state)) {
+            return true;
+        } else if (CONST_NODETYPE_IDENTIFIER_EVENT_PLANED.equalsIgnoreCase(state)) {
             return true;
         } else if (CONST_NODETYPE_IDENTIFIER_EVENT_CONFIRMED.equalsIgnoreCase(state)) {
             return true;
@@ -175,7 +184,9 @@ public class EventNodeService extends TaskNodeService {
     
     @Override
     public boolean isWFStatusOpen(final String state) {
-        if (CONST_NODETYPE_IDENTIFIER_EVENT_PLANED.equalsIgnoreCase(state)) {
+        if (CONST_NODETYPE_IDENTIFIER_EVENT_NOTPLANED.equalsIgnoreCase(state)) {
+            return true;
+        } else if (CONST_NODETYPE_IDENTIFIER_EVENT_PLANED.equalsIgnoreCase(state)) {
             return true;
         } else if (CONST_NODETYPE_IDENTIFIER_EVENT_CONFIRMED.equalsIgnoreCase(state)) {
             return true;

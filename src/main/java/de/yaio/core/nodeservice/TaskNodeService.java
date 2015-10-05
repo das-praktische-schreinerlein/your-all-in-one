@@ -41,6 +41,8 @@ import de.yaio.utils.DataUtils;
 public class TaskNodeService extends BaseNodeService {
 
     // Daten
+    /** nodetype-identifier for parser/formatter on Tasknode  */
+    public static final String CONST_NODETYPE_IDENTIFIER_NOTPLANED = "UNGEPLANT";
     /** nodetype-identifier for parser/formatter on Tasknode Ist=0% */
     public static final String CONST_NODETYPE_IDENTIFIER_OPEN = "OFFEN";
     /** nodetype-identifier for parser/formatter on Tasknode Ist=0 and planstart<today */
@@ -63,7 +65,7 @@ public class TaskNodeService extends BaseNodeService {
                     new HashMap<WorkflowState, String>();
     static {
         // define WorkflowStates
-        CONST_MAP_STATE_WORKFLOWSTATE.put(BaseNodeService.CONST_NODETYPE_IDENTIFIER_UNKNOWN, WorkflowState.NOTPLANED);
+        CONST_MAP_STATE_WORKFLOWSTATE.put(CONST_NODETYPE_IDENTIFIER_NOTPLANED, WorkflowState.NOTPLANED);
         CONST_MAP_STATE_WORKFLOWSTATE.put(CONST_NODETYPE_IDENTIFIER_OPEN, WorkflowState.OPEN);
         CONST_MAP_STATE_WORKFLOWSTATE.put(CONST_NODETYPE_IDENTIFIER_RUNNNING, WorkflowState.RUNNING);
         CONST_MAP_STATE_WORKFLOWSTATE.put(CONST_NODETYPE_IDENTIFIER_LATE, WorkflowState.LATE);
@@ -76,6 +78,7 @@ public class TaskNodeService extends BaseNodeService {
         }
 
         // Defaults
+        CONST_MAP_NODETYPE_IDENTIFIER.put(CONST_NODETYPE_IDENTIFIER_NOTPLANED, CONST_NODETYPE_IDENTIFIER_NOTPLANED);
         CONST_MAP_NODETYPE_IDENTIFIER.put(CONST_NODETYPE_IDENTIFIER_OPEN, CONST_NODETYPE_IDENTIFIER_OPEN);
         CONST_MAP_NODETYPE_IDENTIFIER.put(CONST_NODETYPE_IDENTIFIER_RUNNNING, CONST_NODETYPE_IDENTIFIER_RUNNNING);
         CONST_MAP_NODETYPE_IDENTIFIER.put(CONST_NODETYPE_IDENTIFIER_LATE, CONST_NODETYPE_IDENTIFIER_LATE);
@@ -83,6 +86,14 @@ public class TaskNodeService extends BaseNodeService {
         CONST_MAP_NODETYPE_IDENTIFIER.put(CONST_NODETYPE_IDENTIFIER_DONE, CONST_NODETYPE_IDENTIFIER_DONE);
         CONST_MAP_NODETYPE_IDENTIFIER.put(CONST_NODETYPE_IDENTIFIER_CANCELED, CONST_NODETYPE_IDENTIFIER_CANCELED);
         // Abarten
+        CONST_MAP_NODETYPE_IDENTIFIER.put("NULL", CONST_NODETYPE_IDENTIFIER_NOTPLANED);
+        CONST_MAP_NODETYPE_IDENTIFIER.put("UNKNOWN", CONST_NODETYPE_IDENTIFIER_NOTPLANED);
+        CONST_MAP_NODETYPE_IDENTIFIER.put("NOTPLANED", CONST_NODETYPE_IDENTIFIER_NOTPLANED);
+        CONST_MAP_NODETYPE_IDENTIFIER.put("NOPLAN", CONST_NODETYPE_IDENTIFIER_NOTPLANED);
+        CONST_MAP_NODETYPE_IDENTIFIER.put("UNGEPLANT", CONST_NODETYPE_IDENTIFIER_NOTPLANED);
+        CONST_MAP_NODETYPE_IDENTIFIER.put("OPEN", CONST_NODETYPE_IDENTIFIER_OPEN);
+        CONST_MAP_NODETYPE_IDENTIFIER.put("OPEN", CONST_NODETYPE_IDENTIFIER_OPEN);
+        CONST_MAP_NODETYPE_IDENTIFIER.put("OPEN", CONST_NODETYPE_IDENTIFIER_OPEN);
         CONST_MAP_NODETYPE_IDENTIFIER.put("OPEN", CONST_NODETYPE_IDENTIFIER_OPEN);
         CONST_MAP_NODETYPE_IDENTIFIER.put("OFFEN", CONST_NODETYPE_IDENTIFIER_OPEN);
         CONST_MAP_NODETYPE_IDENTIFIER.put("RUNNING", CONST_NODETYPE_IDENTIFIER_RUNNNING);
@@ -137,7 +148,9 @@ public class TaskNodeService extends BaseNodeService {
 
     @Override
     public boolean isWFStatus(final String state) {
-        if (CONST_NODETYPE_IDENTIFIER_OPEN.equalsIgnoreCase(state)) {
+        if (CONST_NODETYPE_IDENTIFIER_NOTPLANED.equalsIgnoreCase(state)) {
+            return true;
+        } else if (CONST_NODETYPE_IDENTIFIER_OPEN.equalsIgnoreCase(state)) {
             return true;
         } else if (CONST_NODETYPE_IDENTIFIER_RUNNNING.equalsIgnoreCase(state)) {
             return true;
@@ -171,7 +184,9 @@ public class TaskNodeService extends BaseNodeService {
     
     @Override
     public boolean isWFStatusOpen(final String state) {
-        if (CONST_NODETYPE_IDENTIFIER_OPEN.equalsIgnoreCase(state)) {
+        if (CONST_NODETYPE_IDENTIFIER_NOTPLANED.equalsIgnoreCase(state)) {
+            return true;
+        } else if (CONST_NODETYPE_IDENTIFIER_OPEN.equalsIgnoreCase(state)) {
             return true;
         } else if (CONST_NODETYPE_IDENTIFIER_RUNNNING.equalsIgnoreCase(state)) {
             return true;
