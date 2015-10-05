@@ -1,8 +1,8 @@
 <div class='box box-portdesc'>
-    <div class='boxline boxline-ue2'>{{searchOptions.total}} <span lang='tech' translate="{{searchOptions.label}}">{{searchOptions.label}}</span>
+    <div class='boxline boxline-dashboard boxline-dashboard-{{searchOptions.praefix}} boxline-dashboard-{{searchOptions.praefix}}-{{searchOptions.total}}' id="ue_dashboard_{{searchOptions.praefix}}">{{searchOptions.total}} <span lang='tech' translate="{{searchOptions.label}}">{{searchOptions.label}}</span>
         <a ng-if="searchOptions.total > 0" href="#{{createSearchUri();}}" data-tooltip='tooltip.command.DashboardMoreResults' lang='tech' class="" translate="common.command.DashboardMoreResults">Alle anzeigen</a>
     </div>
-    <div class='togglecontainer togglecontainer-dashboard' ng-init="doFulltextSearch()">
+    <div class='togglecontainer togglecontainer-dashboard togglecontainer-dashboard-{{searchOptions.praefix}}' ng-init="doFulltextSearch()" id="togglecontainer_dashboard_{{searchOptions.praefix}}">
 
         <!-- 
         *****************************
@@ -39,5 +39,7 @@
               </tr>
             </tbody>
         </table>
+    </div>
+    <div ng-if="searchOptions.total > 0" ng-init="yaioUtils.getService('YaioLayout').jMATService.getPageLayoutService().appendBlockToggler('ue_dashboard_' + searchOptions.praefix, 'togglecontainer_dashboard_' + searchOptions.praefix);">
     </div>
 </div>

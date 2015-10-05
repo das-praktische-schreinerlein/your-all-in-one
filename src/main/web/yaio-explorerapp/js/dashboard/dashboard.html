@@ -50,7 +50,7 @@
     setTimeout(function() { 
         // add TOC
         yaioAppBase.get('YaioFormatter').addTOCForBlock("#sidebartoc", "#front-content-intro", { toc: { topLink: "Seitenkopf"}});
-        jMATService.getPageLayoutService().doAllBlockToggler(false);
+        yaioAppBase.get('YaioLayout').jMATService.getPageLayoutService().doAllBlockToggler(false);
         yaioAppBase.get('YaioLayout').setupAppSize();
     }, 3000);
     

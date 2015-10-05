@@ -38,7 +38,7 @@ yaioApp.controller('DashBoardNodeSearchCtrl', function($rootScope, $scope, yaioU
 
     $scope.searchOptions = {
         curPage: 1,
-        pageSize: 5,
+        pageSize: 10,
         searchSort: 'lastChangeDown',
         baseSysUID: "MasterplanMasternode1",
         fulltext: "",

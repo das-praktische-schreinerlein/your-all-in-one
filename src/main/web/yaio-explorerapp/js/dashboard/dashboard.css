@@ -36,6 +36,19 @@
 }
 
 #dashboard-content-current .togglecontainer {
-    max-width: 1000px;
+    max-width: 1205px;
+}
+
+#dashboard-content-current .boxline-dashboard {
+    max-width: 1205px;
+    width: 1205px;
+}
+
+.boxline-dashboard {
+    color: black;
+    float: left;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: left;
 }
  
