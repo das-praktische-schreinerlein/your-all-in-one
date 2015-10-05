@@ -389,7 +389,7 @@ public class CommonImporter {
                         Configurator.getInstance().getCommandLine().getOptionValue(
                                         "pathiddb", null);
         if (strPathIdDB != null) {
-            nodeNumberService.initNextNodeNumbersFromFile(strPathIdDB);
+            nodeNumberService.initNextNodeNumbersFromFile(strPathIdDB, false);
         }
 
         // parse excel-file
@@ -491,7 +491,7 @@ public class CommonImporter {
                         Configurator.getInstance().getCommandLine().getOptionValue(
                                         "pathiddb", null);
         if (strPathIdDB != null) {
-            nodeNumberService.initNextNodeNumbersFromFile(strPathIdDB);
+            nodeNumberService.initNextNodeNumbersFromFile(strPathIdDB, false);
         }
 
         // parse file
