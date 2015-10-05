@@ -37,6 +37,7 @@ Yaio.LayoutService = function(appBase) {
      * initialize the object
      */
     me._init = function() {
+        me.jMATService = jMATService;
     };
 
 
