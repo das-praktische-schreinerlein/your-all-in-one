@@ -154,6 +154,7 @@ module.exports = function( grunt ){
 // loaded standalone because of plugins
 //              vendorDestBase + 'js/ace/ace.js',
 //              vendorDestBase + 'js/ace/ext-spellcheck.js',
+              vendorDestBase + 'js/js-deflate/rawdeflate.js',
               vendorDestBase + 'js/strapdown/strapdown-toc.js',
               vendorDestBase + 'js/highlightjs/highlight.pack.js',
               vendorDestBase + 'js/select2/select2.full.min.js',
@@ -359,6 +360,7 @@ module.exports = function( grunt ){
                     {expand: true, cwd: bowerSrcBase + 'jquery-lang-js/js', src: ['jquery-lang.js'], dest: vendorDestBase + 'js/jquery/', flatten: false},
                     {expand: true, cwd: bowerSrcBase + 'jquery-ui', src: ['**/jquery-ui.min.js', '**/jquery-ui-i18n.min.js'], dest: vendorDestBase + 'js/jqueryui/', flatten: true},
                     {expand: true, cwd: bowerSrcBase + 'jqueryui-timepicker-addon', src: ['dist/jquery-ui-sliderAccess.js', 'dist/jquery-ui-timepicker-addon.js'], dest: vendorDestBase + 'js/jqueryui/', flatten: true},
+                    {expand: true, cwd: bowerSrcBase + 'js-deflate', src: ['rawdeflate.js'], dest: vendorDestBase + 'js/js-deflate/', flatten: true},
                     {expand: true, cwd: bowerSrcBase + 'marked', src: ['lib/marked.js'], dest: vendorDestBase + 'js/marked/', flatten: true},
                     // mermaid 0.5
                     {expand: true, cwd: bowerSrcBase + 'mermaid', src: ['dist/mermaid.js'], dest: vendorDestBase + 'js/mermaid/', flatten: true, filter: 'isFile'

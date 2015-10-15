@@ -112,9 +112,10 @@ Yaio.FormatterService = function(appBase) {
             code = me.appBase.get('YaioBase').htmlEscapeTextLazy(code);
             if (code.match(/^sequenceDiagram/) || code.match(/^graph/) || code.match(/^gantt/)) {
                 return '<div id="inlineMermaid' + (me._localHtmlId++) + '" class="mermaid">'+ me.prepareTextForMermaid(code ) + '</div>';
-            } else if (language !== undefined 
-                       && (language.match(/^yaiomindmap/) || language.match(/^yaiofreemind/))) {
+            } else if (language !== undefined  && (language.match(/^yaiomindmap/) || language.match(/^yaiofreemind/))) {
                 return '<div id="inlineMindmap' + (me._localHtmlId++) + '"  class="yaiomindmap">'+ code + '</div>';
+            } else if (language !== undefined  && (language.match(/^yaioplantuml/))) {
+                return '<div id="inlinePlanUML' + (me._localHtmlId++) + '"  class="yaioplantuml">' + code + '</div>';
             } else {
                 return '<pre><code id="inlineCode' + (me._localHtmlId++) + '" class="lang-' + language + '">' + code + '</code></pre>';
             }
@@ -291,6 +292,91 @@ Yaio.FormatterService = function(appBase) {
         fo.write(blockId);
     };
     
+    me.generateYaioyaioPlantuml = function(content) {
+        function encode64(data) {
+            var r = "";
+            for (var i=0; i<data.length; i+=3) {
+                if (i+2==data.length) {
+                    r +=append3bytes(data.charCodeAt(i), data.charCodeAt(i+1), 0);
+                } else if (i+1==data.length) {
+                    r += append3bytes(data.charCodeAt(i), 0, 0);
+                } else {
+                    r += append3bytes(data.charCodeAt(i), data.charCodeAt(i+1),
+                        data.charCodeAt(i+2));
+                }
+            }
+            return r;
+        }
+
+        function append3bytes(b1, b2, b3) {
+            var c1 = b1 >> 2;
+            var c2 = ((b1 & 0x3) << 4) | (b2 >> 4);
+            var c3 = ((b2 & 0xF) << 2) | (b3 >> 6);
+            var c4 = b3 & 0x3F;
+            var r = "";
+            r += encode6bit(c1 & 0x3F);
+            r += encode6bit(c2 & 0x3F);
+            r += encode6bit(c3 & 0x3F);
+            r += encode6bit(c4 & 0x3F);
+            return r;
+        }
+
+        function encode6bit(b) {
+            if (b < 10) {
+                return String.fromCharCode(48 + b);
+            }
+            b -= 10;
+            if (b < 26) {
+                return String.fromCharCode(65 + b);
+            }
+            b -= 26;
+            if (b < 26) {
+                return String.fromCharCode(97 + b);
+            }
+            b -= 26;
+            if (b == 0) {
+                return '-';
+            }
+            if (b == 1) {
+                return '_';
+            }
+            return '?';
+        }
+
+        var txt = content;
+        txt = txt.replace(/&gt;/g,'>');
+        txt = txt.replace(/&lt;/g,'<');
+        txt = txt.replace(/\n\.\n/g,'\n');
+        txt = txt.replace(/\n\n/g,'\n');
+        var s = unescape(encodeURIComponent(txt));
+        var url = "http://www.plantuml.com/plantuml/img/" + encode64(deflate(s, 9));
+        
+        return url;
+    }
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     GUI
+     * <h4>FeatureDescription:</h4>
+     *     format the block-content as plantuml. 
+     *     <ul>
+     *     <li>creates a Img-Tag with src "http://www.plantuml.com/plantuml/img/
+     *     
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue shows Img with the plantuml-content of block
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Layout
+     * @param block - jquery-html-element with the content to convert to plantuml
+     */
+    me.formatYaioyaioPlantuml = function(block) {
+        var blockId = me.$(block).attr('id');
+        var content = me.$(block).html();
+        var url = me.generateYaioyaioPlantuml(content);
+        console.log("formatYaioyaioPlantuml " + blockId + " url:" + url);
+        me.$(block).html('<img class="yaioplantuml" src="'+ url + '" id="' + blockId + 'Img">');
+    };
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -449,6 +535,13 @@ Yaio.FormatterService = function(appBase) {
                 var url = "/converters/mindmap?source=" + encodeURIComponent(content);
                 me.addServicesToDiagrammBlock(block, 'yaiomindmap', "<a href='" + url + "' id='download" + blockId + "' target='_blank'>Download</a>");
                 me.formatYaioMindmap(block);
+            } else if (me.$(block).hasClass("lang-yaioplantuml") || me.$(block).hasClass("yaioplantuml")) {
+                // mindmap: no highlight
+                console.log("formatDescBlock yaioplantuml for descBlock: " + descBlockId + " block: " + blockId);
+                var content = me.$(block).html();
+                var url = me.generateYaioyaioPlantuml(content);
+                me.addServicesToDiagrammBlock(block, 'yaioplantuml', "<a href='" + url + "' id='download" + blockId + "' target='_blank'>Download</a>");
+                me.formatYaioyaioPlantuml(block);
             }
         });
     
