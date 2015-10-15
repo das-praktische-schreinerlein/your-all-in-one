@@ -296,7 +296,7 @@ Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
         console.log(msg + " START");
 
         // load data
-        var url = me.config.restCheckUserUrl;
+        var url = me.config.restCheckUserUrl + "?" + (new Date()).getTime();
         var ajaxCall = function () {
             return me.appBase.get('Angular.$http').get(url);
         }
