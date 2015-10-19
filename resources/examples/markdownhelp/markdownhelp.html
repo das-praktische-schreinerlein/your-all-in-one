@@ -53,7 +53,7 @@ Das hier ist ganz normaler Fließtext.
 
 ## Überschrift Ebene 2
 Ein schönes Feature ist der integrierte Diagramm-Editor.
-- Sequenz-Diagramme
+- Mermaid-Sequenz-Diagramme
 ```mermaid
 sequenceDiagram
     participant Du
@@ -62,7 +62,7 @@ sequenceDiagram
     D'Artagnan->>D'Artagnan: denkt nach
     D'Artagnan->>Du: Ich kann Dir helfen
 ```
-- Prozess-Diagramme
+- Mermaid-Prozess-Diagramme
 ```mermaid
 graph LR
     A[Du] -->|fragst| B(D'Artagnan)
@@ -70,7 +70,7 @@ graph LR
     C -->|na klar| D[Du bist glücklich]
     C -->|ich versuchs| D
 ```
-- Gantt-Diagramme
+- Mermaid-Gantt-Diagramme
 ```mermaid
 gantt
     title Urlaubsplanung Sommer 2015
@@ -85,6 +85,62 @@ gantt
     Sachsen              :sachsen    , after alpen3 , 3d
     Ferienende Schule    :holend     , 27.08.2015     , 1d
     Ötztal               :alpen4     , after sachsen    , 5d
+```
+- PlantUML-Wireframing
+```yaioplantuml
+@startuml
+salt
+{
+  Just plain text
+  [This is my button]
+  ()  Unchecked radio
+  (X) Checked radio
+  []  Unchecked box
+  [X] Checked box
+  "Enter text here   "
+  ^This is a droplist^
+}
+@enduml
+```
+- PlantUML-Class-Diagramm
+```yaioplantuml
+@startuml 
+' Split into 4 pages
+' page 2x2
+' scale 600 width
+
+'default
+top to bottom direction
+
+skinparam handwritten true
+skinparam class {
+  BackgroundColor PaleGreen
+  ArrowColor SeaGreen
+  BorderColor SpringGreen
+  BackgroundColor<<Foo>> Wheat
+  BorderColor<<Foo>> Tomato
+}
+skinparam stereotypeCBackgroundColor YellowGreen
+skinparam stereotypeCBackgroundColor<< Foo >> DimGray
+
+title <b>Node-Services</b>
+
+abstract class de.yaio.core.nodeservice.NodeServiceImpl
+class de.yaio.core.nodeservice.BaseNodeService
+class de.yaio.core.nodeservice.EventNodeService
+class de.yaio.core.nodeservice.InfoNodeService
+class de.yaio.core.nodeservice.SymLinkNodeService
+class de.yaio.core.nodeservice.TaskNodeService
+class de.yaio.core.nodeservice.UrlResNodeService
+interface de.yaio.core.nodeservice.NodeService
+de.yaio.core.nodeservice.NodeServiceImpl --|> de.yaio.core.nodeservice.NodeService
+de.yaio.core.nodeservice.BaseNodeService --|> de.yaio.core.nodeservice.NodeServiceImpl
+de.yaio.core.nodeservice.EventNodeService --|> de.yaio.core.nodeservice.TaskNodeService
+de.yaio.core.nodeservice.InfoNodeService --|> de.yaio.core.nodeservice.BaseNodeService
+de.yaio.core.nodeservice.SymLinkNodeService --|> de.yaio.core.nodeservice.BaseNodeService
+de.yaio.core.nodeservice.TaskNodeService --|> de.yaio.core.nodeservice.BaseNodeService
+de.yaio.core.nodeservice.UrlResNodeService --|> de.yaio.core.nodeservice.InfoNodeService
+@enduml
 ```
 
 ### Überschrift Ebene 3
@@ -131,9 +187,15 @@ Und für ganz strukturierte Leute Checklisten:
     - [PASSED] - Testergebnis
 
 ## Referenzen
-- Die Markdown-Syntax orientiert sich an [http://daringfireball.net/projects/markdown/syntax](http://daringfireball.net/projects/markdown/syntax)
-- Die  Syntax der Prozess-Diagramme folgt http://knsv.github.io/mermaid/flowchart.html
-- Und die Syntax der Sequenz-Diagramme folgt http://knsv.github.io/mermaid/sequenceDiagram.html
+- **Markdown**
+    - Die Markdown-Syntax orientiert sich an [http://daringfireball.net/projects/markdown/syntax](http://daringfireball.net/projects/markdown/syntax)
+- **Mermaid-Diagramme**
+    - Die Syntax der Mermaid-Prozess-Diagramme folgt [http://knsv.github.io/mermaid/flowchart.html](http://knsv.github.io/mermaid/flowchart.html)
+    - Die Syntax der Mermaid-Gantt-Diagramme folgt [http://knsv.github.io/mermaid/gantt.html](http://knsv.github.io/mermaid/gantt.html)
+    - Und die Syntax der Mermaid-Sequenz-Diagramme folgt [http://knsv.github.io/mermaid/sequenceDiagram.html](http://knsv.github.io/mermaid/sequenceDiagram.html)
+- **PlantUML-Diagramme**
+    - Die Syntax der PlantUML-Diagramme (class, process...) folgt [http://plantuml.com/](http://plantuml.com/)
+    - Und PlantUML-Wireframing folgt [http://plantuml.com/salt.html](http://plantuml.com/salt.html)
 
 
 </textarea>
