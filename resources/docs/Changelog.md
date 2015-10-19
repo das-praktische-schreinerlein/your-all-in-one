@@ -13,6 +13,7 @@
     - added new function: copy/MoveNode per GUI (YAIO2224)
     - added new function: edit to contextmenu improved nodeCommand-handling (contextmenu) (YAIO2225)
     - added new function: create nodes by template (YAIO2226)
+    - added plantUML as new diagram-type (YAIO2231)
     - Taskanlegen über Fixture-Import (YAIO2159)
     - job to recalc nodes (YAIO2227)
     - Server (YAIO2184)

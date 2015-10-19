@@ -80,6 +80,7 @@
     - Markdown-Parser+Formatter: [Marked](https://github.com/chjj/marked)
     - Syntax-Highlighting: [highlight.js](https://highlightjs.org/)
     - Web-Diagrams: [mermaid](https://github.com/knsv/mermaid)
+    - Web-Diagrams: [PlantUML](http://plantuml.com/)
 
 ## Development
 - functionality
