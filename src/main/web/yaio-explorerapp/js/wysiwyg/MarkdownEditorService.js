@@ -68,22 +68,22 @@ Yaio.MarkdownEditorService = function(appBase) {
         // editor.setOption("spellcheck", true);
         
         // set value
-        editor.setValue($("#" + textAreaId).val());
+        editor.setValue(me.$("#" + textAreaId).val());
         
         // set eventhandler to update corresponding textarea
         editor.getSession().on('change', function(e) {
             // update textarea for angular
-            $("#" + textAreaId).val(editor.getValue()).trigger('select').triggerHandler("change");
+            me.$("#" + textAreaId).val(editor.getValue()).trigger('select').triggerHandler("change");
         });
         
         // set editor as data-attr on parent
-        $("#" + parentId).data("aceEditor", editor);
+        me.$("#" + parentId).data("aceEditor", editor);
         
         return editor;
     };
     
     me.showPreviewForTextareaId = function(textAreaId) {
-        var descText = $("#" + textAreaId).val();
+        var descText = me.$("#" + textAreaId).val();
     
         // prepare descText
         var descHtmlMarked = me.appBase.get('YaioFormatter').formatMarkdown(descText, true);
@@ -92,86 +92,93 @@ Yaio.MarkdownEditorService = function(appBase) {
     
         
     me.showPreview = function(content) {
+        var svcYaioFormatter = me.appBase.get('YaioFormatter');
+
         // set preview-content
-        $( "#preview-content" ).html(content);
+        me.$( "#preview-content" ).html(content);
         
         // show message
-        $( "#preview-box" ).dialog({
+        me.$( "#preview-box" ).dialog({
             modal: true,
             width: "1050px",
             buttons: {
               Ok: function() {
-                $( this ).dialog( "close" );
+                me.$( this ).dialog( "close" );
               },
-              "Vorlesen": function () {
-                  me.appBase.get('YaioLayout').openSpeechSynthWindow(document.getElementById('preview-content'));
-              }
+              "Vorlesen": {
+                  id: "Vorlesen",
+                  text: "Vorlesen",
+                  class: "jsh-show-inline-block-if-speechsynth",
+                  click: function () {
+                      me.appBase.get('YaioLayout').openSpeechSynthWindow(document.getElementById('preview-content'));
+                  }
+              },
             }
         });    
         
         // do mermaid when preview visible
-        me.appBase.get('YaioFormatter').formatMermaidGlobal();
+        svcYaioFormatter.formatMermaidGlobal();
     
         // do syntax-highlight
-        me.appBase.get('YaioFormatter').formatDescBlock($("#preview-content"));
+        svcYaioFormatter.formatDescBlock(me.$("#preview-content"));
     };
     
     me.showMarkdownHelp = function() {
         // show message
-        var url = "/examples/markdownhelp/markdownhelp.html" + "?" + me.appBase.get('YaioBase').createXFrameAllowFrom();
+        var url = "/examples/markdownhelp/markdownhelp.html";
         console.log("showMarkdownHelp:" + url);
-        $("#markdownhelp-iframe").attr('src',url);
-        $("#markdownhelp-box" ).dialog({
+        me.$("#markdownhelp-iframe").attr('src',url);
+        me.$("#markdownhelp-box" ).dialog({
             modal: true,
             width: "1200px",
             buttons: {
                 "Schliessen": function() {
-                  $( this ).dialog( "close" );
+                  me.$( this ).dialog( "close" );
                 },
                 "Eigenes Fenster": function() {
                     var helpFenster = window.open(url, "markdownhelp", "width=1200,height=500,scrollbars=yes,resizable=yes");
                     helpFenster.focus();
-                    $( this ).dialog( "close" );
+                    me.$( this ).dialog( "close" );
                 } 
             }
         });    
     };
     
     
-    me.openWysiwhgForTextareaId = function(textAreaId) {
+    me.openWysiwygForTextareaId = function(textAreaId) {
         // get existing parentEditor
         var parentEditorId = "editor" + textAreaId.charAt(0).toUpperCase() + textAreaId.substring(1);
-        var parentEditor = $("#" + parentEditorId).data("aceEditor");
+        var parentEditor = me.$("#" + parentEditorId).data("aceEditor");
         console.log("found parentEditor on:" + parentEditorId);
     
         // create  Editor
-        var myParentId = "wysiwhg-editor";
+        var myParentId = "wysiwyg-editor";
         var editor = me.createNodeDescEditorForNode(myParentId, textAreaId);
     
         // reset intervallHandler for this parent
-        var intervalHandler = $("#" + myParentId).data("aceEditor.intervalHandler");
+        var intervalHandler = me.$("#" + myParentId).data("aceEditor.intervalHandler");
         if (intervalHandler != "undefined") {
-            console.log("openWysiwhgForTextareaId: clear old Interval : " + intervalHandler + " for " + myParentId);
+            console.log("openWysiwygForTextareaId: clear old Interval : " + intervalHandler + " for " + myParentId);
             clearInterval(intervalHandler);
         }
         // create new intervalHandler: check every 5 second if there is a change und update all
-        $("#" + myParentId).data("aceEditor.flgChanged", "false");
+        me.$("#" + myParentId).data("aceEditor.flgChanged", "false");
         intervalHandler = setInterval(function(){ 
             // check if something changed
-            if ($("#" + myParentId).data("aceEditor.flgChanged") != "true") {
+            if (me.$("#" + myParentId).data("aceEditor.flgChanged") != "true") {
                 // nothing changed
                 return;
             }
             
-            console.log("openWysiwhgForTextareaId: updateData : " + " for " + myParentId);
+            console.log("openWysiwygForTextareaId: updateData : " + " for " + myParentId);
     
             // reset flag
-            $("#" + myParentId).data("aceEditor.flgChanged", "false");
+            me.$("#" + myParentId).data("aceEditor.flgChanged", "false");
     
             // update textarea for angular
             var value = editor.getValue();
-            $("#" + textAreaId).val(value).trigger('select').triggerHandler("change");
-            console.log("openWysiwhgForTextareaId: updatetextAreaId: " + textAreaId);
+            me.$("#" + textAreaId).val(value).trigger('select').triggerHandler("change");
+            console.log("openWysiwygForTextareaId: updatetextAreaId: " + textAreaId);
     
             // update preview
             me.showWyswhgPreviewForTextareaId(textAreaId);
@@ -181,25 +188,25 @@ Yaio.MarkdownEditorService = function(appBase) {
                 parentEditor.setValue(value);
             }
         }, 5000);
-        console.log("openWysiwhgForTextareaId: setIntervall : " + intervalHandler + " for " + myParentId);
-        $("#" + myParentId).data("aceEditor.intervalHandler", intervalHandler);
+        console.log("openWysiwygForTextareaId: setIntervall : " + intervalHandler + " for " + myParentId);
+        me.$("#" + myParentId).data("aceEditor.intervalHandler", intervalHandler);
         
         // set update-event
         editor.getSession().on('change', function(e) {
-            $("#" + myParentId).data("aceEditor.flgChanged", "true");
+            me.$("#" + myParentId).data("aceEditor.flgChanged", "true");
         });
         
         // init preview
         me.showWyswhgPreviewForTextareaId(textAreaId);
     
         // show message
-        $( "#wysiwhg-box" ).dialog({
+        me.$( "#wysiwyg-box" ).dialog({
             modal: true,
             width: "1200px",
             buttons: {
               Ok: function() {
-                $( this ).dialog( "close" );
-                console.log("openWysiwhgForTextareaId: clearMyInterval : " + intervalHandler + " for " + myParentId);
+                me.$( this ).dialog( "close" );
+                console.log("openWysiwygForTextareaId: clearMyInterval : " + intervalHandler + " for " + myParentId);
                 clearInterval(intervalHandler);
               },
               "Hilfe": function () {
@@ -213,12 +220,12 @@ Yaio.MarkdownEditorService = function(appBase) {
                   text: "Vorlesen",
                   class: "jsh-show-inline-block-if-speechsynth",
                   click: function () {
-                      me.appBase.get('YaioLayout').openSpeechSynthWindow(document.getElementById('wysiwhg-preview'));
+                      me.appBase.get('YaioLayout').openSpeechSynthWindow(document.getElementById('wysiwyg-preview'));
                   }
               },
               "Load": function () {
                   // define handler
-                  var handleImportJSONFileSelectHandler = function handleImportJSONFileSelect(evt) {
+                  var handleImportMarkdownFileSelectHandler = function handleImportMarkdownFileSelect(evt) {
                       var files = evt.target.files; // FileList object
     
                       // Loop through the FileList.
@@ -233,7 +240,7 @@ Yaio.MarkdownEditorService = function(appBase) {
                               
                               // set new content (textarea+editor)
                               editor.setValue(data);
-                              $("#" + myParentId).data("aceEditor.flgChanged", "true");
+                              me.$("#" + myParentId).data("aceEditor.flgChanged", "true");
                           };
                           
                           // read the file
@@ -244,14 +251,14 @@ Yaio.MarkdownEditorService = function(appBase) {
                   };
                   
                   // initFileUploader
-                  var fileDialog = document.getElementById('importJSONFile');
-                  fileDialog.addEventListener('change', handleImportJSONFileSelectHandler, false);
-                  $( "#jsonuploader-box" ).dialog({
+                  var fileDialog = document.getElementById('wysiwygImportMarkdownFile');
+                  fileDialog.addEventListener('change', handleImportMarkdownFileSelectHandler, false);
+                  me.$( "#wysiwygmarkdownuploader-box" ).dialog({
                       modal: true,
                       width: "200px",
                       buttons: {
                         "Schließen": function() {
-                          $( this ).dialog( "close" );
+                          me.$( this ).dialog( "close" );
                         }
                       }
                   });
@@ -259,27 +266,29 @@ Yaio.MarkdownEditorService = function(appBase) {
             }
         });
         // add export-link -> buggy to mix jquery and styles
-        $(".ui-dialog-buttonset").append($("<a href='' id='wysiwyg-exportlink'" +
+        me.$(".ui-dialog-buttonset").append(me.$("<a href='' id='wysiwyg-exportlink'" +
             + " sdf='ojfvbhwjh'"
-            + " onclick=\"yaioAppBase.get('YaioBase').downloadAsFile($('#wysiwyg-exportlink'), $('#" + textAreaId + "').val(), 'data.md', 'text/markdown', 'utf-8');\">"
+            + " onclick=\"yaioAppBase.get('YaioFile').downloadAsFile(yaioAppBase.$('#wysiwyg-exportlink'), yaioAppBase.$('#" + textAreaId + "').val(), 'data.md', 'text/markdown', 'utf-8');\">"
             + "<span class='ui-button-text'>Export</span></a>"));
-        $('#wysiwyg-exportlink').addClass("ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only");
+        me.$('#wysiwyg-exportlink').addClass("ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only");
     
     };
     
     me.showWyswhgPreviewForTextareaId = function(textAreaId) {
+        var svcYaioFormatter = me.appBase.get('YaioFormatter');
+        
         // prepare descText
-        var descText = $("#" + textAreaId).val();
-        var descHtmlMarked = me.appBase.get('YaioFormatter').formatMarkdown(descText, true);
+        var descText = me.$("#" + textAreaId).val();
+        var descHtmlMarked = svcYaioFormatter.formatMarkdown(descText, true);
     
         // set preview-content
-        $( "#wysiwhg-preview" ).html(descHtmlMarked);
+        me.$( "#wysiwyg-preview" ).html(descHtmlMarked);
     
         // do mermaid when preview visible
-        me.appBase.get('YaioFormatter').formatMermaidGlobal();
+        svcYaioFormatter.formatMermaidGlobal();
         
         // do syntax-highlight
-        me.appBase.get('YaioFormatter').formatDescBlock($("#wysiwhg-preview"));
+        svcYaioFormatter.formatDescBlock(me.$("#wysiwyg-preview"));
     };
 
     me._init();

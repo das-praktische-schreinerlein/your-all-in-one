@@ -254,7 +254,7 @@ public class ImportOptionsImpl implements ImportOptions {
     };
 
     protected int manageIntValues(final Integer value) {
-        return (value != null ? value : 0);
+        return value != null ? value : 0;
     }
     
 }

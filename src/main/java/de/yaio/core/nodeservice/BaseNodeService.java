@@ -235,6 +235,18 @@ public class BaseNodeService extends NodeServiceImpl {
         return parentIdHierarchy;
     }
     
+    @Override
+    public boolean hasParent(final DataDomain baseNode, final String parentSysUID) {
+        BaseNode parent = baseNode.getParentNode();
+        while (parent != null) {
+            if (parent.getSysUID().equals(parentSysUID)) {
+                return true;
+            }
+            parent = parent.getParentNode();
+        }
+        return false;
+    }
+
     /**
      * <h4>FeatureDomain:</h4>
      *     Persistence
@@ -448,7 +460,7 @@ public class BaseNodeService extends NodeServiceImpl {
      * @param directionForward - if set reverse the order
      * @return parenthierarchy
      */
-    public String getParentNameHirarchry(final DataDomain baseNode,
+    public String getParentNameHirarchie(final DataDomain baseNode,
                                          final String pdelimiter, 
                                          final boolean directionForward) {
         String parentNames = "";
@@ -519,6 +531,25 @@ public class BaseNodeService extends NodeServiceImpl {
         String nameForLogger = "sysUID_" + node.getSysUID() 
                         + "_name_" + node.getName() + "_srcName_" + node.getSrcName();
         return nameForLogger;    
+    }
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Tests
+     * <h4>FeatureDescription:</h4>
+     *     generate a node hierarchy of node.getNameForLogger recursively intending with spaces
+     * <h4>FeatureKeywords:</h4>
+     *     NameUtil
+     * @param praefix  intending spaces
+     * @param node     node to generate hierarchy for
+     * @return - resulting node hierarchy
+     */
+    public String visualizeNodeHierarchy(String praefix, DataDomain node) {
+        String res = praefix + node.getNameForLogger() + "\n";
+        for (DataDomain childNode : node.getChildNodes()) {
+            res += visualizeNodeHierarchy(praefix + "  ", childNode);
+        }
+        return res;
     }
     
     /**

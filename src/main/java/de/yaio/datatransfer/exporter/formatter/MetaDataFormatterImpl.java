@@ -16,6 +16,7 @@
  */
 package de.yaio.datatransfer.exporter.formatter;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import de.yaio.core.datadomain.DataDomain;
@@ -106,10 +107,10 @@ public class MetaDataFormatterImpl extends FormatterImpl implements MetaDataForm
         String nodeSubType = node.getMetaNodeSubTypeTags();
 
         // Ausgabe erzeugen
-        if ((praefix != null && praefix.length() > 0)
-            || (id != null  && id.length() > 0)
-            || (nodeType != null && nodeType.length() > 0)
-            || (nodeSubType != null && nodeSubType.length() > 0)
+        if (!StringUtils.isEmpty(praefix)
+            || !StringUtils.isEmpty(id)
+            || !StringUtils.isEmpty(nodeType)
+            || !StringUtils.isEmpty(nodeSubType)
             ) {
             // Abstand
             if (nodeOutput.length() > 0) {

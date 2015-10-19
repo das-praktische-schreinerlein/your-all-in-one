@@ -130,10 +130,9 @@ table.fancytree-ext-table.fancytree-treefocus tbody tr.fancytree-active {
 }
 
 
-#wysiwhg-box, #preview-box, div [class*="ui-dialog"], .ui-widget-overlay {
-    display: none;
+#wysiwyg-box, #preview-box, div [class*="ui-dialog"], .ui-widget-overlay, div.ui-resizable-handle, div.ui-dialog {
+    display: none !important;
 }
-
 
 /*****************************************
  *****************************************

@@ -40,7 +40,8 @@ import de.yaio.datatransfer.exporter.OutputOptionsImpl;
 import de.yaio.extension.datatransfer.csv.CSVExporter;
 import de.yaio.extension.datatransfer.excel.ExcelExporter;
 import de.yaio.extension.datatransfer.excel.ExcelOutputOptions;
-import de.yaio.extension.datatransfer.ical.ICalExporter;
+import de.yaio.extension.datatransfer.ical.ICalDBExporter;
+import de.yaio.extension.datatransfer.json.JSONFullExporter;
 import de.yaio.extension.datatransfer.mindmap.MindMapExporter;
 import de.yaio.extension.datatransfer.ppl.PPLExporter;
 import de.yaio.extension.datatransfer.wiki.WikiExporter;
@@ -62,7 +63,10 @@ import de.yaio.extension.datatransfer.wiki.WikiExporter;
 @RequestMapping("/exports")
 public class ExportController {
     
-    /** replaceent to do after processing a node in documentation-context **/
+    /** API-Version **/
+    public static final String API_VERSION = "1.0.0";
+
+                    /** replacements to do after processing a node in documentation-context **/
     public static final Map<String, String> PostProcessorReplacements_documentation = 
                     new LinkedHashMap<String, String>();
     
@@ -269,6 +273,36 @@ public class ExportController {
      * <h4>FeatureDomain:</h4>
      *     Webservice
      * <h4>FeatureDescription:</h4>
+     *     Request to read the node for sysUID and return it in json-format with all children
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>String - json-format of the node
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice Query
+     * @param sysUID - sysUID to export
+     * @param response - the response-Obj to set contenttype and headers
+     * @return String - csv-format of the node
+     */
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.GET, 
+                    value = "/json/{sysUID}", 
+                    produces = "application/json")
+    public String exportNodeAsJson(@PathVariable(value = "sysUID") final String sysUID, 
+                                  final HttpServletResponse response) {
+        // configure
+        Exporter exporter = new JSONFullExporter();
+        OutputOptions oOptions = new OutputOptionsImpl();
+        
+        // run
+        String res = converterUtils.exportNode(sysUID, exporter, oOptions, ".json", response);
+        return res;
+    }
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
      *     Request to read the node for sysUID and return it in ppl-format with all children
      * <h4>FeatureResult:</h4>
      *   <ul>
@@ -351,8 +385,11 @@ public class ExportController {
     public String exportNodeAsICal(@PathVariable(value = "sysUID") final String sysUID, 
                                    final HttpServletResponse response) {
         // configure
-        Exporter exporter = new ICalExporter();
+        Exporter exporter = new ICalDBExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
+        
+        // exclude system-nodes
+        oOptions.setStrNotNodePraefix(System.getProperty("yaio.exportcontroller.excludenodepraefix", ""));
         
         // run
         String res = converterUtils.exportNode(sysUID, exporter, oOptions, ".ics", response);
@@ -382,9 +419,11 @@ public class ExportController {
     public String exportNodeAsICalOnlyEvents(@PathVariable(value = "sysUID") final String sysUID, 
                                              final HttpServletResponse response) {
         // configure
-        Exporter exporter = new ICalExporter();
+        Exporter exporter = new ICalDBExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
         
+        // exclude system-nodes
+        oOptions.setStrNotNodePraefix(System.getProperty("yaio.exportcontroller.excludenodepraefix", ""));
         oOptions.setStrClassFilter("EventNode");
         
         // run
@@ -415,9 +454,11 @@ public class ExportController {
     public String exportNodeAsICalOnlyTasks(@PathVariable(value = "sysUID") final String sysUID, 
                                             final HttpServletResponse response) {
         // configure
-        Exporter exporter = new ICalExporter();
+        Exporter exporter = new ICalDBExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
         
+        // exclude system-nodes
+        oOptions.setStrNotNodePraefix(System.getProperty("yaio.exportcontroller.excludenodepraefix", ""));
         oOptions.setStrClassFilter("TaskNode");
         
         // run
@@ -449,9 +490,11 @@ public class ExportController {
     public String exportNodeAsICalOnlyTasksTodo(@PathVariable(value = "sysUID") final String sysUID, 
                                                 final HttpServletResponse response) {
         // configure
-        Exporter exporter = new ICalExporter();
+        Exporter exporter = new ICalDBExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
         
+        // exclude system-nodes
+        oOptions.setStrNotNodePraefix(System.getProperty("yaio.exportcontroller.excludenodepraefix", ""));
         oOptions.setStrClassFilter("TaskNode");
         oOptions.setStrTypeFilter("OFFEN,RUNNING,LATE,WARNING");
         
@@ -484,9 +527,11 @@ public class ExportController {
     public String exportNodeAsICalOnlyTasksLate(@PathVariable(value = "sysUID") final String sysUID, 
                                                 final HttpServletResponse response) {
         // configure
-        Exporter exporter = new ICalExporter();
+        Exporter exporter = new ICalDBExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
         
+        // exclude system-nodes
+        oOptions.setStrNotNodePraefix(System.getProperty("yaio.exportcontroller.excludenodepraefix", ""));
         oOptions.setStrClassFilter("TaskNode");
         oOptions.setStrTypeFilter("LATE,WARNING");
         
@@ -522,7 +567,7 @@ public class ExportController {
                                    @ModelAttribute final EmptyOutputOptionsImpl oOptions,
                                    final HttpServletResponse response) {
         // configure
-        Exporter exporter = new ICalExporter();
+        Exporter exporter = new ICalDBExporter();
         
         // run
         String res = converterUtils.exportNode(sysUID, exporter, oOptions, ".ics", response);
@@ -554,7 +599,7 @@ public class ExportController {
                                    final HttpServletResponse response) {
         // configure
         OutputOptions oOptions = new OutputOptionsImpl();
-        return converterUtils.commonExportNodeAsHtml(sysUID, oOptions, response, null, null);
+        return converterUtils.commonExportNodeAsHtml(sysUID, oOptions, response, null);
     }
 
     /**
@@ -583,7 +628,7 @@ public class ExportController {
         OutputOptions oOptions = new OutputOptionsImpl();
         oOptions.setFlgProcessDocLayout(true);
         oOptions.setMaxUeEbene(-1);
-        return converterUtils.commonExportNodeAsHtml(sysUID, oOptions, response, "", "");
+        return converterUtils.commonExportNodeAsHtml(sysUID, oOptions, response, "");
     }
 
     /**
@@ -613,7 +658,7 @@ public class ExportController {
         OutputOptions oOptions = new OutputOptionsImpl();
         oOptions.setFlgProcessDocLayout(true);
         oOptions.setMaxUeEbene(-1);
-        String res = converterUtils.commonExportNodeAsHtml(sysUID, oOptions, response, "", "");
+        String res = converterUtils.commonExportNodeAsHtml(sysUID, oOptions, response, "");
         
         // replace urls to frontpage
         res = res.replaceAll("\"/exports/documentation/", 
@@ -648,7 +693,7 @@ public class ExportController {
     public String exportNodeAsHtml(@PathVariable(value = "sysUID") final String sysUID,
                                    @ModelAttribute final EmptyOutputOptionsImpl oOptions,
                                    final HttpServletResponse response) {
-        return converterUtils.commonExportNodeAsHtml(sysUID, oOptions, response, null, null);
+        return converterUtils.commonExportNodeAsHtml(sysUID, oOptions, response, null);
     }
 
     /**
@@ -683,12 +728,41 @@ public class ExportController {
         
         // generate
         String res = converterUtils.commonExportNodeAsHtml(sysUID, oOptions, response, 
-                        "/static/exporttemplates/documentation-export-header.html", 
-                        "/static/exporttemplates/documentation-export-footer.html");
+                        "/static/exporttemplates/documentation-export.html");
         // replace static pathes...
         for (String pattern : PostProcessorReplacements_documentation.keySet()) {
             res = res.replace(pattern, PostProcessorReplacements_documentation.get(pattern));
         }
+        return res;
+    }
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Webservice
+     * <h4>FeatureDescription:</h4>
+     *     Request to read the node for sysUID and return it in yaioOfflineApp-html-format with all children
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>String - yaioOfflineApp-html-format of the node
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Webservice Query
+     * @param sysUID - sysUID to export
+     * @param response - the response-Obj to set contenttype and headers
+     * @return String - yaioOfflineApp-html-format of the node
+     */
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.GET, 
+                    value = "/yaioapp/{sysUID}", 
+                    produces = "text/html")
+    public String exportNodeAsYaioApp(@PathVariable(value = "sysUID") final String sysUID, 
+                                                final HttpServletResponse response) {
+        String res = converterUtils.commonExportNodeAsYaioApp(sysUID, response, null, true);
+        // replace static pathes...
+        for (String pattern : PostProcessorReplacements_documentation.keySet()) {
+            res = res.replace(pattern, PostProcessorReplacements_documentation.get(pattern));
+        }
+        
         return res;
     }
 

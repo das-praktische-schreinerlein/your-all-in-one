@@ -22,6 +22,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import org.apache.commons.lang3.StringUtils;
+
 import de.yaio.core.datadomain.MetaData;
 
 /**
@@ -43,6 +45,8 @@ public class NodeNumberServiceImpl implements NodeNumberService {
     
     private static NodeNumberServiceImpl instance = new NodeNumberServiceImpl();
     
+    private String lastFileName = null;
+
     /**
      * <h4>FeatureDomain:</h4>
      *     Persistence
@@ -115,20 +119,28 @@ public class NodeNumberServiceImpl implements NodeNumberService {
     
 
     @Override
-    public void initNextNodeNumbersFromFile(final String strPathIdDB) throws Exception {
+    public void initNextNodeNumbersFromFile(final String strPathIdDB, boolean forceReload) throws Exception {
+        if (! StringUtils.isEmpty(lastFileName) && !forceReload) {
+            // already read and no force
+            return;
+        }
+        
         // ID-DB einlesen
         Properties props = new Properties();
         FileInputStream in = new FileInputStream(strPathIdDB);
         props.load(in);
         in.close();
+        
+        // set filename
+        lastFileName = strPathIdDB;
 
         // Default ID setzen
-        this.initNextNodeNumber("UNKNOWN", new Integer(0));        
+        this.initNextNodeNumber("UNKNOWN", new Integer(0));
 
         // alle weiteren Ids einlesen
         for (Object key : props.keySet()) {
             this.initNextNodeNumber(key.toString(), 
-                    new Integer(props.getProperty((String) key)));        
+                    new Integer(props.getProperty((String) key)));
         }
     }
     

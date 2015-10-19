@@ -28,8 +28,6 @@
  */
 
 
-var CLIPBOARD = null;
-
 /*****************************************
  *****************************************
  * Configuration
@@ -51,61 +49,16 @@ Yaio.ExplorerTreeService = function(appBase) {
     /**
      * initialize the object
      */
+    me.clipboardNode = null;
+    me.pasteMode = null;
+    me.nodeFilter = {};
     me._init = function() {
     };
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Initialisation
-     * <h4>FeatureDescription:</h4>
-     *     create an fancytree on the html-element treeId and inits it with the data
-     *     of masterNodeId<br>
-     *     if the tree already exists it will only reload the tree<br>
-     *     after init of the tree the doneHandler will be executed  
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>updates html-element treeId with a fancytree
-     *     <li>calls doneHandler
-     *     <li>updates global var treeInstances[treeId]
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Tree
-     * @param treeId - id of the html-element containing the tree
-     * @param masterNodeId - the node.sysUID to load
-     * @param doneHandler - callback-function when tree is created
-     */
-    me.yaioCreateOrReloadFancyTree = function(treeId, masterNodeId, doneHandler){
-        // check if already loaded
-        var state = null;
-        if (treeInstances[treeId]) {
-            state = treeInstances[treeId].state;
-        }
-        console.log("yaioCreateOrReloadFancyTree for id: " + treeId + " state=" + state + " caller: " + treeInstances[treeId]);
-        if (state) {
-            console.log("yaioCreateOrReloadFancyTree: flgYAIOFancyTreeLoaded is set: prepare reload=" 
-                    + me.appBase.config.showUrl + masterNodeId);
-            me.appBase.get('YaioExplorerTree').yaioDoOnFancyTreeState(treeId, "rendering_done", 1000, 5, function () {
-                // do reload if rendering done
-                console.log("yaioCreateOrReloadFancyTree: do reload=" 
-                        + me.appBase.config.showUrl + masterNodeId);
-                var tree = $(treeId).fancytree("getTree");
-                tree.reload(me.appBase.config.showUrl + masterNodeId).done(function(){
-                    console.log("yaioCreateOrReloadFancyTree reload tree done:" + masterNodeId);
-    
-                    // check if doneHandler
-                    if (doneHandler) {
-                        console.log("yaioCreateOrReloadFancyTree call doneHandler");
-                        doneHandler();
-                    }
-                });
-            }, "yaioCreateOrReloadFancyTree.reloadHandler");
-        } else {
-            console.log("yaioCreateOrReloadFancyTree: flgYAIOFancyTreeLoaded not set:"
-                    + " create=" + me.appBase.config.showUrl + masterNodeId);
-            me.appBase.get('YaioExplorerTree').yaioCreateFancyTree(treeId, masterNodeId, doneHandler);
-        }
+    me.sourceHandler = function(nodeId) {
+        return me.appBase.get('YaioNodeData').loadNodeData(nodeId);
     };
-    
+
     /**
      * <h4>FeatureDomain:</h4>
      *     Initialisation
@@ -128,7 +81,7 @@ Yaio.ExplorerTreeService = function(appBase) {
     me.yaioCreateFancyTree = function(treeId, masterNodeId, doneHandler) {
         treeInstances[treeId] = {};
         treeInstances[treeId].state = "loading";
-        $(treeId).fancytree({
+        me.$(treeId).fancytree({
             
             // errorHandler
             loadError: function (e,data) { 
@@ -144,9 +97,14 @@ Yaio.ExplorerTreeService = function(appBase) {
             checkbox: true,
             titlesTabbable: true,     // Add all node titles to TAB chain
       
-            source: { 
-                url: me.appBase.config.showUrl + masterNodeId, 
-                cache: false 
+            source: me.sourceHandler(masterNodeId),
+            
+            // defaultoptions for ajax-request
+            ajax: {
+                xhrFields : {
+                    // for CORS
+                    withCredentials : true
+                }
             },
           
             // set state of the tree for callback, when tree is created
@@ -157,12 +115,8 @@ Yaio.ExplorerTreeService = function(appBase) {
             // lazy load the children
             lazyLoad: function(event, data) {
                 var node = data.node;
-                console.debug("yaioCreateFancyTree load data for " + node.key 
-                        + " from " + me.appBase.config.showUrl + node.key);
-                data.result = {
-                    url: me.appBase.config.showUrl + node.key,
-                    cache: false
-                };
+                console.debug("yaioCreateFancyTree load data for " + node.key);
+                data.result = me.sourceHandler(node.key);
             },
       
             // callback if expanded-state of node changed, to show the matching gantt (only node or + childsum)
@@ -204,6 +158,10 @@ Yaio.ExplorerTreeService = function(appBase) {
                     return true;
                 },
                 dragDrop: function(node, data) {
+                    // check permission
+                    if (! me.appBase.get('YaioAccessManager').getAvailiableNodeAction('move', node.key, false)) {
+                        return false;
+                    }
                     if (window.confirm("Wollen Sie die Node wirklich verschieben?")) {
                         data.otherNode.moveTo(node, data.hitMode);
     
@@ -237,6 +195,10 @@ Yaio.ExplorerTreeService = function(appBase) {
             edit: {
                 triggerStart: ["f2", "dblclick", "shift+click", "mac+enter"],
                 beforeEdit: function(event, data){
+                    // check permission
+                    if (! me.appBase.get('YaioAccessManager').getAvailiableNodeAction('edit', data.node.key, false)) {
+                        return false;
+                    }
                     // open yaio-editor
                     me.appBase.get('YaioEditor').yaioOpenNodeEditor(data.node.key, 'edit');
                     
@@ -257,16 +219,16 @@ Yaio.ExplorerTreeService = function(appBase) {
                 save: function(event, data){
                     // unused because we use the yaioeditor
     
-                    if (window.confirm("Wollen Sie den Titel wirklich ändern?")) {
-                        // Save data.input.val() or return false to keep editor open
-                        me.appBase.get('YaioExplorerAction').yaioSaveNode(data);
-                        // We return true, so ext-edit will set the current user input
-                        // as title
-                        return true;
-                    } else {
-                        // discard
-                        return false;
-                    }
+//                    if (window.confirm("Wollen Sie den Titel wirklich ändern?")) {
+//                        // Save data.input.val() or return false to keep editor open
+//                        me.appBase.get('YaioExplorerAction').yaioSaveNode(data);
+//                        // We return true, so ext-edit will set the current user input
+//                        // as title
+//                        return true;
+//                    } else {
+//                        // discard
+//                        return false;
+//                    }
                 },
                 close: function(event, data){
                     // unused because we use the yaioeditor
@@ -274,7 +236,7 @@ Yaio.ExplorerTreeService = function(appBase) {
                     // Editor was removed
                     if( data.save ) {
                         // Since we started an async request, mark the node as preliminary
-                        $(data.node.span).addClass("pending");
+                        me.$(data.node.span).addClass("pending");
                     }
                 }
             },
@@ -290,30 +252,106 @@ Yaio.ExplorerTreeService = function(appBase) {
             /**
             click: function(event, data) {
                 var node = data.node,
-                    tt = $.ui.fancytree.getEventTargetType(event.originalEvent);
+                    tt = me.$.ui.fancytree.getEventTargetType(event.originalEvent);
                 if (tt == undefined) {
                     return true;
                 }
             },
     **/
         }).on("nodeCommand", function(event, data){
+            var svcYaioExplorerAction = me.appBase.get('YaioExplorerAction');
+            
             // Custom event handler that is triggered by keydown-handler and
             // context menu:
             var refNode,
-                tree = $(this).fancytree("getTree"),
+                tree = me.$(this).fancytree("getTree"),
                 node = tree.getActiveNode();
         
             switch( data.cmd ) {
-                case "rename":
-                    node.editStart();
+                case "edit":
+                    // check permission
+                    if (! me.appBase.get('YaioAccessManager').getAvailiableNodeAction('edit', node.key, false)) {
+                        return false;
+                    }
+                    // open yaio-editor
+                    me.appBase.get('YaioEditor').yaioOpenNodeEditor(node.key, 'edit');
+                    return true;
+                case "cut":
+                    if (! me.appBase.get('YaioAccessManager').getAvailiableNodeAction('move', node.key, false)) {
+                        return false;
+                    }
+                    me.clipboardNode = node;
+                    me.pasteMode = data.cmd;
+                    break;
+                case "copy":
+                    if (! me.appBase.get('YaioAccessManager').getAvailiableNodeAction('copy', node.key, false)) {
+                        return false;
+                    }
+                    me.clipboardNode = node;
+                    me.pasteMode = data.cmd;
+                    break;
+                case "paste":
+                    if (!me.clipboardNode ) {
+                        me.appBase.get('YaioBase').logError("Clipoard is empty.", true);
+                        break;
+                    }
+                    var newParent = node;
+                    var node = me.clipboardNode.toDict(true);
+                    if (me.pasteMode == "cut" ) {
+                        if (! me.appBase.get('YaioAccessManager').getAvailiableNodeAction('move', node.key, false)) {
+                            return false;
+                        }
+                        // Cut mode: check for recursion and remove source
+                        if(newParent.isDescendantOf(node) ) {
+                            me.appBase.get('YaioBase').logError("Cannot move a node to it's sub node.", true);
+                            return;
+                        }
+                        if (window.confirm("Wollen Sie die Node und Ihre Subnodes wirklich hierher verschieben?")) {
+                            // map rootnode to masterNodeId 
+                            var newParentKey = newParent.key;
+                            if (newParent.isRootNode() || newParentKey == "undefined" || ! newParent) {
+                                newParentKey = tree.options.masterNodeId;
+                            }
+                            // move yaioNode
+                            svcYaioExplorerAction.yaioMoveNode(node, newParentKey, 9999);
+                            me.clipboardNode = me.pasteMode = null;
+                            return true;
+                        } else {
+                            // discard
+                            return false;
+                        }
+                    } else {
+                        // Copy mode: prevent duplicate keys:
+                        if (! me.appBase.get('YaioAccessManager').getAvailiableNodeAction('copy', node.key, false)) {
+                            return false;
+                        }
+                        if(newParent.isDescendantOf(node) ) {
+                            me.appBase.get('YaioBase').logError("Cannot copy a node to it's sub node.", true);
+                            return;
+                        }
+                        if (window.confirm("Wollen Sie die Node und Ihre Subnodes wirklich hierher kopieren?")) {
+                            // map rootnode to masterNodeId 
+                            var newParentKey = newParent.key;
+                            if (newParent.isRootNode() || newParentKey == "undefined" || ! newParent) {
+                                newParentKey = tree.options.masterNodeId;
+                            }
+                            // copy yaioNode
+                            svcYaioExplorerAction.yaioCopyNode(node, newParentKey);
+                            me.clipboardNode = me.pasteMode = null;
+                            return true;
+                        } else {
+                            // discard
+                            return false;
+                        }
+                    }
                     break;
                 case "indent":
+                    if (! me.appBase.get('YaioAccessManager').getAvailiableNodeAction('move', node.key, false)) {
+                        return false;
+                    }
                     if (window.confirm("Wollen Sie die Node wirklich verschieben?")) {
                         // move fancynode
                         refNode = node.getPrevSibling();
-                        node.moveTo(refNode, "child");
-                        refNode.setExpanded();
-                        node.setActive();
                         
                         // map rootnode to masterNodeId 
                         var newParentKey = refNode.key;
@@ -322,7 +360,7 @@ Yaio.ExplorerTreeService = function(appBase) {
                         }
                         
                         // move yaioNode
-                        me.appBase.get('YaioExplorerAction').yaioMoveNode(node, newParentKey, 9999);
+                        svcYaioExplorerAction.yaioMoveNode(node, newParentKey, 9999);
                         return true;
                     } else {
                         // discard
@@ -331,11 +369,12 @@ Yaio.ExplorerTreeService = function(appBase) {
                     
                     break;
                 case "outdent":
+                    if (! me.appBase.get('YaioAccessManager').getAvailiableNodeAction('move', node.key, false)) {
+                        return false;
+                    }
                     if (window.confirm("Wollen Sie die Node wirklich verschieben?")) {
                         // move fancynode
                         var newParent = node.getParent().getParent();
-                        node.moveTo(node.getParent(), "after");
-                        node.setActive();
                         
                         // map rootnode to masterNodeId 
                         var newParentKey = newParent.key;
@@ -343,7 +382,7 @@ Yaio.ExplorerTreeService = function(appBase) {
                             newParentKey = tree.options.masterNodeId;
                         }
                         // move yaioNode
-                        me.appBase.get('YaioExplorerAction').yaioMoveNode(node, newParentKey, 9999);
+                        svcYaioExplorerAction.yaioMoveNode(node, newParentKey, 9999);
                         return true;
                     } else {
                         // discard
@@ -351,6 +390,9 @@ Yaio.ExplorerTreeService = function(appBase) {
                     }
                     break;
                 case "moveUp":
+                    if (! me.appBase.get('YaioAccessManager').getAvailiableNodeAction('move', node.key, false)) {
+                        return false;
+                    }
                     // check parent
                     var newParent = node.getParent();
                     var newParentKey = node.getParent().key;
@@ -363,12 +405,12 @@ Yaio.ExplorerTreeService = function(appBase) {
                         newPos = node.getPrevSibling().data.basenode.sortPos - 2;
                     }
     
-                    node.moveTo(node.getPrevSibling(), "before");
-                    node.setActive();
-                    
-                    me.appBase.get('YaioExplorerAction').yaioMoveNode(node, newParentKey, newPos);
+                    svcYaioExplorerAction.yaioMoveNode(node, newParentKey, newPos);
                     break;
                 case "moveDown":
+                    if (! me.appBase.get('YaioAccessManager').getAvailiableNodeAction('move', node.key, false)) {
+                        return false;
+                    }
                     // check parent
                     var newParent = node.getParent();
                     var newParentKey = node.getParent().key;
@@ -381,22 +423,25 @@ Yaio.ExplorerTreeService = function(appBase) {
                         newPos = node.getNextSibling().data.basenode.sortPos + 2;
                     }
     
-                    node.moveTo(node.getNextSibling(), "after");
-                    node.setActive();
-    
-                    me.appBase.get('YaioExplorerAction').yaioMoveNode(node, newParentKey, newPos);
+                    svcYaioExplorerAction.yaioMoveNode(node, newParentKey, newPos);
                     break;
                 case "remove":
-                    me.appBase.get('YaioExplorerAction').yaioRemoveNodeById(node.key);
+                    if (! me.appBase.get('YaioAccessManager').getAvailiableNodeAction('remove', node.key, false)) {
+                        return false;
+                    }
+                    svcYaioExplorerAction.yaioRemoveNodeById(node.key);
                     break;
                 case "addChild":
+                    if (! me.appBase.get('YaioAccessManager').getAvailiableNodeAction('create', node.key, false)) {
+                        return false;
+                    }
                     me.appBase.get('YaioEditor').yaioOpenNodeEditor(node.key, 'create');
                     break;
                 case "asTxt":
-                    me.appBase.get('YaioExplorerAction').openTxtExportWindow($('#container_content_desc_' + node.key).text());
+                    svcYaioExplorerAction.openTxtExportWindow(me.$('#container_content_desc_' + node.key).text());
                     break;
                 case "asJira":
-                    me.appBase.get('YaioExplorerAction').openJiraExportWindow(node.key);
+                    svcYaioExplorerAction.openJiraExportWindow(node.key);
                     break;
                 case "focus":
                     window.location = '#/show/' + node.key;
@@ -415,64 +460,69 @@ Yaio.ExplorerTreeService = function(appBase) {
         
             if( c === "N" && e.ctrlKey && e.shiftKey) {
                 cmd = "addChild";
-            } else if( e.which === $.ui.keyCode.DELETE ) {
+            } else if( e.which === me.$.ui.keyCode.DELETE ) {
                 cmd = "remove";
-            } else if( e.which === $.ui.keyCode.F2 ) {
+            } else if( e.which === me.$.ui.keyCode.F2 ) {
                 cmd = "rename";
-            } else if( e.which === $.ui.keyCode.UP && e.ctrlKey ) {
+            } else if( e.which === me.$.ui.keyCode.UP && e.ctrlKey ) {
                 cmd = "moveUp";
-            } else if( e.which === $.ui.keyCode.DOWN && e.ctrlKey ) {
+            } else if( e.which === me.$.ui.keyCode.DOWN && e.ctrlKey ) {
                 cmd = "moveDown";
-            } else if( e.which === $.ui.keyCode.RIGHT && e.ctrlKey ) {
+            } else if( e.which === me.$.ui.keyCode.RIGHT && e.ctrlKey ) {
                 cmd = "indent";
-            } else if( e.which === $.ui.keyCode.LEFT && e.ctrlKey ) {
+            } else if( e.which === me.$.ui.keyCode.LEFT && e.ctrlKey ) {
                 cmd = "outdent";
             }
             if( cmd ){
-                $(this).trigger("nodeCommand", {cmd: cmd});
+                me.$(this).trigger("nodeCommand", {cmd: cmd});
                 return false;
             }
         });
         
         // check if donehandler
         if (doneHandler) {
-            me.appBase.get('YaioExplorerTree').yaioDoOnFancyTreeState(treeId, "rendering_done", 1000, 5, doneHandler, 
-                    "yaioCreateFancyTree.doneHandler");
+            me.appBase.get('YaioExplorerTree').yaioDoOnFancyTreeState(treeId, 
+                    "rendering_done", 1000, 5, doneHandler, "yaioCreateFancyTree.doneHandler");
         }
     
         /*
          * Context menu (https://github.com/mar10/jquery-ui-contextmenu)
          */
-        $(treeId).contextmenu({
+        me.$(treeId).contextmenu({
             delegate: "span.fancytree-node",
             menu: [
-                {title: "Bearbeiten <kbd>[F2]</kbd>", cmd: "rename", uiIcon: "ui-icon-pencil" },
-                {title: "Löschen <kbd>[Del]</kbd>", cmd: "remove", uiIcon: "ui-icon-trash" },
+                {title: "Bearbeiten <kbd>[F2]</kbd>", cmd: "edit", uiIcon: "ui-icon-pencil", disabled: true },
+                {title: "Löschen <kbd>[Del]</kbd>", cmd: "remove", uiIcon: "ui-icon-trash", disabled: true },
                 {title: "----"},
     //            {title: "New sibling <kbd>[Ctrl+N]</kbd>", cmd: "addSibling", uiIcon: "ui-icon-plus" },
-                {title: "Kind zeugen", cmd: "addChild", uiIcon: "ui-icon-plus" },
+                {title: "Kind zeugen", cmd: "addChild", uiIcon: "ui-icon-plus", disabled: true},
                 {title: "----"},
                 {title: "Focus", cmd: "focus", uiIcon: "ui-icon-arrowreturn-1-e" },
                 {title: "In neuem Fenster", cmd: "focusNewWindow", uiIcon: "ui-icon-arrowreturn-1-e" },
                 {title: "Export Jira", cmd: "asJira", uiIcon: "ui-icon-clipboard" },
                 {title: "Export Txt", cmd: "asTxt", uiIcon: "ui-icon-clipboard" },
-                {title: "----"}
-    //            {title: "Cut <kbd>Ctrl+X</kbd>", cmd: "cut", uiIcon: "ui-icon-scissors"},
-    //            {title: "Copy <kbd>Ctrl-C</kbd>", cmd: "copy", uiIcon: "ui-icon-copy"},
-    //            {title: "Paste as child<kbd>Ctrl+V</kbd>", cmd: "paste", uiIcon: "ui-icon-clipboard", disabled: true }
+                {title: "----"},
+                {title: "Cut <kbd>Ctrl+X</kbd>", cmd: "cut", uiIcon: "ui-icon-scissors", disabled: true},
+                {title: "Copy <kbd>Ctrl-C</kbd>", cmd: "copy", uiIcon: "ui-icon-copy", disabled: true},
+                {title: "Paste as child<kbd>Ctrl+V</kbd>", cmd: "paste", uiIcon: "ui-icon-clipboard", disabled: true}
               ],
             beforeOpen: function(event, ui) {
-                var node = $.ui.fancytree.getNode(ui.target);
-                $("#tree").contextmenu("enableEntry", "paste", !!CLIPBOARD);
+                var node = me.$.ui.fancytree.getNode(ui.target);
+                me.$("#tree").contextmenu("enableEntry", "edit", !!me.appBase.get('YaioAccessManager').getAvailiableNodeAction('edit', node.key, false));
+                me.$("#tree").contextmenu("enableEntry", "remove", !!me.appBase.get('YaioAccessManager').getAvailiableNodeAction('remove', node.key, false));
+                me.$("#tree").contextmenu("enableEntry", "addChild", !!me.appBase.get('YaioAccessManager').getAvailiableNodeAction('create', node.key, false));
+                me.$("#tree").contextmenu("enableEntry", "cut", !!me.appBase.get('YaioAccessManager').getAvailiableNodeAction('move', node.key, false));
+                me.$("#tree").contextmenu("enableEntry", "copy", !!me.appBase.get('YaioAccessManager').getAvailiableNodeAction('copy', node.key, false));
+                me.$("#tree").contextmenu("enableEntry", "paste", !!me.clipboardNode);
                 node.setActive();
             },
             select: function(event, ui) {
                 var that = this;
                 // delay the event, so the menu can close and the click event does
                 // not interfere with the edit control
-                setTimeout(function(){
-                    $(that).trigger("nodeCommand", {cmd: ui.cmd});
-                }, 100);
+                setTimeout(function() { 
+                        me.$(that).trigger("nodeCommand", {cmd: ui.cmd}); 
+                    }, 100);
             }
         });
     };
@@ -588,8 +638,13 @@ Yaio.ExplorerTreeService = function(appBase) {
             var baseNode = data.response.node;
             if (data.response.childNodes) {
                  // iterate childnodes
-                for (var zaehler =0; zaehler < data.response.childNodes.length; zaehler++) {
+                for (var zaehler = 0; zaehler < data.response.childNodes.length; zaehler++) {
                     var childBaseNode = data.response.childNodes[zaehler];
+                    
+                    if (! me.filterNodeData(childBaseNode)) {
+                        continue;
+                    }
+                    
                     var datanode = me.appBase.get('YaioExplorerTree').createFancyDataFromNodeData(childBaseNode);
                     console.debug("add childnode for " + baseNode.sysUID 
                             + " = " + childBaseNode.sysUID + " " + childBaseNode.name);
@@ -605,6 +660,51 @@ Yaio.ExplorerTreeService = function(appBase) {
     };
     
     
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Initialisation
+     * <h4>FeatureDescription:</h4>
+     *     checks if the node passes the current nodefilter
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>return boolean: check passes or not
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     GUI Tree
+     * @param node - nodedata from serverresponse (java de.yaio.rest.controller.NodeActionReponse)
+     * @return check passes or not
+     */
+    me.filterNodeData = function(node) {
+        if (! me.nodeFilter) {
+            // no filter
+            return true;
+        }
+        
+        // check filter
+        if (me.nodeFilter.classNames && !me.nodeFilter.classNames[node.className]) {
+            console.log("filterNodeData: skip node by className:" + node.className);
+            return false;
+        }
+        if (me.nodeFilter.workflowStates && !me.nodeFilter.workflowStates[node.workflowState]) {
+            console.log("filterNodeData: skip node by workflowState:" + node.workflowState);
+            return false;
+        }
+        
+        return true;
+    }
+
+    me.setNodeFilter = function(nodeFilter) {
+        me.nodeFilter = nodeFilter || {};
+        if (! me.nodeFilter) {
+            // no filter
+            return;
+        }
+        
+        // filter existing nodes
+        ;
+    }
+    
     me.yaioFancyTreeLoadError = function(e, data) {
         var error = data.error;
         if (error.status && error.statusText) {
@@ -614,14 +714,14 @@ Yaio.ExplorerTreeService = function(appBase) {
             // check if http-form result
             if (error.status == 401) {
                 // reload loginseite
-                $( "#error-message-text" ).html("Sie wurden vom System abgemeldet.");
+                me.$( "#error-message-text" ).html("Sie wurden vom System abgemeldet.");
                 
                 // show message
-                $( "#error-message" ).dialog({
+                me.$( "#error-message" ).dialog({
                     modal: true,
                     buttons: {
                       "Neu anmelden": function() {
-                        $( this ).dialog( "close" );
+                        me.$( this ).dialog( "close" );
                         window.location.assign(me.appBase.config.loginUrl);
                       }
                     }

@@ -1,7 +1,12 @@
+<update-meta name="title" content="YAIO - D'Artagnan - Frontpage ({{frontpageNodeId}})"></update-meta>
+<update-meta name="description" content="YAIO - D'Artagnan - Frontpage ({{frontpageNodeId}})"></update-meta>
+
 <div class='box box-portdesc add2toc-h1 box-portdesc-explorer' toclabel='Explorer' id='box_explorer'>
-    <div class='boxline boxline-ue2 h2-portdesc h2-portdesc-explorer' id='ue_explorer'>YAIO - D'Artagnan - Explorer
+    <div class='boxline boxline-ue2 h2-portdesc h2-portdesc-explorer' id='ue_explorer'>
+      <div id="containerMasterUe">YAIO - D'Artagnan - Frontpage ({{frontpageNodeId}})</div>
+      <div id="containerCurrentSource" ng-include="yaioUtils.getConfig().resBaseUrl + 'js/sourceselector/current-source-main.html'"></div>
       <div id="containerInfoCommands">
-          <div ng-include="'js/frontpage/menu-main.html'"></div>
+          <div ng-include="yaioUtils.getConfig().resBaseUrl + 'js/frontpage/menu-main.html'"></div>
       </div>
     </div>
 
@@ -16,17 +21,27 @@
       <div class='boxline boxline-ue2 h2-portdesc h2-portdesc-todonext' id='ue_todonext' translate="todonext.ue">ToDoNext</div>
   
       <div class='togglecontainer togglecontainer-todonext' id='details_todonext'>
-          <ul>
-             <li class="todonext" data-tooltip='tooltip.command.OpenFrontpage' lang="tech">
-                <a href="#/" translate="common.command.OpenFrontpage">Startseite</a></li>
-             <li class="todonext" data-tooltip='tooltip.command.OpenTreeView' lang="tech">
-                <a href="#/show/MasterplanMasternode1" class="" translate="todonext.command.OpenTreeView">Open Treeview</a></li>
-             <li class="todonext" data-tooltip='tooltip.command.OpenHelp' lang="tech">
-                <a href="" ng-click="yaioUtils.showHelpSite('/exports/documentation/SysHelp1')" target="help" class="" translate="todonext.command.OpenHelp">Hilfe</a></li>
-<!-- 
-             <li class="todonext" data-tooltip='tooltip.command.OpenInfo' lang="tech">
-                <a href="" ng-click="yaioUtils.showHelpSite('/exports/documentation/SysInfo1')" target="help" class="" translate="todonext.command.OpenInfo">Infos</a></li>
- -->
+         <ul class="todonext">
+           <li class="command" data-tooltip='tooltip.command.OpenSourceSelect' lang="tech">
+              <a href="#/sourceselect"  translate="todonext.command.OpenSourceSelect">Datenquelle</a></li>
+           <li class="command" data-tooltip='tooltip.command.OpenTreeView' lang="tech">
+              <a href="#/show/MasterplanMasternode1"  translate="todonext.command.OpenTreeView">Open Treeview</a></li>
+           <li class="command" data-tooltip='tooltip.command.OpenSearchView' lang="tech"
+               ng-if="yaioUtils.getService('YaioAccessManager').getAvailiableNodeAction('search', null, false)">
+              <a href="#/search/"  translate="todonext.command.OpenSearchView">Open Searchview</a></li>
+           <li class="command" data-tooltip='tooltip.command.OpenHelp' lang="tech"
+               ng-if="yaioUtils.getService('YaioAccessManager').getAvailiableNodeAction('syshelp', null, false)">
+              <a href="" ng-click="yaioUtils.showHelpSite(yaioUtils.getService('YaioAccessManager').getAvailiableNodeAction('syshelp', null, false))"
+                 target="help" translate="todonext.command.OpenHelp">Hilfe</a></li>
+           <li class="command" data-tooltip='tooltip.command.OpenInfo' lang="tech"
+               ng-if="yaioUtils.getService('YaioAccessManager').getAvailiableNodeAction('syshelp', null, false)">
+              <a href="" ng-click="yaioUtils.showHelpSite(yaioUtils.getService('YaioAccessManager').getAvailiableNodeAction('sysinfo', null, false))"
+                 target="help" translate="todonext.command.OpenInfo">Info</a></li>
+           <li class="command" data-tooltip='tooltip.command.Logout' lang="tech" id="logout"
+               ng-if="yaioUtils.getService('YaioAccessManager').getAvailiableNodeAction('logout', null, false)">
+              <a href="{{yaioUtils.getService('YaioAccessManager').getAvailiableNodeAction('logout', null, false)}}"  translate="todonext.command.Logout">Logout</a></li>
+           <li class="command" data-tooltip='tooltip.command.OpenFrontpage' lang="tech">
+              <a href="#/frontpage"  translate="todonext.command.OpenFrontpage">Startseite</a></li>
           </ul>
       </div>
   </div>

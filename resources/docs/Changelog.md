@@ -1,5 +1,57 @@
 # Changelog
 
+## Changelog for release: feature-YAIO2168-improvements-201509-RELEASE
+- **Admin/Doku-Funktionen (YAIO2228)**
+    - added swagger for api-documentation (YAIO2229)
+    - added scripts to recalc data per project (YAIO2230)
+- **neue Funktionen (YAIO2174)**
+    - added json-export from server (YAIO2175)
+    - improved searchfunctions (YAIO2220)
+    - added fat multiselect-boxes for search (YAIO2221)
+    - added nodefilter on show-view (YAIO2222)
+    - added dashboard (YAIO2223)
+    - added new function: copy/MoveNode per GUI (YAIO2224)
+    - added new function: edit to contextmenu improved nodeCommand-handling (contextmenu) (YAIO2225)
+    - added new function: create nodes by template (YAIO2226)
+    - added plantUML as new diagram-type (YAIO2231)
+    - Taskanlegen über Fixture-Import (YAIO2159)
+    - job to recalc nodes (YAIO2227)
+    - Server (YAIO2184)
+        - added export as yaioOfflineApp (YAIO2185)
+        - added json-import to server (YAIO2186)
+    - App (YAIO2215)
+        - added StaticNodeDataService to use YaioApp without Server (YAIO2176)
+            - added json-export of static data (YAIO2177)
+            - added save, create, remove for static-datasource (YAIO2178)
+            - added move for static datasources (YAIO2179)
+            - added search for static datasource (YAIO2180)
+            - introduced staticdatastore for better structure (YAIO2181)
+        - added FileLoader for YaioJson (YAIO2183)
+        - add datasourceselect per parameter (YAIO2216)
+        - added sourceselector to switch between server, static, file (YAIO2182)
+        - added FileService to load static files (YAIO2217)
+        - added module to load/render static content (helpsite...) in offline version (YAIO2218)
+        - added static help-content (YAIO2219)
+- **Code-Verbesserungen (YAIO2187)**
+    - codeclean (YAIO2188)
+    - use relative resBaseUrl (YAIO2211)
+    - fork vendors with yaio-patches on github and use them (YAIO2189)
+    - improved package structure: new service datatransferUtils (YAIO2212)
+    - Verbesserungen YaioApp (YAIO2190)
+        - modular contentloading (YAIO2191)
+        - modularize templates (YAIO2192)
+        - configure services by name and use aliases for usage (YAIO2193)
+        - introduce NodeDataService-interface and implementation (YAIO2194)
+        - added accessmanager to configure urls and check permissions (YAIO2195)
+    - improved naming for unknown task/event-state: not planed (YAIO2213)
+- **Bugfixes (YAIO2196)**
+    - bugfix: hide speechsynth if not availiable (YAIO2197)
+    - bugfix: dont use const in js (YAIO2205)
+    - fixed tests for iexplorer, firefox (YAIO2198)
+    - bugfix: open all exports with target _blank (YAIO2206)
+    - fixed logout (YAIO2199)
+    - fixed migration-scripts (YAIO2207)
+
 ## Changelog for release: feature-YAIO2137-improvements-201507-RELEASE
 - **GUI (YAIO2143)**
     - Link für Infonode mit Snapshot des Checkliste/Gantt-Overview für der Node (YAIO2161)

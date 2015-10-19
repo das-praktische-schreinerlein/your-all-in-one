@@ -29,7 +29,7 @@
 
 /*****************************************
  *****************************************
- * Service-Funktions (layout)
+ * Service-Funktions (base)
  *****************************************
  *****************************************/
 Yaio.BaseService = function(appBase) {
@@ -45,30 +45,30 @@ Yaio.BaseService = function(appBase) {
     };
 
     me.toggleWithLinks = function(link1, link2, id1, id2) {
-         if ($(id1).css("display") != "none") {
-             $(id1).css("display", "none");
-             $(link1).css("display", "inline");
-             $(id2).css("display", "block");
-             $(link2).css("display", "none");
+         if (me.$(id1).css("display") != "none") {
+             me.$(id1).css("display", "none");
+             me.$(link1).css("display", "inline");
+             me.$(id2).css("display", "block");
+             me.$(link2).css("display", "none");
          } else {
-             $(id2).css("display", "none");
-             $(link2).css("display", "inline");
-             $(id1).css("display", "block");
-             $(link1).css("display", "none");
+             me.$(id2).css("display", "none");
+             me.$(link2).css("display", "inline");
+             me.$(id1).css("display", "block");
+             me.$(link1).css("display", "none");
          }
          return false;     
      };
     
      me.showModalErrorMessage = function(message) {
          // set messagetext
-         $( "#error-message-text" ).html(message);
+         me.$( "#error-message-text" ).html(message);
          
          // show message
-         $( "#error-message" ).dialog({
+         me.$( "#error-message" ).dialog({
              modal: true,
              buttons: {
                Ok: function() {
-                 $( this ).dialog( "close" );
+                 me.$( this ).dialog( "close" );
                }
              }
          });    
@@ -76,23 +76,23 @@ Yaio.BaseService = function(appBase) {
     
      me.showModalConfirmDialog = function(message, yesHandler, noHandler) {
          // set messagetext
-         $( "#dialog-confirm-text" ).html(message);
+         me.$( "#dialog-confirm-text" ).html(message);
          
          // show message
          
-         $( "#dialog-confirm" ).dialog({
+         me.$( "#dialog-confirm" ).dialog({
              resizable: false,
              height:140,
              modal: true,
              buttons: {
                "Ja": function() {
-                 $( this ).dialog( "close" );
+                 me.$( this ).dialog( "close" );
                  if (yesHandler) {
                      yesHandler();
                  }
                },
                "Abbrechen": function() {
-                 $( this ).dialog( "close" );
+                 me.$( this ).dialog( "close" );
                  if (noHandler) {
                      noHandler();
                  }
@@ -165,7 +165,7 @@ Yaio.BaseService = function(appBase) {
     };
     
     me.formatGermanDateTime = function(millis) {
-        if (millis == null) {
+        if (millis == null || millis == "undefined" || millis == "") {
            return "";
         }
         var date = new Date(millis);
@@ -176,7 +176,7 @@ Yaio.BaseService = function(appBase) {
             + ":" + me.padNumber(date.getMinutes(), 2);
     };
     me.formatGermanDate = function(millis) {
-        if (millis == null) {
+        if (millis == null || millis == "undefined" || millis == "") {
            return "";
         }
         var date = new Date(millis);
@@ -192,47 +192,11 @@ Yaio.BaseService = function(appBase) {
         return r;
     };
     me.formatNumbers = function(number, nachkomma, suffix) {
-       if (number == null) {
+       if (number == null || number == "undefined") {
            return "";
        }
        
        return (number.toFixed(nachkomma)) + suffix;
-    };
-    
-    me.downloadAsFile = function($link, data, fileName, mime, encoding) {
-        if (mime == "undefind") {
-            mime = "application/text";
-        }
-        if (encoding == "undefind") {
-            mime = "uft-8";
-        }
-        // data URI
-        var dataURI = 'data:' + mime + ';charset=' + encoding + ','
-                + encodeURIComponent(data);
-    
-        // set link
-        var flgSafeMode = 0;
-        if (   (navigator.userAgent.indexOf("Trident") >= 0) 
-            || (navigator.userAgent.indexOf("MSIE") >= 0)
-            || flgSafeMode) {
-           // IE or SafeMode
-           var popup = window.open("");
-           if (! popup) {
-               // warn message
-               me.logError("Leider kann der Download nicht angezeigt werden, da Ihr Popup-Blocker aktiv ist. Beachten Sie die Hinweise im Kopf des Browsers. ", true);
-           } else {
-               // set data to document
-               $(popup.document.body).html("<pre>" + me.htmlEscapeTextLazy(data) + "</pre>");
-           }
-           return false;
-       } else {
-            // all expect IE
-            $link.attr({
-                'download' : fileName,
-                'href' : dataURI,
-                'target' : '_blank'
-            });
-       }
     };
     
     me.createXFrameAllowFrom = function() {
@@ -243,6 +207,17 @@ Yaio.BaseService = function(appBase) {
         return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
     };
     
+    me.getURLParameter = function(name) {
+        return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
+    }
+    
+    me.getBaseRefFromUrl = function(url) {
+        var withoutAncor = url.split('#')[0];
+        var withoutParams = withoutAncor.split('?')[0];
+        var withoutFile = withoutParams.split('/');
+        withoutFile.splice(-1, 1);
+        return withoutFile.join('/');
+    }
     
     me._init();
     

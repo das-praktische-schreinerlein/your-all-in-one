@@ -988,13 +988,12 @@ public class ExcelExporter extends WikiExporter {
         // Bedingte Formartierung setzen
         HSSFSheetConditionalFormatting condFormSheet =
             sheet.getSheetConditionalFormatting();
-        CellRangeAddress [] regions =
-        {
-                new CellRangeAddress(
-                        ExcelNodeService.CONST_GANT_ROUW_UE + 1,
-                        lastRownNum,
-                        versatz + ExcelNodeService.CONST_GANT_COL_GANT_START,
-                        versatz + ExcelNodeService.CONST_GANT_COL_GANT_START + ExcelNodeService.CONST_GANT_PERIODS)
+        CellRangeAddress[] regions = {
+            new CellRangeAddress(
+                    ExcelNodeService.CONST_GANT_ROUW_UE + 1,
+                    lastRownNum,
+                    versatz + ExcelNodeService.CONST_GANT_COL_GANT_START,
+                    versatz + ExcelNodeService.CONST_GANT_COL_GANT_START + ExcelNodeService.CONST_GANT_PERIODS)
         };
 
         // Rule+pattern wenn leer

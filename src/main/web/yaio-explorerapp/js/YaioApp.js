@@ -44,39 +44,95 @@ var yaioApp = angular.module('yaioExplorerApp', ['ngAnimate', 'ngRoute', 'pascal
  */
 yaioApp.config(function($routeProvider) {
     'use strict';
+    
+    var resBaseUrl = yaioAppBase.config.resBaseUrl;
 
     // configure routes
     $routeProvider
-        .when('/show/:nodeId/activate/:activeNodeId', { 
+        .when('/show/:nodeId/activate/:activeNodeId/:dummy?', { 
             controller:  'NodeShowCtrl',
-            templateUrl: 'js/explorer/node.html' })
-        .when('/showByAllIds/:nodeByAllId', { 
+            templateUrl: resBaseUrl + 'js/explorer/node.html' })
+        .when('/show/:nodeId/:workflowState?/activate/:activeNodeId/:dummy?', { 
             controller:  'NodeShowCtrl',
-            templateUrl: 'js/explorer/node.html' })
+            templateUrl: resBaseUrl + 'js/explorer/node.html' })
+        .when('/show/:nodeId/:workflowState?/:dummy?', { 
+            controller:  'NodeShowCtrl',
+            templateUrl: resBaseUrl + 'js/explorer/node.html' })
         .when('/show/:nodeId', { 
             controller:  'NodeShowCtrl',
-            templateUrl: 'js/explorer/node.html' })
-        .when('/search/:curPage?/:pageSize?/:searchSort?/:baseSysUID?/:fulltext?/', { 
+            templateUrl: resBaseUrl + 'js/explorer/node.html' })
+        .when('/showByAllIds/:nodeByAllId', { 
+            controller:  'NodeShowCtrl',
+            templateUrl: resBaseUrl + 'js/explorer/node.html' })
+        .when('/search/:curPage?/:pageSize?/:searchSort?/:baseSysUID?/:fulltext?/:strClassFilter?/:strWorkflowStateFilter?/:strNotNodePraefix?/', { 
             controller:  'NodeSearchCtrl',
-            templateUrl: 'js/search/node-search.html' })
+            templateUrl: resBaseUrl + 'js/search/node-search.html' })
         .when('/search/', { 
             controller:  'NodeSearchCtrl',
-            templateUrl: 'js/search/node-search.html' })
+            templateUrl: resBaseUrl + 'js/search/node-search.html' })
         .when('/login', {
             controller : 'AuthController',
-            templateUrl: 'js/auth/login.html' })
+            templateUrl: resBaseUrl + 'js/auth/login.html' })
         .when('/logout', {
             controller : 'AuthController',
-            templateUrl: 'js/auth/login.html' })
+            templateUrl: resBaseUrl + 'js/auth/login.html' })
+        .when('/logout/:logout', {
+            controller : 'AuthController',
+            templateUrl: resBaseUrl + 'js/auth/login.html' })
         .when('/frontpage/:nodeId', { 
             controller:  'FrontPageCtrl',
-            templateUrl: 'js/frontpage/frontpage.html' })
-        .when('/', { 
+            templateUrl: resBaseUrl + 'js/frontpage/frontpage.html' })
+        .when('/frontpage', { 
             controller:  'FrontPageCtrl',
-            templateUrl: 'js/frontpage/frontpage.html' })
+            templateUrl: resBaseUrl + 'js/frontpage/frontpage.html' })
+        .when('/dashboard', { 
+            controller:  'DashboardCtrl',
+            templateUrl: resBaseUrl + 'js/dashboard/dashboard.html' })
+        .when('/sourceselect', { 
+            controller:  'SourceSelectorCtrl',
+            templateUrl: resBaseUrl + 'js/sourceselector/sourceselector.html' })
+        .when('/sourceselect/:newds', { 
+            controller:  'SourceSelectorCtrl',
+            templateUrl: resBaseUrl + 'js/sourceselector/sourceselector.html' })
+        .when('/', { 
+            controller:  'SourceSelectorCtrl',
+            templateUrl: resBaseUrl + 'js/sourceselector/sourceselector.html' })
         .otherwise({ redirectTo: '/'});
 });
 
+/**
+ * <h4>FeatureDomain:</h4>
+ *     Configuration
+ * <h4>FeatureDescription:</h4>
+ *     configures $sceDelegateProvider - adds resourcewhitelist
+ * <h4>FeatureResult:</h4>
+ *   <ul>
+ *     <li>updates $sceDelegateProvider
+ *   </ul> 
+ * <h4>FeatureKeywords:</h4>
+ *     GUI Configuration
+ * @param $sceDelegateProvider - the $sceDelegateProvider to change the resource-whitelist...
+ */
+yaioApp.config(function($sceDelegateProvider) {
+    var resBaseUrl = yaioAppBase.config.resBaseUrl;
+    var whitelist = [
+        // Allow same origin resource loads.
+        'self',
+        // Allow loading from our assets domain.  Notice the difference between * and **.
+        resBaseUrl + '**'];
+    
+    // configure additional resBaseUrls for CORS
+    if (yaioAppBase.config.addResBaseUrls && yaioAppBase.config.addResBaseUrls.length  > 0) {
+        for (var idx = 0; idx < yaioAppBase.config.addResBaseUrls.length; idx++) {
+            whitelist.push(yaioAppBase.config.addResBaseUrls[idx] + "/**");
+        }
+    }
+    
+    if (resBaseUrl && resBaseUrl != "") {
+        $sceDelegateProvider.resourceUrlWhitelist(whitelist);
+    }
+});
+    
 /**
  * <h4>FeatureDomain:</h4>
  *     Configuration
@@ -93,6 +149,7 @@ yaioApp.config(function($routeProvider) {
 yaioApp.config(['$httpProvider', function($httpProvider) {
     'use strict';
 
+    $httpProvider.defaults.withCredentials = true;
     $httpProvider.defaults.headers.patch = {
         'Content-Type': 'application/json;charset=utf-8'
     };

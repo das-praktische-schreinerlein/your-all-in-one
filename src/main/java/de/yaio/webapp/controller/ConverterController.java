@@ -29,7 +29,8 @@ import de.yaio.core.node.BaseNode;
 import de.yaio.datatransfer.exporter.Exporter;
 import de.yaio.datatransfer.exporter.OutputOptions;
 import de.yaio.datatransfer.exporter.OutputOptionsImpl;
-import de.yaio.extension.datatransfer.ical.ICalExporter;
+import de.yaio.extension.datatransfer.common.DatatransferUtils;
+import de.yaio.extension.datatransfer.ical.ICalDBExporter;
 import de.yaio.extension.datatransfer.mindmap.MindMapExporter;
 import de.yaio.rest.controller.NodeActionResponse;
 
@@ -49,9 +50,15 @@ import de.yaio.rest.controller.NodeActionResponse;
 @Controller
 @RequestMapping("/converters")
 public class ConverterController {
+    /** API-Version **/
+    public static final String API_VERSION = "1.0.0";
+
     @Autowired
     protected ConverterUtils converterUtils;
     
+    @Autowired
+    protected DatatransferUtils datatransferUtils;
+
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
                     value = "/html",
@@ -60,10 +67,9 @@ public class ConverterController {
                                  final HttpServletResponse response) {
         try {
                 OutputOptions oOptions = new OutputOptionsImpl();
-                BaseNode masterNode = converterUtils.parseInlineNodesFromString(source);
-                String headerFile = "/static/exporttemplates/projektplan-export-header.html";
-                String footerFile = "/static/exporttemplates/projektplan-export-footer.html";
-                return converterUtils.commonExportNodeAsHtml(masterNode, oOptions, response, headerFile, footerFile);
+                BaseNode masterNode = datatransferUtils.parseInlineNodesFromString(source);
+                String tplFile = "/static/exporttemplates/projektplan-export.html";
+                return converterUtils.commonExportNodeAsHtml(masterNode, oOptions, response, tplFile);
             } catch (Exception e) {
                 e.printStackTrace();
                 return new NodeActionResponse(
@@ -79,7 +85,7 @@ public class ConverterController {
                     produces = "application/ical")
     public String convertToICal(@RequestParam(value = "source") final String source, 
                                 final HttpServletResponse response) {
-        Exporter exporter = new ICalExporter();
+        Exporter exporter = new ICalDBExporter();
         return commonComnvertSource(exporter, ".ics", source, response);
     }
 
@@ -101,7 +107,7 @@ public class ConverterController {
         try {
             OutputOptions oOptions = new OutputOptionsImpl();
 
-            BaseNode masterNode = converterUtils.parseInlineNodesFromString(source);
+            BaseNode masterNode = datatransferUtils.parseInlineNodesFromString(source);
             String res = converterUtils.exportNode(masterNode, exporter, oOptions, extension, response);
             return res;
 

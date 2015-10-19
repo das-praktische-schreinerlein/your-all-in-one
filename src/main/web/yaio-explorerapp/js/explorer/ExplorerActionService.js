@@ -39,24 +39,26 @@ Yaio.ExplorerActionService = function(appBase) {
     };
     
     me.openNodeHierarchy = function(treeId, lstIdsHierarchy) {
+        var svcYaioBase = me.appBase.get('YaioBase');
+
         // check for tree
-        var tree = $(treeId).fancytree("getTree");
+        var tree = me.$(treeId).fancytree("getTree");
         if (! tree) {
-            me.appBase.get('YaioBase').logError("openHierarchy: error tree:'" + treeId + "' not found.", false);
+            svcYaioBase.logError("openHierarchy: error tree:'" + treeId + "' not found.", false);
             return;
         }
     
         // check for rootNode
         var rootNode = tree.rootNode;
         if (! rootNode) {
-            me.appBase.get('YaioBase').logError("openHierarchy: error for tree:'" + treeId 
+            svcYaioBase.logError("openHierarchy: error for tree:'" + treeId 
                         + "' rootNode not found.", false);
             return;
         }
         
         // check for lstIdsHierarchy
         if (! lstIdsHierarchy || lstIdsHierarchy.length <= 0) {
-            me.appBase.get('YaioBase').logError("openHierarchy: error for tree:'" + treeId 
+            svcYaioBase.logError("openHierarchy: error for tree:'" + treeId 
                         + "' lstIdsHierarchy is empty.", false);
             return;
         }
@@ -69,7 +71,7 @@ Yaio.ExplorerActionService = function(appBase) {
             firstNode = rootNode.mapChildren[firstNodeId];
         }
         if (! firstNode) {
-            me.appBase.get('YaioBase').logError("openHierarchy: error for tree:'" + treeId 
+            svcYaioBase.logError("openHierarchy: error for tree:'" + treeId 
                         + "' firstNode of:'" + lstIdsHierarchySave 
                         + "' not found on rootNode.", false);
             return;
@@ -83,17 +85,19 @@ Yaio.ExplorerActionService = function(appBase) {
     };
     
     me.openNodeHierarchyForNodeId = function(treeId, activeNodeId) {
+        var svcYaioBase = me.appBase.get('YaioBase');
+
         // check for tree
-        var tree = $(treeId).fancytree("getTree");
+        var tree = me.$(treeId).fancytree("getTree");
         if (! tree) {
-            me.appBase.get('YaioBase').logError("openNodeHierarchyForNodeId: error tree:'" + treeId + "' not found.", false);
+            svcYaioBase.logError("openNodeHierarchyForNodeId: error tree:'" + treeId + "' not found.", false);
             return;
         }
         
         // check for activeNodeId
         var treeNode = tree.getNodeByKey(activeNodeId);
         if (! treeNode) {
-            me.appBase.get('YaioBase').logError("openNodeHierarchyForNodeId: error for tree:'" + treeId 
+            svcYaioBase.logError("openNodeHierarchyForNodeId: error for tree:'" + treeId 
                     + "' activeNode " + activeNodeId + " not found.", false);
             return null;
         }
@@ -111,16 +115,18 @@ Yaio.ExplorerActionService = function(appBase) {
     
     
     me.yaioOpenSubNodesForTree = function(treeId, level) {
-        var tree = $(treeId).fancytree("getTree");
+        var svcYaioBase = me.appBase.get('YaioBase');
+
+        var tree = me.$(treeId).fancytree("getTree");
         if (! tree) {
-            me.appBase.get('YaioBase').logError("yaioOpenSubNodesForTree: error tree:'" + treeId + "' not found.", false);
+            svcYaioBase.logError("yaioOpenSubNodesForTree: error tree:'" + treeId + "' not found.", false);
             return;
         }
         
         // check for activeNodeId
         var treeNode = tree.rootNode;
         if (! treeNode) {
-            me.appBase.get('YaioBase').logError("yaioOpenSubNodesForTree: error rootnode for tree:'" + treeId 
+            svcYaioBase.logError("yaioOpenSubNodesForTree: error rootnode for tree:'" + treeId 
                     + " not found.", false);
             return null;
         }
@@ -134,37 +140,42 @@ Yaio.ExplorerActionService = function(appBase) {
     
     me.yaioSaveNode = function(data) {
         var json = JSON.stringify({name: data.input.val()});
-        var url = me.appBase.config.updateUrl + data.node.key;
-        me.appBase.get('YaioNodeData').yaioDoUpdateNode(data.node, url, json);
+        me.appBase.get('YaioNodeData').yaioDoUpdateNode(data.node, json);
     };
     
     me.yaioMoveNode = function(node, newParentKey, newPos) {
         console.log("move node:" + node.key + " to:" + newParentKey + " Pos:" + newPos);
         var json = JSON.stringify({parentNode: newParentKey});
-        var url = me.appBase.config.moveUrl + node.key + "/" + newParentKey + "/" + newPos;
-        me.appBase.get('YaioNodeData').yaioDoUpdateNode(node, url, json);
+        me.appBase.get('YaioNodeData').yaioDoMoveNode(node, newParentKey, newPos, json);
     };
     
+    me.yaioCopyNode = function(node, newParentKey) {
+        console.log("copy node:" + node.key + " to:" + newParentKey);
+        var json = JSON.stringify({parentNode: newParentKey});
+        me.appBase.get('YaioNodeData').yaioDoCopyNode(node, newParentKey, json);
+    };
+
     me.yaioRemoveNodeById = function(nodeId) {
+        var svcYaioBase = me.appBase.get('YaioBase');
+
         if (window.confirm("Wollen Sie die Node wirklich l&ouml;schen?")) {
             console.log("remove node:" + nodeId);
             // check for tree
             var treeId = "#tree";
-            var tree = $(treeId).fancytree("getTree");
+            var tree = me.$(treeId).fancytree("getTree");
             if (! tree) {
-                me.appBase.get('YaioBase').logError("yaioRemoveNode: error tree:'" + treeId + "' not found.", false);
+                svcYaioBase.logError("yaioRemoveNode: error tree:'" + treeId + "' not found.", false);
                 return;
             }
             
             // check for activeNodeId
             var treeNode = tree.getNodeByKey(nodeId);
             if (! treeNode) {
-                me.appBase.get('YaioBase').logError("yaioRemoveNode: error for tree:'" + treeId 
+                svcYaioBase.logError("yaioRemoveNode: error for tree:'" + treeId 
                         + "' activeNode " + nodeId + " not found.", false);
                 return null;
             }
-            var url = me.appBase.config.removeUrl + nodeId;
-            me.appBase.get('YaioNodeData').yaioDoRemoveNode(treeNode, url);
+            me.appBase.get('YaioNodeData').yaioDoRemoveNode(nodeId);
         } else {
             // discard
             return false;
@@ -185,22 +196,24 @@ Yaio.ExplorerActionService = function(appBase) {
      * @param nodeId - id of the node
      */
     me.openJiraExportWindow = function(nodeId) {
+        var svcYaioBase = me.appBase.get('YaioBase');
+
         // check vars
         if (! nodeId) {
             // tree not found
-            me.appBase.get('YaioBase').logError("error openJiraWindow: nodeId required", false);
+            svcYaioBase.logError("error openJiraWindow: nodeId required", false);
             return null;
         }
         // load node
-        var tree = $("#tree").fancytree("getTree");
+        var tree = me.$("#tree").fancytree("getTree");
         if (!tree) {
             // tree not found
-            me.appBase.get('YaioBase').logError("error openJiraWindow: cant load tree for node:" + nodeId, false);
+            svcYaioBase.logError("error openJiraWindow: cant load tree for node:" + nodeId, false);
             return null;
         }
         var treeNode = tree.getNodeByKey(nodeId);
         if (! treeNode) {
-            me.appBase.get('YaioBase').logError("error openJiraWindow: cant load node:" + nodeId, false);
+            svcYaioBase.logError("error openJiraWindow: cant load node:" + nodeId, false);
             return null;
         }
         
@@ -216,18 +229,18 @@ Yaio.ExplorerActionService = function(appBase) {
         
         // convert and secure
         var nodeDesc = me.appBase.get('YaioFormatter').convertMarkdownToJira(descText);
-        nodeDesc = me.appBase.get('YaioBase').htmlEscapeText(nodeDesc);
+        nodeDesc = svcYaioBase.htmlEscapeText(nodeDesc);
         
         // set clipboard-content
-        $( "#clipboard-content" ).html(nodeDesc);
+        me.$( "#clipboard-content" ).html(nodeDesc);
         
         // show message
-        $( "#clipboard-box" ).dialog({
+        me.$( "#clipboard-box" ).dialog({
             modal: true,
             width: "700px",
             buttons: {
               Ok: function() {
-                $( this ).dialog( "close" );
+                me.$( this ).dialog( "close" );
               }
             }
         });    
@@ -247,22 +260,25 @@ Yaio.ExplorerActionService = function(appBase) {
      *     GUI Convert
      */
     me.yaioExportExplorerLinesAsOverview = function() {
+        var svcYaioBase = me.appBase.get('YaioBase');
+        var svcYaioFormatter = me.appBase.get('YaioFormatter');
+
         // convert and secure
-        var checkListSrc = me.appBase.get('YaioFormatter').convertExplorerLinesAsCheckList();
-        checkListSrc = me.appBase.get('YaioBase').htmlEscapeText(checkListSrc);
-        var ganttSrc = me.appBase.get('YaioFormatter').convertExplorerLinesAsGanttMarkdown();
-        ganttSrc = me.appBase.get('YaioBase').htmlEscapeText(ganttSrc);
+        var checkListSrc = svcYaioFormatter.convertExplorerLinesAsCheckList();
+        checkListSrc = svcYaioBase.htmlEscapeText(checkListSrc);
+        var ganttSrc = svcYaioFormatter.convertExplorerLinesAsGanttMarkdown();
+        ganttSrc = svcYaioBase.htmlEscapeText(ganttSrc);
         
         // set clipboard-content
-        $( "#clipboard-content" ).html(checkListSrc + "\n\n" +  ganttSrc);
+        me.$( "#clipboard-content" ).html(checkListSrc + "\n\n" +  ganttSrc);
         
         // show message
-        $( "#clipboard-box" ).dialog({
+        me.$( "#clipboard-box" ).dialog({
             modal: true,
             width: "700px",
             buttons: {
               Ok: function() {
-                $( this ).dialog( "close" );
+                me.$( this ).dialog( "close" );
               }
             }
         });    
@@ -281,11 +297,14 @@ Yaio.ExplorerActionService = function(appBase) {
      *     GUI Convert
      */
     me.yaioSnapshot = function(parentNode) {
+        var svcYaioBase = me.appBase.get('YaioBase');
+        var svcYaioFormatter = me.appBase.get('YaioFormatter');
+
         // convert and secure
-        var checkListSrc = me.appBase.get('YaioFormatter').convertExplorerLinesAsCheckList();
-        checkListSrc = me.appBase.get('YaioBase').htmlEscapeText(checkListSrc);
-        var ganttSrc = me.appBase.get('YaioFormatter').convertExplorerLinesAsGanttMarkdown();
-        ganttSrc = me.appBase.get('YaioBase').htmlEscapeText(ganttSrc);
+        var checkListSrc = svcYaioFormatter.convertExplorerLinesAsCheckList();
+        checkListSrc = svcYaioBase.htmlEscapeText(checkListSrc);
+        var ganttSrc = svcYaioFormatter.convertExplorerLinesAsGanttMarkdown();
+        ganttSrc = svcYaioBase.htmlEscapeText(ganttSrc);
     
         // open editor
         me.appBase.get('YaioEditor').yaioOpenNodeEditorForNode(parentNode, 'createsnapshot', {nodeDesc: checkListSrc + "\n\n" +  ganttSrc});
@@ -310,15 +329,15 @@ Yaio.ExplorerActionService = function(appBase) {
         content = me.appBase.get('YaioBase').htmlEscapeText(content);
     
         // set clipboard-content
-        $( "#clipboard-content" ).html(content);
+        me.$( "#clipboard-content" ).html(content);
         
         // show message
-        $( "#clipboard-box" ).dialog({
+        me.$( "#clipboard-box" ).dialog({
             modal: true,
             width: "700px",
             buttons: {
               Ok: function() {
-                $( this ).dialog( "close" );
+                me.$( this ).dialog( "close" );
               }
             }
         });    
@@ -337,43 +356,44 @@ Yaio.ExplorerActionService = function(appBase) {
      *     GUI Tree Rendering
      * @param id - sysUID of the node 
      */
-   me.toggleNodeDescContainer = function(id) {
-        $("#detail_desc_" + id).slideToggle(1000,function() {
+    me.toggleNodeDescContainer = function(id) {
+        var svcYaioFormatter = me.appBase.get('YaioFormatter');
+        me.$("#detail_desc_" + id).slideToggle(1000,function() {
             // show/hide toggler
-            if ($("#detail_desc_" + id).css("display") == "block") {
+            if (me.$("#detail_desc_" + id).css("display") == "block") {
                 // desc is now shown
-                $("#toggler_desc_" + id).addClass('toggler_show').removeClass('toggler_hidden');
+                me.$("#toggler_desc_" + id).addClass('toggler_show').removeClass('toggler_hidden');
    
                 // check if syntaxhighlighting to do
-                var descBlock = $("#container_content_desc_" + id);
-                if ($(descBlock).hasClass('syntaxhighlighting-open')) {
+                var descBlock = me.$("#container_content_desc_" + id);
+                if (me.$(descBlock).hasClass('syntaxhighlighting-open')) {
                     var flgDoMermaid = false;
-                    console.log("toggleNodeDescContainer highlight for descBlock: " + $(descBlock).attr('id'));
-                    flgDoMermaid = me.appBase.get('YaioFormatter').formatDescBlock(descBlock) || flgDoMermaid;
+                    console.log("toggleNodeDescContainer highlight for descBlock: " + me.$(descBlock).attr('id'));
+                    flgDoMermaid = svcYaioFormatter.formatDescBlock(descBlock) || flgDoMermaid;
                     console.log("toggleNodeDescContainer resulting flgDoMermaid: " + flgDoMermaid);
                     
                     // do Mermaid if found
                     if (flgDoMermaid) {
-                        me.appBase.get('YaioFormatter').formatMermaidGlobal();
+                        svcYaioFormatter.formatMermaidGlobal();
                     }
                 }
             } else {
                 // desc is now hidden
-                $("#toggler_desc_" + id).addClass('toggler_hidden').removeClass('toggler_show');
+                me.$("#toggler_desc_" + id).addClass('toggler_hidden').removeClass('toggler_show');
             }
         });
     };
    
     me.toggleAllNodeDescContainer = function() {
-        if ($("#toggler_desc_all").hasClass('toggler_hidden')) {
+        if (me.$("#toggler_desc_all").hasClass('toggler_hidden')) {
             // show all desc
-            $("div.field_nodeDesc").slideDown(1000);
-            $("div.fieldtype_descToggler > a").addClass('toggler_show').removeClass('toggler_hidden');
+            me.$("div.field_nodeDesc").slideDown(1000);
+            me.$("div.fieldtype_descToggler > a").addClass('toggler_show').removeClass('toggler_hidden');
    
             // check if syntaxhighlighting to do
             var flgDoMermaid = false;
-            $("div.syntaxhighlighting-open").each(function (i, descBlock) {
-                console.log("toggleAllNodeDescContainer highlight for descBlock: " + $(descBlock).attr('id'));
+            me.$("div.syntaxhighlighting-open").each(function (i, descBlock) {
+                console.log("toggleAllNodeDescContainer highlight for descBlock: " + me.$(descBlock).attr('id'));
                 flgDoMermaid = me.appBase.get('YaioFormatter').formatDescBlock(descBlock) || flgDoMermaid;
             });
             console.log("toggleAllNodeDescContainer resulting flgDoMermaid: " + flgDoMermaid);
@@ -384,8 +404,8 @@ Yaio.ExplorerActionService = function(appBase) {
             }
         } else {
             // hide all desc
-            $("div.field_nodeDesc").slideUp(1000);
-            $("div.fieldtype_descToggler > a").addClass('toggler_hidden').removeClass('toggler_show');
+            me.$("div.field_nodeDesc").slideUp(1000);
+            me.$("div.fieldtype_descToggler > a").addClass('toggler_hidden').removeClass('toggler_show');
         }
     };
     
@@ -403,27 +423,27 @@ Yaio.ExplorerActionService = function(appBase) {
      * @param id - sysUID of the node 
     */
     me.toggleNodeSysContainer = function(id) {
-        $("#detail_sys_" + id).slideToggle(1000,function() {
+        me.$("#detail_sys_" + id).slideToggle(1000,function() {
             // show/hide toggler
-            if ($("#detail_sys_" + id).css("display") == "block") {
+            if (me.$("#detail_sys_" + id).css("display") == "block") {
                 // desc is now shown
-                $("#toggler_sys_" + id).addClass('toggler_show').removeClass('toggler_hidden');
+                me.$("#toggler_sys_" + id).addClass('toggler_show').removeClass('toggler_hidden');
             } else {
                 // desc is now hidden
-                $("#toggler_sys_" + id).addClass('toggler_hidden').removeClass('toggler_show');
+                me.$("#toggler_sys_" + id).addClass('toggler_hidden').removeClass('toggler_show');
             }
         });
     };
   
     me.toggleAllNodeSysContainer = function() {
-        if ($("#toggler_sys_all").hasClass('toggler_hidden')) {
+        if (me.$("#toggler_sys_all").hasClass('toggler_hidden')) {
             // show all sys
-            $("div.field_nodeSys").slideDown(1000);
-            $("div.fieldtype_sysToggler > a").addClass('toggler_show').removeClass('toggler_hidden');
+            me.$("div.field_nodeSys").slideDown(1000);
+            me.$("div.fieldtype_sysToggler > a").addClass('toggler_show').removeClass('toggler_hidden');
         }  else {
             // hide all sys
-            $("div.field_nodeSys").slideUp(1000);
-            $("div.fieldtype_sysToggler > a").addClass('toggler_hidden').removeClass('toggler_show');
+            me.$("div.field_nodeSys").slideUp(1000);
+            me.$("div.fieldtype_sysToggler > a").addClass('toggler_hidden').removeClass('toggler_show');
         }
     };
   

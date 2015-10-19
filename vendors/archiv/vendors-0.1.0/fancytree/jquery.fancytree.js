@@ -853,7 +853,7 @@ FancytreeNode.prototype = /** @lends FancytreeNode# */{
 			}
 			return true;
 		}
-		return !!this.children;
+        return !!this.children;
 	},
 	/** Return true if node has keyboard focus.
 	 * @returns {boolean}
@@ -1011,7 +1011,7 @@ FancytreeNode.prototype = /** @lends FancytreeNode# */{
 		var res, source,
 			that = this;
 
-		_assert( this.isLazy(), "load() requires a lazy node" );
+		// _assert( this.isLazy(), "load() requires a lazy node" );
 		// _assert( forceReload || this.isUndefined(), "Pass forceReload=true to re-load a lazy node" );
 		if( !forceReload && !this.isUndefined() ) {
 			return _getResolvedPromise(this);
@@ -1610,7 +1610,8 @@ FancytreeNode.prototype = /** @lends FancytreeNode# */{
 	 * Return false if iteration was stopped.
 	 *
 	 * @param {function} fn the callback function.
-	 *     Return false to stop iteration, return "skip" to skip this node and children only.
+	 *     Return false to stop iteration, return "skip" to skip this node and
+	 *     its children only.
 	 * @param {boolean} [includeSelf=false]
 	 * @returns {boolean}
 	 */
@@ -1634,6 +1635,51 @@ FancytreeNode.prototype = /** @lends FancytreeNode# */{
 			}
 		}
 		return res;
+	},
+	/** Call fn(node) for all child nodes and recursively load lazy children.<br>
+	 * <b>Note:</b> If you need this method, you probably should consider to review
+	 * your architecture! Recursivley loading nodes is a perfect way for lazy
+	 * programmers to flood the server with requests ;-)
+	 *
+	 * @param {function} [fn] optional callback function.
+	 *     Return false to stop iteration, return "skip" to skip this node and
+	 *     its children only.
+	 * @param {boolean} [includeSelf=false]
+	 * @returns {$.Promise}
+	 */
+	visitAndLoad: function(fn, includeSelf, _recursion) {
+		var dfd, res, loaders,
+			node = this;
+
+		// node.debug("visitAndLoad");
+		if( fn && includeSelf === true ) {
+			res = fn(node);
+			if( res === false || res === "skip" ) {
+				return _recursion ? res : _getResolvedPromise();
+		}
+			}
+		if( !node.children && !node.lazy ) {
+			return _getResolvedPromise();
+		}
+		dfd = new $.Deferred();
+		loaders = [];
+		// node.debug("load()...");
+		node.load().done(function(){
+			// node.debug("load()... done.");
+			for(var i=0, l=node.children.length; i<l; i++){
+				res = node.children[i].visitAndLoad(fn, true, true);
+				if( res === false ) {
+					dfd.reject();
+					break;
+				} else if ( res !== "skip" ) {
+					loaders.push(res); // Add promise to the list
+				}
+			}
+			$.when.apply(this, loaders).then(function(){
+				dfd.resolve();
+			});
+		});
+		return dfd.promise();
 	},
 	/** Call fn(node) for all parent nodes, bottom-up, including invisible system root.<br>
 	 * Stop iteration, if fn() returns false.<br>
@@ -1923,10 +1969,11 @@ Fancytree.prototype = /** @lends Fancytree# */{
 	 *
 	 * In selectMode 3 only the topmost selected nodes are considered.
 	 *
-	 * @param {boolean | string} [selected=true]
-	 * @param {boolean | string} [active=true]
+	 * @param {boolean | string} [selected=true] Pass a string to define the variable name (default: `ft_ID[]`)
+	 * @param {boolean | string} [active=true] Pass a string to define the variable name (default: `ft_ID_active`)
+	 * @param {boolean} [stopOnParents] Pass false to generate all selected nodes, even in selectMode 3
 	 */
-	generateFormElements: function(selected, active) {
+	generateFormElements: function(selected, active, stopOnParents) {
 		// TODO: test case
 		var nodeList,
 			selectedName = (selected !== false) ? "ft_" + this._id + "[]" : selected,
@@ -1934,6 +1981,7 @@ Fancytree.prototype = /** @lends Fancytree# */{
 			id = "fancytree_result_" + this._id,
 			$result = $("#" + id);
 
+		stopOnParents = ( typeof stopOnParents === "boolean" ) ? stopOnParents : (this.options.selectMode === 3);
 		if($result.length){
 			$result.empty();
 		}else{
@@ -1942,7 +1990,7 @@ Fancytree.prototype = /** @lends Fancytree# */{
 			}).hide().insertAfter(this.$container);
 		}
 		if(selectedName){
-			nodeList = this.getSelectedNodes( this.options.selectMode === 3 );
+			nodeList = this.getSelectedNodes(stopOnParents);
 			$.each(nodeList, function(idx, node){
 				$result.append($("<input>", {
 					type: "checkbox",
@@ -2922,7 +2970,8 @@ $.extend(Fancytree.prototype,
 			nodeTitle = opts.renderTitle.call(tree, {type: "renderTitle"}, ctx) || "";
 		}
 		if(!nodeTitle){
-			tooltip = node.tooltip ? " title='" + FT.escapeHtml(node.tooltip) + "'" : "";
+			// tooltip = node.tooltip ? " title='" + FT.escapeHtml(node.tooltip) + "'" : "";
+			tooltip = node.tooltip ? " title='" + node.tooltip.replace("'", "&apos;") + "'" : "";
 			id = aria ? " id='ftal_" + node.key + "'" : "";
 			role = aria ? " role='treeitem'" : "";
 			tabindex = opts.titlesTabbable ? " tabindex='0'" : "";
@@ -3127,7 +3176,7 @@ $.extend(Fancytree.prototype,
 		flag = (flag !== false);
 
 		// node.debug("nodeSetExpanded(" + flag + ")");
-		
+
 		// save the nodeIds of all expanded nodes to reload the tree in that state
 		// if expanded: save nodeId to global map (nodeId: ParentPath)
 		// if collapse: remove nodeId 
@@ -3184,13 +3233,13 @@ $.extend(Fancytree.prototype,
 					ctx.tree._triggerNodeEvent(flag ? "expand" : "collapse", ctx);
 				}
 			}
-			
-			
+
+
 			// do callback if defined
 			if (ctx.tree.options.onExpandCallBack) {
 			    ctx.tree.options.onExpandCallBack(node, flag);
 			}
-			
+
 			// check for option openHierarchy recursively
 			console.log("iam here:" + node.key 
 			        + " level:" + node.getLevel() 
@@ -3455,7 +3504,12 @@ $.extend(Fancytree.prototype,
 			var firstChild = ( node.children ? node.children[0] : null );
 			if ( firstChild && firstChild.isStatusNode() ) {
 				$.extend(firstChild, data);
+				firstChild.statusNodeType = type;
 				tree._callHook("nodeRender", firstChild);
+				tree._callHook("nodeRenderTitle", firstChild);
+				// tree._callHook("nodeRenderStatus", firstChild);
+				// node.render();
+				// firstChild.renderTitle();
 			} else {
 				data.key = "_statusNode";
 				node._setChildren([data]);
@@ -3906,7 +3960,7 @@ $.widget("ui.fancytree",
 	 * @returns {FancytreeNode}
 	 */
 	getNodeByKey: function(key) {
-		return this.tree.getNodeByKey(key);
+		return this.tree.getNodeByKey("" + key);
 	},
 	/** Return the invisible system root node.
 	 * @returns {FancytreeNode}
@@ -3939,11 +3993,11 @@ $.extend($.ui.fancytree,
 	/** @lends Fancytree_Static# */
 	{
 	/** @type {string} */
-	version: "@VERSION",      // Set to semver by 'grunt release'
+	version: "2.4.0",      // Set to semver by 'grunt release'
 	/** @type {string} */
-	buildType: "development", // Set to 'production' by 'grunt build'
+	buildType: "production", // Set to 'production' by 'grunt build'
 	/** @type {int} */
-	debugLevel: 2,            // Set to 1 by 'grunt build'
+	debugLevel: 1,            // Set to 1 by 'grunt build'
 							  // Used by $.ui.fancytree.debug() and as default for tree.options.debugLevel
 
 	_nextId: 1,

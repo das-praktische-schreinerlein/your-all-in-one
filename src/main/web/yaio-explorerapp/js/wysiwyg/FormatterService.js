@@ -112,9 +112,10 @@ Yaio.FormatterService = function(appBase) {
             code = me.appBase.get('YaioBase').htmlEscapeTextLazy(code);
             if (code.match(/^sequenceDiagram/) || code.match(/^graph/) || code.match(/^gantt/)) {
                 return '<div id="inlineMermaid' + (me._localHtmlId++) + '" class="mermaid">'+ me.prepareTextForMermaid(code ) + '</div>';
-            } else if (language !== undefined 
-                       && (language.match(/^yaiomindmap/) || language.match(/^yaiofreemind/))) {
+            } else if (language !== undefined  && (language.match(/^yaiomindmap/) || language.match(/^yaiofreemind/))) {
                 return '<div id="inlineMindmap' + (me._localHtmlId++) + '"  class="yaiomindmap">'+ code + '</div>';
+            } else if (language !== undefined  && (language.match(/^yaioplantuml/))) {
+                return '<div id="inlinePlanUML' + (me._localHtmlId++) + '"  class="yaioplantuml">' + code + '</div>';
             } else {
                 return '<pre><code id="inlineCode' + (me._localHtmlId++) + '" class="lang-' + language + '">' + code + '</code></pre>';
             }
@@ -265,8 +266,8 @@ Yaio.FormatterService = function(appBase) {
      * @param block - jquery-html-element with the content to convert to mindmap 
      */
     me.formatYaioMindmap = function(block) {
-        var content = $(block).html();
-        var blockId = $(block).attr('id');
+        var content = me.$(block).html();
+        var blockId = me.$(block).attr('id');
         var url = "/converters/mindmap?source=" + encodeURIComponent(content);
         console.log("formatYaioMindmap " + blockId + " url:" + url);
         
@@ -291,6 +292,91 @@ Yaio.FormatterService = function(appBase) {
         fo.write(blockId);
     };
     
+    me.generateYaioyaioPlantuml = function(content) {
+        function encode64(data) {
+            var r = "";
+            for (var i=0; i<data.length; i+=3) {
+                if (i+2==data.length) {
+                    r +=append3bytes(data.charCodeAt(i), data.charCodeAt(i+1), 0);
+                } else if (i+1==data.length) {
+                    r += append3bytes(data.charCodeAt(i), 0, 0);
+                } else {
+                    r += append3bytes(data.charCodeAt(i), data.charCodeAt(i+1),
+                        data.charCodeAt(i+2));
+                }
+            }
+            return r;
+        }
+
+        function append3bytes(b1, b2, b3) {
+            var c1 = b1 >> 2;
+            var c2 = ((b1 & 0x3) << 4) | (b2 >> 4);
+            var c3 = ((b2 & 0xF) << 2) | (b3 >> 6);
+            var c4 = b3 & 0x3F;
+            var r = "";
+            r += encode6bit(c1 & 0x3F);
+            r += encode6bit(c2 & 0x3F);
+            r += encode6bit(c3 & 0x3F);
+            r += encode6bit(c4 & 0x3F);
+            return r;
+        }
+
+        function encode6bit(b) {
+            if (b < 10) {
+                return String.fromCharCode(48 + b);
+            }
+            b -= 10;
+            if (b < 26) {
+                return String.fromCharCode(65 + b);
+            }
+            b -= 26;
+            if (b < 26) {
+                return String.fromCharCode(97 + b);
+            }
+            b -= 26;
+            if (b == 0) {
+                return '-';
+            }
+            if (b == 1) {
+                return '_';
+            }
+            return '?';
+        }
+
+        var txt = content;
+        txt = txt.replace(/&gt;/g,'>');
+        txt = txt.replace(/&lt;/g,'<');
+        txt = txt.replace(/\n\.\n/g,'\n');
+        txt = txt.replace(/\n\n/g,'\n');
+        var s = unescape(encodeURIComponent(txt));
+        var url = "http://www.plantuml.com/plantuml/svg/" + encode64(deflate(s, 9));
+        
+        return url;
+    }
+    
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     GUI
+     * <h4>FeatureDescription:</h4>
+     *     format the block-content as plantuml. 
+     *     <ul>
+     *     <li>creates a Img-Tag with src "http://www.plantuml.com/plantuml/img/
+     *     
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue shows Img with the plantuml-content of block
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Layout
+     * @param block - jquery-html-element with the content to convert to plantuml
+     */
+    me.formatYaioyaioPlantuml = function(block) {
+        var blockId = me.$(block).attr('id');
+        var content = me.$(block).html();
+        var url = me.generateYaioyaioPlantuml(content);
+        console.log("formatYaioyaioPlantuml " + blockId + " url:" + url);
+        me.$(block).html('<img class="yaioplantuml" src="'+ url + '" id="' + blockId + 'Img">');
+    };
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -406,21 +492,21 @@ Yaio.FormatterService = function(appBase) {
      */
     me.formatDescBlock = function(descBlock) {
         var flgDoMermaid = false;
-        var descBlockId = $(descBlock).attr('id');
+        var descBlockId = me.$(descBlock).attr('id');
     
         console.log("formatDescBlock highlight for descBlock: " + descBlockId);
         // remove trigger-flag
-        $(descBlock).removeClass('syntaxhighlighting-open');
+        me.$(descBlock).removeClass('syntaxhighlighting-open');
         
         // higlight code-blocks
-        $("#" + descBlockId + " code").each(function(i, block) {
-            var blockId = $(block).attr('id');
-            if ($(block).hasClass("lang-mermaid") || $(block).hasClass("mermaid")) {
+        me.$("#" + descBlockId + " code").each(function(i, block) {
+            var blockId = me.$(block).attr('id');
+            if (me.$(block).hasClass("lang-mermaid") || me.$(block).hasClass("mermaid")) {
                 // mermaid: no highlight
                 console.log("formatDescBlock mermaid descBlock: " + descBlockId + " block: " + blockId);
                 me.addServicesToDiagrammBlock(block, 'mermaid',
                         "<a href='' id='linkdownload" + blockId + "'  target='_blank'"
-                        +   " onclick=\"javascript: yaioAppBase.get('YaioBase').downloadAsFile($('#linkdownload" + blockId + "'), $('#" + blockId + "').html(), 'diagram.svg', 'image/svg+xml', 'utf-8'); return true;\">"
+                        +   " onclick=\"javascript: yaioAppBase.get('YaioFile').downloadAsFile(yaioAppBase.$('#linkdownload" + blockId + "'), yaioAppBase.$('#" + blockId + "').html(), 'diagram.svg', 'image/svg+xml', 'utf-8'); return true;\">"
                         + "Download</a>");
                 flgDoMermaid = true;
             } else {
@@ -431,24 +517,31 @@ Yaio.FormatterService = function(appBase) {
         });
     
         // mermaid/mindmap div-blocks
-        $("#" + descBlockId + " div").each(function(i, block) {
-            var blockId = $(block).attr('id');
-            if (   ($(block).hasClass("lang-mermaid") || $(block).hasClass("mermaid")) 
-                && ! $(block).attr("data-processed")) {
+        me.$("#" + descBlockId + " div").each(function(i, block) {
+            var blockId = me.$(block).attr('id');
+            if (   (me.$(block).hasClass("lang-mermaid") || me.$(block).hasClass("mermaid")) 
+                && ! me.$(block).attr("data-processed")) {
                 // mermaid: no highlight
                 console.log("formatDescBlock mermaid descBlock: " + descBlockId + " block: " + blockId);
                 me.addServicesToDiagrammBlock(block, 'mermaid',
                         "<a href='' id='linkdownload" + blockId + "'  target='_blank'"
-                        +   " onclick=\"javascript: yaioAppBase.get('YaioBase').downloadAsFile($('#linkdownload" + blockId + "'), $('#" + blockId + "').html(), 'diagram.svg', 'image/svg+xml', 'utf-8'); return true;\">"
+                        +   " onclick=\"javascript: yaioAppBase.get('YaioFile').downloadAsFile(yaioAppBase.$('#linkdownload" + blockId + "'), yaioAppBase.$('#" + blockId + "').html(), 'diagram.svg', 'image/svg+xml', 'utf-8'); return true;\">"
                         + "Download</a>");
                 flgDoMermaid = true;
-            } else if ($(block).hasClass("lang-yaiomindmap") || $(block).hasClass("yaiomindmap")) {
+            } else if (me.$(block).hasClass("lang-yaiomindmap") || me.$(block).hasClass("yaiomindmap")) {
                 // mindmap: no highlight
                 console.log("formatDescBlock yaiomindmap for descBlock: " + descBlockId + " block: " + blockId);
-                var content = $(block).html();
+                var content = me.$(block).html();
                 var url = "/converters/mindmap?source=" + encodeURIComponent(content);
                 me.addServicesToDiagrammBlock(block, 'yaiomindmap', "<a href='" + url + "' id='download" + blockId + "' target='_blank'>Download</a>");
                 me.formatYaioMindmap(block);
+            } else if (me.$(block).hasClass("lang-yaioplantuml") || me.$(block).hasClass("yaioplantuml")) {
+                // mindmap: no highlight
+                console.log("formatDescBlock yaioplantuml for descBlock: " + descBlockId + " block: " + blockId);
+                var content = me.$(block).html();
+                var url = me.generateYaioyaioPlantuml(content);
+                me.addServicesToDiagrammBlock(block, 'yaioplantuml', "<a href='" + url + "' id='download" + blockId + "' target='_blank'>Download</a>");
+                me.formatYaioyaioPlantuml(block);
             }
         });
     
@@ -472,7 +565,7 @@ Yaio.FormatterService = function(appBase) {
      * @param descBlock - id-filter to identify the block to format
      */
     me.highlightCheckList = function(descBlock) {
-        var descBlockId = $(descBlock).attr('id');
+        var descBlockId = me.$(descBlock).attr('id');
         console.log("highlightCheckList highlight for descBlock: " + descBlockId);
     
         // tests
@@ -499,7 +592,7 @@ Yaio.FormatterService = function(appBase) {
      * @param style      - style to add to new span for matcher found
      */
     me.highlightCheckListForMatchers = function(descBlock, matchers, styleClass, style) {
-        var descBlockId = $(descBlock).attr('id');
+        var descBlockId = me.$(descBlock).attr('id');
         console.log("highlightCheckListForMatchers matchers '" + matchers + "' for descBlock: " + descBlockId);
         for (var idx in matchers) {
             me.highlightCheckListForMatcher(descBlock, "[" + matchers[idx] + "]", styleClass, style);
@@ -523,11 +616,11 @@ Yaio.FormatterService = function(appBase) {
      * @param style      - style to add to new span for matcher found
      */
     me.highlightCheckListForMatcher = function(descBlock, matcherStr, styleClass, style) {
-        var descBlockId = $(descBlock).attr('id');
+        var descBlockId = me.$(descBlock).attr('id');
         console.log("highlightCheckListForMatcher matcherStr '" + matcherStr + "' for descBlock: " + descBlockId);
-        $("#" + descBlockId + " li:contains('" + matcherStr + "'),h1:contains('" + matcherStr + "'),h2:contains('" + matcherStr + "')").each(function(index, value) {
+        me.$("#" + descBlockId + " li:contains('" + matcherStr + "'),h1:contains('" + matcherStr + "'),h2:contains('" + matcherStr + "')").each(function(index, value) {
             var regEx = RegExp(me.appBase.get('YaioBase').escapeRegExp(matcherStr), 'gi');
-            findAndReplaceDOMText($(value).get(0), {
+            findAndReplaceDOMText(me.$(value).get(0), {
                 find: regEx,
                 replace: function(portion) {
                     var el = document.createElement('span');
@@ -560,21 +653,21 @@ Yaio.FormatterService = function(appBase) {
      */
     me.convertExplorerLinesAsCheckList = function() {
         // get title
-        var title = $("#masterTr td.fieldtype_name").text();
+        var title = me.$("#masterTr td.fieldtype_name").text();
         var now = me.appBase.get('YaioBase').formatGermanDateTime((new Date()).getTime());
     
         var checkList = "# Checklist: " + title + " (Stand: " + now + ")\n\n";
         
         // iterate all nodelines
-        $("table.fancytree-ext-table tr").each(function(i, line) {
+        me.$("table.fancytree-ext-table tr").each(function(i, line) {
             // extract data
-            var titleSpan = $(line).find("span.fancytree-title2");
-            var stateSpan = $(line).find("span.fancytree-title-state");
-            var numberSpan = $(line).find("div.field_metanummer");
-            var levelSpan = $(line).find("span.fancytree-node");
-            var istStandDiv = $(line).find("div.fieldtype_stand.field_istChildrenSumStand");
-            var istAufwandDiv = $(line).find("div.fieldtype_aufwand.field_istChildrenSumAufwand");
-            var planAufwandDiv = $(line).find("div.fieldtype_aufwand.field_planChildrenSumAufwand");
+            var titleSpan = me.$(line).find("span.fancytree-title2");
+            var stateSpan = me.$(line).find("span.fancytree-title-state");
+            var numberSpan = me.$(line).find("div.field_metanummer");
+            var levelSpan = me.$(line).find("span.fancytree-node");
+            var istStandDiv = me.$(line).find("div.fieldtype_stand.field_istChildrenSumStand");
+            var istAufwandDiv = me.$(line).find("div.fieldtype_aufwand.field_istChildrenSumAufwand");
+            var planAufwandDiv = me.$(line).find("div.fieldtype_aufwand.field_planChildrenSumAufwand");
             
             // extract content
             var level = 0;
@@ -584,35 +677,35 @@ Yaio.FormatterService = function(appBase) {
             var istStand = "0%";
             var istAufwand = "0h";
             var planAufwand = null;
-            if ($(levelSpan).size() > 0) {
+            if (me.$(levelSpan).size() > 0) {
                 // extract level from intend
-                var intend = $(levelSpan).css("margin-left").replace("px", "");
+                var intend = me.$(levelSpan).css("margin-left").replace("px", "");
                 level = parseInt(intend, 10) / 20;
             }
-            if ($(stateSpan).size() > 0) {
+            if (me.$(stateSpan).size() > 0) {
                 // extract state from style
-                var idx = me.extractCheckListStatefromStateSpan($(stateSpan));
+                var idx = me.extractCheckListStatefromStateSpan(me.$(stateSpan));
                 if (idx) {
                     state = idx;
                     state = state.replace("checklist-state-", "");
                     state = state.replace("checklist-test-", "");
                 }
             }
-            if ($(titleSpan).size() > 0) {
-                title = $(titleSpan).text();
+            if (me.$(titleSpan).size() > 0) {
+                title = me.$(titleSpan).text();
             }
-            if ($(numberSpan).size() > 0) {
-                number = $(numberSpan).text();
+            if (me.$(numberSpan).size() > 0) {
+                number = me.$(numberSpan).text();
             }
             
-            if ($(istAufwandDiv).size() > 0) {
-                istAufwand = $(istAufwandDiv).text();
+            if (me.$(istAufwandDiv).size() > 0) {
+                istAufwand = me.$(istAufwandDiv).text();
             }
-            if ($(planAufwandDiv).size() > 0) {
-                planAufwand = $(planAufwandDiv).text();
+            if (me.$(planAufwandDiv).size() > 0) {
+                planAufwand = me.$(planAufwandDiv).text();
             }
-            if ($(istStandDiv).size() > 0) {
-                istStand = $(istStandDiv).text();
+            if (me.$(istStandDiv).size() > 0) {
+                istStand = me.$(istStandDiv).text();
             }
     
             var stand = istStand.trim() + " (" + istAufwand.trim();
@@ -666,7 +759,7 @@ Yaio.FormatterService = function(appBase) {
      */
     me.convertExplorerLinesAsGanttMarkdown = function() {
         // get title
-        var title = $("#masterTr td.fieldtype_name").text();
+        var title = me.$("#masterTr td.fieldtype_name").text();
         var now = me.appBase.get('YaioBase').formatGermanDateTime((new Date()).getTime());
     
         var ganttMarkdown = "# Gantt: " + title + " (Stand: " + now + ")\n\n"
@@ -679,21 +772,21 @@ Yaio.FormatterService = function(appBase) {
         var ganttMarkdownIst  = "";
         
         // iterate all nodelines
-        $("table.fancytree-ext-table tr").each(function(i, line) {
+        me.$("table.fancytree-ext-table tr").each(function(i, line) {
             // extract data
-            var titleSpan = $(line).find("span.fancytree-title2");
-            var numberSpan = $(line).find("div.field_metanummer");
-            var startEndPlanDiv = $(line).find("div.fieldtype_fromto.field_planChildrenSum");
-            var startEndIstDiv = $(line).find("div.fieldtype_fromto.field_istChildrenSum");
+            var titleSpan = me.$(line).find("span.fancytree-title2");
+            var numberSpan = me.$(line).find("div.field_metanummer");
+            var startEndPlanDiv = me.$(line).find("div.fieldtype_fromto.field_planChildrenSum");
+            var startEndIstDiv = me.$(line).find("div.fieldtype_fromto.field_istChildrenSum");
             
             // extract content
             var title = null;
             var number = null;
-            if ($(titleSpan).size() > 0) {
-                title = $(titleSpan).text();
+            if (me.$(titleSpan).size() > 0) {
+                title = me.$(titleSpan).text();
             }
-            if ($(numberSpan).size() > 0) {
-                number = $(numberSpan).text();
+            if (me.$(numberSpan).size() > 0) {
+                number = me.$(numberSpan).text();
             }
             ganttMarkdownPlan += me.generateGanttMarkdownLineFromBlock(title, number, startEndPlanDiv);
             ganttMarkdownIst += me.generateGanttMarkdownLineFromBlock(title, number, startEndIstDiv);
@@ -725,9 +818,9 @@ Yaio.FormatterService = function(appBase) {
      * @return {String}      mermaid-gantt-markdown-line
      */
     me.generateGanttMarkdownLineFromBlock = function(title, number, selector) {
-        if ($(selector).size() > 0) {
+        if (me.$(selector).size() > 0) {
             // extract dates
-            var dates = $(selector).html().replace(/\&nbsp\;/g, ' ').split("-");
+            var dates = me.$(selector).html().replace(/\&nbsp\;/g, ' ').split("-");
             if (dates.length != 2) {
                 return "";
             }
@@ -744,14 +837,14 @@ Yaio.FormatterService = function(appBase) {
     };
     
     me.addServicesToDiagrammBlock = function(block, type, downloadLink) {
-        var content = $(block).html();
-        var blockId = $(block).attr('id');
+        var content = me.$(block).html();
+        var blockId = me.$(block).attr('id');
     
         // add source
-        $(block).before("<div class='" + type + "-source' id='fallback" + blockId + "'>"
+        me.$(block).before("<div class='" + type + "-source' id='fallback" + blockId + "'>"
                 + "<pre>" + content + "</pre></div>");
         // add service-links
-        $("#fallback" + blockId).before(
+        me.$("#fallback" + blockId).before(
                 "<div class='services" + type + "' id='services" + blockId + "'><div>"
                 + downloadLink
                 + "<a href='#' style='display: none;' id='toggleorig" + blockId + "' onclick=\"yaioAppBase.get('YaioBase').toggleWithLinks('#toggleorig" + blockId + "', '#togglesource" + blockId + "', '#" + blockId + "', '#fallback" + blockId + "'); return false;\" target='_blank'>Diagramm</a>"
@@ -764,8 +857,8 @@ Yaio.FormatterService = function(appBase) {
         // add TOC
         settings = settings || { toc: {}};
         settings.toc = settings.toc || { };
-        settings.toc.dest = $(tocElement);
-        $.fn.toc($(srcElement), settings);
+        settings.toc.dest = me.$(tocElement);
+        me.$.fn.toc(me.$(srcElement), settings);
     };
     
     me._init();

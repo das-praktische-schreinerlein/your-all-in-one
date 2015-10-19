@@ -35,7 +35,7 @@ copy %DIFFPATH1% %DIFFPATH1%-orig.bak
 
 :overwrite
 rem overwrite orig
-rem copy %DIFFPATH2% %DIFFPATH1%
+copy %DIFFPATH2% %DIFFPATH1%
 
 :winmerge
 rem start winmerge

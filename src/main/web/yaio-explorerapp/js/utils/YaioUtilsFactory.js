@@ -27,13 +27,19 @@
  * <h4>FeatureKeywords:</h4>
  *     Utils
  */
-yaioApp.factory('yaioUtils', function () {
+yaioApp.factory('yaioUtils', ['$location', '$http', '$rootScope', '$q', function ($location, $http, $rootScope, $q) {
     'use strict';
 
     var appBase = yaioAppBase;
     var ganttRangeStart = appBase.get('YaioBase').formatGermanDate((new Date()).getTime() - 90*24*60*60*1000); 
     var ganttRangeEnd = appBase.get('YaioBase').formatGermanDate((new Date()).getTime() + 90*24*60*60*1000);
-    
+
+    // set angular to appbase
+    appBase.configureService("Angular.$location", function() { return $location; });
+    appBase.configureService("Angular.$http", function() { return $http; });
+    appBase.configureService("Angular.$rootScope", function() { return $rootScope; });
+    appBase.configureService("Angular.$q", function() { return $q; });
+
     return {
         /**
          * <h4>FeatureDomain:</h4>
@@ -62,7 +68,11 @@ yaioApp.factory('yaioUtils', function () {
             appBase.get('YaioEditor').yaioOpenNodeEditorForNode(node, mode);
         },
         
-        renderNodeLine: function(node, trIdSelector) {
+        downloadAsFile: function(domId, content, filename, mime, encoding) {
+            return appBase.getService('YaioFile').downloadAsFile(appBase.$(domId), content, filename, mime, encoding);
+        },
+        
+        renderNodeLine: function(node, trIdSelector, flgMinimum) {
             // load me
             var data = {
                  node: {
@@ -74,7 +84,7 @@ yaioApp.factory('yaioUtils', function () {
             };
             
             console.log("renderNodeLine nodeId=" + node.sysUID + " tr=" + $(trIdSelector).length);
-            appBase.get('YaioNodeDataRender').renderColumnsForNode(null, data, true);
+            appBase.get('YaioNodeDataRender').renderColumnsForNode(null, data, true, flgMinimum);
         },
         
         ganttOptions: { 
@@ -95,4 +105,4 @@ yaioApp.factory('yaioUtils', function () {
         }
         
     };
-});
+}]);

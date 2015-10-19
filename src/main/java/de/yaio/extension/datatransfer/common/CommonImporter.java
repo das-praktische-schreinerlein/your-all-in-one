@@ -309,7 +309,7 @@ public class CommonImporter {
         // read data
         DataDomain jpaNode = 
                         jpaImporter.getBaseNodeBySysUID(exportSysUID);
-        BaseNode baseNode = ((BaseNode) jpaNode);
+        BaseNode baseNode = (BaseNode) jpaNode;
         if (baseNode == null) {
             throw new IllegalArgumentException("node not found sysUID=" + exportSysUID);
         }
@@ -389,7 +389,7 @@ public class CommonImporter {
                         Configurator.getInstance().getCommandLine().getOptionValue(
                                         "pathiddb", null);
         if (strPathIdDB != null) {
-            nodeNumberService.initNextNodeNumbersFromFile(strPathIdDB);
+            nodeNumberService.initNextNodeNumbersFromFile(strPathIdDB, false);
         }
 
         // parse excel-file
@@ -491,7 +491,7 @@ public class CommonImporter {
                         Configurator.getInstance().getCommandLine().getOptionValue(
                                         "pathiddb", null);
         if (strPathIdDB != null) {
-            nodeNumberService.initNextNodeNumbersFromFile(strPathIdDB);
+            nodeNumberService.initNextNodeNumbersFromFile(strPathIdDB, false);
         }
 
         // parse file

@@ -110,8 +110,8 @@ public class IstChildrenSumDataFormatterImpl extends FormatterImpl
         Date ende = node.getIstChildrenSumEnde();
 
         // Ausgabe erzeugen
-        if ((aufwand != null && aufwand >= Calculator.CONST_DOUBLE_NULL)
-            || (stand != null && stand >= Calculator.CONST_DOUBLE_NULL)
+        if (Calculator.isAufwand(aufwand)
+            || Calculator.isStand(stand)
             || start != null
             || ende != null) {
             if (LOGGER.isDebugEnabled()) {

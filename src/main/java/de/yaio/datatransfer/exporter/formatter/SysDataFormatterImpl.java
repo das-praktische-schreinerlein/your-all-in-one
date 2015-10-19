@@ -18,6 +18,7 @@ package de.yaio.datatransfer.exporter.formatter;
 
 import java.util.Date;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import de.yaio.core.datadomain.DataDomain;
@@ -103,9 +104,9 @@ public class SysDataFormatterImpl extends FormatterImpl implements SysDataFormat
 
         // Ausgabe erzeugen
         boolean flgEver = false;
-        if ((uid != null && uid.length() > 0)
+        if (!StringUtils.isEmpty(uid)
             || (created != null)
-            || (checksum != null && checksum.length() > 0)
+            || !StringUtils.isEmpty(checksum)
             || (changed != null)
             || flgEver
             ) {

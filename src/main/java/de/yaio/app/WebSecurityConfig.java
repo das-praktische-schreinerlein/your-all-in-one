@@ -2,12 +2,14 @@ package de.yaio.app;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -33,7 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private static final Logger logger = Logger.getLogger(WebSecurityConfig.class);
     
     /**
-     * configure API-Configuration
+     * configure API-Configuration for Export per HttpBasic-Auth (ICal-Clients..)
      */
     @EnableWebSecurity
     @Configuration
@@ -41,16 +43,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public static class APIExportsSecurityConfigurerAdapter extends APIWebSecurityConfigurerAdapter {
         @Override
         protected void configure(final HttpSecurity http) throws Exception {
-            String xframeAllowedDomains = System.getProperty("yaio.my-domain", "dummy") 
-                            + "," + System.getProperty("yaio.security.xframe-allowed-domains", "");
-            List<String> xframeAllowedDomainsList = Arrays.asList(xframeAllowedDomains.split(","));
-            logger.info("APIExportsSecurityConfigurerAdapter xframeallowOptions:" + xframeAllowedDomainsList);
             http
                     // authentification
                     .httpBasic()
                 .and()
-                    .requestMatcher(new AntPathRequestMatcher("/exports/**", "GET"))
-                        .authorizeRequests()
+                        // secure path
+                        .requestMatcher(new AntPathRequestMatcher("/exports/**", "GET"))
+                            .authorizeRequests()
                         // secure API webservice
                         .anyRequest()
                             .authenticated()
@@ -58,19 +57,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                    // disable csrf-protection
                    .csrf().disable()
                    .headers()
-//                        .frameOptions().disable()
-//                        .addHeaderWriter(
-//                                   new XFrameOptionsHeaderWriter(
-//                                                   new WhiteListedAllowFromStrategy(
-//                                                                   xframeAllowedDomainsList)))
-                           .addHeaderWriter(
-                                           new XFrameOptionsHeaderWriter(
-                                                           XFrameOptionsMode.SAMEORIGIN));
+//                        .frameOptions().disable();
+//                        .addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsMode.ALLOW_FROM))
+//                        .addHeaderWriter(new XFrameOptionsHeaderWriter(new WhiteListedAllowFromStrategy(WebSecurityConfig.getAllowedDomainList())));
+                        // allow include as Frame for sameorigin
+                        .addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsMode.SAMEORIGIN));
         }
     }    
 
     /**
-     * configure API-Configuration
+     * configure API-Configuration for Import per HttpBasic-Auth (ICal-Clients..)
      */
     @EnableWebSecurity
     @Configuration
@@ -82,10 +78,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     // authentification
                     .httpBasic()
                 .and()
+                    // secure path
                     .requestMatcher(new AntPathRequestMatcher("/imports/**", "POST"))
                         .authorizeRequests()
-                        // secure API webservice
-                        .anyRequest()
+                    // secure API webservice
+                    .anyRequest()
                             .authenticated()
                 .and()
                    // disable csrf-protection
@@ -94,7 +91,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }    
 
     /**
-     * configure API-Configuration
+     * configure API-Configuration for Admin per HttpBasic-Auth
      */
     @EnableWebSecurity
     @Configuration
@@ -106,6 +103,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     // authentification
                     .httpBasic()
                 .and()
+                    // secure path
                     .requestMatcher(new AntPathRequestMatcher("/admin/**", "GET"))
                         .authorizeRequests()
                         // secure API webservice
@@ -118,7 +116,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }    
 
     /**
-     * configure API-Configuration
+     * configure API-Configuration for Form-Auth (REST-API, Browsers..)
      */
     @EnableWebSecurity
     @Configuration
@@ -139,20 +137,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         
         @Override
         protected void configure(final HttpSecurity http) throws Exception {
-            String xframeAllowedDomains = System.getProperty("yaio.my-domain", "dummy") 
-                            + "," + System.getProperty("yaio.security.xframe-allowed-domains", "");
-            List<String> xframeAllowedDomainsList = Arrays.asList(xframeAllowedDomains.split(","));
-            logger.info("APIExportsSecurityConfigurerAdapter xframeallowOptions:" + xframeAllowedDomainsList);
             http
                     // authentification
                     .formLogin()
-                        .defaultSuccessUrl("/yaio-explorerapp/yaio-explorerapp.html", true)
+                        .defaultSuccessUrl("/yaio-explorerapp/yaio-explorerapp.html#/frontpage", true)
                         // if set the defaultprocess doesnt match :-( loginPage(loginPage)
                 .and() 
                     // authorize Requests
                     .authorizeRequests()
+                        // allow CORS-Options Request
+                        .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        // secure path
                         .antMatchers("/js/**", "/css/**", "/yaio-explorerapp/**", "/dist/**",
-                                     "/converters/**",
+                                     "/converters/**", "/yaio-explorerapp/yaio-explorerapp.html",
                                      "/freemind-flash/**",
                                      "/examples/**", "/tests/**",
                                      "/user/current", "/login", "/logout",
@@ -172,19 +169,36 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                    // disable csrf-protection
                    .csrf().disable()
                    //.csrf().csrfTokenRepository(csrfTokenRepository());
-                   // allow include as Frame for sameorigin
                    .headers()
-//                        .frameOptions().disable()
-//                         .addHeaderWriter(
-//                                   new XFrameOptionsHeaderWriter(
-//                                                   new WhiteListedAllowFromStrategy(
-//                                                                   xframeAllowedDomainsList)))
-                          .addHeaderWriter(
-                                           new XFrameOptionsHeaderWriter(
-                                                           XFrameOptionsMode.SAMEORIGIN))
+//                        .frameOptions()
+//                        .disable()
+//                        .addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsMode.ALLOW_FROM))
+//                        .addHeaderWriter(new XFrameOptionsHeaderWriter(new WhiteListedAllowFromStrategy(WebSecurityConfig.getAllowedDomainList())))
+                        // allow include as Frame for sameorigin
+                        .addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsMode.SAMEORIGIN))
                  .and()
                    // add CsrfHeaderFilter because angular uses another Header
                    .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class);
         }
     }    
+
+    protected static List<String> getAllowedDomainList() {
+        // extract allowed domains
+        String xframeAllowedDomains = System.getProperty("yaio.my-domain", "dummy") 
+                        + "," + System.getProperty("yaio.security.xframe-allowed-domains", "");
+        List<String> xframeAllowedDomainsList = Arrays.asList(xframeAllowedDomains.split(","));
+        for (String name : Configurator.getInstance().getKnownYaioInstances().keySet()) {
+            Map<String, String> yaioInstance = Configurator.getInstance().getKnownYaioInstances().get(name);
+            String url = yaioInstance.get(Configurator.CONST_PROPNAME_YAIOINSTANCES_URL);
+            url = url.replace("http://", "");
+            url = url.replace("https://", "");
+            url = url.replace("/", "");
+            url = url.replace(":", "");
+            xframeAllowedDomainsList.add(url);
+        }
+        // xframeAllowedDomainsList = new ArrayList<String>();xframeAllowedDomainsList.add("*");
+        logger.info("APIExportsSecurityConfigurerAdapter xframeallowOptions:" + xframeAllowedDomainsList);
+        return xframeAllowedDomainsList;
+    }
+    
 }

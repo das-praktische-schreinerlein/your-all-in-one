@@ -37,6 +37,17 @@ JsHelferlein.AppBase = function(config) {
     me.config = {};
 
     me.configureService = function(serviceName, constrCallBack) {
+        console.log("configureService: set new serviceconfig:" + serviceName);
+        // delete all instances
+        if (me.services[serviceName]) {
+            console.log("configureService: delete instance for serviceconfig:" + serviceName);
+            me.services[serviceName] = null;
+            me.services.splice(me.services.indexOf(serviceName), 1);
+        }
+        if (me.services.hasOwnProperty(serviceName)) {
+            console.log("configureService: delete instance for serviceconfig:" + serviceName);
+            me.services.splice(me.services.indexOf(serviceName), 1);
+        }
         return me.serviceConfigs[serviceName] = constrCallBack;
     };
 
@@ -50,7 +61,8 @@ JsHelferlein.AppBase = function(config) {
     };
 
     me.getService = function(serviceName) {
-        if (! me.services.hasOwnProperty(serviceName)) {
+        if (! me.services[serviceName]) {
+console.log("create new instance of:" + serviceName);
             if (me.serviceConfigs.hasOwnProperty(serviceName)) {
                 var constr = me.getServiceConfig(serviceName);
                 me.setService(serviceName, constr(me));
@@ -59,8 +71,8 @@ JsHelferlein.AppBase = function(config) {
         return me.services[serviceName];
     };
     
-    me.set = function (serviceName) {
-        return me.setService(serviceName);
+    me.set = function (serviceName, serviceInstance) {
+        return me.setService(serviceName, serviceInstance);
     };
 
     me.get = function (serviceName) {
@@ -118,12 +130,22 @@ JsHelferlein.AppBase = function(config) {
     
     me._configureDefaultServices = function() {
         me.jQuery = $;
+        me.$ = me.jQuery;
         me.configureService("jQuery", function() { return me.jQuery; });
-        me.configureService("Logger", function() { return JsHelferlein.LoggerService(me); });
-        me.configureService("DOMHelper", function() { return JsHelferlein.DOMHelperService(me); });
-        me.configureService("UIToggler", function() { return JsHelferlein.UIToggler(me); });
-        me.configureService("SpeechSynthHelper", function() { return JsHelferlein.SpeechSynthHelperService(me); });
-        me.configureService("SpeechRecognitionHelper", function() { return JsHelferlein.SpeechRecognitionHelperService(me); });
+        
+        // configure instances
+        me.configureService("JsHelferlein.LoggerService", function() { return JsHelferlein.LoggerService(me); });
+        me.configureService("JsHelferlein.DOMHelperService", function() { return JsHelferlein.DOMHelperService(me); });
+        me.configureService("JsHelferlein.UIToggler", function() { return JsHelferlein.UIToggler(me); });
+        me.configureService("JsHelferlein.SpeechSynthHelperService", function() { return JsHelferlein.SpeechSynthHelperService(me); });
+        me.configureService("JsHelferlein.SpeechRecognitionHelperService", function() { return JsHelferlein.SpeechRecognitionHelperService(me); });
+        
+        // configure aliases
+        me.configureService("Logger", function() { return me.get("JsHelferlein.LoggerService"); });
+        me.configureService("DOMHelper", function() { return me.get("JsHelferlein.DOMHelperService"); });
+        me.configureService("UIToggler", function() { return me.get("JsHelferlein.UIToggler"); });
+        me.configureService("SpeechSynthHelper", function() { return me.get("JsHelferlein.SpeechSynthHelperService"); });
+        me.configureService("SpeechRecognitionHelper", function() { return me.get("JsHelferlein.SpeechRecognitionHelperService"); });
     };
 
     me._configureDefaultDetectors = function() {

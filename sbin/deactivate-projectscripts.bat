@@ -9,12 +9,17 @@ set PROJECTPATH=%1%
 rem configure
 set PROJECTSCRIPT=%PROJECTPATH%\gen-planung
 set VAR=%%
+FOR /f %%a in ('WMIC OS GET LocalDateTime ^| find "."') DO set DTS=%%a
+set TIMESTAMP=%DTS:~0,14%
 
 rem your choice
 goto deactivategenscript
 goto end
 
 :deactivategenscript
+rem backup old script
+copy %PROJECTSCRIPT%.bat %PROJECTSCRIPT%.bat-%TIMESTAMP%.bak
+
 rem deactivate projectscript
 echo rem ################> %PROJECTSCRIPT%-new.bat
 echo rem # warning deprecated>> %PROJECTSCRIPT%-new.bat

@@ -36,7 +36,7 @@ describe('yaio importer', function() {
     it('should focus on a node, click on import, upload file, reload page, delete new task', function doSnapshotOfTestNode() {
         // load page
         browser.get(browser.params.yaioConfig.yaioBaseAppUrl + '/show/' + yaioNodePage.jsFuncTestId);
-        protractor.utils.waitUntilElementClickable($(yaioImporterPage.linkImport), protractor.utils.CONST_WAIT_NODEHIRARCHY);
+        protractor.utils.waitUntilElementClickable($(yaioImporterPage.linkImportMenu), protractor.utils.CONST_WAIT_NODEHIRARCHY);
         
         // upload-file and new task
         var taskName = 'uploadtest';
@@ -72,7 +72,7 @@ describe('yaio importer', function() {
         };
         var checkHandlerMainWindow = function () {
             // check mainwindow for new task
-            protractor.utils.waitUntilElementClickable($(yaioImporterPage.linkImport), protractor.utils.CONST_WAIT_NODEHIRARCHY);
+            protractor.utils.waitUntilElementClickable($(yaioImporterPage.linkImportMenu), protractor.utils.CONST_WAIT_NODEHIRARCHY);
             var eleNewTaskName = element(by.cssContainingText(yaioNodePage.spanNodeName, taskName));
             protractor.utils.waitUntilElementVisible(eleNewTaskName, protractor.utils.CONST_WAIT_NODEHIRARCHY);
             expect(eleNewTaskName.getText()).toBe(taskName)

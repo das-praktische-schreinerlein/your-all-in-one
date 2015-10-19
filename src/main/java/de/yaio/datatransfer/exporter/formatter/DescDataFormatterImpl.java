@@ -97,7 +97,7 @@ public class DescDataFormatterImpl extends FormatterImpl implements DescDataForm
         if (dummyText != null) {
             // Sonderzeichen entfernen
             if (dummyText != null && oOptions.isFlgReEscapeDesc()) {
-                dummyText = dummyText.replaceAll("<WLESC>", "\\");
+                dummyText = dummyText.replaceAll("<WLESC>", "\\\\");
                 dummyText = dummyText.replaceAll("<WLBR>", "\n");
                 dummyText = dummyText.replaceAll("<WLTAB>", "\t");
             }

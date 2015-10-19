@@ -111,8 +111,8 @@ public class IstDataFormatterImpl extends FormatterImpl implements IstDataFormat
         String task = node.getIstTask();
 
         // Ausgabe erzeugen
-        if ((aufwand != null && aufwand >= Calculator.CONST_DOUBLE_NULL)
-            || (stand != null && stand >= Calculator.CONST_DOUBLE_NULL)
+        if (Calculator.isAufwand(aufwand)
+            || Calculator.isStand(stand)
             || start != null
             || ende != null
             || task != null) {

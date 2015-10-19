@@ -50,14 +50,14 @@ Yaio.ExportedDataService = function(appBase) {
      * ###########################
      */
     me.togglePrintLayout = function() {
-        if ($("#checkboxPrintAll").prop('checked')) {
+        if (me.$("#checkboxPrintAll").prop('checked')) {
             // print all
-            $("#link_css_dataonly").attr("disabled", "disabled");
-            $("#link_css_dataonly").prop("disabled", true);
+            me.$("#link_css_dataonly").attr("disabled", "disabled");
+            me.$("#link_css_dataonly").prop("disabled", true);
         } else  {
             // print data only
-            $("#link_css_dataonly").removeAttr("disabled");
-            $("#link_css_dataonly").prop("disabled", false);
+            me.$("#link_css_dataonly").removeAttr("disabled");
+            me.$("#link_css_dataonly").prop("disabled", false);
         }
     };
     
@@ -81,7 +81,7 @@ Yaio.ExportedDataService = function(appBase) {
      * # Kalkulation
      * ###########################
      */
-    const CONST_FUNCNAME_SUM = "SUM";
+    me.CONST_FUNCNAME_SUM = "SUM";
     
     me.calcColumns = function(nodeTDId, functionName, praefix, suffix) {
        // Variablen belegen
@@ -96,14 +96,14 @@ Yaio.ExportedDataService = function(appBase) {
        if (! errMsg && ! functionName) { 
            errMsg = "Parameter functionName required"; 
        } else {
-           if (functionName != CONST_FUNCNAME_SUM) {
-              errMsg = "Parameter functionName must be [" + CONST_FUNCNAME_SUM + "]"; 
+           if (functionName != me.CONST_FUNCNAME_SUM) {
+              errMsg = "Parameter functionName must be [" + me.CONST_FUNCNAME_SUM + "]"; 
            }
        }
        if (! errMsg && ! nodeTDId) { 
            errMsg = "Parameter nodeTDId required"; 
        } else {
-           elemNodeTD = $("#" + nodeTDId);
+           elemNodeTD = me.$("#" + nodeTDId);
        }
        
        // TABLE-Element einlesen
@@ -111,7 +111,7 @@ Yaio.ExportedDataService = function(appBase) {
            errMsg = "HTMLElement nodeTDId not found"; 
        } else {
            idxCol = elemNodeTD.attr('cellIndex');
-           elemNodeTABLE = $(elemNodeTD).closest('table');
+           elemNodeTABLE = me.$(elemNodeTD).closest('table');
        }
     
        // IDX einlesen
@@ -133,8 +133,8 @@ Yaio.ExportedDataService = function(appBase) {
        // Funktionalitaet: alle x-Spalten iterieren und Zahlen extrahieren
        var filterTD = "td:nth-child(" + (idxCol + 1) + ")";
        var numbers = new Array();
-       $(elemNodeTABLE).children("tbody").children("tr").children(filterTD).each(function (i) {
-           var col = $(this);
+       me.$(elemNodeTABLE).children("tbody").children("tr").children(filterTD).each(function (i) {
+           var col = me.$(this);
     
            // mich selbst herauslassen 
            if (col.attr('id') == nodeTDId) {
@@ -165,7 +165,7 @@ Yaio.ExportedDataService = function(appBase) {
        var funcResult = 0;
        for (var index = 0; index < numbers.length; ++index) {
            // alert("funcResult +" +  numbers[index]);
-           if (functionName == CONST_FUNCNAME_SUM) {
+           if (functionName == me.CONST_FUNCNAME_SUM) {
               funcResult += numbers[index]; 
            }
        }
@@ -240,18 +240,18 @@ Yaio.ExportedDataService = function(appBase) {
     me.doParentNodeToggler = function(myId, flgShow) {
         try {
             // Parent-Container einlesen (Child)
-            var parents = $("#" + myId).parents();
+            var parents = me.$("#" + myId).parents();
             if (parents) {
                 parents.map( 
                     function () {
                         // Toggler visible setzen, wenn gefunden
-                        var parentId = $(this).attr("id");
+                        var parentId = me.$(this).attr("id");
                         if (parentId) {
                             var nodeIdMatcher = parentId.match(/node_(.*)_childrencontainer/);
                             if (nodeIdMatcher && nodeIdMatcher.length > 0) {
                                 // Toggler aktivieren
                                 var togglerId = parentId;
-                                if (! $(this).is(":visible")) {
+                                if (! me.$(this).is(":visible")) {
                                     jMATService.getLayoutService().togglerBlockShow(
                                         togglerId, togglerId, function () { 
                                             var togEf = new ToggleEffect(togglerId); 
@@ -263,9 +263,9 @@ Yaio.ExportedDataService = function(appBase) {
     
                                 // Element anzeigen
                                 var nodeId = nodeIdMatcher[1];
-                                var master = $("#node_" + nodeId + "_master");
-                                if (master && ! $(master).is(":visible") ) {
-                                    $(master).show();                                
+                                var master = me.$("#node_" + nodeId + "_master");
+                                if (master && ! me.$(master).is(":visible") ) {
+                                    me.$(master).show();                                
                                 }
                             }
                         }
@@ -280,41 +280,66 @@ Yaio.ExportedDataService = function(appBase) {
     
     
     /* Um einen Volltext-Treffer zu haben, müssen alle Worte im durchsuchten Text vorkommen. */
-    me.VolltextTreffer = function(inhalt, suchworte) {
-        // Wenn keine Suchzeichenkette als gefnden kennzeichnen
-        if ( suchworte.length == 0 ) {
+    me.VolltextTreffer = function(inhalt, suchworte, flgUseWildCards, flgUseOr) {
+        // Wenn keine Suchzeichenkette als gefunden kennzeichnen
+        if (suchworte.length == 0) {
             return true;
         }
 
         // alle Suchworte iterieren
+        var suchwortFound = true;
         for (var i = 0; i < suchworte.length; i++) {
-            if ( inhalt.indexOf(suchworte[i]) == -1) {
-                // Wort nicht gefunden
-                return false;
+            // extract patterns
+            var patterns = [suchworte[i]];
+            if (flgUseWildCards) {
+                patterns = suchworte[i].split("*");
+            }
+            // iterate patterns
+            suchwortFound = true;
+            for (var pi = 0; pi < patterns.length; pi++) {
+                var pattern = patterns[pi];
+                if (! pattern || pattern == "") {
+                    continue;
+                }
+                // check pattern
+                if (inhalt.indexOf(pattern) == -1) {
+                    // pattern not found
+                    if (! flgUseOr) {
+                        // we use AND and 1 pattern not found: the looser takes it all
+                        return false;
+                    }
+                    suchwortFound = false;
+                    continue;
+                }
+            }
+
+            if (flgUseOr && suchwortFound) {
+                // we use OR and 1 full word found: the winner takes it all
+                return true;
             }
         }
      
         // alle Worte gefunden
-        return true;
+        return suchwortFound;
     };
     
     me.doSearch = function(suchworte) {
         // Suche auf alle Node-Elemente ausführen
-        $(".node-block").each(
+        me.$(".node-block").each(
             function(index, value) {
                 var flgFound = false;
                 
                 // Datenelemente konfigurieren
                 var searchElements = new Array();
-                searchElements.push($("#" + $(value).attr("id") + " > div:eq(1)").attr("id")); // Desc
-                searchElements.push($("#" + $(value).attr("id") + " > div:first > div:first > div:first > div:eq(1)").attr("id")); // Name
-                searchElements.push($("#" + $(value).attr("id") + " > div:first > div:eq(1)").attr("id")); // Status 
+                searchElements.push(me.$("#" + me.$(value).attr("id") + " > div:eq(1)").attr("id")); // Desc
+                searchElements.push(me.$("#" + me.$(value).attr("id") + " > div:first > div:first > div:first > div:eq(1)").attr("id")); // Name
+                searchElements.push(me.$("#" + me.$(value).attr("id") + " > div:first > div:eq(1)").attr("id")); // Status 
     
                 // alle Datenelemente iterieren
-                $.each(searchElements,
+                me.$.each(searchElements,
                     function(subIndex, subId) {
                         // Inhalt auslesen
-                        var inhalt = $("#"+subId).text().toLowerCase();
+                        var inhalt = me.$("#"+subId).text().toLowerCase();
                         
                         // Volltextsuche
                         if (me.VolltextTreffer(inhalt, suchworte)) {
@@ -327,16 +352,16 @@ Yaio.ExportedDataService = function(appBase) {
                 
                 // Elemente je nach Status der SubElemente ein/ausblenden
                 if (flgFound) {
-                    if ( !$(value).is(":visible") ) {
+                    if ( !me.$(value).is(":visible") ) {
                         // Element aktivieren
-                        $(value).show();
+                        me.$(value).show();
                     }  
     
                     // Eltern oeffnen
-                    me.doParentNodeToggler($(value).attr("id"), true);
+                    me.doParentNodeToggler(me.$(value).attr("id"), true);
                 } else {
                     // Element deaktivieren
-                    $(value).hide();
+                    me.$(value).hide();
                 }
             }
         );
@@ -344,7 +369,7 @@ Yaio.ExportedDataService = function(appBase) {
     
     me.startSearch = function() {
         // Suchworte auslesen
-        var suchworte = $(".volltextsuchfeld").val().toLowerCase().split(" ");
+        var suchworte = me.$(".volltextsuchfeld").val().toLowerCase().split(" ");
     
         // alle Toggler schließen
         me.doAllNodeToggler(false, 0);
@@ -355,7 +380,7 @@ Yaio.ExportedDataService = function(appBase) {
     
     me.resetSearch = function() {
         // Suchworte leeren
-        $(".volltextsuchfeld").val('');
+        me.$(".volltextsuchfeld").val('');
         
         // suche ausfuehren
         me.startSearch();
@@ -363,7 +388,7 @@ Yaio.ExportedDataService = function(appBase) {
     
     me.initSearch = function() {
         // Volltextsuche
-        $(".volltextsuchfeld").keyup(
+        me.$(".volltextsuchfeld").keyup(
             function(event) {
                 // nur ausfuehren wenn enter
                 if(event.keyCode != 13) {
@@ -385,7 +410,7 @@ Yaio.ExportedDataService = function(appBase) {
         var masterId = "node_" + nodeId + "_master";
         
         // Node aktivieren
-        $("#" + masterId).show();
+        me.$("#" + masterId).show();
         
         // openParent-Nodes
         me.doParentNodeToggler(masterId, true);
@@ -394,8 +419,8 @@ Yaio.ExportedDataService = function(appBase) {
         var delayedFocus = window.setInterval(
             function() {
                 // nach 0,1 Sekunden ausfuehren und Intervall loeschen
-                $('html, body').animate({
-                    scrollTop: $("#" + masterId).offset().top
+                me.$('html, body').animate({
+                    scrollTop: me.$("#" + masterId).offset().top
                     }, 
                     1000);
                 window.clearInterval(delayedFocus);

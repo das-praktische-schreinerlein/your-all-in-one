@@ -23,18 +23,22 @@ window.YaioAppBaseConfig = function() {
     
     me.appBaseVarName               = 'yaioAppBase';
     
+    me.resBaseUrl                   = "";
+    me.addResBaseUrls               = []; // additional resBaseUrls for CORS
+    
     me.additionalDetectorStyleNS    = ["yaio-"];
 
     me.CONST_MasterId               = "MasterplanMasternode1";
-    me.loginUrl                     = "/yaio-explorerapp/yaio-explorerapp.html#/login";
-    me.baseUrl                      = "/nodes/";
-    me.showUrl                      = me.baseUrl + "show/";
-    me.symLinkUrl                   = me.baseUrl + "showsymlink/";
-    me.updateUrl                    = me.baseUrl + "update/";
-    me.createUrl                    = me.baseUrl + "create/";
-    me.moveUrl                      = me.baseUrl + "move/";
-    me.removeUrl                    = me.baseUrl + "delete/";
 
+    me.datasources = [];
+    
+    // App urls
+    me.appRootUrl                   = "/";
+    me.appSourceSelectorUrl         = me.appRootUrl + "sourceselector";
+    me.appFrontpageUrl              = me.appRootUrl + "frontpage";
+    me.appLoginUrl                  = me.appRootUrl + "login";
+    me.appLogoutUrl                 = me.appRootUrl + "logout/logout";
+    
     me.configNodeTypeFields         = {
         Create: {
             fields: [
@@ -129,6 +133,13 @@ window.YaioAppBaseConfig = function() {
             ]
         }
     };
+    
+    me.initResBasedUrls = function () {
+        me.loginUrl                     = me.resBaseUrl + "../yaio-explorerapp/yaio-explorerapp.html#/login";
+        me.exportStaticDocumentationUrl = me.resBaseUrl + "../yaio-explorerapp/yaio-staticapp.html?mode=documentatuion&template=";
+    };
+    
+    me.initResBasedUrls();
 
     return me;
 };

@@ -101,3 +101,15 @@
         return state;
      };
     
+     /**
+      * Toggler an bestehendes Diff anfuegen
+      * @param parentId
+      * @param toggleId
+      */
+     JMATPageLayout.prototype.appendBlockToggler = function(parentId, toggleId) {
+         var html = jMATService.getPageLayoutService().createBlockTogglerHtml(toggleId, toggleId, 
+                 "<span class='icon-formrowtoggler icon-formrowtoggleron'>&nbsp;</span>", 
+                 "<span class='icon-formrowtoggler icon-formrowtoggleroff'>&nbsp;</span>", "", "");
+         jMATService.getJMSServiceObj().appendHtml(html, parentId, "blockToggler");
+      }
+     

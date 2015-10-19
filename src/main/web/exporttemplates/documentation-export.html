@@ -1,0 +1,735 @@
+<html>
+<head>
+    <!--<base href="/" />-->
+    <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+    <!-- styles: reset -->
+    <link rel="stylesheet" type="text/css" media="all" href="./dist/yaio-reset.resetversion.css" />
+  
+    <!-- styles: vendors -->
+    <link rel="stylesheet" type="text/css" media="all" href="./dist/vendors-full.vendorversion.css" />
+    <link rel="stylesheet" type="text/css" media="print" href="./dist/vendors.vendorversion/yaio/print.css" />
+    <!-- style: fancytree needs own script for loading plugins -->
+    <link rel="stylesheet" type="text/css" media="all" href="./dist/vendors.vendorversion/fancytree/skin-win8/ui.fancytree.css">
+
+    <!-- styles: yaio-explorer -->
+    <link rel="stylesheet" type="text/css" media="all" href="./dist/yaio-exports-full.exportsversion.css" />
+    <link rel="stylesheet" type="text/css" media="print" href="./dist/yaio-exports-print.exportsversion.css" />
+    <link rel="stylesheet" type="text/css" media="print" href="./dist/yaio-exports-print-dataonly.exportsversion.css" id="link_css_dataonly" disabled="true" />
+
+    <style>
+body { 
+    background: white; 
+    color: black; 
+    font-family: Verdana, Arial, Helvetica, sans-serif; 
+    line-height: 1.3em; 
+    font-size: 11px;
+}
+
+.menueFooterDummy {
+   clear: both;
+}
+
+.node-block {
+    width: 100%;
+    clear: both;
+    float: left;
+}
+.node-block-leaf {
+}
+.node-block-leaf1 {
+}
+.node-block-twig {
+}
+.node-block-twig1 {
+    border: 2px solid #D3D3D3
+}
+.node-line-ue {
+    width: 100%;
+    clear: both;
+    float: left;
+}
+
+.node-style-ue {
+    font-weight: bold;
+    font-size: 12px;
+}
+
+
+/**
+ * Node-Styles
+ */
+.node-style-ue1 {
+}
+
+.node-style-list {
+}
+
+.node-style-list1 {
+}
+
+.node-line-trenner {
+    border: none;
+    height: 1px;
+    font-size: 1px;
+    line-height: 1px;
+}
+
+.node-trenner-area-state {
+}
+
+.node-trenner-area-name {
+}
+
+.node-trenner-area-intend {
+    background: lightgrey;
+    width: 100%;
+}
+
+
+/**
+ * Node-Elemente
+ */
+.node-data-block {
+}
+.node-area-stateshort {
+    vertical-align: top;
+    width: 30px;
+    float: left;
+}
+.node-area-name-container {
+    vertical-align: top;
+    width: 600px;
+    float: left;
+}
+.node-area-name-container2 {
+    border-left: 1px solid black;
+}
+.node-area-name {
+    vertical-align: top;
+    display: inline;
+    float: left;
+    width: 90%;
+}
+.node-area-state {
+    vertical-align: top;
+    width: 80px;
+    float: left;
+}
+
+.node-area-istplan {
+    vertical-align: top;
+    width: 620px;
+    float: left;
+}
+
+.node-block-ist {
+    vertical-align: top;
+    width: 330px;
+    float: left;
+}
+.node-block-istcalcsum {
+    vertical-align: top;
+    width: 330px;
+    float: left;
+}
+
+.node-block-plan {
+    vertical-align: top;
+    width: 290px;
+    float: left;
+}
+.node-block-plancalcsum {
+    vertical-align: top;
+    width: 290px;
+    float: left;
+}
+
+.node-container-desc {
+    width: 100%;
+    clear: both;
+    float: left;
+}
+
+.node-block-desc {
+    width: 100%;
+    clear: both;
+    float: left;
+    font-style: italic;
+}
+
+
+.node-container-children {
+    width: 100%;
+    clear: both;
+    float: left;
+}
+
+.node-block-children {
+    width: 100%;
+    clear: both;
+    float: left;
+}
+
+/**
+ * Node-Typ
+ */
+.node-type-leaf {
+    border-top: 1px dotted #D3D3D3
+}
+
+.node-type-leaf1 {
+}
+
+.node-type-twig {
+    font-weight: bold;
+    border-top: 2px solid #D3D3D3
+}
+
+.node-type-twig1 {
+}
+
+/**
+ * Node-Level
+ */
+.node-level1 {
+   margin-left: 30px;
+}
+.node-level2 {
+   margin-left: 60px;
+}
+.node-level3 {
+   margin-left: 90px;
+}
+.node-level4 {
+   margin-left: 120px;
+}
+.node-level5 {
+   margin-left: 150px;
+}
+.node-level6 {
+   margin-left: 180px;
+}
+.node-level7 {
+   margin-left: 210px;
+}
+.node-level8 {
+   margin-left: 240px;
+}
+.node-level9 {
+   margin-left: 270px;
+}
+.node-level10 {
+   margin-left: 300px;
+}
+.node-level11 {
+   margin-left: 330px;
+}
+.node-level12 {
+   margin-left: 360px;
+}
+
+
+/**
+ * Node-Stati
+ */
+.node-state-INFO {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-DOKU {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-IDEE {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-HOWTO {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-URLRES {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-IMAGERES {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-FILERES {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-MAILRES {
+    background-color: #AFEEEE; /*#E8FEFF; #33CCCC;*/
+}
+.node-state-SYMLINK {
+    background-color: #FFC0CB; /*#33CCCC;*/
+}
+.node-state-OPEN {
+    background-color: #ADFF2F CFF9BB; /*#99FF66;*/
+}
+.node-state-OFFEN {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-RUNNING {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-LATE {
+    background-color: #FFD700; /*#F6F9AE; #FFFF66;*/
+}
+.node-state-VERSPAETET {
+    background-color: #FFD700; /*#F6F9AE; #FFFF66;*/
+}
+.node-state-SHORT {
+    background-color: #FF6347; /* #FCD2C9; /*#FF9966;*/
+}
+.node-state-UEBERFAELLIG {
+    background-color: #FF6347; /* #FCD2C9; /*#FF9966;*/
+}
+.node-state-WARNING {
+    background-color: #FF6347; /* #FCD2C9; /*#FF9966;*/
+}
+.node-state-DONE {
+    background-color: #E0F2FC; /*#B0E0E6;*/
+}
+.node-state-ERLEDIGT {
+    background-color: #E0F2FC; /*#B0E0E6;*/
+}
+.node-state-CANCELED {
+    background-color: #F5F5F5; /*#CCCCCC;*/
+}
+.node-state-VERWORFEN {
+    background-color: #F5F5F5; /*#CCCCCC;*/
+}
+.node-state-UNKNOWN {
+    background-color: #FFFFFF;
+}
+.node-state-UNBEKANNT {
+    background-color: #FFFFFF;
+}
+
+.node-state-EVENT_PLANED {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-EVENT_GEPLANT {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-EVENT_OPEN {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-EVENT_OFFEN {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-EVENT_RUNNING {
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
+}
+.node-state-EVENT_LATE {
+    background-color: #FFD700; /*#F6F9AE; #FFFF66;*/
+}
+.node-state-EVENT_VERSPAETET {
+    background-color: #FFD700; /*#F6F9AE; #FFFF66;*/
+}
+.node-state-EVENT_SHORT {
+    background-color: #FF6347; /* #FF6347; /* #FCD2C9; /*#FF9966;*/
+}
+.node-state-EVENT_UEBERFAELLIG {
+    background-color: #FF6347; /* #FCD2C9; /*#FF9966;*/
+}
+.node-state-EVENT_WARNING {
+    background-color: #FF6347; /* #FCD2C9; /*#FF9966;*/
+}
+.node-state-EVENT_DONE {
+    background-color: #E0F2FC; /*#B0E0E6;*/
+}
+.node-state-EVENT_ERLEDIGT {
+    background-color: #E0F2FC; /*#B0E0E6;*/
+}
+.node-state-EVENT_CANCELED {
+    background-color: #F5F5F5; /*#CCCCCC;*/
+}
+.node-state-EVENT_VERWORFEN {
+    background-color: #F5F5F5; /*#CCCCCC;*/
+}
+
+
+
+.box {
+    width: 712px;
+}
+
+h1, h2, h3, h4, h5, h6, h7, h8 {
+    color: black;
+    padding-top: 5px;
+    border-top: 1px dotted green; 
+    clear: both;
+}
+
+.h1-portdesc {
+    
+}
+.h2-portdesc {
+    font-size: 15px;
+    font-weight: bold;
+}
+.h3-portdesc {
+    margin-left: 10px;
+    font-size: 13px;
+    font-weight: bold;
+}
+.h4-portdesc {
+    margin-left: 20px;
+    font-size: 11px;
+    font-weight: bold;
+}
+.h5-portdesc {
+    margin-left: 30px;
+    font-size: 10px;
+    font-weight: bold;
+}
+.h6-portdesc {
+    margin-left: 35px;
+    font-size: 9px;
+    font-weight: bold;
+}
+.p-portdesc {
+    margin-left: 20px;
+    line-height: 15px;
+    float: left;
+    clear: both;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+.p-portdesc-ue {
+    display: inline-block;
+    width: 150px;
+    text-align: left;
+    float: left;
+    clear: both;
+}
+.p-portdesc-desc {
+    display: inline-block;
+    width: 510px;
+    vertical-align: top;
+}
+.p-portdesc-descdetail {
+    clear: both;
+    display: inline-block;
+    width: 510px;
+    vertical-align: top;
+    font-style:italic;
+    float: left;
+    clear: both;
+    font-size: 9px;
+}
+.p-portdesc-desc-full {
+    display: inline-block;
+    margin-left: 30px;
+    width: 640px;
+    vertical-align: top;
+}
+.li-portdesc {
+    margin-left: 10px;
+    list-style: none outside none;
+}
+.li-portdesc-ue {
+    text-align: left;
+    display: inline-block;
+    width: 200px;
+    float: left;
+    clear: both;
+}
+.li-portdesc-desc {
+    display: inline-block;
+    width: 400px;
+    vertical-align: top;
+}
+.li-portdesc-descdetail {
+    display: inline-block;
+    width: 400px;
+    vertical-align: top;
+    font-style:italic;
+    float: left;
+    clear: both;
+    font-size: 9px;
+}
+
+
+/* Tabellen */
+.tr-portdesc-ue {
+    font-weight: bold;
+    background: #8CACD3;
+}
+.tr-portdesc-gesamt {
+    font-weight: bold;
+    background: #DEE9EF;
+}
+
+
+
+/* spezielle Abwandlungen fuer MyBusness*/
+.p-portdesc-ue {
+/**    display: none;**/
+}
+.li-portdesc-ue-faehigkeiten {
+    font-weight: bold;
+    width: 150px;
+}
+.li-portdesc-desc-faehigkeiten {
+    width: 500px;
+    line-height: 15px;
+}
+
+
+
+.a-node-symlink {
+    color: blue;
+    font-weight: bold;
+}
+.a-node-urlres {
+    color: blue;
+    font-weight: bold;
+}
+
+
+
+/* Documentation */
+/** specials **/
+.a-biglink {
+   font-size: 15px;
+   font-weight: bold;
+}
+.p-portdesc-desc-biglink {
+   text-align: center;
+   margin-left: 0px;
+}
+
+
+
+/** Styles der Faehigkeiten **/
+.li-portdesc-faehigkeiten {
+    margin: 0;
+    list-style: none;
+    width: 30%;
+    float: left;
+    border-right: 1px dotted #008000;
+    border-top: 0px;
+    border-bottom: 0px;
+    height: 120px;
+}
+.li-portdesc-faehigkeiten:nth-of-type(1) {
+}
+.li-portdesc-faehigkeiten:last-child {
+    border-right:0px;
+}
+.li-portdesc-ue-faehigkeiten {
+    display: inline-block;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    vertical-align: top;
+    width: 100%;
+}
+.li-portdesc-ue-faehigkeiten a {
+    display: inline-block;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    vertical-align: top;
+    width: 100%;
+}
+.li-portdesc-desc-faehigkeiten {
+    display: inline-block;
+    text-align: center;
+    vertical-align: top;
+    width: 100%;
+}
+/** Styles fuer Management **/
+.box-portdesc-management {
+    background: #DEE9EF;
+}
+
+.li-portdesc-management {
+    list-style: none;
+    margin-left: 40px;
+}
+.li-portdesc-ue-management {
+    color: black;
+    display: inline-block;
+    text-align: left;
+    width: 150px;
+    font-weight: bold;
+}
+.li-portdesc-desc-management {
+    display: inline-block;
+    width: 450px;
+    vertical-align: top;
+    line-height: 15px;
+}
+
+/** Features **/
+.li-portdesc-ue-istohne {
+    font-weight: bold;
+}
+.li-portdesc-ue-bereiche {
+    font-weight: bold;
+}
+.li-portdesc-ue-features {
+    font-weight: bold;
+}
+.li-portdesc-ue-ausgabeformate {
+    font-weight: bold;
+}
+.li-portdesc-ue-sichten {
+    font-weight: bold;
+}
+
+
+/*  my own additional print.css  */
+@media print {
+    a[href^="http"]:after, a[href^="file"]:after {
+        content:" <"attr(href)">";
+        color:#888;
+        background-color:inherit;
+        font-style:italic;
+        size:80%;
+    } 
+}
+
+/****************
+ *
+ * YAIO
+ * 
+ ****************/
+.p-portdesc {
+    width: 670px;
+}
+.p-portdesc-desc {
+    margin-left: 30px;
+    width: 640px;
+}
+
+/* set img from markdown without class to 600px */
+img:not([class]) {
+    max-width: 600px;
+    width: auto;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.menueFooter {
+    color: #ff9933;
+    width: 710px;
+}
+ul.ulMenueFooter li {
+    float: right;
+}
+
+/* mermaid */
+svg:not([class]) {
+    width: 100%;
+    height: auto;
+}
+div.mermaid, code.mermaid {
+    max-width: 950px;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+    </style>
+
+    <!-- scripts: vendors -->
+    <script  type="text/javascript" charset="UTF-8" src="./dist/vendors-full.vendorversion.js"></script>
+    <!-- scripts: mermaid needs own script for loading plugins -->
+    <script type="text/javascript" charset="UTF-8" src="./dist/vendors.vendorversion/mermaid/mermaid.full.js"></script>
+    <!-- scripts: freemind needs own script for loading plugins -->
+    <script type="text/javascript" charset="UTF-8" src="./dist/vendors.vendorversion/freemind-flash/flashobject.js"></script>
+
+    <!-- scripts: yaio-support -->
+    <script  type="text/javascript" charset="UTF-8" src="./dist/yaio-exports-full.exportsversion.js"></script>
+
+    <!-- JQery-Slimbox2 (Lightbox) -->
+    <script type="text/javascript" src="./dist/vendors.vendorversion/slimbox2/slimbox2.js"></script>
+    <script type="text/javascript" src="./dist/vendors.vendorversion/slimbox2/autoload.js"></script>
+    <link type="text/css" rel="stylesheet" media="screen" href="./dist/vendors.vendorversion/slimbox2/slimbox2.css" />
+
+</head>
+<body>
+    <div id="div_full" style="width: 100%">
+       <div id="globtoc" class="globtoc documentation-globtoc"> </div>
+       
+       <!-- REPLACECONTENT_START -->
+       <!-- REPLACECONTENT_END -->
+    </div>
+
+    <div class="menueFooterDummy" id="menueFooterDummy"> </div>
+    <div class="menueFooter" id="menueFooter">
+        <div class="menueFooterBox">
+            <ul id="ulMenueFooter" class="ulMenueFooter">
+                <li class="menueFooterMasterLink yaio-show-if-speechsynth command"><a class="a-menue-footer-norm button flg-textonly hidden" id="speechSynthLink" onclick="javascript:yaioAppBase.get('YaioExportedData').openSpeechSynth();return false;">Vorlesen</a></li>
+                <li class="menueFooterMasterLink yaio-show-if-javascript"><span class="button"><a onclick="window.print(); return true;" class="a-menue-footer-norm flg-textonly">Drucken</a><input type="checkbox" onclick="yaioAppBase.get('YaioExportedData').togglePrintLayout()" id="checkboxPrintAll"> All</span></li>
+                <li class="menueFooterMasterLink yaio-show-if-javascript command">
+                   <a class="a-menue-footer-norm button flg-textonly" id="showSidebarTOCLink" onclick="javascript:yaioAppBase.get('YaioBase').toggleWithLinks('#showSidebarTOCLink', '#hideSidebarTOCLink', '#sidebartoc', '');return false;">Sidebar an</a>
+                   <a class="a-menue-footer-norm button flg-textonly" style="display: none" id="hideSidebarTOCLink" onclick="javascript:yaioAppBase.get('YaioBase').toggleWithLinks('#showSidebarTOCLink', '#hideSidebarTOCLink', '#sidebartoc', '');return false;">Sidebar aus</a>
+                </li>
+                <li class="menueFooterMasterLink yaio-show-if-javascript command">
+                   <a class="a-menue-footer-norm button flg-textonly" id="showGlobalTOCLink" onclick="javascript:yaioAppBase.get('YaioBase').toggleWithLinks('#showGlobalTOCLink', '#hideGlobalTOCLink', '#globtoc', '');return false;">TOC an</a>
+                   <a class="a-menue-footer-norm button flg-textonly" style="display: none" id="hideGlobalTOCLink" onclick="javascript:yaioAppBase.get('YaioBase').toggleWithLinks('#showGlobalTOCLink', '#hideGlobalTOCLink', '#globtoc', '');return false;">TOC aus</a>
+                </li>
+<!--
+                <li class="menueFooterMasterLink yaio-show-if-javascript">
+                   <input type="text" style="width:200px" class="volltextsuchfeld" id="vlt_msglist">
+                   <input type=button onclick="javascript:yaioAppBase.get('YaioExportedData').startSearch();" value="Suchen">
+                   <input type=button onclick="javascript:yaioAppBase.get('YaioExportedData').resetSearch();yaioAppBase.get('YaioExportedData').doAllNodeToggler(true, 3);" value="Reset">
+                </li>
+ -->
+             </ul>
+        </div>
+    </div>
+    <div id="sidebartoc" class="sidebartoc documentation-sidebartoc"> </div>
+    
+<!-- YaioAppBase -->
+<script type="text/javascript">
+window.yaioAppBase = YaioAppBase();
+yaioAppBase.publishDetectorStyles();
+</script>
+
+<script type="text/javascript">
+    // alle OFFEN hervorheben
+    var styles = {
+        "color": "red",
+        "font-size": "13px",
+        "font-weight": "bold"
+    };
+    $( "span:contains('OFFEN')" ).css( styles );
+</script>
+<script type="text/javascript">
+    // format markdown-extension
+    var flgDoMermaid = yaioAppBase.get('YaioFormatter').formatDescBlock("#div_full");
+    if (flgDoMermaid) {
+        yaioAppBase.get('YaioFormatter').formatMermaidGlobal();
+    }
+    
+    // add TOC
+    yaioAppBase.get('YaioFormatter').addTOCForBlock("#globtoc", "#div_full", { toc: { hide: true, minDeep: 2}});
+    yaioAppBase.get('YaioFormatter').addTOCForBlock("#sidebartoc", "#div_full", { toc: { hide: true, minDeep: 2}});
+
+    // toggleAll after mermaid!!!
+    // alle Bloecke toggeln
+    //jMATService.getPageLayoutService().doAllBlockToggler(false);
+    yaioAppBase.get('YaioExportedData').togglePrintLayout();
+    delayedOptimize = window.setInterval(
+            function() {
+                // nach 2 Sekunden ausfuehren und Intervall loeschen
+                /*
+                jMATService.getLayoutService().toggleBlock(
+                        'node_2_childrencontainer',
+                        'node_2_childrencontainer',
+                        function () {
+                            new ToggleEffect('node_2_childrencontainer').doEffect();
+                        }
+                );
+                */
+                yaioAppBase.get('YaioExportedData').doAllNodeToggler(true, 100);
+                yaioAppBase.get('YaioExportedData').initSearch();
+                window.clearInterval(delayedOptimize);
+            }, 2000);
+</script>
+</body></html>

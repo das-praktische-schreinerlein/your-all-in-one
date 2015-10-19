@@ -27,7 +27,7 @@
  * <h4>FeatureKeywords:</h4>
  *     GUI Configuration BusinessLogic
  */
-yaioApp.controller('OutputOptionsCtrl', function($rootScope, $scope, $location, $http, $routeParams, setFormErrors, OutputOptionsEditor, yaioUtils) {
+yaioApp.controller('OutputOptionsCtrl', function($rootScope, $scope, $location, $routeParams, setFormErrors, OutputOptionsEditor, yaioUtils) {
     'use strict';
 
     // include utils

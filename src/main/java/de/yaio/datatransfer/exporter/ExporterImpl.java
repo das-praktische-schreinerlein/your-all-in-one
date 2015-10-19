@@ -212,7 +212,7 @@ public class ExporterImpl implements Exporter {
         if (oOptions.getStrReadIfStatusInListOnly() != null 
             && oOptions.getStrReadIfStatusInListOnly().length() > 0) {
             mpStates = new HashMap<String, Object>();
-            String [] arrStatusFilter =
+            String[] arrStatusFilter =
                     oOptions.getStrReadIfStatusInListOnly().split(",");
             for (int zaehler = 0; zaehler < arrStatusFilter.length; zaehler++) {
                 mpStates.put(arrStatusFilter[zaehler], arrStatusFilter[zaehler]);
@@ -423,5 +423,10 @@ public class ExporterImpl implements Exporter {
         }
 
         return flgMatchesClass && flgMatchesState && flgMatchesType;
+    }
+
+    @Override
+    public boolean hasOwnNodeReader() {
+        return false;
     }
 }

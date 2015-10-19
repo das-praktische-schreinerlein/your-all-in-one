@@ -1,5 +1,0 @@
-* OFFEN - Urlaube                                                                                                                                                [NodeMeta: Urlaube,85,,] [NodeSys: DT201405051805384241,05.05.2014 18:05,F1E93425E9C1AF2CA96788E280FC56F3,05.05.2014 18:05,1]
-** **OFFEN - 2014**                                                                                                                                              [NodeMeta: Urlaube,86,,] [NodeSys: DT201405051805384242,05.05.2014 18:05,49A92CD348F8CAADFB9C619A0BDFB81E,05.05.2014 18:05,1]
-*** **OFFEN - Pfingsturlaub**                                                                                                                                    [NodeMeta: Urlaube,87,,] [NodeSys: DT201405051805384403,05.05.2014 18:05,A95F61849A5C04719D81AEF0E010E7C5,05.05.2014 18:05,1]
-**** OFFEN - Grobplanung                                                                                                                                         [NodeMeta: Urlaube,88,,] [NodeSys: DT201405051805384404,05.05.2014 18:05,91A159808BE1F59278B757A66603AF34,05.05.2014 18:05,1]
-

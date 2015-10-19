@@ -27,7 +27,7 @@
  * <h4>FeatureKeywords:</h4>
  *     GUI Configuration BusinessLogic
  */
-yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $http, $routeParams, setFormErrors, authorization, yaioUtils) {
+yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $routeParams, setFormErrors, authorization, yaioUtils) {
     'use strict';
 
     // include utils
@@ -55,6 +55,9 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ht
     // create node
     $scope.nodeForEdit = {};
     var nodeId = $rootScope.nodeId;
+    
+    $scope.availiableSystemTemplates = [];
+    $scope.availiableOwnTemplates = [];
     
     /**
      * <h4>FeatureDomain:</h4>
@@ -113,6 +116,36 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ht
         return false;
     };
     
+    
+    $scope.selectCreateFromTemplate = function(formName) {
+        // create new node by template
+        var newParentKey = $scope.nodeForEdit.sysUID;
+        if ($scope.nodeForEdit.createFromTemplate && $scope.nodeForEdit.createFromTemplate != "") {
+            var json = JSON.stringify({parentNode: newParentKey});
+            yaioUtils.getService('YaioNodeData').yaioDoCopyNode({key: $scope.nodeForEdit.createFromTemplate, sysUID: $scope.nodeForEdit.createFromTemplate}, newParentKey, json);
+            yaioUtils.getService('YaioEditor').yaioCloseNodeEditor();
+            return false;
+        }
+    }
+    
+    $scope.loadAvailiableTemplates = function() {
+        yaioUtils.getService('YaioNodeData').yaioDoLoadAvailiableTemplates()
+            .then(function sucess(angularResponse) {
+                    // handle success
+                    $scope.availiableSystemTemplates = angularResponse.data.systemTemplates;
+                    $scope.availiableOwnTemplates = angularResponse.data.ownTemplates;
+                }, function error(angularResponse) {
+                    // handle error
+                    var data = angularResponse.data;
+                    var header = angularResponse.header;
+                    var config = angularResponse.config;
+                    var message = "error loading node-templates";
+                    yaioUtils.getService('YaioBase').logError(message, true);
+                    message = "error data: " + data + " header:" + header + " config:" + config;
+                    yaioUtils.getService('YaioBase').logError(message, false);
+            });
+    }
+
     /**
      * <h4>FeatureDomain:</h4>
      *     Callback
@@ -253,62 +286,32 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ht
             console.log("map nodefield:" + fieldName + "=" + value);
         }
         
-        
-        // branch depending on mode
-        var method, url;
-        var mode =  $scope.nodeForEdit["mode"];
-        if (mode === "edit") {
-            // mode update 
-            method = "PATCH";
-            url = yaioUtils.getConfig().updateUrl + $scope.nodeForEdit.className + "/" + $scope.nodeForEdit.sysUID;
-        } else if (mode === "create") {
-            // mode create 
-            method = "POST";
-            url = yaioUtils.getConfig().createUrl + $scope.nodeForEdit.className + "/" + $scope.nodeForEdit.sysUID;
-            
-            // unset sysUID
-            nodeObj["sysUID"] = null;
-        } else {
-            // unknown mode
-            yaioUtils.getService('YaioBase').logError("unknown mode=" + mode + " form formName=" + formName, false);
-            return null;
-        }
-
-        // define json for common fields
-        var json = JSON.stringify(nodeObj);
-        
-        // create url
-        console.log("NodeSave - url::" + url + " data:" + json);
-        
-        // do http
-        $http({
-                method: method,
-                url: url,
-                data: json
-        }).then(function(nodeResponse) {
+        // save node
+        var yaioSaveNodeSuccessHandler = function(nodeObj, options, yaioNodeActionResponse) {
             // sucess handler
+            var msg = "yaioSaveNodeSuccessHandler node: " + options.mode + ' ' + nodeObj['sysUID'];
             
             // check response
-            var state = nodeResponse.data.state;
+            var state = yaioNodeActionResponse.state;
             if (state === "OK") {
                 // all fine
-                console.log("NodeSave - OK saved node:" + nodeResponse.data.stateMsg);
+                console.log(msg + " OK saved node:" + yaioNodeActionResponse.stateMsg);
                 
                 // reload
                 var newUrl = '/show/' + nodeId 
-                    + '/activate/' + nodeResponse.data.node.sysUID; //$scope.nodeForEdit.sysUID
-                console.log("reload:" + newUrl);
+                    + '/activate/' + yaioNodeActionResponse.node.sysUID + '/'; //$scope.nodeForEdit.sysUID
+                console.log(msg + " RELOAD:" + newUrl);
                 
                 // no cache!!!
                 $location.path(newUrl + "?" + (new Date()).getTime());
             } else {
                 // error
-                var message = "error saving node:" + nodeResponse.data.stateMsg 
+                var message = "error saving node:" + yaioNodeActionResponse.stateMsg 
                         + " details:" + nodeResponse;
-                var userMessage = "error saving node:" + nodeResponse.data.stateMsg;
+                var userMessage = "error saving node:" + yaioNodeActionResponse.stateMsg;
                 
                 // map violations
-                var violations = nodeResponse.data.violations;
+                var violations = yaioNodeActionResponse.violations;
                 var fieldErrors = {};
                 if (violations && violations.length > 0) {
                     message = message + " violations: ";
@@ -337,10 +340,10 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ht
                         message = message + violation.path + ":" + violation.message + ", ";
 
                         // find formelement
-                        var $formField = $('#' + formName).find('*[name="' + violation.path + '"]');
+                        var $formField = $('#' + options.formName).find('*[name="' + violation.path + '"]');
                         if (($formField.length > 0) && ($formField.is(':visible'))) {
                             // formfield is shown by showErrors
-                            console.log("map violation " + violation + " = " + violation.path + ":" + violation.message + " to " + formName + " id=" + $($formField).attr('id'));
+                            console.log(msg + " MAP violation " + violation + " = " + violation.path + ":" + violation.message + " to " + options.formName + " id=" + $($formField).attr('id'));
                         } else {
                             // another error: show userMessage
                             userMessage += "<br>" + violation.path + ":" + violation.message;
@@ -354,19 +357,37 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ht
                 
                 // Failed
                 setFormErrors({
-                    formName: formName,
+                    formName: options.formName,
                     fieldErrors: fieldErrors
                 });
+                
+                console.log(msg + " DONE");
             }
-        }, function(response) {
-            // error handler
-            var data = response.data;
-            var header = response.header;
-            var config = response.config;
-            var message = "error saving node with url: " + url;
-            yaioUtils.getService('YaioBase').logError(message, true);
-            message = "error data: " + data + " header:" + header + " config:" + config;
-            yaioUtils.getService('YaioBase').logError(message, false);
-        });
+        };
+        
+        // call save
+        var options = {
+                mode: $scope.nodeForEdit["mode"],
+                formName: formName,
+                className: $scope.nodeForEdit.className,
+                sysUID: $scope.nodeForEdit.sysUID
+            };
+        return yaioUtils.getService('YaioNodeData').yaioDoSaveNode(nodeObj, options)
+            .then(function success(angularReponse) {
+                    // handle success
+                    return yaioSaveNodeSuccessHandler(nodeObj, options, angularReponse.data);
+                }, function error(angularReponse) {
+                    // handle error
+                    var data = angularReponse.data;
+                    var header = angularReponse.header;
+                    var config = angularReponse.config;
+                    var message = "error saving node " + nodeObj.sysUID;
+                    yaioUtils.getService('YaioBase').logError(message, true);
+                    message = "error data: " + data + " header:" + header + " config:" + config;
+                    yaioUtils.getService('YaioBase').logError(message, false);
+            });
     };
+    
+    // init
+    $scope.loadAvailiableTemplates();
 });

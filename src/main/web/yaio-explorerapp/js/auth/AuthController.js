@@ -27,45 +27,55 @@
  * <h4>FeatureKeywords:</h4>
  *     GUI Configuration
  */
-yaioApp.controller('AuthController', function($rootScope, $scope, $location, $http, $routeParams, setFormErrors, OutputOptionsEditor, authorization) {
+yaioApp.controller('AuthController', function($rootScope, $scope, $location, $routeParams, setFormErrors, OutputOptionsEditor, authorization, yaioUtils) {
     'use strict';
+
+    // include utils
+    $scope.yaioUtils = yaioUtils;
 
     $scope.credentials = {};
     
     $scope.login = function() {
-        $http.post('/login', $.param($scope.credentials), {
-            headers : {
-                "content-type" : "application/x-www-form-urlencoded"
-            }
-        }).success(function(data) {
-            authorization.authentificate(function() {
-                if ($rootScope.authenticated) {
-                    if ($rootScope.lastLocation) {
-                        $location.path($rootScope.lastLocation);
-                    } else {
-                        $location.path("/");
-                    }
-                    $scope.error = false;
-                } else {
-                    $location.path("/login");
+        return yaioUtils.getService('YaioNodeData').yaioDoLogin($scope.credentials)
+            .then(function success(data) {
+                    // handle success
+                    authorization.authentificate(function() {
+                        if ($rootScope.authenticated) {
+                            if ($rootScope.lastLocation) {
+                                $location.path($rootScope.lastLocation);
+                            } else {
+                                $location.path(yaioUtils.getConfig().appFrontpageUrl);
+                            }
+                            $scope.error = false;
+                        } else {
+                            $location.path(yaioUtils.getConfig().appLoginUrl);
+                            $scope.error = true;
+                        }
+                    });
+                }, function error(data) {
+                    // handle error
+                    $location.path(yaioUtils.getConfig().appLoginUrl);
                     $scope.error = true;
-                }
+                    $rootScope.authenticated = false;
             });
-        }).error(function(data) {
-            $location.path("/login");
-            $scope.error = true;
-            $rootScope.authenticated = false;
-        });
     };
     
     $scope.logout = function() {
-        $http.post('/logout', {}).success(function() {
-            $rootScope.authenticated = false;
-            $location.path("/");
-        }).error(function(data) {
-            $location.path("/");
-            $rootScope.authenticated = false;
-        });
+        return yaioUtils.getService('YaioNodeData').yaioDoLogout()
+            .then(function success(data) {
+                // handle success
+                $rootScope.authenticated = false;
+                $location.path(yaioUtils.getConfig().appRootUrl);
+            }, function error(data) {
+                // handle error
+                $location.path(yaioUtils.getConfig().appRootUrl);
+                $rootScope.authenticated = false;
+            });
+    };
+    
+    
+    if ($routeParams.logout) {
+        $scope.logout();
     };
 });
 

@@ -1,6 +1,7 @@
 // configure
 var baseUrl = 'http://yaio-playground.local';
 var chromeBin = 'C:/ProgrammePortable/PortableApps/PortableApps/GoogleChromePortable/App/Chrome-bin/chrome.exe';
+var firefoxBin = 'C:/ProgrammePortable/PortableApps/PortableApps/FirefoxPortable/App/Firefox/firefox.exe';
 var downloadPath = 'd:/tmp/';
 
 // basics
@@ -10,6 +11,24 @@ var testDir = baseDir;
 // imports
 var ScreenShotReporter = require('protractor-screenshot-reporter');
 var Utils = require(baseDir + './utils/utils.js');
+var FirefoxProfile = require('firefox-profile');
+
+// set some userPrefs if needed
+// Note: make sure you call encoded() after setting some userPrefs
+var fp = new FirefoxProfile();
+// activate and open firebug by default for all sites
+//fp.setPreference('extensions.firebug.allPagesActivation', 'on');
+// activate the console panel
+//fp.setPreference('extensions.firebug.console.enableSites', true);
+// show the console panel
+//fp.setPreference('extensions.firebug.defaultPanelName', 'console');
+fp.setPreference("browser.download.folderList", 2);
+fp.setPreference("browser.download.manager.showWhenStarting", false);
+fp.setPreference("browser.download.dir", downloadPath);
+fp.setPreference("browser.helperApps.neverAsk.saveToDisk", "text/html");
+// done with prefs?
+fp.updatePreferences();
+
 
 exports.config = {
     // The address of a running selenium server.
@@ -35,9 +54,9 @@ exports.config = {
 //        },
 //        {
 //                'browserName': 'firefox',
-//                profile.set_preference('browser.download.dir', download_path)
+//                "firefox_binary": firefoxBin,
+//                "firefox_profile": fp
 //        },
-
 //        {
 //            'browserName': 'iexplorer'
 //        },

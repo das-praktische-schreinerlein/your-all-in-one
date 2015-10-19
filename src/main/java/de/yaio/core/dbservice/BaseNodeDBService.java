@@ -109,6 +109,44 @@ public interface BaseNodeDBService {
      * <h4>FeatureDomain:</h4>
      *     Persistence
      * <h4>FeatureDescription:</h4>
+     *     count the basenodes which match fulltext
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue List<BaseNode> - list of the nodes
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Persistence JPA
+     * @param fulltext - fulltext to search in desc and name
+     * @param searchOptions - outputoptions with additional filter
+     * @return total of matching nodes
+     */
+    long countExtendedSearchBaseNodes(final String fulltext, final SearchOptions searchOptions);
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Persistence
+     * <h4>FeatureDescription:</h4>
+     *     read the basenodes which match fulltext
+     * <h4>FeatureResult:</h4>
+     *   <ul>
+     *     <li>returnValue List<BaseNode> - list of the nodes
+     *   </ul> 
+     * <h4>FeatureKeywords:</h4>
+     *     Persistence JPA
+     * @param fulltext - fulltext to search in desc and name
+     * @param searchOptions - outputoptions with additional filter
+     * @param sortConfig - use sort
+     * @param firstResult - resultrange for pagination
+     * @param maxResults - resultrange for pagination
+     * @return List of matching nodes
+     */
+    List<BaseNode> findExtendedSearchBaseNodeEntries(final String fulltext, final SearchOptions searchOptions,
+                    final String sortConfig, final int firstResult, final int maxResults);
+
+    /**
+     * <h4>FeatureDomain:</h4>
+     *     Persistence
+     * <h4>FeatureDescription:</h4>
      *     read the matching nodes for the symLinkRef from database
      * <h4>FeatureResult:</h4>
      *   <ul>

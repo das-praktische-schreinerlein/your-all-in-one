@@ -8,7 +8,8 @@ var path = require('path');
 var YAIOImporterPage = function() {
     var me = this;
     
-    me.linkImport = '[translate="common.command.Import"]';
+    me.linkImportMenu = '[translate="common.command.Import"]';
+    me.linkImport = '[translate="common.command.ImportWiki"]';
     me.inputImportFile = '#inputfileImort';
     me.buttonSend = 'form#nodeFormImport button:first-of-type';
     
@@ -20,12 +21,19 @@ var YAIOImporterPage = function() {
      * @returns {Promise}                    promise
      */
     me.clickButtonImportAndCheck = function (linkImportCommand, fileToUpload, checkHandler) {
-        // look for element and click
-        protractor.utils.waitUntilElementClickable(linkImportCommand, protractor.utils.CONST_WAIT_ELEMENT);
-        expect(linkImportCommand.isDisplayed()).toEqual(true);
+        var linkImportMenu = $(me.linkImportMenu);
+        protractor.utils.waitUntilElementClickable(linkImportMenu, protractor.utils.CONST_WAIT_ELEMENT);
+        expect(linkImportMenu.isDisplayed()).toEqual(true);
 
-        // open upload
-        return linkImportCommand.click()
+        // click import-button for new window
+        return linkImportMenu.click()
+            .then(function doneMenuCommand() {
+                // look for element and click
+                protractor.utils.waitUntilElementClickable(linkImportCommand, protractor.utils.CONST_WAIT_ELEMENT);
+                expect(linkImportCommand.isDisplayed()).toEqual(true);
+                // open upload
+                return linkImportCommand.click();
+            })
             .then(function doneLinkCommand() {
                 // fill upload-form and submit
                 var absolutePath = path.resolve(__dirname, fileToUpload);
@@ -66,7 +74,10 @@ var YAIOImporterPage = function() {
                     return browser.switchTo().window(myHandles[0]);
                 }).then(function doneSwitchWindow() {
                     // call checkHandler for mainwindow
-                    browser.refresh();
+                    browser.ignoreSynchronization = true;
+                    return browser.refresh();
+                }).then(function doneReferesh() {
+                    browser.ignoreSynchronization = false;
                     return checkHandlerMainWindow();
                 })
         }

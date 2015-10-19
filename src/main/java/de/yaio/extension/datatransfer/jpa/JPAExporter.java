@@ -85,7 +85,7 @@ public class JPAExporter extends WikiExporter {
 
         // iterate the new children, look for them and delete them in db
         for (BaseNode newChildNode : masterNode.getChildNodes()) {
-            BaseNode childDbNode = BaseNode.findBaseNode((newChildNode).getSysUID());
+            BaseNode childDbNode = BaseNode.findBaseNode(newChildNode.getSysUID());
             if (childDbNode != null) {
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("delete dbchildren for:" + masterNode.getNameForLogger() 

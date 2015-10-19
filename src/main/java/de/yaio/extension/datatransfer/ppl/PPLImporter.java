@@ -110,7 +110,7 @@ public class PPLImporter extends ImporterImpl {
         }
 
         // NodeSrc trennen
-        String [] lstNodeSrc = nodeSrc.split(delimiter);
+        String[] lstNodeSrc = nodeSrc.split(delimiter);
 
         // die verschiedenen Node durchlaufen
         if (lstNodeSrc != null) {
@@ -189,7 +189,7 @@ public class PPLImporter extends ImporterImpl {
      * @throws Exception - parser/format-Exceptions possible
      */
     public void extractNodesFromLines(final DataDomain masterNode, 
-                                      final String [] lstNodeSrc, 
+                                      final String[] lstNodeSrc, 
                                       final String delimiter) throws Exception {
         // Parameter pruefen
         if (lstNodeSrc == null || lstNodeSrc.length <= 0) {
@@ -235,7 +235,7 @@ public class PPLImporter extends ImporterImpl {
                         PPLService.LINE_DELIMITER);
 
         // split NodesSrc
-        String [] lstNodeSrc = nodesSrc.split(PPLService.LINE_DELIMITER);
+        String[] lstNodeSrc = nodesSrc.split(PPLService.LINE_DELIMITER);
 
         // die verschiedenen Zeilen durchlaufen
         if (lstNodeSrc != null && lstNodeSrc.length > 0) {
@@ -332,7 +332,7 @@ public class PPLImporter extends ImporterImpl {
 
         // read bytes to buffer
         StringBuffer fileContent = new StringBuffer();
-        byte [] readBuffer = new byte [1024];
+        byte[] readBuffer = new byte[1024];
         int bytesRead;
         String lastEncoding = null;
         String bestEncoding = "";
@@ -343,7 +343,7 @@ public class PPLImporter extends ImporterImpl {
         String bufferStr = null;
         while ((bytesRead = fileStream.read(readBuffer)) >= 0) {
             // check only the bytesRead -> the buffer will have more !!!!
-            byte [] checkBuffer = new byte [bytesRead];
+            byte[] checkBuffer = new byte[bytesRead];
             System.arraycopy(readBuffer, 0, checkBuffer, 0, bytesRead);
             
             // check the bytes

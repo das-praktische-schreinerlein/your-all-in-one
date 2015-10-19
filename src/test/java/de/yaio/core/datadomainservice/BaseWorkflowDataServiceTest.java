@@ -123,7 +123,7 @@ public class BaseWorkflowDataServiceTest extends DataDomainServiceTest {
         expectedAfterDoBeforeChildren = 
                         "null|null|null|null|null|null|null|null|null|null|null|null|null|null|null|null|";
         expectedAfterDoAfterChildren = 
-                        "null|UNKNOWN|null|null|null|null|null|null|null|null|null|null|null|null|null|null|";
+                        "null|UNGEPLANT|null|null|null|null|null|null|null|null|null|null|null|null|null|null|";
         this.testServiceDoRecalc(myDataDomainObj, expectedAfterDoBeforeChildren, 
                         expectedAfterDoAfterChildren, recurseDirection);
 

@@ -1,7 +1,12 @@
+<update-meta name="title" content="YAIO - D'Artagnan - Explorer: {{node.name}} ({{node.metaNodePraefix}}{{node.metaNodeNummer}})"></update-meta>
+<update-meta name="description" content="YAIO - D'Artagnan - Explorer: {{node.name}} ({{node.metaNodePraefix}}{{node.metaNodeNummer}})"></update-meta>
+
 <div class='box box-portdesc add2toc-h1 box-portdesc-explorer' toclabel='Explorer' id='box_explorer'>
-  <div class='boxline boxline-ue2 h2-portdesc h2-portdesc-explorer' id='ue_explorer'>YAIO - D'Artagnan - Explorer
+  <div class='boxline boxline-ue2 h2-portdesc h2-portdesc-explorer' id='ue_explorer'>
+      <div id="containerMasterUe">YAIO - D'Artagnan - Explorer</div>
+      <div id="containerCurrentSource" ng-include="yaioUtils.getConfig().resBaseUrl + 'js/sourceselector/current-source-main.html'"></div>
       <div id="containerInfoCommands">
-          <div ng-include="'js/explorer/menu-main.html'"></div>
+          <div ng-include="yaioUtils.getConfig().resBaseUrl + 'js/explorer/menu-main.html'"></div>
       </div>
   </div>
   <div class='togglecontainer togglecontainer-exporer' id='details_explorer'>
@@ -14,14 +19,14 @@
         *    Export Links
         ************************* 
         -->
-        <div ng-include="'js/exporter/export-links.html'"></div>
+        <div ng-include="yaioUtils.getConfig().resBaseUrl + 'js/exporter/export-links.html'"></div>
         
         <!-- 
         *************************
         *    Form: edit/create OutputOptions
         ************************* 
         -->
-        <div ng-include="'js/exporter/export-form.html'"></div>
+        <div ng-include="yaioUtils.getConfig().resBaseUrl + 'js/exporter/export-form.html'"></div>
       </div>
 
       <!-- ImporterCtrl -->
@@ -31,14 +36,14 @@
         * Import-Links
         ************************* 
         -->
-        <div ng-include="'js/importer/import-links.html'"></div>
+        <div ng-include="yaioUtils.getConfig().resBaseUrl + 'js/importer/import-links.html'"></div>
   
         <!-- 
         *************************
         *    Form:   import
         ************************* 
         -->
-        <div ng-include="'js/importer/import-form.html'"></div>
+        <div ng-include="yaioUtils.getConfig().resBaseUrl + 'js/importer/import-form.html'"></div>
       </div>
     </div>
 
@@ -58,7 +63,7 @@
         </div>
     </div>
     <div id="masterdata" class="container-masterdata">
-        <div ng-include="'js/explorer/explorer-head.html'"></div>
+        <div ng-include="yaioUtils.getConfig().resBaseUrl + 'js/explorer/explorer-head.html'"></div>
     </div>
   </div>
 </div>
@@ -80,7 +85,7 @@
               Commands
           ************************* 
           -->
-          <div ng-include="'js/explorer/explorer-node-commands.html'"></div>
+          <div ng-include="yaioUtils.getConfig().resBaseUrl + 'js/explorer/explorer-node-commands.html'"></div>
         </div>
     
         <div id="containerYaioTreeTable" class="container-yaio-tree-table">
@@ -89,7 +94,7 @@
               Tree table
           ************************* 
           -->
-          <div ng-include="'js/explorer/explorer-list.html'"></div>
+          <div ng-include="yaioUtils.getConfig().resBaseUrl + 'js/explorer/explorer-list.html'"></div>
         </div>
     </div>
 
@@ -108,42 +113,42 @@
             Form: Create new Node
         ************************* 
         -->
-        <div ng-include="'js/editor/node-create-form.html'"></div>
+        <div ng-include="yaioUtils.getConfig().resBaseUrl + 'js/editor/node-create-form.html'"></div>
 
         <!-- 
         *************************
             Form: edit/create TaskNode
         ************************* 
         -->
-        <div ng-include="'js/editor/node-task-form.html'"></div>
+        <div ng-include="yaioUtils.getConfig().resBaseUrl + 'js/editor/node-task-form.html'"></div>
         
         <!-- 
         *************************
             Form: edit/create EventNode
         ************************* 
         -->
-        <div ng-include="'js/editor/node-event-form.html'"></div>
+        <div ng-include="yaioUtils.getConfig().resBaseUrl + 'js/editor/node-event-form.html'"></div>
         
         <!-- 
         *************************
             Form: edit/create InfoNode
         ************************* 
         -->
-        <div ng-include="'js/editor/node-info-form.html'"></div>
+        <div ng-include="yaioUtils.getConfig().resBaseUrl + 'js/editor/node-info-form.html'"></div>
 
         <!-- 
         *************************
             Form: edit/create UrlResNode
         ************************* 
         -->
-        <div ng-include="'js/editor/node-urlres-form.html'"></div>
+        <div ng-include="yaioUtils.getConfig().resBaseUrl + 'js/editor/node-urlres-form.html'"></div>
 
         <!-- 
         *************************
             Form: edit/create SymLinkNode
         ************************* 
         -->
-        <div ng-include="'js/editor/node-symlink-form.html'"></div>
+        <div ng-include="yaioUtils.getConfig().resBaseUrl + 'js/editor/node-symlink-form.html'"></div>
       </div>
     </div>
 </div>
@@ -155,7 +160,7 @@
         yaioAppBase.get('YaioLayout').addSpeechRecognitionToElements();
         yaioAppBase.get('YaioLayout').addSpeechSynthToElements();
         yaioAppBase.get('YaioLayout').addPreviewToElements();
-        yaioAppBase.get('YaioLayout').addWysiwhgToElements();
+        yaioAppBase.get('YaioLayout').addWysiwygToElements();
         yaioAppBase.get('YaioLayout').addDatePickerToElements();
         yaioAppBase.get('YaioLayout').addDocLayoutStyleSelectorToElements();
 //        alert($("#ulLanguage").attr("data-curlanguage"));

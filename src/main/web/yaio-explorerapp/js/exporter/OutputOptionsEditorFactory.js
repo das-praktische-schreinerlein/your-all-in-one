@@ -105,40 +105,6 @@ yaioApp.factory('OutputOptionsEditor', function(yaioUtils) {
          *     GUI Callback
          */
         send: function() {
-//            // branch depending on mode
-//            var method;
-//            method = "POST";
-//
-//            // define json for common fields
-//            var json = JSON.stringify(oOptions);
-//            
-//            // create url
-//            console.log("Send - url::" + url + " data:" + json);
-//            
-//            // do http
-//            $http({
-//                    method: method,
-//                    url: url,
-//                    data: json
-//            }).then(function(response) {
-//                // sucess handler
-//                yaioUtils.getService('UIToggler').toggleElement("#containerFormYaioEditorOutputOptions");
-//                
-//                yaioUtils.getService('YaioBase').downloadAsFile(null, response.data, "test.xxx", "dummy", "dummy");
-//                
-//                console.log("send done");
-//            }, function(response) {
-//                // error handler
-//                var data = response.data;
-//                var status = response.status;
-//                var header = response.header;
-//                var config = response.config;
-//                var message = "error while do export with url: " + url;
-//                yaioUtils.getService('YaioBase').logError(message, true);
-//                message = "error data: " + data + " header:" + header + " config:" + config;
-//                yaioUtils.getService('YaioBase').logError(message, false);
-//            });
-
             var formId = "#nodeFormOutputOptions";
             $(formId).submit();
             yaioUtils.getService('UIToggler').toggleElement("#containerFormYaioEditorOutputOptions");

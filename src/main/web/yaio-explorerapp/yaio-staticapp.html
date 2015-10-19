@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!--<base href="/" />-->
+  <title>YAIO - D'Artagnan - StaticViewer</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta http-equiv="Content-Language" content="de" />
+  <meta name="description" content="YAIO - D'Artagnan - StaticViewer" />
+  <meta name="title" content="YAIO - D'Artagnan - StaticViewer" />
+
+  <!-- styles: yaio-explorer -->
+  <link rel="stylesheet" type="text/css" media="all" href="../dist/yaio-app-full.appversion.css" />
+
+  <!-- scripts: vendors -->
+  <script  type="text/javascript" charset="UTF-8" src="../dist/vendors-full.vendorversion.js"></script>
+
+  <!-- scripts: yaio-support -->
+  <script  type="text/javascript" charset="UTF-8" src="../dist/yaio-support-full.supportversion.js"></script>
+</head>
+
+<body>
+<div align="center" class="page-div-center">
+    <!-- Hauptseite-->
+    <div class="pageContent" id="pageContent">
+
+        <!-- Content -->
+        <div class="blockContent" id="blockContent">
+            <div class="content" id="content">
+                <div class="txt-content" id="txt-content">
+
+                    <!-- Context -->
+                    <div class="content">
+                        <!-- Page: Content -->
+                        
+<div id="error-message" class="hidden">
+  <p>
+    <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>
+  </p>
+  <p id="error-message-text">
+  </p>
+</div>                        
+
+<div id="dialog-confirm" class="hidden">
+  <p>
+    <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>
+    
+  </p>
+  <p id="dialog-confirm-text">
+  </p>
+</div>                        
+
+<div id="help-box" class="hidden">
+  <p>
+    <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>
+  </p>
+  <iframe id="help-iframe" src="" ></iframe>
+</div>
+
+<div class="yaio-details"></div>
+
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- YaioAppBase -->
+<script type="text/javascript">
+// create app
+window.yaioAppBase = YaioAppBase();
+
+//reconfigure baseurls
+yaioAppBase.config.resBaseUrl = yaioAppBase.get("YaioBase").getBaseRefFromUrl(window.location.href) + "/";
+yaioAppBase.config.initResBasedUrls();
+
+// init
+yaioAppBase.publishDetectorStyles();
+
+// load Temlate
+var template = yaioAppBase.get("YaioBase").getURLParameter("template");
+template = template.replace(/[^A-Za-z0-9_\.-]/g, "");
+yaioAppBase.get("YaioFile").loadDocumentationContainerContent("static/" + template + ".html")
+    .then(function doneContentFile(contentData) {
+      console.log("loadDocumentationContainerContent done")
+      var doc = document.open("text/html");
+      doc.write(contentData);
+      doc.close();
+    }, function error(errorThrown) {
+        console.error("ERROR error -> return", errorThrown);
+        yaioAppBase.get("YaioBase").logError("Template kann nicht geladen werden", true);
+    });
+
+</script>
+
+</body>
+</html>

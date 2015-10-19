@@ -27,7 +27,7 @@
  * <h4>FeatureKeywords:</h4>
  *     GUI Configuration BusinessLogic
  */
-yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $http, $routeParams, setFormErrors, authorization, yaioUtils) {
+yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $routeParams, setFormErrors, authorization, yaioUtils) {
     'use strict';
 
     // include utils
@@ -42,7 +42,12 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ht
         searchSort: 'lastChangeDown',
         baseSysUID: "MasterplanMasternode1",
         fulltext: "",
-        total: 0
+        total: 0,
+        strNotNodePraefix: "Sys* *Templ MyStart MyHelp JsUnitTest JsFuncTest JUnitTest",
+        strWorkflowStateFilter: "",
+        arrWorkflowStateFilter: [],
+        strClassFilter: "",
+        arrClassFilter: []
     };
     if ($routeParams.curPage) {
         $scope.searchOptions.curPage = decodeURI($routeParams.curPage);
@@ -58,6 +63,17 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ht
     }
     if ($routeParams.fulltext) {
         $scope.searchOptions.fulltext = decodeURI($routeParams.fulltext);
+    }
+    if ($routeParams.strNotNodePraefix) {
+        $scope.searchOptions.strNotNodePraefix = decodeURI($routeParams.strNotNodePraefix);
+    }
+    if ($routeParams.strWorkflowStateFilter) {
+        $scope.searchOptions.strWorkflowStateFilter = decodeURI($routeParams.strWorkflowStateFilter);
+        $scope.searchOptions.arrWorkflowStateFilter = $scope.searchOptions.strWorkflowStateFilter.split(",");
+    }
+    if ($routeParams.strClassFilter) {
+        $scope.searchOptions.strClassFilter = decodeURI($routeParams.strClassFilter);
+        $scope.searchOptions.arrClassFilter = $scope.searchOptions.strClassFilter.split(",");
     }
     console.log("NodeSearchCtrl - processing");
     
@@ -80,13 +96,7 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ht
      */
     $scope.nextPageAct = function(text, page){
         console.log(text, page);
-        var newUrl = '/search'
-            + '/' + encodeURI(page)
-            + '/' + encodeURI($scope.searchOptions.pageSize)
-            + '/' + encodeURI($scope.searchOptions.searchSort)
-            + '/' + encodeURI($scope.searchOptions.baseSysUID)
-            + '/' + encodeURI($scope.searchOptions.fulltext)
-            + '/';
+        var newUrl = $scope.createSearchUri($scope.searchOptions, page);
         
         // save lastLocation for login
         $rootScope.lastLocation = newUrl;
@@ -132,13 +142,8 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ht
      */
     $scope.doNewFulltextSearch = function() {
         $scope.searchOptions.curPage = 1;
-        var newUrl = '/search'
-            + '/' + encodeURI($scope.searchOptions.curPage)
-            + '/' + encodeURI($scope.searchOptions.pageSize)
-            + '/' + encodeURI($scope.searchOptions.searchSort)
-            + '/' + encodeURI($scope.searchOptions.baseSysUID)
-            + '/' + encodeURI($scope.searchOptions.fulltext)
-            + '/';
+        var newUrl = $scope.createSearchUri($scope.searchOptions, $scope.searchOptions.curPage);
+
         // save lastLocation for login
         $rootScope.lastLocation = newUrl;
 
@@ -146,7 +151,21 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ht
         console.log("load new Url:" + newUrl);
         $location.path(newUrl);
     };
-
+    
+    $scope.createSearchUri = function(searchOptions, page) {
+        var newUrl = '/search'
+            + '/' + encodeURI(page)
+            + '/' + encodeURI(searchOptions.pageSize)
+            + '/' + encodeURI(searchOptions.searchSort)
+            + '/' + encodeURI(searchOptions.baseSysUID)
+            + '/' + encodeURI(searchOptions.fulltext)
+            + '/' + encodeURI(searchOptions.arrClassFilter.join(","))
+            + '/' + encodeURI(searchOptions.arrWorkflowStateFilter.join(","))
+            + '/' + encodeURI(searchOptions.strNotNodePraefix)
+            + '/';
+        return newUrl;
+    }
+    
     /**
      * <h4>FeatureDomain:</h4>
      *     GUI
@@ -162,55 +181,51 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ht
      *     GUI Callback Fulltextsearch
      */
     $scope.doFulltextSearch = function() {
-        var uri = '/' + encodeURI($scope.searchOptions.curPage)
-                + '/' + encodeURI($scope.searchOptions.pageSize)
-                + '/' + encodeURI($scope.searchOptions.searchSort)
-                + '/' + encodeURI($scope.searchOptions.baseSysUID)
-                + '/';
         // save lastLocation for login
-        $rootScope.lastLocation = '/search' + uri + encodeURI($scope.searchOptions.fulltext) + '/';
+        $scope.searchOptions.strClassFilter = $scope.searchOptions.arrClassFilter.join(",");
+        $scope.searchOptions.strWorkflowStateFilter = $scope.searchOptions.arrWorkflowStateFilter.join(",");
+        $rootScope.lastLocation = $scope.createSearchUri($scope.searchOptions, $scope.searchOptions.curPage);
 
-        // no empty fulltext for webservice -> we use there another route 
-        if ($scope.searchOptions.fulltext && $scope.searchOptions.fulltext.length > 0) {
-            uri = uri + encodeURI($scope.searchOptions.fulltext) + '/';
-        }
-
-        // load data
-        var searchNodeUrl = '/nodes/search' + uri;
-        $http.get(searchNodeUrl).then(function(nodeResponse) {
-            // success handler
-            
-            // check response
-            var state = nodeResponse.data.state;
-            if (state === "OK") {
-                // all fine
-                console.log("NodeSearchCtrl - OK loading nodes:" + nodeResponse.data.stateMsg + " searchNodeUrl=" + searchNodeUrl);
-                
-                // add nodes to scope
-                $scope.nodes = nodeResponse.data.nodes;
-                
-                // set count
-                $scope.searchOptions.total = nodeResponse.data.count;
-                
-                // set event for paginantion
-                $scope.NodeListReady = true;
-                $scope.$broadcast("NodeListReady");
-            } else {
-                // error
-                yaioUtils.getService('YaioBase').logError("error loading nodes:" + nodeResponse.data.stateMsg + " details:" + nodeResponse, true);
-            }
-        }, function(response) {
-            // error handler
-            var data = response.data;
-            var header = response.header;
-            var config = response.config;
-            var message = "error loading nodes with url: " + searchNodeUrl;
-            yaioUtils.getService('YaioBase').logError(message, true);
-            message = "error data: " + data + " header:" + header + " config:" + config;
-            yaioUtils.getService('YaioBase').logError(message, false);
-        });
+        // search data
+        var searchOptions = $scope.searchOptions;
+        return yaioUtils.getService('YaioNodeData').yaioDoFulltextSearch(searchOptions)
+            .then(function(angularResponse) {
+                // success handler
+                $scope.doFulltextSearchSuccessHandler(searchOptions, angularResponse.data)
+            }, function(angularResponse) {
+                // error handler
+                var data = angularResponse.data;
+                var header = angularResponse.header;
+                var config = angularResponse.config;
+                var message = "error loading nodes with searchOptions: " + searchOptions;
+                yaioUtils.getService('YaioBase').logError(message, true);
+                message = "error data: " + data + " header:" + header + " config:" + config;
+                yaioUtils.getService('YaioBase').logError(message, false);
+            });
     };
     
+    $scope.doFulltextSearchSuccessHandler = function(searchOptions, yaioNodeSearchResponse) {
+        // check response
+        var state = yaioNodeSearchResponse.state;
+        if (state === "OK") {
+            // all fine
+            console.log("NodeSearchCtrl - OK loading nodes:" + yaioNodeSearchResponse.stateMsg + " searchOptions=" + searchOptions);
+            
+            // add nodes to scope
+            $scope.nodes = yaioNodeSearchResponse.nodes;
+            
+            // set count
+            $scope.searchOptions.total = yaioNodeSearchResponse.count;
+            
+            // set event for pagination
+            $scope.NodeListReady = true;
+            $scope.$broadcast("NodeListReady");
+        } else {
+            // error
+            yaioUtils.getService('YaioBase').logError("error loading nodes:" + yaioNodeSearchResponse.stateMsg + " details:" + yaioNodeSearchResponse, true);
+        }
+    }
+
     /**
      * <h4>FeatureDomain:</h4>
      *     GUI
@@ -226,7 +241,7 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ht
     $scope.renderNodeLine = function(node) {
         // we need a timeout to put the tr into DOM
         setTimeout(function(){
-                $scope.yaioUtils.renderNodeLine(node, "#tr" + node.sysUID);
+                $scope.yaioUtils.renderNodeLine(node, "#tr" + node.sysUID, false);
                 console.log("renderNodeLine: done to:" + "#tr" + node.sysUID + $("#detail_sys_" + node.sysUID).length);
 
                 // render hierarchy
@@ -328,7 +343,7 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ht
     authorization.authentificate(function () {
         // check authentification
         if (! $rootScope.authenticated) {
-            $location.path("/login");
+            $location.path(yaioUtils.getConfig().appLoginUrl);
             $scope.error = false;
         } else {
             // do Search

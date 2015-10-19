@@ -37,3 +37,14 @@
     width: 50px;
 } 
 
+ul.exporttypes {
+    float: right;
+}
+ul.exporttypelist {
+    padding-left: 1px;
+    margin: 0px;
+}
+ul.exporttypelist li {
+    padding-left: 1px;
+    margin: 0px;
+}

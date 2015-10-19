@@ -10,7 +10,7 @@
     
     <!-- packaging jar or war and version -->
     <packaging>jar</packaging>
-    <version>0.1.0-beta-feature-YAIO2137-improvements-201507-RELEASE</version>
+    <version>0.1.0-beta-feature-YAIO2168-improvements-201509-RELEASE</version>
     
     <!-- for spring boot -->
     <parent>
@@ -63,6 +63,7 @@
         <poi.version>3.7</poi.version>
         <icu4j.version>54.1</icu4j.version>
         <markdown4j>2.2-cj-1.0</markdown4j>
+        <swagger.version>2.1.2</swagger.version>
 
         <!-- test-scope -->
         <json-path.version>0.8.1</json-path.version>
@@ -110,6 +111,7 @@
             <name>Spring Releases</name>
             <url>http://repo.spring.io/libs-release</url>
         </repository>
+        
     </repositories>
 
     <pluginRepositories>
@@ -388,6 +390,24 @@
             <scope>test</scope>
         </dependency>
 -->
+        <!-- swagger -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${swagger.version}</version>
+        </dependency> 
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-staticdocs</artifactId>
+            <version>${swagger.version}</version>
+            <scope>test</scope>
+        </dependency>
+
         <!-- YAIO -->
         <dependency>
             <groupId>commons-cli</groupId>
@@ -800,7 +820,6 @@
                     </execution>
                 </executions>
             </plugin>
-
             <plugin>
                 <artifactId>maven-antrun-plugin</artifactId>
                 <version>${maven.antrun.plugin.version}</version>
@@ -837,7 +856,7 @@
                    </execution>
                 </executions>
             </plugin>
-        </plugins>
+          </plugins>
     </build>
 
     <reporting>

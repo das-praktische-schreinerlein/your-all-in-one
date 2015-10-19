@@ -16,8 +16,12 @@
  */
 package de.yaio.datatransfer.exporter;
 
+import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.collections.MapUtils;
+
+import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
 import de.yaio.utils.DataUtils;
 
 /**
@@ -43,6 +47,7 @@ public class OutputOptionsImpl implements OutputOptions {
     protected Integer intend = 2;
     protected Integer intendLi = 2;
     protected Integer intendSys = 160;
+    protected Integer flgConcreteToDosOnly = 0;
     protected boolean flgTrimDesc = true;
     protected boolean flgReEscapeDesc = true;
     protected boolean flgShowDescWithUe = false;
@@ -65,13 +70,18 @@ public class OutputOptionsImpl implements OutputOptions {
     protected boolean flgRecalc = false;
     protected boolean flgProcessDocLayout = false;
     protected boolean flgUsePublicBaseRef = false;
+
+    
+    protected String strNotNodePraefix = "";
     protected String strReadIfStatusInListOnly = "";
     protected String strClassFilter = "";
     protected String strTypeFilter = "";
+    protected String strWorkflowStateFilter = "";
     
     protected Map<String, String> mpClassFilter = null;
     protected Map<String, String> mpTypeFilter = null;
     protected Map<String, String> mpStateFilter = null;
+    protected Map<String, WorkflowState> mpWorkflowStateFilter = null;
 
     public OutputOptionsImpl() {
         super();
@@ -88,6 +98,7 @@ public class OutputOptionsImpl implements OutputOptions {
         this.intend = baseOptions.getIntend();
         this.intendLi = baseOptions.getIntendLi();
         this.intendSys = baseOptions.getIntendSys();
+        this.flgConcreteToDosOnly = baseOptions.getFlgConcreteToDosOnly();
         this.flgTrimDesc = baseOptions.isFlgTrimDesc();
         this.flgShowType = baseOptions.isFlgShowType();
         this.flgShowState = baseOptions.isFlgShowState();
@@ -103,6 +114,7 @@ public class OutputOptionsImpl implements OutputOptions {
         this.flgRecalc = baseOptions.isFlgRecalc();
         this.flgProcessDocLayout = baseOptions.isFlgProcessDocLayout();
         this.flgUsePublicBaseRef = baseOptions.isFlgUsePublicBaseRef();
+        this.strNotNodePraefix = baseOptions.getStrNotNodePraefix();
         this.strReadIfStatusInListOnly = baseOptions.getStrReadIfStatusInListOnly();
         this.strClassFilter = baseOptions.getStrClassFilter();
         this.strTypeFilter = baseOptions.getStrTypeFilter();
@@ -266,6 +278,15 @@ public class OutputOptionsImpl implements OutputOptions {
         this.intendSys = intendSys;
     }
 
+    @Override
+    public int getFlgConcreteToDosOnly() {
+        return manageIntValues(flgConcreteToDosOnly);
+    }
+    @Override
+    public void setFlgConcreteToDosOnly(Integer flgConcreteToDosOnly) {
+        this.flgConcreteToDosOnly = flgConcreteToDosOnly;
+    }
+
     public boolean isFlgTrimDesc() {
         return flgTrimDesc;
     }
@@ -296,6 +317,17 @@ public class OutputOptionsImpl implements OutputOptions {
     public void setFlgShowDescInNextLine(final boolean flgShowDescInNextLine) {
         this.flgShowDescInNextLine = flgShowDescInNextLine;
     }
+
+    @Override
+    public String getStrNotNodePraefix() {
+        return this.strNotNodePraefix;
+    }
+
+    @Override
+    public void setStrNotNodePraefix(final String strNotNodePraefix) {
+        this.strNotNodePraefix = strNotNodePraefix;
+    }
+    
     public String getStrReadIfStatusInListOnly() {
         return strReadIfStatusInListOnly;
     }
@@ -317,26 +349,48 @@ public class OutputOptionsImpl implements OutputOptions {
         this.strTypeFilter = strTypeFilter;
         this.mpTypeFilter = DataUtils.initMapFromCsvString(this.strTypeFilter);
     }
+    public String getStrWorkflowStateFilter() {
+        return strWorkflowStateFilter;
+    }
+    public void setStrWorkflowStateFilter(final String strWorkflowStateFilter) {
+        this.strWorkflowStateFilter = strWorkflowStateFilter;
+        this.mpWorkflowStateFilter = new HashMap<String, WorkflowState>();
+        Map<String, String> tmp = DataUtils.initMapFromCsvString(this.strWorkflowStateFilter);
+        if (MapUtils.isEmpty(tmp)) {
+            return;
+        }
+        for (String state : tmp.keySet()) {
+            this.mpWorkflowStateFilter.put(state, WorkflowState.valueOf(state));
+        }
+    }
     
     public int manageIntValues(final Integer value) {
-        return (value != null ? value : 0);
+        return value != null ? value : 0;
     }
     
     
+    @Override
     public Map<String, String> getMapClassFilter() {
         return this.mpClassFilter;
     };
+    @Override
     public Map<String, String> getMapTypeFilter() {
         return this.mpTypeFilter;
     };
+    @Override
     public Map<String, String> getMapStateFilter() {
         return this.mpStateFilter;
+    };
+    @Override
+    public Map<String, WorkflowState> getMapWorkflowStateFilter() {
+        return this.mpWorkflowStateFilter;
     };
     
     public void initFilterMaps() {
         this.setStrReadIfStatusInListOnly(this.getStrReadIfStatusInListOnly());
         this.setStrClassFilter(this.getStrClassFilter());
         this.setStrTypeFilter(this.getStrTypeFilter());
+        this.setStrWorkflowStateFilter(this.getStrWorkflowStateFilter());
     }
     
     public void setAllFlgShow(final boolean value) {
@@ -366,6 +420,7 @@ public class OutputOptionsImpl implements OutputOptions {
         this.intend = 0;
         this.intendLi = 0;
         this.intendSys = 0;
+        this.flgConcreteToDosOnly = 0;
         this.flgTrimDesc = false;
         this.flgReEscapeDesc = false;
 
@@ -388,9 +443,11 @@ public class OutputOptionsImpl implements OutputOptions {
         this.flgRecalc = false;
         this.flgProcessDocLayout = false;
         this.flgUsePublicBaseRef = false;
+        this.setStrNotNodePraefix("");
         this.setStrReadIfStatusInListOnly("");
         this.setStrClassFilter("");
         this.setStrTypeFilter("");
+        this.setStrWorkflowStateFilter("");
     }
 
     @Override
@@ -404,6 +461,7 @@ public class OutputOptionsImpl implements OutputOptions {
                         + ", intend=" + this.intend 
                         + ", intendLi=" + this.intendLi 
                         + ", intendSys=" + this.intendSys
+                        + ", flgConcreteToDosOnly=" + this.flgConcreteToDosOnly
                         + ", flgTrimDesc=" + this.flgTrimDesc
                         + ", flgReEscapeDesc=" + this.flgReEscapeDesc
                         + ", flgShowState=" + this.flgShowState
@@ -424,12 +482,15 @@ public class OutputOptionsImpl implements OutputOptions {
                         + ", flgRecalc=" + this.flgRecalc 
                         + ", flgProcessDocLayout=" + this.flgProcessDocLayout
                         + ", flgUsePublicBaseRef=" + this.flgUsePublicBaseRef
+                        + ", strNotNodePraefix=" + this.strNotNodePraefix
                         + ", strReadIfStatusInListOnly=" + this.strReadIfStatusInListOnly 
                         + ", strClassFilter=" + this.strClassFilter 
                         + ", strTypeFilter=" + this.strTypeFilter 
+                        + ", strWorkflowStateFilter=" + this.strWorkflowStateFilter
                         + ", mpStateFilter=" + this.mpStateFilter 
                         + ", mpClassFilter=" + this.mpClassFilter 
                         + ", mpTypeFilter=" + this.mpTypeFilter 
+                        + ", mpWorkflowStateFilter=" + this.mpWorkflowStateFilter
                         + "]";
     }
 }

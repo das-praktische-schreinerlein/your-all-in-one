@@ -109,7 +109,7 @@ public class Application {
             strPathIdDB = Configurator.getInstance().getCommandLine().getOptionValue(
                                             "pathiddb", null);
             if (strPathIdDB != null) {
-                nodeNumberService.initNextNodeNumbersFromFile(strPathIdDB);
+                nodeNumberService.initNextNodeNumbersFromFile(strPathIdDB, false);
             }
 
             // inform spring about configfile

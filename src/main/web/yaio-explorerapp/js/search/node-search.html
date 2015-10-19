@@ -1,7 +1,12 @@
+<update-meta name="title" content="YAIO - D'Artagnan - Searcher"></update-meta>
+<update-meta name="description" content="YAIO - D'Artagnan - Searcher"></update-meta>
+
 <div class='box box-portdesc add2toc-h1 box-portdesc-explorer' toclabel='Explorer' id='box_explorer'>
-  <div class='boxline boxline-ue2 h2-portdesc h2-portdesc-explorer' id='ue_explorer'>YAIO - D'Artagnan - Explorer
+  <div class='boxline boxline-ue2 h2-portdesc h2-portdesc-explorer' id='ue_explorer'>
+      <div id="containerMasterUe">YAIO - D'Artagnan - Searcher</div>
+      <div id="containerCurrentSource" ng-include="yaioUtils.getConfig().resBaseUrl + 'js/sourceselector/current-source-main.html'"></div>
       <div id="containerInfoCommands">
-          <div ng-include="'js/search/menu-main.html'"></div>
+          <div ng-include="yaioUtils.getConfig().resBaseUrl + 'js/search/menu-main.html'"></div>
       </div>
   </div>
   <div class='togglecontainer togglecontainer-list' id='details_list'>
@@ -38,6 +43,10 @@
                   <option value="planEndeDown" translate="common.select.searchSort.planEndeDown">planEndeDown</option>
                   <option value="planStartUp" translate="common.select.searchSort.planStartUp">planStartUp</option>
                   <option value="planStartDown" translate="common.select.searchSort.planStartDown">planStartDown</option>
+                  <option value="planChildrenSumEndeUp" translate="common.select.searchSort.planChildrenSumEndeUp">planChildrenSumEndeUp</option>
+                  <option value="planChildrenSumEndeDown" translate="common.select.searchSort.planChildrenSumEndeDown">planChildrenSumEndeDown</option>
+                  <option value="planChildrenSumStartUp" translate="common.select.searchSort.planChildrenSumStartUp">planChildrenSumStartUp</option>
+                  <option value="planChildrenSumStartDown" translate="common.select.searchSort.planChildrenSumStartDown">planChildrenSumStartDown</option>
                   <option value="typeUp" translate="common.select.searchSort.typeUp">typeUp</option>
                   <option value="typeDown" translate="common.select.searchSort.typeDown">typeDown</option>
                   <option value="workflowStateUp" translate="common.select.searchSort.workflowStateUp">workflowStateUp</option>
@@ -61,7 +70,33 @@
             show-prev-next="true"
             paging-action="nextPageAct('Paging Clicked', page)">
           </paging><!--  
-     --></div>
+     -->
+          <br>
+          <div class="fulltextline" data-tooltip='tooltip.command.DoSearch' lang="tech">
+             <span lang='tech' translate="editor.common.label.type">Typ</span>
+             <select name="strClassFilter" class="inputtype_select use_select2 inputtype_select_class" id="inputSearchOptionsStrClassFilter" ng-model="searchOptions.arrClassFilter" multiple="multiple">
+                  <option value="" translate="common.select.all">Alle
+                  <option translate="common.select.className.TaskNode" value="TaskNode">Task
+                  <option translate="common.select.className.EventNode" value="EventNode">Event
+                  <option translate="common.select.className.InfoNode" value="InfoNode">Info
+                  <option translate="common.select.className.UrlResNode" value="UrlResNode">UrlRes
+                  <option translate="common.select.className.SymLinkNode" value="SymLinkNode">Symlink
+             </select>
+             <span lang='tech' translate="editor.common.label.state">Status</span>
+             <select name="strWorkflowStateFilter" class="inputtype_select use_select2 inputtype_select_state" id="inputSearchOptionsStrWorkflowStateFilter" ng-model="searchOptions.arrWorkflowStateFilter" multiple="multiple">
+                  <option value="" translate="common.select.all">Alle
+                  <option value="NOTPLANED" translate="common.select.TaskNodeType.UNKNOWN">Ungeplant
+                  <option value="OPEN" translate="common.select.TaskNodeType.OFFEN">Offen
+                  <option value="LATE" translate="common.select.TaskNodeType.LATE">Start verspätet
+                  <option value="RUNNING" translate="common.select.TaskNodeType.RUNNING">in Bearbeitung
+                  <option value="WARNING" translate="common.select.TaskNodeType.WARNING">Ende überschritten
+                  <option value="DONE" translate="common.select.TaskNodeType.ERLEDIGT">Erledigt
+                  <option value="CANCELED" translate="common.select.TaskNodeType.VERWORFEN">Verworfen
+             </select>
+             <span lang='tech' translate="editor.common.label.notPraefix">Not Praefix</span>
+             <input type="text" placeholder="Blacklisted" name="strNotNodePraefix" maxsize="40" class="inputtype_text" id="inputSearchOptionsStrNotNodePraefix" ng-model="searchOptions.strNotNodePraefix">
+          </div>
+        </div>
 
           <!-- 
           *****************************
@@ -118,7 +153,10 @@
                     <span translate="fancytree.table.headline.actions"></span>
                     <br />
                     <div class="fieldtype_sysToggler toggler_show">
-                      <a lang="tech" data-tooltip='tooltip.command.ToggleSysAll' id="toggler_sys_all" onclick="yaioAppBase.get('YaioExplorerAction').toggleAllNodeSysContainer(); return false;" href="#" class="toggler_hidden"></a>
+                      <a lang="tech" data-tooltip='tooltip.command.ToggleSysAll' id="toggler_sys_all" 
+                         onclick="yaioAppBase.get('YaioExplorerAction').toggleAllNodeSysContainer(); return false;" 
+                         href="#" class="toggler_hidden"
+                         ng-if="yaioUtils.getService('YaioAccessManager').getAvailiableNodeAction('showsysdata', null, true)"></a>
                     </div>
                   </th>
                 </tr>
@@ -126,7 +164,7 @@
               <tbody>
                 <tr ng-repeat="node in nodes | filter:search" id="tr{{node.sysUID}}" data-value="{{node.sysUID}}" class="">
                   <td>
-                      <span class="fancytree-expander" style="background: none"><a href='#/show/{{searchOptions.baseSysUID}}/activate/{{node.sysUID}}' class="yaio-icon-open"></a></span>
+                      <span class="fancytree-expander" style="background: none"><a href='#/show/{{searchOptions.baseSysUID}}/activate/{{node.sysUID}}/' class="yaio-icon-open"></a></span>
                       <span class="fancytree-checkbox"></span>
                       <span class="fancytree-title fancytree-title-list"></span>
                   </td>
@@ -135,8 +173,9 @@
                   <td class="container_field fieldtype_actions" >
                     <div class='fieldtype_sysToggler toggler_show'>
                         <a ng-click="yaioUtils.toggleSysContainerForNode(node);"
-                                id='toggler_sys_{{node.sysUID }}'
-                                class='' data-tooltip='tooltip.command.ToggleSys' lang='tech'></a>
+                           ng-if="yaioUtils.getService('YaioAccessManager').getAvailiableNodeAction('showsysdata', node.sysUID, true)"
+                           id='toggler_sys_{{node.sysUID }}'
+                           class='' data-tooltip='tooltip.command.ToggleSys' lang='tech'></a>
                      </div>
                   </td>
                 </tr>
@@ -160,7 +199,8 @@
         });    
         $( window ).scroll(function() {
             yaioAppBase.get('YaioLayout').setupAppSize();
-    });    
+        });
+        $(".use_select2").select2();
 
     }, 1000);
     

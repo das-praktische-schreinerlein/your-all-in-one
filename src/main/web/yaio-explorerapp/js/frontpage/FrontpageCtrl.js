@@ -27,7 +27,7 @@
  * <h4>FeatureKeywords:</h4>
  *     GUI Configuration
  */
-yaioApp.controller('FrontPageCtrl', function($rootScope, $scope, $location, $http, $routeParams, setFormErrors, OutputOptionsEditor, authorization, yaioUtils) {
+yaioApp.controller('FrontPageCtrl', function($rootScope, $scope, $location, $routeParams, setFormErrors, OutputOptionsEditor, authorization, yaioUtils) {
     'use strict';
 
     // include utils
@@ -40,15 +40,17 @@ yaioApp.controller('FrontPageCtrl', function($rootScope, $scope, $location, $htt
     }
     console.log("FrontPageCtrl - processing nodeId=" + nodeId);
     
+    $scope.frontpageNodeId = nodeId;
+    
     // call authentificate 
     authorization.authentificate(function () {
         // check authentification
         if (! $rootScope.authenticated) {
-            $location.path("/login");
+            $location.path(yaioUtils.getConfig().appLoginUrl);
             $scope.error = false;
         } else {
             // load data
-            $scope.frontPageUrl = '/exports/htmlfrontpagefragment/' + nodeId;
+            $scope.frontPageUrl = yaioUtils.getService('YaioAccessManager').getAvailiableNodeAction('frontpagebaseurl', nodeId, false);
         }
     });
 });

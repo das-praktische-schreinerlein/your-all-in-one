@@ -32,11 +32,14 @@ JsHelferlein.DetectorBase = function(appBase, config, defaultConfig) {
     };
     
     me.publishDetectorStyles = function() {
+        var svcDOMHelper = me.appBase.get("DOMHelper");
+        var svcLogger = me.appBase.get("Logger");
+        
         var styles = me.generateStyles();
-        me.appBase.get('DOMHelper').insertStyleBeforeScript(styles);
-        me.appBase.get('DOMHelper').appendStyleAtEnd(styles);
-        if (me.appBase.get('Logger') && me.appBase.get('Logger').isDebug) {
-            me.appBase.get('Logger').logDebug("JsHelferlein.DetectorBase.publishDetectorStyles " + styles);
+        svcDOMHelper.insertStyleBeforeScript(styles);
+        svcDOMHelper.appendStyleAtEnd(styles);
+        if (svcLogger && svcLogger.isDebug) {
+            svcLogger.logDebug("JsHelferlein.DetectorBase.publishDetectorStyles " + styles);
         }
     };
 

@@ -19,6 +19,7 @@ package de.yaio.rest.controller;
 import java.util.List;
 
 import de.yaio.core.node.BaseNode;
+import de.yaio.extension.datatransfer.json.CommonJSONResponse;
 
 /**
  * <h4>FeatureDomain:</h4>
@@ -33,16 +34,8 @@ import de.yaio.core.node.BaseNode;
  * @copyright Copyright (c) 2014, Michael Schreiner
  * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-public class NodeActionResponse {
+public class NodeActionResponse extends CommonJSONResponse {
     
-    /** the resulting state of the request OK/ERROR **/
-    public String state;
-    /** the corresponding message to the state **/
-    public String stateMsg;
-    /** the resulting node for the request (update/insert/move/show) **/
-    public BaseNode node;
-    /** the list of the parentSysUID from the resulting {@link NodeActionResponse#node} **/
-    public List<String> parentIdHierarchy;
     /** the list of the childNodes from the resulting {@link NodeActionResponse#node} **/
     public List<BaseNode> childNodes;
     /** a list {@link NodeViolation} while updating/creating/moving the resulting {@link NodeActionResponse#node} **/
@@ -70,69 +63,9 @@ public class NodeActionResponse {
                            final List<String> parentIdHierarchy, 
                            final List<BaseNode> childNodes,
                            final List<NodeViolation> violatons) {
-        super();
-        this.state = state;
-        this.stateMsg = stateMsg;
-        this.node = node;
-        this.parentIdHierarchy = parentIdHierarchy;
+        super(state, stateMsg, node, parentIdHierarchy);
         this.childNodes = childNodes;
         this.violations = violatons;
-    }
-
-    /**
-     * @return the {@link NodeActionResponse#state}
-     */
-    public String getState() {
-        return this.state;
-    }
-
-    /**
-     * @param state the {@link NodeActionResponse#state} to set
-     */
-    public void setState(final String state) {
-        this.state = state;
-    }
-
-    /**
-     * @return the {@link NodeActionResponse#stateMsg}
-     */
-    public String getStateMsg() {
-        return this.stateMsg;
-    }
-
-    /**
-     * @param stateMsg the {@link NodeActionResponse#stateMsg} to set
-     */
-    public void setStateMsg(final String stateMsg) {
-        this.stateMsg = stateMsg;
-    }
-
-    /**
-     * @return the {@link NodeActionResponse#node}
-     */
-    public BaseNode getNode() {
-        return this.node;
-    }
-
-    /**
-     * @param node the {@link NodeActionResponse#node} to set
-     */
-    public void setNode(final BaseNode node) {
-        this.node = node;
-    }
-
-    /**
-     * @return the {@link NodeActionResponse#parentIdHierarchy}
-     */
-    public List<String> getParentIdHierarchy() {
-        return this.parentIdHierarchy;
-    }
-
-    /**
-     * @param parentIdHierarchy the {@link NodeActionResponse#parentIdHierarchy} to set
-     */
-    public void setParentIdHierarchy(final List<String> parentIdHierarchy) {
-        this.parentIdHierarchy = parentIdHierarchy;
     }
 
     /**

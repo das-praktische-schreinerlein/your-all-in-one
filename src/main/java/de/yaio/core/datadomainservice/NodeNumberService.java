@@ -107,9 +107,10 @@ public interface NodeNumberService {
      *   </ul> 
      * <h4>FeatureKeywords:</h4>
      *     Config
-     * @param strPathIdDB - parth to the idFile
+     * @param strPathIdDB - path to the idFile
+     * @param forceReload - force reload
      * @throws Exception - parser/format/io-Exceptions possible
      */
-    void initNextNodeNumbersFromFile(String strPathIdDB) throws Exception;
+    void initNextNodeNumbersFromFile(String strPathIdDB, boolean forceReload) throws Exception;
 }
 
