@@ -83,7 +83,7 @@ public abstract class DataDomainServiceTest extends BaseTest {
      * @FeatureKeywords              Test
      * @param testObj                the dataobj to test
      * @param expectedAfterDoBeforeChildren the expected result after call doRecalcBeforeChildren
-     * @param expectedAfterDoAfterChildren - the expected result after call doRecalcAfterChildren
+     * @param expectedAfterDoAfterChildren the expected result after call doRecalcAfterChildren
      * @param recurseDirection       direction of recalc
      * @throws Exception             possible Exception     */
     public void testServiceDoRecalc(final TestObj testObj, 

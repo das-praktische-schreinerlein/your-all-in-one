@@ -30,10 +30,7 @@ public interface IstChildrenSumDataFormatter extends Formatter {
 
     /** 
      * formats DomainData: IstChildrenSumData and appends output to StringBuffer nodeOutput
-     * <h4>FeatureConditions:</h4>
-     * formatter runs only if options.flgShowChildrenSum is set<br>
-     * show brackets if options.flgShowBrackets is set<br>
-     * fill with whitespace to options.intendFuncArea
+     * @FeatureConditions            formatter runs only if options.flgShowChildrenSum is set<br> show brackets if options.flgShowBrackets is set<br> fill with whitespace to options.intendFuncArea
      * @FeatureDomain                Praesentation
      * @FeatureResult                appends to nodeOutput
      * @FeatureKeywords              Layout

@@ -43,6 +43,7 @@ function patchComments(content, srcpath) {
     
     // convert my own html-tags in comments to @-tags
     newContent = patchSingleBlock("FeatureDomain", newContent, true)
+    newContent = patchSingleBlock("FeatureConditions", newContent, true)
     newContent = patchSingleBlock("FeatureKeywords", newContent, true)
     newContent = patchSingleBlock("FeatureDescription", newContent, false)
     newContent = patchSingleBlock("FeatureResult", newContent, true)
@@ -53,6 +54,7 @@ function patchComments(content, srcpath) {
     newContent = deleteBlock("FeatureDescription", newContent)
 
     newContent = intendBlock("FeatureDomain", newContent, 30)
+    newContent = intendBlock("FeatureConditions", newContent, 30)
     newContent = intendBlock("FeatureKeywords", newContent, 30)
     newContent = intendBlock("FeatureResult", newContent, 30)
 
@@ -502,7 +504,7 @@ module.exports = function( grunt ){
                 },
                 files: [
                     // JS
-                    {expand: true, cwd: 'src/main', src: ['web/**/*.js', 'java/**/*.java'], dest: 'tmp/corrected/', flatten: false},
+                    {expand: true, cwd: 'src/main', src: ['web/**/*.js', 'web/**/*.css', 'java/**/*.java'], dest: 'tmp/corrected/', flatten: false},
                     {expand: true, cwd: 'src/test', src: ['javascript/**/*.js', 'java/**/*.java'], dest: 'tmp/corrected/', flatten: false},
                 ]
             },

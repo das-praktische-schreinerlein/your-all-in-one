@@ -342,11 +342,8 @@ public class WikiImporter extends ImporterImpl {
 
     /** 
      * filter only known NodeTypes from WikiStructLines
-     * <h4>FeatureCondition:</h4>
-     *   <ul>
-     * <li>flgWFStatesOnly - filter only node with this isWFState = true
-     * <li>ImportOptions.strReadIfStatusInListOnly - filter only node with this nodeTypeIdentifier
-     *   </ul> 
+     * @FeatureCondition             flgWFStatesOnly - filter only node with this isWFState = true
+     * @FeatureCondition             ImportOptions.strReadIfStatusInListOnly - filter only node with this nodeTypeIdentifier
      * @FeatureDomain                import
      * @FeatureResult                returnValue List<WikiStructLine> - list of filtered WikiStructLine
      * @FeatureKeywords              Parser
@@ -628,12 +625,9 @@ public class WikiImporter extends ImporterImpl {
     /** 
      * extracts the list of WikiStructLine from Wiki nodeSrc (several Lines)
      * normalize them with normalizeWikiStructLine and filter them if ImportOptions set
-     * <h4>FeatureCondition:</h4>
-     *   <ul>
-     * <li>ImportOptions.flgReadWithStatusOnly - call filterTaskNodesFromWikiStructLines
-     * <li>ImportOptions.flgReadWithWFStatusOnly - call filterTaskNodesFromWikiStructLines
-     * <li>ImportOptions.strReadIfStatusInListOnly - call filterTaskNodesFromWikiStructLines
-     *   </ul> 
+     * @FeatureCondition             ImportOptions.flgReadWithStatusOnly - call filterTaskNodesFromWikiStructLines
+     * @FeatureCondition             ImportOptions.flgReadWithWFStatusOnly - call filterTaskNodesFromWikiStructLines
+     * @FeatureCondition             ImportOptions.strReadIfStatusInListOnly - call filterTaskNodesFromWikiStructLines
      * @FeatureDomain                import
      * @FeatureResult                returnValue List<WikiStructLine> - list of extracted WikiStructLine
      * @FeatureKeywords              Parser

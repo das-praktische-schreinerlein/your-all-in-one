@@ -30,8 +30,7 @@ public interface DescDataFormatter extends Formatter {
 
     /** 
      * formats DomainData: DescData and appends output to StringBuffer nodeOutput
-     * <h4>FeatureConditions:</h4>
-     * formatter runs only if options.flgShowDesc is set
+     * @FeatureConditions            formatter runs only if options.flgShowDesc is set
      * @FeatureDomain                Praesentation
      * @FeatureResult                appends to nodeOutput
      * @FeatureKeywords              Layout

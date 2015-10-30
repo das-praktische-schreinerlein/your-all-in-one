@@ -1,10 +1,7 @@
 /**
-# * <h4>FeatureDomain:</h4>
-
- *     Collaboration
- * 
  * software for projectmanagement and documentation
  * 
+ * @FeatureDomain                Collaboration
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
  * @category                     collaboration
  * @copyright                    Copyright (c) 2014, Michael Schreiner

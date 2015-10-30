@@ -96,8 +96,7 @@ public interface Parser extends Comparable<Parser> {
 
     /** 
      * parses DataDomain-data from the nodename
-     * <h4>FeatureConditions:</h4>
-     * must not be implemented direct, but should call separate function
+     * @FeatureConditions            must not be implemented direct, but should call separate function
      * @FeatureDomain                DataImport
      * @FeatureResult                returnValue int - count elements found
      * @FeatureResult                updates memberVariable node.name - found Pattern are deleted

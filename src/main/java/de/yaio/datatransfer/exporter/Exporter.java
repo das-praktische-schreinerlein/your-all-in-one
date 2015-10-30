@@ -60,9 +60,7 @@ public interface Exporter {
      * runs all with Exporter#initDataDomainFormatter() configured formatter 
      * for the DataDomains of node<br>
      * appends the output to the StringBuffer nodeOutput
-     * <h4>FeatureConditions:</h4>
-     * formatter must be configured for the DataDomain of the node (Formatter.getTargetClass)<br>
-     * oOptions must be set for the formatter 
+     * @FeatureConditions            formatter must be configured for the DataDomain of the node (Formatter.getTargetClass)<br> oOptions must be set for the formatter 
      * @FeatureDomain                DataExport Presentation
      * @FeatureResult                updates nodeOutput - appends output of the formatter
      * @FeatureKeywords              Layout
@@ -77,9 +75,7 @@ public interface Exporter {
     /** 
      * runs the formatter for the DataDomain (node)<br>
      * appends the output to the StringBuffer nodeOutput
-     * <h4>FeatureConditions:</h4>
-     * formatter must be configured for the DataDomain of the node (Formatter.getTargetClass)<br>
-     * oOptions must be set for the formatter 
+     * @FeatureConditions            formatter must be configured for the DataDomain of the node (Formatter.getTargetClass)<br> oOptions must be set for the formatter 
      * @FeatureDomain                DataExport Presentation
      * @FeatureResult                updates nodeOutput - appends output of the formatter
      * @FeatureKeywords              Layout
@@ -111,8 +107,7 @@ public interface Exporter {
 
     /** 
      * formats recursively masterNode and all childnodes (runs formatter)
-     * <h4>FeatureConditions:</h4>
-     * oOptions must be set for the formatter 
+     * @FeatureConditions            oOptions must be set for the formatter 
      * @FeatureDomain                DataExport Presentation
      * @FeatureResult                returnValue StringBuffer - formatted output of the Node-hierarchy
      * @FeatureKeywords              Layout

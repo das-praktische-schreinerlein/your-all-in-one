@@ -104,7 +104,7 @@ public abstract class DataDomainTest extends BaseTest {
      * @FeatureKeywords              Test
      * @param myDataDomainObj        the dataobj to test
      * @param myExpectedParserResult the expected result
-     * @param myImportOptions - Importoptions for the parser
+     * @param myImportOptions        Importoptions for the parser
      * @throws Exception             io-Exceptions possible
      */
     public void testParser(final DataDomain myDataDomainObj, final String myExpectedParserResult, 
@@ -142,7 +142,7 @@ public abstract class DataDomainTest extends BaseTest {
      * @FeatureKeywords              Test
      * @param myDataDomainObj        the dataobj to test
      * @param myExpectedFormatterResult the expected result
-     * @param myOutputOptions - outputoptions for the formatter
+     * @param myOutputOptions        outputoptions for the formatter
      * @throws Exception             io-Exceptions possible
      */
     public void testFormatter(final DataDomain myDataDomainObj, final String myExpectedFormatterResult, 

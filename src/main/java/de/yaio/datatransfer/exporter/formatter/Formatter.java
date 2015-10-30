@@ -50,9 +50,7 @@ public interface Formatter extends Comparable<Formatter> {
 
     /** 
      * formats DomainData and appends output to StringBuffer nodeOutput
-     * <h4>FeatureConditions:</h4>
-     * formatter runs only if options.flgShow* for DataDomain is set<br>
-     * must not be implemented direct, but should call separate function
+     * @FeatureConditions            formatter runs only if options.flgShow* for DataDomain is set<br> must not be implemented direct, but should call separate function
      * @FeatureDomain                Praesentation
      * @FeatureResult                appends to nodeOutput
      * @FeatureKeywords              Layout

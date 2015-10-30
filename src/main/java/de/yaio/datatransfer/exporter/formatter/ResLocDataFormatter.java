@@ -30,9 +30,7 @@ public interface ResLocDataFormatter extends Formatter {
 
     /** 
      * formats DomainData: ResLocData and appends output to StringBuffer nodeOutput
-     * <h4>FeatureConditions:</h4>
-     * formatter runs only if options.flgShowResLoc is set<br>
-     * show brackets if options.flgShowBrackets is set
+     * @FeatureConditions            formatter runs only if options.flgShowResLoc is set<br> show brackets if options.flgShowBrackets is set
      * @FeatureDomain                Praesentation
      * @FeatureResult                appends to nodeOutput
      * @FeatureKeywords              Layout
