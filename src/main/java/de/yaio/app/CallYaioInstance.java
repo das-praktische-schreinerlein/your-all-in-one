@@ -156,7 +156,7 @@ public abstract class CallYaioInstance extends CmdLineJob {
      * @param request                the request to execute
      * @return                       http-response
      * @throws ClientProtocolException possible
-     * @throws IOException             - possible
+     * @throws IOException           possible
      */
     protected HttpResponse executeRequest(final HttpUriRequest request) 
                     throws ClientProtocolException, IOException {

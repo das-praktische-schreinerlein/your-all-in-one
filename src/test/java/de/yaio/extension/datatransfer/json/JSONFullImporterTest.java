@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -26,17 +23,15 @@ import de.yaio.datatransfer.importer.Importer;
 import de.yaio.extension.datatransfer.wiki.WikiImportOptions;
 import de.yaio.extension.datatransfer.wiki.WikiImporterTest;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     Tests
- * <h4>FeatureDescription:</h4>
- *     test of the wiki-importer-logic<br>
+/** 
+ * test of the wiki-importer-logic<br>
  * 
- * @package de.yaio.extension.datatransfer.wiki
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category tests
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Tests
+ * @package                      de.yaio.extension.datatransfer.wiki
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     tests
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 
 @RunWith(JUnit4.class)
@@ -59,16 +54,13 @@ public class JSONFullImporterTest extends WikiImporterTest {
         testImportFromFixture("FixtureJSONFullImportSource.json", "FixtureJSONFullImportResult.txt"); 
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tests
-     * <h4>FeatureDescription:</h4>
-     *     parse the source and compare the result with expectedResult 
-     * <h4>FeatureKeywords:</h4>
-     *     Test
-     * @param source - the lines to parse
-     * @param expectedResult - the expected ppl-lines from parser
-     * @throws Exception - io-Exceptions possible
+    /** 
+     * parse the source and compare the result with expectedResult 
+     * @FeatureDomain                Tests
+     * @FeatureKeywords              Test
+     * @param source                 the lines to parse
+     * @param expectedResult         the expected ppl-lines from parser
+     * @throws Exception             io-Exceptions possible
      */
     public void testImport(final String source, final String expectedResult) throws Exception {
         // configure Importer

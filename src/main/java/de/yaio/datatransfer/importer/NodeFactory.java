@@ -56,7 +56,7 @@ public interface NodeFactory {
      * @FeatureDomain                DataImport
      * @FeatureKeywords              Config
      * @param constMapNodetypeIdentifier Liste der Schlagworte (Typ, Status usw.)
-     * @param classType - Klasse (Node) die bei Auffinden des Schlagwortes instanziiert wird
+     * @param classType              Klasse (Node) die bei Auffinden des Schlagwortes instanziiert wird
      */
     void addNodeTypeIdentifier(Map<String, String> constMapNodetypeIdentifier,
             Class<?> classType);

@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -45,17 +42,15 @@ import de.yaio.app.Configurator;
 import de.yaio.core.datadomainservice.NodeNumberService;
 import de.yaio.core.node.BaseNode;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     Tests
- * <h4>FeatureDescription:</h4>
- *     test: RESTFull webservices
+/** 
+ * test: RESTFull webservices
  * 
- * @package de.yaio.rest.controller
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category tests
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Tests
+ * @package                      de.yaio.rest.controller
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     tests
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 @ContextConfiguration("/META-INF/spring/defaultApplicationContext.xml")
 public abstract class BaseNodeRestControllerTest  extends BaseTest {
@@ -109,14 +104,11 @@ public abstract class BaseNodeRestControllerTest  extends BaseTest {
      ***********************    
      ***********************/
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     TestService-function
-     * <h4>FeatureDescription:</h4>
-     *     test the node-life-cycle (create, show, update, delete) of a TaskNode
-     * <h4>FeatureKeywords:</h4>
-     *     Test
-     * @throws Exception - io-Exceptions possible
+    /** 
+     * test the node-life-cycle (create, show, update, delete) of a TaskNode
+     * @FeatureDomain                TestService-function
+     * @FeatureKeywords              Test
+     * @throws Exception             io-Exceptions possible
      */
     @Test
     public void doTestNodeLifeCycle() throws Exception {
@@ -136,15 +128,12 @@ public abstract class BaseNodeRestControllerTest  extends BaseTest {
      ***********************/
 
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Test
-     * <h4>FeatureDescription:</h4>
-     *     service-function to test the node-life-cycle (create, show, update, delete)
-     * <h4>FeatureKeywords:</h4>
-     *     Test-servicefunction
-     * @param node - the node to create, show, update, delete
-     * @throws Exception - io-Exceptions possible
+    /** 
+     * service-function to test the node-life-cycle (create, show, update, delete)
+     * @FeatureDomain                Test
+     * @FeatureKeywords              Test-servicefunction
+     * @param node                   the node to create, show, update, delete
+     * @throws Exception             io-Exceptions possible
      */
     public void testNodeLifeCycle(final BaseNode node) throws Exception {
         // create node
@@ -166,16 +155,13 @@ public abstract class BaseNodeRestControllerTest  extends BaseTest {
     }
     
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Test
-     * <h4>FeatureDescription:</h4>
-     *     service-function to test the response for getting a node
-     * <h4>FeatureKeywords:</h4>
-     *     Test-servicefunction
-     * @param id - id of the requested node
-     * @param name - name of the requested node
-     * @throws Exception - io-Exceptions possible
+    /** 
+     * service-function to test the response for getting a node
+     * @FeatureDomain                Test
+     * @FeatureKeywords              Test-servicefunction
+     * @param id                     id of the requested node
+     * @param name                   name of the requested node
+     * @throws Exception             io-Exceptions possible
      */
     public void testShowNode(final String id, final String name) throws Exception {
         // request
@@ -188,31 +174,25 @@ public abstract class BaseNodeRestControllerTest  extends BaseTest {
            .andExpect(jsonPath("$.node.sysUID", is(id)));
     }
         
-     /**
-     * <h4>FeatureDomain:</h4>
-     *     Tests
-     * <h4>FeatureDescription:</h4>
-     *     do test the response for getting the masternode
-     * <h4>FeatureKeywords:</h4>
-     *     Test-servicefunction
-     * @throws Exception - io-Exceptions possible
+     /** 
+     * do test the response for getting the masternode
+     * @FeatureDomain                Tests
+     * @FeatureKeywords              Test-servicefunction
+     * @throws Exception             io-Exceptions possible
      */
     public void testShowMasternode() throws Exception {
         // request
         testShowNode(CONST_MASTERNODE_ID, "Masterplan");
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Test
-     * <h4>FeatureDescription:</h4>
-     *     service-function to test the response for creating a node as child of the parentId
-     * <h4>FeatureKeywords:</h4>
-     *     Test-servicefunction
-     * @param parentId - parentId of the new task
-     * @param node - the node to create
-     * @return - the sysUID of the new node
-     * @throws Exception - io-Exceptions possible
+    /** 
+     * service-function to test the response for creating a node as child of the parentId
+     * @FeatureDomain                Test
+     * @FeatureKeywords              Test-servicefunction
+     * @param parentId               parentId of the new task
+     * @param node                   the node to create
+     * @return                       the sysUID of the new node
+     * @throws Exception             io-Exceptions possible
      */
     public String testCreateNode(final String parentId, final BaseNode node) throws Exception {
         // request
@@ -239,16 +219,13 @@ public abstract class BaseNodeRestControllerTest  extends BaseTest {
         return sysUID;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Test
-     * <h4>FeatureDescription:</h4>
-     *     service-function to test the response for updating a node
-     * <h4>FeatureKeywords:</h4>
-     *     Test-servicefunction
-     * @param node - the node to update on db
-     * @return the ResultActions for more checks
-     * @throws Exception - io-Exceptions possible
+    /** 
+     * service-function to test the response for updating a node
+     * @FeatureDomain                Test
+     * @FeatureKeywords              Test-servicefunction
+     * @param node                   the node to update on db
+     * @return                       the ResultActions for more checks
+     * @throws Exception             io-Exceptions possible
      */
     public ResultActions testUpdateNode(final BaseNode node) throws Exception {
         // request
@@ -271,16 +248,13 @@ public abstract class BaseNodeRestControllerTest  extends BaseTest {
         return res;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tests
-     * <h4>FeatureDescription:</h4>
-     *     service-function to test the response for deleting a node
-     * <h4>FeatureKeywords:</h4>
-     *     Test-servicefunction
-     * @param sysuID - sysuID of the node to delete
-     * @return the ResultActions for more checks
-     * @throws Exception - io-Exceptions possible
+    /** 
+     * service-function to test the response for deleting a node
+     * @FeatureDomain                Tests
+     * @FeatureKeywords              Test-servicefunction
+     * @param sysuID                 sysuID of the node to delete
+     * @return                       the ResultActions for more checks
+     * @throws Exception             io-Exceptions possible
      */
     public ResultActions testDeleteNode(final String sysuID) throws Exception {
         // request
@@ -300,16 +274,13 @@ public abstract class BaseNodeRestControllerTest  extends BaseTest {
      ***********************    
      ***********************/
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tests
-     * <h4>FeatureDescription:</h4>
-     *     service-function to test the standardchecks for the request
-     * <h4>FeatureKeywords:</h4>
-     *     Test-servicefunction
-     * @param rb - the reseust to test
-     * @return - the response for more checks
-     * @throws Exception - io-Exception possible
+    /** 
+     * service-function to test the standardchecks for the request
+     * @FeatureDomain                Tests
+     * @FeatureKeywords              Test-servicefunction
+     * @param rb                     the reseust to test
+     * @return                       the response for more checks
+     * @throws Exception             io-Exception possible
      */
     public ResultActions testBaseRequest(final MockHttpServletRequestBuilder rb) throws Exception {
         // ask
@@ -345,16 +316,13 @@ public abstract class BaseNodeRestControllerTest  extends BaseTest {
         return res;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tests
-     * <h4>FeatureDescription:</h4>
-     *     convert the obj to json to put it as request-parameter to the webservice
-     * <h4>FeatureKeywords:</h4>
-     *     Test-servicefunction
-     * @param object - the object to convert
-     * @return json for the request
-     * @throws IOException - io-Exceptions possible
+    /** 
+     * convert the obj to json to put it as request-parameter to the webservice
+     * @FeatureDomain                Tests
+     * @FeatureKeywords              Test-servicefunction
+     * @param object                 the object to convert
+     * @return                       json for the request
+     * @throws IOException           io-Exceptions possible
      */
     public static byte[] convertObjectToJsonBytes(final Object object) throws IOException {
         ObjectMapper mapper = new ObjectMapper();

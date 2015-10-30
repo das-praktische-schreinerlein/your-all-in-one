@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -25,17 +22,15 @@ import org.apache.log4j.Logger;
 
 import de.yaio.BaseTest.TestObj;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     Tests
- * <h4>FeatureDescription:</h4>
- *     services for tests<br>
+/** 
+ * services for tests<br>
  * 
- * @package de.yaio
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category tests
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Tests
+ * @package                      de.yaio
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     tests
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 
 public class TestServices {
@@ -44,16 +39,13 @@ public class TestServices {
     private static final Logger LOGGER =
             Logger.getLogger(TestServices.class);
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tests
-     * <h4>FeatureDescription:</h4>
-     *     compares the resulting dataobj.toString with myExpecteResult
-     * <h4>FeatureKeywords:</h4>
-     *     Test Service
-     * @param myTestObj - the dataobj to test
-     * @param myExpectedResult - the expected result
-     * @throws Exception - io-Exceptions possible
+    /** 
+     * compares the resulting dataobj.toString with myExpecteResult
+     * @FeatureDomain                Tests
+     * @FeatureKeywords              Test Service
+     * @param myTestObj              the dataobj to test
+     * @param myExpectedResult       the expected result
+     * @throws Exception             io-Exceptions possible
      */
     public void checkToStringResult(final TestObj myTestObj, 
                     final String myExpectedResult) throws Exception {
@@ -66,16 +58,13 @@ public class TestServices {
         assertEquals(myExpectedResult, myTestObj.toString());
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tests
-     * <h4>FeatureDescription:</h4>
-     *     compares the resulting string line by line with myExpecteResult
-     * <h4>FeatureKeywords:</h4>
-     *     Test Service
-     * @param result - the string to test
-     * @param myExpectedResult - the expected result
-     * @throws Exception - io-Exceptions possible
+    /** 
+     * compares the resulting string line by line with myExpecteResult
+     * @FeatureDomain                Tests
+     * @FeatureKeywords              Test Service
+     * @param result                 the string to test
+     * @param myExpectedResult       the expected result
+     * @throws Exception             io-Exceptions possible
      */
     public void checkStringLineByLine(final String result, final String myExpectedResult) 
                     throws Exception {
@@ -105,17 +94,14 @@ public class TestServices {
 //                     "Size: " + result.length());
     }
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tests
-     * <h4>FeatureDescription:</h4>
-     *     read the fixture-file from package-resource 
-     * <h4>FeatureKeywords:</h4>
-     *     FileUtil
-     * @param base - base to get the packagepath for srcFile
-     * @param srcFile - file to load from package
-     * @return - resulting filecontent
-     * @throws Exception - io-Exceptions possible
+    /** 
+     * read the fixture-file from package-resource 
+     * @FeatureDomain                Tests
+     * @FeatureKeywords              FileUtil
+     * @param base                   base to get the packagepath for srcFile
+     * @param srcFile                file to load from package
+     * @return                       resulting filecontent
+     * @throws Exception             io-Exceptions possible
      */
     public StringBuffer readFixture(final Class<?> base, final String srcFile) throws Exception {
         // open resource

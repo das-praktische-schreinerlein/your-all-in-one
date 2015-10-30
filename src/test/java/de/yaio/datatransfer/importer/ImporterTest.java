@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -25,17 +22,15 @@ import de.yaio.BaseTest;
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.node.BaseNode;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     Tests
- * <h4>FeatureDescription:</h4>
- *     test of the importer-logic<br>
+/** 
+ * test of the importer-logic<br>
  * 
- * @package de.yaio.datatransfer.importer
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category tests
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Tests
+ * @package                      de.yaio.datatransfer.importer
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     tests
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 
 @RunWith(JUnit4.class)
@@ -44,17 +39,15 @@ public class ImporterTest extends BaseTest {
 
     protected Importer importerObj = null;
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Test
-     * <h4>FeatureDescription:</h4>
-     *     testobject for importer-logic
+    /** 
+     * testobject for importer-logic
      * 
-     * @package de.yaio.datatransfer.importer
-     * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
-     * @category tests
-     * @copyright Copyright (c) 2014, Michael Schreiner
-     * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+     * @FeatureDomain                Test
+     * @package                      de.yaio.datatransfer.importer
+     * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+     * @category                     tests
+     * @copyright                    Copyright (c) 2014, Michael Schreiner
+     * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
      */
     public class ImporterTestObj implements TestObj {
         
@@ -84,18 +77,12 @@ public class ImporterTest extends BaseTest {
         importer.addNodeTypeIdentifierVariantMapping(TestNode.CONST_MAP_NODETYPE_IDENTIFIER);
     }
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tests
-     * <h4>FeatureDescription:</h4>
-     *     configure the importer for the tests
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>updates membervars importerObj - Importer
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Test Configuration
-     * @throws Exception - possible Exception     */
+    /** 
+     * configure the importer for the tests
+     * @FeatureDomain                Tests
+     * @FeatureResult                updates membervars importerObj - Importer
+     * @FeatureKeywords              Test Configuration
+     * @throws Exception             possible Exception     */
     @Before
     public void setupImporter() throws Exception {
         importerObj = new ImporterImpl(null);
@@ -106,14 +93,11 @@ public class ImporterTest extends BaseTest {
     }
     
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tests
-     * <h4>FeatureDescription:</h4>
-     *     do tests for creation of nodes from text
-     * <h4>FeatureKeywords:</h4>
-     *     Test
-     * @throws Exception - possible Exception     */
+    /** 
+     * do tests for creation of nodes from text
+     * @FeatureDomain                Tests
+     * @FeatureKeywords              Test
+     * @throws Exception             possible Exception     */
     @Test
     public void testCreateNode() throws Exception {
         String expected = null;
