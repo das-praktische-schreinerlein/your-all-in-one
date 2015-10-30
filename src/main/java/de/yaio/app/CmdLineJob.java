@@ -20,12 +20,12 @@ import org.apache.log4j.Logger;
 
 
 /** 
- * baseclass for commandlinejobs
- * <h4>must be implemented:</h4>
+ * baseclass for commandlinejobs<br>
+ * must be implemented:<br>
  * <ul>
  * <li>validateCmdLine
  * </ul>
- * <h1>to configure:</h1>
+ * to configure:<br>
  * <ul>
  * <li>genAvailiableCmdLineOptions
  * </ul>
