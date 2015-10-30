@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -30,18 +27,12 @@ JsHelferlein.UIToggler = function(appBase) {
     // init all
     me._init();
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Layout Toggler
-     * <h4>FeatureDescription:</h4>
-     *     Toggle the specified ojects with a fade. 
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>Updates DOM
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Tree Rendering
-     * @param id - JQuery-Filter (html.id, style, objectlist...) 
+    /** 
+     * Toggle the specified ojects with a fade. 
+     * @FeatureDomain                Layout Toggler
+     * @FeatureResult                Updates DOM
+     * @FeatureKeywords              GUI Tree Rendering
+     * @param id                     JQuery-Filter (html.id, style, objectlist...) 
      */
     me.toggleTableBlock = function(id) {
         // get effect type from
@@ -60,16 +51,14 @@ JsHelferlein.UIToggler = function(appBase) {
         me.$( id ).toggle( selectedEffect, options, 500 );
     };
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     WebGUI
-     * <h4>FeatureDescription:</h4>
-     *     layout-servicefunctions
-     *      
-     * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
-     * @category collaboration
-     * @copyright Copyright (c) 2014, Michael Schreiner
-     * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+    /** 
+     * layout-servicefunctions
+     *  
+     * @FeatureDomain                WebGUI
+     * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+     * @category                     collaboration
+     * @copyright                    Copyright (c) 2014, Michael Schreiner
+     * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
      */
     
     me.togglePreWrap = function(element) {
@@ -95,18 +84,12 @@ JsHelferlein.UIToggler = function(appBase) {
        }
     };
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Layout Toggler
-     * <h4>FeatureDescription:</h4>
-     *     Toggle the specified ojects with a drop. 
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>Updates DOM
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Tree Rendering
-     * @param id - JQuery-Filter (html.id, style, objectlist...) 
+    /** 
+     * Toggle the specified ojects with a drop. 
+     * @FeatureDomain                Layout Toggler
+     * @FeatureResult                Updates DOM
+     * @FeatureKeywords              GUI Tree Rendering
+     * @param id                     JQuery-Filter (html.id, style, objectlist...) 
      */
     me.toggleElement = function(id) {
         // get effect type from

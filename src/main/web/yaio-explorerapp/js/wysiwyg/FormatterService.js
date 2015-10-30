@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -20,16 +17,14 @@
 /* require '/js/marked' */
 /* require '/freemind-flash' */
 
-/**
- * <h4>FeatureDomain:</h4>
- *     WebGUI
- * <h4>FeatureDescription:</h4>
- *     servicefunctions for formatting (markdown, diagramms, mindmaps..)
- *      
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+/** 
+ * servicefunctions for formatting (markdown, diagramms, mindmaps..)
+ *  
+ * @FeatureDomain                WebGUI
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 Yaio.FormatterService = function(appBase) {
     'use strict';
@@ -86,21 +81,15 @@ Yaio.FormatterService = function(appBase) {
         }
     };
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     GUI
-     * <h4>FeatureDescription:</h4>
-     *     format the descText as Markdown
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue String - formatted markdown
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Layout
-     * @param descText - the string to format
-     * @param flgHighlightNow - if is set do syntax-highlighting while markdown-processing, if not set do it later
-     * @param headerPrefix - headerPrefix for heading-ids
-     * @return {String} - formatted markdown
+    /** 
+     * format the descText as Markdown
+     * @FeatureDomain                GUI
+     * @FeatureResult                returnValue String - formatted markdown
+     * @FeatureKeywords              Layout
+     * @param descText               the string to format
+     * @param flgHighlightNow        if is set do syntax-highlighting while markdown-processing, if not set do it later
+     * @param headerPrefix           headerPrefix for heading-ids
+     * @return                       {String} - formatted markdown
      */
     me.formatMarkdown = function(descText, flgHighlightNow, headerPrefix) {
         // prepare descText
@@ -181,20 +170,14 @@ Yaio.FormatterService = function(appBase) {
         return descHtmlMarked;
     };
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     GUI
-     * <h4>FeatureDescription:</h4>
-     *     prepare the text to format as markdown
-     *     prefix empty lines inline code-segs (```) so that they will interpreted as codeline by markdown-parser
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue String - prepared text
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Layout
-     * @param descText   the string to prepare
-     * @return {String}  prepared text to format as markdown
+    /** 
+     * prepare the text to format as markdown
+     * prefix empty lines inline code-segs (```) so that they will interpreted as codeline by markdown-parser
+     * @FeatureDomain                GUI
+     * @FeatureResult                returnValue String - prepared text
+     * @FeatureKeywords              Layout
+     * @param descText               the string to prepare
+     * @return                       {String}  prepared text to format as markdown
      */
     me.prepareTextForMarkdown = function(descText) {
         // prepare descText
@@ -247,23 +230,17 @@ Yaio.FormatterService = function(appBase) {
     };
     
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     GUI
-     * <h4>FeatureDescription:</h4>
-     *     format the block-content as mindmap. 
-     *     <ul>
-     *     <li>creates a FlashObject /dist/vendors.vendorversion/freemind-flash/visorFreemind.swf
-     *     <li>Calls /converters/mindmap with the html-content of the block
-     *     <li>insert the returning flash-object into block-element 
-     *     
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue shows Freemind-Flashviewer with the mindmap-content of block
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Layout
-     * @param block - jquery-html-element with the content to convert to mindmap 
+    /** 
+     * format the block-content as mindmap. 
+     * <ul>
+     * <li>creates a FlashObject /dist/vendors.vendorversion/freemind-flash/visorFreemind.swf
+     * <li>Calls /converters/mindmap with the html-content of the block
+     * <li>insert the returning flash-object into block-element 
+     * 
+     * @FeatureDomain                GUI
+     * @FeatureResult                returnValue shows Freemind-Flashviewer with the mindmap-content of block
+     * @FeatureKeywords              Layout
+     * @param block                  jquery-html-element with the content to convert to mindmap 
      */
     me.formatYaioMindmap = function(block) {
         var content = me.$(block).html();
@@ -354,21 +331,15 @@ Yaio.FormatterService = function(appBase) {
         return url;
     }
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     GUI
-     * <h4>FeatureDescription:</h4>
-     *     format the block-content as plantuml. 
-     *     <ul>
-     *     <li>creates a Img-Tag with src "http://www.plantuml.com/plantuml/img/
-     *     
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue shows Img with the plantuml-content of block
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Layout
-     * @param block - jquery-html-element with the content to convert to plantuml
+    /** 
+     * format the block-content as plantuml. 
+     * <ul>
+     * <li>creates a Img-Tag with src "http://www.plantuml.com/plantuml/img/
+     * 
+     * @FeatureDomain                GUI
+     * @FeatureResult                returnValue shows Img with the plantuml-content of block
+     * @FeatureKeywords              Layout
+     * @param block                  jquery-html-element with the content to convert to plantuml
      */
     me.formatYaioyaioPlantuml = function(block) {
         var blockId = me.$(block).attr('id');
@@ -378,17 +349,11 @@ Yaio.FormatterService = function(appBase) {
         me.$(block).html('<img class="yaioplantuml" src="'+ url + '" id="' + blockId + 'Img">');
     };
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     GUI
-     * <h4>FeatureDescription:</h4>
-     *     calls the global mermaid-formatter
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>formats all divs with class=mermaid
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Layout
+    /** 
+     * calls the global mermaid-formatter
+     * @FeatureDomain                GUI
+     * @FeatureResult                formats all divs with class=mermaid
+     * @FeatureKeywords              Layout
      */
     me.formatMermaidGlobal = function() {
         mermaid.parseError = function(err,hash){
@@ -402,20 +367,14 @@ Yaio.FormatterService = function(appBase) {
         }
     };
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     GUI
-     * <h4>FeatureDescription:</h4>
-     *     prepare the text to format as mermaid
-     *     delete .
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue String - prepared text
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Layout
-     * @param descText   the string to prepare
-     * @return {String}  prepared text to format with mermaid
+    /** 
+     * prepare the text to format as mermaid
+     * delete .
+     * @FeatureDomain                GUI
+     * @FeatureResult                returnValue String - prepared text
+     * @FeatureKeywords              Layout
+     * @param descText               the string to prepare
+     * @return                       {String}  prepared text to format with mermaid
      */
     me.prepareTextForMermaid = function(descText) {
         // prepare descText
@@ -424,19 +383,13 @@ Yaio.FormatterService = function(appBase) {
         return newDescText;
     };
         
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     GUI
-     * <h4>FeatureDescription:</h4>
-     *     convert the markdown-text to jira-format
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue String - jira-converted text
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Convert
-     * @param descText  the string to prepare
-     * @return {String} markdown-text in jira-format
+    /** 
+     * convert the markdown-text to jira-format
+     * @FeatureDomain                GUI
+     * @FeatureResult                returnValue String - jira-converted text
+     * @FeatureKeywords              Convert
+     * @param descText               the string to prepare
+     * @return                       {String} markdown-text in jira-format
      */
     me.convertMarkdownToJira = function(descText) {
         // prepare descText
@@ -475,20 +428,14 @@ Yaio.FormatterService = function(appBase) {
         return newDescText;
     };
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     GUI
-     * <h4>FeatureDescription:</h4>
-     *     executes mermaid, highlight and checklist-formatter on the block,
-     *     return a flag if a mermaid-block is found an mermaid should be executed
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue Boolean - flag if a Mermaid-Block is found and mermaid should be executed
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Convert
-     * @param descBlock - id-filter to identify the block to format
-     * @return {boolean} - flag if a Mermaid-Block is found and mermaid should be executed
+    /** 
+     * executes mermaid, highlight and checklist-formatter on the block,
+     * return a flag if a mermaid-block is found an mermaid should be executed
+     * @FeatureDomain                GUI
+     * @FeatureResult                returnValue Boolean - flag if a Mermaid-Block is found and mermaid should be executed
+     * @FeatureKeywords              Convert
+     * @param descBlock              id-filter to identify the block to format
+     * @return                       {boolean} - flag if a Mermaid-Block is found and mermaid should be executed
      */
     me.formatDescBlock = function(descBlock) {
         var flgDoMermaid = false;
@@ -551,18 +498,12 @@ Yaio.FormatterService = function(appBase) {
         return flgDoMermaid;
     };
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     GUI
-     * <h4>FeatureDescription:</h4>
-     *     executes checklist-formatter (add span with checklist-Styles) on the block [use me.checkListConfigs]
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>updates DOM
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Convert
-     * @param descBlock - id-filter to identify the block to format
+    /** 
+     * executes checklist-formatter (add span with checklist-Styles) on the block [use me.checkListConfigs]
+     * @FeatureDomain                GUI
+     * @FeatureResult                updates DOM
+     * @FeatureKeywords              Convert
+     * @param descBlock              id-filter to identify the block to format
      */
     me.highlightCheckList = function(descBlock) {
         var descBlockId = me.$(descBlock).attr('id');
@@ -575,21 +516,15 @@ Yaio.FormatterService = function(appBase) {
         }
     };
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     GUI
-     * <h4>FeatureDescription:</h4>
-     *     executes checklist-formatter (add span with checklistFormat) with style and styleclass for all matchers "[XXX]" on descBlock
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>updates DOM
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Convert
-     * @param descBlock  - id-filter to identify the block to format
-     * @param matchers   - list of matcher which will call as stringfilter of "[" + matcher + "]" to identify checklist-entry
-     * @param styleClass - styleClass to add to span for matcher found 
-     * @param style      - style to add to new span for matcher found
+    /** 
+     * executes checklist-formatter (add span with checklistFormat) with style and styleclass for all matchers "[XXX]" on descBlock
+     * @FeatureDomain                GUI
+     * @FeatureResult                updates DOM
+     * @FeatureKeywords              Convert
+     * @param descBlock              id-filter to identify the block to format
+     * @param matchers               list of matcher which will call as stringfilter of "[" + matcher + "]" to identify checklist-entry
+     * @param styleClass             styleClass to add to span for matcher found 
+     * @param style                  style to add to new span for matcher found
      */
     me.highlightCheckListForMatchers = function(descBlock, matchers, styleClass, style) {
         var descBlockId = me.$(descBlock).attr('id');
@@ -599,21 +534,15 @@ Yaio.FormatterService = function(appBase) {
         }
     };
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     GUI
-     * <h4>FeatureDescription:</h4>
-     *     executes checklist-formatter (add span with checklistFormat) with style and styleclass for all matchers "[XXX]" on descBlock
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>updates DOM
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Convert
-     * @param descBlock  - id-filter to identify the block to format
-     * @param matcherStr - matcher will call as stringfilter to identify checklist-entry
-     * @param styleClass - styleClass to add to span for matcher found 
-     * @param style      - style to add to new span for matcher found
+    /** 
+     * executes checklist-formatter (add span with checklistFormat) with style and styleclass for all matchers "[XXX]" on descBlock
+     * @FeatureDomain                GUI
+     * @FeatureResult                updates DOM
+     * @FeatureKeywords              Convert
+     * @param descBlock              id-filter to identify the block to format
+     * @param matcherStr             matcher will call as stringfilter to identify checklist-entry
+     * @param styleClass             styleClass to add to span for matcher found 
+     * @param style                  style to add to new span for matcher found
      */
     me.highlightCheckListForMatcher = function(descBlock, matcherStr, styleClass, style) {
         var descBlockId = me.$(descBlock).attr('id');
@@ -637,19 +566,13 @@ Yaio.FormatterService = function(appBase) {
         });
     };
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     GUI
-     * <h4>FeatureDescription:</h4>
-     *     extract data from explorerlines (table.fancytree-ext-table tr) and format 
-     *     them as linked markdown-checklists ([state] - [title](yaio:number)
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>return String - checklist in yaio-markdown-format
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Convert
-     * @return {String}  checklist in yaio-markdown-format
+    /** 
+     * extract data from explorerlines (table.fancytree-ext-table tr) and format 
+     * them as linked markdown-checklists ([state] - [title](yaio:number)
+     * @FeatureDomain                GUI
+     * @FeatureResult                return String - checklist in yaio-markdown-format
+     * @FeatureKeywords              Convert
+     * @return                       {String}  checklist in yaio-markdown-format
      */
     me.convertExplorerLinesAsCheckList = function() {
         // get title
@@ -743,19 +666,13 @@ Yaio.FormatterService = function(appBase) {
         return null;
     };
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     GUI
-     * <h4>FeatureDescription:</h4>
-     *     extract data from explorerlines (table.fancytree-ext-table tr) and format 
-     *     them as mermaid-gantt-markdown
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>return String - mermaid-gantt-markdown
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Convert
-     * @return {String}    mermaid-gantt-markdown
+    /** 
+     * extract data from explorerlines (table.fancytree-ext-table tr) and format 
+     * them as mermaid-gantt-markdown
+     * @FeatureDomain                GUI
+     * @FeatureResult                return String - mermaid-gantt-markdown
+     * @FeatureKeywords              Convert
+     * @return                       {String}    mermaid-gantt-markdown
      */
     me.convertExplorerLinesAsGanttMarkdown = function() {
         // get title
@@ -801,21 +718,15 @@ Yaio.FormatterService = function(appBase) {
     };
     
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     GUI
-     * <h4>FeatureDescription:</h4>
-     *     generate a mermaid-gantt-markdown-line for selector (if start, end-date can be extracted)
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>return String - mermaid-gantt-markdown
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Convert
-     * @param title          title of the line
-     * @param number         referenc
-     * @param selector       seletor to filter the element with jquery
-     * @return {String}      mermaid-gantt-markdown-line
+    /** 
+     * generate a mermaid-gantt-markdown-line for selector (if start, end-date can be extracted)
+     * @FeatureDomain                GUI
+     * @FeatureResult                return String - mermaid-gantt-markdown
+     * @FeatureKeywords              Convert
+     * @param title                  title of the line
+     * @param number                 referenc
+     * @param selector               seletor to filter the element with jquery
+     * @return                       {String}      mermaid-gantt-markdown-line
      */
     me.generateGanttMarkdownLineFromBlock = function(title, number, selector) {
         if (me.$(selector).size() > 0) {

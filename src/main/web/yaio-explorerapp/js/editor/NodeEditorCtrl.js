@@ -1,31 +1,22 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-/**
- * <h4>FeatureDomain:</h4>
- *     Configuration
- * <h4>FeatureDescription:</h4>
- *     the controller to edit nodes
- * <h4>FeatureResult:</h4>
- *   <ul>
- *     <li>returns new controller
- *   </ul> 
- * <h4>FeatureKeywords:</h4>
- *     GUI Configuration BusinessLogic
+/** 
+ * the controller to edit nodes
+ * @FeatureDomain                Configuration
+ * @FeatureResult                returns new controller
+ * @FeatureKeywords              GUI Configuration BusinessLogic
  */
 yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $routeParams, setFormErrors, authorization, yaioUtils) {
     'use strict';
@@ -59,34 +50,22 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
     $scope.availiableSystemTemplates = [];
     $scope.availiableOwnTemplates = [];
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Editor
-     * <h4>FeatureDescription:</h4>
-     *     callbackhandler to discard and close the editor
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>updates layout
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Callback
+    /** 
+     * callbackhandler to discard and close the editor
+     * @FeatureDomain                Editor
+     * @FeatureResult                updates layout
+     * @FeatureKeywords              GUI Callback
      */
     $scope.discard = function() {
         yaioUtils.getService('YaioEditor').yaioCloseNodeEditor();
         return false;
     };
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Callback
-     * <h4>FeatureDescription:</h4>
-     *     callbackhandler to validate the type of a newNode and open the corresponding form
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>updates layout
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Callback
+    /** 
+     * callbackhandler to validate the type of a newNode and open the corresponding form
+     * @FeatureDomain                Callback
+     * @FeatureResult                updates layout
+     * @FeatureKeywords              GUI Callback
      */
     $scope.selectNewNodeType = function() {
         // hide all forms
@@ -146,19 +125,13 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
             });
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Callback
-     * <h4>FeatureDescription:</h4>
-     *     callbackhandler to perform actions when type has changed<br>
-     *     calls yaioUtils.getService('YaioEditor').calcIstStandFromState() for the node
-     *     if ERLEDIGT || VERWORFEN || EVENT_ERLEDIGT || EVENT_VERWORFEN: update istStand=100
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>updates istStand
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Callback
+    /** 
+     * callbackhandler to perform actions when type has changed<br>
+     * calls yaioUtils.getService('YaioEditor').calcIstStandFromState() for the node
+     * if ERLEDIGT || VERWORFEN || EVENT_ERLEDIGT || EVENT_VERWORFEN: update istStand=100
+     * @FeatureDomain                Callback
+     * @FeatureResult                updates istStand
+     * @FeatureKeywords              GUI Callback
      */
     $scope.doTypeChanged = function() {
         $scope.nodeForEdit.istStand = yaioUtils.getService('YaioEditor').calcIstStandFromState($scope.nodeForEdit);
@@ -166,44 +139,32 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
     };
     
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Callback
-     * <h4>FeatureDescription:</h4>
-     *     callbackhandler to perform actions when istStand has changed<br>
-     *     recalcs the type/state depending on the istStand
-     *     <ul>
-     *       <li>if className=TaskNode && 0: update type=OFFEN
-     *       <li>if className=TaskNode && >0&&<100 && ! WARNING: update type=RUNNING
-     *       <li>if className=TaskNode && 100 && != VERWORFEN: update type=ERLEDIGT
-     *       <li>if className=EventNode && 0: update type=EVENT_PLANED
-     *       <li>if className=EventNode && >0&&<100 && ! EVENT_WARNING: update type=EVENT_RUNNING
-     *       <li>if className=EventNode && 100 && != EVENT_VERWORFEN: update type=EVENT_ERLEDIGT
-     *     </ul>
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>updates type
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Callback
+    /** 
+     * callbackhandler to perform actions when istStand has changed<br>
+     * recalcs the type/state depending on the istStand
+     * <ul>
+     *   <li>if className=TaskNode && 0: update type=OFFEN
+     *   <li>if className=TaskNode && >0&&<100 && ! WARNING: update type=RUNNING
+     *   <li>if className=TaskNode && 100 && != VERWORFEN: update type=ERLEDIGT
+     *   <li>if className=EventNode && 0: update type=EVENT_PLANED
+     *   <li>if className=EventNode && >0&&<100 && ! EVENT_WARNING: update type=EVENT_RUNNING
+     *   <li>if className=EventNode && 100 && != EVENT_VERWORFEN: update type=EVENT_ERLEDIGT
+     * </ul>
+     * @FeatureDomain                Callback
+     * @FeatureResult                updates type
+     * @FeatureKeywords              GUI Callback
      */
     $scope.doIstStandChanged = function() {
         $scope.nodeForEdit.type = yaioUtils.getService('YaioEditor').calcTypeFromIstStand($scope.nodeForEdit);
         return false;
     };
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Callback
-     * <h4>FeatureDescription:</h4>
-     *     callbackhandler to perform actions when type has changed<br>
-     *     if EVENT_ERLEDIGT || VERWORFEN: update stand=100;
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>updates stand
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Callback
+    /** 
+     * callbackhandler to perform actions when type has changed<br>
+     * if EVENT_ERLEDIGT || VERWORFEN: update stand=100;
+     * @FeatureDomain                Callback
+     * @FeatureResult                updates stand
+     * @FeatureKeywords              GUI Callback
      */
     $scope.doTaskNodeTypeChanged = function() {
         if (   $scope.nodeForEdit.type === "ERLEDIGT"
@@ -215,18 +176,12 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
     };
     
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Callback
-     * <h4>FeatureDescription:</h4>
-     *     callbackhandler to map the nodedata, create json,call webservice and 
-     *     relocate to the new nodeId
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>save node and updates layout
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Callback
+    /** 
+     * callbackhandler to map the nodedata, create json,call webservice and 
+     * relocate to the new nodeId
+     * @FeatureDomain                Callback
+     * @FeatureResult                save node and updates layout
+     * @FeatureKeywords              GUI Callback
      */
     $scope.save = function(formName) {
         // define json for common fields

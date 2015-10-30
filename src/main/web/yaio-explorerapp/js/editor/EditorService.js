@@ -1,30 +1,25 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-/**
- * <h4>FeatureDomain:</h4>
- *     WebGUI
- * <h4>FeatureDescription:</h4>
- *     servicefunctions for the editors
- *      
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+/** 
+ * servicefunctions for the editors
+ *  
+ * @FeatureDomain                WebGUI
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 
 
@@ -48,17 +43,11 @@ Yaio.EditorService = function(appBase) {
 
 
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     GUI
-     * <h4>FeatureDescription:</h4>
-     *     reset editor (hide all form, empty all formfields)
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>GUI-result: hide editor
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Editor
+    /** 
+     * reset editor (hide all form, empty all formfields)
+     * @FeatureDomain                GUI
+     * @FeatureResult                GUI-result: hide editor
+     * @FeatureKeywords              GUI Editor
      */
     me.yaioResetNodeEditor = function() {
         // reset editor
@@ -80,17 +69,11 @@ Yaio.EditorService = function(appBase) {
         me.yaioResetNodeEditorFormFields();
     };
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     GUI
-     * <h4>FeatureDescription:</h4>
-     *     hide all editor-forms
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>GUI-result: hide all editor-forms 
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Editor
+    /** 
+     * hide all editor-forms
+     * @FeatureDomain                GUI
+     * @FeatureResult                GUI-result: hide all editor-forms
+     * @FeatureKeywords              GUI Editor
      */
     me.yaioHideAllNodeEditorForms = function() {
         // reset editor
@@ -104,17 +87,11 @@ Yaio.EditorService = function(appBase) {
         me.$("#containerFormYaioEditorSymLinkNode").css("display", "none");
     };
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     GUI
-     * <h4>FeatureDescription:</h4>
-     *     reset all formfields
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>GUI-result: empty all formfields 
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Editor
+    /** 
+     * reset all formfields
+     * @FeatureDomain                GUI
+     * @FeatureResult                GUI-result: empty all formfields
+     * @FeatureKeywords              GUI Editor
      */
     me.yaioResetNodeEditorFormFields = function() {
         // reset data
@@ -131,20 +108,14 @@ Yaio.EditorService = function(appBase) {
         }
     };
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     GUI
-     * <h4>FeatureDescription:</h4>
-     *     updates the formfield with the nodedata
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>GUI-result: updates formfield 
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Editor
-     * @param field - fieldconfig from me.appBase.config.configNodeTypeFields
-     * @param fieldSuffix - sufix of the fieldName to identify the form (nodeclass of basenode)
-     * @param basenode - the node to map the fieldvalue
+    /** 
+     * updates the formfield with the nodedata
+     * @FeatureDomain                GUI
+     * @FeatureResult                GUI-result: updates formfield
+     * @FeatureKeywords              GUI Editor
+     * @param field                  fieldconfig from me.appBase.config.configNodeTypeFields
+     * @param fieldSuffix            sufix of the fieldName to identify the form (nodeclass of basenode)
+     * @param basenode               the node to map the fieldvalue
      */
     me.yaioSetFormField = function(field, fieldSuffix, basenode) {
         var svcYaioBase = me.appBase.get('YaioBase');
@@ -197,19 +168,13 @@ Yaio.EditorService = function(appBase) {
         
     };
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     GUI
-     * <h4>FeatureDescription:</h4>
-     *     open the nodeeditor for the node (toggle it fromleft), transfer the data from node to the formfields  
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>GUI-result: reset forms+field, hide forms, open the spcific form for the nodeclass, updates fields
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Editor
-     * @param nodeId - id of the node
-     * @param mode - edit, create, createsymlink
+    /** 
+     * open the nodeeditor for the node (toggle it fromleft), transfer the data from node to the formfields  
+     * @FeatureDomain                GUI
+     * @FeatureResult                GUI-result: reset forms+field, hide forms, open the spcific form for the nodeclass, updates fields
+     * @FeatureKeywords              GUI Editor
+     * @param nodeId                 id of the node
+     * @param mode                   edit, create, createsymlink
      */
     me.yaioOpenNodeEditor = function(nodeId, mode) {
         var svcYaioBase = me.appBase.get('YaioBase');
@@ -244,20 +209,14 @@ Yaio.EditorService = function(appBase) {
         me.yaioOpenNodeEditorForNode(basenode, mode);
     };
         
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     GUI
-     * <h4>FeatureDescription:</h4>
-     *     open the nodeeditor for the node (toggle it fromleft), transfer the data from node to the formfields  
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>GUI-result: reset forms+field, hide forms, open the spcific form for the nodeclass, updates fields
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Editor
-     * @param basenode - the node
-     * @param mode - edit, create, createsymlink
-     * @param newNode - optional node to copy data from (for mode createsnapshot...)
+    /** 
+     * open the nodeeditor for the node (toggle it fromleft), transfer the data from node to the formfields  
+     * @FeatureDomain                GUI
+     * @FeatureResult                GUI-result: reset forms+field, hide forms, open the spcific form for the nodeclass, updates fields
+     * @FeatureKeywords              GUI Editor
+     * @param basenode               the node
+     * @param mode                   edit, create, createsymlink
+     * @param newNode                optional node to copy data from (for mode createsnapshot...)
      */
     me.yaioOpenNodeEditorForNode = function(basenode, mode, newNode) {
         var svcYaioBase = me.appBase.get('YaioBase');
@@ -409,17 +368,11 @@ Yaio.EditorService = function(appBase) {
         svcYaioLayout.setupAppSize();
     };
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     GUI
-     * <h4>FeatureDescription:</h4>
-     *     close the nodeditor, toggle it to the left
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>GUI-result: close the editor
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Tree Editor
+    /** 
+     * close the nodeditor, toggle it to the left
+     * @FeatureDomain                GUI
+     * @FeatureResult                GUI-result: close the editor
+     * @FeatureKeywords              GUI Tree Editor
      */
     me.yaioCloseNodeEditor = function() {
         console.log("close editor");
@@ -427,20 +380,14 @@ Yaio.EditorService = function(appBase) {
         me.yaioResetNodeEditor();
     };
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     GUI
-     * <h4>FeatureDescription:</h4>
-     *     a hack to call updatetrigger for the element because for speechregognition the popup
-     *     cant call the trigger for another window (security)<br>
-     *     the function binds to the current document-window
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>GUI-result: calls updatetrigger for element
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Editor SpeechRecognition
-     * @param element - element (HTML-Element) to fire the trigger
+    /** 
+     * a hack to call updatetrigger for the element because for speechregognition the popup
+     * cant call the trigger for another window (security)<br>
+     * the function binds to the current document-window
+     * @FeatureDomain                GUI
+     * @FeatureResult                GUI-result: calls updatetrigger for element
+     * @FeatureKeywords              GUI Editor SpeechRecognition
+     * @param element                element (HTML-Element) to fire the trigger
      */
     me.callUpdateTriggerForElement = function(element) {
         if (element != null) {
@@ -458,20 +405,14 @@ Yaio.EditorService = function(appBase) {
      *****************************************
      *****************************************/
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     BusinessLogic
-     * <h4>FeatureDescription:</h4>
-     *     recalcs the istStand depending on the state/type
-     *     if ERLEDIGT || VERWORFEN || EVENT_ERLEDIGT || EVENT_VERWORFEN: update istStand=100
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>ReturnValue Integer - the recalced stand
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     BusinessLogic
-     * @param basenode - the node to recalc
-     * @return istStand in %
+    /** 
+     * recalcs the istStand depending on the state/type
+     * if ERLEDIGT || VERWORFEN || EVENT_ERLEDIGT || EVENT_VERWORFEN: update istStand=100
+     * @FeatureDomain                BusinessLogic
+     * @FeatureResult                ReturnValue Integer - the recalced stand
+     * @FeatureKeywords              BusinessLogic
+     * @param basenode               the node to recalc
+     * @return                       istStand in %
      */
     me.calcIstStandFromState = function(basenode) {
         var istStand = basenode.istStand;
@@ -486,27 +427,21 @@ Yaio.EditorService = function(appBase) {
         return istStand;
     };
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     BusinessLogic
-     * <h4>FeatureDescription:</h4>
-     *     recalcs the type/state depending on the istStand
-     *     <ul>
-     *       <li>if className=TaskNode && 0: update type=OFFEN
-     *       <li>if className=TaskNode && >0&&<100 && ! WARNING: update type=RUNNING
-     *       <li>if className=TaskNode && 100 && != VERWORFEN: update type=ERLEDIGT
-     *       <li>if className=EventNode && 0: update type=EVENT_PLANED
-     *       <li>if className=EventNode && >0&&<100 && ! EVENT_WARNING: update type=EVENT_RUNNING
-     *       <li>if className=EventNode && 100 && != EVENT_VERWORFEN: update type=EVENT_ERLEDIGT
-     *     </ul>
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>ReturnValue String - the recalced type/state
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     BusinessLogic
-     * @param basenode - the node to recalc
-     * @return the recalced type
+    /** 
+     * recalcs the type/state depending on the istStand
+     * <ul>
+     *   <li>if className=TaskNode && 0: update type=OFFEN
+     *   <li>if className=TaskNode && >0&&<100 && ! WARNING: update type=RUNNING
+     *   <li>if className=TaskNode && 100 && != VERWORFEN: update type=ERLEDIGT
+     *   <li>if className=EventNode && 0: update type=EVENT_PLANED
+     *   <li>if className=EventNode && >0&&<100 && ! EVENT_WARNING: update type=EVENT_RUNNING
+     *   <li>if className=EventNode && 100 && != EVENT_VERWORFEN: update type=EVENT_ERLEDIGT
+     * </ul>
+     * @FeatureDomain                BusinessLogic
+     * @FeatureResult                ReturnValue String - the recalced type/state
+     * @FeatureKeywords              BusinessLogic
+     * @param basenode               the node to recalc
+     * @return                       the recalced type
      */
     me.calcTypeFromIstStand = function(basenode) {
         var type = basenode.type;

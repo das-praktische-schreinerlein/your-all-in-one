@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -21,18 +18,12 @@
  ***************************************
  ***************************************/
 
-/**
- * <h4>FeatureDomain:</h4>
- *     Configuration
- * <h4>FeatureDescription:</h4>
- *     new function to set form-errors when using input-elements with attribute "witherrors" 
- *     and element "fielderrors" to show the corresponding errors 
- * <h4>FeatureResult:</h4>
- *   <ul>
- *     <li>returns new function
- *   </ul> 
- * <h4>FeatureKeywords:</h4>
- *     GUI Configuration Taglibrary Errorhandling
+/** 
+ * new function to set form-errors when using input-elements with attribute "witherrors" 
+ * and element "fielderrors" to show the corresponding errors 
+ * @FeatureDomain                Configuration
+ * @FeatureResult                returns new function
+ * @FeatureKeywords              GUI Configuration Taglibrary Errorhandling
  */
 yaioApp.factory('setFormErrors', function() {
     'use strict';
@@ -59,18 +50,12 @@ yaioApp.factory('setFormErrors', function() {
 });
 
 
-/**
- * <h4>FeatureDomain:</h4>
- *     Configuration
- * <h4>FeatureDescription:</h4>
- *     adds the new attribute-directive "witherrors" to set/show errors from
- *     different sources (AngularJS, App, WebServices) for this element
- * <h4>FeatureResult:</h4>
- *   <ul>
- *     <li>returns new directive
- *   </ul> 
- * <h4>FeatureKeywords:</h4>
- *     GUI Configuration Taglibrary Errorhandling
+/** 
+ * adds the new attribute-directive "witherrors" to set/show errors from
+ * different sources (AngularJS, App, WebServices) for this element
+ * @FeatureDomain                Configuration
+ * @FeatureResult                returns new directive
+ * @FeatureKeywords              GUI Configuration Taglibrary Errorhandling
  */
 yaioApp.directive('withErrors', ['setFormErrors', function(setFormErrors) {
     'use strict';
@@ -103,18 +88,12 @@ yaioApp.directive('withErrors', ['setFormErrors', function(setFormErrors) {
 }]);
 
 
-/**
- * <h4>FeatureDomain:</h4>
- *     Configuration
- * <h4>FeatureDescription:</h4>
- *     extend the element with the new attribute-directive "witherrors" to 
- *     set/show errors from different sources (AngularJS, App, WebServices) for this element
- * <h4>FeatureResult:</h4>
- *   <ul>
- *     <li>returns new callback
- *   </ul> 
- * <h4>FeatureKeywords:</h4>
- *     GUI Configuration Taglibrary Errorhandling
+/** 
+ * extend the element with the new attribute-directive "witherrors" to 
+ * set/show errors from different sources (AngularJS, App, WebServices) for this element
+ * @FeatureDomain                Configuration
+ * @FeatureResult                returns new callback
+ * @FeatureKeywords              GUI Configuration Taglibrary Errorhandling
  */
 function directiveFieldsWithErrors () {
     'use strict';
@@ -158,18 +137,12 @@ function directiveFieldsWithErrors () {
     };
 }
 
-/**
- * <h4>FeatureDomain:</h4>
- *     Configuration
- * <h4>FeatureDescription:</h4>
- *     extend the element with the new attribute-directive "witherrors" to 
- *     set/show errors from different sources (AngularJS, App, WebServices) for this element
- * <h4>FeatureResult:</h4>
- *   <ul>
- *     <li>returns updated directive
- *   </ul> 
- * <h4>FeatureKeywords:</h4>
- *     GUI Configuration Taglibrary Errorhandling
+/** 
+ * extend the element with the new attribute-directive "witherrors" to 
+ * set/show errors from different sources (AngularJS, App, WebServices) for this element
+ * @FeatureDomain                Configuration
+ * @FeatureResult                returns updated directive
+ * @FeatureKeywords              GUI Configuration Taglibrary Errorhandling
  */
 yaioApp.directive('input', function() {
     'use strict';
@@ -183,18 +156,12 @@ yaioApp.directive('input', function() {
 //    return directiveFieldsWithErrors();
 //});
 
-/**
- * <h4>FeatureDomain:</h4>
- *     Configuration
- * <h4>FeatureDescription:</h4>
- *     adds the new element-directive "fielderrors" to set/show errors from
- *     different sources (AngularJS, App, WebServices) for this element
- * <h4>FeatureResult:</h4>
- *   <ul>
- *     <li>returns new directive
- *   </ul> 
- * <h4>FeatureKeywords:</h4>
- *     GUI Configuration Taglibrary Errorhandling
+/** 
+ * adds the new element-directive "fielderrors" to set/show errors from
+ * different sources (AngularJS, App, WebServices) for this element
+ * @FeatureDomain                Configuration
+ * @FeatureResult                returns new directive
+ * @FeatureKeywords              GUI Configuration Taglibrary Errorhandling
  */
 yaioApp.directive('fielderrors', function() {
     'use strict';

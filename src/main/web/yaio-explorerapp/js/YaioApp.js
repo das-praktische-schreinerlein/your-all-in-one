@@ -1,46 +1,35 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-/**
- * <h4>FeatureDomain:</h4>
- *     WebGUI
- * <h4>FeatureDescription:</h4>
- *     controller for the yaio-gui
- *      
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+/** 
+ * controller for the yaio-gui
+ *  
+ * @FeatureDomain                WebGUI
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 var yaioApp = angular.module('yaioExplorerApp', ['ngAnimate', 'ngRoute', 'pascalprecht.translate']);
 
-/**
- * <h4>FeatureDomain:</h4>
- *     Configuration
- * <h4>FeatureDescription:</h4>
- *     configures the routing for the app<br>
- *     add new routes to the $routeProvider-instance
- * <h4>FeatureResult:</h4>
- *   <ul>
- *     <li>updates $routeProvider
- *   </ul> 
- * <h4>FeatureKeywords:</h4>
- *     GUI Routing Configuration
- * @param $routeProvider - the $routeProvider-instance to add the new routes
+/** 
+ * configures the routing for the app<br>
+ * add new routes to the $routeProvider-instance
+ * @FeatureDomain                Configuration
+ * @FeatureResult                updates $routeProvider
+ * @FeatureKeywords              GUI Routing Configuration
+ * @param $routeProvider         the $routeProvider-instance to add the new routes
  */
 yaioApp.config(function($routeProvider) {
     'use strict';
@@ -100,18 +89,12 @@ yaioApp.config(function($routeProvider) {
         .otherwise({ redirectTo: '/'});
 });
 
-/**
- * <h4>FeatureDomain:</h4>
- *     Configuration
- * <h4>FeatureDescription:</h4>
- *     configures $sceDelegateProvider - adds resourcewhitelist
- * <h4>FeatureResult:</h4>
- *   <ul>
- *     <li>updates $sceDelegateProvider
- *   </ul> 
- * <h4>FeatureKeywords:</h4>
- *     GUI Configuration
- * @param $sceDelegateProvider - the $sceDelegateProvider to change the resource-whitelist...
+/** 
+ * configures $sceDelegateProvider - adds resourcewhitelist
+ * @FeatureDomain                Configuration
+ * @FeatureResult                updates $sceDelegateProvider
+ * @FeatureKeywords              GUI Configuration
+ * @param $sceDelegateProvider   the $sceDelegateProvider to change the resource-whitelist...
  */
 yaioApp.config(function($sceDelegateProvider) {
     var resBaseUrl = yaioAppBase.config.resBaseUrl;
@@ -133,18 +116,12 @@ yaioApp.config(function($sceDelegateProvider) {
     }
 });
     
-/**
- * <h4>FeatureDomain:</h4>
- *     Configuration
- * <h4>FeatureDescription:</h4>
- *     configures $httpProvider - adds default-headers for patch-requests
- * <h4>FeatureResult:</h4>
- *   <ul>
- *     <li>updates $httpProvider
- *   </ul> 
- * <h4>FeatureKeywords:</h4>
- *     GUI Configuration
- * @param $httpProvider - the $httpProvider to change the default-headers
+/** 
+ * configures $httpProvider - adds default-headers for patch-requests
+ * @FeatureDomain                Configuration
+ * @FeatureResult                updates $httpProvider
+ * @FeatureKeywords              GUI Configuration
+ * @param $httpProvider          the $httpProvider to change the default-headers
  */
 yaioApp.config(['$httpProvider', function($httpProvider) {
     'use strict';

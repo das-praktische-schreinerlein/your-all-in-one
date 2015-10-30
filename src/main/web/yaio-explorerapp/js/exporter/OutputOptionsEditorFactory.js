@@ -1,31 +1,22 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-/**
- * <h4>FeatureDomain:</h4>
- *     Configuration
- * <h4>FeatureDescription:</h4>
- *     new functions to control the outputoptions
- * <h4>FeatureResult:</h4>
- *   <ul>
- *     <li>returns new function
- *   </ul> 
- * <h4>FeatureKeywords:</h4>
- *     GUI Configuration
+/** 
+ * new functions to control the outputoptions
+ * @FeatureDomain                Configuration
+ * @FeatureResult                returns new function
+ * @FeatureKeywords              GUI Configuration
  */
 yaioApp.factory('OutputOptionsEditor', function(yaioUtils) {
     'use strict';
@@ -74,17 +65,11 @@ yaioApp.factory('OutputOptionsEditor', function(yaioUtils) {
     return {
         oOptions: oOptions,
         
-        /**
-         * <h4>FeatureDomain:</h4>
-         *     Download
-         * <h4>FeatureDescription:</h4>
-         *     callbackhandler to discard and close the editor
-         * <h4>FeatureResult:</h4>
-         *   <ul>
-         *     <li>updates layout
-         *   </ul> 
-         * <h4>FeatureKeywords:</h4>
-         *     GUI Callback
+        /** 
+         * callbackhandler to discard and close the editor
+         * @FeatureDomain                Download
+         * @FeatureResult                updates layout
+         * @FeatureKeywords              GUI Callback
          */
         discard: function() {
             yaioUtils.getService('UIToggler').toggleElement("#containerFormYaioEditorOutputOptions");
@@ -92,17 +77,11 @@ yaioApp.factory('OutputOptionsEditor', function(yaioUtils) {
             return false;
         },
     
-        /**
-         * <h4>FeatureDomain:</h4>
-         *     Download
-         * <h4>FeatureDescription:</h4>
-         *     callbackhandler to send and close the editor
-         * <h4>FeatureResult:</h4>
-         *   <ul>
-         *     <li>send request and updates layout
-         *   </ul> 
-         * <h4>FeatureKeywords:</h4>
-         *     GUI Callback
+        /** 
+         * callbackhandler to send and close the editor
+         * @FeatureDomain                Download
+         * @FeatureResult                send request and updates layout
+         * @FeatureKeywords              GUI Callback
          */
         send: function() {
             var formId = "#nodeFormOutputOptions";
@@ -112,20 +91,14 @@ yaioApp.factory('OutputOptionsEditor', function(yaioUtils) {
             return false;
         },
         
-        /**
-         * <h4>FeatureDomain:</h4>
-         *     GUI Download
-         * <h4>FeatureDescription:</h4>
-         *     callbackhandler to open the outputOptionsEditor
-         * <h4>FeatureResult:</h4>
-         *   <ul>
-         *     <li>open the outputOptionsEditor
-         *   </ul> 
-         * <h4>FeatureKeywords:</h4>
-         *     GUI Callback
-         * @param sysUID - the sysUID of the current node
-         * @param newUrl - the url to send
-         * @param newTarget - the target window-name
+        /** 
+         * callbackhandler to open the outputOptionsEditor
+         * @FeatureDomain                GUI Download
+         * @FeatureResult                open the outputOptionsEditor
+         * @FeatureKeywords              GUI Callback
+         * @param sysUID                 the sysUID of the current node
+         * @param newUrl                 the url to send
+         * @param newTarget              the target window-name
          */
         showOutputOptionsEditor: function(sysUID, newUrl, newTarget) {
             url = newUrl;
