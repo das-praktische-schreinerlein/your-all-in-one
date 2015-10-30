@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -35,18 +32,15 @@ import de.yaio.extension.datatransfer.wiki.WikiImportOptions;
 import de.yaio.extension.datatransfer.wiki.WikiImporter;
 import de.yaio.extension.datatransfer.wiki.WikiImporter.WikiStructLine;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     DatenExport
- *     Praesentation
- * <h4>FeatureDescription:</h4>
- *     class for import of Nodes
+/** 
+ * class for import of Nodes
  * 
- * @package de.yaio.extension.datatransfer.common
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                DatenExport Praesentation
+ * @package                      de.yaio.extension.datatransfer.common
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class CommonImporter {
     
@@ -56,18 +50,12 @@ public class CommonImporter {
     protected String defaultSourceType = "ppl";
     protected PPLImporter pplImporter = null;
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Constructor
-     * <h4>FeatureDescription:</h4>
-     *     create importer-object to import nodes
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>initialize the importer
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Constructor
-     * @param defaultSourceType - the default sourcetype if commandline-option not set
+    /** 
+     * create importer-object to import nodes
+     * @FeatureDomain                Constructor
+     * @FeatureResult                initialize the importer
+     * @FeatureKeywords              Constructor
+     * @param defaultSourceType      the default sourcetype if commandline-option not set
      */
     public CommonImporter(final String defaultSourceType) {
         this.defaultSourceType = defaultSourceType;
@@ -82,18 +70,12 @@ public class CommonImporter {
      * ##############
      */
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     CLI
-     * <h4>FeatureDescription:</h4>
-     *     add common import-options to the availiableCmdLineOptions
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>update availiableCmdLineOptions
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     CLI
-     * @param availiableCmdLineOptions - the container with the availiableCmdLineOptions
+    /** 
+     * add common import-options to the availiableCmdLineOptions
+     * @FeatureDomain                CLI
+     * @FeatureResult                update availiableCmdLineOptions
+     * @FeatureKeywords              CLI
+     * @param availiableCmdLineOptions the container with the availiableCmdLineOptions
      */
     public void addAvailiableCommonCmdLineOptions(final Options availiableCmdLineOptions) {
         // sourceType
@@ -110,18 +92,12 @@ public class CommonImporter {
     }
     
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     CLI
-     * <h4>FeatureDescription:</h4>
-     *     add Wiki-import-options to the availiableCmdLineOptions
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>update availiableCmdLineOptions
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     CLI
-     * @param availiableCmdLineOptions - the container with the availiableCmdLineOptions
+    /** 
+     * add Wiki-import-options to the availiableCmdLineOptions
+     * @FeatureDomain                CLI
+     * @FeatureResult                update availiableCmdLineOptions
+     * @FeatureKeywords              CLI
+     * @param availiableCmdLineOptions the container with the availiableCmdLineOptions
      */
     public void addAvailiableWikiCmdLineOptions(final Options availiableCmdLineOptions) {
         // Show State
@@ -155,50 +131,32 @@ public class CommonImporter {
         availiableCmdLineOptions.addOption(flgShowList);
     }
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     CLI
-     * <h4>FeatureDescription:</h4>
-     *     add Excel-import-options to the availiableCmdLineOptions
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>update availiableCmdLineOptions
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     CLI
-     * @param availiableCmdLineOptions - the container with the availiableCmdLineOptions
+    /** 
+     * add Excel-import-options to the availiableCmdLineOptions
+     * @FeatureDomain                CLI
+     * @FeatureResult                update availiableCmdLineOptions
+     * @FeatureKeywords              CLI
+     * @param availiableCmdLineOptions the container with the availiableCmdLineOptions
      */
     public void addAvailiableExcelCmdLineOptions(final Options availiableCmdLineOptions) {
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     CLI
-     * <h4>FeatureDescription:</h4>
-     *     add PPL-import-options to the availiableCmdLineOptions
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>update availiableCmdLineOptions
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     CLI
-     * @param availiableCmdLineOptions - the container with the availiableCmdLineOptions
+    /** 
+     * add PPL-import-options to the availiableCmdLineOptions
+     * @FeatureDomain                CLI
+     * @FeatureResult                update availiableCmdLineOptions
+     * @FeatureKeywords              CLI
+     * @param availiableCmdLineOptions the container with the availiableCmdLineOptions
      */
     public void addAvailiablePPLCmdLineOptions(final Options availiableCmdLineOptions) {
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     CLI
-     * <h4>FeatureDescription:</h4>
-     *     add JPA-import-options to the availiableCmdLineOptions
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>update availiableCmdLineOptions
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     CLI
-     * @param availiableCmdLineOptions - the container with the availiableCmdLineOptions
+    /** 
+     * add JPA-import-options to the availiableCmdLineOptions
+     * @FeatureDomain                CLI
+     * @FeatureResult                update availiableCmdLineOptions
+     * @FeatureKeywords              CLI
+     * @param availiableCmdLineOptions the container with the availiableCmdLineOptions
      */
     public void addAvailiableJPACmdLineOptions(final Options availiableCmdLineOptions) {
         // exportsysuid
@@ -208,18 +166,12 @@ public class CommonImporter {
         availiableCmdLineOptions.addOption(exportSysUid);
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     CLI
-     * <h4>FeatureDescription:</h4>
-     *     add Production-import-options to the availiableCmdLineOptions
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>update availiableCmdLineOptions
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     CLI
-     * @param availiableCmdLineOptions - the container with the availiableCmdLineOptions
+    /** 
+     * add Production-import-options to the availiableCmdLineOptions
+     * @FeatureDomain                CLI
+     * @FeatureResult                update availiableCmdLineOptions
+     * @FeatureKeywords              CLI
+     * @param availiableCmdLineOptions the container with the availiableCmdLineOptions
      */
     public void addAvailiableProductiveImportCmdLineOptions(final Options availiableCmdLineOptions) {
         // Id-File
@@ -235,20 +187,14 @@ public class CommonImporter {
      * ##############
      */
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     BusinessLogic
-     * <h4>FeatureDescription:</h4>
-     *     import the data from PPL-File configured by cmdline-options and add 
-     *     them to the masterNode 
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>updates masternode
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     BusinessLogic
-     * @param masterNode - the masternode on which all other nodes are added
-     * @throws Exception - parse/io-Exceptions possible
+    /** 
+     * import the data from PPL-File configured by cmdline-options and add 
+     * them to the masterNode 
+     * @FeatureDomain                BusinessLogic
+     * @FeatureResult                updates masternode
+     * @FeatureKeywords              BusinessLogic
+     * @param masterNode             the masternode on which all other nodes are added
+     * @throws Exception             parse/io-Exceptions possible
      */
     public void importDataToMasterNodeFromPPLFile(final DataDomain masterNode) throws Exception {
         // check srcFile
@@ -269,20 +215,14 @@ public class CommonImporter {
         pplImporter.extractNodesFromFile(masterNode, srcFile, delimiter);
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     BusinessLogic
-     * <h4>FeatureDescription:</h4>
-     *     import the data from JPA configured by cmdline-options and add 
-     *     them to the masterNode 
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>updates masternode
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     BusinessLogic
-     * @param masterNode - the masternode on which all other nodes are added
-     * @throws Exception - parse/io-Exceptions possible
+    /** 
+     * import the data from JPA configured by cmdline-options and add 
+     * them to the masterNode 
+     * @FeatureDomain                BusinessLogic
+     * @FeatureResult                updates masternode
+     * @FeatureKeywords              BusinessLogic
+     * @param masterNode             the masternode on which all other nodes are added
+     * @throws Exception             parse/io-Exceptions possible
      */
     public void importDataToMasterNodeFromJPA(final DataDomain masterNode) throws Exception {
         if (LOGGER.isInfoEnabled()) {
@@ -322,20 +262,14 @@ public class CommonImporter {
         baseNode.setParentNode(masterNode);
     }
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     BusinessLogic
-     * <h4>FeatureDescription:</h4>
-     *     import the data from Excel-File configured by cmdline-options and add 
-     *     them to the masterNode 
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>updates masternode
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     BusinessLogic
-     * @param masterNode - the masternode on which all other nodes are added
-     * @throws Exception - parse/io-Exceptions possible
+    /** 
+     * import the data from Excel-File configured by cmdline-options and add 
+     * them to the masterNode 
+     * @FeatureDomain                BusinessLogic
+     * @FeatureResult                updates masternode
+     * @FeatureKeywords              BusinessLogic
+     * @param masterNode             the masternode on which all other nodes are added
+     * @throws Exception             parse/io-Exceptions possible
      */
     public void importDataToMasterNodeFromExcel(final DataDomain masterNode) throws Exception {
         // config
@@ -350,20 +284,14 @@ public class CommonImporter {
         pplImporter.extractNodesFromLines(masterNode, pplSource, delimiter);
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     BusinessLogic
-     * <h4>FeatureDescription:</h4>
-     *     import the nodes from Excel-File configured by cmdline-options and 
-     *     return them as PPL-String
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue String in PPL-format
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     BusinessLogic
-     * @return String with nodes in PPL-format
-     * @throws Exception - parse/io-Exceptions possible
+    /** 
+     * import the nodes from Excel-File configured by cmdline-options and 
+     * return them as PPL-String
+     * @FeatureDomain                BusinessLogic
+     * @FeatureResult                returnValue String in PPL-format
+     * @FeatureKeywords              BusinessLogic
+     * @return                       String with nodes in PPL-format
+     * @throws Exception             parse/io-Exceptions possible
      */
     public String extractDataFromExcel() throws Exception {
         // check srcFile
@@ -411,20 +339,14 @@ public class CommonImporter {
         return resBuf.toString();
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     BusinessLogic
-     * <h4>FeatureDescription:</h4>
-     *     import the data from Wiki-File configured by cmdline-options and add 
-     *     them to the masterNode 
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>updates masternode
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     BusinessLogic
-     * @param masterNode - the masternode on which all other nodes are added
-     * @throws Exception - parse/io-Exceptions possible
+    /** 
+     * import the data from Wiki-File configured by cmdline-options and add 
+     * them to the masterNode 
+     * @FeatureDomain                BusinessLogic
+     * @FeatureResult                updates masternode
+     * @FeatureKeywords              BusinessLogic
+     * @param masterNode             the masternode on which all other nodes are added
+     * @throws Exception             parse/io-Exceptions possible
      */
     public void importDataToMasterNodeFromWiki(final DataDomain masterNode) throws Exception {
         // config
@@ -438,20 +360,14 @@ public class CommonImporter {
     }
     
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     BusinessLogic
-     * <h4>FeatureDescription:</h4>
-     *     import the nodes from Wiki-File configured by cmdline-options and 
-     *     return them as PPL-String
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue String in PPL-format
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     BusinessLogic
-     * @return String with nodes in PPL-format
-     * @throws Exception - parse/io-Exceptions possible
+    /** 
+     * import the nodes from Wiki-File configured by cmdline-options and 
+     * return them as PPL-String
+     * @FeatureDomain                BusinessLogic
+     * @FeatureResult                returnValue String in PPL-format
+     * @FeatureKeywords              BusinessLogic
+     * @return                       String with nodes in PPL-format
+     * @throws Exception             parse/io-Exceptions possible
      */
     public String extractDataFromWiki() throws Exception {
         // check srcFile
@@ -514,20 +430,14 @@ public class CommonImporter {
         return resBuf.toString();
     }
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     BusinessLogic
-     * <h4>FeatureDescription:</h4>
-     *     import the data from source configured by cmdline-options and add 
-     *     them to the masterNode 
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>updates masternode
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     BusinessLogic
-     * @param masterNode - the masternode on which all other nodes are added
-     * @throws Exception - parse/io-Exceptions possible
+    /** 
+     * import the data from source configured by cmdline-options and add 
+     * them to the masterNode 
+     * @FeatureDomain                BusinessLogic
+     * @FeatureResult                updates masternode
+     * @FeatureKeywords              BusinessLogic
+     * @param masterNode             the masternode on which all other nodes are added
+     * @throws Exception             parse/io-Exceptions possible
      */
     public void importDataToMasterNode(final DataDomain masterNode) throws Exception {
         // check datasource
@@ -558,17 +468,11 @@ public class CommonImporter {
      */
     
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     BusinessLogic
-     * <h4>FeatureDescription:</h4>
-     *     create the commonly used PPLimporter
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>updates MemberVar pplImporter - for the import
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     BusinessLogic
+    /** 
+     * create the commonly used PPLimporter
+     * @FeatureDomain                BusinessLogic
+     * @FeatureResult                updates MemberVar pplImporter - for the import
+     * @FeatureKeywords              BusinessLogic
      */
     protected void createPPLImporter() {
         // create commonImporter
@@ -576,18 +480,12 @@ public class CommonImporter {
     }
     
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     BusinessLogic
-     * <h4>FeatureDescription:</h4>
-     *     get the commonly used PPLimporter
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue an instance of PPLImporter
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     BusinessLogic
-     * @return an instance of PPLImporter
+    /** 
+     * get the commonly used PPLimporter
+     * @FeatureDomain                BusinessLogic
+     * @FeatureResult                returnValue an instance of PPLImporter
+     * @FeatureKeywords              BusinessLogic
+     * @return                       an instance of PPLImporter
      */
     public PPLImporter getPPLImporter() {
         return pplImporter;

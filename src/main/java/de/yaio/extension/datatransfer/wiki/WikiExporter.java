@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -27,18 +24,15 @@ import de.yaio.datatransfer.exporter.ExporterImpl;
 import de.yaio.datatransfer.exporter.OutputOptions;
 import de.yaio.datatransfer.exporter.OutputOptionsImpl;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     DatenExport
- *     Praesentation
- * <h4>FeatureDescription:</h4>
- *     export nodes in Wiki-Format
+/** 
+ * export nodes in Wiki-Format
  * 
- * @package de.yaio.extension.datatransfer.wiki
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                DatenExport Praesentation
+ * @package                      de.yaio.extension.datatransfer.wiki
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class WikiExporter extends ExporterImpl {
     // Logger
@@ -46,17 +40,11 @@ public class WikiExporter extends ExporterImpl {
             Logger.getLogger(WikiExporter.class);
 
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Constructor
-     * <h4>FeatureDescription:</h4>
-     *     service functions to export nodes as Wiki
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>initialize the exporter
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Constructor
+    /** 
+     * service functions to export nodes as Wiki
+     * @FeatureDomain                Constructor
+     * @FeatureResult                initialize the exporter
+     * @FeatureKeywords              Constructor
      */
     public WikiExporter() {
         super();
@@ -65,19 +53,13 @@ public class WikiExporter extends ExporterImpl {
     ////////////////
     // service-functions to configure
     ////////////////
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     DataExport
-     * <h4>FeatureDescription:</h4>
-     *     generate helper-OutputOptions for generation of the Wiki-namearea (show only name+state)
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue OutputOptions - OuputOptions for generation of the Wiki-namearea
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Cofiguration helper
-     * @param baseOOptions - Default OutputOptions to override
-     * @return OuputOptions for generation of the Wiki-namearea
+    /** 
+     * generate helper-OutputOptions for generation of the Wiki-namearea (show only name+state)
+     * @FeatureDomain                DataExport
+     * @FeatureResult                returnValue OutputOptions - OuputOptions for generation of the Wiki-namearea
+     * @FeatureKeywords              Cofiguration helper
+     * @param baseOOptions           Default OutputOptions to override
+     * @return                       OuputOptions for generation of the Wiki-namearea
      */
     public OutputOptions genOutputOptionsForNameArea(final OutputOptions baseOOptions) {
         OutputOptions options = new OutputOptionsImpl(baseOOptions);
@@ -93,19 +75,13 @@ public class WikiExporter extends ExporterImpl {
         return options;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     DataExport
-     * <h4>FeatureDescription:</h4>
-     *     generate helper-OutputOptions for generation of the Wiki-dataarea (show all, hide name+state)
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue OutputOptions - OuputOptions for generation of the Wiki-dataarea
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Cofiguration helper
-     * @param baseOOptions - Default OutputOptions to override
-     * @return OuputOptions for generation of the Wiki-dataarea
+    /** 
+     * generate helper-OutputOptions for generation of the Wiki-dataarea (show all, hide name+state)
+     * @FeatureDomain                DataExport
+     * @FeatureResult                returnValue OutputOptions - OuputOptions for generation of the Wiki-dataarea
+     * @FeatureKeywords              Cofiguration helper
+     * @param baseOOptions           Default OutputOptions to override
+     * @return                       OuputOptions for generation of the Wiki-dataarea
      */
     public OutputOptions genOutputOptionsForDataArea(final OutputOptions baseOOptions) {
         OutputOptions options = new OutputOptionsImpl(baseOOptions);
@@ -119,19 +95,13 @@ public class WikiExporter extends ExporterImpl {
         return options;
     }
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     DataExport
-     * <h4>FeatureDescription:</h4>
-     *     generate helper-OutputOptions for generation of the Wiki-descarea (show desc, hide all)
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue OutputOptions - OuputOptions for generation of the Wiki-descarea
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Cofiguration helper
-     * @param baseOOptions - Default OutputOptions to override
-     * @return OuputOptions for generation of the Wiki-descarea
+    /** 
+     * generate helper-OutputOptions for generation of the Wiki-descarea (show desc, hide all)
+     * @FeatureDomain                DataExport
+     * @FeatureResult                returnValue OutputOptions - OuputOptions for generation of the Wiki-descarea
+     * @FeatureKeywords              Cofiguration helper
+     * @param baseOOptions           Default OutputOptions to override
+     * @return                       OuputOptions for generation of the Wiki-descarea
      */
     public OutputOptions genOutputOptionsForDescArea(final OutputOptions baseOOptions) {
         OutputOptions options = new OutputOptionsImpl(baseOOptions);

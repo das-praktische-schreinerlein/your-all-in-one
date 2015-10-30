@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -46,18 +43,16 @@ import de.yaio.extension.datatransfer.wiki.WikiImportOptions;
 import de.yaio.extension.datatransfer.wiki.WikiImporter;
 import de.yaio.extension.datatransfer.wiki.WikiImporter.WikiStructLine;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     Webservice
- * <h4>FeatureDescription:</h4>
- *     Services to parse text to nodes and convert them in different 
- *     formats (wiki, ppl, excel..)
- *      
- * @package de.yaio.webapp.controller
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+/** 
+ * Services to parse text to nodes and convert them in different 
+ * formats (wiki, ppl, excel..)
+ *  
+ * @FeatureDomain                Webservice
+ * @package                      de.yaio.webapp.controller
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 @Service
 public class ConverterUtils {
@@ -66,25 +61,19 @@ public class ConverterUtils {
     private static final Logger LOGGER =
             Logger.getLogger(ConverterUtils.class);
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     read the node and use the exporter to convert it with all children to 
-     *     exporter-format<br>
-     *     set headers (contentype, disposition) on the response-obj
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>String - wiki-format of the node
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Export
-     * @param sysUID - sysUID to export
-     * @param exporter - the exporter to use
-     * @param oOptions - the outputoptions for the exporter
-     * @param extension - the fileextension for the Content-Disposition
-     * @param response - the response-Obj to set contenttype and headers
-     * @return String - export-format of the node
+    /** 
+     * read the node and use the exporter to convert it with all children to 
+     * exporter-format<br>
+     * set headers (contentype, disposition) on the response-obj
+     * @FeatureDomain                Webservice
+     * @FeatureResult                String - wiki-format of the node
+     * @FeatureKeywords              Webservice Export
+     * @param sysUID                 sysUID to export
+     * @param exporter               the exporter to use
+     * @param oOptions               the outputoptions for the exporter
+     * @param extension              the fileextension for the Content-Disposition
+     * @param response               the response-Obj to set contenttype and headers
+     * @return                       String - export-format of the node
      */
     public String exportNode(final String sysUID, final Exporter exporter, 
                              final OutputOptions oOptions, final String extension,
@@ -103,26 +92,20 @@ public class ConverterUtils {
         }
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     use the exporter to convert it with all children to 
-     *     exporter-format<br>
-     *     set headers (contentype, disposition) on the response-obj
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>String - wiki-format of the node
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Export
-     * @param node - node to export
-     * @param exporter - the exporter to use
-     * @param oOptions - the outputoptions for the exporter
-     * @param extension - the fileextension for the Content-Disposition
-     * @param response - the response-Obj to set contenttype and headers
-     * @return String - export-format of the node
-     * @throws Exception - possible Exceptions
+    /** 
+     * use the exporter to convert it with all children to 
+     * exporter-format<br>
+     * set headers (contentype, disposition) on the response-obj
+     * @FeatureDomain                Webservice
+     * @FeatureResult                String - wiki-format of the node
+     * @FeatureKeywords              Webservice Export
+     * @param node                   node to export
+     * @param exporter               the exporter to use
+     * @param oOptions               the outputoptions for the exporter
+     * @param extension              the fileextension for the Content-Disposition
+     * @param response               the response-Obj to set contenttype and headers
+     * @return                       String - export-format of the node
+     * @throws Exception             possible Exceptions
      */
     public String exportNode(final BaseNode node, final Exporter exporter, 
                              final OutputOptions oOptions, final String extension,
@@ -150,23 +133,17 @@ public class ConverterUtils {
         return res;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     read the node for sysUID and return it in html-format with all children<br>
-     *     use the setting of the output-options and set contect-header on response-obj
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>String - html-format of the node
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param sysUID - sysUID to export
-     * @param oOptions - the outputOptions 
-     * @param response - the response-Obj to set contenttype and headers
-     * @param pTplFile - path to tplFile-resource (if null=defaultfile will used; if empty=ignored)
-     * @return String - html-format of the node
+    /** 
+     * read the node for sysUID and return it in html-format with all children<br>
+     * use the setting of the output-options and set contect-header on response-obj
+     * @FeatureDomain                Webservice
+     * @FeatureResult                String - html-format of the node
+     * @FeatureKeywords              Webservice Query
+     * @param sysUID                 sysUID to export
+     * @param oOptions               the outputOptions 
+     * @param response               the response-Obj to set contenttype and headers
+     * @param pTplFile               path to tplFile-resource (if null=defaultfile will used; if empty=ignored)
+     * @return                       String - html-format of the node
      */
     public String commonExportNodeAsHtml(final String sysUID,
                                          final OutputOptions oOptions,
@@ -186,24 +163,18 @@ public class ConverterUtils {
         }
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     read the node for sysUID and return it in html-format with all children<br>
-     *     use the setting of the output-options and set contect-header on response-obj
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>String - html-format of the node
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param basenode - basenode to export
-     * @param oOptions - the outputOptions 
-     * @param response - the response-Obj to set contenttype and headers
-     * @param pTplFile - path to tplFile-resource (if null=defaultfile will used; if empty=ignored)
-     * @return String - html-format of the node
-     * @throws Exception - IOException and Parser-Exceptions possible
+    /** 
+     * read the node for sysUID and return it in html-format with all children<br>
+     * use the setting of the output-options and set contect-header on response-obj
+     * @FeatureDomain                Webservice
+     * @FeatureResult                String - html-format of the node
+     * @FeatureKeywords              Webservice Query
+     * @param basenode               basenode to export
+     * @param oOptions               the outputOptions 
+     * @param response               the response-Obj to set contenttype and headers
+     * @param pTplFile               path to tplFile-resource (if null=defaultfile will used; if empty=ignored)
+     * @return                       String - html-format of the node
+     * @throws Exception             IOException and Parser-Exceptions possible
      */
     public String commonExportNodeAsHtml(final BaseNode basenode,
                                          final OutputOptions oOptions,
@@ -261,24 +232,18 @@ public class ConverterUtils {
         return res;
     }
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     read the node for sysUID, return it in Json-format with all children<br>
-     *     include it into the yaioOfflineApp and set contect-header on response-obj
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>String - yaioOfflineApp-html-format of the node
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param sysUID - basenode to export
-     * @param response - the response-Obj to set contenttype and headers
-     * @param pTplFile - path to tplFile-resource (if null=defaultfile will used; if empty=ignored)
-     * @param flgExport - if set it will be prepared as export (baseref will be set and static is default datasource)
-     * @return String - html-format of the node
-     * @throws Exception - IOException and Parser-Exceptions possible
+    /** 
+     * read the node for sysUID, return it in Json-format with all children<br>
+     * include it into the yaioOfflineApp and set contect-header on response-obj
+     * @FeatureDomain                Webservice
+     * @FeatureResult                String - yaioOfflineApp-html-format of the node
+     * @FeatureKeywords              Webservice Query
+     * @param sysUID                 basenode to export
+     * @param response               the response-Obj to set contenttype and headers
+     * @param pTplFile               path to tplFile-resource (if null=defaultfile will used; if empty=ignored)
+     * @param flgExport              if set it will be prepared as export (baseref will be set and static is default datasource)
+     * @return                       String - html-format of the node
+     * @throws Exception             IOException and Parser-Exceptions possible
      */
     public String commonExportNodeAsYaioApp(final String sysUID,
                                          final HttpServletResponse response,

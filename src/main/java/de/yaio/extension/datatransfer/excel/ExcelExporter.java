@@ -1,15 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
-
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -51,18 +47,15 @@ import de.yaio.extension.datatransfer.wiki.WikiExporter;
 import de.yaio.utils.DataUtils;
 import de.yaio.utils.ExcelService;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     DatenExport
- *     Praesentation
- * <h4>FeatureDescription:</h4>
- *     export of Nodes as Excel
+/** 
+ * export of Nodes as Excel
  * 
- * @package de.yaio.extension.datatransfer.excel
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                DatenExport Praesentation
+ * @package                      de.yaio.extension.datatransfer.excel
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class ExcelExporter extends WikiExporter {
     
@@ -93,19 +86,13 @@ public class ExcelExporter extends WikiExporter {
         throw new IllegalAccessException("This function must not be used!!!");
     }
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     DataExport
-     * <h4>FeatureDescription:</h4>
-     *     generate helper-OutputOptions for generation of the excel
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue OutputOptions - OuputOptions for generation
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Cofiguration helper
-     * @param baseOOptions - Default OutputOptions to override
-     * @return OuputOptions for generatio
+    /** 
+     * generate helper-OutputOptions for generation of the excel
+     * @FeatureDomain                DataExport
+     * @FeatureResult                returnValue OutputOptions - OuputOptions for generation
+     * @FeatureKeywords              Cofiguration helper
+     * @param baseOOptions           Default OutputOptions to override
+     * @return                       OuputOptions for generatio
      */
     public ExcelOutputOptions genOutputOptionsForExcel(final OutputOptions baseOOptions) {
         ExcelOutputOptions options = new ExcelOutputOptions(baseOOptions);
@@ -122,22 +109,15 @@ public class ExcelExporter extends WikiExporter {
     }
     
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     DataExport
-     *     Presentation
-     * <h4>FeatureDescription:</h4>
-     *     formats recursively nodes into workbook-sheet Planung
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>updates wb - insert lines
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Layout
-     * @param wb - Workbook to fill
-     * @param masterNode - node for output recursively
-     * @param oOptions - options for output (formatter)
-     * @throws Exception - possible Exception
+    /** 
+     * formats recursively nodes into workbook-sheet Planung
+     * @FeatureDomain                DataExport Presentation
+     * @FeatureResult                updates wb - insert lines
+     * @FeatureKeywords              Layout
+     * @param wb                     Workbook to fill
+     * @param masterNode             node for output recursively
+     * @param oOptions               options for output (formatter)
+     * @throws Exception             possible Exception
      */
     public void fillPlanungSheet(final HSSFWorkbook wb, final BaseNode masterNode,
                 final ExcelOutputOptions oOptions)
@@ -862,22 +842,15 @@ public class ExcelExporter extends WikiExporter {
                 cellStyle);
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     DataExport
-     *     Presentation
-     * <h4>FeatureDescription:</h4>
-     *     formats recursively nodes into workbook-sheet Gannt
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>updates wb - insert lines
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Layout
-     * @param wb - Workbook to fill
-     * @param masterNode - node for output recursively
-     * @param oOptions - options for output (formatter)
-     * @throws Exception - possible Exception
+    /** 
+     * formats recursively nodes into workbook-sheet Gannt
+     * @FeatureDomain                DataExport Presentation
+     * @FeatureResult                updates wb - insert lines
+     * @FeatureKeywords              Layout
+     * @param wb                     Workbook to fill
+     * @param masterNode             node for output recursively
+     * @param oOptions               options for output (formatter)
+     * @throws Exception             possible Exception
      */
     public void fillGantSheet(final HSSFWorkbook wb, final BaseNode masterNode,
             final ExcelOutputOptions oOptions)

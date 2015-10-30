@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -38,17 +35,15 @@ import de.yaio.core.node.BaseNode;
 import de.yaio.datatransfer.importer.ImportOptions;
 import de.yaio.datatransfer.importer.ImporterImpl;
 
-/**
- * <h4>FeatureDomain:</h4>
-*     import
- * <h4>FeatureDescription:</h4>
- *     import of Nodes in PPL-Format
+/** 
+ * import of Nodes in PPL-Format
  * 
- * @package de.yaio.extension.datatransfer..ppl
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                import
+ * @package                      de.yaio.extension.datatransfer..ppl
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class PPLImporter extends ImporterImpl {
 
@@ -58,18 +53,12 @@ public class PPLImporter extends ImporterImpl {
     /** Logger */
     private static final Logger LOGGER =
             Logger.getLogger(PPLImporter.class);
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Constructor
-     * <h4>FeatureDescription:</h4>
-     *     Importer to import/parse nodes in PPL-Format
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>initialize the importer
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Constructor
-     *  @param options - the importoptions for the parser...
+    /** 
+     * Importer to import/parse nodes in PPL-Format
+     * @FeatureDomain                Constructor
+     * @FeatureResult                initialize the importer
+     * @FeatureKeywords              Constructor
+     *  @param options                the importoptions for the parser...
      */
     public PPLImporter(final ImportOptions options) {
         super(options);
@@ -79,21 +68,15 @@ public class PPLImporter extends ImporterImpl {
     // service-functions to generate Nodes from source
     ////////////////
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     import
-     * <h4>FeatureDescription:</h4>
-     *     extracts the nodes from PPL nodeSrc (single Line) and appends them to masterNode
-     * <h4>FeatureResult:</h4>
-     *   <ul> 
-     *     <li>updates masterNode - appends from nodeSrc extracted Nodes
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Parser
-     * @param masterNode - node to append extracted Nodes
-     * @param nodeSrc - PPL nodeSrc to be parsed
-     * @param delimiter - delimiter of PPL node-hirarchy
-     * @throws Exception - parser/format-Exceptions possible
+    /** 
+     * extracts the nodes from PPL nodeSrc (single Line) and appends them to masterNode
+     * @FeatureDomain                import
+     * @FeatureResult                updates masterNode - appends from nodeSrc extracted Nodes
+     * @FeatureKeywords              Parser
+     * @param masterNode             node to append extracted Nodes
+     * @param nodeSrc                PPL nodeSrc to be parsed
+     * @param delimiter              delimiter of PPL node-hirarchy
+     * @throws Exception             parser/format-Exceptions possible
      */
     public void extractNodeFromSrcLine(final DataDomain masterNode, 
                                        final String nodeSrc, 
@@ -172,21 +155,15 @@ public class PPLImporter extends ImporterImpl {
         }
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     import
-     * <h4>FeatureDescription:</h4>
-     *     extracts the nodes from PPL lstNodeSrc (list of lines) and appends them to masterNode
-     * <h4>FeatureResult:</h4>
-     *   <ul> 
-     *     <li>updates masterNode - appends from nodeSrc extracted Nodes
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Parser
-     * @param masterNode - node to append extracted Nodes
-     * @param lstNodeSrc - list of PPL nodeSrc to be parsed
-     * @param delimiter - delimiter of PPL node-hirarchy
-     * @throws Exception - parser/format-Exceptions possible
+    /** 
+     * extracts the nodes from PPL lstNodeSrc (list of lines) and appends them to masterNode
+     * @FeatureDomain                import
+     * @FeatureResult                updates masterNode - appends from nodeSrc extracted Nodes
+     * @FeatureKeywords              Parser
+     * @param masterNode             node to append extracted Nodes
+     * @param lstNodeSrc             list of PPL nodeSrc to be parsed
+     * @param delimiter              delimiter of PPL node-hirarchy
+     * @throws Exception             parser/format-Exceptions possible
      */
     public void extractNodesFromLines(final DataDomain masterNode, 
                                       final String[] lstNodeSrc, 
@@ -204,21 +181,15 @@ public class PPLImporter extends ImporterImpl {
         }
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     import
-     * <h4>FeatureDescription:</h4>
-     *     extracts the nodes from PPL nodeSrc (several lines) and appends them to masterNode
-     * <h4>FeatureResult:</h4>
-     *   <ul> 
-     *     <li>updates masterNode - appends from nodeSrc extracted Nodes
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Parser
-     * @param masterNode - node to append extracted Nodes
-     * @param pNodesSrc  - PPL nodeSrc (several lines) to be parsed
-     * @param delimiter  - delimiter of PPL node-hirarchy
-     * @throws Exception - parser/format-Exceptions possible
+    /** 
+     * extracts the nodes from PPL nodeSrc (several lines) and appends them to masterNode
+     * @FeatureDomain                import
+     * @FeatureResult                updates masterNode - appends from nodeSrc extracted Nodes
+     * @FeatureKeywords              Parser
+     * @param masterNode             node to append extracted Nodes
+     * @param pNodesSrc              PPL nodeSrc (several lines) to be parsed
+     * @param delimiter              delimiter of PPL node-hirarchy
+     * @throws Exception             parser/format-Exceptions possible
      */
     public void extractNodesFromLines(final DataDomain masterNode, 
                                       final String pNodesSrc, 
@@ -244,21 +215,15 @@ public class PPLImporter extends ImporterImpl {
     }
 
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     import
-     * <h4>FeatureDescription:</h4>
-     *     extracts the nodes from file and appends them to masterNode
-     * <h4>FeatureResult:</h4>
-     *   <ul> 
-     *     <li>updates masterNode - appends from nodeSrc extracted Nodes
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Parser
-     * @param masterNode - node to append extracted Nodes
-     * @param fileName - fileName with the PPL-nodeSrc
-     * @param delimiter - delimiter of PPL node-hirarchy
-     * @throws Exception - parser/format/io-Exceptions possible
+    /** 
+     * extracts the nodes from file and appends them to masterNode
+     * @FeatureDomain                import
+     * @FeatureResult                updates masterNode - appends from nodeSrc extracted Nodes
+     * @FeatureKeywords              Parser
+     * @param masterNode             node to append extracted Nodes
+     * @param fileName               fileName with the PPL-nodeSrc
+     * @param delimiter              delimiter of PPL node-hirarchy
+     * @throws Exception             parser/format/io-Exceptions possible
      */
     public void extractNodesFromFile(final DataDomain masterNode, 
                                      final String fileName, 
@@ -267,20 +232,14 @@ public class PPLImporter extends ImporterImpl {
         this.extractNodesFromLines(masterNode, fileContent, delimiter);
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     import
-     * <h4>FeatureDescription:</h4>
-     *     read filecontent
-     * <h4>FeatureResult:</h4>
-     *   <ul> 
-     *     <li>returnValue String - filecontent
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Tools
-     * @param fileName - fileName to read
-     * @throws Exception - io-Exceptions possible
-     * @return filecontent
+    /** 
+     * read filecontent
+     * @FeatureDomain                import
+     * @FeatureResult                returnValue String - filecontent
+     * @FeatureKeywords              Tools
+     * @param fileName               fileName to read
+     * @throws Exception             io-Exceptions possible
+     * @return                       filecontent
      */
     public static String readFromFile(final String fileName) throws Exception {
         // Parameter pruefen
@@ -291,24 +250,18 @@ public class PPLImporter extends ImporterImpl {
         return readFromInput(file);
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     import
-     * <h4>FeatureDescription:</h4>
-     *     Read filecontent, detect the best matching encoding from content 
-     *     and encode the file to that encoding.<br>
-     *     Maybe the file will read twice if encoding changes at the end of the file:<br>
-     *     1 run: to detect<br>
-     *     2 run: to read in the best matching encoding
-     * <h4>FeatureResult:</h4>
-     *   <ul> 
-     *     <li>returnValue String - filecontent
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Tools
-     * @param file - file to read
-     * @throws Exception - io-Exceptions possible
-     * @return filecontent - the file content as string in the best detcted encoding
+    /** 
+     * Read filecontent, detect the best matching encoding from content 
+     * and encode the file to that encoding.<br>
+     * Maybe the file will read twice if encoding changes at the end of the file:<br>
+     * 1 run: to detect<br>
+     * 2 run: to read in the best matching encoding
+     * @FeatureDomain                import
+     * @FeatureResult                returnValue String - filecontent
+     * @FeatureKeywords              Tools
+     * @param file                   file to read
+     * @throws Exception             io-Exceptions possible
+     * @return                       filecontent - the file content as string in the best detcted encoding
      */
     public static String readFromInput(final File file) throws Exception {
 

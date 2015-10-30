@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -26,17 +23,15 @@ import de.yaio.core.datadomain.ResLocData;
 import de.yaio.datatransfer.importer.ImportOptions;
 import de.yaio.datatransfer.importer.NodeFactory;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     import
- * <h4>FeatureDescription:</h4>
- *     service-functions for parsing of dataDomain: ResLocData
+/** 
+ * service-functions for parsing of dataDomain: ResLocData
  * 
- * @package de.yaio.datatransfer.importer.parser
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                import
+ * @package                      de.yaio.datatransfer.importer.parser
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class ResLocDataParserImpl  extends ParserImpl implements ResLocDataParser {
 
@@ -65,15 +60,12 @@ public class ResLocDataParserImpl  extends ParserImpl implements ResLocDataParse
         return ResLocData.CONST_ORDER;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     DataImport
-     * <h4>FeatureDescription:</h4>
-     *     hängt den Parser für das spätere Extrahieren der NodeDaten aus dem 
-     *     Namen (NodeFactory.parseNodeDataDomains) in die Parserliste
-     * <h4>FeatureKeywords:</h4>
-     *     Config
-     * @param nodeFactory - instance of the nodeFactory which will use the parser 
+    /** 
+     * hängt den Parser für das spätere Extrahieren der NodeDaten aus dem 
+     * Namen (NodeFactory.parseNodeDataDomains) in die Parserliste
+     * @FeatureDomain                DataImport
+     * @FeatureKeywords              Config
+     * @param nodeFactory            instance of the nodeFactory which will use the parser 
      */
     public static void configureDataDomainParser(final NodeFactory nodeFactory) {
         nodeFactory.addDataDomainParser(new ResLocDataParserImpl());

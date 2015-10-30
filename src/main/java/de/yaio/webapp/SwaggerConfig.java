@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -32,17 +29,15 @@ import de.yaio.webapp.controller.ConverterController;
 import de.yaio.webapp.controller.ExportController;
 import de.yaio.webapp.controller.ImportController;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     Webservice
- * <h4>FeatureDescription:</h4>
- *     configure swagger
- *      
- * @package de.yaio.webapp
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+/** 
+ * configure swagger
+ *  
+ * @FeatureDomain                Webservice
+ * @package                      de.yaio.webapp
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 @Configuration
 @EnableSwagger2
@@ -50,7 +45,7 @@ public class SwaggerConfig {
 
     /**
      * configure the swagger group
-     * @return  the configured swagger-group
+     * @return                       the configured swagger-group
      */
     @Bean
     public Docket exportsApi() {
@@ -67,7 +62,7 @@ public class SwaggerConfig {
 
     /**
      * configure the swagger group
-     * @return  the configured swagger-group
+     * @return                       the configured swagger-group
      */
     @Bean
     public Docket importsApi() {
@@ -84,7 +79,7 @@ public class SwaggerConfig {
 
     /**
      * configure the swagger group
-     * @return  the configured swagger-group
+     * @return                       the configured swagger-group
      */
     @Bean
     public Docket restApi() {
@@ -101,7 +96,7 @@ public class SwaggerConfig {
 
     /**
      * configure the swagger group
-     * @return  the configured swagger-group
+     * @return                       the configured swagger-group
      */
     @Bean
     public Docket convertersApi() {
@@ -118,7 +113,7 @@ public class SwaggerConfig {
 
     /**
      * configure the swagger group
-     * @return  the configured swagger-group
+     * @return                       the configured swagger-group
      */
     @Bean
     public Docket adminApi() {

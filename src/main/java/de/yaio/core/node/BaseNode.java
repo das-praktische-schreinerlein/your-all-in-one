@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -68,19 +65,15 @@ import de.yaio.core.dbservice.BaseNodeDBServiceImpl;
 import de.yaio.core.nodeservice.BaseNodeService;
 import de.yaio.datatransfer.importer.parser.Parser;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     DataDefinition
- *     Persistence
- *     BusinessLogic
- * <h4>FeatureDescription:</h4>
- *     bean with Node-data (as base) and belonging businesslogic
+/** 
+ * bean with Node-data (as base) and belonging businesslogic
  * 
- * @package de.yaio.core.node
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                DataDefinition Persistence BusinessLogic
+ * @package                      de.yaio.core.node
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 @RooJavaBean
 @RooToString
@@ -520,7 +513,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     }
 
     /**
-     * @return the {@link BaseNode#baseNodeDBService}
+     * @return                       the {@link BaseNode#baseNodeDBService}
      */
     @XmlTransient
     @JsonIgnore
@@ -528,7 +521,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
         return baseNodeDBService;
     }
     /**
-     * @param newBaseNodeDBService the {@link BaseNode#baseNodeDBService} to set
+     * @param newBaseNodeDBService   the {@link BaseNode#baseNodeDBService} to set
      */
     @XmlTransient
     @JsonIgnore
@@ -576,7 +569,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
 
     /**
      * checks if planStart <= planEnde
-     * @return true/false
+     * @return                       true/false
      */
     @AssertTrue(message = "planStart must be <= planEnde") 
     @Transient
@@ -596,7 +589,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
 
     /**
      * checks if getPlanStart() <= CONST_MAXDATE && >= CONST_MINDATE
-     * @return true/false
+     * @return                       true/false
      */
     @AssertTrue(message = "planStart is out of range") 
     @Transient
@@ -612,7 +605,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     
     /**
      * checks if getPlanEnde() <= CONST_MAXDATE && >= CONST_MINDATE
-     * @return true/false
+     * @return                       true/false
      */
     @AssertTrue(message = "planEnde is out of range") 
     @Transient
@@ -628,7 +621,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
 
     /**
      * checks if istStart <= istEnde
-     * @return true/false
+     * @return                       true/false
      */
     @AssertTrue(message = "istStart must be <= istEnde") 
     @Transient
@@ -648,7 +641,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
 
     /**
      * checks if istStart <= CONST_MAXDATE && >= CONST_MINDATE
-     * @return true/false
+     * @return                       true/false
      */
     @AssertTrue(message = "istStart is out of range") 
     @Transient
@@ -664,7 +657,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     
     /**
      * checks if istEnde <= CONST_MAXDATE && >= CONST_MINDATE
-     * @return true/false
+     * @return                       true/false
      */
     @AssertTrue(message = "istEnde is out of range")
     @Transient
@@ -682,38 +675,26 @@ public class BaseNode implements BaseData, MetaData, SysData,
     // persistence-functions
     //####################
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Persistence
-     * <h4>FeatureDescription:</h4>
-     *     initialize the Children from database (childNodes and childNodesByNameMapMap)
-     *     recursivly
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>updates memberfields childNodes
-     *     <li>updates memberfields childNodesByNameMapMap
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Persistence
-     * @param pRecursionLevel - how many recursion-level will be read from DB
+    /** 
+     * initialize the Children from database (childNodes and childNodesByNameMapMap)
+     * recursivly
+     * @FeatureDomain                Persistence
+     * @FeatureResult                updates memberfields childNodes
+     * @FeatureResult                updates memberfields childNodesByNameMapMap
+     * @FeatureKeywords              Persistence
+     * @param pRecursionLevel        how many recursion-level will be read from DB
      */
     public void initChildNodesFromDB(final int pRecursionLevel) {
         this.getBaseNodeService().initChildNodesFromDB(this, pRecursionLevel);
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Persistence
-     * <h4>FeatureDescription:</h4>
-     *     initialize the Children from database (childNodes and childNodesByNameMapMap)
-     *     for all parents
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>updates memberfields childNodes otf the parents
-     *     <li>updates memberfields childNodesByNameMapMap of the parents
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Persistence
+    /** 
+     * initialize the Children from database (childNodes and childNodesByNameMapMap)
+     * for all parents
+     * @FeatureDomain                Persistence
+     * @FeatureResult                updates memberfields childNodes otf the parents
+     * @FeatureResult                updates memberfields childNodesByNameMapMap of the parents
+     * @FeatureKeywords              Persistence
      */
     public void initChildNodesForParentsFromDB() {
         List<BaseNode> parentHierarchy = this.getBaseNodeService().getParentHierarchy(this);
@@ -722,39 +703,27 @@ public class BaseNode implements BaseData, MetaData, SysData,
         }
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Persistence
-     * <h4>FeatureDescription:</h4>
-     *     saves the children to database (childNodes) recursivly<br>
-     *     check if entityManger contains objects<br>
-     *     if not: do persist
-     *     if yes or flgForceMerge is set: do merge
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>saves memberfields childNodes to database
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Persistence
-     * @param pRecursionLevel - how many recursion-level will be saved to DB (0 = only my children)
-     * @param flgForceMerge - force merge not persists
-     * @throws Exception - ioExceptions possible
+    /** 
+     * saves the children to database (childNodes) recursivly<br>
+     * check if entityManger contains objects<br>
+     * if not: do persist
+     * if yes or flgForceMerge is set: do merge
+     * @FeatureDomain                Persistence
+     * @FeatureResult                saves memberfields childNodes to database
+     * @FeatureKeywords              Persistence
+     * @param pRecursionLevel        how many recursion-level will be saved to DB (0 = only my children)
+     * @param flgForceMerge          force merge not persists
+     * @throws Exception             ioExceptions possible
      */
     public void saveChildNodesToDB(final int pRecursionLevel, final boolean flgForceMerge) throws Exception {
         this.getBaseNodeDBService().saveChildNodesToDB(this, pRecursionLevel, flgForceMerge);
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Persistence
-     * <h4>FeatureDescription:</h4>
-     *     remove the children from database recursivly
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>deletes all children with this,.getSysUID recursivly from db
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Persistence
+    /** 
+     * remove the children from database recursivly
+     * @FeatureDomain                Persistence
+     * @FeatureResult                deletes all children with this,.getSysUID recursivly from db
+     * @FeatureKeywords              Persistence
      */
     public void removeChildNodesFromDB() {
         this.getBaseNodeDBService().removeChildNodesFromDB(this);

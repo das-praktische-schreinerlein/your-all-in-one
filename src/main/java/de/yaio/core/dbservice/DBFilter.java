@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -19,17 +16,15 @@ package de.yaio.core.dbservice;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     Persistence
- * <h4>FeatureDescription:</h4>
- *     implementation of dbfilter
+/** 
+ * implementation of dbfilter
  * 
- * @package de.yaio.core.node
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Persistence
+ * @package                      de.yaio.core.node
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class DBFilter {
     /**
@@ -39,8 +34,8 @@ public class DBFilter {
         protected String name;
         protected Object value;
         /**
-         * @param name  name of the parameter
-         * @param value value of the parameter
+         * @param name                   name of the parameter
+         * @param value                  value of the parameter
          */
         public Parameter(final String name, final Object value) {
             super();
@@ -49,13 +44,13 @@ public class DBFilter {
         }
 
         /**
-         * @return the {@link DBFilter.Parameter#name}
+         * @return                       the {@link DBFilter.Parameter#name}
          */
         public final String getName() {
             return this.name;
         }
         /**
-         * @return the {@link DBFilter.Parameter#value}
+         * @return                       the {@link DBFilter.Parameter#value}
          */
         public final Object getValue() {
             return this.value;
@@ -66,8 +61,8 @@ public class DBFilter {
     protected List<Parameter> parameters = new ArrayList<Parameter>();
 
     /**
-     * @param sql        sql of the filter
-     * @param parameters parametrs of the filter
+     * @param sql                    sql of the filter
+     * @param parameters             parametrs of the filter
      */
     public DBFilter(final String sql, final List<Parameter> parameters) {
         super();
@@ -76,13 +71,13 @@ public class DBFilter {
     }
 
     /**
-     * @return the {@link DBFilter#sql}
+     * @return                       the {@link DBFilter#sql}
      */
     public final String getSql() {
         return this.sql;
     }
     /**
-     * @return the {@link DBFilter#parameters}
+     * @return                       the {@link DBFilter#parameters}
      */
     public final List<Parameter> getParameters() {
         return this.parameters;

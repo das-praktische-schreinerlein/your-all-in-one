@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -37,18 +34,16 @@ import de.yaio.extension.datatransfer.wiki.WikiImporter;
 import de.yaio.rest.controller.NodeActionResponse;
 import de.yaio.rest.controller.NodeRestController;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     Webservice
- * <h4>FeatureDescription:</h4>
- *     Upload-Services to import BaseNodes in different 
- *     formats (wiki, ppl, excel..)
- *      
- * @package de.yaio.webapp.controller
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+/** 
+ * Upload-Services to import BaseNodes in different 
+ * formats (wiki, ppl, excel..)
+ *  
+ * @FeatureDomain                Webservice
+ * @package                      de.yaio.webapp.controller
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 @Controller
 @RequestMapping("/imports")
@@ -63,21 +58,14 @@ public class ImportController {
     @Autowired
     protected DatatransferUtils datatransferUtils;
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     Request to import the uploaded wiki-file from param "file" to the 
-     *     node parentSysUID returning a simple message
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param parentSysUID - sysUID to append the new nodes
-     * @param file - the uploaded file stream with the data to import
-     * @return text-message
+    /** 
+     * Request to import the uploaded wiki-file from param "file" to the 
+     * node parentSysUID returning a simple message
+     * @FeatureDomain                Webservice
+     * @FeatureKeywords              Webservice Query
+     * @param parentSysUID           sysUID to append the new nodes
+     * @param file                   the uploaded file stream with the data to import
+     * @return                       text-message
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, 
@@ -152,21 +140,14 @@ public class ImportController {
         return response.getStateMsg();
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     Request to import the uploaded json-file from param "file" to the 
-     *     node parentSysUID returning a simple message
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param parentSysUID - sysUID to append the new nodes
-     * @param file - the uploaded file stream with the data to import
-     * @return text-message
+    /** 
+     * Request to import the uploaded json-file from param "file" to the 
+     * node parentSysUID returning a simple message
+     * @FeatureDomain                Webservice
+     * @FeatureKeywords              Webservice Query
+     * @param parentSysUID           sysUID to append the new nodes
+     * @param file                   the uploaded file stream with the data to import
+     * @return                       text-message
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, 

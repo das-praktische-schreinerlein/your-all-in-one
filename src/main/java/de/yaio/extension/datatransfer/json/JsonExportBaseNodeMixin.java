@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -22,19 +19,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import de.yaio.core.node.BaseNode;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     DataDefinition
- *     Persistence
- *     BusinessLogic
- * <h4>FeatureDescription:</h4>
- *     bean with overrides for BaseNode-data for JsonExport
+/** 
+ * bean with overrides for BaseNode-data for JsonExport
  * 
- * @package de.yaio.extension.datatransfer.json
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                DataDefinition Persistence BusinessLogic
+ * @package                      de.yaio.extension.datatransfer.json
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public abstract class JsonExportBaseNodeMixin {
     JsonExportBaseNodeMixin(@JsonProperty final Set<BaseNode> childNodes, 
@@ -43,14 +36,14 @@ public abstract class JsonExportBaseNodeMixin {
     
     /**
      * export childNodes
-     * @return childNodes
+     * @return                       childNodes
      */
     @JsonProperty
     public abstract Set<BaseNode> getChildNodes();
 
     /**
      * ignore parentNode
-     * @return parentNode
+     * @return                       parentNode
      */
     @JsonIgnore
     public abstract BaseNode getParentNode();

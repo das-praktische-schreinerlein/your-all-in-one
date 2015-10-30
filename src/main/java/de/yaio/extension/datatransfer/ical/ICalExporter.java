@@ -2,14 +2,13 @@
 # * <h4>FeatureDomain:</h4>
 
  *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * software for projectmanagement and documentation
+ * 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -37,18 +36,15 @@ import de.yaio.datatransfer.exporter.formatter.Formatter;
 import de.yaio.datatransfer.exporter.formatter.FormatterImpl;
 import de.yaio.extension.datatransfer.wiki.WikiExporter;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     DatenExport
- *     Praesentation
- * <h4>FeatureDescription:</h4>
- *     export of Nodes as ICal
+/** 
+ * export of Nodes as ICal
  * 
- * @package de.yaio.extension.datatransfer.ical
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                DatenExport Praesentation
+ * @package                      de.yaio.extension.datatransfer.ical
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class ICalExporter extends WikiExporter {
 
@@ -59,17 +55,11 @@ public class ICalExporter extends WikiExporter {
     protected final DateFormat DF = new SimpleDateFormat("yyyyMMdd");
     protected final DateFormat TF = new SimpleDateFormat("HHmmss");
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Constructor
-     * <h4>FeatureDescription:</h4>
-     *     service functions to export nodes as ICal
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>initialize the exporter
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Constructor
+    /** 
+     * service functions to export nodes as ICal
+     * @FeatureDomain                Constructor
+     * @FeatureResult                initialize the exporter
+     * @FeatureKeywords              Constructor
      */
     public ICalExporter() {
         super();
@@ -109,22 +99,15 @@ public class ICalExporter extends WikiExporter {
         return res;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     DataExport
-     *     Presentation
-     * <h4>FeatureDescription:</h4>
-     *     formats recursively node in ICal-format
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue String - formatted output of node-hirarchy
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Layout
-     * @param paramCurNode - node for output recursively
-     * @param oOptions - options for output (formatter)
-     * @return - formatted output of node-hierarchy and DataDomains
-     * @throws Exception - parser/format-Exceptions possible
+    /** 
+     * formats recursively node in ICal-format
+     * @FeatureDomain                DataExport Presentation
+     * @FeatureResult                returnValue String - formatted output of node-hirarchy
+     * @FeatureKeywords              Layout
+     * @param paramCurNode           node for output recursively
+     * @param oOptions               options for output (formatter)
+     * @return                       formatted output of node-hierarchy and DataDomains
+     * @throws Exception             parser/format-Exceptions possible
      */
     public String genICalForNode(final BaseNode paramCurNode, 
         final OutputOptions oOptions) throws Exception {
@@ -231,22 +214,15 @@ public class ICalExporter extends WikiExporter {
         return res;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     DataExport
-     *     Presentation
-     * <h4>FeatureDescription:</h4>
-     *     formats single TaskNode in ICal-format
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue String - formatted output of single node
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Layout
-     * @param paramCurNode - node for output
-     * @param oOptions - options for output (formatter)
-     * @return - formatted output
-     * @throws Exception - parser/format-Exceptions possible
+    /** 
+     * formats single TaskNode in ICal-format
+     * @FeatureDomain                DataExport Presentation
+     * @FeatureResult                returnValue String - formatted output of single node
+     * @FeatureKeywords              Layout
+     * @param paramCurNode           node for output
+     * @param oOptions               options for output (formatter)
+     * @return                       formatted output
+     * @throws Exception             parser/format-Exceptions possible
      */
     public String genICalForTaskNode(final TaskNode paramCurNode, 
         final OutputOptions oOptions) throws Exception {
@@ -364,22 +340,15 @@ public class ICalExporter extends WikiExporter {
         return res;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     DataExport
-     *     Presentation
-     * <h4>FeatureDescription:</h4>
-     *     formats single EventNode in ICal-format
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue String - formatted output of single node
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Layout
-     * @param paramCurNode - node for output
-     * @param oOptions - options for output (formatter)
-     * @return - formatted output
-     * @throws Exception - parser/format-Exceptions possible
+    /** 
+     * formats single EventNode in ICal-format
+     * @FeatureDomain                DataExport Presentation
+     * @FeatureResult                returnValue String - formatted output of single node
+     * @FeatureKeywords              Layout
+     * @param paramCurNode           node for output
+     * @param oOptions               options for output (formatter)
+     * @return                       formatted output
+     * @throws Exception             parser/format-Exceptions possible
      */
     public String genICalForEventNode(final EventNode paramCurNode, 
         final OutputOptions oOptions) throws Exception {
@@ -543,21 +512,14 @@ public class ICalExporter extends WikiExporter {
         return icalRes;
     }
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     DataExport
-     *     Presentation
-     * <h4>FeatureDescription:</h4>
-     *     get header for a ICal-calendar
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue String - header for ICal-calendar
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Layout
-     * @param masterNode - node for output
-     * @param oOptions - options for output (formatter)
-     * @return - header for ICal-calendar
+    /** 
+     * get header for a ICal-calendar
+     * @FeatureDomain                DataExport Presentation
+     * @FeatureResult                returnValue String - header for ICal-calendar
+     * @FeatureKeywords              Layout
+     * @param masterNode             node for output
+     * @param oOptions               options for output (formatter)
+     * @return                       header for ICal-calendar
      */
     public String getCalHeader(final DataDomain masterNode, 
             final OutputOptions oOptions) {
@@ -588,21 +550,14 @@ public class ICalExporter extends WikiExporter {
         return icalRes;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     DataExport
-     *     Presentation
-     * <h4>FeatureDescription:</h4>
-     *     get footer for a ICal-calendar
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue String - footer for ICal-calendar
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Layout
-     * @param masterNode - node for output
-     * @param oOptions - options for output (formatter)
-     * @return - footer for ICal-calendar
+    /** 
+     * get footer for a ICal-calendar
+     * @FeatureDomain                DataExport Presentation
+     * @FeatureResult                returnValue String - footer for ICal-calendar
+     * @FeatureKeywords              Layout
+     * @param masterNode             node for output
+     * @param oOptions               options for output (formatter)
+     * @return                       footer for ICal-calendar
      */
     public String getCalFooter(final DataDomain masterNode, 
                                   final OutputOptions oOptions) {

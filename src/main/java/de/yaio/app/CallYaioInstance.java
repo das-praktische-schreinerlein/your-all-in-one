@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -49,17 +46,15 @@ import org.apache.log4j.Logger;
 
 import de.yaio.utils.DataUtils;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     Administration
- * <h4>FeatureDescription:</h4>
- *     job to call admin-int5erface of yaio-instances
+/** 
+ * job to call admin-int5erface of yaio-instances
  * 
- * @package de.yaio.app
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Administration
+ * @package                      de.yaio.app
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public abstract class CallYaioInstance extends CmdLineJob {
 
@@ -70,18 +65,12 @@ public abstract class CallYaioInstance extends CmdLineJob {
     protected String username;
     protected URL yaioInstanceUrl;
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Constructor
-     * <h4>FeatureDescription:</h4>
-     *     job to call yaio-instances for admin-purposes
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>initialize the application
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Constructor
-     * @param args the command line arguments
+    /** 
+     * job to call yaio-instances for admin-purposes
+     * @FeatureDomain                Constructor
+     * @FeatureResult                initialize the application
+     * @FeatureKeywords              Constructor
+     * @param args                   the command line arguments
      */
     public CallYaioInstance(final String[] args) {
         super(args);
@@ -129,18 +118,12 @@ public abstract class CallYaioInstance extends CmdLineJob {
         }
     }
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tools - URL-Handling
-     * <h4>FeatureDescription:</h4>
-     *     prepare a http-security-context with username and password for the yaioInstanceUrl
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValues - http-security-context
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     URL-Handling
-     * @return  - http-security-context prepared with username and password
+    /** 
+     * prepare a http-security-context with username and password for the yaioInstanceUrl
+     * @FeatureDomain                Tools - URL-Handling
+     * @FeatureResult                returnValues - http-security-context
+     * @FeatureKeywords              URL-Handling
+     * @return                       http-security-context prepared with username and password
      */
     protected HttpContext prepareHttpContext() {
         HttpHost targetHost = new HttpHost(yaioInstanceUrl.getHost(), 
@@ -165,20 +148,14 @@ public abstract class CallYaioInstance extends CmdLineJob {
         return context;
     }
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tools - URL-Handling
-     * <h4>FeatureDescription:</h4>
-     *     execute Request with a Security-Context prepared with prepareHttpContext
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValues - http-response
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     URL-Handling
-     * @param request                  - the request to execute
-     * @return                         - http-response
-     * @throws ClientProtocolException - possible
+    /** 
+     * execute Request with a Security-Context prepared with prepareHttpContext
+     * @FeatureDomain                Tools - URL-Handling
+     * @FeatureResult                returnValues - http-response
+     * @FeatureKeywords              URL-Handling
+     * @param request                the request to execute
+     * @return                       http-response
+     * @throws ClientProtocolException possible
      * @throws IOException             - possible
      */
     protected HttpResponse executeRequest(final HttpUriRequest request) 
@@ -192,21 +169,15 @@ public abstract class CallYaioInstance extends CmdLineJob {
     }
     
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tools - URL-Handling
-     * <h4>FeatureDescription:</h4>
-     *     execute GET-Request for yaio-url with params
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValues - ByteArray with the textresponse
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     URL-Handling
-     * @param baseUrl      - the route behind the yaioInstanceUrl to call
-     * @param params       - params for the request
-     * @return             - Response-Text as ByteArray
-     * @throws IOException - possible Exception if Request-state <200 > 299 
+    /** 
+     * execute GET-Request for yaio-url with params
+     * @FeatureDomain                Tools - URL-Handling
+     * @FeatureResult                returnValues - ByteArray with the textresponse
+     * @FeatureKeywords              URL-Handling
+     * @param baseUrl                the route behind the yaioInstanceUrl to call
+     * @param params                 params for the request
+     * @return                       Response-Text as ByteArray
+     * @throws IOException           possible Exception if Request-state <200 > 299 
      */
     protected byte[] callGetUrl(final String route, 
                                 final Map<String, String> params) throws IOException {
@@ -247,22 +218,16 @@ public abstract class CallYaioInstance extends CmdLineJob {
 
     
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tools - URL-Handling
-     * <h4>FeatureDescription:</h4>
-     *     execute POST-Request for yaio-url with params
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValues - ByteArray with the textresponse
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     URL-Handling
-     * @param baseUrl      - the route behind the yaioInstanceUrl to call
-     * @param params       - params for the request
-     * @param fileParams   - files to upload
-     * @return             - Response-Text as ByteArray
-     * @throws IOException - possible Exception if Request-state <200 > 299 
+    /** 
+     * execute POST-Request for yaio-url with params
+     * @FeatureDomain                Tools - URL-Handling
+     * @FeatureResult                returnValues - ByteArray with the textresponse
+     * @FeatureKeywords              URL-Handling
+     * @param baseUrl                the route behind the yaioInstanceUrl to call
+     * @param params                 params for the request
+     * @param fileParams             files to upload
+     * @return                       Response-Text as ByteArray
+     * @throws IOException           possible Exception if Request-state <200 > 299 
      */
     protected byte[] callPostUrl(final String route, 
                                  final Map<String, String> params, 

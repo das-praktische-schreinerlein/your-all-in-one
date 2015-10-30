@@ -2,14 +2,13 @@
 # * <h4>FeatureDomain:</h4>
 
  *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * software for projectmanagement and documentation
+ * 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -33,18 +32,15 @@ import de.yaio.datatransfer.exporter.OutputOptionsImpl;
 import de.yaio.datatransfer.exporter.formatter.FormatterImpl;
 import de.yaio.utils.Calculator;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     DatenExport
- *     Praesentation
- * <h4>FeatureDescription:</h4>
- *     export of Nodes as ICal from database
+/** 
+ * export of Nodes as ICal from database
  * 
- * @package de.yaio.extension.datatransfer.ical
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                DatenExport Praesentation
+ * @package                      de.yaio.extension.datatransfer.ical
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class ICalDBExporter extends ICalExporter {
 
@@ -52,17 +48,11 @@ public class ICalDBExporter extends ICalExporter {
     private static final Logger LOGGER =
         Logger.getLogger(ICalDBExporter.class);
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Constructor
-     * <h4>FeatureDescription:</h4>
-     *     service functions to export nodes as ICal
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>initialize the exporter
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Constructor
+    /** 
+     * service functions to export nodes as ICal
+     * @FeatureDomain                Constructor
+     * @FeatureResult                initialize the exporter
+     * @FeatureKeywords              Constructor
      */
     public ICalDBExporter() {
         super();
@@ -90,22 +80,15 @@ public class ICalDBExporter extends ICalExporter {
         return icalRes;
     }
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     DataExport
-     *     Presentation
-     * <h4>FeatureDescription:</h4>
-     *     formats recursively node in ICal-format
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue String - formatted output of node-hirarchy
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Layout
-     * @param parentNode - node for output recursively
-     * @param poOptions - options for output (formatter)
-     * @return - formatted output of node-hierarchy and DataDomains
-     * @throws Exception - parser/format-Exceptions possible
+    /** 
+     * formats recursively node in ICal-format
+     * @FeatureDomain                DataExport Presentation
+     * @FeatureResult                returnValue String - formatted output of node-hirarchy
+     * @FeatureKeywords              Layout
+     * @param parentNode             node for output recursively
+     * @param poOptions              options for output (formatter)
+     * @return                       formatted output of node-hierarchy and DataDomains
+     * @throws Exception             parser/format-Exceptions possible
      */
     public String genICalForNode(final BaseNode parentNode, 
         final OutputOptions poOptions) throws Exception {

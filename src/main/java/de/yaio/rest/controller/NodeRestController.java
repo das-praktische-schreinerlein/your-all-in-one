@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -46,17 +43,15 @@ import de.yaio.core.node.UrlResNode;
 import de.yaio.core.nodeservice.BaseNodeService;
 import de.yaio.extension.datatransfer.common.DatatransferUtils;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     Webservice
- * <h4>FeatureDescription:</h4>
- *     the controller for RESTful Web Services for BaseNodes<br>
- *      
- * @package de.yaio.webapp.controller
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+/** 
+ * the controller for RESTful Web Services for BaseNodes<br>
+ *  
+ * @FeatureDomain                Webservice
+ * @package                      de.yaio.webapp.controller
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 @Controller
 @RequestMapping("/nodes")
@@ -73,21 +68,15 @@ public class NodeRestController {
     //@Autowired TODO: failed on unitstest...
     protected DatatransferUtils datatransferUtils = new DatatransferUtils();
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     create an response.obj for the node with state OK and the corresponding message<br>
-     *     it will automaticaly set the parentHierarchy
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>NodeResponse (OK) with the node, hierarchy and OK-message
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice 
-     * @param node - the node for the response
-     * @param okMsg - the message
-     * @return NodeResponse (OK) with the node, hierarchy and OK-message
+    /** 
+     * create an response.obj for the node with state OK and the corresponding message<br>
+     * it will automaticaly set the parentHierarchy
+     * @FeatureDomain                Webservice
+     * @FeatureResult                NodeResponse (OK) with the node, hierarchy and OK-message
+     * @FeatureKeywords              Webservice 
+     * @param node                   the node for the response
+     * @param okMsg                  the message
+     * @return                       NodeResponse (OK) with the node, hierarchy and OK-message
      */
     public static NodeActionResponse createResponseObj(final BaseNode node, final String okMsg) {
         // extract parents
@@ -113,24 +102,18 @@ public class NodeRestController {
     }
     
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     common function to search childnodes of sysUID and return them as JSON
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>NodeResponse (OK, ERROR) with matching nodes
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param curPage - current page in result to display
-     * @param pageSize - max items per page
-     * @param sortConfig - use sort
-     * @param sysUID - sysUID to filter as perentNode
-     * @param fulltext - fulltext search string
-     * @param searchOptions searchoptions (additional filter...)
-     * @return NodeSearchResponse (OK, FAILED, ERROR) with matching nodes
+    /** 
+     * common function to search childnodes of sysUID and return them as JSON
+     * @FeatureDomain                Webservice
+     * @FeatureResult                NodeResponse (OK, ERROR) with matching nodes
+     * @FeatureKeywords              Webservice Query
+     * @param curPage                current page in result to display
+     * @param pageSize               max items per page
+     * @param sortConfig             use sort
+     * @param sysUID                 sysUID to filter as perentNode
+     * @param fulltext               fulltext search string
+     * @param searchOptions          searchoptions (additional filter...)
+     * @return                       NodeSearchResponse (OK, FAILED, ERROR) with matching nodes
      */
     public NodeSearchResponse commonSearchNode(final Long curPage, final Long pageSize, 
                                                final String sortConfig, final String sysUID, final String fulltext, 
@@ -162,23 +145,17 @@ public class NodeRestController {
         return response;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     Request to search childnodes of sysUID and return them as JSON
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>NodeResponse (OK, ERROR) with matching nodes
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param curPage - current page in result to display
-     * @param pageSize - max items per page
-     * @param sortConfig - use sort
-     * @param sysUID - sysUID to filter as perentNode
-     * @param fulltext - fulltext search string
-     * @return NodeSearchResponse (OK, FAILED, ERROR) with matching nodes
+    /** 
+     * Request to search childnodes of sysUID and return them as JSON
+     * @FeatureDomain                Webservice
+     * @FeatureResult                NodeResponse (OK, ERROR) with matching nodes
+     * @FeatureKeywords              Webservice Query
+     * @param curPage                current page in result to display
+     * @param pageSize               max items per page
+     * @param sortConfig             use sort
+     * @param sysUID                 sysUID to filter as perentNode
+     * @param fulltext               fulltext search string
+     * @return                       NodeSearchResponse (OK, FAILED, ERROR) with matching nodes
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
@@ -191,24 +168,18 @@ public class NodeRestController {
         return commonSearchNode(curPage, pageSize, sortConfig, sysUID, fulltext, null);
     }
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     Request to search childnodes of sysUID and return them as JSON
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>NodeResponse (OK, ERROR) with matching nodes
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param curPage - current page in result to display
-     * @param pageSize - max items per page
-     * @param sortConfig - use sort
-     * @param sysUID - sysUID to filter as perentNode
-     * @param fulltext - fulltext search string
-     * @param searchOptions   searchOptions
-     * @return NodeSearchResponse (OK, FAILED, ERROR) with matching nodes
+    /** 
+     * Request to search childnodes of sysUID and return them as JSON
+     * @FeatureDomain                Webservice
+     * @FeatureResult                NodeResponse (OK, ERROR) with matching nodes
+     * @FeatureKeywords              Webservice Query
+     * @param curPage                current page in result to display
+     * @param pageSize               max items per page
+     * @param sortConfig             use sort
+     * @param sysUID                 sysUID to filter as perentNode
+     * @param fulltext               fulltext search string
+     * @param searchOptions          searchOptions
+     * @return                       NodeSearchResponse (OK, FAILED, ERROR) with matching nodes
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, 
@@ -222,23 +193,17 @@ public class NodeRestController {
         return commonSearchNode(curPage, pageSize, sortConfig, sysUID, fulltext, searchOptions);
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     Request to search childnodes of sysUID and return them as JSON
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>NodeResponse (OK, ERROR) with matching nodes
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param curPage - current page in result to display
-     * @param pageSize - max items per page
-     * @param sortConfig - use sort
-     * @param sysUID - sysUID to filter as perentNode
-     * @param searchOptions   searchOptions
-     * @return NodeSearchResponse (OK, FAILED, ERROR) with matching nodes
+    /** 
+     * Request to search childnodes of sysUID and return them as JSON
+     * @FeatureDomain                Webservice
+     * @FeatureResult                NodeResponse (OK, ERROR) with matching nodes
+     * @FeatureKeywords              Webservice Query
+     * @param curPage                current page in result to display
+     * @param pageSize               max items per page
+     * @param sortConfig             use sort
+     * @param sysUID                 sysUID to filter as perentNode
+     * @param searchOptions          searchOptions
+     * @return                       NodeSearchResponse (OK, FAILED, ERROR) with matching nodes
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, 
@@ -251,19 +216,13 @@ public class NodeRestController {
         return commonSearchNode(curPage, pageSize, sortConfig, sysUID, "", searchOptions);
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     Request to read the node for sysUID and return it with children as JSON
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>NodeResponse (OK, ERROR) with the node for sysUID
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param sysUID - sysUID to filter
-     * @return NodeResponse (OK, ERROR) with the node for sysUID
+    /** 
+     * Request to read the node for sysUID and return it with children as JSON
+     * @FeatureDomain                Webservice
+     * @FeatureResult                NodeResponse (OK, ERROR) with the node for sysUID
+     * @FeatureKeywords              Webservice Query
+     * @param sysUID                 sysUID to filter
+     * @return                       NodeResponse (OK, ERROR) with the node for sysUID
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
@@ -290,19 +249,13 @@ public class NodeRestController {
         return response;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     Request to read the SymLinkRef-node for sysUID and return it with children as JSON
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>NodeResponse (OK, ERROR) with the node for sysUID
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param symLinkRef - symLinkRef to filter
-     * @return NodeResponse (OK, ERROR) with the node for sysUID
+    /** 
+     * Request to read the SymLinkRef-node for sysUID and return it with children as JSON
+     * @FeatureDomain                Webservice
+     * @FeatureResult                NodeResponse (OK, ERROR) with the node for sysUID
+     * @FeatureKeywords              Webservice Query
+     * @param symLinkRef             symLinkRef to filter
+     * @return                       NodeResponse (OK, ERROR) with the node for sysUID
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
@@ -345,19 +298,13 @@ public class NodeRestController {
     }
     
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     Request to delete the node for sysUID and return its parent with children as JSON
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>NodeResponse (OK, ERROR) with the parentNode for sysUID
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param sysUID - sysUID to delete
-     * @return NodeResponse (OK, ERROR) with the node for sysUID
+    /** 
+     * Request to delete the node for sysUID and return its parent with children as JSON
+     * @FeatureDomain                Webservice
+     * @FeatureResult                NodeResponse (OK, ERROR) with the parentNode for sysUID
+     * @FeatureKeywords              Webservice Query
+     * @param sysUID                 sysUID to delete
+     * @return                       NodeResponse (OK, ERROR) with the node for sysUID
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.DELETE, 
@@ -401,38 +348,26 @@ public class NodeRestController {
     
     
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     recalc and merge the node and its parents recursively
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>List - list of the recalced and saved parenthierarchy
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice 
-     * @param node - the node to recalc and merge
-     * @return List - list of the recalced and saved parenthierarchy
+    /** 
+     * recalc and merge the node and its parents recursively
+     * @FeatureDomain                Webservice
+     * @FeatureResult                List - list of the recalced and saved parenthierarchy
+     * @FeatureKeywords              Webservice 
+     * @param node                   the node to recalc and merge
+     * @return                       List - list of the recalced and saved parenthierarchy
      */
     protected List<BaseNode> updateMeAndMyParents(final BaseNode node) throws Exception {
         return BaseNodeDBServiceImpl.getInstance().updateMeAndMyParents(node);
     }
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     update the node sysUID and return it with children as JSON
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>NodeResponse (OK, ERROR) with the node for sysUID
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param sysUID - sysUID to filter
-     * @param newNode - the node created from request-data
-     * @return NodeResponse (OK, ERROR) with the node for sysUID
+    /** 
+     * update the node sysUID and return it with children as JSON
+     * @FeatureDomain                Webservice
+     * @FeatureResult                NodeResponse (OK, ERROR) with the node for sysUID
+     * @FeatureKeywords              Webservice Query
+     * @param sysUID                 sysUID to filter
+     * @param newNode                the node created from request-data
+     * @return                       NodeResponse (OK, ERROR) with the node for sysUID
      */
     public NodeActionResponse updateNode(final String sysUID, final BaseNode newNode) {
         NodeActionResponse response = new NodeActionResponse(
@@ -507,20 +442,14 @@ public class NodeRestController {
     }
     
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     create the node with parent parentSysUID and return it with children as JSON
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>NodeResponse (OK, ERROR) with the new node for parentSysUID
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param parentSysUID - sysUID of the parent to filter
-     * @param newNode - the node created from request-data
-     * @return NodeResponse (OK, ERROR) with the node for sysUID
+    /** 
+     * create the node with parent parentSysUID and return it with children as JSON
+     * @FeatureDomain                Webservice
+     * @FeatureResult                NodeResponse (OK, ERROR) with the new node for parentSysUID
+     * @FeatureKeywords              Webservice Query
+     * @param parentSysUID           sysUID of the parent to filter
+     * @param newNode                the node created from request-data
+     * @return                       NodeResponse (OK, ERROR) with the node for sysUID
      */
     public NodeActionResponse createNode(final String parentSysUID, final BaseNode newNode) {
         NodeActionResponse response = new NodeActionResponse(
@@ -598,20 +527,14 @@ public class NodeRestController {
         return response;
     }
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     Request to update the BaseNode sysUID and return it with children as JSON
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>NodeResponse (OK, ERROR) with the node for sysUID
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param sysUID - sysUID to filter
-     * @param newNode - the node created from request-data
-     * @return NodeResponse (OK, ERROR) with the node for sysUID
+    /** 
+     * Request to update the BaseNode sysUID and return it with children as JSON
+     * @FeatureDomain                Webservice
+     * @FeatureResult                NodeResponse (OK, ERROR) with the node for sysUID
+     * @FeatureKeywords              Webservice Query
+     * @param sysUID                 sysUID to filter
+     * @param newNode                the node created from request-data
+     * @return                       NodeResponse (OK, ERROR) with the node for sysUID
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.PATCH, 
@@ -622,20 +545,14 @@ public class NodeRestController {
         return this.updateNode(sysUID, newNode);
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     Request to update the TaskNode sysUID and return it with children as JSON
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>NodeResponse (OK, ERROR) with the node for sysUID
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param sysUID - sysUID to filter
-     * @param newNode - the node created from request-data
-     * @return NodeResponse (OK, ERROR) with the node for sysUID
+    /** 
+     * Request to update the TaskNode sysUID and return it with children as JSON
+     * @FeatureDomain                Webservice
+     * @FeatureResult                NodeResponse (OK, ERROR) with the node for sysUID
+     * @FeatureKeywords              Webservice Query
+     * @param sysUID                 sysUID to filter
+     * @param newNode                the node created from request-data
+     * @return                       NodeResponse (OK, ERROR) with the node for sysUID
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.PATCH, 
@@ -646,20 +563,14 @@ public class NodeRestController {
         return this.updateNode(sysUID, newNode);
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     Request to create the new TaskNode with parentSysUID and return it with children as JSON
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>NodeResponse (OK, ERROR) with the new node for parentSysUID
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param parentSysUID - parentSysUID to add the newNode
-     * @param newNode - the node created from request-data
-     * @return NodeResponse (OK, ERROR) with the node for sysUID
+    /** 
+     * Request to create the new TaskNode with parentSysUID and return it with children as JSON
+     * @FeatureDomain                Webservice
+     * @FeatureResult                NodeResponse (OK, ERROR) with the new node for parentSysUID
+     * @FeatureKeywords              Webservice Query
+     * @param parentSysUID           parentSysUID to add the newNode
+     * @param newNode                the node created from request-data
+     * @return                       NodeResponse (OK, ERROR) with the node for sysUID
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, 
@@ -670,20 +581,14 @@ public class NodeRestController {
         return this.createNode(parentSysUID, newNode);
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     Request to update the EventNode sysUID and return it with children as JSON
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>NodeResponse (OK, ERROR) with the node for sysUID
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param sysUID - sysUID to filter
-     * @param newNode - the node created from request-data
-     * @return NodeResponse (OK, ERROR) with the node for sysUID
+    /** 
+     * Request to update the EventNode sysUID and return it with children as JSON
+     * @FeatureDomain                Webservice
+     * @FeatureResult                NodeResponse (OK, ERROR) with the node for sysUID
+     * @FeatureKeywords              Webservice Query
+     * @param sysUID                 sysUID to filter
+     * @param newNode                the node created from request-data
+     * @return                       NodeResponse (OK, ERROR) with the node for sysUID
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.PATCH, 
@@ -694,20 +599,14 @@ public class NodeRestController {
         return this.updateNode(sysUID, newNode);
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     Request to create the new EventNode with parentSysUID and return it with children as JSON
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>NodeResponse (OK, ERROR) with the new node for parentSysUID
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param parentSysUID - parentSysUID to add the newNode
-     * @param newNode - the node created from request-data
-     * @return NodeResponse (OK, ERROR) with the node for sysUID
+    /** 
+     * Request to create the new EventNode with parentSysUID and return it with children as JSON
+     * @FeatureDomain                Webservice
+     * @FeatureResult                NodeResponse (OK, ERROR) with the new node for parentSysUID
+     * @FeatureKeywords              Webservice Query
+     * @param parentSysUID           parentSysUID to add the newNode
+     * @param newNode                the node created from request-data
+     * @return                       NodeResponse (OK, ERROR) with the node for sysUID
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, 
@@ -718,20 +617,14 @@ public class NodeRestController {
         return this.createNode(parentSysUID, newNode);
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     Request to update the UrlresNode sysUID and return it with children as JSON
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>NodeResponse (OK, ERROR) with the node for sysUID
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param sysUID - sysUID to filter
-     * @param newNode - the node created from request-data
-     * @return NodeResponse (OK, ERROR) with the node for sysUID
+    /** 
+     * Request to update the UrlresNode sysUID and return it with children as JSON
+     * @FeatureDomain                Webservice
+     * @FeatureResult                NodeResponse (OK, ERROR) with the node for sysUID
+     * @FeatureKeywords              Webservice Query
+     * @param sysUID                 sysUID to filter
+     * @param newNode                the node created from request-data
+     * @return                       NodeResponse (OK, ERROR) with the node for sysUID
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.PATCH, 
@@ -742,20 +635,14 @@ public class NodeRestController {
         return this.updateNode(sysUID, newNode);
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     Request to create the new UrlResNode with parentSysUID and return it with children as JSON
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>NodeResponse (OK, ERROR) with the new node for parentSysUID
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param parentSysUID - parentSysUID to add the newNode
-     * @param newNode - the node created from request-data
-     * @return NodeResponse (OK, ERROR) with the node for sysUID
+    /** 
+     * Request to create the new UrlResNode with parentSysUID and return it with children as JSON
+     * @FeatureDomain                Webservice
+     * @FeatureResult                NodeResponse (OK, ERROR) with the new node for parentSysUID
+     * @FeatureKeywords              Webservice Query
+     * @param parentSysUID           parentSysUID to add the newNode
+     * @param newNode                the node created from request-data
+     * @return                       NodeResponse (OK, ERROR) with the node for sysUID
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, 
@@ -766,20 +653,14 @@ public class NodeRestController {
         return this.createNode(parentSysUID, newNode);
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     Request to update the InfoNode sysUID and return it with children as JSON
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>NodeResponse (OK, ERROR) with the node for sysUID
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param sysUID - sysUID to filter
-     * @param newNode - the node created from request-data
-     * @return NodeResponse (OK, ERROR) with the node for sysUID
+    /** 
+     * Request to update the InfoNode sysUID and return it with children as JSON
+     * @FeatureDomain                Webservice
+     * @FeatureResult                NodeResponse (OK, ERROR) with the node for sysUID
+     * @FeatureKeywords              Webservice Query
+     * @param sysUID                 sysUID to filter
+     * @param newNode                the node created from request-data
+     * @return                       NodeResponse (OK, ERROR) with the node for sysUID
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.PATCH, 
@@ -790,20 +671,14 @@ public class NodeRestController {
         return this.updateNode(sysUID, newNode);
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     Request to create the new InfoNode with parentSysUID and return it with children as JSON
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>NodeResponse (OK, ERROR) with the new node for parentSysUID
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param parentSysUID - parentSysUID to add the newNode
-     * @param newNode - the node created from request-data
-     * @return NodeResponse (OK, ERROR) with the node for sysUID
+    /** 
+     * Request to create the new InfoNode with parentSysUID and return it with children as JSON
+     * @FeatureDomain                Webservice
+     * @FeatureResult                NodeResponse (OK, ERROR) with the new node for parentSysUID
+     * @FeatureKeywords              Webservice Query
+     * @param parentSysUID           parentSysUID to add the newNode
+     * @param newNode                the node created from request-data
+     * @return                       NodeResponse (OK, ERROR) with the node for sysUID
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, 
@@ -814,20 +689,14 @@ public class NodeRestController {
         return this.createNode(parentSysUID, newNode);
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     Request to update the SymLinkNode sysUID and return it with children as JSON
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>NodeResponse (OK, ERROR) with the node for sysUID
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param sysUID - sysUID to filter
-     * @param newNode - the node created from request-data
-     * @return NodeResponse (OK, ERROR) with the node for sysUID
+    /** 
+     * Request to update the SymLinkNode sysUID and return it with children as JSON
+     * @FeatureDomain                Webservice
+     * @FeatureResult                NodeResponse (OK, ERROR) with the node for sysUID
+     * @FeatureKeywords              Webservice Query
+     * @param sysUID                 sysUID to filter
+     * @param newNode                the node created from request-data
+     * @return                       NodeResponse (OK, ERROR) with the node for sysUID
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.PATCH, 
@@ -838,20 +707,14 @@ public class NodeRestController {
         return this.updateNode(sysUID, newNode);
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     Request to create the new SymLinkNode with parentSysUID and return it with children as JSON
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>NodeResponse (OK, ERROR) with the new node for parentSysUID
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param parentSysUID - parentSysUID to add the newNode
-     * @param newNode - the node created from request-data
-     * @return NodeResponse (OK, ERROR) with the node for sysUID
+    /** 
+     * Request to create the new SymLinkNode with parentSysUID and return it with children as JSON
+     * @FeatureDomain                Webservice
+     * @FeatureResult                NodeResponse (OK, ERROR) with the new node for parentSysUID
+     * @FeatureKeywords              Webservice Query
+     * @param parentSysUID           parentSysUID to add the newNode
+     * @param newNode                the node created from request-data
+     * @return                       NodeResponse (OK, ERROR) with the node for sysUID
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, 
@@ -862,21 +725,15 @@ public class NodeRestController {
         return this.createNode(parentSysUID, newNode);
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     Request to move the node sysUID to newParentSysUID and return it with children as JSON
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>NodeResponse (OK, ERROR) with the node for sysUID
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param sysUID - sysUID to filter
-     * @param newParentSysUID - sysUID of the new parent
-     * @param newSortPos - the new position in the list
-     * @return NodeResponse (OK, ERROR) with the node for sysUID
+    /** 
+     * Request to move the node sysUID to newParentSysUID and return it with children as JSON
+     * @FeatureDomain                Webservice
+     * @FeatureResult                NodeResponse (OK, ERROR) with the node for sysUID
+     * @FeatureKeywords              Webservice Query
+     * @param sysUID                 sysUID to filter
+     * @param newParentSysUID        sysUID of the new parent
+     * @param newSortPos             the new position in the list
+     * @return                       NodeResponse (OK, ERROR) with the node for sysUID
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.PATCH, 
@@ -928,21 +785,15 @@ public class NodeRestController {
         return response;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     Request to copy the node sysUID to newParentSysUID and return it with children as JSON
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>NodeResponse (OK, ERROR) with the node for sysUID
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param sysUID - sysUID to filter
-     * @param newParentSysUID - sysUID of the new parent
-     * @param newSortPos - the new position in the list
-     * @return NodeResponse (OK, ERROR) with the node for sysUID
+    /** 
+     * Request to copy the node sysUID to newParentSysUID and return it with children as JSON
+     * @FeatureDomain                Webservice
+     * @FeatureResult                NodeResponse (OK, ERROR) with the node for sysUID
+     * @FeatureKeywords              Webservice Query
+     * @param sysUID                 sysUID to filter
+     * @param newParentSysUID        sysUID of the new parent
+     * @param newSortPos             the new position in the list
+     * @return                       NodeResponse (OK, ERROR) with the node for sysUID
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.PATCH, 

@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -24,17 +21,15 @@ import de.yaio.core.datadomain.DocLayoutData;
 import de.yaio.datatransfer.exporter.Exporter;
 import de.yaio.datatransfer.exporter.OutputOptions;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     Praesentation
- * <h4>FeatureDescription:</h4>
- *     service-functions for formatting of dataDomain: DocLayoutData
+/** 
+ * service-functions for formatting of dataDomain: DocLayoutData
  * 
- * @package de.yaio.datatransfer.exporter.formatter
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Praesentation
+ * @package                      de.yaio.datatransfer.exporter.formatter
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class DocLayoutDataFormatterImpl extends FormatterImpl implements DocLayoutDataFormatter {
 
@@ -53,16 +48,12 @@ public class DocLayoutDataFormatterImpl extends FormatterImpl implements DocLayo
     }
 
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     DataExport
-     *     Presentation
-     * <h4>FeatureDescription:</h4>
-     *     add me as formatter for formatting DataDomains with (Exporter.formatNodeDataDomains) 
-     *     to the Exporter-Config
-     * <h4>FeatureKeywords:</h4>
-     *     Config
-     * @param exporter - instance of the Exporter which will use me
+    /** 
+     * add me as formatter for formatting DataDomains with (Exporter.formatNodeDataDomains) 
+     * to the Exporter-Config
+     * @FeatureDomain                DataExport Presentation
+     * @FeatureKeywords              Config
+     * @param exporter               instance of the Exporter which will use me
      */
     public static void configureDataDomainFormatter(final Exporter exporter) {
         Formatter formatter = new DocLayoutDataFormatterImpl();

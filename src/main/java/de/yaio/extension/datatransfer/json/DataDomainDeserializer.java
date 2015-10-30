@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -29,18 +26,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.nodeservice.NodeService;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     DatenExport
- *     Praesentation
- * <h4>FeatureDescription:</h4>
- *     deserializer for DataDomain-nodes
+/** 
+ * deserializer for DataDomain-nodes
  * 
- * @package de.yaio.extension.datatransfer.wiki
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                DatenExport Praesentation
+ * @package                      de.yaio.extension.datatransfer.wiki
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class DataDomainDeserializer extends JsonDeserializer<DataDomain> {
 
@@ -55,20 +49,14 @@ public class DataDomainDeserializer extends JsonDeserializer<DataDomain> {
         return result;
     }
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     JSONParser
-     * <h4>FeatureDescription:</h4>
-     *     deserialize a JSONNode to a DataDomain: create BaseNode by className and craete Children fom childNodes
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returns JSONResponse
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     JSONParser
-     * @param node         the jsonNODE to deserialize
-     * @return             the created BaseNode with children
-     * @throws IOException possible
+    /** 
+     * deserialize a JSONNode to a DataDomain: create BaseNode by className and craete Children fom childNodes
+     * @FeatureDomain                JSONParser
+     * @FeatureResult                returns JSONResponse
+     * @FeatureKeywords              JSONParser
+     * @param node                   the jsonNODE to deserialize
+     * @return                       the created BaseNode with children
+     * @throws IOException           possible
      */
     public DataDomain deserializeJSONNode(final JsonNode node) throws IOException {
         // create obj from className

@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -23,16 +20,14 @@ import org.apache.log4j.Logger;
 
 import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     Utils
- * <h4>FeatureDescription:</h4>
- *     Utils for calculating
- * @package de.yaio.utils
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category Utils
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+/** 
+ * Utils for calculating
+ * @FeatureDomain                Utils
+ * @package                      de.yaio.utils
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     Utils
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 
 public class Calculator {
@@ -68,23 +63,17 @@ public class Calculator {
             Logger.getLogger(Calculator.class);
     
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tools - Calculation
-     * <h4>FeatureDescription:</h4>
-     *     executes the action with value1 and value2<br>
-     *     result = action(value1, value2)
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue Object - result of the calculation
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Calculator
-     * @param arg1 - value1 for calculation
-     * @param arg2 - value1 for calculation
-     * @param action - calculation action CONST_CALCULATE_ACTION_*
-     * @return - result of the calculation
-     * @throws Exception - action not allowed possible
+    /** 
+     * executes the action with value1 and value2<br>
+     * result = action(value1, value2)
+     * @FeatureDomain                Tools - Calculation
+     * @FeatureResult                returnValue Object - result of the calculation
+     * @FeatureKeywords              Calculator
+     * @param arg1                   value1 for calculation
+     * @param arg2                   value1 for calculation
+     * @param action                 calculation action CONST_CALCULATE_ACTION_*
+     * @return                       result of the calculation
+     * @throws Exception             action not allowed possible
      */
     public static Object calculate(final Object arg1, final Object arg2, 
                                    final int action) throws Exception {
@@ -248,23 +237,17 @@ public class Calculator {
         return res;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tools - Calculation
-     * <h4>FeatureDescription:</h4>
-     *     compare the values value1 and value2<br>
-     *     if one of these is null, this will LT than the other<br>
-     *     if both are null, they are equal<br>
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue -1/0/+1
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Calculator
-     * @param arg1 - value1 for comparison
-     * @param arg2 - value1 for comparison
-     * @return - result of the comparison (LT,EQU, GT - -1/0/+1)
-     * @throws IllegalAccessException - if Class unknown or classes differ
+    /** 
+     * compare the values value1 and value2<br>
+     * if one of these is null, this will LT than the other<br>
+     * if both are null, they are equal<br>
+     * @FeatureDomain                Tools - Calculation
+     * @FeatureResult                returnValue -1/0/+1
+     * @FeatureKeywords              Calculator
+     * @param arg1                   value1 for comparison
+     * @param arg2                   value1 for comparison
+     * @return                       result of the comparison (LT,EQU, GT - -1/0/+1)
+     * @throws IllegalAccessException if Class unknown or classes differ
      */
     public static int compareValues(Object arg1, Object arg2) throws IllegalAccessException {
         int result = CONST_COMPARE_EQ;
@@ -312,19 +295,13 @@ public class Calculator {
         return result;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tools - Calculation
-     * <h4>FeatureDescription:</h4>
-     *     check if the value is a valid aufwand (!= null and >= CONST_DOUBLE_NULL)
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue boolean - result of the check
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Calculator
-     * @param arg1 - value1 for check
-     * @return - result of the check
+    /** 
+     * check if the value is a valid aufwand (!= null and >= CONST_DOUBLE_NULL)
+     * @FeatureDomain                Tools - Calculation
+     * @FeatureResult                returnValue boolean - result of the check
+     * @FeatureKeywords              Calculator
+     * @param arg1                   value1 for check
+     * @return                       result of the check
      */
     public static boolean isAufwand(final Double arg1) {
         if (arg1 != null && arg1 >= Calculator.CONST_DOUBLE_NULL)  {
@@ -333,19 +310,13 @@ public class Calculator {
         return false;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tools - Calculation
-     * <h4>FeatureDescription:</h4>
-     *     check if the value is a valid stand (!= null and >= CONST_DOUBLE_NULL)
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue boolean - result of the check
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Calculator
-     * @param arg1 - value1 for check
-     * @return - result of the check
+    /** 
+     * check if the value is a valid stand (!= null and >= CONST_DOUBLE_NULL)
+     * @FeatureDomain                Tools - Calculation
+     * @FeatureResult                returnValue boolean - result of the check
+     * @FeatureKeywords              Calculator
+     * @param arg1                   value1 for check
+     * @return                       result of the check
      */
     public static boolean isStand(final Double arg1) {
         return isAufwand(arg1);

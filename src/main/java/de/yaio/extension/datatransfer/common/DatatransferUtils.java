@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -48,18 +45,16 @@ import de.yaio.extension.datatransfer.wiki.WikiImporter;
 import de.yaio.extension.datatransfer.wiki.WikiImporter.WikiStructLine;
 import de.yaio.utils.Calculator;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     Webservice
- * <h4>FeatureDescription:</h4>
- *     Services to parse text to nodes and convert them in different 
- *     formats (wiki, ppl, excel..)
- *      
- * @package de.yaio.webapp.controller
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+/** 
+ * Services to parse text to nodes and convert them in different 
+ * formats (wiki, ppl, excel..)
+ *  
+ * @FeatureDomain                Webservice
+ * @package                      de.yaio.webapp.controller
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 @Service
 public class DatatransferUtils {
@@ -68,20 +63,14 @@ public class DatatransferUtils {
     private static final Logger LOGGER =
             Logger.getLogger(DatatransferUtils.class);
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     WikiImporter
-     * <h4>FeatureDescription:</h4>
-     *     copy the node and all children to the new parent (recalc all and save to db)
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>copies and save ne node
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     WikiImporter
-     * @param node         node to copy
-     * @param newParent    parent for new node
-     * @throws Exception - ParserExceptions possible
+    /** 
+     * copy the node and all children to the new parent (recalc all and save to db)
+     * @FeatureDomain                WikiImporter
+     * @FeatureResult                copies and save ne node
+     * @FeatureKeywords              WikiImporter
+     * @param node                   node to copy
+     * @param newParent              parent for new node
+     * @throws Exception             ParserExceptions possible
      */
     @Transactional
     public void copyNode(BaseNode node, BaseNode newParent) throws Exception {
@@ -130,21 +119,15 @@ public class DatatransferUtils {
     }
     
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     WikiImporter
-     * <h4>FeatureDescription:</h4>
-     *     move the node and all children to the new parent (recalc all and save to db)
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>copies and save ne node
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     WikiImporter
-     * @param node         node to move
-     * @param newParent    new parent for node
-     * @param newSortPos   position for node  in childlist of newParent
-     * @throws Exception - ParserExceptions possible
+    /** 
+     * move the node and all children to the new parent (recalc all and save to db)
+     * @FeatureDomain                WikiImporter
+     * @FeatureResult                copies and save ne node
+     * @FeatureKeywords              WikiImporter
+     * @param node                   node to move
+     * @param newParent              new parent for node
+     * @param newSortPos             position for node  in childlist of newParent
+     * @throws Exception             ParserExceptions possible
      */
     @Transactional
     public void moveNode(BaseNode node, BaseNode newParent, Integer newSortPos) throws Exception {
@@ -200,21 +183,15 @@ public class DatatransferUtils {
         }
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     map the nodeData from newNode to origNode
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>boolean flgChange - true if data changed
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param origNode - 
-     * @param newNode - the new node created from request-data
-     * @return true if data changed
-     * @throws IllegalAccessException - thrown if class of origNode!=newNode
+    /** 
+     * map the nodeData from newNode to origNode
+     * @FeatureDomain                Webservice
+     * @FeatureResult                boolean flgChange - true if data changed
+     * @FeatureKeywords              Webservice Query
+     * @param origNode               
+     * @param newNode                the new node created from request-data
+     * @return                       true if data changed
+     * @throws IllegalAccessException thrown if class of origNode!=newNode
      */
     public boolean mapNodeData(final BaseNode origNode, final BaseNode newNode) 
                     throws IllegalAccessException {
@@ -424,21 +401,15 @@ public class DatatransferUtils {
     }
     
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     WikiImporter
-     * <h4>FeatureDescription:</h4>
-     *     parse wikiSrc with an InlineWikiImporter and add it to an InfoNode named Masternode<br>
-     *     metaNodePraefix will be Inline, metaNodeNumber will start by 1 and increment
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>BaseNode - masternode with the children from wikiSrc
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     WikiImporter
-     * @param wikiSrc - wikiSrc to parse with InlineWikiImporter
-     * @return BaseNode - masternode with the children from wikiSrc
-     * @throws Exception - ParserExceptions possible
+    /** 
+     * parse wikiSrc with an InlineWikiImporter and add it to an InfoNode named Masternode<br>
+     * metaNodePraefix will be Inline, metaNodeNumber will start by 1 and increment
+     * @FeatureDomain                WikiImporter
+     * @FeatureResult                BaseNode - masternode with the children from wikiSrc
+     * @FeatureKeywords              WikiImporter
+     * @param wikiSrc                wikiSrc to parse with InlineWikiImporter
+     * @return                       BaseNode - masternode with the children from wikiSrc
+     * @throws Exception             ParserExceptions possible
      */
     public BaseNode parseInlineNodesFromString(final String wikiSrc) throws Exception {
         // PPL-Importer
@@ -457,21 +428,15 @@ public class DatatransferUtils {
     }
 
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     WikiImporter
-     * <h4>FeatureDescription:</h4>
-     *     parse wikiSrc with an InlineWikiImporter and add it to the masternode<br>
-     *     metaNodePraefix will be Inline, metaNodeNumber will start by 1 and increment
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>adds children from wikiSrc to masterNode
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     WikiImporter
-     * @param masterNode - baseNode to add the children
-     * @param wikiSrc - wikiSrc to parse with InlineWikiImporter
-     * @throws Exception - ParserExceptions possible
+    /** 
+     * parse wikiSrc with an InlineWikiImporter and add it to the masternode<br>
+     * metaNodePraefix will be Inline, metaNodeNumber will start by 1 and increment
+     * @FeatureDomain                WikiImporter
+     * @FeatureResult                adds children from wikiSrc to masterNode
+     * @FeatureKeywords              WikiImporter
+     * @param masterNode             baseNode to add the children
+     * @param wikiSrc                wikiSrc to parse with InlineWikiImporter
+     * @throws Exception             ParserExceptions possible
      */
     public void parseInlineNodesFromString(final BaseNode masterNode, 
                                            final String wikiSrc) throws Exception {
@@ -485,20 +450,14 @@ public class DatatransferUtils {
         parseNodesFromWiki(wikiImporter, inputOptions, masterNode, wikiSrc);
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     WikiImporter
-     * <h4>FeatureDescription:</h4>
-     *     parse wikiSrc with an WikiImporter and add it to the masternode
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>adds children from wikiSrc to masterNode
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     WikiImporter
-     * @param masterNode - baseNode to add the children
-     * @param wikiSrc - wikiSrc to parse with WikiImporter
-     * @throws Exception - ParserExceptions possible
+    /** 
+     * parse wikiSrc with an WikiImporter and add it to the masternode
+     * @FeatureDomain                WikiImporter
+     * @FeatureResult                adds children from wikiSrc to masterNode
+     * @FeatureKeywords              WikiImporter
+     * @param masterNode             baseNode to add the children
+     * @param wikiSrc                wikiSrc to parse with WikiImporter
+     * @throws Exception             ParserExceptions possible
      */
     public void parseNodesFromString(final BaseNode masterNode, 
                                      final String wikiSrc) throws Exception {
@@ -513,22 +472,16 @@ public class DatatransferUtils {
         
     }
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     WikiImporter
-     * <h4>FeatureDescription:</h4>
-     *     parse wikiSrc with WikiImporter and WikiImportOptions, and add it to the masternode
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>adds children from wikiSrc to masterNode
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     WikiImporter
-     * @param wikiImporter - wikiImporter for parsing
-     * @param inputOptions - importOptions for wikiImporter
-     * @param masterNode - baseNode to add the children
-     * @param wikiSrc - wikiSrc to parse with WikiImporter
-     * @throws Exception - ParserExceptions possible
+    /** 
+     * parse wikiSrc with WikiImporter and WikiImportOptions, and add it to the masternode
+     * @FeatureDomain                WikiImporter
+     * @FeatureResult                adds children from wikiSrc to masterNode
+     * @FeatureKeywords              WikiImporter
+     * @param wikiImporter           wikiImporter for parsing
+     * @param inputOptions           importOptions for wikiImporter
+     * @param masterNode             baseNode to add the children
+     * @param wikiSrc                wikiSrc to parse with WikiImporter
+     * @throws Exception             ParserExceptions possible
      */
     public void parseNodesFromWiki(final WikiImporter wikiImporter, 
                                       final WikiImportOptions inputOptions,
@@ -552,21 +505,15 @@ public class DatatransferUtils {
         pplImporter.extractNodesFromLines(masterNode, pplSource, "\t");
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     JsonImporter
-     * <h4>FeatureDescription:</h4>
-     *     parse jsonSrc with JsonImporter and WikiImportOptions, and add it to the masternode
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>adds children from jsonSrc to masterNode
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     JsonImporter
-     * @param inputOptions - importOptions for wikiImporter
-     * @param masterNode - baseNode to add the children
-     * @param jsonSrc - jsonSrc to parse with JsonImporter
-     * @throws Exception - ParserExceptions possible
+    /** 
+     * parse jsonSrc with JsonImporter and WikiImportOptions, and add it to the masternode
+     * @FeatureDomain                JsonImporter
+     * @FeatureResult                adds children from jsonSrc to masterNode
+     * @FeatureKeywords              JsonImporter
+     * @param inputOptions           importOptions for wikiImporter
+     * @param masterNode             baseNode to add the children
+     * @param jsonSrc                jsonSrc to parse with JsonImporter
+     * @throws Exception             ParserExceptions possible
      */
     public void parseNodesFromJson(final WikiImportOptions inputOptions,
                                       final BaseNode masterNode, 
@@ -598,22 +545,16 @@ public class DatatransferUtils {
         //if inoutOptions resetSysUID(masterNode, true);
     }
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     JsonImporter
-     * <h4>FeatureDescription:</h4>
-     *     parse jsonSrc with JsonImporter, export as wiki and reimport from wiki to ensure valid syntax, 
-     *     and add it to the masternode
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>adds children from jsonSrc to masterNode
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     JsonImporter
-     * @param inputOptions - importOptions for wikiImporter
-     * @param masterNode - baseNode to add the children
-     * @param jsonSrc - jsonSrc to parse with JsonImporter
-     * @throws Exception - ParserExceptions possible
+    /** 
+     * parse jsonSrc with JsonImporter, export as wiki and reimport from wiki to ensure valid syntax, 
+     * and add it to the masternode
+     * @FeatureDomain                JsonImporter
+     * @FeatureResult                adds children from jsonSrc to masterNode
+     * @FeatureKeywords              JsonImporter
+     * @param inputOptions           importOptions for wikiImporter
+     * @param masterNode             baseNode to add the children
+     * @param jsonSrc                jsonSrc to parse with JsonImporter
+     * @throws Exception             ParserExceptions possible
      */
     public void parseValidatedNodesFromJson(final WikiImportOptions inputOptions,
                                     final BaseNode masterNode, 
@@ -641,21 +582,15 @@ public class DatatransferUtils {
         }
     }
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Importer
-     * <h4>FeatureDescription:</h4>
-     *     create a masternode for import (temporary)
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returns BaseNode
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Importer
-     * @param sysUID         sysUID
-     * @param nodePraefix    metaNodePraefix
-     * @param nodeNummer     metaNodeNumber
-     * @return               the Basenode to use as masternode 
+    /** 
+     * create a masternode for import (temporary)
+     * @FeatureDomain                Importer
+     * @FeatureResult                returns BaseNode
+     * @FeatureKeywords              Importer
+     * @param sysUID                 sysUID
+     * @param nodePraefix            metaNodePraefix
+     * @param nodeNummer             metaNodeNumber
+     * @return                       the Basenode to use as masternode 
      */
     public BaseNode createTemporaryMasternode(final String sysUID, final String nodePraefix, final String nodeNummer) {
         BaseNode tmpMasterNode = new BaseNode();

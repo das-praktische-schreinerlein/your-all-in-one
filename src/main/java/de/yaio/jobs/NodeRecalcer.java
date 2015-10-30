@@ -1,15 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
-
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -24,54 +20,40 @@ import de.yaio.core.dbservice.BaseNodeDBServiceImpl;
 import de.yaio.core.node.BaseNode;
 import de.yaio.core.nodeservice.NodeService;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     Updater
- * <h4>FeatureDescription:</h4>
- *     recalc nodedata
+/** 
+ * recalc nodedata
  * 
- * @package de.yaio.jobs
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Updater
+ * @package                      de.yaio.jobs
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class NodeRecalcer {
     
     // Logger
     private static final Logger LOGGER = Logger.getLogger(NodeRecalcer.class);
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Constructor
-     * <h4>FeatureDescription:</h4>
-     *     service functions to recalc nodedata
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>initialize the recalcer
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Constructor
+    /** 
+     * service functions to recalc nodedata
+     * @FeatureDomain                Constructor
+     * @FeatureResult                initialize the recalcer
+     * @FeatureKeywords              Constructor
      */
     public NodeRecalcer() {
         super();
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Job
-     * <h4>FeatureDescription:</h4>
-     *     read and recalc the masternode, all of its children and the parents and save it to db
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>ReturnValue String - a result message
-     *     <li>Updates node in db
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Job
-     * @param sysUID - sysUID of the masternode to read and recalc with alls children + parents
-     * @return - result-message
-     * @throws Exception - possible io/db/recalc-Exceptions
+    /** 
+     * read and recalc the masternode, all of its children and the parents and save it to db
+     * @FeatureDomain                Job
+     * @FeatureResult                ReturnValue String - a result message
+     * @FeatureResult                Updates node in db
+     * @FeatureKeywords              Job
+     * @param sysUID                 sysUID of the masternode to read and recalc with alls children + parents
+     * @return                       result-message
+     * @throws Exception             possible io/db/recalc-Exceptions
      */
     @Transactional
     public String findAndRecalcMasternode(final String sysUID)

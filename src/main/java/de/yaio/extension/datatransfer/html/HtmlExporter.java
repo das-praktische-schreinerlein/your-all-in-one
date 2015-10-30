@@ -1,15 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
-
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -41,18 +37,15 @@ import de.yaio.datatransfer.importer.parser.Parser;
 import de.yaio.extension.datatransfer.wiki.WikiExporter;
 import de.yaio.utils.DataUtils;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     DatenExport
- *     Praesentation
- * <h4>FeatureDescription:</h4>
- *     export of Nodes as Html
+/** 
+ * export of Nodes as Html
  * 
- * @package de.yaio.extension.datatransfer.html
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                DatenExport Praesentation
+ * @package                      de.yaio.extension.datatransfer.html
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class HtmlExporter extends WikiExporter {
     
@@ -82,17 +75,11 @@ public class HtmlExporter extends WikiExporter {
     
     protected int htmlElementId = 1;
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Constructor
-     * <h4>FeatureDescription:</h4>
-     *     service functions to export nodes as Html
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>initialize the exporter
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Constructor
+    /** 
+     * service functions to export nodes as Html
+     * @FeatureDomain                Constructor
+     * @FeatureResult                initialize the exporter
+     * @FeatureKeywords              Constructor
      */
     public HtmlExporter() {
         super();
@@ -106,19 +93,13 @@ public class HtmlExporter extends WikiExporter {
     }
     
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     DataExport
-     * <h4>FeatureDescription:</h4>
-     *     generate helper-OutputOptions for generation of the html
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue OutputOptions - OuputOptions for generation of the html
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Cofiguration helper
-     * @param baseOOptions - Default OutputOptions to override
-     * @return OuputOptions for generation of the html
+    /** 
+     * generate helper-OutputOptions for generation of the html
+     * @FeatureDomain                DataExport
+     * @FeatureResult                returnValue OutputOptions - OuputOptions for generation of the html
+     * @FeatureKeywords              Cofiguration helper
+     * @param baseOOptions           Default OutputOptions to override
+     * @return                       OuputOptions for generation of the html
      */
     public OutputOptions genOutputOptionsForHtml(final OutputOptions baseOOptions) {
         OutputOptions options = new OutputOptionsImpl(baseOOptions);
@@ -182,22 +163,15 @@ public class HtmlExporter extends WikiExporter {
         return res;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     DataExport
-     *     Presentation
-     * <h4>FeatureDescription:</h4>
-     *     formats recursively node in html-docu-format
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue String - formatted output of node-hirarchy
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Layout
-     * @param curNode - node for output recursively
-     * @param oOptions - options for output (formatter)
-     * @return - formatted output of node-hierarchy and DataDomains
-     * @throws Exception - parser/format-Exceptions possible
+    /** 
+     * formats recursively node in html-docu-format
+     * @FeatureDomain                DataExport Presentation
+     * @FeatureResult                returnValue String - formatted output of node-hirarchy
+     * @FeatureKeywords              Layout
+     * @param curNode                node for output recursively
+     * @param oOptions               options for output (formatter)
+     * @return                       formatted output of node-hierarchy and DataDomains
+     * @throws Exception             parser/format-Exceptions possible
      */
     public String genHtmlDokuLayoutForNode(final BaseNode curNode,
         final OutputOptions oOptions) throws Exception {
@@ -636,22 +610,15 @@ public class HtmlExporter extends WikiExporter {
         return res;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     DataExport
-     *     Presentation
-     * <h4>FeatureDescription:</h4>
-     *     formats recursively node in html-project-format
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue String - formatted output of node-hirarchy
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Layout
-     * @param curNode - node for output recursively
-     * @param oOptions - options for output (formatter)
-     * @return - formatted output of node-hierarchy and DataDomains
-     * @throws Exception - parser/format-Exceptions possible
+    /** 
+     * formats recursively node in html-project-format
+     * @FeatureDomain                DataExport Presentation
+     * @FeatureResult                returnValue String - formatted output of node-hirarchy
+     * @FeatureKeywords              Layout
+     * @param curNode                node for output recursively
+     * @param oOptions               options for output (formatter)
+     * @return                       formatted output of node-hierarchy and DataDomains
+     * @throws Exception             parser/format-Exceptions possible
      */
     public String genHtmlProjektLayoutForNode(final BaseNode curNode,
         final OutputOptions oOptions) throws Exception {
@@ -917,24 +884,17 @@ public class HtmlExporter extends WikiExporter {
     }
 
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     DataExport
-     *     Presentation
-     * <h4>FeatureDescription:</h4>
-     *     generate a html-block for the node
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue String - htmlblock of the node
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Layout
-     * @param curNode    - the node
-     * @param pData      - the formatted data to export in html-block
-     * @param dataName   - the name for idFields
-     * @param flgShow    - true/false show the block or ignore it 
-     * @return           - htmlblock of the node
-     * @throws Exception - parser/format-Exceptions possible
+    /** 
+     * generate a html-block for the node
+     * @FeatureDomain                DataExport Presentation
+     * @FeatureResult                returnValue String - htmlblock of the node
+     * @FeatureKeywords              Layout
+     * @param curNode                the node
+     * @param pData                  the formatted data to export in html-block
+     * @param dataName               the name for idFields
+     * @param flgShow                true/false show the block or ignore it 
+     * @return                       htmlblock of the node
+     * @throws Exception             parser/format-Exceptions possible
      */
     public String genHtmlDataBlock(final BaseNode curNode, final String pData, 
                                    final String dataName, final boolean flgShow) {
@@ -957,23 +917,16 @@ public class HtmlExporter extends WikiExporter {
         return res;
     }
         
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     DataExport
-     *     Presentation
-     * <h4>FeatureDescription:</h4>
-     *     return the DocLoayoutTagCommand configured in the node<br>
-     *     if it is not set: CONST_LAYOUT_TAG_P<br>
-     *     if is has children: CONST_LAYOUT_TAG_UE
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue String - tagcommand
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Layout
-     * @param curNode - node for output recursively
-     * @return - the tagcommand
-     * @throws Exception - parser/format-Exceptions possible
+    /** 
+     * return the DocLoayoutTagCommand configured in the node<br>
+     * if it is not set: CONST_LAYOUT_TAG_P<br>
+     * if is has children: CONST_LAYOUT_TAG_UE
+     * @FeatureDomain                DataExport Presentation
+     * @FeatureResult                returnValue String - tagcommand
+     * @FeatureKeywords              Layout
+     * @param curNode                node for output recursively
+     * @return                       the tagcommand
+     * @throws Exception             parser/format-Exceptions possible
      */
     public String getDocLayoutTagCommand(final BaseNode curNode) {
         String command = curNode.getDocLayoutTagCommand();
@@ -989,21 +942,14 @@ public class HtmlExporter extends WikiExporter {
     }
     
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     DataExport
-     *     Presentation
-     * <h4>FeatureDescription:</h4>
-     *     format the descText as Markdown
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue String - formatted markdown
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Layout
-     * @param descText     - the string to format
-     * @return             - formatted markdown
-     * @throws IOException - IOException-Exceptions possible
+    /** 
+     * format the descText as Markdown
+     * @FeatureDomain                DataExport Presentation
+     * @FeatureResult                returnValue String - formatted markdown
+     * @FeatureKeywords              Layout
+     * @param descText               the string to format
+     * @return                       formatted markdown
+     * @throws IOException           IOException-Exceptions possible
      */
     public String formatTextAsMarkdown(final String descText) throws IOException {
         // prepare descText
@@ -1050,21 +996,14 @@ public class HtmlExporter extends WikiExporter {
     }
 
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     DataExport
-     *     Presentation
-     * <h4>FeatureDescription:</h4>
-     *     prepare the text to format as markdown
-     *     prefix empty lines inline code-segs (```) so that they will interprewted as codeline by markdown-parser
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue String - prepared text
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Layout
-     * @param descText - the string to prepare
-     * @return - prpeared text to format as markdown
+    /** 
+     * prepare the text to format as markdown
+     * prefix empty lines inline code-segs (```) so that they will interprewted as codeline by markdown-parser
+     * @FeatureDomain                DataExport Presentation
+     * @FeatureResult                returnValue String - prepared text
+     * @FeatureKeywords              Layout
+     * @param descText               the string to prepare
+     * @return                       prpeared text to format as markdown
      */
     public String prepareTextForMarkdown(final String descText) {
         // prepare descText
@@ -1104,23 +1043,16 @@ public class HtmlExporter extends WikiExporter {
         return newDescText;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     DataExport
-     *     Presentation
-     * <h4>FeatureDescription:</h4>
-     *     search for the pattern and replace it with the replacementhead + htmlId + replacementTail
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue String - formatted diagramm-markdown
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Layout
-     * @param text             the haystack
-     * @param patternString    the needle to replace
-     * @param replacementHead  the head before the new htmlelement-id
-     * @param replacementTail  the tail after the new htmlelement-id
-     * @return formatted diagramm-markdown
+    /** 
+     * search for the pattern and replace it with the replacementhead + htmlId + replacementTail
+     * @FeatureDomain                DataExport Presentation
+     * @FeatureResult                returnValue String - formatted diagramm-markdown
+     * @FeatureKeywords              Layout
+     * @param text                   the haystack
+     * @param patternString          the needle to replace
+     * @param replacementHead        the head before the new htmlelement-id
+     * @param replacementTail        the tail after the new htmlelement-id
+     * @return                       formatted diagramm-markdown
      */
     protected StringBuffer replaceDiagrammPattern(final String text, 
                                                final String patternString, 

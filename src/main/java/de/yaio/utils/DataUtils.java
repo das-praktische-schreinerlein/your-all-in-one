@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -30,16 +27,14 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     Utils
- * <h4>FeatureDescription:</h4>
- *     Utils for managing data
- * @package de.yaio.utils
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category Utils
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+/** 
+ * Utils for managing data
+ * @FeatureDomain                Utils
+ * @package                      de.yaio.utils
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     Utils
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 
 public class DataUtils {
@@ -58,19 +53,13 @@ public class DataUtils {
     
     
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tools - Converter
-     * <h4>FeatureDescription:</h4>
-     *     escape html entities
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue html-escaped string
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Converter
-     * @param src - the string to escape all html
-     * @return the html-escaped string
+    /** 
+     * escape html entities
+     * @FeatureDomain                Tools - Converter
+     * @FeatureResult                returnValue html-escaped string
+     * @FeatureKeywords              Converter
+     * @param src                    the string to escape all html
+     * @return                       the html-escaped string
      */
     public static String htmlEscapeText(final String src) {
         String text = src;
@@ -88,19 +77,13 @@ public class DataUtils {
         return text;
     }
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tools - Converter
-     * <h4>FeatureDescription:</h4>
-     *     lazy escape html entities
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue html-escaped string
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Converter
-     * @param src - the string to escape all html
-     * @return the html-escaped string
+    /** 
+     * lazy escape html entities
+     * @FeatureDomain                Tools - Converter
+     * @FeatureResult                returnValue html-escaped string
+     * @FeatureKeywords              Converter
+     * @param src                    the string to escape all html
+     * @return                       the html-escaped string
      */
     public static String htmlEscapeTextLazy(final String src) {
         String text = src;
@@ -114,19 +97,13 @@ public class DataUtils {
         return text;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tools - Converter
-     * <h4>FeatureDescription:</h4>
-     *     convert commaseparated string to map
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue map
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Converter
-     * @param csvString - the string to split
-     * @return the map of string
+    /** 
+     * convert commaseparated string to map
+     * @FeatureDomain                Tools - Converter
+     * @FeatureResult                returnValue map
+     * @FeatureKeywords              Converter
+     * @param csvString              the string to split
+     * @return                       the map of string
      */
     public static Map<String, String> initMapFromCsvString(final String csvString) {
         Map<String, String> mpStates = null;
@@ -145,20 +122,14 @@ public class DataUtils {
         return mpStates;
     }
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     BusinessLogic
-     * <h4>FeatureDescription:</h4>
-     *     calcs the checksum of the data
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue String - checksum of the node
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     BusinessLogic
-     * @param data - data to get the checksum
-     * @return the checksum
-     * @throws Exception - parser/format/io-Exceptions possible
+    /** 
+     * calcs the checksum of the data
+     * @FeatureDomain                BusinessLogic
+     * @FeatureResult                returnValue String - checksum of the node
+     * @FeatureKeywords              BusinessLogic
+     * @param data                   data to get the checksum
+     * @return                       the checksum
+     * @throws Exception             parser/format/io-Exceptions possible
      */
     public static String generateCheckSum(final String data) {
         // Checksumme
@@ -184,55 +155,49 @@ public class DataUtils {
     
     /** 
      * copy date
-     * @param oldDate - date to copy
-     * @return new Date
+     * @param oldDate                date to copy
+     * @return                       new Date
      */
     public static Date getNewDate(final Date oldDate) {
         return oldDate != null ? new Date(oldDate.getTime()) : null;
     }
     
     /** 
-     * @return dateformat-instance for german date dd.MM.yyyy 
+     * @return                       dateformat-instance for german date dd.MM.yyyy 
      */
     public static DateFormat getDF() {
         return  new SimpleDateFormat("dd.MM.yyyy");
     }
     
     /**
-     * @return dateformat-instance for german time HH:mm
+     * @return                       dateformat-instance for german time HH:mm
      */
     public static DateFormat getTF() {
         return new SimpleDateFormat("HH:mm");
     }
 
     /**
-     * @return dateformat-instance for german datetime dd.MM.yyyy HH:mm
+     * @return                       dateformat-instance for german datetime dd.MM.yyyy HH:mm
      * */
     public static DateFormat getDTF() {
         return new SimpleDateFormat("dd.MM.yyyy HH:mm");
     }
     
     /**
-     * @return dateformat-instance for UID yyyyMMddHHmmssSSS
+     * @return                       dateformat-instance for UID yyyyMMddHHmmssSSS
      */
     public static DateFormat getUIDF() {
         return new SimpleDateFormat("yyyyMMddHHmmssSSS");
     }
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tools - URL-Handling
-     * <h4>FeatureDescription:</h4>
-     *     extract url from string (defaults if not set scheme:http host:localhost port:80)
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValues - the extracted url
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     URL-Handling
-     * @param value                  - string to extract url from
-     * @return                       - the extracted url
-     * @throws MalformedURLException - possible invalid URL
+    /** 
+     * extract url from string (defaults if not set scheme:http host:localhost port:80)
+     * @FeatureDomain                Tools - URL-Handling
+     * @FeatureResult                returnValues - the extracted url
+     * @FeatureKeywords              URL-Handling
+     * @param value                  string to extract url from
+     * @return                       the extracted url
+     * @throws MalformedURLException possible invalid URL
      */
     public static URL extractWebUrl(final String value) throws MalformedURLException {
         if (StringUtils.isEmpty(value)) {
