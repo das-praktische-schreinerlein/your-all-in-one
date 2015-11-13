@@ -36,7 +36,7 @@ import de.yaio.core.datadomainservice.NodeNumberService;
 import de.yaio.core.node.BaseNode;
 
 /** 
- * a spring boot application
+ * the yaio-app as spring boot application
  * 
  * @FeatureDomain                Webservice
  * @package                      de.yaio.app

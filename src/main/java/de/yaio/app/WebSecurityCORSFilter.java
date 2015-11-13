@@ -28,7 +28,7 @@ import org.springframework.stereotype.Component;
 
 
 /**
- * userservice-websecurity-filter for CORS as seen on https://spring.io/guides/gs/rest-service-cors/
+ * yaio-websecurity-filter for CORS as seen on https://spring.io/guides/gs/rest-service-cors/
  *
  */
 @Component
