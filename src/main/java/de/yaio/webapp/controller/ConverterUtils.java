@@ -34,14 +34,6 @@ import de.yaio.datatransfer.exporter.OutputOptions;
 import de.yaio.datatransfer.exporter.OutputOptionsImpl;
 import de.yaio.extension.datatransfer.html.HtmlExporter;
 import de.yaio.extension.datatransfer.json.JSONFullExporter;
-import de.yaio.extension.datatransfer.json.JSONFullImporter;
-import de.yaio.extension.datatransfer.json.JSONResponse;
-import de.yaio.extension.datatransfer.ppl.PPLImporter;
-import de.yaio.extension.datatransfer.wiki.InlineWikiImporter;
-import de.yaio.extension.datatransfer.wiki.WikiExporter;
-import de.yaio.extension.datatransfer.wiki.WikiImportOptions;
-import de.yaio.extension.datatransfer.wiki.WikiImporter;
-import de.yaio.extension.datatransfer.wiki.WikiImporter.WikiStructLine;
 
 /** 
  * Services to parse text to nodes and convert them in different 
