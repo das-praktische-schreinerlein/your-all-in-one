@@ -25,7 +25,7 @@ import org.springframework.security.web.util.AntPathRequestMatcher;
 import de.yaio.rest.controller.CsrfHeaderFilter;
 
 /**
- * userservice-websecurity-config
+ * yaio-websecurity-config
  *
  */
 @EnableWebSecurity
@@ -149,7 +149,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         // secure path
                         .antMatchers("/js/**", "/css/**", "/yaio-explorerapp/**", "/dist/**",
-                                     "/converters/**", "/yaio-explorerapp/yaio-explorerapp.html",
+                                     "/converters/**", "/apiconfig/**", "/yaio-explorerapp/yaio-explorerapp.html",
                                      "/freemind-flash/**",
                                      "/examples/**", "/tests/**",
                                      "/user/current", "/login", "/logout",
