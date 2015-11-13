@@ -25,6 +25,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import de.yaio.rest.controller.NodeRestController;
 import de.yaio.webapp.controller.AdminController;
+import de.yaio.webapp.controller.ApiConfigController;
 import de.yaio.webapp.controller.ConverterController;
 import de.yaio.webapp.controller.ExportController;
 import de.yaio.webapp.controller.ImportController;
@@ -126,6 +127,23 @@ public class SwaggerConfig {
             .apiInfo(apiInfo("YAIO's Admin-API", 
                                 "Administrate the YAIO-database.", 
                                 AdminController.API_VERSION));
+    }
+
+    /**
+     * configure the swagger group
+     * @return                       the configured swagger-group
+     */
+    @Bean
+    public Docket apiconfigApi() {
+        return new Docket(DocumentationType.SWAGGER_2)
+            .groupName("ApiConfig")
+            .select()
+                .apis(RequestHandlerSelectors.any())
+                .paths(regex("/apiconfig.*"))
+                .build()
+            .apiInfo(apiInfo("YAIO's APIConfig-API", 
+                                "Get the current API-Config for the client.", 
+                                ApiConfigController.API_VERSION));
     }
 
     private ApiInfo apiInfo(final String name, final String desc, final String version) {
