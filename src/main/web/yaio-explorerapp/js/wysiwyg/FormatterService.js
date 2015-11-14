@@ -326,7 +326,7 @@ Yaio.FormatterService = function(appBase) {
         txt = txt.replace(/\n\.\n/g,'\n');
         txt = txt.replace(/\n\n/g,'\n');
         var s = unescape(encodeURIComponent(txt));
-        var url = "http://www.plantuml.com/plantuml/svg/" + encode64(deflate(s, 9));
+        var url = me.appBase.config.plantUmlBaseUrl + "plantuml/svg/" + encode64(deflate(s, 9));
         
         return url;
     }

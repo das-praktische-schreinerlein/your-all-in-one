@@ -25,10 +25,13 @@ window.YaioAppBaseConfig = function() {
     
     me.additionalDetectorStyleNS    = ["yaio-"];
 
-    me.CONST_MasterId               = "MasterplanMasternode1";
+    me.masterSysUId                 = "MasterplanMasternode1";
 
     me.datasources = [];
     
+    // server-configs
+    me.plantUmlBaseUrl              = "http://www.plantuml.com/";
+
     // App urls
     me.appRootUrl                   = "/";
     me.appSourceSelectorUrl         = me.appRootUrl + "sourceselector";

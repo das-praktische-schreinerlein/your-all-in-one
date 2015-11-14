@@ -45,7 +45,7 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
         flgNodeByAllId = true;
     }
     if (nodeId == null || nodeId == "" || ! nodeId) {
-        nodeId = yaioUtils.getConfig().CONST_MasterId;
+        nodeId = yaioUtils.getConfig().masterSysUId;
     }
 
     // create node

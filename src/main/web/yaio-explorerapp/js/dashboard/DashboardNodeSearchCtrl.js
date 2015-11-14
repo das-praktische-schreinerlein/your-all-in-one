@@ -31,10 +31,10 @@ yaioApp.controller('DashBoardNodeSearchCtrl', function($rootScope, $scope, yaioU
         curPage: 1,
         pageSize: 10,
         searchSort: 'lastChangeDown',
-        baseSysUID: "MasterplanMasternode1",
+        baseSysUID: yaioUtils.getConfig().masterSysUId,
         fulltext: "",
         total: 0,
-        strNotNodePraefix: "Sys* *Templ MyStart MyHelp JsUnitTest JsFuncTest JUnitTest",
+        strNotNodePraefix: yaioUtils.getConfig().excludenodepraefix,
         strWorkflowStateFilter: "",
         strClassFilter: ""
     };
