@@ -918,6 +918,36 @@
                     <targetJdk>${java.version}</targetJdk>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>gr.abiss.mvn.plugins</groupId>
+                <artifactId>maven-jstools-plugin</artifactId>
+                <version>0.7</version>
+                <configuration>
+                    <jsDir>src/main/web</jsDir>
+                    <includePrivate>true</includePrivate>
+                    <includeUndocumented>true</includeUndocumented>
+                </configuration>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>jslint</report>
+                            <report>jsdoc</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+           <plugin>
+               <groupId>com.phasebash.jsdoc</groupId>
+               <artifactId>jsdoc3-maven-plugin</artifactId>
+               <version>1.1.0</version>
+               <configuration>
+                   <recursive>true</recursive>
+                   <directoryRoots>
+                       <directoryRoot>${basedir}/yaio-playground/src/main/web/yaio-explorerapp/js</directoryRoot>
+                       <directoryRoot>${basedir}/yaio-playground/src/test/javascript</directoryRoot>
+                   </directoryRoots>
+               </configuration>
+            </plugin>
          </plugins>
     </reporting>
 </project>
