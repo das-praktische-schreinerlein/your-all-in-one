@@ -49,14 +49,30 @@ Yaio.NodeDataService = function(appBase, config, defaultConfig) {
     me.loadNodeData = function(nodeId) {
         me.logNotImplemented();
     };
-    
-    me.loadStaticJson = function() {
-        // return promise
-        var dfd = new $.Deferred();
-        var res = dfd.promise();
-        dfd.resolve("OK");
-        return res;
+
+    me.connectService = function() {
+        me.logNotImplemented();
     }
+    
+    me.updateServiceConfig = function(yaioCommonApiConfig) {
+        me.logNotImplemented();
+    };
+    
+    me.updateAppConfig = function() {
+        var msg = "updateAppConfig";
+        console.log(msg + " with:", me.config);
+        if (me.config.plantUmlBaseUrl) {
+            me.appBase.config.plantUmlBaseUrl = me.config.plantUmlBaseUrl;
+        }
+        if (me.config.masterSysUId) {
+            me.appBase.config.masterSysUId = me.config.masterSysUId;
+        }
+        if (me.config.excludeNodePraefix) {
+            me.appBase.config.excludeNodePraefix = me.config.excludeNodePraefix;
+        }
+        console.log(msg + " to:", me.appBase.config);
+    };
+
     
     me.yaioDoLoadAvailiableTemplates = function() {
         var msg = "yaioDoLoadTemplates";
@@ -239,7 +255,7 @@ Yaio.NodeDataService = function(appBase, config, defaultConfig) {
                     // load page for referenced node with full hierarchy
                     //firstNodeId = yaioNodeActionResponse.parentIdHierarchy.shift();
                     // we set it constant
-                    firstNodeId = me.appBase.config.CONST_MasterId;
+                    firstNodeId = me.appBase.config.masterSysUId;
                     
                     newUrl = '#/show/' + firstNodeId 
                         + '/activate/' + yaioNodeActionResponse.node.sysUID + '/';

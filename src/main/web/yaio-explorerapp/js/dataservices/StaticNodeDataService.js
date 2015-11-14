@@ -49,10 +49,14 @@ Yaio.StaticNodeDataService = function(appBase, config, defaultConfig) {
         return res;
     };
     
-    me.loadStaticJson = function() {
+    me.connectService = function() {
+        // update serviceconfig
+        me.updateServiceConfig();
+        me.updateAppConfig();
+        
         // load data
         me._loadStaticJson(JSON.stringify(window.yaioStaticJSON));
-        
+
         // return promise
         var dfd = new $.Deferred();
         var res = dfd.promise();
@@ -60,6 +64,9 @@ Yaio.StaticNodeDataService = function(appBase, config, defaultConfig) {
         return res;
     }
     
+    me.updateServiceConfig = function(yaioCommonApiConfig) {
+    };
+
     me.exportNodeActionResponseJSONById = function(nodeId) {
         return JSON.stringify(me._exportNodeActionResponseById(nodeId))
     }
@@ -81,13 +88,13 @@ Yaio.StaticNodeDataService = function(appBase, config, defaultConfig) {
         var masterNode = yaioNodeActionReponse.node;
         
         // create Masternode if not exists 
-        if (masterNode.sysUID != me.appBase.config.CONST_MasterId) {
+        if (masterNode.sysUID != me.appBase.config.masterSysUId) {
             masterNode = {
                 "className": "TaskNode",
                 "name": "Masterplan",
                 "ebene": 0,
                 "nodeDesc": "Masternode of the Masterplan",
-                "sysUID": me.appBase.config.CONST_MasterId,
+                "sysUID": me.appBase.config.masterSysUId,
                 "sysChangeCount": 9,
                 "sysCreateDate": 1411717226471,
                 "sysChangeDate": 1429887836887,

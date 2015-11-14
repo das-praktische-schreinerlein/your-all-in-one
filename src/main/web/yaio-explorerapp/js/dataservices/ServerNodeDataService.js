@@ -41,6 +41,34 @@ Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
         };
     };
     
+    me.connectService = function() {
+        var res = me._loadConfig();
+        return res;
+    }
+    
+    me.updateServiceConfig = function(yaioCommonApiConfig) {
+        if (yaioCommonApiConfig) {
+            var msg = "updateServiceConfig for yaio";
+            console.log(msg + " with:", yaioCommonApiConfig);
+            
+            // base
+            me.config.name               = yaioCommonApiConfig.yaioInstanceName;
+            // dont overwrite configured url, maybe its tunneled: me.config.urlBase            = yaioCommonApiConfig.yaioInstanceUrl;
+            me.config.desc               = yaioCommonApiConfig.yaioInstanceDesc;
+            me.config.updateConfig();
+            
+            // options
+            me.config.masterSysUId       = yaioCommonApiConfig.yaioMastersysuid;
+            me.config.excludeNodePraefix = yaioCommonApiConfig.yaioExportcontrollerExcludenodepraefix;
+            me.config.excludeNodePraefix = (me.config.excludeNodePraefix != null ? me.config.excludeNodePraefix.replace(/%/g, "*") : "nothing");
+
+            // services
+            me.config.plantUmlBaseUrl    = yaioCommonApiConfig.plantUmlBaseUrl;
+            
+            console.log(msg + " to:", me.config);
+        }
+    };
+    
     /*****************************************
      *****************************************
      * Service-Funktions (webservice)
@@ -49,6 +77,56 @@ Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
     me._createAccessManager = function() {
         return Yaio.ServerAccessManagerService(me.appBase, me.config);
     };
+    
+    me._loadConfig = function() {
+        // return promise
+        var dfd = new $.Deferred();
+        var res = dfd.promise();
+
+        // load config from server
+        var resConfig = me._yaioCallLoadConfig();
+        var loadDone = false;
+        resConfig.done(function(yaioCommonApiConfig, textStatus, jqXhr ) {
+            var msg = "_loadConfig for yaio";
+            console.log(msg + " done");
+            // update config
+            me.updateServiceConfig(yaioCommonApiConfig);
+            me.updateAppConfig();
+            
+            // resolve promise
+            dfd.resolve("OK");
+        });
+
+        return res;
+    };
+    
+    me._yaioCallLoadConfig = function() {
+        var svcYaioBase = me.appBase.get('YaioBase');
+
+        var url = me.config.configUrl;
+        var msg = "_yaioCallLoadConfig for yaio:" + url;
+        console.log(msg + " START");
+        return me.$.ajax({
+            headers: {
+                'Accept' : 'application/json',
+                'Content-Type' : 'application/json'
+            },
+            xhrFields : {
+                // for CORS
+                withCredentials : true
+            },
+            url : url,
+            type : 'GET',
+            error : function(jqXHR, textStatus, errorThrown) {
+                // log the error to the console
+                svcYaioBase.logError("ERROR  " + msg + " The following error occured: " + textStatus + " " + errorThrown, false);
+                svcYaioBase.logError("cant load " + msg + " error:" + textStatus, true);
+            },
+            complete : function() {
+                console.log("completed load " + msg);
+            }
+        });
+    }
     
     me._yaioCallUpdateNode = function(fancynode, json) {
         var url = me.config.restUpdateUrl + fancynode.key;

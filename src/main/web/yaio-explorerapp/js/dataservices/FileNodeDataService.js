@@ -33,7 +33,7 @@ Yaio.FileNodeDataService = function(appBase, config, defaultConfig) {
     me._init = function() {
     };
     
-    me.loadStaticJson = function() {
+    me.connectService = function() {
         // return promise
         var dfd = new $.Deferred();
         var res = dfd.promise();
@@ -52,6 +52,10 @@ Yaio.FileNodeDataService = function(appBase, config, defaultConfig) {
                     console.log("read fileName:" + file.name);
                     var data = res.target.result;
                     
+                    // update serviceconfig
+                    me.updateServiceConfig();
+                    me.updateAppConfig();
+
                     // set content as json
                     window.yaioFileJSON = res.target.result;
                     
@@ -60,7 +64,7 @@ Yaio.FileNodeDataService = function(appBase, config, defaultConfig) {
                     
                     // set new name
                     me.config.name = "Dateiupload: " + file.name;
-
+                    
                     dfd.resolve("OK");
                 };
                 

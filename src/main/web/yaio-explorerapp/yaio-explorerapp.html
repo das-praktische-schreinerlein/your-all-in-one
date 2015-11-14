@@ -230,7 +230,7 @@ if (myUrl.search("dsn=YaioStaticNodeData") > 0 || window.yaioUseStaticJson) {
     // default: local server
     yaioAppBase.configureService("YaioNodeData", function() { return yaioAppBase.get("YaioServerNodeData_Local"); });
 }
-yaioAppBase.get("YaioNodeData").loadStaticJson();
+yaioAppBase.get("YaioNodeData").connectService();
 
 // init
 yaioAppBase.publishDetectorStyles();
