@@ -7,7 +7,11 @@
     <artifactId>yaio</artifactId>
     <name>yaio</name>
     <description>YourAllInOne D'Artagnan</description>
-    
+    <organization>
+        <name>Your-All-In-One</name>
+        <url>http://www.your-all-in-one.de</url>
+    </organization>
+        
     <!-- packaging jar or war and version -->
     <packaging>jar</packaging>
     <version>0.1.0-beta-feature-YAIO2234-improvements-201511-RC</version>
@@ -111,7 +115,12 @@
             <name>Spring Releases</name>
             <url>http://repo.spring.io/libs-release</url>
         </repository>
-        
+
+        <!-- github repos -->
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
     </repositories>
 
     <pluginRepositories>
@@ -458,6 +467,13 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpmime</artifactId>
             <version>${httpmime.version}</version>
+        </dependency>
+
+        <!-- yaio-services / via jitpack.io because of no maven-centra-account -->
+        <dependency>
+            <groupId>com.github.das-praktische-schreinerlein</groupId>
+            <artifactId>plantuml-service</artifactId>
+            <version>0.1.0</version>
         </dependency>
     </dependencies>
 
@@ -902,6 +918,6 @@
                     <targetJdk>${java.version}</targetJdk>
                 </configuration>
             </plugin>
-        </plugins>
+         </plugins>
     </reporting>
 </project>
