@@ -21,6 +21,9 @@ Yaio.FileNodeDataServiceConfig = function(urlBase, name, desc) {
     me.urlBase                      = urlBase || window.location.host;
     me.name                         = name || ("Dateiupload");
     me.desc                         = desc || ("Daten werden aus einer Yaio-JSON-Datei geladen.");
+    me.plantUmlBaseUrl              = "http://www.plantuml.com/";
+    me.excludeNodePraefix           = "Sys* *Templ MyStart MyHelp JsUnitTest JsFuncTest JUnitTest";
+    me.masterSysUId                 = "MasterplanMasternode1";
 
     return me;
 };

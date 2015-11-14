@@ -34,7 +34,7 @@ yaioApp.controller('DashBoardNodeSearchCtrl', function($rootScope, $scope, yaioU
         baseSysUID: yaioUtils.getConfig().masterSysUId,
         fulltext: "",
         total: 0,
-        strNotNodePraefix: yaioUtils.getConfig().excludenodepraefix,
+        strNotNodePraefix: yaioUtils.getConfig().excludeNodePraefix,
         strWorkflowStateFilter: "",
         strClassFilter: ""
     };

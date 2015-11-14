@@ -34,7 +34,7 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
         baseSysUID: yaioUtils.getConfig().masterSysUId,
         fulltext: "",
         total: 0,
-        strNotNodePraefix: yaioUtils.getConfig().excludenodepraefix,
+        strNotNodePraefix: yaioUtils.getConfig().excludeNodePraefix,
         strWorkflowStateFilter: "",
         arrWorkflowStateFilter: [],
         strClassFilter: "",

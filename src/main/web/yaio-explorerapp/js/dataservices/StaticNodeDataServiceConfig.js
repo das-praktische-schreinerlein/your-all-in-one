@@ -21,5 +21,9 @@ Yaio.StaticNodeDataServiceConfig = function(urlBase, name, desc) {
     me.urlBase                      = "";
     me.name                         = name || "Statische InApp-Daten";
     me.desc                         = desc || "Die statisch in der App hinterlegten Daten werden geladen.";
+    me.plantUmlBaseUrl              = "http://www.plantuml.com/";
+    me.excludeNodePraefix           = "Sys* *Templ MyStart MyHelp JsUnitTest JsFuncTest JUnitTest";
+    me.masterSysUId                 = "MasterplanMasternode1";
+
     return me;
 };
