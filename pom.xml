@@ -891,7 +891,7 @@
                 <executions>
                     <execution>
                         <id>start-third-parties</id>
-                        <phase>${maven-antrun-plugin.phase.pre-integration-test}pre-integration-test</phase>
+                        <phase>${maven-antrun-plugin.phase.pre-integration-test}</phase>
                         <configuration>
                             <target>
                                 <!-- clean all instances -->
