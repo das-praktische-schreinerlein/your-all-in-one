@@ -23,17 +23,17 @@ import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
-import de.yaio.rest.controller.NodeRestController;
 import de.yaio.webapp.controller.AdminController;
 import de.yaio.webapp.controller.ApiConfigController;
 import de.yaio.webapp.controller.ConverterController;
 import de.yaio.webapp.controller.ExportController;
 import de.yaio.webapp.controller.ImportController;
+import de.yaio.webapp.restcontroller.NodeRestController;
 
 /** 
  * configure swagger
  *  
- * @FeatureDomain                Webservice
+ * @FeatureDomain                Webservice Config
  * @package                      de.yaio.webapp
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
  * @category                     collaboration

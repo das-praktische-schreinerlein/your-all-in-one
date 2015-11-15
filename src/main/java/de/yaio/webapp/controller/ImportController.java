@@ -31,8 +31,8 @@ import de.yaio.extension.datatransfer.jpa.JPAExporter;
 import de.yaio.extension.datatransfer.ppl.PPLImporter;
 import de.yaio.extension.datatransfer.wiki.WikiImportOptions;
 import de.yaio.extension.datatransfer.wiki.WikiImporter;
-import de.yaio.rest.controller.NodeActionResponse;
-import de.yaio.rest.controller.NodeRestController;
+import de.yaio.webapp.restcontroller.NodeActionResponse;
+import de.yaio.webapp.restcontroller.NodeRestController;
 
 /** 
  * Upload-Services to import BaseNodes in different 

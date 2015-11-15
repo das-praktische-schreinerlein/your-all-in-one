@@ -1,4 +1,17 @@
-package de.yaio.app;
+/** 
+ * software for projectmanagement and documentation
+ * 
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+package de.yaio.webapp;
 
 import java.util.Arrays;
 import java.util.List;
@@ -22,11 +35,17 @@ import org.springframework.security.web.header.writers.frameoptions.XFrameOption
 import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter.XFrameOptionsMode;
 import org.springframework.security.web.util.AntPathRequestMatcher;
 
-import de.yaio.rest.controller.CsrfHeaderFilter;
+import de.yaio.app.Configurator;
 
 /**
  * yaio-websecurity-config
- *
+ *  
+ * @FeatureDomain                Webservice Config
+ * @package                      de.yaio.webapp
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {

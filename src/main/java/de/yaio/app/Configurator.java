@@ -96,6 +96,10 @@ public class Configurator {
     /** the configured yaioInstances to allow XFrameHeader and to construct in sourceselector of app */
     protected final Map<String, Map<String, String>> knownYaioInstances = new LinkedHashMap<String, Map<String, String>>();
 
+    /** replacements to do after processing a node in documentation-context **/
+    public static final Map<String, String> PostProcessorReplacements_documentation = 
+                    new LinkedHashMap<String, String>();
+    
     protected ApplicationContext applicationContext;
     protected CommandLine commandLine;
     protected String[] cmdLineArgs;
@@ -321,7 +325,7 @@ public class Configurator {
                         + " / " + pattern + "=" + target);
                 }
                 if (pattern != null) {
-                    ExportController.PostProcessorReplacements_documentation.put(
+                    PostProcessorReplacements_documentation.put(
                                     pattern, 
                                     target != null ? target : "");
                         LOGGER.info("set PostProcessorReplacements_documentation:" 

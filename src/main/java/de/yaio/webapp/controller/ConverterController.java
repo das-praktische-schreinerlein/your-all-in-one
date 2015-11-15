@@ -29,7 +29,7 @@ import de.yaio.datatransfer.exporter.OutputOptionsImpl;
 import de.yaio.extension.datatransfer.common.DatatransferUtils;
 import de.yaio.extension.datatransfer.ical.ICalDBExporter;
 import de.yaio.extension.datatransfer.mindmap.MindMapExporter;
-import de.yaio.rest.controller.NodeActionResponse;
+import de.yaio.webapp.restcontroller.NodeActionResponse;
 
 /** 
  * Services to parse text to nodes and convert them in different 

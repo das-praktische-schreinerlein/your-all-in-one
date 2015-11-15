@@ -1,4 +1,4 @@
-package de.yaio.rest.controller;
+package de.yaio.webapp.controller;
 
 import java.security.Principal;
 

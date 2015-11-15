@@ -23,7 +23,7 @@ import de.yaio.core.dbservice.BaseNodeDBService;
 import de.yaio.core.dbservice.BaseNodeDBServiceImpl;
 import de.yaio.core.node.BaseNode;
 import de.yaio.jobs.NodeRecalcer;
-import de.yaio.rest.controller.NodeActionResponse;
+import de.yaio.webapp.restcontroller.NodeActionResponse;
 
 /** 
  * Admin-Services to recalc, reset...

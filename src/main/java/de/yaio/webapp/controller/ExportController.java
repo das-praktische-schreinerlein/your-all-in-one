@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import de.yaio.app.Configurator;
 import de.yaio.core.node.BaseNode;
 import de.yaio.datatransfer.exporter.EmptyOutputOptionsImpl;
 import de.yaio.datatransfer.exporter.Exporter;
@@ -61,9 +62,6 @@ public class ExportController {
     /** API-Version **/
     public static final String API_VERSION = "1.0.0";
 
-                    /** replacements to do after processing a node in documentation-context **/
-    public static final Map<String, String> PostProcessorReplacements_documentation = 
-                    new LinkedHashMap<String, String>();
     
     // Logger
     private static final Logger LOGGER =
@@ -605,8 +603,8 @@ public class ExportController {
         String res = converterUtils.commonExportNodeAsHtml(sysUID, oOptions, response, 
                         "/static/exporttemplates/documentation-export.html");
         // replace static pathes...
-        for (String pattern : PostProcessorReplacements_documentation.keySet()) {
-            res = res.replace(pattern, PostProcessorReplacements_documentation.get(pattern));
+        for (String pattern : Configurator.PostProcessorReplacements_documentation.keySet()) {
+            res = res.replace(pattern, Configurator.PostProcessorReplacements_documentation.get(pattern));
         }
         return res;
     }
@@ -628,8 +626,8 @@ public class ExportController {
                                                 final HttpServletResponse response) {
         String res = converterUtils.commonExportNodeAsYaioApp(sysUID, response, null, true);
         // replace static pathes...
-        for (String pattern : PostProcessorReplacements_documentation.keySet()) {
-            res = res.replace(pattern, PostProcessorReplacements_documentation.get(pattern));
+        for (String pattern : Configurator.PostProcessorReplacements_documentation.keySet()) {
+            res = res.replace(pattern, Configurator.PostProcessorReplacements_documentation.get(pattern));
         }
         
         return res;
