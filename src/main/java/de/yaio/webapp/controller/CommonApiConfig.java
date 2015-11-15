@@ -11,15 +11,11 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package de.yaio.webapp;
+package de.yaio.webapp.controller;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import de.yaio.webapp.controller.AdminController;
-import de.yaio.webapp.controller.ApiConfigController;
-import de.yaio.webapp.controller.ConverterController;
-import de.yaio.webapp.controller.ExportController;
 import de.yaio.webapp.restcontroller.NodeRestController;
 
 

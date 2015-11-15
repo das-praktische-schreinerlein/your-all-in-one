@@ -19,8 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import de.yaio.webapp.CommonApiConfig;
-
 /** 
  * Services to export the current webconfig
  *  
