@@ -4,6 +4,9 @@ rem set CONFIG
 set BASEPATH=%1%
 set FLGWP=%2%
 
+rem set pathes
+set GRAPHVIZ_DOT=D:\ProgrammeShared\graphviz-2.38\bin\dot.exe
+
 rem set appconfig
 set YAIOINSTANCE=yaio-playground.local
 set YAIOAPPURLCONFIG=-config dummy -yaioinstance %YAIOINSTANCE% -username admin -password secret
@@ -44,7 +47,6 @@ set CP="%YAIOAPP%;%APPPROPAGATOR%;"
 set CFGFILE=%BASEPATH%..\config\application.properties
 set CFG=--config %CFGFILE% 
 set JAVAOPTIONS=-Xmx768m -Xms128m -Dspring.config.location=file:%CFGFILE% -Dlog4j.configuration=file:%BASEPATH%..\config\log4j.properties
-
 
 rem change CodePage
 CHCP 1252
