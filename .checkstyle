@@ -9,11 +9,9 @@
   </fileset>
   <filter name="DerivedFiles" enabled="true"/>
   <filter name="FilesFromPackage" enabled="true">
-    <filter-data value="src/main/resources/META-INF"/>
-    <filter-data value="src/main/resources/static/css/highlightjs"/>
-    <filter-data value="src/main/resources/static/css/jqueryui"/>
-    <filter-data value="src/main/resources/static/css/slimbox2"/>
-    <filter-data value="src/main/resources/static/images"/>
-    <filter-data value="src/main/resources/static/js"/>
+    <filter-data value="src/main/web"/>
+    <filter-data value="src/test/javascript"/>
+    <filter-data value="src/main/resources"/>
+    <filter-data value="src/main/generated-resources"/>
   </filter>
 </fileset-config>
