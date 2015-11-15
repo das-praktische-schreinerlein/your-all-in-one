@@ -6,7 +6,7 @@ export BASEPATH=${1}
 export FLGWP=${2}
 
 # set pathes
-GRAPHVIZ_DOT=/usr/local/bin/graphviz-2.38/bind/dot
+GRAPHVIZ_DOT=/usr/bin/dot
 
 # set appconfig
 export YAIOINSTANCE=yaio-playground.local
