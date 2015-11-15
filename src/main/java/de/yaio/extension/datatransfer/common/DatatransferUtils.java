@@ -73,7 +73,7 @@ public class DatatransferUtils {
      * @throws Exception             ParserExceptions possible
      */
     @Transactional
-    public void copyNode(BaseNode node, BaseNode newParent) throws Exception {
+    public void copyNode(final BaseNode node, final BaseNode newParent) throws Exception {
         // read old parent
         BaseNode oldParent = node.getParentNode();
 
@@ -130,7 +130,7 @@ public class DatatransferUtils {
      * @throws Exception             ParserExceptions possible
      */
     @Transactional
-    public void moveNode(BaseNode node, BaseNode newParent, Integer newSortPos) throws Exception {
+    public void moveNode(final BaseNode node, final BaseNode newParent, final Integer newSortPos) throws Exception {
         // map the data
         boolean flgChangedParent = false;
         boolean flgChangedPosition = false;

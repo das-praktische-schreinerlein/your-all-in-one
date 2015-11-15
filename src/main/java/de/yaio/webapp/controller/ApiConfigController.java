@@ -40,6 +40,13 @@ public class ApiConfigController {
     @Autowired
     CommonApiConfig commonApiConfig;
 
+    /** 
+     * serve the common API-Config from application.properties
+     * @FeatureDomain                Webservice
+     * @FeatureResult                CommonApiConfig - json-format of the configuration
+     * @FeatureKeywords              Webservice Configuration
+     * @return                       CommonApiConfig - json of the CommonApiConfig
+     */
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET,
                     value = "/commonApiConfig")

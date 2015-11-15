@@ -54,6 +54,15 @@ public class ConverterController {
     @Autowired
     protected DatatransferUtils datatransferUtils;
 
+    /** 
+     * parses the yaio-wiki-source to nodes and converts it to Html
+     * @FeatureDomain                Webservice
+     * @FeatureResult                resulting Html of the parsed yaio-wiki-source
+     * @FeatureKeywords              Webservice Html Converter
+     * @param source                 yaio-wiki-source to parse 
+     * @param response               response-obj to set encoding, headers...
+     * @return                       resulting Html of the parsed yaio-wiki-source
+     */
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
                     value = "/html",
@@ -74,6 +83,15 @@ public class ConverterController {
             }
     }
 
+    /** 
+     * parses the yaio-wiki-source to nodes and converts it to ICal
+     * @FeatureDomain                Webservice
+     * @FeatureResult                resulting ICal of the parsed yaio-wiki-source
+     * @FeatureKeywords              Webservice ICal Converter
+     * @param source                 yaio-wiki-source to parse 
+     * @param response               response-obj to set encoding, headers...
+     * @return                       resulting ICal of the parsed yaio-wiki-source
+     */
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
                     value = "/ical",
@@ -81,9 +99,18 @@ public class ConverterController {
     public String convertToICal(@RequestParam(value = "source") final String source, 
                                 final HttpServletResponse response) {
         Exporter exporter = new ICalDBExporter();
-        return commonComnvertSource(exporter, ".ics", source, response);
+        return commonConvertSource(exporter, ".ics", source, response);
     }
 
+    /** 
+     * parses the yaio-wiki-source to nodes and converts it to Mindmap
+     * @FeatureDomain                Webservice
+     * @FeatureResult                resulting Mindmap of the parsed yaio-wiki-source
+     * @FeatureKeywords              Webservice Mindmap Converter
+     * @param source                 yaio-wiki-source to parse 
+     * @param response               response-obj to set encoding, headers...
+     * @return                       resulting Mindmap of the parsed yaio-wiki-source
+     */
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
                     value = "/mindmap",
@@ -91,11 +118,21 @@ public class ConverterController {
     public String convertToMindmap(@RequestParam(value = "source") final String source, 
                                    final HttpServletResponse response) {
         Exporter exporter = new MindMapExporter();
-        return commonComnvertSource(exporter, ".mm", source, response);
+        return commonConvertSource(exporter, ".mm", source, response);
     }
 
-
-    protected String commonComnvertSource(final Exporter exporter,
+    /** 
+     * parses the yaio-wiki-source to nodes and converts it with help of the exporter
+     * @FeatureDomain                Webservice
+     * @FeatureResult                Converter-result of the parsed yaio-wiki-source
+     * @FeatureKeywords              Webservice Converter
+     * @param exporter               exporter to use (mindmap, html...)
+     * @param extension              file-extension
+     * @param source                 yaio-wiki-source to parse 
+     * @param response               response-obj to set encoding, headers...
+     * @return                       Converter-result of the parsed yaio-wiki-source
+     */
+    protected String commonConvertSource(final Exporter exporter,
                                          final String extension,
                                          final String source,
                                          final HttpServletResponse response) {
@@ -113,5 +150,5 @@ public class ConverterController {
                             "cant convert source => " + e, 
                             null, null, null, null).getStateMsg();
         }
-    }                                         
+    }
 }

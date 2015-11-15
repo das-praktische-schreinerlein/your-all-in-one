@@ -482,7 +482,7 @@ public class BaseNodeService extends NodeServiceImpl {
      * @param node                   node to generate hierarchy for
      * @return                       resulting node hierarchy
      */
-    public String visualizeNodeHierarchy(String praefix, DataDomain node) {
+    public String visualizeNodeHierarchy(final String praefix, final DataDomain node) {
         String res = praefix + node.getNameForLogger() + "\n";
         for (DataDomain childNode : node.getChildNodes()) {
             res += visualizeNodeHierarchy(praefix + "  ", childNode);

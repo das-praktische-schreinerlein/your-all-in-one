@@ -278,7 +278,7 @@ public class OutputOptionsImpl implements OutputOptions {
         return manageIntValues(flgConcreteToDosOnly);
     }
     @Override
-    public void setFlgConcreteToDosOnly(Integer flgConcreteToDosOnly) {
+    public void setFlgConcreteToDosOnly(final Integer flgConcreteToDosOnly) {
         this.flgConcreteToDosOnly = flgConcreteToDosOnly;
     }
 

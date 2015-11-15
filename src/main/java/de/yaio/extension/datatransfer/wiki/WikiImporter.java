@@ -280,7 +280,7 @@ public class WikiImporter extends ImporterImpl {
     /** 
      * extracts the list of WikiStructLine from Wiki nodeSrc (several Lines)
      * @FeatureDomain                import
-     * @FeatureResult                <li>returnValue List<WikiStructLine> - list of extracted WikiStructLine </ul> 
+     * @FeatureResult                returnValue List<WikiStructLine> - list of extracted WikiStructLine
      * @FeatureKeywords              Parser
      * @param nodeSrc                nodeSrc to be parsed
      * @param inputOptions           ImportOptions for the parser

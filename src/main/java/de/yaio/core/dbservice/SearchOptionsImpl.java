@@ -70,7 +70,7 @@ public class SearchOptionsImpl implements SearchOptions {
         return manageIntValues(flgConcreteToDosOnly);
     }
     @Override
-    public void setFlgConcreteToDosOnly(Integer flgConcreteToDosOnly) {
+    public void setFlgConcreteToDosOnly(final Integer flgConcreteToDosOnly) {
         this.flgConcreteToDosOnly = flgConcreteToDosOnly;
     }
 

@@ -108,8 +108,8 @@ public class NodeNumberServiceImpl implements NodeNumberService {
     
 
     @Override
-    public void initNextNodeNumbersFromFile(final String strPathIdDB, boolean forceReload) throws Exception {
-        if (! StringUtils.isEmpty(lastFileName) && !forceReload) {
+    public void initNextNodeNumbersFromFile(final String strPathIdDB, final boolean forceReload) throws Exception {
+        if (!StringUtils.isEmpty(lastFileName) && !forceReload) {
             // already read and no force
             return;
         }
