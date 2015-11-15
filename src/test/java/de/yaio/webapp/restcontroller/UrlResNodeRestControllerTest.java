@@ -11,12 +11,12 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package de.yaio.rest.controller;
+package de.yaio.webapp.restcontroller;
 
-import de.yaio.core.node.TaskNode;
+import de.yaio.core.node.UrlResNode;
 
 /** 
- * test: RESTFull webservices for TaskNodes
+ * test: RESTFull webservices for UrlResNodes
  * 
  * @FeatureDomain                Tests
  * @package                      de.yaio.rest.controller
@@ -25,10 +25,10 @@ import de.yaio.core.node.TaskNode;
  * @copyright                    Copyright (c) 2014, Michael Schreiner
  * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-public class TaskNodeRestControllerTest extends BaseNodeRestControllerTest {
+public class UrlResNodeRestControllerTest extends BaseNodeRestControllerTest {
     
     /** 
-     * testobject for TaskNode
+     * testobject for UrlResNode
      * 
      * @FeatureDomain                Test
      * @package                      de.yaio.rest.controller
@@ -37,7 +37,7 @@ public class TaskNodeRestControllerTest extends BaseNodeRestControllerTest {
      * @copyright                    Copyright (c) 2014, Michael Schreiner
      * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
      */
-    public class TaskNodeRestControllerTestObj extends TaskNode implements TestObj {
+    public class UrlResNodeRestControllerTestObj extends UrlResNode implements TestObj {
         @Override
         public String toString() {
             StringBuffer resBuffer = new StringBuffer();
@@ -48,7 +48,7 @@ public class TaskNodeRestControllerTest extends BaseNodeRestControllerTest {
         
         @Override
         public String getClassName() {
-            return "TaskNode";
+            return "UrlResNode";
             
         }
     }
@@ -59,9 +59,9 @@ public class TaskNodeRestControllerTest extends BaseNodeRestControllerTest {
     @Override
     public TestObj setupNewTestObj() throws Exception {
      // create, show, update, delete task
-        String name1 = "Test-TaskNode";
+        String name1 = "Test-UrlResNode";
         
-        TaskNodeRestControllerTestObj node = new TaskNodeRestControllerTestObj();
+        UrlResNodeRestControllerTestObj node = new UrlResNodeRestControllerTestObj();
         node.setName(name1);
         
         return node;

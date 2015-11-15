@@ -1,3 +1,4 @@
+package de.yaio.webapp.restcontroller;
 //package de.yaio.rest.controller;
 //
 //import static org.junit.Assert.fail;

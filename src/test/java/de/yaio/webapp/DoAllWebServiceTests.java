@@ -11,18 +11,18 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package de.yaio.rest;
+package de.yaio.webapp;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
-import de.yaio.rest.controller.EventNodeRestControllerTest;
-import de.yaio.rest.controller.InfoNodeRestControllerTest;
-import de.yaio.rest.controller.MasterNodeRestControllerTest;
-import de.yaio.rest.controller.SymLinkNodeRestControllerTest;
-import de.yaio.rest.controller.TaskNodeRestControllerTest;
-import de.yaio.rest.controller.UrlResNodeRestControllerTest;
+import de.yaio.webapp.restcontroller.EventNodeRestControllerTest;
+import de.yaio.webapp.restcontroller.InfoNodeRestControllerTest;
+import de.yaio.webapp.restcontroller.MasterNodeRestControllerTest;
+import de.yaio.webapp.restcontroller.SymLinkNodeRestControllerTest;
+import de.yaio.webapp.restcontroller.TaskNodeRestControllerTest;
+import de.yaio.webapp.restcontroller.UrlResNodeRestControllerTest;
 
 /** 
  * Testsuite for the restFULL-webservice-logic

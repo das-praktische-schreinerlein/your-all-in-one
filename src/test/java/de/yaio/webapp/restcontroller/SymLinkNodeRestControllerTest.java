@@ -11,12 +11,12 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package de.yaio.rest.controller;
+package de.yaio.webapp.restcontroller;
 
-import de.yaio.core.node.EventNode;
+import de.yaio.core.node.SymLinkNode;
 
 /** 
- * test: RESTFull webservices for EventNodes
+ * test: RESTFull webservices for SymLinkNodes
  * 
  * @FeatureDomain                Tests
  * @package                      de.yaio.rest.controller
@@ -25,10 +25,10 @@ import de.yaio.core.node.EventNode;
  * @copyright                    Copyright (c) 2014, Michael Schreiner
  * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-public class EventNodeRestControllerTest extends BaseNodeRestControllerTest {
+public class SymLinkNodeRestControllerTest extends BaseNodeRestControllerTest {
     
     /** 
-     * testobject for EventNode
+     * testobject for SymLinkNode
      * 
      * @FeatureDomain                Test
      * @package                      de.yaio.rest.controller
@@ -37,7 +37,7 @@ public class EventNodeRestControllerTest extends BaseNodeRestControllerTest {
      * @copyright                    Copyright (c) 2014, Michael Schreiner
      * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
      */
-    public class EventNodeRestControllerTestObj extends EventNode implements TestObj {
+    public class SymLinkNodeRestControllerTestObj extends SymLinkNode implements TestObj {
         @Override
         public String toString() {
             StringBuffer resBuffer = new StringBuffer();
@@ -48,7 +48,7 @@ public class EventNodeRestControllerTest extends BaseNodeRestControllerTest {
         
         @Override
         public String getClassName() {
-            return "EventNode";
+            return "SymLinkNode";
             
         }
     }
@@ -59,9 +59,9 @@ public class EventNodeRestControllerTest extends BaseNodeRestControllerTest {
     @Override
     public TestObj setupNewTestObj() throws Exception {
      // create, show, update, delete task
-        String name1 = "Test-EventNode";
+        String name1 = "Test-SymLinkNode";
         
-        EventNodeRestControllerTestObj node = new EventNodeRestControllerTestObj();
+        SymLinkNodeRestControllerTestObj node = new SymLinkNodeRestControllerTestObj();
         node.setName(name1);
         
         return node;

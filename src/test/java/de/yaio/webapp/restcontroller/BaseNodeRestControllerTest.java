@@ -11,7 +11,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package de.yaio.rest.controller;
+package de.yaio.webapp.restcontroller;
 
 import static org.hamcrest.core.Is.is;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -41,6 +41,7 @@ import de.yaio.BaseTest;
 import de.yaio.app.Configurator;
 import de.yaio.core.datadomainservice.NodeNumberService;
 import de.yaio.core.node.BaseNode;
+import de.yaio.webapp.restcontroller.NodeRestController;
 
 /** 
  * test: RESTFull webservices
