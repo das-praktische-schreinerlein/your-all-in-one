@@ -16,9 +16,12 @@
     
     <!-- for spring boot -->
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.1.6.RELEASE</version>
+        <groupId>de.yaio</groupId>
+            <!-- 
+            <groupId>com.github.das-praktische-schreinerlein</groupId>
+             -->
+        <artifactId>yaio-pom-webstarter</artifactId>
+        <version>0.1.0</version>
     </parent>
 
     <!-- settings-->
@@ -53,7 +56,6 @@
          -->
         <!--  project -->
         <start-class>de.yaio.rest.Application</start-class>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!--
           ##################
@@ -61,9 +63,7 @@
           ##################
          -->
         <!--  versions -->
-        <java.version>1.7</java.version>
         <roo.version>1.2.4.RELEASE</roo.version>
-        <springboot.version>1.1.6.RELEASE</springboot.version>
         <aspectj.version>1.7.2</aspectj.version>
         
         <!-- managed -->
@@ -126,7 +126,6 @@
         
     <!-- packaging jar or war and version -->
     <packaging>${packaging.type}</packaging>
-
 
     <!-- use these repositories to solve dependencies and get jars -->
     <repositories>
@@ -357,39 +356,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- spring-boot -->
-       <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <version>${springboot.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-            <version>${springboot.version}</version>
-            <exclusions>
-                 <exclusion>
-                     <groupId>org.springframework.boot</groupId>
-                     <artifactId>spring-boot-starter-logging</artifactId>
-                 </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-log4j</artifactId>
-            <version>${springboot.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-            <version>${springboot.version}</version>
-        </dependency>
-        <!--  security/crypto -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-            <version>${springboot.version}</version>
-        </dependency>
 
         <!--  tests -->
         <dependency>
@@ -421,20 +387,7 @@
             <artifactId>frontend-maven-plugin</artifactId>
             <version>${frontend-maven-plugin.version}</version>
         </dependency>
-<!--
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-            <version>${selenium-java.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-firefox-driver</artifactId>
-            <version>${selenium-firefox-driver.version}</version>
-            <scope>test</scope>
-        </dependency>
--->
+ 
         <!-- swagger -->
         <dependency>
             <groupId>io.springfox</groupId>
@@ -507,9 +460,12 @@
 
         <!-- yaio-services / via jitpack.io because of no maven-centra-account -->
         <dependency>
+            <groupId>de.yaio.services</groupId>
+            <!-- 
             <groupId>com.github.das-praktische-schreinerlein</groupId>
-            <artifactId>plantuml-service</artifactId>
-            <version>0.1.0</version>
+             -->
+            <artifactId>yaio-plantuml-service</artifactId>
+            <version>0.2.0</version>
         </dependency>
     </dependencies>
 
@@ -695,25 +651,6 @@
                 </executions>
             </plugin>
 
-            <!-- shade and big-jar -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>2.3</version>
-                <executions>
-                  <execution>
-                    <phase>${packaging.assembly-phase}</phase>
-                    <goals>
-                        <goal>single</goal>
-                    </goals>
-                    <configuration>
-                        <descriptorRefs>
-                            <descriptorRef>jar-with-dependencies</descriptorRef>
-                        </descriptorRefs>
-                    </configuration>
-                  </execution>
-                </executions>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
@@ -770,47 +707,6 @@
                         <contextPath>/${project.name}</contextPath>
                     </webAppConfig>
                 </configuration>
-            </plugin>
-            <!-- 
-               use this becase of jar-manifest-problems in super-duper-all-in-one-jars
-               look at  http://robert-reiz.com/2011/11/14/832/
-            -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>2.3</version>
-                <executions>
-                  <execution>
-                    <phase>${packaging.shade-phase}</phase>
-                    <goals>
-                        <goal>shade</goal>
-                    </goals>
-                    <configuration>
-                        <minimizeJar>false</minimizeJar>
-                        <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
-                          <resource>META-INF/spring.handlers</resource>
-                        </transformer>
-                        <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
-                          <resource>META-INF/spring.schemas</resource>
-                        </transformer>
-                    </configuration>
-                  </execution>
-                </executions>
-            </plugin>
-            
-            <!-- spring boot -->
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${springboot.version}</version>
-                <executions>
-                  <execution>
-                    <phase>${packaging.springboot-phase}</phase>
-                    <configuration>
-                        <addResources>false</addResources>
-                    </configuration>
-                  </execution>
-                </executions>
             </plugin>
 
             <!-- checkstyle -->
