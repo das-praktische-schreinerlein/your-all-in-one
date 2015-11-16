@@ -984,6 +984,11 @@ public class HtmlExporter extends WikiExporter {
                             + "*?)<\\/code><\\/pre>", 
                         "<div id=\"inlineMindmap",
                         "\" class=\"yaiomindmap\">$1</div>").toString();
+        newDescText = replaceDiagrammPattern(newDescText,
+                        "<pre><code class=\\\"yaioplantuml\\\">(" + Parser.CONST_PATTERN_SEG_DESC 
+                            + "*?)<\\/code><\\/pre>", 
+                        "<div id=\"yaioplantuml",
+                        "\" class=\"yaioplantuml\">$1</div>").toString();
         
         // replace yaio-links
         newDescText = newDescText.replaceAll("href=\"yaio:", "href=\"" + "/yaio-explorerapp/yaio-explorerapp.html#/showByAllIds/");

@@ -104,7 +104,7 @@ Yaio.FormatterService = function(appBase) {
             } else if (language !== undefined  && (language.match(/^yaiomindmap/) || language.match(/^yaiofreemind/))) {
                 return '<div id="inlineMindmap' + (me._localHtmlId++) + '"  class="yaiomindmap">'+ code + '</div>';
             } else if (language !== undefined  && (language.match(/^yaioplantuml/))) {
-                return '<div id="inlinePlanUML' + (me._localHtmlId++) + '"  class="yaioplantuml">' + code + '</div>';
+                return '<div id="inlinePlantUML' + (me._localHtmlId++) + '"  class="yaioplantuml">' + code + '</div>';
             } else {
                 return '<pre><code id="inlineCode' + (me._localHtmlId++) + '" class="lang-' + language + '">' + code + '</code></pre>';
             }
