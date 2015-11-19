@@ -440,6 +440,18 @@ public class BaseNode implements BaseData, MetaData, SysData,
     private Integer statWorkflowTodoCount;
 
     /**
+     * count of my children with urlRes
+     */
+    @Min(0)
+    private Integer statUrlResCount;
+
+    /**
+     * count of my children with info
+     */
+    @Min(0)
+    private Integer statInfoCount;
+
+    /**
      */
     @ManyToOne
     private BaseNode parentNode;

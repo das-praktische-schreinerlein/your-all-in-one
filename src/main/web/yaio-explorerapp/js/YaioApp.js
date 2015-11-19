@@ -41,10 +41,10 @@ yaioApp.config(function($routeProvider) {
         .when('/show/:nodeId/activate/:activeNodeId/:dummy?', { 
             controller:  'NodeShowCtrl',
             templateUrl: resBaseUrl + 'js/explorer/node.html' })
-        .when('/show/:nodeId/:workflowState?/activate/:activeNodeId/:dummy?', { 
+        .when('/show/:nodeId/:workflowState?/:statCount?/activate/:activeNodeId/:dummy?', { 
             controller:  'NodeShowCtrl',
             templateUrl: resBaseUrl + 'js/explorer/node.html' })
-        .when('/show/:nodeId/:workflowState?/:dummy?', { 
+        .when('/show/:nodeId/:workflowState?/:statCount?/:dummy?', { 
             controller:  'NodeShowCtrl',
             templateUrl: resBaseUrl + 'js/explorer/node.html' })
         .when('/show/:nodeId', { 

@@ -189,7 +189,9 @@ Yaio.NodeDataRenderService = function(appBase) {
         $row.append(
                 me.$("<div lang='tech' />").html("Kinder: " + basenode.statChildNodeCount 
                         + " Workflows: " + basenode.statWorkflowCount
-                        + " ToDos: " + basenode.statWorkflowTodoCount)
+                        + " ToDos: " + basenode.statWorkflowTodoCount
+                        + " Urls: " + basenode.statUrlResCount
+                        + " Info: " + basenode.statInfoCount)
                         .addClass("container_field")
                         .addClass("fieldtype_basedata")
                         .addClass("fieldtype_statistik")

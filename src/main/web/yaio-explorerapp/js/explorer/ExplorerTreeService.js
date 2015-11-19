@@ -655,6 +655,10 @@ Yaio.ExplorerTreeService = function(appBase) {
             console.log("filterNodeData: skip node by workflowState:" + node.workflowState);
             return false;
         }
+        if (me.nodeFilter.statCount && !(node[me.nodeFilter.statCount] > 0)) {
+            console.log("filterNodeData: skip node by statCount:" + me.nodeFilter.statCount);
+            return false;
+        }
         
         return true;
     }

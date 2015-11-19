@@ -33,4 +33,8 @@ public interface StatData extends DataDomain {
     Integer getStatWorkflowCount();
     void setStatWorkflowTodoCount(Integer newStatWorkflowTodoCount);
     Integer getStatWorkflowTodoCount();
+    void setStatUrlResCount(Integer newStatUrlResCount);
+    Integer getStatUrlResCount();
+    void setStatInfoCount(Integer newStatInfoCount);
+    Integer getStatInfoCount();
 }

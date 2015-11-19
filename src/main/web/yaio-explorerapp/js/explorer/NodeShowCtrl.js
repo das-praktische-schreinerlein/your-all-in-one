@@ -32,6 +32,9 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
     if ($routeParams.workflowState && $routeParams.workflowState != "?") {
         $scope.filterOptions.strWorkflowStateFilter = $routeParams.workflowState;
     }
+    if ($routeParams.statCount && $routeParams.statCount != "?") {
+        $scope.filterOptions.strStatCountFilter = $routeParams.statCount;
+    }
 
     // check parameter - set default if empty
     var baseUrl = '/show/';
@@ -253,7 +256,8 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
     $scope.changeExplorerFilter = function() {
         var msg = "changeExplorerFilter node: " + nodeId;
         var newUrl = '/show/' + nodeId 
-            + '/' + $scope.filterOptions.strWorkflowStateFilter + "/";
+            + '/' + ($scope.filterOptions.strWorkflowStateFilter ? $scope.filterOptions.strWorkflowStateFilter : "?")
+            + '/' + ($scope.filterOptions.strStatCountFilter ? $scope.filterOptions.strStatCountFilter : "?") + "/";
         if (activeNodeId) {
             newUrl = newUrl + 'activate/' + activeNodeId + '/';
         }
@@ -276,6 +280,10 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
                     nodeFilter.workflowStates[arrWorkflowStateFilter[i]] = arrWorkflowStateFilter[i];
                 }
             }
+        }
+        nodeFilter.statCount = null;
+        if ($scope.filterOptions.strStatCountFilter) {
+            nodeFilter.statCount = $scope.filterOptions.strStatCountFilter;
         }
         console.log("setExplorerFilter: set filter:", nodeFilter);
         yaioUtils.getService('YaioExplorerTree').setNodeFilter(nodeFilter);

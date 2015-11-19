@@ -18,6 +18,8 @@ import org.apache.log4j.Logger;
 import de.yaio.core.datadomain.BaseWorkflowData;
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.datadomain.StatData;
+import de.yaio.core.node.InfoNode;
+import de.yaio.core.node.UrlResNode;
 import de.yaio.core.nodeservice.NodeService;
 
 /** 
@@ -96,6 +98,8 @@ public class StatDataServiceImpl extends DataDomainRecalcImpl implements StatDat
         int childCount = node.getChildNodesByNameMap().size();
         int wfCount = 0;
         int wfToDoCount = 0;
+        int urlResCount = 0;
+        int infoCount = 0;
         
         // check Workflow-states of the node
         if (BaseWorkflowData.class.isInstance(node)) {
@@ -119,7 +123,21 @@ public class StatDataServiceImpl extends DataDomainRecalcImpl implements StatDat
                 }
             }
         }
-
+        if (UrlResNode.class.isInstance(node)) {
+            // check UrlRes of the node
+            urlResCount++;
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("UrlResNode " + node.getNameForLogger() 
+                                + " urlResCount++");
+            }
+        } else if (InfoNode.class.isInstance(node)) {
+            // check Info of the node
+            infoCount++;
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("InfoNode " + node.getNameForLogger() 
+                                + " infoCount++");
+            }
+        }
         
         // iterate children
         for (String nodeName : node.getChildNodesByNameMap().keySet()) {
@@ -138,6 +156,12 @@ public class StatDataServiceImpl extends DataDomainRecalcImpl implements StatDat
                     if (statChildNode.getStatWorkflowTodoCount() != null) {
                         wfToDoCount += statChildNode.getStatWorkflowTodoCount();
                     }
+                    if (statChildNode.getStatInfoCount() != null) {
+                        infoCount += statChildNode.getStatInfoCount();
+                    }
+                    if (statChildNode.getStatUrlResCount() != null) {
+                        urlResCount += statChildNode.getStatUrlResCount();
+                    }
                     if (LOGGER.isDebugEnabled()) {
                         LOGGER.debug("child " + childNode.getNameForLogger() 
                                         + " wfCount:" + statChildNode.getStatWorkflowCount());
@@ -152,5 +176,7 @@ public class StatDataServiceImpl extends DataDomainRecalcImpl implements StatDat
         node.setStatChildNodeCount(childCount);
         node.setStatWorkflowCount(wfCount);
         node.setStatWorkflowTodoCount(wfToDoCount);
+        node.setStatInfoCount(infoCount);
+        node.setStatUrlResCount(urlResCount);
     }
 }
