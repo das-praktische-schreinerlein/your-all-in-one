@@ -13,7 +13,10 @@
  */
 package de.yaio.core.datadomainservice;
 
+import java.util.List;
+
 import de.yaio.core.datadomain.DataDomain;
+import de.yaio.core.dbservice.DBFilter;
 
 
 /** 
@@ -54,8 +57,28 @@ public interface DataDomainRecalc extends Comparable<DataDomainRecalc> {
      * @throws Exception             parser/format-Exceptions possible
      */
     void doRecalcAfterChildren(DataDomain node, int recurceDirection) throws Exception;
-    
-    
+
+    /** 
+     * recalcs the DataDomain connected to the Recalcer if it is triggered by db
+     * @FeatureDomain                BusinessLogic
+     * @FeatureResult                updates memberVariables
+     * @FeatureKeywords              BsuinessLogic
+     * @param node                   node to recalc
+     * @param recurceDirection       Type of recursion (parent, me, children) NodeService.CONST_RECURSE_DIRECTION_*
+     * @throws Exception             parser/format-Exceptions possible
+     */
+    void doRecalcWhenTriggered(DataDomain node, int recurceDirection) throws Exception;
+
+    /** 
+     * returns the trigger-filter 
+     * @FeatureDomain                BusinessLogic
+     * @FeatureResult                updates memberVariables
+     * @FeatureKeywords              BsuinessLogic
+     * @return                       list of filters to get nodes to recalc
+     * @throws Exception             parser/format-Exceptions possible
+     */
+    List<DBFilter> getDBTriggerFilter() throws Exception;
+
     /** 
      * returns the class of the DataDomain for which the service runs
      * @FeatureDomain                BusinessLogic
@@ -73,6 +96,4 @@ public interface DataDomainRecalc extends Comparable<DataDomainRecalc> {
      * @return                       position in the service-queue
      */
     int getRecalcTargetOrder();
-    
-    
 }

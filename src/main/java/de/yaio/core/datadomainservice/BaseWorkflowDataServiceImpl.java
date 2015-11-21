@@ -13,7 +13,9 @@
  */
 package de.yaio.core.datadomainservice;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -31,6 +33,7 @@ import de.yaio.core.datadomain.PlanCalcData;
 import de.yaio.core.datadomain.PlanChildrenSumData;
 import de.yaio.core.datadomain.PlanData;
 import de.yaio.core.datadomain.PlanDependencieData.PredecessorDependencieType;
+import de.yaio.core.dbservice.DBFilter;
 import de.yaio.core.node.EventNode;
 import de.yaio.core.node.TaskNode;
 import de.yaio.core.nodeservice.BaseNodeService;
@@ -114,8 +117,17 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
         this.recalcStateData((BaseWorkflowData) node);
     }
     
-    
-    
+    @Override
+    public void doRecalcWhenTriggered(final DataDomain node, final int recurceDirection) throws Exception {
+        // NOP
+    }
+
+    @Override
+    public List<DBFilter> getDBTriggerFilter() throws Exception {
+        // NOP
+        return new ArrayList<DBFilter>();
+    }
+
     /** 
      * returns the StandFaktor of the BaseWorkflowData-Node<br>
      * if instance of ExtendedWorkflowData then Plan/IstData is used<br>
