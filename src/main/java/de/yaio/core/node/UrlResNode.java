@@ -64,4 +64,11 @@ public class UrlResNode extends InfoNode implements ResLocData {
     public BaseNodeService getBaseNodeService() {
         return nodeDataService;
     }
+
+    @Override
+    public void resetResLocData() {
+        this.setResLocRef(null);
+        this.setResLocName(null);
+        this.setResLocTags(null);
+    }
 }

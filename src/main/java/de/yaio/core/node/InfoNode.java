@@ -47,4 +47,12 @@ public class InfoNode extends BaseNode implements DocLayoutData {
     public BaseNodeService getBaseNodeService() {
         return nodeDataService;
     }
+
+    @Override
+    public void resetDocLayoutData() {
+        this.setDocLayoutAddStyleClass(null);
+        this.setDocLayoutFlgCloseDiv(null);
+        this.setDocLayoutShortName(null);
+        this.setDocLayoutTagCommand(null);
+    }
 }

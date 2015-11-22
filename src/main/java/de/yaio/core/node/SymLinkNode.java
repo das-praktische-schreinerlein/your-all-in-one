@@ -63,4 +63,11 @@ public class SymLinkNode extends BaseNode implements SymLinkData {
     public BaseNodeService getBaseNodeService() {
         return nodeDataService;
     }
+
+    @Override
+    public void resetSymLinkData() {
+        this.setSymLinkRef(null);
+        this.setSymLinkName(null);
+        this.setSymLinkTags(null);
+    }
 }

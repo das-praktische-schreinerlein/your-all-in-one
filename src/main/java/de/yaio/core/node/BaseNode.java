@@ -912,4 +912,74 @@ public class BaseNode implements BaseData, MetaData, SysData,
     public void setFlgForceUpdate(final boolean flgForceUpdate) {
         this.flgForceUpdate = flgForceUpdate;
     }
+
+    @Override
+    public void resetIstChildrenSumData() {
+        this.setIstChildrenSumAufwand(null);
+        this.setIstChildrenSumEnde(null);
+        this.setIstChildrenSumStand(null);
+        this.setIstChildrenSumStart(null);
+    }
+
+    @Override
+    public void resetPlanCalcData() {
+        this.setPlanCalcCheckSum(null);
+        this.setPlanCalcEnde(null);
+        this.setPlanCalcStart(null);
+    }
+
+    @Override
+    public void resetPlanDependencieData() {
+        this.setPlanDuration(null);
+        this.setPlanDurationMeasure(null);
+        this.setPlanPredecessor(null);
+        this.setPlanPredecessorType(null);
+        this.setPlanPredecessorDependencieType(null);
+        this.setPlanPredecessorShift(null);
+        this.setPlanPredecessorShiftMeasure(null);
+    }
+
+    @Override
+    public void resetPlanChildrenSumData() {
+        this.setPlanChildrenSumAufwand(null);
+        this.setPlanChildrenSumEnde(null);
+        this.setPlanChildrenSumStart(null);
+    }
+
+    @Override
+    public void resetStatData() {
+        this.setStatChildNodeCount(null);
+        this.setStatInfoCount(null);
+        this.setStatUrlResCount(null);
+        this.setStatWorkflowCount(null);
+        this.setStatWorkflowTodoCount(null);
+    }
+
+    @Override
+    public void resetBaseWorkflowData() {
+        this.setState(null);
+        this.setWorkflowState(WorkflowState.NOWORKFLOW);
+    }
+
+    @Override
+    public void resetDescData() {
+        this.setNodeDesc(null);
+    }
+
+    @Override
+    public void resetSysData() {
+        this.setSysChangeCount(null);
+        this.setSysChangeDate(null);
+        this.setSysCreateDate(null);
+        this.setSysCurChecksum(null);
+        this.setSysUID(null);
+    }
+
+    @Override
+    public void resetMetaData() {
+        this.setMetaNodeNummer(null);
+        this.setMetaNodePraefix("UNKNOWN");
+        this.setMetaNodeSubTypeTags(null);
+        this.setMetaNodeTypeTags(null);
+    }
 }

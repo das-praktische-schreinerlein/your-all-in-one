@@ -73,4 +73,23 @@ public class TaskNode extends BaseNode implements ExtendedWorkflowData {
     public Date getCurrentEnde() {
         return BaseWorkflowDataServiceImpl.getInstance().calcCurrentEnde(this);
     }
+
+    @Override
+    public void resetIstData() {
+        this.setIstAufwand(null);
+        this.setIstEnde(null);
+        this.setIstStand(null);
+        this.setIstStart(null);
+    }
+
+    @Override
+    public void resetPlanData() {
+        this.setPlanAufwand(null);
+        this.setPlanEnde(null);
+        this.setPlanStart(null);
+    }
+
+    @Override
+    public void resetExtendedWorkflowData() {
+    }
 }
