@@ -23,6 +23,16 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import de.yaio.core.datadomain.DocLayoutData;
+import de.yaio.core.datadomain.IstChildrenSumData;
+import de.yaio.core.datadomain.IstData;
+import de.yaio.core.datadomain.MetaData;
+import de.yaio.core.datadomain.PlanCalcData;
+import de.yaio.core.datadomain.PlanChildrenSumData;
+import de.yaio.core.datadomain.PlanData;
+import de.yaio.core.datadomain.ResLocData;
+import de.yaio.core.datadomain.SymLinkData;
+import de.yaio.core.datadomain.SysData;
 import de.yaio.core.dbservice.BaseNodeDBServiceImpl;
 import de.yaio.core.node.BaseNode;
 import de.yaio.core.node.EventNode;
@@ -91,8 +101,15 @@ public class DatatransferUtils {
                         newParent.getSysUID(), newParent.getMetaNodePraefix(), newParent.getMetaNodeNummer());
         
         // Parser+Options anlegen
-        ImportOptions inputOptions = new ImportOptionsImpl();
-        parseNodesFromJson(inputOptions, masterNode, jsonSrc);
+        ImportOptions importOptions = new ImportOptionsImpl();
+        importOptions.setAllFlgParse(false);
+        importOptions.setFlgParseDesc(true);
+        importOptions.setFlgParseDocLayout(true);
+        importOptions.setFlgParsePlan(true);
+        importOptions.setFlgParsePlanCalc(true);
+        importOptions.setFlgParseResLoc(true);
+        importOptions.setFlgParseSymLink(true);
+        parseNodesFromJson(importOptions, masterNode, jsonSrc);
         
         // JPA-Exporter
         JPAExporter jpaExporter = new JPAExporter();
@@ -395,16 +412,16 @@ public class DatatransferUtils {
      * @FeatureDomain                JsonImporter
      * @FeatureResult                adds children from jsonSrc to masterNode
      * @FeatureKeywords              JsonImporter
-     * @param inputOptions           importOptions for jsonImporter
+     * @param importOptions          importOptions for jsonImporter
      * @param masterNode             baseNode to add the children
      * @param jsonSrc                jsonSrc to parse with JsonImporter
      * @throws Exception             ParserExceptions possible
      */
-    public void parseNodesFromJson(final ImportOptions inputOptions,
-                                      final BaseNode masterNode, 
-                                      final String jsonSrc) throws Exception {
+    public void parseNodesFromJson(final ImportOptions importOptions,
+                                   final BaseNode masterNode, 
+                                   final String jsonSrc) throws Exception {
         // extract 
-        JSONFullImporter jsonImporter = new JSONFullImporter(inputOptions);
+        JSONFullImporter jsonImporter = new JSONFullImporter(importOptions);
         JSONResponse response = jsonImporter.parseJSONResponse(jsonSrc);
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("parse Response:" + response);
@@ -426,8 +443,9 @@ public class DatatransferUtils {
             // add masternode
             baseNode.setParentNode(masterNode);
         }
+        resetRestrictedData(masterNode, importOptions, true);
         LOGGER.info("masterNode after json:" + masterNode.getBaseNodeService().visualizeNodeHierarchy("", masterNode));
-        //if inoutOptions resetSysUID(masterNode, true);
+        
     }
     
     /** 
@@ -449,15 +467,60 @@ public class DatatransferUtils {
         return tmpMasterNode;
     }
 
-    public void resetSysUID(final BaseNode node, final boolean childrenOnly) {
+    /** 
+     * call resetDataDomain recursively for all dataDomains not set in ImportOptions
+     * @FeatureDomain                Importer
+     * @FeatureResult                returns BaseNode
+     * @FeatureKeywords              Importer
+     * @param node                   the node to reset
+     * @param importOptions          importOptions with flags which DataDomains should be resetet
+     * @param childrenOnly           reset for children only
+     */
+    public void resetRestrictedData(final BaseNode node, final ImportOptions importOptions, final boolean childrenOnly) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("resetSysUID:" + node.getNameForLogger());
         }
         if (!childrenOnly) {
-            node.setSysUID(null);
+            // reset calced data
+            if (IstChildrenSumData.class.isInstance(node)) {
+                ((IstChildrenSumData) node).resetIstChildrenSumData();
+            }
+            if (PlanChildrenSumData.class.isInstance(node)) {
+                ((PlanChildrenSumData) node).resetPlanChildrenSumData();
+            }
+            
+            // reset if flag is not set
+            if (!importOptions.isFlgParseDesc()) {
+                node.setNodeDesc(null);
+            }
+            if (!importOptions.isFlgParseDocLayout() && DocLayoutData.class.isInstance(node)) {
+                ((DocLayoutData) node).resetDocLayoutData();
+            }
+            if (!importOptions.isFlgParseIst() && IstData.class.isInstance(node)) {
+                ((IstData) node).resetIstData();
+            }
+            if (!importOptions.isFlgParseMetaData() && MetaData.class.isInstance(node)) {
+                ((MetaData) node).resetMetaData();
+            }
+            if (!importOptions.isFlgParsePlan() && PlanData.class.isInstance(node)) {
+                ((PlanData) node).resetPlanData();
+            }
+            if (!importOptions.isFlgParsePlanCalc() && PlanCalcData.class.isInstance(node)) {
+                ((PlanCalcData) node).resetPlanCalcData();
+            }
+            if (!importOptions.isFlgParseResLoc() && ResLocData.class.isInstance(node)) {
+                ((ResLocData) node).resetResLocData();
+            }
+            if (!importOptions.isFlgParseSymLink() && SymLinkData.class.isInstance(node)) {
+                ((SymLinkData) node).resetSymLinkData();
+            }
+            if (!importOptions.isFlgParseSysData() && SysData.class.isInstance(node)) {
+                ((SysData) node).resetSysData();
+            }
         }
+            
         for (BaseNode childNode : node.getChildNodes()) {
-            resetSysUID(childNode, false);
+            resetRestrictedData(childNode, importOptions, false);
         }
     }
     
