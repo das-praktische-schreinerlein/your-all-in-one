@@ -37,4 +37,6 @@ public interface StatData extends DataDomain {
     Integer getStatUrlResCount();
     void setStatInfoCount(Integer newStatInfoCount);
     Integer getStatInfoCount();
+
+    void resetStatData();
 }

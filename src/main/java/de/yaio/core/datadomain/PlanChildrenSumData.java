@@ -35,4 +35,6 @@ public interface PlanChildrenSumData extends DataDomain {
     void setPlanChildrenSumEnde(Date planEnde);
     Double getPlanChildrenSumAufwand();
     void setPlanChildrenSumAufwand(Double planAufwand);
+
+    void resetPlanChildrenSumData();
 }

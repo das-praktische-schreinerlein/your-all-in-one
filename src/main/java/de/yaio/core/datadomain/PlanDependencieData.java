@@ -71,4 +71,6 @@ public interface PlanDependencieData extends DataDomain {
     void setPlanPredecessorShift(Integer predecessorShift);
     DurationMeasure getPlanPredecessorShiftMeasure();
     void setPlanPredecessorShiftMeasure(DurationMeasure planPredecessorShiftMeasure);
+
+    void resetPlanDependencieData();
 }

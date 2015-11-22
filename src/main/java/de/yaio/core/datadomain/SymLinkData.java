@@ -33,4 +33,6 @@ public interface SymLinkData extends DataDomain {
     void setSymLinkName(String symLinkName);
     String getSymLinkTags();
     void setSymLinkTags(String symLinkTags);
+
+    void resetSymLinkData();
 }

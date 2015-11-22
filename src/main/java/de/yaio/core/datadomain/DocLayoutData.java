@@ -35,4 +35,6 @@ public interface DocLayoutData extends DataDomain {
     void setDocLayoutShortName(String docLayoutShortName);
     String getDocLayoutFlgCloseDiv();    
     void setDocLayoutFlgCloseDiv(String docLayoutFlgCloseDiv);
+
+    void resetDocLayoutData();
 }

@@ -33,4 +33,6 @@ public interface ResLocData extends DataDomain {
     void setResLocName(String resLocName);
     String getResLocTags();
     void setResLocTags(String resLocTags);
+
+    void resetResLocData();
 }

@@ -37,4 +37,6 @@ public interface IstChildrenSumData extends DataDomain {
     void setIstChildrenSumEnde(Date istEnde);
     Double getIstChildrenSumAufwand();
     void setIstChildrenSumAufwand(Double istAufwand);
+
+    void resetIstChildrenSumData();
 }

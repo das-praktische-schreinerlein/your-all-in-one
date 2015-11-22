@@ -36,4 +36,6 @@ public interface PlanData extends DataDomain {
     void setPlanAufwand(Double planAufwand);
     String getPlanTask();
     void setPlanTask(String planTask);
+
+    void resetPlanData();
 }

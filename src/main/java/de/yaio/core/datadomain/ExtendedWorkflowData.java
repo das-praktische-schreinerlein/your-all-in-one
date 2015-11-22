@@ -31,4 +31,6 @@ public interface ExtendedWorkflowData extends BaseWorkflowData, IstData, PlanDat
 
     Date getCurrentStart();
     Date getCurrentEnde();
+
+    void resetExtendedWorkflowData();
 }

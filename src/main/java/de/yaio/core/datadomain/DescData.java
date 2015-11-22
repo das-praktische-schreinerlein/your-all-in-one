@@ -28,4 +28,6 @@ public interface DescData extends DataDomain {
     
     String getNodeDesc();
     void setNodeDesc(String nodedesc);
+
+    void resetDescData();
 }

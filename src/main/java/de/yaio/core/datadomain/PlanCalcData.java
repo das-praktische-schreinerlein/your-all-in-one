@@ -34,4 +34,6 @@ public interface PlanCalcData extends DataDomain {
     void setPlanCalcEnde(Date planEnde);
     String getPlanCalcCheckSum();
     void setPlanCalcCheckSum(String planCalcCheckSum);
+
+    void resetPlanCalcData();
 }

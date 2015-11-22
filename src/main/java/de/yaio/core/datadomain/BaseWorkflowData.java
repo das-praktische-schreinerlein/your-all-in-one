@@ -60,6 +60,8 @@ public interface BaseWorkflowData extends DataDomain, IstChildrenSumData,
     
     WorkflowState getWorkflowState();
     void setWorkflowState(WorkflowState istState);
+    
+    void resetBaseWorkflowData();
 
     /** 
      * checks weather the state is a configurated workflow-state

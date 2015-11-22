@@ -38,4 +38,6 @@ public interface IstData extends DataDomain {
     void setIstAufwand(Double istAufwand);
     String getIstTask();
     void setIstTask(String istTask);
+
+    void resetIstData();
 }
