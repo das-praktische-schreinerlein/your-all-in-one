@@ -41,7 +41,7 @@ import de.yaio.core.node.SymLinkNode;
 import de.yaio.core.node.TaskNode;
 import de.yaio.core.node.UrlResNode;
 import de.yaio.core.nodeservice.BaseNodeService;
-import de.yaio.extension.datatransfer.common.DatatransferUtils;
+import de.yaio.datatransfer.common.DatatransferUtils;
 
 /** 
  * the controller for RESTful Web Services for BaseNodes<br>

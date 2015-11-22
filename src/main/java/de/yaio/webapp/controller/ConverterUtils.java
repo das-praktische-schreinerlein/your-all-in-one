@@ -32,8 +32,8 @@ import de.yaio.core.node.BaseNode;
 import de.yaio.datatransfer.exporter.Exporter;
 import de.yaio.datatransfer.exporter.OutputOptions;
 import de.yaio.datatransfer.exporter.OutputOptionsImpl;
+import de.yaio.datatransfer.json.JSONFullExporter;
 import de.yaio.extension.datatransfer.html.HtmlExporter;
-import de.yaio.extension.datatransfer.json.JSONFullExporter;
 
 /** 
  * Services to parse text to nodes and convert them in different 

@@ -13,9 +13,6 @@
  */
 package de.yaio.webapp.controller;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
@@ -35,11 +32,11 @@ import de.yaio.datatransfer.exporter.EmptyOutputOptionsImpl;
 import de.yaio.datatransfer.exporter.Exporter;
 import de.yaio.datatransfer.exporter.OutputOptions;
 import de.yaio.datatransfer.exporter.OutputOptionsImpl;
+import de.yaio.datatransfer.json.JSONFullExporter;
 import de.yaio.extension.datatransfer.csv.CSVExporter;
 import de.yaio.extension.datatransfer.excel.ExcelExporter;
 import de.yaio.extension.datatransfer.excel.ExcelOutputOptions;
 import de.yaio.extension.datatransfer.ical.ICalDBExporter;
-import de.yaio.extension.datatransfer.json.JSONFullExporter;
 import de.yaio.extension.datatransfer.mindmap.MindMapExporter;
 import de.yaio.extension.datatransfer.ppl.PPLExporter;
 import de.yaio.extension.datatransfer.wiki.WikiExporter;

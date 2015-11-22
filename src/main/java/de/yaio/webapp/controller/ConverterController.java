@@ -26,7 +26,7 @@ import de.yaio.core.node.BaseNode;
 import de.yaio.datatransfer.exporter.Exporter;
 import de.yaio.datatransfer.exporter.OutputOptions;
 import de.yaio.datatransfer.exporter.OutputOptionsImpl;
-import de.yaio.extension.datatransfer.common.DatatransferUtils;
+import de.yaio.extension.datatransfer.common.ExtendedDatatransferUtils;
 import de.yaio.extension.datatransfer.ical.ICalDBExporter;
 import de.yaio.extension.datatransfer.mindmap.MindMapExporter;
 import de.yaio.webapp.restcontroller.NodeActionResponse;
@@ -52,7 +52,7 @@ public class ConverterController {
     protected ConverterUtils converterUtils;
     
     @Autowired
-    protected DatatransferUtils datatransferUtils;
+    protected ExtendedDatatransferUtils datatransferUtils;
 
     /** 
      * parses the yaio-wiki-source to nodes and converts it to Html

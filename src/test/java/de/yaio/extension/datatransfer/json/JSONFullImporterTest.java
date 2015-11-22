@@ -19,8 +19,10 @@ import org.springframework.mock.staticmock.MockStaticEntityMethods;
 
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.datatransfer.importer.ImportOptions;
+import de.yaio.datatransfer.importer.ImportOptionsImpl;
 import de.yaio.datatransfer.importer.Importer;
-import de.yaio.extension.datatransfer.wiki.WikiImportOptions;
+import de.yaio.datatransfer.json.JSONFullImporter;
+import de.yaio.datatransfer.json.JSONResponse;
 import de.yaio.extension.datatransfer.wiki.WikiImporterTest;
 
 /** 
@@ -45,7 +47,7 @@ public class JSONFullImporterTest extends WikiImporterTest {
     
     @Override
     public ImportOptions setupNewImportOptions() throws Exception {
-        return new WikiImportOptions();
+        return new ImportOptionsImpl();
     }
     
     @Test

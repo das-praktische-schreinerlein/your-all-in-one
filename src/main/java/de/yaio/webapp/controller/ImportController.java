@@ -26,8 +26,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import de.yaio.core.node.BaseNode;
-import de.yaio.extension.datatransfer.common.DatatransferUtils;
-import de.yaio.extension.datatransfer.jpa.JPAExporter;
+import de.yaio.datatransfer.jpa.JPAExporter;
+import de.yaio.extension.datatransfer.common.ExtendedDatatransferUtils;
 import de.yaio.extension.datatransfer.ppl.PPLImporter;
 import de.yaio.extension.datatransfer.wiki.WikiImportOptions;
 import de.yaio.extension.datatransfer.wiki.WikiImporter;
@@ -56,7 +56,7 @@ public class ImportController {
     protected ConverterUtils converterUtils;
     
     @Autowired
-    protected DatatransferUtils datatransferUtils;
+    protected ExtendedDatatransferUtils datatransferUtils;
 
     /** 
      * Request to import the uploaded wiki-file from param "file" to the 

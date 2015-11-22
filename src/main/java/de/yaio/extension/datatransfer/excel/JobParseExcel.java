@@ -16,7 +16,7 @@ package de.yaio.extension.datatransfer.excel;
 import org.apache.commons.cli.Options;
 
 import de.yaio.app.Configurator;
-import de.yaio.extension.datatransfer.common.CommonImporter;
+import de.yaio.extension.datatransfer.common.ExtendedCommonImporter;
 import de.yaio.extension.datatransfer.wiki.JobParseWiki;
 
 /** 
@@ -45,7 +45,7 @@ public class JobParseExcel extends JobParseWiki {
     @Override
     protected void createCommonImporter() {
         // create commonImporter
-        commonImporter = new CommonImporter("excel");
+        commonImporter = new ExtendedCommonImporter("excel");
     }
 
     @Override

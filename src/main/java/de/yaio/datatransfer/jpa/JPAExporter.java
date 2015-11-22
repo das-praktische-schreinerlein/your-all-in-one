@@ -11,7 +11,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package de.yaio.extension.datatransfer.jpa;
+package de.yaio.datatransfer.jpa;
 
 import org.apache.log4j.Logger;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,8 +21,8 @@ import de.yaio.core.dbservice.BaseNodeDBServiceImpl;
 import de.yaio.core.node.BaseNode;
 import de.yaio.core.nodeservice.BaseNodeService;
 import de.yaio.core.nodeservice.NodeService;
+import de.yaio.datatransfer.exporter.ExporterImpl;
 import de.yaio.datatransfer.exporter.OutputOptions;
-import de.yaio.extension.datatransfer.wiki.WikiExporter;
 
 /** 
  * export of Nodes to JPA
@@ -34,7 +34,7 @@ import de.yaio.extension.datatransfer.wiki.WikiExporter;
  * @copyright                    Copyright (c) 2014, Michael Schreiner
  * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-public class JPAExporter extends WikiExporter {
+public class JPAExporter extends ExporterImpl {
     
     // Logger
     private static final Logger LOGGER = Logger.getLogger(JPAExporter.class);

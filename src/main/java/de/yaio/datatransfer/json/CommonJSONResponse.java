@@ -12,7 +12,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-package de.yaio.extension.datatransfer.json;
+package de.yaio.datatransfer.json;
 
 import java.util.List;
 

@@ -17,7 +17,7 @@ import org.apache.commons.cli.Options;
 
 import de.yaio.app.CmdLineJob;
 import de.yaio.app.Configurator;
-import de.yaio.extension.datatransfer.common.CommonImporter;
+import de.yaio.extension.datatransfer.common.ExtendedCommonImporter;
 
 /** 
  * job for import of Nodes in Wiki-format and output as PPL
@@ -31,7 +31,7 @@ import de.yaio.extension.datatransfer.common.CommonImporter;
  */
 public class JobParseWiki extends CmdLineJob {
     
-    protected CommonImporter commonImporter;
+    protected ExtendedCommonImporter commonImporter;
 
     /** 
      * job to import nodes in Wiki-Format and output as PPL
@@ -74,7 +74,7 @@ public class JobParseWiki extends CmdLineJob {
      */
     protected void createCommonImporter() {
         // create commonImporter
-        commonImporter = new CommonImporter("ppl");
+        commonImporter = new ExtendedCommonImporter("ppl");
     }
 
     /** 

@@ -17,6 +17,7 @@ import org.junit.runners.JUnit4;
 import org.springframework.mock.staticmock.MockStaticEntityMethods;
 
 import de.yaio.datatransfer.exporter.Exporter;
+import de.yaio.datatransfer.jpa.JPAExporter;
 import de.yaio.extension.datatransfer.wiki.WikiExporterTest;
 
 /** 

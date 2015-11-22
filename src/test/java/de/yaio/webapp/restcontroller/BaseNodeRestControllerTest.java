@@ -41,7 +41,6 @@ import de.yaio.BaseTest;
 import de.yaio.app.Configurator;
 import de.yaio.core.datadomainservice.NodeNumberService;
 import de.yaio.core.node.BaseNode;
-import de.yaio.webapp.restcontroller.NodeRestController;
 
 /** 
  * test: RESTFull webservices

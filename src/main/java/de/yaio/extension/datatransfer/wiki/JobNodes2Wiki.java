@@ -24,7 +24,7 @@ import de.yaio.core.datadomain.DataDomain;
 import de.yaio.datatransfer.exporter.Exporter;
 import de.yaio.datatransfer.exporter.OutputOptions;
 import de.yaio.datatransfer.exporter.OutputOptionsImpl;
-import de.yaio.extension.datatransfer.common.CommonImporter;
+import de.yaio.extension.datatransfer.common.ExtendedCommonImporter;
 
 /** 
  * job to import nodes in PPL-Format and output as Wiki
@@ -44,7 +44,7 @@ public class JobNodes2Wiki extends CmdLineJob {
      * the exporter to format the masternode-data 
      */
     public Exporter exporter;
-    protected CommonImporter commonImporter;
+    protected ExtendedCommonImporter commonImporter;
     
     /** 
      * job to import nodes in PPL-Format and output as Wiki
@@ -361,7 +361,7 @@ public class JobNodes2Wiki extends CmdLineJob {
      */
     protected void createCommonImporter() {
         // create commonImporter
-        commonImporter = new CommonImporter("ppl");
+        commonImporter = new ExtendedCommonImporter("ppl");
     }
     
     /** 

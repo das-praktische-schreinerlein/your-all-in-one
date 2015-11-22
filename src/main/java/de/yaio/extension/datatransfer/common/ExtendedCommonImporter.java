@@ -22,11 +22,10 @@ import org.apache.log4j.Logger;
 import de.yaio.app.Configurator;
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.datadomainservice.NodeNumberService;
-import de.yaio.core.node.BaseNode;
+import de.yaio.datatransfer.common.CommonImporter;
 import de.yaio.datatransfer.importer.ImportOptions;
 import de.yaio.datatransfer.importer.ImportOptionsImpl;
 import de.yaio.extension.datatransfer.excel.ExcelImporter;
-import de.yaio.extension.datatransfer.jpa.JPAImporter;
 import de.yaio.extension.datatransfer.ppl.PPLImporter;
 import de.yaio.extension.datatransfer.wiki.WikiImportOptions;
 import de.yaio.extension.datatransfer.wiki.WikiImporter;
@@ -42,10 +41,10 @@ import de.yaio.extension.datatransfer.wiki.WikiImporter.WikiStructLine;
  * @copyright                    Copyright (c) 2014, Michael Schreiner
  * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-public class CommonImporter {
+public class ExtendedCommonImporter extends CommonImporter {
     
     // Logger
-    private static final Logger LOGGER = Logger.getLogger(CommonImporter.class);
+    private static final Logger LOGGER = Logger.getLogger(ExtendedCommonImporter.class);
 
     protected String defaultSourceType = "ppl";
     protected PPLImporter pplImporter = null;
@@ -57,8 +56,8 @@ public class CommonImporter {
      * @FeatureKeywords              Constructor
      * @param defaultSourceType      the default sourcetype if commandline-option not set
      */
-    public CommonImporter(final String defaultSourceType) {
-        this.defaultSourceType = defaultSourceType;
+    public ExtendedCommonImporter(final String defaultSourceType) {
+        super(defaultSourceType);
         createPPLImporter();
     }
     
@@ -70,13 +69,7 @@ public class CommonImporter {
      * ##############
      */
     
-    /** 
-     * add common import-options to the availiableCmdLineOptions
-     * @FeatureDomain                CLI
-     * @FeatureResult                update availiableCmdLineOptions
-     * @FeatureKeywords              CLI
-     * @param availiableCmdLineOptions the container with the availiableCmdLineOptions
-     */
+    @Override
     public void addAvailiableCommonCmdLineOptions(final Options availiableCmdLineOptions) {
         // sourceType
         Option sourceType = new Option("", "sourcetype", true,
@@ -152,21 +145,6 @@ public class CommonImporter {
     }
 
     /** 
-     * add JPA-import-options to the availiableCmdLineOptions
-     * @FeatureDomain                CLI
-     * @FeatureResult                update availiableCmdLineOptions
-     * @FeatureKeywords              CLI
-     * @param availiableCmdLineOptions the container with the availiableCmdLineOptions
-     */
-    public void addAvailiableJPACmdLineOptions(final Options availiableCmdLineOptions) {
-        // exportsysuid
-        Option exportSysUid = new Option("", "exportsysuid", true,
-                "SysUId of the masterNode to export.");
-        exportSysUid.setRequired(false);
-        availiableCmdLineOptions.addOption(exportSysUid);
-    }
-
-    /** 
      * add Production-import-options to the availiableCmdLineOptions
      * @FeatureDomain                CLI
      * @FeatureResult                update availiableCmdLineOptions
@@ -215,53 +193,6 @@ public class CommonImporter {
         pplImporter.extractNodesFromFile(masterNode, srcFile, delimiter);
     }
 
-    /** 
-     * import the data from JPA configured by cmdline-options and add 
-     * them to the masterNode 
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                updates masternode
-     * @FeatureKeywords              BusinessLogic
-     * @param masterNode             the masternode on which all other nodes are added
-     * @throws Exception             parse/io-Exceptions possible
-     */
-    public void importDataToMasterNodeFromJPA(final DataDomain masterNode) throws Exception {
-        if (LOGGER.isInfoEnabled()) {
-            LOGGER.info("read from JPA");
-        }
-        
-        // check exportsysuid
-        String exportSysUID = 
-                        Configurator.getInstance().getCommandLine().getOptionValue(
-                                        "exportsysuid");
-        if (exportSysUID == null || "".equalsIgnoreCase(exportSysUID)) {
-            throw new IllegalArgumentException("For sourcetype=jpa a exportsysuid is expected");
-        }
-        
-        // initApplicationContext
-        Configurator.getInstance().getSpringApplicationContext();
-
-        // create own importer
-        JPAImporter jpaImporter = new JPAImporter(null);
-        if (LOGGER.isInfoEnabled()) {
-            LOGGER.info("read from JPA exportsysuid: '" + exportSysUID + "'");
-        }
-
-        // read data
-        DataDomain jpaNode = 
-                        jpaImporter.getBaseNodeBySysUID(exportSysUID);
-        BaseNode baseNode = (BaseNode) jpaNode;
-        if (baseNode == null) {
-            throw new IllegalArgumentException("node not found sysUID=" + exportSysUID);
-        }
-        if (LOGGER.isInfoEnabled()) {
-            LOGGER.info("result from JPA  for sysUID: '" + exportSysUID + "' " + 
-                            baseNode.getNameForLogger());
-        }
-        
-        // add to masternode
-        baseNode.setParentNode(masterNode);
-    }
-    
     /** 
      * import the data from Excel-File configured by cmdline-options and add 
      * them to the masterNode 
@@ -430,24 +361,13 @@ public class CommonImporter {
         return resBuf.toString();
     }
     
-    /** 
-     * import the data from source configured by cmdline-options and add 
-     * them to the masterNode 
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                updates masternode
-     * @FeatureKeywords              BusinessLogic
-     * @param masterNode             the masternode on which all other nodes are added
-     * @throws Exception             parse/io-Exceptions possible
-     */
+    @Override
     public void importDataToMasterNode(final DataDomain masterNode) throws Exception {
         // check datasource
         String sourceType = 
                         Configurator.getInstance().getCommandLine().getOptionValue(
                                         "sourcetype", defaultSourceType);
-        if ("jpa".equalsIgnoreCase(sourceType)) {
-            // from jpa
-            this.importDataToMasterNodeFromJPA(masterNode);
-        } else if ("excel".equalsIgnoreCase(sourceType)) {
+        if ("excel".equalsIgnoreCase(sourceType)) {
             // from excel
             this.importDataToMasterNodeFromExcel(masterNode);
         } else if ("wiki".equalsIgnoreCase(sourceType)) {
@@ -457,7 +377,7 @@ public class CommonImporter {
             // default: ppl
             this.importDataToMasterNodeFromPPLFile(masterNode);
         } else {
-            throw new IllegalArgumentException("if sourcetype is set ist must be jpa,ppl,wiki or excel");
+            super.importDataToMasterNode(masterNode);
         }
     }
 

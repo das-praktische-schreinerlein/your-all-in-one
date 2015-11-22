@@ -16,7 +16,7 @@ package de.yaio.webapp.restcontroller;
 import java.util.List;
 
 import de.yaio.core.node.BaseNode;
-import de.yaio.extension.datatransfer.json.CommonJSONResponse;
+import de.yaio.datatransfer.json.CommonJSONResponse;
 
 /** 
  * the responseobject for crud-functions (show, create, delete) of the 
