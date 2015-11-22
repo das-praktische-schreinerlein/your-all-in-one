@@ -59,6 +59,7 @@ public class ImportOptionsImpl implements ImportOptions {
         this.flgParsePlanCalc = baseOptions.isFlgParsePlanCalc();
         this.flgParseIst = baseOptions.isFlgParseIst();
         this.flgParseMetaData = baseOptions.isFlgParseMetaData();
+        this.flgParseResLoc = baseOptions.isFlgParseResLoc();
         this.flgParseSysData = baseOptions.isFlgParseSysData();
         this.flgParseDesc = baseOptions.isFlgParseDesc();
         this.strReadIfStatusInListOnly = baseOptions.getStrReadIfStatusInListOnly();
