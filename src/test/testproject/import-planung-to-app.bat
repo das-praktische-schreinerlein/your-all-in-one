@@ -1,0 +1,14 @@
+rem set pathes
+set PLANDIR=%~dp0
+set YAIOSCRIPTPATH=%PLANDIR%..\..\..\sbin\
+set YAIOBASEPATH=%YAIOSCRIPTPATH%
+set BASEPATH=%YAIOBASEPATH%
+
+set PLANFILEBASE=test
+set PLANNAME=TestPlanung
+set PARENTSYSUID=JavaUnitTest1
+
+call %BASEPATH%/importToYAIOApp.bat %PLANDIR% %PLANFILEBASE%.wiki %PARENTSYSUID%
+
+:end
+

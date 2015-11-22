@@ -13,38 +13,16 @@
  */
 package de.yaio.app;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
 
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
-import org.apache.commons.collections.MapUtils;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpHost;
-import org.apache.http.HttpResponse;
-import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.client.AuthCache;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.CredentialsProvider;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.client.protocol.HttpClientContext;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.impl.auth.BasicScheme;
-import org.apache.http.impl.client.BasicAuthCache;
-import org.apache.http.impl.client.BasicCredentialsProvider;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.protocol.HttpContext;
-import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 
 import de.yaio.utils.DataUtils;
+import de.yaio.utils.HttpUtils;
 
 /** 
  * job to call admin-int5erface of yaio-instances
@@ -119,57 +97,6 @@ public abstract class CallYaioInstance extends CmdLineJob {
     }
     
     /** 
-     * prepare a http-security-context with username and password for the yaioInstanceUrl
-     * @FeatureDomain                Tools - URL-Handling
-     * @FeatureResult                returnValues - http-security-context
-     * @FeatureKeywords              URL-Handling
-     * @return                       http-security-context prepared with username and password
-     */
-    protected HttpContext prepareHttpContext() {
-        HttpHost targetHost = new HttpHost(yaioInstanceUrl.getHost(), 
-                        yaioInstanceUrl.getPort(), yaioInstanceUrl.getProtocol());
-        
-        CredentialsProvider credsProvider = new BasicCredentialsProvider();
-        credsProvider.setCredentials(
-                new AuthScope(targetHost.getHostName(), targetHost.getPort()),
-                new UsernamePasswordCredentials(username, password));
-
-        // Create AuthCache instance
-        AuthCache authCache = new BasicAuthCache();
-        // Generate BASIC scheme object and add it to the local auth cache
-        BasicScheme basicAuth = new BasicScheme();
-        authCache.put(targetHost, basicAuth);
-
-        // Add AuthCache to the execution context
-        HttpClientContext context = HttpClientContext.create();
-        context.setCredentialsProvider(credsProvider);
-        context.setAuthCache(authCache);
-
-        return context;
-    }
-    
-    /** 
-     * execute Request with a Security-Context prepared with prepareHttpContext
-     * @FeatureDomain                Tools - URL-Handling
-     * @FeatureResult                returnValues - http-response
-     * @FeatureKeywords              URL-Handling
-     * @param request                the request to execute
-     * @return                       http-response
-     * @throws ClientProtocolException possible
-     * @throws IOException           possible
-     */
-    protected HttpResponse executeRequest(final HttpUriRequest request) 
-                    throws ClientProtocolException, IOException {
-        @SuppressWarnings("deprecation")
-        HttpClient client = new DefaultHttpClient();
-        HttpContext context = prepareHttpContext();
-        HttpResponse response = null;
-        response = client.execute(request, context);
-        return response;    
-    }
-    
-    
-    /** 
      * execute GET-Request for yaio-url with params
      * @FeatureDomain                Tools - URL-Handling
      * @FeatureResult                returnValues - ByteArray with the textresponse
@@ -182,38 +109,7 @@ public abstract class CallYaioInstance extends CmdLineJob {
     protected byte[] callGetUrl(final String route, 
                                 final Map<String, String> params) throws IOException {
         String url = yaioInstanceUrl.toExternalForm() + route;
-
-        // map params
-        if (MapUtils.isNotEmpty(params)) {
-            url += "?";
-            for (String key : params.keySet()) {
-                url += "&" + key + "=" + params.get(key);
-            }
-        }
-
-        // create request
-        HttpGet request = new HttpGet(url);
- 
-        // add request header
-        request.addHeader("User-Agent", "YAIOCaller");
- 
-        // call url
-        if (LOGGER.isInfoEnabled()) {
-            LOGGER.info("Sending 'GET' request to URL : " + url);
-        }
-        HttpResponse response = executeRequest(request);
-        
-        // get response
-        int retCode = response.getStatusLine().getStatusCode();
-        if (LOGGER.isInfoEnabled()) {
-            LOGGER.info("Response Code : " + retCode);
-        }
-        if (retCode < 200 || retCode > 299) {
-            throw new IOException("illegal reponse:" + response.getStatusLine() + " for urlcall:" + url);
-        }
-        
-        HttpEntity entity = response.getEntity();
-        return EntityUtils.toByteArray(entity);
+        return HttpUtils.callGetUrl(url, username, password, params);
     }
 
     
@@ -234,47 +130,6 @@ public abstract class CallYaioInstance extends CmdLineJob {
                                  final Map<String, String> fileParams) throws IOException {
         // create request
         String url = yaioInstanceUrl.toExternalForm() + route;
-        HttpPost request = new HttpPost(url);
- 
-        // map params
-        MultipartEntityBuilder builder = MultipartEntityBuilder.create();
-        if (MapUtils.isNotEmpty(params)) {
-            for (String key : params.keySet()) {
-                builder.addTextBody(key, params.get(key), ContentType.TEXT_PLAIN);
-            }
-        }
-
-        // map files
-        if (MapUtils.isNotEmpty(fileParams)) {
-            for (String key : fileParams.keySet()) {
-                File file = new File(fileParams.get(key));
-                builder.addBinaryBody("file", file, ContentType.TEXT_PLAIN, fileParams.get(key));
-            }
-        }
-        
-        // set request
-        HttpEntity multipart = builder.build();
-        request.setEntity(multipart);
-        
-        // add request header
-        request.addHeader("User-Agent", "YAIOCaller");
-        
-        // call url
-        if (LOGGER.isInfoEnabled()) {
-            LOGGER.info("Sending 'POST' request to URL : " + url);
-        }
-        HttpResponse response = executeRequest(request);
-        
-        // get response
-        int retCode = response.getStatusLine().getStatusCode();
-        if (LOGGER.isInfoEnabled()) {
-            LOGGER.info("Response Code : " + retCode);
-        }
-        if (retCode < 200 || retCode > 299) {
-            throw new IOException("illegal reponse:" + response.getStatusLine() + " for urlcall:" + url);
-        }
-
-        HttpEntity entity = response.getEntity();
-        return EntityUtils.toByteArray(entity);
+        return HttpUtils.callPostUrl(url, username, password, params, fileParams, null);
     }
 }
