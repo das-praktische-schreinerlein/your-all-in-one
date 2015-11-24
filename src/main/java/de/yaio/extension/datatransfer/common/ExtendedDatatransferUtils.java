@@ -13,12 +13,7 @@
  */
 package de.yaio.extension.datatransfer.common;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -26,25 +21,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 import de.yaio.core.dbservice.BaseNodeDBServiceImpl;
 import de.yaio.core.node.BaseNode;
-import de.yaio.core.node.EventNode;
-import de.yaio.core.node.InfoNode;
-import de.yaio.core.node.SymLinkNode;
-import de.yaio.core.node.TaskNode;
-import de.yaio.core.node.UrlResNode;
 import de.yaio.datatransfer.common.DatatransferUtils;
 import de.yaio.datatransfer.exporter.Exporter;
 import de.yaio.datatransfer.exporter.OutputOptions;
 import de.yaio.datatransfer.exporter.OutputOptionsImpl;
 import de.yaio.datatransfer.jpa.JPAExporter;
-import de.yaio.datatransfer.json.JSONFullImporter;
-import de.yaio.datatransfer.json.JSONResponse;
 import de.yaio.extension.datatransfer.ppl.PPLImporter;
 import de.yaio.extension.datatransfer.wiki.InlineWikiImporter;
 import de.yaio.extension.datatransfer.wiki.WikiExporter;
 import de.yaio.extension.datatransfer.wiki.WikiImportOptions;
 import de.yaio.extension.datatransfer.wiki.WikiImporter;
 import de.yaio.extension.datatransfer.wiki.WikiImporter.WikiStructLine;
-import de.yaio.utils.Calculator;
 
 /** 
  * Services to parse text to nodes and convert them in different 
