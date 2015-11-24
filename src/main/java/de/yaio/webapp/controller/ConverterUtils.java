@@ -14,6 +14,7 @@
 package de.yaio.webapp.controller;
 
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -117,10 +118,7 @@ public class ConverterUtils {
         response.setContentType("application/force-download");
         response.setHeader("Content-Disposition", 
                         "attachment; filename=converted" + extension);
-        
-        // TODO FIXME: a awful hack
-        response.setCharacterEncoding("ISO-8859-15");
-//        response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+        response.setCharacterEncoding(StandardCharsets.UTF_8.name());
         
         return res;
     }
