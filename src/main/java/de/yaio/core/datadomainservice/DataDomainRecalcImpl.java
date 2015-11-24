@@ -13,9 +13,6 @@
  */
 package de.yaio.core.datadomainservice;
 
-
-
-
 /** 
  * baseservice for businesslogic of datadomains
  * 

@@ -13,14 +13,10 @@
  */
 package de.yaio.core.datadomainservice;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.log4j.Logger;
 
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.datadomain.MetaData;
-import de.yaio.core.dbservice.DBFilter;
 import de.yaio.core.nodeservice.NodeService;
 
 /** 
@@ -94,17 +90,6 @@ public class MetaDataServiceImpl extends DataDomainRecalcImpl implements MetaDat
         // NOP
     }
     
-    @Override
-    public void doRecalcWhenTriggered(final DataDomain node, final int recurceDirection) throws Exception {
-        // NOP
-    }
-
-    @Override
-    public List<DBFilter> getDBTriggerFilter() throws Exception {
-        // NOP
-        return new ArrayList<DBFilter>();
-    }
-
     @Override
     public void initMetaData(final MetaData node) throws Exception {
         // Daten einlesen

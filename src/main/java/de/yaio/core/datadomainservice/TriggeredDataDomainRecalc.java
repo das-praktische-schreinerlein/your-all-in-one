@@ -13,7 +13,11 @@
  */
 package de.yaio.core.datadomainservice;
 
+import java.util.List;
+
 import de.yaio.core.datadomain.DataDomain;
+import de.yaio.core.dbservice.DBFilter;
+
 
 /** 
  * interface for baseservice with businesslogic of datadomains
@@ -25,34 +29,36 @@ import de.yaio.core.datadomain.DataDomain;
  * @copyright                    Copyright (c) 2014, Michael Schreiner
  * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-public interface DataDomainRecalc extends Comparable<DataDomainRecalc> {
-    
-    /** the position in the recalc-order at which the recalcer will run */
-    int CONST_ORDER_NOOP = -1;
+public interface TriggeredDataDomainRecalc {
     
     /** 
-     * recalcs the DataDomain connected to the Recalcer before the children 
-     * are recalced
+     * recalcs the DataDomain connected to the Recalcer if it is triggered by db
      * @FeatureDomain                BusinessLogic
      * @FeatureResult                updates memberVariables
      * @FeatureKeywords              BsuinessLogic
-     * @param node                   node to recalc
-     * @param recurceDirection       Type of recursion (parent, me, children) NodeService.CONST_RECURSE_DIRECTION_*
      * @throws Exception             parser/format-Exceptions possible
      */
-    void doRecalcBeforeChildren(DataDomain node, int recurceDirection) throws Exception;
+    void doSearchAndTrigger() throws Exception;
 
     /** 
-     * recalcs the DataDomain connected to the Recalcer after the children 
-     * are recalced
+     * recalcs the DataDomain connected to the Recalcer if it is triggered by db
      * @FeatureDomain                BusinessLogic
      * @FeatureResult                updates memberVariables
      * @FeatureKeywords              BsuinessLogic
      * @param node                   node to recalc
-     * @param recurceDirection       Type of recursion (parent, me, children) NodeService.CONST_RECURSE_DIRECTION_*
      * @throws Exception             parser/format-Exceptions possible
      */
-    void doRecalcAfterChildren(DataDomain node, int recurceDirection) throws Exception;
+    void doRecalcWhenTriggered(DataDomain node) throws Exception;
+
+    /** 
+     * returns the trigger-filter 
+     * @FeatureDomain                BusinessLogic
+     * @FeatureResult                updates memberVariables
+     * @FeatureKeywords              BsuinessLogic
+     * @return                       list of filters to get nodes to recalc
+     * @throws Exception             parser/format-Exceptions possible
+     */
+    List<DBFilter> getDBTriggerFilter() throws Exception;
 
     /** 
      * returns the class of the DataDomain for which the service runs
@@ -62,13 +68,4 @@ public interface DataDomainRecalc extends Comparable<DataDomainRecalc> {
      * @return                       DataDomain for which the service runs
      */
     Class<?> getRecalcTargetClass();
-
-    /** 
-     * returns position in the service-queue
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                returnValue int - position in the service-queue
-     * @FeatureKeywords              Config
-     * @return                       position in the service-queue
-     */
-    int getRecalcTargetOrder();
 }

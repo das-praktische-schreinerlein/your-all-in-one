@@ -13,15 +13,11 @@
  */
 package de.yaio.core.datadomainservice;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.log4j.Logger;
 
 import de.yaio.core.datadomain.BaseWorkflowData;
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.datadomain.StatData;
-import de.yaio.core.dbservice.DBFilter;
 import de.yaio.core.node.InfoNode;
 import de.yaio.core.node.UrlResNode;
 import de.yaio.core.nodeservice.NodeService;
@@ -86,17 +82,6 @@ public class StatDataServiceImpl extends DataDomainRecalcImpl implements StatDat
         this.updateChildrenCount((StatData) node);
     }
     
-    @Override
-    public void doRecalcWhenTriggered(final DataDomain node, final int recurceDirection) throws Exception {
-        // NOP
-    }
-
-    @Override
-    public List<DBFilter> getDBTriggerFilter() throws Exception {
-        // NOP
-        return new ArrayList<DBFilter>();
-    }
-
     @Override
     public Class<?> getRecalcTargetClass() {
         return StatData.class;

@@ -15,15 +15,12 @@ package de.yaio.core.datadomainservice;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import org.apache.log4j.Logger;
 
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.datadomain.SysData;
-import de.yaio.core.dbservice.DBFilter;
 import de.yaio.core.nodeservice.NodeService;
 import de.yaio.utils.DataUtils;
 
@@ -89,17 +86,6 @@ public class SysDataServiceImpl extends DataDomainRecalcImpl implements SysDataS
         this.initSysData((SysData) node);
     }
     
-    @Override
-    public void doRecalcWhenTriggered(final DataDomain node, final int recurceDirection) throws Exception {
-        // NOP
-    }
-
-    @Override
-    public List<DBFilter> getDBTriggerFilter() throws Exception {
-        // NOP
-        return new ArrayList<DBFilter>();
-    }
-
     @Override
     public Class<?> getRecalcTargetClass() {
         return SysData.class;
