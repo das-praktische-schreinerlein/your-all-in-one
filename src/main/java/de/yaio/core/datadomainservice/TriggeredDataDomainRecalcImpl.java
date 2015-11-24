@@ -49,11 +49,12 @@ public abstract class TriggeredDataDomainRecalcImpl implements TriggeredDataDoma
         while (!flgAllDone) {
             // create query and read
             TypedQuery<BaseNode> query = (TypedQuery<BaseNode>)this.createQuery();
-            query.setFirstResult(1);
+            query.setFirstResult(0);
             query.setMaxResults(500);
             List<BaseNode> results = query.getResultList();
+            LOGGER.info("got results:" + results.size() + " for query: do ierate nodes");
             
-            // ietarte all node
+            // iterate all node
             for (BaseNode node : results) {
                 this.doRecalcWhenTriggered(node);
             }
@@ -65,7 +66,7 @@ public abstract class TriggeredDataDomainRecalcImpl implements TriggeredDataDoma
         }
     }
 
-    protected TypedQuery<?> createQuery() {
+    protected TypedQuery<?> createQuery() throws Exception {
         // setup class
         Class<?> resClass = BaseNode.class;
 
