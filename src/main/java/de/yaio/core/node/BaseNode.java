@@ -752,11 +752,6 @@ public class BaseNode implements BaseData, MetaData, SysData,
     }
 
     @Override
-    public void setParentNode(final BaseNode parentNode) {
-        getBaseNodeService().setParentNode(this, parentNode, true);
-    }
-    
-    @Override
     @XmlTransient
     @JsonIgnore
     public void setParentNodeOnly(final DataDomain parentNode) {
@@ -783,7 +778,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     
     @Override
     public void setParentNode(final DataDomain parentNode) {
-        setParentNode((BaseNode) parentNode);
+        getBaseNodeService().setParentNode(this, (BaseNode)parentNode, true);
     }
 
     @Override

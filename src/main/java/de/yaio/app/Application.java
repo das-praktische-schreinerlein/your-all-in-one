@@ -30,7 +30,9 @@ import org.springframework.boot.context.embedded.MultipartConfigFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.FilterType;
 
 import de.yaio.core.datadomainservice.NodeNumberService;
 import de.yaio.core.node.BaseNode;
@@ -46,8 +48,31 @@ import de.yaio.core.node.BaseNode;
  * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 @Configuration
-@EnableAutoConfiguration
-@ComponentScan("de.yaio")
+@EnableAutoConfiguration(exclude = {
+                de.yaio.services.webshot.WebshotApplication.class, 
+                de.yaio.services.webshot.WebshotWebSecurityConfig.class,
+                de.yaio.services.webshot.WebshotWebSecurityConfig.WebshotServiceSecurityConfigurerAdapter.class,
+                de.yaio.services.dms.DMSApplication.class,
+                de.yaio.services.dms.DMSWebSecurityConfig.class,
+                de.yaio.services.dms.DMSWebSecurityConfig.WebshotServiceSecurityConfigurerAdapter.class,
+                de.yaio.services.plantuml.PlantumlApplication.class,
+                de.yaio.services.plantuml.PlantumlWebSecurityConfig.class,
+                de.yaio.services.plantuml.PlantumlWebSecurityConfig.WebshotServiceSecurityConfigurerAdapter.class
+                })
+@ComponentScan(basePackages = "de.yaio",
+                excludeFilters = {
+                    @Filter(type = FilterType.ASSIGNABLE_TYPE, value = {
+                        de.yaio.services.webshot.WebshotApplication.class, 
+                        de.yaio.services.webshot.WebshotWebSecurityConfig.class,
+                        de.yaio.services.webshot.WebshotWebSecurityConfig.WebshotServiceSecurityConfigurerAdapter.class,
+                        de.yaio.services.dms.DMSApplication.class,
+                        de.yaio.services.dms.DMSWebSecurityConfig.class,
+                        de.yaio.services.dms.DMSWebSecurityConfig.WebshotServiceSecurityConfigurerAdapter.class,
+                        de.yaio.services.plantuml.PlantumlApplication.class,
+                        de.yaio.services.plantuml.PlantumlWebSecurityConfig.class,
+                        de.yaio.services.plantuml.PlantumlWebSecurityConfig.WebshotServiceSecurityConfigurerAdapter.class
+                    })
+                })
 public class Application {
     protected static ApplicationContext springApplicationContext;
     protected static NodeNumberService nodeNumberService;

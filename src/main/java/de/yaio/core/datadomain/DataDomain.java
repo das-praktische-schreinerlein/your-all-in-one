@@ -36,7 +36,6 @@ public interface DataDomain {
     // because of Spring roo with Node
     Set<BaseNode> getChildNodes();
     BaseNode getParentNode();
-    void setParentNode(BaseNode parentNode);
     void setParentNode(DataDomain parentNode);
 
     // hirarchy-functions
