@@ -33,6 +33,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import de.yaio.core.datadomainservice.NodeNumberService;
 import de.yaio.core.node.BaseNode;
@@ -73,6 +74,7 @@ import de.yaio.core.node.BaseNode;
                         de.yaio.services.plantuml.PlantumlWebSecurityConfig.WebshotServiceSecurityConfigurerAdapter.class
                     })
                 })
+@EnableScheduling
 public class Application {
     protected static ApplicationContext springApplicationContext;
     protected static NodeNumberService nodeNumberService;
