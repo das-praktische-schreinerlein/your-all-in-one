@@ -64,7 +64,7 @@
          -->
         <!--  versions -->
         <roo.version>1.2.4.RELEASE</roo.version>
-        <aspectj.version>1.7.2</aspectj.version>
+        <aspectj.version>1.8.3</aspectj.version>
         
         <!-- managed -->
         <!--
@@ -99,6 +99,7 @@
         <icu4j.version>54.1</icu4j.version>
         <markdown4j>2.2-cj-1.0</markdown4j>
         <swagger.version>2.1.2</swagger.version>
+        <biweekly.version>0.4.2</biweekly.version>
 
         <!-- test-scope -->
         <json-path.version>0.8.1</json-path.version>
@@ -457,6 +458,11 @@
             <artifactId>httpmime</artifactId>
             <version>${httpmime.version}</version>
         </dependency>
+        <dependency>
+           <groupId>net.sf.biweekly</groupId>
+           <artifactId>biweekly</artifactId>
+           <version>${biweekly.version}</version>
+        </dependency>
 
         <!-- yaio-services / via jitpack.io because of no maven-centra-account -->
         <dependency>
@@ -467,6 +473,23 @@
             <artifactId>yaio-plantuml-service</artifactId>
             <version>0.2.0</version>
         </dependency>
+        <dependency>
+            <groupId>de.yaio.services</groupId>
+            <!-- 
+            <groupId>com.github.das-praktische-schreinerlein</groupId>
+             -->
+            <artifactId>yaio-webshot-service</artifactId>
+            <version>0.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>de.yaio.services</groupId>
+            <!-- 
+            <groupId>com.github.das-praktische-schreinerlein</groupId>
+             -->
+            <artifactId>yaio-dms-service</artifactId>
+            <version>0.1.0</version>
+        </dependency>
+
     </dependencies>
 
     <!-- build options -->
