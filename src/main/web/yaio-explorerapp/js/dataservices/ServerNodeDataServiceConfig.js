@@ -50,6 +50,10 @@ Yaio.ServerNodeDataServiceConfig = function(urlBase, name, desc) {
         me.restRemoveUrl                = me.restBaseUrl + "delete/";
         me.restSearchUrl                = me.restBaseUrl + "search/";
         me.restExportsBaseUrl           = me.urlBase + "/exports/";
+        
+        // dms
+        me.dmsDownloadUrl               = me.urlBase + "/dms/download/"
+        me.dmsEmbedUrl               = me.urlBase + "/dms/embed/"
     }
     
     me._init();

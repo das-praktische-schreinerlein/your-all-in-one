@@ -40,6 +40,8 @@ Yaio.ServerAccessManagerService = function(appBase, config, defaultConfig) {
         me.setAvailiableNodeAction('copy', me.config.restCopyUrl);
         me.setAvailiableNodeAction('remove', me.config.restRemoveUrl);
         me.setAvailiableNodeAction('search', me.config.restSearchUrl);
+        me.setAvailiableNodeAction('dmsDownload', me.config.dmsDownloadUrl);
+        me.setAvailiableNodeAction('dmsEmbed', me.config.dmsEmbedUrl);
         me.setAvailiableNodeAction('dashboard', "#/dashboard");
 
         me.setAvailiableNodeAction('syshelp', me.config.restExportsBaseUrl + 'documentation/SysHelp1');

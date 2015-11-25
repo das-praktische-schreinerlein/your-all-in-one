@@ -60,7 +60,10 @@ label[for="nodeDesc"] {
 } 
 .inputtype_resLocRef {
     width: 500px;
-} 
+}
+.label_resContentDMSState {
+    width: 150px;
+}
 .inputtype_resLocName {
     width: 500px;
 } 

@@ -115,12 +115,13 @@ window.YaioAppBaseConfig = function() {
             fields: [
                 { fieldName: "name", type: "input"},
                 { fieldName: "resLocRef", type: "input"},
+                //{ fieldName: "resContentDMSState", type: "checkbox"},
                 { fieldName: "resLocName", type: "input"},
                 { fieldName: "resLocTags", type: "textarea"},
                 { fieldName: "docLayoutTagCommand", type: "select"},
                 { fieldName: "docLayoutAddStyleClass", type: "input"},
                 { fieldName: "docLayoutShortName", type: "input"},
-                { fieldName: "docLayoutFlgCloseDiv", type: "checkbox"}
+                { fieldName: "docLayoutFlgCloseDiv", type: "checkbox"},
             ]
         },
         SymLinkNode: {

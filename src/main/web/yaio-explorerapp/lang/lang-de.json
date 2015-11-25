@@ -131,6 +131,7 @@
     "editor.common.label.planStart": "Start",
     "editor.common.label.resLocName": "Label",
     "editor.common.label.resLocRef": "URI",
+    "editor.common.label.resContentDMSState": "Screenshot der Webseite",
     "editor.common.label.resLocTags": "Tags",
     "editor.common.label.state": "Status",
     "editor.common.label.symLinkName": "Label",

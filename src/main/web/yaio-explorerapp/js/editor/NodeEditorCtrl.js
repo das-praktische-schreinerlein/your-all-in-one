@@ -240,6 +240,11 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
             nodeObj[fieldName] = value;
             console.log("map nodefield:" + fieldName + "=" + value);
         }
+        if ($scope.nodeForEdit.className === "UrlResNode") {
+            if ($scope.nodeForEdit["resContentDMSState"]) {
+                nodeObj["resContentDMSState"] = "UPLOAD_OPEN";
+            }
+        }        
         
         // save node
         var yaioSaveNodeSuccessHandler = function(nodeObj, options, yaioNodeActionResponse) {

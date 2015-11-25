@@ -43,6 +43,11 @@
               <input type="text" name="resLocRef" placeholder="http:// oder  file://" class="inputtype_resLocRef" ng-model="nodeForEdit.resLocRef" id="inputResLocRefUrlResNode" required ng-change=""> 
               <fielderrors for="resLocRef"></fielderrors>
 
+              <!-- show checkbox -->
+              <label for="resContentDMSState" translate="editor.common.label.resContentDMSState" class="label_resContentDMSState">Reload Page</label> 
+              <input type="checkbox" name="resContentDMSState" class="inputtype_resContentDMSState" ng-model="nodeForEdit.resContentDMSState" id="inputResContentDMSStateUrlResNode" ng-change=""> 
+              <fielderrors for="resContentDMSState"></fielderrors>
+
               <br />
 
               <!-- show textfield -->

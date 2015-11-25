@@ -54,3 +54,12 @@
    text-align: left;
 }
 
+.field_resContentDMSState_UPLOAD_DONE {
+    background: green;
+}
+.field_resContentDMSState_UPLOAD_OPEN {
+    background: yellow;
+}
+.field_resContentDMSState_UPLOAD_FAILED {
+    background: red;
+}

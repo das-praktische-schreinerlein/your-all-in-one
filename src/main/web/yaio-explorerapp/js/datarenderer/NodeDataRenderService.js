@@ -391,6 +391,25 @@ Yaio.NodeDataRenderService = function(appBase) {
             // Url only
             if (basenode.className == "UrlResNode") {
                 // url
+                var resContentDMSState = basenode.resContentDMSState;
+                var stateMapping = {"UPLOAD_DONE": "OK", "UPLOAD_OPEN": "O", "UPLOAD_FAILED": "F"};
+                if (stateMapping[resContentDMSState] 
+                    && me.appBase.get('YaioAccessManager').getAvailiableNodeAction('dmsDownload', basenode.sysUID, false)) {
+                    // url
+                    var stateBlock = svcYaioBase.htmlEscapeText(stateMapping[resContentDMSState]);
+                    if (resContentDMSState == "UPLOAD_DONE") {
+                        stateBlock = "<a href='" +  "' onClick=\"yaioAppBase.get('YaioExplorerAction').openDMSDownloadWindow('"+ basenode.sysUID + "'); return false;" 
+                                     +   "\" lang='tech' data-tooltip='tooltip.command.OpenDMSDownloadWindow_" + resContentDMSState + "'>" + stateBlock + "</a>";
+                    }
+                    $row.append(
+                            me.$("<div />").html(stateBlock)
+                                      .addClass("container_field")
+                                      .addClass("fieldtype_additionaldata")
+                                      .addClass("fieldtype_uploadsstate")
+                                      .addClass("field_resContentDMSState")
+                                      .addClass("field_resContentDMSState_" + resContentDMSState)
+                                      ); 
+                }
                 $row.append(
                         me.$("<div />").html("<a href='" + svcYaioBase.htmlEscapeText(basenode.resLocRef) + "' target='_blank'>" 
                                          + svcYaioBase.htmlEscapeText(basenode.resLocRef) + "</a>")
