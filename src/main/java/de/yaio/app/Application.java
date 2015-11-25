@@ -55,10 +55,10 @@ import de.yaio.core.node.BaseNode;
                 de.yaio.services.webshot.WebshotWebSecurityConfig.WebshotServiceSecurityConfigurerAdapter.class,
                 de.yaio.services.dms.DMSApplication.class,
                 de.yaio.services.dms.DMSWebSecurityConfig.class,
-                de.yaio.services.dms.DMSWebSecurityConfig.WebshotServiceSecurityConfigurerAdapter.class,
+                de.yaio.services.dms.DMSWebSecurityConfig.DMSServiceSecurityConfigurerAdapter.class,
                 de.yaio.services.plantuml.PlantumlApplication.class,
                 de.yaio.services.plantuml.PlantumlWebSecurityConfig.class,
-                de.yaio.services.plantuml.PlantumlWebSecurityConfig.WebshotServiceSecurityConfigurerAdapter.class
+                de.yaio.services.plantuml.PlantumlWebSecurityConfig.PlantumlServiceSecurityConfigurerAdapter.class
                 })
 @ComponentScan(basePackages = "de.yaio",
                 excludeFilters = {
@@ -68,10 +68,10 @@ import de.yaio.core.node.BaseNode;
                         de.yaio.services.webshot.WebshotWebSecurityConfig.WebshotServiceSecurityConfigurerAdapter.class,
                         de.yaio.services.dms.DMSApplication.class,
                         de.yaio.services.dms.DMSWebSecurityConfig.class,
-                        de.yaio.services.dms.DMSWebSecurityConfig.WebshotServiceSecurityConfigurerAdapter.class,
+                        de.yaio.services.dms.DMSWebSecurityConfig.DMSServiceSecurityConfigurerAdapter.class,
                         de.yaio.services.plantuml.PlantumlApplication.class,
                         de.yaio.services.plantuml.PlantumlWebSecurityConfig.class,
-                        de.yaio.services.plantuml.PlantumlWebSecurityConfig.WebshotServiceSecurityConfigurerAdapter.class
+                        de.yaio.services.plantuml.PlantumlWebSecurityConfig.PlantumlServiceSecurityConfigurerAdapter.class
                     })
                 })
 @EnableScheduling

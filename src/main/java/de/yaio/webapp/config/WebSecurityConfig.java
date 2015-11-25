@@ -74,13 +74,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                             .authenticated()
                 .and()
                    // disable csrf-protection
-                   .csrf().disable()
+                        .csrf().disable()
                    .headers()
-//                        .frameOptions().disable();
+                        .frameOptions().sameOrigin()
 //                        .addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsMode.ALLOW_FROM))
 //                        .addHeaderWriter(new XFrameOptionsHeaderWriter(new WhiteListedAllowFromStrategy(WebSecurityConfig.getAllowedDomainList())));
                         // allow include as Frame for sameorigin
-                        .addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsMode.SAMEORIGIN));
+//                        .addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsMode.SAMEORIGIN))
+                        ;
         }
     }    
 
@@ -135,11 +136,39 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }    
 
     /**
-     * configure API-Configuration for Form-Auth (REST-API, Browsers..)
+     * configure API-Configuration for Admin per HttpBasic-Auth
      */
     @EnableWebSecurity
     @Configuration
     @Order(4)
+    public static class APIServicesWebSecurityConfigurerAdapter extends APIWebSecurityConfigurerAdapter {
+        @Override
+        protected void configure(final HttpSecurity http) throws Exception {
+            http
+                    // authentification
+                    .httpBasic()
+                .and()
+                    // secure path
+                    .requestMatcher(new AntPathRequestMatcher("/services/**"))
+                        .authorizeRequests()
+                        // secure API webservice
+                        .anyRequest()
+                            .hasRole("SERVICES")
+                .and()
+                   // disable csrf-protection
+                   .csrf().disable()
+                   .headers()
+                        .frameOptions().sameOrigin()
+                   ;
+        }
+    }    
+
+    /**
+     * configure API-Configuration for Form-Auth (REST-API, Browsers..)
+     */
+    @EnableWebSecurity
+    @Configuration
+    @Order(5)
     public static class APIWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
         private CsrfTokenRepository csrfTokenRepository() {
           HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
@@ -189,12 +218,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                    .csrf().disable()
                    //.csrf().csrfTokenRepository(csrfTokenRepository());
                    .headers()
-//                        .frameOptions()
+                        .frameOptions().sameOrigin()
 //                        .disable()
 //                        .addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsMode.ALLOW_FROM))
 //                        .addHeaderWriter(new XFrameOptionsHeaderWriter(new WhiteListedAllowFromStrategy(WebSecurityConfig.getAllowedDomainList())))
                         // allow include as Frame for sameorigin
-                        .addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsMode.SAMEORIGIN))
+                        //.addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsMode.SAMEORIGIN))
                  .and()
                    // add CsrfHeaderFilter because angular uses another Header
                    .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class);

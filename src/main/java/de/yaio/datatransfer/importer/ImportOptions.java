@@ -44,6 +44,10 @@ public interface ImportOptions {
     void setFlgParsePlanCalc(boolean flgParsePlanCalc);
     boolean isFlgParseResLoc();
     void setFlgParseResLoc(boolean flgParseResLoc);
+    boolean isFlgParseResContent();
+    void setFlgParseResContent(boolean flgParseResContent);
+    boolean isFlgParseResIndex();
+    void setFlgParseResIndex(boolean flgParseResIndex);
     boolean isFlgParseSymLink();
     void setFlgParseSymLink(boolean flgParseSymLink);
     boolean isFlgParseSysData();

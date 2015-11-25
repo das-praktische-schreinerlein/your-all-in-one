@@ -261,5 +261,16 @@ public class DataUtils {
         // return not found
         LOGGER.warn("cant parse url from value:" + value);
         return null;
-    }    
+    }
+
+    public static String normalizeFileName(String fileName) {
+        String newFileName = fileName;
+        // replace all . but the last as extension
+        newFileName = fileName.replaceAll("\\.(?=.*\\.)", "_");
+        
+        // replace all not matching characters
+        newFileName = fileName.replaceAll("[^a-zA-Z0-9-.]", "_");
+        return newFileName;
+    }
+
 }

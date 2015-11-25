@@ -19,6 +19,7 @@ import java.util.Date;
 import org.apache.log4j.Logger;
 
 import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
+import de.yaio.core.datadomain.ResContentData.UploadWorkflowState;
 
 /** 
  * Utils for calculating
@@ -276,6 +277,8 @@ public class Calculator {
                 return ((Float) arg1).compareTo((Float) arg2);
             } else if (Double.class.isInstance(arg1)) {
                 return ((Double) arg1).compareTo((Double) arg2);
+            } else if (UploadWorkflowState.class.isInstance(arg1)) {
+                return ((UploadWorkflowState) arg1).compareTo((UploadWorkflowState) arg2);
             } else if (Date.class.isInstance(arg1)) {
                 return ((Date) arg1).compareTo((Date) arg2);
             } else {

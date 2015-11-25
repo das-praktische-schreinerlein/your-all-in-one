@@ -26,6 +26,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPatch;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.entity.ContentType;
@@ -225,6 +226,71 @@ public class HttpUtils {
         // call url
         if (LOGGER.isInfoEnabled()) {
             LOGGER.info("Sending 'POST' request to URL : " + baseUrl);
+        }
+        HttpResponse response = executeRequest(request, username, password);
+        
+        // get response
+        int retCode = response.getStatusLine().getStatusCode();
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info("Response Code : " + retCode);
+        }
+        return response;
+    }
+
+    /** 
+     * execute POST-Request for url with params
+     * @FeatureDomain                Tools - URL-Handling
+     * @FeatureResult                returnValues - HttpResponse
+     * @FeatureKeywords              URL-Handling
+     * @param baseUrl                the url to call
+     * @param username               username for auth
+     * @param password               password for auth
+     * @param params                 params for the request
+     * @param textFileParams         text-files to upload
+     * @param binFileParams          bin-files to upload
+     * @return                       HttpResponse
+     * @throws IOException           possible Exception if Request-state <200 > 299 
+     */
+    public static HttpResponse callPatchUrlPure(final String baseUrl, final String username, final String password,
+                                 final Map<String, String> params, 
+                                 final Map<String, String> textFileParams,
+                                 final Map<String, String> binFileParams) throws IOException {
+        // create request
+        HttpPatch request = new HttpPatch(baseUrl);
+ 
+        // map params
+        MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+        if (MapUtils.isNotEmpty(params)) {
+            for (String key : params.keySet()) {
+                builder.addTextBody(key, params.get(key), ContentType.TEXT_PLAIN);
+            }
+        }
+
+        // map files
+        if (MapUtils.isNotEmpty(textFileParams)) {
+            for (String key : textFileParams.keySet()) {
+                File file = new File(textFileParams.get(key));
+                builder.addBinaryBody(key, file, ContentType.DEFAULT_TEXT, textFileParams.get(key));
+            }
+        }
+        // map files
+        if (MapUtils.isNotEmpty(binFileParams)) {
+            for (String key : binFileParams.keySet()) {
+                File file = new File(binFileParams.get(key));
+                builder.addBinaryBody(key, file, ContentType.DEFAULT_BINARY, binFileParams.get(key));
+            }
+        }
+        
+        // set request
+        HttpEntity multipart = builder.build();
+        request.setEntity(multipart);
+        
+        // add request header
+        request.addHeader("User-Agent", "YAIOCaller");
+        
+        // call url
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info("Sending 'PATCH' request to URL : " + baseUrl);
         }
         HttpResponse response = executeRequest(request, username, password);
         

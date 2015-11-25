@@ -36,6 +36,8 @@ public class ImportOptionsImpl implements ImportOptions {
     protected boolean flgParsePlan = true;
     protected boolean flgParsePlanCalc = false;
     protected boolean flgParseResLoc = true;
+    protected boolean flgParseResContent = false;
+    protected boolean flgParseResIndex = false;
     protected boolean flgParseSymLink = true;
     protected boolean flgParseSysData = true;
 
@@ -59,6 +61,8 @@ public class ImportOptionsImpl implements ImportOptions {
         this.flgParsePlanCalc = baseOptions.isFlgParsePlanCalc();
         this.flgParseIst = baseOptions.isFlgParseIst();
         this.flgParseMetaData = baseOptions.isFlgParseMetaData();
+        this.flgParseResContent = baseOptions.isFlgParseResContent();
+        this.flgParseResIndex = baseOptions.isFlgParseResIndex();
         this.flgParseResLoc = baseOptions.isFlgParseResLoc();
         this.flgParseSysData = baseOptions.isFlgParseSysData();
         this.flgParseDesc = baseOptions.isFlgParseDesc();
@@ -86,6 +90,8 @@ public class ImportOptionsImpl implements ImportOptions {
         setFlgParseMetaData(value);
         setFlgParsePlan(value);
         setFlgParsePlanCalc(value);
+        setFlgParseResContent(value);
+        setFlgParseResIndex(value);
         setFlgParseResLoc(value);
         setFlgParseSymLink(value);
         setFlgParseSysData(value);
@@ -98,6 +104,8 @@ public class ImportOptionsImpl implements ImportOptions {
         this.flgParseMetaData = false;
         this.flgParsePlan = false;
         this.flgParsePlanCalc = false;
+        this.flgParseResContent = false;
+        this.flgParseResIndex = false;
         this.flgParseResLoc = false;
         this.flgParseSymLink = false;
         this.flgParseSysData = false;
@@ -113,6 +121,8 @@ public class ImportOptionsImpl implements ImportOptions {
         return "OutputOptionsImpl ["
                         + "flgParseDesc=" + this.flgParseDesc
                         + ", flgParseDocLayout=" + this.flgParseDocLayout
+                        + ", flgParseResContent=" + this.flgParseResContent
+                        + ", flgParseResIndex=" + this.flgParseResIndex
                         + ", flgParseResLoc=" + this.flgParseResLoc
                         + ", flgParseSymLink=" + this.flgParseSymLink
                         + ", flgParseIst=" + this.flgParseIst 
@@ -175,6 +185,22 @@ public class ImportOptionsImpl implements ImportOptions {
     @Override
     public void setFlgParsePlanCalc(final boolean flgParsePlanCalc) {
         this.flgParsePlanCalc = flgParsePlanCalc;
+    }
+    @Override
+    public boolean isFlgParseResContent() {
+        return flgParseResContent;
+    }
+    @Override
+    public void setFlgParseResContent(final boolean flgParseResContent) {
+        this.flgParseResContent = flgParseResContent;
+    }
+    @Override
+    public boolean isFlgParseResIndex() {
+        return flgParseResIndex;
+    }
+    @Override
+    public void setFlgParseResIndex(final boolean flgParseResIndex) {
+        this.flgParseResIndex = flgParseResIndex;
     }
     @Override
     public boolean isFlgParseResLoc() {

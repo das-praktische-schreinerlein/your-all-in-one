@@ -30,6 +30,9 @@ import de.yaio.core.datadomain.MetaData;
 import de.yaio.core.datadomain.PlanCalcData;
 import de.yaio.core.datadomain.PlanChildrenSumData;
 import de.yaio.core.datadomain.PlanData;
+import de.yaio.core.datadomain.ResContentData;
+import de.yaio.core.datadomain.ResContentData.UploadWorkflowState;
+import de.yaio.core.datadomain.ResIndexData;
 import de.yaio.core.datadomain.ResLocData;
 import de.yaio.core.datadomain.SymLinkData;
 import de.yaio.core.datadomain.SysData;
@@ -40,6 +43,7 @@ import de.yaio.core.node.InfoNode;
 import de.yaio.core.node.SymLinkNode;
 import de.yaio.core.node.TaskNode;
 import de.yaio.core.node.UrlResNode;
+import de.yaio.core.nodeservice.UrlResNodeService;
 import de.yaio.datatransfer.exporter.OutputOptions;
 import de.yaio.datatransfer.exporter.OutputOptionsImpl;
 import de.yaio.datatransfer.importer.ImportOptions;
@@ -362,6 +366,18 @@ public class DatatransferUtils {
                 origUrlResNode.setResLocTags(newUrlResNode.getResLocTags());
                 flgChange = true;
             }
+
+            // check for ResContentDMSState
+            UploadWorkflowState oldState = origUrlResNode.getResContentDMSState();
+            UploadWorkflowState newState = newUrlResNode.getResContentDMSState();
+            if (UrlResNodeService.CONST_NODETYPE_IDENTIFIER_URLRES.equals(newUrlResNode.getType())
+                    && Calculator.compareValues(oldState, newState) != Calculator.CONST_COMPARE_EQ
+                    && newState != null
+                    && newState.equals(UploadWorkflowState.UPLOAD_OPEN)
+                    && !oldState.equals(UploadWorkflowState.UPLOAD_RUNNING)) {
+                origUrlResNode.setResContentDMSState(newUrlResNode.getResContentDMSState());
+                flgChange = true;
+            }
         }
         
         // SymLinkNode
@@ -487,6 +503,12 @@ public class DatatransferUtils {
             }
             if (PlanChildrenSumData.class.isInstance(node)) {
                 ((PlanChildrenSumData) node).resetPlanChildrenSumData();
+            }
+            if (ResContentData.class.isInstance(node)) {
+                ((ResContentData) node).resetResContentData();
+            }
+            if (ResIndexData.class.isInstance(node)) {
+                ((ResIndexData) node).resetResIndexData();
             }
             
             // reset if flag is not set
