@@ -19,8 +19,8 @@ import java.util.GregorianCalendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import de.yaio.commons.data.DataUtils;
 import de.yaio.core.datadomain.DataDomain;
-import de.yaio.utils.DataUtils;
 
 /** 
  * service-functions for parsing of dataDomains

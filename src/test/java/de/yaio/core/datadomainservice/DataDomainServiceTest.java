@@ -22,9 +22,9 @@ import org.junit.runners.JUnit4;
 import org.springframework.mock.staticmock.MockStaticEntityMethods;
 
 import de.yaio.BaseTest;
+import de.yaio.commons.data.DataUtils;
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.nodeservice.NodeService;
-import de.yaio.utils.DataUtils;
 
 /** 
  * interface for test of the datadomainservice-logic<br>

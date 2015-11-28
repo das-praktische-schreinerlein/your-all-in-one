@@ -18,8 +18,8 @@ import java.util.Map;
 
 import org.apache.commons.collections.MapUtils;
 
+import de.yaio.commons.data.DataUtils;
 import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
-import de.yaio.utils.DataUtils;
 
 /** 
  * options for search of Nodes, initialized with default-values

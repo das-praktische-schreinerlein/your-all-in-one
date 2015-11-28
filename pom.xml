@@ -62,6 +62,14 @@
           # dependency versions
           ##################
          -->
+         
+        <!-- Yaio versions -->
+        <yaio-commons.version>0.1.0</yaio-commons.version>
+        <yaio-plantuml-service.version>0.3.0</yaio-plantuml-service.version>
+        <yaio-webshot-service.version>0.3.0</yaio-webshot-service.version>
+        <yaio-dms-service.version>0.2.0</yaio-dms-service.version>
+        <yaio-metaextract-service.version>0.1.0</yaio-metaextract-service.version>
+
         <!--  versions -->
         <roo.version>1.2.4.RELEASE</roo.version>
         <aspectj.version>1.8.3</aspectj.version>
@@ -86,15 +94,11 @@
         <flexjson.version>2.1</flexjson.version>
         <validation-api.version>1.0.0.GA</validation-api.version>
 
-        <commons-lang3.version>3.1</commons-lang3.version>
-        <commons-collections.version>3.2.1</commons-collections.version>
         <commons-pool.version>1.5.6</commons-pool.version>
         <commons-dbcp.version>1.4</commons-dbcp.version>
         <commons-cli.version>1.2</commons-cli.version>
         <commons-io.version>2.1</commons-io.version>
         <commons-compress>1.10</commons-compress>
-        <httpclient.version>4.3.6</httpclient.version>
-        <httpmime.version>4.3.6</httpmime.version>
 
         <poi.version>3.7</poi.version>
         <icu4j.version>54.1</icu4j.version>
@@ -188,28 +192,6 @@
     <dependencies>
         <!-- General dependencies for standard applications -->
         
-        <!-- logging -->
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>${log4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>jcl-over-slf4j</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
-        
         <!-- aspect-->
         <dependency>
             <groupId>org.aspectj</groupId>
@@ -231,11 +213,6 @@
             <groupId>net.sf.flexjson</groupId>
             <artifactId>flexjson</artifactId>
             <version>${flexjson.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>${commons-lang3.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -311,11 +288,6 @@
             <groupId>org.hibernate.javax.persistence</groupId>
             <artifactId>hibernate-jpa-2.0-api</artifactId>
             <version>${hibernate-jpa-2.0-api.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-collections</groupId>
-            <artifactId>commons-collections</artifactId>
-            <version>${commons-collections.version}</version>
         </dependency>
         <dependency>
             <groupId>javax.validation</groupId>
@@ -455,16 +427,6 @@
         </dependency>
         <!-- admin -->
         <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>${httpclient.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpmime</artifactId>
-            <version>${httpmime.version}</version>
-        </dependency>
-        <dependency>
            <groupId>net.sf.biweekly</groupId>
            <artifactId>biweekly</artifactId>
            <version>${biweekly.version}</version>
@@ -472,12 +434,20 @@
 
         <!-- yaio-services / via jitpack.io because of no maven-centra-account -->
         <dependency>
+            <groupId>de.yaio</groupId>
+            <!-- 
+            <groupId>com.github.das-praktische-schreinerlein</groupId>
+             -->
+            <artifactId>yaio-commons</artifactId>
+            <version>${yaio-commons.version}</version>
+        </dependency>
+        <dependency>
             <groupId>de.yaio.services</groupId>
             <!-- 
             <groupId>com.github.das-praktische-schreinerlein</groupId>
              -->
             <artifactId>yaio-plantuml-service</artifactId>
-            <version>0.3.0</version>
+            <version>${yaio-plantuml-service.version}</version>
         </dependency>
         <dependency>
             <groupId>de.yaio.services</groupId>
@@ -485,7 +455,7 @@
             <groupId>com.github.das-praktische-schreinerlein</groupId>
              -->
             <artifactId>yaio-webshot-service</artifactId>
-            <version>0.3.0</version>
+            <version>${yaio-webshot-service.version}</version>
         </dependency>
         <dependency>
             <groupId>de.yaio.services</groupId>
@@ -493,7 +463,7 @@
             <groupId>com.github.das-praktische-schreinerlein</groupId>
              -->
             <artifactId>yaio-dms-service</artifactId>
-            <version>0.2.0</version>
+            <version>${yaio-dms-service.version}</version>
         </dependency>
         <dependency>
             <groupId>de.yaio.services</groupId>
@@ -501,7 +471,7 @@
             <groupId>com.github.das-praktische-schreinerlein</groupId>
              -->
             <artifactId>yaio-metaextract-service</artifactId>
-            <version>0.1.0</version>
+            <version>${yaio-metaextract-service.version}</version>
         </dependency>
 
     </dependencies>

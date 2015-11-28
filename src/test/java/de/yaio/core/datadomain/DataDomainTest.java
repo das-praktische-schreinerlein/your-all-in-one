@@ -24,13 +24,13 @@ import org.junit.runners.JUnit4;
 import org.springframework.mock.staticmock.MockStaticEntityMethods;
 
 import de.yaio.BaseTest;
+import de.yaio.commons.data.DataUtils;
 import de.yaio.datatransfer.exporter.OutputOptions;
 import de.yaio.datatransfer.exporter.OutputOptionsImpl;
 import de.yaio.datatransfer.exporter.formatter.Formatter;
 import de.yaio.datatransfer.importer.ImportOptions;
 import de.yaio.datatransfer.importer.ImportOptionsImpl;
 import de.yaio.datatransfer.importer.parser.Parser;
-import de.yaio.utils.DataUtils;
 
 /** 
  * interface for test of the datadomain-logic<br>

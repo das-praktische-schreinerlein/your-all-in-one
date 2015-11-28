@@ -21,6 +21,7 @@ import org.apache.log4j.Logger;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import de.yaio.commons.data.DataUtils;
 import de.yaio.core.datadomain.BaseWorkflowData;
 import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
 import de.yaio.core.datadomain.DataDomain;
@@ -36,7 +37,6 @@ import de.yaio.core.node.TaskNode;
 import de.yaio.core.nodeservice.BaseNodeService;
 import de.yaio.core.nodeservice.NodeService;
 import de.yaio.utils.Calculator;
-import de.yaio.utils.DataUtils;
 import de.yaio.utils.PredecessorCalculator;
 
 /** 

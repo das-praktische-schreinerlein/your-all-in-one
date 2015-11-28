@@ -25,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import de.yaio.commons.data.DataUtils;
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.datadomain.ResContentData;
 import de.yaio.core.datadomain.ResContentData.UploadWorkflowState;
@@ -35,7 +36,6 @@ import de.yaio.core.node.UrlResNode;
 import de.yaio.core.nodeservice.UrlResNodeService;
 import de.yaio.extension.dms.utils.DMSClient;
 import de.yaio.extension.dms.utils.YaioWebshotClient;
-import de.yaio.utils.DataUtils;
 
 /** 
  * businesslogic for dataDomain: ResContentData (upload url/file to dms)

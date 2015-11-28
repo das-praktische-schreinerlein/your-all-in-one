@@ -19,10 +19,10 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 
+import de.yaio.commons.data.DataUtils;
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.datadomain.SysData;
 import de.yaio.core.nodeservice.NodeService;
-import de.yaio.utils.DataUtils;
 
 /** 
  * businesslogic for dataDomain: SysData

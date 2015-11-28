@@ -21,9 +21,9 @@ import java.util.GregorianCalendar;
 
 import org.apache.log4j.Logger;
 
+import de.yaio.commons.data.DataUtils;
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.datatransfer.exporter.OutputOptions;
-import de.yaio.utils.DataUtils;
 
 /** 
  * service-functions for formatting of dataDomains

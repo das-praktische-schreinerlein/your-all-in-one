@@ -21,8 +21,8 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.log4j.Logger;
 
-import de.yaio.utils.DataUtils;
-import de.yaio.utils.HttpUtils;
+import de.yaio.commons.data.DataUtils;
+import de.yaio.commons.http.HttpUtils;
 
 /** 
  * job to call admin-int5erface of yaio-instances

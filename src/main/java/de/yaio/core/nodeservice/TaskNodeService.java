@@ -16,11 +16,11 @@ package de.yaio.core.nodeservice;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.yaio.commons.data.DataUtils;
 import de.yaio.core.datadomain.BaseWorkflowData;
 import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.node.TaskNode;
-import de.yaio.utils.DataUtils;
 
 
 /** 

@@ -20,6 +20,7 @@ import java.util.regex.Pattern;
 import org.apache.log4j.Logger;
 import org.markdown4j.Markdown4jProcessor;
 
+import de.yaio.commons.data.DataUtils;
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.node.BaseNode;
 import de.yaio.core.node.InfoNode;
@@ -35,7 +36,6 @@ import de.yaio.datatransfer.exporter.formatter.PlanChildrenSumDataFormatterImpl;
 import de.yaio.datatransfer.exporter.formatter.PlanDataFormatterImpl;
 import de.yaio.datatransfer.importer.parser.Parser;
 import de.yaio.extension.datatransfer.wiki.WikiExporter;
-import de.yaio.utils.DataUtils;
 
 /** 
  * export of Nodes as Html

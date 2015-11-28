@@ -26,7 +26,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import de.yaio.utils.HttpUtils;
+import de.yaio.commons.http.HttpUtils;
 
 /** 
  * businesslogic for metaextract

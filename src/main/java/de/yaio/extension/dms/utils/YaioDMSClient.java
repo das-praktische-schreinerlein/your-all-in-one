@@ -34,8 +34,8 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import de.yaio.commons.http.HttpUtils;
 import de.yaio.services.dms.storage.StorageResourceVersion;
-import de.yaio.utils.HttpUtils;
 
 /** 
  * businesslogic for dms

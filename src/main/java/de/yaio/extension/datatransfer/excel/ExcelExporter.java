@@ -35,6 +35,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.util.CellRangeAddress;
 
+import de.yaio.commons.data.DataUtils;
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.node.BaseNode;
 import de.yaio.core.node.TaskNode;
@@ -44,7 +45,6 @@ import de.yaio.datatransfer.exporter.formatter.DocLayoutDataFormatterImpl;
 import de.yaio.datatransfer.exporter.formatter.IstDataFormatterImpl;
 import de.yaio.datatransfer.exporter.formatter.PlanDataFormatterImpl;
 import de.yaio.extension.datatransfer.wiki.WikiExporter;
-import de.yaio.utils.DataUtils;
 import de.yaio.utils.ExcelService;
 
 /** 
