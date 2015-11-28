@@ -14,10 +14,11 @@
 package de.yaio.extension.dms.jobs;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import de.yaio.extension.dms.services.ResContentDataServiceImpl;
+import de.yaio.extension.dms.services.ResContentDataService;
 
 /** 
  * job to do webshots and upload to dms
@@ -30,26 +31,14 @@ import de.yaio.extension.dms.services.ResContentDataServiceImpl;
  * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 @Component
-public class JobUrlWebShots extends ResContentDataServiceImpl {
-    
-    private static JobUrlWebShots instance = new JobUrlWebShots();
-    
+public class JobUrlWebShots {
     // Logger
     private static final Logger LOGGER =
             Logger.getLogger(JobUrlWebShots.class);
+    
+    @Autowired
+    private ResContentDataService resContentService;
 
-    /** 
-     * return the main instance of this service
-     * @FeatureDomain                Persistence
-     * @FeatureResult                return the main instance of this service
-     * @FeatureKeywords              Persistence
-     * @return                       the main instance of this service
-     */
-    public static JobUrlWebShots getInstance() {
-        return instance;
-    }
-
-    @Override
     @Scheduled(
                fixedDelayString = "${yaio.dms-client.jobs.urlwebshots.fixedDelay}",
 //               fixedRateString = "${yaio.dms-client.jobs.urlwebshots.fixedRate}",
@@ -58,7 +47,7 @@ public class JobUrlWebShots extends ResContentDataServiceImpl {
                )
     public void doSearchAndTrigger() throws Exception {
         LOGGER.info("start job");
-        super.doSearchAndTrigger();
+        resContentService.doSearchAndTrigger();
         LOGGER.info("end job");
     }
 }

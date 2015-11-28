@@ -22,6 +22,7 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import de.yaio.core.datadomain.DataDomain;
@@ -46,10 +47,8 @@ import de.yaio.utils.DataUtils;
  * @copyright                    Copyright (c) 2014, Michael Schreiner
  * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
+@Service
 public class ResContentDataServiceImpl extends TriggeredDataDomainRecalcImpl implements ResContentDataService {
-    
-    private static ResContentDataServiceImpl instance = new ResContentDataServiceImpl();
-    
     // Logger
     private static final Logger LOGGER =
             Logger.getLogger(ResContentDataServiceImpl.class);
@@ -58,17 +57,6 @@ public class ResContentDataServiceImpl extends TriggeredDataDomainRecalcImpl imp
     protected YaioWebshotClient webshotProvider;
     @Autowired
     protected DMSClient dmsProvider;
-
-    /** 
-     * return the main instance of this service
-     * @FeatureDomain                Persistence
-     * @FeatureResult                return the main instance of this service
-     * @FeatureKeywords              Persistence
-     * @return                       the main instance of this service
-     */
-    public static ResContentDataServiceImpl getInstance() {
-        return instance;
-    }
 
     public Class<?> getRecalcTargetClass() {
         return ResContentData.class;
@@ -152,11 +140,11 @@ public class ResContentDataServiceImpl extends TriggeredDataDomainRecalcImpl imp
         if (StringUtils.isEmpty(resContentDMSId)) {
             // add new file
             resContentDMSId = node.getSysUID() + "-" + "content";
-            dmsProvider.addResContentToDMS(resContentDMSId, normfileName, input);
+            dmsProvider.addContentToDMS(resContentDMSId, normfileName, input);
             node.setResContentDMSId(resContentDMSId);
         } else {
             // update file
-            dmsProvider.updateResContentInDMS(resContentDMSId, normfileName, input);
+            dmsProvider.updateContentInDMS(resContentDMSId, normfileName, input);
         }
 
         // everything fine

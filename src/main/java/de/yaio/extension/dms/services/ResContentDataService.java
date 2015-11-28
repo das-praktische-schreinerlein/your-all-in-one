@@ -18,6 +18,7 @@ import java.io.InputStream;
 
 import de.yaio.core.datadomain.ResContentData;
 import de.yaio.core.datadomain.ResLocData;
+import de.yaio.core.datadomainservice.TriggeredDataDomainRecalc;
 
 /** 
  * businesslogic for dataDomain: ResContentData (upload url/file to dms)
@@ -29,7 +30,7 @@ import de.yaio.core.datadomain.ResLocData;
  * @copyright                    Copyright (c) 2014, Michael Schreiner
  * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-public interface ResContentDataService {
+public interface ResContentDataService extends TriggeredDataDomainRecalc {
 
     /** 
      * uploads the ResLoc-data to dms
