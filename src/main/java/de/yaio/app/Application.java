@@ -58,7 +58,10 @@ import de.yaio.core.node.BaseNode;
                 de.yaio.services.dms.DMSWebSecurityConfig.DMSServiceSecurityConfigurerAdapter.class,
                 de.yaio.services.plantuml.PlantumlApplication.class,
                 de.yaio.services.plantuml.PlantumlWebSecurityConfig.class,
-                de.yaio.services.plantuml.PlantumlWebSecurityConfig.PlantumlServiceSecurityConfigurerAdapter.class
+                de.yaio.services.plantuml.PlantumlWebSecurityConfig.PlantumlServiceSecurityConfigurerAdapter.class,
+                de.yaio.services.metaextract.MetaExtractApplication.class,
+                de.yaio.services.metaextract.MetaExtractWebSecurityConfig.class,
+                de.yaio.services.metaextract.MetaExtractWebSecurityConfig.MetaExtractServiceSecurityConfigurerAdapter.class
                 })
 @ComponentScan(basePackages = "de.yaio",
                 excludeFilters = {
@@ -71,7 +74,10 @@ import de.yaio.core.node.BaseNode;
                         de.yaio.services.dms.DMSWebSecurityConfig.DMSServiceSecurityConfigurerAdapter.class,
                         de.yaio.services.plantuml.PlantumlApplication.class,
                         de.yaio.services.plantuml.PlantumlWebSecurityConfig.class,
-                        de.yaio.services.plantuml.PlantumlWebSecurityConfig.PlantumlServiceSecurityConfigurerAdapter.class
+                        de.yaio.services.plantuml.PlantumlWebSecurityConfig.PlantumlServiceSecurityConfigurerAdapter.class,
+                        de.yaio.services.metaextract.MetaExtractApplication.class,
+                        de.yaio.services.metaextract.MetaExtractWebSecurityConfig.class,
+                        de.yaio.services.metaextract.MetaExtractWebSecurityConfig.MetaExtractServiceSecurityConfigurerAdapter.class
                     })
                 })
 @EnableScheduling
