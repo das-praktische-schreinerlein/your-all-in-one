@@ -92,6 +92,7 @@
         <commons-dbcp.version>1.4</commons-dbcp.version>
         <commons-cli.version>1.2</commons-cli.version>
         <commons-io.version>2.1</commons-io.version>
+        <commons-compress>1.10</commons-compress>
         <httpclient.version>4.3.6</httpclient.version>
         <httpmime.version>4.3.6</httpmime.version>
 
@@ -235,6 +236,11 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>${commons-lang3.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-compress</artifactId>
+            <version>${commons-compress}</version>
         </dependency>
         <!-- ROO dependencies -->
         <dependency>
@@ -471,7 +477,7 @@
             <groupId>com.github.das-praktische-schreinerlein</groupId>
              -->
             <artifactId>yaio-plantuml-service</artifactId>
-            <version>0.2.0</version>
+            <version>0.3.0</version>
         </dependency>
         <dependency>
             <groupId>de.yaio.services</groupId>
@@ -479,7 +485,7 @@
             <groupId>com.github.das-praktische-schreinerlein</groupId>
              -->
             <artifactId>yaio-webshot-service</artifactId>
-            <version>0.2.0</version>
+            <version>0.3.0</version>
         </dependency>
         <dependency>
             <groupId>de.yaio.services</groupId>
@@ -487,6 +493,14 @@
             <groupId>com.github.das-praktische-schreinerlein</groupId>
              -->
             <artifactId>yaio-dms-service</artifactId>
+            <version>0.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>de.yaio.services</groupId>
+            <!-- 
+            <groupId>com.github.das-praktische-schreinerlein</groupId>
+             -->
+            <artifactId>yaio-metaextract-service</artifactId>
             <version>0.1.0</version>
         </dependency>
 

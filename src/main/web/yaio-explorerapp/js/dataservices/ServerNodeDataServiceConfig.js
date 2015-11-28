@@ -53,7 +53,9 @@ Yaio.ServerNodeDataServiceConfig = function(urlBase, name, desc) {
         
         // dms
         me.dmsDownloadUrl               = me.urlBase + "/dms/download/"
-        me.dmsEmbedUrl               = me.urlBase + "/dms/embed/"
+        me.dmsEmbedUrl                  = me.urlBase + "/dms/embed/"
+        me.dmsIndexDownloadUrl          = me.urlBase + "/dms/indexdownload/"
+        me.dmsIndexEmbedUrl             = me.urlBase + "/dms/indexembed/"
     }
     
     me._init();

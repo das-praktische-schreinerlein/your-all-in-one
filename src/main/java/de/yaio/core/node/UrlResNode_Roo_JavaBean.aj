@@ -74,26 +74,26 @@ privileged aspect UrlResNode_Roo_JavaBean {
     }
 
     public String UrlResNode.getResIndexDMSId() {
-        return this.resContentIndexDMSId;
+        return this.resIndexDMSId;
     }
 
-    public void UrlResNode.setResIndexDMSId(String resContentIndexDMSId) {
-        this.resContentIndexDMSId = resContentIndexDMSId;
+    public void UrlResNode.setResIndexDMSId(String resIndexDMSId) {
+        this.resIndexDMSId = resIndexDMSId;
     }
 
     public String UrlResNode.getResIndexDMSType() {
-        return this.resContentIndexDMSType;
+        return this.resIndexDMSType;
     }
 
-    public void UrlResNode.setResIndexDMSType(String resContentIndexDMSType) {
-        this.resContentIndexDMSType = resContentIndexDMSType;
+    public void UrlResNode.setResIndexDMSType(String resIndexDMSType) {
+        this.resIndexDMSType = resIndexDMSType;
     }
 
     public IndexWorkflowState UrlResNode.getResIndexDMSState() {
-        return this.resContentIndexDMSState;
+        return this.resIndexDMSState;
     }
 
-    public void UrlResNode.setResIndexDMSState(IndexWorkflowState resContentIndexDMSState) {
-        this.resContentIndexDMSState = resContentIndexDMSState;
+    public void UrlResNode.setResIndexDMSState(IndexWorkflowState resIndexDMSState) {
+        this.resIndexDMSState = resIndexDMSState;
     }
 }

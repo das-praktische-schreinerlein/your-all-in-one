@@ -63,3 +63,13 @@
 .field_resContentDMSState_UPLOAD_FAILED {
     background: red;
 }
+
+.field_resIndexDMSState_INDEX_DONE {
+    background: green;
+}
+.field_resIndexDMSState_INDEX_OPEN {
+    background: yellow;
+}
+.field_resIndexDMSState_INDEX_FAILED {
+    background: red;
+}

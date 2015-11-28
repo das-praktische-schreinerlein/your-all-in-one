@@ -317,8 +317,8 @@ Yaio.ExplorerActionService = function(appBase) {
     /** 
      * open the dmsdownloadwindow for the node  
      * @FeatureDomain                GUI
-     * @FeatureResult                GUI-result: opens jira window with jira-converted node-content
-     * @FeatureKeywords              GUI Convert
+     * @FeatureResult                GUI-result: opens dmsdownloadwindow
+     * @FeatureKeywords              GUI 
      * @param nodeId                 id of the node
      */
     me.openDMSDownloadWindow = function(nodeId) {
@@ -367,6 +367,68 @@ Yaio.ExplorerActionService = function(appBase) {
         });    
     };
     
+    /** 
+     * open the dmsdownloadwindow for the extracted metadata of the node document 
+     * @FeatureDomain                GUI
+     * @FeatureResult                GUI-result: opens dmsdownloadwindow node-content
+     * @FeatureKeywords              GUI
+     * @param nodeId                 id of the node
+     */
+    me.openDMSIndexDownloadWindow = function(nodeId) {
+        var svcYaioBase = me.appBase.get('YaioBase');
+
+        // check vars
+        if (! nodeId) {
+            // tree not found
+            svcYaioBase.logError("error openDMSIndexDownloadWindow: nodeId required", false);
+            return null;
+        }
+        // load node
+        var tree = me.$("#tree").fancytree("getTree");
+        if (!tree) {
+            // tree not found
+            svcYaioBase.logError("error openDMSIndexDownloadWindow: cant load tree for node:" + nodeId, false);
+            return null;
+        }
+        var treeNode = tree.getNodeByKey(nodeId);
+        if (! treeNode) {
+            svcYaioBase.logError("error openDMSIndexDownloadWindow: cant load node:" + nodeId, false);
+            return null;
+        }
+        
+        // extract nodedata
+        var basenode = treeNode.data.basenode;
+        var embedUrl = me.appBase.get('YaioAccessManager').getAvailiableNodeAction('dmsIndexEmbed', basenode.sysUID, false) + basenode.sysUID;
+        var downloadUrl = me.appBase.get('YaioAccessManager').getAvailiableNodeAction('dmsIndexDownload', basenode.sysUID, false) + basenode.sysUID;
+
+        $.getJSON( embedUrl, function(data) {
+            // set clipboard-content
+            var doc = me.$( "#download-iframe" )[0].contentWindow.document;
+            var $body = $('body',doc);
+            var tika = data.versions["class de.yaio.services.metaextract.extractor.TikaExtractor"];
+            var content = "" + tika.content;
+            content = me.appBase.get('YaioBase').htmlEscapeText(content);
+            content = content.replace(/\n/g, "<br />");
+            $body.html('<h1>Content: tika</h1><br><code>' + content + "<code>");
+        });
+        
+        
+        // show message
+        me.$( "#download-box" ).dialog({
+            modal: true,
+            width: "700px",
+            buttons: {
+              Ok: function() {
+                me.$( this ).dialog( "close" );
+              },
+              'Download': function() {
+                var helpFenster = window.open(downloadUrl, "download", "width=200,height=200,scrollbars=yes,resizable=yes");
+                helpFenster.focus();
+              }
+            }
+        });    
+    };
+
     /** 
      * Toggle the "#detail_desc_" for the specified id with a slide. 
      * @FeatureDomain                Layout Toggler

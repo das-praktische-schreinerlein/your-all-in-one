@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import de.yaio.core.datadomain.ResContentData;
+import de.yaio.core.datadomain.ResIndexData;
 import de.yaio.core.node.UrlResNode;
 import de.yaio.extension.dms.utils.DMSClient;
 import de.yaio.services.dms.storage.StorageResourceVersion;
@@ -66,7 +67,7 @@ public class ResDocumentService {
         
         String resContentDMSId = node.getResContentDMSId();
         if (!StringUtils.isEmpty(resContentDMSId)) {
-            return dmsProvider.getResContentFromDMS(resContentDMSId, version);
+            return dmsProvider.getContentFromDMS(resContentDMSId, version);
         }
         
         return null;
@@ -92,7 +93,59 @@ public class ResDocumentService {
         
         String resContentDMSId = node.getResContentDMSId();
         if (!StringUtils.isEmpty(resContentDMSId)) {
-            return dmsProvider.getMetaDataForResContentFromDMS(resContentDMSId, version);
+            return dmsProvider.getMetaDataForContentFromDMS(resContentDMSId, version);
+        }
+        
+        return null;
+    }
+
+    /**
+     * get index for version from dms
+     * @FeatureDomain                DMS
+     * @FeatureResult                returns Inputstream
+     * @FeatureKeywords              DMS
+     * @param datanode               node
+     * @param version                version of the request index 
+     * @return                       Inputstream
+     * @throws IOException           Exceptions possible
+     */
+    public InputStream downloadResIndexFromDMS(final ResIndexData datanode, final Integer version) 
+                    throws IOException {
+        if (!UrlResNode.class.isInstance(datanode)) {
+            throw new IllegalArgumentException();
+        }
+        
+        UrlResNode node = (UrlResNode) datanode;
+        
+        String resIndexDMSId = node.getResIndexDMSId();
+        if (!StringUtils.isEmpty(resIndexDMSId)) {
+            return dmsProvider.getContentFromDMS(resIndexDMSId, version);
+        }
+        
+        return null;
+    }
+
+    /**
+     * get metadata for version from dms
+     * @FeatureDomain                DMS
+     * @FeatureResult                returns StorageResourceVersion
+     * @FeatureKeywords              DMS
+     * @param datanode               node
+     * @param version                version of the request index 
+     * @return                       StorageResourceVersion
+     * @throws IOException           Exceptions possible
+     */
+    public StorageResourceVersion getMetaDataForResIndexFromDMS(final ResIndexData datanode, final Integer version) 
+                    throws IOException {
+        if (!UrlResNode.class.isInstance(datanode)) {
+            throw new IllegalArgumentException();
+        }
+        
+        UrlResNode node = (UrlResNode) datanode;
+        
+        String resIndexDMSId = node.getResIndexDMSId();
+        if (!StringUtils.isEmpty(resIndexDMSId)) {
+            return dmsProvider.getMetaDataForContentFromDMS(resIndexDMSId, version);
         }
         
         return null;

@@ -69,10 +69,14 @@ public class DocumentController {
      * @FeatureKeywords              Webservice Query
      * @param sysUID                 sysUID to export
      * @param response               the response-Obj to set contenttype and headers
+     * @param flgEmbed               goal is to embed it (Content-Disposition inline)
+     * @param flgIndexData           the extracted metada is requested only
+     * @throws IOException           is something failed 
      */
     public void commondRequestResource(final String sysUID, 
-                                 final HttpServletResponse response,
-                                 final boolean flgEmbed) throws IOException {
+                                       final HttpServletResponse response,
+                                       final boolean flgEmbed,
+                                       final boolean flgIndexData) throws IOException {
         BaseNode baseNode = BaseNode.findBaseNode(sysUID);
         if (sysUID == null) {
             // node not found
@@ -82,8 +86,17 @@ public class DocumentController {
         }
 
         UrlResNode node = (UrlResNode) baseNode;
-        InputStream input = resDocumentService.downloadResContentFromDMS(node, 0);
-        StorageResourceVersion resVersion = resDocumentService.getMetaDataForResContentFromDMS(node, 0);
+        InputStream input;
+        StorageResourceVersion resVersion;
+        if (flgIndexData) {
+            // Indexdata
+            input = resDocumentService.downloadResIndexFromDMS(node, 0);
+            resVersion = resDocumentService.getMetaDataForResIndexFromDMS(node, 0);
+        } else {
+            // Content
+            input = resDocumentService.downloadResContentFromDMS(node, 0);
+            resVersion = resDocumentService.getMetaDataForResContentFromDMS(node, 0);
+        }
         String normfileName = DataUtils.normalizeFileName(resVersion.getOrigName());
 
         String fileType = fileTypeMap.getContentType(normfileName);
@@ -111,7 +124,7 @@ public class DocumentController {
     public void downloadResource(@PathVariable(value = "sysUID") final String sysUID, 
                                    final HttpServletResponse response) {
         try {
-            this.commondRequestResource(sysUID, response, false);
+            this.commondRequestResource(sysUID, response, false, false);
         } catch (IOException e) {
             response.setStatus(404);
             e.printStackTrace();
@@ -132,7 +145,49 @@ public class DocumentController {
     public void embedResource(@PathVariable(value = "sysUID") final String sysUID, 
                                    final HttpServletResponse response) {
         try {
-            this.commondRequestResource(sysUID, response, true);
+            this.commondRequestResource(sysUID, response, true, false);
+        } catch (IOException e) {
+            response.setStatus(404);
+            e.printStackTrace();
+        }
+    }
+
+    /** 
+     * Request to download the resource-index of UrlResNode with sysUID
+     * @FeatureDomain                Webservice
+     * @FeatureResult                Downloadfile
+     * @FeatureKeywords              Webservice Query
+     * @param sysUID                 sysUID to export
+     * @param response               the response-Obj to set contenttype and headers
+     */
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.GET, 
+                    value = "/indexdownload/{sysUID}")
+    public void downloadIndexResource(@PathVariable(value = "sysUID") final String sysUID, 
+                                   final HttpServletResponse response) {
+        try {
+            this.commondRequestResource(sysUID, response, false, true);
+        } catch (IOException e) {
+            response.setStatus(404);
+            e.printStackTrace();
+        }
+    }
+
+    /** 
+     * Request to embed the resource-index of UrlResNode with sysUID
+     * @FeatureDomain                Webservice
+     * @FeatureResult                Downloadfile
+     * @FeatureKeywords              Webservice Query
+     * @param sysUID                 sysUID to export
+     * @param response               the response-Obj to set contenttype and headers
+     */
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.GET, 
+                    value = "/indexembed/{sysUID}")
+    public void embedIndexResource(@PathVariable(value = "sysUID") final String sysUID, 
+                                   final HttpServletResponse response) {
+        try {
+            this.commondRequestResource(sysUID, response, true, true);
         } catch (IOException e) {
             response.setStatus(404);
             e.printStackTrace();

@@ -391,6 +391,8 @@ Yaio.NodeDataRenderService = function(appBase) {
             // Url only
             if (basenode.className == "UrlResNode") {
                 // url
+                
+                // upload content
                 var resContentDMSState = basenode.resContentDMSState;
                 var stateMapping = {"UPLOAD_DONE": "OK", "UPLOAD_OPEN": "O", "UPLOAD_FAILED": "F"};
                 if (stateMapping[resContentDMSState] 
@@ -410,6 +412,28 @@ Yaio.NodeDataRenderService = function(appBase) {
                                       .addClass("field_resContentDMSState_" + resContentDMSState)
                                       ); 
                 }
+                // extracted metadata
+                var resIndexDMSState = basenode.resIndexDMSState;
+                var indexStateMapping = {"INDEX_DONE": "OK", "INDEX_OPEN": "O", "INDEX_FAILED": "F"};
+                if (indexStateMapping[resIndexDMSState] 
+                    && me.appBase.get('YaioAccessManager').getAvailiableNodeAction('dmsDownload', basenode.sysUID, false)) {
+                    // url
+                    var stateBlock = svcYaioBase.htmlEscapeText(indexStateMapping[resIndexDMSState]);
+                    if (resIndexDMSState == "INDEX_DONE") {
+                        stateBlock = "<a href='" +  "' onClick=\"yaioAppBase.get('YaioExplorerAction').openDMSIndexDownloadWindow('"+ basenode.sysUID + "'); return false;" 
+                                     +   "\" lang='tech' data-tooltip='tooltip.command.OpenDMSIndexDownloadWindow_" + resIndexDMSState + "'>" + stateBlock + "</a>";
+                    }
+                    $row.append(
+                            me.$("<div />").html(stateBlock)
+                                      .addClass("container_field")
+                                      .addClass("fieldtype_additionaldata")
+                                      .addClass("fieldtype_uploadsstate")
+                                      .addClass("field_resIndexDMSState")
+                                      .addClass("field_resIndexDMSState_" + resIndexDMSState)
+                                      ); 
+                }
+                
+                // url-data
                 $row.append(
                         me.$("<div />").html("<a href='" + svcYaioBase.htmlEscapeText(basenode.resLocRef) + "' target='_blank'>" 
                                          + svcYaioBase.htmlEscapeText(basenode.resLocRef) + "</a>")

@@ -33,6 +33,7 @@ import de.yaio.core.datadomain.PlanData;
 import de.yaio.core.datadomain.ResContentData;
 import de.yaio.core.datadomain.ResContentData.UploadWorkflowState;
 import de.yaio.core.datadomain.ResIndexData;
+import de.yaio.core.datadomain.ResIndexData.IndexWorkflowState;
 import de.yaio.core.datadomain.ResLocData;
 import de.yaio.core.datadomain.SymLinkData;
 import de.yaio.core.datadomain.SysData;
@@ -367,15 +368,32 @@ public class DatatransferUtils {
                 flgChange = true;
             }
 
-            // check for ResContentDMSState
-            UploadWorkflowState oldState = origUrlResNode.getResContentDMSState();
-            UploadWorkflowState newState = newUrlResNode.getResContentDMSState();
-            if (UrlResNodeService.CONST_NODETYPE_IDENTIFIER_URLRES.equals(newUrlResNode.getType())
-                    && Calculator.compareValues(oldState, newState) != Calculator.CONST_COMPARE_EQ
-                    && newState != null
-                    && newState.equals(UploadWorkflowState.UPLOAD_OPEN)
-                    && !oldState.equals(UploadWorkflowState.UPLOAD_RUNNING)) {
-                origUrlResNode.setResContentDMSState(newUrlResNode.getResContentDMSState());
+            // check for ResContentDMSState for real urls only
+            UploadWorkflowState oldUploadState = origUrlResNode.getResContentDMSState();
+            UploadWorkflowState newUploadState = newUrlResNode.getResContentDMSState();
+            if (UrlResNodeService.CONST_NODETYPE_IDENTIFIER_URLRES.equals(newUrlResNode.getType())) {
+                if (Calculator.compareValues(oldUploadState, newUploadState) != Calculator.CONST_COMPARE_EQ
+                        && newUploadState != null
+                        && newUploadState.equals(UploadWorkflowState.UPLOAD_OPEN)
+                        && (oldUploadState == null || !oldUploadState.equals(UploadWorkflowState.UPLOAD_RUNNING))) {
+                    origUrlResNode.setResContentDMSState(newUrlResNode.getResContentDMSState());
+                    flgChange = true;
+                }
+            }
+
+            // check for ResIndexDMSState is set to open and upload is open or done
+            IndexWorkflowState oldIndexState = origUrlResNode.getResIndexDMSState();
+            IndexWorkflowState newIndexState = newUrlResNode.getResIndexDMSState();
+            if (Calculator.compareValues(oldIndexState, newIndexState) != Calculator.CONST_COMPARE_EQ
+                    && newIndexState != null
+                    && newIndexState.equals(IndexWorkflowState.INDEX_OPEN)
+                    && (oldIndexState == null || !oldIndexState.equals(IndexWorkflowState.INDEX_RUNNING))
+                    && (   (oldUploadState != null
+                            && (oldUploadState.equals(UploadWorkflowState.UPLOAD_OPEN)
+                                || oldUploadState.equals(UploadWorkflowState.UPLOAD_DONE)))
+                        || (newUploadState != null
+                            && (newUploadState.equals(UploadWorkflowState.UPLOAD_OPEN))))) {
+                origUrlResNode.setResIndexDMSState(newUrlResNode.getResIndexDMSState());
                 flgChange = true;
             }
         }

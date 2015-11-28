@@ -20,6 +20,7 @@ import org.apache.log4j.Logger;
 
 import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
 import de.yaio.core.datadomain.ResContentData.UploadWorkflowState;
+import de.yaio.core.datadomain.ResIndexData.IndexWorkflowState;
 
 /** 
  * Utils for calculating
@@ -279,6 +280,8 @@ public class Calculator {
                 return ((Double) arg1).compareTo((Double) arg2);
             } else if (UploadWorkflowState.class.isInstance(arg1)) {
                 return ((UploadWorkflowState) arg1).compareTo((UploadWorkflowState) arg2);
+            } else if (IndexWorkflowState.class.isInstance(arg1)) {
+                return ((IndexWorkflowState) arg1).compareTo((IndexWorkflowState) arg2);
             } else if (Date.class.isInstance(arg1)) {
                 return ((Date) arg1).compareTo((Date) arg2);
             } else {

@@ -132,6 +132,7 @@
     "editor.common.label.resLocName": "label",
     "editor.common.label.resLocRef": "URI",
     "editor.common.label.resContentDMSState": "webshot of the url",
+    "editor.common.label.resContentDMSState": "extract metadata (text...)",
     "editor.common.label.resLocTags": "tags",
     "editor.common.label.state": "state",
     "editor.common.label.symLinkName": "label",

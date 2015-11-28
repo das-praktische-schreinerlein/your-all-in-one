@@ -13,7 +13,12 @@
  */
 package de.yaio.extension.dms.services;
 
+import java.io.IOException;
+import java.io.InputStream;
+
+import de.yaio.core.datadomain.ResIndexData;
 import de.yaio.core.datadomain.ResLocData;
+import de.yaio.core.datadomainservice.TriggeredDataDomainRecalc;
 
 /** 
  * businesslogic for dataDomain: ResIndexData (index url/file to dms)
@@ -25,10 +30,8 @@ import de.yaio.core.datadomain.ResLocData;
  * @copyright                    Copyright (c) 2014, Michael Schreiner
  * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-public interface ResIndexDataService {
+public interface ResIndexDataService extends TriggeredDataDomainRecalc {
 
-    /** the position in the recalc-order at which the recalcer will run */
-    int CONST_RECALC_ORDER = 70;
     /** 
      * index the uploaded ResLoc-data to dms
      * @FeatureDomain                DMS
@@ -38,4 +41,17 @@ public interface ResIndexDataService {
      * @throws Exception             parser/format-Exceptions possible
      */
     void indexResLoc(ResLocData node) throws Exception;
+
+
+    /**
+     * index the uploaded ResLoc-data to dms
+     * @FeatureDomain                DMS
+     * @FeatureResult                updates membervars
+     * @FeatureKeywords              DMS
+     * @param datanode               node
+     * @param fileName               original-filename
+     * @param input                  the input to upload (uploadfile or url-webshot)
+     * @throws IOException           Exceptions possible
+     */
+    void uploadResIndexToDMS(ResIndexData datanode, String fileName, InputStream input) throws IOException;
 }

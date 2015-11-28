@@ -116,6 +116,7 @@ window.YaioAppBaseConfig = function() {
                 { fieldName: "name", type: "input"},
                 { fieldName: "resLocRef", type: "input"},
                 //{ fieldName: "resContentDMSState", type: "checkbox"},
+                //{ fieldName: "resIndexDMSState", type: "checkbox"},
                 { fieldName: "resLocName", type: "input"},
                 { fieldName: "resLocTags", type: "textarea"},
                 { fieldName: "docLayoutTagCommand", type: "select"},

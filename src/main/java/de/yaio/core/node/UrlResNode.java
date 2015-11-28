@@ -88,16 +88,16 @@ public class UrlResNode extends InfoNode implements ResLocData, ResContentData, 
     /**
      */
     @Size(max = 255)
-    private String resContentIndexDMSId;
+    private String resIndexDMSId;
 
     /**
      */
     @Size(max = 20)
-    private String resContentIndexDMSType;
+    private String resIndexDMSType;
 
     /**
      */
-    private IndexWorkflowState resContentIndexDMSState;
+    private IndexWorkflowState resIndexDMSState;
 
     @XmlTransient
     @JsonIgnore

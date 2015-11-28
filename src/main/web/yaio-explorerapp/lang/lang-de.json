@@ -132,6 +132,7 @@
     "editor.common.label.resLocName": "Label",
     "editor.common.label.resLocRef": "URI",
     "editor.common.label.resContentDMSState": "Screenshot der Webseite",
+    "editor.common.label.resIndexDMSState": "Metadaten (Text...) extrachieren",
     "editor.common.label.resLocTags": "Tags",
     "editor.common.label.state": "Status",
     "editor.common.label.symLinkName": "Label",

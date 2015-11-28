@@ -244,6 +244,9 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
             if ($scope.nodeForEdit["resContentDMSState"]) {
                 nodeObj["resContentDMSState"] = "UPLOAD_OPEN";
             }
+            if ($scope.nodeForEdit["resIndexDMSState"]) {
+                nodeObj["resIndexDMSState"] = "INDEX_OPEN";
+            }
         }        
         
         // save node
