@@ -13,12 +13,10 @@
  */
 package de.yaio.extension.dms.utils;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
@@ -64,39 +62,26 @@ public class YaioMetaExtractClient {
      * @throws IOException           if something went wrong
      */
     public byte[] getMetaExtractFromUrl(final String url) throws IOException {
-//        // call url
-//        String baseUrl = metaextracturl + "/getByUrl";
-//        HttpResponse response = HttpUtils.callPostUrlPure(baseUrl,
-//                        metaextractusername, metaextractpassword, params, null, null);
-//        HttpEntity entity = response.getEntity();
-//        
-//        // check response
-//        int retCode = response.getStatusLine().getStatusCode();
-//        if (retCode < 200 || retCode > 299) {
-//            throw new IOException("illegal reponse:" + response.getStatusLine() 
-//                            + " for baseurl:" + baseUrl + " with url:" + url 
-//                            + " response:" + EntityUtils.toString(entity));
-//        }
-//
-//        return EntityUtils.toByteArray(entity);
+        // get metadata from url
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("lang", "de");
+        params.put("url", url);
 
         // call url
-        HttpResponse response = HttpUtils.callGetUrlPure(url, "anonymous", "anonymous", null);
+        String baseUrl = metaextracturl + "/getByUrl";
+        HttpResponse response = HttpUtils.callPostUrlPure(baseUrl,
+                        metaextractusername, metaextractpassword, params, null, null);
         HttpEntity entity = response.getEntity();
         
         // check response
         int retCode = response.getStatusLine().getStatusCode();
         if (retCode < 200 || retCode > 299) {
             throw new IOException("illegal reponse:" + response.getStatusLine() 
-                            + " for url:" + url 
+                            + " for baseurl:" + baseUrl + " with url:" + url 
                             + " response:" + EntityUtils.toString(entity));
         }
-        
-        File tmpFile = File.createTempFile("download", "html");
-        tmpFile.deleteOnExit();
-        FileUtils.writeByteArrayToFile(tmpFile, EntityUtils.toByteArray(entity), true);
 
-        return getMetaExtractFromFile(tmpFile.getCanonicalPath());
+        return EntityUtils.toByteArray(entity);
     }
 
     /**
@@ -109,7 +94,7 @@ public class YaioMetaExtractClient {
      * @throws IOException           if something went wrong
      */
     public byte[] getMetaExtractFromFile(final String fileName) throws IOException {
-        // get metadata from url
+        // get metadata from file
         Map<String, String> params = new HashMap<String, String>();
         params.put("lang", "de");
         Map<String, String> binfileParams = new HashMap<String, String>();
