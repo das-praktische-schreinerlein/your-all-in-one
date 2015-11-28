@@ -403,18 +403,18 @@ Yaio.ExplorerActionService = function(appBase) {
 
         $.getJSON( embedUrl, function(data) {
             // set clipboard-content
-            var doc = me.$( "#download-iframe" )[0].contentWindow.document;
-            var $body = $('body',doc);
-            var tika = data.versions["class de.yaio.services.metaextract.extractor.TikaExtractor"];
-            var content = "" + tika.content;
-            content = me.appBase.get('YaioBase').htmlEscapeText(content);
-            content = content.replace(/\n/g, "<br />");
-            $body.html('<h1>Content: tika</h1><br><code>' + content + "<code>");
+            var parent = me.$( "#downloadindex-content" );
+            parent.html("");
+            for (var key in data.versions) {
+                if (data.versions.hasOwnProperty(key)) {
+                    me.createDMSIndexDiv(key, data.versions[key], parent)
+                }
+            }
         });
         
         
         // show message
-        me.$( "#download-box" ).dialog({
+        me.$( "#downloadindex-box" ).dialog({
             modal: true,
             width: "700px",
             buttons: {
@@ -428,6 +428,14 @@ Yaio.ExplorerActionService = function(appBase) {
             }
         });    
     };
+
+    me.createDMSIndexDiv = function (key, data, parent) {
+        var content = "" + data.content;
+        var name = "" + data.parserName;
+        content = me.appBase.get('YaioBase').htmlEscapeText(content);
+        content = content.replace(/\n/g, "<br />");
+        $(parent).append('<div class="downloadindex-container"><div class="downloadindex-name">' + name + '</div><br><pre>' + content + "<pre></div>");
+    } 
 
     /** 
      * Toggle the "#detail_desc_" for the specified id with a slide. 
