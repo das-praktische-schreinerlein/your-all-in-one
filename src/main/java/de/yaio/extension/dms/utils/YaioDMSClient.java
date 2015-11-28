@@ -74,20 +74,26 @@ public class YaioDMSClient implements DMSClient {
     private int BUFFER_SIZE;
 
     @Override
-    public byte[] addResContentToDMS(final String id, final String origFileName,
+    public byte[] addContentToDMS(final String id, final String origFileName,
                                         final InputStream input) throws IOException {
         return saveResContentInDMS(true, id, origFileName, input);
     }
 
     @Override
-    public byte[] updateResContentInDMS(final String id, final String origFileName,
+    public byte[] updateContentInDMS(final String id, final String origFileName,
                                         final InputStream input) throws IOException {
         return saveResContentInDMS(false, id, origFileName, input);
     }
 
 
     @Override
-    public InputStream getResContentFromDMS(final String id, final Integer version) throws IOException {
+    public InputStream getContentFromDMS(final String id, final Integer version) throws IOException {
+        File tmpFile = this.getContentFileFromDMS(id, version);
+        return new FileInputStream(tmpFile);
+    }
+    
+    @Override
+    public File getContentFileFromDMS(final String id, final Integer version) throws IOException {
         // tmp-File
         File tmpFile = File.createTempFile("download", "tmp");
         tmpFile.deleteOnExit();
@@ -108,11 +114,11 @@ public class YaioDMSClient implements DMSClient {
         // write bytes read from the input stream into the output stream
         IOUtils.write(EntityUtils.toByteArray(entity), new FileOutputStream(tmpFile));
 
-        return new FileInputStream(tmpFile);
+        return tmpFile;
     }
     
     @Override
-    public StorageResourceVersion getMetaDataForResContentFromDMS(final String id, final Integer version) 
+    public StorageResourceVersion getMetaDataForContentFromDMS(final String id, final Integer version) 
                     throws IOException {
         // call url
         String baseUrl = dmsurl + "/getmetaversion/" + dmsappId + "/" + id + "/" + version;
