@@ -128,7 +128,8 @@ public class ResContentDataServiceImpl extends TriggeredDataDomainRecalcImpl imp
     }
 
     @Override
-    public void uploadResContentToDMS(final ResContentData datanode, final String fileName, final InputStream input) throws IOException {
+    public void uploadResContentToDMS(final ResContentData datanode, final String fileName, 
+                                      final InputStream input) throws IOException {
         if (!UrlResNode.class.isInstance(datanode)) {
             throw new IllegalArgumentException();
         }
