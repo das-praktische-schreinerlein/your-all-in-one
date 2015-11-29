@@ -134,7 +134,7 @@ public class ResIndexDataServiceImpl extends TriggeredDataDomainRecalcImpl imple
             response = metaextractProvider.getMetaExtractFromUrl(datanode.getResLocRef());
         } else {
             // get metadata from file
-            File contentFile = dmsProvider.getContentFileFromDMS(node.getResContentDMSId(), 0);
+            File contentFile = dmsProvider.getContentFileFromDMS(node.getResContentDMSId(), 0, true);
             response = metaextractProvider.getMetaExtractFromFile(contentFile.getCanonicalPath());
         }
 
@@ -144,7 +144,8 @@ public class ResIndexDataServiceImpl extends TriggeredDataDomainRecalcImpl imple
     }
 
     @Override
-    public void uploadResIndexToDMS(final ResIndexData datanode, final String fileName, final InputStream input) throws IOException {
+    public void uploadResIndexToDMS(final ResIndexData datanode, final String fileName, 
+                                    final InputStream input) throws IOException {
         if (!UrlResNode.class.isInstance(datanode)) {
             throw new IllegalArgumentException();
         }

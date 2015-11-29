@@ -78,10 +78,12 @@ public interface DMSClient {
      * @FeatureKeywords              DMS
      * @param id                     id of the content in dms
      * @param version                version of the content
+     * @param useOriginalExtension   if checked then there will be a second call to get the orginial fileextension for the tmp-file
      * @throws IOException           if something went wrong
      * @return                       file the binary content
      */
-    File getContentFileFromDMS(final String id, final Integer version) throws IOException;
+    File getContentFileFromDMS(final String id, final Integer version, 
+                               final boolean useOriginalExtension) throws IOException;
 
     /**
      * read the metadata for content from configured dms

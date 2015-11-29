@@ -22,6 +22,7 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -88,14 +89,22 @@ public class YaioDMSClient implements DMSClient {
 
     @Override
     public InputStream getContentFromDMS(final String id, final Integer version) throws IOException {
-        File tmpFile = this.getContentFileFromDMS(id, version);
+        File tmpFile = this.getContentFileFromDMS(id, version, false);
         return new FileInputStream(tmpFile);
     }
     
     @Override
-    public File getContentFileFromDMS(final String id, final Integer version) throws IOException {
+    public File getContentFileFromDMS(final String id, final Integer version, 
+                                      final boolean useOriginalExtension) throws IOException {
+        String ex = ".tmp";
+        if (useOriginalExtension) {
+            // extract extension from dms
+            StorageResourceVersion storageResVersion = this.getMetaDataForContentFromDMS(id, version);
+            ex = "." + FilenameUtils.getExtension(storageResVersion.getResName());
+        }
+
         // tmp-File
-        File tmpFile = File.createTempFile("download", "tmp");
+        File tmpFile = File.createTempFile("download", ex);
         tmpFile.deleteOnExit();
 
         // call url
