@@ -131,6 +131,7 @@
     "editor.common.label.planStart": "Start",
     "editor.common.label.resLocName": "label",
     "editor.common.label.resLocRef": "URI",
+    "editor.common.label.uploadFile": "upload file",
     "editor.common.label.resContentDMSState": "webshot of the url",
     "editor.common.label.resContentDMSState": "extract metadata (text...)",
     "editor.common.label.resLocTags": "tags",

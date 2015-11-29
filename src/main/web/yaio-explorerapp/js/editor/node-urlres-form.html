@@ -45,11 +45,22 @@
 
               <br />
 
-              <!-- show checkbox -->
-              <label for="resContentDMSState" translate="editor.common.label.resContentDMSState" class="label_resContentDMSState">Reload Page</label> 
-              <input type="checkbox" name="resContentDMSState" class="inputtype_resContentDMSState" ng-model="nodeForEdit.resContentDMSState" id="inputResContentDMSStateUrlResNode" ng-change=""> 
-              <fielderrors for="resContentDMSState"></fielderrors>
+              <!-- show fileinput -->
+              <div ng-if="nodeForEdit.type == 'FILERES'">
+                <label for="uploadFile" translate="editor.common.label.uploadFile">Uploadfile</label> 
+                <input type="file" name="uploadFile" id="inputUploadFileUrlResNode" class="inputtype_uploadFile" onchange="angular.element(this).scope().doUploadFileChanged(this)"/>
+                <fielderrors for="uploadFile"></fielderrors>
+                <br />
+              </div>
 
+              <!-- show checkbox for url-upload-->
+              <div ng-if="nodeForEdit.type == 'URLRES'">
+                <label for="resContentDMSState" translate="editor.common.label.resContentDMSState" class="label_resContentDMSState">Reload Page</label> 
+                <input type="checkbox" name="resContentDMSState" class="inputtype_resContentDMSState" ng-model="nodeForEdit.resContentDMSState" id="inputResContentDMSStateUrlResNode" ng-change=""> 
+                <fielderrors for="resContentDMSState"></fielderrors>
+              </div>
+
+              <!-- show checkbox for indexing-->
               <label for="resIndexDMSState" translate="editor.common.label.resIndexDMSState" class="label_resIndexDMSState">Reload Index</label> 
               <input type="checkbox" name="resIndexDMSState" class="inputtype_resIndexDMSState" ng-model="nodeForEdit.resIndexDMSState" id="inputResIndexDMSStateUrlResNode" ng-change=""> 
               <fielderrors for="resIndexDMSState"></fielderrors>

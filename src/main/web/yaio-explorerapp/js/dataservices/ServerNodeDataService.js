@@ -233,7 +233,33 @@ Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
         var msg = "_yaioCallSaveNode node: " + options.mode + ' ' + nodeObj['sysUID'];
         console.log(msg + " START");
         // branch depending on mode
-        var method, url, json, ajaxCall;
+        var method, url, json, ajaxCall, formData;
+        
+        if (options.mode === "create") {
+            // unset sysUID
+            nodeObj["sysUID"] = null;
+        }
+
+        // special case UrlResNode because of multipart-uploads
+        var flgMultiPart = false;
+        if (options.className == "UrlResNode") {
+            // UrlResNod set formdata for multipart-uploads
+            flgMultiPart = true;
+            
+            // create formadata
+            formData = new FormData();
+            formData.append('node', new Blob([JSON.stringify(nodeObj)], {
+                                                type: "application/json"
+                                            })
+            );
+            
+            // add uploadfile only if set
+            formData.append("uploadFile", options.uploadFile ? options.uploadFile : "");
+        } else {
+            // default: json-request: add nodeObj
+            formData = nodeObj;
+        }
+        
         if (options.mode === "edit") {
             // mode update 
             method = "PATCH";
@@ -241,18 +267,38 @@ Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
             ajaxCall = function () {
                 // hack because shortcut .patch not exists yet in angular-version
                 var http = me.appBase.get('Angular.$http');
-                return http({method: method, url: url, data: nodeObj, withCredentials: true});
+                var httpOptions = {
+                        method: method, 
+                        url: url, 
+                        data: formData, 
+                        withCredentials: true 
+                };
+                if (flgMultiPart) {
+                    // spring accepts no fileuploads for PATCH
+                    httpOptions.method = "POST",
+                    httpOptions.headers = {'Content-Type': undefined};
+                    httpOptions.transformRequest = angular.identity;
+                }
+                return http(httpOptions);
             }
         } else if (options.mode === "create") {
             // mode create 
             method = "POST";
             url = me.config.restCreateUrl + options.className + "/" + options.sysUID;
             
-            // unset sysUID
-            nodeObj["sysUID"] = null;
-
             ajaxCall = function () {
-                return me.appBase.get('Angular.$http').post(url, nodeObj, {withCredentials: true});
+                var http = me.appBase.get('Angular.$http');
+                var httpOptions = {
+                        method: method, 
+                        url: url, 
+                        data: formData, 
+                        withCredentials: true 
+                };
+                if (flgMultiPart) {
+                    httpOptions.headers = {'Content-Type': undefined};
+                    httpOptions.transformRequest = angular.identity;
+                }
+                return http(httpOptions);
             }
         } else {
             // unknown mode

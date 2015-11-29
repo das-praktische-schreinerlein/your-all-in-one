@@ -175,6 +175,12 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
         return false;
     };
     
+    $scope.doUploadFileChanged = function() {
+        var element = document.getElementById("inputUploadFileUrlResNode");
+        if (element && element.files) {
+            $scope.uploadFile = element.files[0];
+        }
+    }
     
     /** 
      * callbackhandler to map the nodedata, create json,call webservice and 
@@ -247,7 +253,7 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
             if ($scope.nodeForEdit["resIndexDMSState"]) {
                 nodeObj["resIndexDMSState"] = "INDEX_OPEN";
             }
-        }        
+        }
         
         // save node
         var yaioSaveNodeSuccessHandler = function(nodeObj, options, yaioNodeActionResponse) {
@@ -333,7 +339,8 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
                 mode: $scope.nodeForEdit["mode"],
                 formName: formName,
                 className: $scope.nodeForEdit.className,
-                sysUID: $scope.nodeForEdit.sysUID
+                sysUID: $scope.nodeForEdit.sysUID,
+                uploadFile: $scope.uploadFile
             };
         return yaioUtils.getService('YaioNodeData').yaioDoSaveNode(nodeObj, options)
             .then(function success(angularReponse) {
