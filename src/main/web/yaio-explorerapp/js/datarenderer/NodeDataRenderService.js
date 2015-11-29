@@ -159,7 +159,7 @@ Yaio.NodeDataRenderService = function(appBase) {
         //$tdList.eq(colName).find("span.fancytree-expander").addClass(statestyle);
         
         // render datablock
-        var $nodeDataBlock = me.appBase.get('YaioNodeDataRender').renderDataBlock(basenode, node);
+        var $nodeDataBlock = me.appBase.get('YaioNodeDataRender').renderDataBlock(basenode, node, preventActionsColum);
         
         // add SysData
         // create sys row
@@ -310,9 +310,10 @@ Yaio.NodeDataRenderService = function(appBase) {
      * @FeatureKeywords              GUI Tree Rendering
      * @param basenode               the nodedata to render (java de.yaio.core.node.BaseNode)
      * @param fancynode              the corresponding fancynode
+     * @param preventActionsColum    dont replace Action-column
      * @returns                      JQuery-Html-Object - the rendered datablock
      */
-    me.renderDataBlock = function(basenode, fancynode) {
+    me.renderDataBlock = function(basenode, fancynode, preventActionsColum) {
         var svcYaioBase = me.appBase.get('YaioBase');
         
         // extract nodedata
@@ -394,14 +395,16 @@ Yaio.NodeDataRenderService = function(appBase) {
                 
                 // upload content
                 var resContentDMSState = basenode.resContentDMSState;
-                var stateMapping = {"UPLOAD_DONE": "OK", "UPLOAD_OPEN": "O", "UPLOAD_FAILED": "F"};
+                var stateMapping = {"UPLOAD_DONE": "Download", "UPLOAD_OPEN": "Uploading", "UPLOAD_FAILED": "Upload Failed"};
                 if (stateMapping[resContentDMSState] 
                     && me.appBase.get('YaioAccessManager').getAvailiableNodeAction('dmsDownload', basenode.sysUID, false)) {
                     // url
                     var stateBlock = svcYaioBase.htmlEscapeText(stateMapping[resContentDMSState]);
-                    if (resContentDMSState == "UPLOAD_DONE") {
+                    if (resContentDMSState == "UPLOAD_DONE" && !preventActionsColum) {
                         stateBlock = "<a href='" +  "' onClick=\"yaioAppBase.get('YaioExplorerAction').openDMSDownloadWindow('"+ basenode.sysUID + "'); return false;" 
                                      +   "\" lang='tech' data-tooltip='tooltip.command.OpenDMSDownloadWindow_" + resContentDMSState + "'>" + stateBlock + "</a>";
+                    } else if (stateMapping[resContentDMSState]) {
+                        stateBlock = "<span \" lang='tech' data-tooltip='tooltip.command.OpenDMSDownloadWindow_" + resContentDMSState + "'>" + stateBlock + "</span>";
                     }
                     $row.append(
                             me.$("<div />").html(stateBlock)
@@ -414,14 +417,16 @@ Yaio.NodeDataRenderService = function(appBase) {
                 }
                 // extracted metadata
                 var resIndexDMSState = basenode.resIndexDMSState;
-                var indexStateMapping = {"INDEX_DONE": "OK", "INDEX_OPEN": "O", "INDEX_FAILED": "F"};
+                var indexStateMapping = {"INDEX_DONE": "Metadata", "INDEX_OPEN": "Indexing", "INDEX_FAILED": "Indexing Failed"};
                 if (indexStateMapping[resIndexDMSState] 
                     && me.appBase.get('YaioAccessManager').getAvailiableNodeAction('dmsDownload', basenode.sysUID, false)) {
                     // url
                     var stateBlock = svcYaioBase.htmlEscapeText(indexStateMapping[resIndexDMSState]);
-                    if (resIndexDMSState == "INDEX_DONE") {
+                    if (resIndexDMSState == "INDEX_DONE" && !preventActionsColum) {
                         stateBlock = "<a href='" +  "' onClick=\"yaioAppBase.get('YaioExplorerAction').openDMSIndexDownloadWindow('"+ basenode.sysUID + "'); return false;" 
                                      +   "\" lang='tech' data-tooltip='tooltip.command.OpenDMSIndexDownloadWindow_" + resIndexDMSState + "'>" + stateBlock + "</a>";
+                    } else if (indexStateMapping[resIndexDMSState]) {
+                        stateBlock = "<span \" lang='tech' data-tooltip='tooltip.command.OpenDMSIndexDownloadWindow_" + resIndexDMSState + "'>" + stateBlock + "</span>";
                     }
                     $row.append(
                             me.$("<div />").html(stateBlock)
