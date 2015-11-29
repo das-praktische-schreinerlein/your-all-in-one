@@ -395,7 +395,7 @@ Yaio.NodeDataRenderService = function(appBase) {
                 
                 // upload content
                 var resContentDMSState = basenode.resContentDMSState;
-                var stateMapping = {"UPLOAD_DONE": "Download", "UPLOAD_OPEN": "Uploading", "UPLOAD_FAILED": "Upload Failed"};
+                var stateMapping = {"UPLOAD_DONE": "Download", "UPLOAD_OPEN": "Webshoting", "UPLOAD_FAILED": "Webshot failed"};
                 if (stateMapping[resContentDMSState] 
                     && me.appBase.get('YaioAccessManager').getAvailiableNodeAction('dmsDownload', basenode.sysUID, false)) {
                     // url
@@ -439,9 +439,14 @@ Yaio.NodeDataRenderService = function(appBase) {
                 }
                 
                 // url-data
+                var resLocData = svcYaioBase.htmlEscapeText(basenode.resLocRef);
+                if (basenode.type == "URLRES") {
+                    resLocData = "<a href='" + resLocData + "' target='_blank'>" + resLocData + "</a>";
+                } else {
+                    resLocData = "<span>" + resLocData + "</span>";
+                }
                 $row.append(
-                        me.$("<div />").html("<a href='" + svcYaioBase.htmlEscapeText(basenode.resLocRef) + "' target='_blank'>" 
-                                         + svcYaioBase.htmlEscapeText(basenode.resLocRef) + "</a>")
+                        me.$("<div />").html(resLocData)
                                   .addClass("container_field")
                                   .addClass("fieldtype_additionaldata")
                                   .addClass("fieldtype_url")

@@ -54,22 +54,12 @@
    text-align: left;
 }
 
-.field_resContentDMSState_UPLOAD_DONE {
-    background: green;
+.field_resContentDMSState_UPLOAD_DONE, .field_resIndexDMSState_INDEX_DONE {
+    background-color: #E0F2FC; /*#B0E0E6;*/
 }
-.field_resContentDMSState_UPLOAD_OPEN {
-    background: yellow;
+.field_resContentDMSState_UPLOAD_OPEN, .field_resIndexDMSState_INDEX_OPEN{
+    background-color: #ADFF2F; /* #CFF9BB #99FF66;*/
 }
-.field_resContentDMSState_UPLOAD_FAILED {
-    background: red;
-}
-
-.field_resIndexDMSState_INDEX_DONE {
-    background: green;
-}
-.field_resIndexDMSState_INDEX_OPEN {
-    background: yellow;
-}
-.field_resIndexDMSState_INDEX_FAILED {
-    background: red;
+.field_resContentDMSState_UPLOAD_FAILED, .field_resIndexDMSState_INDEX_FAILED {
+    background-color: #FFD700; /*#F6F9AE; #FFFF66;*/
 }
