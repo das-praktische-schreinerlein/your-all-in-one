@@ -38,27 +38,38 @@
             <fieldset>
               <legend translate="editor.common.legend.Resource">Resource</legend>
               
-              <!-- show textfield -->
-              <label for="resLocRef" translate="editor.common.label.resLocRef">URI</label> 
-              <input type="text" name="resLocRef" placeholder="http:// oder  file://" class="inputtype_resLocRef" ng-model="nodeForEdit.resLocRef" id="inputResLocRefUrlResNode" required ng-change=""> 
-              <fielderrors for="resLocRef"></fielderrors>
+              <!-- show url-input -->
+              <div ng-if="nodeForEdit.type != 'FILERES'">
+                  <!-- show textfield -->
+                  <label for="resLocRef" translate="editor.common.label.resLocRef">URI</label> 
+                  <input type="text" name="resLocRef" placeholder="http:// oder  file://" class="inputtype_resLocRef" ng-model="nodeForEdit.resLocRef" id="inputResLocRefUrlResNode" required ng-change=""> 
+                  <fielderrors for="resLocRef"></fielderrors>
 
-              <br />
+                  <br />
+
+                  <!-- show checkbox for url-upload-->
+                  <div ng-if="nodeForEdit.type == 'URLRES'">
+                    <label for="resContentDMSState" translate="editor.common.label.resContentDMSState" class="label_resContentDMSState">Reload Page</label> 
+                    <input type="checkbox" name="resContentDMSState" class="inputtype_resContentDMSState" ng-model="nodeForEdit.resContentDMSState" id="inputResContentDMSStateUrlResNode" ng-change=""> 
+                    <fielderrors for="resContentDMSState"></fielderrors>
+                  </div>
+              </div>
 
               <!-- show fileinput -->
               <div ng-if="nodeForEdit.type == 'FILERES'">
-                <label for="uploadFile" translate="editor.common.label.uploadFile">Uploadfile</label> 
-                <input type="file" name="uploadFile" id="inputUploadFileUrlResNode" class="inputtype_uploadFile" onchange="angular.element(this).scope().doUploadFileChanged(this)"/>
-                <fielderrors for="uploadFile"></fielderrors>
-                <br />
+                  <!-- show textfield -->
+                  <label for="resLocRef" translate="editor.common.label.resLocRef">URI</label> 
+                  <input type="text" name="resLocRef" class="inputtype_resLocRef" ng-model="nodeForEdit.resLocRef" id="inputResLocRefUrlResNode" disabled="disabled"> 
+                  <fielderrors for="dummyResLocRef"></fielderrors>
+
+                  <br />
+
+                  <label for="uploadFile" translate="editor.common.label.uploadFile">Uploadfile</label> 
+                  <input type="file" name="uploadFile" id="inputUploadFileUrlResNode" class="inputtype_uploadFile" onchange="angular.element(this).scope().doUploadFileChanged(this)"/>
+                  <fielderrors for="uploadFile"></fielderrors>
+                  <br />
               </div>
 
-              <!-- show checkbox for url-upload-->
-              <div ng-if="nodeForEdit.type == 'URLRES'">
-                <label for="resContentDMSState" translate="editor.common.label.resContentDMSState" class="label_resContentDMSState">Reload Page</label> 
-                <input type="checkbox" name="resContentDMSState" class="inputtype_resContentDMSState" ng-model="nodeForEdit.resContentDMSState" id="inputResContentDMSStateUrlResNode" ng-change=""> 
-                <fielderrors for="resContentDMSState"></fielderrors>
-              </div>
 
               <!-- show checkbox for indexing-->
               <label for="resIndexDMSState" translate="editor.common.label.resIndexDMSState" class="label_resIndexDMSState">Reload Index</label> 

@@ -46,6 +46,7 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
     // create node
     $scope.nodeForEdit = {};
     var nodeId = $rootScope.nodeId;
+    $scope.uploadFile = undefined;
     
     $scope.availiableSystemTemplates = [];
     $scope.availiableOwnTemplates = [];
@@ -175,10 +176,19 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
         return false;
     };
     
+    /** 
+     * callbackhandler to perform actions when UploadFile has changed<br>
+     * set variable in scope with filename and updates resLocRef
+     * @FeatureDomain                Callback
+     * @FeatureResult                updates resLocRef and uploadFile
+     * @FeatureKeywords              GUI Callback
+     */
     $scope.doUploadFileChanged = function() {
         var element = document.getElementById("inputUploadFileUrlResNode");
         if (element && element.files) {
             $scope.uploadFile = element.files[0];
+            $scope.nodeForEdit.resLocRef = $scope.uploadFile.name;
+            $("#inputResLocRefUrlResNode").val($scope.nodeForEdit.resLocRef);
         }
     }
     
