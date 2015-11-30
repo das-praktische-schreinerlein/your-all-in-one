@@ -100,7 +100,7 @@
         <commons-io.version>2.1</commons-io.version>
         <commons-compress>1.10</commons-compress>
 
-        <poi.version>3.7</poi.version>
+        <poi.version>3.12</poi.version> <!-- POI 3.13 breaks Excel-Exporter so we should use tika 1.9 with 3.12 -->
         <icu4j.version>54.1</icu4j.version>
         <markdown4j>2.2-cj-1.0</markdown4j>
         <swagger.version>2.1.2</swagger.version>
