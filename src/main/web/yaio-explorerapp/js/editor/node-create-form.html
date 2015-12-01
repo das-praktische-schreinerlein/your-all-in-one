@@ -32,7 +32,7 @@
 
           <!-- show only if copy allowed and templates available -->
           <form with-errors id="nodeFormCreateFromTemplate" name="nodeFormCreateFromTemplate">
-            <fieldset ng-if="yaioUtils.getService('YaioAccessManager').getAvailiableNodeAction('copy', node.sysUID, false) && (availiableSystemTemplates.length > 0 || availiableOwnTemplates.length > 0)">
+            <fieldset ng-if="yaioUtils.getService('YaioAccessManager').getAvailiableNodeAction('copy', nodeForEdit.sysUID, false) && (availiableSystemTemplates.length > 0 || availiableOwnTemplates.length > 0)">
               <legend translate="editor.common.legend.template">Template benutzen</legend>
               
               <!-- show textfield -->
@@ -45,5 +45,6 @@
               
               <button ng-click="selectCreateFromTemplate('nodeFormCreateFromTemplate')" class="btn btn-primary" translate="editor.formCreate.buttonCreateFromTemplate">Create</button>
             </fieldset>
-          </form> 
+          </form>
+
         </div>
