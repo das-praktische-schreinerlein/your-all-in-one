@@ -175,8 +175,9 @@ Yaio.EditorService = function(appBase) {
      * @FeatureKeywords              GUI Editor
      * @param nodeId                 id of the node
      * @param mode                   edit, create, createsymlink
+     * @param newNode                optional basedata for the new node
      */
-    me.yaioOpenNodeEditor = function(nodeId, mode) {
+    me.yaioOpenNodeEditor = function(nodeId, mode, newNode) {
         var svcYaioBase = me.appBase.get('YaioBase');
 
         // reset editor
@@ -206,7 +207,7 @@ Yaio.EditorService = function(appBase) {
         var basenode = treeNode.data.basenode;
         
         // open editor
-        me.yaioOpenNodeEditorForNode(basenode, mode);
+        me.yaioOpenNodeEditorForNode(basenode, mode, newNode);
     };
         
     /** 
@@ -290,6 +291,26 @@ Yaio.EditorService = function(appBase) {
                     symLinkRef: origBasenode.metaNodePraefix + "" + origBasenode.metaNodeNummer
             };
             console.log("yaioOpenNodeEditor mode=createsymlink for node:" + nodeId);
+        } else if (mode === "createuploadurlresnode") {
+            // mode create
+            formSuffix = "UrlResNode";
+            fieldSuffix = "UrlResNode";
+            fields = fields.concat(me.appBase.config.configNodeTypeFields.CreateUploadFileUrlResNode.fields);
+
+            // new basenode
+            basenode = {
+                mode: "create",
+                sysUID: origBasenode.sysUID,
+                name: newNode.name,
+                className: "UrlResNode",
+                type: "FILERES",
+                state: "FILERES",
+                resLocRef: newNode.resLocRef,
+                resLocName: newNode.resLocName,
+                resLocTags: newNode.resLocTags,
+                uploadFile: newNode.uploadFile
+            };
+            console.log("yaioOpenNodeEditor mode=createupload for node:" + nodeId);
         } else if (mode === "createsnapshot") {
             // mode create
             formSuffix = "InfoNode";
@@ -366,6 +387,11 @@ Yaio.EditorService = function(appBase) {
         
         // update appsize
         svcYaioLayout.setupAppSize();
+
+        // set uploadfile
+        if (mode === "createuploadurlresnode") {
+            me.setUploadFileUrlResNode(basenode);
+        }
     };
     
     /** 
@@ -397,8 +423,71 @@ Yaio.EditorService = function(appBase) {
             me.$(element).focus();
         }
     };
-    
-    
+
+    /** 
+     * handler for drag&drop-dragover
+     * @FeatureDomain                GUI
+     * @FeatureResult                GUI-result: show copy-hint
+     * @FeatureKeywords              GUI Editor
+     * @param evt                    Drag&Drop-event
+     */
+    me.handleUploadFileUrlResNodeDragOver = function(evt) {
+        // Explicitly show this is a copy.
+        evt.stopPropagation();
+        evt.preventDefault();
+        evt.dataTransfer.dropEffect = 'copy';
+    }
+
+    /** 
+     * handler for drag&drop-drag: open the UrlResNode-Editor with the filedata to create and upload the file
+     * File-Drag&Drop&Read inspired by http://www.html5rocks.com/de/tutorials/file/dndfiles/
+     * @FeatureDomain                GUI
+     * @FeatureResult                GUI-result: show uploadform
+     * @FeatureKeywords              GUI Editor
+     * @param evt                    Drag&Drop-event
+     */
+    me.handleUploadFileUrlResNodeSelect = function(evt) {
+        evt.stopPropagation();
+        evt.preventDefault();
+
+        // get files
+        var files = evt.dataTransfer.files;
+        var file = files[0];
+        var parentSysUID = evt.target.getAttribute('data-parentsysuid');
+
+        // check data
+        if (!parentSysUID || !file) {
+            me.appBase.get('YaioBase').logError("error: parentSysUID and file required", false);
+        }
+        var baseNode = {
+            sysUID: parentSysUID,
+            className: 'UrlResNode',
+            type: 'FILERES',
+            name: file.name,
+            resLocRef: file.name,
+            resLocName: file.name,
+            uploadFile: file
+        }
+
+        // open Editor
+        me.yaioOpenNodeEditorForNode(baseNode, 'createuploadurlresnode', baseNode);
+    }
+
+    /** 
+     * set uploadFile in angular
+     * @FeatureDomain                GUI
+     * @FeatureResult                GUI-result: init uploadFile
+     * @FeatureKeywords              GUI Editor
+     * @param basenode               the node-data sith attr: uploadfile
+     */
+    me.setUploadFileUrlResNode = function (basenode) {
+        // set uploadFile in scope
+        var uploadFile = basenode.uploadFile;
+        var element = document.getElementById("inputTypeUrlResNode");
+        angular.element(element).scope().setUploadFileUrlResNode(uploadFile, true);
+    }
+
+
     /*****************************************
      *****************************************
      * Service-Funktions (businesslogic)

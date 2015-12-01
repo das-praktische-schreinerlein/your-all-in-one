@@ -183,16 +183,36 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
      * @FeatureResult                updates resLocRef and uploadFile
      * @FeatureKeywords              GUI Callback
      */
-    $scope.doUploadFileChanged = function() {
+    $scope.doUploadFileUrlResNodeChanged = function() {
         var element = document.getElementById("inputUploadFileUrlResNode");
         if (element && element.files) {
-            $scope.uploadFile = element.files[0];
-            $scope.nodeForEdit.resLocRef = $scope.uploadFile.name;
-            $("#inputResLocRefUrlResNode").val($scope.nodeForEdit.resLocRef);
+            setUploadFile(element.files[0]);
         }
     }
-    
-    /** 
+
+    /**
+     * set the uploadFile
+     * @FeatureDomain                Callback
+     * @FeatureResult                updates resLocRef and uploadFile
+     * @FeatureKeywords              GUI Callback
+     */
+    $scope.setUploadFileUrlResNode = function(uploadFile, forceDoIndex) {
+        $scope.uploadFile = uploadFile;
+        var fileName = "";
+        if ($scope.uploadFile) {
+            fileName = $scope.uploadFile.name;
+        }
+        $scope.nodeForEdit.resLocRef = fileName;
+        $("#inputResLocRefUrlResNode").val($scope.nodeForEdit.resLocRef);
+
+        if (forceDoIndex) {
+            $scope.nodeForEdit["resIndexDMSState"] = true;
+            $("#inputResIndexDMSStateUrlResNode").prop("checked", true).trigger('input').triggerHandler("change");
+        }
+    }
+
+
+    /**
      * callbackhandler to map the nodedata, create json,call webservice and 
      * relocate to the new nodeId
      * @FeatureDomain                Callback

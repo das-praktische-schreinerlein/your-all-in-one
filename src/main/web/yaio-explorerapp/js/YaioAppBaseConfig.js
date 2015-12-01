@@ -46,6 +46,24 @@ window.YaioAppBaseConfig = function() {
                 { fieldName: "sysUID", type: "hidden"}
             ]
         },
+        CreateUploadFileUrlResNode: {
+            fields: [
+                { fieldName: "name", type: "input"},
+                { fieldName: "type", type: "hidden"},
+                { fieldName: "className", type: "hidden"},
+                { fieldName: "sysUID", type: "hidden"},
+                { fieldName: "resLocRef", type: "input"},
+                //{ fieldName: "resContentDMSState", type: "checkbox"},
+                //{ fieldName: "resIndexDMSState", type: "checkbox"},
+                { fieldName: "resLocName", type: "input"},
+                { fieldName: "resLocTags", type: "textarea"},
+                { fieldName: "docLayoutTagCommand", type: "select"},
+                { fieldName: "docLayoutAddStyleClass", type: "input"},
+                { fieldName: "docLayoutShortName", type: "input"},
+                { fieldName: "docLayoutFlgCloseDiv", type: "checkbox"},
+                { fieldName: "mode", type: "hidden", intern: true},
+            ]
+        },
         CreateSymlink: {
             fields: [
                 { fieldName: "name", type: "input"},

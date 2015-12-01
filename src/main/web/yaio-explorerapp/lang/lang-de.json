@@ -5,6 +5,7 @@
     "common.button.lang.de": "DE",
     "common.button.lang.en": "EN",
     "common.command.DoSearch": "Suchen",
+    "common.command.DragDropUploader": "Drag&Drop-Uploader...",
     "common.command.Export": "Exporte...",
     "common.command.ExportAsOverview": "Export Übersicht",
     "common.command.ExportForm": "Konfigurierbar",

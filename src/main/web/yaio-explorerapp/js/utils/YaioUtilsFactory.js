@@ -49,8 +49,8 @@ yaioApp.factory('yaioUtils', ['$location', '$http', '$rootScope', '$q', function
             appBase.get('YaioExplorerAction').toggleNodeSysContainer(node.sysUID);
         },
         
-        openNodeEditorForNode: function(node, mode) {
-            appBase.get('YaioEditor').yaioOpenNodeEditorForNode(node, mode);
+        openNodeEditorForNode: function(node, mode, newNode) {
+            appBase.get('YaioEditor').yaioOpenNodeEditorForNode(node, mode, newNode);
         },
         
         downloadAsFile: function(domId, content, filename, mime, encoding) {
