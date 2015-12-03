@@ -727,11 +727,11 @@ public class HtmlExporter extends WikiExporter {
         styleClassesNameContainer2 = " node-level" + curNode.getEbene();
         if (UrlResNode.class.isInstance(curNode)) {
             // URLRes
-            UrlResNode symlinkNode = (UrlResNode) curNode;
+            UrlResNode urlResNode = (UrlResNode) curNode;
             
             // Label belegen
             String suffix = name;
-            String label = symlinkNode.getResLocName();
+            String label = urlResNode.getResLocName();
             
             // Label: falls leer mit Name belegen
             if (label == null || label.length() < 1) {
@@ -744,12 +744,17 @@ public class HtmlExporter extends WikiExporter {
             // Label: falls leer mit Link belegen
             if (label == null || label.length() < 1) {
                 suffix = "";
-                label = symlinkNode.getResLocRef();
+                label = urlResNode.getResLocRef();
             }
             
-            blockName = "<a href='" + symlinkNode.getResLocRef() + "' "
-                + " target='_blank' class='a-node-urlres'>"
-                + label + "</a> " + suffix + " (" + curNode.getWorkingId() + ")";
+            blockName = "<a href='" + urlResNode.getResLocRef() + "' "
+                            + " target='_blank' class='a-node-urlres'>"
+                            + label + "</a>";
+            if (UrlResNodeService.CONST_NODETYPE_IDENTIFIER_FILERES.equals(urlResNode.getType())) {
+//                url = "/dms/download/" + urlResNode.getResContentDMSId();
+                blockName = urlResNode.getResLocRef() + " ";
+            }
+            blockName += suffix + " (" + curNode.getWorkingId() + ")";
         } else if (SymLinkNode.class.isInstance(curNode)) {
             // Symlink
             SymLinkNode symlinkNode = (SymLinkNode) curNode;
