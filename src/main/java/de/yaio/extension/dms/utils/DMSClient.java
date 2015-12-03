@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import de.yaio.services.dms.storage.StorageResource;
 import de.yaio.services.dms.storage.StorageResourceVersion;
 
 /** 
@@ -34,29 +35,29 @@ public interface DMSClient {
     /**
      * uploads the input to the configured dms
      * @FeatureDomain                DMS
-     * @FeatureResult                response
+     * @FeatureResult                StorageResource
      * @FeatureKeywords              DMS
-     * @return                       response
+     * @return                       StorageResource
      * @param id                     id of the content in dms
      * @param origFileName           original filename
      * @param input                  the data to store in dms
      * @throws IOException           if something went wrong
      */
-    byte[] addContentToDMS(String id, String origFileName, 
+    StorageResource addContentToDMS(String id, String origFileName, 
                                                  InputStream input) throws IOException;
 
     /**
      * updates the input in the configured dms
      * @FeatureDomain                DMS
-     * @FeatureResult                response
+     * @FeatureResult                StorageResource
      * @FeatureKeywords              DMS
-     * @return                       response
+     * @return                       StorageResource
      * @param id                     id of the content in dms
      * @param origFileName           original filename
      * @param input                  the data to store in dms
      * @throws IOException           if something went wrong
      */
-    byte[] updateContentInDMS(String id, String origFileName, 
+    StorageResource updateContentInDMS(String id, String origFileName, 
                                                  InputStream input) throws IOException;
 
     /**

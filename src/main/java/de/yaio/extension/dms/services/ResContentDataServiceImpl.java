@@ -36,6 +36,7 @@ import de.yaio.core.node.UrlResNode;
 import de.yaio.core.nodeservice.UrlResNodeService;
 import de.yaio.extension.dms.utils.DMSClient;
 import de.yaio.extension.dms.utils.YaioWebshotClient;
+import de.yaio.services.dms.storage.StorageResource;
 
 /** 
  * businesslogic for dataDomain: ResContentData (upload url/file to dms)
@@ -141,8 +142,8 @@ public class ResContentDataServiceImpl extends TriggeredDataDomainRecalcImpl imp
         if (StringUtils.isEmpty(resContentDMSId)) {
             // add new file
             resContentDMSId = node.getSysUID() + "-" + "content";
-            dmsProvider.addContentToDMS(resContentDMSId, normfileName, input);
-            node.setResContentDMSId(resContentDMSId);
+            StorageResource resource = dmsProvider.addContentToDMS(resContentDMSId, normfileName, input);
+            node.setResContentDMSId(resource.getDMSId());
         } else {
             // update file
             dmsProvider.updateContentInDMS(resContentDMSId, normfileName, input);

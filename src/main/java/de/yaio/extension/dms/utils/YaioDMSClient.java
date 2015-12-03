@@ -32,11 +32,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import de.yaio.commons.http.HttpUtils;
+import de.yaio.services.dms.storage.StorageResource;
 import de.yaio.services.dms.storage.StorageResourceVersion;
+import de.yaio.services.dms.storage.StorageUtils;
 
 /** 
  * businesslogic for dms
@@ -67,39 +66,39 @@ public class YaioDMSClient implements DMSClient {
     @Value("${yaio.dms-client.yaio-dms-service.password}")
     protected String dmspassword;
 
-    // Jackson
+    // StorageUtils
     @Autowired
-    protected ObjectMapper mapper;
+    protected StorageUtils storageUtils;
 
     @Value("${yaio.dms-client.yaio-dms-service.buffersize}")
     private int BUFFER_SIZE;
 
     @Override
-    public byte[] addContentToDMS(final String id, final String origFileName,
+    public StorageResource addContentToDMS(final String srcId, final String origFileName,
                                         final InputStream input) throws IOException {
-        return saveResContentInDMS(true, id, origFileName, input);
+        return saveResContentInDMS(true, srcId, origFileName, input);
     }
 
     @Override
-    public byte[] updateContentInDMS(final String id, final String origFileName,
+    public StorageResource updateContentInDMS(final String dmsId, final String origFileName,
                                         final InputStream input) throws IOException {
-        return saveResContentInDMS(false, id, origFileName, input);
+        return saveResContentInDMS(false, dmsId, origFileName, input);
     }
 
 
     @Override
-    public InputStream getContentFromDMS(final String id, final Integer version) throws IOException {
-        File tmpFile = this.getContentFileFromDMS(id, version, false);
+    public InputStream getContentFromDMS(final String dmsId, final Integer version) throws IOException {
+        File tmpFile = this.getContentFileFromDMS(dmsId, version, false);
         return new FileInputStream(tmpFile);
     }
     
     @Override
-    public File getContentFileFromDMS(final String id, final Integer version, 
+    public File getContentFileFromDMS(final String dmsId, final Integer version, 
                                       final boolean useOriginalExtension) throws IOException {
         String ex = ".tmp";
         if (useOriginalExtension) {
             // extract extension from dms
-            StorageResourceVersion storageResVersion = this.getMetaDataForContentFromDMS(id, version);
+            StorageResourceVersion storageResVersion = this.getMetaDataForContentFromDMS(dmsId, version);
             ex = "." + FilenameUtils.getExtension(storageResVersion.getResName());
         }
 
@@ -108,7 +107,7 @@ public class YaioDMSClient implements DMSClient {
         tmpFile.deleteOnExit();
 
         // call url
-        String baseUrl = dmsurl + "/get/" + dmsappId + "/" + id + "/" + version;
+        String baseUrl = dmsurl + "/get/" + dmsappId + "/" + dmsId + "/" + version;
         HttpResponse response = HttpUtils.callGetUrlPure(baseUrl, dmsusername, dmspassword, null);
         HttpEntity entity = response.getEntity();
         
@@ -127,10 +126,10 @@ public class YaioDMSClient implements DMSClient {
     }
     
     @Override
-    public StorageResourceVersion getMetaDataForContentFromDMS(final String id, final Integer version) 
+    public StorageResourceVersion getMetaDataForContentFromDMS(final String dmsId, final Integer version) 
                     throws IOException {
         // call url
-        String baseUrl = dmsurl + "/getmetaversion/" + dmsappId + "/" + id + "/" + version;
+        String baseUrl = dmsurl + "/getmetaversion/" + dmsappId + "/" + dmsId + "/" + version;
         HttpResponse response = HttpUtils.callGetUrlPure(baseUrl, dmsusername, dmspassword, null);
         HttpEntity entity = response.getEntity();
         
@@ -144,21 +143,24 @@ public class YaioDMSClient implements DMSClient {
         
         // configure
         String metaJson = EntityUtils.toString(entity);
-        mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-        mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
-        mapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
-        StorageResourceVersion resourceVersion = mapper.readValue(metaJson, StorageResourceVersion.class);
+        StorageResourceVersion resourceVersion = storageUtils.parseStorageResourceVersionFromJson(metaJson);
 
         return resourceVersion;
     }
 
 
-    protected byte[] saveResContentInDMS(final boolean flgNew, final String id, final String origFileName,
+    protected StorageResource saveResContentInDMS(final boolean flgNew, final String id, final String origFileName,
                                          final InputStream input) throws IOException {
         // upload file
         Map<String, String> params = new HashMap<String, String>();
         params.put("appId", dmsappId);
-        params.put("id", id);
+        
+        // use different id-params
+        if (flgNew) {
+            params.put("srcId", id);
+        } else {
+            params.put("dmsId", id);
+        }
         params.put("origFileName", origFileName);
         Map<String, String> binfileParams = new HashMap<String, String>();
         File tmpFile = File.createTempFile("upload", "tmp");
@@ -198,6 +200,10 @@ public class YaioDMSClient implements DMSClient {
                             + " response:" + EntityUtils.toString(entity));
         }
 
-        return EntityUtils.toByteArray(entity);
+        // configure
+        String metaJson = EntityUtils.toString(entity);
+        StorageResource resource = storageUtils.parseStorageResourceFromJson(metaJson);
+
+        return resource;
     }
 }
