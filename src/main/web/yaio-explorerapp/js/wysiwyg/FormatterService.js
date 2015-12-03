@@ -81,6 +81,27 @@ Yaio.FormatterService = function(appBase) {
         }
     };
     
+    
+    me.parseYaioLinks = function(href, dmsOnly) {
+        if (!dmsOnly && href && href.indexOf('yaio:') === 0) {
+            var sysUIDid = href.substr(5);
+            href = "/yaio-explorerapp/yaio-explorerapp.html#/showByAllIds/" + sysUID;
+        } else if (href && href.indexOf('yaiodmsdownload:') === 0) {
+            var sysUID = href.substr('yaiodmsdownload:'.length);
+            href = me.appBase.get('YaioAccessManager').getAvailiableNodeAction('dmsDownload', sysUID, false) + sysUID;
+        } else if (href && href.indexOf('yaiodmsidxdownload:') === 0) {
+            var sysUID = href.substr('yaiodmsidxdownload:'.length);
+            href = me.appBase.get('YaioAccessManager').getAvailiableNodeAction('dmsIndexDownload', sysUID, false) + sysUID;
+        } else if (href && href.indexOf('yaiodmsembed:') === 0) {
+            var sysUID = href.substr('yaiodmsembed:'.length);
+            href = me.appBase.get('YaioAccessManager').getAvailiableNodeAction('dmsEmbed', sysUID, false) + sysUID;
+        } else if (href && href.indexOf('yaiodmsidxembed:') === 0) {
+            var sysUID = href.substr('yaiodmsidxembed:'.length);
+            href = me.appBase.get('YaioAccessManager').getAvailiableNodeAction('dmsIndexEmbed', sysUID, false) + sysUID;
+        }
+        return href;
+    }
+    
     /** 
      * format the descText as Markdown
      * @FeatureDomain                GUI
@@ -119,24 +140,21 @@ Yaio.FormatterService = function(appBase) {
             + '</h' + level + '>\n';
         };
         
-        // my own link: for yaio
+        // my own link-renderer: for yaio
         renderer.link = function(href, title, text) {
-            var prot; 
             if (this.options.sanitize) {
-              try {
-                prot = decodeURIComponent(unescape(href))
-                  .replace(/[^\w:]/g, '')
-                  .toLowerCase();
-              } catch (e) {
-                return '';
-              }
-              if (prot && prot.indexOf('javascript:') === 0) {
-                return '';
-              }
-              if (prot && prot.indexOf('yaio:') === 0) {
-                  href = href.substr(5);
-                  href="/yaio-explorerapp/yaio-explorerapp.html#/showByAllIds/" + href;
-              }
+                var prot; 
+                try {
+                  prot = decodeURIComponent(unescape(href))
+                    .replace(/[^\w:]/g, '')
+                    .toLowerCase();
+                } catch (e) {
+                  return '';
+                }
+                if (prot && prot.indexOf('javascript:') === 0) {
+                  return '';
+                }
+                href = me.parseYaioLinks(href);
             }
             var out = '<a href="' + href + '"';
             if (title) {
@@ -145,7 +163,31 @@ Yaio.FormatterService = function(appBase) {
             out += '>' + text + '</a>';
             return out;
           };
-        
+
+          // my own img-renderer: for yaio
+          renderer.image = function(href, title, text) {
+              if (this.options.sanitize) {
+                  var prot; 
+                  try {
+                    prot = decodeURIComponent(unescape(href))
+                      .replace(/[^\w:]/g, '')
+                      .toLowerCase();
+                  } catch (e) {
+                    return '';
+                  }
+                  if (prot && prot.indexOf('javascript:') === 0) {
+                    return '';
+                  }
+                  href = me.parseYaioLinks(href, true);
+              }
+              var out = '<img src="' + href + '" alt="' + text + '"';
+              if (title) {
+                out += ' title="' + title + '"';
+              }
+              out += this.options.xhtml ? '/>' : '>';
+              return out;
+            };
+          
         // Marked
         marked.setOptions({
           renderer: renderer,
