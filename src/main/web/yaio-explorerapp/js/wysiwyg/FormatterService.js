@@ -82,9 +82,19 @@ Yaio.FormatterService = function(appBase) {
     };
     
     
+    /** 
+     * parse yaio-links like yaio:, yaiodmsdownload:, yaiodmsidxdownload:, yaiodmsembed:, yaiodmsidxembed: from href
+     * and replace if exists with dms-urls...
+     * @FeatureDomain                GUI
+     * @FeatureResult                returnValue String - mapped url
+     * @FeatureKeywords              Layout
+     * @param href                   the url to parse
+     * @param dmsOnly                parse dms only: not yaio:
+     * @return  {String}             mapped url
+     */
     me.parseYaioLinks = function(href, dmsOnly) {
         if (!dmsOnly && href && href.indexOf('yaio:') === 0) {
-            var sysUIDid = href.substr(5);
+            var sysUID = href.substr(5);
             href = "/yaio-explorerapp/yaio-explorerapp.html#/showByAllIds/" + sysUID;
         } else if (href && href.indexOf('yaiodmsdownload:') === 0) {
             var sysUID = href.substr('yaiodmsdownload:'.length);
@@ -154,7 +164,7 @@ Yaio.FormatterService = function(appBase) {
                 if (prot && prot.indexOf('javascript:') === 0) {
                   return '';
                 }
-                href = me.parseYaioLinks(href);
+                href = me.parseYaioLinks(href, false);
             }
             var out = '<a href="' + href + '"';
             if (title) {
