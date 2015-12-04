@@ -13,6 +13,18 @@
  */
 package de.yaio.webapp.restcontroller;
 
+import static org.hamcrest.core.Is.is;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+
+import org.hamcrest.core.IsNull;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import com.jayway.jsonpath.JsonPath;
+
+import de.yaio.core.node.BaseNode;
 import de.yaio.core.node.UrlResNode;
 
 /** 
@@ -58,12 +70,64 @@ public class UrlResNodeRestControllerTest extends BaseNodeRestControllerTest {
      */
     @Override
     public TestObj setupNewTestObj() throws Exception {
-     // create, show, update, delete task
+        // create, show, update, delete task
         String name1 = "Test-UrlResNode";
         
         UrlResNodeRestControllerTestObj node = new UrlResNodeRestControllerTestObj();
         node.setName(name1);
         
         return node;
+    }
+    
+    @Override
+    public String testCreateNode(final String parentId, final BaseNode node) throws Exception {
+        // configure request
+        MockMultipartFile file = new MockMultipartFile("uploadFile", "myFile.txt", 
+                        "text/plain", "hello".getBytes());
+        MockMultipartFile json = new MockMultipartFile("node", "", "application/json", convertObjectToJsonBytes(node));
+        file = null;
+
+        MockMultipartHttpServletRequestBuilder req = MockMvcRequestBuilders.fileUpload(
+                        "/nodes/create/" + node.getClassName() + "/" + parentId);
+        req.file(json);
+        if (file != null) {
+            req.file(file);
+        }
+
+        ResultActions res = testBaseRequest(req);
+
+        // check data
+        res.andExpect(jsonPath("$.node.name", is(node.getName())))
+           .andExpect(jsonPath("$.node.sysUID", IsNull.notNullValue()));
+
+        // create JSON from String
+        String response = res.andReturn().getResponse().getContentAsString();
+        String sysUID = JsonPath.read(response, "$.node.sysUID");
+
+        return sysUID;
+    }
+
+    @Override
+    public ResultActions testUpdateNode(final BaseNode node) throws Exception {
+        // configure request
+        MockMultipartFile file = new MockMultipartFile("uploadFile", "myFile2.txt", 
+                        "text/plain", "hello2".getBytes());
+        MockMultipartFile json = new MockMultipartFile("node", "", "application/json", convertObjectToJsonBytes(node));
+        file = null;
+
+        MockMultipartHttpServletRequestBuilder req = MockMvcRequestBuilders.fileUpload(
+                        "/nodes/update/" + node.getClassName() + "/" + node.getSysUID());
+        req.file(json);
+        if (file != null) {
+            req.file(file);
+        }
+
+        ResultActions res = testBaseRequest(req);
+
+        // check data
+        res.andExpect(jsonPath("$.node.name", is(node.getName())))
+           .andExpect(jsonPath("$.node.sysUID", is(node.getSysUID())));
+
+        return res;
     }
 }
