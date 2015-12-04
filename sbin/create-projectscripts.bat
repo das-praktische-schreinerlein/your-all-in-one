@@ -10,9 +10,11 @@ rem configure
 set PROJECTSCRIPT=%PROJECTPATH%\gen-planung
 set CONFIGSCRIPT=%PROJECTPATH%\configure-project.bat
 set EXPORTSCRIPT=%PROJECTPATH%\get-planung-from-app.bat
+set RECALCSCRIPT=%PROJECTPATH%\recalc-planung-in-app.bat
 set VAR=%%
 
 rem your choice
+goto createrecalcscript
 goto createexportscript
 goto creategenscript
 goto createconfig
@@ -61,5 +63,22 @@ echo call %VAR%BASEPATH%VAR%backupdiffs %VAR%PLANDIR%VAR%%VAR%PLANFILEBASE%VAR%.
 echo goto end>> %EXPORTSCRIPT%
 C:\ProgrammePortable\PortableApps\PortableApps\CygwinPortable\App\Cygwin\bin\echo >> %EXPORTSCRIPT%
 echo :end>> %EXPORTSCRIPT%
+
+:createrecalcscript
+rem create new recalcscript
+echo rem ################> %RECALCSCRIPT%
+echo rem # recalc project>> %RECALCSCRIPT%
+echo rem ################>> %RECALCSCRIPT%
+C:\ProgrammePortable\PortableApps\PortableApps\CygwinPortable\App\Cygwin\bin\echo >> %RECALCSCRIPT%
+echo rem configure>> %RECALCSCRIPT%
+echo set PLANDIR=%VAR%~dp0>> %RECALCSCRIPT%
+echo call %VAR%PLANDIR%VAR%configure-project.bat>> %RECALCSCRIPT%
+C:\ProgrammePortable\PortableApps\PortableApps\CygwinPortable\App\Cygwin\bin\echo >> %RECALCSCRIPT%
+echo rem rock'n'roll>> %RECALCSCRIPT%
+echo set BASEPATH=\Daten\Projekte\yourallinone\yaio-prod\sbin\>> %RECALCSCRIPT%
+echo call %VAR%BASEPATH%VAR%recalcNodesInYAIOApp.bat %VAR%PLANSYSUID%VAR%>> %RECALCSCRIPT%
+echo goto end>> %RECALCSCRIPT%
+C:\ProgrammePortable\PortableApps\PortableApps\CygwinPortable\App\Cygwin\bin\echo >> %RECALCSCRIPT%
+echo :end>> %RECALCSCRIPT%
 
 :end
