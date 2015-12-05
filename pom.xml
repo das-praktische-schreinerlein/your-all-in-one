@@ -64,11 +64,11 @@
          -->
          
         <!-- Yaio versions -->
-        <yaio-commons.version>0.1.0</yaio-commons.version>
-        <yaio-plantuml-service.version>0.3.0</yaio-plantuml-service.version>
-        <yaio-webshot-service.version>0.4.0</yaio-webshot-service.version>
-        <yaio-dms-service.version>0.2.0</yaio-dms-service.version>
-        <yaio-metaextract-service.version>0.1.0</yaio-metaextract-service.version>
+        <yaio-commons.version>0.2.0</yaio-commons.version>
+        <yaio-plantuml-service.version>0.4.0</yaio-plantuml-service.version>
+        <yaio-webshot-service.version>0.5.0</yaio-webshot-service.version>
+        <yaio-dms-service.version>0.3.0</yaio-dms-service.version>
+        <yaio-metaextract-service.version>0.2.0</yaio-metaextract-service.version>
 
         <!--  versions -->
         <roo.version>1.2.4.RELEASE</roo.version>
