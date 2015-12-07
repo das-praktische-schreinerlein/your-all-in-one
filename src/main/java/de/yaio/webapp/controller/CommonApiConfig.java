@@ -58,6 +58,15 @@ public class CommonApiConfig {
     @Value(value = "${yaio.mastersysuid}")
     public String yaioMastersysuid;
 
+    @Value(value = "${yaio.dms-client.yaio-metaextract-service.available}")
+    public Boolean metaextractAvailable;
+
+    @Value(value = "${yaio.dms-client.yaio-webshot-service.available}")
+    public Boolean webshotAvailable;
+
+    @Value(value = "${yaio.dms-client.yaio-dms-service.available}")
+    public Boolean dmsAvailable;
+
     public String configApiVersion = ApiConfigController.API_VERSION;
     public String adminApiVersion = AdminController.API_VERSION;
     public String converterApiVersion = ConverterController.API_VERSION;

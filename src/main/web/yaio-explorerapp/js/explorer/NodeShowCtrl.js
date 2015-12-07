@@ -289,4 +289,12 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
         yaioUtils.getService('YaioExplorerTree').setNodeFilter(nodeFilter);
     }
     
+    
+    $scope.initDragDropFileUploader = function(divId) {
+        // Setup the Uploadfile-Listener
+        var dropZone = document.getElementById(divId);
+        dropZone.addEventListener('dragover', function (event) { console.log("dragover:", event); yaioUtils.getService('YaioEditor').handleUploadFileUrlResNodeDragOver(event); }, false);
+        dropZone.addEventListener('drop', function (event) { console.log("drop:", event); yaioUtils.getService('YaioEditor').handleUploadFileUrlResNodeSelect(event); }, false);
+    }
+
 });

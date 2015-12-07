@@ -186,7 +186,7 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
     $scope.doUploadFileUrlResNodeChanged = function() {
         var element = document.getElementById("inputUploadFileUrlResNode");
         if (element && element.files) {
-            setUploadFile(element.files[0]);
+            $scope.setUploadFileUrlResNode(element.files[0]);
         }
     }
 

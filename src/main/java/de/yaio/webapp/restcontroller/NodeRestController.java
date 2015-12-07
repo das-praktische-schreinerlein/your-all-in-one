@@ -52,6 +52,7 @@ import de.yaio.core.nodeservice.UrlResNodeService;
 import de.yaio.datatransfer.common.DatatransferUtils;
 import de.yaio.extension.datatransfer.common.ExtendedDatatransferUtils;
 import de.yaio.extension.dms.services.ResContentDataService;
+import de.yaio.webapp.controller.CommonApiConfig;
 
 /** 
  * the controller for RESTful Web Services for BaseNodes<br>
@@ -72,6 +73,9 @@ public class NodeRestController {
 
     @Autowired
     private ResContentDataService resContentService;
+
+    @Autowired
+    private CommonApiConfig commonApiConfig;
 
     // Logger
     private static final Logger LOGGER =
@@ -694,7 +698,8 @@ public class NodeRestController {
             flgChange = datatransferUtils.mapNodeData(node, newNode);
 
             // handle uploads for UrlResNode
-            if (UrlResNode.class.isInstance(node)
+            if (commonApiConfig != null && commonApiConfig.dmsAvailable == true
+                    && UrlResNode.class.isInstance(node)
                     && MapUtils.isNotEmpty(addFileParams)
                     && addFileParams.containsKey("uploadFile") 
                     && addFileParams.get("uploadFile") != null
@@ -814,7 +819,8 @@ public class NodeRestController {
             newNode.persist();
 
             // handle uploads for UrlResNode
-            if (UrlResNode.class.isInstance(newNode) 
+            if (commonApiConfig != null && commonApiConfig.dmsAvailable == true
+                    && UrlResNode.class.isInstance(newNode)
                     && MapUtils.isNotEmpty(addFileParams)
                     && addFileParams.containsKey("uploadFile") 
                     && addFileParams.get("uploadFile") != null

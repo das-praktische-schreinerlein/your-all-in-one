@@ -31,8 +31,8 @@ yaioApp.controller('SourceSelectorCtrl', function($rootScope, $scope, $location,
         // load data and open frontpage if succeed
         yaioUtils.getAppBase().get("YaioNodeData").connectService().then(function success() {
             console.error("success connectService:" + yaioUtils.getConfig().appFrontpageUrl);
-            $location.path(yaioUtils.getConfig().appFrontpageUrl);
-            yaioAppBase.get("Angular.$location").path(yaioAppBase.config.appFrontpageUrl);
+            $location.path(yaioUtils.getConfig().appFrontpageUrl + "?" + new Date());
+            yaioAppBase.get("Angular.$location").path(yaioAppBase.config.appFrontpageUrl + "?" + new Date());
             console.error("success connectService done:" + yaioUtils.getConfig().appFrontpageUrl);
         });
     };

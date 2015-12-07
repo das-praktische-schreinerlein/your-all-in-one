@@ -40,11 +40,14 @@ Yaio.ServerAccessManagerService = function(appBase, config, defaultConfig) {
         me.setAvailiableNodeAction('copy', me.config.restCopyUrl);
         me.setAvailiableNodeAction('remove', me.config.restRemoveUrl);
         me.setAvailiableNodeAction('search', me.config.restSearchUrl);
-        me.setAvailiableNodeAction('dmsDownload', me.config.dmsDownloadUrl);
-        me.setAvailiableNodeAction('dmsEmbed', me.config.dmsEmbedUrl);
-        me.setAvailiableNodeAction('dmsIndexDownload', me.config.dmsIndexDownloadUrl);
-        me.setAvailiableNodeAction('dmsIndexEmbed', me.config.dmsIndexEmbedUrl);
         me.setAvailiableNodeAction('dashboard', "#/dashboard");
+
+        if (me.config.dmsAvailable) {
+            me.setAvailiableNodeAction('dmsDownload', me.config.dmsDownloadUrl);
+            me.setAvailiableNodeAction('dmsEmbed', me.config.dmsEmbedUrl);
+            me.setAvailiableNodeAction('dmsIndexDownload', me.config.dmsIndexDownloadUrl);
+            me.setAvailiableNodeAction('dmsIndexEmbed', me.config.dmsIndexEmbedUrl);
+        }
 
         me.setAvailiableNodeAction('syshelp', me.config.restExportsBaseUrl + 'documentation/SysHelp1');
         me.setAvailiableNodeAction('sysinfo', me.config.restExportsBaseUrl + 'documentation/SysInfo1');
@@ -59,6 +62,9 @@ Yaio.ServerAccessManagerService = function(appBase, config, defaultConfig) {
         // flags
         me.setAvailiableNodeAction('showsysdata', true);
         me.setAvailiableNodeAction('print', true);
+        me.setAvailiableNodeAction('urlResFileUploadAvailable', me.config.dmsAvailable);
+        me.setAvailiableNodeAction('urlResWebshotAvailable', me.config.webshotAvailable);
+        me.setAvailiableNodeAction('urlResIndexingAvailable', me.config.metaextractAvailable);
 
         // import-forms
         me.setAvailiableImportForm('ImportWiki', '/imports/wiki/');

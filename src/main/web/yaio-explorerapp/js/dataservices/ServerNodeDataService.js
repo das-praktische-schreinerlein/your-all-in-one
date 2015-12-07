@@ -64,7 +64,11 @@ Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
 
             // services
             me.config.plantUmlBaseUrl    = yaioCommonApiConfig.plantUmlBaseUrl;
-            
+
+            me.config.dmsAvailable       = yaioCommonApiConfig.dmsAvailable;
+            me.config.webshotAvailable   = yaioCommonApiConfig.webshotAvailable;
+            me.config.metaextractAvailable = yaioCommonApiConfig.metaextractAvailable;
+
             console.log(msg + " to:", me.config);
         }
     };
