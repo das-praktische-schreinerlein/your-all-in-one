@@ -82,6 +82,47 @@
     - Web-Diagrams: [mermaid](https://github.com/knsv/mermaid)
     - Web-Diagrams: [PlantUML](http://plantuml.com/)
 
+## Java-Services
+
+### yaio-commmons
+- functionality
+    - common functions and utils for yaio
+- [yaio-commons on Github](https://github.com/das-praktische-schreinerlein/yaio-commons)
+
+### yaio-pom-webstarter
+- functionality
+    - starter pom for spring-boot-webapps
+- [yaio-pom-webstarter on Github](https://github.com/das-praktische-schreinerlein/yaio-pom-webstarter)
+
+### yaio-plantuml-service
+- functionality
+    - webservie to create plantuml-diagrams from source
+    - inspired by [PlantUML Server](https://github.com/plantuml/plantuml-server)
+- [yaio-plantuml-service on Github](https://github.com/das-praktische-schreinerlein/yaio-plantuml-service)
+- use external libs
+    - [Plantuml-Core](https://github.com/plantuml/plantuml)
+
+### yaio-metaextract-service
+- functionality
+    - webservice to extract text and metadata from uploaded files or urls
+- [yaio-metaextract-service on Github](https://github.com/das-praktische-schreinerlein/yaio-metaextract-service)
+- use external libs
+    - [Apache Tika](https://tika.apache.org/1.11/gettingstarted.html)
+    - [Tess4j](http://tess4j.sourceforge.net/)
+    - [Tesseract](https://github.com/tesseract-ocr/tesseract)
+
+### yaio-webshot-service
+- functionality
+    - webservice to make a webshot of the url as png or pdf
+- [yaio-webshot-service on Github](https://github.com/das-praktische-schreinerlein/yaio-webshot-service)
+- use external libs
+    - [Wkhtmltopdf](https://github.com/wkhtmltopdf/wkhtmltopdf)
+
+### yaio-dms-service
+- functionality
+    - webservice to store and retrieve documents with simple dms-functions
+- [yaio-dms-service on Github](https://github.com/das-praktische-schreinerlein/yaio-dms-service)
+
 ## Development
 - functionality
     - build and support-tools
@@ -110,6 +151,9 @@
         - Codeanalysis codestyle: [Checkstyle](https://github.com/checkstyle/checkstyle)
         - Codeanalysis possible bugs: [Findbugs](http://findbugs.sourceforge.net/)
         - Codeanalysis possible bugs: [Pmd](http://pmd.sourceforge.net/snapshot/pmd-java/)
+        - Codeanalysis dependencies:[Dependency-Analyzer](http://www.dependency-analyzer.org/)
+        - Codeanalysis dependency documentation: [Plantuml-Dependency-Analyser](http://plantuml-depend.sourceforge.net/download/download.html)
+        - Diagrams: [Plantuml-Doclet](http://de.plantuml.com/doclet.html)
         - Test-Framework: [Junit](http://junit.org/)
         - RESTful-API-Interface documentation: [Springfox Swagger](http://springfox.github.io/springfox/)
     - **Virtualisation**
