@@ -49,6 +49,13 @@
         <!-- post integration tests - deactivate it with "mvn package -Dmaven-antrun-plugin.phase.post-integration-test=none" -->
         <maven-antrun-plugin.phase.post-integration-test>post-integration-test</maven-antrun-plugin.phase.post-integration-test>
 
+        <!--  maven install -->
+        <groupId>${project.groupId}</groupId>
+        <artifactId>${project.artifactId}</artifactId>
+        <version>${project.version}</version>
+        <packaging>${packaging.type}</packaging>
+        <file>target/${project.artifactId}-${project.version}.${packaging.type}</file>
+
         <!--
           ##################
           # project
@@ -135,6 +142,11 @@
 
     <!-- use these repositories to solve dependencies and get jars -->
     <repositories>
+        <repository>
+            <id>git-das-praktische-schreinerlein</id>
+            <name>das-praktische-schreinerlein's Git based repo</name>
+            <url>https://github.com/das-praktische-schreinerlein/maven-repo/raw/master/</url>
+        </repository>
         <repository>
             <id>spring-maven-release</id>
             <name>Spring Maven Release Repository</name>
@@ -824,7 +836,7 @@
                    </execution>
                 </executions>
             </plugin>
-          </plugins>
+        </plugins>
     </build>
 
     <reporting>
