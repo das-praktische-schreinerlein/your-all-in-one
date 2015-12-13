@@ -371,7 +371,7 @@ public class NodeRestController {
     public NodeActionResponse createTaskNode(@PathVariable(value = "parentSysUID") final String parentSysUID, 
                                              @RequestBody final TaskNode newNode) {
         // create default response
-        return this.createNode(parentSysUID, newNode);
+        return this.createNode(parentSysUID, new TaskNode(), newNode);
     }
 
     /** 
@@ -407,7 +407,7 @@ public class NodeRestController {
     public NodeActionResponse createEventNode(@PathVariable(value = "parentSysUID") final String parentSysUID, 
                                               @RequestBody final EventNode newNode) {
         // create default response
-        return this.createNode(parentSysUID, newNode);
+        return this.createNode(parentSysUID, new EventNode(), newNode);
     }
 
     /** 
@@ -459,7 +459,7 @@ public class NodeRestController {
         Map<String, Object> addParams = new HashMap<String, Object>();
         LOGGER.info("createUrlResNode with file:" + addFileParams.get("uploadFile") 
                         + " for node:" + newNode.getNameForLogger());
-        return this.createNode(parentSysUID, newNode, addParams, addFileParams);
+        return this.createNode(parentSysUID, new UrlResNode(), newNode, addParams, addFileParams);
     }
 
     /** 
@@ -495,7 +495,7 @@ public class NodeRestController {
     public NodeActionResponse createInfoNode(@PathVariable(value = "parentSysUID") final String parentSysUID, 
                                              @RequestBody final InfoNode newNode) {
         // create default response
-        return this.createNode(parentSysUID, newNode);
+        return this.createNode(parentSysUID, new InfoNode(), newNode);
     }
 
     /** 
@@ -531,7 +531,7 @@ public class NodeRestController {
     public NodeActionResponse createSymLinkNode(@PathVariable(value = "parentSysUID") final String parentSysUID, 
                                                 @RequestBody final SymLinkNode newNode) {
         // create default response
-        return this.createNode(parentSysUID, newNode);
+        return this.createNode(parentSysUID, new SymLinkNode(), newNode);
     }
 
     /** 
@@ -769,11 +769,12 @@ public class NodeRestController {
      * @FeatureResult                NodeResponse (OK, ERROR) with the new node for parentSysUID
      * @FeatureKeywords              Webservice Query
      * @param parentSysUID           sysUID of the parent to filter
+     * @param origNode               the empty node to fill with the newNode-data
      * @param newNode                the node created from request-data
      * @return                       NodeResponse (OK, ERROR) with the node for sysUID
      */
-    protected NodeActionResponse createNode(final String parentSysUID, final BaseNode newNode) {
-        return this.createNode(parentSysUID, newNode, null, null);
+    protected NodeActionResponse createNode(final String parentSysUID, final BaseNode origNode, final BaseNode newNode) {
+        return this.createNode(parentSysUID, origNode, newNode, null, null);
     }
 
     /** 
@@ -782,12 +783,14 @@ public class NodeRestController {
      * @FeatureResult                NodeResponse (OK, ERROR) with the new node for parentSysUID
      * @FeatureKeywords              Webservice Query
      * @param parentSysUID           sysUID of the parent to filter
+     * @param origNode               the empty node to fill with the newNode-data
      * @param newNode                the node created from request-data
      * @param addParams              map with additional params not set on the newNode
      * @param addFileParams          map with additional uploadFiles not set on the newNode
      * @return                       NodeResponse (OK, ERROR) with the node for sysUID
      */
-    protected NodeActionResponse createNode(final String parentSysUID, final BaseNode newNode, 
+    protected NodeActionResponse createNode(final String parentSysUID, final BaseNode origNode,
+                                            final BaseNode newNode, 
                                             final Map<String, Object> addParams, 
                                             final Map<String, MultipartFile> addFileParams) {
         NodeActionResponse response = new NodeActionResponse(
@@ -806,35 +809,35 @@ public class NodeRestController {
             parentNode.initChildNodesFromDB(0);
             
             // init some vars and map NodeData
-            newNode.setEbene(parentNode.getEbene() + 1);
-            datatransferUtils.mapNodeData(newNode, newNode);
+            origNode.setEbene(parentNode.getEbene() + 1);
+            datatransferUtils.mapNodeData(origNode, newNode);
             
             // add new Node
-            newNode.setParentNode(parentNode);
+            origNode.setParentNode(parentNode);
             
             // recalc data
-            newNode.recalcData(BaseNodeService.CONST_RECURSE_DIRECTION_ONLYME);
+            origNode.recalcData(BaseNodeService.CONST_RECURSE_DIRECTION_ONLYME);
             
             // save
-            newNode.persist();
+            origNode.persist();
 
             // handle uploads for UrlResNode
             if (commonApiConfig != null && commonApiConfig.dmsAvailable == true
-                    && UrlResNode.class.isInstance(newNode)
+                    && UrlResNode.class.isInstance(origNode)
                     && MapUtils.isNotEmpty(addFileParams)
                     && addFileParams.containsKey("uploadFile") 
                     && addFileParams.get("uploadFile") != null
                     && !addFileParams.get("uploadFile").isEmpty()) {
                 LOGGER.info("got handleUploadFile for " + addFileParams.get("uploadFile")
-                                + " for node:" + newNode.getNameForLogger());
-                this.handleUploadFile((UrlResNode) newNode, addFileParams.get("uploadFile"));
+                                + " for node:" + origNode.getNameForLogger());
+                this.handleUploadFile((UrlResNode) origNode, addFileParams.get("uploadFile"));
             }
 
             // recalc 
-            updateMeAndMyParents(newNode);
+            updateMeAndMyParents(origNode);
 
             // create response
-            response = createResponseObj(newNode, "node '" + newNode.getSysUID() 
+            response = createResponseObj(origNode, "node '" + origNode.getSysUID() 
                             + "' created for parentNode=" + parentSysUID);
 
         } catch (ConstraintViolationException ex) {
@@ -854,7 +857,7 @@ public class NodeRestController {
             LOGGER.error("violationerrors while creating node for parent '" 
                             + parentSysUID + "':", ex);
             LOGGER.error("error creating node '" 
-                            + newNode);
+                            + origNode);
             response = new NodeActionResponse(
                             "ERROR", "violationerrors while creating node for parent '" 
                             + parentSysUID + "':" + ex, 
@@ -867,7 +870,7 @@ public class NodeRestController {
             LOGGER.error("error while creating node for parent '" 
                             + parentSysUID + "':" + ex, ex);
             LOGGER.error("error creating node '" 
-                            + newNode);
+                            + origNode);
             response = new NodeActionResponse(
                             "ERROR", "error while creating node for parent '" 
                             + parentSysUID + "':" + ex, 
