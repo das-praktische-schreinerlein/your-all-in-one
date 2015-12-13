@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -23,16 +20,14 @@ import org.apache.log4j.Logger;
 
 import de.yaio.core.datadomain.PlanDependencieData.DurationMeasure;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     Utils
- * <h4>FeatureDescription:</h4>
- *     Utils for calculating predecessor
- * @package de.yaio.utils
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category Utils
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+/** 
+ * Utils for calculating predecessor
+ * @FeatureDomain                Utils
+ * @package                      de.yaio.utils
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     Utils
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 
 public class PredecessorCalculator {

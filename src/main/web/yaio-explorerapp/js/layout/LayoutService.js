@@ -1,30 +1,25 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-/**
- * <h4>FeatureDomain:</h4>
- *     WebGUI
- * <h4>FeatureDescription:</h4>
- *     servicefunctions for layout
- *      
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+/** 
+ * servicefunctions for layout
+ *  
+ * @FeatureDomain                WebGUI
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 
 Yaio.LayoutService = function(appBase) {
@@ -41,18 +36,12 @@ Yaio.LayoutService = function(appBase) {
     };
 
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     GUI
-     * <h4>FeatureDescription:</h4>
-     *     add speechRecognition to name+nodeDesc-Label if availiable<br>
-     *     set the flg webkitSpeechRecognitionAdded on the element, so that there is no doubling
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>GUI-result: add speechrecognition to elements
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Editor SpeechRecognition
+    /** 
+     * add speechRecognition to name+nodeDesc-Label if availiable<br>
+     * set the flg webkitSpeechRecognitionAdded on the element, so that there is no doubling
+     * @FeatureDomain                GUI
+     * @FeatureResult                GUI-result: add speechrecognition to elements
+     * @FeatureKeywords              GUI Editor SpeechRecognition
      */
     me.addSpeechRecognitionToElements = function() {
         // add speechrecognition if availiable
@@ -92,18 +81,12 @@ Yaio.LayoutService = function(appBase) {
         }
     };
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     GUI
-     * <h4>FeatureDescription:</h4>
-     *     open speechrecognition for element
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>GUI-result: open speechrecognition for element
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Editor SpeechRecognition
-     * @param target - target-element to update (HTML-Element)
+    /** 
+     * open speechrecognition for element
+     * @FeatureDomain                GUI
+     * @FeatureResult                GUI-result: open speechrecognition for element
+     * @FeatureKeywords              GUI Editor SpeechRecognition
+     * @param target                 target-element to update (HTML-Element)
      */
     me.openSpeechRecognitionWindow = function(target) {
         if (target == null) { target = self; }
@@ -114,18 +97,12 @@ Yaio.LayoutService = function(appBase) {
         speechrecognitionWindow.opener.targetElement = target;
     };
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     GUI
-     * <h4>FeatureDescription:</h4>
-     *     add speechSynth to nodeDesc-Label if availiable<br>
-     *     set the flg speechSynthAdded on the element, so that there is no doubling
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>GUI-result: add speechSynth to elements
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Editor SpeechSynth
+    /** 
+     * add speechSynth to nodeDesc-Label if availiable<br>
+     * set the flg speechSynthAdded on the element, so that there is no doubling
+     * @FeatureDomain                GUI
+     * @FeatureResult                GUI-result: add speechSynth to elements
+     * @FeatureKeywords              GUI Editor SpeechSynth
      */
     me.addSpeechSynthToElements = function() {
         // add speechSynth if availiable
@@ -163,18 +140,12 @@ Yaio.LayoutService = function(appBase) {
         }
     };
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     GUI
-     * <h4>FeatureDescription:</h4>
-     *     open speechsynth for element
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>GUI-result: open speechsynth for element
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Editor SpeechSynth
-     * @param target - target-element to update (HTML-Element)
+    /** 
+     * open speechsynth for element
+     * @FeatureDomain                GUI
+     * @FeatureResult                GUI-result: open speechsynth for element
+     * @FeatureKeywords              GUI Editor SpeechSynth
+     * @param target                 target-element to update (HTML-Element)
      */
     me.openSpeechSynthWindow = function(target) {
         if (target == null) { target = self; }
@@ -186,17 +157,11 @@ Yaio.LayoutService = function(appBase) {
     };
     
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     GUI
-     * <h4>FeatureDescription:</h4>
-     *     add datepicker to all input-elements with styleclass inputtype_date and inputtype_datetime
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>GUI-result: add datepicker
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Editor DatePicker
+    /** 
+     * add datepicker to all input-elements with styleclass inputtype_date and inputtype_datetime
+     * @FeatureDomain                GUI
+     * @FeatureResult                GUI-result: add datepicker
+     * @FeatureKeywords              GUI Editor DatePicker
      */
     me.addDatePickerToElements = function() {
         // add datepicker to all dateinput
@@ -217,17 +182,11 @@ Yaio.LayoutService = function(appBase) {
     };
     
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     GUI
-     * <h4>FeatureDescription:</h4>
-     *     add styleselectbox to all input-elements with styleclass inputtype_docLayoutAddStyleClass
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>GUI-result: add styleselectbox after input
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Editor
+    /** 
+     * add styleselectbox to all input-elements with styleclass inputtype_docLayoutAddStyleClass
+     * @FeatureDomain                GUI
+     * @FeatureResult                GUI-result: add styleselectbox after input
+     * @FeatureKeywords              GUI Editor
      */
     me.addDocLayoutStyleSelectorToElements = function() {
         // iterate over docLayoutSDtyleClass-elements
@@ -335,18 +294,12 @@ Yaio.LayoutService = function(appBase) {
         });
     };
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     GUI
-     * <h4>FeatureDescription:</h4>
-     *     init the multilanguage support for all tags with attribute <XX lang="de">
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>GUI-result: init multilanguage-support
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Editor Multilanguagesupport
-     * @param langKey - key of the preferred-language
+    /** 
+     * init the multilanguage support for all tags with attribute <XX lang="de">
+     * @FeatureDomain                GUI
+     * @FeatureResult                GUI-result: init multilanguage-support
+     * @FeatureKeywords              GUI Editor Multilanguagesupport
+     * @param langKey                key of the preferred-language
      */
     me.initLanguageSupport = function(langKey) {
         // Create language switcher instance and set default language to tech

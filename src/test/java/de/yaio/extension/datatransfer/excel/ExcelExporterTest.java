@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -30,17 +27,15 @@ import de.yaio.core.node.BaseNode;
 import de.yaio.datatransfer.exporter.Exporter;
 import de.yaio.extension.datatransfer.wiki.WikiExporterTest;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     Tests
- * <h4>FeatureDescription:</h4>
- *     test of the excel-exporter-logic<br>
+/** 
+ * test of the excel-exporter-logic<br>
  * 
- * @package de.yaio.extension.datatransfer.excel
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category tests
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Tests
+ * @package                      de.yaio.extension.datatransfer.excel
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     tests
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 
 @RunWith(JUnit4.class)
@@ -57,16 +52,13 @@ public class ExcelExporterTest extends WikiExporterTest {
         testExportFromFixture("FixtureExcelExportSource.ppl", "FixtureExcelExportResult.xls"); 
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tests
-     * <h4>FeatureDescription:</h4>
-     *     parse the ppl-source, format it and compare the result with expectedResult 
-     * <h4>FeatureKeywords:</h4>
-     *     Test
-     * @param source - the ppl-lines to parse and to convert
-     * @param expectedResult - the expected lines from exporter
-     * @throws Exception - possible Exception     */
+    /** 
+     * parse the ppl-source, format it and compare the result with expectedResult 
+     * @FeatureDomain                Tests
+     * @FeatureKeywords              Test
+     * @param source                 the ppl-lines to parse and to convert
+     * @param expectedResult         the expected lines from exporter
+     * @throws Exception             possible Exception     */
     public synchronized void testExport(final String source, final String expectedResult) throws Exception {
         // parse
         DataDomain masterNode  = importerObj.createNodeObjFromText(1, "Test", "Test", null);

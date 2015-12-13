@@ -5,6 +5,9 @@ echo off
 export BASEPATH=${1}
 export FLGWP=${2}
 
+# set pathes
+export GRAPHVIZ_DOT=/usr/bin/dot
+
 # set appconfig
 export YAIOINSTANCE=yaio-playground.local
 export YAIOAPPURLCONFIG=-config dummy -yaioinstance ${YAIOINSTANCE} -username admin -password secret

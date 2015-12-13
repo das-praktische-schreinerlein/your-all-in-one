@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -25,22 +22,20 @@ import org.junit.runners.JUnit4;
 import org.springframework.mock.staticmock.MockStaticEntityMethods;
 
 import de.yaio.BaseTest;
+import de.yaio.commons.data.DataUtils;
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.nodeservice.NodeService;
-import de.yaio.utils.DataUtils;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     Tests
- * <h4>FeatureDescription:</h4>
- *     interface for test of the datadomainservice-logic<br>
- *     test: doRecalc...
+/** 
+ * interface for test of the datadomainservice-logic<br>
+ * test: doRecalc...
  * 
- * @package de.yaio.core.datadomainservice
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category tests
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Tests
+ * @package                      de.yaio.core.datadomainservice
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     tests
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 
 @RunWith(JUnit4.class)
@@ -62,47 +57,35 @@ public abstract class DataDomainServiceTest extends BaseTest {
     /** dateformat-instance for UID yyyyMMddHHmmssSSS */
     protected final DateFormat UIDF = DataUtils.getUIDF();
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tests
-     * <h4>FeatureDescription:</h4>
-     *     setup the datadomainservice-obj to test
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>updates membervar dataDomainService
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Test Config Initialisation
-     * @throws Exception - possible Exception     */
+    /** 
+     * setup the datadomainservice-obj to test
+     * @FeatureDomain                Tests
+     * @FeatureResult                updates membervar dataDomainService
+     * @FeatureKeywords              Test Config Initialisation
+     * @throws Exception             possible Exception     */
     @Before
     public abstract void setupDataDomainService() throws Exception;
     
     @Test
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tests
-     * <h4>FeatureDescription:</h4>
-     *     do the ServiceRecalc-tests
-     * <h4>FeatureKeywords:</h4>
-     *     Test
-     * @throws Exception - possible Exception     */
+    /** 
+     * do the ServiceRecalc-tests
+     * @FeatureDomain                Tests
+     * @FeatureKeywords              Test
+     * @throws Exception             possible Exception     */
     public abstract void testServiceDoRecalc() throws Exception;
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tests
-     * <h4>FeatureDescription:</h4>
-     *     does a datadomainservice-test on the datadomainservice-obj with the dataobj<br>
-     *     calls dataDomainService.doRecalcBeforeChildren and checks the result with checkServiceResult()<br>  
-     *     calls recalcData for every childNode<br>  
-     *     calls dataDomainService.doRecalcAfterChildren and checks the result with checkServiceResult()<br>  
-     * <h4>FeatureKeywords:</h4>
-     *     Test
-     * @param testObj - the dataobj to test
-     * @param expectedAfterDoBeforeChildren - the expected result after call doRecalcBeforeChildren
-     * @param expectedAfterDoAfterChildren - the expected result after call doRecalcAfterChildren
-     * @param recurseDirection - direction of recalc
-     * @throws Exception - possible Exception     */
+    /** 
+     * does a datadomainservice-test on the datadomainservice-obj with the dataobj<br>
+     * calls dataDomainService.doRecalcBeforeChildren and checks the result with checkServiceResult()<br>  
+     * calls recalcData for every childNode<br>  
+     * calls dataDomainService.doRecalcAfterChildren and checks the result with checkServiceResult()<br>  
+     * @FeatureDomain                Tests
+     * @FeatureKeywords              Test
+     * @param testObj                the dataobj to test
+     * @param expectedAfterDoBeforeChildren the expected result after call doRecalcBeforeChildren
+     * @param expectedAfterDoAfterChildren the expected result after call doRecalcAfterChildren
+     * @param recurseDirection       direction of recalc
+     * @throws Exception             possible Exception     */
     public void testServiceDoRecalc(final TestObj testObj, 
                     final String expectedAfterDoBeforeChildren,
                     final String expectedAfterDoAfterChildren,

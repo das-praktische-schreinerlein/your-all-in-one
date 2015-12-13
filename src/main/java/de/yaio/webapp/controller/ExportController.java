@@ -1,23 +1,17 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 package de.yaio.webapp.controller;
-
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
@@ -32,32 +26,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import de.yaio.app.Configurator;
 import de.yaio.core.node.BaseNode;
 import de.yaio.datatransfer.exporter.EmptyOutputOptionsImpl;
 import de.yaio.datatransfer.exporter.Exporter;
 import de.yaio.datatransfer.exporter.OutputOptions;
 import de.yaio.datatransfer.exporter.OutputOptionsImpl;
+import de.yaio.datatransfer.json.JSONFullExporter;
 import de.yaio.extension.datatransfer.csv.CSVExporter;
 import de.yaio.extension.datatransfer.excel.ExcelExporter;
 import de.yaio.extension.datatransfer.excel.ExcelOutputOptions;
 import de.yaio.extension.datatransfer.ical.ICalDBExporter;
-import de.yaio.extension.datatransfer.json.JSONFullExporter;
 import de.yaio.extension.datatransfer.mindmap.MindMapExporter;
 import de.yaio.extension.datatransfer.ppl.PPLExporter;
 import de.yaio.extension.datatransfer.wiki.WikiExporter;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     Webservice
- * <h4>FeatureDescription:</h4>
- *     controller with Download-Services to export BaseNodes in different 
- *     formats (wiki, excel..)
- *      
- * @package de.yaio.webapp.controller
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+/** 
+ * controller with Download-Services to export BaseNodes in different 
+ * formats (wiki, excel..)
+ *  
+ * @FeatureDomain                Webservice
+ * @package                      de.yaio.webapp.controller
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 @Controller
 @RequestMapping("/exports")
@@ -66,9 +59,6 @@ public class ExportController {
     /** API-Version **/
     public static final String API_VERSION = "1.0.0";
 
-                    /** replacements to do after processing a node in documentation-context **/
-    public static final Map<String, String> PostProcessorReplacements_documentation = 
-                    new LinkedHashMap<String, String>();
     
     // Logger
     private static final Logger LOGGER =
@@ -77,21 +67,15 @@ public class ExportController {
     @Autowired
     protected ConverterUtils converterUtils;
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     Request to read the node for sysUID and return it in wiki-format with all children<br>
-     *     use the settings of the default-output-options
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>String - wiki-format of the node
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param sysUID - sysUID to export
-     * @param response - the response-Obj to set contenttype and headers
-     * @return String - wiki-format of the node
+    /** 
+     * Request to read the node for sysUID and return it in wiki-format with all children<br>
+     * use the settings of the default-output-options
+     * @FeatureDomain                Webservice
+     * @FeatureResult                String - wiki-format of the node
+     * @FeatureKeywords              Webservice Query
+     * @param sysUID                 sysUID to export
+     * @param response               the response-Obj to set contenttype and headers
+     * @return                       String - wiki-format of the node
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
@@ -108,23 +92,17 @@ public class ExportController {
         return res;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     Request to read the node for sysUID and return it in wiki-format with all children<br>
-     *     use the setting of the output-options from request<br>
-     *     requires an post-form application/x-www-form-urlencoded
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>String - wiki-format of the node
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param sysUID - sysUID to export
-     * @param oOptions - the outputOptions 
-     * @param response - the response-Obj to set contenttype and headers
-     * @return String - wiki-format of the node
+    /** 
+     * Request to read the node for sysUID and return it in wiki-format with all children<br>
+     * use the setting of the output-options from request<br>
+     * requires an post-form application/x-www-form-urlencoded
+     * @FeatureDomain                Webservice
+     * @FeatureResult                String - wiki-format of the node
+     * @FeatureKeywords              Webservice Query
+     * @param sysUID                 sysUID to export
+     * @param oOptions               the outputOptions 
+     * @param response               the response-Obj to set contenttype and headers
+     * @return                       String - wiki-format of the node
      */
     @ResponseBody
     @RequestMapping(method = {RequestMethod.POST}, 
@@ -142,20 +120,14 @@ public class ExportController {
         return res;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     Request to read the node for sysUID and return it in mindmap-format with all children
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>String - mindmap-format of the node
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param sysUID - sysUID to export
-     * @param response - the response-Obj to set contenttype and headers
-     * @return String - mindmap-format of the node
+    /** 
+     * Request to read the node for sysUID and return it in mindmap-format with all children
+     * @FeatureDomain                Webservice
+     * @FeatureResult                String - mindmap-format of the node
+     * @FeatureKeywords              Webservice Query
+     * @param sysUID                 sysUID to export
+     * @param response               the response-Obj to set contenttype and headers
+     * @return                       String - mindmap-format of the node
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
@@ -171,23 +143,17 @@ public class ExportController {
         String res = converterUtils.exportNode(sysUID, exporter, oOptions, ".mm", response);
         return res;
     }
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     Request to read the node for sysUID and return it in mindmap-format with all children<br>
-     *     use the setting of the output-options from request<br>
-     *     requires an post-form application/x-www-form-urlencoded
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>String - mindmap-format of the node
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param sysUID - sysUID to export
-     * @param oOptions - the outputOptions 
-     * @param response - the response-Obj to set contenttype and headers
-     * @return String - mindmap-format of the node
+    /** 
+     * Request to read the node for sysUID and return it in mindmap-format with all children<br>
+     * use the setting of the output-options from request<br>
+     * requires an post-form application/x-www-form-urlencoded
+     * @FeatureDomain                Webservice
+     * @FeatureResult                String - mindmap-format of the node
+     * @FeatureKeywords              Webservice Query
+     * @param sysUID                 sysUID to export
+     * @param oOptions               the outputOptions 
+     * @param response               the response-Obj to set contenttype and headers
+     * @return                       String - mindmap-format of the node
      */
     @ResponseBody
     @RequestMapping(method = {RequestMethod.POST}, 
@@ -205,20 +171,14 @@ public class ExportController {
         return res;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     Request to read the node for sysUID and return it in csv-format with all children
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>String - csv-format of the node
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param sysUID - sysUID to export
-     * @param response - the response-Obj to set contenttype and headers
-     * @return String - csv-format of the node
+    /** 
+     * Request to read the node for sysUID and return it in csv-format with all children
+     * @FeatureDomain                Webservice
+     * @FeatureResult                String - csv-format of the node
+     * @FeatureKeywords              Webservice Query
+     * @param sysUID                 sysUID to export
+     * @param response               the response-Obj to set contenttype and headers
+     * @return                       String - csv-format of the node
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
@@ -235,23 +195,17 @@ public class ExportController {
         return res;
     }
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     Request to read the node for sysUID and return it in csv-format with all children<br>
-     *     use the setting of the output-options from request<br>
-     *     requires an post-form application/x-www-form-urlencoded
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>String - csv-format of the node
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param sysUID - sysUID to export
-     * @param oOptions - the outputOptions 
-     * @param response - the response-Obj to set contenttype and headers
-     * @return String - csv-format of the node
+    /** 
+     * Request to read the node for sysUID and return it in csv-format with all children<br>
+     * use the setting of the output-options from request<br>
+     * requires an post-form application/x-www-form-urlencoded
+     * @FeatureDomain                Webservice
+     * @FeatureResult                String - csv-format of the node
+     * @FeatureKeywords              Webservice Query
+     * @param sysUID                 sysUID to export
+     * @param oOptions               the outputOptions 
+     * @param response               the response-Obj to set contenttype and headers
+     * @return                       String - csv-format of the node
      */
     @ResponseBody
     @RequestMapping(method = {RequestMethod.POST}, 
@@ -269,20 +223,14 @@ public class ExportController {
         return res;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     Request to read the node for sysUID and return it in json-format with all children
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>String - json-format of the node
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param sysUID - sysUID to export
-     * @param response - the response-Obj to set contenttype and headers
-     * @return String - csv-format of the node
+    /** 
+     * Request to read the node for sysUID and return it in json-format with all children
+     * @FeatureDomain                Webservice
+     * @FeatureResult                String - json-format of the node
+     * @FeatureKeywords              Webservice Query
+     * @param sysUID                 sysUID to export
+     * @param response               the response-Obj to set contenttype and headers
+     * @return                       String - csv-format of the node
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
@@ -299,20 +247,14 @@ public class ExportController {
         return res;
     }
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     Request to read the node for sysUID and return it in ppl-format with all children
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>String - ppl-format of the node
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param sysUID - sysUID to export
-     * @param response - the response-Obj to set contenttype and headers
-     * @return String - ppl-format of the node
+    /** 
+     * Request to read the node for sysUID and return it in ppl-format with all children
+     * @FeatureDomain                Webservice
+     * @FeatureResult                String - ppl-format of the node
+     * @FeatureKeywords              Webservice Query
+     * @param sysUID                 sysUID to export
+     * @param response               the response-Obj to set contenttype and headers
+     * @return                       String - ppl-format of the node
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
@@ -329,23 +271,17 @@ public class ExportController {
         return res;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     Request to read the node for sysUID and return it in ppl-format with all children<br>
-     *     use the setting of the output-options from request<br>
-     *     requires an post-form application/x-www-form-urlencoded
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>String - ppl-format of the node
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param sysUID - sysUID to export
-     * @param oOptions - the outputOptions 
-     * @param response - the response-Obj to set contenttype and headers
-     * @return String - ppl-format of the node
+    /** 
+     * Request to read the node for sysUID and return it in ppl-format with all children<br>
+     * use the setting of the output-options from request<br>
+     * requires an post-form application/x-www-form-urlencoded
+     * @FeatureDomain                Webservice
+     * @FeatureResult                String - ppl-format of the node
+     * @FeatureKeywords              Webservice Query
+     * @param sysUID                 sysUID to export
+     * @param oOptions               the outputOptions 
+     * @param response               the response-Obj to set contenttype and headers
+     * @return                       String - ppl-format of the node
      */
     @ResponseBody
     @RequestMapping(method = {RequestMethod.POST}, 
@@ -363,20 +299,14 @@ public class ExportController {
         return res;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     Request to read the node for sysUID and return it in ICal-format with all children
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>String - ICal-format of the node
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param sysUID - sysUID to export
-     * @param response - the response-Obj to set contenttype and headers
-     * @return String - ical-format of the node
+    /** 
+     * Request to read the node for sysUID and return it in ICal-format with all children
+     * @FeatureDomain                Webservice
+     * @FeatureResult                String - ICal-format of the node
+     * @FeatureKeywords              Webservice Query
+     * @param sysUID                 sysUID to export
+     * @param response               the response-Obj to set contenttype and headers
+     * @return                       String - ical-format of the node
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
@@ -396,21 +326,15 @@ public class ExportController {
         return res;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     Request to read all Events after node=sysUID and return it and all 
-     *     children that matches className=EventNode in ICal-format 
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>String - ICal-format of the node
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param sysUID - sysUID to export
-     * @param response - the response-Obj to set contenttype and headers
-     * @return String - ical-format of the node
+    /** 
+     * Request to read all Events after node=sysUID and return it and all 
+     * children that matches className=EventNode in ICal-format 
+     * @FeatureDomain                Webservice
+     * @FeatureResult                String - ICal-format of the node
+     * @FeatureKeywords              Webservice Query
+     * @param sysUID                 sysUID to export
+     * @param response               the response-Obj to set contenttype and headers
+     * @return                       String - ical-format of the node
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
@@ -431,21 +355,15 @@ public class ExportController {
         return res;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     Request to read all Tasks after node=sysUID and return it and all 
-     *     children that matches className=TaskNode in ICal-format 
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>String - ICal-format of the node
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param sysUID - sysUID to export
-     * @param response - the response-Obj to set contenttype and headers
-     * @return String - ical-format of the node
+    /** 
+     * Request to read all Tasks after node=sysUID and return it and all 
+     * children that matches className=TaskNode in ICal-format 
+     * @FeatureDomain                Webservice
+     * @FeatureResult                String - ICal-format of the node
+     * @FeatureKeywords              Webservice Query
+     * @param sysUID                 sysUID to export
+     * @param response               the response-Obj to set contenttype and headers
+     * @return                       String - ical-format of the node
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
@@ -466,22 +384,16 @@ public class ExportController {
         return res;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     Request to read all Open Tasks after node=sysUID and return it and 
-     *     all children that matches className=TaskNode and 
-     *     type=OFFEN,RUNNING,LATE,WARNING in ICal-format 
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>String - ICal-format of the node
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param sysUID - sysUID to export
-     * @param response - the response-Obj to set contenttype and headers
-     * @return String - ical-format of the node
+    /** 
+     * Request to read all Open Tasks after node=sysUID and return it and 
+     * all children that matches className=TaskNode and 
+     * type=OFFEN,RUNNING,LATE,WARNING in ICal-format 
+     * @FeatureDomain                Webservice
+     * @FeatureResult                String - ICal-format of the node
+     * @FeatureKeywords              Webservice Query
+     * @param sysUID                 sysUID to export
+     * @param response               the response-Obj to set contenttype and headers
+     * @return                       String - ical-format of the node
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
@@ -503,22 +415,16 @@ public class ExportController {
         return res;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     Request to read all Late Tasks after node=sysUID and return it and 
-     *     all children that matches className=TaskNode and type=LATE,WARNING 
-     *     in ICal-format 
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>String - ICal-format of the node
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param sysUID - sysUID to export
-     * @param response - the response-Obj to set contenttype and headers
-     * @return String - ical-format of the node
+    /** 
+     * Request to read all Late Tasks after node=sysUID and return it and 
+     * all children that matches className=TaskNode and type=LATE,WARNING 
+     * in ICal-format 
+     * @FeatureDomain                Webservice
+     * @FeatureResult                String - ICal-format of the node
+     * @FeatureKeywords              Webservice Query
+     * @param sysUID                 sysUID to export
+     * @param response               the response-Obj to set contenttype and headers
+     * @return                       String - ical-format of the node
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
@@ -540,23 +446,17 @@ public class ExportController {
         return res;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     Request to read the node for sysUID and return it in ical-format with all children<br>
-     *     use the setting of the output-options from request<br>
-     *     requires an post-form application/x-www-form-urlencoded
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>String - ical-format of the node
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param sysUID - sysUID to export
-     * @param oOptions - the outputOptions 
-     * @param response - the response-Obj to set contenttype and headers
-     * @return String - ical-format of the node
+    /** 
+     * Request to read the node for sysUID and return it in ical-format with all children<br>
+     * use the setting of the output-options from request<br>
+     * requires an post-form application/x-www-form-urlencoded
+     * @FeatureDomain                Webservice
+     * @FeatureResult                String - ical-format of the node
+     * @FeatureKeywords              Webservice Query
+     * @param sysUID                 sysUID to export
+     * @param oOptions               the outputOptions 
+     * @param response               the response-Obj to set contenttype and headers
+     * @return                       String - ical-format of the node
      */
     @ResponseBody
     @RequestMapping(method = {RequestMethod.POST}, 
@@ -576,20 +476,14 @@ public class ExportController {
     
     
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     Request to read the node for sysUID and return it in html-format with all children
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>String - html-format of the node
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param sysUID - sysUID to export
-     * @param response - the response-Obj to set contenttype and headers
-     * @return String - html-format of the node
+    /** 
+     * Request to read the node for sysUID and return it in html-format with all children
+     * @FeatureDomain                Webservice
+     * @FeatureResult                String - html-format of the node
+     * @FeatureKeywords              Webservice Query
+     * @param sysUID                 sysUID to export
+     * @param response               the response-Obj to set contenttype and headers
+     * @return                       String - html-format of the node
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
@@ -602,21 +496,15 @@ public class ExportController {
         return converterUtils.commonExportNodeAsHtml(sysUID, oOptions, response, null);
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     Request to read the node for sysUID and return it in layout-html-format 
-     *     with all children, but without header/footer-file.
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>String - html-format of the node
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param sysUID - sysUID to export
-     * @param response - the response-Obj to set contenttype and headers
-     * @return String - html-format of the node
+    /** 
+     * Request to read the node for sysUID and return it in layout-html-format 
+     * with all children, but without header/footer-file.
+     * @FeatureDomain                Webservice
+     * @FeatureResult                String - html-format of the node
+     * @FeatureKeywords              Webservice Query
+     * @param sysUID                 sysUID to export
+     * @param response               the response-Obj to set contenttype and headers
+     * @return                       String - html-format of the node
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
@@ -631,22 +519,16 @@ public class ExportController {
         return converterUtils.commonExportNodeAsHtml(sysUID, oOptions, response, "");
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     Request to read the node for sysUID and return it in layout-html-format 
-     *     with all children, but without header/footer-file.
-     *     replaces all /documentation/-urls to /yaio-explorerapp/yaio-explorerapp.html#/frontpage/
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>String - html-format of the node
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param sysUID - sysUID to export
-     * @param response - the response-Obj to set contenttype and headers
-     * @return String - html-format of the node
+    /** 
+     * Request to read the node for sysUID and return it in layout-html-format 
+     * with all children, but without header/footer-file.
+     * replaces all /documentation/-urls to /yaio-explorerapp/yaio-explorerapp.html#/frontpage/
+     * @FeatureDomain                Webservice
+     * @FeatureResult                String - html-format of the node
+     * @FeatureKeywords              Webservice Query
+     * @param sysUID                 sysUID to export
+     * @param response               the response-Obj to set contenttype and headers
+     * @return                       String - html-format of the node
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
@@ -667,23 +549,17 @@ public class ExportController {
         return res;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     Request to read the node for sysUID and return it in html-format with all children<br>
-     *     use the setting of the output-options from request<br>
-     *     requires an post-form application/x-www-form-urlencoded
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>String - html-format of the node
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param sysUID - sysUID to export
-     * @param oOptions - the outputOptions 
-     * @param response - the response-Obj to set contenttype and headers
-     * @return String - html-format of the node
+    /** 
+     * Request to read the node for sysUID and return it in html-format with all children<br>
+     * use the setting of the output-options from request<br>
+     * requires an post-form application/x-www-form-urlencoded
+     * @FeatureDomain                Webservice
+     * @FeatureResult                String - html-format of the node
+     * @FeatureKeywords              Webservice Query
+     * @param sysUID                 sysUID to export
+     * @param oOptions               the outputOptions 
+     * @param response               the response-Obj to set contenttype and headers
+     * @return                       String - html-format of the node
      */
     @ResponseBody
     @RequestMapping(method = {RequestMethod.POST}, 
@@ -696,20 +572,14 @@ public class ExportController {
         return converterUtils.commonExportNodeAsHtml(sysUID, oOptions, response, null);
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     Request to read the node for sysUID and return it in documentation-html-format with all children
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>String - documentation-html-format of the node
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param sysUID - sysUID to export
-     * @param response - the response-Obj to set contenttype and headers
-     * @return String - documentation-html-format of the node
+    /** 
+     * Request to read the node for sysUID and return it in documentation-html-format with all children
+     * @FeatureDomain                Webservice
+     * @FeatureResult                String - documentation-html-format of the node
+     * @FeatureKeywords              Webservice Query
+     * @param sysUID                 sysUID to export
+     * @param response               the response-Obj to set contenttype and headers
+     * @return                       String - documentation-html-format of the node
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
@@ -730,26 +600,20 @@ public class ExportController {
         String res = converterUtils.commonExportNodeAsHtml(sysUID, oOptions, response, 
                         "/static/exporttemplates/documentation-export.html");
         // replace static pathes...
-        for (String pattern : PostProcessorReplacements_documentation.keySet()) {
-            res = res.replace(pattern, PostProcessorReplacements_documentation.get(pattern));
+        for (String pattern : Configurator.PostProcessorReplacements_documentation.keySet()) {
+            res = res.replace(pattern, Configurator.PostProcessorReplacements_documentation.get(pattern));
         }
         return res;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     Request to read the node for sysUID and return it in yaioOfflineApp-html-format with all children
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>String - yaioOfflineApp-html-format of the node
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param sysUID - sysUID to export
-     * @param response - the response-Obj to set contenttype and headers
-     * @return String - yaioOfflineApp-html-format of the node
+    /** 
+     * Request to read the node for sysUID and return it in yaioOfflineApp-html-format with all children
+     * @FeatureDomain                Webservice
+     * @FeatureResult                String - yaioOfflineApp-html-format of the node
+     * @FeatureKeywords              Webservice Query
+     * @param sysUID                 sysUID to export
+     * @param response               the response-Obj to set contenttype and headers
+     * @return                       String - yaioOfflineApp-html-format of the node
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
@@ -759,28 +623,22 @@ public class ExportController {
                                                 final HttpServletResponse response) {
         String res = converterUtils.commonExportNodeAsYaioApp(sysUID, response, null, true);
         // replace static pathes...
-        for (String pattern : PostProcessorReplacements_documentation.keySet()) {
-            res = res.replace(pattern, PostProcessorReplacements_documentation.get(pattern));
+        for (String pattern : Configurator.PostProcessorReplacements_documentation.keySet()) {
+            res = res.replace(pattern, Configurator.PostProcessorReplacements_documentation.get(pattern));
         }
         
         return res;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     Request to read the node for sysUID and return it in excel-format with all children
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>String - excel-format of the node
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param sysUID - sysUID to export
-     * @param oOptions - the outputOptions
-     * @param response - the response-Obj to set contenttype and headers
-     * @return ByteArrayOutputStream - excel-format of the node
+    /** 
+     * Request to read the node for sysUID and return it in excel-format with all children
+     * @FeatureDomain                Webservice
+     * @FeatureResult                String - excel-format of the node
+     * @FeatureKeywords              Webservice Query
+     * @param sysUID                 sysUID to export
+     * @param oOptions               the outputOptions
+     * @param response               the response-Obj to set contenttype and headers
+     * @return                       ByteArrayOutputStream - excel-format of the node
      */
     public String commonExportNodeAsExcel(final String sysUID, 
                                           final ExcelOutputOptions oOptions,
@@ -825,20 +683,14 @@ public class ExportController {
         return null;
     }
 
-        /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     Request to read the node for sysUID and return it in excel-format with all children
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>String - excel-format of the node
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param sysUID - sysUID to export
-     * @param response - the response-Obj to set contenttype and headers
-     * @return ByteArrayOutputStream - excel-format of the node
+        /** 
+     * Request to read the node for sysUID and return it in excel-format with all children
+     * @FeatureDomain                Webservice
+     * @FeatureResult                String - excel-format of the node
+     * @FeatureKeywords              Webservice Query
+     * @param sysUID                 sysUID to export
+     * @param response               the response-Obj to set contenttype and headers
+     * @return                       ByteArrayOutputStream - excel-format of the node
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
@@ -850,23 +702,17 @@ public class ExportController {
         return this.commonExportNodeAsExcel(sysUID, oOptions, response);
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     Request to read the node for sysUID and return it in html-format with all children<br>
-     *     use the setting of the output-options from request<br>
-     *     requires an post-form application/x-www-form-urlencoded
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>String - html-format of the node
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Query
-     * @param sysUID - sysUID to export
-     * @param oOptions - the outputOptions 
-     * @param response - the response-Obj to set contenttype and headers
-     * @return String - html-format of the node
+    /** 
+     * Request to read the node for sysUID and return it in html-format with all children<br>
+     * use the setting of the output-options from request<br>
+     * requires an post-form application/x-www-form-urlencoded
+     * @FeatureDomain                Webservice
+     * @FeatureResult                String - html-format of the node
+     * @FeatureKeywords              Webservice Query
+     * @param sysUID                 sysUID to export
+     * @param oOptions               the outputOptions 
+     * @param response               the response-Obj to set contenttype and headers
+     * @return                       String - html-format of the node
      */
     @ResponseBody
     @RequestMapping(method = {RequestMethod.POST}, 

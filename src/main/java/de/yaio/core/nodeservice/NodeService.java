@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -24,17 +21,15 @@ import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.datadomainservice.DataDomainRecalc;
 import de.yaio.core.node.BaseNode;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     BusinessLogic
- * <h4>FeatureDescription:</h4>
- *     interface for businesslogic of nodes
+/** 
+ * interface for businesslogic of nodes
  * 
- * @package de.yaio.core.dataservice
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                BusinessLogic
+ * @package                      de.yaio.core.dataservice
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public interface NodeService {
     
@@ -51,114 +46,77 @@ public interface NodeService {
     ///////////////////////
     // Recalc
     ///////////////////////
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     BusinessLogic
-     * <h4>FeatureDescription:</h4>
-     *     initialize all DataDomainRecalcer
-     *     must be override and call Exporter.addDataDomaineRecalcer for every Recalcer
-     * <h4>FeatureKeywords:</h4>
-     *     Config
+    /** 
+     * initialize all DataDomainRecalcer
+     * must be override and call Exporter.addDataDomaineRecalcer for every Recalcer
+     * @FeatureDomain                BusinessLogic
+     * @FeatureKeywords              Config
      */
     void configureDataDomainRecalcer();
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     DataExport
-     *     Presentation
-     * <h4>FeatureDescription:</h4>
-     *     add DataDomainRecalcer to the Service-Config
-     * <h4>FeatureKeywords:</h4>
-     *     Config
-     * @param dataDomainRecalcer - instance of the dataDomainRecalcer
+    /** 
+     * add DataDomainRecalcer to the Service-Config
+     * @FeatureDomain                DataExport Presentation
+     * @FeatureKeywords              Config
+     * @param dataDomainRecalcer     instance of the dataDomainRecalcer
      */
     void addDataDomainRecalcer(DataDomainRecalc dataDomainRecalcer);
     
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     BusinessLogic
-     * <h4>FeatureDescription:</h4>
-     *     recalcs the DataDomain of the node
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>updates memberVariables
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     BsuinessLogic
-     * @param node - node to recalc
-     * @param recurseDirection - Type of recursion (parent, me, children) NodeService.CONST_RECURSE_DIRECTION_*
-     * @throws Exception - parser/format-Exceptions possible
+    /** 
+     * recalcs the DataDomain of the node
+     * @FeatureDomain                BusinessLogic
+     * @FeatureResult                updates memberVariables
+     * @FeatureKeywords              BsuinessLogic
+     * @param node                   node to recalc
+     * @param recurseDirection       Type of recursion (parent, me, children) NodeService.CONST_RECURSE_DIRECTION_*
+     * @throws Exception             parser/format-Exceptions possible
      */
     void doRecalc(DataDomain node, int recurseDirection) throws Exception;
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     BusinessLogic
-     * <h4>FeatureDescription:</h4>
-     *     recalcs the DataDomain of the node before the children are recalced
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>updates memberVariables
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     BsuinessLogic
-     * @param node - node to recalc
-     * @param recurceDirection - Type of recursion (parent, me, children) NodeService.CONST_RECURSE_DIRECTION_*
-     * @throws Exception - parser/format-Exceptions possible
+    /** 
+     * recalcs the DataDomain of the node before the children are recalced
+     * @FeatureDomain                BusinessLogic
+     * @FeatureResult                updates memberVariables
+     * @FeatureKeywords              BsuinessLogic
+     * @param node                   node to recalc
+     * @param recurceDirection       Type of recursion (parent, me, children) NodeService.CONST_RECURSE_DIRECTION_*
+     * @throws Exception             parser/format-Exceptions possible
      */
     void doRecalcBeforeChildren(DataDomain node, int recurceDirection) throws Exception;
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     BusinessLogic
-     * <h4>FeatureDescription:</h4>
-     *     recalcs the DataDomain of the nodes children
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>updates children of the node
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     BsuinessLogic
-     * @param node - node which children to recalc
-     * @param recurceDirection - Type of recursion (parent, me, children) NodeService.CONST_RECURSE_DIRECTION_*
-     * @throws Exception - parser/format-Exceptions possible
+    /** 
+     * recalcs the DataDomain of the nodes children
+     * @FeatureDomain                BusinessLogic
+     * @FeatureResult                updates children of the node
+     * @FeatureKeywords              BsuinessLogic
+     * @param node                   node which children to recalc
+     * @param recurceDirection       Type of recursion (parent, me, children) NodeService.CONST_RECURSE_DIRECTION_*
+     * @throws Exception             parser/format-Exceptions possible
      */
     void doRecalcChildren(DataDomain node, int recurceDirection) throws Exception;
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     BusinessLogic
-     * <h4>FeatureDescription:</h4>
-     *     recalcs the DataDomain of the node after the children are recalced
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>updates memberVariables
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     BsuinessLogic
-     * @param node - node to recalc
-     * @param recurceDirection - Type of recursion (parent, me, children) NodeService.CONST_RECURSE_DIRECTION_*
-     * @throws Exception - parser/format-Exceptions possible
+    /** 
+     * recalcs the DataDomain of the node after the children are recalced
+     * @FeatureDomain                BusinessLogic
+     * @FeatureResult                updates memberVariables
+     * @FeatureKeywords              BsuinessLogic
+     * @param node                   node to recalc
+     * @param recurceDirection       Type of recursion (parent, me, children) NodeService.CONST_RECURSE_DIRECTION_*
+     * @throws Exception             parser/format-Exceptions possible
      */
     void doRecalcAfterChildren(DataDomain node, int recurceDirection) throws Exception;
     
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     BusinessLogic
-     * <h4>FeatureDescription:</h4>
-     *     recalc the WFData of the node
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>updates memberfields of dataDomain PlanChildrenSum
-     *     <li>updates memberfields of dataDomain IstChildrenSum
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     BusinessLogic
-     * @param baseNode - node to get the state from
-     * @param recursionDirection - direction for recursivly recalc CONST_RECURSE_DIRECTION_* 
-     * @throws Exception - parser/format-Exceptions possible
+    /** 
+     * recalc the WFData of the node
+     * @FeatureDomain                BusinessLogic
+     * @FeatureResult                updates memberfields of dataDomain PlanChildrenSum
+     * @FeatureResult                updates memberfields of dataDomain IstChildrenSum
+     * @FeatureKeywords              BusinessLogic
+     * @param baseNode               node to get the state from
+     * @param recursionDirection     direction for recursivly recalc CONST_RECURSE_DIRECTION_* 
+     * @throws Exception             parser/format-Exceptions possible
      */
     void recalcData(DataDomain baseNode, int recursionDirection) throws Exception;
 
@@ -173,73 +131,49 @@ public interface NodeService {
     ///////////////////////
     // Hirarchy
     ///////////////////////
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     BusinessLogic
-     * <h4>FeatureDescription:</h4>
-     *     sets the parentNode of the baseNode and updates recursivly 
-     *     field Ebene of all childnodes 
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>updates memberVariable baseNode.parentNode
-     *     <li>updates memberVariable parentNode.childNodes
-     *     <li>updates memberVariable baseNode.ebene for all childs
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     BusinessLogic
-     * @param baseNode - node to set new parentNode
-     * @param parentNode - new parentNode
-     * @param flgRenewParent - flag force Renew of the parent, if nothing changed too 
+    /** 
+     * sets the parentNode of the baseNode and updates recursivly 
+     * field Ebene of all childnodes 
+     * @FeatureDomain                BusinessLogic
+     * @FeatureResult                updates memberVariable baseNode.parentNode
+     * @FeatureResult                updates memberVariable parentNode.childNodes
+     * @FeatureResult                updates memberVariable baseNode.ebene for all childs
+     * @FeatureKeywords              BusinessLogic
+     * @param baseNode               node to set new parentNode
+     * @param parentNode             new parentNode
+     * @param flgRenewParent         flag force Renew of the parent, if nothing changed too 
      */
     void setParentNode(DataDomain baseNode, DataDomain parentNode, boolean flgRenewParent);
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Persistence
-     * <h4>FeatureDescription:</h4>
-     *     get a List of the Ids of parent-hierarchy 
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue List<String> - list of the parent-sysUIDs, start with my own parent (not me)
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Persistence
-     * @param baseNode node
-     * @return list of the parent-sysUIDs, start with my own parent (not baseNode)
+    /** 
+     * get a List of the Ids of parent-hierarchy 
+     * @FeatureDomain                Persistence
+     * @FeatureResult                returnValue List<String> - list of the parent-sysUIDs, start with my own parent (not me)
+     * @FeatureKeywords              Persistence
+     * @param baseNode               node
+     * @return                       list of the parent-sysUIDs, start with my own parent (not baseNode)
      */
     List<String> getParentIdHierarchy(final DataDomain baseNode);
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Persistence
-     * <h4>FeatureDescription:</h4>
-     *     get a List of the parent-hierarchy
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue List<BaseNode> - list of the parents, start with my own parent (not me)
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Persistence
-     * @param baseNode node
-     * @return list of the parents, start with my own parent (not baseNode)
+    /** 
+     * get a List of the parent-hierarchy
+     * @FeatureDomain                Persistence
+     * @FeatureResult                returnValue List<BaseNode> - list of the parents, start with my own parent (not me)
+     * @FeatureKeywords              Persistence
+     * @param baseNode               node
+     * @return                       list of the parents, start with my own parent (not baseNode)
      */
     List<BaseNode> getParentHierarchy(final DataDomain baseNode);
     
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Persistence
-     * <h4>FeatureDescription:</h4>
-     *     check if parentSysUID exists in parent-hierarchy
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue boolean - true/false weather parentSysUID exists or not in hierarchy
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Persistence
-     * @param baseNode node
-     * @param parentSysUID sysUID to search
-     * @return list of the parents, start with my own parent (not baseNode)
+    /** 
+     * check if parentSysUID exists in parent-hierarchy
+     * @FeatureDomain                Persistence
+     * @FeatureResult                returnValue boolean - true/false weather parentSysUID exists or not in hierarchy
+     * @FeatureKeywords              Persistence
+     * @param baseNode               node
+     * @param parentSysUID           sysUID to search
+     * @return                       list of the parents, start with my own parent (not baseNode)
      */
     public boolean hasParent(final DataDomain baseNode, final String parentSysUID);
 }

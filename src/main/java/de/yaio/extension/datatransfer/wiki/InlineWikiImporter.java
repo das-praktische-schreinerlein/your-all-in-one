@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -22,17 +19,15 @@ import de.yaio.core.datadomain.MetaData;
 import de.yaio.core.node.BaseNode;
 import de.yaio.datatransfer.importer.ImportOptions;
 
-/**
- * <h4>FeatureDomain:</h4>
-*     import
- * <h4>FeatureDescription:</h4>
- *     import of Nodes in InlineWiki-Format
+/** 
+ * import of Nodes in InlineWiki-Format
  * 
- * @package de.yaio.extension.datatransfer.wiki
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                import
+ * @package                      de.yaio.extension.datatransfer.wiki
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class InlineWikiImporter extends WikiImporter {
 
@@ -48,19 +43,13 @@ public class InlineWikiImporter extends WikiImporter {
     protected int localId = 1;
     protected String strMetaIdPraefix = "Inline";
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Constructor
-     * <h4>FeatureDescription:</h4>
-     *     Importer to import/parse nodes in Wiki-Format
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>initialize the importer
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Constructor
-     * @param options - the importoptions for the parser...
-     * @param strMetaIdPraefix - default meta id praefix 
+    /** 
+     * Importer to import/parse nodes in Wiki-Format
+     * @FeatureDomain                Constructor
+     * @FeatureResult                initialize the importer
+     * @FeatureKeywords              Constructor
+     * @param options                the importoptions for the parser...
+     * @param strMetaIdPraefix       default meta id praefix 
      */
     public InlineWikiImporter(final ImportOptions options, final String strMetaIdPraefix) {
         super(options);

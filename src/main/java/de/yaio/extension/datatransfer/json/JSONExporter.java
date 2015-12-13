@@ -1,15 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
-
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -26,35 +22,26 @@ import de.yaio.core.node.BaseNode;
 import de.yaio.datatransfer.exporter.OutputOptions;
 import de.yaio.extension.datatransfer.csv.CSVExporter;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     DatenExport
- *     Praesentation
- * <h4>FeatureDescription:</h4>
- *     export of Nodes in JSON-format
+/** 
+ * export of Nodes in JSON-format
  * 
- * @package de.yaio.extension.datatransfer.ical
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                DatenExport Praesentation
+ * @package                      de.yaio.extension.datatransfer.ical
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class JSONExporter extends CSVExporter {
     
     protected final DateFormat DF = new SimpleDateFormat("yyyy-MM-dd");
     protected final DateFormat TF = new SimpleDateFormat("HH-mm-ss");
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Constructor
-     * <h4>FeatureDescription:</h4>
-     *     service functions to export nodes as JSON
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>initialize the exporter
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Constructor
+    /** 
+     * service functions to export nodes as JSON
+     * @FeatureDomain                Constructor
+     * @FeatureResult                initialize the exporter
+     * @FeatureKeywords              Constructor
      */
     public JSONExporter() {
         super();

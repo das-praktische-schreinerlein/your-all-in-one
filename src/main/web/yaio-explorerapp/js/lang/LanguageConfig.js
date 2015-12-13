@@ -1,32 +1,23 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-/**
- * <h4>FeatureDomain:</h4>
- *     Configuration
- * <h4>FeatureDescription:</h4>
- *     configures $translateProvider - international app
- * <h4>FeatureResult:</h4>
- *   <ul>
- *     <li>updates $translateProvider
- *   </ul> 
- * <h4>FeatureKeywords:</h4>
- *     GUI Configuration
- * @param $translateProvider - the $translateProvider to get text-resources
+/** 
+ * configures $translateProvider - international app
+ * @FeatureDomain                Configuration
+ * @FeatureResult                updates $translateProvider
+ * @FeatureKeywords              GUI Configuration
+ * @param $translateProvider     the $translateProvider to get text-resources
  */
 yaioApp.config(function ($translateProvider) {
     'use strict';

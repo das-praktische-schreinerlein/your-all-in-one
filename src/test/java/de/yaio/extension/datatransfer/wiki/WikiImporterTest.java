@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -27,17 +24,15 @@ import de.yaio.datatransfer.importer.ImportOptions;
 import de.yaio.datatransfer.importer.Importer;
 import de.yaio.extension.datatransfer.wiki.WikiImporter.WikiStructLine;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     Tests
- * <h4>FeatureDescription:</h4>
- *     test of the wiki-importer-logic<br>
+/** 
+ * test of the wiki-importer-logic<br>
  * 
- * @package de.yaio.extension.datatransfer.wiki
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category tests
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Tests
+ * @package                      de.yaio.extension.datatransfer.wiki
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     tests
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 
 @RunWith(JUnit4.class)
@@ -49,50 +44,35 @@ public class WikiImporterTest extends BaseTest {
         return null;
     }
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tests
-     * <h4>FeatureDescription:</h4>
-     *     configure the importer for the tests
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returns importerObj - Importer
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Test Configuration
-     * @return - optionsObj
-     * @throws Exception - io-Exceptions possible
+    /** 
+     * configure the importer for the tests
+     * @FeatureDomain                Tests
+     * @FeatureResult                returns importerObj - Importer
+     * @FeatureKeywords              Test Configuration
+     * @return                       optionsObj
+     * @throws Exception             io-Exceptions possible
      */
     public Importer setupNewImporter() throws Exception {
         return new WikiImporter(setupNewImportOptions());
     }
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tests
-     * <h4>FeatureDescription:</h4>
-     *     configure the importoptions for the tests
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returns importoptions - ImportOptions
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Test Configuration
-     * @return - optionsObj
-     * @throws Exception - io-Exceptions possible
+    /** 
+     * configure the importoptions for the tests
+     * @FeatureDomain                Tests
+     * @FeatureResult                returns importoptions - ImportOptions
+     * @FeatureKeywords              Test Configuration
+     * @return                       optionsObj
+     * @throws Exception             io-Exceptions possible
      */
     public ImportOptions setupNewImportOptions() throws Exception {
         return new WikiImportOptions();
     }
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tests
-     * <h4>FeatureDescription:</h4>
-     *     do tests for import
-     * <h4>FeatureKeywords:</h4>
-     *     Test
-     * @throws Exception - io-Exceptions possible
+    /** 
+     * do tests for import
+     * @FeatureDomain                Tests
+     * @FeatureKeywords              Test
+     * @throws Exception             io-Exceptions possible
      */
     @Test
     public void testImport() throws Exception {
@@ -100,32 +80,26 @@ public class WikiImporterTest extends BaseTest {
         //testImportFromFixture("FixtureWikiImportSourceISO.wiki", "FixtureWikiImportResultISO.ppl"); 
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tests
-     * <h4>FeatureDescription:</h4>
-     *     parse the source and compare the result with expectedResult 
-     * <h4>FeatureKeywords:</h4>
-     *     Test
-     * @param srcFile - file with the source
-     * @param expectedResultFile - file with the expected result
-     * @throws Exception - io-Exceptions possible
+    /** 
+     * parse the source and compare the result with expectedResult 
+     * @FeatureDomain                Tests
+     * @FeatureKeywords              Test
+     * @param srcFile                file with the source
+     * @param expectedResultFile     file with the expected result
+     * @throws Exception             io-Exceptions possible
      */
     public void testImportFromFixture(final String srcFile, final String expectedResultFile) throws Exception {
         testImport(this.testService.readFixture(this.getClass(), srcFile).toString(), 
                    this.testService.readFixture(this.getClass(), expectedResultFile).toString()); 
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tests
-     * <h4>FeatureDescription:</h4>
-     *     parse the source and compare the result with expectedResult 
-     * <h4>FeatureKeywords:</h4>
-     *     Test
-     * @param source - the lines to parse
-     * @param expectedResult - the expected ppl-lines from parser
-     * @throws Exception - io-Exceptions possible
+    /** 
+     * parse the source and compare the result with expectedResult 
+     * @FeatureDomain                Tests
+     * @FeatureKeywords              Test
+     * @param source                 the lines to parse
+     * @param expectedResult         the expected ppl-lines from parser
+     * @throws Exception             io-Exceptions possible
      */
     public void testImport(final String source, final String expectedResult) throws Exception {
         // configure Importer

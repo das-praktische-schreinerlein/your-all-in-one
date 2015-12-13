@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -55,13 +52,13 @@ public class ExcelService {
     /**
      * Schreibt den Excel-Bericht <tt>wb</tt> in die Datei <tt>file</tt>.
      *
-     * @param file
+     * @param file                   
      * Datei, in welche der Bericht geschrieben werden soll.
      *
-     * @param wb
+     * @param wb                     
      * Excel-Bericht als HSSFWorkbook-Objekt.
      *
-     * @throws IOException
+     * @throws IOException           
      */
     public static void writeWorkbookToFile(final File file, final HSSFWorkbook wb)
             throws IOException {
@@ -78,13 +75,13 @@ public class ExcelService {
      * zur�ckgibt. Wenn die Zelle noch nicht exisitiert bzw. def. ist, wird
      * sie neu erzeugt.
      *
-     * @param sheet
+     * @param sheet                  
      * HSSFSheet-Objekt (Tabellenblatt)
      *
-     * @param rownum
+     * @param rownum                 
      * Zeilennummer
      *
-     * @param cellnum
+     * @param cellnum                
      * Spaltennummer
      *
      * @return
@@ -222,18 +219,18 @@ public class ExcelService {
     /**
      * Hilfsmethode zum Setzen eines String-Wertes.
      *
-     * @param sheet
+     * @param sheet                  
      * HSSFSheet-Objekt (Tabellenblatt)
      *
-     * @param rownum
+     * @param rownum                 
      * Zeilennummer
      *
-     * @param cellnum
+     * @param cellnum                
      * Spaltennummer
      *
-     * @param value
+     * @param value                  
      * String-Wert, der gesetzt werden soll
-     * @return - the new cell
+     * @return                       the new cell
      */
     public static HSSFCell setCellString(
             final HSSFSheet sheet, final int rownum, final int cellnum, final String value) {
@@ -365,10 +362,10 @@ public class ExcelService {
      * Kopiert die Eigenschaften des �bergebenen Cell-Styles und gibt
      * es als neues HSSFCellStyle-Objekt zur�ck.
      *
-     * @param style
+     * @param style                  
      * zu kopierendens HSSFCellStyle-Objekt
      *
-     * @param wb
+     * @param wb                     
      * das betreffende Workbook
      *
      * @return

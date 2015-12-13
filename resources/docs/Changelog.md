@@ -1,5 +1,67 @@
 # Changelog
 
+## Changelog for release: feature-YAIO2234-improvements-201512-RELEASE
+- **external yaio-services (YAIO2280)**
+    - introduced yaio-common-utils moved several utils to yaio-common (YAIO2281) 
+    - use own yaio-plantuml-service (YAIO2282) 
+    - use yaio-pom-webstarter (YAIO2283) 
+    - use metaextract-service to extract metadata from urls/files (YAIO2284) 
+    - use webshot-service to webshot urls (YAIO2285) 
+    - use yaio-dms-service with common StorageUtils (YAIO2286) 
+- **neue Funktionen (YAIO2240)**
+    - added statistics and filter for url/info-nodes (YAIO2287) 
+    - FileUpload mit Indexierung und Speicherung im CMS (YAIO2234) 
+    - UrlRes per Crawler als Text speichern (analog lynx) (YAIO2231) 
+    - **Added DMS with File/Url-Upload DMS with Webshots and MetaExtraction (YAIO2288)**
+        - added dms-functions added possibility of webshots for saved urls (YAIO2289) 
+        - added drag&drop-uploader (YAIO2290) 
+        - added fileupload (YAIO2291) 
+        - added functions to recalc when triggered by Cronjob from DB (YAIO2292) 
+        - added indexer-service (YAIO2293) 
+        - added NetFirewall to secure my private network (YAIO2294) 
+        - added optional for dms-download to get the real file-extension for better metaextract (YAIO2295) 
+        - added options for markdown to use yaio-dms-links for images (YAIO2296) 
+        - data for the included tesseract ocr (YAIO2297) 
+        - enabled scheduling for triggered-service (YAIO2298) 
+        - disable functions per flag (YAIO2299) 
+        - improved dmsclient (YAIO2300) 
+        - improved layout (YAIO2301) 
+        - improved layout and show all parser-results (YAIO2302) 
+        - improved styling of dms (YAIO2303) 
+        - UrlRes mit ScreenCapture (YAIO2232) 
+- **Code-Verbesserungen (YAIO2241)**
+    - added ConfigController (YAIO2242) 
+    - externalize config (YAIO2243) 
+    - ServerNodeDataService loads config from server externalize config (YAIO2244) 
+    - codeclean (YAIO2245) 
+    - optimized pom for options (YAIO2246) 
+    - added http-utils (YAIO2247) 
+    - added prototype of ical-generation with biweekly (YAIO2248) 
+    - improved naming (YAIO2249) 
+    - improved package-structure (YAIO2250) 
+    - updated spring-boot.version to 1.3.0 (YAIO2251) 
+    - service-functions to reset data per datadomain (YAIO2252) 
+    - recalc nodes with different scripts/stages (YAIO2253) 
+    - splitted services into recalc and triggered (YAIO2254) 
+- **Bugfixes (YAIO2242)**
+    - bugfix: unknown var for calcing yaio-hrefs (YAIO2255) 
+    - compatibility poi for yaio and tika (YAIO2256) 
+    - fixed config (YAIO2257) 
+    - fixed html-export for fileres (YAIO2258) 
+    - fixed plantuml-integration in htlm-export (YAIO2259) 
+    - fixed security issue on nodecreation: map newNodeData from paramNode to an empty newNode (YAIO2260) 
+    - fixed tests for fileupload (YAIO2261) 
+    - fixed triggered-service (YAIO2262) 
+    - fixed typos (YAIO2263) 
+    - fixed webshots-service (YAIO2264) 
+    - use another promise-handler (YAIO2265) 
+- **Admin/Doku-Funktionen (YAIO2243)**
+    - Eigenes Dok-Format von <h4> -> @ migrieren (YAIO2238) 
+    - autom Class-Dokumentation von YAIO mit PlantUML (YAIO2237) 
+    - added devtools for documentation (YAIO2239) 
+    - add js-resporting-tools (YAIO2240) 
+    - use tool to analyse deps (YAIO2241) 
+
 ## Changelog for release: feature-YAIO2168-improvements-201509-RELEASE
 - **Admin/Doku-Funktionen (YAIO2228)**
     - added swagger for api-documentation (YAIO2229)

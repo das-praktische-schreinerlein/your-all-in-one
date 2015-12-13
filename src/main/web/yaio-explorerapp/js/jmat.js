@@ -1,13 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     WebGUI
- * <h4>FeatureDescription:</h4>
- *     overloads some functions from my JMAT-Framework
- *      
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+/** 
+ * overloads some functions from my JMAT-Framework
+ *  
+ * @FeatureDomain                WebGUI
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 'use strict';
 
@@ -25,8 +23,8 @@
 
     /**
      * show InputRow
-     * @param eleInputRow
-     * @returns {Boolean}
+     * @param eleInputRow            
+     * @returns                      {Boolean}
      */
     JMSLayout.prototype.showInputRow = function(eleInputRow) {
         if (! eleInputRow) {
@@ -38,7 +36,7 @@
 
     /**
      * liefert Status eines Input-Elements
-     * @param eleInput  INPUT-HTMLElement
+     * @param eleInput               INPUT-HTMLElement
      * return belegt trzue/false
      */
     JMSLayout.prototype.getStateInputElement = function(eleInput) {
@@ -103,8 +101,8 @@
     
      /**
       * Toggler an bestehendes Diff anfuegen
-      * @param parentId
-      * @param toggleId
+      * @param parentId               
+      * @param toggleId               
       */
      JMATPageLayout.prototype.appendBlockToggler = function(parentId, toggleId) {
          var html = jMATService.getPageLayoutService().createBlockTogglerHtml(toggleId, toggleId, 

@@ -38,12 +38,49 @@
             <fieldset>
               <legend translate="editor.common.legend.Resource">Resource</legend>
               
-              <!-- show textfield -->
-              <label for="resLocRef" translate="editor.common.label.resLocRef">URI</label> 
-              <input type="text" name="resLocRef" placeholder="http:// oder  file://" class="inputtype_resLocRef" ng-model="nodeForEdit.resLocRef" id="inputResLocRefUrlResNode" required ng-change=""> 
-              <fielderrors for="resLocRef"></fielderrors>
+              <!-- show url-input -->
+              <div ng-if="nodeForEdit.type != 'FILERES'">
+                  <!-- show textfield -->
+                  <label for="resLocRef" translate="editor.common.label.resLocRef">URI</label> 
+                  <input type="text" name="resLocRef" placeholder="http:// oder  file://" class="inputtype_resLocRef" ng-model="nodeForEdit.resLocRef" id="inputResLocRefUrlResNode" required ng-change=""> 
+                  <fielderrors for="resLocRef"></fielderrors>
 
-              <br />
+                  <br />
+
+                  <!-- show checkbox for url-upload-->
+                  <div ng-if="nodeForEdit.type == 'URLRES' && yaioUtils.getService('YaioAccessManager').getAvailiableNodeAction('urlResWebshotAvailable', nodeForEdit.sysUID) == true">
+                    <label for="resContentDMSState" translate="editor.common.label.resContentDMSState" class="label_resContentDMSState">Reload Page</label> 
+                    <input type="checkbox" name="resContentDMSState" class="inputtype_resContentDMSState" ng-model="nodeForEdit.resContentDMSState" id="inputResContentDMSStateUrlResNode" ng-change=""> 
+                    <fielderrors for="resContentDMSState"></fielderrors>
+                  </div>
+              </div>
+
+              <!-- show fileinput -->
+              <div ng-if="nodeForEdit.type == 'FILERES'">
+                  <!-- show textfield -->
+                  <label for="resLocRef" translate="editor.common.label.resLocRef">URI</label> 
+                  <input type="text" name="resLocRef" class="inputtype_resLocRef" ng-model="nodeForEdit.resLocRef" id="inputResLocRefUrlResNode" disabled="disabled"> 
+                  <fielderrors for="dummyResLocRef"></fielderrors>
+
+                  <br />
+
+                  <div ng-if="yaioUtils.getService('YaioAccessManager').getAvailiableNodeAction('urlResFileUploadAvailable', nodeForEdit.sysUID) == true">
+                      <label for="uploadFile" translate="editor.common.label.uploadFile">Uploadfile</label>
+                      <input type="file" name="uploadFile" id="inputUploadFileUrlResNode" class="inputtype_uploadFile" onchange="angular.element(this).scope().doUploadFileUrlResNodeChanged(this)"/>
+                      <fielderrors for="uploadFile"></fielderrors>
+                      <br />
+                  </div>
+              </div>
+
+
+              <!-- show checkbox for indexing-->
+              <div ng-if="yaioUtils.getService('YaioAccessManager').getAvailiableNodeAction('urlResIndexingAvailable', nodeForEdit.sysUID) == true">
+                  <label for="resIndexDMSState" translate="editor.common.label.resIndexDMSState" class="label_resIndexDMSState">Reload Index</label>
+                  <input type="checkbox" name="resIndexDMSState" class="inputtype_resIndexDMSState" ng-model="nodeForEdit.resIndexDMSState" id="inputResIndexDMSStateUrlResNode" ng-change="">
+                  <fielderrors for="resIndexDMSState"></fielderrors>
+
+                  <br />
+              </div>
 
               <!-- show textfield -->
               <label for="resLocName" translate="editor.common.label.resLocName">Label</label> 

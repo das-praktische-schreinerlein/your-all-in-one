@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -26,17 +23,15 @@ import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.node.BaseNode;
 import de.yaio.core.node.TaskNode;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     Tests
- * <h4>FeatureDescription:</h4>
- *     test of the importer-logic<br>
+/** 
+ * test of the importer-logic<br>
  * 
- * @package de.yaio.datatransfer.importer
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category tests
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Tests
+ * @package                      de.yaio.datatransfer.importer
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     tests
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 
 @RunWith(JUnit4.class)
@@ -45,17 +40,15 @@ public class NodeFactoryTest extends BaseTest {
 
     protected NodeFactory nodeFactoryObj = null;
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Test
-     * <h4>FeatureDescription:</h4>
-     *     testobject for importer-logic
+    /** 
+     * testobject for importer-logic
      * 
-     * @package de.yaio.datatransfer.importer
-     * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
-     * @category tests
-     * @copyright Copyright (c) 2014, Michael Schreiner
-     * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+     * @FeatureDomain                Test
+     * @package                      de.yaio.datatransfer.importer
+     * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+     * @category                     tests
+     * @copyright                    Copyright (c) 2014, Michael Schreiner
+     * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
      */
     public static class NodeFactoryTestObj implements TestObj {
         
@@ -81,32 +74,23 @@ public class NodeFactoryTest extends BaseTest {
         return null;
     }
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tests
-     * <h4>FeatureDescription:</h4>
-     *     configure the nodefactory for the tests
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>updates membervars nodeFactoryObj - NodeFactory
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Test Configuration
-     * @throws Exception - possible Exception     */
+    /** 
+     * configure the nodefactory for the tests
+     * @FeatureDomain                Tests
+     * @FeatureResult                updates membervars nodeFactoryObj - NodeFactory
+     * @FeatureKeywords              Test Configuration
+     * @throws Exception             possible Exception     */
     @Before
     public void setupNodeFactory() throws Exception {
         nodeFactoryObj = new NodeFactoryImpl(null);
         TestNode.configureNodeTypeIdentifier(nodeFactoryObj);
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tests
-     * <h4>FeatureDescription:</h4>
-     *     do tests for creation of nodes from text
-     * <h4>FeatureKeywords:</h4>
-     *     Test
-     * @throws Exception - possible Exception     */
+    /** 
+     * do tests for creation of nodes from text
+     * @FeatureDomain                Tests
+     * @FeatureKeywords              Test
+     * @throws Exception             possible Exception     */
     @Test
     public void testCreateNode() throws Exception {
         String expected = null;

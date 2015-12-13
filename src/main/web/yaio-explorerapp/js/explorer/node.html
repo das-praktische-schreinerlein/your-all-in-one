@@ -45,6 +45,15 @@
         -->
         <div ng-include="yaioUtils.getConfig().resBaseUrl + 'js/importer/import-form.html'"></div>
       </div>
+
+      <!-- Uploader -->
+      <div ng-if="yaioUtils.getService('YaioAccessManager').getAvailiableNodeAction('urlResFileUploadAvailable', node.sysUID) == true">
+        <ul class="commands exporttypes">
+          <li>
+            <div id='divGlobalUrlResFileUploader' class='button exporttype hide-if-printversion divGlobalUrlResFileUploader' data-parentsysuid="{{node.sysUID}}" data-tooltip='tooltip.command.DragDropUploader' lang="tech" translate="common.command.DragDropUploader" ng-init="initDragDropFileUploader('divGlobalUrlResFileUploader')">Drag&Drop Uploader...</div>
+          </li>
+        </ul>
+      </div>
     </div>
 
     <!-- 

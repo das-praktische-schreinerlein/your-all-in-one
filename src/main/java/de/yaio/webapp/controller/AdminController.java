@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -26,19 +23,17 @@ import de.yaio.core.dbservice.BaseNodeDBService;
 import de.yaio.core.dbservice.BaseNodeDBServiceImpl;
 import de.yaio.core.node.BaseNode;
 import de.yaio.jobs.NodeRecalcer;
-import de.yaio.rest.controller.NodeActionResponse;
+import de.yaio.webapp.restcontroller.NodeActionResponse;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     Webservice
- * <h4>FeatureDescription:</h4>
- *     Admin-Services to recalc, reset...
- *      
- * @package de.yaio.webapp.controller
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+/** 
+ * Admin-Services to recalc, reset...
+ *  
+ * @FeatureDomain                Webservice
+ * @package                      de.yaio.webapp.controller
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 @Controller
 @RequestMapping("/admin")
@@ -47,19 +42,12 @@ public class AdminController {
     /** API-Version **/
     public static final String API_VERSION = "1.0.0";
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     Request to recalc the specified node
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Admin
-     * @param sysUID - sysUID to recalc
-     * @return text-message
+    /** 
+     * Request to recalc the specified node
+     * @FeatureDomain                Webservice
+     * @FeatureKeywords              Webservice Admin
+     * @param sysUID                 sysUID to recalc
+     * @return                       text-message
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
@@ -97,18 +85,11 @@ public class AdminController {
         return response.getStateMsg();
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Webservice
-     * <h4>FeatureDescription:</h4>
-     *     reset the yaio-instance
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Webservice Admin
-     * @return text-message
+    /** 
+     * reset the yaio-instance
+     * @FeatureDomain                Webservice
+     * @FeatureKeywords              Webservice Admin
+     * @return                       text-message
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 

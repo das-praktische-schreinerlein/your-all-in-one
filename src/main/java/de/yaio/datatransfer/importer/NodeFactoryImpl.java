@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -42,17 +39,15 @@ import de.yaio.datatransfer.importer.parser.ResLocDataParserImpl;
 import de.yaio.datatransfer.importer.parser.SymLinkDataParserImpl;
 import de.yaio.datatransfer.importer.parser.SysDataParserImpl;
 
-/**
- * <h4>FeatureDomain:</h4>
-*     import
- * <h4>FeatureDescription:</h4>
+/** 
  *    factory-functions for creation of Nodes
  * 
- * @package de.yaio.datatransfer.importer
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                import
+ * @package                      de.yaio.datatransfer.importer
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class NodeFactoryImpl implements NodeFactory {
 
@@ -71,18 +66,12 @@ public class NodeFactoryImpl implements NodeFactory {
 
     protected ImportOptions options = null;
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Constructor
-     * <h4>FeatureDescription:</h4>
-     *     create Factory to create nodes
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>initialize the importer
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Constructor
-     *  @param options - the importoptions for the parser...
+    /** 
+     * create Factory to create nodes
+     * @FeatureDomain                Constructor
+     * @FeatureResult                initialize the importer
+     * @FeatureKeywords              Constructor
+     *  @param options                the importoptions for the parser...
      */
     public NodeFactoryImpl(final ImportOptions options) {
         this.options = options;

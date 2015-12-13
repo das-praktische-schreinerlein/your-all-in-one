@@ -20,7 +20,7 @@ set MMPATH=%1%
 set SRCFILE=%2%
 set SYSUID=%3%
 
-rem export data from running yaio
+rem import data to running yaio
 set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_CALLYAIOIMPORT% %YAIOAPPURLCONFIG% -parentsysuid %SYSUID% -importfile %MMPATH%\%SRCFILE%
 rem echo "%CMD%"
 %CMD%

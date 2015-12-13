@@ -5,31 +5,74 @@
     <!-- the base -->
     <groupId>de.yaio</groupId>
     <artifactId>yaio</artifactId>
+    <version>0.1.0-beta-feature-YAIO2234-improvements-201512-merry-christmas-RELEASE</version>
     <name>yaio</name>
     <description>YourAllInOne D'Artagnan</description>
-    
-    <!-- packaging jar or war and version -->
-    <packaging>jar</packaging>
-    <version>0.1.0-beta-feature-YAIO2168-improvements-201509-RELEASE</version>
+    <url>http://www.your-all-in-one.de</url>
+    <organization>
+        <name>Your-All-In-One</name>
+        <url>http://www.your-all-in-one.de</url>
+    </organization>
     
     <!-- for spring boot -->
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.1.6.RELEASE</version>
+        <groupId>de.yaio</groupId>
+            <!-- 
+            <groupId>com.github.das-praktische-schreinerlein</groupId>
+             -->
+        <artifactId>yaio-pom-webstarter</artifactId>
+        <version>0.1.0</version>
     </parent>
 
     <!-- settings-->
     <properties>
+        <!--
+          ##################
+          # Packaging/Phase defaults
+          ##################
+         -->
+        <!-- packaging - change it with "mvn package -Dpackaging.type=jar" -->
+        <packaging.type>jar</packaging.type>
+        <!-- assembly a jar with all dependencies - activate it with "mvn package -Dpackaging.assembly-phase=package" -->
+        <packaging.assembly-phase>none</packaging.assembly-phase>
+        <!-- shade to an ueber-jar - deactivate it with "mvn package -Dpackaging.shade-phase=none" -->
+        <packaging.shade-phase>package</packaging.shade-phase>
+        <packaging.springboot-phase>package</packaging.springboot-phase>
+        <!-- generate resources - deactivate it with "mvn package -Dfrontend-maven-plugin.phase=none" -->
+        <frontend-maven-plugin.phase>generate-resources</frontend-maven-plugin.phase>
+        <!-- karma tests - deactivate it with "mvn package -Dmaven-karma-plugin.phase=none" -->
+        <maven-karma-plugin.phase>test</maven-karma-plugin.phase>
+        <!-- protractor tests - deactivate it with "mvn package -Dmaven.ng.protractor=none" -->
+        <maven.ng.protractor.phase>integration-test</maven.ng.protractor.phase>
+        <!-- prepare integration tests - deactivate it with "mvn package -Dmaven-antrun-plugin.phase.pre-integration-test=none" -->
+        <maven-antrun-plugin.phase.pre-integration-test>pre-integration-test</maven-antrun-plugin.phase.pre-integration-test>
+        <!-- post integration tests - deactivate it with "mvn package -Dmaven-antrun-plugin.phase.post-integration-test=none" -->
+        <maven-antrun-plugin.phase.post-integration-test>post-integration-test</maven-antrun-plugin.phase.post-integration-test>
+
+        <!--
+          ##################
+          # project
+          ##################
+         -->
         <!--  project -->
         <start-class>de.yaio.rest.Application</start-class>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!--
+          ##################
+          # dependency versions
+          ##################
+         -->
+         
+        <!-- Yaio versions -->
+        <yaio-commons.version>0.2.0</yaio-commons.version>
+        <yaio-plantuml-service.version>0.4.0</yaio-plantuml-service.version>
+        <yaio-webshot-service.version>0.5.0</yaio-webshot-service.version>
+        <yaio-dms-service.version>0.3.0</yaio-dms-service.version>
+        <yaio-metaextract-service.version>0.2.0</yaio-metaextract-service.version>
 
         <!--  versions -->
-        <java.version>1.7</java.version>
         <roo.version>1.2.4.RELEASE</roo.version>
-        <springboot.version>1.1.6.RELEASE</springboot.version>
-        <aspectj.version>1.7.2</aspectj.version>
+        <aspectj.version>1.8.3</aspectj.version>
         
         <!-- managed -->
         <!--
@@ -51,19 +94,17 @@
         <flexjson.version>2.1</flexjson.version>
         <validation-api.version>1.0.0.GA</validation-api.version>
 
-        <commons-lang3.version>3.1</commons-lang3.version>
-        <commons-collections.version>3.2.1</commons-collections.version>
         <commons-pool.version>1.5.6</commons-pool.version>
         <commons-dbcp.version>1.4</commons-dbcp.version>
         <commons-cli.version>1.2</commons-cli.version>
         <commons-io.version>2.1</commons-io.version>
-        <httpclient.version>4.3.6</httpclient.version>
-        <httpmime.version>4.3.6</httpmime.version>
+        <commons-compress>1.10</commons-compress>
 
-        <poi.version>3.7</poi.version>
+        <poi.version>3.12</poi.version> <!-- POI 3.13 breaks Excel-Exporter so we should use tika 1.9 with 3.12 -->
         <icu4j.version>54.1</icu4j.version>
         <markdown4j>2.2-cj-1.0</markdown4j>
         <swagger.version>2.1.2</swagger.version>
+        <biweekly.version>0.4.2</biweekly.version>
 
         <!-- test-scope -->
         <json-path.version>0.8.1</json-path.version>
@@ -88,6 +129,10 @@
         <npm.version>1.3.15</npm.version>
     </properties>
 
+        
+    <!-- packaging jar or war and version -->
+    <packaging>${packaging.type}</packaging>
+
     <!-- use these repositories to solve dependencies and get jars -->
     <repositories>
         <repository>
@@ -111,7 +156,12 @@
             <name>Spring Releases</name>
             <url>http://repo.spring.io/libs-release</url>
         </repository>
-        
+
+        <!-- github repos -->
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
     </repositories>
 
     <pluginRepositories>
@@ -142,28 +192,6 @@
     <dependencies>
         <!-- General dependencies for standard applications -->
         
-        <!-- logging -->
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>${log4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>jcl-over-slf4j</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
-        
         <!-- aspect-->
         <dependency>
             <groupId>org.aspectj</groupId>
@@ -188,8 +216,8 @@
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>${commons-lang3.version}</version>
+            <artifactId>commons-compress</artifactId>
+            <version>${commons-compress}</version>
         </dependency>
         <!-- ROO dependencies -->
         <dependency>
@@ -262,11 +290,6 @@
             <version>${hibernate-jpa-2.0-api.version}</version>
         </dependency>
         <dependency>
-            <groupId>commons-collections</groupId>
-            <artifactId>commons-collections</artifactId>
-            <version>${commons-collections.version}</version>
-        </dependency>
-        <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
             <version>${validation-api.version}</version>
@@ -312,39 +335,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- spring-boot -->
-       <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <version>${springboot.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-            <version>${springboot.version}</version>
-            <exclusions>
-                 <exclusion>
-                     <groupId>org.springframework.boot</groupId>
-                     <artifactId>spring-boot-starter-logging</artifactId>
-                 </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-log4j</artifactId>
-            <version>${springboot.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-            <version>${springboot.version}</version>
-        </dependency>
-        <!--  security/crypto -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-            <version>${springboot.version}</version>
-        </dependency>
 
         <!--  tests -->
         <dependency>
@@ -376,20 +366,7 @@
             <artifactId>frontend-maven-plugin</artifactId>
             <version>${frontend-maven-plugin.version}</version>
         </dependency>
-<!--
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-            <version>${selenium-java.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-firefox-driver</artifactId>
-            <version>${selenium-firefox-driver.version}</version>
-            <scope>test</scope>
-        </dependency>
--->
+ 
         <!-- swagger -->
         <dependency>
             <groupId>io.springfox</groupId>
@@ -450,15 +427,53 @@
         </dependency>
         <!-- admin -->
         <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>${httpclient.version}</version>
+           <groupId>net.sf.biweekly</groupId>
+           <artifactId>biweekly</artifactId>
+           <version>${biweekly.version}</version>
+        </dependency>
+
+        <!-- yaio-services / via jitpack.io because of no maven-centra-account -->
+        <dependency>
+            <groupId>de.yaio</groupId>
+            <!-- 
+            <groupId>com.github.das-praktische-schreinerlein</groupId>
+             -->
+            <artifactId>yaio-commons</artifactId>
+            <version>${yaio-commons.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpmime</artifactId>
-            <version>${httpmime.version}</version>
+            <groupId>de.yaio.services</groupId>
+            <!-- 
+            <groupId>com.github.das-praktische-schreinerlein</groupId>
+             -->
+            <artifactId>yaio-plantuml-service</artifactId>
+            <version>${yaio-plantuml-service.version}</version>
         </dependency>
+        <dependency>
+            <groupId>de.yaio.services</groupId>
+            <!-- 
+            <groupId>com.github.das-praktische-schreinerlein</groupId>
+             -->
+            <artifactId>yaio-webshot-service</artifactId>
+            <version>${yaio-webshot-service.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.yaio.services</groupId>
+            <!-- 
+            <groupId>com.github.das-praktische-schreinerlein</groupId>
+             -->
+            <artifactId>yaio-dms-service</artifactId>
+            <version>${yaio-dms-service.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.yaio.services</groupId>
+            <!-- 
+            <groupId>com.github.das-praktische-schreinerlein</groupId>
+             -->
+            <artifactId>yaio-metaextract-service</artifactId>
+            <version>${yaio-metaextract-service.version}</version>
+        </dependency>
+
     </dependencies>
 
     <!-- build options -->
@@ -499,7 +514,7 @@
                <executions>
                    <execution>
                        <id>install node and npm</id>
-                       <phase>generate-resources</phase>
+                       <phase>${frontend-maven-plugin.phase}</phase>
                        <goals>
                            <goal>install-node-and-npm</goal>
                        </goals>
@@ -510,7 +525,7 @@
                    </execution>
                    <execution>
                        <id>npm install</id>
-                       <phase>generate-resources</phase>
+                       <phase>${frontend-maven-plugin.phase}</phase>
                        <goals>
                            <goal>npm</goal>
                        </goals>
@@ -520,7 +535,7 @@
                    </execution>
                    <execution>
                        <id>grunt build</id>
-                       <phase>generate-resources</phase>
+                       <phase>${frontend-maven-plugin.phase}</phase>
                        <goals>
                            <goal>grunt</goal>
                        </goals>
@@ -601,7 +616,7 @@
                 <version>2.6</version>
                 <configuration>
                     <encoding>${project.build.sourceEncoding}</encoding>
-                    <nonFilteredFileExtensions>                            
+                    <nonFilteredFileExtensions>
                         <nonFilteredFileExtension>swf</nonFilteredFileExtension>
                         <nonFilteredFileExtension>pdf</nonFilteredFileExtension>
                     </nonFilteredFileExtensions>
@@ -643,17 +658,6 @@
                 </executions>
             </plugin>
 
-            <!-- shade and big-jar -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>2.3</version>
-                <configuration>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
@@ -711,42 +715,6 @@
                     </webAppConfig>
                 </configuration>
             </plugin>
-            <!-- 
-               use this becase of jar-manifest-problems in super-duper-all-in-one-jars
-               look at  http://robert-reiz.com/2011/11/14/832/
-            -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>2.3</version>
-                <executions>
-                  <execution>
-                    <phase>package</phase>
-                    <goals>
-                      <goal>shade</goal>
-                    </goals>
-                    <configuration>
-                        <minimizeJar>false</minimizeJar>
-                        <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
-                          <resource>META-INF/spring.handlers</resource>
-                        </transformer>
-                        <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
-                          <resource>META-INF/spring.schemas</resource>
-                        </transformer>
-                    </configuration>
-                  </execution>
-                </executions>
-            </plugin>
-            
-            <!-- spring boot -->
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${springboot.version}</version>
-                    <configuration>
-                        <addResources>false</addResources>
-                    </configuration>
-            </plugin>
 
             <!-- checkstyle -->
             <plugin>
@@ -754,7 +722,7 @@
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>${maven.checkstyle.plugin.version}</version>
                 <configuration>
-                    <configLocation>checkstyle.xml</configLocation>
+                    <configLocation>/checkstyle.xml</configLocation>
                     <consoleOutput>true</consoleOutput>
                     <violationSeverity>info</violationSeverity>
                 </configuration>
@@ -778,7 +746,7 @@
                 <version>1.6</version>
                 <executions>
                     <execution>
-                        <phase>test</phase>
+                        <phase>${maven-karma-plugin.phase}</phase>
                         <goals>
                             <goal>start</goal>
                         </goals>
@@ -813,7 +781,7 @@
                 <executions>
                     <execution>
                         <id>ng-protractor</id>
-                        <phase>integration-test</phase>
+                        <phase>${maven.ng.protractor.phase}</phase>
                         <goals>
                             <goal>run</goal>
                         </goals>
@@ -826,7 +794,7 @@
                 <executions>
                     <execution>
                         <id>start-third-parties</id>
-                        <phase>pre-integration-test</phase>
+                        <phase>${maven-antrun-plugin.phase.pre-integration-test}</phase>
                         <configuration>
                             <target>
                                 <!-- clean all instances -->
@@ -843,7 +811,7 @@
                     </execution>
                     <execution>
                         <id>stop-third-parties</id>
-                        <phase>post-integration-test</phase>
+                        <phase>${maven-antrun-plugin.phase.post-integration-test}</phase>
                         <configuration>
                             <target>
                                 <!-- clean all instances -->
@@ -902,6 +870,36 @@
                     <targetJdk>${java.version}</targetJdk>
                 </configuration>
             </plugin>
-        </plugins>
+            <plugin>
+                <groupId>gr.abiss.mvn.plugins</groupId>
+                <artifactId>maven-jstools-plugin</artifactId>
+                <version>0.7</version>
+                <configuration>
+                    <jsDir>src/main/web</jsDir>
+                    <includePrivate>true</includePrivate>
+                    <includeUndocumented>true</includeUndocumented>
+                </configuration>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>jslint</report>
+                            <report>jsdoc</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+           <plugin>
+               <groupId>com.phasebash.jsdoc</groupId>
+               <artifactId>jsdoc3-maven-plugin</artifactId>
+               <version>1.1.0</version>
+               <configuration>
+                   <recursive>true</recursive>
+                   <directoryRoots>
+                       <directoryRoot>${basedir}/yaio-playground/src/main/web/yaio-explorerapp/js</directoryRoot>
+                       <directoryRoot>${basedir}/yaio-playground/src/test/javascript</directoryRoot>
+                   </directoryRoots>
+               </configuration>
+            </plugin>
+         </plugins>
     </reporting>
 </project>

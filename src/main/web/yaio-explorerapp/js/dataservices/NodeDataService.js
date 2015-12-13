@@ -1,30 +1,25 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-/**
- * <h4>FeatureDomain:</h4>
- *     WebGUI
- * <h4>FeatureDescription:</h4>
- *     servicefunctions for data-services
- *      
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+/** 
+ * servicefunctions for data-services
+ *  
+ * @FeatureDomain                WebGUI
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 Yaio.NodeDataService = function(appBase, config, defaultConfig) {
     'use strict';
@@ -54,14 +49,30 @@ Yaio.NodeDataService = function(appBase, config, defaultConfig) {
     me.loadNodeData = function(nodeId) {
         me.logNotImplemented();
     };
-    
-    me.loadStaticJson = function() {
-        // return promise
-        var dfd = new $.Deferred();
-        var res = dfd.promise();
-        dfd.resolve("OK");
-        return res;
+
+    me.connectService = function() {
+        me.logNotImplemented();
     }
+    
+    me.updateServiceConfig = function(yaioCommonApiConfig) {
+        me.logNotImplemented();
+    };
+    
+    me.updateAppConfig = function() {
+        var msg = "updateAppConfig";
+        console.log(msg + " with:", me.config);
+        if (me.config.plantUmlBaseUrl) {
+            me.appBase.config.plantUmlBaseUrl = me.config.plantUmlBaseUrl;
+        }
+        if (me.config.masterSysUId) {
+            me.appBase.config.masterSysUId = me.config.masterSysUId;
+        }
+        if (me.config.excludeNodePraefix) {
+            me.appBase.config.excludeNodePraefix = me.config.excludeNodePraefix;
+        }
+        console.log(msg + " to:", me.appBase.config);
+    };
+
     
     me.yaioDoLoadAvailiableTemplates = function() {
         var msg = "yaioDoLoadTemplates";
@@ -244,7 +255,7 @@ Yaio.NodeDataService = function(appBase, config, defaultConfig) {
                     // load page for referenced node with full hierarchy
                     //firstNodeId = yaioNodeActionResponse.parentIdHierarchy.shift();
                     // we set it constant
-                    firstNodeId = me.appBase.config.CONST_MasterId;
+                    firstNodeId = me.appBase.config.masterSysUId;
                     
                     newUrl = '#/show/' + firstNodeId 
                         + '/activate/' + yaioNodeActionResponse.node.sysUID + '/';

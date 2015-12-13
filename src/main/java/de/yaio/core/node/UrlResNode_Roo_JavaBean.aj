@@ -3,6 +3,9 @@
 
 package de.yaio.core.node;
 
+import de.yaio.core.datadomain.ResContentData.UploadWorkflowState;
+import de.yaio.core.datadomain.ResIndexData.IndexWorkflowState;
+
 
 privileged aspect UrlResNode_Roo_JavaBean {
     
@@ -30,4 +33,67 @@ privileged aspect UrlResNode_Roo_JavaBean {
         this.resLocTags = resLocTags;
     }
     
+    public String UrlResNode.getResContentMime() {
+        return this.resContentMime;
+    }
+
+    public void UrlResNode.setResContentMime(String resContentMime) {
+        this.resContentMime = resContentMime;
+    }
+
+    public Long UrlResNode.getResContentSize() {
+        return this.resContentSize;
+    }
+
+    public void UrlResNode.setResContentSize(Long resContentSize) {
+        this.resContentSize = resContentSize;
+    }
+
+    public String UrlResNode.getResContentDMSId() {
+        return this.resContentDMSId;
+    }
+
+    public void UrlResNode.setResContentDMSId(String resContentDMSId) {
+        this.resContentDMSId = resContentDMSId;
+    }
+
+    public String UrlResNode.getResContentDMSType() {
+        return this.resContentDMSType;
+    }
+
+    public void UrlResNode.setResContentDMSType(String resContentDMSType) {
+        this.resContentDMSType = resContentDMSType;
+    }
+
+    public UploadWorkflowState UrlResNode.getResContentDMSState() {
+        return this.resContentDMSState;
+    }
+
+    public void UrlResNode.setResContentDMSState(UploadWorkflowState resContentDMSState) {
+        this.resContentDMSState = resContentDMSState;
+    }
+
+    public String UrlResNode.getResIndexDMSId() {
+        return this.resIndexDMSId;
+    }
+
+    public void UrlResNode.setResIndexDMSId(String resIndexDMSId) {
+        this.resIndexDMSId = resIndexDMSId;
+    }
+
+    public String UrlResNode.getResIndexDMSType() {
+        return this.resIndexDMSType;
+    }
+
+    public void UrlResNode.setResIndexDMSType(String resIndexDMSType) {
+        this.resIndexDMSType = resIndexDMSType;
+    }
+
+    public IndexWorkflowState UrlResNode.getResIndexDMSState() {
+        return this.resIndexDMSState;
+    }
+
+    public void UrlResNode.setResIndexDMSState(IndexWorkflowState resIndexDMSState) {
+        this.resIndexDMSState = resIndexDMSState;
+    }
 }

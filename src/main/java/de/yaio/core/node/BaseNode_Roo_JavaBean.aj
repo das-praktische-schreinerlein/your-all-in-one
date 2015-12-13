@@ -405,6 +405,22 @@ privileged aspect BaseNode_Roo_JavaBean {
     public void BaseNode.setStatWorkflowTodoCount(Integer statWorkflowTodoCount) {
         this.statWorkflowTodoCount = statWorkflowTodoCount;
     }
+
+    public void BaseNode.setStatUrlResCount(Integer statUrlResCount) {
+        this.statUrlResCount = statUrlResCount;
+    }
+
+    public Integer BaseNode.getStatUrlResCount() {
+        return this.statUrlResCount;
+    }
+
+    public void BaseNode.setStatInfoCount(Integer statInfoCount) {
+        this.statInfoCount = statInfoCount;
+    }
+
+    public Integer BaseNode.getStatInfoCount() {
+        return this.statInfoCount;
+    }
     
     public BaseNode BaseNode.getParentNode() {
         return this.parentNode;

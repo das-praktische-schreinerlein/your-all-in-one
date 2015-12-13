@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -29,23 +26,21 @@ import de.yaio.core.node.BaseNode;
 import de.yaio.datatransfer.exporter.Exporter;
 import de.yaio.datatransfer.exporter.OutputOptions;
 import de.yaio.datatransfer.exporter.OutputOptionsImpl;
-import de.yaio.extension.datatransfer.common.DatatransferUtils;
+import de.yaio.extension.datatransfer.common.ExtendedDatatransferUtils;
 import de.yaio.extension.datatransfer.ical.ICalDBExporter;
 import de.yaio.extension.datatransfer.mindmap.MindMapExporter;
-import de.yaio.rest.controller.NodeActionResponse;
+import de.yaio.webapp.restcontroller.NodeActionResponse;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     Webservice
- * <h4>FeatureDescription:</h4>
- *     Services to parse text to nodes and convert them in different 
- *     formats (wiki, ppl, excel..)
- *      
- * @package de.yaio.webapp.controller
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+/** 
+ * Services to parse text to nodes and convert them in different 
+ * formats (wiki, ppl, excel..)
+ *  
+ * @FeatureDomain                Webservice
+ * @package                      de.yaio.webapp.controller
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 @Controller
 @RequestMapping("/converters")
@@ -57,8 +52,17 @@ public class ConverterController {
     protected ConverterUtils converterUtils;
     
     @Autowired
-    protected DatatransferUtils datatransferUtils;
+    protected ExtendedDatatransferUtils datatransferUtils;
 
+    /** 
+     * parses the yaio-wiki-source to nodes and converts it to Html
+     * @FeatureDomain                Webservice
+     * @FeatureResult                resulting Html of the parsed yaio-wiki-source
+     * @FeatureKeywords              Webservice Html Converter
+     * @param source                 yaio-wiki-source to parse 
+     * @param response               response-obj to set encoding, headers...
+     * @return                       resulting Html of the parsed yaio-wiki-source
+     */
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
                     value = "/html",
@@ -79,6 +83,15 @@ public class ConverterController {
             }
     }
 
+    /** 
+     * parses the yaio-wiki-source to nodes and converts it to ICal
+     * @FeatureDomain                Webservice
+     * @FeatureResult                resulting ICal of the parsed yaio-wiki-source
+     * @FeatureKeywords              Webservice ICal Converter
+     * @param source                 yaio-wiki-source to parse 
+     * @param response               response-obj to set encoding, headers...
+     * @return                       resulting ICal of the parsed yaio-wiki-source
+     */
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
                     value = "/ical",
@@ -86,9 +99,18 @@ public class ConverterController {
     public String convertToICal(@RequestParam(value = "source") final String source, 
                                 final HttpServletResponse response) {
         Exporter exporter = new ICalDBExporter();
-        return commonComnvertSource(exporter, ".ics", source, response);
+        return commonConvertSource(exporter, ".ics", source, response);
     }
 
+    /** 
+     * parses the yaio-wiki-source to nodes and converts it to Mindmap
+     * @FeatureDomain                Webservice
+     * @FeatureResult                resulting Mindmap of the parsed yaio-wiki-source
+     * @FeatureKeywords              Webservice Mindmap Converter
+     * @param source                 yaio-wiki-source to parse 
+     * @param response               response-obj to set encoding, headers...
+     * @return                       resulting Mindmap of the parsed yaio-wiki-source
+     */
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
                     value = "/mindmap",
@@ -96,11 +118,21 @@ public class ConverterController {
     public String convertToMindmap(@RequestParam(value = "source") final String source, 
                                    final HttpServletResponse response) {
         Exporter exporter = new MindMapExporter();
-        return commonComnvertSource(exporter, ".mm", source, response);
+        return commonConvertSource(exporter, ".mm", source, response);
     }
 
-
-    protected String commonComnvertSource(final Exporter exporter,
+    /** 
+     * parses the yaio-wiki-source to nodes and converts it with help of the exporter
+     * @FeatureDomain                Webservice
+     * @FeatureResult                Converter-result of the parsed yaio-wiki-source
+     * @FeatureKeywords              Webservice Converter
+     * @param exporter               exporter to use (mindmap, html...)
+     * @param extension              file-extension
+     * @param source                 yaio-wiki-source to parse 
+     * @param response               response-obj to set encoding, headers...
+     * @return                       Converter-result of the parsed yaio-wiki-source
+     */
+    protected String commonConvertSource(final Exporter exporter,
                                          final String extension,
                                          final String source,
                                          final HttpServletResponse response) {
@@ -118,5 +150,5 @@ public class ConverterController {
                             "cant convert source => " + e, 
                             null, null, null, null).getStateMsg();
         }
-    }                                         
+    }
 }

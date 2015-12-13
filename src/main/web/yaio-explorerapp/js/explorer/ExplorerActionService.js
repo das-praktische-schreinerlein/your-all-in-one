@@ -1,30 +1,25 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
+/** 
+ * software for projectmanagement and documentation
  *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
- *
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-/**
- * <h4>FeatureDomain:</h4>
- *     WebGUI
- * <h4>FeatureDescription:</h4>
- *     servicefunctions for explorer-actions
+/** 
+ * servicefunctions for explorer-actions
  *
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                WebGUI
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 Yaio.ExplorerActionService = function(appBase) {
     'use strict';
@@ -182,18 +177,12 @@ Yaio.ExplorerActionService = function(appBase) {
         }
     };
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     GUI
-     * <h4>FeatureDescription:</h4>
-     *     open the jirawindow for the node  
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>GUI-result: opens jira window with jira-converted node-content
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Convert
-     * @param nodeId - id of the node
+    /** 
+     * open the jirawindow for the node  
+     * @FeatureDomain                GUI
+     * @FeatureResult                GUI-result: opens jira window with jira-converted node-content
+     * @FeatureKeywords              GUI Convert
+     * @param nodeId                 id of the node
      */
     me.openJiraExportWindow = function(nodeId) {
         var svcYaioBase = me.appBase.get('YaioBase');
@@ -247,17 +236,11 @@ Yaio.ExplorerActionService = function(appBase) {
     };
     
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     GUI
-     * <h4>FeatureDescription:</h4>
-     *     open the clipboardwindow with generated checklist and gantt-markdown
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>GUI-result: opens clipboard window with checklist/ganttmarkdown-converted node-content
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Convert
+    /** 
+     * open the clipboardwindow with generated checklist and gantt-markdown
+     * @FeatureDomain                GUI
+     * @FeatureResult                GUI-result: opens clipboard window with checklist/ganttmarkdown-converted node-content
+     * @FeatureKeywords              GUI Convert
      */
     me.yaioExportExplorerLinesAsOverview = function() {
         var svcYaioBase = me.appBase.get('YaioBase');
@@ -284,17 +267,11 @@ Yaio.ExplorerActionService = function(appBase) {
         });    
     };
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     GUI
-     * <h4>FeatureDescription:</h4>
-     *     open the nodeeditor with a new infornode with snaphot of current gui: checklist and gantt-markdown
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>GUI-result: open the nodeeditor for new infonode with checklist/ganttmarkdown-converted node-content
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Convert
+    /** 
+     * open the nodeeditor with a new infornode with snaphot of current gui: checklist and gantt-markdown
+     * @FeatureDomain                GUI
+     * @FeatureResult                GUI-result: open the nodeeditor for new infonode with checklist/ganttmarkdown-converted node-content
+     * @FeatureKeywords              GUI Convert
      */
     me.yaioSnapshot = function(parentNode) {
         var svcYaioBase = me.appBase.get('YaioBase');
@@ -311,18 +288,12 @@ Yaio.ExplorerActionService = function(appBase) {
     };
     
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     GUI
-     * <h4>FeatureDescription:</h4>
-     *     open the txtwindow for the node  
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>GUI-result: opens txt-window with txt node-content
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Convert
-     * @param content - txt content
+    /** 
+     * open the txtwindow for the node  
+     * @FeatureDomain                GUI
+     * @FeatureResult                GUI-result: opens txt-window with txt node-content
+     * @FeatureKeywords              GUI Convert
+     * @param content                txt content
      */
     me.openTxtExportWindow = function(content) {
         // secure
@@ -343,18 +314,135 @@ Yaio.ExplorerActionService = function(appBase) {
         });    
     };
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Layout Toggler
-     * <h4>FeatureDescription:</h4>
-     *     Toggle the "#detail_desc_" for the specified id with a slide. 
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>Updates DOM
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Tree Rendering
-     * @param id - sysUID of the node 
+    /** 
+     * open the dmsdownloadwindow for the node  
+     * @FeatureDomain                GUI
+     * @FeatureResult                GUI-result: opens dmsdownloadwindow
+     * @FeatureKeywords              GUI 
+     * @param nodeId                 id of the node
+     */
+    me.openDMSDownloadWindow = function(nodeId) {
+        var svcYaioBase = me.appBase.get('YaioBase');
+
+        // check vars
+        if (! nodeId) {
+            // tree not found
+            svcYaioBase.logError("error openDMSDownloadExportWindow: nodeId required", false);
+            return null;
+        }
+        // load node
+        var tree = me.$("#tree").fancytree("getTree");
+        if (!tree) {
+            // tree not found
+            svcYaioBase.logError("error openDMSDownloadExportWindow: cant load tree for node:" + nodeId, false);
+            return null;
+        }
+        var treeNode = tree.getNodeByKey(nodeId);
+        if (! treeNode) {
+            svcYaioBase.logError("error openDMSDownloadExportWindow: cant load node:" + nodeId, false);
+            return null;
+        }
+        
+        // extract nodedata
+        var basenode = treeNode.data.basenode;
+        var embedUrl = me.appBase.get('YaioAccessManager').getAvailiableNodeAction('dmsEmbed', basenode.sysUID, false) + basenode.sysUID;
+        var downloadUrl = me.appBase.get('YaioAccessManager').getAvailiableNodeAction('dmsDownload', basenode.sysUID, false) + basenode.sysUID;
+
+        // set clipboard-content
+        me.$( "#download-iframe" ).attr("src", embedUrl);
+        
+        // show message
+        me.$( "#download-box" ).dialog({
+            modal: true,
+            width: "700px",
+            buttons: {
+              Ok: function() {
+                me.$( this ).dialog( "close" );
+              },
+              'Download': function() {
+                var helpFenster = window.open(downloadUrl, "download", "width=200,height=200,scrollbars=yes,resizable=yes");
+                helpFenster.focus();
+              }
+            }
+        });    
+    };
+    
+    /** 
+     * open the dmsdownloadwindow for the extracted metadata of the node document 
+     * @FeatureDomain                GUI
+     * @FeatureResult                GUI-result: opens dmsdownloadwindow node-content
+     * @FeatureKeywords              GUI
+     * @param nodeId                 id of the node
+     */
+    me.openDMSIndexDownloadWindow = function(nodeId) {
+        var svcYaioBase = me.appBase.get('YaioBase');
+
+        // check vars
+        if (! nodeId) {
+            // tree not found
+            svcYaioBase.logError("error openDMSIndexDownloadWindow: nodeId required", false);
+            return null;
+        }
+        // load node
+        var tree = me.$("#tree").fancytree("getTree");
+        if (!tree) {
+            // tree not found
+            svcYaioBase.logError("error openDMSIndexDownloadWindow: cant load tree for node:" + nodeId, false);
+            return null;
+        }
+        var treeNode = tree.getNodeByKey(nodeId);
+        if (! treeNode) {
+            svcYaioBase.logError("error openDMSIndexDownloadWindow: cant load node:" + nodeId, false);
+            return null;
+        }
+        
+        // extract nodedata
+        var basenode = treeNode.data.basenode;
+        var embedUrl = me.appBase.get('YaioAccessManager').getAvailiableNodeAction('dmsIndexEmbed', basenode.sysUID, false) + basenode.sysUID;
+        var downloadUrl = me.appBase.get('YaioAccessManager').getAvailiableNodeAction('dmsIndexDownload', basenode.sysUID, false) + basenode.sysUID;
+
+        $.getJSON( embedUrl, function(data) {
+            // set clipboard-content
+            var parent = me.$( "#downloadindex-content" );
+            parent.html("");
+            for (var key in data.versions) {
+                if (data.versions.hasOwnProperty(key)) {
+                    me.createDMSIndexDiv(key, data.versions[key], parent)
+                }
+            }
+        });
+        
+        
+        // show message
+        me.$( "#downloadindex-box" ).dialog({
+            modal: true,
+            width: "700px",
+            buttons: {
+              Ok: function() {
+                me.$( this ).dialog( "close" );
+              },
+              'Download': function() {
+                var helpFenster = window.open(downloadUrl, "download", "width=200,height=200,scrollbars=yes,resizable=yes");
+                helpFenster.focus();
+              }
+            }
+        });    
+    };
+
+    me.createDMSIndexDiv = function (key, data, parent) {
+        var content = "" + data.content;
+        var name = "" + data.parserName;
+        content = me.appBase.get('YaioBase').htmlEscapeText(content);
+        content = content.replace(/\n/g, "<br />");
+        $(parent).append('<div class="downloadindex-container"><div class="downloadindex-name">' + name + '</div><br><pre>' + content + "<pre></div>");
+    } 
+
+    /** 
+     * Toggle the "#detail_desc_" for the specified id with a slide. 
+     * @FeatureDomain                Layout Toggler
+     * @FeatureResult                Updates DOM
+     * @FeatureKeywords              GUI Tree Rendering
+     * @param id                     sysUID of the node 
      */
     me.toggleNodeDescContainer = function(id) {
         var svcYaioFormatter = me.appBase.get('YaioFormatter');
@@ -409,18 +497,12 @@ Yaio.ExplorerActionService = function(appBase) {
         }
     };
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Layout Toggler
-     * <h4>FeatureDescription:</h4>
-     *     Toggle the "#detail_sys_" for the specified id with a slide. 
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>Updates DOM
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Tree Rendering
-     * @param id - sysUID of the node 
+    /** 
+     * Toggle the "#detail_sys_" for the specified id with a slide. 
+     * @FeatureDomain                Layout Toggler
+     * @FeatureResult                Updates DOM
+     * @FeatureKeywords              GUI Tree Rendering
+     * @param id                     sysUID of the node 
     */
     me.toggleNodeSysContainer = function(id) {
         me.$("#detail_sys_" + id).slideToggle(1000,function() {

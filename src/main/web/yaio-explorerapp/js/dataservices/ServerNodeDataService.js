@@ -1,30 +1,25 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-/**
- * <h4>FeatureDomain:</h4>
- *     WebGUI
- * <h4>FeatureDescription:</h4>
- *     servicefunctions for data-services
- *      
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+/** 
+ * servicefunctions for data-services
+ *  
+ * @FeatureDomain                WebGUI
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
     'use strict';
@@ -46,6 +41,38 @@ Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
         };
     };
     
+    me.connectService = function() {
+        var res = me._loadConfig();
+        return res;
+    }
+    
+    me.updateServiceConfig = function(yaioCommonApiConfig) {
+        if (yaioCommonApiConfig) {
+            var msg = "updateServiceConfig for yaio";
+            console.log(msg + " with:", yaioCommonApiConfig);
+            
+            // base
+            me.config.name               = yaioCommonApiConfig.yaioInstanceName;
+            // dont overwrite configured url, maybe its tunneled: me.config.urlBase            = yaioCommonApiConfig.yaioInstanceUrl;
+            me.config.desc               = yaioCommonApiConfig.yaioInstanceDesc;
+            me.config.updateConfig();
+            
+            // options
+            me.config.masterSysUId       = yaioCommonApiConfig.yaioMastersysuid;
+            me.config.excludeNodePraefix = yaioCommonApiConfig.yaioExportcontrollerExcludenodepraefix;
+            me.config.excludeNodePraefix = (me.config.excludeNodePraefix != null ? me.config.excludeNodePraefix.replace(/%/g, "*") : "nothing");
+
+            // services
+            me.config.plantUmlBaseUrl    = yaioCommonApiConfig.plantUmlBaseUrl;
+
+            me.config.dmsAvailable       = yaioCommonApiConfig.dmsAvailable;
+            me.config.webshotAvailable   = yaioCommonApiConfig.webshotAvailable;
+            me.config.metaextractAvailable = yaioCommonApiConfig.metaextractAvailable;
+
+            console.log(msg + " to:", me.config);
+        }
+    };
+    
     /*****************************************
      *****************************************
      * Service-Funktions (webservice)
@@ -54,6 +81,56 @@ Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
     me._createAccessManager = function() {
         return Yaio.ServerAccessManagerService(me.appBase, me.config);
     };
+    
+    me._loadConfig = function() {
+        // return promise
+        var dfd = new $.Deferred();
+        var res = dfd.promise();
+
+        // load config from server
+        var resConfig = me._yaioCallLoadConfig();
+        var loadDone = false;
+        resConfig.done(function(yaioCommonApiConfig, textStatus, jqXhr ) {
+            var msg = "_loadConfig for yaio";
+            console.log(msg + " done");
+            // update config
+            me.updateServiceConfig(yaioCommonApiConfig);
+            me.updateAppConfig();
+            
+            // resolve promise
+            dfd.resolve("OK");
+        });
+
+        return res;
+    };
+    
+    me._yaioCallLoadConfig = function() {
+        var svcYaioBase = me.appBase.get('YaioBase');
+
+        var url = me.config.configUrl;
+        var msg = "_yaioCallLoadConfig for yaio:" + url;
+        console.log(msg + " START");
+        return me.$.ajax({
+            headers: {
+                'Accept' : 'application/json',
+                'Content-Type' : 'application/json'
+            },
+            xhrFields : {
+                // for CORS
+                withCredentials : true
+            },
+            url : url,
+            type : 'GET',
+            error : function(jqXHR, textStatus, errorThrown) {
+                // log the error to the console
+                svcYaioBase.logError("ERROR  " + msg + " The following error occured: " + textStatus + " " + errorThrown, false);
+                svcYaioBase.logError("cant load " + msg + " error:" + textStatus, true);
+            },
+            complete : function() {
+                console.log("completed load " + msg);
+            }
+        });
+    }
     
     me._yaioCallUpdateNode = function(fancynode, json) {
         var url = me.config.restUpdateUrl + fancynode.key;
@@ -160,7 +237,33 @@ Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
         var msg = "_yaioCallSaveNode node: " + options.mode + ' ' + nodeObj['sysUID'];
         console.log(msg + " START");
         // branch depending on mode
-        var method, url, json, ajaxCall;
+        var method, url, json, ajaxCall, formData;
+        
+        if (options.mode === "create") {
+            // unset sysUID
+            nodeObj["sysUID"] = null;
+        }
+
+        // special case UrlResNode because of multipart-uploads
+        var flgMultiPart = false;
+        if (options.className == "UrlResNode") {
+            // UrlResNod set formdata for multipart-uploads
+            flgMultiPart = true;
+            
+            // create formadata
+            formData = new FormData();
+            formData.append('node', new Blob([JSON.stringify(nodeObj)], {
+                                                type: "application/json"
+                                            })
+            );
+            
+            // add uploadfile only if set
+            formData.append("uploadFile", options.uploadFile ? options.uploadFile : "");
+        } else {
+            // default: json-request: add nodeObj
+            formData = nodeObj;
+        }
+        
         if (options.mode === "edit") {
             // mode update 
             method = "PATCH";
@@ -168,18 +271,38 @@ Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
             ajaxCall = function () {
                 // hack because shortcut .patch not exists yet in angular-version
                 var http = me.appBase.get('Angular.$http');
-                return http({method: method, url: url, data: nodeObj, withCredentials: true});
+                var httpOptions = {
+                        method: method, 
+                        url: url, 
+                        data: formData, 
+                        withCredentials: true 
+                };
+                if (flgMultiPart) {
+                    // spring accepts no fileuploads for PATCH
+                    httpOptions.method = "POST",
+                    httpOptions.headers = {'Content-Type': undefined};
+                    httpOptions.transformRequest = angular.identity;
+                }
+                return http(httpOptions);
             }
         } else if (options.mode === "create") {
             // mode create 
             method = "POST";
             url = me.config.restCreateUrl + options.className + "/" + options.sysUID;
             
-            // unset sysUID
-            nodeObj["sysUID"] = null;
-
             ajaxCall = function () {
-                return me.appBase.get('Angular.$http').post(url, nodeObj, {withCredentials: true});
+                var http = me.appBase.get('Angular.$http');
+                var httpOptions = {
+                        method: method, 
+                        url: url, 
+                        data: formData, 
+                        withCredentials: true 
+                };
+                if (flgMultiPart) {
+                    httpOptions.headers = {'Content-Type': undefined};
+                    httpOptions.transformRequest = angular.identity;
+                }
+                return http(httpOptions);
             }
         } else {
             // unknown mode

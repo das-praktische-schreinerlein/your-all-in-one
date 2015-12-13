@@ -15,15 +15,17 @@ rem @category Collaboration
 rem @copyright Copyright (c) 2011-2014, Michael Schreiner
 rem @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
 
+rem init config
+set NODEID=%1%
+
 rem set pathes
 set YAIOSCRIPTPATH=%~dp0
 set YAIOBASEPATH=%YAIOSCRIPTPATH%
 set BASEPATH=%YAIOBASEPATH%
 set YAIOCONFIGPATH=%YAIOSCRIPTPATH%..\config\
 
-rem init config
 
 call %YAIOCONFIGPATH%\config-yaio.bat %YAIOSCRIPTPATH%
-set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_CALLYAIORECALC% %YAIOAPPURLCONFIG% -sysuid %MASTERNODEID%
+set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_CALLYAIORECALC% %YAIOAPPURLCONFIG% -sysuid %NODEID%
 echo "callYaioRecalcNodes: %CMD%"
 %CMD%

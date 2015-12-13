@@ -1,15 +1,11 @@
 /**
-# * <h4>FeatureDomain:</h4>
-
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -26,6 +22,25 @@ import java.util.GregorianCalendar;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
+import biweekly.ICalDataType;
+import biweekly.ICalendar;
+import biweekly.component.VAlarm;
+import biweekly.component.VEvent;
+import biweekly.component.VTodo;
+import biweekly.parameter.Related;
+import biweekly.property.Created;
+import biweekly.property.DateDue;
+import biweekly.property.DateEnd;
+import biweekly.property.DateStart;
+import biweekly.property.DateTimeStamp;
+import biweekly.property.Description;
+import biweekly.property.LastModified;
+import biweekly.property.Location;
+import biweekly.property.Status;
+import biweekly.property.Summary;
+import biweekly.property.Trigger;
+import biweekly.property.Uid;
+import biweekly.util.Duration;
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.node.BaseNode;
 import de.yaio.core.node.EventNode;
@@ -37,18 +52,15 @@ import de.yaio.datatransfer.exporter.formatter.Formatter;
 import de.yaio.datatransfer.exporter.formatter.FormatterImpl;
 import de.yaio.extension.datatransfer.wiki.WikiExporter;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     DatenExport
- *     Praesentation
- * <h4>FeatureDescription:</h4>
- *     export of Nodes as ICal
+/** 
+ * export of Nodes as ICal
  * 
- * @package de.yaio.extension.datatransfer.ical
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                DatenExport Praesentation
+ * @package                      de.yaio.extension.datatransfer.ical
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class ICalExporter extends WikiExporter {
 
@@ -59,17 +71,11 @@ public class ICalExporter extends WikiExporter {
     protected final DateFormat DF = new SimpleDateFormat("yyyyMMdd");
     protected final DateFormat TF = new SimpleDateFormat("HHmmss");
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Constructor
-     * <h4>FeatureDescription:</h4>
-     *     service functions to export nodes as ICal
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>initialize the exporter
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Constructor
+    /** 
+     * service functions to export nodes as ICal
+     * @FeatureDomain                Constructor
+     * @FeatureResult                initialize the exporter
+     * @FeatureKeywords              Constructor
      */
     public ICalExporter() {
         super();
@@ -109,22 +115,15 @@ public class ICalExporter extends WikiExporter {
         return res;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     DataExport
-     *     Presentation
-     * <h4>FeatureDescription:</h4>
-     *     formats recursively node in ICal-format
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue String - formatted output of node-hirarchy
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Layout
-     * @param paramCurNode - node for output recursively
-     * @param oOptions - options for output (formatter)
-     * @return - formatted output of node-hierarchy and DataDomains
-     * @throws Exception - parser/format-Exceptions possible
+    /** 
+     * formats recursively node in ICal-format
+     * @FeatureDomain                DataExport Presentation
+     * @FeatureResult                returnValue String - formatted output of node-hirarchy
+     * @FeatureKeywords              Layout
+     * @param paramCurNode           node for output recursively
+     * @param oOptions               options for output (formatter)
+     * @return                       formatted output of node-hierarchy and DataDomains
+     * @throws Exception             parser/format-Exceptions possible
      */
     public String genICalForNode(final BaseNode paramCurNode, 
         final OutputOptions oOptions) throws Exception {
@@ -231,22 +230,15 @@ public class ICalExporter extends WikiExporter {
         return res;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     DataExport
-     *     Presentation
-     * <h4>FeatureDescription:</h4>
-     *     formats single TaskNode in ICal-format
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue String - formatted output of single node
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Layout
-     * @param paramCurNode - node for output
-     * @param oOptions - options for output (formatter)
-     * @return - formatted output
-     * @throws Exception - parser/format-Exceptions possible
+    /** 
+     * formats single TaskNode in ICal-format
+     * @FeatureDomain                DataExport Presentation
+     * @FeatureResult                returnValue String - formatted output of single node
+     * @FeatureKeywords              Layout
+     * @param paramCurNode           node for output
+     * @param oOptions               options for output (formatter)
+     * @return                       formatted output
+     * @throws Exception             parser/format-Exceptions possible
      */
     public String genICalForTaskNode(final TaskNode paramCurNode, 
         final OutputOptions oOptions) throws Exception {
@@ -304,6 +296,7 @@ public class ICalExporter extends WikiExporter {
         descOOptions.setFlgReEscapeDesc(true);
         this.formatNodeDataDomains(curNode, descFull, descOOptions);
         String statusName = "IN-PROCESS";
+        Status status = Status.inProgress();
 
         // Result erzeugen
         res += "BEGIN:VTODO\n";
@@ -314,36 +307,55 @@ public class ICalExporter extends WikiExporter {
         res += "DTSTAMP:" + DF.format(curNode.getSysChangeDate()) + "T" 
                         + TF.format(curNode.getSysChangeDate()) + "Z" + "\n";
         res += "UID:" + curNode.getSysUID() + "\n";
+
+        VTodo event = new VTodo();
+        event.setCreated(new Created(curNode.getSysCreateDate()));
+        event.setLastModified(new LastModified(curNode.getSysCreateDate()));
+        event.setDateTimeStamp(new DateTimeStamp(curNode.getSysCreateDate()));
+        event.setUid(new Uid(curNode.getSysUID()));
         
         String id = "";
         id += curNode.getMetaNodePraefix() != null ? curNode.getMetaNodePraefix() : "";
         id += curNode.getMetaNodeNummer() != null ? curNode.getMetaNodeNummer() : "";
         res += "SUMMARY:" + id  + ": " + name + "\n";
         res += "CATEGORIES:Planung\n";
+
+        Summary summary = event.setSummary(id  + ": " + name);
+        summary.setLanguage("de-de");
+        event.addCategories("Planung");
+
         Date dateStart = curNode.getCurrentStart();
         Date dateEnde = curNode.getPlanEnde();
         if (dateStart != null) {
             res += "DTSTART;TZID=Europe/Berlin:" + DF.format(dateStart) + "T080000\n";
+            event.setDateStart(new DateStart(dateStart, true));
         }
         if (dateEnde != null) {
             res += "DUE;TZID=Europe/Berlin:" + DF.format(dateEnde) + "T180000\n";
+            event.setDateDue(new DateDue(dateEnde, true));
         }
         res += "LOCATION:Berlin\n";
+        event.setLocation(new Location("Berlin"));
         
         // Status anzeigen
         if (curNode.getIstStand() != null) {
             if (curNode.getIstStand().intValue() > 99 && dateEnde != null) {
                 res += "COMPLETED:" + DF.format(dateEnde) + "T180000Z\n";
                 statusName = "COMPLETED";
+                status = Status.completed();
             } else {
                 statusName = "IN-PROCESS";
+                status = Status.inProgress();
             }
             res += "PERCENT-COMPLETE:" + curNode.getIstStand().intValue() + "\n";
+            event.setExperimentalProperty("PERCENT-COMPLETE", ICalDataType.INTEGER, curNode.getIstStand().toString());
         }
         res += "STATUS:" + statusName + "\n";
+        event.setStatus(status);
 
         if (descFull != null && descFull.length() > 0 && oOptions.isFlgShowDesc()) {
             // Html-Escapen
+            event.setDescription(new Description(descFull.toString()));
             String tmpDesc = descFull.toString().replaceAll("\n", "\\\\n");
             res += "DESCRIPTION:" + tmpDesc + "\n";
         } else {
@@ -355,6 +367,9 @@ public class ICalExporter extends WikiExporter {
 //      TRIGGER;VALUE=DURATION:-P1D
 //      DESCRIPTION:Mozilla Standardbeschreibung
 //      END:VALARM
+//        Trigger trigger = new Trigger(new Duration.Builder().days(-1));
+//        VAlarm alarm = VAlarm.display(trigger, name);
+//        event.addAlarm(alarm);
         res += "END:VTODO\n";
         
         if (LOGGER.isDebugEnabled()) {
@@ -364,22 +379,15 @@ public class ICalExporter extends WikiExporter {
         return res;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     DataExport
-     *     Presentation
-     * <h4>FeatureDescription:</h4>
-     *     formats single EventNode in ICal-format
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue String - formatted output of single node
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Layout
-     * @param paramCurNode - node for output
-     * @param oOptions - options for output (formatter)
-     * @return - formatted output
-     * @throws Exception - parser/format-Exceptions possible
+    /** 
+     * formats single EventNode in ICal-format
+     * @FeatureDomain                DataExport Presentation
+     * @FeatureResult                returnValue String - formatted output of single node
+     * @FeatureKeywords              Layout
+     * @param paramCurNode           node for output
+     * @param oOptions               options for output (formatter)
+     * @return                       formatted output
+     * @throws Exception             parser/format-Exceptions possible
      */
     public String genICalForEventNode(final EventNode paramCurNode, 
         final OutputOptions oOptions) throws Exception {
@@ -437,6 +445,7 @@ public class ICalExporter extends WikiExporter {
         descOOptions.setFlgReEscapeDesc(true);
         this.formatNodeDataDomains(curNode, descFull, descOOptions);
         String statusName = "CONFIRMED";
+        Status status = Status.confirmed();
 
         // Result erzeugen
         res += "BEGIN:VEVENT\n";
@@ -448,17 +457,28 @@ public class ICalExporter extends WikiExporter {
                         + TF.format(curNode.getSysChangeDate()) + "Z" + "\n";
         res += "UID:" + curNode.getSysUID() + "\n";
 
+        VEvent event = new VEvent();
+        event.setCreated(new Created(curNode.getSysCreateDate()));
+        event.setLastModified(new LastModified(curNode.getSysCreateDate()));
+        event.setDateTimeStamp(new DateTimeStamp(curNode.getSysCreateDate()));
+        event.setUid(new Uid(curNode.getSysUID()));
+
         String id = "";
         id += curNode.getMetaNodePraefix() != null ? curNode.getMetaNodePraefix() : "";
         id += curNode.getMetaNodeNummer() != null ? curNode.getMetaNodeNummer() : "";
         res += "SUMMARY:" + id  + ": " + name + "\n";
         res += "CATEGORIES:Planung\n";
+
+        Summary summary = event.setSummary(id  + ": " + name);
+        summary.setLanguage("de-de");
+        event.addCategories("Planung");
+
         Date dateStart = curNode.getCurrentStart();
         Date dateEnde = curNode.getCurrentEnde();
         Calendar calTime = new GregorianCalendar();
         if (dateStart != null) {
             res += "DTSTART;TZID=Europe/Berlin:" + DF.format(dateStart);
-            
+
             // Zeitanteil setzen
             calTime.setTime(dateStart);
             if (calTime.get(Calendar.SECOND) == Formatter.CONST_FLAG_NODATE_SECONDS) {
@@ -468,6 +488,8 @@ public class ICalExporter extends WikiExporter {
                 // Uhrzeit des Datums benutzen
                 res += "T" + TF.format(dateStart) + "\n";
             }
+
+            event.setDateStart(new DateStart(dateStart, true));
         }
         if (dateEnde != null) {
 //            res += "DUE;TZID=Europe/Berlin:" + DF.format(dateEnde) + "T180000\n";
@@ -482,24 +504,33 @@ public class ICalExporter extends WikiExporter {
                 // Uhrzeit des Datums benutzen
                 res += "T" + TF.format(dateEnde) + "\n";
             }
+
+            event.setDateEnd(new DateEnd(dateStart, true));
         }
         res += "LOCATION:Berlin\n";
+        event.setLocation(new Location("Berlin"));
         
         // Status anzeigen
         if (curNode.getIstStand() != null) {
             if (curNode.getIstStand().intValue() > 99 && dateEnde != null) {
                 res += "X-MOZ-LASTACK:" + DF.format(dateEnde) + "T180000Z\n";
+                event.setExperimentalProperty("X-MOZ-LASTACK", ICalDataType.DATE_TIME, DF.format(dateEnde) + "T180000Z");
                 res += "COMPLETED:" + DF.format(dateEnde) + "T180000Z\n";
+                status = Status.inProgress();
             } else {
                 statusName = "CONFIRMED";
+                status = Status.confirmed();
             }
             res += "PERCENT-COMPLETE:" + curNode.getIstStand().intValue() + "\n";
+            event.setExperimentalProperty("PERCENT-COMPLETE", ICalDataType.INTEGER, curNode.getIstStand().toString());
         } else {
             res += "STATUS:" + statusName + "\n";
         }
+        event.setStatus(status);
 
         if (!StringUtils.isEmpty(descFull) && oOptions.isFlgShowDesc()) {
             // Html-Escapen
+            event.setDescription(new Description(descFull.toString()));
             String tmpDesc = descFull.toString();
             tmpDesc = tmpDesc.replaceAll("\n", "\\\\n");
             res += "DESCRIPTION:" + tmpDesc + "\n";
@@ -513,6 +544,10 @@ public class ICalExporter extends WikiExporter {
         res += "TRIGGER;VALUE=DURATION:-P1D\n";
         res += "DESCRIPTION:Mozilla Standardbeschreibung\n";
         res += "END:VALARM\n";
+
+        Trigger trigger = new Trigger(new Duration.Builder().prior(true).days(-1).build(), Related.START);
+        VAlarm alarm = VAlarm.display(trigger, name);
+        event.addAlarm(alarm);
 
         res += "END:VEVENT\n";
         
@@ -543,21 +578,14 @@ public class ICalExporter extends WikiExporter {
         return icalRes;
     }
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     DataExport
-     *     Presentation
-     * <h4>FeatureDescription:</h4>
-     *     get header for a ICal-calendar
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue String - header for ICal-calendar
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Layout
-     * @param masterNode - node for output
-     * @param oOptions - options for output (formatter)
-     * @return - header for ICal-calendar
+    /** 
+     * get header for a ICal-calendar
+     * @FeatureDomain                DataExport Presentation
+     * @FeatureResult                returnValue String - header for ICal-calendar
+     * @FeatureKeywords              Layout
+     * @param masterNode             node for output
+     * @param oOptions               options for output (formatter)
+     * @return                       header for ICal-calendar
      */
     public String getCalHeader(final DataDomain masterNode, 
             final OutputOptions oOptions) {
@@ -588,26 +616,24 @@ public class ICalExporter extends WikiExporter {
         return icalRes;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     DataExport
-     *     Presentation
-     * <h4>FeatureDescription:</h4>
-     *     get footer for a ICal-calendar
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue String - footer for ICal-calendar
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Layout
-     * @param masterNode - node for output
-     * @param oOptions - options for output (formatter)
-     * @return - footer for ICal-calendar
+    /** 
+     * get footer for a ICal-calendar
+     * @FeatureDomain                DataExport Presentation
+     * @FeatureResult                returnValue String - footer for ICal-calendar
+     * @FeatureKeywords              Layout
+     * @param masterNode             node for output
+     * @param oOptions               options for output (formatter)
+     * @return                       footer for ICal-calendar
      */
     public String getCalFooter(final DataDomain masterNode, 
                                   final OutputOptions oOptions) {
         String icalRes = "END:VCALENDAR\n";
 
         return icalRes;
+    }
+    
+    public ICalendar createICalendar() {
+        ICalendar ical = new ICalendar();
+        return ical;
     }
 }

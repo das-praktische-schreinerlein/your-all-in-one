@@ -1,31 +1,22 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-/**
- * <h4>FeatureDomain:</h4>
- *     Configuration
- * <h4>FeatureDescription:</h4>
- *     the controller to load the nodes for url-params and register the yaio-functions
- * <h4>FeatureResult:</h4>
- *   <ul>
- *     <li>returns new controller
- *   </ul> 
- * <h4>FeatureKeywords:</h4>
- *     GUI Configuration BusinessLogic
+/** 
+ * the controller to load the nodes for url-params and register the yaio-functions
+ * @FeatureDomain                Configuration
+ * @FeatureResult                returns new controller
+ * @FeatureKeywords              GUI Configuration BusinessLogic
  */
 yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $routeParams, setFormErrors, OutputOptionsEditor, authorization, yaioUtils) {
     'use strict';
@@ -41,6 +32,9 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
     if ($routeParams.workflowState && $routeParams.workflowState != "?") {
         $scope.filterOptions.strWorkflowStateFilter = $routeParams.workflowState;
     }
+    if ($routeParams.statCount && $routeParams.statCount != "?") {
+        $scope.filterOptions.strStatCountFilter = $routeParams.statCount;
+    }
 
     // check parameter - set default if empty
     var baseUrl = '/show/';
@@ -54,7 +48,7 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
         flgNodeByAllId = true;
     }
     if (nodeId == null || nodeId == "" || ! nodeId) {
-        nodeId = yaioUtils.getConfig().CONST_MasterId;
+        nodeId = yaioUtils.getConfig().masterSysUId;
     }
 
     // create node
@@ -196,17 +190,11 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
         }
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Editor
-     * <h4>FeatureDescription:</h4>
-     *     export GUI As Overview
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>exportAsOverview
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Callback
+    /** 
+     * export GUI As Overview
+     * @FeatureDomain                Editor
+     * @FeatureResult                exportAsOverview
+     * @FeatureKeywords              GUI Callback
      */
     $scope.exportAsOverview = function() {
         console.log("exportAsOverview");
@@ -214,17 +202,11 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
         return false;
     };
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Editor
-     * <h4>FeatureDescription:</h4>
-     *     create snapshot of GUI
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>snapshot
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Callback
+    /** 
+     * create snapshot of GUI
+     * @FeatureDomain                Editor
+     * @FeatureResult                snapshot
+     * @FeatureKeywords              GUI Callback
      */
     $scope.snapshot = function() {
         console.log("snapshot");
@@ -232,17 +214,11 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
         return false;
     };
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Editor
-     * <h4>FeatureDescription:</h4>
-     *     callbackhandler to open all subnodes<level in the treeview
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>open the subNodes till treeOpenLevel
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Callback
+    /** 
+     * callbackhandler to open all subnodes<level in the treeview
+     * @FeatureDomain                Editor
+     * @FeatureResult                open the subNodes till treeOpenLevel
+     * @FeatureKeywords              GUI Callback
      */
     $scope.openSubNodes = function() {
         console.log("openSubNodes:" + " level:" + $scope.config.treeOpenLevel);
@@ -250,17 +226,11 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
         return false;
     };
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     GUI
-     * <h4>FeatureDescription:</h4>
-     *     callbackhandler to recalc ganttblocks for nodes
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>recalc ganttblocks
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Callback
+    /** 
+     * callbackhandler to recalc ganttblocks for nodes
+     * @FeatureDomain                GUI
+     * @FeatureResult                recalc ganttblocks
+     * @FeatureKeywords              GUI Callback
      */
     $scope.recalcGanttBlocks = function() {
         yaioUtils.getService('YaioNodeGanttRender').yaioRecalcFancytreeGanttBlocks();
@@ -268,18 +238,12 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
         return false;
     };
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     GUI
-     * <h4>FeatureDescription:</h4>
-     *     callbackhandler to recalc Gantt with Master-Ist/Plan-DateRange
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>recalc ganttblocks
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Callback
-     * @param  flgShowIst   boolean if is set show ist, if not show plan
+    /** 
+     * callbackhandler to recalc Gantt with Master-Ist/Plan-DateRange
+     * @FeatureDomain                GUI
+     * @FeatureResult                recalc ganttblocks
+     * @FeatureKeywords              GUI Callback
+     * @param flgShowIst             boolean if is set show ist, if not show plan
      */
     $scope.recalcGanttForIstOrPlan = function(flgShowIst) {
         var start = flgShowIst ? $scope.node.istChildrenSumStart : $scope.node.planChildrenSumStart;
@@ -292,7 +256,8 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
     $scope.changeExplorerFilter = function() {
         var msg = "changeExplorerFilter node: " + nodeId;
         var newUrl = '/show/' + nodeId 
-            + '/' + $scope.filterOptions.strWorkflowStateFilter + "/";
+            + '/' + ($scope.filterOptions.strWorkflowStateFilter ? $scope.filterOptions.strWorkflowStateFilter : "?")
+            + '/' + ($scope.filterOptions.strStatCountFilter ? $scope.filterOptions.strStatCountFilter : "?") + "/";
         if (activeNodeId) {
             newUrl = newUrl + 'activate/' + activeNodeId + '/';
         }
@@ -316,8 +281,20 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
                 }
             }
         }
+        nodeFilter.statCount = null;
+        if ($scope.filterOptions.strStatCountFilter) {
+            nodeFilter.statCount = $scope.filterOptions.strStatCountFilter;
+        }
         console.log("setExplorerFilter: set filter:", nodeFilter);
         yaioUtils.getService('YaioExplorerTree').setNodeFilter(nodeFilter);
     }
     
+    
+    $scope.initDragDropFileUploader = function(divId) {
+        // Setup the Uploadfile-Listener
+        var dropZone = document.getElementById(divId);
+        dropZone.addEventListener('dragover', function (event) { console.log("dragover:", event); yaioUtils.getService('YaioEditor').handleUploadFileUrlResNodeDragOver(event); }, false);
+        dropZone.addEventListener('drop', function (event) { console.log("drop:", event); yaioUtils.getService('YaioEditor').handleUploadFileUrlResNodeSelect(event); }, false);
+    }
+
 });

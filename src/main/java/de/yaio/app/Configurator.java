@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -40,20 +37,16 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
-import de.yaio.webapp.controller.ExportController;
 
 
-
-/**
- * <h4>FeatureDomain:</h4>
- *     Configuration
- * <h4>FeatureDescription:</h4>
- *     baseclass for configuration
+/** 
+ * baseclass for configuration
  *
- * @package de.yaio.utils
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @copyright Copyright (c) 2013, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Configuration
+ * @package                      de.yaio.utils
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @copyright                    Copyright (c) 2013, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -101,6 +94,10 @@ public class Configurator {
     /** the configured yaioInstances to allow XFrameHeader and to construct in sourceselector of app */
     protected final Map<String, Map<String, String>> knownYaioInstances = new LinkedHashMap<String, Map<String, String>>();
 
+    /** replacements to do after processing a node in documentation-context **/
+    public static final Map<String, String> PostProcessorReplacements_documentation = 
+                    new LinkedHashMap<String, String>();
+    
     protected ApplicationContext applicationContext;
     protected CommandLine commandLine;
     protected String[] cmdLineArgs;
@@ -110,16 +107,14 @@ public class Configurator {
         initConfigurator();
     }
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Configuration
-     * <h4>FeatureDescription:</h4>
-     *     Bugfix-Class because Options.getOptions returns only shortoptions
+    /** 
+     * Bugfix-Class because Options.getOptions returns only shortoptions
      *
-     * @package base
-     * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
-     * @copyright Copyright (c) 2013, Michael Schreiner
-     * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+     * @FeatureDomain                Configuration
+     * @package                      base
+     * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+     * @copyright                    Copyright (c) 2013, Michael Schreiner
+     * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
      *
      * This Source Code Form is subject to the terms of the Mozilla Public
      * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -135,14 +130,11 @@ public class Configurator {
         /** a protected (not private!!!) map of the options with the long key */
         protected Map<String, Option> mylongOpts = new HashMap<String, Option>();
         
-        /**
-         * <h4>FeatureDomain:</h4>
-         *     Configuration
-         * <h4>FeatureDescription:</h4>
-         *     create CommandlineOptions 
-         *     Bugfix-Class because Options.getOptions returns only shortoptions
-         * <h4>FeatureKeywords:</h4>
-         *     Configuration
+        /** 
+         * create CommandlineOptions 
+         * Bugfix-Class because Options.getOptions returns only shortoptions
+         * @FeatureDomain                Configuration
+         * @FeatureKeywords              Configuration
          */
         public CommandlineOptions() {
             super();
@@ -155,7 +147,7 @@ public class Configurator {
          * Retrieve a read-only list of options in this set
          * override original because this only retrieved the shortoptions
          *
-         * @return read-only Collection of {@link Option} objects in this descriptor
+         * @return                       read-only Collection of {@link Option} objects in this descriptor
          */
         @SuppressWarnings("unchecked")
         @Override
@@ -181,8 +173,8 @@ public class Configurator {
          * Adds an option instance 
          * if it has only longopt, add it to mylongOpts
          *
-         * @param opt the option that is to be added
-         * @return the resulting Options instance
+         * @param opt                    the option that is to be added
+         * @return                       the resulting Options instance
          */
         @Override
         public Options addOption(final Option opt) {
@@ -207,18 +199,12 @@ public class Configurator {
     }
     
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tools - CLI-Handling
-     * <h4>FeatureDescription:</h4>
-     *     return new Instance of CommandlineOptions
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue CommandlineOptions - a new instance to define CommandlineOptions
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     CLI-Handling
-     * @return a new instance to define CommandlineOptions
+    /** 
+     * return new Instance of CommandlineOptions
+     * @FeatureDomain                Tools - CLI-Handling
+     * @FeatureResult                returnValue CommandlineOptions - a new instance to define CommandlineOptions
+     * @FeatureKeywords              CLI-Handling
+     * @return                       a new instance to define CommandlineOptions
      */
     public static CommandlineOptions getNewOptionsInstance() {
         return new CommandlineOptions();
@@ -237,19 +223,13 @@ public class Configurator {
     }
     
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Configuration
-     * <h4>FeatureDescription:</h4>
-     *     return the current static Configurator-instance
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue the current Configurator-instance for the app
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Configuration CLI-Handling
-     * @return the current Configurator-instance
-     * @throws Exception - parse/io-Exceptions possible
+    /** 
+     * return the current static Configurator-instance
+     * @FeatureDomain                Configuration
+     * @FeatureResult                returnValue the current Configurator-instance for the app
+     * @FeatureKeywords              Configuration CLI-Handling
+     * @return                       the current Configurator-instance
+     * @throws Exception             parse/io-Exceptions possible
      */
     public static Configurator getInstance() {
         return instance;
@@ -264,20 +244,14 @@ public class Configurator {
      ***********************
      */
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tools - CLI-Handling
-     * <h4>FeatureDescription:</h4>
-     *     return the current SpringApplicationContext 
-     *     if is not set call ApplicationContext.initSpringApplicationContext()
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue the current SpringApplicationContext
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     CLI-Handling
-     * @return the current SpringApplicationContext
-     * @throws Exception - parse/io-Exceptions possible
+    /** 
+     * return the current SpringApplicationContext 
+     * if is not set call ApplicationContext.initSpringApplicationContext()
+     * @FeatureDomain                Tools - CLI-Handling
+     * @FeatureResult                returnValue the current SpringApplicationContext
+     * @FeatureKeywords              CLI-Handling
+     * @return                       the current SpringApplicationContext
+     * @throws Exception             parse/io-Exceptions possible
      */
     public ApplicationContext getSpringApplicationContext() throws Exception {
         // check weather exists
@@ -288,19 +262,13 @@ public class Configurator {
         return applicationContext;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tools - CLI-Handling
-     * <h4>FeatureDescription:</h4>
-     *     return the current configFile from option config
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue the current configFile
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     CLI-Handling
-     * @return the configFile from option config
-     * @throws Exception - parse/io-Exceptions possible
+    /** 
+     * return the current configFile from option config
+     * @FeatureDomain                Tools - CLI-Handling
+     * @FeatureResult                returnValue the current configFile
+     * @FeatureKeywords              CLI-Handling
+     * @return                       the configFile from option config
+     * @throws Exception             parse/io-Exceptions possible
      */
     public String getConfigFile() throws Exception {
         // check
@@ -355,7 +323,7 @@ public class Configurator {
                         + " / " + pattern + "=" + target);
                 }
                 if (pattern != null) {
-                    ExportController.PostProcessorReplacements_documentation.put(
+                    PostProcessorReplacements_documentation.put(
                                     pattern, 
                                     target != null ? target : "");
                         LOGGER.info("set PostProcessorReplacements_documentation:" 
@@ -418,36 +386,24 @@ public class Configurator {
      ***********************
      */
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tools - CLI-Handling
-     * <h4>FeatureDescription:</h4>
-     *     return current CMD-Args
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue String[] - current CMD-Args
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     CLI-Handling
-     * @return String[] - current CMD-Args
+    /** 
+     * return current CMD-Args
+     * @FeatureDomain                Tools - CLI-Handling
+     * @FeatureResult                returnValue String[] - current CMD-Args
+     * @FeatureKeywords              CLI-Handling
+     * @return                       String[] - current CMD-Args
      */
     public String[] getCmdLineArgs() {
         return this.cmdLineArgs;
     }
 
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tools - CLI-Handling
-     * <h4>FeatureDescription:</h4>
-     *     set current CMD-Args (throws exception if already set)
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>updates cmdLineArgs
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     CLI-Handling
-     * @param cmdLineArgs - current CMD-Args
+    /** 
+     * set current CMD-Args (throws exception if already set)
+     * @FeatureDomain                Tools - CLI-Handling
+     * @FeatureResult                updates cmdLineArgs
+     * @FeatureKeywords              CLI-Handling
+     * @param cmdLineArgs            current CMD-Args
      */
     public void setCmdLineArgs(final String[] cmdLineArgs) {
         if (this.cmdLineArgs != null) {
@@ -458,37 +414,25 @@ public class Configurator {
         this.cmdLineArgs = cmdLineArgs;
     }
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tools - CLI-Handling
-     * <h4>FeatureDescription:</h4>
-     *     checks weather Commandline is valid
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue boolean - valid Commandline?
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     CLI-Handling
-     * @return boolean - valid Commandline?
-     * @throws Exception - parse-Exceptions possible
+    /** 
+     * checks weather Commandline is valid
+     * @FeatureDomain                Tools - CLI-Handling
+     * @FeatureResult                returnValue boolean - valid Commandline?
+     * @FeatureKeywords              CLI-Handling
+     * @return                       boolean - valid Commandline?
+     * @throws Exception             parse-Exceptions possible
      */
     public boolean validateCmdLine() throws Exception {
         return true;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tools - CLI-Handling
-     * <h4>FeatureDescription:</h4>
-     *     return current parsed CLI-Commandline (if not set, call initCommandLine)
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue CommandLine - current CLI-Commandline
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     CLI-Handling
-     * @return CommandLine - current CLI-Commandline
-     * @throws Exception - parse-Exceptions possible
+    /** 
+     * return current parsed CLI-Commandline (if not set, call initCommandLine)
+     * @FeatureDomain                Tools - CLI-Handling
+     * @FeatureResult                returnValue CommandLine - current CLI-Commandline
+     * @FeatureKeywords              CLI-Handling
+     * @return                       CommandLine - current CLI-Commandline
+     * @throws Exception             parse-Exceptions possible
      */
     public CommandLine getCommandLine() throws Exception {
         // check weather exists
@@ -506,7 +450,7 @@ public class Configurator {
      *     liefert die verfuegbaren CLI-Optionen
      * <h1>Nebenwirkungen:</h1>
      *     Rueckgabe als Options
-     * @return Options
+     * @return                       Options
      */
     public Options getAvailiableCmdLineOptions() {
         return this.availiableCmdLineOptions;
@@ -564,8 +508,8 @@ public class Configurator {
      *     konfiguriert die verfuegbaren CLI-Optionen
      * <h1>Nebenwirkungen:</h1>
      *     Rueckgabe als Options
-     * @param newAvailiableCmdLineOptions - cmd-options to add to availiableCmdLineOptions 
-     * @throws Exception - parseExceptions possible
+     * @param newAvailiableCmdLineOptions cmd-options to add to availiableCmdLineOptions 
+     * @throws Exception             parseExceptions possible
      */
     public void addAvailiableCmdLineOptions(final Options newAvailiableCmdLineOptions) throws Exception {
         if (commandLine != null) {
@@ -637,21 +581,15 @@ public class Configurator {
      ***********************
      */
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Configuration
-     * <h4>FeatureDescription:</h4>
-     *     read the properties from the given filepath (first by filesystem, 
-     *     if failed by classpath)
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue Properties - the properties read from propertyfile
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Configuration
-     * @param filePath - path to the file (filesystem or classressource)
-     * @return the properties read from propertyfile
-     * @throws Exception - parse/io-Exceptions possible
+    /** 
+     * read the properties from the given filepath (first by filesystem, 
+     * if failed by classpath)
+     * @FeatureDomain                Configuration
+     * @FeatureResult                returnValue Properties - the properties read from propertyfile
+     * @FeatureKeywords              Configuration
+     * @param filePath               path to the file (filesystem or classressource)
+     * @return                       the properties read from propertyfile
+     * @throws Exception             parse/io-Exceptions possible
      */
     public static Properties readProperties(final String filePath) throws Exception {
         Properties prop = new Properties();
@@ -688,10 +626,10 @@ public class Configurator {
      *     erzeugt aus den CMD-Args ein CLI-Commandline-Object
      * <h1>Nebenwirkungen:</h1>
      *     Rueckgabe als CommandLine
-     * @param cmdArgs - Parameter aus z.B. main
-     * @param availiableCmdLineOptions - verfuegbare CLI-Optionen
-     * @return CommandLine
-     * @throws ParseException - pase-Exceptions possible
+     * @param cmdArgs                Parameter aus z.B. main
+     * @param availiableCmdLineOptions verfuegbare CLI-Optionen
+     * @return                       CommandLine
+     * @throws ParseException        pase-Exceptions possible
      */
     public static CommandLine createCommandLineFromCmdArgs(final String[] cmdArgs,
             final Options availiableCmdLineOptions) throws ParseException {
@@ -701,7 +639,7 @@ public class Configurator {
 
 
     /**
-     * @return the {@link Configurator#knownYaioInstances}
+     * @return                       the {@link Configurator#knownYaioInstances}
      */
     public final Map<String, Map<String, String>> getKnownYaioInstances() {
         return this.knownYaioInstances;

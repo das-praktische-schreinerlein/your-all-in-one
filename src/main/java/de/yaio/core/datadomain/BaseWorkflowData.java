@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -24,17 +21,15 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     DataDefinition
- * <h4>FeatureDescription:</h4>
- *     interface for BaseWorkflow (service-functions) of the Node
+/** 
+ * interface for BaseWorkflow (service-functions) of the Node
  * 
- * @package de.yaio.core.datadomain
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                DataDefinition
+ * @package                      de.yaio.core.datadomain
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public interface BaseWorkflowData extends DataDomain, IstChildrenSumData, 
     PlanCalcData, PlanDependencieData, PlanChildrenSumData {
@@ -65,68 +60,46 @@ public interface BaseWorkflowData extends DataDomain, IstChildrenSumData,
     
     WorkflowState getWorkflowState();
     void setWorkflowState(WorkflowState istState);
+    
+    void resetBaseWorkflowData();
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Workflow
-     * <h4>FeatureDescription:</h4>
-     *     checks weather the state is a configurated workflow-state
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue boolean - workflow-state yes/no
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Worflow
-     * @param state - state to check
-     * @return workflow-state yes/no
+    /** 
+     * checks weather the state is a configurated workflow-state
+     * @FeatureDomain                Workflow
+     * @FeatureResult                returnValue boolean - workflow-state yes/no
+     * @FeatureKeywords              Worflow
+     * @param state                  state to check
+     * @return                       workflow-state yes/no
      */
     boolean isWFStatus(String state);
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Workflow
-     * <h4>FeatureDescription:</h4>
-     *     checks weather the state is a configurated workflow-state for DONE
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue boolean - workflow-DONE yes/no
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Worflow
-     * @param state - state to check
-     * @return workflow-DONE yes/no
+    /** 
+     * checks weather the state is a configurated workflow-state for DONE
+     * @FeatureDomain                Workflow
+     * @FeatureResult                returnValue boolean - workflow-DONE yes/no
+     * @FeatureKeywords              Worflow
+     * @param state                  state to check
+     * @return                       workflow-DONE yes/no
      */
     boolean isWFStatusDone(String state);
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Workflow
-     * <h4>FeatureDescription:</h4>
-     *     checks weather the state is a configurated workflow-state for OPEN
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue boolean - workflow-OPEN yes/no
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Worflow
-     * @param state - state to check
-     * @return workflow-OPEN yes/no
+    /** 
+     * checks weather the state is a configurated workflow-state for OPEN
+     * @FeatureDomain                Workflow
+     * @FeatureResult                returnValue boolean - workflow-OPEN yes/no
+     * @FeatureKeywords              Worflow
+     * @param state                  state to check
+     * @return                       workflow-OPEN yes/no
      */
     boolean isWFStatusOpen(String state);
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Workflow
-     * <h4>FeatureDescription:</h4>
-     *     checks weather the state is a configurated workflow-state for CANCELED
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue boolean - workflow-CANCELED yes/no
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Worflow
-     * @param state - state to check
-     * @return workflow-CANCELED yes/no
+    /** 
+     * checks weather the state is a configurated workflow-state for CANCELED
+     * @FeatureDomain                Workflow
+     * @FeatureResult                returnValue boolean - workflow-CANCELED yes/no
+     * @FeatureKeywords              Worflow
+     * @param state                  state to check
+     * @return                       workflow-CANCELED yes/no
      */
     boolean isWFStatusCanceled(String state);
 }

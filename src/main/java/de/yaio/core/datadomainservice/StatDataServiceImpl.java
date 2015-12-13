@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -21,19 +18,19 @@ import org.apache.log4j.Logger;
 import de.yaio.core.datadomain.BaseWorkflowData;
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.datadomain.StatData;
+import de.yaio.core.node.InfoNode;
+import de.yaio.core.node.UrlResNode;
 import de.yaio.core.nodeservice.NodeService;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     BusinessLogic
- * <h4>FeatureDescription:</h4>
- *     businesslogic for dataDomain: StatData
+/** 
+ * businesslogic for dataDomain: StatData
  * 
- * @package de.yaio.core.dataservice
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                BusinessLogic
+ * @package                      de.yaio.core.dataservice
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class StatDataServiceImpl extends DataDomainRecalcImpl implements StatDataService {
 
@@ -43,32 +40,22 @@ public class StatDataServiceImpl extends DataDomainRecalcImpl implements StatDat
 
     private static StatDataServiceImpl instance = new StatDataServiceImpl();
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Persistence
-     * <h4>FeatureDescription:</h4>
-     *     return the main instance of this service
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>return the main instance of this service
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Persistence
-     * @return the main instance of this service
+    /** 
+     * return the main instance of this service
+     * @FeatureDomain                Persistence
+     * @FeatureResult                return the main instance of this service
+     * @FeatureKeywords              Persistence
+     * @return                       the main instance of this service
      */
     public static StatDataServiceImpl getInstance() {
         return instance;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     DataExport
-     *     Presentation
-     * <h4>FeatureDescription:</h4>
-     *     add me as DataDomainRecalcer to the Service-Config
-     * <h4>FeatureKeywords:</h4>
-     *     Config
-     * @param nodeService - instance of the nodeService which will call me as recalcer
+    /** 
+     * add me as DataDomainRecalcer to the Service-Config
+     * @FeatureDomain                DataExport Presentation
+     * @FeatureKeywords              Config
+     * @param nodeService            instance of the nodeService which will call me as recalcer
      */
     public static void configureDataDomainRecalcer(final NodeService nodeService) {
         DataDomainRecalc baseDataDomainRecalc = StatDataServiceImpl.getInstance();
@@ -104,13 +91,14 @@ public class StatDataServiceImpl extends DataDomainRecalcImpl implements StatDat
     public int getRecalcTargetOrder() {
         return StatDataService.CONST_RECALC_ORDER;
     }
-    
-    
+
     @Override
     public void updateChildrenCount(final StatData node) throws Exception {
         int childCount = node.getChildNodesByNameMap().size();
         int wfCount = 0;
         int wfToDoCount = 0;
+        int urlResCount = 0;
+        int infoCount = 0;
         
         // check Workflow-states of the node
         if (BaseWorkflowData.class.isInstance(node)) {
@@ -134,7 +122,21 @@ public class StatDataServiceImpl extends DataDomainRecalcImpl implements StatDat
                 }
             }
         }
-
+        if (UrlResNode.class.isInstance(node)) {
+            // check UrlRes of the node
+            urlResCount++;
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("UrlResNode " + node.getNameForLogger() 
+                                + " urlResCount++");
+            }
+        } else if (InfoNode.class.isInstance(node)) {
+            // check Info of the node
+            infoCount++;
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("InfoNode " + node.getNameForLogger() 
+                                + " infoCount++");
+            }
+        }
         
         // iterate children
         for (String nodeName : node.getChildNodesByNameMap().keySet()) {
@@ -153,6 +155,12 @@ public class StatDataServiceImpl extends DataDomainRecalcImpl implements StatDat
                     if (statChildNode.getStatWorkflowTodoCount() != null) {
                         wfToDoCount += statChildNode.getStatWorkflowTodoCount();
                     }
+                    if (statChildNode.getStatInfoCount() != null) {
+                        infoCount += statChildNode.getStatInfoCount();
+                    }
+                    if (statChildNode.getStatUrlResCount() != null) {
+                        urlResCount += statChildNode.getStatUrlResCount();
+                    }
                     if (LOGGER.isDebugEnabled()) {
                         LOGGER.debug("child " + childNode.getNameForLogger() 
                                         + " wfCount:" + statChildNode.getStatWorkflowCount());
@@ -167,5 +175,7 @@ public class StatDataServiceImpl extends DataDomainRecalcImpl implements StatDat
         node.setStatChildNodeCount(childCount);
         node.setStatWorkflowCount(wfCount);
         node.setStatWorkflowTodoCount(wfToDoCount);
+        node.setStatInfoCount(infoCount);
+        node.setStatUrlResCount(urlResCount);
     }
 }

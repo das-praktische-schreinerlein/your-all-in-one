@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -26,17 +23,15 @@ import de.yaio.core.nodeservice.SymLinkNodeService;
 import de.yaio.core.nodeservice.TaskNodeService;
 import de.yaio.core.nodeservice.UrlResNodeService;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     export
- * <h4>FeatureDescription:</h4>
- *     configurator for formatting workflow nodes
+/** 
+ * configurator for formatting workflow nodes
  * 
- * @package de.yaio.extension.datatransfer.exporter.formatter
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                export
+ * @package                      de.yaio.extension.datatransfer.exporter.formatter
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class WorkflowFormatConfigurator {
 
@@ -112,79 +107,54 @@ public class WorkflowFormatConfigurator {
         CONST_STATI_ICON.put(UrlResNodeService.CONST_NODETYPE_IDENTIFIER_EMAILRES, null);
     }
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Factory
-     * <h4>FeatureDescription:</h4>
-     *     return the global WorkflowFormatConfigurator
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue WorkflowFormatConfigurator
-     *   </ul>
-     * @return the global WorkflowFormatConfigurator 
+    /** 
+     * return the global WorkflowFormatConfigurator
+     * @FeatureDomain                Factory
+     * @FeatureResult                returnValue WorkflowFormatConfigurator
+     * @return                       the global WorkflowFormatConfigurator 
      */
     public static WorkflowFormatConfigurator getWorkflowFormatConfigurator() {
         return me;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Presentation
-     * <h4>FeatureDescription:</h4>
-     *     return the Mapping of color for which state
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue StateToColorMapping
-     *   </ul>
-     * @return the StateToColorMapping 
+    /** 
+     * return the Mapping of color for which state
+     * @FeatureDomain                Presentation
+     * @FeatureResult                returnValue StateToColorMapping
+     * @return                       the StateToColorMapping 
      */
     public Map<String, String> getConfigStateColor() {
         return CONST_STATI_COLOR;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Presentation
-     * <h4>FeatureDescription:</h4>
-     *     return the Mapping of icon for which state
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue StateToIconMapping
-     *   </ul>
-     * @return the StateToIconMapping 
+    /** 
+     * return the Mapping of icon for which state
+     * @FeatureDomain                Presentation
+     * @FeatureResult                returnValue StateToIconMapping
+     * @return                       the StateToIconMapping 
      */
     public Map<String, String> getConfigStateIcon() {
         return CONST_STATI_ICON;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Presentation
-     * <h4>FeatureDescription:</h4>
-     *     return the mapped color for the state
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue color
-     *   </ul>
-     * @param state - the state to get the mapped color
-     * @return the mapped color
+    /** 
+     * return the mapped color for the state
+     * @FeatureDomain                Presentation
+     * @FeatureResult                returnValue color
+     * @param state                  the state to get the mapped color
+     * @return                       the mapped color
      */
     public String getStateColor(final String state) {
         String color = (String) this.getConfigStateColor().get(state);
         return color;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Presentation
-     * <h4>FeatureDescription:</h4>
-     *     return the mapped icon for the state
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue icon
-     *   </ul>
-     * @param state - the state to get the mapped icon
-     * @return the mapped icon
+    /** 
+     * return the mapped icon for the state
+     * @FeatureDomain                Presentation
+     * @FeatureResult                returnValue icon
+     * @param state                  the state to get the mapped icon
+     * @return                       the mapped icon
      */
     public String getStateIcon(final String state) {
         String icon = (String) this.getConfigStateIcon().get(state);

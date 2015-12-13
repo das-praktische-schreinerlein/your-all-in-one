@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -19,37 +16,29 @@ package de.yaio.datatransfer.importer.parser;
 import de.yaio.core.datadomain.PlanData;
 import de.yaio.datatransfer.importer.ImportOptions;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     import
- * <h4>FeatureDescription:</h4>
- *     interface with service-functions for parsing of dataDomain: PlanData
+/** 
+ * interface with service-functions for parsing of dataDomain: PlanData
  * 
- * @package de.yaio.datatransfer.importer.parser
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                import
+ * @package                      de.yaio.datatransfer.importer.parser
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public interface PlanDataParser extends Parser {
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     DataImport
-     * <h4>FeatureDescription:</h4>
-     *     parses DataDomain: PlanData from the nodename
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue int - count elements found
-     *     <li>updates memberVariable node.name - found Pattern are deleted
-     *     <li>updates memberVariable node.plan* - found Pattern are set at MemberVars of the DataDomain
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Parser
-     * @param node - DataDomain to parse
-     * @param options - ImportOptionen for the parser
-     * @return count elements found
-     * @throws Exception - parser-Exceptions possible
+    /** 
+     * parses DataDomain: PlanData from the nodename
+     * @FeatureDomain                DataImport
+     * @FeatureResult                returnValue int - count elements found
+     * @FeatureResult                updates memberVariable node.name - found Pattern are deleted
+     * @FeatureResult                updates memberVariable node.plan* - found Pattern are set at MemberVars of the DataDomain
+     * @FeatureKeywords              Parser
+     * @param node                   DataDomain to parse
+     * @param options                ImportOptionen for the parser
+     * @return                       count elements found
+     * @throws Exception             parser-Exceptions possible
      */
     int parsePlanDataFromName(PlanData node, ImportOptions options) throws Exception;
 }

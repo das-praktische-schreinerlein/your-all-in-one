@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -27,26 +24,24 @@ import org.junit.runners.JUnit4;
 import org.springframework.mock.staticmock.MockStaticEntityMethods;
 
 import de.yaio.BaseTest;
+import de.yaio.commons.data.DataUtils;
 import de.yaio.datatransfer.exporter.OutputOptions;
 import de.yaio.datatransfer.exporter.OutputOptionsImpl;
 import de.yaio.datatransfer.exporter.formatter.Formatter;
 import de.yaio.datatransfer.importer.ImportOptions;
 import de.yaio.datatransfer.importer.ImportOptionsImpl;
 import de.yaio.datatransfer.importer.parser.Parser;
-import de.yaio.utils.DataUtils;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     Tests
- * <h4>FeatureDescription:</h4>
- *     interface for test of the datadomain-logic<br>
- *     test: parser, formatter
+/** 
+ * interface for test of the datadomain-logic<br>
+ * test: parser, formatter
  * 
- * @package de.yaio.core.datadomain
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category tests
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Tests
+ * @package                      de.yaio.core.datadomain
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     tests
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 
 @RunWith(JUnit4.class)
@@ -72,63 +67,45 @@ public abstract class DataDomainTest extends BaseTest {
     /** dateformat-instance for UID yyyyMMddHHmmssSSS */
     protected final DateFormat UIDF = DataUtils.getUIDF();
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tests
-     * <h4>FeatureDescription:</h4>
-     *     setup the parser-obj to test
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>updates membervar parser
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Test Config Initialisation
-     * @throws Exception - in case of Problems when setup
+    /** 
+     * setup the parser-obj to test
+     * @FeatureDomain                Tests
+     * @FeatureResult                updates membervar parser
+     * @FeatureKeywords              Test Config Initialisation
+     * @throws Exception             in case of Problems when setup
      */
     @Before
     public abstract void setupParser() throws Exception;
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tests
-     * <h4>FeatureDescription:</h4>
-     *     setup the formatter-obj to test
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>updates membervar formatter
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Test Config Initialisation
-     * @throws Exception - in case of Problems when setup
+    /** 
+     * setup the formatter-obj to test
+     * @FeatureDomain                Tests
+     * @FeatureResult                updates membervar formatter
+     * @FeatureKeywords              Test Config Initialisation
+     * @throws Exception             in case of Problems when setup
      */
     @Before
     public abstract void setupFormatter() throws Exception;
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tests
-     * <h4>FeatureDescription:</h4>
-     *     do the parser-tests
-     * <h4>FeatureKeywords:</h4>
-     *     Test
-     * @throws Exception - in case of Problems while test
+    /** 
+     * do the parser-tests
+     * @FeatureDomain                Tests
+     * @FeatureKeywords              Test
+     * @throws Exception             in case of Problems while test
      */
     @Test
     public abstract void testParser() throws Exception;
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tests
-     * <h4>FeatureDescription:</h4>
-     *     does a parser-test on the parser-obj with the dataobj<br>
-     *     calls parser.parseFromName() and compares the resulting dataobj.toString 
-     *     with myExpectedParserResult
-     * <h4>FeatureKeywords:</h4>
-     *     Test
-     * @param myDataDomainObj - the dataobj to test
-     * @param myExpectedParserResult - the expected result
-     * @param myImportOptions - Importoptions for the parser
-     * @throws Exception - io-Exceptions possible
+    /** 
+     * does a parser-test on the parser-obj with the dataobj<br>
+     * calls parser.parseFromName() and compares the resulting dataobj.toString 
+     * with myExpectedParserResult
+     * @FeatureDomain                Tests
+     * @FeatureKeywords              Test
+     * @param myDataDomainObj        the dataobj to test
+     * @param myExpectedParserResult the expected result
+     * @param myImportOptions        Importoptions for the parser
+     * @throws Exception             io-Exceptions possible
      */
     public void testParser(final DataDomain myDataDomainObj, final String myExpectedParserResult, 
             final ImportOptions myImportOptions) throws Exception {
@@ -148,31 +125,25 @@ public abstract class DataDomainTest extends BaseTest {
         testService.checkToStringResult((TestObj) myDataDomainObj, myExpectedParserResult);
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tests
-     * <h4>FeatureDescription:</h4>
-     *     do the formatter-tests
-     * <h4>FeatureKeywords:</h4>
-     *     Test
-     * @throws Exception - io-Exceptions possible
+    /** 
+     * do the formatter-tests
+     * @FeatureDomain                Tests
+     * @FeatureKeywords              Test
+     * @throws Exception             io-Exceptions possible
      */
     @Test
     public abstract void testFormatter() throws Exception;
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tests
-     * <h4>FeatureDescription:</h4>
-     *     does a formatter-test on the formatter-obj with the dataobj
-     *     calls formatter.format() and compares the resulting String 
-     *     with myExpectedFormatterResult
-     * <h4>FeatureKeywords:</h4>
-     *     Test
-     * @param myDataDomainObj - the dataobj to test
-     * @param myExpectedFormatterResult - the expected result
-     * @param myOutputOptions - outputoptions for the formatter
-     * @throws Exception - io-Exceptions possible
+    /** 
+     * does a formatter-test on the formatter-obj with the dataobj
+     * calls formatter.format() and compares the resulting String 
+     * with myExpectedFormatterResult
+     * @FeatureDomain                Tests
+     * @FeatureKeywords              Test
+     * @param myDataDomainObj        the dataobj to test
+     * @param myExpectedFormatterResult the expected result
+     * @param myOutputOptions        outputoptions for the formatter
+     * @throws Exception             io-Exceptions possible
      */
     public void testFormatter(final DataDomain myDataDomainObj, final String myExpectedFormatterResult, 
             final OutputOptions myOutputOptions) throws Exception {

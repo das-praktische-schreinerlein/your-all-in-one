@@ -6,17 +6,15 @@ import java.util.Map;
 import de.yaio.BaseTest.TestObj;
 import de.yaio.core.node.BaseNode;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     Test
- * <h4>FeatureDescription:</h4>
- *     testnode for importer-logic
+/** 
+ * testnode for importer-logic
  * 
- * @package de.yaio.datatransfer.importer
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category tests
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Test
+ * @package                      de.yaio.datatransfer.importer
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     tests
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class TestNode extends BaseNode implements TestObj {
     

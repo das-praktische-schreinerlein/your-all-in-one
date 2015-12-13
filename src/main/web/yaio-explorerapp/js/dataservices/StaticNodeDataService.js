@@ -1,30 +1,25 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-/**
- * <h4>FeatureDomain:</h4>
- *     WebGUI
- * <h4>FeatureDescription:</h4>
- *     servicefunctions for data-services
- *      
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+/** 
+ * servicefunctions for data-services
+ *  
+ * @FeatureDomain                WebGUI
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 Yaio.StaticNodeDataService = function(appBase, config, defaultConfig) {
     'use strict';
@@ -54,10 +49,14 @@ Yaio.StaticNodeDataService = function(appBase, config, defaultConfig) {
         return res;
     };
     
-    me.loadStaticJson = function() {
+    me.connectService = function() {
+        // update serviceconfig
+        me.updateServiceConfig();
+        me.updateAppConfig();
+        
         // load data
         me._loadStaticJson(JSON.stringify(window.yaioStaticJSON));
-        
+
         // return promise
         var dfd = new $.Deferred();
         var res = dfd.promise();
@@ -65,6 +64,9 @@ Yaio.StaticNodeDataService = function(appBase, config, defaultConfig) {
         return res;
     }
     
+    me.updateServiceConfig = function(yaioCommonApiConfig) {
+    };
+
     me.exportNodeActionResponseJSONById = function(nodeId) {
         return JSON.stringify(me._exportNodeActionResponseById(nodeId))
     }
@@ -86,13 +88,13 @@ Yaio.StaticNodeDataService = function(appBase, config, defaultConfig) {
         var masterNode = yaioNodeActionReponse.node;
         
         // create Masternode if not exists 
-        if (masterNode.sysUID != me.appBase.config.CONST_MasterId) {
+        if (masterNode.sysUID != me.appBase.config.masterSysUId) {
             masterNode = {
                 "className": "TaskNode",
                 "name": "Masterplan",
                 "ebene": 0,
                 "nodeDesc": "Masternode of the Masterplan",
-                "sysUID": me.appBase.config.CONST_MasterId,
+                "sysUID": me.appBase.config.masterSysUId,
                 "sysChangeCount": 9,
                 "sysCreateDate": 1411717226471,
                 "sysChangeDate": 1429887836887,

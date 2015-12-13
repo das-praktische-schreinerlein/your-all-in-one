@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -36,6 +33,7 @@ import org.apache.poi.hssf.usermodel.HSSFFormulaEvaluator;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
+import de.yaio.commons.data.DataUtils;
 import de.yaio.core.node.BaseNode;
 import de.yaio.core.node.TaskNode;
 import de.yaio.core.nodeservice.BaseNodeService;
@@ -47,20 +45,17 @@ import de.yaio.datatransfer.importer.ImportOptionsImpl;
 import de.yaio.datatransfer.importer.ImporterImpl;
 import de.yaio.extension.datatransfer.ppl.PPLExporter;
 import de.yaio.extension.datatransfer.ppl.PPLImporter;
-import de.yaio.utils.DataUtils;
 import de.yaio.utils.ExcelService;
 
-/**
- * <h4>FeatureDomain:</h4>
-*     import
- * <h4>FeatureDescription:</h4>
- *     import of Nodes from Excel
+/** 
+ * import of Nodes from Excel
  * 
- * @package de.yaio.extension.datatransfer.excel
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                import
+ * @package                      de.yaio.extension.datatransfer.excel
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class ExcelImporter extends ImporterImpl {
 

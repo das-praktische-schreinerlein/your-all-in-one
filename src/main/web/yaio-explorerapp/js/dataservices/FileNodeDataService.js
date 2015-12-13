@@ -1,30 +1,25 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-/**
- * <h4>FeatureDomain:</h4>
- *     WebGUI
- * <h4>FeatureDescription:</h4>
- *     servicefunctions for data-services
- *      
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+/** 
+ * servicefunctions for data-services
+ *  
+ * @FeatureDomain                WebGUI
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 Yaio.FileNodeDataService = function(appBase, config, defaultConfig) {
     'use strict';
@@ -38,7 +33,7 @@ Yaio.FileNodeDataService = function(appBase, config, defaultConfig) {
     me._init = function() {
     };
     
-    me.loadStaticJson = function() {
+    me.connectService = function() {
         // return promise
         var dfd = new $.Deferred();
         var res = dfd.promise();
@@ -57,6 +52,10 @@ Yaio.FileNodeDataService = function(appBase, config, defaultConfig) {
                     console.log("read fileName:" + file.name);
                     var data = res.target.result;
                     
+                    // update serviceconfig
+                    me.updateServiceConfig();
+                    me.updateAppConfig();
+
                     // set content as json
                     window.yaioFileJSON = res.target.result;
                     
@@ -65,7 +64,7 @@ Yaio.FileNodeDataService = function(appBase, config, defaultConfig) {
                     
                     // set new name
                     me.config.name = "Dateiupload: " + file.name;
-
+                    
                     dfd.resolve("OK");
                 };
                 

@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -26,17 +23,15 @@ import org.apache.commons.lang3.StringUtils;
 
 import de.yaio.core.datadomain.MetaData;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     BusinessLogic
- * <h4>FeatureDescription:</h4>
- *     businesslogic for dataDomain: MetaData to manage Nodenumbers
+/** 
+ * businesslogic for dataDomain: MetaData to manage Nodenumbers
  * 
- * @package de.yaio.core.dataservice
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                BusinessLogic
+ * @package                      de.yaio.core.dataservice
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class NodeNumberServiceImpl implements NodeNumberService {
     
@@ -47,18 +42,12 @@ public class NodeNumberServiceImpl implements NodeNumberService {
     
     private String lastFileName = null;
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Persistence
-     * <h4>FeatureDescription:</h4>
-     *     return the main instance of this service
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>return the main instance of this service
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Persistence
-     * @return the main instance of this service
+    /** 
+     * return the main instance of this service
+     * @FeatureDomain                Persistence
+     * @FeatureResult                return the main instance of this service
+     * @FeatureKeywords              Persistence
+     * @return                       the main instance of this service
      */
     public static NodeNumberServiceImpl getInstance() {
         return instance;
@@ -119,8 +108,8 @@ public class NodeNumberServiceImpl implements NodeNumberService {
     
 
     @Override
-    public void initNextNodeNumbersFromFile(final String strPathIdDB, boolean forceReload) throws Exception {
-        if (! StringUtils.isEmpty(lastFileName) && !forceReload) {
+    public void initNextNodeNumbersFromFile(final String strPathIdDB, final boolean forceReload) throws Exception {
+        if (!StringUtils.isEmpty(lastFileName) && !forceReload) {
             // already read and no force
             return;
         }

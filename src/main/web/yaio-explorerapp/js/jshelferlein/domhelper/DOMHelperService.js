@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -29,9 +26,9 @@ JsHelferlein.DOMHelperService = function(appBase) {
 
     /**
      * fuegt ein Style an
-     * @param styles: CSS-Styles 
-     * @param parentId: Id des Elternelements
-     * @return {Boolean} falls angefuegt
+     * @param styles:                CSS-Styles 
+     * @param parentId:              Id des Elternelements
+     * @return                       {Boolean} falls angefuegt
      */
     me.appendStyle = function(styles, parentId) {
         // neues Stylelement erzeugen
@@ -57,10 +54,10 @@ JsHelferlein.DOMHelperService = function(appBase) {
 
     /**
      * fuegt ein HTML-Element an
-     * @param html: HTML
-     * @param parentId: Id des Elternelements
-     * @param className: falls belegt - CSS-Klasse des neuen Elements
-     * @return {Boolean} falls angefuegt
+     * @param html:                  HTML
+     * @param parentId:              Id des Elternelements
+     * @param className:             falls belegt - CSS-Klasse des neuen Elements
+     * @return                       {Boolean} falls angefuegt
      */
     me.appendHtml = function(html, parentId, className) {
         // neues Htmllement erzeugen
@@ -83,8 +80,8 @@ JsHelferlein.DOMHelperService = function(appBase) {
 
     /**
      * fuegt ein Style vor dem 1. JavaScript-Block ein
-     * @param styles: CSS-Styles 
-     * @return {Boolean} falls angefuegt
+     * @param styles:                CSS-Styles 
+     * @return                       {Boolean} falls angefuegt
      */
     me.insertStyleBeforeScript = function(styles) {
         // neues Stylelement erzeugen
@@ -107,8 +104,8 @@ JsHelferlein.DOMHelperService = function(appBase) {
 
     /**
      * fuegt ein Style am Ende der Seite an (body)
-     * @param styles: CSS-Styles 
-     * @return {Boolean} falls angefuegt
+     * @param styles:                CSS-Styles 
+     * @return                       {Boolean} falls angefuegt
      */
     me.appendStyleAtEnd = function(styles) {
         // neues Stylelement erzeugen
@@ -131,9 +128,9 @@ JsHelferlein.DOMHelperService = function(appBase) {
     
     /**
      * sucht alle Elemente mit den Styklenames und setzt das uebergeben Event bei OnClick
-     * @param classNames - Array von Stylenamen
-     * @param event - Eventfunktion
-     * @param force - auch wenn schon belegt, ueberschreiben
+     * @param classNames             Array von Stylenamen
+     * @param event                  Eventfunktion
+     * @param force                  auch wenn schon belegt, ueberschreiben
      */
     me.addLinkOnClickEvent = function(classNames, event, force){
         var svcLogger = me.appBase.get("Logger");

@@ -1,0 +1,23 @@
+@startuml 
+' Split into 4 pages
+' page 2x2
+' scale 600 width
+
+'default
+top to bottom direction
+
+skinparam handwritten true
+skinparam class {
+    BackgroundColor PaleGreen
+    ArrowColor SeaGreen
+    BorderColor SpringGreen
+    BackgroundColor<<Foo>> Wheat
+    BorderColor<<Foo>> Tomato
+}
+skinparam stereotypeCBackgroundColor YellowGreen
+skinparam stereotypeCBackgroundColor<< Foo >> DimGray
+
+title <b>XXXPUMLLABELXXX</b>
+XXXPUMLXXX
+
+@enduml

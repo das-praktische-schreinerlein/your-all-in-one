@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -43,17 +40,15 @@ import de.yaio.datatransfer.exporter.formatter.ResLocDataFormatterImpl;
 import de.yaio.datatransfer.exporter.formatter.SymLinkDataFormatterImpl;
 import de.yaio.datatransfer.exporter.formatter.SysDataFormatterImpl;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     DatenExport
- * <h4>FeatureDescription:</h4>
- *     service-functions for export of Nodes
+/** 
+ * service-functions for export of Nodes
  * 
- * @package de.yaio.datatransfer.exporter
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                DatenExport
+ * @package                      de.yaio.datatransfer.exporter
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class ExporterImpl implements Exporter {
     // Logger
@@ -64,17 +59,11 @@ public class ExporterImpl implements Exporter {
     protected Map<String, Formatter> hshDataDomainFormatterByClassName = 
             new HashMap<String, Formatter>();
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Constructor
-     * <h4>FeatureDescription:</h4>
-     *     create Exporter to export nodes
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>initialize the exporter
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Constructor
+    /** 
+     * create Exporter to export nodes
+     * @FeatureDomain                Constructor
+     * @FeatureResult                initialize the exporter
+     * @FeatureKeywords              Constructor
      */
     public ExporterImpl() {
         // NodeTypes konfigurieren
@@ -163,23 +152,16 @@ public class ExporterImpl implements Exporter {
             final OutputOptions oOptions) throws Exception {
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     DataExport
-     *     Presentation
-     * <h4>FeatureDescription:</h4>
-     *     formats recursively node and all childnodes (runs formatter)
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue StringBuffer - formatted output of node-hierarchy and DataDomains
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Layout
-     * @param node - node for output recursively
-     * @param praefix - string to use as prefix in front of nodeoutput
-     * @param oOptions - options for output (formatter)
-     * @return - formatted output of node-hierarchy and DataDomains
-     * @throws Exception - parser/format/io-Exceptions possible
+    /** 
+     * formats recursively node and all childnodes (runs formatter)
+     * @FeatureDomain                DataExport Presentation
+     * @FeatureResult                returnValue StringBuffer - formatted output of node-hierarchy and DataDomains
+     * @FeatureKeywords              Layout
+     * @param node                   node for output recursively
+     * @param praefix                string to use as prefix in front of nodeoutput
+     * @param oOptions               options for output (formatter)
+     * @return                       formatted output of node-hierarchy and DataDomains
+     * @throws Exception             parser/format/io-Exceptions possible
      */
     public StringBuffer getNodeResult(final DataDomain node, final String praefix,
             final OutputOptions oOptions) throws Exception {

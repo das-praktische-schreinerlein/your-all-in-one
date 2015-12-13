@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -28,20 +25,16 @@ import de.yaio.core.datadomain.SymLinkData;
 import de.yaio.core.nodeservice.BaseNodeService;
 import de.yaio.core.nodeservice.SymLinkNodeService;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     DataDefinition
- *     Persistence
- *     BusinessLogic
- * <h4>FeatureDescription:</h4>
- *     bean with SymLinkNode-data (SymLink to another node corresponding 
- *     fileystems-link) and matching businesslogic
+/** 
+ * bean with SymLinkNode-data (SymLink to another node corresponding 
+ * fileystems-link) and matching businesslogic
  * 
- * @package de.yaio.core.node
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                DataDefinition Persistence BusinessLogic
+ * @package                      de.yaio.core.node
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 @RooJavaBean
 @RooToString
@@ -69,5 +62,12 @@ public class SymLinkNode extends BaseNode implements SymLinkData {
     @JsonIgnore
     public BaseNodeService getBaseNodeService() {
         return nodeDataService;
+    }
+
+    @Override
+    public void resetSymLinkData() {
+        this.setSymLinkRef(null);
+        this.setSymLinkName(null);
+        this.setSymLinkTags(null);
     }
 }

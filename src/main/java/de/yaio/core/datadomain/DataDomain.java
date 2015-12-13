@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -23,17 +20,15 @@ import javax.validation.ConstraintViolation;
 
 import de.yaio.core.node.BaseNode;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     DataDefinition
- * <h4>FeatureDescription:</h4>
- *     interface for DataDomains of the Node
+/** 
+ * interface for DataDomains of the Node
  * 
- * @package de.yaio.core.datadomain
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                DataDefinition
+ * @package                      de.yaio.core.datadomain
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public interface DataDomain {
     int CONST_ORDER = 1;
@@ -41,7 +36,6 @@ public interface DataDomain {
     // because of Spring roo with Node
     Set<BaseNode> getChildNodes();
     BaseNode getParentNode();
-    void setParentNode(BaseNode parentNode);
     void setParentNode(DataDomain parentNode);
 
     // hirarchy-functions
@@ -62,46 +56,34 @@ public interface DataDomain {
     // servies
     de.yaio.core.nodeservice.BaseNodeService getBaseNodeService();
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Validation
-     * <h4>FeatureDescription:</h4>
-     *     validates the node against the declared validation rules
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>ReturnValue Set<ConstraintViolation<BaseNode>> - set of violations
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Validation
-     * @return - set of violations
+    /** 
+     * validates the node against the declared validation rules
+     * @FeatureDomain                Validation
+     * @FeatureResult                ReturnValue Set<ConstraintViolation<BaseNode>> - set of violations
+     * @FeatureKeywords              Validation
+     * @return                       set of violations
      */
      Set<ConstraintViolation<BaseNode>> validateMe();
 
-     /**
-     * <h4>FeatureDomain:</h4>
-     *     BusinessLogic
-     * <h4>FeatureDescription:</h4>
-     *     recalc the WFData of the node
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>upadtes memberfields of dataDomain PlanChildrenSum
-     *     <li>upadtes memberfields of dataDomain IstChildrenSum
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     BusinessLogic
-     * @param recursionDirection - direction for recursivly recalc CONST_RECURSE_DIRECTION_* 
-     * @throws Exception - possible Exception
+     /** 
+     * recalc the WFData of the node
+     * @FeatureDomain                BusinessLogic
+     * @FeatureResult                upadtes memberfields of dataDomain PlanChildrenSum
+     * @FeatureResult                upadtes memberfields of dataDomain IstChildrenSum
+     * @FeatureKeywords              BusinessLogic
+     * @param recursionDirection     direction for recursivly recalc CONST_RECURSE_DIRECTION_* 
+     * @throws Exception             possible Exception
      */
     void recalcData(int recursionDirection) throws Exception;
 
     String getNameForLogger();
 
     /**
-     * @return the {@link BaseNode#flgForceUpdate}
+     * @return                       the {@link BaseNode#flgForceUpdate}
      */
     boolean isFlgForceUpdate();
     /**
-     * @param flgForceUpdate the {@link BaseNode#flgForceUpdate} to set
+     * @param flgForceUpdate         the {@link BaseNode#flgForceUpdate} to set
      */
     void setFlgForceUpdate(boolean flgForceUpdate);
 }

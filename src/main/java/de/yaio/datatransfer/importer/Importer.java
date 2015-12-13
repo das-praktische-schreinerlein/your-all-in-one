@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -20,17 +17,15 @@ import java.util.Map;
 
 import de.yaio.core.datadomain.DataDomain;
 
-/**
- * <h4>FeatureDomain:</h4>
-*     import
- * <h4>FeatureDescription:</h4>
+/** 
  *    interface with service-functions for import of Nodes
  * 
- * @package de.yaio.datatransfer.importer
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                import
+ * @package                      de.yaio.datatransfer.importer
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public interface Importer {
 
@@ -38,124 +33,85 @@ public interface Importer {
     // service-functions for configuration
     //////////////
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     DataImport
-     * <h4>FeatureDescription:</h4>
-     *     configure variants of NodeTypeIdentifier (used by parser to normalize 
-     *     the sourcedata)<br>
-     *     must be override and call Exporter.addNodeTypeIdentifierVariantMapping 
-     *     for every nodeType 
-     * <h4>FeatureKeywords:</h4>
-     *     Config
+    /** 
+     * configure variants of NodeTypeIdentifier (used by parser to normalize 
+     * the sourcedata)<br>
+     * must be override and call Exporter.addNodeTypeIdentifierVariantMapping 
+     * for every nodeType 
+     * @FeatureDomain                DataImport
+     * @FeatureKeywords              Config
      */
     void initNodeTypeIdentifierVariantMapping();
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     DataImport
-     * <h4>FeatureDescription:</h4>
-     *     configure variants of NodeTypeIdentifier (used by parser to normalize 
-     *     the sourcedata)<br>
-     * <h4>FeatureKeywords:</h4>
-     *     Config
-     * @param constMapNodetypeIdentifier - Map der Schlagwortvarianten (Variante = NodeTypeIdentifier)
+    /** 
+     * configure variants of NodeTypeIdentifier (used by parser to normalize 
+     * the sourcedata)<br>
+     * @FeatureDomain                DataImport
+     * @FeatureKeywords              Config
+     * @param constMapNodetypeIdentifier Map der Schlagwortvarianten (Variante = NodeTypeIdentifier)
      */
     void addNodeTypeIdentifierVariantMapping(Map<String, String> constMapNodetypeIdentifier);
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     DataImport
-     * <h4>FeatureDescription:</h4>
-     *     get variants for NodeTypeIdentifier
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue Map - Map of variants for NodeTypeIdentifier
-     *         (variant = NodeTypeIdentifier)
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Config
-     * @return - variants for NodeTypeIdentifier
+    /** 
+     * get variants for NodeTypeIdentifier
+     * @FeatureDomain                DataImport
+     * @FeatureResult                returnValue Map - Map of variants for NodeTypeIdentifier (variant = NodeTypeIdentifier)
+     * @FeatureKeywords              Config
+     * @return                       variants for NodeTypeIdentifier
      */
     Map<String, String> getHshNodeTypeIdentifierVariantMapping();
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     DataImport
-     * <h4>FeatureDescription:</h4>
-     *     configure special Workflow-NodeTypeIdentifier (used by Importer.isWFStatus)<br>
-     *     must be override and call Exporter.addWorkflowNodeTypeMapping 
-     *     for every nodeType 
-     * <h4>FeatureKeywords:</h4>
-     *     Config
+    /** 
+     * configure special Workflow-NodeTypeIdentifier (used by Importer.isWFStatus)<br>
+     * must be override and call Exporter.addWorkflowNodeTypeMapping 
+     * for every nodeType 
+     * @FeatureDomain                DataImport
+     * @FeatureKeywords              Config
      */
     void initWorkflowNodeTypeMapping();
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     DataImport
-     * <h4>FeatureDescription:</h4>
-     *     configure special Workflow-NodeTypeIdentifier (used by Importer.isWFStatus)
-     * <h4>FeatureKeywords:</h4>
-     *     Config
-     * @param stateMap - Map der Schlagwortvarianten (Variante = NodeTypeIdentifier)
+    /** 
+     * configure special Workflow-NodeTypeIdentifier (used by Importer.isWFStatus)
+     * @FeatureDomain                DataImport
+     * @FeatureKeywords              Config
+     * @param stateMap               Map der Schlagwortvarianten (Variante = NodeTypeIdentifier)
      */
     void addWorkflowNodeTypeMapping(Map<String, String> stateMap);
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     DataImport
-     * <h4>FeatureDescription:</h4>
-     *     retuns special Workflow-NodeTypeIdentifier
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue Map - Map of Workflow-NodeTypeIdentifier 
-     *         (NodeTypeIdentifier)
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Config
-     * @return - Map of Workflow-NodeTypeIdentifier
+    /** 
+     * retuns special Workflow-NodeTypeIdentifier
+     * @FeatureDomain                DataImport
+     * @FeatureResult                returnValue Map - Map of Workflow-NodeTypeIdentifier  (NodeTypeIdentifier)
+     * @FeatureKeywords              Config
+     * @return                       Map of Workflow-NodeTypeIdentifier
      */
     Map<String, String> getHshWorkflowNodeTypeMapping();
     
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     DataImport
-     * <h4>FeatureDescription:</h4>
-     *     returns current NodeFactory for creation of Nodes
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue NodeFactory - current NodeFactory for creation of Nodes
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Config
-     * @return - current NodeFactory for creation of Nodes
+    /** 
+     * returns current NodeFactory for creation of Nodes
+     * @FeatureDomain                DataImport
+     * @FeatureResult                returnValue NodeFactory - current NodeFactory for creation of Nodes
+     * @FeatureKeywords              Config
+     * @return                       current NodeFactory for creation of Nodes
      */
     NodeFactory getNodeFactory();
 
     ////////////////
     // Generierungs-Funktionen
     ////////////////
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     DataImport
-     * <h4>FeatureDescription:</h4>
-     *     creates from strFullSrc with NodeFactory new Nodes and initializes them
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue Node - new node Node
-     *     <li>updates memberVariable node.xx = runs NodeFactrory.parseNodeDataDomains 
-     *         to initialize node
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Parser
-     * @param id - id of the new Node
-     * @param strFullSrc - source of the node to create
-     * @param srcName - Name of the node (for parsing)
-     * @param curParentNode - ParentNode
-     * @return - new Node-instance
-     * @throws Exception - parser/format-Exceptions possible
+    /** 
+     * creates from strFullSrc with NodeFactory new Nodes and initializes them
+     * @FeatureDomain                DataImport
+     * @FeatureResult                returnValue Node - new node Node
+     * @FeatureResult                updates memberVariable node.xx = runs NodeFactrory.parseNodeDataDomains  to initialize node
+     * @FeatureKeywords              Parser
+     * @param id                     id of the new Node
+     * @param strFullSrc             source of the node to create
+     * @param srcName                Name of the node (for parsing)
+     * @param curParentNode          ParentNode
+     * @return                       new Node-instance
+     * @throws Exception             parser/format-Exceptions possible
      */
     DataDomain createNodeObjFromText(int id, String strFullSrc, String srcName, 
             DataDomain curParentNode)
@@ -164,20 +120,14 @@ public interface Importer {
     ////////////////
     // Service-Funktionen
     ////////////////
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Service
-     * <h4>FeatureDescription:</h4>
-     *     checks Map of Workflow-NodeTypeIdentifier and
-     *     returns weather the state is a Workflow-state
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue boolean - true/false Workflow-state from getHshWorkflowNodeTypeMapping
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Service Workflow Parser
-     * @param state - the state to check
-     * @return true/false Workflow-state from getHshWorkflowNodeTypeMapping
+    /** 
+     * checks Map of Workflow-NodeTypeIdentifier and
+     * returns weather the state is a Workflow-state
+     * @FeatureDomain                Service
+     * @FeatureResult                returnValue boolean - true/false Workflow-state from getHshWorkflowNodeTypeMapping
+     * @FeatureKeywords              Service Workflow Parser
+     * @param state                  the state to check
+     * @return                       true/false Workflow-state from getHshWorkflowNodeTypeMapping
      */
     boolean isWFStatus(String state);
 }

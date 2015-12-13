@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -16,15 +13,12 @@
  */
 
 /**
- * <h4>FeatureDomain:</h4>
- *     WebGUI
- * <h4>FeatureDescription:</h4>
- *     taskconfiguration
+ * taskconfiguration
  *      
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 var path = require('path');
 
@@ -43,6 +37,189 @@ var testSrcBase = 'src/test/javascript/';
 /**
  * patches
  **/
+function patchComments(content, srcpath) {
+    var newContent = content;
+    console.log("patchComments:" + srcpath);
+    
+    // convert my own html-tags in comments to @-tags
+    newContent = patchSingleBlock("FeatureDomain", newContent, true)
+    newContent = patchSingleBlock("FeatureConditions", newContent, true)
+    newContent = patchSingleBlock("FeatureKeywords", newContent, true)
+    newContent = patchSingleBlock("FeatureDescription", newContent, false)
+    newContent = patchSingleBlock("FeatureResult", newContent, true)
+    newContent = patchLiBlock("FeatureResult", newContent)
+
+    newContent = switchBlocks("FeatureDomain", "FeatureDescription", newContent)
+    newContent = reintendBlock("FeatureDescription", newContent, 1)
+    newContent = deleteBlock("FeatureDescription", newContent)
+
+    newContent = intendBlock("FeatureDomain", newContent, 30)
+    newContent = intendBlock("FeatureConditions", newContent, 30)
+    newContent = intendBlock("FeatureKeywords", newContent, 30)
+    newContent = intendBlock("FeatureResult", newContent, 30)
+
+    newContent = intendBlock("param", newContent, 7, 30)
+    newContent = intendBlock("return", newContent, 30)
+    newContent = intendBlock("returns", newContent, 30)
+    newContent = intendBlock("throws", newContent, 8, 30)
+
+    newContent = intendBlock("package", newContent, 30)
+    newContent = intendBlock("author", newContent, 30)
+    newContent = intendBlock("category", newContent, 30)
+    newContent = intendBlock("copyright", newContent, 30)
+    newContent = intendBlock("license", newContent, 30)
+
+//    console.log("patchComments2 result:" + newContent);
+    return newContent;
+}
+function patchSingleBlock(block, content, flgOneline) {
+    var newContent = content;
+    var regExStr = "(.*?)" +
+                   "([\\r\\n]+[ ]+\\* *)<h4>" + block + ":<\\/h4>([\\s\\S\\r\\n]*?)([\\n\\r] +\\* +<h4>|[\\n\\r] +\\* +@|[\\n\\r] +\\*\\/)" +
+                   "";
+    var myRegexp = new RegExp(regExStr, "gim");
+    var match;
+    
+    // iterate all matching comment-html-tags
+    while (match = myRegexp.exec(newContent)) {
+        // extract data
+        var blockContent = match[3];
+        var restBefore = RegExp.leftContext;
+        var restAfter = RegExp.rightContext;
+        
+        // fit text to one line
+        if (flgOneline && blockContent) {
+            blockContent = blockContent.replace(/ +/, " ").replace(/[\r\n] +\* +/g, " ").replace(/\n/g, " ").replace(/\r/g, " ").replace(/^ +\* +/g, " ").replace(/ +\* *$/g, " ");
+        }
+        // convert to @-tag
+        newContent = restBefore + match[1] +
+            match[2] + "@" + block + " " + blockContent + match[4] + restAfter;
+    }
+    return newContent
+}
+
+function switchBlocks(block1, block2, content) {
+    var newContent = content;
+    var regExStr = "(.*?)" +
+                   "([\\r\\n]+[ ]+\\* *@" + block1 + "[\\s\\S\\r\\n]*?)([\\r\\n]+[ ]+\\* *@" + block2 + "[\\s\\S\\r\\n]*?)([\\n\\r] +\\* +@|[\\n\\r] +\\*\\/)" +
+                   "";
+    var myRegexp = new RegExp(regExStr, "gim");
+    var match;
+    while (match = myRegexp.exec(newContent)) {
+        var blockContent = match[3];
+        var restBefore = RegExp.leftContext;
+        var restAfter = RegExp.rightContext;
+        newContent = restBefore + match[1] +
+            match[3] + match[2] + match[4] + restAfter;
+    }
+    return newContent
+}
+
+function deleteBlock(block, content) {
+    var newContent = content;
+    var regExStr = "(.*?)" +
+                   "([\\r\\n]+[ ]+\\* *@" + block + "[\\s\\n]*?)" +
+                   "";
+    var myRegexp = new RegExp(regExStr, "gim");
+    var match;
+    while (match = myRegexp.exec(newContent)) {
+        var blockContent = match[3];
+        var restBefore = RegExp.leftContext;
+        var restAfter = RegExp.rightContext;
+        newContent = restBefore + match[1] + restAfter;
+    }
+    return newContent
+}
+
+function intendBlock(block, content, intend, intend2) {
+    var newContent = content;
+    var regExStr = "(.*?)" +
+                   "([\\r\\n]+[ ]+\\* *)(@" + block + ") +(.*)" +
+                   "";
+    var myRegexp = new RegExp(regExStr, "gim");
+    var match;
+    while (match = myRegexp.exec(newContent)) {
+        var restBefore = RegExp.leftContext + match[1];
+        var restAfter = RegExp.rightContext;
+        var blockContent = match[4];
+        blockContent = blockContent.replace(/^[- ]+/g, "");
+        
+        newContent = restBefore + match[2];
+        var paramLine = match[3];
+        for (var i = paramLine.length; i < intend; i++) {
+            paramLine += " ";
+        }
+        if (intend2) {
+            var match2 = new RegExp(" *(\\S*)[- ]*(.*)").exec(blockContent);
+            if (match2) {
+                var firstWord = match2[1];
+                blockContent = match2[2];
+                paramLine += firstWord;
+                for (var i = paramLine.length; i < intend2 - 1; i++) {
+                    paramLine += " ";
+                }
+                paramLine += " ";
+            }
+        }
+        newContent += paramLine + blockContent + restAfter;
+    }
+    return newContent
+}
+
+function reintendBlock(block, content) {
+    var newContent = content;
+    var regExStr = "(.*?)" +
+                   "([\\r\\n]+[ ]+\\* *@" + block + ")([\\s\\S\\r\\n]*?)([\\n\\r] +\\* +@|[\\n\\r] +\\*\\/)" +
+                   "";
+    var myRegexp = new RegExp(regExStr, "gim");
+    var match;
+    while (match = myRegexp.exec(newContent)) {
+        var blockContent = match[3];
+        var restBefore = RegExp.leftContext;
+        var restAfter = RegExp.rightContext;
+
+        // intend
+        blockContent = blockContent.replace(/ \*     /g, " * ");
+
+        newContent = restBefore + match[1] +
+            match[2] + blockContent + match[4] + restAfter;
+    }
+    return newContent
+}
+
+function patchLiBlock(block, content) {
+    var newContent = content;
+    var regExStr = "(.*?)" +
+                    "[\\r\\n]+([ ]+\\* *)@" + block + " *<ul>(.*?)<\\/ul> *[\\r\\n]"
+                    "";
+    var myRegexp = new RegExp(regExStr, "gim");
+    var match;
+
+    // iterate all matching comment-li-tags
+    while (match = myRegexp.exec(newContent)) {
+        newContent = RegExp.leftContext + match[1] + "\n";
+
+        // extract data
+        var restAfter = RegExp.rightContext;
+        restAfter.replace(/^[\s]+$/gm, "");        
+        var praefix = match[2];
+        praefix = praefix.replace(/^[\s]+$/gm, "");
+        
+        // split list by li and convert
+        var srcLi = match[3];
+        var listLis = srcLi.split("<li>");
+        for (var i = 0; i < listLis.length; i++) {
+            var li = listLis[i];
+            li = li.replace(/^ +/g, "").replace(/ +$/g, "").replace(/^[\s]+$/g, "");
+            if (li.length > 0) {
+                newContent += praefix + "@" + block + " " + li + "\n";
+            }
+        }
+        
+        newContent += restAfter;
+    }
+    return newContent
+}
 function checkWebResOnly(srcpath) {
     if (srcpath.search(/\.js|\.css|\.html/) < 0) {
         return false;
@@ -319,6 +496,18 @@ module.exports = function( grunt ){
             dist:  [destBase]
         },
         copy: {
+            patchOldComments: {
+                options: {
+                    process: function (content, srcpath) {
+                        return patchComments(content, srcpath);
+                    }
+                },
+                files: [
+                    // JS
+                    {expand: true, cwd: 'src/main', src: ['web/**/*.js', 'web/**/*.css', 'java/**/*.java'], dest: 'tmp/corrected/', flatten: false},
+                    {expand: true, cwd: 'src/test', src: ['javascript/**/*.js', 'java/**/*.java'], dest: 'tmp/corrected/', flatten: false},
+                ]
+            },
             // copy bower-text resources (js/css/html-files) to dest and patch them
             bower2vendors: {
                 options: {

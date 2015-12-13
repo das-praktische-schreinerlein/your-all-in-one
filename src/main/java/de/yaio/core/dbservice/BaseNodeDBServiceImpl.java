@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -38,17 +35,15 @@ import de.yaio.core.nodeservice.NodeService;
 import de.yaio.core.nodeservice.TaskNodeService;
 
 
-/**
- * <h4>FeatureDomain:</h4>
- *     Persistence
- * <h4>FeatureDescription:</h4>
- *     implementation of dbservices for BaseNodes
+/** 
+ * implementation of dbservices for BaseNodes
  * 
- * @package de.yaio.core.node
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Persistence
+ * @package                      de.yaio.core.node
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class BaseNodeDBServiceImpl implements BaseNodeDBService {
     protected static final Map<String, String> CONST_AVAILIABLE_SORTS = new HashMap<String, String>();
@@ -86,18 +81,12 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
     private static final Logger LOGGER =
         Logger.getLogger(BaseNodeDBServiceImpl.class);
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Persistence
-     * <h4>FeatureDescription:</h4>
-     *     return the instance of BaseNodeDBService
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>ReturnValue BaseNodeDBService - the instance of BaseNodeDBService
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Persistence
-     * @return - the instance of BaseNodeDBService
+    /** 
+     * return the instance of BaseNodeDBService
+     * @FeatureDomain                Persistence
+     * @FeatureResult                ReturnValue BaseNodeDBService - the instance of BaseNodeDBService
+     * @FeatureKeywords              Persistence
+     * @return                       the instance of BaseNodeDBService
      */
     public static BaseNodeDBService getInstance() {
         return instance;

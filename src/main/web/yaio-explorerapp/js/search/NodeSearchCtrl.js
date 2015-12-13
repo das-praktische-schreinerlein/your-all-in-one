@@ -1,31 +1,22 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-/**
- * <h4>FeatureDomain:</h4>
- *     Configuration
- * <h4>FeatureDescription:</h4>
- *     the controller to search nodes for url-params and register the yaio-functions
- * <h4>FeatureResult:</h4>
- *   <ul>
- *     <li>returns new controller
- *   </ul> 
- * <h4>FeatureKeywords:</h4>
- *     GUI Configuration BusinessLogic
+/** 
+ * the controller to search nodes for url-params and register the yaio-functions
+ * @FeatureDomain                Configuration
+ * @FeatureResult                returns new controller
+ * @FeatureKeywords              GUI Configuration BusinessLogic
  */
 yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $routeParams, setFormErrors, authorization, yaioUtils) {
     'use strict';
@@ -40,10 +31,10 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
         curPage: 1,
         pageSize: 20,
         searchSort: 'lastChangeDown',
-        baseSysUID: "MasterplanMasternode1",
+        baseSysUID: yaioUtils.getConfig().masterSysUId,
         fulltext: "",
         total: 0,
-        strNotNodePraefix: "Sys* *Templ MyStart MyHelp JsUnitTest JsFuncTest JUnitTest",
+        strNotNodePraefix: yaioUtils.getConfig().excludeNodePraefix,
         strWorkflowStateFilter: "",
         arrWorkflowStateFilter: [],
         strClassFilter: "",
@@ -80,19 +71,13 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
     // pagination has to wait for event
     $scope.NodeListReady = false;
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     GUI
-     * <h4>FeatureDescription:</h4>
-     *     callbackhandler for pagination to load new page
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>changes $location
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Callback Pagination
-     * @param text - page text
-     * @param page - new pagenumber
+    /** 
+     * callbackhandler for pagination to load new page
+     * @FeatureDomain                GUI
+     * @FeatureResult                changes $location
+     * @FeatureKeywords              GUI Callback Pagination
+     * @param text                   page text
+     * @param page                   new pagenumber
      */
     $scope.nextPageAct = function(text, page){
         console.log(text, page);
@@ -107,18 +92,12 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
     };
     
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     GUI
-     * <h4>FeatureDescription:</h4>
-     *     callbackhandler for fulltextsearch if keyCode=13 (Enter) run doNewFulltextSearch
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>starts doNewFulltextSearch if keyCode=13
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Callback Fulltextsearch
-     * @param event - key-pressed event
+    /** 
+     * callbackhandler for fulltextsearch if keyCode=13 (Enter) run doNewFulltextSearch
+     * @FeatureDomain                GUI
+     * @FeatureResult                starts doNewFulltextSearch if keyCode=13
+     * @FeatureKeywords              GUI Callback Fulltextsearch
+     * @param event                  key-pressed event
      */
     $scope.checkEnterFulltextSearch = function(event) {
         if (event.keyCode == 13) {
@@ -128,17 +107,11 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
         return event;
     };
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     GUI
-     * <h4>FeatureDescription:</h4>
-     *     callbackhandler for fulltextsearch set page=1 and start doFulltextSearch
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>starts doFulltextSearch with page=1
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Callback Fulltextsearch
+    /** 
+     * callbackhandler for fulltextsearch set page=1 and start doFulltextSearch
+     * @FeatureDomain                GUI
+     * @FeatureResult                starts doFulltextSearch with page=1
+     * @FeatureKeywords              GUI Callback Fulltextsearch
      */
     $scope.doNewFulltextSearch = function() {
         $scope.searchOptions.curPage = 1;
@@ -166,19 +139,13 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
         return newUrl;
     }
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     GUI
-     * <h4>FeatureDescription:</h4>
-     *     send ajax-request for fulltextsearch to server and add reszult to scope<br>
-     *     sends broadcast NodeListReady when result is ready
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li> Updates scope.nodes
-     *     <li> sends broadcast NodeListReady when result is ready
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Callback Fulltextsearch
+    /** 
+     * send ajax-request for fulltextsearch to server and add reszult to scope<br>
+     * sends broadcast NodeListReady when result is ready
+     * @FeatureDomain                GUI
+     * @FeatureResult                Updates scope.nodes
+     * @FeatureResult                sends broadcast NodeListReady when result is ready
+     * @FeatureKeywords              GUI Callback Fulltextsearch
      */
     $scope.doFulltextSearch = function() {
         // save lastLocation for login
@@ -226,17 +193,11 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
         }
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     GUI
-     * <h4>FeatureDescription:</h4>
-     *     callbackhandler to rendernodeLine for node
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>renders nodeline
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Callback
+    /** 
+     * callbackhandler to rendernodeLine for node
+     * @FeatureDomain                GUI
+     * @FeatureResult                renders nodeline
+     * @FeatureKeywords              GUI Callback
      */
     $scope.renderNodeLine = function(node) {
         // we need a timeout to put the tr into DOM
@@ -320,17 +281,11 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
             }, 10);
     };
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     GUI
-     * <h4>FeatureDescription:</h4>
-     *     callbackhandler to recalc ganttblocks for nodes
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>recalc ganttblocks
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Callback
+    /** 
+     * callbackhandler to recalc ganttblocks for nodes
+     * @FeatureDomain                GUI
+     * @FeatureResult                recalc ganttblocks
+     * @FeatureKeywords              GUI Callback
      */
     $scope.recalcGanttBlocks = function() {
         for (var idx in $scope.nodes) {

@@ -1,30 +1,25 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-/**
- * <h4>FeatureDomain:</h4>
- *     WebGUI
- * <h4>FeatureDescription:</h4>
- *     servicefunctions for data-rendering
- *      
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+/** 
+ * servicefunctions for data-rendering
+ *  
+ * @FeatureDomain                WebGUI
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 Yaio.NodeDataRenderService = function(appBase) {
     'use strict';
@@ -38,26 +33,19 @@ Yaio.NodeDataRenderService = function(appBase) {
     me._init = function() {
     };
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Layout
-     *     Rendering
-     * <h4>FeatureDescription:</h4>
-     *     Callback for fancyftree. Renders the full block for corresponding basenode.
-     *     Manipulates the default-fancytree-tablerow (replace+add+hide elements).<br>
-     *     <ul>
-     *       <li>data.node.tr: Html-Obj of the table-line
-     *       <li>data.node.data.basenode: the basenode (java de.yaio.core.node.BaseNode)
-     *     </ul>
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>Updates DOM
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Tree Rendering
-     * @param event - fancytree-event
-     * @param data - the fancytreenode-data (basenode = data.node.data.basenode, tr = data.node.tr)
-     * @param preventActionsColum - dont replace Action-column
+    /** 
+     * Callback for fancyftree. Renders the full block for corresponding basenode.
+     * Manipulates the default-fancytree-tablerow (replace+add+hide elements).<br>
+     * <ul>
+     *   <li>data.node.tr: Html-Obj of the table-line
+     *   <li>data.node.data.basenode: the basenode (java de.yaio.core.node.BaseNode)
+     * </ul>
+     * @FeatureDomain                Layout Rendering
+     * @FeatureResult                Updates DOM
+     * @FeatureKeywords              GUI Tree Rendering
+     * @param event                  fancytree-event
+     * @param data                   the fancytreenode-data (basenode = data.node.data.basenode, tr = data.node.tr)
+     * @param preventActionsColum    dont replace Action-column
      */
     me.renderColumnsForNode = function(event, data, preventActionsColum, flgRenderMinimum) {
         var svcYaioBase = me.appBase.get('YaioBase');
@@ -171,7 +159,7 @@ Yaio.NodeDataRenderService = function(appBase) {
         //$tdList.eq(colName).find("span.fancytree-expander").addClass(statestyle);
         
         // render datablock
-        var $nodeDataBlock = me.appBase.get('YaioNodeDataRender').renderDataBlock(basenode, node);
+        var $nodeDataBlock = me.appBase.get('YaioNodeDataRender').renderDataBlock(basenode, node, preventActionsColum);
         
         // add SysData
         // create sys row
@@ -201,7 +189,9 @@ Yaio.NodeDataRenderService = function(appBase) {
         $row.append(
                 me.$("<div lang='tech' />").html("Kinder: " + basenode.statChildNodeCount 
                         + " Workflows: " + basenode.statWorkflowCount
-                        + " ToDos: " + basenode.statWorkflowTodoCount)
+                        + " ToDos: " + basenode.statWorkflowTodoCount
+                        + " Urls: " + basenode.statUrlResCount
+                        + " Info: " + basenode.statInfoCount)
                         .addClass("container_field")
                         .addClass("fieldtype_basedata")
                         .addClass("fieldtype_statistik")
@@ -313,23 +303,17 @@ Yaio.NodeDataRenderService = function(appBase) {
         }
     };
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Layout
-     *     Rendering
-     * <h4>FeatureDescription:</h4>
-     *     Renders the DataBlock for basenode and returns a JQuery-Html-Obj.
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>ReturnValue JQuery-Html-Object - the rendered datablock
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Tree Rendering
-     * @param basenode - the nodedata to render (java de.yaio.core.node.BaseNode)
-     * @param fancynode - the corresponding fancynode
-     * @returns JQuery-Html-Object - the rendered datablock
+    /** 
+     * Renders the DataBlock for basenode and returns a JQuery-Html-Obj.
+     * @FeatureDomain                Layout Rendering
+     * @FeatureResult                ReturnValue JQuery-Html-Object - the rendered datablock
+     * @FeatureKeywords              GUI Tree Rendering
+     * @param basenode               the nodedata to render (java de.yaio.core.node.BaseNode)
+     * @param fancynode              the corresponding fancynode
+     * @param preventActionsColum    dont replace Action-column
+     * @returns                      JQuery-Html-Object - the rendered datablock
      */
-    me.renderDataBlock = function(basenode, fancynode) {
+    me.renderDataBlock = function(basenode, fancynode, preventActionsColum) {
         var svcYaioBase = me.appBase.get('YaioBase');
         
         // extract nodedata
@@ -408,9 +392,61 @@ Yaio.NodeDataRenderService = function(appBase) {
             // Url only
             if (basenode.className == "UrlResNode") {
                 // url
+                
+                // upload content
+                var resContentDMSState = basenode.resContentDMSState;
+                var stateMapping = {"UPLOAD_DONE": "Download", "UPLOAD_OPEN": "Webshoting", "UPLOAD_FAILED": "Webshot failed"};
+                if (stateMapping[resContentDMSState] 
+                    && me.appBase.get('YaioAccessManager').getAvailiableNodeAction('dmsDownload', basenode.sysUID, false)) {
+                    // url
+                    var stateBlock = svcYaioBase.htmlEscapeText(stateMapping[resContentDMSState]);
+                    if (resContentDMSState == "UPLOAD_DONE" && !preventActionsColum) {
+                        stateBlock = "<a href='" +  "' onClick=\"yaioAppBase.get('YaioExplorerAction').openDMSDownloadWindow('"+ basenode.sysUID + "'); return false;" 
+                                     +   "\" lang='tech' data-tooltip='tooltip.command.OpenDMSDownloadWindow_" + resContentDMSState + "'>" + stateBlock + "</a>";
+                    } else if (stateMapping[resContentDMSState]) {
+                        stateBlock = "<span \" lang='tech' data-tooltip='tooltip.command.OpenDMSDownloadWindow_" + resContentDMSState + "'>" + stateBlock + "</span>";
+                    }
+                    $row.append(
+                            me.$("<div />").html(stateBlock)
+                                      .addClass("container_field")
+                                      .addClass("fieldtype_additionaldata")
+                                      .addClass("fieldtype_uploadsstate")
+                                      .addClass("field_resContentDMSState")
+                                      .addClass("field_resContentDMSState_" + resContentDMSState)
+                                      ); 
+                }
+                // extracted metadata
+                var resIndexDMSState = basenode.resIndexDMSState;
+                var indexStateMapping = {"INDEX_DONE": "Metadata", "INDEX_OPEN": "Indexing", "INDEX_FAILED": "Indexing Failed"};
+                if (indexStateMapping[resIndexDMSState] 
+                    && me.appBase.get('YaioAccessManager').getAvailiableNodeAction('dmsDownload', basenode.sysUID, false)) {
+                    // url
+                    var stateBlock = svcYaioBase.htmlEscapeText(indexStateMapping[resIndexDMSState]);
+                    if (resIndexDMSState == "INDEX_DONE" && !preventActionsColum) {
+                        stateBlock = "<a href='" +  "' onClick=\"yaioAppBase.get('YaioExplorerAction').openDMSIndexDownloadWindow('"+ basenode.sysUID + "'); return false;" 
+                                     +   "\" lang='tech' data-tooltip='tooltip.command.OpenDMSIndexDownloadWindow_" + resIndexDMSState + "'>" + stateBlock + "</a>";
+                    } else if (indexStateMapping[resIndexDMSState]) {
+                        stateBlock = "<span \" lang='tech' data-tooltip='tooltip.command.OpenDMSIndexDownloadWindow_" + resIndexDMSState + "'>" + stateBlock + "</span>";
+                    }
+                    $row.append(
+                            me.$("<div />").html(stateBlock)
+                                      .addClass("container_field")
+                                      .addClass("fieldtype_additionaldata")
+                                      .addClass("fieldtype_uploadsstate")
+                                      .addClass("field_resIndexDMSState")
+                                      .addClass("field_resIndexDMSState_" + resIndexDMSState)
+                                      ); 
+                }
+                
+                // url-data
+                var resLocData = svcYaioBase.htmlEscapeText(basenode.resLocRef);
+                if (basenode.type == "URLRES") {
+                    resLocData = "<a href='" + resLocData + "' target='_blank'>" + resLocData + "</a>";
+                } else {
+                    resLocData = "<span>" + resLocData + "</span>";
+                }
                 $row.append(
-                        me.$("<div />").html("<a href='" + svcYaioBase.htmlEscapeText(basenode.resLocRef) + "' target='_blank'>" 
-                                         + svcYaioBase.htmlEscapeText(basenode.resLocRef) + "</a>")
+                        me.$("<div />").html(resLocData)
                                   .addClass("container_field")
                                   .addClass("fieldtype_additionaldata")
                                   .addClass("fieldtype_url")
@@ -482,20 +518,14 @@ Yaio.NodeDataRenderService = function(appBase) {
     };
     
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Layout Toggler
-     * <h4>FeatureDescription:</h4>
-     *     Shows the DataBlock<br> 
-     *     Toggles DataBlock, GanttBlock and the links #tabTogglerData, #tabTogglerGantt.<br>
-     *     Show all: td.block_nodedata, th.block_nodedata + #tabTogglerGantt<br>
-     *     Hide all: td.block_nodegantt, th.block_nodegantt + #tabTogglerData<br>
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>Updates DOM
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Tree Rendering
+    /** 
+     * Shows the DataBlock<br> 
+     * Toggles DataBlock, GanttBlock and the links #tabTogglerData, #tabTogglerGantt.<br>
+     * Show all: td.block_nodedata, th.block_nodedata + #tabTogglerGantt<br>
+     * Hide all: td.block_nodegantt, th.block_nodegantt + #tabTogglerData<br>
+     * @FeatureDomain                Layout Toggler
+     * @FeatureResult                Updates DOM
+     * @FeatureKeywords              GUI Tree Rendering
      */
     me.yaioShowDataBlock = function() {
         var svcUIToggler = me.appBase.get('UIToggler');

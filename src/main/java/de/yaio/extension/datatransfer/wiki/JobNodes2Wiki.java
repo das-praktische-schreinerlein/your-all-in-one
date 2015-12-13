@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -27,20 +24,17 @@ import de.yaio.core.datadomain.DataDomain;
 import de.yaio.datatransfer.exporter.Exporter;
 import de.yaio.datatransfer.exporter.OutputOptions;
 import de.yaio.datatransfer.exporter.OutputOptionsImpl;
-import de.yaio.extension.datatransfer.common.CommonImporter;
+import de.yaio.extension.datatransfer.common.ExtendedCommonImporter;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     DatenExport
- *     Praesentation
- * <h4>FeatureDescription:</h4>
- *     job to import nodes in PPL-Format and output as Wiki
+/** 
+ * job to import nodes in PPL-Format and output as Wiki
  * 
- * @package de.yaio.extension.datatransfer.wiki
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                DatenExport Praesentation
+ * @package                      de.yaio.extension.datatransfer.wiki
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class JobNodes2Wiki extends CmdLineJob {
 
@@ -50,20 +44,14 @@ public class JobNodes2Wiki extends CmdLineJob {
      * the exporter to format the masternode-data 
      */
     public Exporter exporter;
-    protected CommonImporter commonImporter;
+    protected ExtendedCommonImporter commonImporter;
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Constructor
-     * <h4>FeatureDescription:</h4>
-     *     job to import nodes in PPL-Format and output as Wiki
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>initialize the application
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Constructor
-     * @param args the command line arguments
+    /** 
+     * job to import nodes in PPL-Format and output as Wiki
+     * @FeatureDomain                Constructor
+     * @FeatureResult                initialize the application
+     * @FeatureKeywords              Constructor
+     * @param args                   the command line arguments
      */
     public JobNodes2Wiki(final String[] args) {
         super(args);
@@ -93,18 +81,12 @@ public class JobNodes2Wiki extends CmdLineJob {
         return availiableCmdLineOptions;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     CLI
-     * <h4>FeatureDescription:</h4>
-     *     add common output-options to the availiableCmdLineOptions
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>update availiableCmdLineOptions
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     CLI
-     * @param availiableCmdLineOptions - the container with the availiableCmdLineOptions
+    /** 
+     * add common output-options to the availiableCmdLineOptions
+     * @FeatureDomain                CLI
+     * @FeatureResult                update availiableCmdLineOptions
+     * @FeatureKeywords              CLI
+     * @param availiableCmdLineOptions the container with the availiableCmdLineOptions
      */
     protected Options addAvailiableCommonOutputCmdLineOptions(final Options availiableCmdLineOptions) throws Exception {
         // Mastername
@@ -122,18 +104,12 @@ public class JobNodes2Wiki extends CmdLineJob {
         return availiableCmdLineOptions;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     CLI
-     * <h4>FeatureDescription:</h4>
-     *     add special wiki output-options to the availiableCmdLineOptions
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>update availiableCmdLineOptions
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     CLI
-     * @param availiableCmdLineOptions - the container with the availiableCmdLineOptions
+    /** 
+     * add special wiki output-options to the availiableCmdLineOptions
+     * @FeatureDomain                CLI
+     * @FeatureResult                update availiableCmdLineOptions
+     * @FeatureKeywords              CLI
+     * @param availiableCmdLineOptions the container with the availiableCmdLineOptions
      */
     protected Options addAvailiableOutputCmdLineOptions(final Options availiableCmdLineOptions) throws Exception {
 
@@ -269,60 +245,42 @@ public class JobNodes2Wiki extends CmdLineJob {
     // common functions
     // #############
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     BusinessLogic
-     * <h4>FeatureDescription:</h4>
-     *     create the masternode on which all other nodes are added
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue masternode
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     BusinessLogic
-     * @param name - name of the masternode
-     * @return masternode - the masternode on which all other nodes are added
-     * @throws Exception - parse/io-Exceptions possible
+    /** 
+     * create the masternode on which all other nodes are added
+     * @FeatureDomain                BusinessLogic
+     * @FeatureResult                returnValue masternode
+     * @FeatureKeywords              BusinessLogic
+     * @param name                   name of the masternode
+     * @return                       masternode - the masternode on which all other nodes are added
+     * @throws Exception             parse/io-Exceptions possible
      */
     public DataDomain createMasternode(final String name) throws Exception {
         DataDomain masterNode  = commonImporter.getPPLImporter().createNodeObjFromText(1, name, name, null);
         return masterNode;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     BusinessLogic
-     * <h4>FeatureDescription:</h4>
-     *     import the data from source configured by cmdline-options and add 
-     *     them to the masterNode 
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>updates masternode
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     BusinessLogic
-     * @param masterNode - the masternode on which all other nodes are added
-     * @throws Exception - parse/io-Exceptions possible
+    /** 
+     * import the data from source configured by cmdline-options and add 
+     * them to the masterNode 
+     * @FeatureDomain                BusinessLogic
+     * @FeatureResult                updates masternode
+     * @FeatureKeywords              BusinessLogic
+     * @param masterNode             the masternode on which all other nodes are added
+     * @throws Exception             parse/io-Exceptions possible
      */
     public void importDataToMasterNode(final DataDomain masterNode) throws Exception {
         commonImporter.importDataToMasterNode(masterNode);
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     BusinessLogic
-     * <h4>FeatureDescription:</h4>
-     *     publish the masternode and all children with the help of exporter
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>prints on STDOUT
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     BusinessLogic
-     * @param exporter - exporter to format the output
-     * @param masterNode - the masternode to export
-     * @param oOptions - Outputoptions
-     * @throws Exception - parse/io-Exceptions possible
+    /** 
+     * publish the masternode and all children with the help of exporter
+     * @FeatureDomain                BusinessLogic
+     * @FeatureResult                prints on STDOUT
+     * @FeatureKeywords              BusinessLogic
+     * @param exporter               exporter to format the output
+     * @param masterNode             the masternode to export
+     * @param oOptions               Outputoptions
+     * @throws Exception             parse/io-Exceptions possible
      */
     public void publishResult(final Exporter exporter, final DataDomain masterNode, 
             final OutputOptions oOptions) throws Exception {
@@ -330,19 +288,13 @@ public class JobNodes2Wiki extends CmdLineJob {
                 exporter.getMasterNodeResult(masterNode, oOptions));
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     BusinessLogic
-     * <h4>FeatureDescription:</h4>
-     *     get the Outputoptions for export from commandline
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>Returnvalue OutputOptions - the parsed options from commandline
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     BusinessLogic
-     * @return oOptions - Outputoptions
-     * @throws Exception  - parse-Exceptions possible
+    /** 
+     * get the Outputoptions for export from commandline
+     * @FeatureDomain                BusinessLogic
+     * @FeatureResult                Returnvalue OutputOptions - the parsed options from commandline
+     * @FeatureKeywords              BusinessLogic
+     * @return                       oOptions - Outputoptions
+     * @throws Exception             parse-Exceptions possible
      */
     public OutputOptions getOutputOptions() throws Exception {
         // Konfiguration
@@ -390,69 +342,45 @@ public class JobNodes2Wiki extends CmdLineJob {
     // specific functions
     // ######################
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     BusinessLogic
-     * <h4>FeatureDescription:</h4>
-     *     create the exporter for the export with publishResult
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>updates MemberVar exporter - to format the output
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     BusinessLogic
+    /** 
+     * create the exporter for the export with publishResult
+     * @FeatureDomain                BusinessLogic
+     * @FeatureResult                updates MemberVar exporter - to format the output
+     * @FeatureKeywords              BusinessLogic
      */
     public void createExporter() {
         exporter = new WikiExporter();
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     BusinessLogic
-     * <h4>FeatureDescription:</h4>
-     *     create the commonly used importer to imports the data from differenet 
-     *     sourcetypes
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>updates MemberVar commonImporter - for the import
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     BusinessLogic
+    /** 
+     * create the commonly used importer to imports the data from differenet 
+     * sourcetypes
+     * @FeatureDomain                BusinessLogic
+     * @FeatureResult                updates MemberVar commonImporter - for the import
+     * @FeatureKeywords              BusinessLogic
      */
     protected void createCommonImporter() {
         // create commonImporter
-        commonImporter = new CommonImporter("ppl");
+        commonImporter = new ExtendedCommonImporter("ppl");
     }
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Logging
-     * <h4>FeatureDescription:</h4>
-     *     get the Class-logger
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue Logger - use it !!!!
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Logging
-     * @return logger - the logger
+    /** 
+     * get the Class-logger
+     * @FeatureDomain                Logging
+     * @FeatureResult                returnValue Logger - use it !!!!
+     * @FeatureKeywords              Logging
+     * @return                       logger - the logger
      */
     public static Logger getLogger() {
         return LOGGER;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     CLI
-     * <h4>FeatureDescription:</h4>
-     *     Main-method to start the application
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>initialize the application
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     CLI
-     * @param args the command line arguments
+    /** 
+     * Main-method to start the application
+     * @FeatureDomain                CLI
+     * @FeatureResult                initialize the application
+     * @FeatureKeywords              CLI
+     * @param args                   the command line arguments
      */
     public static void main(final String[] args) {
         JobNodes2Wiki me = new JobNodes2Wiki(args);

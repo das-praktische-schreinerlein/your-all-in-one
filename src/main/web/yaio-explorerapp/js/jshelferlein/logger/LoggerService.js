@@ -1,14 +1,11 @@
- /**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+ /** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -76,7 +73,7 @@ JsHelferlein.LoggerService = function(appBase, config) {
      * Loggen von Fehlern
      * - falls ownConsoleElement aktiviert - Logging in eigene Console mit logOwnConsole
      * - falls webLoggerUrl und isErrorWebLoogger aktiviert - Logging auf WebLogger mit logWebLogger
-     * @param text
+     * @param text                   
      */
     me.logError = function(text) {
         me.console.error(" ERROR:" + text);
@@ -88,7 +85,7 @@ JsHelferlein.LoggerService = function(appBase, config) {
      * Loggen von Warnungen
      * - falls ownConsoleElement aktiviert - Logging in eigene Console mit logOwnConsole
      * - falls webLoggerUrl und isWarningWebLoogger aktiviert - Logging auf WebLogger mit logWebLogger
-     * @param ext
+     * @param ext                    
      */
     me.logWarning = function(text) {
         me.console.warn(" WARNING:" + text);
@@ -100,7 +97,7 @@ JsHelferlein.LoggerService = function(appBase, config) {
      * Loggen von Infos
      * - falls ownConsoleElement aktiviert - Logging in eigene Console mit logOwnConsole
      * - falls webLoggerUrl und isInfoWebLoogger aktiviert - Logging auf WebLogger mit logWebLogger
-     * @param ext
+     * @param ext                    
      */
     me.logInfo = function(text) {
         me.console.info(" INFO:" + text);
@@ -112,7 +109,7 @@ JsHelferlein.LoggerService = function(appBase, config) {
      * Loggen von Debugmeldungen
      * - falls ownConsoleElement aktiviert - Logging in eigene Console mit logOwnConsole
      * - falls webLoggerUrl und isDebugWebLoogger aktiviert - Logging auf WebLogger mit logWebLogger
-     * @param ext
+     * @param ext                    
      */
     me.logDebug = function(text) {
         me.console.debug(" DEBUG:" + text);
@@ -123,7 +120,7 @@ JsHelferlein.LoggerService = function(appBase, config) {
 
     /**
      * Initalisieren der eigenen LogConsole
-     * @returns HtmlElement
+     * @returns                      HtmlElement
      */
     me._initOwnConsole = function () {
         var consoleWindowElement = null;
@@ -147,7 +144,7 @@ JsHelferlein.LoggerService = function(appBase, config) {
 
     /**
      * falls ownConsoleElement aktiviert, dann Anhaengen der Lognmeldung an die Textarea
-     * @param text
+     * @param text                   
      */
     me._logOwnConsole = function(text) {
         if (me.ownConsoleElement) {
@@ -160,7 +157,7 @@ JsHelferlein.LoggerService = function(appBase, config) {
 
     /**
      * falls webLoggerUrl aktiviert, dann Insert eines iframe mit der Id:weblogger der webLoggerUrl einbindet
-     * @param text
+     * @param text                   
      */
     me._logWebLogger = function(logLevel, text) {
         if (me.webLoggerUrl) {

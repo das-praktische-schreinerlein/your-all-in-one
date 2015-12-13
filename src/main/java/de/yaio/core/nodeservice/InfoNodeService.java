@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -22,17 +19,15 @@ import java.util.Map;
 import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
 
 
-/**
- * <h4>FeatureDomain:</h4>
- *     BusinessLogic
- * <h4>FeatureDescription:</h4>
- *     businesslogic for entity: InfoNode
+/** 
+ * businesslogic for entity: InfoNode
  * 
- * @package de.yaio.core.dataservice
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                BusinessLogic
+ * @package                      de.yaio.core.dataservice
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class InfoNodeService extends BaseNodeService {
 
@@ -63,18 +58,12 @@ public class InfoNodeService extends BaseNodeService {
 
     private static InfoNodeService instance = new InfoNodeService();
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Persistence
-     * <h4>FeatureDescription:</h4>
-     *     return the main instance of this service
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>return the main instance of this service
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Persistence
-     * @return the main instance of this service
+    /** 
+     * return the main instance of this service
+     * @FeatureDomain                Persistence
+     * @FeatureResult                return the main instance of this service
+     * @FeatureKeywords              Persistence
+     * @return                       the main instance of this service
      */
     public static InfoNodeService getInstance() {
         return instance;

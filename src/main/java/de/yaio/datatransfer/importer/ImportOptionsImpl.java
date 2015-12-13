@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -18,19 +15,17 @@ package de.yaio.datatransfer.importer;
 
 import java.util.Map;
 
-import de.yaio.utils.DataUtils;
+import de.yaio.commons.data.DataUtils;
 
-/**
- * <h4>FeatureDomain:</h4>
-*     import
- * <h4>FeatureDescription:</h4>
+/** 
  *    options for import of Nodes
  * 
- * @package de.yaio.datatransfer.importer
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                import
+ * @package                      de.yaio.datatransfer.importer
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class ImportOptionsImpl implements ImportOptions {
 
@@ -41,6 +36,8 @@ public class ImportOptionsImpl implements ImportOptions {
     protected boolean flgParsePlan = true;
     protected boolean flgParsePlanCalc = false;
     protected boolean flgParseResLoc = true;
+    protected boolean flgParseResContent = false;
+    protected boolean flgParseResIndex = false;
     protected boolean flgParseSymLink = true;
     protected boolean flgParseSysData = true;
 
@@ -64,6 +61,9 @@ public class ImportOptionsImpl implements ImportOptions {
         this.flgParsePlanCalc = baseOptions.isFlgParsePlanCalc();
         this.flgParseIst = baseOptions.isFlgParseIst();
         this.flgParseMetaData = baseOptions.isFlgParseMetaData();
+        this.flgParseResContent = baseOptions.isFlgParseResContent();
+        this.flgParseResIndex = baseOptions.isFlgParseResIndex();
+        this.flgParseResLoc = baseOptions.isFlgParseResLoc();
         this.flgParseSysData = baseOptions.isFlgParseSysData();
         this.flgParseDesc = baseOptions.isFlgParseDesc();
         this.strReadIfStatusInListOnly = baseOptions.getStrReadIfStatusInListOnly();
@@ -90,6 +90,8 @@ public class ImportOptionsImpl implements ImportOptions {
         setFlgParseMetaData(value);
         setFlgParsePlan(value);
         setFlgParsePlanCalc(value);
+        setFlgParseResContent(value);
+        setFlgParseResIndex(value);
         setFlgParseResLoc(value);
         setFlgParseSymLink(value);
         setFlgParseSysData(value);
@@ -102,6 +104,8 @@ public class ImportOptionsImpl implements ImportOptions {
         this.flgParseMetaData = false;
         this.flgParsePlan = false;
         this.flgParsePlanCalc = false;
+        this.flgParseResContent = false;
+        this.flgParseResIndex = false;
         this.flgParseResLoc = false;
         this.flgParseSymLink = false;
         this.flgParseSysData = false;
@@ -117,6 +121,8 @@ public class ImportOptionsImpl implements ImportOptions {
         return "OutputOptionsImpl ["
                         + "flgParseDesc=" + this.flgParseDesc
                         + ", flgParseDocLayout=" + this.flgParseDocLayout
+                        + ", flgParseResContent=" + this.flgParseResContent
+                        + ", flgParseResIndex=" + this.flgParseResIndex
                         + ", flgParseResLoc=" + this.flgParseResLoc
                         + ", flgParseSymLink=" + this.flgParseSymLink
                         + ", flgParseIst=" + this.flgParseIst 
@@ -179,6 +185,22 @@ public class ImportOptionsImpl implements ImportOptions {
     @Override
     public void setFlgParsePlanCalc(final boolean flgParsePlanCalc) {
         this.flgParsePlanCalc = flgParsePlanCalc;
+    }
+    @Override
+    public boolean isFlgParseResContent() {
+        return flgParseResContent;
+    }
+    @Override
+    public void setFlgParseResContent(final boolean flgParseResContent) {
+        this.flgParseResContent = flgParseResContent;
+    }
+    @Override
+    public boolean isFlgParseResIndex() {
+        return flgParseResIndex;
+    }
+    @Override
+    public void setFlgParseResIndex(final boolean flgParseResIndex) {
+        this.flgParseResIndex = flgParseResIndex;
     }
     @Override
     public boolean isFlgParseResLoc() {

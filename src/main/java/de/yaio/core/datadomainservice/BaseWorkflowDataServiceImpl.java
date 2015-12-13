@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -24,6 +21,7 @@ import org.apache.log4j.Logger;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import de.yaio.commons.data.DataUtils;
 import de.yaio.core.datadomain.BaseWorkflowData;
 import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
 import de.yaio.core.datadomain.DataDomain;
@@ -39,20 +37,17 @@ import de.yaio.core.node.TaskNode;
 import de.yaio.core.nodeservice.BaseNodeService;
 import de.yaio.core.nodeservice.NodeService;
 import de.yaio.utils.Calculator;
-import de.yaio.utils.DataUtils;
 import de.yaio.utils.PredecessorCalculator;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     BusinessLogic
- * <h4>FeatureDescription:</h4>
- *     businesslogic for dataDomain: BaseWorkflowData
+/** 
+ * businesslogic for dataDomain: BaseWorkflowData
  * 
- * @package de.yaio.core.dataservice
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                BusinessLogic
+ * @package                      de.yaio.core.dataservice
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl 
     implements BaseWorkflowDataService {
@@ -63,18 +58,12 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
 
     private static BaseWorkflowDataServiceImpl instance = new BaseWorkflowDataServiceImpl();
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Persistence
-     * <h4>FeatureDescription:</h4>
-     *     return the main instance of this service
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>return the main instance of this service
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Persistence
-     * @return the main instance of this service
+    /** 
+     * return the main instance of this service
+     * @FeatureDomain                Persistence
+     * @FeatureResult                return the main instance of this service
+     * @FeatureKeywords              Persistence
+     * @return                       the main instance of this service
      */
     public static BaseWorkflowDataServiceImpl getInstance() {
         return instance;
@@ -90,15 +79,11 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
         return BaseWorkflowDataService.CONST_RECALC_ORDER;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     DataExport
-     *     Presentation
-     * <h4>FeatureDescription:</h4>
-     *     add me as DataDomainRecalcer to the Service-Config
-     * <h4>FeatureKeywords:</h4>
-     *     Config
-     * @param nodeService - instance of the nodeService which will call me as recalcer
+    /** 
+     * add me as DataDomainRecalcer to the Service-Config
+     * @FeatureDomain                DataExport Presentation
+     * @FeatureKeywords              Config
+     * @param nodeService            instance of the nodeService which will call me as recalcer
      */
     public static void configureDataDomainRecalcer(final NodeService nodeService) {
         DataDomainRecalc baseDataDomainRecalc  = BaseWorkflowDataServiceImpl.getInstance();
@@ -129,24 +114,16 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
         this.recalcStateData((BaseWorkflowData) node);
     }
     
-    
-    
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     BusinessLogic
-     * <h4>FeatureDescription:</h4>
-     *     returns the StandFaktor of the BaseWorkflowData-Node<br>
-     *     if instance of ExtendedWorkflowData then Plan/IstData is used<br>
-     *     if not: 0.0 is set
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue Double - standFaktor of the node
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     BsuinessLogic
-     * @param node - node to process
-     * @return standFaktor of the node
-     * @throws Exception - parser/format-Exceptions possible
+    /** 
+     * returns the StandFaktor of the BaseWorkflowData-Node<br>
+     * if instance of ExtendedWorkflowData then Plan/IstData is used<br>
+     * if not: 0.0 is set
+     * @FeatureDomain                BusinessLogic
+     * @FeatureResult                returnValue Double - standFaktor of the node
+     * @FeatureKeywords              BsuinessLogic
+     * @param node                   node to process
+     * @return                       standFaktor of the node
+     * @throws Exception             parser/format-Exceptions possible
      */
     public Double getMyStandFaktor(final BaseWorkflowData node) throws Exception {
         Double standFaktor = 0.0;
@@ -169,21 +146,15 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
         return standFaktor;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     BusinessLogic
-     * <h4>FeatureDescription:</h4>
-     *     initializes the ChildSumData<br>
-     *     if instance of ExtendedWorkflowData then Plan/IstData is used<br>
-     *     if not: alle is set to null
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>updates meberVars of node
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     BsuinessLogic
-     * @param node - node to process
-     * @throws Exception - parser/format-Exceptions possible
+    /** 
+     * initializes the ChildSumData<br>
+     * if instance of ExtendedWorkflowData then Plan/IstData is used<br>
+     * if not: alle is set to null
+     * @FeatureDomain                BusinessLogic
+     * @FeatureResult                updates meberVars of node
+     * @FeatureKeywords              BsuinessLogic
+     * @param node                   node to process
+     * @throws Exception             parser/format-Exceptions possible
      */
     public void initChildSumData(final BaseWorkflowData node) throws Exception {
         PlanChildrenSumData planChildrenSumData = node;
@@ -497,20 +468,14 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
     }
     
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     BusinessLogic
-     * <h4>FeatureDescription:</h4>
-     *     return the recalced state (uses Plan/IstChildrenSum)
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue String - recalced state
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     BsuinessLogic
-     * @param baseNode - node to process
-     * @return recalced state
-     * @throws Exception - parser/format-Exceptions possible
+    /** 
+     * return the recalced state (uses Plan/IstChildrenSum)
+     * @FeatureDomain                BusinessLogic
+     * @FeatureResult                returnValue String - recalced state
+     * @FeatureKeywords              BsuinessLogic
+     * @param baseNode               node to process
+     * @return                       recalced state
+     * @throws Exception             parser/format-Exceptions possible
      */
     public String getRecalcedState(final BaseWorkflowData baseNode) throws Exception {
         if (!ExtendedWorkflowData.class.isInstance(baseNode)) {
@@ -527,20 +492,14 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
         return BaseNodeService.CONST_NODETYPE_IDENTIFIER_UNKNOWN;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     BusinessLogic
-     * <h4>FeatureDescription:</h4>
-     *     return the recalced workflowstate for a BaseNode (uses Plan/Ist)
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue WorkflowState - recalced state
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     BusinessLogic
-     * @param node - node to process
-     * @return recalced state
-     * @throws Exception - parser/format-Exceptions possible
+    /** 
+     * return the recalced workflowstate for a BaseNode (uses Plan/Ist)
+     * @FeatureDomain                BusinessLogic
+     * @FeatureResult                returnValue WorkflowState - recalced state
+     * @FeatureKeywords              BusinessLogic
+     * @param node                   node to process
+     * @return                       recalced state
+     * @throws Exception             parser/format-Exceptions possible
      */
     public WorkflowState calcMyWorkflowState(final BaseWorkflowData node) {
         WorkflowState newState = node.getWorkflowState();

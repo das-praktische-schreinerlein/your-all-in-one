@@ -1,30 +1,25 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-/**
- * <h4>FeatureDomain:</h4>
- *     WebGUI
- * <h4>FeatureDescription:</h4>
- *     servicefunctions for data-services
- *      
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+/** 
+ * servicefunctions for data-services
+ *  
+ * @FeatureDomain                WebGUI
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 Yaio.ServerAccessManagerService = function(appBase, config, defaultConfig) {
     'use strict';
@@ -47,6 +42,13 @@ Yaio.ServerAccessManagerService = function(appBase, config, defaultConfig) {
         me.setAvailiableNodeAction('search', me.config.restSearchUrl);
         me.setAvailiableNodeAction('dashboard', "#/dashboard");
 
+        if (me.config.dmsAvailable) {
+            me.setAvailiableNodeAction('dmsDownload', me.config.dmsDownloadUrl);
+            me.setAvailiableNodeAction('dmsEmbed', me.config.dmsEmbedUrl);
+            me.setAvailiableNodeAction('dmsIndexDownload', me.config.dmsIndexDownloadUrl);
+            me.setAvailiableNodeAction('dmsIndexEmbed', me.config.dmsIndexEmbedUrl);
+        }
+
         me.setAvailiableNodeAction('syshelp', me.config.restExportsBaseUrl + 'documentation/SysHelp1');
         me.setAvailiableNodeAction('sysinfo', me.config.restExportsBaseUrl + 'documentation/SysInfo1');
         me.setAvailiableNodeAction('frontpagebaseurl', me.config.restExportsBaseUrl + 'htmlfrontpagefragment/');
@@ -60,6 +62,9 @@ Yaio.ServerAccessManagerService = function(appBase, config, defaultConfig) {
         // flags
         me.setAvailiableNodeAction('showsysdata', true);
         me.setAvailiableNodeAction('print', true);
+        me.setAvailiableNodeAction('urlResFileUploadAvailable', me.config.dmsAvailable);
+        me.setAvailiableNodeAction('urlResWebshotAvailable', me.config.webshotAvailable);
+        me.setAvailiableNodeAction('urlResIndexingAvailable', me.config.metaextractAvailable);
 
         // import-forms
         me.setAvailiableImportForm('ImportWiki', '/imports/wiki/');

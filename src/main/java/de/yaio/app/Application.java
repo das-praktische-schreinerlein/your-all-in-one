@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -33,44 +30,69 @@ import org.springframework.boot.context.embedded.MultipartConfigFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.FilterType;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import de.yaio.core.datadomainservice.NodeNumberService;
 import de.yaio.core.node.BaseNode;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     Webservice
- * <h4>FeatureDescription:</h4>
- *     a spring boot application
+/** 
+ * the yaio-app as spring boot application
  * 
- * @package de.yaio.app
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Webservice
+ * @package                      de.yaio.app
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 @Configuration
-@EnableAutoConfiguration
-@ComponentScan("de.yaio")
+@EnableAutoConfiguration(exclude = {
+                de.yaio.services.webshot.WebshotApplication.class, 
+                de.yaio.services.webshot.WebshotWebSecurityConfig.class,
+                de.yaio.services.webshot.WebshotWebSecurityConfig.WebshotServiceSecurityConfigurerAdapter.class,
+                de.yaio.services.dms.DMSApplication.class,
+                de.yaio.services.dms.DMSWebSecurityConfig.class,
+                de.yaio.services.dms.DMSWebSecurityConfig.DMSServiceSecurityConfigurerAdapter.class,
+                de.yaio.services.plantuml.PlantumlApplication.class,
+                de.yaio.services.plantuml.PlantumlWebSecurityConfig.class,
+                de.yaio.services.plantuml.PlantumlWebSecurityConfig.PlantumlServiceSecurityConfigurerAdapter.class,
+                de.yaio.services.metaextract.MetaExtractApplication.class,
+                de.yaio.services.metaextract.MetaExtractWebSecurityConfig.class,
+                de.yaio.services.metaextract.MetaExtractWebSecurityConfig.MetaExtractServiceSecurityConfigurerAdapter.class
+                })
+@ComponentScan(basePackages = "de.yaio",
+                excludeFilters = {
+                    @Filter(type = FilterType.ASSIGNABLE_TYPE, value = {
+                        de.yaio.services.webshot.WebshotApplication.class, 
+                        de.yaio.services.webshot.WebshotWebSecurityConfig.class,
+                        de.yaio.services.webshot.WebshotWebSecurityConfig.WebshotServiceSecurityConfigurerAdapter.class,
+                        de.yaio.services.dms.DMSApplication.class,
+                        de.yaio.services.dms.DMSWebSecurityConfig.class,
+                        de.yaio.services.dms.DMSWebSecurityConfig.DMSServiceSecurityConfigurerAdapter.class,
+                        de.yaio.services.plantuml.PlantumlApplication.class,
+                        de.yaio.services.plantuml.PlantumlWebSecurityConfig.class,
+                        de.yaio.services.plantuml.PlantumlWebSecurityConfig.PlantumlServiceSecurityConfigurerAdapter.class,
+                        de.yaio.services.metaextract.MetaExtractApplication.class,
+                        de.yaio.services.metaextract.MetaExtractWebSecurityConfig.class,
+                        de.yaio.services.metaextract.MetaExtractWebSecurityConfig.MetaExtractServiceSecurityConfigurerAdapter.class
+                    })
+                })
+@EnableScheduling
 public class Application {
     protected static ApplicationContext springApplicationContext;
     protected static NodeNumberService nodeNumberService;
     protected static String strPathIdDB;
     private static final Logger LOGGER = Logger.getLogger(Application.class);
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     CLI
-     * <h4>FeatureDescription:</h4>
-     *     Main-method to start the application
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>initialize the application
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     CLI
-     * @param args the command line arguments
+    /** 
+     * Main-method to start the application
+     * @FeatureDomain                CLI
+     * @FeatureResult                initialize the application
+     * @FeatureKeywords              CLI
+     * @param args                   the command line arguments
      */
     public static void main(final String[] args) {
         try {

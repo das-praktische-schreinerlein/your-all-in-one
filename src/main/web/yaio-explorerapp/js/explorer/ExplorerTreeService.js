@@ -1,30 +1,25 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-/**
- * <h4>FeatureDomain:</h4>
- *     WebGUI
- * <h4>FeatureDescription:</h4>
- *     controller for the treeview
- *      
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+/** 
+ * controller for the treeview
+ *  
+ * @FeatureDomain                WebGUI
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 
 
@@ -59,24 +54,18 @@ Yaio.ExplorerTreeService = function(appBase) {
         return me.appBase.get('YaioNodeData').loadNodeData(nodeId);
     };
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Initialisation
-     * <h4>FeatureDescription:</h4>
-     *     creates an fancytree on the html-element treeId and inits it with the data
-     *     of masterNodeId<br>
-     *     after init of the tree the doneHandler will be executed  
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>updates html-element treeId with a fancytree
-     *     <li>calls doneHandler
-     *     <li>updates global var treeInstances[treeId]
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Tree
-     * @param treeId - id of the html-element containing the tree
-     * @param masterNodeId - the node.sysUID to load
-     * @param doneHandler - callback-function when tree is created
+    /** 
+     * creates an fancytree on the html-element treeId and inits it with the data
+     * of masterNodeId<br>
+     * after init of the tree the doneHandler will be executed  
+     * @FeatureDomain                Initialisation
+     * @FeatureResult                updates html-element treeId with a fancytree
+     * @FeatureResult                calls doneHandler
+     * @FeatureResult                updates global var treeInstances[treeId]
+     * @FeatureKeywords              GUI Tree
+     * @param treeId                 id of the html-element containing the tree
+     * @param masterNodeId           the node.sysUID to load
+     * @param doneHandler            callback-function when tree is created
      */
     me.yaioCreateFancyTree = function(treeId, masterNodeId, doneHandler) {
         treeInstances[treeId] = {};
@@ -533,25 +522,19 @@ Yaio.ExplorerTreeService = function(appBase) {
      *****************************************
      *****************************************/
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Initialisation
-     * <h4>FeatureDescription:</h4>
-     *     Checks if the tree is in wished state and runs doneHandler.
-     *     If tree is not in state, it waits waitTime trys it till maxTries is reached.
-     *     If maxTries reached, doneHandler is done regardless of the state.
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>calls doneHandler if tree is in state
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Tree
-     * @param treeId - id of the html-element containing the tree
-     * @param state - the state the tree must reached to run doneHandler
-     * @param waitTime - millis to wait for next try if tree is not in state 
-     * @param maxTries - maximum of tries till donehandlder will run if tree is not in state 
-     * @param doneHandler - callback-function to run if tree is in state
-     * @param name        - name of the callback-function fpr logging
+    /** 
+     * Checks if the tree is in wished state and runs doneHandler.
+     * If tree is not in state, it waits waitTime trys it till maxTries is reached.
+     * If maxTries reached, doneHandler is done regardless of the state.
+     * @FeatureDomain                Initialisation
+     * @FeatureResult                calls doneHandler if tree is in state
+     * @FeatureKeywords              GUI Tree
+     * @param treeId                 id of the html-element containing the tree
+     * @param state                  the state the tree must reached to run doneHandler
+     * @param waitTime               millis to wait for next try if tree is not in state 
+     * @param maxTries               maximum of tries till donehandlder will run if tree is not in state 
+     * @param doneHandler            callback-function to run if tree is in state
+     * @param name                   name of the callback-function fpr logging
      */
     me.yaioDoOnFancyTreeState = function(treeId, state, waitTime, maxTries, doneHandler, name) {
         // check if donehandler
@@ -573,19 +556,13 @@ Yaio.ExplorerTreeService = function(appBase) {
         }
     };
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Initialisation
-     * <h4>FeatureDescription:</h4>
-     *     create an fancytree-datanode from an yaio.basenode  
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>datanode - a datanode for FancyTree
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Tree
-     * @param basenode - a basenode from yaio
-     * @returns a datanode for FancyTree
+    /** 
+     * create an fancytree-datanode from an yaio.basenode  
+     * @FeatureDomain                Initialisation
+     * @FeatureResult                datanode - a datanode for FancyTree
+     * @FeatureKeywords              GUI Tree
+     * @param basenode               a basenode from yaio
+     * @returns                      a datanode for FancyTree
      */
     me.createFancyDataFromNodeData = function(basenode) {
         var datanode = {
@@ -609,22 +586,16 @@ Yaio.ExplorerTreeService = function(appBase) {
         return datanode;
     };
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Initialisation
-     * <h4>FeatureDescription:</h4>
-     *     Callbackhandler for FancyTree to convert the presponse from server to fancytree-data. 
-     *     Fancytree runs it if nodedata is read from server.<br>
-     *     checks for data.response.state=OK, create FancydataNode from data.response.childNodes
-     *     and adds them to data.result.
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>updates data.result with the childlist of the node
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Tree
-     * @param event - fancytree-event
-     * @param data - the serverresponse (java de.yaio.rest.controller.NodeActionReponse)
+    /** 
+     * Callbackhandler for FancyTree to convert the presponse from server to fancytree-data. 
+     * Fancytree runs it if nodedata is read from server.<br>
+     * checks for data.response.state=OK, create FancydataNode from data.response.childNodes
+     * and adds them to data.result.
+     * @FeatureDomain                Initialisation
+     * @FeatureResult                updates data.result with the childlist of the node
+     * @FeatureKeywords              GUI Tree
+     * @param event                  fancytree-event
+     * @param data                   the serverresponse (java de.yaio.rest.controller.NodeActionReponse)
      */
     me.postProcessNodeData = function(event, data) {
         var list = new Array();
@@ -661,19 +632,13 @@ Yaio.ExplorerTreeService = function(appBase) {
     
     
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Initialisation
-     * <h4>FeatureDescription:</h4>
-     *     checks if the node passes the current nodefilter
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>return boolean: check passes or not
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     GUI Tree
-     * @param node - nodedata from serverresponse (java de.yaio.rest.controller.NodeActionReponse)
-     * @return check passes or not
+    /** 
+     * checks if the node passes the current nodefilter
+     * @FeatureDomain                Initialisation
+     * @FeatureResult                return boolean: check passes or not
+     * @FeatureKeywords              GUI Tree
+     * @param node                   nodedata from serverresponse (java de.yaio.rest.controller.NodeActionReponse)
+     * @return                       check passes or not
      */
     me.filterNodeData = function(node) {
         if (! me.nodeFilter) {
@@ -688,6 +653,10 @@ Yaio.ExplorerTreeService = function(appBase) {
         }
         if (me.nodeFilter.workflowStates && !me.nodeFilter.workflowStates[node.workflowState]) {
             console.log("filterNodeData: skip node by workflowState:" + node.workflowState);
+            return false;
+        }
+        if (me.nodeFilter.statCount && !(node[me.nodeFilter.statCount] > 0)) {
+            console.log("filterNodeData: skip node by statCount:" + me.nodeFilter.statCount);
             return false;
         }
         

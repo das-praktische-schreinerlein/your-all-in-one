@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -38,17 +35,15 @@ import de.yaio.extension.datatransfer.ppl.PPLExporter;
 import de.yaio.extension.datatransfer.ppl.PPLImporter;
 import de.yaio.extension.datatransfer.ppl.PPLService;
 
-/**
- * <h4>FeatureDomain:</h4>
-*     import
- * <h4>FeatureDescription:</h4>
- *     import of Nodes in Wiki-Format
+/** 
+ * import of Nodes in Wiki-Format
  * 
- * @package de.yaio.extension.datatransfer.wiki
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                import
+ * @package                      de.yaio.extension.datatransfer.wiki
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class WikiImporter extends ImporterImpl {
 
@@ -86,16 +81,14 @@ public class WikiImporter extends ImporterImpl {
     private static final Logger LOGGER =
             Logger.getLogger(WikiImporter.class);
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     DataImport
-     * <h4>FeatureDescription:</h4>
-     *     helper single WikiStructLine
-     * @package de.schreiner.yaio.adapter.wiki
-     * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
-     * @category Parser helper
-     * @copyright Copyright (c) 2014, Michael Schreiner
-     * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+    /** 
+     * helper single WikiStructLine
+     * @FeatureDomain                DataImport
+     * @package                      de.schreiner.yaio.adapter.wiki
+     * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+     * @category                     Parser helper
+     * @copyright                    Copyright (c) 2014, Michael Schreiner
+     * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
      */
     public class WikiStructLine {
 
@@ -105,20 +98,14 @@ public class WikiImporter extends ImporterImpl {
         private String idPraefix;
         private String hirarchy;
 
-        /**
-         * <h4>FeatureDomain:</h4>
-         *     Constructor
-         * <h4>FeatureDescription:</h4>
-         *     create object of WikiStructLine
-         * <h4>FeatureResult:</h4>
-         *   <ul>
-         *     <li>initialize the exporter
-         *   </ul> 
-         * <h4>FeatureKeywords:</h4>
-         *     Constructor
-         * @param wiki - the wiki-sourceline
-         * @param text - the text
-         * @param desc - the optional desc
+        /** 
+         * create object of WikiStructLine
+         * @FeatureDomain                Constructor
+         * @FeatureResult                initialize the exporter
+         * @FeatureKeywords              Constructor
+         * @param wiki                   the wiki-sourceline
+         * @param text                   the text
+         * @param desc                   the optional desc
          */
         public WikiStructLine(final String wiki, final String text, final String desc) {
             this.setWiki(wiki);
@@ -130,35 +117,23 @@ public class WikiImporter extends ImporterImpl {
             return "WL: " + getWiki() + " " + text + " HI:" + getHirarchy();
         }
 
-        /**
-         * <h4>FeatureDomain:</h4>
-         *     DataImport
-         * <h4>FeatureDescription:</h4>
-         *     get the wiki-hirarchy-line
-         * <h4>FeatureResult:</h4>
-         *   <ul>
-         *     <li>ResturnValue wiki-hirarchy-line
-         *   </ul> 
-         * <h4>FeatureKeywords:</h4>
-         *     DataImport ParserOptions
-         * @return wiki-hirarchy-line
+        /** 
+         * get the wiki-hirarchy-line
+         * @FeatureDomain                DataImport
+         * @FeatureResult                ResturnValue wiki-hirarchy-line
+         * @FeatureKeywords              DataImport ParserOptions
+         * @return                       wiki-hirarchy-line
          */
         public String getHirarchy() {
             return this.hirarchy;
         }
 
-        /**
-         * <h4>FeatureDomain:</h4>
-         *     DataImport
-         * <h4>FeatureDescription:</h4>
-         *     get clean wiki-text (replace \* -> "", \t - <WLTAB> and escaped desc
-         * <h4>FeatureResult:</h4>
-         *   <ul>
-         *     <li>returnValue String - clean wiki-text
-         *   </ul> 
-         * <h4>FeatureKeywords:</h4>
-         *     helper formatter
-         * @return clean Wiki-text
+        /** 
+         * get clean wiki-text (replace \* -> "", \t - <WLTAB> and escaped desc
+         * @FeatureDomain                DataImport
+         * @FeatureResult                returnValue String - clean wiki-text
+         * @FeatureKeywords              helper formatter
+         * @return                       clean Wiki-text
          */
         public String getCleanText() {
             // Standardzeile bereinigen
@@ -172,14 +147,11 @@ public class WikiImporter extends ImporterImpl {
             return dummyText;
         }
 
-        /**
-         * <h4>FeatureDomain:</h4>
-         *     DataImport
-         * <h4>FeatureDescription:</h4>
-         *     append to desc
-         * <h4>FeatureKeywords:</h4>
-         *     helper
-         * @param desc - desc to append
+        /** 
+         * append to desc
+         * @FeatureDomain                DataImport
+         * @FeatureKeywords              helper
+         * @param desc                   desc to append
          */
         public void addDesc(final String desc) {
             // an bestehende desc anfuegen
@@ -190,19 +162,13 @@ public class WikiImporter extends ImporterImpl {
             }
         }
 
-        /**
-         * <h4>FeatureDomain:</h4>
-         *     DataImport
-         * <h4>FeatureDescription:</h4>
-         *     get escaped wiki-desc (\n -> <WLBR>, \t -> <WLTAB>
-         * <h4>FeatureResult:</h4>
-         *   <ul>
-         *     <li>returnValue String - escaped desc
-         *   </ul> 
-         * <h4>FeatureKeywords:</h4>
-         *     helper formatter
-         * @param praefix - to set in front of the desc
-         * @return escaped desc
+        /** 
+         * get escaped wiki-desc (\n -> <WLBR>, \t -> <WLTAB>
+         * @FeatureDomain                DataImport
+         * @FeatureResult                returnValue String - escaped desc
+         * @FeatureKeywords              helper formatter
+         * @param praefix                to set in front of the desc
+         * @return                       escaped desc
          */
         public String getEscapedDesc(final String praefix) {
             String dummyText = "";
@@ -221,35 +187,35 @@ public class WikiImporter extends ImporterImpl {
         }
 
         /**
-         * @return the {@link WikiStructLine#idPraefix}
+         * @return                       the {@link WikiStructLine#idPraefix}
          */
         public String getIdPraefix() {
             return idPraefix;
         }
 
         /**
-         * @param idPraefix the {@link WikiStructLine#idPraefix} to set
+         * @param idPraefix              the {@link WikiStructLine#idPraefix} to set
          */
         public void setIdPraefix(final String idPraefix) {
             this.idPraefix = idPraefix;
         }
 
         /**
-         * @param hirarchy the {@link WikiStructLine#hirarchy} to set
+         * @param hirarchy               the {@link WikiStructLine#hirarchy} to set
          */
         public void setHirarchy(final String hirarchy) {
             this.hirarchy = hirarchy;
         }
 
         /**
-         * @return the {@link WikiStructLine#wiki}
+         * @return                       the {@link WikiStructLine#wiki}
          */
         public String getWiki() {
             return wiki;
         }
 
         /**
-         * @param wiki the {@link WikiStructLine#wiki} to set
+         * @param wiki                   the {@link WikiStructLine#wiki} to set
          */
         public void setWiki(final String wiki) {
             this.wiki = wiki;
@@ -259,35 +225,23 @@ public class WikiImporter extends ImporterImpl {
     protected PPLImporter importer = new PPLImporter(new ImportOptionsImpl());
     protected PPLExporter exporter = new PPLExporter();
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Constructor
-     * <h4>FeatureDescription:</h4>
-     *     Importer to import/parse nodes in Wiki-Format
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>initialize the importer
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Constructor
-     *  @param options - the importoptions for the parser...
+    /** 
+     * Importer to import/parse nodes in Wiki-Format
+     * @FeatureDomain                Constructor
+     * @FeatureResult                initialize the importer
+     * @FeatureKeywords              Constructor
+     *  @param options                the importoptions for the parser...
      */
     public WikiImporter(final ImportOptions options) {
         super(options);
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     DataImport
-     * <h4>FeatureDescription:</h4>
-     *     generate helper-OutputOptions for generation of the Wiki-area (show all, hide calcSum+desc)
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue OutputOptions - OuputOptions for generation of the Wiki-area
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Cofiguration helper
-     * @return OuputOptions for generation of the Wiki-area
+    /** 
+     * generate helper-OutputOptions for generation of the Wiki-area (show all, hide calcSum+desc)
+     * @FeatureDomain                DataImport
+     * @FeatureResult                returnValue OutputOptions - OuputOptions for generation of the Wiki-area
+     * @FeatureKeywords              Cofiguration helper
+     * @return                       OuputOptions for generation of the Wiki-area
      */
     public OutputOptions genOutputOptionsForBaseDataExport() {
         OutputOptions options = new OutputOptionsImpl();
@@ -300,20 +254,14 @@ public class WikiImporter extends ImporterImpl {
 
     
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     DataImport
-     * <h4>FeatureDescription:</h4>
-     *     search for pattern in haystack
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue List<MatchResult> - list of matching results
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     helper parser
-     * @param pattern - needle to find
-     * @param haystack - haystack
-     * @return - list of matching results
+    /** 
+     * search for pattern in haystack
+     * @FeatureDomain                DataImport
+     * @FeatureResult                returnValue List<MatchResult> - list of matching results
+     * @FeatureKeywords              helper parser
+     * @param pattern                needle to find
+     * @param haystack               haystack
+     * @return                       list of matching results
      */
     public static List<MatchResult> findMatches(final Pattern pattern, final CharSequence haystack) {
         List<MatchResult> results = null;
@@ -329,20 +277,15 @@ public class WikiImporter extends ImporterImpl {
     }
 
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     import
-     * <h4>FeatureDescription:</h4>
-     *     extracts the list of WikiStructLine from Wiki nodeSrc (several Lines)
-     * <h4>FeatureResult:</h4>
-     *     <li>returnValue List<WikiStructLine> - list of extracted WikiStructLine
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Parser
-     * @param nodeSrc - nodeSrc to be parsed
-     * @param inputOptions - ImportOptions for the parser
-     * @return list of extracted WikiStructLine
-     * @throws Exception - parser/format-Exceptions possible
+    /** 
+     * extracts the list of WikiStructLine from Wiki nodeSrc (several Lines)
+     * @FeatureDomain                import
+     * @FeatureResult                returnValue List<WikiStructLine> - list of extracted WikiStructLine
+     * @FeatureKeywords              Parser
+     * @param nodeSrc                nodeSrc to be parsed
+     * @param inputOptions           ImportOptions for the parser
+     * @return                       list of extracted WikiStructLine
+     * @throws Exception             parser/format-Exceptions possible
      */
     public List<WikiStructLine> extractWikiStructLines(final String nodeSrc,
             final WikiImportOptions inputOptions) throws Exception {
@@ -397,27 +340,18 @@ public class WikiImporter extends ImporterImpl {
         return wikiLines;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     import
-     * <h4>FeatureDescription:</h4>
-     *     filter only known NodeTypes from WikiStructLines
-     * <h4>FeatureCondition:</h4>
-     *   <ul>
-     *     <li>flgWFStatesOnly - filter only node with this isWFState = true
-     *     <li>ImportOptions.strReadIfStatusInListOnly - filter only node with this nodeTypeIdentifier
-     *   </ul> 
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue List<WikiStructLine> - list of filtered WikiStructLine
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Parser
-     * @param lstWikiLines - lstWikiLines to filter
-     * @param flgWFStatesOnly - filter only node with this isWFState = true
-     * @param inputOptions - ImportOptions for the parser+filter
-     * @return list of filtered WikiStructLine
-     * @throws Exception - parser/format-Exceptions possible
+    /** 
+     * filter only known NodeTypes from WikiStructLines
+     * @FeatureCondition             flgWFStatesOnly - filter only node with this isWFState = true
+     * @FeatureCondition             ImportOptions.strReadIfStatusInListOnly - filter only node with this nodeTypeIdentifier
+     * @FeatureDomain                import
+     * @FeatureResult                returnValue List<WikiStructLine> - list of filtered WikiStructLine
+     * @FeatureKeywords              Parser
+     * @param lstWikiLines           lstWikiLines to filter
+     * @param flgWFStatesOnly        filter only node with this isWFState = true
+     * @param inputOptions           ImportOptions for the parser+filter
+     * @return                       list of filtered WikiStructLine
+     * @throws Exception             parser/format-Exceptions possible
      */
     public List<WikiStructLine> filterOnlyKnownNodeTypesFromWikiStructLines(
             final List<WikiStructLine> lstWikiLines, 
@@ -476,21 +410,15 @@ public class WikiImporter extends ImporterImpl {
         return lstWikiTab;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     import
-     * <h4>FeatureDescription:</h4>
-     *     normalizes and sorts the WikiStructLine
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue List<WikiStructLine> - list of normalized WikiStructLine
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Parser
-     * @param lstWikiLines - WikiStructLines to be normalized
-     * @param inputOptions - ImportOptions for the parser
-     * @return list of sorted and normalized WikiStructLine
-     * @throws Exception - parser/format-Exceptions possible
+    /** 
+     * normalizes and sorts the WikiStructLine
+     * @FeatureDomain                import
+     * @FeatureResult                returnValue List<WikiStructLine> - list of normalized WikiStructLine
+     * @FeatureKeywords              Parser
+     * @param lstWikiLines           WikiStructLines to be normalized
+     * @param inputOptions           ImportOptions for the parser
+     * @return                       list of sorted and normalized WikiStructLine
+     * @throws Exception             parser/format-Exceptions possible
      */
     public List<WikiStructLine> normalizeWikiStructLines(final List<WikiStructLine> lstWikiLines, 
             final WikiImportOptions inputOptions) throws Exception {
@@ -694,28 +622,19 @@ public class WikiImporter extends ImporterImpl {
         curNode.initSysData();
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     import
-     * <h4>FeatureDescription:</h4>
-     *     extracts the list of WikiStructLine from Wiki nodeSrc (several Lines)
-     *     normalize them with normalizeWikiStructLine and filter them if ImportOptions set
-     * <h4>FeatureCondition:</h4>
-     *   <ul>
-     *     <li>ImportOptions.flgReadWithStatusOnly - call filterTaskNodesFromWikiStructLines
-     *     <li>ImportOptions.flgReadWithWFStatusOnly - call filterTaskNodesFromWikiStructLines
-     *     <li>ImportOptions.strReadIfStatusInListOnly - call filterTaskNodesFromWikiStructLines
-     *   </ul> 
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue List<WikiStructLine> - list of extracted WikiStructLine
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Parser
-     * @param src - src to be parsed
-     * @param inputOptions - ImportOptions for the parser
-     * @return list of extracted WikiStructLine
-     * @throws Exception - parser/format-Exceptions possible
+    /** 
+     * extracts the list of WikiStructLine from Wiki nodeSrc (several Lines)
+     * normalize them with normalizeWikiStructLine and filter them if ImportOptions set
+     * @FeatureCondition             ImportOptions.flgReadWithStatusOnly - call filterTaskNodesFromWikiStructLines
+     * @FeatureCondition             ImportOptions.flgReadWithWFStatusOnly - call filterTaskNodesFromWikiStructLines
+     * @FeatureCondition             ImportOptions.strReadIfStatusInListOnly - call filterTaskNodesFromWikiStructLines
+     * @FeatureDomain                import
+     * @FeatureResult                returnValue List<WikiStructLine> - list of extracted WikiStructLine
+     * @FeatureKeywords              Parser
+     * @param src                    src to be parsed
+     * @param inputOptions           ImportOptions for the parser
+     * @return                       list of extracted WikiStructLine
+     * @throws Exception             parser/format-Exceptions possible
      */
     public List<WikiStructLine> extractWikiStructLinesFromSrc(final String src,
             final WikiImportOptions inputOptions) throws Exception {
@@ -742,21 +661,15 @@ public class WikiImporter extends ImporterImpl {
         return projektWikiEntries;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     import
-     * <h4>FeatureDescription:</h4>
-     *     extracts the list of WikiStructLine from Wiki-file
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue List<WikiStructLine> - list of extracted WikiStructLine
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Parser
-     * @param fileName - fileName to be read and parsed
-     * @param inputOptions - ImportOptions for the parser
-     * @return list of extracted WikiStructLine
-     * @throws Exception - parser/format/io-Exceptions possible
+    /** 
+     * extracts the list of WikiStructLine from Wiki-file
+     * @FeatureDomain                import
+     * @FeatureResult                returnValue List<WikiStructLine> - list of extracted WikiStructLine
+     * @FeatureKeywords              Parser
+     * @param fileName               fileName to be read and parsed
+     * @param inputOptions           ImportOptions for the parser
+     * @return                       list of extracted WikiStructLine
+     * @throws Exception             parser/format/io-Exceptions possible
      */
     public List<WikiStructLine> extractWikiStructLinesFromFile(final String fileName,
             final WikiImportOptions inputOptions) throws Exception {
@@ -780,7 +693,7 @@ public class WikiImporter extends ImporterImpl {
     }
     
     /**
-     * @param args the command line arguments
+     * @param args                   the command line arguments
      */
     public static void main(final String[] args) {
         WikiImporter importer = new WikiImporter(new WikiImportOptions());

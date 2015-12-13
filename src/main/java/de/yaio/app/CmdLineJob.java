@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -22,24 +19,22 @@ import org.apache.commons.cli.Options;
 import org.apache.log4j.Logger;
 
 
-/**
- * <h4>FeatureDomain:</h4>
- *     Tools - CLI-Handling
- * <h4>FeatureDescription:</h4>
- *     baseclass for commandlinejobs
- * <h4>must be implemented:</h4>
- *     <ul>
- *     <li>validateCmdLine
- *     </ul>
- * <h1>to configure:</h1>
- *     <ul>
- *     <li>genAvailiableCmdLineOptions
- *     </ul>
+/** 
+ * baseclass for commandlinejobs<br>
+ * must be implemented:<br>
+ * <ul>
+ * <li>validateCmdLine
+ * </ul>
+ * to configure:<br>
+ * <ul>
+ * <li>genAvailiableCmdLineOptions
+ * </ul>
  *
- * @package de.yaio.utils
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @copyright Copyright (c) 2013, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Tools - CLI-Handling
+ * @package                      de.yaio.utils
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @copyright                    Copyright (c) 2013, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -60,54 +55,36 @@ public abstract class CmdLineJob {
     
     protected String jobConfFile = null;
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Constructor
-     * <h4>FeatureDescription:</h4>
-     *     baseclass for CommandLineJobs
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>initialize the application
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Constructor
-     * @param args the command line arguments
+    /** 
+     * baseclass for CommandLineJobs
+     * @FeatureDomain                Constructor
+     * @FeatureResult                initialize the application
+     * @FeatureKeywords              Constructor
+     * @param args                   the command line arguments
      */
     public CmdLineJob(final String[] args) {
         // set args
         Configurator.getInstance().setCmdLineArgs(args);
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tools - CLI-Handling
-     * <h4>FeatureDescription:</h4>
-     *     returns jobname (Classname without package)
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue String - jobname (Classname without package)
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     CLI-Handling
-     * @return String - jobname (Classname without package)
-     * @throws Exception - possible Exception
+    /** 
+     * returns jobname (Classname without package)
+     * @FeatureDomain                Tools - CLI-Handling
+     * @FeatureResult                returnValue String - jobname (Classname without package)
+     * @FeatureKeywords              CLI-Handling
+     * @return                       String - jobname (Classname without package)
+     * @throws Exception             possible Exception
      */
     protected String getJobName() throws Exception  {
         return this.getClass().getName();
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tools - CLI-Handling
-     * <h4>FeatureDescription:</h4>
-     *     prints usage of current commandlineoptions
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>prints on STDOUT - usage
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     CLI-Handling
-     * @throws Exception - possible Exception
+    /** 
+     * prints usage of current commandlineoptions
+     * @FeatureDomain                Tools - CLI-Handling
+     * @FeatureResult                prints on STDOUT - usage
+     * @FeatureKeywords              CLI-Handling
+     * @throws Exception             possible Exception
      */
     protected void printUsage() throws Exception  {
         HelpFormatter formatter = new HelpFormatter();
@@ -122,24 +99,21 @@ public abstract class CmdLineJob {
      *     konfiguriert die verfuegbaren CLI-Optionen -> muss ueberladen werden
      * <h1>Nebenwirkungen:</h1>
      *     Rueckgabe als Options
-     * @return Options
-     * @throws Exception - possible Exception
+     * @return                       Options
+     * @throws Exception             possible Exception
      */
     protected abstract Options addAvailiableCmdLineOptions() throws Exception;
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Jobhandling
-     * <h4>FeatureDescription:</h4>
-     *     do the jobprocessing
-     *     <ul>
-     *        <li>initialize Configurator and Commandline
-     *        <li>call initJob
-     *        <li>call doJob
-     *        <li>call cleanUpAfterJob
-     *     </ul>
-     * <h4>FeatureKeywords:</h4>
-     *     Jobhandling
+    /** 
+     * do the jobprocessing
+     * <ul>
+     *    <li>initialize Configurator and Commandline
+     *    <li>call initJob
+     *    <li>call doJob
+     *    <li>call cleanUpAfterJob
+     * </ul>
+     * @FeatureDomain                Jobhandling
+     * @FeatureKeywords              Jobhandling
      */
     public void startJobProcessing() {
         try {
@@ -228,29 +202,23 @@ public abstract class CmdLineJob {
         }
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Jobhandling
-     * <h4>FeatureDescription:</h4>
-     *     log errormessages
-     * <h4>FeatureKeywords:</h4>
-     *     Jobhandling
-     * @param errorMsg - the errormsg for output on System.out and Logger
+    /** 
+     * log errormessages
+     * @FeatureDomain                Jobhandling
+     * @FeatureKeywords              Jobhandling
+     * @param errorMsg               the errormsg for output on System.out and Logger
      */
     public static void logErrorMsg(final String errorMsg) {
         System.out.println(errorMsg);
         LOGGER.fatal(errorMsg);
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Jobhandling
-     * <h4>FeatureDescription:</h4>
-     *     handle throable (log errorme4ssages and exit if flgExit is set)
-     * <h4>FeatureKeywords:</h4>
-     *     Jobhandling
-     * @param e - the exceptuiion/error...
-     * @param flgExit - do exit if it is set
+    /** 
+     * handle throable (log errorme4ssages and exit if flgExit is set)
+     * @FeatureDomain                Jobhandling
+     * @FeatureKeywords              Jobhandling
+     * @param e                      the exceptuiion/error...
+     * @param flgExit                do exit if it is set
      */
     public void handleThrowable(final Throwable e, final boolean flgExit) {
 

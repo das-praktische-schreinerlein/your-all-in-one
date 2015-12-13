@@ -19,5 +19,14 @@
                     <option value="OPEN,RUNNING" translate="common.select.NodeFilter.WorkflowState.OPEN_RUNNING">Todo planned
                     <option value="LATE,WARNING" translate="common.select.NodeFilter.WorkflowState.LATE_WARNING">Todo warning
                     <option value="OPEN,RUNNING,LATE,WARNING" translate="common.select.NodeFilter.WorkflowState.ALL_TODOS">all Todos
-               </select></li>
+               </select>
+                <span lang='tech' translate="editor.common.label.type">Type</span>
+                <select name="strStatCountFilter" ng-change="changeExplorerFilter()" class="inputtype_select" id="inputFilterOptionsStrStatCountFilter" ng-model="filterOptions.strStatCountFilter">
+                    <option value="" translate="common.select.all">Alle
+                    <option value="statWorkflowCount" translate="common.select.NodeFilter.StatCount.statWorkflowCount">Tasks/Events
+                    <option value="statWorkflowTodoCount" translate="common.select.NodeFilter.StatCount.statWorkflowTodoCount">Tasks/Events Offen
+                    <option value="statUrlResCount" translate="common.select.NodeFilter.StatCount.statUrlResCount">UrlRes
+                    <option value="statInfoCount" translate="common.select.NodeFilter.StatCount.statInfoCount">Infos
+               </select>
+               </li>
           </ul>

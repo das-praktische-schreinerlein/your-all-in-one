@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -28,10 +25,13 @@ window.YaioAppBaseConfig = function() {
     
     me.additionalDetectorStyleNS    = ["yaio-"];
 
-    me.CONST_MasterId               = "MasterplanMasternode1";
+    me.masterSysUId                 = "MasterplanMasternode1";
 
     me.datasources = [];
     
+    // server-configs
+    me.plantUmlBaseUrl              = "http://www.plantuml.com/";
+
     // App urls
     me.appRootUrl                   = "/";
     me.appSourceSelectorUrl         = me.appRootUrl + "sourceselector";
@@ -44,6 +44,24 @@ window.YaioAppBaseConfig = function() {
             fields: [
                 { fieldName: "className", type: "hidden"},
                 { fieldName: "sysUID", type: "hidden"}
+            ]
+        },
+        CreateUploadFileUrlResNode: {
+            fields: [
+                { fieldName: "name", type: "input"},
+                { fieldName: "type", type: "hidden"},
+                { fieldName: "className", type: "hidden"},
+                { fieldName: "sysUID", type: "hidden"},
+                { fieldName: "resLocRef", type: "input"},
+                //{ fieldName: "resContentDMSState", type: "checkbox"},
+                //{ fieldName: "resIndexDMSState", type: "checkbox"},
+                { fieldName: "resLocName", type: "input"},
+                { fieldName: "resLocTags", type: "textarea"},
+                { fieldName: "docLayoutTagCommand", type: "select"},
+                { fieldName: "docLayoutAddStyleClass", type: "input"},
+                { fieldName: "docLayoutShortName", type: "input"},
+                { fieldName: "docLayoutFlgCloseDiv", type: "checkbox"},
+                { fieldName: "mode", type: "hidden", intern: true},
             ]
         },
         CreateSymlink: {
@@ -115,12 +133,14 @@ window.YaioAppBaseConfig = function() {
             fields: [
                 { fieldName: "name", type: "input"},
                 { fieldName: "resLocRef", type: "input"},
+                //{ fieldName: "resContentDMSState", type: "checkbox"},
+                //{ fieldName: "resIndexDMSState", type: "checkbox"},
                 { fieldName: "resLocName", type: "input"},
                 { fieldName: "resLocTags", type: "textarea"},
                 { fieldName: "docLayoutTagCommand", type: "select"},
                 { fieldName: "docLayoutAddStyleClass", type: "input"},
                 { fieldName: "docLayoutShortName", type: "input"},
-                { fieldName: "docLayoutFlgCloseDiv", type: "checkbox"}
+                { fieldName: "docLayoutFlgCloseDiv", type: "checkbox"},
             ]
         },
         SymLinkNode: {

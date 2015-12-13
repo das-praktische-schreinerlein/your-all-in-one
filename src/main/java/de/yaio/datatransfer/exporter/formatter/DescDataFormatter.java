@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -19,37 +16,28 @@ package de.yaio.datatransfer.exporter.formatter;
 import de.yaio.core.datadomain.DescData;
 import de.yaio.datatransfer.exporter.OutputOptions;
 
-/**
- * <h4>FeatureDomain:</h4>
- *     Praesentation
- * <h4>FeatureDescription:</h4>
- *     interface with service-functions for formatting of dataDomain: DescData
+/** 
+ * interface with service-functions for formatting of dataDomain: DescData
  * 
- * @package de.yaio.datatransfer.exporter.formatter
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Praesentation
+ * @package                      de.yaio.datatransfer.exporter.formatter
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public interface DescDataFormatter extends Formatter {
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Praesentation
-     * <h4>FeatureDescription:</h4>
-     *     formats DomainData: DescData and appends output to StringBuffer nodeOutput
-     * <h4>FeatureConditions:</h4>
-     *     formatter runs only if options.flgShowDesc is set
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>appends to nodeOutput
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Layout
-     * @param node - node to be formatted
-     * @param nodeOutput - to append the output
-     * @param options - options for formatter
-     * @throws Exception - parser/format-Exceptions possible
+    /** 
+     * formats DomainData: DescData and appends output to StringBuffer nodeOutput
+     * @FeatureConditions            formatter runs only if options.flgShowDesc is set
+     * @FeatureDomain                Praesentation
+     * @FeatureResult                appends to nodeOutput
+     * @FeatureKeywords              Layout
+     * @param node                   node to be formatted
+     * @param nodeOutput             to append the output
+     * @param options                options for formatter
+     * @throws Exception             parser/format-Exceptions possible
      */
     void formatDescData(DescData node, StringBuffer nodeOutput, OutputOptions options) throws Exception;
 }

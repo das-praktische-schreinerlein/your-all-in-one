@@ -1,14 +1,11 @@
-/**
- * <h4>FeatureDomain:</h4>
- *     Collaboration
- *
- * <h4>FeatureDescription:</h4>
- *     software for projectmanagement and documentation
+/** 
+ * software for projectmanagement and documentation
  * 
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -36,17 +33,15 @@ import de.yaio.core.datadomainservice.SysDataServiceImpl;
 import de.yaio.core.node.BaseNode;
 
 
-/**
- * <h4>FeatureDomain:</h4>
- *     BusinessLogic
- * <h4>FeatureDescription:</h4>
- *     businesslogic for entity: BaseNode
+/** 
+ * businesslogic for entity: BaseNode
  * 
- * @package de.yaio.core.dataservice
- * @author Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category collaboration
- * @copyright Copyright (c) 2014, Michael Schreiner
- * @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ * @FeatureDomain                BusinessLogic
+ * @package                      de.yaio.core.dataservice
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class BaseNodeService extends NodeServiceImpl {
     
@@ -75,34 +70,22 @@ public class BaseNodeService extends NodeServiceImpl {
     
     private static BaseNodeService instance = new BaseNodeService();
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Persistence
-     * <h4>FeatureDescription:</h4>
-     *     return the main instance of this service
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>return the main instance of this service
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Persistence
-     * @return the main instance of this service
+    /** 
+     * return the main instance of this service
+     * @FeatureDomain                Persistence
+     * @FeatureResult                return the main instance of this service
+     * @FeatureKeywords              Persistence
+     * @return                       the main instance of this service
      */
     public static BaseNodeService getInstance() {
         return instance;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Constructor
-     * <h4>FeatureDescription:</h4>
-     *     service-functions for the BaseNode
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>initialize the service-class
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Constructor
+    /** 
+     * service-functions for the BaseNode
+     * @FeatureDomain                Constructor
+     * @FeatureResult                initialize the service-class
+     * @FeatureKeywords              Constructor
      */
     public BaseNodeService() {
         configureDataDomainRecalcer();
@@ -247,19 +230,13 @@ public class BaseNodeService extends NodeServiceImpl {
         return false;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Persistence
-     * <h4>FeatureDescription:</h4>
-     *     add the child in childlist
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>updates childNodes
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Persistence
-     * @param baseNode - basenode to add child
-     * @param childNode - the child to add
+    /** 
+     * add the child in childlist
+     * @FeatureDomain                Persistence
+     * @FeatureResult                updates childNodes
+     * @FeatureKeywords              Persistence
+     * @param baseNode               basenode to add child
+     * @param childNode              the child to add
      */
     public void addChildNode(final BaseNode baseNode, final DataDomain childNode) {
         if (LOGGER.isDebugEnabled()) {
@@ -282,20 +259,14 @@ public class BaseNodeService extends NodeServiceImpl {
         }
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Persistence
-     * <h4>FeatureDescription:</h4>
-     *     move the child in childlist to the sortPos
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>reorder childNodes
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Persistence
-     * @param baseNode - basenode to add child
-     * @param child - the child to move in list
-     * @param newSortPos - the new position
+    /** 
+     * move the child in childlist to the sortPos
+     * @FeatureDomain                Persistence
+     * @FeatureResult                reorder childNodes
+     * @FeatureKeywords              Persistence
+     * @param baseNode               basenode to add child
+     * @param child                  the child to move in list
+     * @param newSortPos             the new position
      */
     public void moveChildToSortPos(final BaseNode baseNode, final BaseNode child, 
                                    final Integer newSortPos) {
@@ -368,19 +339,13 @@ public class BaseNodeService extends NodeServiceImpl {
         }
     }
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     BusinessLogic
-     * <h4>FeatureDescription:</h4>
-     *     returns the max level of children for this node 
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>return maximum childLevel
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     BusinessLogic
-     * @param baseNode - node
-     * @return maximum childLevel
+    /** 
+     * returns the max level of children for this node 
+     * @FeatureDomain                BusinessLogic
+     * @FeatureResult                return maximum childLevel
+     * @FeatureKeywords              BusinessLogic
+     * @param baseNode               node
+     * @return                       maximum childLevel
      */
     public int getMaxChildEbene(final DataDomain baseNode) {
         // TODO cache this
@@ -398,21 +363,15 @@ public class BaseNodeService extends NodeServiceImpl {
         return maxEbene;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Persistence
-     * <h4>FeatureDescription:</h4>
-     *     initialize the Children from database (childNodes and childNodesByNameMapMap)
-     *     recursivly
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>updates memberfields childNodes
-     *     <li>updates memberfields childNodesByNameMapMap
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Persistence
-     * @param baseNode node
-     * @param pRecursionLevel - how many recursion-level will be read from DB
+    /** 
+     * initialize the Children from database (childNodes and childNodesByNameMapMap)
+     * recursivly
+     * @FeatureDomain                Persistence
+     * @FeatureResult                updates memberfields childNodes
+     * @FeatureResult                updates memberfields childNodesByNameMapMap
+     * @FeatureKeywords              Persistence
+     * @param baseNode               node
+     * @param pRecursionLevel        how many recursion-level will be read from DB
      */
     public void initChildNodesFromDB(final BaseNode baseNode, final int pRecursionLevel) {
         int recursionLevel = pRecursionLevel;
@@ -444,21 +403,15 @@ public class BaseNodeService extends NodeServiceImpl {
         }
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     BusinessLogic
-     * <h4>FeatureDescription:</h4>
-     *     returns parenthierarchy
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>return parenthierarchy
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     BusinessLogic
-     * @param baseNode - node
-     * @param pdelimiter - text to delimit the diffrent parentnames
-     * @param directionForward - if set reverse the order
-     * @return parenthierarchy
+    /** 
+     * returns parenthierarchy
+     * @FeatureDomain                BusinessLogic
+     * @FeatureResult                return parenthierarchy
+     * @FeatureKeywords              BusinessLogic
+     * @param baseNode               node
+     * @param pdelimiter             text to delimit the diffrent parentnames
+     * @param directionForward       if set reverse the order
+     * @return                       parenthierarchy
      */
     public String getParentNameHirarchie(final DataDomain baseNode,
                                          final String pdelimiter, 
@@ -486,19 +439,13 @@ public class BaseNodeService extends NodeServiceImpl {
     ///////////////////////
     // Name+Id-Services
     ///////////////////////
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     BusinessLogic
-     * <h4>FeatureDescription:</h4>
-     *     returns WorkingId to identify in process (parsing...)
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>return WorkingId to identify in process (parsing...)
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     BusinessLogic
-     * @param baseNode - node
-     * @return WorkingId to identify in process (parsing...)
+    /** 
+     * returns WorkingId to identify in process (parsing...)
+     * @FeatureDomain                BusinessLogic
+     * @FeatureResult                return WorkingId to identify in process (parsing...)
+     * @FeatureKeywords              BusinessLogic
+     * @param baseNode               node
+     * @return                       WorkingId to identify in process (parsing...)
      */
     public String getWorkingId(final DataDomain baseNode) {
         String res = "UNKNOWN";
@@ -512,19 +459,13 @@ public class BaseNodeService extends NodeServiceImpl {
         return res;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     BusinessLogic
-     * <h4>FeatureDescription:</h4>
-     *     returns name for logging
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>return name for logging
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     BusinessLogic
-     * @param baseNode - node
-     * @return name for logging
+    /** 
+     * returns name for logging
+     * @FeatureDomain                BusinessLogic
+     * @FeatureResult                return name for logging
+     * @FeatureKeywords              BusinessLogic
+     * @param baseNode               node
+     * @return                       name for logging
      */
     public String getNameForLogger(final DataDomain baseNode) {
         BaseNode node = (BaseNode) baseNode;
@@ -533,18 +474,15 @@ public class BaseNodeService extends NodeServiceImpl {
         return nameForLogger;    
     }
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Tests
-     * <h4>FeatureDescription:</h4>
-     *     generate a node hierarchy of node.getNameForLogger recursively intending with spaces
-     * <h4>FeatureKeywords:</h4>
-     *     NameUtil
-     * @param praefix  intending spaces
-     * @param node     node to generate hierarchy for
-     * @return - resulting node hierarchy
+    /** 
+     * generate a node hierarchy of node.getNameForLogger recursively intending with spaces
+     * @FeatureDomain                Tests
+     * @FeatureKeywords              NameUtil
+     * @param praefix                intending spaces
+     * @param node                   node to generate hierarchy for
+     * @return                       resulting node hierarchy
      */
-    public String visualizeNodeHierarchy(String praefix, DataDomain node) {
+    public String visualizeNodeHierarchy(final String praefix, final DataDomain node) {
         String res = praefix + node.getNameForLogger() + "\n";
         for (DataDomain childNode : node.getChildNodes()) {
             res += visualizeNodeHierarchy(praefix + "  ", childNode);
@@ -552,20 +490,14 @@ public class BaseNodeService extends NodeServiceImpl {
         return res;
     }
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     BusinessLogic
-     * <h4>FeatureDescription:</h4>
-     *     returns the data to create a checksum from
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>return datastring
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     BusinessLogic
-     * @param baseNode - node
-     * @return datastring
-     * @throws Exception - possible Exception
+    /** 
+     * returns the data to create a checksum from
+     * @FeatureDomain                BusinessLogic
+     * @FeatureResult                return datastring
+     * @FeatureKeywords              BusinessLogic
+     * @param baseNode               node
+     * @return                       datastring
+     * @throws Exception             possible Exception
      */
     public String getDataBlocks4CheckSum(final DataDomain baseNode) throws Exception {
         BaseNode node = (BaseNode) baseNode;
@@ -601,133 +533,91 @@ public class BaseNodeService extends NodeServiceImpl {
     /////////////////////////
     // Workflow
     /////////////////////////
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Workflow
-     * <h4>FeatureDescription:</h4>
-     *     checks weather the state is a configurated workflow-state
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue boolean - workflow-state yes/no
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Worflow
-     * @param state - state to check
-     * @return workflow-state yes/no
+    /** 
+     * checks weather the state is a configurated workflow-state
+     * @FeatureDomain                Workflow
+     * @FeatureResult                returnValue boolean - workflow-state yes/no
+     * @FeatureKeywords              Worflow
+     * @param state                  state to check
+     * @return                       workflow-state yes/no
      */
     public boolean isWFStatus(final String state) {
         return false;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Workflow
-     * <h4>FeatureDescription:</h4>
-     *     checks weather the state is a configurated workflow-state for DONE
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue boolean - workflow-DONE yes/no
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Worflow
-     * @param state - state to check
-     * @return workflow-DONE yes/no
+    /** 
+     * checks weather the state is a configurated workflow-state for DONE
+     * @FeatureDomain                Workflow
+     * @FeatureResult                returnValue boolean - workflow-DONE yes/no
+     * @FeatureKeywords              Worflow
+     * @param state                  state to check
+     * @return                       workflow-DONE yes/no
      */
     public boolean isWFStatusDone(final String state) {
         return false;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Workflow
-     * <h4>FeatureDescription:</h4>
-     *     checks weather the state is a configurated workflow-state for OPEN
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue boolean - workflow-OPEN yes/no
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Worflow
-     * @param state - state to check
-     * @return workflow-OPEN yes/no
+    /** 
+     * checks weather the state is a configurated workflow-state for OPEN
+     * @FeatureDomain                Workflow
+     * @FeatureResult                returnValue boolean - workflow-OPEN yes/no
+     * @FeatureKeywords              Worflow
+     * @param state                  state to check
+     * @return                       workflow-OPEN yes/no
      */
     public boolean isWFStatusOpen(final String state) {
         return false;
     }
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Workflow
-     * <h4>FeatureDescription:</h4>
-     *     checks weather the state is a configurated workflow-state for CANCELED
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue boolean - workflow-CANCELED yes/no
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Worflow
-     * @param state - state to check
-     * @return workflow-CANCELED yes/no
+    /** 
+     * checks weather the state is a configurated workflow-state for CANCELED
+     * @FeatureDomain                Workflow
+     * @FeatureResult                returnValue boolean - workflow-CANCELED yes/no
+     * @FeatureKeywords              Worflow
+     * @param state                  state to check
+     * @return                       workflow-CANCELED yes/no
      */
     public boolean isWFStatusCanceled(final String state) {
         return false;
     }
     
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Workflow
-     * <h4>FeatureDescription:</h4>
-     *     returns the workflowstate of the node. 
-     *     if empty and no state do: NOWORKFLOW of Unplaned if it is a task/evvent
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue workflowstate
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Worflow
-     * @param node - node to get the workflow state from
-     * @return workflowstate
-     * @throws IllegalStateException - if illegal state 
+    /** 
+     * returns the workflowstate of the node. 
+     * if empty and no state do: NOWORKFLOW of Unplaned if it is a task/evvent
+     * @FeatureDomain                Workflow
+     * @FeatureResult                returnValue workflowstate
+     * @FeatureKeywords              Worflow
+     * @param node                   node to get the workflow state from
+     * @return                       workflowstate
+     * @throws IllegalStateException if illegal state 
      */
     public WorkflowState getWorkflowState(final BaseWorkflowData node) throws IllegalStateException {
         return WorkflowState.NOWORKFLOW;
     };
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Workflow
-     * <h4>FeatureDescription:</h4>
-     *     returns the workflowstate for the state of the node. 
-     *     if empty and no state do: NOWORKFLOW of Unplaned if it is a task/event
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue workflowstate
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Worflow
-     * @param node - node to get the workflow state from
-     * @return workflowstate
-     * @throws IllegalStateException - if illegal state 
+    /** 
+     * returns the workflowstate for the state of the node. 
+     * if empty and no state do: NOWORKFLOW of Unplaned if it is a task/event
+     * @FeatureDomain                Workflow
+     * @FeatureResult                returnValue workflowstate
+     * @FeatureKeywords              Worflow
+     * @param node                   node to get the workflow state from
+     * @return                       workflowstate
+     * @throws IllegalStateException if illegal state 
      */
     public WorkflowState getWorkflowStateForState(final BaseWorkflowData node) throws IllegalStateException {
         return WorkflowState.NOWORKFLOW;
     };
 
-    /**
-     * <h4>FeatureDomain:</h4>
-     *     Workflow
-     * <h4>FeatureDescription:</h4>
-     *     returns the state for the workflowstate of the node. 
-     *     if empty and no workflowstate: return the given state of the node
-     * <h4>FeatureResult:</h4>
-     *   <ul>
-     *     <li>returnValue state
-     *   </ul> 
-     * <h4>FeatureKeywords:</h4>
-     *     Worflow
-     * @param node - node to get the workflow state from
-     * @return state
-     * @throws IllegalStateException - if illegal state 
+    /** 
+     * returns the state for the workflowstate of the node. 
+     * if empty and no workflowstate: return the given state of the node
+     * @FeatureDomain                Workflow
+     * @FeatureResult                returnValue state
+     * @FeatureKeywords              Worflow
+     * @param node                   node to get the workflow state from
+     * @return                       state
+     * @throws IllegalStateException if illegal state 
      */
     public String getStateForWorkflowState(final BaseWorkflowData node) throws IllegalStateException {
         return node.getState();
