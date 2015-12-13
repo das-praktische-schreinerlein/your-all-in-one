@@ -200,7 +200,7 @@ public class DatatransferUtils {
      * @FeatureDomain                Webservice
      * @FeatureResult                boolean flgChange - true if data changed
      * @FeatureKeywords              Webservice Query
-     * @param origNode               
+     * @param origNode               the node to fill with the newNode-data
      * @param newNode                the new node created from request-data
      * @return                       true if data changed
      * @throws IllegalAccessException thrown if class of origNode!=newNode
