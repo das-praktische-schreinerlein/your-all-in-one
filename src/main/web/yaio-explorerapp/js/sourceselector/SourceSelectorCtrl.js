@@ -29,10 +29,10 @@ yaioApp.controller('SourceSelectorCtrl', function($rootScope, $scope, $location,
         yaioUtils.getAppBase().configureService("YaioAccessManager", function() { return yaioAppBase.get("YaioNodeData").getAccessManager(); });
         
         // load data and open frontpage if succeed
-        yaioUtils.getAppBase().get("YaioNodeData").connectService().then(function success() {
+        yaioUtils.getAppBase().get("YaioNodeData").connectService().done(function success() {
             console.error("success connectService:" + yaioUtils.getConfig().appFrontpageUrl);
-            $location.path(yaioUtils.getConfig().appFrontpageUrl + "?" + new Date());
-            yaioAppBase.get("Angular.$location").path(yaioAppBase.config.appFrontpageUrl + "?" + new Date());
+            $location.path(yaioUtils.getConfig().appFrontpageUrl);
+            yaioAppBase.get("Angular.$location").path(yaioAppBase.config.appFrontpageUrl);
             console.error("success connectService done:" + yaioUtils.getConfig().appFrontpageUrl);
         });
     };
