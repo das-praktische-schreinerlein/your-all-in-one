@@ -51,7 +51,7 @@ yaioApp.controller('DashBoardNodeSearchCtrl', function($rootScope, $scope, yaioU
             + '/' + encodeURI($scope.searchOptions.strNotNodePraefix)
             + '/';
         return newUrl;
-    }
+    };
     
     /** 
      * send ajax-request for fulltextsearch to server and add reszult to scope<br>
@@ -96,7 +96,7 @@ yaioApp.controller('DashBoardNodeSearchCtrl', function($rootScope, $scope, yaioU
             // error
             yaioUtils.getService('YaioBase').logError("error loading nodes:" + yaioNodeSearchResponse.stateMsg + " details:" + yaioNodeSearchResponse, true);
         }
-    }
+    };
 
     /** 
      * callbackhandler to rendernodeLine for node
