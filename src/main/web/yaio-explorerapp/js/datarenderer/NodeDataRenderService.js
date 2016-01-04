@@ -52,6 +52,7 @@ Yaio.NodeDataRenderService = function(appBase) {
         var svcYaioExplorerAction = me.appBase.get('YaioExplorerAction');
         var svcYaioNodeGanttRender = me.appBase.get('YaioNodeGanttRender');
         var svcYaioAccessManager = me.appBase.get('YaioAccessManager');
+        var yaioAppBaseVarName = me.appBase.config.appBaseVarName;
         
         // extract nodedata
         var node = data.node;
@@ -76,32 +77,32 @@ Yaio.NodeDataRenderService = function(appBase) {
             var actionHtml = "";
             if (svcYaioAccessManager.getAvailiableNodeAction('showsysdata', basenode.sysUID, false)) {
                 actionHtml += "<div class='fieldtype_sysToggler toggler_show'>"
-                    + "<a onclick=\"javascript: yaioAppBase.get('YaioExplorerAction').toggleNodeSysContainer('" + basenode.sysUID + "'); return false;\""
+                    + "<a onclick=\"javascript: " + yaioAppBaseVarName + ".get('YaioExplorerAction').toggleNodeSysContainer('" + basenode.sysUID + "'); return false;\""
                             + " id='toggler_sys_" + basenode.sysUID + "'"
                             + " class='' "
                             + " data-tooltip='tooltip.command.ToggleSys' lang='tech'></a>"
                     + "</div>";
             }
             if (svcYaioAccessManager.getAvailiableNodeAction('edit', basenode.sysUID, false)) {
-                actionHtml += "<a onclick=\"javascript: yaioAppBase.get('YaioEditor').yaioOpenNodeEditor('" + basenode.sysUID + "', 'edit'); return false;\""
+                actionHtml += "<a onclick=\"javascript: " + yaioAppBaseVarName + ".get('YaioEditor').yaioOpenNodeEditor('" + basenode.sysUID + "', 'edit'); return false;\""
                     + " id='cmdEdit" + basenode.sysUID + "'"
                     + " class='yaio-icon-edit'"
                     + " lang='tech' data-tooltip='tooltip.command.NodeEdit'></a>";
             }
             if (svcYaioAccessManager.getAvailiableNodeAction('create', basenode.sysUID, false)) {
-                actionHtml += "<a onclick=\"javascript: yaioAppBase.get('YaioEditor').yaioOpenNodeEditor('" + basenode.sysUID + "', 'create'); return false;\""
+                actionHtml += "<a onclick=\"javascript: " + yaioAppBaseVarName + ".get('YaioEditor').yaioOpenNodeEditor('" + basenode.sysUID + "', 'create'); return false;\""
                     + " id='cmdCreate" + basenode.sysUID + "'"
                     + " class='yaio-icon-create'"
                     + " lang='tech' data-tooltip='tooltip.command.NodeCreateChild'></a>";
             }
             if (svcYaioAccessManager.getAvailiableNodeAction('createsymlink', basenode.sysUID, false)) {
-                actionHtml += "<a onclick=\"javascript: yaioAppBase.get('YaioEditor').yaioOpenNodeEditor('" + basenode.sysUID + "', 'createsymlink'); return false;\""
+                actionHtml += "<a onclick=\"javascript: " + yaioAppBaseVarName + ".get('YaioEditor').yaioOpenNodeEditor('" + basenode.sysUID + "', 'createsymlink'); return false;\""
                     + " id='cmdCreateSymLink" + basenode.sysUID + "'"
                     + " class='yaio-icon-createsymlink'"
                     + " lang='tech' data-tooltip='tooltip.command.NodeCreateSymLink'></a>";
             }
             if (svcYaioAccessManager.getAvailiableNodeAction('remove', basenode.sysUID, false)) {
-                actionHtml += "<a onclick=\"javascript: yaioAppBase.get('YaioExplorerAction').yaioRemoveNodeById('" + basenode.sysUID + "'); return false;\""
+                actionHtml += "<a onclick=\"javascript: " + yaioAppBaseVarName + ".get('YaioExplorerAction').yaioRemoveNodeById('" + basenode.sysUID + "'); return false;\""
                     + " id='cmdRemove" + basenode.sysUID + "'"
                     + " class='yaio-icon-remove'"
                     + " lang='tech' data-tooltip='tooltip.command.NodeDelete'></a>";
@@ -206,7 +207,7 @@ Yaio.NodeDataRenderService = function(appBase) {
             // add  column
             me.$($nodeDataBlock).find("div.container_data_row").append(
                     me.$("<div />").html("<a href='#'" +
-                            " onclick=\"yaioAppBase.get('YaioExplorerAction').toggleNodeDescContainer('" + basenode.sysUID + "'); return false;\"" +
+                            " onclick=\"" + yaioAppBaseVarName + ".get('YaioExplorerAction').toggleNodeDescContainer('" + basenode.sysUID + "'); return false;\"" +
                                 " id='toggler_desc_" + basenode.sysUID + "'" +
                                 " data-tooltip='tooltip.command.ToggleDesc' lang='tech'></a>")
                             .addClass("container_field")
@@ -222,19 +223,19 @@ Yaio.NodeDataRenderService = function(appBase) {
             // add commands
             var commands = "<div class='container-commands-desc' id='commands_desc_" + basenode.sysUID + "'"
                 + " data-tooltip='tooltip.command.TogglePreWrap' lang='tech' >" 
-                + "<input type='checkbox' id='cmd_toggle_content_desc_" + basenode.sysUID + "' onclick=\"yaioAppBase.get('UIToggler').togglePreWrap('#content_desc_" + basenode.sysUID + "');yaioAppBase.get('UIToggler').togglePreWrap('#container_content_desc_" + basenode.sysUID + "'); return true;\">"
+                + "<input type='checkbox' id='cmd_toggle_content_desc_" + basenode.sysUID + "' onclick=\"" + yaioAppBaseVarName + ".get('UIToggler').togglePreWrap('#content_desc_" + basenode.sysUID + "');" + yaioAppBaseVarName + ".get('UIToggler').togglePreWrap('#container_content_desc_" + basenode.sysUID + "'); return true;\">"
                 + "<span lang='tech'>im Originallayout anzeigen</span>"
         //        + "<input type='checkbox' id='cmd_toggle_content_desc_markdown_" + basenode.sysUID + "' onclick=\"toggleDescMarkdown('#container_content_desc_" + basenode.sysUID + "'); return true;\">"
         //        + "<span lang='tech'>Markdown</span>"
                 ;
-            commands += "<a class=\"button command-desc-jiraexport\" onClick=\"yaioAppBase.get('YaioExplorerAction').openJiraExportWindow('"+ basenode.sysUID + "'); return false;" 
+            commands += "<a class=\"button command-desc-jiraexport\" onClick=\"" + yaioAppBaseVarName + ".get('YaioExplorerAction').openJiraExportWindow('"+ basenode.sysUID + "'); return false;" 
                 +   "\" lang='tech' data-tooltip='tooltip.command.OpenJiraExportWindow'>common.command.OpenJiraExportWindow</a>";
-            commands += "<a class=\"button command-desc-txtexport\" onClick=\"yaioAppBase.get('YaioExplorerAction').openTxtExportWindow(" 
-                +   "yaioAppBase.$('#container_content_desc_" + basenode.sysUID + "').text()); return false;" 
+            commands += "<a class=\"button command-desc-txtexport\" onClick=\"" + yaioAppBaseVarName + ".get('YaioExplorerAction').openTxtExportWindow(" 
+                +   yaioAppBaseVarName + ".$('#container_content_desc_" + basenode.sysUID + "').text()); return false;" 
                 +   "\" lang='tech' data-tooltip='tooltip.command.OpenTxtExportWindow'>common.command.OpenTxtExportWindow</a>";
             if ('speechSynthesis' in window) {
                 // Synthesis support. Make your web apps talk!
-                commands += "<a class=\"button\" onClick=\"yaioAppBase.get('YaioLayout').openSpeechSynthWindow(" 
+                commands += "<a class=\"button\" onClick=\"" + yaioAppBaseVarName + ".get('YaioLayout').openSpeechSynthWindow(" 
                     +   "document.getElementById('container_content_desc_" + basenode.sysUID + "')); return false;" 
                     +   "\" lang='tech' data-tooltip='tooltip.command.OpenSpeechSynth'>common.command.OpenSpeechSynth</a>";
      
@@ -315,6 +316,7 @@ Yaio.NodeDataRenderService = function(appBase) {
      */
     me.renderDataBlock = function(basenode, fancynode, preventActionsColum) {
         var svcYaioBase = me.appBase.get('YaioBase');
+        var yaioAppBaseVarName = me.appBase.config.appBaseVarName;
         
         // extract nodedata
         var nodestate = basenode.state;
@@ -401,7 +403,7 @@ Yaio.NodeDataRenderService = function(appBase) {
                     // url
                     var stateBlock = svcYaioBase.htmlEscapeText(stateMapping[resContentDMSState]);
                     if (resContentDMSState == "UPLOAD_DONE" && !preventActionsColum) {
-                        stateBlock = "<a href='" +  "' onClick=\"yaioAppBase.get('YaioExplorerAction').openDMSDownloadWindow('"+ basenode.sysUID + "'); return false;" 
+                        stateBlock = "<a href='" +  "' onClick=\"" + yaioAppBaseVarName + ".get('YaioExplorerAction').openDMSDownloadWindow('"+ basenode.sysUID + "'); return false;" 
                                      +   "\" lang='tech' data-tooltip='tooltip.command.OpenDMSDownloadWindow_" + resContentDMSState + "'>" + stateBlock + "</a>";
                     } else if (stateMapping[resContentDMSState]) {
                         stateBlock = "<span \" lang='tech' data-tooltip='tooltip.command.OpenDMSDownloadWindow_" + resContentDMSState + "'>" + stateBlock + "</span>";
@@ -423,7 +425,7 @@ Yaio.NodeDataRenderService = function(appBase) {
                     // url
                     var stateBlock = svcYaioBase.htmlEscapeText(indexStateMapping[resIndexDMSState]);
                     if (resIndexDMSState == "INDEX_DONE" && !preventActionsColum) {
-                        stateBlock = "<a href='" +  "' onClick=\"yaioAppBase.get('YaioExplorerAction').openDMSIndexDownloadWindow('"+ basenode.sysUID + "'); return false;" 
+                        stateBlock = "<a href='" +  "' onClick=\"" + yaioAppBaseVarName + ".get('YaioExplorerAction').openDMSIndexDownloadWindow('"+ basenode.sysUID + "'); return false;" 
                                      +   "\" lang='tech' data-tooltip='tooltip.command.OpenDMSIndexDownloadWindow_" + resIndexDMSState + "'>" + stateBlock + "</a>";
                     } else if (indexStateMapping[resIndexDMSState]) {
                         stateBlock = "<span \" lang='tech' data-tooltip='tooltip.command.OpenDMSIndexDownloadWindow_" + resIndexDMSState + "'>" + stateBlock + "</span>";
