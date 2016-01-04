@@ -490,6 +490,7 @@ Yaio.FormatterService = function(appBase) {
      * @return                       {boolean} - flag if a Mermaid-Block is found and mermaid should be executed
      */
     me.formatDescBlock = function(descBlock) {
+        var yaioAppBaseVarName = me.appBase.config.appBaseVarName;
         var flgDoMermaid = false;
         var descBlockId = me.$(descBlock).attr('id');
     
@@ -505,7 +506,9 @@ Yaio.FormatterService = function(appBase) {
                 console.log("formatDescBlock mermaid descBlock: " + descBlockId + " block: " + blockId);
                 me.addServicesToDiagrammBlock(block, 'mermaid',
                         "<a href='' id='linkdownload" + blockId + "'  target='_blank'"
-                        +   " onclick=\"javascript: yaioAppBase.get('YaioFile').downloadAsFile(yaioAppBase.$('#linkdownload" + blockId + "'), yaioAppBase.$('#" + blockId + "').html(), 'diagram.svg', 'image/svg+xml', 'utf-8'); return true;\">"
+                        +   " onclick=\"javascript: " + yaioAppBaseVarName + ".get('YaioFile').downloadAsFile(" 
+                        +       yaioAppBaseVarName + ".$('#linkdownload" + blockId + "'), " +
+                        +       yaioAppBaseVarName + ".$('#" + blockId + "').html(), 'diagram.svg', 'image/svg+xml', 'utf-8'); return true;\">"
                         + "Download</a>");
                 flgDoMermaid = true;
             } else {
@@ -524,7 +527,9 @@ Yaio.FormatterService = function(appBase) {
                 console.log("formatDescBlock mermaid descBlock: " + descBlockId + " block: " + blockId);
                 me.addServicesToDiagrammBlock(block, 'mermaid',
                         "<a href='' id='linkdownload" + blockId + "'  target='_blank'"
-                        +   " onclick=\"javascript: yaioAppBase.get('YaioFile').downloadAsFile(yaioAppBase.$('#linkdownload" + blockId + "'), yaioAppBase.$('#" + blockId + "').html(), 'diagram.svg', 'image/svg+xml', 'utf-8'); return true;\">"
+                        +   " onclick=\"javascript: " + yaioAppBaseVarName + ".get('YaioFile').downloadAsFile(" 
+                                + yaioAppBaseVarName + ".$('#linkdownload" + blockId + "'), " 
+                                + yaioAppBaseVarName + ".$('#" + blockId + "').html(), 'diagram.svg', 'image/svg+xml', 'utf-8'); return true;\">"
                         + "Download</a>");
                 flgDoMermaid = true;
             } else if (me.$(block).hasClass("lang-yaiomindmap") || me.$(block).hasClass("yaiomindmap")) {
@@ -802,6 +807,7 @@ Yaio.FormatterService = function(appBase) {
     me.addServicesToDiagrammBlock = function(block, type, downloadLink) {
         var content = me.$(block).html();
         var blockId = me.$(block).attr('id');
+        var yaioAppBaseVarName = me.appBase.config.appBaseVarName;
     
         // add source
         me.$(block).before("<div class='" + type + "-source' id='fallback" + blockId + "'>"
@@ -810,8 +816,10 @@ Yaio.FormatterService = function(appBase) {
         me.$("#fallback" + blockId).before(
                 "<div class='services" + type + "' id='services" + blockId + "'><div>"
                 + downloadLink
-                + "<a href='#' style='display: none;' id='toggleorig" + blockId + "' onclick=\"yaioAppBase.get('YaioBase').toggleWithLinks('#toggleorig" + blockId + "', '#togglesource" + blockId + "', '#" + blockId + "', '#fallback" + blockId + "'); return false;\" target='_blank'>Diagramm</a>"
-                + "<a href='#' id='togglesource" + blockId + "' onclick=\"yaioAppBase.get('YaioBase').toggleWithLinks('#toggleorig" + blockId + "', '#togglesource" + blockId + "', '#" + blockId + "', '#fallback" + blockId + "'); return false;\" target='_blank'>Source</a>"
+                + "<a href='#' style='display: none;' id='toggleorig" + blockId + "' "
+                +     "onclick=\"" + yaioAppBaseVarName +".get('YaioBase').toggleWithLinks('#toggleorig" + blockId + "', '#togglesource" + blockId + "', '#" + blockId + "', '#fallback" + blockId + "'); return false;\" target='_blank'>Diagramm</a>"
+                + "<a href='#' id='togglesource" + blockId + "' " 
+                +     "onclick=\"" + yaioAppBaseVarName +".get('YaioBase').toggleWithLinks('#toggleorig" + blockId + "', '#togglesource" + blockId + "', '#" + blockId + "', '#fallback" + blockId + "'); return false;\" target='_blank'>Source</a>"
                 + "</div></div>");
     };
     
