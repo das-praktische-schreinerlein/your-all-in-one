@@ -48,7 +48,7 @@ Yaio.MarkdownEditorService = function(appBase) {
     
         // options from http://ace.c9.io/build/kitchen-sink.html
         // editor.setShowFoldWidgets(value !== "manual");
-        // editor.setOption("wrap", value);
+        // editor.setOption("wrap", 'free');
         // editor.setOption("selectionStyle", checked ? "line" : "text");
         editor.setShowInvisibles(true);
         editor.setDisplayIndentGuides(true);
@@ -61,6 +61,8 @@ Yaio.MarkdownEditorService = function(appBase) {
         // editor.setBehavioursEnabled(checked);
         // editor.setFadeFoldWidgets(true);
         // editor.setOption("spellcheck", true);
+        //https://github.com/swenson/ace_spell_check_js
+        //https://github.com/cfinke/Typo.js#f399cf7191c4cb9a1fc55400a1a850367e8d6eb4
         
         // set value
         editor.setValue(me.$("#" + textAreaId).val());
@@ -261,9 +263,12 @@ Yaio.MarkdownEditorService = function(appBase) {
             }
         });
         // add export-link -> buggy to mix jquery and styles
+        var yaioAppBaseVarName = me.appBase.config.appBaseVarName;
         me.$(".ui-dialog-buttonset").append(me.$("<a href='' id='wysiwyg-exportlink'" +
             + " sdf='ojfvbhwjh'"
-            + " onclick=\"yaioAppBase.get('YaioFile').downloadAsFile(yaioAppBase.$('#wysiwyg-exportlink'), yaioAppBase.$('#" + textAreaId + "').val(), 'data.md', 'text/markdown', 'utf-8');\">"
+            + " onclick=\"" + yaioAppBaseVarName + ".get('YaioFile').downloadAsFile(" 
+            +      yaioAppBaseVarName + ".$('#wysiwyg-exportlink'), " 
+            +      yaioAppBaseVarName + ".$('#" + textAreaId + "').val(), 'data.md', 'text/markdown', 'utf-8');\">"
             + "<span class='ui-button-text'>Export</span></a>"));
         me.$('#wysiwyg-exportlink').addClass("ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only");
     
