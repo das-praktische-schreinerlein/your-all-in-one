@@ -217,7 +217,7 @@ Yaio.ExplorerActionService = function(appBase) {
         descText = descText.replace(/<WLTAB>/g, "\t");
         
         // convert and secure
-        var nodeDesc = me.appBase.get('YaioFormatter').convertMarkdownToJira(descText);
+        var nodeDesc = me.appBase.get('YaioMarkdownConverter').convertMarkdownToJira(descText);
         nodeDesc = svcYaioBase.htmlEscapeText(nodeDesc);
         
         // set clipboard-content
@@ -244,12 +244,12 @@ Yaio.ExplorerActionService = function(appBase) {
      */
     me.yaioExportExplorerLinesAsOverview = function() {
         var svcYaioBase = me.appBase.get('YaioBase');
-        var svcYaioFormatter = me.appBase.get('YaioFormatter');
+        var svcYaioExplorerConverter = me.appBase.get('YaioExplorerConverter');
 
         // convert and secure
-        var checkListSrc = svcYaioFormatter.convertExplorerLinesAsCheckList();
+        var checkListSrc = svcYaioExplorerConverter.convertExplorerLinesAsCheckList();
         checkListSrc = svcYaioBase.htmlEscapeText(checkListSrc);
-        var ganttSrc = svcYaioFormatter.convertExplorerLinesAsGanttMarkdown();
+        var ganttSrc = svcYaioExplorerConverter.convertExplorerLinesAsGanttMarkdown();
         ganttSrc = svcYaioBase.htmlEscapeText(ganttSrc);
         
         // set clipboard-content
@@ -275,12 +275,12 @@ Yaio.ExplorerActionService = function(appBase) {
      */
     me.yaioSnapshot = function(parentNode) {
         var svcYaioBase = me.appBase.get('YaioBase');
-        var svcYaioFormatter = me.appBase.get('YaioFormatter');
+        var svcYaioExplorerConverter = me.appBase.get('YaioExplorerConverter');
 
         // convert and secure
-        var checkListSrc = svcYaioFormatter.convertExplorerLinesAsCheckList();
+        var checkListSrc = svcYaioExplorerConverter.convertExplorerLinesAsCheckList();
         checkListSrc = svcYaioBase.htmlEscapeText(checkListSrc);
-        var ganttSrc = svcYaioFormatter.convertExplorerLinesAsGanttMarkdown();
+        var ganttSrc = svcYaioExplorerConverter.convertExplorerLinesAsGanttMarkdown();
         ganttSrc = svcYaioBase.htmlEscapeText(ganttSrc);
     
         // open editor
@@ -407,7 +407,7 @@ Yaio.ExplorerActionService = function(appBase) {
             parent.html("");
             for (var key in data.versions) {
                 if (data.versions.hasOwnProperty(key)) {
-                    me.createDMSIndexDiv(key, data.versions[key], parent)
+                    me.createDMSIndexDiv(key, data.versions[key], parent);
                 }
             }
         });
@@ -435,7 +435,7 @@ Yaio.ExplorerActionService = function(appBase) {
         content = me.appBase.get('YaioBase').htmlEscapeText(content);
         content = content.replace(/\n/g, "<br />");
         $(parent).append('<div class="downloadindex-container"><div class="downloadindex-name">' + name + '</div><br><pre>' + content + "<pre></div>");
-    } 
+    };
 
     /** 
      * Toggle the "#detail_desc_" for the specified id with a slide. 
