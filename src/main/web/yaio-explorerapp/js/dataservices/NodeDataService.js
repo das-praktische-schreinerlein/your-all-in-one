@@ -52,7 +52,7 @@ Yaio.NodeDataService = function(appBase, config, defaultConfig) {
 
     me.connectService = function() {
         me.logNotImplemented();
-    }
+    };
     
     me.updateServiceConfig = function(yaioCommonApiConfig) {
         me.logNotImplemented();
@@ -81,7 +81,7 @@ Yaio.NodeDataService = function(appBase, config, defaultConfig) {
         var promiseHelper = me.appBase.get("YaioPromiseHelper").createAngularPromiseHelper();
         var ajaxCall = function () {
             return promiseHelper.getHttpPromiseMock();
-        }
+        };
         var angularResponse = {
             data: {systemTemplates: [], ownTemplates: []}
         };
@@ -170,7 +170,7 @@ Yaio.NodeDataService = function(appBase, config, defaultConfig) {
     };
     
     me.yaioDoSaveNode = function(nodeObj, options) {
-        var msg = "yaioDoSaveNode for node:" + nodeObj['sysUID'];
+        var msg = "yaioDoSaveNode for node:" + nodeObj.sysUID;
         console.log(msg + " START");
         return me._yaioCallSaveNode(nodeObj, options);
     };

@@ -31,7 +31,7 @@ Yaio.AccessManagerService = function(appBase, config, defaultConfig) {
      * initialize the object
      */
     me._init = function() {
-        me.masterNodeId;
+        me.masterNodeId = undefined;
         me.availiableExportForms = {};
         me.availiableExportLinks = {};
         me.availiableStaticExportLinks = {};

@@ -50,8 +50,7 @@ Yaio.FileNodeDataService = function(appBase, config, defaultConfig) {
                 // config reader
                 reader.onload = function(res) {
                     console.log("read fileName:" + file.name);
-                    var data = res.target.result;
-                    
+
                     // update serviceconfig
                     me.updateServiceConfig();
                     me.updateAppConfig();
@@ -89,7 +88,7 @@ Yaio.FileNodeDataService = function(appBase, config, defaultConfig) {
         });
         
         return res;
-    }
+    };
 
     /*****************************************
      *****************************************

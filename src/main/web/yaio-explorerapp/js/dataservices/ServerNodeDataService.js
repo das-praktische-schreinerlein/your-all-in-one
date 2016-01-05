@@ -44,7 +44,7 @@ Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
     me.connectService = function() {
         var res = me._loadConfig();
         return res;
-    }
+    };
     
     me.updateServiceConfig = function(yaioCommonApiConfig) {
         if (yaioCommonApiConfig) {
@@ -130,7 +130,7 @@ Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
                 console.log("completed load " + msg);
             }
         });
-    }
+    };
     
     me._yaioCallUpdateNode = function(fancynode, json) {
         var url = me.config.restUpdateUrl + fancynode.key;
@@ -201,7 +201,7 @@ Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
                 console.log("completed load " + msg);
             }
         });
-    }
+    };
     
     me._yaioCallRemoveNode = function(nodeId) {
         var svcYaioBase = me.appBase.get('YaioBase');
@@ -234,14 +234,14 @@ Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
     me._yaioCallSaveNode = function(nodeObj, options) {
         var svcYaioBase = me.appBase.get('YaioBase');
 
-        var msg = "_yaioCallSaveNode node: " + options.mode + ' ' + nodeObj['sysUID'];
+        var msg = "_yaioCallSaveNode node: " + options.mode + ' ' + nodeObj.sysUID;
         console.log(msg + " START");
         // branch depending on mode
         var method, url, json, ajaxCall, formData;
         
         if (options.mode === "create") {
             // unset sysUID
-            nodeObj["sysUID"] = null;
+            nodeObj.sysUID = null;
         }
 
         // special case UrlResNode because of multipart-uploads
@@ -284,7 +284,7 @@ Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
                     httpOptions.transformRequest = angular.identity;
                 }
                 return http(httpOptions);
-            }
+            };
         } else if (options.mode === "create") {
             // mode create 
             method = "POST";
@@ -303,7 +303,7 @@ Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
                     httpOptions.transformRequest = angular.identity;
                 }
                 return http(httpOptions);
-            }
+            };
         } else {
             // unknown mode
             svcYaioBase.logError("unknown mode=" + options.mode + " form formName=" + options.formName, false);
@@ -311,7 +311,7 @@ Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
         }
 
         // define json for common fields
-        var json = JSON.stringify(nodeObj);
+        json = JSON.stringify(nodeObj);
         
         // do http
         console.log(msg + " CALL url:" + url + " data:" + json);
@@ -328,7 +328,7 @@ Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
         var url = restBaseUrl + nodeId;
         var ajaxCall = function () {
             return me.appBase.get('Angular.$http').get(url);
-        }
+        };
         
         // do http
         console.log(msg + " CALL url:" + url);
@@ -372,7 +372,7 @@ Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
                         "content-type" : "application/json;charset=utf-8"
                     }
                 });
-        }
+        };
         
         // do http
         console.log(msg + " CALL url:" + url);
@@ -392,7 +392,7 @@ Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
                         "content-type" : "application/x-www-form-urlencoded"
                     }
                 });
-        }
+        };
         
         // do http
         console.log(msg + " CALL url:" + url);
@@ -407,7 +407,7 @@ Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
         var url = me.config.restLogoutUrl;
         var ajaxCall = function () {
             return me.appBase.get('Angular.$http').post(url, $.param({}), {withCredentials: true});
-        }
+        };
         
         // do http
         console.log(msg + " CALL url:" + url);
@@ -422,7 +422,7 @@ Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
         var url = me.config.restCheckUserUrl + "?" + (new Date()).getTime();
         var ajaxCall = function () {
             return me.appBase.get('Angular.$http').get(url);
-        }
+        };
         
         // do http
         console.log(msg + " CALL url:" + url);

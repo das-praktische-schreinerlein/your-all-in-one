@@ -81,7 +81,7 @@ Yaio.StaticNodeDataStoreService = function(appBase, config, defaultConfig) {
     
     me.resetNodeList = function() {
         me.nodeList = [];
-    }
+    };
 
     me.loadStaticNodeData = function (node) {
         if (! node) {
@@ -100,20 +100,21 @@ Yaio.StaticNodeDataStoreService = function(appBase, config, defaultConfig) {
             me.loadStaticNodeData(childNode);
             node.childNodes[i] = childNode.sysUID;
         }
-    }
+    };
     
     me.getNodeDataById = function(nodeId, flgCopy) {
+        var node;
         if (flgCopy) {
-            var node = me.getNodeDataById(nodeId, false);
+            node = me.getNodeDataById(nodeId, false);
             return JSON.parse(JSON.stringify(node));
         }
-        var node = me.nodeList[nodeId];
+        node = me.nodeList[nodeId];
         if (node) {
             node.statChildNodeCount = node.childNodes.length;
         }
 
         return node;
-    }
+    };
 
     me.moveNode = function(fancynode, newParentKey, newPos, json) {
         var msg = "moveNode for fancynode:" + fancynode.key + " newParentKey:" + newParentKey + " newPos:" + newPos;
@@ -126,7 +127,7 @@ Yaio.StaticNodeDataStoreService = function(appBase, config, defaultConfig) {
             oldParent.childNodes.splice(oldParent.childNodes.indexOf(node.sysUID), 1);
 
             // update parentIdHierarchy
-            console.log(msg + " use newparent:" + newPos, parent)
+            console.log(msg + " use newparent:" + newPos, parent);
             
             // set new parentId
             node.parentId = parent.sysUID;
@@ -135,7 +136,7 @@ Yaio.StaticNodeDataStoreService = function(appBase, config, defaultConfig) {
             
             // delete node from childList 
             parent.childNodes.splice(parent.childNodes.indexOf(node.sysUID), 1);
-            console.log(msg + " use oldparent:", parent)
+            console.log(msg + " use oldparent:", parent);
         }
 
         // calc index where to add
@@ -157,14 +158,13 @@ Yaio.StaticNodeDataStoreService = function(appBase, config, defaultConfig) {
             addIdx = parent.childNodes.length;
         }
         // add node at addIdx
-        console.log(msg + " addNewNode at pos:" + addIdx)
+        console.log(msg + " addNewNode at pos:" + addIdx);
         parent.childNodes.splice(addIdx, 0, node.sysUID);
 
         return node;
     };
 
     me.removeNodeById = function(nodeId) {
-        var svcYaioBase = me.appBase.get('YaioBase');
         var msg = "removeNode node:" + nodeId;
         
         var node = me.getNodeDataById(nodeId, false);
@@ -185,13 +185,13 @@ Yaio.StaticNodeDataStoreService = function(appBase, config, defaultConfig) {
         // delete from list
         me.nodeList[nodeId] = null;
         me.nodeList.splice(me.nodeList.indexOf(nodeId), 1);
-    }
+    };
 
     me.saveNode = function(nodeObj, options) {
         var svcYaioBase = me.appBase.get('YaioBase');
 
         var node = JSON.parse(JSON.stringify(nodeObj));
-        var msg = "_saveNode node: " + options.mode + ' ' + nodeObj['sysUID'];
+        var msg = "_saveNode node: " + options.mode + ' ' + nodeObj.sysUID;
         var now = new Date();
         console.log(msg + " START:", nodeObj);
 
@@ -199,7 +199,7 @@ Yaio.StaticNodeDataStoreService = function(appBase, config, defaultConfig) {
             // mode update
             
             // merge orig and new node
-            var orig = me.getNodeDataById(node['sysUID'], false);
+            var orig = me.getNodeDataById(node.sysUID, false);
             for (var prop in node){
                 orig[prop] = node[prop];
             }
@@ -244,7 +244,7 @@ Yaio.StaticNodeDataStoreService = function(appBase, config, defaultConfig) {
         node['workflowState'] = me.mapWorkflowStates[node['state']];
         
         // save node
-        console.log(msg + " save node:", node)
+        console.log(msg + " save node:", node);
         me.nodeList[node['sysUID']] = node;
         
         console.log(msg + " response:", node);
