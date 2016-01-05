@@ -37,6 +37,19 @@ Yaio.MarkdownRendererService = function(appBase) {
     me._localHtmlId = 1;
 
     /**
+     * Extzened Markdown-syntax
+     */
+    me.extenedBlockRules = {
+        box_start: /^ *(<|&lt;)\!---(BOX\.INFO|BOX\.WARN|BOX\.ALERT|BOX|CONTAINER|STYLE) *([#-_a-zA-Z,;0-9\.: ]*?) *---(>|&gt;)/,
+        box_end:   /^ *(<|&lt;)\!---\/(BOX\.INFO|BOX\.WARN|BOX\.ALERT|BOX|CONTAINER|STYLE) *([#-_a-zA-Z,;0-9\.: ]*?) *---(>|&gt;)/
+    };
+
+    me.extenedInlineRules = {
+        toggler: /(.*?)(<|&lt;)!---(TOGGLER) *([-#_a-zA-Z,;0-9\.]*?) *---(>|&gt;)(.*)$/,
+        splitter: /(.*?)(:\|:)(.*)$/
+    };
+
+    /**
      * calls the global mermaid-formatter
      * @FeatureDomain                GUI
      * @FeatureResult                formats all divs with class=mermaid
@@ -303,7 +316,7 @@ Yaio.MarkdownRendererService = function(appBase) {
 
         // my own img-renderer: for yaio
         renderer.image = me._renderMarkdownImage;
-
+        
         return renderer;
     };
 
@@ -381,7 +394,7 @@ Yaio.MarkdownRendererService = function(appBase) {
         out += '>' + text + '</a>';
         return out;
     };
-
+    
     me._renderMarkdownImage = function(href, title, text) {
         if (this.options.sanitize) {
             var prot;
@@ -405,8 +418,191 @@ Yaio.MarkdownRendererService = function(appBase) {
         return out;
     };
 
+    me.tokenizeExtenedMarkdown = function(lexer, src) {
+        var cap;
+        // check block.msextend
+        if (me.extenedBlockRules.box_start) {
+            if (cap = me.extenedBlockRules.box_start.exec(src)) {
+                src = src.substring(cap[0].length);
+                lexer.tokens.push({
+                    type: 'box_start',
+                    boxtype: cap[2],
+                    attr: cap[3]
+                });
+                return { src: src, found: true };
+            }
+        }
+        if (me.extenedBlockRules.box_end) {
+            if (cap = me.extenedBlockRules.box_end.exec(src)) {
+                src = src.substring(cap[0].length);
+                lexer.tokens.push({
+                    type: 'box_end',
+                    boxtype: cap[2],
+                    attr: cap[3]
+                });
+                return { src: src, found: true };
+            }
+        }
+
+        return { src: src, found: false };
+    };
+ 
+    me.renderExtenedMarkdownToken = function(parser, token) {
+        switch (token.type) {
+            case 'box_start': {
+                return me._renderExtenedMarkdownBoxStart(parser.renderer, token.boxtype, token.attr);
+            }
+            case 'box_end': {
+                return me._renderExtenedMarkdownBoxEnd(parser.renderer, token.boxtype, token.attr);
+            }
+            case 'toggler': {
+                return me._renderExtenedMarkdownToggler(parser.renderer, token.togglertype, token.attr);
+            }
+            case 'splitter': {
+                return me._renderExtenedMarkdownSplitter(parser.renderer, token.togglertype, token.attr, token.pre, token.after);
+            }
+        };
+        return '';
+    };
+
+    me.renderExtenedInlineSyntax = function(inlinelexer, src) {
+        var out = '', cap;
+
+        // check inline.msextend
+        if (me.extenedInlineRules.splitter) {
+            if (cap = me.extenedInlineRules.splitter.exec(src)) {
+                out += me._renderExtenedMarkdownSplitter(inlinelexer.renderer, cap[2], '', 
+                        inlinelexer.output(cap[1]), inlinelexer.output(cap[3]));
+                src = '';
+                return { out: out, src: src, found: true };
+            }
+        }
+        if (me.extenedInlineRules.toggler) {
+            if (cap = me.extenedInlineRules.toggler.exec(src)) {
+                out += inlinelexer.output(cap[1]);
+                out += me._renderExtenedMarkdownToggler(inlinelexer.renderer, cap[3], cap[4]);
+                src = cap[6];
+                return { out: out, src: src, found: true };
+            }
+        }
+        return { out: '', src: src, found: false };
+    };
+    
+    me._renderExtenedMarkdownBoxhtmlStart = function(renderer, type, param) {
+        return '<div class="md-' + type + 'box ' + renderer.genStyleClassesForTag(type + 'box') + '">' +
+               '<div class="md-' + type + 'box-ue ' + renderer.genStyleClassesForTag(type + 'box-ue') + '">' + param + '</div>' +
+               '<div class="md-' + type + 'box-container ' + renderer.genStyleClassesForTag(type + 'box-container') + '">';
+    };
+
+    me._renderExtenedMarkdownBoxStart = function(renderer, type, param) {
+        var res = '';
+
+        if (type.toLowerCase() === 'box') {
+            res = '<div class="md-box ' + renderer.genStyleClassesForTag('box') + ' ' + param + '">';
+        } else if (type.toLowerCase() === 'container') {
+            res = '<div class="md-container md-container-' + param + '" id="md-container-' + param + '">';
+        } else if (type.toLowerCase() === 'box.info') {
+            res = me._renderExtenedMarkdownBoxhtmlStart(renderer, 'info', param);
+        } else if (type.toLowerCase() === 'box.warn') {
+            res = me._renderExtenedMarkdownBoxhtmlStart(renderer, 'warn', param);
+        } else if (type.toLowerCase() === 'box.alert') {
+            res = me._renderExtenedMarkdownBoxhtmlStart(renderer, 'alert', param);
+        } else if (type.toLowerCase() === 'style' && param) {
+            // do set style for next elements
+
+            // split params elements:styles
+            var params = param.split(':'),
+            tags = [],
+            styles = [];
+            if (params.length > 0) {
+                tags = params[0].split(' ');
+                if (params.length > 1) {
+                    styles = params[1].split(' ');
+                }
+            }
+            // set styles for all tags
+            var allTagStyles = renderer.allTagStyles;
+            tags.map(function (tag) {
+                var tagStyles = allTagStyles[tag];
+                if (!tagStyles) {
+                    tagStyles = {};
+                }
+                styles.map(function (style) {
+                    tagStyles[style] = style;
+                });
+                allTagStyles[tag] = tagStyles;
+            });
+            renderer.allTagStyles = allTagStyles;
+        }
+        return res;
+    };
+
+    me._renderExtenedMarkdownBoxEnd = function(renderer, type, param) {
+        var res = '';
+
+        if (type.toLowerCase() === 'box') {
+            res = '</div>';
+        } else if (type.toLowerCase() === 'box.info' ||
+                   type.toLowerCase() === 'box.alert' ||
+                   type.toLowerCase() === 'box.warn') {
+            res = '</div></div>';
+        } else if (type.toLowerCase() === 'container') {
+            res = '</div>';
+        } else if (type.toLowerCase() === 'style' && param) {
+            // do reset style for next elements
+            // split params elements:styles
+            var params = param.split(':'),
+            tags = [],
+            styles = [];
+            if (params.length > 0) {
+                tags = params[0].split(' ');
+                if (params.length > 1) {
+                    styles = params[1].split(' ');
+                }
+            }
+            // reset styles for all tags
+            var allTagStyles = renderer.allTagStyles;
+            tags.map(function (tag) {
+                styles.map(function (style) {
+                    if (allTagStyles[tag] && allTagStyles[tag][style]) {
+                        allTagStyles[tag][style] = '';
+                        delete allTagStyles[tag][style];
+                    }
+                });
+            });
+        }
+        return res;
+    };
+
+    me._renderExtenedMarkdownToggler = function(renderer, type, attr) {
+        var res = '';
+        
+        if (type.toLowerCase() === 'toggler') {
+            res = '<div class="md-togglerparent-' + attr + '" id="md-togglerparent-' + attr + '"></div><script>jMATService.getPageLayoutService().appendBlockToggler("md-togglerparent-' + attr + '", "md-container-' + attr + '");</script>';
+        }
+        return res;
+    };
+
+    me._renderExtenedMarkdownSplitter = function(renderer, type, attr, first, second) {
+        var res = '<label class="md-splitter-first ' + renderer.genStyleClassesForTag('splitter_first') + '">' + first + '</label>' +
+                  '<span class="md-splitter-second ' + renderer.genStyleClassesForTag('splitter_second') + '">' + second + '</span>';
+        return res;
+    };
+
 
     me._init();
     
     return me;
+};
+
+marked.Lexer.prototype.tokenizeExtenedMarkdown = function(lexer, src) {
+    return yaioAppBase.get('YaioMarkdownRenderer').tokenizeExtenedMarkdown(lexer, src);
+};
+
+marked.Parser.prototype.renderExtenedMarkdownToken = function(parser, token) {
+    return yaioAppBase.get('YaioMarkdownRenderer').renderExtenedMarkdownToken(parser, token);
+};
+
+marked.InlineLexer.prototype.renderExtenedInlineSyntax = function(inlinelexer, src) {
+    return yaioAppBase.get('YaioMarkdownRenderer').renderExtenedInlineSyntax(inlinelexer, src);
 };
