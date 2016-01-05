@@ -106,7 +106,7 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
             yaioUtils.getService('YaioEditor').yaioCloseNodeEditor();
             return false;
         }
-    }
+    };
     
     $scope.loadAvailiableTemplates = function() {
         yaioUtils.getService('YaioNodeData').yaioDoLoadAvailiableTemplates()
@@ -124,7 +124,7 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
                     message = "error data: " + data + " header:" + header + " config:" + config;
                     yaioUtils.getService('YaioBase').logError(message, false);
             });
-    }
+    };
 
     /** 
      * callbackhandler to perform actions when type has changed<br>
@@ -188,7 +188,7 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
         if (element && element.files) {
             $scope.setUploadFileUrlResNode(element.files[0]);
         }
-    }
+    };
 
     /**
      * set the uploadFile
@@ -206,10 +206,10 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
         $("#inputResLocRefUrlResNode").val($scope.nodeForEdit.resLocRef);
 
         if (forceDoIndex) {
-            $scope.nodeForEdit["resIndexDMSState"] = true;
+            $scope.nodeForEdit.resIndexDMSState = true;
             $("#inputResIndexDMSStateUrlResNode").prop("checked", true).trigger('input').triggerHandler("change");
         }
-    }
+    };
 
 
     /**

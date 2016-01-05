@@ -234,7 +234,7 @@ Yaio.EditorService = function(appBase) {
             svcYaioBase.logError("error yaioOpenNodeEditor: basenode required", false);
             return null;
         }
-        var nodeId = basenode['sysUID'];
+        var nodeId = basenode.sysUID;
     
         // check mode    
         var fields = new Array();
@@ -436,7 +436,7 @@ Yaio.EditorService = function(appBase) {
         evt.stopPropagation();
         evt.preventDefault();
         evt.dataTransfer.dropEffect = 'copy';
-    }
+    };
 
     /** 
      * handler for drag&drop-drag: open the UrlResNode-Editor with the filedata to create and upload the file
@@ -467,11 +467,11 @@ Yaio.EditorService = function(appBase) {
             resLocRef: file.name,
             resLocName: file.name,
             uploadFile: file
-        }
+        };
 
         // open Editor
         me.yaioOpenNodeEditorForNode(baseNode, 'createuploadurlresnode', baseNode);
-    }
+    };
 
     /** 
      * set uploadFile in angular
@@ -485,7 +485,7 @@ Yaio.EditorService = function(appBase) {
         var uploadFile = basenode.uploadFile;
         var element = document.getElementById("inputTypeUrlResNode");
         angular.element(element).scope().setUploadFileUrlResNode(uploadFile, true);
-    }
+    };
 
 
     /*****************************************
@@ -530,7 +530,7 @@ Yaio.EditorService = function(appBase) {
      * @FeatureResult                ReturnValue String - the recalced type/state
      * @FeatureKeywords              BusinessLogic
      * @param basenode               the node to recalc
-     * @return                       the recalced type
+     * @return string                the recalced type
      */
     me.calcTypeFromIstStand = function(basenode) {
         var type = basenode.type;
