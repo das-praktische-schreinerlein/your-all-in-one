@@ -661,7 +661,7 @@ Yaio.ExplorerTreeService = function(appBase) {
         }
         
         return true;
-    }
+    };
 
     me.setNodeFilter = function(nodeFilter) {
         me.nodeFilter = nodeFilter || {};
@@ -672,7 +672,7 @@ Yaio.ExplorerTreeService = function(appBase) {
         
         // filter existing nodes
         ;
-    }
+    };
     
     me.yaioFancyTreeLoadError = function(e, data) {
         var error = data.error;
