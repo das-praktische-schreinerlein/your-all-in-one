@@ -109,7 +109,7 @@ Yaio.MarkdownEditorService = function(appBase) {
                   click: function () {
                       me.appBase.get('YaioLayout').openSpeechSynthWindow(document.getElementById('preview-content'));
                   }
-              },
+              }
             }
         });    
         
@@ -264,7 +264,7 @@ Yaio.MarkdownEditorService = function(appBase) {
         });
         // add export-link -> buggy to mix jquery and styles
         var yaioAppBaseVarName = me.appBase.config.appBaseVarName;
-        me.$(".ui-dialog-buttonset").append(me.$("<a href='' id='wysiwyg-exportlink'" +
+        me.$(".ui-dialog-buttonset").append(me.$("<a href='' id='wysiwyg-exportlink'"
             + " sdf='ojfvbhwjh'"
             + " onclick=\"" + yaioAppBaseVarName + ".get('YaioFile').downloadAsFile(" 
             +      yaioAppBaseVarName + ".$('#wysiwyg-exportlink'), " 
