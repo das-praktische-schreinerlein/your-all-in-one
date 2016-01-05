@@ -109,5 +109,5 @@
                  "<span class='icon-formrowtoggler icon-formrowtoggleron'>&nbsp;</span>", 
                  "<span class='icon-formrowtoggler icon-formrowtoggleroff'>&nbsp;</span>", "", "");
          jMATService.getJMSServiceObj().appendHtml(html, parentId, "blockToggler");
-      }
+      };
      

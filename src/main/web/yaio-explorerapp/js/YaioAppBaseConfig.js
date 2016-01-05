@@ -61,7 +61,7 @@ window.YaioAppBaseConfig = function() {
                 { fieldName: "docLayoutAddStyleClass", type: "input"},
                 { fieldName: "docLayoutShortName", type: "input"},
                 { fieldName: "docLayoutFlgCloseDiv", type: "checkbox"},
-                { fieldName: "mode", type: "hidden", intern: true},
+                { fieldName: "mode", type: "hidden", intern: true}
             ]
         },
         CreateSymlink: {
@@ -140,7 +140,7 @@ window.YaioAppBaseConfig = function() {
                 { fieldName: "docLayoutTagCommand", type: "select"},
                 { fieldName: "docLayoutAddStyleClass", type: "input"},
                 { fieldName: "docLayoutShortName", type: "input"},
-                { fieldName: "docLayoutFlgCloseDiv", type: "checkbox"},
+                { fieldName: "docLayoutFlgCloseDiv", type: "checkbox"}
             ]
         },
         SymLinkNode: {
