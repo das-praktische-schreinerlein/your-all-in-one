@@ -187,7 +187,7 @@ JsHelferlein.SpeechSynthHelperService = function(appBase, config) {
         var svcLogger = me.appBase.get("Logger");
 
         // set default maxLength if not set
-        if (! (maxLength > 100)) {
+        if (!(maxLength > 100)) {
             maxLength = 100;
         }
         

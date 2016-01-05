@@ -24,7 +24,7 @@ JsHelferlein.ServiceBase = function(appBase, config, defaultConfig) {
             svcLogger.logError("not implemented");
         }
         throw "function is not implemented";
-    }
+    };
     
     me._init = function() {
         // check Config

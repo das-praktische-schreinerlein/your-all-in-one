@@ -203,8 +203,8 @@ Yaio.BaseService = function(appBase) {
     };
     
     me.getURLParameter = function(name) {
-        return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
-    }
+        return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
+    };
     
     me.getBaseRefFromUrl = function(url) {
         var withoutAncor = url.split('#')[0];
@@ -212,7 +212,7 @@ Yaio.BaseService = function(appBase) {
         var withoutFile = withoutParams.split('/');
         withoutFile.splice(-1, 1);
         return withoutFile.join('/');
-    }
+    };
     
     me._init();
     

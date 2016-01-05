@@ -137,7 +137,7 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
             + '/' + encodeURI(searchOptions.strNotNodePraefix)
             + '/';
         return newUrl;
-    }
+    };
     
     /** 
      * send ajax-request for fulltextsearch to server and add reszult to scope<br>
@@ -158,7 +158,7 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
         return yaioUtils.getService('YaioNodeData').yaioDoFulltextSearch(searchOptions)
             .then(function(angularResponse) {
                 // success handler
-                $scope.doFulltextSearchSuccessHandler(searchOptions, angularResponse.data)
+                $scope.doFulltextSearchSuccessHandler(searchOptions, angularResponse.data);
             }, function(angularResponse) {
                 // error handler
                 var data = angularResponse.data;
@@ -191,7 +191,7 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
             // error
             yaioUtils.getService('YaioBase').logError("error loading nodes:" + yaioNodeSearchResponse.stateMsg + " details:" + yaioNodeSearchResponse, true);
         }
-    }
+    };
 
     /** 
      * callbackhandler to rendernodeLine for node

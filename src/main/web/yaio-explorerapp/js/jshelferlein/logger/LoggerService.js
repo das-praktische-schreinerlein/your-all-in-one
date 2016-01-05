@@ -85,7 +85,7 @@ JsHelferlein.LoggerService = function(appBase, config) {
      * Loggen von Warnungen
      * - falls ownConsoleElement aktiviert - Logging in eigene Console mit logOwnConsole
      * - falls webLoggerUrl und isWarningWebLoogger aktiviert - Logging auf WebLogger mit logWebLogger
-     * @param ext                    
+     * @param text
      */
     me.logWarning = function(text) {
         me.console.warn(" WARNING:" + text);
@@ -97,7 +97,7 @@ JsHelferlein.LoggerService = function(appBase, config) {
      * Loggen von Infos
      * - falls ownConsoleElement aktiviert - Logging in eigene Console mit logOwnConsole
      * - falls webLoggerUrl und isInfoWebLoogger aktiviert - Logging auf WebLogger mit logWebLogger
-     * @param ext                    
+     * @param text
      */
     me.logInfo = function(text) {
         me.console.info(" INFO:" + text);
@@ -109,7 +109,7 @@ JsHelferlein.LoggerService = function(appBase, config) {
      * Loggen von Debugmeldungen
      * - falls ownConsoleElement aktiviert - Logging in eigene Console mit logOwnConsole
      * - falls webLoggerUrl und isDebugWebLoogger aktiviert - Logging auf WebLogger mit logWebLogger
-     * @param ext                    
+     * @param text
      */
     me.logDebug = function(text) {
         me.console.debug(" DEBUG:" + text);
@@ -168,7 +168,7 @@ JsHelferlein.LoggerService = function(appBase, config) {
                 // neues Logelement erzeugen
                 var logElement = document.createElement('script');
                 logElement.src = url;
-                parent = document.getElementsByTagName('script')[0];
+                var parent = document.getElementsByTagName('script')[0];
                 parent.parentNode.insertBefore(logElement, parent);
 
             } catch (e) {

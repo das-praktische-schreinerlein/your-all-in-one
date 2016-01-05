@@ -54,7 +54,7 @@ JsHelferlein.CookieHelperService = function(appBase) {
         var nameFull = name + "=";
         var cookie = document.cookie;
         var ca = cookie.split(';');
-        if (ca.length == 0) {
+        if (ca.length === 0) {
             ca = [cookie];
         }
         for(var i=0;i < ca.length;i++) {
@@ -66,7 +66,7 @@ JsHelferlein.CookieHelperService = function(appBase) {
             }
 
             // Value extrahieren
-            if (c.indexOf(nameFull) == 0) {
+            if (c.indexOf(nameFull) === 0) {
                 return c.substring(nameFull.length,c.length);
             }
         }
