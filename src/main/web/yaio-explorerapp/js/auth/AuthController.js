@@ -28,7 +28,7 @@ yaioApp.controller('AuthController', function($rootScope, $scope, $location, $ro
     
     $scope.login = function() {
         return yaioUtils.getService('YaioNodeData').yaioDoLogin($scope.credentials)
-            .then(function success(data) {
+            .then(function success() {
                     // handle success
                     authorization.authentificate(function() {
                         if ($rootScope.authenticated) {
@@ -43,7 +43,7 @@ yaioApp.controller('AuthController', function($rootScope, $scope, $location, $ro
                             $scope.error = true;
                         }
                     });
-                }, function error(data) {
+                }, function error() {
                     // handle error
                     $location.path(yaioUtils.getConfig().appLoginUrl);
                     $scope.error = true;
@@ -53,11 +53,11 @@ yaioApp.controller('AuthController', function($rootScope, $scope, $location, $ro
     
     $scope.logout = function() {
         return yaioUtils.getService('YaioNodeData').yaioDoLogout()
-            .then(function success(data) {
+            .then(function success() {
                 // handle success
                 $rootScope.authenticated = false;
                 $location.path(yaioUtils.getConfig().appRootUrl);
-            }, function error(data) {
+            }, function error() {
                 // handle error
                 $location.path(yaioUtils.getConfig().appRootUrl);
                 $rootScope.authenticated = false;
@@ -67,6 +67,6 @@ yaioApp.controller('AuthController', function($rootScope, $scope, $location, $ro
     
     if ($routeParams.logout) {
         $scope.logout();
-    };
+    }
 });
 

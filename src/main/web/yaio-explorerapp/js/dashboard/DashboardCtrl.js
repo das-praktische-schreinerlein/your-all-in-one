@@ -30,8 +30,6 @@ yaioApp.controller('DashboardCtrl', function($rootScope, $scope, $location, $rou
         if (! $rootScope.authenticated) {
             $location.path(yaioUtils.getConfig().appLoginUrl);
             $scope.error = false;
-        } else {
-            // load data
         }
     });
 });

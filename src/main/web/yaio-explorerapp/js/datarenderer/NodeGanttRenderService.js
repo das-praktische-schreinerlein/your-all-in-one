@@ -49,7 +49,7 @@ Yaio.NodeGanttRenderService = function(appBase) {
      * @param label                  the label to show if aufwand >0
      * @param $divLine               optional ganttContainer to use - if not set #gantt_" + type + "_container_" + basenode.sysUID will be used
      */
-    me.fillGanttBlock = function(basenode, type, label, $divLine) {
+    me.fillGanttBlock = function (basenode, type, label, $divLine) {
         var msg = "ganttblock for node:" + basenode.sysUID;
     
         // get divs
