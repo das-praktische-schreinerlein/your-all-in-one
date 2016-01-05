@@ -90,7 +90,7 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
                                 var data = angularResponse.data;
                                 var header = angularResponse.header;
                                 var config = angularResponse.config;
-                                var message = "error loading activenode with url: " + activeNodeUrl;
+                                var message = "error loading activenode: " + activeNodeId;
                                 yaioUtils.getService('YaioBase').logError(message, true);
                                 message = "error data: " + data + " header:" + header + " config:" + config;
                                 yaioUtils.getService('YaioBase').logError(message, false);
@@ -167,7 +167,7 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
             var tries = 20;
             var templateIsLoadedTimer;
             var templateIsLoadedHandler = function() {
-                tries--
+                tries--;
                 var loaded = $("#masterTr").length;
                 if (loaded || tries <= 0) {
                     clearInterval(templateIsLoadedTimer);
@@ -188,7 +188,7 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
             yaioUtils.getService('YaioBase').logError("error loading nodes:" + yaioNodeActionResponse.stateMsg 
                     + " details:" + yaioNodeActionResponse, true);
         }
-    }
+    };
 
     /** 
      * export GUI As Overview
@@ -287,14 +287,15 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
         }
         console.log("setExplorerFilter: set filter:", nodeFilter);
         yaioUtils.getService('YaioExplorerTree').setNodeFilter(nodeFilter);
-    }
+    };
     
     
     $scope.initDragDropFileUploader = function(divId) {
+        // change to https://www.npmjs.com/package/angular-draganddrop
         // Setup the Uploadfile-Listener
         var dropZone = document.getElementById(divId);
         dropZone.addEventListener('dragover', function (event) { console.log("dragover:", event); yaioUtils.getService('YaioEditor').handleUploadFileUrlResNodeDragOver(event); }, false);
         dropZone.addEventListener('drop', function (event) { console.log("drop:", event); yaioUtils.getService('YaioEditor').handleUploadFileUrlResNodeSelect(event); }, false);
-    }
+    };
 
 });
