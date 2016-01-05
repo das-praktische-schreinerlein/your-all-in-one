@@ -21,6 +21,7 @@
  * @copyright                    Copyright (c) 2014, Michael Schreiner
  * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
+'use strict';
 
 marked.Lexer.prototype.extenedBlockRules = {
     box_start: /^ *(<|&lt;)\!---(BOX\.INFO|BOX\.WARN|BOX\.ALERT|BOX|CONTAINER|STYLE) *([#-_a-zA-Z,;0-9\.: ]*?) *---(>|&gt;)/,
@@ -70,7 +71,7 @@ marked.Parser.prototype.renderExtenedMarkdownToken = function(parser, token) {
         case 'splitter': {
             return parser.renderer._renderExtenedMarkdownSplitter(parser.renderer, token.togglertype, token.attr, token.pre, token.after);
         }
-    };
+    }
     return '';
 };
 
@@ -193,7 +194,8 @@ marked.Renderer.prototype._renderExtenedMarkdownToggler = function(renderer, typ
     var res = '';
     
     if (type.toLowerCase() === 'toggler') {
-        res = '<div class="md-togglerparent-' + attr + '" id="md-togglerparent-' + attr + '"></div><script>jMATService.getPageLayoutService().appendBlockToggler("md-togglerparent-' + attr + '", "md-container-' + attr + '");</script>';
+        res = '<div class="md-togglerparent-' + attr + '" id="md-togglerparent-' + attr + '"></div>' +
+              '<script>jMATService.getPageLayoutService().appendBlockToggler("md-togglerparent-' + attr + '", "md-container-' + attr + '");</script>';
     }
     return res;
 };

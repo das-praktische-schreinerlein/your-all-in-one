@@ -249,7 +249,7 @@ Yaio.MarkdownRendererService = function(appBase) {
         var url = me.appBase.config.plantUmlBaseUrl + "plantuml/svg/" + encode64(deflate(s, 9));
 
         return url;
-    }
+    };
 
     /**
      * prepare the text to format as mermaid
