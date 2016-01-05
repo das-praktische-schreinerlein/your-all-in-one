@@ -360,6 +360,7 @@ module.exports = function( grunt ){
             srcBase + 'yaio-explorerapp/js/datarenderer/*.js',
             srcBase + 'yaio-explorerapp/js/dataservices/*.js',
             srcBase + 'yaio-explorerapp/js/explorer/ExplorerActionService.js',
+            srcBase + 'yaio-explorerapp/js/explorer/ExplorerConverterService.js',
             srcBase + 'yaio-explorerapp/js/explorer/ExplorerTreeService.js',
             // angular
             srcBase + 'yaio-explorerapp/js/YaioApp.js',
@@ -394,6 +395,9 @@ module.exports = function( grunt ){
             srcBase + 'yaio-explorerapp/js/utils/FileService.js',
             srcBase + 'yaio-explorerapp/js/editor/EditorService.js',
             srcBase + 'yaio-explorerapp/js/layout/LayoutService.js',
+            srcBase + 'yaio-explorerapp/js/wysiwyg/ChecklistParserService.js',
+            srcBase + 'yaio-explorerapp/js/wysiwyg/MarkdownConverterService.js',
+            srcBase + 'yaio-explorerapp/js/wysiwyg/MarkdownRendererService.js',
             srcBase + 'yaio-explorerapp/js/wysiwyg/FormatterService.js',
             srcBase + 'yaio-explorerapp/js/wysiwyg/MarkdownEditorService.js',
             srcBase + 'yaio-explorerapp/js/utils/ExportedDataService.js'
@@ -856,13 +860,15 @@ module.exports = function( grunt ){
     });
 
     // register tasks
-    grunt.registerTask('default',   ['distfull']);
-    grunt.registerTask('vendors',   ['clean:bower', 'bower', 'copy:bower2vendors', 'copy:bowerbin2vendors']);
-    grunt.registerTask('distfull',  ['vendors', 'clean:dist', 'copy:archiv2dist', 'concat', 'copy:vendors2dist', 'copy:yaiores2dist', 'replace:versionOnDist', 'replace:versionOnRes', 'copy:dist2archiv']);
-    grunt.registerTask('distyaio',  ['concat', 'copy:yaiores2dist', 'replace:versionOnDist', 'replace:versionOnRes', 'copy:dist2archiv']);
-    grunt.registerTask('dist',      ['distfull']);
-    grunt.registerTask('unit-test', ['dist', 'karma:continuous:start', 'watch:karma']);
-    grunt.registerTask('e2e-test',  ['dist', 'protractor:continuous', 'watch:protractor']);
+    grunt.registerTask('default',      ['distfull']);
+    grunt.registerTask('vendorslocal', ['copy:bower2vendors', 'copy:bowerbin2vendors']);
+    grunt.registerTask('vendorsfull',  ['clean:bower', 'bower', 'vendorslocal']);
+    grunt.registerTask('distyaio',     ['concat', 'copy:yaiores2dist', 'replace:versionOnDist', 'replace:versionOnRes', 'copy:dist2archiv']);
+    grunt.registerTask('distlocal',    ['vendorslocal', 'copy:vendors2dist', 'distyaio']);
+    grunt.registerTask('distfull',     ['vendorsfull', 'clean:dist', 'copy:archiv2dist', 'concat', 'copy:vendors2dist', 'copy:yaiores2dist', 'replace:versionOnDist', 'replace:versionOnRes', 'copy:dist2archiv']);
+    grunt.registerTask('dist',         ['distfull']);
+    grunt.registerTask('unit-test',    ['dist', 'karma:continuous:start', 'watch:karma']);
+    grunt.registerTask('e2e-test',     ['dist', 'protractor:continuous', 'watch:protractor']);
 
     // load grunt tasks
     grunt.loadNpmTasks('grunt-bower-task');
