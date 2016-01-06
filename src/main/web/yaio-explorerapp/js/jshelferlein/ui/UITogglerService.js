@@ -107,7 +107,112 @@ JsHelferlein.UIToggler = function(appBase) {
         // run the effect
         me.$( id ).toggle( selectedEffect, options, 500 );
     };
-   
+    
+    me.appendToggler = function(parentId, containerId, type) {
+        var $ele = me.$(containerId + "_On");
+        if ($ele.length <= 0) {
+            // create toggler
+            console.log("createTogglerIfNotExists link not exists: create new toggler parent=" + parentId 
+                    + " containerId=" + containerId);
+            var html = me._createTogglerElement(containerId, type);
+            me.$(parentId).append(html);
+        } else {
+            console.log("createTogglerIfNotExists link exists: skip new toggler parent=" + parentId 
+                    + " containerId=" + containerId);
+        }
+    };
+    
+    me._createTogglerElement = function(containerId, type) {
+        var containerClass = containerId.replace(".", "");
+        var html;
+        if (type === 'text') {
+            html = me._createTogglerLinks(containerId, containerId,
+                "<span class='text-toggler text-toggleron'>[ mehr... ]</span>",
+                "<span class='text-toggler text-toggleroff'>[ weniger... ]</span>", '', '');
+        } else if (type === 'icon2') {
+            html = me._createTogglerLinks(containerId, containerId,
+                "",
+                "", "toggler_show", "toggler_hide");
+        } else if (type === 'icon' || 1) {
+            html = me._createTogglerLinks(containerId, containerId,
+                "<span class='icon-toggler icon-toggleron'>&nbsp;</span>",
+                "<span class='icon-toggler icon-toggleroff'>&nbsp;</span>", "", "");
+        }
+        html = '<div class="blockToggler block4Toggler' + containerClass + '" togglerbaseid="' + containerId + '" toggleid="' + containerId + '">' + html + '</div>';
+        return html;
+    };
+    
+    /**
+     * FormRow-Toggler erzeugen (blendet Formularfelder eines Typs ein/aus)
+     * @param togglerBaseId
+     * @param toggleClassName
+     * @param htmlOn
+     * @param htmlOff
+     * @param addStyleOn
+     * @param addStyleOff
+     * @returns
+     */
+    me._createTogglerLinks = function(togglerBaseId, toggleClassName,
+            htmlOn, htmlOff, addStyleOn, addStyleOff) {
+        // parameter pruefen
+        var yaioAppBaseVarName = me.appBase.config.appBaseVarName;
+        if (! togglerBaseId) {
+           return null;
+        }
+
+        // html erzeugen
+        var togglerBaseClass = togglerBaseId.replace(".", "");
+        var html = "<a href=\"#\" onclick=\"javascript: " + yaioAppBaseVarName + ".get('UIToggler').toggle('" + togglerBaseId + "', '" + toggleClassName + "', false); return false;\" class=\"toggler togglerOn " + togglerBaseClass + "_On " + addStyleOn + "\" id=\"" + togglerBaseClass + "_On\">";
+        html += htmlOn + "</a>";
+        html += "<a href=\"#\" onclick=\"javascript: " + yaioAppBaseVarName + ".get('UIToggler').toggle('" + togglerBaseId + "', '" + toggleClassName + "', true); return false;\" class=\"toggler togglerOff " + togglerBaseClass + "_Off " + addStyleOff + "\" style=\"display: none;\" id=\"" + togglerBaseClass + "_Off\">";
+        html += htmlOff + "</a>";
+
+        return html;
+    };
+
+    /** 
+     * Toggle the specific toggleContainer managed by toggler
+     * @FeatureDomain                Layout Toggler
+     * @FeatureResult                Updates DOM
+     * @FeatureKeywords              GUI Tree Rendering
+     * @param toggleContainerId      JQuery-Filter (html.id, style, objectlist...) for the specific toggleContainer to toggle
+     * @param togglerId              JQuery-Filter (html.id, style, objectlist...) for the specific toggle to toggle
+     */
+    me.toggle = function(toggleContainerId, togglerId) {
+        if (me.$(togglerId).hasClass('toggler_hidden')) {
+            // show
+            me.$(toggleContainerId).slideDown(1000);
+            me.$(togglerId).addClass('toggler_show').removeClass('toggler_hidden');
+        } else {
+            // hide
+            me.$(toggleContainerId).slideUp(1000);
+            me.$(togglerId).addClass('toggler_hidden').removeClass('toggler_show');
+        }
+    };
+
+    /** 
+     * Toggle all toggleContainer managed by the masterToggler
+     * @FeatureDomain                Layout Toggler
+     * @FeatureResult                Updates DOM
+     * @FeatureKeywords              GUI Tree Rendering
+     * @param masterTogglerId        JQuery-Filter (html.id, style, objectlist...) for the masterToggler 
+     * @param toggleContainerId      JQuery-Filter (html.id, style, objectlist...) for the specific toggleContainer to toggle
+     * @param togglerId              JQuery-Filter (html.id, style, objectlist...) for the specific toggle to toggle
+     */
+    me.toggleAllToggler = function(masterTogglerId, toggleContainerId, togglerId) {
+        if (me.$(masterTogglerId).hasClass('toggler_hidden')) {
+            // show all
+            me.$(toggleContainerId).slideDown(1000);
+            me.$(togglerId).addClass('toggler_show').removeClass('toggler_hidden');
+            me.$(masterTogglerId).addClass('toggler_show').removeClass('toggler_hidden');
+        } else {
+            // hide all
+            me.$(toggleContainerId).slideUp(1000);
+            me.$(togglerId).addClass('toggler_hidden').removeClass('toggler_show');
+            me.$(masterTogglerId).addClass('toggler_show').removeClass('toggler_hidden');
+        }
+    };
+
     me._init();
 
     return me;

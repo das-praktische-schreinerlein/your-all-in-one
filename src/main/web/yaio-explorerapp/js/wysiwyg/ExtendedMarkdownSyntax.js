@@ -192,10 +192,18 @@ marked.Renderer.prototype._renderExtenedMarkdownBoxEnd = function(renderer, type
 
 marked.Renderer.prototype._renderExtenedMarkdownToggler = function(renderer, type, attr) {
     var res = '';
-    
+    var params = (attr || '').split(','),
+        id, togglerType;
+    if (params.length > 0) {
+        id = params[0].replace(" ");
+        if (params.length > 1) {
+            togglerType = params[1];
+        }
+    }
+
     if (type.toLowerCase() === 'toggler') {
-        res = '<div class="md-togglerparent-' + attr + '" id="md-togglerparent-' + attr + '"></div>' +
-              '<script>jMATService.getPageLayoutService().appendBlockToggler("md-togglerparent-' + attr + '", "md-container-' + attr + '");</script>';
+        res = '<div class="md-togglerparent md-togglerparent-' + id + '" id="md-togglerparent-' + id + '"></div>' +
+              '<script>yaioAppBase.get(\'UIToggler\').appendToggler(".md-togglerparent-' + id + '", ".md-container-' + id + '", "' + togglerType + '");</script>';
     }
     return res;
 };

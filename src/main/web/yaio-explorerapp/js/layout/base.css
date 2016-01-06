@@ -86,6 +86,8 @@ a.yaio-icon-createsymlink,
 a.yaio-icon-remove,
 .icon-formrowtoggleroff,
 .icon-formrowtoggleron,
+.icon-toggleroff,
+.icon-toggleron,
 a.icon-preview,
 a.icon-markdownhelp,
 a.icon-wysiwyg,
@@ -107,6 +109,8 @@ a.yaio-icon-createsymlink,
 a.yaio-icon-remove,
 .icon-formrowtoggleroff,
 .icon-formrowtoggleron,
+.icon-toggleroff,
+.icon-toggleron,
 a.icon-preview,
 a.icon-markdownhelp,
 a.icon-wysiwyg,
@@ -147,11 +151,11 @@ a.toggler_hidden {
   margin-left: 3px;
   background-position: -64px -32px;
 }
-.icon-formrowtoggleroff {
+.icon-formrowtoggleroff, .icon-toggleroff {
   margin-left: 3px;
   background-position: -64px -80px;
 }
-.icon-formrowtoggleron {
+.icon-formrowtoggleron, .icon-toggleron {
   margin-left: 3px;
   background-position: -32px -80px;
 }

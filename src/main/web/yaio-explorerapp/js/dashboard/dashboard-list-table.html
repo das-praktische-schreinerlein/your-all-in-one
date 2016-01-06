@@ -29,7 +29,7 @@
                 <td ng-init="renderNodeLine(node)"/>
                 <td />
                 <td class="container_field fieldtype_actions" >
-                  <div class='fieldtype_sysToggler toggler_show'>
+                  <div class='fieldtype_sysToggler'>
                       <a ng-click="yaioUtils.toggleSysContainerForNode(node);"
                          ng-if="yaioUtils.getService('YaioAccessManager').getAvailiableNodeAction('showsysdata', node.sysUID, true)"
                          id='toggler_sys_{{node.sysUID }}'

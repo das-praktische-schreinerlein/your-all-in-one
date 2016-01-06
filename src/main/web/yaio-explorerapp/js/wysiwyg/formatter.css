@@ -456,23 +456,31 @@ li.md-list-horiz {
     width: 30%;
 }
 
+
+/*****************************************
+ * toggler
+ *****************************************/
+div.md-togglerparent {
+    display: inline-block;
+}
+
 /*****************************************
  * splitter
  *****************************************/
-li label.md-splitter-first {
+li label.md-splitter-first, p label.md-splitter-first {
     display: inline-block;
     font-weight: bold;
     width: 29%;
 }
-li span.md-splitter-second {
+li span.md-splitter-second, p span.md-splitter-second {
     display: inline-block;
     width: 69%;
 }
 
-li label.md-hide-label {
+li label.md-hide-label, p label.md-hide-label {
     display: none;
 }
-li span.md-hide-label {
+li span.md-hide-label, p span.md-hide-label {
     display: inline-block;
     width: 99%;
 }

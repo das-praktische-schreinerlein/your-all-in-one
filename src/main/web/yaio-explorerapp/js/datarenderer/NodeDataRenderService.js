@@ -76,7 +76,7 @@ Yaio.NodeDataRenderService = function(appBase) {
             // generate actions
             var actionHtml = "";
             if (svcYaioAccessManager.getAvailiableNodeAction('showsysdata', basenode.sysUID, false)) {
-                actionHtml += "<div class='fieldtype_sysToggler toggler_show'>"
+                actionHtml += "<div class='fieldtype_sysToggler'>"
                     + "<a onclick=\"javascript: " + yaioAppBaseVarName + ".get('YaioExplorerAction').toggleNodeSysContainer('" + basenode.sysUID + "'); return false;\""
                             + " id='toggler_sys_" + basenode.sysUID + "'"
                             + " class='' "

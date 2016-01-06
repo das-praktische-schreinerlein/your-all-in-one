@@ -24,7 +24,7 @@
                       <div class="container_field fieldtype_additionaldata fieldtype_fromto field_istChildrenSum field_center" translate="fancytree.table.headline.istChildrenSum"> <br />Zeitraum</div>
                       <div class="container_field fieldtype_additionaldata fieldtype_aufwand field_planChildrenSumAufwand field_center" translate="fancytree.table.headline.planChildrenSumAufwand">Plan<br />Aufwand</div>
                       <div class="container_field fieldtype_additionaldata fieldtype_fromto field_planChildrenSum field_center" translate="fancytree.table.headline.planChildrenSum"> <br />Zeitraum</div>
-                      <div class="container_field fieldtype_additionaldata fieldtype_descToggler toggler_show">
+                      <div class="container_field fieldtype_additionaldata fieldtype_descToggler">
                          <br />
                          <a lang="tech" data-tooltip='tooltip.command.ToggleDescAll' id="toggler_desc_all" onclick="yaioAppBase.get('YaioExplorerAction').toggleAllNodeDescContainer(); return false;" href="#" class="toggler_hidden"></a>
                       </div>
@@ -45,7 +45,7 @@
                     <!-- show actions-header -->
                     <span translate="fancytree.table.headline.actions"></span>
                     <br />
-                    <div class="fieldtype_sysToggler toggler_show">
+                    <div class="fieldtype_sysToggler">
                       <a lang="tech" data-tooltip='tooltip.command.ToggleSysAll' id="toggler_sys_all" 
                          ng-if="yaioUtils.getService('YaioAccessManager').getAvailiableNodeAction('showsysdata', null, true)"
                          onclick="yaioAppBase.get('YaioExplorerAction').toggleAllNodeSysContainer(); return false;" 
