@@ -77,9 +77,9 @@ marked.Parser.prototype.renderExtenedMarkdownToken = function(parser, token) {
 
 marked.InlineLexer.prototype.extenedInlineRules = {
     toggler: /([\s\S]*?)(<|&lt;)!---(TOGGLER) *([-#_a-zA-Z,;0-9\.]*?) *---(>|&gt;)([\s\S]*)/,
-    splitter: /([\s\S]*?)(:\|:)([\s\S]*)/,
-    box_start: /([\s\S]*?)(<|&lt;)\!---(BOX\.INFO|BOX\.WARN|BOX\.ALERT|BOX|CONTAINER|STYLE?) *([#-_a-zA-Z,;0-9\.: ]*?) *---(>|&gt;)([\s\S]*)/,
-    box_end:   /([\s\S]*?)(<|&lt;)\!---\/(BOX\.INFO|BOX\.WARN|BOX\.ALERT|BOX|CONTAINER|STYLE?) *([#-_a-zA-Z,;0-9\.: ]*?) *---(>|&gt;)([\s\S]*)/
+    splitter: /([\s\S]*?)(:\|:)(.*)([\s\S]*)/,
+    box_start: /(.*?)(<|&lt;)\!---(BOX\.INFO|BOX\.WARN|BOX\.ALERT|BOX|CONTAINER|STYLE?) *([#-_a-zA-Z,;0-9\.: ]*?) *---(>|&gt;)([\s\S]*)/,
+    box_end:   /(.*?)(<|&lt;)\!---\/(BOX\.INFO|BOX\.WARN|BOX\.ALERT|BOX|CONTAINER|STYLE?) *([#-_a-zA-Z,;0-9\.: ]*?) *---(>|&gt;)([\s\S]*)/
 };
 
 marked.InlineLexer.prototype.renderExtenedInlineSyntax = function(inlinelexer, src) {
@@ -90,7 +90,8 @@ marked.InlineLexer.prototype.renderExtenedInlineSyntax = function(inlinelexer, s
         if (cap = inlinelexer.extenedInlineRules.splitter.exec(src)) {
             out += inlinelexer.renderer._renderExtenedMarkdownSplitter(inlinelexer.renderer, cap[2], '', 
                     inlinelexer.output(cap[1]), inlinelexer.output(cap[3]));
-            src = '';
+            src = cap[4];
+            console.error("splitter src:" + src + " cap3:" + cap[3]);
             return { out: out, src: src, found: true };
         }
     }
@@ -115,6 +116,7 @@ marked.InlineLexer.prototype.renderExtenedInlineSyntax = function(inlinelexer, s
             out += inlinelexer.output(cap[1]);
             out += inlinelexer.renderer._renderExtenedMarkdownBoxEnd(inlinelexer.renderer, cap[3], cap[4]);
             src = cap[6];
+            console.error("boxend src:" + src + " cap3:" + cap[3]);
             return { out: out, src: src, found: true };
         }
     }
