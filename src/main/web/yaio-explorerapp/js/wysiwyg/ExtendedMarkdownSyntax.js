@@ -24,8 +24,8 @@
 'use strict';
 
 marked.Lexer.prototype.extenedBlockRules = {
-    box_start: /^ *(<|&lt;)\!---(BOX\.INFO|BOX\.WARN|BOX\.ALERT|BOX|CONTAINER|STYLE) *([#-_a-zA-Z,;0-9\.: ]*?) *---(>|&gt;)/,
-    box_end:   /^ *(<|&lt;)\!---\/(BOX\.INFO|BOX\.WARN|BOX\.ALERT|BOX|CONTAINER|STYLE) *([#-_a-zA-Z,;0-9\.: ]*?) *---(>|&gt;)/
+    box_start: /^ *(<|&lt;)\!---(BOX\.INFO|BOX\.WARN|BOX\.ALERT|BOX|CONTAINER|STYLE?) *([#-_a-zA-Z,;0-9\.: ]*?) *---(>|&gt;)/,
+    box_end:   /^ *(<|&lt;)\!---\/(BOX\.INFO|BOX\.WARN|BOX\.ALERT|BOX|CONTAINER|STYLE?) *([#-_a-zA-Z,;0-9\.: ]*?) *---(>|&gt;)/
 };
 
 marked.Lexer.prototype.tokenizeExtenedMarkdown = function(lexer, src) {
@@ -76,8 +76,10 @@ marked.Parser.prototype.renderExtenedMarkdownToken = function(parser, token) {
 };
 
 marked.InlineLexer.prototype.extenedInlineRules = {
-    toggler: /(.*?)(<|&lt;)!---(TOGGLER) *([-#_a-zA-Z,;0-9\.]*?) *---(>|&gt;)(.*)$/,
-    splitter: /(.*?)(:\|:)(.*)$/
+    toggler: /([\s\S]*?)(<|&lt;)!---(TOGGLER) *([-#_a-zA-Z,;0-9\.]*?) *---(>|&gt;)([\s\S]*)/,
+    splitter: /([\s\S]*?)(:\|:)([\s\S]*)/,
+    box_start: /([\s\S]*?)(<|&lt;)\!---(BOX\.INFO|BOX\.WARN|BOX\.ALERT|BOX|CONTAINER|STYLE?) *([#-_a-zA-Z,;0-9\.: ]*?) *---(>|&gt;)([\s\S]*)/,
+    box_end:   /([\s\S]*?)(<|&lt;)\!---\/(BOX\.INFO|BOX\.WARN|BOX\.ALERT|BOX|CONTAINER|STYLE?) *([#-_a-zA-Z,;0-9\.: ]*?) *---(>|&gt;)([\s\S]*)/
 };
 
 marked.InlineLexer.prototype.renderExtenedInlineSyntax = function(inlinelexer, src) {
@@ -96,6 +98,22 @@ marked.InlineLexer.prototype.renderExtenedInlineSyntax = function(inlinelexer, s
         if (cap = inlinelexer.extenedInlineRules.toggler.exec(src)) {
             out += inlinelexer.output(cap[1]);
             out += inlinelexer.renderer._renderExtenedMarkdownToggler(inlinelexer.renderer, cap[3], cap[4]);
+            src = cap[6];
+            return { out: out, src: src, found: true };
+        }
+    }
+    if (inlinelexer.extenedInlineRules.box_start) {
+        if (cap = inlinelexer.extenedInlineRules.box_start.exec(src)) {
+            out += inlinelexer.output(cap[1]);
+            out += inlinelexer.renderer._renderExtenedMarkdownBoxStart(inlinelexer.renderer, cap[3], cap[4]);
+            src = cap[6];
+            return { out: out, src: src, found: true };
+        }
+    }
+    if (inlinelexer.extenedInlineRules.box_end) {
+        if (cap = inlinelexer.extenedInlineRules.box_end.exec(src)) {
+            out += inlinelexer.output(cap[1]);
+            out += inlinelexer.renderer._renderExtenedMarkdownBoxEnd(inlinelexer.renderer, cap[3], cap[4]);
             src = cap[6];
             return { out: out, src: src, found: true };
         }
