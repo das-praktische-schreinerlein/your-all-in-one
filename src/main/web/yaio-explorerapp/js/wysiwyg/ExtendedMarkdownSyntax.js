@@ -91,7 +91,6 @@ marked.InlineLexer.prototype.renderExtenedInlineSyntax = function(inlinelexer, s
             out += inlinelexer.renderer._renderExtenedMarkdownSplitter(inlinelexer.renderer, cap[2], '', 
                     inlinelexer.output(cap[1]), inlinelexer.output(cap[3]));
             src = cap[4];
-            console.error("splitter src:" + src + " cap3:" + cap[3]);
             return { out: out, src: src, found: true };
         }
     }
@@ -116,7 +115,6 @@ marked.InlineLexer.prototype.renderExtenedInlineSyntax = function(inlinelexer, s
             out += inlinelexer.output(cap[1]);
             out += inlinelexer.renderer._renderExtenedMarkdownBoxEnd(inlinelexer.renderer, cap[3], cap[4]);
             src = cap[6];
-            console.error("boxend src:" + src + " cap3:" + cap[3]);
             return { out: out, src: src, found: true };
         }
     }
