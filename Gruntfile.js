@@ -397,6 +397,7 @@ module.exports = function( grunt ){
             srcBase + 'yaio-explorerapp/js/layout/LayoutService.js',
             srcBase + 'yaio-explorerapp/js/wysiwyg/ChecklistParserService.js',
             srcBase + 'yaio-explorerapp/js/wysiwyg/MarkdownConverterService.js',
+            srcBase + 'yaio-explorerapp/js/wysiwyg/ExtendedMarkdownSyntax.js',
             srcBase + 'yaio-explorerapp/js/wysiwyg/MarkdownRendererService.js',
             srcBase + 'yaio-explorerapp/js/wysiwyg/FormatterService.js',
             srcBase + 'yaio-explorerapp/js/wysiwyg/MarkdownEditorService.js',
