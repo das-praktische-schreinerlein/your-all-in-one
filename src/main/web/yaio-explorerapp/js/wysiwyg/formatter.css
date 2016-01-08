@@ -428,6 +428,9 @@ div.container-content-desc tr {
 .md-background-info {
     background-color: #dee9ef;
 }
+.md-background-news {
+    background-color: #D2FFA5;
+}
 
 /*****************************************
  * text
@@ -471,27 +474,32 @@ li label.md-splitter-first, p label.md-splitter-first {
     display: inline-block;
     font-weight: bold;
     width: 29%;
+    vertical-align: top;
 }
 li span.md-splitter-second, p span.md-splitter-second {
     display: inline-block;
     width: 69%;
+    vertical-align: top;
 }
 
-li label.md-hide-label, p label.md-hide-label {
+li label.md-hide-label, p label.md-hide-label, p.p-md-hide-label label.md-splitter-first {
     display: none;
 }
-li span.md-hide-label, p span.md-hide-label {
+li span.md-hide-label, p span.md-hide-label, p.p-md-hide-label span.md-splitter-second {
     display: inline-block;
     width: 99%;
+    vertical-align: top;
 }
 
 li label.md-list-horiz {
     text-align: center;
     display: inline-block;
     width: 99%;
+    vertical-align: top;
 }
 li span.md-list-horiz {
     text-align: center;
     display: inline-block;
     width: 99%;
+    vertical-align: top;
 }
