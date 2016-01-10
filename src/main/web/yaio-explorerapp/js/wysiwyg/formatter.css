@@ -147,7 +147,7 @@ div.container-content-desc > ul, div.container-content-desc > ol {
 }
 /* set img from markdown without class to 1000px */
 div.container-content-desc img:not([class]) {
-    max-width: 1000px;
+    max-width: 100%;
     width: auto;
     height: auto;
     display: block;
@@ -160,19 +160,19 @@ div.container-content-desc svg:not([class]) {
 }
 
 div.container-content-desc div.mermaid {
-    max-width: 1000px;
+    max-width: 100%;
     height: auto;
     margin-left: auto;
     margin-right: auto;
 }
 div.container-content-desc div.yaioplantuml {
-    max-width: 1000px;
+    max-width: 100%;
     height: auto;
     margin-left: auto;
     margin-right: auto;
 }
 div.container-content-desc img.yaioplantuml {
-    max-width: 1000px;
+    max-width: 100%;
     width: auto;
     height: auto;
     display: block;
@@ -503,3 +503,40 @@ li span.md-list-horiz {
     width: 99%;
     vertical-align: top;
 }
+
+/*****************************************
+ * table
+ *****************************************/
+table.md-table, div.md-box table {
+    border: 1px solid #8CACD3;
+    margin-left: 30px;
+}
+td.md-table, div.md-box td {
+    border: 1px solid #8CACD3;
+}
+th.md-table, div.md-box th {
+    font-weight: bold;
+    background: #8CACD3;
+}
+tr.md-table, div.md-box tr {
+    font-weight: bold;
+    background: #DEE9EF;
+}
+
+/*****************************************
+ * table
+ *****************************************/
+/* set img from markdown without class to 1000px */
+div.md-box img:not([class]) {
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+div.md-box svg:not([class]) {
+    width: 100%;
+    height: auto;
+}
+
