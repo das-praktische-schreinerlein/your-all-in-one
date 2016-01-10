@@ -107,9 +107,9 @@ JsHelferlein.UIToggler = function(appBase) {
         // run the effect
         me.$( id ).toggle( selectedEffect, options, 500 );
     };
-    
+
     me.appendToggler = function(parentId, containerId, type) {
-        var $ele = me.$(containerId + "_On");
+        var $ele = me.$(me._generateTogglerId(containerId));
         if ($ele.length <= 0) {
             // create toggler
             console.log("createTogglerIfNotExists link not exists: create new toggler parent=" + parentId 
@@ -121,24 +121,31 @@ JsHelferlein.UIToggler = function(appBase) {
                     + " containerId=" + containerId);
         }
     };
-    
-    me._createTogglerElement = function(containerId, type) {
+
+    me._generateTogglerId = function(containerId) {
         var containerClass = containerId.replace(".", "");
+        return '.block4Toggler' + containerClass;
+    }
+
+    me._createTogglerElement = function(containerId, type) {
+        var togglerId = me._generateTogglerId(containerId);
+        var togglerClass = togglerId.replace('.', '');
+
         var html;
         if (type === 'text') {
-            html = me._createTogglerLinks(containerId, containerId,
-                "<span class='text-toggler text-toggleron'>[ mehr... ]</span>",
-                "<span class='text-toggler text-toggleroff'>[ weniger... ]</span>", '', '');
+            html = me._createTogglerLinks(containerId, togglerId,
+                "<span class='text-toggler text-toggleron'>[Bitte mehr Details... ]</span>",
+                "<span class='text-toggler text-toggleroff'>[OK reicht. Bitte weniger Details.]</span>", '', '');
         } else if (type === 'icon2') {
-            html = me._createTogglerLinks(containerId, containerId,
-                "",
-                "", "toggler_show", "toggler_hide");
+            html = me._createTogglerLinks(containerId, togglerId,
+                "<span class='icon-toggler icon2-toggleron'>&nbsp;</span>",
+                "<span class='icon-toggler icon2-toggleroff'>&nbsp;</span>", "", "");
         } else if (type === 'icon' || 1) {
-            html = me._createTogglerLinks(containerId, containerId,
+            html = me._createTogglerLinks(containerId, togglerId,
                 "<span class='icon-toggler icon-toggleron'>&nbsp;</span>",
                 "<span class='icon-toggler icon-toggleroff'>&nbsp;</span>", "", "");
         }
-        html = '<div class="blockToggler block4Toggler' + containerClass + '" togglerbaseid="' + containerId + '" toggleid="' + containerId + '">' + html + '</div>';
+        html = '<div class="blockToggler ' + togglerClass + ' toggler_show" togglerbaseid="' + containerId + '" toggleid="' + togglerId + '">' + html + '</div>';
         return html;
     };
     
@@ -152,19 +159,19 @@ JsHelferlein.UIToggler = function(appBase) {
      * @param addStyleOff
      * @returns
      */
-    me._createTogglerLinks = function(togglerBaseId, toggleClassName,
+    me._createTogglerLinks = function(toggleContainer, toggler,
             htmlOn, htmlOff, addStyleOn, addStyleOff) {
         // parameter pruefen
         var yaioAppBaseVarName = me.appBase.config.appBaseVarName;
-        if (! togglerBaseId) {
+        if (! toggleContainer) {
            return null;
         }
 
         // html erzeugen
-        var togglerBaseClass = togglerBaseId.replace(".", "");
-        var html = "<a href=\"#\" onclick=\"javascript: " + yaioAppBaseVarName + ".get('UIToggler').toggle('" + togglerBaseId + "', '" + toggleClassName + "', false); return false;\" class=\"toggler togglerOn " + togglerBaseClass + "_On " + addStyleOn + "\" id=\"" + togglerBaseClass + "_On\">";
+        var togglerBaseClass = toggler.replace('.', '');
+        var html = "<a href=\"#\" onclick=\"javascript: " + yaioAppBaseVarName + ".get('UIToggler').toggle('" + toggleContainer + "', '" + toggler + "', false); return false;\" class=\"toggler toggleron " + togglerBaseClass + "_On " + addStyleOn + "\" id=\"" + togglerBaseClass + "_On\">";
         html += htmlOn + "</a>";
-        html += "<a href=\"#\" onclick=\"javascript: " + yaioAppBaseVarName + ".get('UIToggler').toggle('" + togglerBaseId + "', '" + toggleClassName + "', true); return false;\" class=\"toggler togglerOff " + togglerBaseClass + "_Off " + addStyleOff + "\" style=\"display: none;\" id=\"" + togglerBaseClass + "_Off\">";
+        html += "<a href=\"#\" onclick=\"javascript: " + yaioAppBaseVarName + ".get('UIToggler').toggle('" + toggleContainer + "', '" + toggler + "', true); return false;\" class=\"toggler toggleroff " + togglerBaseClass + "_Off " + addStyleOff + "\" id=\"" + togglerBaseClass + "_Off\">";
         html += htmlOff + "</a>";
 
         return html;
@@ -175,18 +182,18 @@ JsHelferlein.UIToggler = function(appBase) {
      * @FeatureDomain                Layout Toggler
      * @FeatureResult                Updates DOM
      * @FeatureKeywords              GUI Tree Rendering
-     * @param toggleContainerId      JQuery-Filter (html.id, style, objectlist...) for the specific toggleContainer to toggle
-     * @param togglerId              JQuery-Filter (html.id, style, objectlist...) for the specific toggle to toggle
+     * @param toggleContainer        JQuery-Filter (html.id, style, objectlist...) for the specific toggleContainer to toggle
+     * @param toggler                JQuery-Filter (html.id, style, objectlist...) for the specific toggle to toggle
      */
-    me.toggle = function(toggleContainerId, togglerId) {
-        if (me.$(togglerId).hasClass('toggler_hidden')) {
+    me.toggle = function(toggleContainer, toggler) {
+        if (me.$(toggler).hasClass('toggler_hidden')) {
             // show
-            me.$(toggleContainerId).slideDown(1000);
-            me.$(togglerId).addClass('toggler_show').removeClass('toggler_hidden');
+            me.$(toggleContainer).slideDown(1000);
+            me.$(toggler).addClass('toggler_show').removeClass('toggler_hidden');
         } else {
             // hide
-            me.$(toggleContainerId).slideUp(1000);
-            me.$(togglerId).addClass('toggler_hidden').removeClass('toggler_show');
+            me.$(toggleContainer).slideUp(1000);
+            me.$(toggler).addClass('toggler_hidden').removeClass('toggler_show');
         }
     };
 

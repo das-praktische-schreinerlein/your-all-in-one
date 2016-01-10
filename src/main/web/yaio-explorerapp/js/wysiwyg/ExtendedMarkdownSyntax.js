@@ -209,19 +209,24 @@ marked.Renderer.prototype._renderExtenedMarkdownBoxEnd = function(renderer, type
 };
 
 marked.Renderer.prototype._renderExtenedMarkdownToggler = function(renderer, type, attr) {
+    var appBaseVarName = renderer.appBaseVarName;
+    if (!appBaseVarName) {
+        appBaseVarName = 'yaioAppBase';
+    }
     var res = '';
     var params = (attr || '').split(','),
-        id, togglerType;
+        togglerType = 'icon',
+        id;
     if (params.length > 0) {
-        id = params[0].replace(" ");
+        id = params[0].replace(' ');
         if (params.length > 1) {
             togglerType = params[1];
         }
     }
 
-    if (type.toLowerCase() === 'toggler') {
+    if (type.toLowerCase() === 'toggler' && id !== undefined && id !== '') {
         res = '<div class="md-togglerparent md-togglerparent-' + id + '" id="md-togglerparent-' + id + '"></div>' +
-              '<script>yaioAppBase.get(\'UIToggler\').appendToggler(".md-togglerparent-' + id + '", ".md-container-' + id + '", "' + togglerType + '");</script>';
+            '<script>' + appBaseVarName + '.get(\'UIToggler\').appendToggler(".md-togglerparent-' + id + '", ".md-container-' + id + '", "' + togglerType + '");</script>';
     }
     return res;
 };

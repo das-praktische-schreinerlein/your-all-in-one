@@ -465,6 +465,24 @@ li.md-list-horiz {
  *****************************************/
 div.md-togglerparent {
     display: inline-block;
+    float: right;
+}
+
+span.text-toggler {
+    font-size: 10px;
+}
+div.blockToggler.toggler_hidden a.toggleron {
+    display: inline-block;
+}
+div.blockToggler.toggler_hidden a.toggleroff {
+    display: none;
+}
+
+div.blockToggler.toggler_show a.toggleron {
+    display: none;
+}
+div.blockToggler.toggler_show a.toggleroff {
+    display: inline-block;
 }
 
 /*****************************************

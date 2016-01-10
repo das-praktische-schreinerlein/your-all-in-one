@@ -292,6 +292,8 @@ Yaio.MarkdownRendererService = function(appBase) {
     me._createMarkdownRenderer = function () {
         var renderer = new marked.Renderer();
 
+        renderer.appBaseVarName = me.appBase.config.appBaseVarName;
+
         // my own code-handler
         renderer.code = me._renderMarkdownCode;
 
