@@ -67,7 +67,7 @@ body {
 }
 /* set img from markdown without class to 500px */
 div.container-content-desc img:not([class]), div.container-content-desc img.yaioplantuml{
-    max-width: 500px;
+    max-width: 100%;
     width: auto;
     height: auto;
 }
@@ -76,7 +76,7 @@ div.container-content-desc svg:not([class]) {
     height: auto;
 }
 div.mermaid, code.mermaid {
-    max-width: 500px;
+    max-width: 100%;
     height: auto;
     margin-left: auto;
     margin-right: auto;
