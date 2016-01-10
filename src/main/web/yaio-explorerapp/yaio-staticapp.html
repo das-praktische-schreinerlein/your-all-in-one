@@ -72,14 +72,14 @@
 window.yaioAppBase = YaioAppBase();
 
 //reconfigure baseurls
-yaioAppBase.config.resBaseUrl = yaioAppBase.get("YaioBase").getBaseRefFromUrl(window.location.href) + "/";
+yaioAppBase.config.resBaseUrl = yaioAppBase.get("DataUtils").getBaseRefFromUrl(window.location.href) + "/";
 yaioAppBase.config.initResBasedUrls();
 
 // init
 yaioAppBase.publishDetectorStyles();
 
 // load Temlate
-var template = yaioAppBase.get("YaioBase").getURLParameter("template");
+var template = yaioAppBase.get("DataUtils").getURLParameter("template");
 template = template.replace(/[^A-Za-z0-9_\.-]/g, "");
 yaioAppBase.get("YaioFile").loadDocumentationContainerContent("static/" + template + ".html")
     .then(function doneContentFile(contentData) {
@@ -89,7 +89,7 @@ yaioAppBase.get("YaioFile").loadDocumentationContainerContent("static/" + templa
       doc.close();
     }, function error(errorThrown) {
         console.error("ERROR error -> return", errorThrown);
-        yaioAppBase.get("YaioBase").logError("Template kann nicht geladen werden", true);
+        yaioAppBase.get("Logger").logError("Template kann nicht geladen werden", true);
     });
 
 </script>

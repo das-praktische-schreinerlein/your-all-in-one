@@ -74,9 +74,9 @@ yaioApp.controller('DashBoardNodeSearchCtrl', function($rootScope, $scope, yaioU
                 var header = angularResponse.header;
                 var config = angularResponse.config;
                 var message = "error loading nodes with searchOptions: " + searchOptions;
-                yaioUtils.getService('YaioBase').logError(message, true);
+                yaioUtils.getService('Logger').logError(message, true);
                 message = "error data: " + data + " header:" + header + " config:" + config;
-                yaioUtils.getService('YaioBase').logError(message, false);
+                yaioUtils.getService('Logger').logError(message, false);
             });
     };
     
@@ -94,7 +94,7 @@ yaioApp.controller('DashBoardNodeSearchCtrl', function($rootScope, $scope, yaioU
             $scope.searchOptions.total = yaioNodeSearchResponse.count;
         } else {
             // error
-            yaioUtils.getService('YaioBase').logError("error loading nodes:" + yaioNodeSearchResponse.stateMsg + " details:" + yaioNodeSearchResponse, true);
+            yaioUtils.getService('Logger').logError("error loading nodes:" + yaioNodeSearchResponse.stateMsg + " details:" + yaioNodeSearchResponse, true);
         }
     };
 
@@ -118,7 +118,7 @@ yaioApp.controller('DashBoardNodeSearchCtrl', function($rootScope, $scope, yaioU
                     parentStr = parentNode.name + " --> " + parentStr;
                     parentNode = parentNode.parentNode;
                 }
-                parentStr = "<b>" + yaioUtils.getService('YaioBase').htmlEscapeText(parentStr) + "</b>";
+                parentStr = "<b>" + yaioUtils.getService('DataUtils').htmlEscapeText(parentStr) + "</b>";
                 
                 // add searchdata
                 console.log("renderNodeLine: add searchdata to:" + "#tr" + domId);

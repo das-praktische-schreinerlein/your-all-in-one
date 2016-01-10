@@ -12,7 +12,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-JsHelferlein.UIToggler = function(appBase) {
+JsHelferlein.UITogglerService = function(appBase) {
     'use strict';
 
     // my own instance
@@ -23,9 +23,6 @@ JsHelferlein.UIToggler = function(appBase) {
      */
     me._init = function() {
     };
-
-    // init all
-    me._init();
 
     /** 
      * Toggle the specified ojects with a fade. 
@@ -125,7 +122,7 @@ JsHelferlein.UIToggler = function(appBase) {
     me._generateTogglerId = function(containerId) {
         var containerClass = containerId.replace(".", "");
         return '.block4Toggler' + containerClass;
-    }
+    };
 
     me._createTogglerElement = function(containerId, type) {
         var togglerId = me._generateTogglerId(containerId);
@@ -151,8 +148,8 @@ JsHelferlein.UIToggler = function(appBase) {
     
     /**
      * FormRow-Toggler erzeugen (blendet Formularfelder eines Typs ein/aus)
-     * @param togglerBaseId
-     * @param toggleClassName
+     * @param toggleContainer
+     * @param toggler
      * @param htmlOn
      * @param htmlOff
      * @param addStyleOn

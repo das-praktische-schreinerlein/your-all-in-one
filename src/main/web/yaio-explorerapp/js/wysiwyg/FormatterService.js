@@ -54,7 +54,7 @@ Yaio.FormatterService = function(appBase) {
         var flgDoMermaid = false;
         var descBlockId = me.$(descBlock).attr('id');
         var svcYaioMarkdownRenderer = me.appBase.get('YaioMarkdownRenderer');
-        var svcYaioChecklistParser = me.appBase.get('YaioChecklistParser');
+        var svcChecklistParser = me.appBase.get('ChecklistParser');
 
         console.log("formatDescBlock highlight for descBlock: " + descBlockId);
         // remove trigger-flag
@@ -112,7 +112,7 @@ Yaio.FormatterService = function(appBase) {
         });
     
         // highlight checklist
-        svcYaioChecklistParser.highlightCheckList(descBlock);
+        svcChecklistParser.highlightCheckList(descBlock);
         
         return flgDoMermaid;
     };

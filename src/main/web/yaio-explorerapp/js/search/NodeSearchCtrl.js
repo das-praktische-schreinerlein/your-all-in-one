@@ -165,9 +165,9 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
                 var header = angularResponse.header;
                 var config = angularResponse.config;
                 var message = "error loading nodes with searchOptions: " + searchOptions;
-                yaioUtils.getService('YaioBase').logError(message, true);
+                yaioUtils.getService('Logger').logError(message, true);
                 message = "error data: " + data + " header:" + header + " config:" + config;
-                yaioUtils.getService('YaioBase').logError(message, false);
+                yaioUtils.getService('Logger').logError(message, false);
             });
     };
     
@@ -189,7 +189,7 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
             $scope.$broadcast("NodeListReady");
         } else {
             // error
-            yaioUtils.getService('YaioBase').logError("error loading nodes:" + yaioNodeSearchResponse.stateMsg + " details:" + yaioNodeSearchResponse, true);
+            yaioUtils.getService('Logger').logError("error loading nodes:" + yaioNodeSearchResponse.stateMsg + " details:" + yaioNodeSearchResponse, true);
         }
     };
 
@@ -212,7 +212,7 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
                     parentStr = parentNode.name + " --> " + parentStr;
                     parentNode = parentNode.parentNode;
                 }
-                parentStr = "<b>" + yaioUtils.getService('YaioBase').htmlEscapeText(parentStr) + "</b>";
+                parentStr = "<b>" + yaioUtils.getService('DataUtils').htmlEscapeText(parentStr) + "</b>";
                 
                 // extract search words
                 var searchExtract = "";
@@ -230,7 +230,7 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
                     descText = descText.toLowerCase();
                     
                     for (var idx in searchWords) {
-                        searchWord = yaioUtils.getService('YaioBase').escapeRegExp(searchWords[idx]);
+                        searchWord = yaioUtils.getService('DataUtils').escapeRegExp(searchWords[idx]);
 
                         // split by searchwords
                         searchResults = descText.toLowerCase().split(searchWord.toLowerCase());
@@ -251,7 +251,7 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
                                 splitText = searchResults[idx2].substr(0, splitLength);
                                 console.log("found " + searchWord + " after use " + splitLength + " extracted:" + splitText);
                                 searchExtract += "<b>"+ searchWord + "</b>" 
-                                    + yaioUtils.getService('YaioBase').htmlEscapeText(splitText) + "...";
+                                    + yaioUtils.getService('DataUtils').htmlEscapeText(splitText) + "...";
                             }
                             if (idx2 < searchResults.length) {
                                 splitLength = (searchResults[idx2].length > 50 ? 50 : searchResults[idx2].length);
@@ -260,7 +260,7 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
                                         searchResults[idx2].length);
                                 console.log("found " + searchWord + " before use " + splitLength + " extracted:" + splitText);
                                 searchExtract += "..." 
-                                    + yaioUtils.getService('YaioBase').htmlEscapeText(splitText);
+                                    + yaioUtils.getService('DataUtils').htmlEscapeText(splitText);
                             }
                         }
                     }

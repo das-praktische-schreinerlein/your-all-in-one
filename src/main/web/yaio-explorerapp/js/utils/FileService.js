@@ -161,7 +161,7 @@ Yaio.FileService = function(appBase) {
            var popup = window.open("");
            if (! popup) {
                // warn message
-               me.appBase.get("YaioBase").logError("Leider kann der Download nicht angezeigt werden, da Ihr Popup-Blocker aktiv ist. Beachten Sie die Hinweise im Kopf des Browsers. ", true);
+               me.appBase.get("Logger").logError("Leider kann der Download nicht angezeigt werden, da Ihr Popup-Blocker aktiv ist. Beachten Sie die Hinweise im Kopf des Browsers. ", true);
            } else {
                // set data to document
                me.$(popup.document.body).html("<pre>" + me.htmlEscapeTextLazy(data) + "</pre>");

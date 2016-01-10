@@ -133,16 +133,22 @@ console.log("create new instance of:" + serviceName);
         // configure instances
         me.configureService("JsHelferlein.LoggerService", function() { return JsHelferlein.LoggerService(me); });
         me.configureService("JsHelferlein.DOMHelperService", function() { return JsHelferlein.DOMHelperService(me); });
-        me.configureService("JsHelferlein.UIToggler", function() { return JsHelferlein.UIToggler(me); });
+        me.configureService("JsHelferlein.DataUtilsService", function() { return JsHelferlein.DataUtilsService(me); });
+        me.configureService("JsHelferlein.UIDialogsService", function() { return JsHelferlein.UIDialogsService(me); });
+        me.configureService("JsHelferlein.UITogglerService", function() { return JsHelferlein.UITogglerService(me); });
         me.configureService("JsHelferlein.SpeechSynthHelperService", function() { return JsHelferlein.SpeechSynthHelperService(me); });
         me.configureService("JsHelferlein.SpeechRecognitionHelperService", function() { return JsHelferlein.SpeechRecognitionHelperService(me); });
-        
+        me.configureService("JsHelferlein.ChecklistParserService", function() { return JsHelferlein.ChecklistParserService(me); });
+
         // configure aliases
         me.configureService("Logger", function() { return me.get("JsHelferlein.LoggerService"); });
         me.configureService("DOMHelper", function() { return me.get("JsHelferlein.DOMHelperService"); });
-        me.configureService("UIToggler", function() { return me.get("JsHelferlein.UIToggler"); });
+        me.configureService("UIDialogs", function() { return me.get("JsHelferlein.UIDialogsService"); });
+        me.configureService("UIToggler", function() { return me.get("JsHelferlein.UITogglerService"); });
+        me.configureService("DataUtils", function() { return me.get("JsHelferlein.DataUtilsService"); });
         me.configureService("SpeechSynthHelper", function() { return me.get("JsHelferlein.SpeechSynthHelperService"); });
         me.configureService("SpeechRecognitionHelper", function() { return me.get("JsHelferlein.SpeechRecognitionHelperService"); });
+        me.configureService("ChecklistParser", function() { return me.get("JsHelferlein.ChecklistParserService"); });
     };
 
     me._configureDefaultDetectors = function() {

@@ -214,7 +214,7 @@ Yaio.NodeDataService = function(appBase, config, defaultConfig) {
     };
     
     me._yaioLoadSymLinkDataSuccessHandler = function(basenode, fancynode, yaioNodeActionResponse, textStatus, jqXhr) {
-        var svcYaioBase = me.appBase.get('YaioBase');
+        var svcLogger = me.appBase.get('Logger');
         var msg = "_yaioLoadSymLinkDataSuccessHandler for fancynode:" + fancynode.key;
         console.log(msg + " OK done!" + yaioNodeActionResponse.state);
         if (yaioNodeActionResponse.state == "OK") {
@@ -225,7 +225,7 @@ Yaio.NodeDataService = function(appBase, config, defaultConfig) {
                 var tree = me.$("#tree").fancytree("getTree");
                 if (!tree) {
                     // tree not found
-                    svcYaioBase.logError("error yaioLoadSymLinkData: cant load tree - " + msg, false);
+                    svcLogger.logError("error yaioLoadSymLinkData: cant load tree - " + msg, false);
                     return null;
                 }
                 var rootNode = tree.rootNode;
@@ -236,7 +236,7 @@ Yaio.NodeDataService = function(appBase, config, defaultConfig) {
                 }
                 var treeNode = tree.getNodeByKey(basenode.sysUID);
                 if (! treeNode) {
-                    svcYaioBase.logError("error yaioLoadSymLinkData: cant load node - " + msg, false);
+                    svcLogger.logError("error yaioLoadSymLinkData: cant load node - " + msg, false);
                     return null;
                 }
                 
@@ -271,10 +271,10 @@ Yaio.NodeDataService = function(appBase, config, defaultConfig) {
 
                 console.log(msg + " DONE");
             } else {
-                svcYaioBase.logError("ERROR got no " + msg, true);
+                svcLogger.logError("ERROR got no " + msg, true);
             }
         } else {
-            svcYaioBase.logError("ERROR cant load  " + msg + " error:" + yaioNodeActionResponse.stateMsg, true);
+            svcLogger.logError("ERROR cant load  " + msg + " error:" + yaioNodeActionResponse.stateMsg, true);
         }
     };
     
@@ -295,7 +295,7 @@ Yaio.NodeDataService = function(appBase, config, defaultConfig) {
     };
     
     me._yaioPatchNodeSuccessHandler = function(fancynode, yaioNodeActionResponse, textStatus, jqXhr) {
-        var svcYaioBase = me.appBase.get('YaioBase');
+        var svcLogger = me.appBase.get('Logger');
         var msg = "_yaioPatchNodeSuccessHandler for fancynode:" + fancynode.key;
         console.log(msg + " OK done!" + yaioNodeActionResponse.state);
         if (yaioNodeActionResponse.state == "OK") {
@@ -310,7 +310,7 @@ Yaio.NodeDataService = function(appBase, config, defaultConfig) {
                     me.appBase.get('YaioExplorerAction').openNodeHierarchy("#tree", yaioNodeActionResponse.parentIdHierarchy);
                 });
             } else {
-                svcYaioBase.logError("got no hierarchy for:" + fancynode.key 
+                svcLogger.logError("got no hierarchy for:" + fancynode.key 
                         + " hierarchy:" + yaioNodeActionResponse.parentIdHierarchy, true);
             }
         } else {
@@ -321,12 +321,12 @@ Yaio.NodeDataService = function(appBase, config, defaultConfig) {
                 message = message +  " violations: ";
                 for (var idx in yaioNodeActionResponse.violations) {
                     var violation = yaioNodeActionResponse.violations[idx];
-                    svcYaioBase.logError("violations while save fancynode:" + fancynode.key 
+                    svcLogger.logError("violations while save fancynode:" + fancynode.key 
                             + " field:" + violation.path + " message:" + violation.message, false);
                     message = message +  violation.path + " (" + violation.message + "),";
                 }
             }
-            svcYaioBase.logError(message, true);
+            svcLogger.logError(message, true);
         }
     };
 
@@ -335,7 +335,7 @@ Yaio.NodeDataService = function(appBase, config, defaultConfig) {
     };
 
     me._yaioRemoveNodeSuccessHandler = function(nodeId, yaioNodeActionResponse, textStatus, jqXhr) {
-        var svcYaioBase = me.appBase.get('YaioBase');
+        var svcLogger = me.appBase.get('Logger');
         var msg = "_yaioRemoveNodeSuccessHandler for nodeId:" + nodeId;
         console.log(msg + " OK done!" + yaioNodeActionResponse.state);
         if (yaioNodeActionResponse.state == "OK") {
@@ -350,17 +350,17 @@ Yaio.NodeDataService = function(appBase, config, defaultConfig) {
                     me.appBase.get('YaioExplorerAction').openNodeHierarchy("#tree", yaioNodeActionResponse.parentIdHierarchy);
                 });
             } else {
-                svcYaioBase.logError("got no hierarchy for:" + nodeId
+                svcLogger.logError("got no hierarchy for:" + nodeId
                         + " hierarchy:" + yaioNodeActionResponse.parentIdHierarchy, true);
             }
         } else {
-            svcYaioBase.logError("cant remove node:" + nodeId + " error:" + yaioNodeActionResponse.stateMsg, false);
+            svcLogger.logError("cant remove node:" + nodeId + " error:" + yaioNodeActionResponse.stateMsg, false);
             // check for violations
             if (yaioNodeActionResponse.violations) {
                 // iterate violations
                 for (var idx in yaioNodeActionResponse.violations) {
                     var violation = yaioNodeActionResponse.violations[idx];
-                    svcYaioBase.logError("violations while remove node:" + nodeId 
+                    svcLogger.logError("violations while remove node:" + nodeId 
                             + " field:" + violation.path + " message:" + violation.message, false);
                     window.alert("cant remove node because: " + violation.path + " (" + violation.message + ")");
                 }

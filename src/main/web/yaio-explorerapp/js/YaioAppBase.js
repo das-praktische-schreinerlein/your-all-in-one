@@ -30,7 +30,6 @@ window.YaioAppBase = function() {
         me.configureService("Yaio.FileService", function() { return Yaio.FileService(me); });
         me.configureService("Yaio.LayoutService", function() { return Yaio.LayoutService(me); });
         me.configureService("Yaio.EditorService", function() { return Yaio.EditorService(me); });
-        me.configureService("Yaio.ChecklistParserService", function() { return Yaio.ChecklistParserService(me); });
         me.configureService("Yaio.MarkdownConverterService", function() { return Yaio.MarkdownConverterService(me); });
         me.configureService("Yaio.MarkdownRendererService", function() { return Yaio.MarkdownRendererService(me); });
         me.configureService("Yaio.ExplorerConverterService", function() { return Yaio.ExplorerConverterService(me); });
@@ -52,7 +51,6 @@ window.YaioAppBase = function() {
         me.configureService("YaioFile", function() { return me.get("Yaio.FileService"); });
         me.configureService("YaioLayout", function() { return me.get("Yaio.LayoutService"); });
         me.configureService("YaioEditor", function() { return me.get("Yaio.EditorService"); });
-        me.configureService("YaioChecklistParser", function() { return me.get("Yaio.ChecklistParserService"); });
         me.configureService("YaioMarkdownConverter", function() { return me.get("Yaio.MarkdownConverterService"); });
         me.configureService("YaioMarkdownRenderer", function() { return me.get("Yaio.MarkdownRendererService"); });
         me.configureService("YaioExplorerConverter", function() { return me.get("Yaio.ExplorerConverterService"); });

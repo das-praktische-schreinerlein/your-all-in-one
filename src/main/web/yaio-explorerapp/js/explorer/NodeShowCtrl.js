@@ -91,9 +91,9 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
                                 var header = angularResponse.header;
                                 var config = angularResponse.config;
                                 var message = "error loading activenode: " + activeNodeId;
-                                yaioUtils.getService('YaioBase').logError(message, true);
+                                yaioUtils.getService('Logger').logError(message, true);
                                 message = "error data: " + data + " header:" + header + " config:" + config;
-                                yaioUtils.getService('YaioBase').logError(message, false);
+                                yaioUtils.getService('Logger').logError(message, false);
                         });
                 };
             }
@@ -110,9 +110,9 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
                         var header = angularResponse.header;
                         var config = angularResponse.config;
                         var message = "error loading node with url: " + curNodeUrl;
-                        yaioUtils.getService('YaioBase').logError(message, true);
+                        yaioUtils.getService('Logger').logError(message, true);
                         message = "error data: " + data + " header:" + header + " config:" + config;
-                        yaioUtils.getService('YaioBase').logError(message, false);
+                        yaioUtils.getService('Logger').logError(message, false);
                 });
         }
     });
@@ -140,7 +140,7 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
             yaioUtils.getService('YaioExplorerAction').openNodeHierarchy("#tree", nodeIdHierarchy);
         } else {
             // error
-            yaioUtils.getService('YaioBase').logError("error loading activenode:" + yaioNodeActionResponse.stateMsg 
+            yaioUtils.getService('Logger').logError("error loading activenode:" + yaioNodeActionResponse.stateMsg 
                     + " details:" + yaioNodeActionResponse, false);
         }
     };
@@ -185,7 +185,7 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
             templateIsLoadedTimer = setInterval(templateIsLoadedHandler, 100);
         } else {
             // error
-            yaioUtils.getService('YaioBase').logError("error loading nodes:" + yaioNodeActionResponse.stateMsg 
+            yaioUtils.getService('Logger').logError("error loading nodes:" + yaioNodeActionResponse.stateMsg 
                     + " details:" + yaioNodeActionResponse, true);
         }
     };
@@ -248,8 +248,8 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
     $scope.recalcGanttForIstOrPlan = function(flgShowIst) {
         var start = flgShowIst ? $scope.node.istChildrenSumStart : $scope.node.planChildrenSumStart;
         var ende = flgShowIst ? $scope.node.istChildrenSumEnde : $scope.node.planChildrenSumEnde;
-        $("#inputGanttRangeStart").val(yaioUtils.getService('YaioBase').formatGermanDate(start)).trigger('input').triggerHandler("change");
-        $("#inputGanttRangeEnde").val(yaioUtils.getService('YaioBase').formatGermanDate(ende)).trigger('input').triggerHandler("change");
+        $("#inputGanttRangeStart").val(yaioUtils.getService('DataUtils').formatGermanDate(start)).trigger('input').triggerHandler("change");
+        $("#inputGanttRangeEnde").val(yaioUtils.getService('DataUtils').formatGermanDate(ende)).trigger('input').triggerHandler("change");
         return false;
     };
     

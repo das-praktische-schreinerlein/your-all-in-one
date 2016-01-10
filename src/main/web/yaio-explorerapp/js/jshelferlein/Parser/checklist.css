@@ -1,0 +1,50 @@
+/** 
+ * software for projectmanagement and documentation
+ * 
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+/*****************************************
+ *****************************************
+ * checklist-states
+ *****************************************
+ *****************************************/
+.checklist-state-OPEN {
+    background-color: #adff2f; 
+}
+.checklist-state-RUNNING {
+    background-color: #adff2f;
+}
+.checklist-state-LATE {
+    background-color: #ffd700;
+    font-weight: bold;
+}
+.checklist-state-BLOCKED {
+    background-color: #F3F940;
+    font-weight: bold;
+}
+.checklist-state-WARNING {
+    background-color: #ff6347;
+    font-weight: bold;
+}
+.checklist-state-DONE {
+    font-style: italic;
+}
+.checklist-test-TESTOPEN {
+    background-color: #F3F940; 
+}
+.checklist-test-PASSED {
+    font-style: italic;
+}
+.checklist-test-FAILED {
+    background-color: #ff6347; 
+    font-weight: bold;
+}

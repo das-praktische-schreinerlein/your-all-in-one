@@ -118,7 +118,7 @@ Yaio.EditorService = function(appBase) {
      * @param basenode               the node to map the fieldvalue
      */
     me.yaioSetFormField = function(field, fieldSuffix, basenode) {
-        var svcYaioBase = me.appBase.get('YaioBase');
+        var svcDataUtils = me.appBase.get('DataUtils');
         var fieldName = field.fieldName;
         var fieldNameId = "#input" + fieldName.charAt(0).toUpperCase() + fieldName.slice(1) + fieldSuffix;
         var value = basenode[fieldName];
@@ -129,10 +129,10 @@ Yaio.EditorService = function(appBase) {
             value = 0;
         } else if (field.datatype === "date")  {
             // date
-            value = svcYaioBase.formatGermanDate(value);
+            value = svcDataUtils.formatGermanDate(value);
         } else if (field.datatype === "datetime")  {
             // date
-            value = svcYaioBase.formatGermanDateTime(value);
+            value = svcDataUtils.formatGermanDateTime(value);
         } else if (! value || value == "undefined" || value == null) {
             // alle other
             value = "";
@@ -178,7 +178,7 @@ Yaio.EditorService = function(appBase) {
      * @param newNode                optional basedata for the new node
      */
     me.yaioOpenNodeEditor = function(nodeId, mode, newNode) {
-        var svcYaioBase = me.appBase.get('YaioBase');
+        var svcLogger = me.appBase.get('Logger');
 
         // reset editor
         console.log("yaioOpenNodeEditor: reset editor");
@@ -187,19 +187,19 @@ Yaio.EditorService = function(appBase) {
         // check vars
         if (! nodeId) {
             // tree not found
-            svcYaioBase.logError("error yaioOpenNodeEditor: nodeId required", false);
+            svcLogger.logError("error yaioOpenNodeEditor: nodeId required", false);
             return null;
         }
         // load node
         var tree = me.$("#tree").fancytree("getTree");
         if (!tree) {
             // tree not found
-            svcYaioBase.logError("error yaioOpenNodeEditor: cant load tree for node:" + nodeId, false);
+            svcLogger.logError("error yaioOpenNodeEditor: cant load tree for node:" + nodeId, false);
             return null;
         }
         var treeNode = tree.getNodeByKey(nodeId);
         if (! treeNode) {
-            svcYaioBase.logError("error yaioOpenNodeEditor: cant load node:" + nodeId, false);
+            svcLogger.logError("error yaioOpenNodeEditor: cant load node:" + nodeId, false);
             return null;
         }
         
@@ -220,7 +220,8 @@ Yaio.EditorService = function(appBase) {
      * @param newNode                optional node to copy data from (for mode createsnapshot...)
      */
     me.yaioOpenNodeEditorForNode = function(basenode, mode, newNode) {
-        var svcYaioBase = me.appBase.get('YaioBase');
+        var svcLogger = me.appBase.get('Logger');
+        var svcDataUtils = me.appBase.get('DataUtils');
         var svcYaioLayout = me.appBase.get('YaioLayout');
         var svcYaioMarkdownEditor = me.appBase.get('YaioMarkdownEditor');
 
@@ -231,7 +232,7 @@ Yaio.EditorService = function(appBase) {
         // check vars
         if (! basenode) {
             // tree not found
-            svcYaioBase.logError("error yaioOpenNodeEditor: basenode required", false);
+            svcLogger.logError("error yaioOpenNodeEditor: basenode required", false);
             return null;
         }
         var nodeId = basenode.sysUID;
@@ -321,7 +322,7 @@ Yaio.EditorService = function(appBase) {
             basenode = {
                     mode: "create",
                     sysUID: origBasenode.sysUID,
-                    name: "Snapshot für: '" + origBasenode.name + "' vom " + svcYaioBase.formatGermanDateTime((new Date()).getTime()),
+                    name: "Snapshot für: '" + origBasenode.name + "' vom " + svcDataUtils.formatGermanDateTime((new Date()).getTime()),
                     type: "INFO",
                     state: "INFO",
                     className: "InfoNode",
@@ -329,7 +330,7 @@ Yaio.EditorService = function(appBase) {
             };
             console.error("yaioOpenNodeEditor mode=createsnapshot for node:" + nodeId);
         } else {
-            svcYaioBase.logError("error yaioOpenNodeEditor: unknown mode=" + mode 
+            svcLogger.logError("error yaioOpenNodeEditor: unknown mode=" + mode 
                     + " for nodeId:" + nodeId, false);
             return null;
         }
@@ -457,7 +458,7 @@ Yaio.EditorService = function(appBase) {
 
         // check data
         if (!parentSysUID || !file) {
-            me.appBase.get('YaioBase').logError("error: parentSysUID and file required", false);
+            me.appBase.get('Logger').logError("error: parentSysUID and file required", false);
         }
         var baseNode = {
             sysUID: parentSysUID,

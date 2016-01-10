@@ -22,8 +22,8 @@ yaioApp.factory('yaioUtils', ['$location', '$http', '$rootScope', '$q', function
     'use strict';
 
     var appBase = yaioAppBase;
-    var ganttRangeStart = appBase.get('YaioBase').formatGermanDate((new Date()).getTime() - 90*24*60*60*1000); 
-    var ganttRangeEnd = appBase.get('YaioBase').formatGermanDate((new Date()).getTime() + 90*24*60*60*1000);
+    var ganttRangeStart = appBase.get('DataUtils').formatGermanDate((new Date()).getTime() - 90*24*60*60*1000); 
+    var ganttRangeEnd = appBase.get('DataUtils').formatGermanDate((new Date()).getTime() + 90*24*60*60*1000);
 
     // set angular to appbase
     appBase.configureService("Angular.$location", function() { return $location; });

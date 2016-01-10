@@ -46,7 +46,7 @@ Yaio.ExplorerConverterService = function(appBase) {
         // get title
         var idx;
         var title = me.$("#masterTr td.fieldtype_name").text();
-        var now = me.appBase.get('YaioBase').formatGermanDateTime((new Date()).getTime());
+        var now = me.appBase.get('DataUtils').formatGermanDateTime((new Date()).getTime());
 
         var checkList = "# Checklist: " + title + " (Stand: " + now + ")\n\n";
 
@@ -121,7 +121,7 @@ Yaio.ExplorerConverterService = function(appBase) {
 
     me._extractCheckListStatefromStateSpan = function(block) {
         // iterate all configs
-        var checkListConfigs = me.appBase.get('YaioChecklistParser').checkListConfigs;
+        var checkListConfigs = me.appBase.get('ChecklistParser').checkListConfigs;
         for (var idx in checkListConfigs) {
             var matchers = checkListConfigs[idx].matchers;
 
@@ -147,7 +147,7 @@ Yaio.ExplorerConverterService = function(appBase) {
     me.convertExplorerLinesAsGanttMarkdown = function() {
         // get title
         var title = me.$("#masterTr td.fieldtype_name").text();
-        var now = me.appBase.get('YaioBase').formatGermanDateTime((new Date()).getTime());
+        var now = me.appBase.get('DataUtils').formatGermanDateTime((new Date()).getTime());
 
         var ganttMarkdown = "# Gantt: " + title + " (Stand: " + now + ")\n\n"
             + "```mermaid\n"

@@ -105,7 +105,7 @@ Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
     };
     
     me._yaioCallLoadConfig = function() {
-        var svcYaioBase = me.appBase.get('YaioBase');
+        var svcLogger = me.appBase.get('Logger');
 
         var url = me.config.configUrl;
         var msg = "_yaioCallLoadConfig for yaio:" + url;
@@ -123,8 +123,8 @@ Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
             type : 'GET',
             error : function(jqXHR, textStatus, errorThrown) {
                 // log the error to the console
-                svcYaioBase.logError("ERROR  " + msg + " The following error occured: " + textStatus + " " + errorThrown, false);
-                svcYaioBase.logError("cant load " + msg + " error:" + textStatus, true);
+                svcLogger.logError("ERROR  " + msg + " The following error occured: " + textStatus + " " + errorThrown, false);
+                svcLogger.logError("cant load " + msg + " error:" + textStatus, true);
             },
             complete : function() {
                 console.log("completed load " + msg);
@@ -148,7 +148,7 @@ Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
     };
 
     me._yaioCallPatchNode = function(fancynode, url, json) {
-        var svcYaioBase = me.appBase.get('YaioBase');
+        var svcLogger = me.appBase.get('Logger');
 
         var msg = "_yaioCallPatchNode for fancynode:" + fancynode.key;
         console.log(msg + " CALL: " + "url: "+ url + " with:" + json);
@@ -166,8 +166,8 @@ Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
             data : json,
             error : function(jqXHR, textStatus, errorThrown) {
                 // log the error to the console
-                svcYaioBase.logError("The following error occured: " + textStatus + " " + errorThrown, true);
-                svcYaioBase.logError("cant save fancynode:" + fancynode.key + " error:" + textStatus);
+                svcLogger.logError("The following error occured: " + textStatus + " " + errorThrown, true);
+                svcLogger.logError("cant save fancynode:" + fancynode.key + " error:" + textStatus);
             },
             complete : function() {
                 console.log("update fancynode:" + fancynode.key + "' ran");
@@ -176,7 +176,7 @@ Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
     };
     
     me._yaioCallLoadSymLinkData = function(basenode, fancynode) {
-        var svcYaioBase = me.appBase.get('YaioBase');
+        var svcLogger = me.appBase.get('Logger');
 
         var msg = "_yaioCallLoadSymLinkData for node:" + basenode.sysUID + " symlink:" + basenode.symLinkRef + " fancynode:" + fancynode.key;
         console.log(msg + " START");
@@ -194,8 +194,8 @@ Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
             type : 'GET',
             error : function(jqXHR, textStatus, errorThrown) {
                 // log the error to the console
-                svcYaioBase.logError("ERROR  " + msg + " The following error occured: " + textStatus + " " + errorThrown, false);
-                svcYaioBase.logError("cant load " + msg + " error:" + textStatus, true);
+                svcLogger.logError("ERROR  " + msg + " The following error occured: " + textStatus + " " + errorThrown, false);
+                svcLogger.logError("cant load " + msg + " error:" + textStatus, true);
             },
             complete : function() {
                 console.log("completed load " + msg);
@@ -204,7 +204,7 @@ Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
     };
     
     me._yaioCallRemoveNode = function(nodeId) {
-        var svcYaioBase = me.appBase.get('YaioBase');
+        var svcLogger = me.appBase.get('Logger');
 
         var msg = "_yaioCallRemoveNode node:" + nodeId;
         var url = me.config.restRemoveUrl + nodeId;
@@ -222,8 +222,8 @@ Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
             type: 'DELETE',
             error: function(jqXHR, textStatus, errorThrown) {
                 // log the error to the console
-                svcYaioBase.logError("The following error occured: " + textStatus + " " + errorThrown, false);
-                svcYaioBase.logError("cant remove node:" + nodeId + " error:" + textStatus, true);
+                svcLogger.logError("The following error occured: " + textStatus + " " + errorThrown, false);
+                svcLogger.logError("cant remove node:" + nodeId + " error:" + textStatus, true);
             },
             complete: function() {
                 console.log("remove node:" + nodeId + "' ran");
@@ -232,7 +232,7 @@ Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
     };
 
     me._yaioCallSaveNode = function(nodeObj, options) {
-        var svcYaioBase = me.appBase.get('YaioBase');
+        var svcLogger = me.appBase.get('Logger');
 
         var msg = "_yaioCallSaveNode node: " + options.mode + ' ' + nodeObj.sysUID;
         console.log(msg + " START");
@@ -306,7 +306,7 @@ Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
             };
         } else {
             // unknown mode
-            svcYaioBase.logError("unknown mode=" + options.mode + " form formName=" + options.formName, false);
+            svcLogger.logError("unknown mode=" + options.mode + " form formName=" + options.formName, false);
             return null;
         }
 

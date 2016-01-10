@@ -120,9 +120,9 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
                     var header = angularResponse.header;
                     var config = angularResponse.config;
                     var message = "error loading node-templates";
-                    yaioUtils.getService('YaioBase').logError(message, true);
+                    yaioUtils.getService('Logger').logError(message, true);
                     message = "error data: " + data + " header:" + header + " config:" + config;
-                    yaioUtils.getService('YaioBase').logError(message, false);
+                    yaioUtils.getService('Logger').logError(message, false);
             });
     };
 
@@ -349,9 +349,9 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
                         }
                     }
                 }
-                yaioUtils.getService('YaioBase').logError(message, false);
+                yaioUtils.getService('Logger').logError(message, false);
                 if (userMessage != "") {
-                    yaioUtils.getService('YaioBase').logError(userMessage, true);
+                    yaioUtils.getService('Logger').logError(userMessage, true);
                 }
                 
                 // Failed
@@ -382,9 +382,9 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
                     var header = angularReponse.header;
                     var config = angularReponse.config;
                     var message = "error saving node " + nodeObj.sysUID;
-                    yaioUtils.getService('YaioBase').logError(message, true);
+                    yaioUtils.getService('Logger').logError(message, true);
                     message = "error data: " + data + " header:" + header + " config:" + config;
-                    yaioUtils.getService('YaioBase').logError(message, false);
+                    yaioUtils.getService('Logger').logError(message, false);
             });
     };
     

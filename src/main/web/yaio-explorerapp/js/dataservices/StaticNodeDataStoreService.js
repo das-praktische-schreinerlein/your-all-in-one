@@ -188,7 +188,7 @@ Yaio.StaticNodeDataStoreService = function(appBase, config, defaultConfig) {
     };
 
     me.saveNode = function(nodeObj, options) {
-        var svcYaioBase = me.appBase.get('YaioBase');
+        var svcLogger = me.appBase.get('Logger');
 
         var node = JSON.parse(JSON.stringify(nodeObj));
         var msg = "_saveNode node: " + options.mode + ' ' + nodeObj.sysUID;
@@ -233,7 +233,7 @@ Yaio.StaticNodeDataStoreService = function(appBase, config, defaultConfig) {
             me.nodeList.push(node['sysUID']);
         } else {
             // unknown mode
-            svcYaioBase.logError("unknown mode=" + options.mode + " form formName=" + options.formName, false);
+            svcLogger.logError("unknown mode=" + options.mode + " form formName=" + options.formName, false);
             return null;
         }
 

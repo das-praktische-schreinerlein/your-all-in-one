@@ -75,8 +75,12 @@ JsHelferlein.LoggerService = function(appBase, config) {
      * - falls webLoggerUrl und isErrorWebLoogger aktiviert - Logging auf WebLogger mit logWebLogger
      * @param text                   
      */
-    me.logError = function(text) {
+    me.logError = function(text, flgShowDialog) {
         me.console.error(" ERROR:" + text);
+        if (flgShowDialog) {
+            me.appBase.get('UIDialogs').showToastMessage("error", "Oops! Ein Fehlerchen :-(", me.appBase.get('DataUtils').htmlEscapeText(text));
+    //        me.showModalErrorMessage(me.appBase.get('DataUtils').htmlEscapeText(message));
+        }
         if (me.ownConsoleElement) { me._logOwnConsole(text); }
         if (me.webLoggerUrl && me.isErrorWebLogger) { me._logWebLogger("ERROR", text); }
     };

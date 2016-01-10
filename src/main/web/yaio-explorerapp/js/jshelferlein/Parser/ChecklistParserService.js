@@ -21,7 +21,7 @@
  * @copyright                    Copyright (c) 2014, Michael Schreiner
  * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-Yaio.ChecklistParserService = function(appBase) {
+JsHelferlein.ChecklistParserService = function(appBase) {
     'use strict';
 
     // my own instance
@@ -123,7 +123,7 @@ Yaio.ChecklistParserService = function(appBase) {
         var descBlockId = me.$(descBlock).attr('id');
         console.log("highlightCheckListForMatcher matcherStr '" + matcherStr + "' for descBlock: " + descBlockId);
         me.$("#" + descBlockId + " li:contains('" + matcherStr + "'),h1:contains('" + matcherStr + "'),h2:contains('" + matcherStr + "')").each(function(index, value) {
-            var regEx = RegExp(me.appBase.get('YaioBase').escapeRegExp(matcherStr), 'gi');
+            var regEx = RegExp(me.appBase.get('DataUtils').escapeRegExp(matcherStr), 'gi');
             findAndReplaceDOMText(me.$(value).get(0), {
                 find: regEx,
                 replace: function(portion) {

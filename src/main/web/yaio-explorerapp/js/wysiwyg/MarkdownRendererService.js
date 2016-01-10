@@ -44,8 +44,8 @@ Yaio.MarkdownRendererService = function(appBase) {
      */
     me.formatMermaidGlobal = function() {
         mermaid.parseError = function(err,hash){
-            me.appBase.get('YaioBase').showToastMessage("error", "Oops! Ein Fehlerchen :-(", "Syntaxfehler bei Parsen des Diagrammcodes:" + err);
-            //        me.appBase.get('YaioBase').showModalErrorMessage(":" + err);
+            me.appBase.get('UIDialogs').showToastMessage("error", "Oops! Ein Fehlerchen :-(", "Syntaxfehler bei Parsen des Diagrammcodes:" + err);
+            //        me.appBase.get('UIDialogs').showModalErrorMessage(":" + err);
         };
         try {
             mermaid.init();
@@ -92,7 +92,7 @@ Yaio.MarkdownRendererService = function(appBase) {
             noCode = newDescTextRest.slice(0, codeStart + 3);
 
             // replace <> but prevent <br> in noCode
-            noCode = me.appBase.get('YaioBase').htmlEscapeTextLazy(noCode);
+            noCode = me.appBase.get('DataUtils').htmlEscapeTextLazy(noCode);
             noCode = noCode.replace(/&lt;br&gt;/g, "<br>");
             newDescText += noCode;
 
@@ -122,7 +122,7 @@ Yaio.MarkdownRendererService = function(appBase) {
 
         // replace <> but prevent <br> in noCode
         noCode = newDescTextRest;
-        noCode = me.appBase.get('YaioBase').htmlEscapeTextLazy(noCode);
+        noCode = me.appBase.get('DataUtils').htmlEscapeTextLazy(noCode);
         noCode = noCode.replace(/&lt;br&gt;/g, "<br>");
 
         // add rest to newDescText
@@ -341,7 +341,7 @@ Yaio.MarkdownRendererService = function(appBase) {
     };
 
     me._renderMarkdownCode = function (code, language) {
-        code = me.appBase.get('YaioBase').htmlEscapeTextLazy(code);
+        code = me.appBase.get('DataUtils').htmlEscapeTextLazy(code);
         if (code.match(/^sequenceDiagram/) || code.match(/^graph/) || code.match(/^gantt/)) {
             return '<div id="inlineMermaid' + (me._localHtmlId++) + '" class="mermaid">'+ me._prepareTextForMermaid(code ) + '</div>';
         } else if (language !== undefined  && (language.match(/^yaiomindmap/) || language.match(/^yaiofreemind/))) {

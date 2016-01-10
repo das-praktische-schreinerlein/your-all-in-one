@@ -281,7 +281,7 @@ Yaio.ExplorerTreeService = function(appBase) {
                     break;
                 case "paste":
                     if (!me.clipboardNode ) {
-                        me.appBase.get('YaioBase').logError("Clipoard is empty.", true);
+                        me.appBase.get('Logger').logError("Clipoard is empty.", true);
                         break;
                     }
                     var newParent = node;
@@ -292,7 +292,7 @@ Yaio.ExplorerTreeService = function(appBase) {
                         }
                         // Cut mode: check for recursion and remove source
                         if(newParent.isDescendantOf(node) ) {
-                            me.appBase.get('YaioBase').logError("Cannot move a node to it's sub node.", true);
+                            me.appBase.get('Logger').logError("Cannot move a node to it's sub node.", true);
                             return;
                         }
                         if (window.confirm("Wollen Sie die Node und Ihre Subnodes wirklich hierher verschieben?")) {
@@ -315,7 +315,7 @@ Yaio.ExplorerTreeService = function(appBase) {
                             return false;
                         }
                         if(newParent.isDescendantOf(node) ) {
-                            me.appBase.get('YaioBase').logError("Cannot copy a node to it's sub node.", true);
+                            me.appBase.get('Logger').logError("Cannot copy a node to it's sub node.", true);
                             return;
                         }
                         if (window.confirm("Wollen Sie die Node und Ihre Subnodes wirklich hierher kopieren?")) {
@@ -624,7 +624,7 @@ Yaio.ExplorerTreeService = function(appBase) {
             }
         } else {
             // error
-            me.appBase.get('YaioBase').logError("error loading nodes:" + data.response.stateMsg, true);
+            me.appBase.get('Logger').logError("error loading nodes:" + data.response.stateMsg, true);
         }
         
         data.result = list;
@@ -700,7 +700,7 @@ Yaio.ExplorerTreeService = function(appBase) {
             data.message = "Custom error: " + data.message;
             data.details = "An error occured during loading: " + error;
         }
-        me.appBase.get('YaioBase').showToastMessage("error", "Oops! Ein Fehlerchen beim Laden :-(", 
+        me.appBase.get('UIDialogs').showToastMessage("error", "Oops! Ein Fehlerchen beim Laden :-(", 
                 "Es ist ein Fehler beim Nachladen aufgetreten:" + data.message 
                 + " Details:" + data.details);
     };

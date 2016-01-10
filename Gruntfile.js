@@ -395,9 +395,7 @@ module.exports = function( grunt ){
             srcBase + 'yaio-explorerapp/js/utils/FileService.js',
             srcBase + 'yaio-explorerapp/js/editor/EditorService.js',
             srcBase + 'yaio-explorerapp/js/layout/LayoutService.js',
-            srcBase + 'yaio-explorerapp/js/wysiwyg/ChecklistParserService.js',
             srcBase + 'yaio-explorerapp/js/wysiwyg/MarkdownConverterService.js',
-            srcBase + 'yaio-explorerapp/js/wysiwyg/ExtendedMarkdownSyntax.js',
             srcBase + 'yaio-explorerapp/js/wysiwyg/MarkdownRendererService.js',
             srcBase + 'yaio-explorerapp/js/wysiwyg/FormatterService.js',
             srcBase + 'yaio-explorerapp/js/wysiwyg/MarkdownEditorService.js',
@@ -422,12 +420,17 @@ module.exports = function( grunt ){
               srcBase + 'yaio-explorerapp/js/auth/auth.css',
               srcBase + 'yaio-explorerapp/js/frontpage/frontpage.css',
               srcBase + 'yaio-explorerapp/js/dashboard/*.css',
+              srcBase + 'yaio-explorerapp/js/jshelferlein/parser/checklist.css',
+              srcBase + 'yaio-explorerapp/js/jshelferlein/parser/markdown.css',
+              srcBase + 'yaio-explorerapp/js/jshelferlein/ui/toggler.css',
               srcBase + 'yaio-explorerapp/js/wysiwyg/formatter.css'
         ],
         projectSupportCssFiles: [
             srcBase + 'yaio-explorerapp/js/layout/base.css',
             srcBase + 'yaio-explorerapp/js/layout/support.css',
             srcBase + 'yaio-explorerapp/js/layout/toc.css',
+            srcBase + 'yaio-explorerapp/js/jshelferlein/renderer/markdown.css',
+            srcBase + 'yaio-explorerapp/js/jshelferlein/ui/toggler.css',
             srcBase + 'yaio-explorerapp/js/wysiwyg/formatter.css'
         ],
         projectPrintCssFiles: [
