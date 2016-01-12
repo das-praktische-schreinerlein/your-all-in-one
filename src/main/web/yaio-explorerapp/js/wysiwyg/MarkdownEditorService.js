@@ -266,7 +266,7 @@ Yaio.MarkdownEditorService = function(appBase) {
         var yaioAppBaseVarName = me.appBase.config.appBaseVarName;
         me.$(".ui-dialog-buttonset").append(me.$("<a href='' id='wysiwyg-exportlink'"
             + " sdf='ojfvbhwjh'"
-            + " onclick=\"" + yaioAppBaseVarName + ".get('YaioFile').downloadAsFile(" 
+            + " onclick=\"" + yaioAppBaseVarName + ".get('FileUtils').downloadAsFile(" 
             +      yaioAppBaseVarName + ".$('#wysiwyg-exportlink'), " 
             +      yaioAppBaseVarName + ".$('#" + textAreaId + "').val(), 'data.md', 'text/markdown', 'utf-8');\">"
             + "<span class='ui-button-text'>Export</span></a>"));

@@ -13,7 +13,7 @@
  */
 
 /** 
- * file-servicefunctions
+ * FileLoader-servicefunctions
  *  
  * @FeatureDomain                WebGUI
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
@@ -27,7 +27,7 @@
  * Service-Funktions (file)
  *****************************************
  *****************************************/
-Yaio.FileService = function(appBase) {
+Yaio.FileLoaderService = function(appBase) {
     'use strict';
 
     // my own instance

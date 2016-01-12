@@ -68,7 +68,7 @@ Yaio.FormatterService = function(appBase) {
                 console.log("formatDescBlock mermaid descBlock: " + descBlockId + " block: " + blockId);
                 me.addServicesToDiagrammBlock(block, 'mermaid',
                         "<a href='' id='linkdownload" + blockId + "'  target='_blank'"
-                        +   " onclick=\"javascript: " + yaioAppBaseVarName + ".get('YaioFile').downloadAsFile(" 
+                        +   " onclick=\"javascript: " + yaioAppBaseVarName + ".get('FileUtils').downloadAsFile(" 
                         +       yaioAppBaseVarName + ".$('#linkdownload" + blockId + "'), "
                         +       yaioAppBaseVarName + ".$('#" + blockId + "').html(), 'diagram.svg', 'image/svg+xml', 'utf-8'); return true;\">"
                         + "Download</a>");
@@ -89,7 +89,7 @@ Yaio.FormatterService = function(appBase) {
                 console.log("formatDescBlock mermaid descBlock: " + descBlockId + " block: " + blockId);
                 me.addServicesToDiagrammBlock(block, 'mermaid',
                         "<a href='' id='linkdownload" + blockId + "'  target='_blank'"
-                        +   " onclick=\"javascript: " + yaioAppBaseVarName + ".get('YaioFile').downloadAsFile(" 
+                        +   " onclick=\"javascript: " + yaioAppBaseVarName + ".get('FileUtils').downloadAsFile(" 
                                 + yaioAppBaseVarName + ".$('#linkdownload" + blockId + "'), " 
                                 + yaioAppBaseVarName + ".$('#" + blockId + "').html(), 'diagram.svg', 'image/svg+xml', 'utf-8'); return true;\">"
                         + "Download</a>");

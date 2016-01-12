@@ -81,7 +81,7 @@ yaioAppBase.publishDetectorStyles();
 // load Temlate
 var template = yaioAppBase.get("DataUtils").getURLParameter("template");
 template = template.replace(/[^A-Za-z0-9_\.-]/g, "");
-yaioAppBase.get("YaioFile").loadDocumentationContainerContent("static/" + template + ".html")
+yaioAppBase.get("YaioFileLoader").loadDocumentationContainerContent("static/" + template + ".html")
     .then(function doneContentFile(contentData) {
       console.log("loadDocumentationContainerContent done")
       var doc = document.open("text/html");

@@ -54,7 +54,7 @@ yaioApp.factory('yaioUtils', ['$location', '$http', '$rootScope', '$q', function
         },
         
         downloadAsFile: function(domId, content, filename, mime, encoding) {
-            return appBase.getService('YaioFile').downloadAsFile(appBase.$(domId), content, filename, mime, encoding);
+            return appBase.getService('FileUtils').downloadAsFile(appBase.$(domId), content, filename, mime, encoding);
         },
         
         renderNodeLine: function(node, trIdSelector, flgMinimum) {
