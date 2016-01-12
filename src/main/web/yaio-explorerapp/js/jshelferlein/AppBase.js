@@ -140,6 +140,10 @@ console.log("create new instance of:" + serviceName);
         me.configureService("JsHelferlein.SpeechSynthHelperService", function() { return JsHelferlein.SpeechSynthHelperService(me); });
         me.configureService("JsHelferlein.SpeechRecognitionHelperService", function() { return JsHelferlein.SpeechRecognitionHelperService(me); });
         me.configureService("JsHelferlein.ChecklistParserService", function() { return JsHelferlein.ChecklistParserService(me); });
+        me.configureService("JsHelferlein.MermaidParserService", function() { return JsHelferlein.MermaidParserService(me); });
+        me.configureService("JsHelferlein.MindmapParserService", function() { return JsHelferlein.MindmapParserService(me); });
+        me.configureService("JsHelferlein.PlantumlParserService", function() { return JsHelferlein.PlantumlParserService(me); });
+        me.configureService("JsHelferlein.SyntaxHighlighterParserService", function() { return JsHelferlein.SyntaxHighlighterParserService(me); });
 
         // configure aliases
         me.configureService("Logger", function() { return me.get("JsHelferlein.LoggerService"); });
@@ -151,6 +155,10 @@ console.log("create new instance of:" + serviceName);
         me.configureService("SpeechSynthHelper", function() { return me.get("JsHelferlein.SpeechSynthHelperService"); });
         me.configureService("SpeechRecognitionHelper", function() { return me.get("JsHelferlein.SpeechRecognitionHelperService"); });
         me.configureService("ChecklistParser", function() { return me.get("JsHelferlein.ChecklistParserService"); });
+        me.configureService("MermaidParser", function() { return me.get("JsHelferlein.MermaidParserService"); });
+        me.configureService("MindmapParser", function() { return me.get("JsHelferlein.MindmapParserService"); });
+        me.configureService("PlantumlParser", function() { return me.get("JsHelferlein.PlantumlParserService"); });
+        me.configureService("SyntaxHighlighterParser", function() { return me.get("JsHelferlein.SyntaxHighlighterParserService"); });
     };
 
     me._configureDefaultDetectors = function() {

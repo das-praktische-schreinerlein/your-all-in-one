@@ -53,8 +53,12 @@ Yaio.FormatterService = function(appBase) {
         var yaioAppBaseVarName = me.appBase.config.appBaseVarName;
         var flgDoMermaid = false;
         var descBlockId = me.$(descBlock).attr('id');
-        var svcYaioMarkdownRenderer = me.appBase.get('YaioMarkdownRenderer');
+
+        var svcSyntaxHighlighterParser = me.appBase.get('SyntaxHighlighterParser');
         var svcChecklistParser = me.appBase.get('ChecklistParser');
+        var svcMermaidParser = me.appBase.get('MermaidParser');
+        var svcMindmapParser = me.appBase.get('MindmapParser');
+        var svcPlantumlParser = me.appBase.get('PlantumlParser');
 
         console.log("formatDescBlock highlight for descBlock: " + descBlockId);
         // remove trigger-flag
@@ -76,7 +80,7 @@ Yaio.FormatterService = function(appBase) {
             } else {
                 // do highlight
                 console.log("formatDescBlock highlight descBlock: " + descBlockId + " block: " + blockId);
-                hljs.highlightBlock(block);
+                svcSyntaxHighlighterParser.renderBlock(block);
             }
         });
     
@@ -100,19 +104,19 @@ Yaio.FormatterService = function(appBase) {
                 content = me.$(block).html();
                 url = "/converters/mindmap?source=" + encodeURIComponent(content);
                 me.addServicesToDiagrammBlock(block, 'yaiomindmap', "<a href='" + url + "' id='download" + blockId + "' target='_blank'>Download</a>");
-                svcYaioMarkdownRenderer.formatMindmap(block);
+                svcMindmapParser.renderBlock(block);
             } else if (me.$(block).hasClass("lang-yaioplantuml") || me.$(block).hasClass("yaioplantuml")) {
                 // mindmap: no highlight
                 console.log("formatDescBlock yaioplantuml for descBlock: " + descBlockId + " block: " + blockId);
                 content = me.$(block).html();
-                url = svcYaioMarkdownRenderer.generatePlantuml(content);
+                url = svcPlantumlParser.generatePlantuml(content);
                 me.addServicesToDiagrammBlock(block, 'yaioplantuml', "<a href='" + url + "' id='download" + blockId + "' target='_blank'>Download</a>");
-                svcYaioMarkdownRenderer.formatPlantuml(block);
+                svcPlantumlParser.renderBlock(block);
             }
         });
     
         // highlight checklist
-        svcChecklistParser.highlightCheckList(descBlock);
+        svcChecklistParser.parseBlock(descBlock);
         
         return flgDoMermaid;
     };
@@ -124,7 +128,7 @@ Yaio.FormatterService = function(appBase) {
      * @FeatureKeywords              Layout
      */
     me.formatMermaidGlobal = function() {
-        return me.appBase.get('YaioMarkdownRenderer').formatMermaidGlobal();
+        return me.appBase.get('MermaidParser').formatMermaidGlobal();
     };
 
     /**

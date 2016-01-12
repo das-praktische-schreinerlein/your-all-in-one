@@ -25,7 +25,7 @@ JsHelferlein.ChecklistParserService = function(appBase) {
     'use strict';
 
     // my own instance
-    var me = JsHelferlein.ServiceBase(appBase);
+    var me = JsHelferlein.AbstractParserService(appBase);
 
     // states
     me.checkListConfigs = {
@@ -71,6 +71,20 @@ JsHelferlein.ChecklistParserService = function(appBase) {
      * initialize the object
      */
     me._init = function() {
+    };
+
+    /**
+     * executes checklist-formatter (add span with checklist-Styles) on the block [use me.checkListConfigs]
+     * @FeatureDomain                GUI
+     * @FeatureResult                updates DOM
+     * @FeatureKeywords              Convert
+     * @param blockId                filter to identify the block to format
+     */
+    me.parseBlock = function(blockId) {
+        me.$(blockId).each(function(i, block) {
+            console.log("ChecklistParserService.renderBlock " + blockId);
+            me.highlightCheckList(block);
+        });
     };
 
     /**

@@ -37,24 +37,6 @@ Yaio.MarkdownRendererService = function(appBase) {
     me._localHtmlId = 1;
 
     /**
-     * calls the global mermaid-formatter
-     * @FeatureDomain                GUI
-     * @FeatureResult                formats all divs with class=mermaid
-     * @FeatureKeywords              Layout
-     */
-    me.formatMermaidGlobal = function() {
-        mermaid.parseError = function(err,hash){
-            me.appBase.get('UIDialogs').showToastMessage("error", "Oops! Ein Fehlerchen :-(", "Syntaxfehler bei Parsen des Diagrammcodes:" + err);
-            //        me.appBase.get('UIDialogs').showModalErrorMessage(":" + err);
-        };
-        try {
-            mermaid.init();
-        } catch (ex) {
-            console.error("formatMermaidGlobal error:" + ex);
-        }
-    };
-
-    /**
      * format the descText as Markdown
      * @FeatureDomain                GUI
      * @FeatureResult                returnValue String - formatted markdown
@@ -132,141 +114,6 @@ Yaio.MarkdownRendererService = function(appBase) {
     };
 
 
-    /**
-     * format the block-content as mindmap. 
-     * <ul>
-     * <li>creates a FlashObject /dist/vendors.vendorversion/freemind-flash/visorFreemind.swf
-     * <li>Calls /converters/mindmap with the html-content of the block
-     * <li>insert the returning flash-object into block-element 
-     * 
-     * @FeatureDomain                GUI
-     * @FeatureResult                returnValue shows Freemind-Flashviewer with the mindmap-content of block
-     * @FeatureKeywords              Layout
-     * @param block                  jquery-html-element with the content to convert to mindmap 
-     */
-    me.formatMindmap = function(block) {
-        var content = me.$(block).html();
-        var blockId = me.$(block).attr('id');
-        var url = "/converters/mindmap?source=" + encodeURIComponent(content);
-        console.log("formatMindmap " + blockId + " url:" + url);
-        
-        var fo = new FlashObject("/dist/vendors.vendorversion/freemind-flash/visorFreemind.swf", "visorFreeMind", "100%", "100%", 6, "#9999ff");
-        fo.addParam("quality", "high");
-        fo.addParam("bgcolor", "#a0a0f0");
-        fo.addVariable("openUrl", "_blank");
-        fo.addVariable("startCollapsedToLevel","10");
-        fo.addVariable("maxNodeWidth","200");
-        //
-        fo.addVariable("mainNodeShape","elipse");
-        fo.addVariable("justMap","false");
-        
-        fo.addVariable("initLoadFile",url);
-        fo.addVariable("defaultToolTipWordWrap",200);
-        fo.addVariable("offsetX","left");
-        fo.addVariable("offsetY","top");
-        fo.addVariable("buttonsPos","top");
-        fo.addVariable("min_alpha_buttons",20);
-        fo.addVariable("max_alpha_buttons",100);
-        fo.addVariable("scaleTooltips","false");
-        fo.write(blockId);
-    };
-    
-    /**
-     * format the block-content as plantuml. 
-     * <ul>
-     * <li>creates a Img-Tag with src "http://www.plantuml.com/plantuml/img/
-     * 
-     * @FeatureDomain                GUI
-     * @FeatureResult                returnValue shows Img with the plantuml-content of block
-     * @FeatureKeywords              Layout
-     * @param block                  jquery-html-element with the content to convert to plantuml
-     */
-    me.formatPlantuml = function(block) {
-        var blockId = me.$(block).attr('id');
-        var content = me.$(block).html();
-        var url = me.generatePlantuml(content);
-        console.log("formatPlantuml " + blockId + " url:" + url);
-        me.$(block).html('<img class="yaioplantuml" src="'+ url + '" id="' + blockId + 'Img">');
-    };
-
-    me.generatePlantuml = function(content) {
-        function encode64(data) {
-            var r = "";
-            for (var i=0; i<data.length; i+=3) {
-                if (i+2==data.length) {
-                    r +=append3bytes(data.charCodeAt(i), data.charCodeAt(i+1), 0);
-                } else if (i+1==data.length) {
-                    r += append3bytes(data.charCodeAt(i), 0, 0);
-                } else {
-                    r += append3bytes(data.charCodeAt(i), data.charCodeAt(i+1),
-                        data.charCodeAt(i+2));
-                }
-            }
-            return r;
-        }
-
-        function append3bytes(b1, b2, b3) {
-            var c1 = b1 >> 2;
-            var c2 = ((b1 & 0x3) << 4) | (b2 >> 4);
-            var c3 = ((b2 & 0xF) << 2) | (b3 >> 6);
-            var c4 = b3 & 0x3F;
-            var r = "";
-            r += encode6bit(c1 & 0x3F);
-            r += encode6bit(c2 & 0x3F);
-            r += encode6bit(c3 & 0x3F);
-            r += encode6bit(c4 & 0x3F);
-            return r;
-        }
-
-        function encode6bit(b) {
-            if (b < 10) {
-                return String.fromCharCode(48 + b);
-            }
-            b -= 10;
-            if (b < 26) {
-                return String.fromCharCode(65 + b);
-            }
-            b -= 26;
-            if (b < 26) {
-                return String.fromCharCode(97 + b);
-            }
-            b -= 26;
-            if (b == 0) {
-                return '-';
-            }
-            if (b == 1) {
-                return '_';
-            }
-            return '?';
-        }
-
-        var txt = content;
-        txt = txt.replace(/&gt;/g,'>');
-        txt = txt.replace(/&lt;/g,'<');
-        txt = txt.replace(/\n\.\n/g,'\n');
-        txt = txt.replace(/\n\n/g,'\n');
-        var s = unescape(encodeURIComponent(txt));
-        var url = me.appBase.config.plantUmlBaseUrl + "plantuml/svg/" + encode64(deflate(s, 9));
-
-        return url;
-    };
-
-    /**
-     * prepare the text to format as mermaid
-     * delete .
-     * @FeatureDomain                GUI
-     * @FeatureResult                returnValue String - prepared text
-     * @FeatureKeywords              Layout
-     * @param descText               the string to prepare
-     * @return                       {String}  prepared text to format with mermaid
-     */
-    me._prepareTextForMermaid = function(descText) {
-        // prepare descText
-        var newDescText = descText;
-        newDescText = newDescText.replace(/\n\.\n/g, "\n\n");
-        return newDescText;
-    };
-        
     me._configureMarked = function (flgHighlightNow, headerPrefix) {
         var renderer = me._createMarkdownRenderer();
         marked.setOptions({
@@ -343,7 +190,7 @@ Yaio.MarkdownRendererService = function(appBase) {
     me._renderMarkdownCode = function (code, language) {
         code = me.appBase.get('DataUtils').htmlEscapeTextLazy(code);
         if (code.match(/^sequenceDiagram/) || code.match(/^graph/) || code.match(/^gantt/)) {
-            return '<div id="inlineMermaid' + (me._localHtmlId++) + '" class="mermaid">'+ me._prepareTextForMermaid(code ) + '</div>';
+            return '<div id="inlineMermaid' + (me._localHtmlId++) + '" class="mermaid">'+ me.appBase.get('MermaidParser').prepareTextForMermaid(code ) + '</div>';
         } else if (language !== undefined  && (language.match(/^yaiomindmap/) || language.match(/^yaiofreemind/))) {
             return '<div id="inlineMindmap' + (me._localHtmlId++) + '"  class="yaiomindmap">'+ code + '</div>';
         } else if (language !== undefined  && (language.match(/^yaioplantuml/))) {
