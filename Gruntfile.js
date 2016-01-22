@@ -368,7 +368,7 @@ module.exports = function( grunt ){
             srcBase + 'yaio-explorerapp/js/utils/FileLoaderService.js',
             srcBase + 'yaio-explorerapp/js/editor/EditorService.js',
             srcBase + 'yaio-explorerapp/js/layout/LayoutService.js',
-            srcBase + 'yaio-explorerapp/js/wysiwyg/MarkdownRendererService.js',
+            srcBase + 'yaio-explorerapp/js/formatter/MarkdownRendererService.js',
             srcBase + 'yaio-explorerapp/js/utils/ExportedDataService.js',
             // services
             srcBase + 'yaio-explorerapp/js/datarenderer/*.js',
@@ -407,7 +407,7 @@ module.exports = function( grunt ){
             srcBase + 'yaio-explorerapp/js/utils/FileLoaderService.js',
             srcBase + 'yaio-explorerapp/js/editor/EditorService.js',
             srcBase + 'yaio-explorerapp/js/layout/LayoutService.js',
-            srcBase + 'yaio-explorerapp/js/wysiwyg/MarkdownRendererService.js',
+            srcBase + 'yaio-explorerapp/js/formatter/MarkdownRendererService.js',
             srcBase + 'yaio-explorerapp/js/utils/ExportedDataService.js'
         ],
         projectExportsJsFiles: [
@@ -421,6 +421,7 @@ module.exports = function( grunt ){
               srcBase + 'yaio-explorerapp/js/explorer/explorer.css',
               srcBase + 'yaio-explorerapp/js/datarenderer/gantt.css',
               srcBase + 'yaio-explorerapp/js/datarenderer/data.css',
+              srcBase + 'yaio-explorerapp/js/formatter/formatter.css',
               srcBase + 'yaio-explorerapp/js/search/search.css',
               srcBase + 'yaio-explorerapp/js/editor/editor.css',
               srcBase + 'yaio-explorerapp/js/exporter/exporter.css',
@@ -432,6 +433,7 @@ module.exports = function( grunt ){
         ],
         projectSupportCssFiles: [
             srcBase + 'yaio-explorerapp/js/layout/base.css',
+            srcBase + 'yaio-explorerapp/js/formatter/formatter.css',
             srcBase + 'yaio-explorerapp/js/layout/support.css'
         ],
         projectPrintCssFiles: [
