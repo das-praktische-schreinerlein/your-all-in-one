@@ -429,7 +429,8 @@ module.exports = function( grunt ){
             srcBase + 'yaio-explorerapp/js/layout/base.css',
             srcBase + 'yaio-explorerapp/js/layout/support.css',
             srcBase + 'yaio-explorerapp/js/layout/toc.css',
-            srcBase + 'yaio-explorerapp/js/jshelferlein/renderer/markdown.css',
+            srcBase + 'yaio-explorerapp/js/jshelferlein/parser/checklist.css',
+            srcBase + 'yaio-explorerapp/js/jshelferlein/parser/markdown.css',
             srcBase + 'yaio-explorerapp/js/jshelferlein/ui/toggler.css',
             srcBase + 'yaio-explorerapp/js/wysiwyg/formatter.css'
         ],
