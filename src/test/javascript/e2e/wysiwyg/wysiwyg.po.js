@@ -7,9 +7,9 @@ var fs = require('fs');
 var YAIOWysiwygPage = function() {
     var me = this;
 
-    me.editorInput = '#wysiwyg-editor';
-    me.editorPreview = '#wysiwyg-preview';
-    me.inputAceElm = '#wysiwyg-editor > textarea.ace_text-input';
+    me.editorInput = '#ymf-wysiwyg-editor';
+    me.editorPreview = '#ymf-wysiwyg-preview';
+    me.inputAceElm = '#ymf-wysiwyg-editor > textarea.ace_text-input';
     
     /**
      * add markdown to wysiwyg-editor, wait till rendered and compare with expected result
