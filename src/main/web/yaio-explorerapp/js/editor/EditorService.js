@@ -422,6 +422,12 @@ Yaio.EditorService = function(appBase) {
             me.$(element).trigger('select').triggerHandler("change");
             me.$(element).trigger('input');
             me.$(element).focus();
+
+            // update ace-editor
+            var parentEditor = me.$(element).data('aceEditor');
+            if (parentEditor) {
+                parentEditor.setValue(me.$(element).val());
+            }
         }
     };
 

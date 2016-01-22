@@ -25,6 +25,23 @@ window.YaioAppBase = function() {
     
     me._configureDefaultServices = function() {
         // instances
+        me.configureService('Ymf.LayoutService', function () {
+            return Ymf.LayoutService(me);
+        });
+        me.configureService('Ymf.MarkdownConverterService', function () {
+            return Ymf.MarkdownConverterService(me);
+        });
+        me.configureService('Ymf.MarkdownRendererService', function () {
+            return Ymf.MarkdownRendererService(me);
+        });
+        me.configureService('Ymf.FormatterService', function () {
+            return Ymf.FormatterService(me);
+        });
+        me.configureService('Ymf.MarkdownEditorService', function () {
+            return Ymf.MarkdownEditorService(me);
+        });
+
+        // instances
         me.configureService("Yaio.PromiseHelperService", function() { return Yaio.PromiseHelperService(me); });
         me.configureService("Yaio.BaseService", function() { return Yaio.BaseService(me); });
         me.configureService("Yaio.FileLoaderService", function() { return Yaio.FileLoaderService(me); });
@@ -46,16 +63,31 @@ window.YaioAppBase = function() {
         me.configureService("Yaio.ExportedDataService", function() { return Yaio.ExportedDataService(me); });
 
         // aliases
+        me.configureService('YmfLayout', function () {
+            return me.get('Ymf.LayoutService');
+        });
+        me.configureService('YmfMarkdownConverter', function () {
+            return me.get('Ymf.MarkdownConverterService');
+        });
+        me.configureService('YmfMarkdownRenderer', function () {
+            return me.get('Yaio.MarkdownRendererService');
+        });
+        me.configureService('YmfFormatter', function () {
+            return me.get('Ymf.FormatterService');
+        });
+        me.configureService('YmfMarkdownEditor', function () {
+            return me.get('Ymf.MarkdownEditorService');
+        });
         me.configureService("YaioPromiseHelper", function() { return me.get("Yaio.PromiseHelperService"); });
         me.configureService("YaioBase", function() { return me.get("Yaio.BaseService"); });
         me.configureService("YaioFileLoader", function() { return me.get("Yaio.FileLoaderService"); });
         me.configureService("YaioLayout", function() { return me.get("Yaio.LayoutService"); });
         me.configureService("YaioEditor", function() { return me.get("Yaio.EditorService"); });
-        me.configureService("YaioMarkdownConverter", function() { return me.get("Yaio.MarkdownConverterService"); });
-        me.configureService("YaioMarkdownRenderer", function() { return me.get("Yaio.MarkdownRendererService"); });
+        me.configureService("YaioMarkdownConverter", function() { return me.get("YmfMarkdownConverter"); });
+        me.configureService("YaioMarkdownRenderer", function() { return me.get("YmfMarkdownRenderer"); });
         me.configureService("YaioExplorerConverter", function() { return me.get("Yaio.ExplorerConverterService"); });
-        me.configureService("YaioFormatter", function() { return me.get("Yaio.FormatterService"); });
-        me.configureService("YaioMarkdownEditor", function() { return me.get("Yaio.MarkdownEditorService"); });
+        me.configureService("YaioFormatter", function() { return me.get("YmfFormatter"); });
+        me.configureService("YaioMarkdownEditor", function() { return me.get("YmfMarkdownEditor"); });
 
         // use NodeDataService with aliases 
         me.configureService("YaioStaticNodeDataStore", function() { return me.get("Yaio.StaticNodeDataStoreService"); });

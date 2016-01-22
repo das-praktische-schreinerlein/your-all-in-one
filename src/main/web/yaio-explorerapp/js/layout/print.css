@@ -17,19 +17,6 @@
  * base
  *****************************************
  *****************************************/
-body {
-    background: none;
-/**
-    -webkit-transform: scale(0.9);
-    -moz-transform: scale(0.9);
-    -ms-transform: scale(0.9);
-    -o-transform: scale(0.9);
-    transform: scale(0.9);    
-    transform-origin: -10% -10%;
-**/
-    width: 1200px;
-}
-
 .page-div-center {
     width: 100%;
 }
@@ -126,38 +113,6 @@ table.fancytree-ext-table.fancytree-treefocus tbody tr.fancytree-active {
     outline: none;
 }
 
-
-#wysiwyg-box, #preview-box, div [class*="ui-dialog"], .ui-widget-overlay, div.ui-resizable-handle, div.ui-dialog {
-    display: none !important;
-}
-
-/*****************************************
- *****************************************
- * formatter-elements
- *****************************************
- *****************************************/
-pre {
-    max-height: none;
-    /* show all whitespaces */
-    white-space: pre-wrap;
-    overflow: visible;
-}
-
-div.mermaid-source {
-    display: none;
-}
-div.yaiomindmap {
-    display: none !important;
-}
-div.yaiomindmap-source {
-    display: block !important;
-}
-div.servicesmermaid {
-    display: none;
-}
-div.servicesyaiomindmap {
-    display: none;
-}
 
 .container-toc-desc {
 }

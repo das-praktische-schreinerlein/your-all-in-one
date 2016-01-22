@@ -36,6 +36,14 @@ Yaio.LayoutService = function(appBase) {
     };
 
 
+    me.addPreviewToElements = function() {
+        me.appBase.YmfLayout.addPreviewToElements('label[for="nodeDesc"');
+    };
+    
+    me.addWysiwygToElements = function() {
+        me.appBase.YmfLayout.addWysiwygToElements('label[for="nodeDesc"');
+    };
+    
     /** 
      * add speechRecognition to name+nodeDesc-Label if availiable<br>
      * set the flg webkitSpeechRecognitionAdded on the element, so that there is no doubling
@@ -44,43 +52,7 @@ Yaio.LayoutService = function(appBase) {
      * @FeatureKeywords              GUI Editor SpeechRecognition
      */
     me.addSpeechRecognitionToElements = function() {
-        var yaioAppBaseVarName = me.appBase.config.appBaseVarName;
-
-        // add speechrecognition if availiable
-        if (me.appBase.getDetector('SpeechRecognitionDetector').isSupported()) {
-            // add speechrecognition to nodeDesc+name
-            me.$("label[for='nodeDesc'], label[for='name']").append(function (idx) {
-                var link = "";
-                var label = this;
-                
-                // check if already set
-                if (me.$(label).attr("webkitSpeechRecognitionAdded")) {
-                    console.error("addSpeechRecognitionToElements: SKIP because already added: " + me.$(label).attr("for"));
-                    return link;
-                }
-    
-                // get corresponding form
-                var forName = me.$(label).attr("for");
-                var form = me.$(label).closest("form");
-                
-                // get for-element byName from form
-                var forElement = form.find("[name="+ forName + "]").first();
-                if (forElement.length > 0) {
-                    // define link to label
-                    link = "<a href=\"\" class=\"\"" +
-                        " onClick=\"" + yaioAppBaseVarName + ".get('YaioLayout').openSpeechRecognitionWindow(" +
-                            "document.getElementById('" + forElement.attr('id') + "')); return false;" +
-                        "\" lang='tech' data-tooltip='tooltip.command.OpenSpeechRecognition'>" +
-                        "<img alt='Spracherkennung nutzen' style='width:25px'" +
-                            " src='" + me.appBase.getService('SpeechRecognitionHelper').config.statusImgSrcStart + "'></a>";
-                    
-                    // set flag
-                    me.$(label).attr("webkitSpeechRecognitionAdded", "true");
-                    console.log("addSpeechRecognitionToElements: add : " + forName + " for " + forElement.attr('id'));
-                }
-                return link;
-            });
-        }
+        me.appBase.YmfLayout.addSpeechRecognitionToElements('label[for="nodeDesc"], label[for="name"]');
     };
     
     /** 
@@ -91,12 +63,7 @@ Yaio.LayoutService = function(appBase) {
      * @param target                 target-element to update (HTML-Element)
      */
     me.openSpeechRecognitionWindow = function(target) {
-        if (target == null) { target = self; }
-        target.focus();
-        var speechrecognitionWindow = window.open('speechrecognition.html', "speechrecognition", "width=690,height=350,resizable=yes,dependent=yes,scrollbars=yes");
-        speechrecognitionWindow.focus();
-        if (speechrecognitionWindow.opener == null) { speechrecognitionWindow.opener = self; }
-        speechrecognitionWindow.opener.targetElement = target;
+        me.appBase.YmfLayout.openSpeechRecognitionWindow(target);
     };
     
     /** 
@@ -107,41 +74,7 @@ Yaio.LayoutService = function(appBase) {
      * @FeatureKeywords              GUI Editor SpeechSynth
      */
     me.addSpeechSynthToElements = function() {
-        var yaioAppBaseVarName = me.appBase.config.appBaseVarName;
-
-        // add speechSynth if availiable
-        if (me.appBase.getDetector('SpeechSynthDetector').isSupported()) {
-            // add speechrecognition to nodeDesc+name
-            me.$("label[for='nodeDesc']").append(function (idx) {
-                var link = "";
-                var label = this;
-                
-                // check if already set
-                if (me.$(label).attr("speechSynthAdded")) {
-                    console.error("addSpeechSynthToElements: SKIP because already added: " + me.$(label).attr("for"));
-                    return link;
-                }
-    
-                // get corresponding form
-                var forName = me.$(label).attr("for");
-                var form = me.$(label).closest("form");
-                
-                // get for-element byName from form
-                var forElement = form.find("[name="+ forName + "]").first();
-                if (forElement.length > 0) {
-                    // define link to label
-                    link = "<a href=\"\" class=\"button\"" +
-                           " onClick=\"" + yaioAppBaseVarName + ".get('YaioLayout').openSpeechSynthWindow(" +
-                            "document.getElementById('" + forElement.attr('id') + "')); return false;" +
-                           "\" lang='tech' data-tooltip='tooltip.command.OpenSpeechSynth' class='button'>common.command.OpenSpeechSynth</a>";
-                    
-                    // set flag
-                    me.$(label).attr("speechSynthAdded", "true");
-                    console.log("addSpeechSynthToElements: add : " + forName + " for " + forElement.attr('id'));
-                }
-                return link;
-            });
-        }
+        me.appBase.YmfLayout.addSpeechSynthToElements('label[for="nodeDesc"]');
     };
     
     /** 
@@ -152,40 +85,37 @@ Yaio.LayoutService = function(appBase) {
      * @param target                 target-element to update (HTML-Element)
      */
     me.openSpeechSynthWindow = function(target) {
-        if (target == null) { target = self; }
-        target.focus();
-        var speechsynthWindow = window.open('speechsynth.html', "speechsynth", "width=690,height=350,resizable=yes,dependent=yes,scrollbars=yes");
-        speechsynthWindow.focus();
-        if (speechsynthWindow.opener == null) { speechsynthWindow.opener = self; }
-        speechsynthWindow.opener.targetElement = target;
+        me.appBase.YmfLayout.openSpeechSynthWindow(target);
     };
-    
-    
-    /** 
+
+    me.togglePrintLayout = function() {
+        me.appBase.YmfLayout.togglePrintLayout();
+    };
+
+    /**
      * add datepicker to all input-elements with styleclass inputtype_date and inputtype_datetime
      * @FeatureDomain                GUI
      * @FeatureResult                GUI-result: add datepicker
      * @FeatureKeywords              GUI Editor DatePicker
      */
-    me.addDatePickerToElements = function() {
+    me.addDatePickerToElements = function () {
         // add datepicker to all dateinput
-        me.$.datepicker.setDefaults(me.$.datepicker.regional['de']);
-        me.$.timepicker.regional['de'] = {
-                timeOnlyTitle: 'Uhrzeit auswählen',
-                timeText: 'Zeit',
-                hourText: 'Stunde',
-                minuteText: 'Minute',
-                secondText: 'Sekunde',
-                currentText: 'Jetzt',
-                closeText: 'Auswählen',
-                ampm: false
-              };
-        me.$.timepicker.setDefaults(me.$.timepicker.regional['de']);    
+        me.$.datepicker.setDefaults(me.$.datepicker.regional.de);
+        me.$.timepicker.regional.de = {
+            timeOnlyTitle: 'Uhrzeit auswählen',
+            timeText: 'Zeit',
+            hourText: 'Stunde',
+            minuteText: 'Minute',
+            secondText: 'Sekunde',
+            currentText: 'Jetzt',
+            closeText: 'Auswählen',
+            ampm: false
+        };
+        me.$.timepicker.setDefaults(me.$.timepicker.regional.de);
         me.$('input.inputtype_date').datepicker();
         me.$('input.inputtype_datetime').datetimepicker();
     };
-    
-    
+
     /** 
      * add styleselectbox to all input-elements with styleclass inputtype_docLayoutAddStyleClass
      * @FeatureDomain                GUI
@@ -227,81 +157,6 @@ Yaio.LayoutService = function(appBase) {
         });
     };
     
-    me.addPreviewToElements = function() {
-        var yaioAppBaseVarName = me.appBase.config.appBaseVarName;
-
-        // add preview to nodeDesc
-        me.$("label[for='nodeDesc']").append(function (idx) {
-            var link = "";
-            var label = this;
-            
-            // check if already set
-            if (me.$(label).attr("previewAdded")) {
-                console.error("addPreviewElements: SKIP because already added: " + me.$(label).attr("for"));
-                return link;
-            }
-   
-            // get corresponding form
-            var forName = me.$(label).attr("for");
-            var form = me.$(label).closest("form");
-            
-            // get for-element byName from form
-            var forElement = form.find("[name="+ forName + "]").first();
-            if (forElement.length > 0) {
-                // define link to label
-                link = "<a href=\"#\" id='showPreview4" + forElement.attr('id') + "'" +
-                       " onClick=\"" + yaioAppBaseVarName + ".get('YaioMarkdownEditor').showPreviewForTextareaId('" +
-                          forElement.attr('id') + "'); return false;" +
-                       "\" lang='tech' data-tooltip='tooltip.command.OpenPreview' class='button'>common.command.OpenPreview</a>";
-                link += "<a href=\"#\" id='openMarkdownHelp4" + forElement.attr('id') + "'" +
-                        " onClick=\"" + yaioAppBaseVarName + ".get('YaioMarkdownEditor').showMarkdownHelp(); return false;" +
-                        "\" lang='tech' data-tooltip='tooltip.command.OpenMarkdownHelp' class='button'>common.command.OpenMarkdownHelp</a>";
-                
-                // set flag
-                me.$(label).attr("previewAdded", "true");
-                console.log("addPreviewToElements: add : " + forName + " for " + forElement.attr('id'));
-            }
-            return link;
-        });
-    };
-    
-     
-     
-    me.addWysiwygToElements = function() {
-        var yaioAppBaseVarName = me.appBase.config.appBaseVarName;
-
-        // add preview to nodeDesc
-        me.$("label[for='nodeDesc']").append(function (idx) {
-            var link = "";
-            var label = this;
-            
-            // check if already set
-            if (me.$(label).attr("wysiwygAdded")) {
-                console.error("addWysiwygElements: SKIP because already added: " + me.$(label).attr("for"));
-                return link;
-            }
-   
-            // get corresponding form
-            var forName = me.$(label).attr("for");
-            var form = me.$(label).closest("form");
-            
-            // get for-element byName from form
-            var forElement = form.find("[name="+ forName + "]").first();
-            if (forElement.length > 0) {
-                // define link to label
-                link = "<a href=\"#\" id='openWysiwyg4" + forElement.attr('id') + "'" +
-                    " onClick=\"" + yaioAppBaseVarName + ".get('YaioMarkdownEditor').openWysiwygForTextareaId('" +
-                        forElement.attr('id') + "'); return false;" +
-                    "\" lang='tech' data-tooltip='tooltip.command.OpenWysiwygEditor' class='button'>common.command.OpenWysiwygEditor</a>";
-                
-                // set flag
-                me.$(label).attr("wysiwygAdded", "true");
-                console.log("addWysiwygToElements: add : " + forName + " for " + forElement.attr('id'));
-            }
-            return link;
-        });
-    };
-    
     /** 
      * init the multilanguage support for all tags with attribute <XX lang="de">
      * @FeatureDomain                GUI
@@ -324,74 +179,73 @@ Yaio.LayoutService = function(appBase) {
         // change to de
         window.lang.change(langKey);
     };
-    
-    me.setupAppSize = function() {
+
+    me.setupAppSize = function () {
         var height = window.innerHeight;
-        var width = window.innerWidth;
-        
+
         // YAIO-editor
-        var ele = me.$("#containerBoxYaioEditor");
+        var ele = me.$('#containerBoxYaioEditor');
         if (ele.length > 0) {
             // we are relative to the tree
-            var paddingToHead = me.$("#containerYaioTree").position().top;
-            var left = me.$("#containerYaioTree").position().left + me.$("#containerYaioTree").width + 2;
-    
+            var paddingToHead = me.$('#containerYaioTree').position().top;
+            var left = me.$('#containerYaioTree').position().left + me.$('#containerYaioTree').width + 2;
+
             // set posTop as scrollTop burt never < paddingToHead
             var posTop = me.$(window).scrollTop();
             if (posTop < paddingToHead) {
                 posTop = paddingToHead;
             }
-            
+
             // calc maxHeight = windHeight - 20 (puffer)
             var maxHeight = height - 20;
             // sub topPos - Scollpos
             maxHeight = maxHeight - (posTop - me.$(window).scrollTop());
-    
+
             // set values
-            me.$(ele).css("position", "absolute");
-            me.$(ele).css("max-height", maxHeight);
-            me.$(ele).css("top", posTop);
-            me.$(ele).css("left", left);
-            
-            console.log("setup size containerBoxYaioEditor width:" + window.innerWidth 
-                    + " height:" + window.innerHeight 
-                    + " scrollTop:" + me.$(window).scrollTop()
-                    + " offset.top" + me.$(ele).offset().top
-                    + " top:" + posTop
-                    + " max-height:" + me.$(ele).css("max-height")
-                    );
+            me.$(ele).css('position', 'absolute');
+            me.$(ele).css('max-height', maxHeight);
+            me.$(ele).css('top', posTop);
+            me.$(ele).css('left', left);
+
+            console.log('setup size containerBoxYaioEditor width:' + window.innerWidth
+                + ' height:' + window.innerHeight
+                + ' scrollTop:' + me.$(window).scrollTop()
+                + ' offset.top' + me.$(ele).offset().top
+                + ' top:' + posTop
+                + ' max-height:' + me.$(ele).css('max-height')
+            );
         }
-        
+
         // Export-editor
-        ele = me.$("#containerFormYaioEditorOutputOptions");
+        ele = me.$('#containerFormYaioEditorOutputOptions');
         if (ele.length > 0) {
-            me.$(ele).css("max-height", height-me.$(ele).offset().top);
-            console.log("setup size containerFormYaioEditorOutputOptions width:" + window.innerWidth 
-                    + " height:" + window.innerHeight 
-                    + " scrollTop:" + me.$(window).scrollTop()
-                    + " offset.top" + me.$(ele).offset().top
-                    + " max-height:" + me.$(ele).css("max-height")
-                    );
+            me.$(ele).css('max-height', height - me.$(ele).offset().top);
+            console.log('setup size containerFormYaioEditorOutputOptions width:' + window.innerWidth
+                + ' height:' + window.innerHeight
+                + ' scrollTop:' + me.$(window).scrollTop()
+                + ' offset.top' + me.$(ele).offset().top
+                + ' max-height:' + me.$(ele).css('max-height')
+            );
         }
         // Import-editor
-        ele = me.$("#containerFormYaioEditorImport");
+        ele = me.$('#containerFormYaioEditorImport');
         if (ele.length > 0) {
-            me.$(ele).css("max-height", height-me.$(ele).offset().top);
-            console.log("setup size containerFormYaioEditorImport width:" + window.innerWidth 
-                    + " height:" + window.innerHeight 
-                    + " scrollTop:" + me.$(window).scrollTop()
-                    + " offset.top" + me.$(ele).offset().top
-                    + " max-height:" + me.$(ele).css("max-height")
-                    );
+            me.$(ele).css('max-height', height - me.$(ele).offset().top);
+            console.log('setup size containerFormYaioEditorImport width:' + window.innerWidth
+                + ' height:' + window.innerHeight
+                + ' scrollTop:' + me.$(window).scrollTop()
+                + ' offset.top' + me.$(ele).offset().top
+                + ' max-height:' + me.$(ele).css('max-height')
+            );
         }
-    
+
         // Frontpage
-        ele = me.$("#front-content-intro");
+        ele = me.$('#front-content-intro');
         if (0 && ele.length > 0) {
-            var maxHeight = height-me.$(ele).offset().top;
-            
+            var maxHeight = height - me.$(ele).offset().top;
+
             // sub todonextbox
-            if (me.$('#box_todonext').length > 0 ) {
+            if (me.$('#box_todonext').length > 0) {
                 if (me.$('#box_todonext').height > 0) {
                     maxHeight = maxHeight - me.$('#box_todonext').height;
                 } else {
@@ -399,38 +253,38 @@ Yaio.LayoutService = function(appBase) {
                     maxHeight = maxHeight - 100;
                 }
             }
-            me.$(ele).css("max-height", maxHeight);
-            console.log("setup size front-content-intro width:" + window.innerWidth 
-                    + " height:" + window.innerHeight 
-                    + " scrollTop:" + me.$(window).scrollTop()
-                    + " offset.top" + me.$(ele).offset().top
-                    + " max-height:" + me.$(ele).css("max-height")
-                    );
+            me.$(ele).css('max-height', maxHeight);
+            console.log('setup size front-content-intro width:' + window.innerWidth
+                + ' height:' + window.innerHeight
+                + ' scrollTop:' + me.$(window).scrollTop()
+                + ' offset.top' + me.$(ele).offset().top
+                + ' max-height:' + me.$(ele).css('max-height')
+            );
         }
     };
-    
-    me.yaioShowHelpSite = function(url) {
+
+    me.yaioShowHelpSite = function (url) {
         // set messagetext
-        console.log("yaioShowHelpSite:" + url);
-        me.$("#help-iframe").attr('src',url);
-        
+        console.log('yaioShowHelpSite:' + url);
+        me.$('#help-iframe').attr('src', url);
+
         // show message
-        me.$( "#help-box" ).dialog({
+        me.$('#help-box').dialog({
             modal: true,
-            width: "800px",
+            width: '800px',
             buttons: {
-              "Schliessen": function() {
-                me.$( this ).dialog( "close" );
-              },
-              "Eigenes Fenster": function() {
-                  var helpFenster = window.open(url, "help", "width=750,height=500,scrollbars=yes,resizable=yes");
-                  helpFenster.focus();
-                  me.$( this ).dialog( "close" );
+                'Schliessen': function () {
+                    me.$(this).dialog('close');
+                },
+                'Eigenes Fenster': function () {
+                    var helpFenster = window.open(url, 'help', 'width=750,height=500,scrollbars=yes,resizable=yes');
+                    helpFenster.focus();
+                    me.$(this).dialog('close');
                 }
             }
-        });    
+        });
     };
-    
+
     me.hideFormRowTogglerIfSet = function(togglerId, className, state) {
         if (jMATService.getLayoutService().isInputRowsSet(className)) {
             // show all
@@ -462,17 +316,6 @@ Yaio.LayoutService = function(appBase) {
         }
     };
      
-    me.togglePrintLayout = function() {
-        if (me.$("#checkboxPrintAll").prop('checked')) {
-            // print all
-            me.$("#link_css_dataonly").attr("disabled", "disabled");
-            me.$("#link_css_dataonly").prop("disabled", true);
-        } else  {
-            // print data only
-            me.$("#link_css_dataonly").removeAttr("disabled");
-            me.$("#link_css_dataonly").prop("disabled", false);
-        }
-    };
 
     me._init();
     
