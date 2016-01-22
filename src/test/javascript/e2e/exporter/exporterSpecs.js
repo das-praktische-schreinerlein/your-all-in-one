@@ -156,8 +156,8 @@ describe('yaio exporter', function() {
     it('should export Desc of Testnode', function doShowDescOfTestNode() {
         // Given
         var deferred = protractor.promise.defer();
-        var expectedText = "Diese Aufgabe bitte nicht löschen, da hier die JavaScript-E2E-Tests ausgeführt werden.";
-        var expectedHtml = "<p>" + expectedText + "</p>";
+        var expectedText = 'Diese Aufgabe bitte nicht löschen, da hier die JavaScript-E2E-Tests ausgeführt werden.';
+        var expectedHtml = '<p class="jsh-md-p">' + expectedText + '</p>';
         var contentHandler = yaioExporterPage.createHandlerToCheckNodeExports(yaioNodePage.jsFuncTestId, expectedHtml, expectedText, expectedText);
 
         // When and Then
