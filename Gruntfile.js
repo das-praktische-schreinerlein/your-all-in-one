@@ -342,6 +342,8 @@ module.exports = function( grunt ){
 // loaded standalone because of plugins
               vendorSrcBase + 'freemind-flash/flashobject.js',
               vendorSrcBase + 'js/yaio/JMATAllIn.js',
+            // !!!! ymf is vendor but my project
+            vendorDestBase + 'js/ymf/ymf-app-full.js',
         ],
         vendorCssFiles: [
               vendorDestBase + 'css/jqueryui/jquery-ui.css',
@@ -353,9 +355,21 @@ module.exports = function( grunt ){
               vendorDestBase + 'css/toastr/toastr.css',
               vendorDestBase + 'css/mermaid/mermaid.css',
               vendorSrcBase + 'css/yaio/style.css',
-              vendorSrcBase + 'css/yaio/main.css'
+              vendorSrcBase + 'css/yaio/main.css',
+            // !!!! ymf is vendor but my project
+            vendorDestBase + 'css/ymf/ymf-app-full.css',
         ],
         projectJsFiles: [
+            srcBase + 'yaio-explorerapp/js/jmat.js',
+            srcBase + 'yaio-explorerapp/js/YaioAppBaseConfig.js',
+            srcBase + 'yaio-explorerapp/js/YaioAppBase.js',
+            srcBase + 'yaio-explorerapp/js/utils/PromiseHelperService.js',
+            srcBase + 'yaio-explorerapp/js/utils/BaseService.js',
+            srcBase + 'yaio-explorerapp/js/utils/FileLoaderService.js',
+            srcBase + 'yaio-explorerapp/js/editor/EditorService.js',
+            srcBase + 'yaio-explorerapp/js/layout/LayoutService.js',
+            srcBase + 'yaio-explorerapp/js/wysiwyg/MarkdownRendererService.js',
+            srcBase + 'yaio-explorerapp/js/utils/ExportedDataService.js',
             // services
             srcBase + 'yaio-explorerapp/js/datarenderer/*.js',
             srcBase + 'yaio-explorerapp/js/dataservices/*.js',
@@ -386,8 +400,6 @@ module.exports = function( grunt ){
         ],
         projectSupportJsFiles: [
             srcBase + 'yaio-explorerapp/js/jmat.js',
-            srcBase + 'yaio-explorerapp/js/jshelferlein/JsHelferlein.js',
-            srcBase + 'yaio-explorerapp/js/jshelferlein/**/*.js',
             srcBase + 'yaio-explorerapp/js/YaioAppBaseConfig.js',
             srcBase + 'yaio-explorerapp/js/YaioAppBase.js',
             srcBase + 'yaio-explorerapp/js/utils/PromiseHelperService.js',
@@ -395,10 +407,7 @@ module.exports = function( grunt ){
             srcBase + 'yaio-explorerapp/js/utils/FileLoaderService.js',
             srcBase + 'yaio-explorerapp/js/editor/EditorService.js',
             srcBase + 'yaio-explorerapp/js/layout/LayoutService.js',
-            srcBase + 'yaio-explorerapp/js/wysiwyg/MarkdownConverterService.js',
             srcBase + 'yaio-explorerapp/js/wysiwyg/MarkdownRendererService.js',
-            srcBase + 'yaio-explorerapp/js/wysiwyg/FormatterService.js',
-            srcBase + 'yaio-explorerapp/js/wysiwyg/MarkdownEditorService.js',
             srcBase + 'yaio-explorerapp/js/utils/ExportedDataService.js'
         ],
         projectExportsJsFiles: [
@@ -419,28 +428,26 @@ module.exports = function( grunt ){
               srcBase + 'yaio-explorerapp/js/lang/lang.css',
               srcBase + 'yaio-explorerapp/js/auth/auth.css',
               srcBase + 'yaio-explorerapp/js/frontpage/frontpage.css',
-              srcBase + 'yaio-explorerapp/js/dashboard/*.css',
-              srcBase + 'yaio-explorerapp/js/jshelferlein/parser/checklist.css',
-              srcBase + 'yaio-explorerapp/js/jshelferlein/parser/markdown.css',
-              srcBase + 'yaio-explorerapp/js/jshelferlein/ui/toggler.css',
-              srcBase + 'yaio-explorerapp/js/wysiwyg/formatter.css'
+              srcBase + 'yaio-explorerapp/js/dashboard/*.css'
         ],
         projectSupportCssFiles: [
             srcBase + 'yaio-explorerapp/js/layout/base.css',
-            srcBase + 'yaio-explorerapp/js/layout/support.css',
-            srcBase + 'yaio-explorerapp/js/layout/toc.css',
-            srcBase + 'yaio-explorerapp/js/jshelferlein/parser/checklist.css',
-            srcBase + 'yaio-explorerapp/js/jshelferlein/parser/markdown.css',
-            srcBase + 'yaio-explorerapp/js/jshelferlein/ui/toggler.css',
-            srcBase + 'yaio-explorerapp/js/wysiwyg/formatter.css'
+            srcBase + 'yaio-explorerapp/js/layout/support.css'
         ],
         projectPrintCssFiles: [
+            // !!!! ymf is vendor but my project
+            vendorDestBase + 'css/ymf/ymf-app-print.css',
+            srcBase + 'yaio-explorerapp/js/layout/print.css',
             srcBase + 'yaio-explorerapp/js/layout/print.css',
         ],
         projectPrintDataOnlyCssFiles: [
+            // !!!! ymf is vendor but my project
+            vendorDestBase + 'css/ymf/ymf-app-print-dataonly.css',
             srcBase + 'yaio-explorerapp/js/layout/print-dataonly.css',
         ],
         projectResetCssFiles: [
+            // !!!! ymf is vendor but my project
+            vendorDestBase + 'css/ymf/ymf-reset.css',
             srcBase + 'yaio-explorerapp/js/layout/reset.css',
         ],
         vendorJsTestFiles: [
@@ -584,8 +591,13 @@ module.exports = function( grunt ){
                     {expand: true, cwd: bowerSrcBase + 'mermaid', src: ['dist/mermaid.css'], dest: vendorDestBase + 'css/mermaid/', flatten: true, filter: 'isFile'},
                     {expand: true, cwd: bowerSrcBase + 'select2', src: ['dist/css/select2.min.css'], dest: vendorDestBase + 'css/select2/', flatten: true},
                     {expand: true, cwd: bowerSrcBase + 'slimbox2', src: ['**/slimbox2.css'], dest: vendorDestBase + 'css/slimbox2/', flatten: true, filter: 'isFile'},
-                    {expand: true, cwd: bowerSrcBase + 'toastr', src: ['toastr.css'], dest: vendorDestBase + 'css/toastr/', flatten: true, filter: 'isFile'}
-                ],
+                    {expand: true, cwd: bowerSrcBase + 'toastr', src: ['toastr.css'], dest: vendorDestBase + 'css/toastr/', flatten: true, filter: 'isFile'},
+
+                    // ymf
+                    {expand: true, cwd: bowerSrcBase + 'ymf/build/dist/', src: ['*.css'], dest: vendorDestBase + 'css/ymf/', flatten: true, filter: 'isFile'},
+                    {expand: true, cwd: bowerSrcBase + 'ymf/build/dist/', src: ['*.js'], dest: vendorDestBase + 'js/ymf/', flatten: true, filter: 'isFile'},
+                    {expand: true, cwd: bowerSrcBase + 'ymf/build/ymf-editorapp/', src: ['*.html'], dest: vendorDestBase + 'html/ymf/', flatten: true, filter: 'isFile'}
+                ]
             },
             // copy bower-binary resources (png...-files) to dest
             bowerbin2vendors: {
@@ -593,7 +605,7 @@ module.exports = function( grunt ){
                     {expand: true, cwd: bowerSrcBase + 'fancytree/dist/', src: ['skin-win8/*.png', 'skin-win8/*.gif'], dest: vendorDestBase + 'js/fancytree/', flatten: false},
                     {expand: true, cwd: bowerSrcBase + 'fancytree/dist/', src: ['skin-lion/*.png', 'skin-lion/*.gif'], dest: vendorDestBase + 'js/fancytree/', flatten: false},
                     {expand: true, cwd: bowerSrcBase + 'jquery-ui/themes/smoothness', src: ['images/*.*'], dest: vendorDestBase + 'css/jqueryui/', flatten: false},
-                ],
+                ]
             },
             // copy vendor-files which must exists in specific pathes to dist
             vendors2dist: {
@@ -614,7 +626,10 @@ module.exports = function( grunt ){
                     // yaio-intern vendors
                     {expand: true, cwd: vendorSrcBase + '', src: ['freemind-flash/**'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/', flatten: false},
                     {expand: true, cwd: vendorSrcBase + 'js/', src: ['yaio/**'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/', flatten: false},
-                    {expand: true, cwd: vendorSrcBase + 'css/', src: ['yaio/**'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/', flatten: false}
+                    {expand: true, cwd: vendorSrcBase + 'css/', src: ['yaio/**'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/', flatten: false},
+
+                    //
+                    {expand: true, cwd: vendorDestBase + 'html/ymf/', src: ['*.html'], dest: destBase + 'yaio-explorerapp/', flatten: false}
                 ]
             },
             // copy archiv to dist
@@ -679,6 +694,18 @@ module.exports = function( grunt ){
                             match: /[-.]vendorversion\.(css|js)/g,
                             replacement: "-<%= pkg.vendorversion %>.$1"
                         },
+                        {
+                            match: /dist\/ymf-(app|exports)-vendors[-.](vendorsversion|\d+\.\d+\.\d+)?\.(css|js)/g,
+                            replacement: "dist\/vendors-full-<%= pkg.appversion %>.$3"
+                        },
+                        {
+                            match: /dist\/ymf-(app|exports)-vendors[-.](appversion|\d+\.\d+\.\d+)\//g,
+                            replacement: "dist\/vendors-<%= pkg.appversion %>\/"
+                        },
+                        {
+                            match: /dist\/ymf-(.*)[-.](appversion|\d+\.\d+\.\d+)?\.(css|js)/g,
+                            replacement: "dist\/yaio-$1-<%= pkg.appversion %>.$3"
+                        }
                     ]
                 },
                 files: [
@@ -713,8 +740,7 @@ module.exports = function( grunt ){
                 },
                 files: [
                     {expand: true, 
-                        src: ['resources/projektplan-export-header.html', 
-                              'resources/examples/markdownhelp/markdownhelp.html'], 
+                        src: ['resources/projektplan-export-header.html'],
                         dest: '', flatten: false}
                 ]
             }
