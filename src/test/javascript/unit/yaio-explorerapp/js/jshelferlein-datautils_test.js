@@ -15,7 +15,7 @@
 'use strict';
 
 /** 
- * tests for yaio-baseservice.js
+ * tests for jshelferlein-datautils.js
  *  
  * @FeatureDomain                Test
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
@@ -25,16 +25,16 @@
  */
 
 (function () {
-    var testObj = yaioAppBase.get('YaioBase');
+    var testObj = yaioAppBase.get('DataUtils');
     
-    describe('Modul yaio-baseservice Service-Funktions (htmlEscapeText)', function doSuiteHtmlEscapeText() {
+    describe('Modul jshelferlein-datautils Service-Funktions (htmlEscapeText)', function doSuiteHtmlEscapeText() {
         it( "check htmlEscapeText", function doTestHtmlEscapeText() {
             var res = testObj.htmlEscapeText("<>/&'\"");
             expect(res).toBe("&lt;&gt;&#x2F;&amp;&#x27;&quot;");
         });
     });
         
-    describe('Modul yaio-baseservice Service-Funktions (formatGermanDate)', function doSuiteFormatGermanDate() {
+    describe('Modul jshelferlein-datautils Service-Funktions (formatGermanDate)', function doSuiteFormatGermanDate() {
         it( "check formatGermanDate 1ms", function doTestFormatGermanDate1ms() {
             var res = testObj.formatGermanDate(1);
             expect(res).toBe("01.01.1970");
@@ -46,7 +46,7 @@
         });
     });
     
-    describe('Modul yaio-baseservice Service-Funktions (padNumber)', function doSuitePadNumber() {
+    describe('Modul jshelferlein-datautils Service-Funktions (padNumber)', function doSuitePadNumber() {
         
         it( "check padNumber null", function doTestPadNumberNull() {
             var res = testObj.padNumber("", 2);
@@ -70,7 +70,7 @@
         
     });
     
-    describe('Modul yaio-baseservice Service-Funktions (formatNumbers)', function doSuiteFormatNumbers() {
+    describe('Modul jshelferlein-datautils Service-Funktions (formatNumbers)', function doSuiteFormatNumbers() {
         it( "check formatNumbers 100.245 with 2", function doTestFormatNumbersFull() {
             var res = testObj.formatNumbers(100.245, 2, "");
             expect(res).toBe("100.25");
