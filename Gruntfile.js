@@ -696,17 +696,26 @@ module.exports = function( grunt ){
                             match: /[-.]vendorversion\.(css|js)/g,
                             replacement: "-<%= pkg.vendorversion %>.$1"
                         },
+                        // ymf-files
                         {
-                            match: /dist\/ymf-(app|exports)-vendors[-.](vendorsversion|\d+\.\d+\.\d+)?\.(css|js)/g,
-                            replacement: "dist\/vendors-full-<%= pkg.appversion %>.$3"
+                            match: /dist\/ymf-(.*?)-vendors\.(css|js)/g,
+                            replacement: "dist\/vendors-full-<%= pkg.vendorversion %>.$2"
                         },
                         {
-                            match: /dist\/ymf-(app|exports)-vendors[-.](appversion|\d+\.\d+\.\d+)\//g,
-                            replacement: "dist\/vendors-<%= pkg.appversion %>\/"
+                            match: /dist\/ymf-(.*?)-vendors\//g,
+                            replacement: "dist\/vendors-<%= pkg.vendorversion %>\/"
                         },
                         {
-                            match: /dist\/ymf-(.*)[-.](appversion|\d+\.\d+\.\d+)?\.(css|js)/g,
-                            replacement: "dist\/yaio-$1-<%= pkg.appversion %>.$3"
+                            match: /dist\/ymf-reset\.(css|js)/g,
+                            replacement: "dist\/yaio-reset-<%= pkg.resetversion %>.$1"
+                        },
+                        {
+                            match: /dist\/ymf-app-(full|print)(.*?)\.(css|js)/g,
+                            replacement: "dist\/yaio-app-$1$2-<%= pkg.appversion %>.$3"
+                        },
+                        {
+                            match: /dist\/ymf-jsh-(full|print)(.*?)\.(css|js)/g,
+                            replacement: "dist\/yaio-support-$1$2-<%= pkg.supportversion %>.$3"
                         }
                     ]
                 },
