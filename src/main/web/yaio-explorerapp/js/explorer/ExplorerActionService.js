@@ -456,15 +456,9 @@ Yaio.ExplorerActionService = function(appBase) {
                 // check if syntaxhighlighting to do
                 var descBlock = me.$("#container_content_desc_" + id);
                 if (me.$(descBlock).hasClass('syntaxhighlighting-open')) {
-                    var flgDoMermaid = false;
+                    me.$(descBlock).removeClass('syntaxhighlighting-open');
                     console.log("toggleNodeDescContainer highlight for descBlock: " + me.$(descBlock).attr('id'));
-                    flgDoMermaid = svcYaioFormatter.formatDescBlock(descBlock) || flgDoMermaid;
-                    console.log("toggleNodeDescContainer resulting flgDoMermaid: " + flgDoMermaid);
-                    
-                    // do Mermaid if found
-                    if (flgDoMermaid) {
-                        svcYaioFormatter.formatMermaidGlobal();
-                    }
+                    svcYaioFormatter.formatDescBlock(descBlock);
                 }
             } else {
                 // desc is now hidden
@@ -480,17 +474,10 @@ Yaio.ExplorerActionService = function(appBase) {
             me.$("div.fieldtype_descToggler > a").addClass('toggler_show').removeClass('toggler_hidden');
    
             // check if syntaxhighlighting to do
-            var flgDoMermaid = false;
             me.$("div.syntaxhighlighting-open").each(function (i, descBlock) {
                 console.log("toggleAllNodeDescContainer highlight for descBlock: " + me.$(descBlock).attr('id'));
-                flgDoMermaid = me.appBase.get('YaioFormatter').formatDescBlock(descBlock) || flgDoMermaid;
+                me.appBase.get('YaioFormatter').formatDescBlock(descBlock);
             });
-            console.log("toggleAllNodeDescContainer resulting flgDoMermaid: " + flgDoMermaid);
-           
-            // mermaid all
-            if (flgDoMermaid) {
-               me.appBase.get('YaioFormatter').formatMermaidGlobal();
-            }
         } else {
             // hide all desc
             me.$("div.field_nodeDesc").slideUp(1000);
