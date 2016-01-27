@@ -83,23 +83,23 @@
 
 @media print and (orientation: landscape) {
     body {
-        width: 12000px;
+        width: 700px;
     }
 
     #div_full {
-        width: 1150px !important;
+        width: 650px !important;
     }
 
     @page {
-        size: landscape;
+        size: portrait;
     }
 
     .box {
-        width: 1160px;
+        width: 660px;
     }
 
     .globtoc {
-        width: 1160px;
+        width: 660px;
     }
 }
 
