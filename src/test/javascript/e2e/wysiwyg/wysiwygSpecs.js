@@ -89,7 +89,7 @@ describe('yaio wysiwyg', function() {
             .then(function extendMarkdown() {
                 // extend markdown
                 markdownText = '\n### Ue3\n';
-                expected = '<h1 class="jsh-md-h1" id="undefined_3_ue1">Ue1</h1>\n<h2 class="jsh-md-h2" id="undefined_4_ue2">Ue2</h2>\n<h3 class="jsh-md-h3" id="undefined_5_ue3">Ue3</h3>';
+                expected = '<h1 class="jsh-md-h1" id="undefined_5_ue1">Ue1</h1>\n<h2 class="jsh-md-h2" id="undefined_6_ue2">Ue2</h2>\n<h3 class="jsh-md-h3" id="undefined_7_ue3">Ue3</h3>';
                 return yaioWysiwygPage.checkWysiwygContent(markdownText, expected);
             });
         
