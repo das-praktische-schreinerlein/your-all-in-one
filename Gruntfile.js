@@ -20,12 +20,14 @@
  * @copyright                    Copyright (c) 2014, Michael Schreiner
  * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
+'use strict';
 var path = require('path');
 
 /**
  * baseconfig
  **/
 var srcBase = 'src/main/web/';
+var resSrcBase = 'src/main/resources/';
 var tplSrcBase = 'src/main/web/';
 var destBase = 'src/main/generated-resources/static/';
 var bowerSrcBase = 'bower/_src/';
@@ -42,32 +44,32 @@ function patchComments(content, srcpath) {
     console.log("patchComments:" + srcpath);
     
     // convert my own html-tags in comments to @-tags
-    newContent = patchSingleBlock("FeatureDomain", newContent, true)
-    newContent = patchSingleBlock("FeatureConditions", newContent, true)
-    newContent = patchSingleBlock("FeatureKeywords", newContent, true)
-    newContent = patchSingleBlock("FeatureDescription", newContent, false)
-    newContent = patchSingleBlock("FeatureResult", newContent, true)
-    newContent = patchLiBlock("FeatureResult", newContent)
+    newContent = patchSingleBlock("FeatureDomain", newContent, true);
+    newContent = patchSingleBlock("FeatureConditions", newContent, true);
+    newContent = patchSingleBlock("FeatureKeywords", newContent, true);
+    newContent = patchSingleBlock("FeatureDescription", newContent, false);
+    newContent = patchSingleBlock("FeatureResult", newContent, true);
+    newContent = patchLiBlock("FeatureResult", newContent);
 
-    newContent = switchBlocks("FeatureDomain", "FeatureDescription", newContent)
-    newContent = reintendBlock("FeatureDescription", newContent, 1)
-    newContent = deleteBlock("FeatureDescription", newContent)
+    newContent = switchBlocks("FeatureDomain", "FeatureDescription", newContent);
+    newContent = reintendBlock("FeatureDescription", newContent, 1);
+    newContent = deleteBlock("FeatureDescription", newContent);
 
-    newContent = intendBlock("FeatureDomain", newContent, 30)
-    newContent = intendBlock("FeatureConditions", newContent, 30)
-    newContent = intendBlock("FeatureKeywords", newContent, 30)
-    newContent = intendBlock("FeatureResult", newContent, 30)
+    newContent = intendBlock("FeatureDomain", newContent, 30);
+    newContent = intendBlock("FeatureConditions", newContent, 30);
+    newContent = intendBlock("FeatureKeywords", newContent, 30);
+    newContent = intendBlock("FeatureResult", newContent, 30);
 
-    newContent = intendBlock("param", newContent, 7, 30)
-    newContent = intendBlock("return", newContent, 30)
-    newContent = intendBlock("returns", newContent, 30)
-    newContent = intendBlock("throws", newContent, 8, 30)
+    newContent = intendBlock("param", newContent, 7, 30);
+    newContent = intendBlock("return", newContent, 30);
+    newContent = intendBlock("returns", newContent, 30);
+    newContent = intendBlock("throws", newContent, 8, 30);
 
-    newContent = intendBlock("package", newContent, 30)
-    newContent = intendBlock("author", newContent, 30)
-    newContent = intendBlock("category", newContent, 30)
-    newContent = intendBlock("copyright", newContent, 30)
-    newContent = intendBlock("license", newContent, 30)
+    newContent = intendBlock("package", newContent, 30);
+    newContent = intendBlock("author", newContent, 30);
+    newContent = intendBlock("category", newContent, 30);
+    newContent = intendBlock("copyright", newContent, 30);
+    newContent = intendBlock("license", newContent, 30);
 
 //    console.log("patchComments2 result:" + newContent);
     return newContent;
@@ -95,7 +97,7 @@ function patchSingleBlock(block, content, flgOneline) {
         newContent = restBefore + match[1] +
             match[2] + "@" + block + " " + blockContent + match[4] + restAfter;
     }
-    return newContent
+    return newContent;
 }
 
 function switchBlocks(block1, block2, content) {
@@ -112,7 +114,7 @@ function switchBlocks(block1, block2, content) {
         newContent = restBefore + match[1] +
             match[3] + match[2] + match[4] + restAfter;
     }
-    return newContent
+    return newContent;
 }
 
 function deleteBlock(block, content) {
@@ -163,7 +165,7 @@ function intendBlock(block, content, intend, intend2) {
         }
         newContent += paramLine + blockContent + restAfter;
     }
-    return newContent
+    return newContent;
 }
 
 function reintendBlock(block, content) {
@@ -184,7 +186,7 @@ function reintendBlock(block, content) {
         newContent = restBefore + match[1] +
             match[2] + blockContent + match[4] + restAfter;
     }
-    return newContent
+    return newContent;
 }
 
 function patchLiBlock(block, content) {
@@ -218,7 +220,7 @@ function patchLiBlock(block, content) {
         
         newContent += restAfter;
     }
-    return newContent
+    return newContent;
 }
 function checkWebResOnly(srcpath) {
     if (srcpath.search(/\.js|\.css|\.html/) < 0) {
@@ -343,7 +345,7 @@ module.exports = function( grunt ){
               vendorSrcBase + 'freemind-flash/flashobject.js',
               vendorSrcBase + 'js/yaio/JMATAllIn.js',
             // !!!! ymf is vendor but my project
-            vendorDestBase + 'js/ymf/ymf-app-full.js',
+            vendorDestBase + 'js/ymf/ymf-app-full.js'
         ],
         vendorCssFiles: [
               vendorDestBase + 'css/jqueryui/jquery-ui.css',
@@ -357,7 +359,7 @@ module.exports = function( grunt ){
               vendorSrcBase + 'css/yaio/style.css',
               vendorSrcBase + 'css/yaio/main.css',
             // !!!! ymf is vendor but my project
-            vendorDestBase + 'css/ymf/ymf-app-full.css',
+            vendorDestBase + 'css/ymf/ymf-app-full.css'
         ],
         projectJsFiles: [
             srcBase + 'yaio-explorerapp/js/jmat.js',
@@ -411,7 +413,7 @@ module.exports = function( grunt ){
             srcBase + 'yaio-explorerapp/js/utils/ExportedDataService.js'
         ],
         projectExportsJsFiles: [
-            srcBase + 'yaio-explorerapp/js/utils/ExportedDataService.js',
+            srcBase + 'yaio-explorerapp/js/utils/ExportedDataService.js'
         ],
         projectCssFiles: [
               srcBase + 'yaio-explorerapp/js/layout/base.css',
@@ -439,25 +441,24 @@ module.exports = function( grunt ){
         projectPrintCssFiles: [
             // !!!! ymf is vendor but my project
             vendorDestBase + 'css/ymf/ymf-app-print.css',
-            srcBase + 'yaio-explorerapp/js/layout/print.css',
-            srcBase + 'yaio-explorerapp/js/layout/print.css',
+            srcBase + 'yaio-explorerapp/js/layout/base-print.css'
         ],
         projectPrintDataOnlyCssFiles: [
             // !!!! ymf is vendor but my project
             vendorDestBase + 'css/ymf/ymf-app-print-dataonly.css',
-            srcBase + 'yaio-explorerapp/js/layout/print-dataonly.css',
+            srcBase + 'yaio-explorerapp/js/layout/base-print-dataonly.css'
         ],
         projectResetCssFiles: [
             // !!!! ymf is vendor but my project
             vendorDestBase + 'css/ymf/ymf-reset.css',
-            srcBase + 'yaio-explorerapp/js/layout/reset.css',
+            srcBase + 'yaio-explorerapp/js/layout/reset.css'
         ],
         vendorJsTestFiles: [
             testSrcBase + 'unit/resources/js/jasmine/jasmine-jquery.js',
-            testSrcBase + 'unit/jasmine-config.js',
+            testSrcBase + 'unit/jasmine-config.js'
         ],
         projectUnitJsTestFiles: [
-            testSrcBase + 'unit/yaio-explorerapp/**/*_test.js',
+            testSrcBase + 'unit/yaio-explorerapp/**/*_test.js'
         ],
         projectE2EJsTestFiles: [
             testSrcBase + 'e2e/yaio-explorerapp/**/*_test.js'
@@ -472,29 +473,29 @@ module.exports = function( grunt ){
                             // map type
                             var extractedType = source.replace(/.*\.(.*)?/, "$1");
                             var renamedType = "js";
-                            if (extractedType == 'js') renamedType = 'js';
-                            else if (extractedType == 'css') renamedType = 'css';
+                            if ('js' === extractedType) renamedType = 'js';
+                            else if ('css' === extractedType) renamedType = 'css';
 
                             // map compontent
-                            if (component.search('fancytree') >= 0) {
+                            if (-1 < component.search('fancytree')) {
                                 // copy all fancytree to js
                                 renamedType = "js";
-                            } else if (component.search('ace-builds') >= 0) {
+                            } else if (-1 < component.search('ace-builds')) {
                                 // map ace
                                 component = "ace";
-                            } else if (component.search('jquery-ui') >= 0) {
+                            } else if (-1 < component.search('jquery-ui')) {
                                 // map jqueryui
                                 component = "jqueryui";
-                            } else if (component.search('jqueryui') >= 0) {
+                            } else if (-1 < component.search('jqueryui')) {
                                 // map jqueryui
                                 component = "jqueryui";
-                            } else if (component.search('ui-contextmenu') >= 0) {
+                            } else if (-1 < component.search('ui-contextmenu')) {
                                 // map jqueryui
                                 component = "jqueryui";
-                            } else if (component.search('jquery-lang') >= 0) {
+                            } else if (-1 < component.search('jquery-lang')) {
                                 // map jquery
                                 component = "jquery";
-                            } else if (component.search('angular') >= 0) {
+                            } else if (-1 < component.search('angular')) {
                                 // map angularjs
                                 component = "angularjs";
                             }
@@ -523,24 +524,24 @@ module.exports = function( grunt ){
                 files: [
                     // JS
                     {expand: true, cwd: 'src/main', src: ['web/**/*.js', 'web/**/*.css', 'java/**/*.java'], dest: 'tmp/corrected/', flatten: false},
-                    {expand: true, cwd: 'src/test', src: ['javascript/**/*.js', 'java/**/*.java'], dest: 'tmp/corrected/', flatten: false},
+                    {expand: true, cwd: 'src/test', src: ['javascript/**/*.js', 'java/**/*.java'], dest: 'tmp/corrected/', flatten: false}
                 ]
             },
             // copy bower-text resources (js/css/html-files) to dest and patch them
             bower2vendors: {
                 options: {
                     process: function (content, srcpath) {
-                        if (srcpath.search('slimbox2.') > 0) {
+                        if (-1 < srcpath.search('slimbox2.')) {
                             return patchFileSlimbox2(content, srcpath);
-                        } else if (srcpath.search('fancytree') > 0) {
+                        } else if (-1 < srcpath.search('fancytree')) {
                             return patchFileFancytree(content, srcpath);
-                        } else if (srcpath.search('highlightjs') > 0) {
+                        } else if (-1 < srcpath.search('highlightjs')) {
                             return patchFileHighlightJsLang(content, srcpath);
-                        } else if (srcpath.search('jquery-lang') > 0) {
+                        } else if (-1 < srcpath.search('jquery-lang')) {
                             return patchFileJQueryLang(content, srcpath);
-                        } else if (srcpath.search('jquery-ui') > 0) {
+                        } else if (-1 < srcpath.search('jquery-ui')) {
                             return patchFileJQueryUi(content, srcpath);
-                        } else if (srcpath.search('jquery') > 0) {
+                        } else if (-1 < srcpath.search('jquery')) {
                             return patchFileJQuery(content, srcpath);
                         }
                         return content;
@@ -570,14 +571,14 @@ module.exports = function( grunt ){
                     {expand: true, cwd: bowerSrcBase + 'js-deflate', src: ['rawdeflate.js'], dest: vendorDestBase + 'js/js-deflate/', flatten: true},
                     {expand: true, cwd: bowerSrcBase + 'marked', src: ['lib/marked.js'], dest: vendorDestBase + 'js/marked/', flatten: true},
                     // mermaid 0.5
-                    {expand: true, cwd: bowerSrcBase + 'mermaid', src: ['dist/mermaid.js'], dest: vendorDestBase + 'js/mermaid/', flatten: true, filter: 'isFile'
-                        ,rename: function(dest, src) {
+                    {expand: true, cwd: bowerSrcBase + 'mermaid', src: ['dist/mermaid.js'], dest: vendorDestBase + 'js/mermaid/', flatten: true, filter: 'isFile',
+                        rename: function(dest, src) {
                             return dest + src.replace('mermaid.js','mermaid.full.js');
                           }
                     },
                     // mermaid 0.4
-                    {expand: true, cwd: bowerSrcBase + 'mermaid', src: ['dist/mermaid.full.js'], dest: vendorDestBase + 'js/mermaid/', flatten: true, filter: 'isFile'
-                        ,rename: function(dest, src) {
+                    {expand: true, cwd: bowerSrcBase + 'mermaid', src: ['dist/mermaid.full.js'], dest: vendorDestBase + 'js/mermaid/', flatten: true, filter: 'isFile',
+                        rename: function(dest, src) {
                             return dest + src.replace('-legacy.full.js','.full.js');
                           }
                     },
@@ -607,6 +608,7 @@ module.exports = function( grunt ){
                     {expand: true, cwd: bowerSrcBase + 'fancytree/dist/', src: ['skin-win8/*.png', 'skin-win8/*.gif'], dest: vendorDestBase + 'js/fancytree/', flatten: false},
                     {expand: true, cwd: bowerSrcBase + 'fancytree/dist/', src: ['skin-lion/*.png', 'skin-lion/*.gif'], dest: vendorDestBase + 'js/fancytree/', flatten: false},
                     {expand: true, cwd: bowerSrcBase + 'jquery-ui/themes/smoothness', src: ['images/*.*'], dest: vendorDestBase + 'css/jqueryui/', flatten: false},
+                    {expand: true, cwd: bowerSrcBase + 'ymf/build/dist/', src: ['*.png'], dest: vendorDestBase + 'css/ymf/', flatten: false}
                 ]
             },
             // copy vendor-files which must exists in specific pathes to dist
@@ -631,7 +633,9 @@ module.exports = function( grunt ){
                     {expand: true, cwd: vendorSrcBase + 'css/', src: ['yaio/**'], dest: destBase + 'dist/vendors-<%= pkg.vendorversion %>/', flatten: false},
 
                     //
-                    {expand: true, cwd: vendorDestBase + 'html/ymf/', src: ['*.html'], dest: destBase + 'yaio-explorerapp/', flatten: false}
+                    {expand: true, cwd: vendorDestBase + 'html/ymf/', src: ['*.html'], dest: destBase + 'yaio-explorerapp/', flatten: false},
+                    {expand: true, cwd: vendorDestBase + 'css/ymf/', src: ['*.png'], dest: destBase + 'dist/', flatten: false},
+                    {expand: true, cwd: vendorDestBase + 'css/ymf/', src: ['*-icons-*.css'], dest: destBase + 'dist/', flatten: false}
                 ]
             },
             // copy archiv to dist
@@ -761,64 +765,112 @@ module.exports = function( grunt ){
         concat: {
             options: {
                 stripBanners: true,
-                banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %> */\n\n',
+                banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %> */\n\n'
             },            
             vendors: {
                 options: {
                     stripBanners: true,
-                    banner: '/*! <%= pkg.name %>-v<%= pkg.version %> vendors-<%= pkg.vendorversion %> */\n\n',
+                    banner: '/*! <%= pkg.name %>-v<%= pkg.version %> vendors-<%= pkg.vendorversion %> */\n\n'
                 },            
                 files: {
                     '<%= destBase %>dist/vendors-full-<%= pkg.vendorversion %>.js': ['<%= vendorJsFiles %>'],
-                    '<%= destBase %>dist/vendors-full-<%= pkg.vendorversion %>.css': ['<%= vendorCssFiles %>'],
-                },
+                    '<%= destBase %>dist/vendors-full-<%= pkg.vendorversion %>.css': ['<%= vendorCssFiles %>']
+                }
             },
             reset: {
                 options: {
                     stripBanners: true,
-                    banner: '/*! <%= pkg.name %>-v<%= pkg.version %> reset-<%= pkg.resetversion %> */\n\n',
+                    banner: '/*! <%= pkg.name %>-v<%= pkg.version %> reset-<%= pkg.resetversion %> */\n\n'
                 },            
                 files: {
-                    '<%= destBase %>dist/<%= pkg.name %>-reset-<%= pkg.resetversion %>.css': ['<%= projectResetCssFiles %>'],
-                },
+                    '<%= destBase %>dist/<%= pkg.name %>-reset-<%= pkg.resetversion %>.css': ['<%= projectResetCssFiles %>']
+                }
             },
             app: {
                 options: {
                     stripBanners: true,
-                    banner: '/*! <%= pkg.name %>-v<%= pkg.version %> app-<%= pkg.appversion %> */\n\n',
+                    banner: '/*! <%= pkg.name %>-v<%= pkg.version %> app-<%= pkg.appversion %> */\n\n'
                 },            
                 files: {
                     '<%= destBase %>dist/<%= pkg.name %>-app-full-<%= pkg.appversion %>.js': ['<%= projectJsFiles %>'],
                     '<%= destBase %>dist/<%= pkg.name %>-app-full-<%= pkg.appversion %>.css': ['<%= projectCssFiles %>'],
                     '<%= destBase %>dist/<%= pkg.name %>-app-print-<%= pkg.appversion %>.css': ['<%= projectPrintCssFiles %>'],
-                    '<%= destBase %>dist/<%= pkg.name %>-app-print-dataonly-<%= pkg.appversion %>.css': ['<%= projectPrintDataOnlyCssFiles %>'],
-                },
+                    '<%= destBase %>dist/<%= pkg.name %>-app-print-dataonly-<%= pkg.appversion %>.css': ['<%= projectPrintDataOnlyCssFiles %>']
+                }
             },
             support: {
                 options: {
                     stripBanners: true,
-                    banner: '/*! <%= pkg.name %>-v<%= pkg.version %> support-<%= pkg.supportversion %> */\n\n',
+                    banner: '/*! <%= pkg.name %>-v<%= pkg.version %> support-<%= pkg.supportversion %> */\n\n'
                 },            
                 files: {
                     '<%= destBase %>dist/<%= pkg.name %>-support-full-<%= pkg.supportversion %>.js': ['<%= projectSupportJsFiles %>'],
                     '<%= destBase %>dist/<%= pkg.name %>-support-full-<%= pkg.supportversion %>.css': ['<%= projectSupportCssFiles %>'],
                     '<%= destBase %>dist/<%= pkg.name %>-support-print-<%= pkg.supportversion %>.css': ['<%= projectPrintCssFiles %>'],
-                    '<%= destBase %>dist/<%= pkg.name %>-support-print-dataonly-<%= pkg.supportversion %>.css': ['<%= projectPrintDataOnlyCssFiles %>'],
-                },
+                    '<%= destBase %>dist/<%= pkg.name %>-support-print-dataonly-<%= pkg.supportversion %>.css': ['<%= projectPrintDataOnlyCssFiles %>']
+                }
             },
             exports: {
                 options: {
                     stripBanners: true,
-                    banner: '/*! <%= pkg.name %>-v<%= pkg.version %> exports-<%= pkg.exportsversion %> */\n\n',
+                    banner: '/*! <%= pkg.name %>-v<%= pkg.version %> exports-<%= pkg.exportsversion %> */\n\n'
                 },            
                 files: {
                     '<%= destBase %>dist/<%= pkg.name %>-exports-full-<%= pkg.exportsversion %>.js': ['<%= projectSupportJsFiles %>', '<%= projectExportsJsFiles %>'],
                     '<%= destBase %>dist/<%= pkg.name %>-exports-full-<%= pkg.exportsversion %>.css': ['<%= projectSupportCssFiles %>'],
                     '<%= destBase %>dist/<%= pkg.name %>-exports-print-<%= pkg.exportsversion %>.css': ['<%= projectPrintCssFiles %>'],
                     '<%= destBase %>dist/<%= pkg.name %>-exports-print-dataonly-<%= pkg.exportsversion %>.css': ['<%= projectPrintDataOnlyCssFiles %>']
-                },
-            },
-        },   
+                }
+            }
+        },
+
+        css_image: {
+            distYaio:{
+                files:[{
+                    cwd: resSrcBase + 'images/icons/',
+                    src: '**/*.{png,jpg,gif}',
+                    dest: destBase + 'dist/yaio-icons-embed-<%= pkg.supportversion %>.css'
+                }],
+                options:{
+                    prefix: '',
+                    images_path: './'
+                }
+            }
+        },
+
+        sprite: {
+            iconsYaio: {
+                src: resSrcBase + 'images/icons/*.*',
+                dest: destBase + 'dist/yaio-icons-sprite.png',
+                destCss: destBase + 'dist/yaio-icons-sprite-<%= pkg.supportversion %>.css',
+                cssTemplate: 'css.template.handlebars',
+                cssVarMap: function (sprite) {
+                    sprite.name = 'yaio-' + sprite.name;
+                }
+            }
+        },
+
+        dataUri: {
+            distIconsYaio: {
+                // src file
+                src: [destBase + 'dist/yaio-icons-embed-<%= pkg.supportversion %>.css'],
+                // output dir
+                dest: destBase + 'dist/',
+                options: {
+                    // specified files are only encoding
+                    target: [resSrcBase + 'images/icons/**/*.png', resSrcBase + 'images/icons/**/*.gif', resSrcBase + 'images/icons/**/*.jpg'],
+                    // adjust relative path?
+                    fixDirLevel: true,
+                    // img detecting base dir
+                    baseDir: resSrcBase + 'images/icons/',
+
+                    // Do not inline any images larger
+                    // than this size. 2048 is a size
+                    // recommended by Google's mod_pagespeed.
+                    maxBytes : 20000
+                }
+            }
+        },
 
         // jshint: look at https://github.com/gruntjs/grunt-contrib-jshint
         jshint: {
@@ -903,24 +955,33 @@ module.exports = function( grunt ){
 
     // register tasks
     grunt.registerTask('default',      ['distfull']);
+
+    grunt.registerTask('css-images',   ['css_image']);
+    grunt.registerTask('sprites',      ['sprite']);
+    grunt.registerTask('data-uri',     ['dataUri']);
+    grunt.registerTask('images',       ['sprites', 'css-images', 'data-uri']);
+
     grunt.registerTask('vendorslocal', ['copy:bower2vendors', 'copy:bowerbin2vendors']);
     grunt.registerTask('vendorsfull',  ['clean:bower', 'bower', 'vendorslocal']);
-    grunt.registerTask('distyaio',     ['concat', 'copy:yaiores2dist', 'replace:versionOnDist', 'replace:versionOnRes', 'copy:dist2archiv']);
+    grunt.registerTask('distyaio',     ['images', 'concat', 'copy:yaiores2dist', 'replace:versionOnDist', 'replace:versionOnRes', 'copy:dist2archiv']);
     grunt.registerTask('distlocal',    ['vendorslocal', 'copy:vendors2dist', 'distyaio']);
-    grunt.registerTask('distfull',     ['vendorsfull', 'clean:dist', 'copy:archiv2dist', 'concat', 'copy:vendors2dist', 'copy:yaiores2dist', 'replace:versionOnDist', 'replace:versionOnRes', 'copy:dist2archiv']);
+    grunt.registerTask('distfull',     ['vendorsfull', 'clean:dist', 'copy:archiv2dist', 'images', 'concat', 'copy:vendors2dist', 'copy:yaiores2dist', 'replace:versionOnDist', 'replace:versionOnRes', 'copy:dist2archiv']);
     grunt.registerTask('dist',         ['distfull']);
     grunt.registerTask('unit-test',    ['dist', 'karma:continuous:start', 'watch:karma']);
     grunt.registerTask('e2e-test',     ['dist', 'protractor:continuous', 'watch:protractor']);
 
     // load grunt tasks
     grunt.loadNpmTasks('grunt-bower-task');
+    grunt.loadNpmTasks('grunt-css-image');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-data-uri');
     grunt.loadNpmTasks('grunt-jsdoc');
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-protractor-runner');
     grunt.loadNpmTasks('grunt-replace');
+    grunt.loadNpmTasks('grunt-spritesmith');
 };
