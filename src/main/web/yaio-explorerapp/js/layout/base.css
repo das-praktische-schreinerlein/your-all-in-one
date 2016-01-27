@@ -78,17 +78,8 @@ select, textarea, input {
  * Common icon definitions
  *****************************************
  *****************************************/
-a.yaio-icon-center,
-a.yaio-icon-open,
-a.yaio-icon-edit,
-a.yaio-icon-create,
-a.yaio-icon-createsymlink,
-a.yaio-icon-remove,
 .icon-formrowtoggleroff,
 .icon-formrowtoggleron,
-a.icon-preview,
-a.icon-markdownhelp,
-a.icon-wysiwyg,
 a.toggler_show,
 a.toggler_hidden {
   width: 16px;
@@ -99,46 +90,13 @@ a.toggler_hidden {
   background-image: url("../../dist/vendors.vendorversion/fancytree/skin-lion/icons.gif");
   background-position: 0px 0px;
 }
-a.yaio-icon-center,
-a.yaio-icon-open,
-a.yaio-icon-edit,
-a.yaio-icon-create,
-a.yaio-icon-createsymlink,
-a.yaio-icon-remove,
 .icon-formrowtoggleroff,
 .icon-formrowtoggleron,
-a.icon-preview,
-a.icon-markdownhelp,
-a.icon-wysiwyg,
 a.toggler_show,
 a.toggler_hidden {
   margin-top: 1px;
 }
 
-a.yaio-icon-center {
-  margin-left: 3px;
-  background-position: -48px -48px;
-}
-a.yaio-icon-open {
-  margin-left: 3px;
-  background-position: -64px -80px;
-}
-a.yaio-icon-edit {
-  margin-left: 3px;
-  background-position: -48px -160px;
-}
-a.yaio-icon-create {
-  margin-left: 3px;
-  background-position: 0px -160px;
-}
-a.yaio-icon-createsymlink {
-  margin-left: 3px;
-  background-position: -64px -160px;
-}
-a.yaio-icon-remove {
-  margin-left: 3px;
-  background-position: -16px -112px;
-}
 a.toggler_show, .icon2-toggleroff {
   margin-left: 3px;
   background-position: -32px -32px;
@@ -155,14 +113,3 @@ a.toggler_hidden, .icon2-toggleron {
   margin-left: 3px;
   background-position: -32px -80px;
 }
-
-a.icon-preview {
-    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAPElEQVR42mP4//8/AyWYgWIDHjx48L+goIAsDNLLAGLYlm8hC4P0DkIDkMHAuwAbGAkuoL8BFOcFSnMjAF48oX6YfwDmAAAAAElFTkSuQmCC");
-}
-a.icon-markdownhelp {
-    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAPElEQVR42mP4//8/AyWYgWIDHjx48L+goIAsDNLLAGLYlm8hC4P0DkIDkMHAuwAbGAkuoL8BFOcFSnMjAF48oX6YfwDmAAAAAElFTkSuQmCC");
-}
-a.icon-wysiwyg{
-    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAPElEQVR42mP4//8/AyWYgWIDHjx48L+goIAsDNLLAGLYlm8hC4P0DkIDkMHAuwAbGAkuoL8BFOcFSnMjAF48oX6YfwDmAAAAAElFTkSuQmCC");
-}
-
