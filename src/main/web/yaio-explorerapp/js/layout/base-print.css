@@ -1,0 +1,175 @@
+/** 
+ * software for projectmanagement and documentation
+ * 
+ * @FeatureDomain                Collaboration 
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+@media print {
+    body {
+        width: 1200px !important;
+    }
+
+    /*****************************************
+     *****************************************
+     * base
+     *****************************************
+     *****************************************/
+    .page-div-center {
+        width: 100%;
+    }
+
+    .pageContent {
+        width: 100%;
+    }
+
+    #div_full {
+        width: 1150px !important;
+    }
+
+    @page {
+        size: landscape;
+    }
+
+    .blockPageFooter {
+        display: none;
+    }
+
+    /*****************************************
+     *****************************************
+     * explorer-elements
+     *****************************************
+     *****************************************/
+    #menueTop {
+        display: none;
+    }
+
+    .box-portdesc-todonext {
+        display: none;
+    }
+
+    #containerInfoCommands {
+        display: none;
+    }
+
+    #containerNodeCommands {
+        display: none;
+    }
+
+    #containerTreeCommands {
+        display: none;
+    }
+
+    .button {
+        display: none;
+    }
+
+    .tabToggler {
+        display: none;
+    }
+
+    table#tree tbody tr td.container_field.fieldtype_actions,
+    table#masterTable thead tr#tab_header th:first-child + th + th + th,
+    table#masterTable tbody tr td:first-child + td + td + td {
+        display: none;
+    }
+
+    .fieldtype_descToggler {
+        display: none;
+    }
+
+    .command-center {
+        display: none;
+    }
+
+    .fancytree-icon {
+        display: none;
+    }
+
+    .container-commands-desc {
+        display: none;
+    }
+
+    #searchcommand {
+        display: none;
+    }
+
+    /*****************************************
+     *****************************************
+     * export-elements
+     *****************************************
+     *****************************************/
+    #menueFooter {
+        display: none;
+    }
+
+    .node-data-block {
+        /* show all whitespaces */
+        white-space: pre-wrap;
+        overflow: visible;
+    }
+
+    table.fancytree-ext-table tbody tr.fancytree-active, table.fancytree-ext-table.fancytree-treefocus tbody tr.fancytree-active {
+        outline: none;
+    }
+
+    table.fancytree-ext-table tbody tr.fancytree-active {
+        background-color: unset;
+        outline: none;
+    }
+
+    table.fancytree-ext-table.fancytree-treefocus tbody tr.fancytree-active {
+        background-color: unset;
+        outline: none;
+    }
+
+    .container-toc-desc {
+    }
+
+    #sidebartoc {
+        display: none !important;
+    }
+}
+
+@media print and (orientation: landscape) {
+    body {
+        width: 1200px;
+    }
+
+    #div_full {
+        width: 1150px !important;
+    }
+
+    @page {
+        size: landscape;
+    }
+}
+
+@media print and (orientation: portrait) {
+    body {
+        width: 700px !important;
+    }
+
+    #div_full {
+        width: 650px !important;
+    }
+
+    @page {
+        size: landscape;
+    }
+
+    .box {
+        width: 660px !important;
+    }
+
+    .globtoc {
+        width: 660px !important;
+    }
+}
