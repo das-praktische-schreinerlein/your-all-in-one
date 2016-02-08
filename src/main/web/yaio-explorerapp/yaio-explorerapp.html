@@ -79,50 +79,8 @@
                     <!-- Context -->
                     <div class="content">
                         <!-- Page: Content -->
-                        
-                        <div id="jsh-error-message" class="hidden">
-                            <p>
-                                <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>
-                            </p>
-
-                            <p id="jsh-error-message-text">
-                            </p>
-                        </div>
-
-                        <div id="jsh-dialog-confirm" class="hidden">
-                            <p>
-                                <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>
-
-                            </p>
-
-                            <p id="jsh-dialog-confirm-text">
-                            </p>
-                        </div>
-
-                        <div id="ymf-preview-box" class="hidden">
-                            <div id="ymf-preview-contentcontainer" class="container-preview-contentcontainer">
-                                <div id="ymf-preview-content" class="container-content-desc"></div>
-                            </div>
-                        </div>
-
-                        <div id="ymf-wysiwyg-box" class="hidden">
-                            <pre id="ymf-wysiwyg-editor" class="container-wyswhg-editor"></pre>
-                            <div id="ymf-wysiwyg-previewcontainer" class="container-wysiwyg-previewcontainer">
-                                <div id="ymf-wysiwyg-preview" class="container-wysiwyg-preview"></div>
-                            </div>
-                        </div>
-
-                        <div id="ymf-markdownhelp-box" class="hidden">
-                            <iframe id="ymf-markdownhelp-iframe" src=""></iframe>
-                        </div>
-
                         <div id="ymf-workspace-box" class="hidden">
                             <textarea id="ymf-workspace-content" class="ymf-workspace-content-desc"></textarea>
-                        </div>
-
-                        <div id="ymf-uploader-box" class="hidden">
-                            <input type="file" id="ymf-import-filedialog" name="ymf-import-filedialog"
-                                   value="Import Markdown"/>
                         </div>
 
                         <div id="help-box" class="hidden">
@@ -250,6 +208,7 @@ yaioAppBase.get("YaioNodeData").connectService();
 
 // init
 yaioAppBase.publishDetectorStyles();
+yaioAppBase.YmfEditorUI.prepareUI();
 mermaid.initialize({startOnLoad:false});
 </script>
 

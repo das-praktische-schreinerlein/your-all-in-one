@@ -28,12 +28,13 @@
     "jqueryui-timepicker-addon": "1.4.5",
     "js-deflate": "johan/js-deflate#256a5c4d274b75fa0b35532319d3d893b204dbca",
     "marked": "das-praktische-schreinerlein/marked#0.3.3-yaio",
-    "mermaid": "das-praktische-schreinerlein/mermaid#0.5.1-yaio",
+    "mermaid": "knsv/mermaid#0.5.7",
     "select2": "4.0.0",
     "slimbox2": "das-praktische-schreinerlein/slimbox#2.05-yaio",
     "strapdown": "das-praktische-schreinerlein/strapdown#0.4.1-yaio",
     "toastr": "CodeSeven/toastr#2.1.0",
-    "ui-contextmenu": "1.7.0"
+    "ui-contextmenu": "1.7.0",
+    "ymf": "das-praktische-schreinerlein/your-markdown-fellow#0.1.0"
   },
   "exportsOverride": {
     "x": {

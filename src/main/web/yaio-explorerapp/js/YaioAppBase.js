@@ -34,8 +34,8 @@ window.YaioAppBase = function() {
         me.configureService('JsHelferlein.MarkdownRendererService', function () {
             return Yaio.MarkdownRendererService(me);
         });
-        me.configureService('Ymf.EditorDialogsService', function () {
-            return Ymf.EditorDialogsService(me);
+        me.configureService('Ymf.EditorUIService', function () {
+            return Ymf.EditorUIService(me);
         });
         me.configureService('Ymf.MarkdownEditorService', function () {
             return Ymf.MarkdownEditorService(me);
@@ -75,8 +75,8 @@ window.YaioAppBase = function() {
         me.configureService('YmfFormatter', function () {
             return me.get('JsHelferlein.FormatterService');
         });
-        me.configureService('YmfEditorDialogs', function () {
-            return me.get('Ymf.EditorDialogsService');
+        me.configureService('YmfEditorUI', function () {
+            return me.get('Ymf.EditorUIService');
         });
         me.configureService('YmfMarkdownEditor', function () {
             return me.get('Ymf.MarkdownEditorService');
