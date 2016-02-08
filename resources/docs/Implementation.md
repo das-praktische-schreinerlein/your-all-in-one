@@ -66,13 +66,10 @@
     - UI-Features Fat Selectboxes: [Select2](https://github.com/select2/select2)
     - UI Search Pagination: [Angular-Paging](https://github.com/brantwills/Angular-Paging)
 
-## JS-Formatter
+## Wysiwyg-Markdown-Editor
 - functionality
-    - formatting of all markdown-sources: Markdown-Formatter, Diagramm-Formatter, Checklists, Wysiwyg-Markdown-Editor
-- packages
-    - src/main/web/yaio-explorerapp/js/layout/
-    - src/main/web/yaio-explorerapp/js/wysiwyg/
-    - src/main/web/yaio-explorerapp/wysiwyg.html
+    - online-markdown-editor: Markdown-Formatter, Diagramm-Formatter, Checklists, Wysiwyg-Markdown-Editor
+- [ymf on Github](https://github.com/das-praktische-schreinerlein/your-markdown-fellow)
 - use external Libs
     - Freemmind-Browser: [Freemind Flash-Browser](http://freemind.sourceforge.net/wiki/index.php/Flash_browser)
     - Html-Editor: [Ace](https://github.com/ajaxorg/ace-builds)
