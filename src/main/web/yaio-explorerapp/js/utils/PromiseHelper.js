@@ -27,7 +27,7 @@
  * Service-Funktions (layout)
  *****************************************
  *****************************************/
-Yaio.PromiseHelperService = function(appBase) {
+Yaio.PromiseHelper = function(appBase) {
     'use strict';
 
     // my own instance

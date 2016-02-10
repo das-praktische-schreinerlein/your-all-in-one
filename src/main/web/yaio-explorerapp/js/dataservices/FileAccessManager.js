@@ -12,18 +12,28 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-Yaio.FileNodeDataServiceConfig = function(urlBase, name, desc) {
+/** 
+ * servicefunctions for data-services
+ *  
+ * @FeatureDomain                WebGUI
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
+ */
+Yaio.FileAccessManager = function(appBase, config, defaultConfig) {
     'use strict';
 
     // my own instance
-    var me = JsHelferlein.ConfigBase();
-    
-    me.urlBase                      = urlBase || window.location.host;
-    me.name                         = name || ("Dateiupload");
-    me.desc                         = desc || ("Daten werden aus einer Yaio-JSON-Datei geladen.");
-    me.plantUmlBaseUrl              = "http://www.plantuml.com/";
-    me.excludeNodePraefix           = "Sys* *Templ MyStart MyHelp JsUnitTest JsFuncTest JUnitTest";
-    me.masterSysUId                 = "MasterplanMasternode1";
+    var me = Yaio.StaticAccessManager(appBase, config, defaultConfig);
 
+    /**
+     * initialize the object
+     */
+    me._init = function() {
+    };
+    
+    me._init();
+    
     return me;
 };

@@ -27,7 +27,7 @@
  * Service-Funktions (file)
  *****************************************
  *****************************************/
-Yaio.FileLoaderService = function(appBase) {
+Yaio.FileLoader = function(appBase) {
     'use strict';
 
     // my own instance

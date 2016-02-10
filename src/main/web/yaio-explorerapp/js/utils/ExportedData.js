@@ -28,7 +28,7 @@
  *****************************************
  *****************************************/
 
-Yaio.ExportedDataService = function(appBase) {
+Yaio.ExportedData = function(appBase) {
     'use strict';
 
     // my own instance

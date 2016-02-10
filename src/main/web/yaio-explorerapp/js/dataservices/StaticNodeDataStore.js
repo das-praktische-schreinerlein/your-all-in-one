@@ -21,7 +21,7 @@
  * @copyright                    Copyright (c) 2014, Michael Schreiner
  * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-Yaio.StaticNodeDataStoreService = function(appBase, config, defaultConfig) {
+Yaio.StaticNodeDataStore = function(appBase, config, defaultConfig) {
     'use strict';
 
     // my own instance

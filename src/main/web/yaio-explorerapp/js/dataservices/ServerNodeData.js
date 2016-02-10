@@ -21,11 +21,11 @@
  * @copyright                    Copyright (c) 2014, Michael Schreiner
  * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
+Yaio.ServerNodeData = function(appBase, config, defaultConfig) {
     'use strict';
 
     // my own instance
-    var me = Yaio.NodeDataService(appBase, config, defaultConfig);
+    var me = Yaio.NodeData(appBase, config, defaultConfig);
 
     /**
      * initialize the object
@@ -79,7 +79,7 @@ Yaio.ServerNodeDataService = function(appBase, config, defaultConfig) {
      *****************************************
      *****************************************/
     me._createAccessManager = function() {
-        return Yaio.ServerAccessManagerService(me.appBase, me.config);
+        return Yaio.ServerAccessManager(me.appBase, me.config);
     };
     
     me._loadConfig = function() {

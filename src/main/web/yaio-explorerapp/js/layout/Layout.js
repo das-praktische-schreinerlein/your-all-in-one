@@ -22,7 +22,7 @@
  * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 
-Yaio.LayoutService = function(appBase) {
+Yaio.Layout = function(appBase) {
     'use strict';
 
     // my own instance

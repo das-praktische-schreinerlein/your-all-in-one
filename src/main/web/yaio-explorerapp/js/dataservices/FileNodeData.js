@@ -21,11 +21,11 @@
  * @copyright                    Copyright (c) 2014, Michael Schreiner
  * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-Yaio.FileNodeDataService = function(appBase, config, defaultConfig) {
+Yaio.FileNodeData = function(appBase, config, defaultConfig) {
     'use strict';
 
     // my own instance
-    var me = Yaio.StaticNodeDataService(appBase, config, defaultConfig);
+    var me = Yaio.StaticNodeData(appBase, config, defaultConfig);
     
     /**
      * initialize the object
@@ -96,7 +96,7 @@ Yaio.FileNodeDataService = function(appBase, config, defaultConfig) {
      *****************************************
      *****************************************/
     me._createAccessManager = function() {
-        return Yaio.FileAccessManagerService(me.appBase, me.config);
+        return Yaio.FileAccessManager(me.appBase, me.config);
     };
     
     me._init();

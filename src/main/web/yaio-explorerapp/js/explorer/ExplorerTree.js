@@ -35,7 +35,7 @@ var treeInstances = new Array();
  * YAIO-Treefunctions
  *****************************************
  *****************************************/
-Yaio.ExplorerTreeService = function(appBase) {
+Yaio.ExplorerTree = function(appBase) {
     'use strict';
 
     // my own instance

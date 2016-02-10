@@ -21,11 +21,11 @@
  * @copyright                    Copyright (c) 2014, Michael Schreiner
  * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-Yaio.ServerAccessManagerService = function(appBase, config, defaultConfig) {
+Yaio.ServerAccessManager = function(appBase, config, defaultConfig) {
     'use strict';
 
     // my own instance
-    var me = Yaio.AccessManagerService(appBase, config, defaultConfig);
+    var me = Yaio.AccessManager(appBase, config, defaultConfig);
 
     /**
      * initialize the object

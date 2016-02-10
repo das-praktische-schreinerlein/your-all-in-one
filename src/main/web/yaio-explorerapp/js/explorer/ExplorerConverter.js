@@ -21,7 +21,7 @@
  * @copyright                    Copyright (c) 2014, Michael Schreiner
  * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-Yaio.ExplorerConverterService = function(appBase) {
+Yaio.ExplorerConverter = function(appBase) {
     'use strict';
 
     // my own instance

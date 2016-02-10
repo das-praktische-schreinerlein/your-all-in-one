@@ -28,7 +28,7 @@
  * Service-Funktions (editor)
  *****************************************
  *****************************************/
-Yaio.EditorService = function(appBase) {
+Yaio.Editor = function(appBase) {
     'use strict';
 
     // my own instance
