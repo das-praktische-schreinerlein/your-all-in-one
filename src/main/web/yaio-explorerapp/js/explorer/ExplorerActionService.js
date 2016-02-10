@@ -458,7 +458,7 @@ Yaio.ExplorerActionService = function(appBase) {
                 if (me.$(descBlock).hasClass('syntaxhighlighting-open')) {
                     me.$(descBlock).removeClass('syntaxhighlighting-open');
                     console.log("toggleNodeDescContainer highlight for descBlock: " + me.$(descBlock).attr('id'));
-                    svcYaioFormatter.formatDescBlock(descBlock);
+                    svcYaioFormatter.runAllRendererOnBlock(descBlock);
                 }
             } else {
                 // desc is now hidden
@@ -476,7 +476,7 @@ Yaio.ExplorerActionService = function(appBase) {
             // check if syntaxhighlighting to do
             me.$("div.syntaxhighlighting-open").each(function (i, descBlock) {
                 console.log("toggleAllNodeDescContainer highlight for descBlock: " + me.$(descBlock).attr('id'));
-                me.appBase.get('YaioFormatter').formatDescBlock(descBlock);
+                me.appBase.get('YaioFormatter').runAllRendererOnBlock(descBlock);
             });
         } else {
             // hide all desc

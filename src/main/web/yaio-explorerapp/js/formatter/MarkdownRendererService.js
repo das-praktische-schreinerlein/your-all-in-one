@@ -25,7 +25,7 @@ Yaio.MarkdownRendererService = function(appBase) {
     'use strict';
 
     // my own instance
-    var me = JsHelferlein.MarkdownRendererService(appBase);
+    var me = JsHelferlein.MarkdownRenderer(appBase);
 
     /**
      * initialize the object

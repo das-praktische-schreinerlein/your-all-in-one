@@ -643,10 +643,7 @@ yaioAppBase.publishDetectorStyles();
 </script>
 <script type="text/javascript">
     // format markdown-extension
-    var flgDoMermaid = yaioAppBase.get('YaioFormatter').formatDescBlock("#div_full");
-    if (flgDoMermaid) {
-        yaioAppBase.get('YaioFormatter').formatMermaidGlobal();
-    }
+    yaioAppBase.get('YaioFormatter').runAllRendererOnBlock("#div_full");
 
     // add TOC
     yaioAppBase.get('YaioFormatter').addTOCForBlock("#globtoc", "#div_full", { toc: { hide: true, minDeep: 2}});

@@ -380,11 +380,11 @@ Yaio.EditorService = function(appBase) {
         svcYaioLayout.hideFormRowTogglerIfSet("filterDescSymLinkForm", "filter_DescSymLinkNode", false);
     
         // create nodeDesc-editor
-        svcYaioMarkdownEditor.createNodeDescEditorForNode("editorInputNodeDescTaskNode", "inputNodeDescTaskNode");
-        svcYaioMarkdownEditor.createNodeDescEditorForNode("editorInputNodeDescEventNode", "inputNodeDescEventNode");
-        svcYaioMarkdownEditor.createNodeDescEditorForNode("editorInputNodeDescInfoNode", "inputNodeDescInfoNode");
-        svcYaioMarkdownEditor.createNodeDescEditorForNode("editorInputNodeDescUrlResNode", "inputNodeDescUrlResNode");
-        svcYaioMarkdownEditor.createNodeDescEditorForNode("editorInputNodeDescSymLinkNode", "inputNodeDescSymLinkNode");
+        svcYaioMarkdownEditor.createMarkdownEditorForTextarea("editorInputNodeDescTaskNode", "inputNodeDescTaskNode");
+        svcYaioMarkdownEditor.createMarkdownEditorForTextarea("editorInputNodeDescEventNode", "inputNodeDescEventNode");
+        svcYaioMarkdownEditor.createMarkdownEditorForTextarea("editorInputNodeDescInfoNode", "inputNodeDescInfoNode");
+        svcYaioMarkdownEditor.createMarkdownEditorForTextarea("editorInputNodeDescUrlResNode", "inputNodeDescUrlResNode");
+        svcYaioMarkdownEditor.createMarkdownEditorForTextarea("editorInputNodeDescSymLinkNode", "inputNodeDescSymLinkNode");
         
         // update appsize
         svcYaioLayout.setupAppSize();

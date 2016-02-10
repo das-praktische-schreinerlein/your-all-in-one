@@ -52,11 +52,8 @@
 
 <script type="text/javascript">
     // format markdown-extension
-    var flgDoMermaid = yaioAppBase.get('YaioFormatter').formatDescBlock("#front-content-intro");
-    if (flgDoMermaid) {
-        yaioAppBase.get('YaioFormatter').formatMermaidGlobal();
-    }
-    
+    yaioAppBase.get('YaioFormatter').runAllRendererOnBlock("#front-content-intro");
+
     // activate elements after 1 second
     setTimeout(function() { 
         // activate speech recognition

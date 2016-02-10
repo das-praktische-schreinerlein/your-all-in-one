@@ -251,7 +251,7 @@ Yaio.NodeDataRenderService = function(appBase) {
             descText = descText.replace(/<WLTAB>/g, "\t");
     
             // prepare descText
-            var descHtml = me.appBase.get('YaioFormatter').formatMarkdown(descText, false, basenode.sysUID);
+            var descHtml = me.appBase.get('YaioFormatter').renderMarkdown(descText, false, basenode.sysUID);
             $divDesc.append("<div id='container_content_desc_" + basenode.sysUID + "' class='container-content-desc syntaxhighlighting-open'>" + descHtml + "</div>");
     
             // append to datablock
