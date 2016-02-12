@@ -425,6 +425,13 @@ Yaio.Editor = function(appBase) {
 
             // update ace-editor
             var parentEditor = me.$(element).data('aceEditor');
+            if (!parentEditor) {
+                var id = me.$(element).attr('id');
+                if (id) {
+                    id = "#editor" + id.charAt(0).toUpperCase() + id.slice(1);
+                    parentEditor = me.$(id).data('aceEditor');
+                }
+            }
             if (parentEditor) {
                 parentEditor.setValue(me.$(element).val());
             }
