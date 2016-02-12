@@ -201,6 +201,9 @@ function patchFileSlimbox2(content, srcpath) {
         "    /*!");
     newContent = newContent.replace(/\t/g,
         "    ");
+    newContent = newContent.replace(/ img\:not\(\[class\]\)/g,
+        " img.jsh-md-img");
+
     newContent = newContent.replace("middle = win.scrollTop() + (win.height() / 2);",
         "middle = win.scrollTop() + (window.innerHeight / 2);");
     return newContent;
@@ -398,8 +401,8 @@ module.exports = {
                     'vendors-full-<%= pkg.vendorversion %>.js',
                     'vendors-full-<%= pkg.vendorversion %>.css',
                     '<%= pkg.name %>-reset-<%= pkg.resetversion %>.css',
-                    '<%= pkg.name %>-exports-full-<%= pkg.exportsversion %>.js',
-                    '<%= pkg.name %>-exports-full-<%= pkg.exportsversion %>.css',
+                    '<%= pkg.name %>-exports-dist-<%= pkg.exportsversion %>.js',
+                    '<%= pkg.name %>-exports-dist-<%= pkg.exportsversion %>.css',
                     '<%= pkg.name %>-exports-print-<%= pkg.exportsversion %>.css',
                     '<%= pkg.name %>-exports-print-dataonly-<%= pkg.exportsversion %>.css'
                 ], dest: '<%= archivSrcBase %>', flatten: false},

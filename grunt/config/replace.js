@@ -42,11 +42,11 @@ module.exports = {
                     replacement: "dist\/yaio-reset-<%= pkg.resetversion %>.$1"
                 },
                 {
-                    match: /dist\/ymf-app-(full|print)(.*?)\.(css|js)/g,
+                    match: /dist\/ymf-app-(dist|print)(.*?)\.(css|js)/g,
                     replacement: "dist\/yaio-app-$1$2-<%= pkg.appversion %>.$3"
                 },
                 {
-                    match: /dist\/ymf-jsh-(full|print)(.*?)\.(css|js)/g,
+                    match: /dist\/jsh-(dist|print)(.*?)\.(css|js)/g,
                     replacement: "dist\/yaio-support-$1$2-<%= pkg.supportversion %>.$3"
                 }
             ]

@@ -29,8 +29,8 @@ module.exports = {
             banner: '/*! <%= pkg.name %>-v<%= pkg.version %> app-<%= pkg.appversion %> */\n\n'
         },
         files: {
-            '<%= destBase %>dist/<%= pkg.name %>-app-full-<%= pkg.appversion %>.js': ['<%= projectJsFiles %>'],
-            '<%= destBase %>dist/<%= pkg.name %>-app-full-<%= pkg.appversion %>.css': ['<%= projectCssFiles %>'],
+            '<%= destBase %>dist/<%= pkg.name %>-app-dist-<%= pkg.appversion %>.js': ['<%= projectJsFiles %>'],
+            '<%= destBase %>dist/<%= pkg.name %>-app-dist-<%= pkg.appversion %>.css': ['<%= projectCssFiles %>'],
             '<%= destBase %>dist/<%= pkg.name %>-app-print-<%= pkg.appversion %>.css': ['<%= projectPrintCssFiles %>'],
             '<%= destBase %>dist/<%= pkg.name %>-app-print-dataonly-<%= pkg.appversion %>.css': ['<%= projectPrintDataOnlyCssFiles %>']
         }
@@ -41,8 +41,8 @@ module.exports = {
             banner: '/*! <%= pkg.name %>-v<%= pkg.version %> support-<%= pkg.supportversion %> */\n\n'
         },
         files: {
-            '<%= destBase %>dist/<%= pkg.name %>-support-full-<%= pkg.supportversion %>.js': ['<%= projectSupportJsFiles %>'],
-            '<%= destBase %>dist/<%= pkg.name %>-support-full-<%= pkg.supportversion %>.css': ['<%= projectSupportCssFiles %>'],
+            '<%= destBase %>dist/<%= pkg.name %>-support-dist-<%= pkg.supportversion %>.js': ['<%= projectSupportJsFiles %>'],
+            '<%= destBase %>dist/<%= pkg.name %>-support-dist-<%= pkg.supportversion %>.css': ['<%= projectSupportCssFiles %>'],
             '<%= destBase %>dist/<%= pkg.name %>-support-print-<%= pkg.supportversion %>.css': ['<%= projectPrintCssFiles %>'],
             '<%= destBase %>dist/<%= pkg.name %>-support-print-dataonly-<%= pkg.supportversion %>.css': ['<%= projectPrintDataOnlyCssFiles %>']
         }
@@ -53,8 +53,8 @@ module.exports = {
             banner: '/*! <%= pkg.name %>-v<%= pkg.version %> exports-<%= pkg.exportsversion %> */\n\n'
         },
         files: {
-            '<%= destBase %>dist/<%= pkg.name %>-exports-full-<%= pkg.exportsversion %>.js': ['<%= projectSupportJsFiles %>', '<%= projectExportsJsFiles %>'],
-            '<%= destBase %>dist/<%= pkg.name %>-exports-full-<%= pkg.exportsversion %>.css': ['<%= projectSupportCssFiles %>'],
+            '<%= destBase %>dist/<%= pkg.name %>-exports-dist-<%= pkg.exportsversion %>.js': ['<%= projectSupportJsFiles %>', '<%= projectExportsJsFiles %>'],
+            '<%= destBase %>dist/<%= pkg.name %>-exports-dist-<%= pkg.exportsversion %>.css': ['<%= projectSupportCssFiles %>'],
             '<%= destBase %>dist/<%= pkg.name %>-exports-print-<%= pkg.exportsversion %>.css': ['<%= projectPrintCssFiles %>'],
             '<%= destBase %>dist/<%= pkg.name %>-exports-print-dataonly-<%= pkg.exportsversion %>.css': ['<%= projectPrintDataOnlyCssFiles %>']
         }

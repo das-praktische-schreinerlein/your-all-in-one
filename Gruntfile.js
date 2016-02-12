@@ -95,7 +95,7 @@ module.exports = function(grunt) {
                 vendorSrcBase + 'freemind-flash/flashobject.js',
                 vendorSrcBase + 'js/yaio/JMATAllIn.js',
                 // !!!! ymf is vendor but my project
-                vendorDestBase + 'js/ymf/ymf-app-full.js'
+                vendorDestBase + 'js/ymf/ymf-app-dist.js'
             ],
             vendorCssFiles: [
                 vendorDestBase + 'css/jqueryui/jquery-ui.css',
@@ -109,7 +109,7 @@ module.exports = function(grunt) {
                 vendorSrcBase + 'css/yaio/style.css',
                 vendorSrcBase + 'css/yaio/main.css',
                 // !!!! ymf is vendor but my project
-                vendorDestBase + 'css/ymf/ymf-app-full.css'
+                vendorDestBase + 'css/ymf/ymf-app-dist.css'
             ],
             projectJsFiles: [
                 srcBase + 'yaio-explorerapp/js/jmat.js',

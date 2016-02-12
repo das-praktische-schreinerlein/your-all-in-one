@@ -31,8 +31,8 @@ module.exports = function(config) {
         distSrcPath + 'vendors-' + packageConfig.vendorversion + '/ace/ext-spellcheck.js',
         distSrcPath + 'vendors-' + packageConfig.vendorversion + '/freemind-flash/flashobject.js',
         // yaio: files
-        distSrcPath + 'yaio-support-full-' + packageConfig.supportversion + '.js',
-        distSrcPath + 'yaio-app-full-' + packageConfig.appversion + '.js',
+        distSrcPath + 'yaio-support-dist-' + packageConfig.supportversion + '.js',
+        distSrcPath + 'yaio-app-dist-' + packageConfig.appversion + '.js',
         testSrcPath + 'unit/resources/js/jasmine/jasmine-jquery.js',
         testSrcPath + 'unit/jasmine-config.js',
 
