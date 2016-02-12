@@ -35,7 +35,9 @@ window.YaioAppBase = function() {
             return Yaio.MarkdownRenderer(me);
         });
         me.configureService('Ymf.MarkdownEditor', function () {
-            return Ymf.MarkdownEditor(me);
+            var config = new JsHelferlein.ConfigBase();
+            config.usePrintWidget = false;
+            return Ymf.MarkdownEditor(me, config);
         });
 
         // instances
