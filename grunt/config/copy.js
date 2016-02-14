@@ -331,7 +331,7 @@ module.exports = {
                 }
             },
             {expand: true, cwd: '<%= bowerSrcBase %>select2', src: ['dist/js/select2.full.min.js'], dest: '<%= vendorDestBase %>js/select2/', flatten: true},
-            {expand: true, cwd: '<%= bowerSrcBase %>slimbox2', src: ['js/*.js'], dest: '<%= vendorDestBase %>js/slimbox2/', flatten: true},
+            {expand: true, cwd: '<%= bowerSrcBase %>slimbox2', src: ['js/slimbox2.js'], dest: '<%= vendorDestBase %>js/slimbox2/', flatten: true},
             {expand: true, cwd: '<%= bowerSrcBase %>strapdown', src: ['src/js/strapdown-toc.js'], dest: '<%= vendorDestBase %>js/strapdown/', flatten: true},
             {expand: true, cwd: '<%= bowerSrcBase %>toastr', src: ['build/toastr.min.js'], dest: '<%= vendorDestBase %>js/toastr/', flatten: true},
             {expand: true, cwd: '<%= bowerSrcBase %>ui-contextmenu', src: ['jquery.ui-contextmenu.min.js'], dest: '<%= vendorDestBase %>js/jqueryui/', flatten: true},
@@ -373,8 +373,6 @@ module.exports = {
                 'skin-win8/*.*'], dest: '<%= destBase %>dist/vendors-<%= pkg.vendorversion %>/fancytree/', flatten: false},
             {expand: true, cwd: '<%= vendorDestBase %>css', src: ['jqueryui/images/*.*'], dest: '<%= destBase %>dist/vendors-<%= pkg.vendorversion %>/', flatten: false},
             {expand: true, cwd: '<%= vendorDestBase %>js/mermaid', src: ['*.js'], dest: '<%= destBase %>dist/vendors-<%= pkg.vendorversion %>/mermaid/', flatten: false},
-            {expand: true, cwd: '<%= vendorDestBase %>js/', src: ['slimbox2/**'], dest: '<%= destBase %>dist/vendors-<%= pkg.vendorversion %>/', flatten: false},
-            {expand: true, cwd: '<%= vendorDestBase %>css/', src: ['slimbox2/**'], dest: '<%= destBase %>dist/vendors-<%= pkg.vendorversion %>/', flatten: false},
             // yaio-intern vendors
             {expand: true, cwd: '<%= vendorSrcBase %>', src: ['freemind-flash/**'], dest: '<%= destBase %>dist/vendors-<%= pkg.vendorversion %>/', flatten: false},
             {expand: true, cwd: '<%= vendorSrcBase %>js/', src: ['yaio/**'], dest: '<%= destBase %>dist/vendors-<%= pkg.vendorversion %>/', flatten: false},

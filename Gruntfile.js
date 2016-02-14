@@ -87,6 +87,7 @@ module.exports = function(grunt) {
                 vendorDestBase + 'js/strapdown/strapdown-toc.js',
                 vendorDestBase + 'js/highlightjs/highlight.pack.js',
                 vendorDestBase + 'js/select2/select2.full.min.js',
+                vendorDestBase + 'js/slimbox2/slimbox2.js',
                 vendorDestBase + 'js/toastr/toastr.min.js',
 // loaded standalone because of problems
 //              vendorDestBase + 'js/mermaid/mermaid.full.js',
@@ -103,6 +104,7 @@ module.exports = function(grunt) {
 // loaded standalone because of plugins
 //              vendorDestBase + 'js/fancytree/skin-win8/ui.fancytree.css',
                 vendorDestBase + 'css/highlightjs/default.css',
+                vendorDestBase + 'css/slimbox2/slimbox2.css',
                 vendorDestBase + 'css/select2/select2.min.css',
                 vendorDestBase + 'css/toastr/toastr.css',
                 vendorDestBase + 'css/mermaid/mermaid.css',
