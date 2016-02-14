@@ -25,8 +25,8 @@ window.YaioAppBase = function() {
     
     me._configureDefaultServices = function() {
         // instances
-        me.configureService('Ymf.Layout', function () {
-            return Ymf.Layout(me);
+        me.configureService('Ymf.MarkdownEditorServiceHelper', function () {
+            return Ymf.MarkdownEditorServiceHelper(me);
         });
         me.configureService('Ymf.MarkdownConverter', function () {
             return Ymf.MarkdownConverter(me);
@@ -62,8 +62,8 @@ window.YaioAppBase = function() {
         me.configureService("Yaio.ExportedData", function() { return Yaio.ExportedData(me); });
 
         // aliases
-        me.configureService('YmfLayout', function () {
-            return me.get('Ymf.Layout');
+        me.configureService('YmfMarkdownEditorServiceHelper', function () {
+            return me.get('Ymf.MarkdownEditorServiceHelper');
         });
         me.configureService('YmfMarkdownConverter', function () {
             return me.get('Ymf.MarkdownConverter');

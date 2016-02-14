@@ -37,66 +37,46 @@ Yaio.Layout = function(appBase) {
 
 
     me.addPreviewToElements = function() {
-        me.appBase.YmfLayout.addPreviewToElements('label[for="nodeDesc"');
+        me.appBase.YmfMarkdownEditorServiceHelper.addPreviewToElements('label[for="nodeDesc"');
     };
     
     me.addWysiwygToElements = function() {
-        me.appBase.YmfLayout.addWysiwygToElements('label[for="nodeDesc"');
+        me.appBase.YmfMarkdownEditorServiceHelper.addWysiwygToElements('label[for="nodeDesc"');
     };
     
     /** 
      * add speechRecognition to name+nodeDesc-Label if availiable<br>
      * set the flg webkitSpeechRecognitionAdded on the element, so that there is no doubling
-     * @FeatureDomain                GUI
-     * @FeatureResult                GUI-result: add speechrecognition to elements
-     * @FeatureKeywords              GUI Editor SpeechRecognition
      */
     me.addSpeechRecognitionToElements = function() {
-        me.appBase.YmfLayout.addSpeechRecognitionToElements('label[for="nodeDesc"], label[for="name"]');
-    };
-    
-    /** 
-     * open speechrecognition for element
-     * @FeatureDomain                GUI
-     * @FeatureResult                GUI-result: open speechrecognition for element
-     * @FeatureKeywords              GUI Editor SpeechRecognition
-     * @param target                 target-element to update (HTML-Element)
-     */
-    me.openSpeechRecognitionWindow = function(target) {
-        me.appBase.YmfLayout.openSpeechRecognitionWindow(target);
+        me.appBase.SpeechServiceHelper.addSpeechRecognitionToElements('label[for="nodeDesc"], label[for="name"]');
     };
     
     /** 
      * add speechSynth to nodeDesc-Label if availiable<br>
      * set the flg speechSynthAdded on the element, so that there is no doubling
-     * @FeatureDomain                GUI
-     * @FeatureResult                GUI-result: add speechSynth to elements
-     * @FeatureKeywords              GUI Editor SpeechSynth
      */
     me.addSpeechSynthToElements = function() {
-        me.appBase.YmfLayout.addSpeechSynthToElements('label[for="nodeDesc"]');
+        me.appBase.SpeechServiceHelper.addSpeechSynthToElements('label[for="nodeDesc"]');
     };
     
-    /** 
-     * open speechsynth for element
-     * @FeatureDomain                GUI
-     * @FeatureResult                GUI-result: open speechsynth for element
-     * @FeatureKeywords              GUI Editor SpeechSynth
-     * @param target                 target-element to update (HTML-Element)
+    /**
+     * toggle printlayout depending on #checkboxPrintAll is checked or not
      */
-    me.openSpeechSynthWindow = function(target) {
-        me.appBase.YmfLayout.openSpeechSynthWindow(target);
-    };
-
-    me.togglePrintLayout = function() {
-        me.appBase.YmfLayout.togglePrintLayout();
+    me.togglePrintLayout = function () {
+        if (me.$('#checkboxPrintAll').prop('checked')) {
+            // print all
+            me.$('#link_css_dataonly').attr('disabled', 'disabled');
+            me.$('#link_css_dataonly').prop('disabled', true);
+        } else {
+            // print data only
+            me.$('#link_css_dataonly').removeAttr('disabled');
+            me.$('#link_css_dataonly').prop('disabled', false);
+        }
     };
 
     /**
      * add datepicker to all input-elements with styleclass inputtype_date and inputtype_datetime
-     * @FeatureDomain                GUI
-     * @FeatureResult                GUI-result: add datepicker
-     * @FeatureKeywords              GUI Editor DatePicker
      */
     me.addDatePickerToElements = function () {
         // add datepicker to all dateinput
@@ -118,9 +98,6 @@ Yaio.Layout = function(appBase) {
 
     /** 
      * add styleselectbox to all input-elements with styleclass inputtype_docLayoutAddStyleClass
-     * @FeatureDomain                GUI
-     * @FeatureResult                GUI-result: add styleselectbox after input
-     * @FeatureKeywords              GUI Editor
      */
     me.addDocLayoutStyleSelectorToElements = function() {
         // iterate over docLayoutSDtyleClass-elements
@@ -159,10 +136,7 @@ Yaio.Layout = function(appBase) {
     
     /** 
      * init the multilanguage support for all tags with attribute <XX lang="de">
-     * @FeatureDomain                GUI
-     * @FeatureResult                GUI-result: init multilanguage-support
-     * @FeatureKeywords              GUI Editor Multilanguagesupport
-     * @param langKey                key of the preferred-language
+     * @param {string} langKey                key of the preferred-language
      */
     me.initLanguageSupport = function(langKey) {
         // Create language switcher instance and set default language to tech
