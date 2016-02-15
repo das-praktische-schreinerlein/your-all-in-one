@@ -25,7 +25,7 @@
 
                 <li ng-if="yaioUtils.getService('YaioAccessManager').getAvailiableStaticExportLinkKeys().length > 0">
                   <span data-tooltip='tooltip.command.ExportDirect' lang="tech" translate="common.command.ExportDirect">Schnelllinks</span>
-                  <ul class="exporttypelist" ">
+                  <ul class="exporttypelist">
                      <li ng-if="yaioUtils.getService('YaioAccessManager').getAvailiableStaticExportLink('ExportStaticJsonDirect')" 
                          class="exporttype" data-tooltip="tooltip.command.ExportStaticJsonDirect" lang="tech">
                         <a href="#" ng-click="yaioUtils.downloadAsFile('#exportLinkExportStaticJsonDirect', yaioUtils.getService('YaioNodeData').exportNodeActionResponseJSONById(node.sysUID), 'export-' + node.sysUID+ '.json', 'application/json', 'utf-8');" 

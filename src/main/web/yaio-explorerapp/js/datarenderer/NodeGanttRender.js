@@ -154,7 +154,7 @@ Yaio.NodeGanttRender = function(appBase) {
                                      + label + ":" + "</span>"
                                    + "<span class='gantt_aufwand_value'" +
                                          " data-rangeaufwand='" + rangeAufwand + "'>" 
-                                     + me.appBase.get('DataUtils').formatNumbers(rangeAufwand, 0, "h") + "</span");
+                                     + me.appBase.get('DataUtils').formatNumbers(rangeAufwand, 0, "h") + "</span>");
                     $div.attr("data-rangeaufwand", rangeAufwand);
                 }
                 
@@ -449,7 +449,7 @@ Yaio.NodeGanttRender = function(appBase) {
             $divLabel.html("<span class='gantt_aufwand_label'>" 
                     + praefix + "Sum:" + "</span>"
                     + "<span class='gantt_aufwand_value'" + ">" 
-                    + me.appBase.get('DataUtils').formatNumbers(sumRangeAufwand, 0, "h") + "</span");
+                    + me.appBase.get('DataUtils').formatNumbers(sumRangeAufwand, 0, "h") + "</span>");
         } else {
             console.log("yaioRecalcMasterGanttBlock type=" + praefix + " hide gantt_aufwand_label because no calced rangeaufwand :" + sumRangeAufwand + " for " + masterNodeId);
         }
