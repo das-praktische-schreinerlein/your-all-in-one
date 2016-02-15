@@ -11,7 +11,8 @@
                 src:                 [
                     'GruntFile.js',
                     'grunt/**/*.js',
-                    'src/**/*.js'
+                    'src/main/web/**/*.js',
+                    'src/test/javascript/**/*.js'
                 ]
             }
         },
