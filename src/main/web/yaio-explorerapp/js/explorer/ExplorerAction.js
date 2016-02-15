@@ -37,24 +37,23 @@ Yaio.ExplorerAction = function(appBase) {
         var svcLogger = me.appBase.get('Logger');
 
         // check for tree
-        var tree = me.$(treeId).fancytree("getTree");
+        var tree = me.$(treeId).fancytree('getTree');
         if (! tree) {
-            svcLogger.logError("openHierarchy: error tree:'" + treeId + "' not found.", false);
+            svcLogger.logError('openHierarchy: error tree:"' + treeId + '" not found.', false);
             return;
         }
     
         // check for rootNode
         var rootNode = tree.rootNode;
         if (! rootNode) {
-            svcLogger.logError("openHierarchy: error for tree:'" + treeId 
-                        + "' rootNode not found.", false);
+            svcLogger.logError('openHierarchy: error for tree:"' + treeId
+                        + '" rootNode not found.', false);
             return;
         }
         
         // check for lstIdsHierarchy
         if (! lstIdsHierarchy || lstIdsHierarchy.length <= 0) {
-            svcLogger.logError("openHierarchy: error for tree:'" + treeId 
-                        + "' lstIdsHierarchy is empty.", false);
+            svcLogger.logError('openHierarchy: error for tree:"' + treeId + '" lstIdsHierarchy is empty.', false);
             return;
         }
         
@@ -66,9 +65,8 @@ Yaio.ExplorerAction = function(appBase) {
             firstNode = rootNode.mapChildren[firstNodeId];
         }
         if (! firstNode) {
-            svcLogger.logError("openHierarchy: error for tree:'" + treeId 
-                        + "' firstNode of:'" + lstIdsHierarchySave 
-                        + "' not found on rootNode.", false);
+            svcLogger.logError('openHierarchy: error for tree:"' + treeId + '" firstNode of:"' + lstIdsHierarchySave + '"'
+                        + ' not found on rootNode.', false);
             return;
         }
     
@@ -83,26 +81,26 @@ Yaio.ExplorerAction = function(appBase) {
         var svcLogger = me.appBase.get('Logger');
 
         // check for tree
-        var tree = me.$(treeId).fancytree("getTree");
+        var tree = me.$(treeId).fancytree('getTree');
         if (! tree) {
-            svcLogger.logError("openNodeHierarchyForNodeId: error tree:'" + treeId + "' not found.", false);
+            svcLogger.logError('openNodeHierarchyForNodeId: error tree:"' + treeId + '" not found.', false);
             return;
         }
         
         // check for activeNodeId
         var treeNode = tree.getNodeByKey(activeNodeId);
         if (! treeNode) {
-            svcLogger.logError("openNodeHierarchyForNodeId: error for tree:'" + treeId 
-                    + "' activeNode " + activeNodeId + " not found.", false);
+            svcLogger.logError('openNodeHierarchyForNodeId: error for tree:"' + treeId + '" activeNode ' +
+                activeNodeId + ' not found.', false);
             return null;
         }
     
-        // Return the parent keys separated by options.keyPathSeparator, e.g. "id_1/id_17/id_32"
+        // Return the parent keys separated by options.keyPathSeparator, e.g. 'id_1/id_17/id_32'
         var keyPath = treeNode.getKeyPath(false);
         // extract lstIdsHierarchy
-        var lstIdsHierarchy = keyPath.split("/");
-        console.log("openNodeHierarchyForNodeId: extracted lst:" 
-                + lstIdsHierarchy + " from keyPath:" + keyPath);
+        var lstIdsHierarchy = keyPath.split('/');
+        console.log('openNodeHierarchyForNodeId: extracted lst:'
+                + lstIdsHierarchy + ' from keyPath:' + keyPath);
         
         // open Hierarchy
         me.openNodeHierarchy(treeId, lstIdsHierarchy);
@@ -112,24 +110,23 @@ Yaio.ExplorerAction = function(appBase) {
     me.yaioOpenSubNodesForTree = function(treeId, level) {
         var svcLogger = me.appBase.get('Logger');
 
-        var tree = me.$(treeId).fancytree("getTree");
+        var tree = me.$(treeId).fancytree('getTree');
         if (! tree) {
-            svcLogger.logError("yaioOpenSubNodesForTree: error tree:'" + treeId + "' not found.", false);
+            svcLogger.logError('yaioOpenSubNodesForTree: error tree:"' + treeId + '" not found.', false);
             return;
         }
         
         // check for activeNodeId
         var treeNode = tree.rootNode;
         if (! treeNode) {
-            svcLogger.logError("yaioOpenSubNodesForTree: error rootnode for tree:'" + treeId 
-                    + " not found.", false);
+            svcLogger.logError('yaioOpenSubNodesForTree: error rootnode for tree:"' + treeId + '" not found.', false);
             return null;
         }
         
         var opts = {};
         opts.minExpandLevel = level;
         opts.recursively = true;
-        console.log("yaioOpenSubNodesForTree setExpanded:" + " level:" + level);
+        console.log('yaioOpenSubNodesForTree setExpanded:' + ' level:' + level);
         treeNode.setExpanded(true, opts);
     };
     
@@ -139,13 +136,13 @@ Yaio.ExplorerAction = function(appBase) {
     };
     
     me.yaioMoveNode = function(node, newParentKey, newPos) {
-        console.log("move node:" + node.key + " to:" + newParentKey + " Pos:" + newPos);
+        console.log('move node:' + node.key + ' to:' + newParentKey + ' Pos:' + newPos);
         var json = JSON.stringify({parentNode: newParentKey});
         me.appBase.get('YaioNodeData').yaioDoMoveNode(node, newParentKey, newPos, json);
     };
     
     me.yaioCopyNode = function(node, newParentKey) {
-        console.log("copy node:" + node.key + " to:" + newParentKey);
+        console.log('copy node:' + node.key + ' to:' + newParentKey);
         var json = JSON.stringify({parentNode: newParentKey});
         me.appBase.get('YaioNodeData').yaioDoCopyNode(node, newParentKey, json);
     };
@@ -153,21 +150,21 @@ Yaio.ExplorerAction = function(appBase) {
     me.yaioRemoveNodeById = function(nodeId) {
         var svcLogger = me.appBase.get('Logger');
 
-        if (window.confirm("Wollen Sie die Node wirklich l&ouml;schen?")) {
-            console.log("remove node:" + nodeId);
+        if (window.confirm('Wollen Sie die Node wirklich l&ouml;schen?')) {
+            console.log('remove node:' + nodeId);
             // check for tree
-            var treeId = "#tree";
-            var tree = me.$(treeId).fancytree("getTree");
+            var treeId = '#tree';
+            var tree = me.$(treeId).fancytree('getTree');
             if (! tree) {
-                svcLogger.logError("yaioRemoveNode: error tree:'" + treeId + "' not found.", false);
+                svcLogger.logError('yaioRemoveNode: error tree:"' + treeId + '" not found.', false);
                 return;
             }
             
             // check for activeNodeId
             var treeNode = tree.getNodeByKey(nodeId);
             if (! treeNode) {
-                svcLogger.logError("yaioRemoveNode: error for tree:'" + treeId 
-                        + "' activeNode " + nodeId + " not found.", false);
+                svcLogger.logError('yaioRemoveNode: error for tree:"' + treeId + '"' +
+                    ' activeNode ' + nodeId + ' not found.', false);
                 return null;
             }
             me.appBase.get('YaioNodeData').yaioDoRemoveNode(nodeId);
@@ -191,19 +188,19 @@ Yaio.ExplorerAction = function(appBase) {
         // check vars
         if (! nodeId) {
             // tree not found
-            svcLogger.logError("error openJiraWindow: nodeId required", false);
+            svcLogger.logError('error openJiraWindow: nodeId required', false);
             return null;
         }
         // load node
-        var tree = me.$("#tree").fancytree("getTree");
+        var tree = me.$('#tree').fancytree('getTree');
         if (!tree) {
             // tree not found
-            svcLogger.logError("error openJiraWindow: cant load tree for node:" + nodeId, false);
+            svcLogger.logError('error openJiraWindow: cant load tree for node:' + nodeId, false);
             return null;
         }
         var treeNode = tree.getNodeByKey(nodeId);
         if (! treeNode) {
-            svcLogger.logError("error openJiraWindow: cant load node:" + nodeId, false);
+            svcLogger.logError('error openJiraWindow: cant load node:' + nodeId, false);
             return null;
         }
         
@@ -211,26 +208,26 @@ Yaio.ExplorerAction = function(appBase) {
         var basenode = treeNode.data.basenode;
         var descText = basenode.nodeDesc;
         if (! descText) {
-            descText = "";
+            descText = '';
         }
-        descText = descText.replace(/<WLBR>/g, "\n");
-        descText = descText.replace(/<WLESC>/g, "\\");
-        descText = descText.replace(/<WLTAB>/g, "\t");
+        descText = descText.replace(/<WLBR>/g, '\n');
+        descText = descText.replace(/<WLESC>/g, '\\');
+        descText = descText.replace(/<WLTAB>/g, '\t');
         
         // convert and secure
         var nodeDesc = me.appBase.get('YaioMarkdownConverter').convertMarkdownToJira(descText);
         nodeDesc = svcDataUtils.htmlEscapeText(nodeDesc);
         
         // set clipboard-content
-        me.$( "#clipboard-content" ).html(nodeDesc);
+        me.$( '#clipboard-content' ).html(nodeDesc);
         
         // show message
-        me.$( "#clipboard-box" ).dialog({
+        me.$( '#clipboard-box' ).dialog({
             modal: true,
-            width: "700px",
+            width: '700px',
             buttons: {
               Ok: function() {
-                me.$( this ).dialog( "close" );
+                me.$( this ).dialog( 'close' );
               }
             }
         });    
@@ -254,15 +251,15 @@ Yaio.ExplorerAction = function(appBase) {
         ganttSrc = svcDataUtils.htmlEscapeText(ganttSrc);
         
         // set clipboard-content
-        me.$( "#clipboard-content" ).html(checkListSrc + "\n\n" +  ganttSrc);
+        me.$( '#clipboard-content' ).html(checkListSrc + '\n\n' +  ganttSrc);
         
         // show message
-        me.$( "#clipboard-box" ).dialog({
+        me.$( '#clipboard-box' ).dialog({
             modal: true,
-            width: "700px",
+            width: '700px',
             buttons: {
               Ok: function() {
-                me.$( this ).dialog( "close" );
+                me.$( this ).dialog( 'close' );
               }
             }
         });    
@@ -285,7 +282,7 @@ Yaio.ExplorerAction = function(appBase) {
         ganttSrc = svcDataUtils.htmlEscapeText(ganttSrc);
     
         // open editor
-        me.appBase.get('YaioEditor').yaioOpenNodeEditorForNode(parentNode, 'createsnapshot', {nodeDesc: checkListSrc + "\n\n" +  ganttSrc});
+        me.appBase.get('YaioEditor').yaioOpenNodeEditorForNode(parentNode, 'createsnapshot', {nodeDesc: checkListSrc + '\n\n' +  ganttSrc});
     };
     
     
@@ -301,15 +298,15 @@ Yaio.ExplorerAction = function(appBase) {
         content = me.appBase.get('DataUtils').htmlEscapeText(content);
     
         // set clipboard-content
-        me.$( "#clipboard-content" ).html(content);
+        me.$( '#clipboard-content' ).html(content);
         
         // show message
-        me.$( "#clipboard-box" ).dialog({
+        me.$( '#clipboard-box' ).dialog({
             modal: true,
-            width: "700px",
+            width: '700px',
             buttons: {
               Ok: function() {
-                me.$( this ).dialog( "close" );
+                me.$( this ).dialog( 'close' );
               }
             }
         });    
@@ -328,19 +325,19 @@ Yaio.ExplorerAction = function(appBase) {
         // check vars
         if (! nodeId) {
             // tree not found
-            svcLogger.logError("error openDMSDownloadExportWindow: nodeId required", false);
+            svcLogger.logError('error openDMSDownloadExportWindow: nodeId required', false);
             return null;
         }
         // load node
-        var tree = me.$("#tree").fancytree("getTree");
+        var tree = me.$('#tree').fancytree('getTree');
         if (!tree) {
             // tree not found
-            svcLogger.logError("error openDMSDownloadExportWindow: cant load tree for node:" + nodeId, false);
+            svcLogger.logError('error openDMSDownloadExportWindow: cant load tree for node:' + nodeId, false);
             return null;
         }
         var treeNode = tree.getNodeByKey(nodeId);
         if (! treeNode) {
-            svcLogger.logError("error openDMSDownloadExportWindow: cant load node:" + nodeId, false);
+            svcLogger.logError('error openDMSDownloadExportWindow: cant load node:' + nodeId, false);
             return null;
         }
         
@@ -350,18 +347,18 @@ Yaio.ExplorerAction = function(appBase) {
         var downloadUrl = me.appBase.get('YaioAccessManager').getAvailiableNodeAction('dmsDownload', basenode.sysUID, false) + basenode.sysUID;
 
         // set clipboard-content
-        me.$( "#download-iframe" ).attr("src", embedUrl);
+        me.$( '#download-iframe' ).attr('src', embedUrl);
         
         // show message
-        me.$( "#download-box" ).dialog({
+        me.$( '#download-box' ).dialog({
             modal: true,
-            width: "700px",
+            width: '700px',
             buttons: {
               Ok: function() {
-                me.$( this ).dialog( "close" );
+                me.$( this ).dialog( 'close' );
               },
               'Download': function() {
-                var helpFenster = window.open(downloadUrl, "download", "width=200,height=200,scrollbars=yes,resizable=yes");
+                var helpFenster = window.open(downloadUrl, 'download', 'width=200,height=200,scrollbars=yes,resizable=yes');
                 helpFenster.focus();
               }
             }
@@ -381,19 +378,19 @@ Yaio.ExplorerAction = function(appBase) {
         // check vars
         if (! nodeId) {
             // tree not found
-            svcLogger.logError("error openDMSIndexDownloadWindow: nodeId required", false);
+            svcLogger.logError('error openDMSIndexDownloadWindow: nodeId required', false);
             return null;
         }
         // load node
-        var tree = me.$("#tree").fancytree("getTree");
+        var tree = me.$('#tree').fancytree('getTree');
         if (!tree) {
             // tree not found
-            svcLogger.logError("error openDMSIndexDownloadWindow: cant load tree for node:" + nodeId, false);
+            svcLogger.logError('error openDMSIndexDownloadWindow: cant load tree for node:' + nodeId, false);
             return null;
         }
         var treeNode = tree.getNodeByKey(nodeId);
         if (! treeNode) {
-            svcLogger.logError("error openDMSIndexDownloadWindow: cant load node:" + nodeId, false);
+            svcLogger.logError('error openDMSIndexDownloadWindow: cant load node:' + nodeId, false);
             return null;
         }
         
@@ -404,8 +401,8 @@ Yaio.ExplorerAction = function(appBase) {
 
         $.getJSON( embedUrl, function(data) {
             // set clipboard-content
-            var parent = me.$( "#downloadindex-content" );
-            parent.html("");
+            var parent = me.$( '#downloadindex-content' );
+            parent.html('');
             for (var key in data.versions) {
                 if (data.versions.hasOwnProperty(key)) {
                     me.createDMSIndexDiv(key, data.versions[key], parent);
@@ -415,15 +412,15 @@ Yaio.ExplorerAction = function(appBase) {
         
         
         // show message
-        me.$( "#downloadindex-box" ).dialog({
+        me.$( '#downloadindex-box' ).dialog({
             modal: true,
-            width: "700px",
+            width: '700px',
             buttons: {
               Ok: function() {
-                me.$( this ).dialog( "close" );
+                me.$( this ).dialog( 'close' );
               },
               'Download': function() {
-                var helpFenster = window.open(downloadUrl, "download", "width=200,height=200,scrollbars=yes,resizable=yes");
+                var helpFenster = window.open(downloadUrl, 'download', 'width=200,height=200,scrollbars=yes,resizable=yes');
                 helpFenster.focus();
               }
             }
@@ -431,15 +428,15 @@ Yaio.ExplorerAction = function(appBase) {
     };
 
     me.createDMSIndexDiv = function (key, data, parent) {
-        var content = "" + data.content;
-        var name = "" + data.parserName;
+        var content = '' + data.content;
+        var name = '' + data.parserName;
         content = me.appBase.get('DataUtils').htmlEscapeText(content);
-        content = content.replace(/\n/g, "<br />");
-        $(parent).append('<div class="downloadindex-container"><div class="downloadindex-name">' + name + '</div><br><pre>' + content + "<pre></div>");
+        content = content.replace(/\n/g, '<br />');
+        $(parent).append('<div class="downloadindex-container"><div class="downloadindex-name">' + name + '</div><br><pre>' + content + '<pre></div>');
     };
 
     /** 
-     * Toggle the "#detail_desc_" for the specified id with a slide. 
+     * Toggle the '#detail_desc_' for the specified id with a slide.
      * @FeatureDomain                Layout Toggler
      * @FeatureResult                Updates DOM
      * @FeatureKeywords              GUI Tree Rendering
@@ -447,73 +444,73 @@ Yaio.ExplorerAction = function(appBase) {
      */
     me.toggleNodeDescContainer = function(id) {
         var svcYaioFormatter = me.appBase.get('YaioFormatter');
-        me.$("#detail_desc_" + id).slideToggle(1000,function() {
+        me.$('#detail_desc_' + id).slideToggle(1000,function() {
             // show/hide toggler
-            if (me.$("#detail_desc_" + id).css("display") == "block") {
+            if (me.$('#detail_desc_' + id).css('display') == 'block') {
                 // desc is now shown
-                me.$("#toggler_desc_" + id).addClass('toggler_show').removeClass('toggler_hidden');
+                me.$('#toggler_desc_' + id).addClass('toggler_show').removeClass('toggler_hidden');
    
                 // check if syntaxhighlighting to do
-                var descBlock = me.$("#container_content_desc_" + id);
+                var descBlock = me.$('#container_content_desc_' + id);
                 if (me.$(descBlock).hasClass('syntaxhighlighting-open')) {
                     me.$(descBlock).removeClass('syntaxhighlighting-open');
-                    console.log("toggleNodeDescContainer highlight for descBlock: " + me.$(descBlock).attr('id'));
+                    console.log('toggleNodeDescContainer highlight for descBlock: ' + me.$(descBlock).attr('id'));
                     svcYaioFormatter.runAllRendererOnBlock(descBlock);
                 }
             } else {
                 // desc is now hidden
-                me.$("#toggler_desc_" + id).addClass('toggler_hidden').removeClass('toggler_show');
+                me.$('#toggler_desc_' + id).addClass('toggler_hidden').removeClass('toggler_show');
             }
         });
     };
    
     me.toggleAllNodeDescContainer = function() {
-        if (me.$("#toggler_desc_all").hasClass('toggler_hidden')) {
+        if (me.$('#toggler_desc_all').hasClass('toggler_hidden')) {
             // show all desc
-            me.$("div.field_nodeDesc").slideDown(1000);
-            me.$("div.fieldtype_descToggler > a").addClass('toggler_show').removeClass('toggler_hidden');
+            me.$('div.field_nodeDesc').slideDown(1000);
+            me.$('div.fieldtype_descToggler > a').addClass('toggler_show').removeClass('toggler_hidden');
    
             // check if syntaxhighlighting to do
-            me.$("div.syntaxhighlighting-open").each(function (i, descBlock) {
-                console.log("toggleAllNodeDescContainer highlight for descBlock: " + me.$(descBlock).attr('id'));
+            me.$('div.syntaxhighlighting-open').each(function (i, descBlock) {
+                console.log('toggleAllNodeDescContainer highlight for descBlock: ' + me.$(descBlock).attr('id'));
                 me.appBase.get('YaioFormatter').runAllRendererOnBlock(descBlock);
             });
         } else {
             // hide all desc
-            me.$("div.field_nodeDesc").slideUp(1000);
-            me.$("div.fieldtype_descToggler > a").addClass('toggler_hidden').removeClass('toggler_show');
+            me.$('div.field_nodeDesc').slideUp(1000);
+            me.$('div.fieldtype_descToggler > a').addClass('toggler_hidden').removeClass('toggler_show');
         }
     };
     
     /** 
-     * Toggle the "#detail_sys_" for the specified id with a slide. 
+     * Toggle the '#detail_sys_' for the specified id with a slide.
      * @FeatureDomain                Layout Toggler
      * @FeatureResult                Updates DOM
      * @FeatureKeywords              GUI Tree Rendering
      * @param id                     sysUID of the node 
     */
     me.toggleNodeSysContainer = function(id) {
-        me.$("#detail_sys_" + id).slideToggle(1000,function() {
+        me.$('#detail_sys_' + id).slideToggle(1000,function() {
             // show/hide toggler
-            if (me.$("#detail_sys_" + id).css("display") == "block") {
+            if (me.$('#detail_sys_' + id).css('display') == 'block') {
                 // desc is now shown
-                me.$("#toggler_sys_" + id).addClass('toggler_show').removeClass('toggler_hidden');
+                me.$('#toggler_sys_' + id).addClass('toggler_show').removeClass('toggler_hidden');
             } else {
                 // desc is now hidden
-                me.$("#toggler_sys_" + id).addClass('toggler_hidden').removeClass('toggler_show');
+                me.$('#toggler_sys_' + id).addClass('toggler_hidden').removeClass('toggler_show');
             }
         });
     };
   
     me.toggleAllNodeSysContainer = function() {
-        if (me.$("#toggler_sys_all").hasClass('toggler_hidden')) {
+        if (me.$('#toggler_sys_all').hasClass('toggler_hidden')) {
             // show all sys
-            me.$("div.field_nodeSys").slideDown(1000);
-            me.$("div.fieldtype_sysToggler > a").addClass('toggler_show').removeClass('toggler_hidden');
+            me.$('div.field_nodeSys').slideDown(1000);
+            me.$('div.fieldtype_sysToggler > a').addClass('toggler_show').removeClass('toggler_hidden');
         }  else {
             // hide all sys
-            me.$("div.field_nodeSys").slideUp(1000);
-            me.$("div.fieldtype_sysToggler > a").addClass('toggler_hidden').removeClass('toggler_show');
+            me.$('div.field_nodeSys').slideUp(1000);
+            me.$('div.fieldtype_sysToggler > a').addClass('toggler_hidden').removeClass('toggler_show');
         }
     };
   

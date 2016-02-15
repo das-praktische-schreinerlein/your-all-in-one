@@ -53,7 +53,7 @@ describe('yaio wysiwyg', function() {
             })
             .then(function sendMarkdown() {
                 // sendMarkdown
-                return yaioWysiwygPage.checkWysiwygContent(markdownText, expected)
+                return yaioWysiwygPage.checkWysiwygContent(markdownText, expected);
             })
             .then(function extendMarkdown() {
                 // extend markdown

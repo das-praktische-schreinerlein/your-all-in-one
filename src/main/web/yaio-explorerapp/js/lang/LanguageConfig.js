@@ -39,6 +39,6 @@ yaioApp.config(function ($translateProvider) {
     
 
     // change icons
-    $(".button-lang").removeClass("button-lang-active").addClass("button-lang-inactive");
-    $("#button_lang_" + langKey).removeClass("button-lang-inactive").addClass("button-lang-active");
+    $('.button-lang').removeClass('button-lang-active').addClass('button-lang-inactive');
+    $('#button_lang_' + langKey).removeClass('button-lang-inactive').addClass('button-lang-active');
 });

@@ -13,7 +13,7 @@
  */
 
 /** 
- * adds the new tag-directive "state" to output formated node-state
+ * adds the new tag-directive 'state' to output formated node-state
  * @FeatureDomain                Configuration
  * @FeatureResult                returns new directive
  * @FeatureKeywords              GUI Configuration Taglibrary

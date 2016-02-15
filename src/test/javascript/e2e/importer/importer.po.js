@@ -15,9 +15,9 @@ var YAIOImporterPage = function() {
     
     /**
      * click import-link, fill upload-form with filename, upload and check result
-     * @returns {Element} linkImportCommand   import-link
-     * @returns {String}  fileToUpload       filename to import (relative to current dir)
-     * @param   {Function} checkHandler      handler which is called to check the result (should return a promise)
+     * @param {Element} linkImportCommand   import-link
+     * @param {String}  fileToUpload       filename to import (relative to current dir)
+     * @param {Function} checkHandler      handler which is called to check the result (should return a promise)
      * @returns {Promise}                    promise
      */
     me.clickButtonImportAndCheck = function (linkImportCommand, fileToUpload, checkHandler) {
@@ -50,11 +50,11 @@ var YAIOImporterPage = function() {
 
     /**
      * click import-link, fill upload-form with filename, upload and check result for importwindow and mainwindow
-     * @returns {Element} linkImportCommand   import-link
-     * @returns {String}  fileToUpload       filename to import (relative to current dir)
-     * @param   {Function} checkHandlerImportWindow    handler which is called to check ImportWindow (should return a promise)
-     * @param   {Function} checkHandlerMainWindow      handler which is called to check MainWindow (should return a promise)
-     * @returns {Promise}                    promise
+     * @param {Element} linkImportCommand   import-link
+     * @param {String}  fileToUpload       filename to import (relative to current dir)
+     * @param {Function} checkHandlerImportWindow    handler which is called to check ImportWindow (should return a promise)
+     * @param {Function} checkHandlerMainWindow      handler which is called to check MainWindow (should return a promise)
+     * @returns {JQueryPromise}                    promise
      */
     me.importFileAndCheckForNewTask = function (linkImportCommand, fileToUpload, checkHandlerImportWindow, checkHandlerMainWindow) {
         var newWindowCheckHandler = function () {
@@ -79,8 +79,8 @@ var YAIOImporterPage = function() {
                 }).then(function doneReferesh() {
                     browser.ignoreSynchronization = false;
                     return checkHandlerMainWindow();
-                })
-        }
+                });
+        };
         return me.clickButtonImportAndCheck(linkImportCommand, fileToUpload, newWindowCheckHandler);
     };
 };

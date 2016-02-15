@@ -26,10 +26,10 @@ yaioApp.factory('yaioUtils', ['$location', '$http', '$rootScope', '$q', function
     var ganttRangeEnd = appBase.get('DataUtils').formatGermanDate((new Date()).getTime() + 90*24*60*60*1000);
 
     // set angular to appbase
-    appBase.configureService("Angular.$location", function() { return $location; });
-    appBase.configureService("Angular.$http", function() { return $http; });
-    appBase.configureService("Angular.$rootScope", function() { return $rootScope; });
-    appBase.configureService("Angular.$q", function() { return $q; });
+    appBase.configureService('Angular.$location', function() { return $location; });
+    appBase.configureService('Angular.$http', function() { return $http; });
+    appBase.configureService('Angular.$rootScope', function() { return $rootScope; });
+    appBase.configureService('Angular.$q', function() { return $q; });
 
     return {
         /** 
@@ -40,7 +40,7 @@ yaioApp.factory('yaioUtils', ['$location', '$http', '$rootScope', '$q', function
          * @param url                    the url of the helpsite
          */
         showHelpSite: function(url) {
-            console.log("showHelpSite:" + " url:" + url);
+            console.log('showHelpSite:' + ' url:' + url);
             appBase.get('YaioLayout').yaioShowHelpSite(url);
             return false;
         },
@@ -68,7 +68,7 @@ yaioApp.factory('yaioUtils', ['$location', '$http', '$rootScope', '$q', function
                  } 
             };
             
-            console.log("renderNodeLine nodeId=" + node.sysUID + " tr=" + $(trIdSelector).length);
+            console.log('renderNodeLine nodeId=' + node.sysUID + ' tr=' + $(trIdSelector).length);
             appBase.get('YaioNodeDataRender').renderColumnsForNode(null, data, true, flgMinimum);
         },
         

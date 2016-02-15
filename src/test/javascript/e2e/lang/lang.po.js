@@ -12,12 +12,12 @@ var YAIOLangPage = function() {
     me.linkSwitchLangEn = '#button_lang_en';
     
     // tooltip
-    me.tooltip = ".ui-tooltip";
+    me.tooltip = '.ui-tooltip';
 
     // explorer-link
     me.linkFrontpage = '[translate="common.command.OpenFrontpage"]';
     me.linkMouseReset = '#ue_explorer';
-    me.labelMasterplan = "#masterTr > td.container_field.fieldtype_name.field_name";
+    me.labelMasterplan = '#masterTr > td.container_field.fieldtype_name.field_name';
     
     /**
      * switch language-button and check content of element and tooltip if mouseover

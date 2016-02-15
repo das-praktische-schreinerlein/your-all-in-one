@@ -18,7 +18,8 @@
  * @FeatureResult                returns new controller
  * @FeatureKeywords              GUI Configuration BusinessLogic
  */
-yaioApp.controller('OutputOptionsCtrl', function($rootScope, $scope, $location, $routeParams, setFormErrors, OutputOptionsEditor, yaioUtils) {
+yaioApp.controller('OutputOptionsCtrl', function($rootScope, $scope, $location, $routeParams,
+                                                 setFormErrors, OutputOptionsEditor, yaioUtils) {
     'use strict';
 
     // include utils
@@ -29,6 +30,6 @@ yaioApp.controller('OutputOptionsCtrl', function($rootScope, $scope, $location, 
     // create options
     $scope.oOptions = $scope.outputOptionsEditor.oOptions;
     
-    console.log("OutputOptionsCtrl - started");
+    console.log('OutputOptionsCtrl - started');
 });
 

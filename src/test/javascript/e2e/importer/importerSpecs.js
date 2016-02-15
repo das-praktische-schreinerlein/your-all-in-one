@@ -54,7 +54,7 @@ describe('yaio importer', function() {
                         browser.ignoreSynchronization = false;
                         expect(source).toContain('imported');
                         defer.fulfill(true);
-                    } else if (source && browser.browserName === "phantomjs") {
+                    } else if (source && browser.browserName === 'phantomjs') {
                         // import passed: phantomjs sometime cant get the source :-(
                         browser.ignoreSynchronization = false;
                         expect(source).toContain('html');
@@ -62,7 +62,7 @@ describe('yaio importer', function() {
                     } else {
                         // import passed
                         browser.ignoreSynchronization = false;
-                        console.error("upload failed:" + source);
+                        console.error('upload failed:' + source);
                         expect(source).toContain('imported');
                         defer.reject(false);
                     }
@@ -75,7 +75,7 @@ describe('yaio importer', function() {
             protractor.utils.waitUntilElementClickable($(yaioImporterPage.linkImportMenu), protractor.utils.CONST_WAIT_NODEHIRARCHY);
             var eleNewTaskName = element(by.cssContainingText(yaioNodePage.spanNodeName, taskName));
             protractor.utils.waitUntilElementVisible(eleNewTaskName, protractor.utils.CONST_WAIT_NODEHIRARCHY);
-            expect(eleNewTaskName.getText()).toBe(taskName)
+            expect(eleNewTaskName.getText()).toBe(taskName);
             return eleNewTaskName;
         };
 
@@ -95,7 +95,7 @@ describe('yaio importer', function() {
                 var deletedElement = yaioNodePage.deleteNodeById(nodeId, yaioNodePage.jsFuncTestId);
                 deletedElement.isPresent().then(function() {
                     deferred.fulfill(deletedElement);
-                })
+                });
 
                 // check that element no more exists
                 expect(deletedElement.isPresent()).toEqual(false);

@@ -18,7 +18,8 @@
  * @FeatureResult                returns new controller
  * @FeatureKeywords              GUI Configuration
  */
-yaioApp.controller('AuthController', function($rootScope, $scope, $location, $routeParams, setFormErrors, OutputOptionsEditor, authorization, yaioUtils) {
+yaioApp.controller('AuthController', function($rootScope, $scope, $location, $routeParams,
+                                              setFormErrors, OutputOptionsEditor, authorization, yaioUtils) {
     'use strict';
 
     // include utils

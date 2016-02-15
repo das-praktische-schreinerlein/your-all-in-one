@@ -50,7 +50,7 @@ describe('yaio search', function() {
         return $(yaioSearchPage.buttonDoSearch).click()
             .then( function getFirstElement() {
                 // get first element
-                return element.all(by.repeater('node in nodes | filter:search')).first().getAttribute('data-value')
+                return element.all(by.repeater('node in nodes | filter:search')).first().getAttribute('data-value');
             })
             .then( function getFirstElement(id) {
                 // get element id
@@ -141,7 +141,7 @@ describe('yaio search', function() {
 
     it('should show Sys of first SearchResult', function doShowSysOfFirstSearchResult() {
         // Given
-        var expectedText = "Stand:";
+        var expectedText = 'Stand:';
         var checkContentHandler = function (container) {
             expect(container.getText()).toContain(expectedText);
             return container.getText();
@@ -163,7 +163,7 @@ describe('yaio search', function() {
                 var container = yaioNodePage.showSysForNode(nodeId, checkContentHandler);
                 container.getText().then(function() {
                     deferred.fulfill(container);
-                })
+                });
                 
                 return deferred.promise;
             });
@@ -171,7 +171,7 @@ describe('yaio search', function() {
 
     it('should show Desc of first SearchResult', function doShowDescOfFirstSearchResult() {
         // Given
-        var expectedText = "der";
+        var expectedText = 'der';
         var checkContentHandler = function (container) {
             expect(container.getText()).toContain(expectedText);
             return container.getText();
@@ -181,7 +181,7 @@ describe('yaio search', function() {
         $(yaioSearchPage.inputFullText).sendKeys('der');
         $(yaioSearchPage.buttonDoSearch).click();
 
-        // check first Node for "der" in desc
+        // check first Node for 'der' in desc
         return yaioNodePage.getVisibleNodes()
             .then( function (nodes) {
                 // extract nodeid from new task
@@ -195,7 +195,7 @@ describe('yaio search', function() {
                 var container = yaioNodePage.showDescForNode(nodeId, checkContentHandler);
                 container.getText().then(function() {
                     deferred.fulfill(container);
-                })
+                });
                 
                 return deferred.promise;
             });

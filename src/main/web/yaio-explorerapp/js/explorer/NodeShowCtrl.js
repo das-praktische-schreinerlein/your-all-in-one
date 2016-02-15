@@ -18,7 +18,8 @@
  * @FeatureResult                returns new controller
  * @FeatureKeywords              GUI Configuration BusinessLogic
  */
-yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $routeParams, setFormErrors, OutputOptionsEditor, authorization, yaioUtils) {
+yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $routeParams,
+                                            setFormErrors, OutputOptionsEditor, authorization, yaioUtils) {
     'use strict';
 
     // include utils
@@ -29,10 +30,10 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
     
     // register filterOptions
     $scope.filterOptions = {};
-    if ($routeParams.workflowState && $routeParams.workflowState != "?") {
+    if ($routeParams.workflowState && $routeParams.workflowState != '?') {
         $scope.filterOptions.strWorkflowStateFilter = $routeParams.workflowState;
     }
-    if ($routeParams.statCount && $routeParams.statCount != "?") {
+    if ($routeParams.statCount && $routeParams.statCount != '?') {
         $scope.filterOptions.strStatCountFilter = $routeParams.statCount;
     }
 
@@ -42,12 +43,12 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
     var nodeByAllId = $routeParams.nodeByAllId;
     var activeNodeId = $routeParams.activeNodeId;
     var flgNodeByAllId = false;
-    if (nodeByAllId != null && nodeByAllId != "" && nodeByAllId) {
+    if (nodeByAllId != null && nodeByAllId != '' && nodeByAllId) {
         nodeId = nodeByAllId;
         baseUrl = '/showByAllIds/';
         flgNodeByAllId = true;
     }
-    if (nodeId == null || nodeId == "" || ! nodeId) {
+    if (nodeId == null || nodeId == '' || ! nodeId) {
         nodeId = yaioUtils.getConfig().masterSysUId;
     }
 
@@ -65,7 +66,7 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
     authorization.authentificate(function () {
         // check authentification
         if (! $rootScope.authenticated) {
-            console.log("showControl: not authentification: " + $rootScope.authenticated);
+            console.log('showControl: not authentification: ' + $rootScope.authenticated);
             $location.path(yaioUtils.getConfig().appLoginUrl);
             $scope.error = false;
         } else {
@@ -80,7 +81,7 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
             // check for activeNodeId if set
             if (activeNodeId) {
                 loadOptions.loadActiveNodeIdHandler = function() {
-                    console.log("start loading activenode:" + activeNodeId);
+                    console.log('start loading activenode:' + activeNodeId);
                     return yaioUtils.getService('YaioNodeData').yaioDoLoadNodeById(activeNodeId, {})
                         .then(function sucess(angularResponse) {
                                 // handle success
@@ -90,16 +91,16 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
                                 var data = angularResponse.data;
                                 var header = angularResponse.header;
                                 var config = angularResponse.config;
-                                var message = "error loading activenode: " + activeNodeId;
+                                var message = 'error loading activenode: ' + activeNodeId;
                                 yaioUtils.getService('Logger').logError(message, true);
-                                message = "error data: " + data + " header:" + header + " config:" + config;
+                                message = 'error data: ' + data + ' header:' + header + ' config:' + config;
                                 yaioUtils.getService('Logger').logError(message, false);
                         });
                 };
             }
 
             // load data
-            console.log("NodeShowCtrl - processing nodeId=" + nodeId + " activeNodeId=" + activeNodeId);
+            console.log('NodeShowCtrl - processing nodeId=' + nodeId + ' activeNodeId=' + activeNodeId);
             return yaioUtils.getService('YaioNodeData').yaioDoLoadNodeById(nodeId, loadOptions)
                 .then(function sucess(angularResponse) {
                         // handle success
@@ -109,9 +110,9 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
                         var data = angularResponse.data;
                         var header = angularResponse.header;
                         var config = angularResponse.config;
-                        var message = "error loading node with url: " + curNodeUrl;
+                        var message = 'error loading node with url: ' + curNodeUrl;
                         yaioUtils.getService('Logger').logError(message, true);
-                        message = "error data: " + data + " header:" + header + " config:" + config;
+                        message = 'error data: ' + data + ' header:' + header + ' config:' + config;
                         yaioUtils.getService('Logger').logError(message, false);
                 });
         }
@@ -120,14 +121,14 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
     $scope.loadActiveNodeIdSuccessHandler = function(nodeId, options, yaioNodeActionResponse) {
         // check response
         var state = yaioNodeActionResponse.state;
-        if (state == "OK") {
+        if (state == 'OK') {
             // all fine
-            console.log("NodeShowCtrl - OK loading activenode:" + yaioNodeActionResponse.stateMsg);
+            console.log('NodeShowCtrl - OK loading activenode:' + yaioNodeActionResponse.stateMsg);
             
             // create nodehierarchy
             var nodeIdHierarchy = new Array();
             var parentNode = yaioNodeActionResponse.node.parentNode;
-            while (parentNode != null && parentNode != "" && parentNode != "undefined") {
+            while (parentNode != null && parentNode != '' && parentNode != 'undefined') {
                 nodeIdHierarchy.push(parentNode.sysUID);
                 parentNode = parentNode.parentNode;
             }
@@ -137,26 +138,26 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
             nodeIdHierarchy.push(yaioNodeActionResponse.node.sysUID);
             
             // open Hierarchy
-            yaioUtils.getService('YaioExplorerAction').openNodeHierarchy("#tree", nodeIdHierarchy);
+            yaioUtils.getService('YaioExplorerAction').openNodeHierarchy('#tree', nodeIdHierarchy);
         } else {
             // error
-            yaioUtils.getService('Logger').logError("error loading activenode:" + yaioNodeActionResponse.stateMsg 
-                    + " details:" + yaioNodeActionResponse, false);
+            yaioUtils.getService('Logger').logError('error loading activenode:' + yaioNodeActionResponse.stateMsg
+                    + ' details:' + yaioNodeActionResponse, false);
         }
     };
 
     $scope.loadCurrentNodeIdSuccessHandler = function(nodeId, options, yaioNodeActionResponse) {
         // check response
         var state = yaioNodeActionResponse.state;
-        if (state == "OK") {
+        if (state == 'OK') {
             // all fine
-            console.log("NodeShowCtrl - OK loading nodes:" + yaioNodeActionResponse.stateMsg);
+            console.log('NodeShowCtrl - OK loading nodes:' + yaioNodeActionResponse.stateMsg);
             $scope.node = yaioNodeActionResponse.node;
             
             // create nodehierarchy
             var nodeHierarchy = new Array();
             var parentNode = yaioNodeActionResponse.node.parentNode;
-            while (parentNode != null && parentNode != "" && parentNode != "undefined") {
+            while (parentNode != null && parentNode != '' && parentNode != 'undefined') {
                 nodeHierarchy.push(parentNode);
                 parentNode = parentNode.parentNode;
             }
@@ -168,15 +169,15 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
             var templateIsLoadedTimer;
             var templateIsLoadedHandler = function() {
                 tries--;
-                var loaded = $("#masterTr").length;
+                var loaded = $('#masterTr').length;
                 if (loaded || tries <= 0) {
                     clearInterval(templateIsLoadedTimer);
                     
                     // load fencytree
-                    yaioUtils.getService('YaioExplorerTree').yaioCreateFancyTree("#tree", $scope.node.sysUID, options.loadActiveNodeIdHandler);
+                    yaioUtils.getService('YaioExplorerTree').yaioCreateFancyTree('#tree', $scope.node.sysUID, options.loadActiveNodeIdHandler);
                     
                     // load me
-                    $scope.yaioUtils.renderNodeLine(yaioNodeActionResponse.node, "#masterTr", false);
+                    $scope.yaioUtils.renderNodeLine(yaioNodeActionResponse.node, '#masterTr', false);
 
                     // recalc gantt
                     yaioUtils.getService('YaioNodeGanttRender').yaioRecalcMasterGanttBlock($scope.node);
@@ -185,8 +186,8 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
             templateIsLoadedTimer = setInterval(templateIsLoadedHandler, 100);
         } else {
             // error
-            yaioUtils.getService('Logger').logError("error loading nodes:" + yaioNodeActionResponse.stateMsg 
-                    + " details:" + yaioNodeActionResponse, true);
+            yaioUtils.getService('Logger').logError('error loading nodes:' + yaioNodeActionResponse.stateMsg
+                    + ' details:' + yaioNodeActionResponse, true);
         }
     };
 
@@ -197,7 +198,7 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
      * @FeatureKeywords              GUI Callback
      */
     $scope.exportAsOverview = function() {
-        console.log("exportAsOverview");
+        console.log('exportAsOverview');
         yaioUtils.getService('YaioExplorerAction').yaioExportExplorerLinesAsOverview();
         return false;
     };
@@ -209,7 +210,7 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
      * @FeatureKeywords              GUI Callback
      */
     $scope.snapshot = function() {
-        console.log("snapshot");
+        console.log('snapshot');
         yaioUtils.getService('YaioExplorerAction').yaioSnapshot($scope.node);
         return false;
     };
@@ -221,8 +222,8 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
      * @FeatureKeywords              GUI Callback
      */
     $scope.openSubNodes = function() {
-        console.log("openSubNodes:" + " level:" + $scope.config.treeOpenLevel);
-        yaioUtils.getService('YaioExplorerAction').yaioOpenSubNodesForTree("#tree", $scope.config.treeOpenLevel);
+        console.log('openSubNodes:' + ' level:' + $scope.config.treeOpenLevel);
+        yaioUtils.getService('YaioExplorerAction').yaioOpenSubNodesForTree('#tree', $scope.config.treeOpenLevel);
         return false;
     };
 
@@ -248,23 +249,23 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
     $scope.recalcGanttForIstOrPlan = function(flgShowIst) {
         var start = flgShowIst ? $scope.node.istChildrenSumStart : $scope.node.planChildrenSumStart;
         var ende = flgShowIst ? $scope.node.istChildrenSumEnde : $scope.node.planChildrenSumEnde;
-        $("#inputGanttRangeStart").val(yaioUtils.getService('DataUtils').formatGermanDate(start)).trigger('input').triggerHandler("change");
-        $("#inputGanttRangeEnde").val(yaioUtils.getService('DataUtils').formatGermanDate(ende)).trigger('input').triggerHandler("change");
+        $('#inputGanttRangeStart').val(yaioUtils.getService('DataUtils').formatGermanDate(start)).trigger('input').triggerHandler('change');
+        $('#inputGanttRangeEnde').val(yaioUtils.getService('DataUtils').formatGermanDate(ende)).trigger('input').triggerHandler('change');
         return false;
     };
     
     $scope.changeExplorerFilter = function() {
-        var msg = "changeExplorerFilter node: " + nodeId;
+        var msg = 'changeExplorerFilter node: ' + nodeId;
         var newUrl = '/show/' + nodeId 
-            + '/' + ($scope.filterOptions.strWorkflowStateFilter ? $scope.filterOptions.strWorkflowStateFilter : "?")
-            + '/' + ($scope.filterOptions.strStatCountFilter ? $scope.filterOptions.strStatCountFilter : "?") + "/";
+            + '/' + ($scope.filterOptions.strWorkflowStateFilter ? $scope.filterOptions.strWorkflowStateFilter : '?')
+            + '/' + ($scope.filterOptions.strStatCountFilter ? $scope.filterOptions.strStatCountFilter : '?') + '/';
         if (activeNodeId) {
             newUrl = newUrl + 'activate/' + activeNodeId + '/';
         }
         
         // no cache!!!
-        newUrl = newUrl +  "?" + (new Date()).getTime();
-        console.log(msg + " RELOAD:" + newUrl);
+        newUrl = newUrl +  '?' + (new Date()).getTime();
+        console.log(msg + ' RELOAD:' + newUrl);
         $location.path(newUrl);
     };
     
@@ -273,7 +274,7 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
         var nodeFilter = yaioUtils.getService('YaioExplorerTree').nodeFilter || {};
         nodeFilter.workflowStates = null;
         if ($scope.filterOptions.strWorkflowStateFilter) {
-            var arrWorkflowStateFilter = $scope.filterOptions.strWorkflowStateFilter.split(",");
+            var arrWorkflowStateFilter = $scope.filterOptions.strWorkflowStateFilter.split(',');
             if (arrWorkflowStateFilter.length > 0) {
                 nodeFilter.workflowStates = {};
                 for (var i=0; i < arrWorkflowStateFilter.length; i++) {
@@ -285,7 +286,7 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
         if ($scope.filterOptions.strStatCountFilter) {
             nodeFilter.statCount = $scope.filterOptions.strStatCountFilter;
         }
-        console.log("setExplorerFilter: set filter:", nodeFilter);
+        console.log('setExplorerFilter: set filter:', nodeFilter);
         yaioUtils.getService('YaioExplorerTree').setNodeFilter(nodeFilter);
     };
     
@@ -294,8 +295,8 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
         // change to https://www.npmjs.com/package/angular-draganddrop
         // Setup the Uploadfile-Listener
         var dropZone = document.getElementById(divId);
-        dropZone.addEventListener('dragover', function (event) { console.log("dragover:", event); yaioUtils.getService('YaioEditor').handleUploadFileUrlResNodeDragOver(event); }, false);
-        dropZone.addEventListener('drop', function (event) { console.log("drop:", event); yaioUtils.getService('YaioEditor').handleUploadFileUrlResNodeSelect(event); }, false);
+        dropZone.addEventListener('dragover', function (event) { console.log('dragover:', event); yaioUtils.getService('YaioEditor').handleUploadFileUrlResNodeDragOver(event); }, false);
+        dropZone.addEventListener('drop', function (event) { console.log('drop:', event); yaioUtils.getService('YaioEditor').handleUploadFileUrlResNodeSelect(event); }, false);
     };
 
 });

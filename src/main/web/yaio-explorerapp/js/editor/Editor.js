@@ -51,18 +51,18 @@ Yaio.Editor = function(appBase) {
      */
     me.yaioResetNodeEditor = function() {
         // reset editor
-        console.log("yaioResetNodeEditor: show tree, hide editor");
+        console.log('yaioResetNodeEditor: show tree, hide editor');
         
         // show full tree
-        me.$("#containerYaioTree").css("width", "100%");
+        me.$('#containerYaioTree').css('width', '100%');
         
         // hide editor-container
-        me.$("#containerYaioEditor").css("width", "100%");
-        me.$("#containerYaioEditor").css("display", "none");
+        me.$('#containerYaioEditor').css('width', '100%');
+        me.$('#containerYaioEditor').css('display', 'none');
         
         // hide editor-box
-        me.$("#containerBoxYaioEditor").css("width", "100%");
-        me.$("#containerBoxYaioEditor").css("display", "none");
+        me.$('#containerBoxYaioEditor').css('width', '100%');
+        me.$('#containerBoxYaioEditor').css('display', 'none');
         
         // hide forms
         me.yaioHideAllNodeEditorForms();
@@ -77,14 +77,14 @@ Yaio.Editor = function(appBase) {
      */
     me.yaioHideAllNodeEditorForms = function() {
         // reset editor
-        console.log("yaioHideAllNodeEditorForms: hide forms");
+        console.log('yaioHideAllNodeEditorForms: hide forms');
         // hide forms
-        me.$("#containerFormYaioEditorCreate").css("display", "none");
-        me.$("#containerFormYaioEditorTaskNode").css("display", "none");
-        me.$("#containerFormYaioEditorEventNode").css("display", "none");
-        me.$("#containerFormYaioEditorInfoNode").css("display", "none");
-        me.$("#containerFormYaioEditorUrlResNode").css("display", "none");
-        me.$("#containerFormYaioEditorSymLinkNode").css("display", "none");
+        me.$('#containerFormYaioEditorCreate').css('display', 'none');
+        me.$('#containerFormYaioEditorTaskNode').css('display', 'none');
+        me.$('#containerFormYaioEditorEventNode').css('display', 'none');
+        me.$('#containerFormYaioEditorInfoNode').css('display', 'none');
+        me.$('#containerFormYaioEditorUrlResNode').css('display', 'none');
+        me.$('#containerFormYaioEditorSymLinkNode').css('display', 'none');
     };
     
     /** 
@@ -120,51 +120,51 @@ Yaio.Editor = function(appBase) {
     me.yaioSetFormField = function(field, fieldSuffix, basenode) {
         var svcDataUtils = me.appBase.get('DataUtils');
         var fieldName = field.fieldName;
-        var fieldNameId = "#input" + fieldName.charAt(0).toUpperCase() + fieldName.slice(1) + fieldSuffix;
+        var fieldNameId = '#input' + fieldName.charAt(0).toUpperCase() + fieldName.slice(1) + fieldSuffix;
         var value = basenode[fieldName];
         
         // convert value
-        if (field.datatype === "integer" && (! value || value == "undefined" || value === null)) {
+        if (field.datatype === 'integer' && (! value || value == 'undefined' || value === null)) {
             // specical int
             value = 0;
-        } else if (field.datatype === "date")  {
+        } else if (field.datatype === 'date')  {
             // date
             value = svcDataUtils.formatGermanDate(value);
-        } else if (field.datatype === "datetime")  {
+        } else if (field.datatype === 'datetime')  {
             // date
             value = svcDataUtils.formatGermanDateTime(value);
-        } else if (! value || value == "undefined" || value == null) {
+        } else if (! value || value == 'undefined' || value == null) {
             // alle other
-            value = "";
+            value = '';
         } 
         
         // reescape data for form
-        if (fieldName === "nodeDesc") {
-            value = value.replace(/<WLBR>/g, "\n");
-            value = value.replace(/<WLESC>/g, "\\");
-            value = value.replace(/<WLTAB>/g, "\t");
+        if (fieldName === 'nodeDesc') {
+            value = value.replace(/<WLBR>/g, '\n');
+            value = value.replace(/<WLESC>/g, '\\');
+            value = value.replace(/<WLTAB>/g, '\t');
         }
         
         // set depending on the fieldtype
-        if (field.type === "hidden") {
-            me.$(fieldNameId).val(value).trigger('input').triggerHandler("change");
-        } else if (field.type === "select") {
-            me.$(fieldNameId).val(value).trigger('select').triggerHandler("change");
-        } else if (field.type === "checkbox") {
+        if (field.type === 'hidden') {
+            me.$(fieldNameId).val(value).trigger('input').triggerHandler('change');
+        } else if (field.type === 'select') {
+            me.$(fieldNameId).val(value).trigger('select').triggerHandler('change');
+        } else if (field.type === 'checkbox') {
             if (value) {
-                me.$(fieldNameId).prop("checked", true);
+                me.$(fieldNameId).prop('checked', true);
             } else {
-                me.$(fieldNameId).prop("checked", false);
+                me.$(fieldNameId).prop('checked', false);
             }
-            me.$(fieldNameId).trigger('input').triggerHandler("change");
-        } else if (field.type === "textarea") {
-            me.$(fieldNameId).val(value).trigger('select').triggerHandler("change");
+            me.$(fieldNameId).trigger('input').triggerHandler('change');
+        } else if (field.type === 'textarea') {
+            me.$(fieldNameId).val(value).trigger('select').triggerHandler('change');
         } else {
             // input
             me.$(fieldNameId).val(value).trigger('input');
         }
-        console.log("yaioSetFormField map nodefield:" + fieldName 
-                + " set:" + fieldNameId + "=" + value);
+        console.log('yaioSetFormField map nodefield:' + fieldName
+                + ' set:' + fieldNameId + '=' + value);
         
     };
     
@@ -181,25 +181,25 @@ Yaio.Editor = function(appBase) {
         var svcLogger = me.appBase.get('Logger');
 
         // reset editor
-        console.log("yaioOpenNodeEditor: reset editor");
+        console.log('yaioOpenNodeEditor: reset editor');
         me.yaioResetNodeEditor();
         
         // check vars
         if (! nodeId) {
             // tree not found
-            svcLogger.logError("error yaioOpenNodeEditor: nodeId required", false);
+            svcLogger.logError('error yaioOpenNodeEditor: nodeId required', false);
             return null;
         }
         // load node
-        var tree = me.$("#tree").fancytree("getTree");
+        var tree = me.$('#tree').fancytree('getTree');
         if (!tree) {
             // tree not found
-            svcLogger.logError("error yaioOpenNodeEditor: cant load tree for node:" + nodeId, false);
+            svcLogger.logError('error yaioOpenNodeEditor: cant load tree for node:' + nodeId, false);
             return null;
         }
         var treeNode = tree.getNodeByKey(nodeId);
         if (! treeNode) {
-            svcLogger.logError("error yaioOpenNodeEditor: cant load node:" + nodeId, false);
+            svcLogger.logError('error yaioOpenNodeEditor: cant load node:' + nodeId, false);
             return null;
         }
         
@@ -226,13 +226,13 @@ Yaio.Editor = function(appBase) {
         var svcYaioMarkdownEditor = me.appBase.get('YaioMarkdownEditor');
 
         // reset editor
-        console.log("yaioOpenNodeEditor: reset editor");
+        console.log('yaioOpenNodeEditor: reset editor');
         me.yaioResetNodeEditor();
         
         // check vars
         if (! basenode) {
             // tree not found
-            svcLogger.logError("error yaioOpenNodeEditor: basenode required", false);
+            svcLogger.logError('error yaioOpenNodeEditor: basenode required', false);
             return null;
         }
         var nodeId = basenode.sysUID;
@@ -241,97 +241,97 @@ Yaio.Editor = function(appBase) {
         var fields = new Array();
         var formSuffix, fieldSuffix;
         var origBasenode = basenode;
-        if (mode === "edit") {
+        if (mode === 'edit') {
             // mode edit
             
             // configure value mapping
             fields = fields.concat(me.appBase.config.configNodeTypeFields.Common.fields);
-            if (basenode.className === "TaskNode") {
+            if (basenode.className === 'TaskNode') {
                 fields = fields.concat(me.appBase.config.configNodeTypeFields.TaskNode.fields);
-            } else if (basenode.className === "EventNode") {
+            } else if (basenode.className === 'EventNode') {
                 fields = fields.concat(me.appBase.config.configNodeTypeFields.EventNode.fields);
-            } else if (basenode.className === "InfoNode") {
+            } else if (basenode.className === 'InfoNode') {
                 fields = fields.concat(me.appBase.config.configNodeTypeFields.InfoNode.fields);
-            }  else if (basenode.className === "UrlResNode") {
+            }  else if (basenode.className === 'UrlResNode') {
                 fields = fields.concat(me.appBase.config.configNodeTypeFields.UrlResNode.fields);
-            }  else if (basenode.className === "SymLinkNode") {
+            }  else if (basenode.className === 'SymLinkNode') {
                 fields = fields.concat(me.appBase.config.configNodeTypeFields.SymLinkNode.fields);
             }
             
             // set formSuffix
             formSuffix = basenode.className;
             fieldSuffix = basenode.className;
-            basenode.mode = "edit";
-            console.log("yaioOpenNodeEditor mode=edit for node:" + nodeId);
-        } else if (mode === "create") {
+            basenode.mode = 'edit';
+            console.log('yaioOpenNodeEditor mode=edit for node:' + nodeId);
+        } else if (mode === 'create') {
             // mode create
-            formSuffix = "Create";
-            fieldSuffix = "Create";
+            formSuffix = 'Create';
+            fieldSuffix = 'Create';
             fields = fields.concat(me.appBase.config.configNodeTypeFields.Create.fields);
             
             // new basenode
             basenode = {
-                    mode: "create",
+                    mode: 'create',
                     sysUID: origBasenode.sysUID
             };
-            console.log("yaioOpenNodeEditor mode=create for node:" + nodeId);
-        } else if (mode === "createsymlink") {
+            console.log('yaioOpenNodeEditor mode=create for node:' + nodeId);
+        } else if (mode === 'createsymlink') {
             // mode create
-            formSuffix = "SymLinkNode";
-            fieldSuffix = "SymLinkNode";
+            formSuffix = 'SymLinkNode';
+            fieldSuffix = 'SymLinkNode';
             fields = fields.concat(me.appBase.config.configNodeTypeFields.CreateSymlink.fields);
     
             // new basenode
             basenode = {
-                    mode: "create",
+                    mode: 'create',
                     sysUID: origBasenode.sysUID,
-                    name: "Symlink auf: '" + origBasenode.name + "'",
-                    type: "SYMLINK",
-                    state: "SYMLINK",
-                    className: "SymLinkNode",
-                    symLinkRef: origBasenode.metaNodePraefix + "" + origBasenode.metaNodeNummer
+                    name: 'Symlink auf: "' + origBasenode.name + '"',
+                    type: 'SYMLINK',
+                    state: 'SYMLINK',
+                    className: 'SymLinkNode',
+                    symLinkRef: origBasenode.metaNodePraefix + '' + origBasenode.metaNodeNummer
             };
-            console.log("yaioOpenNodeEditor mode=createsymlink for node:" + nodeId);
-        } else if (mode === "createuploadurlresnode") {
+            console.log('yaioOpenNodeEditor mode=createsymlink for node:' + nodeId);
+        } else if (mode === 'createuploadurlresnode') {
             // mode create
-            formSuffix = "UrlResNode";
-            fieldSuffix = "UrlResNode";
+            formSuffix = 'UrlResNode';
+            fieldSuffix = 'UrlResNode';
             fields = fields.concat(me.appBase.config.configNodeTypeFields.CreateUploadFileUrlResNode.fields);
 
             // new basenode
             basenode = {
-                mode: "create",
+                mode: 'create',
                 sysUID: origBasenode.sysUID,
                 name: newNode.name,
-                className: "UrlResNode",
-                type: "FILERES",
-                state: "FILERES",
+                className: 'UrlResNode',
+                type: 'FILERES',
+                state: 'FILERES',
                 resLocRef: newNode.resLocRef,
                 resLocName: newNode.resLocName,
                 resLocTags: newNode.resLocTags,
                 uploadFile: newNode.uploadFile
             };
-            console.log("yaioOpenNodeEditor mode=createupload for node:" + nodeId);
-        } else if (mode === "createsnapshot") {
+            console.log('yaioOpenNodeEditor mode=createupload for node:' + nodeId);
+        } else if (mode === 'createsnapshot') {
             // mode create
-            formSuffix = "InfoNode";
-            fieldSuffix = "InfoNode";
+            formSuffix = 'InfoNode';
+            fieldSuffix = 'InfoNode';
             fields = fields.concat(me.appBase.config.configNodeTypeFields.CreateSnapshot.fields);
     
             // new basenode
             basenode = {
-                    mode: "create",
+                    mode: 'create',
                     sysUID: origBasenode.sysUID,
-                    name: "Snapshot für: '" + origBasenode.name + "' vom " + svcDataUtils.formatGermanDateTime((new Date()).getTime()),
-                    type: "INFO",
-                    state: "INFO",
-                    className: "InfoNode",
+                    name: 'Snapshot für: "' + origBasenode.name + '" vom ' + svcDataUtils.formatGermanDateTime((new Date()).getTime()),
+                    type: 'INFO',
+                    state: 'INFO',
+                    className: 'InfoNode',
                     nodeDesc: newNode.nodeDesc
             };
-            console.error("yaioOpenNodeEditor mode=createsnapshot for node:" + nodeId);
+            console.error('yaioOpenNodeEditor mode=createsnapshot for node:' + nodeId);
         } else {
-            svcLogger.logError("error yaioOpenNodeEditor: unknown mode=" + mode 
-                    + " for nodeId:" + nodeId, false);
+            svcLogger.logError('error yaioOpenNodeEditor: unknown mode=' + mode
+                    + ' for nodeId:' + nodeId, false);
             return null;
         }
         
@@ -342,55 +342,55 @@ Yaio.Editor = function(appBase) {
         }
         
         // show editor
-        var width = me.$("#box_data").width();
-        console.log("yaioOpenNodeEditor show editor: " + formSuffix 
-                + " for node:" + nodeId);
+        var width = me.$('#box_data').width();
+        console.log('yaioOpenNodeEditor show editor: ' + formSuffix
+                + ' for node:' + nodeId);
     
         // set width
-        me.$("#containerYaioEditor").css("width", "900px");
-        me.$("#containerBoxYaioEditor").css("width", "900px");
-        me.$("#containerYaioTree").css("width", (width - me.$("#containerYaioEditor").width() - 30) + "px");
+        me.$('#containerYaioEditor').css('width', '900px');
+        me.$('#containerBoxYaioEditor').css('width', '900px');
+        me.$('#containerYaioTree').css('width', (width - me.$('#containerYaioEditor').width() - 30) + 'px');
         
         // display editor and form for the formSuffix
-        me.$("#containerBoxYaioEditor").css("display", "block");
-        me.$("#containerFormYaioEditor" + formSuffix).css("display", "block");
-        //me.$("#containerYaioEditor").css("display", "block");
-        me.appBase.get('UIToggler').toggleElement("#containerYaioEditor");
+        me.$('#containerBoxYaioEditor').css('display', 'block');
+        me.$('#containerFormYaioEditor' + formSuffix).css('display', 'block');
+        //me.$('#containerYaioEditor').css('display', 'block');
+        me.appBase.get('UIToggler').toggleElement('#containerYaioEditor');
     
         // create Elements if not exists
-        svcYaioLayout.createTogglerIfNotExists("legendIstTaskForm", "filterIstTaskForm", "filter_IstTaskNode");
-        svcYaioLayout.createTogglerIfNotExists("legendDescTaskForm", "filterDescTaskForm", "filter_DescTaskNode");
-        svcYaioLayout.createTogglerIfNotExists("legendIstEventForm", "filterIstEventForm", "filter_IstEventNode");
-        svcYaioLayout.createTogglerIfNotExists("legendDescEventForm", "filterDescEventForm", "filter_DescEventNode");
-        svcYaioLayout.createTogglerIfNotExists("legendLayoutInfoForm", "filterLayoutInfoForm", "filter_LayoutInfoNode");
-        svcYaioLayout.createTogglerIfNotExists("legendDescInfoForm", "filterDescInfoForm", "filter_DescInfoNode");
-        svcYaioLayout.createTogglerIfNotExists("legendLayoutUrlResForm", "filterLayoutUrlResForm", "filter_LayoutUrlResNode");
-        svcYaioLayout.createTogglerIfNotExists("legendDescUrlResForm", "filterDescUrlResForm", "filter_DescUrlResNode");
-        svcYaioLayout.createTogglerIfNotExists("legendDescSymLinkForm", "filterDescSymLinkForm", "filter_DescSymLinkNode");
+        svcYaioLayout.createTogglerIfNotExists('legendIstTaskForm', 'filterIstTaskForm', 'filter_IstTaskNode');
+        svcYaioLayout.createTogglerIfNotExists('legendDescTaskForm', 'filterDescTaskForm', 'filter_DescTaskNode');
+        svcYaioLayout.createTogglerIfNotExists('legendIstEventForm', 'filterIstEventForm', 'filter_IstEventNode');
+        svcYaioLayout.createTogglerIfNotExists('legendDescEventForm', 'filterDescEventForm', 'filter_DescEventNode');
+        svcYaioLayout.createTogglerIfNotExists('legendLayoutInfoForm', 'filterLayoutInfoForm', 'filter_LayoutInfoNode');
+        svcYaioLayout.createTogglerIfNotExists('legendDescInfoForm', 'filterDescInfoForm', 'filter_DescInfoNode');
+        svcYaioLayout.createTogglerIfNotExists('legendLayoutUrlResForm', 'filterLayoutUrlResForm', 'filter_LayoutUrlResNode');
+        svcYaioLayout.createTogglerIfNotExists('legendDescUrlResForm', 'filterDescUrlResForm', 'filter_DescUrlResNode');
+        svcYaioLayout.createTogglerIfNotExists('legendDescSymLinkForm', 'filterDescSymLinkForm', 'filter_DescSymLinkNode');
         
         // hide empty, optional elements
-        svcYaioLayout.hideFormRowTogglerIfSet("filterIstTaskForm", "filter_IstTaskNode", false);
-        svcYaioLayout.hideFormRowTogglerIfSet("filterDescTaskForm", "filter_DescTaskNode", false);
-        svcYaioLayout.hideFormRowTogglerIfSet("filterIstEventForm", "filter_IstEventNode", false);
-        svcYaioLayout.hideFormRowTogglerIfSet("filterDescEventForm", "filter_DescEventNode", false);
-        svcYaioLayout.hideFormRowTogglerIfSet("filterLayoutInfoForm", "filter_LayoutInfoNode", false);
-        svcYaioLayout.hideFormRowTogglerIfSet("filterDescInfoForm", "filter_DescInfoNode", false);
-        svcYaioLayout.hideFormRowTogglerIfSet("filterLayoutUrlResForm", "filter_LayoutUrlResNode", false);
-        svcYaioLayout.hideFormRowTogglerIfSet("filterDescUrlResForm", "filter_DescUrlResNode", false);
-        svcYaioLayout.hideFormRowTogglerIfSet("filterDescSymLinkForm", "filter_DescSymLinkNode", false);
+        svcYaioLayout.hideFormRowTogglerIfSet('filterIstTaskForm', 'filter_IstTaskNode', false);
+        svcYaioLayout.hideFormRowTogglerIfSet('filterDescTaskForm', 'filter_DescTaskNode', false);
+        svcYaioLayout.hideFormRowTogglerIfSet('filterIstEventForm', 'filter_IstEventNode', false);
+        svcYaioLayout.hideFormRowTogglerIfSet('filterDescEventForm', 'filter_DescEventNode', false);
+        svcYaioLayout.hideFormRowTogglerIfSet('filterLayoutInfoForm', 'filter_LayoutInfoNode', false);
+        svcYaioLayout.hideFormRowTogglerIfSet('filterDescInfoForm', 'filter_DescInfoNode', false);
+        svcYaioLayout.hideFormRowTogglerIfSet('filterLayoutUrlResForm', 'filter_LayoutUrlResNode', false);
+        svcYaioLayout.hideFormRowTogglerIfSet('filterDescUrlResForm', 'filter_DescUrlResNode', false);
+        svcYaioLayout.hideFormRowTogglerIfSet('filterDescSymLinkForm', 'filter_DescSymLinkNode', false);
     
         // create nodeDesc-editor
-        svcYaioMarkdownEditor.createMarkdownEditorForTextarea("editorInputNodeDescTaskNode", "inputNodeDescTaskNode");
-        svcYaioMarkdownEditor.createMarkdownEditorForTextarea("editorInputNodeDescEventNode", "inputNodeDescEventNode");
-        svcYaioMarkdownEditor.createMarkdownEditorForTextarea("editorInputNodeDescInfoNode", "inputNodeDescInfoNode");
-        svcYaioMarkdownEditor.createMarkdownEditorForTextarea("editorInputNodeDescUrlResNode", "inputNodeDescUrlResNode");
-        svcYaioMarkdownEditor.createMarkdownEditorForTextarea("editorInputNodeDescSymLinkNode", "inputNodeDescSymLinkNode");
+        svcYaioMarkdownEditor.createMarkdownEditorForTextarea('editorInputNodeDescTaskNode', 'inputNodeDescTaskNode');
+        svcYaioMarkdownEditor.createMarkdownEditorForTextarea('editorInputNodeDescEventNode', 'inputNodeDescEventNode');
+        svcYaioMarkdownEditor.createMarkdownEditorForTextarea('editorInputNodeDescInfoNode', 'inputNodeDescInfoNode');
+        svcYaioMarkdownEditor.createMarkdownEditorForTextarea('editorInputNodeDescUrlResNode', 'inputNodeDescUrlResNode');
+        svcYaioMarkdownEditor.createMarkdownEditorForTextarea('editorInputNodeDescSymLinkNode', 'inputNodeDescSymLinkNode');
         
         // update appsize
         svcYaioLayout.setupAppSize();
 
         // set uploadfile
-        if (mode === "createuploadurlresnode") {
+        if (mode === 'createuploadurlresnode') {
             me.setUploadFileUrlResNode(basenode);
         }
     };
@@ -402,8 +402,8 @@ Yaio.Editor = function(appBase) {
      * @FeatureKeywords              GUI Tree Editor
      */
     me.yaioCloseNodeEditor = function() {
-        console.log("close editor");
-        me.appBase.get('UIToggler').toggleElement("#containerYaioEditor");
+        console.log('close editor');
+        me.appBase.get('UIToggler').toggleElement('#containerYaioEditor');
         me.yaioResetNodeEditor();
     };
     
@@ -418,8 +418,8 @@ Yaio.Editor = function(appBase) {
      */
     me.callUpdateTriggerForElement = function(element) {
         if (element != null) {
-            me.$(element).trigger('input').triggerHandler("change");
-            me.$(element).trigger('select').triggerHandler("change");
+            me.$(element).trigger('input').triggerHandler('change');
+            me.$(element).trigger('select').triggerHandler('change');
             me.$(element).trigger('input');
             me.$(element).focus();
 
@@ -428,7 +428,7 @@ Yaio.Editor = function(appBase) {
             if (!parentEditor) {
                 var id = me.$(element).attr('id');
                 if (id) {
-                    id = "#editor" + id.charAt(0).toUpperCase() + id.slice(1);
+                    id = '#editor' + id.charAt(0).toUpperCase() + id.slice(1);
                     parentEditor = me.$(id).data('aceEditor');
                 }
             }
@@ -471,7 +471,7 @@ Yaio.Editor = function(appBase) {
 
         // check data
         if (!parentSysUID || !file) {
-            me.appBase.get('Logger').logError("error: parentSysUID and file required", false);
+            me.appBase.get('Logger').logError('error: parentSysUID and file required', false);
         }
         var baseNode = {
             sysUID: parentSysUID,
@@ -497,7 +497,7 @@ Yaio.Editor = function(appBase) {
     me.setUploadFileUrlResNode = function (basenode) {
         // set uploadFile in scope
         var uploadFile = basenode.uploadFile;
-        var element = document.getElementById("inputTypeUrlResNode");
+        var element = document.getElementById('inputTypeUrlResNode');
         angular.element(element).scope().setUploadFileUrlResNode(uploadFile, true);
     };
 
@@ -519,13 +519,13 @@ Yaio.Editor = function(appBase) {
      */
     me.calcIstStandFromState = function(basenode) {
         var istStand = basenode.istStand;
-        if (   basenode.type == "EVENT_ERLEDIGT"
-            || basenode.type == "EVENT_VERWORFEN"
-            || basenode.type == "ERLEDIGT"
-            || basenode.type == "VERWORFEN") {
+        if (   basenode.type == 'EVENT_ERLEDIGT'
+            || basenode.type == 'EVENT_VERWORFEN'
+            || basenode.type == 'ERLEDIGT'
+            || basenode.type == 'VERWORFEN') {
             istStand = 100;
         }
-        console.log("calcIstStandFromState for node:" + basenode.sysUID + " state=" + basenode.type + " new istStand=" + istStand);
+        console.log('calcIstStandFromState for node:' + basenode.sysUID + ' state=' + basenode.type + ' new istStand=' + istStand);
         
         return istStand;
     };
@@ -549,36 +549,36 @@ Yaio.Editor = function(appBase) {
     me.calcTypeFromIstStand = function(basenode) {
         var type = basenode.type;
     
-        if (basenode.className == "TaskNode") {
+        if (basenode.className == 'TaskNode') {
             // TaskNode
-            if (basenode.istStand == "0") {
+            if (basenode.istStand == '0') {
                 // 0: OFFEN
-                type = "OFFEN"; 
-            } else if (basenode.istStand == 100 && basenode.type !== "VERWORFEN") {
+                type = 'OFFEN';
+            } else if (basenode.istStand == 100 && basenode.type !== 'VERWORFEN') {
                 // 100: ERLEDIGT if not VERWORFEN already
-                type = "ERLEDIGT"; 
+                type = 'ERLEDIGT';
             } else if (basenode.istStand < 100 && basenode.istStand > 0) {
                 // 0<istStand<100: RUNNING if not WARNING already
-                if (basenode.type !== "WARNING") {
-                    type = "RUNNING"; 
+                if (basenode.type !== 'WARNING') {
+                    type = 'RUNNING';
                 }
             }
-        } else if (basenode.className == "EventNode") {
+        } else if (basenode.className == 'EventNode') {
             // EventNode
-            if (basenode.istStand == "0") {
+            if (basenode.istStand == '0') {
                 // 0: EVENT_PLANED
-                type = "EVENT_PLANED"; 
-            } else if (basenode.istStand == 100 && basenode.type !== "EVENT_VERWORFEN") {
+                type = 'EVENT_PLANED';
+            } else if (basenode.istStand == 100 && basenode.type !== 'EVENT_VERWORFEN') {
                 // 100: EVENT_ERLEDIGT if not EVENT_VERWORFEN already
-                type = "EVENT_ERLEDIGT"; 
+                type = 'EVENT_ERLEDIGT';
             } else if (basenode.istStand < 100 && basenode.istStand > 0) {
                 // 0<istStand<100: EVENT_RUNNING if not EVENT_WARNING already
-                if (basenode.type !== "EVENT_WARNING") {
-                    type = "EVENT_RUNNING"; 
+                if (basenode.type !== 'EVENT_WARNING') {
+                    type = 'EVENT_RUNNING';
                 }
             }
         }
-        console.log("calcTypeFromIstStand for node:" + basenode.sysUID + " istStand=" + basenode.istStand + " newstate=" + type);
+        console.log('calcTypeFromIstStand for node:' + basenode.sysUID + ' istStand=' + basenode.istStand + ' newstate=' + type);
         
         return type;
     };

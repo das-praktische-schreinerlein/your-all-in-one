@@ -13,7 +13,6 @@ var fs = require('fs');
 describe('yaio exporter', function() {
 
     var yaioAuthPage = new YAIOAuthPage();
-    var yaioFrontPage = new YAIOFrontPage();
     var yaioNodePage = new YAIONodePage();
     var yaioExporterPage = new YAIOExporterPage();
 
@@ -43,7 +42,7 @@ describe('yaio exporter', function() {
      */
     it('should focus on a node, click on snapshot and open the info-editor with a snapshot of children as checklist+gantt', function doSnapshotOfTestNode() {
         // Given
-        var expectedMarkdownPartial = "#·Gantt:·Überschritten·-·Ein·Beispiel-Projekt·(Stand:XXX)";
+        var expectedMarkdownPartial = '#·Gantt:·Überschritten·-·Ein·Beispiel-Projekt·(Stand:XXX)';
 
         // When and Then
 
@@ -64,15 +63,15 @@ describe('yaio exporter', function() {
                 
                 // check nodetype
                 expect($(yaioNodePage.inputTypeInfoNode).isDisplayed()).toEqual(true);
-                //expect($('#inputTypeInfoNode > option:selected').getText()).toEqual("Information");
+                //expect($('#inputTypeInfoNode > option:selected').getText()).toEqual('Information');
 
                 // check name-data
                 expect($(yaioNodePage.inputNameInfoNode).isDisplayed()).toEqual(true);
                 return $(yaioNodePage.inputNameInfoNode).getAttribute('value')
                     .then(function getData(content) {
                         // normalize and check name-data
-                        content = content.replace(/vom .*?/g, "vom XXX");
-                        expect(content).toContain("Snapshot für: 'Ein Beispiel-Projekt' vom XXX");
+                        content = content.replace(/vom .*?/g, 'vom XXX');
+                        expect(content).toContain('Snapshot für: "Ein Beispiel-Projekt" vom XXX');
                     });
             })
             .then(function checkDescForm() {
@@ -81,8 +80,8 @@ describe('yaio exporter', function() {
                 return $(yaioNodePage.editorInputNodeDescInfoNode).getText()
                     .then(function getData(content) {
                         // normalize and check parts of desc-data
-                        content = content.replace(/\(Stand:.*?\)/g, "(Stand: XXX)");
-                        expectedMarkdownPartial = expectedMarkdownPartial.replace(/\(Stand:.*?\)/g, "(Stand: XXX)");
+                        content = content.replace(/\(Stand:.*?\)/g, '(Stand: XXX)');
+                        expectedMarkdownPartial = expectedMarkdownPartial.replace(/\(Stand:.*?\)/g, '(Stand: XXX)');
                         expect(content).toContain(expectedMarkdownPartial);
                     });
             });
@@ -90,7 +89,7 @@ describe('yaio exporter', function() {
 
     it('should open page and export the children as checklist+gantt', function doExportOverrviewOfTestNode() {
         // Given
-        var filePath = browser.params.baseDir + "exporter/exporter.exportOverview.md";
+        var filePath = browser.params.baseDir + 'exporter/exporter.exportOverview.md';
         var expectedMarkdown;
 
         var checkClipboardHandlerText = function (clipboard) {
@@ -98,8 +97,8 @@ describe('yaio exporter', function() {
             return clipboard.getText()
                 .then(function getData(content) {
                     // normalize and check data
-                    content = content.replace(/\(Stand: .*?\)/g, "(Stand: XXX)");
-                    expectedMarkdown = expectedMarkdown.replace(/\(Stand: .*?\)/g, "(Stand: XXX)");
+                    content = content.replace(/\(Stand: .*?\)/g, '(Stand: XXX)');
+                    expectedMarkdown = expectedMarkdown.replace(/\(Stand: .*?\)/g, '(Stand: XXX)');
                     expect(content).toContain(expectedMarkdown);
                 });
         };
@@ -130,7 +129,7 @@ describe('yaio exporter', function() {
 
     it('should open page and export the full Nodetree', function doShowDescOfTestNode() {
         // Given
-        var expectedHtmlDocumentation = "Ein Beispiel-Projekt (SysPlay118)";
+        var expectedHtmlDocumentation = 'Ein Beispiel-Projekt (SysPlay118)';
         var expectedMindmap = '<node  id="SysPlay119" text="WARNING - Teilprojekt 1" ID="SysPlay119" TEXT="WARNING - Teilprojekt 1" background_color="#FF6347" BACKGROUND_COLOR="#FF6347" >';
         var expectedICal = 'Ein Beispiel-Projekt';
         
@@ -168,7 +167,7 @@ describe('yaio exporter', function() {
                 var container = yaioNodePage.showDescForNode(yaioNodePage.jsFuncTestId, contentHandler);
                 container.getText().then(function() {
                     deferred.fulfill(container);
-                })
+                });
                 
                 return deferred.promise;
             });

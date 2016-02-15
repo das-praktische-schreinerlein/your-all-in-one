@@ -78,25 +78,25 @@ var YAIOAuthPage = function() {
         
         // define checkResponseHandler
         var checkResponseHandler = function(source){
-            if (! source || ! (source.search('authenticated') > 0)) {
+            if (!source || (source.search('authenticated') <= 0)) {
                 // on error do Login
-                console.error("session not ok: do login");
+                console.error('session not ok: do login');
                 me.doLogin()
                     .then(function loginPassed() {
                         protractor.utils.waitUntilElementPresent($(me.loginResult), protractor.utils.CONST_WAIT_ELEMENT);
                         defer.fulfill(true);
                     }, function loginFailed () {
-                        console.error("login failed");
+                        console.error('login failed');
                         defer.reject(false);
-                    })
+                    });
             } else {
                 // open Frontpage
-                browser.get(browser.params.yaioConfig.yaioBaseAppUrl + "/frontpage")
+                browser.get(browser.params.yaioConfig.yaioBaseAppUrl + '/frontpage')
                     .then(function () {
                         defer.fulfill(true);
                     });
             }
-        }
+        };
            
         // check the current Userstate 
         browser.ignoreSynchronization = true;
@@ -107,10 +107,10 @@ var YAIOAuthPage = function() {
                         browser.ignoreSynchronization = false;
                         checkResponseHandler(source);
                     }, function sourceError() {
-                        console.error("error while getting source");
+                        console.error('error while getting source');
                         browser.ignoreSynchronization = false;
                         checkResponseHandler(source);
-                    })
+                    });
             }); 
         
         // Return a promise so the caller can wait on it for the request to complete

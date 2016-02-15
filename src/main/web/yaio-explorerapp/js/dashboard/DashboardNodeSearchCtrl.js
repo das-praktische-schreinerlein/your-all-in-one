@@ -32,11 +32,11 @@ yaioApp.controller('DashBoardNodeSearchCtrl', function($rootScope, $scope, yaioU
         pageSize: 10,
         searchSort: 'lastChangeDown',
         baseSysUID: yaioUtils.getConfig().masterSysUId,
-        fulltext: "",
+        fulltext: '',
         total: 0,
         strNotNodePraefix: yaioUtils.getConfig().excludeNodePraefix,
-        strWorkflowStateFilter: "",
-        strClassFilter: ""
+        strWorkflowStateFilter: '',
+        strClassFilter: ''
     };
 
     $scope.createSearchUri = function() {
@@ -73,9 +73,9 @@ yaioApp.controller('DashBoardNodeSearchCtrl', function($rootScope, $scope, yaioU
                 var data = angularResponse.data;
                 var header = angularResponse.header;
                 var config = angularResponse.config;
-                var message = "error loading nodes with searchOptions: " + searchOptions;
+                var message = 'error loading nodes with searchOptions: ' + searchOptions;
                 yaioUtils.getService('Logger').logError(message, true);
-                message = "error data: " + data + " header:" + header + " config:" + config;
+                message = 'error data: ' + data + ' header:' + header + ' config:' + config;
                 yaioUtils.getService('Logger').logError(message, false);
             });
     };
@@ -83,9 +83,10 @@ yaioApp.controller('DashBoardNodeSearchCtrl', function($rootScope, $scope, yaioU
     $scope.doFulltextSearchSuccessHandler = function(searchOptions, yaioNodeSearchResponse) {
         // check response
         var state = yaioNodeSearchResponse.state;
-        if (state === "OK") {
+        if (state === 'OK') {
             // all fine
-            console.log("NodeSearchCtrl - OK loading nodes:" + yaioNodeSearchResponse.stateMsg + " searchOptions=" + searchOptions);
+            console.log('NodeSearchCtrl - OK loading nodes:' + yaioNodeSearchResponse.stateMsg +
+                ' searchOptions=' + searchOptions);
             
             // add nodes to scope
             $scope.nodes = yaioNodeSearchResponse.nodes;
@@ -94,7 +95,8 @@ yaioApp.controller('DashBoardNodeSearchCtrl', function($rootScope, $scope, yaioU
             $scope.searchOptions.total = yaioNodeSearchResponse.count;
         } else {
             // error
-            yaioUtils.getService('Logger').logError("error loading nodes:" + yaioNodeSearchResponse.stateMsg + " details:" + yaioNodeSearchResponse, true);
+            yaioUtils.getService('Logger').logError('error loading nodes:' + yaioNodeSearchResponse.stateMsg
+                + ' details:' + yaioNodeSearchResponse, true);
         }
     };
 
@@ -108,26 +110,27 @@ yaioApp.controller('DashBoardNodeSearchCtrl', function($rootScope, $scope, yaioU
         // we need a timeout to put the tr into DOM
         setTimeout(function() {
                 var domId = $scope.searchOptions.praefix + node.sysUID;
-                $scope.yaioUtils.renderNodeLine(node, "#tr" + domId, true);
-                console.log("renderNodeLine: done to:" + "#tr" + domId + $("#detail_sys_" + domId).length);
+                $scope.yaioUtils.renderNodeLine(node, '#tr' + domId, true);
+                console.log('renderNodeLine: done to:' + '#tr' + domId + $('#detail_sys_' + domId).length);
 
                 // render hierarchy
                 var parentNode = node.parentNode;
                 var parentStr = node.name;
-                while (parentNode != null && parentNode != "" && parentNode != "undefined") {
-                    parentStr = parentNode.name + " --> " + parentStr;
+                while (parentNode != null && parentNode != '' && parentNode != 'undefined') {
+                    parentStr = parentNode.name + ' --> ' + parentStr;
                     parentNode = parentNode.parentNode;
                 }
-                parentStr = "<b>" + yaioUtils.getService('DataUtils').htmlEscapeText(parentStr) + "</b>";
+                parentStr = '<b>' + yaioUtils.getService('DataUtils').htmlEscapeText(parentStr) + '</b>';
                 
                 // add searchdata
-                console.log("renderNodeLine: add searchdata to:" + "#tr" + domId);
-                var $html = $("<div id='details_parent_" + domId + "'"
-                                + " class='field_nodeParent'>"
+                console.log('renderNodeLine: add searchdata to:' + '#tr' + domId);
+                var $html = $('<div id="details_parent_' + domId + '"'
+                                + ' class="field_nodeParent">'
                                 + parentStr
-                                + "</div>");
-                $("#tr" + domId + " #detail_sys_" + node.sysUID).after($html);
-                console.log("renderNodeLine: added searchdata to:" + "#detail_sys_" + domId + $("#detail_sys_" + domId).length);
+                                + '</div>');
+                $('#tr' + domId + ' #detail_sys_' + node.sysUID).after($html);
+                console.log('renderNodeLine: added searchdata to:' +
+                    '#detail_sys_' + domId + $('#detail_sys_' + domId).length);
             }, 10);
     };
 });

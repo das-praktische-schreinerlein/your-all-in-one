@@ -26,7 +26,7 @@ yaioApp.factory('authorization', function ($rootScope, yaioUtils) {
 //            return yaioUtils.getService('YaioNodeData').yaioDoCheckUser()
 //                .then(function success(data) {
 //                        // handle success
-//                        console.log("authentificate: success " + data);
+//                        console.log('authentificate: success ' + data);
 //                        if (data) {
 //                            $rootScope.authenticated = true;
 //                        } else {
@@ -35,12 +35,12 @@ yaioApp.factory('authorization', function ($rootScope, yaioUtils) {
 //                        callback && callback();
 //                    }, function error(data) {
 //                        // handle error
-//                        console.log("authentificate: error " + data);
+//                        console.log('authentificate: error ' + data);
 //                        $rootScope.authenticated = false;
 //                        callback && callback();
 //                });
             yaioUtils.getService('YaioNodeData').yaioDoCheckUser().success(function(data) {
-                console.log("authentificate: success " + data);
+                console.log('authentificate: success ' + data);
                 if (data) {
                     $rootScope.authenticated = true;
                 } else {
@@ -48,7 +48,7 @@ yaioApp.factory('authorization', function ($rootScope, yaioUtils) {
                 }
                 callback && callback();
             }).error(function(data) {
-                console.log("authentificate: error " + data);
+                console.log('authentificate: error ' + data);
                 $rootScope.authenticated = false;
                 callback && callback();
             });

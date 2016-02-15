@@ -101,21 +101,21 @@ Yaio.Layout = function(appBase) {
      */
     me.addDocLayoutStyleSelectorToElements = function() {
         // iterate over docLayoutSDtyleClass-elements
-        me.$("input.inputtype_docLayoutAddStyleClass").each(function () {
+        me.$('input.inputtype_docLayoutAddStyleClass').each(function () {
             // add select only if id id set
             var ele = this;
-            var id = me.$(ele).attr("id");
+            var id = me.$(ele).attr('id');
             if (id) {
                 // add select
-                var $select = me.$("<select id='" + id + "_select' lang='tech' />");
+                var $select = me.$('<select id="' + id + '_select" lang="tech" />');
                 
                 // append values
-                $select.append(me.$("<option value=''>Standardstyle</option>"));
-                $select.append(me.$("<option value='row-label-value'>row-label-value</option>"));
-                $select.append(me.$("<option value='row-label-value'>row-label-value</option>"));
-                $select.append(me.$("<option value='row-boldlabel-value'>row-boldlabel-value</option>"));
-                $select.append(me.$("<option value='row-value-only-full'>row-value-only-full</option>"));
-                $select.append(me.$("<option value='row-label-only-full'>row-label-only-full</option>"));
+                $select.append(me.$('<option value="">Standardstyle</option>'));
+                $select.append(me.$('<option value="row-label-value">row-label-value</option>'));
+                $select.append(me.$('<option value="row-label-value">row-label-value</option>'));
+                $select.append(me.$('<option value="row-boldlabel-value">row-boldlabel-value</option>'));
+                $select.append(me.$('<option value="row-value-only-full">row-value-only-full</option>'));
+                $select.append(me.$('<option value="row-label-only-full">row-label-only-full</option>'));
                 
                 // add changehandler
                 $select.change(function() {
@@ -135,7 +135,7 @@ Yaio.Layout = function(appBase) {
     };
     
     /** 
-     * init the multilanguage support for all tags with attribute <XX lang="de">
+     * init the multilanguage support for all tags with attribute <XX lang='de'>
      * @param {string} langKey                key of the preferred-language
      */
     me.initLanguageSupport = function(langKey) {
@@ -265,28 +265,28 @@ Yaio.Layout = function(appBase) {
             jMATService.getPageLayoutService().toggleFormrows(togglerId, className, true);
             
             // hide toggler
-            me.$("#" + togglerId + "_On").css('display', 'none');
-            me.$("#" + togglerId + "_Off").css('display', 'none');
+            me.$('#' + togglerId + '_On').css('display', 'none');
+            me.$('#' + togglerId + '_Off').css('display', 'none');
         } else {
             // show or hide ??
-            me.$("#" + togglerId + "_On").css('display', 'none');
-            me.$("#" + togglerId + "_Off").css('display', 'block');
+            me.$('#' + togglerId + '_On').css('display', 'none');
+            me.$('#' + togglerId + '_Off').css('display', 'block');
             jMATService.getPageLayoutService().toggleFormrows(togglerId, className, state);
         }
     };
      
     me.createTogglerIfNotExists = function(parentId, toggleId, className) {
-        var $ele = me.$("#" + toggleId + "_On");
+        var $ele = me.$('#' + toggleId + '_On');
         if ($ele.length <= 0) {
             // create toggler
-            console.log("createTogglerIfNotExists link not exists: create new toggler parent=" + parentId 
-                    + " toggleEleId=" + toggleId
-                    + " className=" + className);
-            jMATService.getPageLayoutService().appendFormrowToggler(parentId, toggleId, className, "&nbsp;");
+            console.log('createTogglerIfNotExists link not exists: create new toggler parent=' + parentId 
+                    + ' toggleEleId=' + toggleId
+                    + ' className=' + className);
+            jMATService.getPageLayoutService().appendFormrowToggler(parentId, toggleId, className, '&nbsp;');
         } else {
-            console.log("createTogglerIfNotExists link exists: skip new toggler parent=" + parentId 
-                    + " toggleEleId=" + toggleId
-                    + " className=" + className);
+            console.log('createTogglerIfNotExists link exists: skip new toggler parent=' + parentId 
+                    + ' toggleEleId=' + toggleId
+                    + ' className=' + className);
         }
     };
      

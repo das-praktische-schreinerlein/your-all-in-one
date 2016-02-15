@@ -49,7 +49,7 @@ Yaio.FileNodeData = function(appBase, config, defaultConfig) {
 
                 // config reader
                 reader.onload = function(res) {
-                    console.log("read fileName:" + file.name);
+                    console.log('read fileName:' + file.name);
 
                     // update serviceconfig
                     me.updateServiceConfig();
@@ -62,9 +62,9 @@ Yaio.FileNodeData = function(appBase, config, defaultConfig) {
                     me._loadStaticJson(window.yaioFileJSON);
                     
                     // set new name
-                    me.config.name = "Dateiupload: " + file.name;
+                    me.config.name = 'Dateiupload: ' + file.name;
                     
-                    dfd.resolve("OK");
+                    dfd.resolve('OK');
                 };
                 
                 // read the file
@@ -77,12 +77,12 @@ Yaio.FileNodeData = function(appBase, config, defaultConfig) {
         // initFileUploader
         var fileDialog = document.getElementById('yaioLoadJSONFile');
         fileDialog.addEventListener('change', handleLoadJSONFileSelectHandler, false);
-        me.$( "#yaioloadjsonuploader-box" ).dialog({
+        me.$( '#yaioloadjsonuploader-box' ).dialog({
             modal: true,
-            width: "200px",
+            width: '200px',
             buttons: {
-              "Schließen": function() {
-                me.$( this ).dialog( "close" );
+              'Schließen': function() {
+                me.$( this ).dialog( 'close' );
               }
             }
         });

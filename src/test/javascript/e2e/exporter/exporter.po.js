@@ -29,7 +29,7 @@ var YAIOExporterPage = function() {
      * @returns {Promise}
      */
     me.clickButtonExportNodeToClipboardAsText = function (nodeId) {
-        var linkExportCommand = $("div#commands_desc_" + nodeId + " a.button.command-desc-txtexport");
+        var linkExportCommand = $('div#commands_desc_' + nodeId + ' a.button.command-desc-txtexport');
         return me.clickButtonExportNodeToClipboard(linkExportCommand);
     };
     
@@ -39,7 +39,7 @@ var YAIOExporterPage = function() {
      * @returns {Promise}
      */
     me.clickButtonExportNodeToClipboardAsJira = function (nodeId) {
-        var linkExportCommand = $("div#commands_desc_" + nodeId + " a.button.command-desc-jiraexport");
+        var linkExportCommand = $('div#commands_desc_' + nodeId + ' a.button.command-desc-jiraexport');
         return me.clickButtonExportNodeToClipboard(linkExportCommand);
     };
     
@@ -88,7 +88,7 @@ var YAIOExporterPage = function() {
         };
         
         return contentHandler;
-    }
+    };
 
     /**
      * check the clipboard-content and close the clipboard
@@ -114,23 +114,23 @@ var YAIOExporterPage = function() {
                 protractor.utils.waitThatElementIsNotPresent(clipboardContent, protractor.utils.CONST_WAIT_ELEMENT);
                 expect(clipboardContent.isDisplayed()).toEqual(false);
             });
-        }
+        };
         
-        if (checkHandler != "undefined") {
+        if (checkHandler !== undefined) {
             // run checkHandler
             checkHandler(clipboardContent).then( function doneCheckHandler() {
                 // run CloseHandler
-                closeContainer()
+                closeContainer();
             });
         } else  {
             // run CloseHandler
-            closeContainer()
+            closeContainer();
         }
 
         browser.ignoreSynchronization = false;
         
         return clipboardContent;
-    }
+    };
 
 
     /**
@@ -152,7 +152,7 @@ var YAIOExporterPage = function() {
                 browser.ignoreSynchronization = true;
                 protractor.utils.waitUntilElementClickable(linkExportCommand, protractor.utils.CONST_WAIT_ELEMENT);
                 expect(linkExportCommand.isDisplayed()).toEqual(true);
-                return linkExportCommand.click()
+                return linkExportCommand.click();
             })
             .then(function doneLinkCommand() {
                 // call checkHandler
@@ -188,8 +188,8 @@ var YAIOExporterPage = function() {
                     // close and go back to the main window
                     browser.driver.close();
                     return browser.switchTo().window(myHandles[0]);
-                })
-        }
+                });
+        };
         return me.clickButtonExportAndCheck(linkExportCommand, newWindowCheckHandler);
     };
     
@@ -204,8 +204,8 @@ var YAIOExporterPage = function() {
         
         // define checkhandler
         var checkHandler = function () {
-            protractor.utils.waitUntilElementPresent($("#div_full"), protractor.utils.CONST_WAIT_NODEHIRARCHY);
-            expect($("#div_full").getInnerHtml()).toContain(expectedText);
+            protractor.utils.waitUntilElementPresent($('#div_full'), protractor.utils.CONST_WAIT_NODEHIRARCHY);
+            expect($('#div_full').getInnerHtml()).toContain(expectedText);
         };
         // call exporter
         var newWindow = me.clickButtonExportAndCheckInNewWindow(linkExportCommand, checkHandler);
@@ -239,7 +239,7 @@ var YAIOExporterPage = function() {
                 });
         };
         
-        if (browser.browserName === "phantomjs" || browser.browserName === "iexplorer" || browser.browserName === "firefox") {
+        if (browser.browserName === 'phantomjs' || browser.browserName === 'iexplorer' || browser.browserName === 'firefox') {
             downloadCheckHandler = null;
         }
         
@@ -254,7 +254,7 @@ var YAIOExporterPage = function() {
     me.clickShortlinkExportAsICal = function (expectedText) {
         // define export-button
         var linkExportCommand = $('[translate="common.command.ExportICalDirect"]');
-        return me.clickButtonExportAndCheckFileDownload(linkExportCommand, "converted.ics", expectedText);
+        return me.clickButtonExportAndCheckFileDownload(linkExportCommand, 'converted.ics', expectedText);
     };
 
     /**
@@ -265,7 +265,7 @@ var YAIOExporterPage = function() {
     me.clickShortlinkExportAsMindmap = function (expectedText) {
         // define export-button
         var linkExportCommand = $('[translate="common.command.ExportMindmapDirect"]');
-        return me.clickButtonExportAndCheckFileDownload(linkExportCommand, "converted.mm", expectedText);
+        return me.clickButtonExportAndCheckFileDownload(linkExportCommand, 'converted.mm', expectedText);
     };
 };
 module.exports = YAIOExporterPage;

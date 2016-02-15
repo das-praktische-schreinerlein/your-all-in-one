@@ -36,7 +36,7 @@ yaioApp.controller('LanguageCtrl', ['$translate', '$scope', function ($translate
         $scope.currentLanguageKey = langKey;
         
         // change icons
-        $(".button-lang").removeClass("button-lang-active").addClass("button-lang-inactive");
-        $("#button_lang_" + langKey).removeClass("button-lang-inactive").addClass("button-lang-active");
+        $('.button-lang').removeClass('button-lang-active').addClass('button-lang-inactive');
+        $('#button_lang_' + langKey).removeClass('button-lang-inactive').addClass('button-lang-active');
     };
 }]);
