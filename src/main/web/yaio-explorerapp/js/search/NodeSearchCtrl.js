@@ -101,7 +101,7 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
      * @param event                  key-pressed event
      */
     $scope.checkEnterFulltextSearch = function(event) {
-        if (event.keyCode == 13) {
+        if (event.keyCode === 13) {
             $scope.doNewFulltextSearch();
         }
         
@@ -209,7 +209,7 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
                 // render hierarchy
                 var parentNode = node.parentNode;
                 var parentStr = node.name;
-                while (parentNode != null && parentNode != '' && parentNode != 'undefined') {
+                while (parentNode !== null && parentNode !== '' && parentNode !== undefined && parentNode !== 'undefined') {
                     parentStr = parentNode.name + ' --> ' + parentStr;
                     parentNode = parentNode.parentNode;
                 }
@@ -219,7 +219,7 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
                 var searchExtract = '';
                 if ($scope.searchOptions.fulltext 
                     && $scope.searchOptions.fulltext.length > 0
-                    && node.nodeDesc != undefined) {
+                    && node.nodeDesc !== undefined) {
                     // split to searchwords
                     var searchWords = $scope.searchOptions.fulltext.split(' ');
                     var searchWord, searchResults, splitLength, splitText;
@@ -237,10 +237,10 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
                         searchResults = descText.toLowerCase().split(searchWord.toLowerCase());
                         
                         // add dummy-element if desc start/ends with searchWord 
-                        if (descText.search(searchWord.toLowerCase()) == 0) {
+                        if (descText.search(searchWord.toLowerCase()) === 0) {
                             searchResults.insert(' ');
                         }
-                        if (descText.search(searchWord.toLowerCase()) == (descText.length - searchWord.length)) {
+                        if (descText.search(searchWord.toLowerCase()) === (descText.length - searchWord.length)) {
                             searchResults.push(' ');
                         }
 

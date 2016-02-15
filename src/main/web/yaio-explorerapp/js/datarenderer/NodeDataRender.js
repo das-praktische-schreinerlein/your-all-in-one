@@ -90,19 +90,19 @@ Yaio.NodeDataRender = function(appBase) {
                     + ' lang="tech" data-tooltip="tooltip.command.NodeEdit"></a>';
             }
             if (svcYaioAccessManager.getAvailiableNodeAction('create', basenode.sysUID, false)) {
-                actionHtml += '<a onclick=\'javascript: ' + yaioAppBaseVarName + '.get(\'YaioEditor\').yaioOpenNodeEditor(\'' + basenode.sysUID + '', 'create\'); return false;"'
+                actionHtml += '<a onclick="javascript: ' + yaioAppBaseVarName + '.get(\'YaioEditor\').yaioOpenNodeEditor(\'' + basenode.sysUID + '\', \'create\'); return false;"'
                     + ' id="cmdCreate' + basenode.sysUID + '"'
                     + ' class="yaio-icon-create"'
                     + ' lang="tech" data-tooltip="tooltip.command.NodeCreateChild"></a>';
             }
             if (svcYaioAccessManager.getAvailiableNodeAction('createsymlink', basenode.sysUID, false)) {
-                actionHtml += '<a onclick=\'javascript: ' + yaioAppBaseVarName + '.get(\'YaioEditor\').yaioOpenNodeEditor(\'' + basenode.sysUID + '', 'createsymlink\'); return false;"'
+                actionHtml += '<a onclick="javascript: ' + yaioAppBaseVarName + '.get(\'YaioEditor\').yaioOpenNodeEditor(\'' + basenode.sysUID + '\', \'createsymlink\'); return false;"'
                     + ' id="cmdCreateSymLink' + basenode.sysUID + '"'
                     + ' class="yaio-icon-createsymlink"'
                     + ' lang="tech" data-tooltip="tooltip.command.NodeCreateSymLink"></a>';
             }
             if (svcYaioAccessManager.getAvailiableNodeAction('remove', basenode.sysUID, false)) {
-                actionHtml += '<a onclick=\'javascript: ' + yaioAppBaseVarName + '.get(\'YaioExplorerAction\').yaioRemoveNodeById(\'' + basenode.sysUID + '\'); return false;"'
+                actionHtml += '<a onclick="javascript: ' + yaioAppBaseVarName + '.get(\'YaioExplorerAction\').yaioRemoveNodeById(\'' + basenode.sysUID + '\'); return false;"'
                     + ' id="cmdRemove' + basenode.sysUID + '"'
                     + ' class="yaio-icon-remove"'
                     + ' lang="tech" data-tooltip="tooltip.command.NodeDelete"></a>';
@@ -138,10 +138,10 @@ Yaio.NodeDataRender = function(appBase) {
         
         // define name
         var name = basenode.name;
-        if (name == null || name.length <= 0) {
-           if (basenode.className == 'UrlResNode') {
+        if (name === null || name.length <= 0) {
+           if (basenode.className === 'UrlResNode') {
                name = basenode.resLocName;
-           } else if (basenode.className == 'SymLinkNode') {
+           } else if (basenode.className === 'SymLinkNode') {
                name = basenode.symLinkName;
            }
         }
@@ -200,14 +200,14 @@ Yaio.NodeDataRender = function(appBase) {
                         ); 
         
         // add nodeDesc if set
-        if (basenode.nodeDesc != '' && basenode.nodeDesc != null && !flgRenderMinimum) {
+        if (basenode.nodeDesc !== '' && basenode.nodeDesc !== null && !flgRenderMinimum) {
             // columncount
             //var columnCount = me.$('>td', $nodedataBlock).length;
             
             // add  column
             me.$($nodeDataBlock).find('div.container_data_row').append(
                     me.$('<div />').html('<a href="#"' +
-                            ' onclick=\'' + yaioAppBaseVarName + '.get(\'YaioExplorerAction\').toggleNodeDescContainer(\'' + basenode.sysUID + '\'); return false;"' +
+                            ' onclick="' + yaioAppBaseVarName + '.get(\'YaioExplorerAction\').toggleNodeDescContainer(\'' + basenode.sysUID + '\'); return false;"' +
                                 ' id="toggler_desc_' + basenode.sysUID + '"' +
                                 ' data-tooltip="tooltip.command.ToggleDesc" lang="tech"></a>')
                             .addClass('container_field')
@@ -226,7 +226,7 @@ Yaio.NodeDataRender = function(appBase) {
                 + '<input type="checkbox" id="cmd_toggle_content_desc_' + basenode.sysUID + '" onclick="' + yaioAppBaseVarName + '.get(\'UIToggler\').togglePreWrap(\'#content_desc_' + basenode.sysUID + '\');' + yaioAppBaseVarName + '.get(\'UIToggler\').togglePreWrap(\'#container_content_desc_' + basenode.sysUID + '\'); return true;">'
                 + '<span lang="tech">im Originallayout anzeigen</span>'
         //        + '<input type="checkbox" id="cmd_toggle_content_desc_markdown_' + basenode.sysUID + '" onclick="toggleDescMarkdown(\'#container_content_desc_' + basenode.sysUID + '\'); return true;">'
-        //        + '<span lang="tech'>Markdown</span>'
+        //        + '<span lang="tech">Markdown</span>'
                 ;
             commands += '<a class="button command-desc-jiraexport" onClick="' + yaioAppBaseVarName + '.get(\'YaioExplorerAction\').openJiraExportWindow(\''+ basenode.sysUID + '\'); return false;"'
                 +   ' lang="tech" data-tooltip="tooltip.command.OpenJiraExportWindow">common.command.OpenJiraExportWindow</a>';
@@ -283,7 +283,7 @@ Yaio.NodeDataRender = function(appBase) {
             $tdList.eq(colGantt).html($nodeGanttBlock).addClass('block_nodegantt');
         
             // set visibility of data/gantt-block
-            if (me.$('#tabTogglerGantt').css('display') != 'none') {
+            if (me.$('#tabTogglerGantt').css('display') !== 'none') {
                 $tdList.eq(colData).css('display', 'table-cell');
                 $tdList.eq(colGantt).css('display', 'none');
             } else {
@@ -344,7 +344,7 @@ Yaio.NodeDataRender = function(appBase) {
                .addClass('fieldtype_type')
                .addClass('field_type')
                .addClass(statestyle));
-        if (basenode.className == 'TaskNode' || basenode.className == 'EventNode') {
+        if (basenode.className === 'TaskNode' || basenode.className === 'EventNode') {
             // TaskNode
             $row.append(
                     me.$('<div />').html('&nbsp;' + svcDataUtils.formatNumbers(basenode.istChildrenSumStand, 0, '%'))
@@ -388,11 +388,11 @@ Yaio.NodeDataRender = function(appBase) {
                              .addClass('field_planChildrenSum')
                              .addClass(statestyle)
                              );
-        } else if (basenode.className == 'InfoNode' || basenode.className == 'UrlResNode') {
+        } else if (basenode.className === 'InfoNode' || basenode.className === 'UrlResNode') {
             // render Info + UrlRes
             
             // Url only
-            if (basenode.className == 'UrlResNode') {
+            if (basenode.className === 'UrlResNode') {
                 // url
                 
                 // upload content
@@ -402,8 +402,8 @@ Yaio.NodeDataRender = function(appBase) {
                     && me.appBase.get('YaioAccessManager').getAvailiableNodeAction('dmsDownload', basenode.sysUID, false)) {
                     // url
                     var stateBlock = svcDataUtils.htmlEscapeText(stateMapping[resContentDMSState]);
-                    if (resContentDMSState == 'UPLOAD_DONE' && !preventActionsColum) {
-                        stateBlock = '<a href="' + '" onClick=\'' + yaioAppBaseVarName + '.get(\'YaioExplorerAction\').openDMSDownloadWindow(\''+ basenode.sysUID + '\'); return false;"'
+                    if (resContentDMSState === 'UPLOAD_DONE' && !preventActionsColum) {
+                        stateBlock = '<a href="' + '" onClick="' + yaioAppBaseVarName + '.get(\'YaioExplorerAction\').openDMSDownloadWindow(\''+ basenode.sysUID + '\'); return false;"'
                                      +   ' lang="tech" data-tooltip="tooltip.command.OpenDMSDownloadWindow_' + resContentDMSState + '">' + stateBlock + '</a>';
                     } else if (stateMapping[resContentDMSState]) {
                         stateBlock = '<span lang="tech" data-tooltip="tooltip.command.OpenDMSDownloadWindow_' + resContentDMSState + '">' + stateBlock + '</span>';
@@ -424,8 +424,8 @@ Yaio.NodeDataRender = function(appBase) {
                     && me.appBase.get('YaioAccessManager').getAvailiableNodeAction('dmsDownload', basenode.sysUID, false)) {
                     // url
                     var stateBlock = svcDataUtils.htmlEscapeText(indexStateMapping[resIndexDMSState]);
-                    if (resIndexDMSState == 'INDEX_DONE' && !preventActionsColum) {
-                        stateBlock = '<a href="' + '" onClick=\'' + yaioAppBaseVarName + '.get(\'YaioExplorerAction\').openDMSIndexDownloadWindow(\''+ basenode.sysUID + '\'); return false;"'
+                    if (resIndexDMSState === 'INDEX_DONE' && !preventActionsColum) {
+                        stateBlock = '<a href="' + '" onClick="' + yaioAppBaseVarName + '.get(\'YaioExplorerAction\').openDMSIndexDownloadWindow(\''+ basenode.sysUID + '\'); return false;"'
                                      +   ' lang="tech" data-tooltip="tooltip.command.OpenDMSIndexDownloadWindow_' + resIndexDMSState + '">' + stateBlock + '</a>';
                     } else if (indexStateMapping[resIndexDMSState]) {
                         stateBlock = '<span lang="tech" data-tooltip="tooltip.command.OpenDMSIndexDownloadWindow_' + resIndexDMSState + '">' + stateBlock + '</span>';
@@ -442,7 +442,7 @@ Yaio.NodeDataRender = function(appBase) {
                 
                 // url-data
                 var resLocData = svcDataUtils.htmlEscapeText(basenode.resLocRef);
-                if (basenode.type == 'URLRES') {
+                if (basenode.type === 'URLRES') {
                     resLocData = '<a href="' + resLocData + '" target="_blank">' + resLocData + '</a>';
                 } else {
                     resLocData = '<span>' + resLocData + '</span>';
@@ -509,7 +509,7 @@ Yaio.NodeDataRender = function(appBase) {
                                     ); 
                 }
             }
-        } else if (basenode.className == 'SymLinkNode') {
+        } else if (basenode.className === 'SymLinkNode') {
             // render SymLinkNode
             me.appBase.get('YaioNodeData').yaioLoadSymLinkData(basenode, fancynode);
         } 
