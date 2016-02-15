@@ -1,5 +1,7 @@
-'use strict';
-module.exports = {
+(function () {
+    'use strict';
+
+    module.exports = {
     options: {
         stripBanners: true,
         banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %> */\n\n'
@@ -59,5 +61,5 @@ module.exports = {
             '<%= destBase %>dist/<%= pkg.name %>-exports-print-dataonly-<%= pkg.exportsversion %>.css': ['<%= projectPrintDataOnlyCssFiles %>']
         }
     }
-};
-
+    };
+})();

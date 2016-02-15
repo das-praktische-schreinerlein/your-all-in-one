@@ -1,12 +1,31 @@
-// jshint: look at https://github.com/gruntjs/grunt-contrib-jshint
-'use strict';
-module.exports = {
-    files: [
-        'GruntFile.js',
-        '<%= srcBase %>' + 'yaio-explorerapp/js/**/*.js'
-    ],
-    options: {
-        jshintrc: true
-    }
-};
+(function () {
+    'use strict';
 
+    // jshint: look at https://github.com/gruntjs/grunt-contrib-jshint
+    module.exports = {
+        options: {
+            jshintrc: true
+        },
+        js: {
+            files: {
+                src:                 [
+                    'GruntFile.js',
+                    'grunt/**/*.js',
+                    'src/**/*.js'
+                ]
+            }
+        },
+        html: {
+            options: {
+                extract: 'always',
+                undef: true,
+                browser: true,
+                strict: false,
+                jshintrc: 'browser.jshintrc'
+            },
+            files: {
+                src: ['src/**/*.html']
+            }
+        }
+    };
+})();
