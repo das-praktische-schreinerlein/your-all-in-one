@@ -5,7 +5,7 @@ var firefoxBin = 'C:/ProgrammePortable/PortableApps/PortableApps/FirefoxPortable
 var downloadPath = 'd:/tmp/';
 
 // basics
-var baseDir = "./src/test/javascript/e2e/";
+var baseDir = './src/test/javascript/e2e/';
 var testDir = baseDir;
 
 // imports
@@ -22,10 +22,10 @@ var fp = new FirefoxProfile();
 //fp.setPreference('extensions.firebug.console.enableSites', true);
 // show the console panel
 //fp.setPreference('extensions.firebug.defaultPanelName', 'console');
-fp.setPreference("browser.download.folderList", 2);
-fp.setPreference("browser.download.manager.showWhenStarting", false);
-fp.setPreference("browser.download.dir", downloadPath);
-fp.setPreference("browser.helperApps.neverAsk.saveToDisk", "text/html");
+fp.setPreference('browser.download.folderList', 2);
+fp.setPreference('browser.download.manager.showWhenStarting', false);
+fp.setPreference('browser.download.dir', downloadPath);
+fp.setPreference('browser.helperApps.neverAsk.saveToDisk', 'text/html');
 // done with prefs?
 fp.updatePreferences();
 
@@ -54,8 +54,8 @@ exports.config = {
 //        },
 //        {
 //                'browserName': 'firefox',
-//                "firefox_binary": firefoxBin,
-//                "firefox_profile": fp
+//                'firefox_binary': firefoxBin,
+//                'firefox_profile': fp
 //        },
 //        {
 //            'browserName': 'iexplorer'
@@ -86,7 +86,7 @@ exports.config = {
         search:        [testDir + '/search/**/*Specs.js'],
         wysiwyg:       [testDir + '/wysiwyg/**/*Specs.js'],
 
-        full:          [testDir + '/**/*Specs.js'],
+        full:          [testDir + '/**/*Specs.js']
     },
 
     // Options to be passed to Jasmine-node.
@@ -120,7 +120,7 @@ exports.config = {
             prefixes: {
                 success: 'OK     ', //'✓ ',
                 failure: 'FAILED ', //'✗ ',
-                pending: '-      ', //'- '
+                pending: '-      '  //'- '
             }
         }));
 
@@ -128,7 +128,7 @@ exports.config = {
 // sometimes buggy :-(
         jasmine.getEnv().addReporter(
             new ScreenShotReporter({
-                baseDirectory: "target/protractor-reports/"
+                baseDirectory: 'target/protractor-reports/'
                 }
             )
         );
@@ -159,6 +159,6 @@ exports.config = {
                 width: 1380,
                 height: 800
             }
-        },
-    },
+        }
+    }
 };
