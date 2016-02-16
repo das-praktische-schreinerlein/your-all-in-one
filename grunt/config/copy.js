@@ -224,7 +224,6 @@
         var myRegexp = new RegExp(regExStr, 'gim');
         var match;
         while (match = myRegexp.exec(newContent)) {
-            var blockContent = match[3];
             var restBefore = RegExp.leftContext;
             var restAfter = RegExp.rightContext;
             newContent = restBefore + match[1] +
@@ -241,12 +240,11 @@
         var myRegexp = new RegExp(regExStr, 'gim');
         var match;
         while (match = myRegexp.exec(newContent)) {
-            var blockContent = match[3];
             var restBefore = RegExp.leftContext;
             var restAfter = RegExp.rightContext;
             newContent = restBefore + match[1] + restAfter;
         }
-        return newContent
+        return newContent;
     }
 
     function intendBlock(block, content, intend, intend2) {
@@ -308,8 +306,7 @@
     function patchLiBlock(block, content) {
         var newContent = content;
         var regExStr = '(.*?)' +
-            '[\\r\\n]+([ ]+\\* *)@' + block + ' *<ul>(.*?)<\\/ul> *[\\r\\n]'
-        '';
+            '[\\r\\n]+([ ]+\\* *)@' + block + ' *<ul>(.*?)<\\/ul> *[\\r\\n]';
         var myRegexp = new RegExp(regExStr, 'gim');
         var match;
 

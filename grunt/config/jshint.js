@@ -5,14 +5,36 @@
     module.exports = {
         options: {
             jshintrc: true
+            //reporter: 'checkstyle'
         },
         js: {
             files: {
                 src:                 [
                     'GruntFile.js',
                     'grunt/**/*.js',
-                    'src/main/web/**/*.js',
-                    'src/test/javascript/**/*.js'
+                    'src/main/web/**/*.js'
+                ]
+            }
+        },
+        unittests: {
+            options: {
+                extract: 'always',
+                jshintrc: 'unittests.jshintrc'
+            },
+            files: {
+                src: [
+                    'src/test/javascript/unit/**/*.js'
+                ]
+            }
+        },
+        e2e: {
+            options: {
+                extract: 'always',
+                jshintrc: 'e2e.jshintrc'
+            },
+            files: {
+                src: [
+                    'src/test/javascript/e2e/**/*.js'
                 ]
             }
         },
@@ -22,10 +44,10 @@
                 undef: true,
                 browser: true,
                 strict: false,
-                jshintrc: 'browser.jshintrc'
+                jshintrc: 'html.jshintrc'
             },
             files: {
-                src: ['src/**/*.html']
+                src: ['src/main/web/**/*.html']
             }
         }
     };
