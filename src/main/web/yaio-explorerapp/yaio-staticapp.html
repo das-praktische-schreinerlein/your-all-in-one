@@ -57,24 +57,24 @@
 window.yaioAppBase = YaioAppBase();
 
 //reconfigure baseurls
-yaioAppBase.config.resBaseUrl = yaioAppBase.get("DataUtils").getBaseRefFromUrl(window.location.href) + "/";
+yaioAppBase.config.resBaseUrl = yaioAppBase.get('DataUtils').getBaseRefFromUrl(window.location.href) + '/';
 yaioAppBase.config.initResBasedUrls();
 
 // init
 yaioAppBase.publishDetectorStyles();
 
 // load Temlate
-var template = yaioAppBase.get("DataUtils").getURLParameter("template");
-template = template.replace(/[^A-Za-z0-9_\.-]/g, "");
-yaioAppBase.get("YaioFileLoader").loadDocumentationContainerContent("static/" + template + ".html")
+var template = yaioAppBase.get('DataUtils').getURLParameter('template');
+template = template.replace(/[^A-Za-z0-9_\.-]/g, '');
+yaioAppBase.get('YaioFileLoader').loadDocumentationContainerContent('static/' + template + '.html')
     .then(function doneContentFile(contentData) {
-      console.log("loadDocumentationContainerContent done")
-      var doc = document.open("text/html");
+      console.log('loadDocumentationContainerContent done');
+      var doc = document.open('text/html');
       doc.write(contentData);
       doc.close();
     }, function error(errorThrown) {
-        console.error("ERROR error -> return", errorThrown);
-        yaioAppBase.get("Logger").logError("Template kann nicht geladen werden", true);
+        console.error('ERROR error -> return', errorThrown);
+        yaioAppBase.get('Logger').logError('Template kann nicht geladen werden', true);
     });
 
 </script>
