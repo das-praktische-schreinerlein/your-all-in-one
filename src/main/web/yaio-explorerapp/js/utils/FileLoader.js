@@ -130,24 +130,25 @@ Yaio.FileLoader = function(appBase) {
         return res;
     };
     
-    me.downloadDocumentationContainerContent = function($link, contentFileName, mime, encoding, target) {
+    me.downloadDocumentationContainerContent = function($link, contentFileName, mime, encoding) {
         var target = $link.attr('target');
         me.loadDocumentationContainerContent(contentFileName)
             .then(function doneContentFile(contentData) {
-                me.downloadAsFile($link, contentData, fileName, mime, encoding, target);
+                me.downloadAsFile($link, contentData, contentFileName, mime, encoding, target);
             });
     };
     
     me.downloadAsFile = function($link, data, fileName, mime, encoding, target) {
-        if (mime == 'undefind') {
+        if (me.appBase.DataUtils.isUndefined(mime)) {
             mime = 'application/text';
         }
-        if (encoding == 'undefind') {
+        if (me.appBase.DataUtils.isUndefined(encoding)) {
             mime = 'uft-8';
         }
-        if (target == 'undefind') {
+        if (me.appBase.DataUtils.isUndefined(target)) {
             target = '_blank';
         }
+
         // data URI
         var dataURI = 'data:' + mime + ';charset=' + encoding + ','
                 + encodeURIComponent(data);

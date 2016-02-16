@@ -209,7 +209,7 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
                 // render hierarchy
                 var parentNode = node.parentNode;
                 var parentStr = node.name;
-                while (parentNode !== null && parentNode !== '' && parentNode !== undefined && parentNode !== 'undefined') {
+                while (!yaioUtils.getService('DataUtils').isEmptyStringValue(parentNode)) {
                     parentStr = parentNode.name + ' --> ' + parentStr;
                     parentNode = parentNode.parentNode;
                 }
@@ -219,7 +219,7 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
                 var searchExtract = '';
                 if ($scope.searchOptions.fulltext 
                     && $scope.searchOptions.fulltext.length > 0
-                    && node.nodeDesc !== undefined) {
+                    && !yaioUtils.getService('DataUtils').isUndefinedStringValue(node.nodeDesc)) {
                     // split to searchwords
                     var searchWords = $scope.searchOptions.fulltext.split(' ');
                     var searchWord, searchResults, splitLength, splitText;
@@ -231,6 +231,9 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
                     descText = descText.toLowerCase();
                     
                     for (var idx in searchWords) {
+                        if (!searchWords.hasOwnProperty(idx)) {
+                            continue;
+                        }
                         searchWord = yaioUtils.getService('DataUtils').escapeRegExp(searchWords[idx]);
 
                         // split by searchwords
@@ -290,6 +293,9 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
      */
     $scope.recalcGanttBlocks = function() {
         for (var idx in $scope.nodes) {
+            if (!$scope.nodes.hasOwnProperty(idx)) {
+                continue;
+            }
             var node = $scope.nodes[idx];
             yaioUtils.getService('YaioNodeGanttRender').yaioRecalcGanttBlock(node);
         }

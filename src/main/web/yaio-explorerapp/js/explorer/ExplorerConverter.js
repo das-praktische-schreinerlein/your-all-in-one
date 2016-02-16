@@ -123,6 +123,9 @@ Yaio.ExplorerConverter = function(appBase) {
         // iterate all configs
         var checkListConfigs = me.appBase.get('ChecklistParser').checkListConfigs;
         for (var idx in checkListConfigs) {
+            if (!checkListConfigs.hasOwnProperty(idx)) {
+                continue;
+            }
             var matchers = checkListConfigs[idx].matchers;
 
             // iterate all matchers
@@ -202,7 +205,7 @@ Yaio.ExplorerConverter = function(appBase) {
         if (me.$(selector).size() > 0) {
             // extract dates
             var dates = me.$(selector).html().replace(/&nbsp;/g, ' ').split('-');
-            if (dates.length != 2) {
+            if (dates.length !== 2) {
                 return '';
             }
             var start = dates[0];

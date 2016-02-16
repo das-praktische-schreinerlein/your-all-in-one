@@ -138,7 +138,7 @@ Yaio.NodeDataRender = function(appBase) {
         
         // define name
         var name = basenode.name;
-        if (name === null || name.length <= 0) {
+        if (me.appBase.DataUtils.isUndefinedStringValue(name)) {
            if (basenode.className === 'UrlResNode') {
                name = basenode.resLocName;
            } else if (basenode.className === 'SymLinkNode') {
@@ -200,7 +200,7 @@ Yaio.NodeDataRender = function(appBase) {
                         ); 
         
         // add nodeDesc if set
-        if (basenode.nodeDesc !== '' && basenode.nodeDesc !== null && !flgRenderMinimum) {
+        if (!me.appBase.DataUtils.isEmptyStringValue(basenode.nodeDesc) && !flgRenderMinimum) {
             // columncount
             //var columnCount = me.$('>td', $nodedataBlock).length;
             

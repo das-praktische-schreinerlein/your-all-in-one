@@ -217,7 +217,7 @@ Yaio.NodeData = function(appBase, config, defaultConfig) {
         var svcLogger = me.appBase.get('Logger');
         var msg = '_yaioLoadSymLinkDataSuccessHandler for fancynode:' + fancynode.key;
         console.log(msg + ' OK done!' + yaioNodeActionResponse.state);
-        if (yaioNodeActionResponse.state == 'OK') {
+        if (yaioNodeActionResponse.state === 'OK') {
             if (yaioNodeActionResponse.node) {
                 var $nodeDataBlock = me.appBase.get('YaioNodeDataRender').renderDataBlock(yaioNodeActionResponse.node, fancynode);
                 
@@ -298,7 +298,7 @@ Yaio.NodeData = function(appBase, config, defaultConfig) {
         var svcLogger = me.appBase.get('Logger');
         var msg = '_yaioPatchNodeSuccessHandler for fancynode:' + fancynode.key;
         console.log(msg + ' OK done!' + yaioNodeActionResponse.state);
-        if (yaioNodeActionResponse.state == 'OK') {
+        if (yaioNodeActionResponse.state === 'OK') {
             console.log(msg + ' OK saved fancynode:' + fancynode.key + ' load:' + yaioNodeActionResponse.parentIdHierarchy);
             if (yaioNodeActionResponse.parentIdHierarchy && yaioNodeActionResponse.parentIdHierarchy.length > 0) {
                 // reload tree
@@ -320,6 +320,9 @@ Yaio.NodeData = function(appBase, config, defaultConfig) {
                 // iterate violations
                 message = message +  ' violations: ';
                 for (var idx in yaioNodeActionResponse.violations) {
+                    if (!yaioNodeActionResponse.violations.hasOwnProperty(idx)) {
+                        continue;
+                    }
                     var violation = yaioNodeActionResponse.violations[idx];
                     svcLogger.logError('violations while save fancynode:' + fancynode.key
                             + ' field:' + violation.path + ' message:' + violation.message, false);
@@ -338,7 +341,7 @@ Yaio.NodeData = function(appBase, config, defaultConfig) {
         var svcLogger = me.appBase.get('Logger');
         var msg = '_yaioRemoveNodeSuccessHandler for nodeId:' + nodeId;
         console.log(msg + ' OK done!' + yaioNodeActionResponse.state);
-        if (yaioNodeActionResponse.state == 'OK') {
+        if (yaioNodeActionResponse.state === 'OK') {
             console.log(msg + ' OK removed node:' + nodeId + ' load:' + yaioNodeActionResponse.parentIdHierarchy);
             if (yaioNodeActionResponse.parentIdHierarchy && yaioNodeActionResponse.parentIdHierarchy.length >= 0) {
                 // reload tree
@@ -359,6 +362,9 @@ Yaio.NodeData = function(appBase, config, defaultConfig) {
             if (yaioNodeActionResponse.violations) {
                 // iterate violations
                 for (var idx in yaioNodeActionResponse.violations) {
+                    if (!yaioNodeActionResponse.violations.hasOwnProperty(idx)) {
+                        continue;
+                    }
                     var violation = yaioNodeActionResponse.violations[idx];
                     svcLogger.logError('violations while remove node:' + nodeId
                             + ' field:' + violation.path + ' message:' + violation.message, false);

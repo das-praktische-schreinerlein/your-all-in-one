@@ -42,7 +42,7 @@
     JMSLayout.prototype.getStateInputElement = function(eleInput) {
         var state = false;
 
-        if (eleInput.nodeName.toUpperCase() == 'SELECT') {
+        if (eleInput.nodeName.toUpperCase() === 'SELECT') {
             // Select-Box
             if (eleInput.value && (eleInput.value !== 'search_all.php')) {
                 state = true;
@@ -55,13 +55,13 @@
                     }
                 }
             }
-        } else if (eleInput.nodeName.toUpperCase() == 'INPUT') {
+        } else if (eleInput.nodeName.toUpperCase() === 'INPUT') {
            // Element als Radio/Checkbox suchen
-           if (eleInput.type.toUpperCase() == 'RADIO') {
+           if (eleInput.type.toUpperCase() === 'RADIO') {
               if (eleInput.checked) {
                   state = true;
               }
-           } else if (eleInput.type.toUpperCase() == 'CHECKBOX') {
+           } else if (eleInput.type.toUpperCase() === 'CHECKBOX') {
               if (eleInput.checked) {
                   state = true;
               }
@@ -69,7 +69,7 @@
               // normales Eingabefeld
               state = true;
            }
-        } else if (eleInput.nodeName.toUpperCase() == 'TEXTAREA') {
+        } else if (eleInput.nodeName.toUpperCase() === 'TEXTAREA') {
             // Element als textarea suchen
             if (eleInput && eleInput.value) {
                // normales Eingabefeld

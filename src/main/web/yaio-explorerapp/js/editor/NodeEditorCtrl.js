@@ -75,21 +75,21 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
         
         // display createform and select nodeform
         $('#containerFormYaioEditorCreate').css('display', 'block');
-        var className = $scope.nodeForEdit['className'];
+        var className = $scope.nodeForEdit.className;
         $('#containerFormYaioEditor' + className).css('display', 'block');
         console.log('selectNewNodeType open form #containerFormYaioEditor' + className);
 
         // special fields
         if (className === 'SymLinkNode') {
-            $scope.nodeForEdit['type'] = 'SYMLINK';
+            $scope.nodeForEdit.type = 'SYMLINK';
         } else if (className === 'InfoNode') {
-            $scope.nodeForEdit['type'] = 'INFO';
+            $scope.nodeForEdit.type = 'INFO';
         } else if (className === 'UrlResNode') {
-            $scope.nodeForEdit['type'] = 'URLRES';
+            $scope.nodeForEdit.type = 'URLRES';
         } else if (className === 'TaskNode') {
-            $scope.nodeForEdit['type'] = 'OFFEN';
+            $scope.nodeForEdit.type = 'OFFEN';
         } else if (className === 'EventNode') {
-            $scope.nodeForEdit['type'] = 'EVENT_PLANED';
+            $scope.nodeForEdit.type = 'EVENT_PLANED';
         }
 
         // set mode
@@ -101,7 +101,7 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
     $scope.selectCreateFromTemplate = function(formName) {
         // create new node by template
         var newParentKey = $scope.nodeForEdit.sysUID;
-        if ($scope.nodeForEdit.createFromTemplate && $scope.nodeForEdit.createFromTemplate != '') {
+        if ($scope.nodeForEdit.createFromTemplate && $scope.nodeForEdit.createFromTemplate !== '') {
             var json = JSON.stringify({parentNode: newParentKey});
             yaioUtils.getService('YaioNodeData').yaioDoCopyNode({key: $scope.nodeForEdit.createFromTemplate, sysUID: $scope.nodeForEdit.createFromTemplate}, newParentKey, json);
             yaioUtils.getService('YaioEditor').yaioCloseNodeEditor();
@@ -243,6 +243,9 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
         
         // iterate fields an map to nodeObj
         for (var idx in fields) {
+            if (!fields.hasOwnProperty(idx)) {
+                continue;
+            }
             var field = fields[idx];
             var fieldName = field.fieldName;
             var value = $scope.nodeForEdit[fieldName];
@@ -278,18 +281,18 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
             console.log('map nodefield:' + fieldName + '=' + value);
         }
         if ($scope.nodeForEdit.className === 'UrlResNode') {
-            if ($scope.nodeForEdit['resContentDMSState']) {
-                nodeObj['resContentDMSState'] = 'UPLOAD_OPEN';
+            if ($scope.nodeForEdit.resContentDMSState) {
+                nodeObj.resContentDMSState = 'UPLOAD_OPEN';
             }
-            if ($scope.nodeForEdit['resIndexDMSState']) {
-                nodeObj['resIndexDMSState'] = 'INDEX_OPEN';
+            if ($scope.nodeForEdit.resIndexDMSState) {
+                nodeObj.resIndexDMSState = 'INDEX_OPEN';
             }
         }
         
         // save node
         var yaioSaveNodeSuccessHandler = function(nodeObj, options, yaioNodeActionResponse) {
             // sucess handler
-            var msg = 'yaioSaveNodeSuccessHandler node: ' + options.mode + ' ' + nodeObj['sysUID'];
+            var msg = 'yaioSaveNodeSuccessHandler node: ' + options.mode + ' ' + nodeObj.sysUID;
             
             // check response
             var state = yaioNodeActionResponse.state;
@@ -307,7 +310,7 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
             } else {
                 // error
                 var message = 'error saving node:' + yaioNodeActionResponse.stateMsg
-                        + ' details:' + nodeResponse;
+                        + ' details:' + yaioNodeActionResponse;
                 var userMessage = 'error saving node:' + yaioNodeActionResponse.stateMsg;
                 
                 // map violations
@@ -317,6 +320,9 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
                     message = message + ' violations: ';
                     userMessage = '';
                     for (var idx in violations) {
+                        if (!violations.hasOwnProperty(idx)) {
+                            continue;
+                        }
                         // map violation errors
                         var violation = violations[idx];
                         
@@ -351,7 +357,7 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
                     }
                 }
                 yaioUtils.getService('Logger').logError(message, false);
-                if (userMessage != '') {
+                if (!yaioUtils.getService('DataUtils').isUndefinedStringValue(userMessage)) {
                     yaioUtils.getService('Logger').logError(userMessage, true);
                 }
                 
@@ -367,7 +373,7 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
         
         // call save
         var options = {
-                mode: $scope.nodeForEdit['mode'],
+                mode: $scope.nodeForEdit.mode,
                 formName: formName,
                 className: $scope.nodeForEdit.className,
                 sysUID: $scope.nodeForEdit.sysUID,

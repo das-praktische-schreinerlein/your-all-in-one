@@ -97,6 +97,8 @@ yaioApp.config(function($routeProvider) {
  * @param $sceDelegateProvider   the $sceDelegateProvider to change the resource-whitelist...
  */
 yaioApp.config(function($sceDelegateProvider) {
+    'use strict';
+
     var resBaseUrl = yaioAppBase.config.resBaseUrl;
     var whitelist = [
         // Allow same origin resource loads.
@@ -111,7 +113,7 @@ yaioApp.config(function($sceDelegateProvider) {
         }
     }
     
-    if (resBaseUrl && resBaseUrl != '') {
+    if (resBaseUrl && resBaseUrl !== '') {
         $sceDelegateProvider.resourceUrlWhitelist(whitelist);
     }
 });

@@ -40,7 +40,7 @@ Yaio.Base = function(appBase) {
     };
 
     me.toggleWithLinks = function(link1, link2, id1, id2) {
-         if (me.$(id1).css('display') != 'none') {
+         if (me.$(id1).css('display') !== 'none') {
              me.$(id1).css('display', 'none');
              me.$(link1).css('display', 'inline');
              me.$(id2).css('display', 'block');

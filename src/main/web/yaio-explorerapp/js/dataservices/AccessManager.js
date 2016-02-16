@@ -50,7 +50,8 @@ Yaio.AccessManager = function(appBase, config, defaultConfig) {
     };
     
     me.setAvailiableExportForm = function(key, url) {
-        return me.availiableExportForms[key] = url;
+        me.availiableExportForms[key] = url;
+        return me.availiableExportForms[key];
     };
     
     me.getAvailiableExportLinkKeys = function(nodeId, flgMaster) {
@@ -62,7 +63,8 @@ Yaio.AccessManager = function(appBase, config, defaultConfig) {
     };
     
     me.setAvailiableExportLink = function(key, url) {
-        return me.availiableExportLinks[key] = url;
+        me.availiableExportLinks[key] = url;
+        return me.availiableExportLinks[key];
     };
 
     me.getAvailiableStaticExportLinkKeys = function(nodeId, flgMaster) {
@@ -74,7 +76,8 @@ Yaio.AccessManager = function(appBase, config, defaultConfig) {
     };
     
     me.setAvailiableStaticExportLink = function(key, url) {
-        return me.availiableStaticExportLinks[key] = url;
+        me.availiableStaticExportLinks[key] = url;
+        return me.availiableStaticExportLinks[key];
     };
 
     me.getAvailiableImportFormKeys = function(nodeId, flgMaster) {
@@ -86,7 +89,8 @@ Yaio.AccessManager = function(appBase, config, defaultConfig) {
     };
     
     me.setAvailiableImportForm = function(key, url) {
-        return me.availiableImportForms[key] = url;
+        me.availiableImportForms[key] = url;
+        return me.availiableImportForms[key];
     };
 
     me.getAvailiableNodeActionKeys = function(nodeId, flgMaster) {
@@ -104,7 +108,8 @@ Yaio.AccessManager = function(appBase, config, defaultConfig) {
     };
     
     me.setAvailiableNodeAction = function(key, url) {
-        return me.availiableNodeActions[key] = url;
+        me.availiableNodeActions[key] = url;
+        return me.availiableNodeActions[key];
     };
 
     me._init();

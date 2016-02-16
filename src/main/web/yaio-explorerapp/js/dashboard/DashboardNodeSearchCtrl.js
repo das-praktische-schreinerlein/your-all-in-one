@@ -116,7 +116,7 @@ yaioApp.controller('DashBoardNodeSearchCtrl', function($rootScope, $scope, yaioU
                 // render hierarchy
                 var parentNode = node.parentNode;
                 var parentStr = node.name;
-                while (parentNode != null && parentNode != '' && parentNode != 'undefined') {
+                while (!yaioUtils.getService('DataUtils').isEmptyStringValue(parentNode)) {
                     parentStr = parentNode.name + ' --> ' + parentStr;
                     parentNode = parentNode.parentNode;
                 }

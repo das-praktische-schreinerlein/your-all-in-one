@@ -446,7 +446,7 @@ Yaio.ExplorerAction = function(appBase) {
         var svcYaioFormatter = me.appBase.get('YaioFormatter');
         me.$('#detail_desc_' + id).slideToggle(1000,function() {
             // show/hide toggler
-            if (me.$('#detail_desc_' + id).css('display') == 'block') {
+            if (me.$('#detail_desc_' + id).css('display') === 'block') {
                 // desc is now shown
                 me.$('#toggler_desc_' + id).addClass('toggler_show').removeClass('toggler_hidden');
    
@@ -492,7 +492,7 @@ Yaio.ExplorerAction = function(appBase) {
     me.toggleNodeSysContainer = function(id) {
         me.$('#detail_sys_' + id).slideToggle(1000,function() {
             // show/hide toggler
-            if (me.$('#detail_sys_' + id).css('display') == 'block') {
+            if (me.$('#detail_sys_' + id).css('display') === 'block') {
                 // desc is now shown
                 me.$('#toggler_sys_' + id).addClass('toggler_show').removeClass('toggler_hidden');
             } else {

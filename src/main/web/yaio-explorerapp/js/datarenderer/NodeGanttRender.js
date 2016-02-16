@@ -69,7 +69,7 @@ Yaio.NodeGanttRender = function(appBase) {
         // set range
         var dateRangeStartStr = me.$('#inputGanttRangeStart').val();
         var dateRangeEndStr = me.$('#inputGanttRangeEnde').val();
-        if (dateRangeEndStr == null || dateRangeEndStr == null) {
+        if (me.appBase.DataUtils.isUndefinedStringValue(dateRangeStartStr) || me.appBase.DataUtils.isUndefinedStringValue(dateRangeEndStr)) {
             console.error('fillGanttBlock range is not set correctly: '
                     + dateRangeStartStr + '-' + dateRangeEndStr + ' ' + msg);
             return;
@@ -80,14 +80,14 @@ Yaio.NodeGanttRender = function(appBase) {
         var dateRangeStart = new Date(lstDate[1]+'/'+lstDate[0]+'/'+lstDate[2]);
         lstDate=dateRangeEndStr.split('.');
         var dateRangeEnd = new Date(lstDate[1]+'/'+lstDate[0]+'/'+lstDate[2]);
-        if (dateRangeStart == 'NaN' || dateRangeEndStr == 'NaN') {
+        if (me.appBase.DataUtils.isUndefinedStringValue(dateRangeStart) || me.appBase.DataUtils.isUndefinedStringValue(dateRangeEndStr)) {
             console.error('fillGanttBlock range is not set correctly: '
                     + dateRangeStartStr + '-' + dateRangeEndStr + ' ' + msg);
             return;
         }
         var dateRangeStartMillis = dateRangeStart.getTime();
         var dateRangeEndMillis = dateRangeEnd.getTime();
-        if (dateRangeStartMillis == 'NaN' || dateRangeEndMillis == 'NaN') {
+        if (isNaN(dateRangeStartMillis) || isNaN(dateRangeEndMillis)) {
             console.error('fillGanttBlock range is not set correctly: '
                     + dateRangeStartStr + '-' + dateRangeEndStr + ' ' + msg);
             return;
@@ -101,7 +101,7 @@ Yaio.NodeGanttRender = function(appBase) {
         var startMillis = basenode[type + 'Start'];
         var endMillis = basenode[type + 'Ende'];
         var aufwand = basenode[type + 'Aufwand'];
-        if (startMillis != null && endMillis != null) {
+        if (!me.appBase.DataUtils.isUndefinedStringValue(startMillis) && !me.appBase.DataUtils.isUndefinedStringValue(endMillis)) {
     
             var startPos = 0;
             var endPos = 0;
@@ -184,8 +184,6 @@ Yaio.NodeGanttRender = function(appBase) {
      * @returns                      JQuery-Html-Object - the rendered ganttblock
      */
     me.createGanttBlock = function(basenode, type, addStyle, label) {
-        var msg = 'ganttblock for node:' + basenode.sysUID;
-    
         // create line
         var $divLine = me.$('<div id="gantt_' + type + '_container_' + basenode.sysUID + '"' +
                 ' class ="gantt_container gantt_' + type + '_container"' +
@@ -232,7 +230,7 @@ Yaio.NodeGanttRender = function(appBase) {
         var $row = me.$('<div class="container_gantt_row" />');
         $table.append($row);
         
-        if (basenode.className == 'TaskNode' || basenode.className == 'EventNode') {
+        if (basenode.className === 'TaskNode' || basenode.className === 'EventNode') {
             // TaskNode
             var $div;
             
@@ -360,7 +358,7 @@ Yaio.NodeGanttRender = function(appBase) {
     me.yaioRecalcMasterGanttBlockFromTree = function() {
         // calc from children
         var masterNodeId = me.$('#masterTr').attr('data-value');
-        if (masterNodeId != undefined) {
+        if (!me.appBase.DataUtils.isUndefinedStringValue(masterNodeId)) {
             console.log('yaioRecalcMasterGanttBlockFromTree calc for masterNodeId:', masterNodeId);
             me.yaioRecalcMasterGanttBlockLine(masterNodeId, 'plan');
             me.yaioRecalcMasterGanttBlockLine(masterNodeId, 'ist');
@@ -398,7 +396,7 @@ Yaio.NodeGanttRender = function(appBase) {
         // check for tree
         var treeId = '#tree';
         var tree = me.$(treeId).fancytree('getTree');
-        if (me.$(treeId).length <= 0 || !tree || tree == 'undefined' ) {
+        if (me.appBase.DataUtils.isEmptyStringValue(me.$(treeId).length) || me.appBase.DataUtils.isEmptyStringValue(tree)) {
             me.appBase.get('Logger').logError('yaioRecalcMasterGanttBlock: error tree:"' + treeId + '" not found.', false);
             return;
         }
@@ -406,7 +404,7 @@ Yaio.NodeGanttRender = function(appBase) {
         // filter ganttblocks
         var filter = 'div.gantt_' + praefix + '_bar, div.gantt_' + praefix + 'ChildrenSum_bar';
         var $ganttBars = me.$(filter).filter(function () { 
-            return me.$(this).parent().css('display') == 'block'; 
+            return me.$(this).parent().css('display') === 'block';
         });
         console.log('yaioRecalcMasterGanttBlock type=' + praefix + ' found:' + $ganttBars.length + ' for filter:' + filter);
         if ($ganttBars.length > 0) {

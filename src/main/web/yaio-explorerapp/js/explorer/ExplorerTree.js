@@ -158,7 +158,7 @@ Yaio.ExplorerTree = function(appBase) {
                         var newPos = data.otherNode.data.basenode.sortPos;
                         var newParent = node.getParent();
                         var newParentKey = node.getParent().key;
-                        if (newParent.isRootNode() || newParentKey == 'undefined' || ! newParent) {
+                        if (newParent.isRootNode() || me.appBase.DataUtils.isUndefinedStringValue(newParentKey) || !newParent) {
                             newParentKey = node.tree.options.masterNodeId;
                         }
                         switch( data.hitMode){
@@ -286,7 +286,7 @@ Yaio.ExplorerTree = function(appBase) {
                     }
                     var newParent = node;
                     var node = me.clipboardNode.toDict(true);
-                    if (me.pasteMode == 'cut' ) {
+                    if (me.pasteMode === 'cut' ) {
                         if (! me.appBase.get('YaioAccessManager').getAvailiableNodeAction('move', node.key, false)) {
                             return false;
                         }
@@ -298,7 +298,7 @@ Yaio.ExplorerTree = function(appBase) {
                         if (window.confirm('Wollen Sie die Node und Ihre Subnodes wirklich hierher verschieben?')) {
                             // map rootnode to masterNodeId 
                             var newParentKey = newParent.key;
-                            if (newParent.isRootNode() || newParentKey == 'undefined' || ! newParent) {
+                            if (newParent.isRootNode() || me.appBase.DataUtils.isUndefinedStringValue(newParentKey) || !newParent) {
                                 newParentKey = tree.options.masterNodeId;
                             }
                             // move yaioNode
@@ -321,7 +321,7 @@ Yaio.ExplorerTree = function(appBase) {
                         if (window.confirm('Wollen Sie die Node und Ihre Subnodes wirklich hierher kopieren?')) {
                             // map rootnode to masterNodeId 
                             var newParentKey = newParent.key;
-                            if (newParent.isRootNode() || newParentKey == 'undefined' || ! newParent) {
+                            if (newParent.isRootNode() || me.appBase.DataUtils.isUndefinedStringValue(newParentKey) || !newParent) {
                                 newParentKey = tree.options.masterNodeId;
                             }
                             // copy yaioNode
@@ -367,7 +367,7 @@ Yaio.ExplorerTree = function(appBase) {
                         
                         // map rootnode to masterNodeId 
                         var newParentKey = newParent.key;
-                        if (newParent.isRootNode() || newParentKey == 'undefined' || ! newParent) {
+                        if (newParent.isRootNode() || me.appBase.DataUtils.isUndefinedStringValue(newParentKey) || !newParent) {
                             newParentKey = tree.options.masterNodeId;
                         }
                         // move yaioNode
@@ -385,12 +385,12 @@ Yaio.ExplorerTree = function(appBase) {
                     // check parent
                     var newParent = node.getParent();
                     var newParentKey = node.getParent().key;
-                    if (newParent.isRootNode() || newParentKey == 'undefined' || ! newParent) {
+                    if (newParent.isRootNode() || me.appBase.DataUtils.isUndefinedStringValue(newParentKey) || !newParent) {
                         newParentKey = tree.options.masterNodeId;
                     }
                     // calc new position
                     var newPos = -2;
-                    if (node.getPrevSibling() != null) {
+                    if (!me.appBase.DataUtils.isUndefined(node.getPrevSibling())) {
                         newPos = node.getPrevSibling().data.basenode.sortPos - 2;
                     }
     
@@ -403,12 +403,12 @@ Yaio.ExplorerTree = function(appBase) {
                     // check parent
                     var newParent = node.getParent();
                     var newParentKey = node.getParent().key;
-                    if (newParent.isRootNode() || newParentKey == 'undefined' || ! newParent) {
+                    if (newParent.isRootNode() || me.appBase.DataUtils.isUndefinedStringValue(newParentKey) || !newParent) {
                         newParentKey = tree.options.masterNodeId;
                     }
                     // calc new position
                     var newPos = 9999;
-                    if (node.getNextSibling() != null) {
+                    if (!me.appBase.DataUtils.isUndefined(node.getNextSibling())) {
                         newPos = node.getNextSibling().data.basenode.sortPos + 2;
                     }
     
@@ -540,7 +540,7 @@ Yaio.ExplorerTree = function(appBase) {
         // check if donehandler
         if (doneHandler) {
             // only postprocess after rendering
-            if (treeInstances[treeId].state != state && maxTries > 0) {
+            if (treeInstances[treeId].state !== state && maxTries > 0) {
                 // wait if maxTries>0 or state is set to rendering_done
                 console.log('yaioDoOnFancyTreeState doneHandler:' + name + ') try=' + maxTries
                         + ' wait=' + waitTime + 'ms for ' + treeId + '=' + state);
@@ -574,12 +574,12 @@ Yaio.ExplorerTree = function(appBase) {
         };
         
         // deactivate lazyload for node if no children avaiable
-        if (basenode.statChildNodeCount == 'undefined' || basenode.statChildNodeCount <= 0) {
+        if (me.appBase.DataUtils.isUndefinedStringValue(basenode.statChildNodeCount) || basenode.statChildNodeCount <= 0) {
             datanode.lazy = false;
             datanode.children = [];
         }
     
-        if (basenode.className == 'UrlResNode') {
+        if (basenode.className === 'UrlResNode') {
             datanode.title = basenode.resLocName;
         }
         
@@ -602,7 +602,7 @@ Yaio.ExplorerTree = function(appBase) {
         
         // check response
         var state = data.response.state;
-        if (state == 'OK') {
+        if (state === 'OK') {
             // all fine
             console.log('OK loading nodes:' + data.response.stateMsg);
             
@@ -638,7 +638,7 @@ Yaio.ExplorerTree = function(appBase) {
      * @FeatureResult                return boolean: check passes or not
      * @FeatureKeywords              GUI Tree
      * @param node                   nodedata from serverresponse (java de.yaio.rest.controller.NodeActionReponse)
-     * @return                       check passes or not
+     * @return {boolean}             check passes or not
      */
     me.filterNodeData = function(node) {
         if (! me.nodeFilter) {
@@ -655,7 +655,7 @@ Yaio.ExplorerTree = function(appBase) {
             console.log('filterNodeData: skip node by workflowState:' + node.workflowState);
             return false;
         }
-        if (me.nodeFilter.statCount && !(node[me.nodeFilter.statCount] > 0)) {
+        if (me.nodeFilter.statCount && (node[me.nodeFilter.statCount] <= 0)) {
             console.log('filterNodeData: skip node by statCount:' + me.nodeFilter.statCount);
             return false;
         }
@@ -681,7 +681,7 @@ Yaio.ExplorerTree = function(appBase) {
             data.details = 'Ajax error: ' + error.statusText + ', status code = ' + error.status;
             
             // check if http-form result
-            if (error.status == 401) {
+            if (error.status === 401) {
                 // reload loginseite
                 me.$( '#error-message-text' ).html('Sie wurden vom System abgemeldet.');
                 

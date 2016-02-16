@@ -88,7 +88,7 @@ Yaio.StaticNodeData = function(appBase, config, defaultConfig) {
         var masterNode = yaioNodeActionReponse.node;
         
         // create Masternode if not exists 
-        if (masterNode.sysUID != me.appBase.config.masterSysUId) {
+        if (masterNode.sysUID !== me.appBase.config.masterSysUId) {
             masterNode = {
                 'className': 'TaskNode',
                 'name': 'Masterplan',
@@ -122,7 +122,7 @@ Yaio.StaticNodeData = function(appBase, config, defaultConfig) {
         
         var parentIdHirarchy = [];
         var node = me._getNodeDataById(nodeId, false);
-        if (node && node.parentId && node.parentId != '' && node.parentId != 'undefined') {
+        if (node && node.parentId && !me.appBase.DataUtils.isEmptyStringValue(node.parentId)) {
             parentIdHirarchy = me._getParentIdHierarchyById(node.parentId, true);
             parentIdHirarchy.push(node.parentId);
         }
@@ -207,7 +207,7 @@ Yaio.StaticNodeData = function(appBase, config, defaultConfig) {
     };
 
     me._yaioCallMoveNode = function(fancynode, newParentKey, newPos, json) {
-        var msg = '_yaioCallMoveNode for fancynode:' + fancynode.key + ' newParentKey:' + newParentKey + ' newPos:' + newPos;
+        //var msg = '_yaioCallMoveNode for fancynode:' + fancynode.key + ' newParentKey:' + newParentKey + ' newPos:' + newPos;
 
         var node = me.appBase.get('YaioStaticNodeDataStore').moveNode(fancynode, newParentKey, newPos, json);
 

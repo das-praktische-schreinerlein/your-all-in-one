@@ -30,10 +30,10 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
     
     // register filterOptions
     $scope.filterOptions = {};
-    if ($routeParams.workflowState && $routeParams.workflowState != '?') {
+    if ($routeParams.workflowState && $routeParams.workflowState !== '?') {
         $scope.filterOptions.strWorkflowStateFilter = $routeParams.workflowState;
     }
-    if ($routeParams.statCount && $routeParams.statCount != '?') {
+    if ($routeParams.statCount && $routeParams.statCount !== '?') {
         $scope.filterOptions.strStatCountFilter = $routeParams.statCount;
     }
 
@@ -43,12 +43,12 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
     var nodeByAllId = $routeParams.nodeByAllId;
     var activeNodeId = $routeParams.activeNodeId;
     var flgNodeByAllId = false;
-    if (nodeByAllId != null && nodeByAllId != '' && nodeByAllId) {
+    if (!yaioUtils.getService('DataUtils').isUndefinedStringValue(nodeByAllId)) {
         nodeId = nodeByAllId;
         baseUrl = '/showByAllIds/';
         flgNodeByAllId = true;
     }
-    if (nodeId == null || nodeId == '' || ! nodeId) {
+    if (yaioUtils.getService('DataUtils').isUndefinedStringValue(nodeId)) {
         nodeId = yaioUtils.getConfig().masterSysUId;
     }
 
@@ -110,7 +110,7 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
                         var data = angularResponse.data;
                         var header = angularResponse.header;
                         var config = angularResponse.config;
-                        var message = 'error loading node with url: ' + curNodeUrl;
+                        var message = 'error loading node=' + nodeId + ' activeNodeId=' + activeNodeId;
                         yaioUtils.getService('Logger').logError(message, true);
                         message = 'error data: ' + data + ' header:' + header + ' config:' + config;
                         yaioUtils.getService('Logger').logError(message, false);
@@ -121,14 +121,14 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
     $scope.loadActiveNodeIdSuccessHandler = function(nodeId, options, yaioNodeActionResponse) {
         // check response
         var state = yaioNodeActionResponse.state;
-        if (state == 'OK') {
+        if (state === 'OK') {
             // all fine
             console.log('NodeShowCtrl - OK loading activenode:' + yaioNodeActionResponse.stateMsg);
             
             // create nodehierarchy
             var nodeIdHierarchy = new Array();
             var parentNode = yaioNodeActionResponse.node.parentNode;
-            while (parentNode != null && parentNode != '' && parentNode != 'undefined') {
+            while (!yaioUtils.getService('DataUtils').isEmptyStringValue(parentNode)) {
                 nodeIdHierarchy.push(parentNode.sysUID);
                 parentNode = parentNode.parentNode;
             }
@@ -149,7 +149,7 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
     $scope.loadCurrentNodeIdSuccessHandler = function(nodeId, options, yaioNodeActionResponse) {
         // check response
         var state = yaioNodeActionResponse.state;
-        if (state == 'OK') {
+        if (state === 'OK') {
             // all fine
             console.log('NodeShowCtrl - OK loading nodes:' + yaioNodeActionResponse.stateMsg);
             $scope.node = yaioNodeActionResponse.node;
@@ -157,7 +157,7 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
             // create nodehierarchy
             var nodeHierarchy = new Array();
             var parentNode = yaioNodeActionResponse.node.parentNode;
-            while (parentNode != null && parentNode != '' && parentNode != 'undefined') {
+            while (!yaioUtils.getService('DataUtils').isEmptyStringValue(parentNode)) {
                 nodeHierarchy.push(parentNode);
                 parentNode = parentNode.parentNode;
             }

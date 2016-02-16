@@ -27,7 +27,7 @@ yaioApp.controller('FrontPageCtrl', function($rootScope, $scope, $location, $rou
     
     // set vars
     var nodeId = $routeParams.nodeId;
-    if (nodeId == null || nodeId == '' || ! nodeId) {
+    if (yaioUtils.getService('DataUtils').isUndefinedStringValue(nodeId)) {
         nodeId = 'SysStart1';
     }
     console.log('FrontPageCtrl - processing nodeId=' + nodeId);

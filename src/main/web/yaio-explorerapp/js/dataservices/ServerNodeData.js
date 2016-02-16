@@ -60,7 +60,8 @@ Yaio.ServerNodeData = function(appBase, config, defaultConfig) {
             // options
             me.config.masterSysUId       = yaioCommonApiConfig.yaioMastersysuid;
             me.config.excludeNodePraefix = yaioCommonApiConfig.yaioExportcontrollerExcludenodepraefix;
-            me.config.excludeNodePraefix = (me.config.excludeNodePraefix != null ? me.config.excludeNodePraefix.replace(/%/g, '*') : 'nothing');
+            me.config.excludeNodePraefix = (!me.appBase.DataUtils.isUndefined(me.config.excludeNodePraefix) ?
+                me.config.excludeNodePraefix.replace(/%/g, '*') : 'nothing');
 
             // services
             me.config.plantUmlBaseUrl    = yaioCommonApiConfig.plantUmlBaseUrl;
@@ -89,7 +90,6 @@ Yaio.ServerNodeData = function(appBase, config, defaultConfig) {
 
         // load config from server
         var resConfig = me._yaioCallLoadConfig();
-        var loadDone = false;
         resConfig.done(function(yaioCommonApiConfig, textStatus, jqXhr ) {
             var msg = '_loadConfig for yaio';
             console.log(msg + ' done');
@@ -246,7 +246,7 @@ Yaio.ServerNodeData = function(appBase, config, defaultConfig) {
 
         // special case UrlResNode because of multipart-uploads
         var flgMultiPart = false;
-        if (options.className == 'UrlResNode') {
+        if (options.className === 'UrlResNode') {
             // UrlResNod set formdata for multipart-uploads
             flgMultiPart = true;
             

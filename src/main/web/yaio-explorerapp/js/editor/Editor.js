@@ -98,10 +98,16 @@ Yaio.Editor = function(appBase) {
         // configure value mapping
         var basenode = {};
         for (var formName in me.appBase.config.configNodeTypeFields) {
+            if (!me.appBase.config.configNodeTypeFields.hasOwnProperty(formName)) {
+                continue;
+            }
             var fields = new Array();
             fields = fields.concat(me.appBase.config.configNodeTypeFields.Common.fields);
             fields = fields.concat(me.appBase.config.configNodeTypeFields[formName].fields);
             for (var idx in fields) {
+                if (!fields.hasOwnProperty(idx)) {
+                    continue;
+                }
                 var field = fields[idx];
                 me.yaioSetFormField(field, formName, basenode);
             }
@@ -124,7 +130,7 @@ Yaio.Editor = function(appBase) {
         var value = basenode[fieldName];
         
         // convert value
-        if (field.datatype === 'integer' && (! value || value == 'undefined' || value === null)) {
+        if (field.datatype === 'integer' && (me.appBase.DataUtils.isEmptyStringValue(value))) {
             // specical int
             value = 0;
         } else if (field.datatype === 'date')  {
@@ -133,7 +139,7 @@ Yaio.Editor = function(appBase) {
         } else if (field.datatype === 'datetime')  {
             // date
             value = svcDataUtils.formatGermanDateTime(value);
-        } else if (! value || value == 'undefined' || value == null) {
+        } else if (me.appBase.DataUtils.isUndefinedStringValue(value)) {
             // alle other
             value = '';
         } 
@@ -337,6 +343,9 @@ Yaio.Editor = function(appBase) {
         
         // iterate fields
         for (var idx in fields) {
+            if (!fields.hasOwnProperty(idx)) {
+                continue;
+            }
             var field = fields[idx];
             me.yaioSetFormField(field, fieldSuffix, basenode);
         }
@@ -417,7 +426,7 @@ Yaio.Editor = function(appBase) {
      * @param element                element (HTML-Element) to fire the trigger
      */
     me.callUpdateTriggerForElement = function(element) {
-        if (element != null) {
+        if (!me.appBase.DataUtils.isUndefined(element)) {
             me.$(element).trigger('input').triggerHandler('change');
             me.$(element).trigger('select').triggerHandler('change');
             me.$(element).trigger('input');
@@ -519,10 +528,10 @@ Yaio.Editor = function(appBase) {
      */
     me.calcIstStandFromState = function(basenode) {
         var istStand = basenode.istStand;
-        if (   basenode.type == 'EVENT_ERLEDIGT'
-            || basenode.type == 'EVENT_VERWORFEN'
-            || basenode.type == 'ERLEDIGT'
-            || basenode.type == 'VERWORFEN') {
+        if (   basenode.type === 'EVENT_ERLEDIGT'
+            || basenode.type === 'EVENT_VERWORFEN'
+            || basenode.type === 'ERLEDIGT'
+            || basenode.type === 'VERWORFEN') {
             istStand = 100;
         }
         console.log('calcIstStandFromState for node:' + basenode.sysUID + ' state=' + basenode.type + ' new istStand=' + istStand);
@@ -549,12 +558,12 @@ Yaio.Editor = function(appBase) {
     me.calcTypeFromIstStand = function(basenode) {
         var type = basenode.type;
     
-        if (basenode.className == 'TaskNode') {
+        if (basenode.className === 'TaskNode') {
             // TaskNode
-            if (basenode.istStand == '0') {
+            if (basenode.istStand === '0' || basenode.istStand === 0) {
                 // 0: OFFEN
                 type = 'OFFEN';
-            } else if (basenode.istStand == 100 && basenode.type !== 'VERWORFEN') {
+            } else if (basenode.istStand === 100 && basenode.type !== 'VERWORFEN') {
                 // 100: ERLEDIGT if not VERWORFEN already
                 type = 'ERLEDIGT';
             } else if (basenode.istStand < 100 && basenode.istStand > 0) {
@@ -563,12 +572,12 @@ Yaio.Editor = function(appBase) {
                     type = 'RUNNING';
                 }
             }
-        } else if (basenode.className == 'EventNode') {
+        } else if (basenode.className === 'EventNode') {
             // EventNode
-            if (basenode.istStand == '0') {
+            if (basenode.istStand === '0' || basenode.istStand === 0) {
                 // 0: EVENT_PLANED
                 type = 'EVENT_PLANED';
-            } else if (basenode.istStand == 100 && basenode.type !== 'EVENT_VERWORFEN') {
+            } else if (basenode.istStand === 100 && basenode.type !== 'EVENT_VERWORFEN') {
                 // 100: EVENT_ERLEDIGT if not EVENT_VERWORFEN already
                 type = 'EVENT_ERLEDIGT';
             } else if (basenode.istStand < 100 && basenode.istStand > 0) {

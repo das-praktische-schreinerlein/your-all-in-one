@@ -63,11 +63,11 @@ Yaio.ExportedData = function(appBase) {
      */
     me.openSpeechSynth = function() {
          var target = document.getElementById('div_full');
-         if (target == null) { target = self; }
+         if (target === null) { target = self; }
          target.focus();
          var speechsynthWindow = window.open('/yaio-explorerapp/speechsynth.html', 'speechsynth', 'width=690,height=350,resizable=yes,dependent=yes,scrollbars=yes');
          speechsynthWindow.focus();
-         if (speechsynthWindow.opener == null) { speechsynthWindow.opener = self; }
+         if (speechsynthWindow.opener === null) { speechsynthWindow.opener = self; }
          speechsynthWindow.opener.targetElement = target;
      };
     
@@ -91,7 +91,7 @@ Yaio.ExportedData = function(appBase) {
        if (! errMsg && ! functionName) { 
            errMsg = 'Parameter functionName required';
        } else {
-           if (functionName != me.CONST_FUNCNAME_SUM) {
+           if (functionName !== me.CONST_FUNCNAME_SUM) {
               errMsg = 'Parameter functionName must be [' + me.CONST_FUNCNAME_SUM + ']';
            }
        }
@@ -132,7 +132,7 @@ Yaio.ExportedData = function(appBase) {
            var col = me.$(this);
     
            // mich selbst herauslassen 
-           if (col.attr('id') == nodeTDId) {
+           if (col.attr('id') === nodeTDId) {
               // Jquery continue;
               //alert('SKIP NODEID: Zeile:' + (i+1) + ' ID:' + col.id + ' Content:' + col.html() + ' Number' + number);
               return;
@@ -160,7 +160,7 @@ Yaio.ExportedData = function(appBase) {
        var funcResult = 0;
        for (var index = 0; index < numbers.length; ++index) {
            // alert('funcResult +' +  numbers[index]);
-           if (functionName == me.CONST_FUNCNAME_SUM) {
+           if (functionName === me.CONST_FUNCNAME_SUM) {
               funcResult += numbers[index]; 
            }
        }
@@ -168,7 +168,7 @@ Yaio.ExportedData = function(appBase) {
        // Inhalt des Elements setzen
        //alert('funcResult:' + funcResult);
        var text = (praefix ? praefix : '') + funcResult + (suffix ? suffix : '');
-       elemNodeTD.html(funcResult);
+       elemNodeTD.html(text);
     };
     
     /*
@@ -277,7 +277,7 @@ Yaio.ExportedData = function(appBase) {
     /* Um einen Volltext-Treffer zu haben, müssen alle Worte im durchsuchten Text vorkommen. */
     me.VolltextTreffer = function(inhalt, suchworte, flgUseWildCards, flgUseOr) {
         // Wenn keine Suchzeichenkette als gefunden kennzeichnen
-        if (suchworte.length == 0) {
+        if (suchworte.length === 0) {
             return true;
         }
 
@@ -293,11 +293,11 @@ Yaio.ExportedData = function(appBase) {
             suchwortFound = true;
             for (var pi = 0; pi < patterns.length; pi++) {
                 var pattern = patterns[pi];
-                if (! pattern || pattern == '') {
+                if (me.appBase.DataUtils.isUndefinedStringValue(pattern)) {
                     continue;
                 }
                 // check pattern
-                if (inhalt.indexOf(pattern) == -1) {
+                if (inhalt.indexOf(pattern) === -1) {
                     // pattern not found
                     if (! flgUseOr) {
                         // we use AND and 1 pattern not found: the looser takes it all
@@ -386,7 +386,7 @@ Yaio.ExportedData = function(appBase) {
         me.$('.volltextsuchfeld').keyup(
             function(event) {
                 // nur ausfuehren wenn enter
-                if(event.keyCode != 13) {
+                if(event.keyCode !== 13) {
                    return;
                 }
                 
