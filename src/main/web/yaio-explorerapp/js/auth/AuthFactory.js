@@ -46,11 +46,15 @@ yaioApp.factory('authorization', function ($rootScope, yaioUtils) {
                 } else {
                     $rootScope.authenticated = false;
                 }
-                callback && callback();
+                if (callback) {
+                    callback();
+                }
             }).error(function(data) {
                 console.log('authentificate: error ' + data);
                 $rootScope.authenticated = false;
-                callback && callback();
+                if (callback) {
+                    callback();
+                }
             });
         }
     };
