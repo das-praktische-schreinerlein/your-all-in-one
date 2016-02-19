@@ -41,14 +41,13 @@ Yaio.FileNodeData = function(appBase, config, defaultConfig) {
         // define handler
         var handleLoadJSONFileSelectHandler = function handleLoadJSONFileSelect(evt) {
             var files = evt.target.files; // FileList object
+            var reader = new FileReader();
 
-            // Loop through the FileList.
-            for (var i = 0, numFiles = files.length; i < numFiles; i++) {
-                var file = files[i];
-                var reader = new FileReader();
+            if (files.length === 1) {
+                var file = files[0];
 
                 // config reader
-                reader.onload = function(res) {
+                reader.onload = function (res) {
                     console.log('read fileName:' + file.name);
 
                     // update serviceconfig
@@ -57,20 +56,18 @@ Yaio.FileNodeData = function(appBase, config, defaultConfig) {
 
                     // set content as json
                     window.yaioFileJSON = res.target.result;
-                    
+
                     // load content
                     me._loadStaticJson(window.yaioFileJSON);
-                    
+
                     // set new name
                     me.config.name = 'Dateiupload: ' + file.name;
-                    
+
                     dfd.resolve('OK');
                 };
-                
+
                 // read the file
                 reader.readAsText(file);
-                
-                i = files.length +1000;
             }
         };
         
