@@ -33,7 +33,7 @@ Yaio.NodeDataRender = function(appBase) {
     me._init = function() {
     };
 
-    /* jshint maxstatements: 100 */
+    /* jshint maxstatements: 110 */
     /**
      * Callback for fancyftree. Renders the full block for corresponding basenode.
      * Manipulates the default-fancytree-tablerow (replace+add+hide elements).<br>
@@ -54,6 +54,7 @@ Yaio.NodeDataRender = function(appBase) {
         var svcYaioNodeGanttRender = me.appBase.get('YaioNodeGanttRender');
         var svcYaioAccessManager = me.appBase.get('YaioAccessManager');
         var yaioAppBaseVarName = me.appBase.config.appBaseVarName;
+        var clickHandler;
         
         // extract nodedata
         var node = data.node;
@@ -77,36 +78,41 @@ Yaio.NodeDataRender = function(appBase) {
             // generate actions
             var actionHtml = '';
             if (svcYaioAccessManager.getAvailiableNodeAction('showsysdata', basenode.sysUID, false)) {
-                actionHtml += '<div class="fieldtype_sysToggler">'
-                    + '<a onclick="javascript: ' + yaioAppBaseVarName + '.get(\'YaioExplorerAction\').toggleNodeSysContainer(\'' + basenode.sysUID + '\'); return false;"'
-                            + ' id="toggler_sys_' + basenode.sysUID + '"'
-                            + ' class="" '
-                            + ' data-tooltip="tooltip.command.ToggleSys" lang="tech"></a>'
-                    + '</div>';
+                clickHandler = yaioAppBaseVarName + '.YaioExplorerAction.toggleNodeSysContainer(\'' + basenode.sysUID + '\'); return false;';
+                actionHtml += '<div class="fieldtype_sysToggler">' +
+                    '<a onclick="javascript: ' + clickHandler + '"' +
+                    ' id="toggler_sys_' + basenode.sysUID + '"' +
+                    ' class="" ' +
+                    ' data-tooltip="tooltip.command.ToggleSys" lang="tech"></a>' +
+                    '</div>';
             }
             if (svcYaioAccessManager.getAvailiableNodeAction('edit', basenode.sysUID, false)) {
-                actionHtml += '<a onclick="javascript: ' + yaioAppBaseVarName + '.get(\'YaioEditor\').yaioOpenNodeEditor(\'' + basenode.sysUID + '\', \'edit\'); return false;"'
-                    + ' id="cmdEdit' + basenode.sysUID + '"'
-                    + ' class="yaio-icon-edit"'
-                    + ' lang="tech" data-tooltip="tooltip.command.NodeEdit"></a>';
+                clickHandler = yaioAppBaseVarName + '.YaioEditor.yaioOpenNodeEditor(\'' + basenode.sysUID + '\', \'edit\'); return false;';
+                actionHtml += '<a onclick="javascript: ' + clickHandler + '"' +
+                    ' id="cmdEdit' + basenode.sysUID + '"' +
+                    ' class="yaio-icon-edit"' +
+                    ' lang="tech" data-tooltip="tooltip.command.NodeEdit"></a>';
             }
             if (svcYaioAccessManager.getAvailiableNodeAction('create', basenode.sysUID, false)) {
-                actionHtml += '<a onclick="javascript: ' + yaioAppBaseVarName + '.get(\'YaioEditor\').yaioOpenNodeEditor(\'' + basenode.sysUID + '\', \'create\'); return false;"'
-                    + ' id="cmdCreate' + basenode.sysUID + '"'
-                    + ' class="yaio-icon-create"'
-                    + ' lang="tech" data-tooltip="tooltip.command.NodeCreateChild"></a>';
+                clickHandler = yaioAppBaseVarName + '.YaioEditor.yaioOpenNodeEditor(\'' + basenode.sysUID + '\', \'create\'); return false;';
+                actionHtml += '<a onclick="javascript: ' + clickHandler + '"' +
+                    ' id="cmdCreate' + basenode.sysUID + '"' +
+                    ' class="yaio-icon-create"' +
+                    ' lang="tech" data-tooltip="tooltip.command.NodeCreateChild"></a>';
             }
             if (svcYaioAccessManager.getAvailiableNodeAction('createsymlink', basenode.sysUID, false)) {
-                actionHtml += '<a onclick="javascript: ' + yaioAppBaseVarName + '.get(\'YaioEditor\').yaioOpenNodeEditor(\'' + basenode.sysUID + '\', \'createsymlink\'); return false;"'
-                    + ' id="cmdCreateSymLink' + basenode.sysUID + '"'
-                    + ' class="yaio-icon-createsymlink"'
-                    + ' lang="tech" data-tooltip="tooltip.command.NodeCreateSymLink"></a>';
+                clickHandler = yaioAppBaseVarName + '.YaioEditor.yaioOpenNodeEditor(\'' + basenode.sysUID + '\', \'createsymlink\'); return false;';
+                actionHtml += '<a onclick="javascript: ' + clickHandler + '"' +
+                    ' id="cmdCreateSymLink' + basenode.sysUID + '"' +
+                    ' class="yaio-icon-createsymlink"' +
+                    ' lang="tech" data-tooltip="tooltip.command.NodeCreateSymLink"></a>';
             }
             if (svcYaioAccessManager.getAvailiableNodeAction('remove', basenode.sysUID, false)) {
-                actionHtml += '<a onclick="javascript: ' + yaioAppBaseVarName + '.get(\'YaioExplorerAction\').yaioRemoveNodeById(\'' + basenode.sysUID + '\'); return false;"'
-                    + ' id="cmdRemove' + basenode.sysUID + '"'
-                    + ' class="yaio-icon-remove"'
-                    + ' lang="tech" data-tooltip="tooltip.command.NodeDelete"></a>';
+                clickHandler = yaioAppBaseVarName + '.YaioExplorerAction.yaioRemoveNodeById(\'' + basenode.sysUID + '\'); return false;';
+                actionHtml += '<a onclick="javascript: ' + clickHandler + '"' +
+                    ' id="cmdRemove' + basenode.sysUID + '"' +
+                    ' class="yaio-icon-remove"' +
+                    ' lang="tech" data-tooltip="tooltip.command.NodeDelete"></a>';
             }
             
             // add actions
@@ -125,9 +131,9 @@ Yaio.NodeDataRender = function(appBase) {
     
         // replace checkbox by center-command
         var $checkEle = $tdList.eq(colName).find('span.fancytree-checkbox');
-        $checkEle.html('<a href="#/show/' + basenode.sysUID + '"'
-            + ' class="yaio-icon-center"'
-            + ' lang="tech" data-tooltip="tooltip.command.NodeFocus"></a>');
+        $checkEle.html('<a href="#/show/' + basenode.sysUID + '"' +
+            ' class="yaio-icon-center"' +
+            ' lang="tech" data-tooltip="tooltip.command.NodeFocus"></a>');
         $checkEle.removeClass('fancytree-checkbox').addClass('command-center');
     
         // manipulate name-column
@@ -151,15 +157,12 @@ Yaio.NodeDataRender = function(appBase) {
         var $nameEle = $tdList.eq(colName).find('span.fancytree-title');
         var $div = me.$('<div style="display: inline-block" />')
             .append(me.$('<span class="' + statestyle + ' fancytree-title-state" lang="de" id="titleState' + basenode.sysUID + '"/>')
-                        .html(basenode.state + ' ')
-                        )
+                .html(basenode.state + ' '))
             .append('&nbsp;')
-            .append(me.$('<span class="fancytree-title2" id="title' + basenode.sysUID + '">' 
-                    + svcDataUtils.htmlEscapeText(name) + '</span>'))
-            ;
+            .append(me.$('<span class="fancytree-title2" id="title' + basenode.sysUID + '">' +
+                svcDataUtils.htmlEscapeText(name) + '</span>'));
         $nameEle.html($div);
-        //$tdList.eq(colName).find('span.fancytree-expander').addClass(statestyle);
-        
+
         // render datablock
         var $nodeDataBlock = me.appBase.get('YaioNodeDataRender').renderDataBlock(basenode, node, preventActionsColum);
         
@@ -168,77 +171,80 @@ Yaio.NodeDataRender = function(appBase) {
         var $row = me.$('<div class="togglecontainer field_nodeSys" id="detail_sys_' + basenode.sysUID + '" />');
         $nodeDataBlock.append($row);
         $row.append(
-                me.$('<div lang="tech" />').html('Stand: ' + svcDataUtils.formatGermanDateTime(basenode.sysChangeDate))
-                        .addClass('container_field')
-                        .addClass('fieldtype_basedata')
-                        .addClass('fieldtype_sysChangeDate')
-                        .addClass('field_sysChangeDate')
-                        );
+            me.$('<div lang="tech" />').html('Stand: ' + svcDataUtils.formatGermanDateTime(basenode.sysChangeDate))
+                .addClass('container_field')
+                .addClass('fieldtype_basedata')
+                .addClass('fieldtype_sysChangeDate')
+                .addClass('field_sysChangeDate')
+        );
         $row.append(
-                me.$('<div lang="tech" />').html(' (V ' + basenode.sysChangeCount + ')')
-                        .addClass('container_field')
-                        .addClass('fieldtype_basedata')
-                        .addClass('fieldtype_sysChangeCount')
-                        .addClass('field_sysChangeCount')
-                        );
+            me.$('<div lang="tech" />').html(' (V ' + basenode.sysChangeCount + ')')
+                .addClass('container_field')
+                .addClass('fieldtype_basedata')
+                .addClass('fieldtype_sysChangeCount')
+                .addClass('field_sysChangeCount')
+            );
         $row.append(
-                me.$('<div lang="tech" />').html('angelegt: ' + svcDataUtils.formatGermanDateTime(basenode.sysCreateDate))
-                        .addClass('container_field')
-                        .addClass('fieldtype_basedata')
-                        .addClass('fieldtype_sysCreateDate')
-                        .addClass('field_sysCreateDate')
-                        ); 
+            me.$('<div lang="tech" />').html('angelegt: ' + svcDataUtils.formatGermanDateTime(basenode.sysCreateDate))
+                .addClass('container_field')
+                .addClass('fieldtype_basedata')
+                .addClass('fieldtype_sysCreateDate')
+                .addClass('field_sysCreateDate')
+        );
         $row.append(
-                me.$('<div lang="tech" />').html('Kinder: ' + basenode.statChildNodeCount 
-                        + ' Workflows: ' + basenode.statWorkflowCount
-                        + ' ToDos: ' + basenode.statWorkflowTodoCount
-                        + ' Urls: ' + basenode.statUrlResCount
-                        + ' Info: ' + basenode.statInfoCount)
-                        .addClass('container_field')
-                        .addClass('fieldtype_basedata')
-                        .addClass('fieldtype_statistik')
-                        .addClass('field_statistik')
-                        ); 
-        
+            me.$('<div lang="tech" />').html('Kinder: ' + basenode.statChildNodeCount +
+                    ' Workflows: ' + basenode.statWorkflowCount +
+                    ' ToDos: ' + basenode.statWorkflowTodoCount +
+                    ' Urls: ' + basenode.statUrlResCount +
+                    ' Info: ' + basenode.statInfoCount)
+                .addClass('container_field')
+                .addClass('fieldtype_basedata')
+                .addClass('fieldtype_statistik')
+                .addClass('field_statistik')
+        );
+
         // add nodeDesc if set
         if (!me.appBase.DataUtils.isEmptyStringValue(basenode.nodeDesc) && !flgRenderMinimum) {
             // columncount
-            //var columnCount = me.$('>td', $nodedataBlock).length;
-            
+
             // add  column
+            clickHandler = yaioAppBaseVarName + '.YaioExplorerAction.toggleNodeDescContainer(\'' + basenode.sysUID + '\'); return false;';
             me.$($nodeDataBlock).find('div.container_data_row').append(
-                    me.$('<div />').html('<a href="#"' +
-                            ' onclick="' + yaioAppBaseVarName + '.get(\'YaioExplorerAction\').toggleNodeDescContainer(\'' + basenode.sysUID + '\'); return false;"' +
-                                ' id="toggler_desc_' + basenode.sysUID + '"' +
-                                ' data-tooltip="tooltip.command.ToggleDesc" lang="tech"></a>')
-                            .addClass('container_field')
-                            .addClass('fieldtype_descToggler')
-                            .addClass('toggler_show')
-                            //.addClass(statestyle)
-                            );
+                me.$('<div />').html('<a href="#"' +
+                        ' onclick="' + clickHandler + '"' +
+                        ' id="toggler_desc_' + basenode.sysUID + '"' +
+                        ' data-tooltip="tooltip.command.ToggleDesc" lang="tech"></a>')
+                    .addClass('container_field')
+                    .addClass('fieldtype_descToggler')
+                    .addClass('toggler_show')
+            );
             
             // create desc row
             var $divDesc = me.$('<div class="togglecontainer" id="detail_desc_' + basenode.sysUID + '" />');
             $divDesc.addClass('field_nodeDesc');
     
             // add commands
-            var commands = '<div class="container-commands-desc" id="commands_desc_' + basenode.sysUID + '"'
-                + ' data-tooltip="tooltip.command.TogglePreWrap" lang="tech" >'
-                + '<input type="checkbox" id="cmd_toggle_content_desc_' + basenode.sysUID + '" onclick="' + yaioAppBaseVarName + '.get(\'UIToggler\').togglePreWrap(\'#content_desc_' + basenode.sysUID + '\');' + yaioAppBaseVarName + '.get(\'UIToggler\').togglePreWrap(\'#container_content_desc_' + basenode.sysUID + '\'); return true;">'
-                + '<span lang="tech">im Originallayout anzeigen</span>'
-        //        + '<input type="checkbox" id="cmd_toggle_content_desc_markdown_' + basenode.sysUID + '" onclick="toggleDescMarkdown(\'#container_content_desc_' + basenode.sysUID + '\'); return true;">'
-        //        + '<span lang="tech">Markdown</span>'
-                ;
-            commands += '<a class="button command-desc-jiraexport" onClick="' + yaioAppBaseVarName + '.get(\'YaioExplorerAction\').openJiraExportWindow(\''+ basenode.sysUID + '\'); return false;"'
-                +   ' lang="tech" data-tooltip="tooltip.command.OpenJiraExportWindow">common.command.OpenJiraExportWindow</a>';
-            commands += '<a class="button command-desc-txtexport" onClick="' + yaioAppBaseVarName + '.get(\'YaioExplorerAction\').openTxtExportWindow('
-                +   yaioAppBaseVarName + '.$(\'#container_content_desc_' + basenode.sysUID + '\').text()); return false;"'
-                +   ' lang="tech" data-tooltip="tooltip.command.OpenTxtExportWindow">common.command.OpenTxtExportWindow</a>';
+            var commands = '<div class="container-commands-desc" id="commands_desc_' + basenode.sysUID + '"' +
+                ' data-tooltip="tooltip.command.TogglePreWrap" lang="tech" >';
+
+            clickHandler = yaioAppBaseVarName + '.UIToggler.togglePreWrap(\'#content_desc_' + basenode.sysUID + '\');' +
+                yaioAppBaseVarName + '.get(\'UIToggler\').togglePreWrap(\'#container_content_desc_' + basenode.sysUID + '\'); return true;';
+            commands += '<input type="checkbox" id="cmd_toggle_content_desc_' + basenode.sysUID +
+                '" onclick="' + clickHandler + '">' +
+                '<span lang="tech">im Originallayout anzeigen</span>';
+
+            clickHandler = yaioAppBaseVarName + '.YaioExplorerAction.openJiraExportWindow(\'' + basenode.sysUID + '\'); return false;';
+            commands += '<a class="button command-desc-jiraexport" onClick="' + clickHandler + '" lang="tech"' +
+                ' data-tooltip="tooltip.command.OpenJiraExportWindow">common.command.OpenJiraExportWindow</a>';
+
+            clickHandler = yaioAppBaseVarName + '.YaioExplorerAction.openTxtExportWindow(' + yaioAppBaseVarName + '.$(\'#container_content_desc_' + basenode.sysUID + '\').text()); return false;';
+            commands += '<a class="button command-desc-txtexport" onClick="' + clickHandler + '" lang="tech"' +
+                ' data-tooltip="tooltip.command.OpenTxtExportWindow">common.command.OpenTxtExportWindow</a>';
             if ('speechSynthesis' in window) {
                 // Synthesis support. Make your web apps talk!
-                commands += '<a class="button" onClick="' + yaioAppBaseVarName + '.get(\'YaioLayout\').openSpeechSynthWindow('
-                    +   'document.getElementById(\'container_content_desc_' + basenode.sysUID + '\')); return false;"'
-                    +   ' lang="tech" data-tooltip="tooltip.command.OpenSpeechSynth">common.command.OpenSpeechSynth</a>';
+                clickHandler = yaioAppBaseVarName + '.SpeechSynthController.open(\'container_content_desc_' + basenode.sysUID + '\'); return false;';
+                commands += '<a class="button" onClick="' + clickHandler + '" lang="tech"' +
+                    ' data-tooltip="tooltip.command.OpenSpeechSynth">common.command.OpenSpeechSynth</a>';
      
                }        
             commands += '</div>';
@@ -332,65 +338,65 @@ Yaio.NodeDataRender = function(appBase) {
         var $table = me.$('<div class="container_data_table"/>');
         var $row = me.$('<div class="container_data_row"/>');
         $table.append($row);
-        
+
         // default fields
         $row.append(me.$('<div />').html(svcDataUtils.htmlEscapeText(basenode.metaNodePraefix + basenode.metaNodeNummer))
-                .addClass('container_field')
-                .addClass('fieldtype_basedata')
-                .addClass('fieldtype_metanummer')
-                .addClass('field_metanummer')
-                );
-            
+            .addClass('container_field')
+            .addClass('fieldtype_basedata')
+            .addClass('fieldtype_metanummer')
+            .addClass('field_metanummer')
+        );
+
         $row.append(me.$('<div lang="tech" />').html(basenode.className)
-               .addClass('container_field')
-               .addClass('fieldtype_basedata')
-               .addClass('fieldtype_type')
-               .addClass('field_type')
-               .addClass(statestyle));
+            .addClass('container_field')
+            .addClass('fieldtype_basedata')
+            .addClass('fieldtype_type')
+            .addClass('field_type')
+            .addClass(statestyle));
         if (basenode.className === 'TaskNode' || basenode.className === 'EventNode') {
             // TaskNode
             $row.append(
-                    me.$('<div />').html('&nbsp;' + svcDataUtils.formatNumbers(basenode.istChildrenSumStand, 0, '%'))
-                            .addClass('container_field')
-                            .addClass('fieldtype_additionaldata')
-                            .addClass('fieldtype_stand')
-                            .addClass('field_istChildrenSumStand')
-                            .addClass(statestyle)
-                            ); 
+                me.$('<div />').html('&nbsp;' + svcDataUtils.formatNumbers(basenode.istChildrenSumStand, 0, '%'))
+                    .addClass('container_field')
+                    .addClass('fieldtype_additionaldata')
+                    .addClass('fieldtype_stand')
+                    .addClass('field_istChildrenSumStand')
+                    .addClass(statestyle)
+            );
             $row.append(
-                    me.$('<div />').html('&nbsp;' + svcDataUtils.formatNumbers(basenode.istChildrenSumAufwand, 1, 'h'))
-                            .addClass('container_field')
-                            .addClass('fieldtype_additionaldata')
-                            .addClass('fieldtype_aufwand')
-                            .addClass('field_istChildrenSumAufwand')
-                            .addClass(statestyle)
-                            );
+                me.$('<div />').html('&nbsp;' + svcDataUtils.formatNumbers(basenode.istChildrenSumAufwand, 1, 'h'))
+                    .addClass('container_field')
+                    .addClass('fieldtype_additionaldata')
+                    .addClass('fieldtype_aufwand')
+                    .addClass('field_istChildrenSumAufwand')
+                    .addClass(statestyle)
+            );
             $row.append(
-                    me.$('<div />').html('&nbsp;' + svcDataUtils.formatGermanDate(basenode.istChildrenSumStart)
-                            + '-' + svcDataUtils.formatGermanDate(basenode.istChildrenSumEnde))
-                             .addClass('container_field')
-                             .addClass('fieldtype_additionaldata')
-                             .addClass('fieldtype_fromto')
-                             .addClass('field_istChildrenSum')
-                             .addClass(statestyle)
-                             );
+                me.$('<div />').html('&nbsp;' + svcDataUtils.formatGermanDate(basenode.istChildrenSumStart)
+                        + '-' + svcDataUtils.formatGermanDate(basenode.istChildrenSumEnde))
+                    .addClass('container_field')
+                    .addClass('fieldtype_additionaldata')
+                    .addClass('fieldtype_fromto')
+                    .addClass('field_istChildrenSum')
+                    .addClass(statestyle)
+            );
             $row.append(
-                    me.$('<div />').html('&nbsp;' + svcDataUtils.formatNumbers(basenode.planChildrenSumAufwand, 1, 'h'))
-                             .addClass('container_field')
-                             .addClass('fieldtype_additionaldata')
-                             .addClass('fieldtype_aufwand')
-                             .addClass('field_planChildrenSumAufwand')
-                             .addClass(statestyle)
-                             );
+                me.$('<div />').html('&nbsp;' + svcDataUtils.formatNumbers(basenode.planChildrenSumAufwand, 1, 'h'))
+                    .addClass('container_field')
+                    .addClass('fieldtype_additionaldata')
+                    .addClass('fieldtype_aufwand')
+                    .addClass('field_planChildrenSumAufwand')
+                    .addClass(statestyle)
+            );
             $row.append(
-                    me.$('<div />').html('&nbsp;' + svcDataUtils.formatGermanDate(basenode.planChildrenSumStart)
-                             + '-' + svcDataUtils.formatGermanDate(basenode.planChildrenSumEnde))
-                             .addClass('container_field')
-                             .addClass('fieldtype_additionaldata')
-                             .addClass('fieldtype_fromto')
-                             .addClass('field_planChildrenSum')
-                             .addClass(statestyle)
-                             );
+                me.$('<div />').html('&nbsp;' + svcDataUtils.formatGermanDate(basenode.planChildrenSumStart)
+                        + '-' + svcDataUtils.formatGermanDate(basenode.planChildrenSumEnde))
+                    .addClass('container_field')
+                    .addClass('fieldtype_additionaldata')
+                    .addClass('fieldtype_fromto')
+                    .addClass('field_planChildrenSum')
+                    .addClass(statestyle)
+            );
         } else if (basenode.className === 'InfoNode' || basenode.className === 'UrlResNode') {
             // render Info + UrlRes
             
@@ -412,13 +418,13 @@ Yaio.NodeDataRender = function(appBase) {
                         stateBlock = '<span lang="tech" data-tooltip="tooltip.command.OpenDMSDownloadWindow_' + resContentDMSState + '">' + stateBlock + '</span>';
                     }
                     $row.append(
-                            me.$('<div />').html(stateBlock)
-                                      .addClass('container_field')
-                                      .addClass('fieldtype_additionaldata')
-                                      .addClass('fieldtype_uploadsstate')
-                                      .addClass('field_resContentDMSState')
-                                      .addClass('field_resContentDMSState_' + resContentDMSState)
-                                      ); 
+                        me.$('<div />').html(stateBlock)
+                            .addClass('container_field')
+                            .addClass('fieldtype_additionaldata')
+                            .addClass('fieldtype_uploadsstate')
+                            .addClass('field_resContentDMSState')
+                            .addClass('field_resContentDMSState_' + resContentDMSState)
+                    );
                 }
                 // extracted metadata
                 var resIndexDMSState = basenode.resIndexDMSState;
@@ -434,13 +440,13 @@ Yaio.NodeDataRender = function(appBase) {
                         stateBlock = '<span lang="tech" data-tooltip="tooltip.command.OpenDMSIndexDownloadWindow_' + resIndexDMSState + '">' + stateBlock + '</span>';
                     }
                     $row.append(
-                            me.$('<div />').html(stateBlock)
-                                      .addClass('container_field')
-                                      .addClass('fieldtype_additionaldata')
-                                      .addClass('fieldtype_uploadsstate')
-                                      .addClass('field_resIndexDMSState')
-                                      .addClass('field_resIndexDMSState_' + resIndexDMSState)
-                                      ); 
+                        me.$('<div />').html(stateBlock)
+                            .addClass('container_field')
+                            .addClass('fieldtype_additionaldata')
+                            .addClass('fieldtype_uploadsstate')
+                            .addClass('field_resIndexDMSState')
+                            .addClass('field_resIndexDMSState_' + resIndexDMSState)
+                    );
                 }
                 
                 // url-data
@@ -451,12 +457,12 @@ Yaio.NodeDataRender = function(appBase) {
                     resLocData = '<span>' + resLocData + '</span>';
                 }
                 $row.append(
-                        me.$('<div />').html(resLocData)
-                                  .addClass('container_field')
-                                  .addClass('fieldtype_additionaldata')
-                                  .addClass('fieldtype_url')
-                                  .addClass('field_resLocRef')
-                                  ); 
+                    me.$('<div />').html(resLocData)
+                        .addClass('container_field')
+                        .addClass('fieldtype_additionaldata')
+                        .addClass('fieldtype_url')
+                        .addClass('field_resLocRef')
+                );
             }
         
             // both
@@ -464,52 +470,52 @@ Yaio.NodeDataRender = function(appBase) {
                 || basenode.docLayoutAddStyleClass || basenode.docLayoutFlgCloseDiv) {
                 // render both
                 $row.append(
-                        me.$('<div lang="tech" />').html('Layout ')
-                                .addClass('container_field')
-                                .addClass('fieldtype_additionaldata')
-                                .addClass('fieldtype_ueDocLayout')
-                                .addClass('field_ueDocLayout')
-                                ); 
-                
+                    me.$('<div lang="tech" />').html('Layout ')
+                        .addClass('container_field')
+                        .addClass('fieldtype_additionaldata')
+                        .addClass('fieldtype_ueDocLayout')
+                        .addClass('field_ueDocLayout')
+                );
+
                 // check which docLayout is set    
                 if (basenode.docLayoutTagCommand) {
                     $row.append(
-                            me.$('<div lang="tech" />').html('Tag: ' 
-                                        + svcDataUtils.htmlEscapeText(basenode.docLayoutTagCommand))
-                                    .addClass('container_field')
-                                    .addClass('fieldtype_additionaldata')
-                                    .addClass('fieldtype_docLayoutTagCommand')
-                                    .addClass('field_docLayoutTagCommand')
-                                    ); 
+                        me.$('<div lang="tech" />').html('Tag: '
+                                + svcDataUtils.htmlEscapeText(basenode.docLayoutTagCommand))
+                            .addClass('container_field')
+                            .addClass('fieldtype_additionaldata')
+                            .addClass('fieldtype_docLayoutTagCommand')
+                            .addClass('field_docLayoutTagCommand')
+                    );
                 }
                 if (basenode.docLayoutAddStyleClass) {
                     $row.append(
-                            me.$('<div lang="tech" />').html('Style: ' 
-                                        + svcDataUtils.htmlEscapeText(basenode.docLayoutAddStyleClass))
-                                    .addClass('container_field')
-                                    .addClass('fieldtype_additionaldata')
-                                    .addClass('fieldtype_docLayoutAddStyleClass')
-                                    .addClass('field_docLayoutAddStyleClass')
-                                    ); 
+                        me.$('<div lang="tech" />').html('Style: '
+                                + svcDataUtils.htmlEscapeText(basenode.docLayoutAddStyleClass))
+                            .addClass('container_field')
+                            .addClass('fieldtype_additionaldata')
+                            .addClass('fieldtype_docLayoutAddStyleClass')
+                            .addClass('field_docLayoutAddStyleClass')
+                    );
                 }
                 if (basenode.docLayoutShortName) {
                     $row.append(
-                            me.$('<div lang="tech" />').html('Kurzname: ' 
-                                        + svcDataUtils.htmlEscapeText(basenode.docLayoutShortName))
-                                    .addClass('container_field')
-                                    .addClass('fieldtype_additionaldata')
-                                    .addClass('fieldtype_docLayoutShortName')
-                                    .addClass('field_docLayoutShortName')
-                                    ); 
+                        me.$('<div lang="tech" />').html('Kurzname: '
+                                + svcDataUtils.htmlEscapeText(basenode.docLayoutShortName))
+                            .addClass('container_field')
+                            .addClass('fieldtype_additionaldata')
+                            .addClass('fieldtype_docLayoutShortName')
+                            .addClass('field_docLayoutShortName')
+                    );
                 }
                 if (basenode.docLayoutFlgCloseDiv) {
                     $row.append(
-                            me.$('<div lang="tech" />').html('Block schlie&szligen!')
-                                    .addClass('container_field')
-                                    .addClass('fieldtype_additionaldata')
-                                    .addClass('fieldtype_docLayoutFlgCloseDiv')
-                                    .addClass('field_docLayoutFlgCloseDiv')
-                                    ); 
+                        me.$('<div lang="tech" />').html('Block schlie&szligen!')
+                            .addClass('container_field')
+                            .addClass('fieldtype_additionaldata')
+                            .addClass('fieldtype_docLayoutFlgCloseDiv')
+                            .addClass('field_docLayoutFlgCloseDiv')
+                    );
                 }
             }
         } else if (basenode.className === 'SymLinkNode') {
