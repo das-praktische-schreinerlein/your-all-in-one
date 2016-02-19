@@ -279,7 +279,7 @@ Yaio.ServerNodeData = function(appBase, config, defaultConfig) {
                 };
                 if (flgMultiPart) {
                     // spring accepts no fileuploads for PATCH
-                    httpOptions.method = 'POST',
+                    httpOptions.method = 'POST';
                     httpOptions.headers = {'Content-Type': undefined};
                     httpOptions.transformRequest = angular.identity;
                 }
