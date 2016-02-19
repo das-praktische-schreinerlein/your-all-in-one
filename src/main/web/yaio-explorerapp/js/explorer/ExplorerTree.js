@@ -28,7 +28,7 @@
  * Configuration
  *****************************************
  *****************************************/
-var treeInstances = new Array();
+var treeInstances = [];
 
 /*****************************************
  *****************************************
@@ -54,7 +54,9 @@ Yaio.ExplorerTree = function(appBase) {
         return me.appBase.get('YaioNodeData').loadNodeData(nodeId);
     };
 
-    /** 
+    /* jshint maxstatements: 100 */
+    /* jshint maxcomplexity: 100 */
+    /**
      * creates an fancytree on the html-element treeId and inits it with the data
      * of masterNodeId<br>
      * after init of the tree the doneHandler will be executed  
@@ -143,7 +145,6 @@ Yaio.ExplorerTree = function(appBase) {
                     return true;
                 },
                 dragEnter: function(node, data) {
-                    // return ['before', 'after'];
                     return true;
                 },
                 dragDrop: function(node, data) {
@@ -194,59 +195,16 @@ Yaio.ExplorerTree = function(appBase) {
                     // Return false to prevent edit mode
                     // dont use fancyeditor
                     return false;
-                },
-                edit: function(event, data){
-                    // unused because we use the yaioeditor
-                    
-                    // Editor was opened (available as data.input)
-                },
-                beforeClose: function(event, data){
-                    // unused because we use the yaioeditor
-    
-                    // Return false to prevent cancel/save (data.input is available)
-                },
-                save: function(event, data){
-                    // unused because we use the yaioeditor
-    
-//                    if (window.confirm('Wollen Sie den Titel wirklich ändern?')) {
-//                        // Save data.input.val() or return false to keep editor open
-//                        me.appBase.get('YaioExplorerAction').yaioSaveNode(data);
-//                        // We return true, so ext-edit will set the current user input
-//                        // as title
-//                        return true;
-//                    } else {
-//                        // discard
-//                        return false;
-//                    }
-                },
-                close: function(event, data){
-                    // unused because we use the yaioeditor
-    
-                    // Editor was removed
-                    if( data.save ) {
-                        // Since we started an async request, mark the node as preliminary
-                        me.$(data.node.span).addClass('pending');
-                    }
                 }
             },
             table: {
                 indentation: 20,
                 nodeColumnIdx: 0
-    //            checkboxColumnIdx: 0
             },
             gridnav: {
                 autofocusInput: false,
                 handleCursorKeys: true
             }
-            /**
-            click: function(event, data) {
-                var node = data.node,
-                    tt = me.$.ui.fancytree.getEventTargetType(event.originalEvent);
-                if (tt == undefined) {
-                    return true;
-                }
-            },
-    **/
         }).on('nodeCommand', function(event, data){
             var svcYaioExplorerAction = me.appBase.get('YaioExplorerAction');
             
@@ -442,7 +400,6 @@ Yaio.ExplorerTree = function(appBase) {
                     window.alert('Unhandled command: ' + data.cmd);
                     return;
             }
-      
         }).on('keydown', function(e){
             var c = String.fromCharCode(e.which),
                 cmd = null;
@@ -483,7 +440,6 @@ Yaio.ExplorerTree = function(appBase) {
                 {title: 'Bearbeiten <kbd>[F2]</kbd>', cmd: 'edit', uiIcon: 'ui-icon-pencil', disabled: true },
                 {title: 'Löschen <kbd>[Del]</kbd>', cmd: 'remove', uiIcon: 'ui-icon-trash', disabled: true },
                 {title: '----'},
-    //            {title: 'New sibling <kbd>[Ctrl+N]</kbd>', cmd: 'addSibling', uiIcon: 'ui-icon-plus' },
                 {title: 'Kind zeugen', cmd: 'addChild', uiIcon: 'ui-icon-plus', disabled: true},
                 {title: '----'},
                 {title: 'Focus', cmd: 'focus', uiIcon: 'ui-icon-arrowreturn-1-e' },
@@ -515,7 +471,10 @@ Yaio.ExplorerTree = function(appBase) {
             }
         });
     };
-    
+    /* jshint maxstatements: 50 */
+    /* jshint maxcomplexity: 50 */
+
+
     /*****************************************
      *****************************************
      * Service-Funktions (fancytree-callbacks)
@@ -598,7 +557,7 @@ Yaio.ExplorerTree = function(appBase) {
      * @param data                   the serverresponse (java de.yaio.rest.controller.NodeActionReponse)
      */
     me.postProcessNodeData = function(event, data) {
-        var list = new Array();
+        var list = [];
         
         // check response
         var state = data.response.state;
@@ -665,13 +624,6 @@ Yaio.ExplorerTree = function(appBase) {
 
     me.setNodeFilter = function(nodeFilter) {
         me.nodeFilter = nodeFilter || {};
-        if (! me.nodeFilter) {
-            // no filter
-            return;
-        }
-        
-        // filter existing nodes
-        ;
     };
     
     me.yaioFancyTreeLoadError = function(e, data) {
@@ -704,7 +656,7 @@ Yaio.ExplorerTree = function(appBase) {
                 'Es ist ein Fehler beim Nachladen aufgetreten:' + data.message
                 + ' Details:' + data.details);
     };
-    
+
     
     me._init();
     
