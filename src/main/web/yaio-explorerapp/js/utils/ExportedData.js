@@ -62,14 +62,8 @@ Yaio.ExportedData = function(appBase) {
      * ###########################
      */
     me.openSpeechSynth = function() {
-         var target = document.getElementById('div_full');
-         if (target === null) { target = self; }
-         target.focus();
-         var speechsynthWindow = window.open('/yaio-explorerapp/speechsynth.html', 'speechsynth', 'width=690,height=350,resizable=yes,dependent=yes,scrollbars=yes');
-         speechsynthWindow.focus();
-         if (speechsynthWindow.opener === null) { speechsynthWindow.opener = self; }
-         speechsynthWindow.opener.targetElement = target;
-     };
+        me.appBase.SpeechSynthController.open('div_full');
+    };
     
     /*
      * ###########################
@@ -127,7 +121,7 @@ Yaio.ExportedData = function(appBase) {
        
        // Funktionalitaet: alle x-Spalten iterieren und Zahlen extrahieren
        var filterTD = 'td:nth-child(' + (idxCol + 1) + ')';
-       var numbers = new Array();
+       var numbers = [];
        me.$(elemNodeTABLE).children('tbody').children('tr').children(filterTD).each(function (i) {
            var col = me.$(this);
     
@@ -196,13 +190,15 @@ Yaio.ExportedData = function(appBase) {
                         if (toggleBlock) {
                             curEbene = toggleBlock.getAttribute('data-pjebene');
                         }
-    
+
+                        /* jshint loopfunc: true */
                         var effect = function(){
                             // Leertoggler
                             var togEf = new ToggleEffect(toggleId); 
                             togEf.slideAniLen = 1; 
                             togEf.doEffect();
                         };
+                        /* jshint loopfunc: false */
                         if (flgShow) {
                             // Block zeigen
                             if (minEbene && curEbene && curEbene < minEbene) {
@@ -325,7 +321,7 @@ Yaio.ExportedData = function(appBase) {
                 var flgFound = false;
                 
                 // Datenelemente konfigurieren
-                var searchElements = new Array();
+                var searchElements = [];
                 searchElements.push(me.$('#' + me.$(value).attr('id') + ' > div:eq(1)').attr('id')); // Desc
                 searchElements.push(me.$('#' + me.$(value).attr('id') + ' > div:first > div:first > div:first > div:eq(1)').attr('id')); // Name
                 searchElements.push(me.$('#' + me.$(value).attr('id') + ' > div:first > div:eq(1)').attr('id')); // Status
