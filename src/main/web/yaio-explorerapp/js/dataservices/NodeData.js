@@ -246,7 +246,7 @@ Yaio.NodeData = function(appBase, config, defaultConfig) {
                 
                 // check if node-hierarchy exists (same tree)
                 var firstNodeId, firstNode;
-                var lstIdsHierarchy = new Array().concat(yaioNodeActionResponse.parentIdHierarchy);
+                var lstIdsHierarchy = [].concat(yaioNodeActionResponse.parentIdHierarchy);
                 while (! firstNode && lstIdsHierarchy.length > 0) {
                     firstNodeId = lstIdsHierarchy.shift();
                     firstNode = rootNode.mapChildren[firstNodeId];
