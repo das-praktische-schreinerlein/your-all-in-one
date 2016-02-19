@@ -199,7 +199,7 @@
         var match;
 
         // iterate all matching comment-html-tags
-        while (match = myRegexp.exec(newContent)) {
+        while ((match = myRegexp.exec(newContent)) !== null) {
             // extract data
             var blockContent = match[3];
             var restBefore = RegExp.leftContext;
@@ -223,7 +223,7 @@
             '';
         var myRegexp = new RegExp(regExStr, 'gim');
         var match;
-        while (match = myRegexp.exec(newContent)) {
+        while ((match = myRegexp.exec(newContent)) !== null) {
             var restBefore = RegExp.leftContext;
             var restAfter = RegExp.rightContext;
             newContent = restBefore + match[1] +
@@ -239,7 +239,7 @@
             '';
         var myRegexp = new RegExp(regExStr, 'gim');
         var match;
-        while (match = myRegexp.exec(newContent)) {
+        while ((match = myRegexp.exec(newContent)) !== null) {
             var restBefore = RegExp.leftContext;
             var restAfter = RegExp.rightContext;
             newContent = restBefore + match[1] + restAfter;
@@ -254,7 +254,7 @@
             '';
         var myRegexp = new RegExp(regExStr, 'gim');
         var match;
-        while (match = myRegexp.exec(newContent)) {
+        while ((match = myRegexp.exec(newContent)) !== null) {
             var restBefore = RegExp.leftContext + match[1];
             var restAfter = RegExp.rightContext;
             var blockContent = match[4];
@@ -289,7 +289,7 @@
             '';
         var myRegexp = new RegExp(regExStr, 'gim');
         var match;
-        while (match = myRegexp.exec(newContent)) {
+        while ((match = myRegexp.exec(newContent)) !== null) {
             var blockContent = match[3];
             var restBefore = RegExp.leftContext;
             var restAfter = RegExp.rightContext;
@@ -311,7 +311,7 @@
         var match;
 
         // iterate all matching comment-li-tags
-        while (match = myRegexp.exec(newContent)) {
+        while ((match = myRegexp.exec(newContent)) !== null) {
             newContent = RegExp.leftContext + match[1] + '\n';
 
             // extract data
