@@ -38,7 +38,7 @@ Yaio.Editor = function(appBase) {
      * initialize the object
      */
     me._init = function() {
-        self.callUpdateTriggerForElement = me.callUpdateTriggerForElement;
+        window.self.callUpdateTriggerForElement = me.callUpdateTriggerForElement;
     };
 
 
@@ -101,7 +101,7 @@ Yaio.Editor = function(appBase) {
             if (!me.appBase.config.configNodeTypeFields.hasOwnProperty(formName)) {
                 continue;
             }
-            var fields = new Array();
+            var fields = [];
             fields = fields.concat(me.appBase.config.configNodeTypeFields.Common.fields);
             fields = fields.concat(me.appBase.config.configNodeTypeFields[formName].fields);
             for (var idx in fields) {
@@ -215,8 +215,9 @@ Yaio.Editor = function(appBase) {
         // open editor
         me.yaioOpenNodeEditorForNode(basenode, mode, newNode);
     };
-        
-    /** 
+
+    /* jshint maxstatements: 100 */
+    /**
      * open the nodeeditor for the node (toggle it fromleft), transfer the data from node to the formfields  
      * @FeatureDomain                GUI
      * @FeatureResult                GUI-result: reset forms+field, hide forms, open the spcific form for the nodeclass, updates fields
@@ -229,7 +230,7 @@ Yaio.Editor = function(appBase) {
         var svcLogger = me.appBase.get('Logger');
         var svcDataUtils = me.appBase.get('DataUtils');
         var svcYaioLayout = me.appBase.get('YaioLayout');
-        var svcYaioMarkdownEditor = me.appBase.get('YaioMarkdownEditor');
+        var svcYaioMarkdownEditorController = me.appBase.get('YaioMarkdownEditorController');
 
         // reset editor
         console.log('yaioOpenNodeEditor: reset editor');
@@ -244,7 +245,7 @@ Yaio.Editor = function(appBase) {
         var nodeId = basenode.sysUID;
     
         // check mode    
-        var fields = new Array();
+        var fields = [];
         var formSuffix, fieldSuffix;
         var origBasenode = basenode;
         if (mode === 'edit') {
@@ -389,11 +390,11 @@ Yaio.Editor = function(appBase) {
         svcYaioLayout.hideFormRowTogglerIfSet('filterDescSymLinkForm', 'filter_DescSymLinkNode', false);
     
         // create nodeDesc-editor
-        svcYaioMarkdownEditor.createMarkdownEditorForTextarea('editorInputNodeDescTaskNode', 'inputNodeDescTaskNode');
-        svcYaioMarkdownEditor.createMarkdownEditorForTextarea('editorInputNodeDescEventNode', 'inputNodeDescEventNode');
-        svcYaioMarkdownEditor.createMarkdownEditorForTextarea('editorInputNodeDescInfoNode', 'inputNodeDescInfoNode');
-        svcYaioMarkdownEditor.createMarkdownEditorForTextarea('editorInputNodeDescUrlResNode', 'inputNodeDescUrlResNode');
-        svcYaioMarkdownEditor.createMarkdownEditorForTextarea('editorInputNodeDescSymLinkNode', 'inputNodeDescSymLinkNode');
+        svcYaioMarkdownEditorController.createMarkdownEditorForTextarea('editorInputNodeDescTaskNode', 'inputNodeDescTaskNode');
+        svcYaioMarkdownEditorController.createMarkdownEditorForTextarea('editorInputNodeDescEventNode', 'inputNodeDescEventNode');
+        svcYaioMarkdownEditorController.createMarkdownEditorForTextarea('editorInputNodeDescInfoNode', 'inputNodeDescInfoNode');
+        svcYaioMarkdownEditorController.createMarkdownEditorForTextarea('editorInputNodeDescUrlResNode', 'inputNodeDescUrlResNode');
+        svcYaioMarkdownEditorController.createMarkdownEditorForTextarea('editorInputNodeDescSymLinkNode', 'inputNodeDescSymLinkNode');
         
         // update appsize
         svcYaioLayout.setupAppSize();
@@ -403,7 +404,8 @@ Yaio.Editor = function(appBase) {
             me.setUploadFileUrlResNode(basenode);
         }
     };
-    
+    /* jshint maxstatements: 50 */
+
     /** 
      * close the nodeditor, toggle it to the left
      * @FeatureDomain                GUI
@@ -420,31 +422,10 @@ Yaio.Editor = function(appBase) {
      * a hack to call updatetrigger for the element because for speechregognition the popup
      * cant call the trigger for another window (security)<br>
      * the function binds to the current document-window
-     * @FeatureDomain                GUI
-     * @FeatureResult                GUI-result: calls updatetrigger for element
-     * @FeatureKeywords              GUI Editor SpeechRecognition
      * @param element                element (HTML-Element) to fire the trigger
      */
     me.callUpdateTriggerForElement = function(element) {
-        if (!me.appBase.DataUtils.isUndefined(element)) {
-            me.$(element).trigger('input').triggerHandler('change');
-            me.$(element).trigger('select').triggerHandler('change');
-            me.$(element).trigger('input');
-            me.$(element).focus();
-
-            // update ace-editor
-            var parentEditor = me.$(element).data('aceEditor');
-            if (!parentEditor) {
-                var id = me.$(element).attr('id');
-                if (id) {
-                    id = '#editor' + id.charAt(0).toUpperCase() + id.slice(1);
-                    parentEditor = me.$(id).data('aceEditor');
-                }
-            }
-            if (parentEditor) {
-                parentEditor.setValue(me.$(element).val());
-            }
-        }
+        me.appBase.DataUtils.callUpdateTriggerForElement(element);
     };
 
     /** 
