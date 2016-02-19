@@ -33,7 +33,8 @@ Yaio.NodeGanttRender = function(appBase) {
     me._init = function() {
     };
 
-    /** 
+    /* jshint maxstatements: 100 */
+    /**
      * Calcs+renders the gantt-block of specified type: (ist, plan, planChildrenSum, 
      * istChildrenSum) for basenode. Updates this elements:
      * <ul>
@@ -165,7 +166,8 @@ Yaio.NodeGanttRender = function(appBase) {
             console.log('fillGanttBlock SKIP no planDates: ' + msg);
         }
     };
-    
+    /* jshint maxstatements: 50 */
+
     /** 
      * Create the gantt-block of specified type: (ist, plan, planChildrenSum, 
      * istChildrenSum) for basenode. Creates this elements:
@@ -438,7 +440,6 @@ Yaio.NodeGanttRender = function(appBase) {
         var type = praefix + 'ChildrenSum';
         var $divLine = me.$('#gantt_' + type + '_container_' + masterNodeId);
         var $divLabel = me.$($divLine).find('#gantt_' + type + '_aufwand_' + masterNodeId);
-        var $div = me.$($divLine).find('#gantt_' + type + '_bar_' + masterNodeId);
         $divLabel.html('');
         if (sumRangeAufwand > 0)  {
             console.log('yaioRecalcMasterGanttBlock type=' + praefix + ' set gantt_aufwand_label with calced rangeaufwand :' + sumRangeAufwand + ' for ' + masterNodeId);
