@@ -226,7 +226,7 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
 
         // do extra for the different classNames
         // configure value mapping
-        var fields = new Array();
+        var fields = [];
         fields = fields.concat(yaioUtils.getConfig().configNodeTypeFields.Common.fields);
         if ($scope.nodeForEdit.className === 'TaskNode') {
             fields = fields.concat(yaioUtils.getConfig().configNodeTypeFields.TaskNode.fields);
