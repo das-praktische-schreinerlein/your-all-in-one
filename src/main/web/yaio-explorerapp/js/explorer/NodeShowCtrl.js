@@ -126,7 +126,7 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
             console.log('NodeShowCtrl - OK loading activenode:' + yaioNodeActionResponse.stateMsg);
             
             // create nodehierarchy
-            var nodeIdHierarchy = new Array();
+            var nodeIdHierarchy = [];
             var parentNode = yaioNodeActionResponse.node.parentNode;
             while (!yaioUtils.getService('DataUtils').isEmptyStringValue(parentNode)) {
                 nodeIdHierarchy.push(parentNode.sysUID);
@@ -155,7 +155,7 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
             $scope.node = yaioNodeActionResponse.node;
             
             // create nodehierarchy
-            var nodeHierarchy = new Array();
+            var nodeHierarchy = [];
             var parentNode = yaioNodeActionResponse.node.parentNode;
             while (!yaioUtils.getService('DataUtils').isEmptyStringValue(parentNode)) {
                 nodeHierarchy.push(parentNode);
