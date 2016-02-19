@@ -165,7 +165,7 @@ Yaio.StaticNodeDataStore = function(appBase, config, defaultConfig) {
     };
 
     me.removeNodeById = function(nodeId) {
-        var msg = 'removeNode node:' + nodeId;
+        //var msg = 'removeNode node:' + nodeId;
 
         var node = me.getNodeDataById(nodeId, false);
         if (node) {
