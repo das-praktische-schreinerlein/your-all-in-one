@@ -32,8 +32,9 @@ Yaio.NodeDataRender = function(appBase) {
      */
     me._init = function() {
     };
-    
-    /** 
+
+    /* jshint maxstatements: 100 */
+    /**
      * Callback for fancyftree. Renders the full block for corresponding basenode.
      * Manipulates the default-fancytree-tablerow (replace+add+hide elements).<br>
      * <ul>
@@ -303,8 +304,10 @@ Yaio.NodeDataRender = function(appBase) {
             svcYaioNodeGanttRender.yaioRecalcMasterGanttBlockFromTree();
         }
     };
+    /* jshint maxstatements: 50 */
 
-    /** 
+    /* jshint maxstatements: 100 */
+    /**
      * Renders the DataBlock for basenode and returns a JQuery-Html-Obj.
      * @FeatureDomain                Layout Rendering
      * @FeatureResult                ReturnValue JQuery-Html-Object - the rendered datablock
@@ -518,7 +521,7 @@ Yaio.NodeDataRender = function(appBase) {
     
         return $table;
     };
-    
+    /* jshint maxstatements: 50 */
 
     /** 
      * Shows the DataBlock<br> 
