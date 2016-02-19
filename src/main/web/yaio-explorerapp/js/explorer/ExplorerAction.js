@@ -59,7 +59,7 @@ Yaio.ExplorerAction = function(appBase) {
         
         // search for firstNode in rootTree, ignore if not found
         var firstNodeId, firstNode;
-        var lstIdsHierarchySave = new Array().concat(lstIdsHierarchy); 
+        var lstIdsHierarchySave = [].concat(lstIdsHierarchy);
         while (! firstNode && lstIdsHierarchy.length > 0) {
             firstNodeId = lstIdsHierarchy.shift();
             firstNode = rootNode.mapChildren[firstNodeId];
