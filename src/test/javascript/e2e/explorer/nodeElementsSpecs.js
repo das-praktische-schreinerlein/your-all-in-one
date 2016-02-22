@@ -43,7 +43,7 @@ describe('yaio explorer nodeelements', function() {
      */
     it('should show Desc of Testnode', function doShowDescOfTestNode() {
         // Given
-        var expectedText = "Diese Aufgabe bitte nicht löschen, da hier die JavaScript-E2E-Tests ausgeführt werden.";
+        var expectedText = 'Diese Aufgabe bitte nicht löschen, da hier die JavaScript-E2E-Tests ausgeführt werden.';
         var checkContentHandler = function (container) {
             expect(container.getText()).toContain(expectedText);
             return container.getText();
@@ -59,7 +59,7 @@ describe('yaio explorer nodeelements', function() {
                 var container = yaioNodePage.showDescForNode(yaioNodePage.jsFuncTestId, checkContentHandler);
                 container.getText().then(function() {
                     deferred.fulfill(container);
-                })
+                });
                 
                 return deferred.promise;
             });
@@ -67,7 +67,7 @@ describe('yaio explorer nodeelements', function() {
 
     it('should show Sys of Testnode', function doShowSysOfTestNode() {
         // Given
-        var expectedText = "Stand:";
+        var expectedText = 'Stand:';
         var checkContentHandler = function (container) {
             expect(container.getText()).toContain(expectedText);
             return container.getText();
@@ -85,7 +85,7 @@ describe('yaio explorer nodeelements', function() {
                 var container = yaioNodePage.showSysForNode(yaioNodePage.jsFuncTestId, checkContentHandler);
                 container.getText().then(function() {
                     deferred.fulfill(container);
-                })
+                });
                 
                 return deferred.promise;
             });

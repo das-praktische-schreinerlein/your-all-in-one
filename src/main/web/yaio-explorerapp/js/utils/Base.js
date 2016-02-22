@@ -40,22 +40,22 @@ Yaio.Base = function(appBase) {
     };
 
     me.toggleWithLinks = function(link1, link2, id1, id2) {
-         if (me.$(id1).css("display") != "none") {
-             me.$(id1).css("display", "none");
-             me.$(link1).css("display", "inline");
-             me.$(id2).css("display", "block");
-             me.$(link2).css("display", "none");
+         if (me.$(id1).css('display') !== 'none') {
+             me.$(id1).css('display', 'none');
+             me.$(link1).css('display', 'inline');
+             me.$(id2).css('display', 'block');
+             me.$(link2).css('display', 'none');
          } else {
-             me.$(id2).css("display", "none");
-             me.$(link2).css("display", "inline");
-             me.$(id1).css("display", "block");
-             me.$(link1).css("display", "none");
+             me.$(id2).css('display', 'none');
+             me.$(link2).css('display', 'inline');
+             me.$(id1).css('display', 'block');
+             me.$(link1).css('display', 'none');
          }
          return false;
      };
     
     me.createXFrameAllowFrom = function() {
-        return "x-frames-allow-from=" + window.location.hostname;
+        return 'x-frames-allow-from=' + window.location.hostname;
     };
 
     me._init();

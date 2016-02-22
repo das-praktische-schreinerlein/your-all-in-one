@@ -16,9 +16,9 @@
     JMATPageLayout.prototype.appendFormrowToggler = function(parentId, togglerBaseId, toggleClassName, label) {
         var html = jMATService.getPageLayoutService().createFormrowToggler(
                 togglerBaseId, toggleClassName, 
-                label + "<span class='icon-formrowtoggler icon-formrowtoggleron'>&nbsp;</span>", 
-                label + "<span class='icon-formrowtoggler icon-formrowtoggleroff'>&nbsp;</span>", "", "");
-        jMATService.getJMSServiceObj().appendHtml(html,parentId, "formrowToggler");
+                label + '<span class="icon-formrowtoggler icon-formrowtoggleron">&nbsp;</span>',
+                label + '<span class="icon-formrowtoggler icon-formrowtoggleroff">&nbsp;</span>', '', '');
+        jMATService.getJMSServiceObj().appendHtml(html,parentId, 'formrowToggler');
     };
 
     /**
@@ -30,7 +30,7 @@
         if (! eleInputRow) {
            return false;
         }
-        eleInputRow.style.display = "inline-block";
+        eleInputRow.style.display = 'inline-block';
         return true;
     };
 
@@ -42,26 +42,26 @@
     JMSLayout.prototype.getStateInputElement = function(eleInput) {
         var state = false;
 
-        if (eleInput.nodeName.toUpperCase() == "SELECT") {
+        if (eleInput.nodeName.toUpperCase() === 'SELECT') {
             // Select-Box
-            if (eleInput.value && (eleInput.value !== "search_all.php")) {
+            if (eleInput.value && (eleInput.value !== 'search_all.php')) {
                 state = true;
             } else {
                 // Multiselect auswerten
                 for (var i = 0; i < eleInput.length; i++) {
-                    if (eleInput.options[i].selected && eleInput.options[i].value && (eleInput.options[i].value !== "search_all.php")) {
+                    if (eleInput.options[i].selected && eleInput.options[i].value && (eleInput.options[i].value !== 'search_all.php')) {
                         state = true;
                         i = eleInput.length + 1;
                     }
                 }
             }
-        } else if (eleInput.nodeName.toUpperCase() == "INPUT") {
+        } else if (eleInput.nodeName.toUpperCase() === 'INPUT') {
            // Element als Radio/Checkbox suchen
-           if (eleInput.type.toUpperCase() == "RADIO") {
+           if (eleInput.type.toUpperCase() === 'RADIO') {
               if (eleInput.checked) {
                   state = true;
               }
-           } else if (eleInput.type.toUpperCase() == "CHECKBOX") {
+           } else if (eleInput.type.toUpperCase() === 'CHECKBOX') {
               if (eleInput.checked) {
                   state = true;
               }
@@ -69,7 +69,7 @@
               // normales Eingabefeld
               state = true;
            }
-        } else if (eleInput.nodeName.toUpperCase() == "TEXTAREA") {
+        } else if (eleInput.nodeName.toUpperCase() === 'TEXTAREA') {
             // Element als textarea suchen
             if (eleInput && eleInput.value) {
                // normales Eingabefeld
@@ -94,7 +94,7 @@
            // InputRow verarbeiten
            var eleInputRow = lstInputRows[i];
            state = state || this.getState4InputRow(eleInputRow);
-           console.log("state=" + state + " for " + eleInputRow.id);
+           console.log('state=' + state + ' for ' + eleInputRow.id);
         }
         return state;
      };
@@ -106,8 +106,8 @@
       */
      JMATPageLayout.prototype.appendBlockToggler = function(parentId, toggleId) {
          var html = jMATService.getPageLayoutService().createBlockTogglerHtml(toggleId, toggleId, 
-                 "<span class='icon-formrowtoggler icon-formrowtoggleron'>&nbsp;</span>", 
-                 "<span class='icon-formrowtoggler icon-formrowtoggleroff'>&nbsp;</span>", "", "");
-         jMATService.getJMSServiceObj().appendHtml(html, parentId, "blockToggler");
+                 '<span class="icon-formrowtoggler icon-formrowtoggleron">&nbsp;</span>',
+                 '<span class="icon-formrowtoggler icon-formrowtoggleroff">&nbsp;</span>', '', '');
+         jMATService.getJMSServiceObj().appendHtml(html, parentId, 'blockToggler');
       };
      

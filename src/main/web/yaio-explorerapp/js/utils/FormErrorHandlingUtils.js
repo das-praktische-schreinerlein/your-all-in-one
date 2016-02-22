@@ -19,8 +19,8 @@
  ***************************************/
 
 /** 
- * new function to set form-errors when using input-elements with attribute "witherrors" 
- * and element "fielderrors" to show the corresponding errors 
+ * new function to set form-errors when using input-elements with attribute 'witherrors'
+ * and element 'fielderrors' to show the corresponding errors
  * @FeatureDomain                Configuration
  * @FeatureResult                returns new function
  * @FeatureKeywords              GUI Configuration Taglibrary Errorhandling
@@ -51,7 +51,7 @@ yaioApp.factory('setFormErrors', function() {
 
 
 /** 
- * adds the new attribute-directive "witherrors" to set/show errors from
+ * adds the new attribute-directive 'witherrors' to set/show errors from
  * different sources (AngularJS, App, WebServices) for this element
  * @FeatureDomain                Configuration
  * @FeatureResult                returns new directive
@@ -89,7 +89,7 @@ yaioApp.directive('withErrors', ['setFormErrors', function(setFormErrors) {
 
 
 /** 
- * extend the element with the new attribute-directive "witherrors" to 
+ * extend the element with the new attribute-directive 'witherrors' to
  * set/show errors from different sources (AngularJS, App, WebServices) for this element
  * @FeatureDomain                Configuration
  * @FeatureResult                returns new callback
@@ -138,7 +138,7 @@ function directiveFieldsWithErrors () {
 }
 
 /** 
- * extend the element with the new attribute-directive "witherrors" to 
+ * extend the element with the new attribute-directive 'witherrors' to
  * set/show errors from different sources (AngularJS, App, WebServices) for this element
  * @FeatureDomain                Configuration
  * @FeatureResult                returns updated directive
@@ -157,7 +157,7 @@ yaioApp.directive('input', function() {
 //});
 
 /** 
- * adds the new element-directive "fielderrors" to set/show errors from
+ * adds the new element-directive 'fielderrors' to set/show errors from
  * different sources (AngularJS, App, WebServices) for this element
  * @FeatureDomain                Configuration
  * @FeatureResult                returns new directive

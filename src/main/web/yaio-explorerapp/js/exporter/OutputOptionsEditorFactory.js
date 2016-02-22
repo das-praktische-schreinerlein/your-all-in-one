@@ -57,9 +57,9 @@ yaioApp.factory('OutputOptionsEditor', function(yaioUtils) {
     oOptions.flgProcessDocLayout = false;
     oOptions.flgUsePublicBaseRef = false;
     oOptions.flgRecalc= false;
-    oOptions.strClassFilter = "";
-    oOptions.strTypeFilter = "";
-    oOptions.strReadIfStatusInListOnly = "";
+    oOptions.strClassFilter = '';
+    oOptions.strTypeFilter = '';
+    oOptions.strReadIfStatusInListOnly = '';
     
     // define the functions
     return {
@@ -72,8 +72,8 @@ yaioApp.factory('OutputOptionsEditor', function(yaioUtils) {
          * @FeatureKeywords              GUI Callback
          */
         discard: function() {
-            yaioUtils.getService('UIToggler').toggleElement("#containerFormYaioEditorOutputOptions");
-            console.log("discard done");
+            yaioUtils.getService('UIToggler').toggleElement('#containerFormYaioEditorOutputOptions');
+            console.log('discard done');
             return false;
         },
     
@@ -84,10 +84,10 @@ yaioApp.factory('OutputOptionsEditor', function(yaioUtils) {
          * @FeatureKeywords              GUI Callback
          */
         send: function() {
-            var formId = "#nodeFormOutputOptions";
+            var formId = '#nodeFormOutputOptions';
             $(formId).submit();
-            yaioUtils.getService('UIToggler').toggleElement("#containerFormYaioEditorOutputOptions");
-            console.log("send done");
+            yaioUtils.getService('UIToggler').toggleElement('#containerFormYaioEditorOutputOptions');
+            console.log('send done');
             return false;
         },
         
@@ -104,19 +104,19 @@ yaioApp.factory('OutputOptionsEditor', function(yaioUtils) {
             url = newUrl;
             target = newTarget;
             
-            var formId = "#nodeFormOutputOptions";
-            console.log("OutputOptionsEditor:" + " url:" + url);
-            $("#containerFormYaioEditorOutputOptions").css("display", "none");
-            yaioUtils.getService('UIToggler').toggleElement("#containerFormYaioEditorOutputOptions");
-            $(formId).attr("target", target);
-            $(formId).attr("action", url);
-            $(formId).trigger('form').triggerHandler("change");
+            var formId = '#nodeFormOutputOptions';
+            console.log('OutputOptionsEditor:' + ' url:' + url);
+            $('#containerFormYaioEditorOutputOptions').css('display', 'none');
+            yaioUtils.getService('UIToggler').toggleElement('#containerFormYaioEditorOutputOptions');
+            $(formId).attr('target', target);
+            $(formId).attr('action', url);
+            $(formId).trigger('form').triggerHandler('change');
             $(formId).trigger('input');
             
             // update appsize
             yaioUtils.getService('YaioLayout').setupAppSize();
 
-            console.log("showOutputOptionsEditor done:" + " url:" + url);
+            console.log('showOutputOptionsEditor done:' + ' url:' + url);
             return false;
         }
     };

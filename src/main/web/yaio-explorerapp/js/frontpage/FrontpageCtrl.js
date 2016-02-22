@@ -18,7 +18,8 @@
  * @FeatureResult                returns new controller
  * @FeatureKeywords              GUI Configuration
  */
-yaioApp.controller('FrontPageCtrl', function($rootScope, $scope, $location, $routeParams, setFormErrors, OutputOptionsEditor, authorization, yaioUtils) {
+yaioApp.controller('FrontPageCtrl', function($rootScope, $scope, $location, $routeParams,
+                                             setFormErrors, OutputOptionsEditor, authorization, yaioUtils) {
     'use strict';
 
     // include utils
@@ -26,10 +27,10 @@ yaioApp.controller('FrontPageCtrl', function($rootScope, $scope, $location, $rou
     
     // set vars
     var nodeId = $routeParams.nodeId;
-    if (nodeId == null || nodeId == "" || ! nodeId) {
+    if (yaioUtils.getService('DataUtils').isUndefinedStringValue(nodeId)) {
         nodeId = 'SysStart1';
     }
-    console.log("FrontPageCtrl - processing nodeId=" + nodeId);
+    console.log('FrontPageCtrl - processing nodeId=' + nodeId);
     
     $scope.frontpageNodeId = nodeId;
     

@@ -45,33 +45,33 @@ Yaio.ExplorerConverter = function(appBase) {
     me.convertExplorerLinesAsCheckList = function() {
         // get title
         var idx;
-        var title = me.$("#masterTr td.fieldtype_name").text();
+        var title = me.$('#masterTr td.fieldtype_name').text();
         var now = me.appBase.get('DataUtils').formatGermanDateTime((new Date()).getTime());
 
-        var checkList = "# Checklist: " + title + " (Stand: " + now + ")\n\n";
+        var checkList = '# Checklist: ' + title + ' (Stand: ' + now + ')\n\n';
 
         // iterate all nodelines
-        me.$("table.fancytree-ext-table tr").each(function(i, line) {
+        me.$('table.fancytree-ext-table tr').each(function(i, line) {
             // extract data
-            var titleSpan = me.$(line).find("span.fancytree-title2");
-            var stateSpan = me.$(line).find("span.fancytree-title-state");
-            var numberSpan = me.$(line).find("div.field_metanummer");
-            var levelSpan = me.$(line).find("span.fancytree-node");
-            var istStandDiv = me.$(line).find("div.fieldtype_stand.field_istChildrenSumStand");
-            var istAufwandDiv = me.$(line).find("div.fieldtype_aufwand.field_istChildrenSumAufwand");
-            var planAufwandDiv = me.$(line).find("div.fieldtype_aufwand.field_planChildrenSumAufwand");
+            var titleSpan = me.$(line).find('span.fancytree-title2');
+            var stateSpan = me.$(line).find('span.fancytree-title-state');
+            var numberSpan = me.$(line).find('div.field_metanummer');
+            var levelSpan = me.$(line).find('span.fancytree-node');
+            var istStandDiv = me.$(line).find('div.fieldtype_stand.field_istChildrenSumStand');
+            var istAufwandDiv = me.$(line).find('div.fieldtype_aufwand.field_istChildrenSumAufwand');
+            var planAufwandDiv = me.$(line).find('div.fieldtype_aufwand.field_planChildrenSumAufwand');
 
             // extract content
             var level = 0;
             var title = null;
             var state = null;
             var number = null;
-            var istStand = "0%";
-            var istAufwand = "0h";
+            var istStand = '0%';
+            var istAufwand = '0h';
             var planAufwand = null;
             if (me.$(levelSpan).size() > 0) {
                 // extract level from intend
-                var intend = me.$(levelSpan).css("margin-left").replace("px", "");
+                var intend = me.$(levelSpan).css('margin-left').replace('px', '');
                 level = parseInt(intend, 10) / 20;
             }
             if (me.$(stateSpan).size() > 0) {
@@ -79,8 +79,8 @@ Yaio.ExplorerConverter = function(appBase) {
                 idx = me._extractCheckListStatefromStateSpan(me.$(stateSpan));
                 if (idx) {
                     state = idx;
-                    state = state.replace("checklist-state-", "");
-                    state = state.replace("checklist-test-", "");
+                    state = state.replace('checklist-state-', '');
+                    state = state.replace('checklist-test-', '');
                 }
             }
             if (me.$(titleSpan).size() > 0) {
@@ -100,19 +100,19 @@ Yaio.ExplorerConverter = function(appBase) {
                 istStand = me.$(istStandDiv).text();
             }
 
-            var stand = istStand.trim() + " (" + istAufwand.trim();
+            var stand = istStand.trim() + ' (' + istAufwand.trim();
             if (planAufwand) {
-                stand  += "/" + planAufwand.trim();
+                stand  += '/' + planAufwand.trim();
             }
-            stand += ")";
+            stand += ')';
 
             // if all set: generate checklist
-            console.log("state:" + state + " title:" + title + " number:" + number + " level:" + level + " stand:" + stand);
+            console.log('state:' + state + ' title:' + title + ' number:' + number + ' level:' + level + ' stand:' + stand);
             if (title && state && number) {
                 for (idx = 0; idx < level; idx ++) {
-                    checkList += "    ";
+                    checkList += '    ';
                 }
-                checkList += "- [" + state + "] - [" + title + "](yaio:" + number + ") " + stand + "\n";
+                checkList += '- [' + state + '] - [' + title + '](yaio:' + number + ') ' + stand + '\n';
             }
         });
 
@@ -123,12 +123,15 @@ Yaio.ExplorerConverter = function(appBase) {
         // iterate all configs
         var checkListConfigs = me.appBase.get('ChecklistParser').checkListConfigs;
         for (var idx in checkListConfigs) {
+            if (!checkListConfigs.hasOwnProperty(idx)) {
+                continue;
+            }
             var matchers = checkListConfigs[idx].matchers;
 
             // iterate all matchers
             for (var idx2 in matchers) {
                 // check for matcher in style
-                if (block.hasClass("node-state-" + matchers[idx2])) {
+                if (block.hasClass('node-state-' + matchers[idx2])) {
                     return idx;
                 }
             }
@@ -146,25 +149,25 @@ Yaio.ExplorerConverter = function(appBase) {
      */
     me.convertExplorerLinesAsGanttMarkdown = function() {
         // get title
-        var title = me.$("#masterTr td.fieldtype_name").text();
+        var title = me.$('#masterTr td.fieldtype_name').text();
         var now = me.appBase.get('DataUtils').formatGermanDateTime((new Date()).getTime());
 
-        var ganttMarkdown = "# Gantt: " + title + " (Stand: " + now + ")\n\n"
-            + "```mermaid\n"
-            + "gantt\n"
-            + "    title " + title + " (Stand: " + now + ")\n"
-            + "    dateFormat  DD.MM.YYYY\n"
-            + "\n";
-        var ganttMarkdownPlan = "";
-        var ganttMarkdownIst  = "";
+        var ganttMarkdown = '# Gantt: ' + title + ' (Stand: ' + now + ')\n\n'
+            + '```mermaid\n'
+            + 'gantt\n'
+            + '    title ' + title + ' (Stand: ' + now + ')\n'
+            + '    dateFormat  DD.MM.YYYY\n'
+            + '\n';
+        var ganttMarkdownPlan = '';
+        var ganttMarkdownIst  = '';
 
         // iterate all nodelines
-        me.$("table.fancytree-ext-table tr").each(function(i, line) {
+        me.$('table.fancytree-ext-table tr').each(function(i, line) {
             // extract data
-            var titleSpan = me.$(line).find("span.fancytree-title2");
-            var numberSpan = me.$(line).find("div.field_metanummer");
-            var startEndPlanDiv = me.$(line).find("div.fieldtype_fromto.field_planChildrenSum");
-            var startEndIstDiv = me.$(line).find("div.fieldtype_fromto.field_istChildrenSum");
+            var titleSpan = me.$(line).find('span.fancytree-title2');
+            var numberSpan = me.$(line).find('div.field_metanummer');
+            var startEndPlanDiv = me.$(line).find('div.fieldtype_fromto.field_planChildrenSum');
+            var startEndIstDiv = me.$(line).find('div.fieldtype_fromto.field_istChildrenSum');
 
             // extract content
             var title = null;
@@ -180,9 +183,9 @@ Yaio.ExplorerConverter = function(appBase) {
         });
 
         // concat
-        ganttMarkdownPlan = ganttMarkdownPlan.length > 0 ? "    section Plan\n" + ganttMarkdownPlan : "";
-        ganttMarkdownIst = ganttMarkdownIst.length > 0 ? "    section Ist\n" + ganttMarkdownIst : "";
-        ganttMarkdown += ganttMarkdownPlan + ganttMarkdownIst  + "```\n";
+        ganttMarkdownPlan = ganttMarkdownPlan.length > 0 ? '    section Plan\n' + ganttMarkdownPlan : '';
+        ganttMarkdownIst = ganttMarkdownIst.length > 0 ? '    section Ist\n' + ganttMarkdownIst : '';
+        ganttMarkdown += ganttMarkdownPlan + ganttMarkdownIst  + '```\n';
 
         return ganttMarkdown;
     };
@@ -201,20 +204,20 @@ Yaio.ExplorerConverter = function(appBase) {
     me._generateGanttMarkdownLineFromBlock = function(title, number, selector) {
         if (me.$(selector).size() > 0) {
             // extract dates
-            var dates = me.$(selector).html().replace(/&nbsp;/g, ' ').split("-");
-            if (dates.length != 2) {
-                return "";
+            var dates = me.$(selector).html().replace(/&nbsp;/g, ' ').split('-');
+            if (dates.length !== 2) {
+                return '';
             }
             var start = dates[0];
             var end = dates[1];
 
             // if all set: generate gantt
-            console.log("extractGanttMarkdownLineFromBlock: title:" + title + " number:" + number + " start:" + start + " end:" + end);
+            console.log('extractGanttMarkdownLineFromBlock: title:' + title + ' number:' + number + ' start:' + start + ' end:' + end);
             if (title && number && start && end) {
-                return "    " + title + ": " + number + ", " + start + ", " + end + "\n";
+                return '    ' + title + ': ' + number + ', ' + start + ', ' + end + '\n';
             }
         }
-        return "";
+        return '';
     };
 
 

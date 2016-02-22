@@ -40,7 +40,7 @@ Yaio.ServerAccessManager = function(appBase, config, defaultConfig) {
         me.setAvailiableNodeAction('copy', me.config.restCopyUrl);
         me.setAvailiableNodeAction('remove', me.config.restRemoveUrl);
         me.setAvailiableNodeAction('search', me.config.restSearchUrl);
-        me.setAvailiableNodeAction('dashboard', "#/dashboard");
+        me.setAvailiableNodeAction('dashboard', '#/dashboard');
 
         if (me.config.dmsAvailable) {
             me.setAvailiableNodeAction('dmsDownload', me.config.dmsDownloadUrl);
@@ -52,12 +52,12 @@ Yaio.ServerAccessManager = function(appBase, config, defaultConfig) {
         me.setAvailiableNodeAction('syshelp', me.config.restExportsBaseUrl + 'documentation/SysHelp1');
         me.setAvailiableNodeAction('sysinfo', me.config.restExportsBaseUrl + 'documentation/SysInfo1');
         me.setAvailiableNodeAction('frontpagebaseurl', me.config.restExportsBaseUrl + 'htmlfrontpagefragment/');
-        me.setAvailiableNodeAction('logout', "#/logout/logout");
+        me.setAvailiableNodeAction('logout', '#/logout/logout');
 //        me.setAvailiableNodeAction('logout', me.config.restLogoutUrl);
         
         // configure parentIds of the available templates
-        me.setAvailiableNodeAction('ownTemplateId', "OwnTempl1");
-        me.setAvailiableNodeAction('systemTemplateId', "SysTempl1");
+        me.setAvailiableNodeAction('ownTemplateId', 'OwnTempl1');
+        me.setAvailiableNodeAction('systemTemplateId', 'SysTempl1');
 
         // flags
         me.setAvailiableNodeAction('showsysdata', true);

@@ -28,6 +28,7 @@
  */
 
 /* jshint maxstatements: false */
+/* jshint -W032 */
 (function (window, jasmine, $) {
     'use strict';
 
@@ -856,4 +857,4 @@
     };
 })(window, window.jasmine, window.jQuery);
 /* jshint maxstatements: 50 */
-
+/* jshint +W032 */

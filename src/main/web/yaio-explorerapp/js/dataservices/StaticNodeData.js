@@ -37,7 +37,7 @@ Yaio.StaticNodeData = function(appBase, config, defaultConfig) {
     
     me.loadNodeData = function(nodeId) {
         // use promise as described on https://github.com/mar10/fancytree/wiki/TutorialLoadData#user-content-use-a-deferred-promise
-        console.log("load data for node:" + nodeId);
+        console.log('load data for node:' + nodeId);
         var nodeActionResponse = me._getNodeActionResponseById(nodeId);
         var fancyTreeResponse = { response: nodeActionResponse};
         me.appBase.get('YaioExplorerTree').postProcessNodeData({}, fancyTreeResponse);
@@ -60,7 +60,7 @@ Yaio.StaticNodeData = function(appBase, config, defaultConfig) {
         // return promise
         var dfd = new $.Deferred();
         var res = dfd.promise();
-        dfd.resolve("OK");
+        dfd.resolve('OK');
         return res;
     };
     
@@ -81,38 +81,38 @@ Yaio.StaticNodeData = function(appBase, config, defaultConfig) {
     };
     
     me._loadStaticJson = function(json) {
-        me.appBase.get("YaioStaticNodeDataStore").resetNodeList();
+        me.appBase.get('YaioStaticNodeDataStore').resetNodeList();
         me.flgDataLoaded = false;
 
         var yaioNodeActionReponse = JSON.parse(json);
         var masterNode = yaioNodeActionReponse.node;
         
         // create Masternode if not exists 
-        if (masterNode.sysUID != me.appBase.config.masterSysUId) {
+        if (masterNode.sysUID !== me.appBase.config.masterSysUId) {
             masterNode = {
-                "className": "TaskNode",
-                "name": "Masterplan",
-                "ebene": 0,
-                "nodeDesc": "Masternode of the Masterplan",
-                "sysUID": me.appBase.config.masterSysUId,
-                "sysChangeCount": 9,
-                "sysCreateDate": 1411717226471,
-                "sysChangeDate": 1429887836887,
-                "metaNodePraefix": "Masterplan",
-                "metaNodeNummer": "1",
-                "state": "RUNNING",
-                "type": "RUNNING",
-                "workflowState": "RUNNING",
-                "sortPos": 0,
-                "childNodes": [yaioNodeActionReponse.node]
+                'className': 'TaskNode',
+                'name': 'Masterplan',
+                'ebene': 0,
+                'nodeDesc': 'Masternode of the Masterplan',
+                'sysUID': me.appBase.config.masterSysUId,
+                'sysChangeCount': 9,
+                'sysCreateDate': 1411717226471,
+                'sysChangeDate': 1429887836887,
+                'metaNodePraefix': 'Masterplan',
+                'metaNodeNummer': '1',
+                'state': 'RUNNING',
+                'type': 'RUNNING',
+                'workflowState': 'RUNNING',
+                'sortPos': 0,
+                'childNodes': [yaioNodeActionReponse.node]
             };
         }
-        me.appBase.get("YaioStaticNodeDataStore").loadStaticNodeData(masterNode);
+        me.appBase.get('YaioStaticNodeDataStore').loadStaticNodeData(masterNode);
         me.flgDataLoaded = true;
     };
 
     me._getNodeDataById = function(nodeId, flgCopy) {
-        return me.appBase.get("YaioStaticNodeDataStore").getNodeDataById(nodeId, flgCopy);
+        return me.appBase.get('YaioStaticNodeDataStore').getNodeDataById(nodeId, flgCopy);
     };
 
     me._getParentIdHierarchyById = function(nodeId, flgCopy) {
@@ -122,7 +122,7 @@ Yaio.StaticNodeData = function(appBase, config, defaultConfig) {
         
         var parentIdHirarchy = [];
         var node = me._getNodeDataById(nodeId, false);
-        if (node && node.parentId && node.parentId != "" && node.parentId != "undefined") {
+        if (node && node.parentId && !me.appBase.DataUtils.isEmptyStringValue(node.parentId)) {
             parentIdHirarchy = me._getParentIdHierarchyById(node.parentId, true);
             parentIdHirarchy.push(node.parentId);
         }
@@ -160,15 +160,15 @@ Yaio.StaticNodeData = function(appBase, config, defaultConfig) {
         
         // create response
         var nodeActionResponse = {
-            state: "OK",
-            stateMsg: "node '" +  nodeId + "' found",
+            state: 'OK',
+            stateMsg: 'node "' +  nodeId + '" found',
             node: nodeData,
             parentIdHierarchy: parentIdHierarchy,
             childNodes: childNodes
         };
         if (! nodeData || ! parentIdHierarchy) {
-            nodeActionResponse.state = "ERROR";
-            nodeActionResponse.stateMsg = "node '" +  nodeId + "' not found";
+            nodeActionResponse.state = 'ERROR';
+            nodeActionResponse.stateMsg = 'node "' +  nodeId + '" not found';
         }
 
         return nodeActionResponse;
@@ -181,14 +181,14 @@ Yaio.StaticNodeData = function(appBase, config, defaultConfig) {
         
         // create response
         var nodeActionResponse = {
-            state: "OK",
-            stateMsg: "node '" +  nodeId + "' found",
+            state: 'OK',
+            stateMsg: 'node "' +  nodeId + '" found',
             node: nodeData,
             parentIdHierarchy: parentIdHierarchy
         };
         if (! nodeData || ! parentIdHierarchy) {
-            nodeActionResponse.state = "ERROR";
-            nodeActionResponse.stateMsg = "node '" +  nodeId + "' not found";
+            nodeActionResponse.state = 'ERROR';
+            nodeActionResponse.stateMsg = 'node "' +  nodeId + '" not found';
         }
 
         return nodeActionResponse;
@@ -207,9 +207,9 @@ Yaio.StaticNodeData = function(appBase, config, defaultConfig) {
     };
 
     me._yaioCallMoveNode = function(fancynode, newParentKey, newPos, json) {
-        var msg = "_yaioCallMoveNode for fancynode:" + fancynode.key + " newParentKey:" + newParentKey + " newPos:" + newPos;
+        //var msg = '_yaioCallMoveNode for fancynode:' + fancynode.key + ' newParentKey:' + newParentKey + ' newPos:' + newPos;
 
-        var node = me.appBase.get("YaioStaticNodeDataStore").moveNode(fancynode, newParentKey, newPos, json);
+        var node = me.appBase.get('YaioStaticNodeDataStore').moveNode(fancynode, newParentKey, newPos, json);
 
         // create response for
         var nodeActionResponse = me._getNodeActionResponseById(node.sysUID);
@@ -223,7 +223,7 @@ Yaio.StaticNodeData = function(appBase, config, defaultConfig) {
 
     me._yaioCallRemoveNode = function(nodeId) {
         var node = me._getNodeDataById(nodeId, true);
-        me.appBase.get("YaioStaticNodeDataStore").removeNodeById(nodeId);
+        me.appBase.get('YaioStaticNodeDataStore').removeNodeById(nodeId);
         
         // create response for parent
         var nodeActionResponse = me._getNodeActionResponseById(node.parentId);
@@ -236,8 +236,8 @@ Yaio.StaticNodeData = function(appBase, config, defaultConfig) {
     };
     
     me._yaioCallLoadSymLinkData = function(basenode, fancynode) {
-        var msg = "_yaioCallLoadSymLinkData for node:" + basenode.sysUID + " symlink:" + basenode.symLinkRef + " fancynode:" + fancynode.key;
-        console.log(msg + " START");
+        var msg = '_yaioCallLoadSymLinkData for node:' + basenode.sysUID + ' symlink:' + basenode.symLinkRef + ' fancynode:' + fancynode.key;
+        console.log(msg + ' START');
         var nodeActionResponse = me._getNodeActionResponseById(basenode.symLinkRef);
 
         var dfd = new $.Deferred();
@@ -248,11 +248,11 @@ Yaio.StaticNodeData = function(appBase, config, defaultConfig) {
     };
     
     me._yaioCallLoadNodeById = function(nodeId, options) {
-        var msg = "_yaioCallLoadNodeById node: " + nodeId + " options:" + options;
-        console.log(msg + " START");
+        var msg = '_yaioCallLoadNodeById node: ' + nodeId + ' options:' + options;
+        console.log(msg + ' START');
         
         // mock the ajax-request
-        var promiseHelper = me.appBase.get("YaioPromiseHelper").createAngularPromiseHelper();
+        var promiseHelper = me.appBase.get('YaioPromiseHelper').createAngularPromiseHelper();
         var ajaxCall = function () {
             return promiseHelper.getHttpPromiseMock();
         };
@@ -266,55 +266,55 @@ Yaio.StaticNodeData = function(appBase, config, defaultConfig) {
     };
     
     me._yaioCallSaveNode = function(nodeObj, options) {
-        var msg = "_yaioCallSaveNode node: " + options.mode + ' ' + nodeObj.sysUID;
-        console.log(msg + " START:", nodeObj);
+        var msg = '_yaioCallSaveNode node: ' + options.mode + ' ' + nodeObj.sysUID;
+        console.log(msg + ' START:', nodeObj);
 
-        var node = me.appBase.get("YaioStaticNodeDataStore").saveNode(nodeObj, options);
+        var node = me.appBase.get('YaioStaticNodeDataStore').saveNode(nodeObj, options);
 
         // mock the ajax-request
-        var promiseHelper = me.appBase.get("YaioPromiseHelper").createAngularPromiseHelper();
+        var promiseHelper = me.appBase.get('YaioPromiseHelper').createAngularPromiseHelper();
         var ajaxCall = function () {
             return promiseHelper.getHttpPromiseMock();
         };
         var angularResponse = {
             data: me._getNodeActionResponseById(node.sysUID)
         };
-        console.log(msg + " response:", angularResponse);
+        console.log(msg + ' response:', angularResponse);
         promiseHelper.resolve(angularResponse);
 
         return ajaxCall();
     };
 
     me._yaioCallFulltextSearch = function(searchOptions) {
-        var msg = "_yaioCallFulltextSearch searchOptions: " + searchOptions;
+        var msg = '_yaioCallFulltextSearch searchOptions: ' + searchOptions;
         
-        var searchResponse = me.appBase.get("YaioStaticNodeDataStore").fulltextSearch(searchOptions);
+        var searchResponse = me.appBase.get('YaioStaticNodeDataStore').fulltextSearch(searchOptions);
         
         // mock the ajax-request
-        var promiseHelper = me.appBase.get("YaioPromiseHelper").createAngularPromiseHelper();
+        var promiseHelper = me.appBase.get('YaioPromiseHelper').createAngularPromiseHelper();
         var ajaxCall = function () {
             return promiseHelper.getHttpPromiseMock();
         };
         var angularResponse = {
             data: searchResponse
         };
-        console.log(msg + " response:", angularResponse);
+        console.log(msg + ' response:', angularResponse);
         promiseHelper.resolve(angularResponse);
 
         return ajaxCall();
     };
 
     me._yaioCallLogin = function(credentials) {
-        var msg = "_yaioCallLogin for credentials:" + credentials;
-        console.log(msg + " START");
+        var msg = '_yaioCallLogin for credentials:' + credentials;
+        console.log(msg + ' START');
 
         // load data
-        var promiseHelper = me.appBase.get("YaioPromiseHelper").createAngularPromiseHelper();
+        var promiseHelper = me.appBase.get('YaioPromiseHelper').createAngularPromiseHelper();
         var ajaxCall = function () {
             return promiseHelper.getHttpPromiseMock();
         };
         var angularResponse = {
-            data: "OK"
+            data: 'OK'
         };
         promiseHelper.resolve(angularResponse);
         
@@ -323,16 +323,16 @@ Yaio.StaticNodeData = function(appBase, config, defaultConfig) {
     };
     
     me._yaioCallLogout = function(session) {
-        var msg = "_yaioCallLogout for session" + session;
-        console.log(msg + " START");
+        var msg = '_yaioCallLogout for session' + session;
+        console.log(msg + ' START');
 
         // load data
-        var promiseHelper = me.appBase.get("YaioPromiseHelper").createAngularPromiseHelper();
+        var promiseHelper = me.appBase.get('YaioPromiseHelper').createAngularPromiseHelper();
         var ajaxCall = function () {
             return promiseHelper.getHttpPromiseMock();
         };
         var angularResponse = {
-            data: "OK"
+            data: 'OK'
         };
         promiseHelper.resolve(angularResponse);
         
@@ -341,16 +341,16 @@ Yaio.StaticNodeData = function(appBase, config, defaultConfig) {
     };
     
     me._yaioCallCheckUser = function(session) {
-        var msg = "_yaioCallCheckUser for session:" + session;
-        console.log(msg + " START");
+        var msg = '_yaioCallCheckUser for session:' + session;
+        console.log(msg + ' START');
 
         // load data
-        var promiseHelper = me.appBase.get("YaioPromiseHelper").createAngularPromiseHelper();
+        var promiseHelper = me.appBase.get('YaioPromiseHelper').createAngularPromiseHelper();
         var ajaxCall = function () {
             return promiseHelper.getHttpPromiseMock();
         };
         var angularResponse = {
-            data: "OK"
+            data: 'OK'
         };
         promiseHelper.resolve(angularResponse);
         

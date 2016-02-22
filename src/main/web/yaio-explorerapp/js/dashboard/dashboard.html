@@ -28,7 +28,7 @@
 
 <script type="text/javascript">
     // format markdown-extension
-    yaioAppBase.get('YaioFormatter').runAllRendererOnBlock("#front-content-intro");
+    yaioAppBase.get('YaioFormatter').runAllRendererOnBlock('#front-content-intro');
 
     // activate elements after 1 second
     setTimeout(function() { 
@@ -46,7 +46,7 @@
     // add TOC after 3 second
     setTimeout(function() { 
         // add TOC
-        yaioAppBase.get('YaioFormatter').addTOCForBlock("#sidebartoc", "#front-content-intro", { toc: { topLink: "Seitenkopf"}});
+        yaioAppBase.get('YaioFormatter').addTOCForBlock('#sidebartoc', '#front-content-intro', { toc: { topLink: 'Seitenkopf'}});
         yaioAppBase.get('YaioLayout').jMATService.getPageLayoutService().doAllBlockToggler(false);
         yaioAppBase.get('YaioLayout').setupAppSize();
     }, 3000);

@@ -30,8 +30,7 @@
     describe('Modul yaio-editorservice Service-Funktions (businesslogic calcIstStandFromState)', function () {
         var doCheckCalcIstStandFromState = function(basenode, state, stand) {
             // Given
-            var defaultIstStand = 0;
-            basenode.istStand = defaultIstStand;
+            basenode.istStand = 0;
             basenode.type = state;
             
             // When
@@ -39,32 +38,32 @@
             
             // Expected
             expect(res).toBe(stand);
-        }
+        };
         
         beforeEach(function () {
             this.basenode = {
                     istStand: 0
-            }
+            };
         });
 
-        it( "check calcIstStandFromState", function() {
-            doCheckCalcIstStandFromState(this.basenode, "OFFEN", 0);
+        it( 'check calcIstStandFromState', function() {
+            doCheckCalcIstStandFromState(this.basenode, 'OFFEN', 0);
         });
         
-        it( "check calcIstStandFromState", function() {
-            doCheckCalcIstStandFromState(this.basenode, "ERLEDIGT", 100);
+        it( 'check calcIstStandFromState', function() {
+            doCheckCalcIstStandFromState(this.basenode, 'ERLEDIGT', 100);
         });
         
-        it( "check calcIstStandFromState", function() {
-            doCheckCalcIstStandFromState(this.basenode, "EVENT_ERLEDIGT", 100);
+        it( 'check calcIstStandFromState', function() {
+            doCheckCalcIstStandFromState(this.basenode, 'EVENT_ERLEDIGT', 100);
         });
         
-        it( "check calcIstStandFromState", function() {
-            doCheckCalcIstStandFromState(this.basenode, "VERWORFEN", 100);
+        it( 'check calcIstStandFromState', function() {
+            doCheckCalcIstStandFromState(this.basenode, 'VERWORFEN', 100);
         });
         
-        it( "check calcIstStandFromState", function() {
-            doCheckCalcIstStandFromState(this.basenode, "EVENT_VERWORFEN", 100);
+        it( 'check calcIstStandFromState', function() {
+            doCheckCalcIstStandFromState(this.basenode, 'EVENT_VERWORFEN', 100);
         });
     });
 
@@ -80,53 +79,53 @@
             
             // Expected
             expect(res).toBe(resType);
-        }
+        };
 
         beforeEach(function () {
             this.basenode = {
                     istStand: 0
-            }
+            };
         });
 
 
-        it( "check calcTypeFromIstStand Event 0", function( ) {
-            doCheckCalcTypeFromIstStand(this.basenode, 0, "EventNode", "", "EVENT_PLANED");
+        it( 'check calcTypeFromIstStand Event 0', function( ) {
+            doCheckCalcTypeFromIstStand(this.basenode, 0, 'EventNode', '', 'EVENT_PLANED');
         });
         
-        it( "check calcTypeFromIstStand Task 10", function() {
-            doCheckCalcTypeFromIstStand(this.basenode, 10, "TaskNode", "", "RUNNING");
+        it( 'check calcTypeFromIstStand Task 10', function() {
+            doCheckCalcTypeFromIstStand(this.basenode, 10, 'TaskNode', '', 'RUNNING');
         });
         
-        it( "check calcTypeFromIstStand Event 10", function() {
-            doCheckCalcTypeFromIstStand(this.basenode, 10, "EventNode", "", "EVENT_RUNNING");
+        it( 'check calcTypeFromIstStand Event 10', function() {
+            doCheckCalcTypeFromIstStand(this.basenode, 10, 'EventNode', '', 'EVENT_RUNNING');
         });
         
-        it( "check calcTypeFromIstStand Task 10 Warn", function() {
-            doCheckCalcTypeFromIstStand(this.basenode, 10, "TaskNode", "WARNING", "WARNING");
+        it( 'check calcTypeFromIstStand Task 10 Warn', function() {
+            doCheckCalcTypeFromIstStand(this.basenode, 10, 'TaskNode', 'WARNING', 'WARNING');
         });
         
-        it( "check calcTypeFromIstStand Event 10 Warn", function() {
-            doCheckCalcTypeFromIstStand(this.basenode, 10, "EventNode", "EVENT_WARNING", "EVENT_WARNING");
+        it( 'check calcTypeFromIstStand Event 10 Warn', function() {
+            doCheckCalcTypeFromIstStand(this.basenode, 10, 'EventNode', 'EVENT_WARNING', 'EVENT_WARNING');
         });
         
-        it( "check calcIstStandFromState Task 100", function() {
-            doCheckCalcTypeFromIstStand(this.basenode, 100, "TaskNode", "", "ERLEDIGT");
+        it( 'check calcIstStandFromState Task 100', function() {
+            doCheckCalcTypeFromIstStand(this.basenode, 100, 'TaskNode', '', 'ERLEDIGT');
         });
         
-        it( "check calcIstStandFromState Event 100", function() {
-            doCheckCalcTypeFromIstStand(this.basenode, 100, "EventNode", "", "EVENT_ERLEDIGT");
+        it( 'check calcIstStandFromState Event 100', function() {
+            doCheckCalcTypeFromIstStand(this.basenode, 100, 'EventNode', '', 'EVENT_ERLEDIGT');
         });
         
-        it( "check calcIstStandFromState Task 100 Verworfen", function() {
-            doCheckCalcTypeFromIstStand(this.basenode, 100, "TaskNode", "VERWORFEN", "VERWORFEN");
+        it( 'check calcIstStandFromState Task 100 Verworfen', function() {
+            doCheckCalcTypeFromIstStand(this.basenode, 100, 'TaskNode', 'VERWORFEN', 'VERWORFEN');
         });
         
-        it( "check calcIstStandFromState Event 100 Verworfen", function() {
-            doCheckCalcTypeFromIstStand(this.basenode, 100, "EventNode", "EVENT_VERWORFEN", "EVENT_VERWORFEN");
+        it( 'check calcIstStandFromState Event 100 Verworfen', function() {
+            doCheckCalcTypeFromIstStand(this.basenode, 100, 'EventNode', 'EVENT_VERWORFEN', 'EVENT_VERWORFEN');
         });
         
-        it( "check calcIstStandFromState Event 100 Verworfen/Erledigt", function() {
-            doCheckCalcTypeFromIstStand(this.basenode, 100, "EventNode", "VERWORFEN", "EVENT_ERLEDIGT");
+        it( 'check calcIstStandFromState Event 100 Verworfen/Erledigt', function() {
+            doCheckCalcTypeFromIstStand(this.basenode, 100, 'EventNode', 'VERWORFEN', 'EVENT_ERLEDIGT');
         });
     });
 })();

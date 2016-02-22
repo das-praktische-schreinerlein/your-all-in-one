@@ -18,10 +18,10 @@ Yaio.ServerNodeDataConfig = function(urlBase, name, desc) {
     // my own instance
     var me = JsHelferlein.ConfigBase();
     
-    me.urlBase                      = urlBase || (window.location.protocol + "//" + window.location.hostname + (window.location.port ? ":" + window.location.port : ""));
-    me.name                         = name || ("Server: " + window.location.host);
-    me.desc                         = desc || ("Daten werden vom aktuellen Server " + window.location.host + " geladen.");
-    me.configUrl                    = me.urlBase + "/apiconfig/commonApiConfig";
+    me.urlBase                      = urlBase || (window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : ''));
+    me.name                         = name || ('Server: ' + window.location.host);
+    me.desc                         = desc || ('Daten werden vom aktuellen Server ' + window.location.host + ' geladen.');
+    me.configUrl                    = me.urlBase + '/apiconfig/commonApiConfig';
 
     /**
      * initialize the object
@@ -35,27 +35,27 @@ Yaio.ServerNodeDataConfig = function(urlBase, name, desc) {
      */
     me.updateConfig = function() {
         // REST login
-        me.restLoginUrl                 = me.urlBase + "/login";
-        me.restLogoutUrl                = me.urlBase + "/logout";
-        me.restCheckUserUrl             = me.urlBase + "/user/current";
+        me.restLoginUrl                 = me.urlBase + '/login';
+        me.restLogoutUrl                = me.urlBase + '/logout';
+        me.restCheckUserUrl             = me.urlBase + '/user/current';
         
         // REST actions
-        me.restBaseUrl                  = me.urlBase + "/nodes/";
-        me.restShowUrl                  = me.restBaseUrl + "show/";
-        me.restSymLinkUrl               = me.restBaseUrl + "showsymlink/";
-        me.restUpdateUrl                = me.restBaseUrl + "update/";
-        me.restCreateUrl                = me.restBaseUrl + "create/";
-        me.restMoveUrl                  = me.restBaseUrl + "move/";
-        me.restCopyUrl                  = me.restBaseUrl + "copy/";
-        me.restRemoveUrl                = me.restBaseUrl + "delete/";
-        me.restSearchUrl                = me.restBaseUrl + "search/";
-        me.restExportsBaseUrl           = me.urlBase + "/exports/";
+        me.restBaseUrl                  = me.urlBase + '/nodes/';
+        me.restShowUrl                  = me.restBaseUrl + 'show/';
+        me.restSymLinkUrl               = me.restBaseUrl + 'showsymlink/';
+        me.restUpdateUrl                = me.restBaseUrl + 'update/';
+        me.restCreateUrl                = me.restBaseUrl + 'create/';
+        me.restMoveUrl                  = me.restBaseUrl + 'move/';
+        me.restCopyUrl                  = me.restBaseUrl + 'copy/';
+        me.restRemoveUrl                = me.restBaseUrl + 'delete/';
+        me.restSearchUrl                = me.restBaseUrl + 'search/';
+        me.restExportsBaseUrl           = me.urlBase + '/exports/';
         
         // dms
-        me.dmsDownloadUrl               = me.urlBase + "/dms/download/";
-        me.dmsEmbedUrl                  = me.urlBase + "/dms/embed/";
-        me.dmsIndexDownloadUrl          = me.urlBase + "/dms/indexdownload/";
-        me.dmsIndexEmbedUrl             = me.urlBase + "/dms/indexembed/";
+        me.dmsDownloadUrl               = me.urlBase + '/dms/download/';
+        me.dmsEmbedUrl                  = me.urlBase + '/dms/embed/';
+        me.dmsIndexDownloadUrl          = me.urlBase + '/dms/indexdownload/';
+        me.dmsIndexEmbedUrl             = me.urlBase + '/dms/indexembed/';
     };
     
     me._init();

@@ -18,7 +18,8 @@
  * @FeatureResult                returns new controller
  * @FeatureKeywords              GUI Configuration BusinessLogic
  */
-yaioApp.controller('ImporterCtrl', function($rootScope, $scope, $location, $routeParams, setFormErrors, authorization, yaioUtils) {
+yaioApp.controller('ImporterCtrl', function($rootScope, $scope, $location, $routeParams,
+                                            setFormErrors, authorization, yaioUtils) {
     'use strict';
 
     // include utils
@@ -31,11 +32,11 @@ yaioApp.controller('ImporterCtrl', function($rootScope, $scope, $location, $rout
      * @FeatureKeywords              GUI Callback
      */
     $scope.sendImport = function() {
-        var formId = "#nodeFormImport";
+        var formId = '#nodeFormImport';
         $(formId).submit();
-        yaioUtils.getService('UIToggler').toggleElement("#containerFormYaioEditorImport");
+        yaioUtils.getService('UIToggler').toggleElement('#containerFormYaioEditorImport');
 
-        console.log("send done");
+        console.log('send done');
         return false;
     };
     
@@ -46,8 +47,8 @@ yaioApp.controller('ImporterCtrl', function($rootScope, $scope, $location, $rout
      * @FeatureKeywords              GUI Callback
      */
     $scope.discardImport = function() {
-        yaioUtils.getService('UIToggler').toggleElement("#containerFormYaioEditorImport");
-        console.log("discard done");
+        yaioUtils.getService('UIToggler').toggleElement('#containerFormYaioEditorImport');
+        console.log('discard done');
         return false;
     };
 
@@ -64,19 +65,19 @@ yaioApp.controller('ImporterCtrl', function($rootScope, $scope, $location, $rout
         var url = newUrl;
         var target = newTarget;
 
-        var formId = "#nodeFormImport";
-        $(formId).attr("target", target);
-        $(formId).attr("action", url);
-        $(formId).trigger('form').triggerHandler("change");
+        var formId = '#nodeFormImport';
+        $(formId).attr('target', target);
+        $(formId).attr('action', url);
+        $(formId).trigger('form').triggerHandler('change');
         $(formId).trigger('input');
-        console.log("ImportEditor:" + " url:" + url);
-        $("#containerFormYaioEditorImport").css("display", "none");
-        yaioUtils.getService('UIToggler').toggleElement("#containerFormYaioEditorImport");
+        console.log('ImportEditor:' + ' url:' + url);
+        $('#containerFormYaioEditorImport').css('display', 'none');
+        yaioUtils.getService('UIToggler').toggleElement('#containerFormYaioEditorImport');
         
         // update appsize
         yaioUtils.getService('YaioLayout').setupAppSize();
 
-        console.log("showImportEditor done:" + " url:" + url);
+        console.log('showImportEditor done:' + ' url:' + url);
         return false;
     };
 });

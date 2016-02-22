@@ -38,7 +38,7 @@ Yaio.StaticAccessManager = function(appBase, config, defaultConfig) {
         me.setAvailiableNodeAction('move', true);
         me.setAvailiableNodeAction('remove', true);
         me.setAvailiableNodeAction('search', true);
-        me.setAvailiableNodeAction('dashboard', "#/dashboard");
+        me.setAvailiableNodeAction('dashboard', '#/dashboard');
         
         me.setAvailiableNodeAction('frontpagebaseurl', me.appBase.config.resBaseUrl + 'static/');
         me.setAvailiableNodeAction('syshelp', me.appBase.config.exportStaticDocumentationUrl + 'SysHelp1');
@@ -55,7 +55,7 @@ Yaio.StaticAccessManager = function(appBase, config, defaultConfig) {
             return false;
         }
         if (key === 'frontpagebaseurl') {
-            return me.availiableNodeActions[key] + nodeId + ".html";
+            return me.availiableNodeActions[key] + nodeId + '.html';
         }
         return me.availiableNodeActions[key];
     };

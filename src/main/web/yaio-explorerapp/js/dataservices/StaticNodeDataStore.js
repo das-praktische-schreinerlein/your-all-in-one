@@ -36,47 +36,47 @@ Yaio.StaticNodeDataStore = function(appBase, config, defaultConfig) {
      * initialize the object
      */
     me._init = function() {
-        me.mapWorkflowStates['UNKNOWN'] = 'NOTPLANED';
-        me.mapWorkflowStates['OPEN'] = 'OPEN';
-        me.mapWorkflowStates['LATE'] = 'LATE';
-        me.mapWorkflowStates['RUNNING'] = 'RUNNING';
-        me.mapWorkflowStates['WARNING'] = 'WARNING';
-        me.mapWorkflowStates['ERLEDIGT'] = 'DONE';
-        me.mapWorkflowStates['VERWORFEN'] = 'CANCELED';
-        me.mapWorkflowStates['EVENT_UNKNOWN'] = 'NOTPLANED';
-        me.mapWorkflowStates['EVENT_PLANED'] = 'OPEN';
-        me.mapWorkflowStates['EVENT_CONFIRMED'] = 'OPEN';
-        me.mapWorkflowStates['EVENT_LATE'] = 'LATE';
-        me.mapWorkflowStates['EVENT_RUNNING'] = 'RUNNING';
-        me.mapWorkflowStates['EVENT_SHORT'] = 'WARNING';
-        me.mapWorkflowStates['EVENT_ERLEDIGT'] = 'DONE';
-        me.mapWorkflowStates['EVENT_VERWORFEN'] = 'CANCELED';
+        me.mapWorkflowStates.UNKNOWN = 'NOTPLANED';
+        me.mapWorkflowStates.OPEN = 'OPEN';
+        me.mapWorkflowStates.LATE = 'LATE';
+        me.mapWorkflowStates.RUNNING = 'RUNNING';
+        me.mapWorkflowStates.WARNING = 'WARNING';
+        me.mapWorkflowStates.ERLEDIGT = 'DONE';
+        me.mapWorkflowStates.VERWORFEN = 'CANCELED';
+        me.mapWorkflowStates.EVENT_UNKNOWN = 'NOTPLANED';
+        me.mapWorkflowStates.EVENT_PLANED = 'OPEN';
+        me.mapWorkflowStates.EVENT_CONFIRMED = 'OPEN';
+        me.mapWorkflowStates.EVENT_LATE = 'LATE';
+        me.mapWorkflowStates.EVENT_RUNNING = 'RUNNING';
+        me.mapWorkflowStates.EVENT_SHORT = 'WARNING';
+        me.mapWorkflowStates.EVENT_ERLEDIGT = 'DONE';
+        me.mapWorkflowStates.EVENT_VERWORFEN = 'CANCELED';
 
-        me.mapSorts["default"] = "ebene asc";
-        me.mapSorts["createdUp"] = "sysCreateDate asc";
-        me.mapSorts["createdDown"] = "sysCreateDate desc";
-        me.mapSorts["istEndeUp"] = "istChildrenSumEnde asc";
-        me.mapSorts["istEndeDown"] = "istChildrenSumEnde desc";
-        me.mapSorts["istStartUp"] = "istChildrenSumStart asc";
-        me.mapSorts["istStartDown"] = "istChildrenSumStart desc";
-        me.mapSorts["lastChangeUp"] = "sysChangeDate asc";
-        me.mapSorts["lastChangeDown"] = "sysChangeDate desc";
-        me.mapSorts["nameUp"] = "name asc";
-        me.mapSorts["nameDown"] = "name desc";
-        me.mapSorts["nodeNumberUp"] = "metaNodePraefix asc, metaNodeNummer asc";
-        me.mapSorts["nodeNumberDown"] = "metaNodePraefix desc, metaNodeNummer desc";
-        me.mapSorts["planEndeUp"] = "planEnde asc";
-        me.mapSorts["planEndeDown"] = "planEnde desc";
-        me.mapSorts["planStartUp"] = "planStart asc";
-        me.mapSorts["planStartDown"] = "planStart desc";
-        me.mapSorts["planChildrenSumEndeUp"] = "planChildrenSumEnde asc";
-        me.mapSorts["planChildrenSumEndeDown"] = "planChildrenSumEnde desc";
-        me.mapSorts["planChildrenSumStartUp"] = "planChildrenSumStart asc";
-        me.mapSorts["planChildrenSumStartDown"] = "planChildrenSumStart desc";
-        me.mapSorts["typeUp"] = "type asc";
-        me.mapSorts["typeDown"] = "type desc";
-        me.mapSorts["workflowStateUp"] = "workflowState asc";
-        me.mapSorts["workflowStateDown"] = "workflowState desc";
+        me.mapSorts.default = 'ebene asc';
+        me.mapSorts.createdUp = 'sysCreateDate asc';
+        me.mapSorts.createdDown = 'sysCreateDate desc';
+        me.mapSorts.istEndeUp = 'istChildrenSumEnde asc';
+        me.mapSorts.istEndeDown = 'istChildrenSumEnde desc';
+        me.mapSorts.istStartUp = 'istChildrenSumStart asc';
+        me.mapSorts.istStartDown = 'istChildrenSumStart desc';
+        me.mapSorts.lastChangeUp = 'sysChangeDate asc';
+        me.mapSorts.lastChangeDown = 'sysChangeDate desc';
+        me.mapSorts.nameUp = 'name asc';
+        me.mapSorts.nameDown = 'name desc';
+        me.mapSorts.nodeNumberUp = 'metaNodePraefix asc, metaNodeNummer asc';
+        me.mapSorts.nodeNumberDown = 'metaNodePraefix desc, metaNodeNummer desc';
+        me.mapSorts.planEndeUp = 'planEnde asc';
+        me.mapSorts.planEndeDown = 'planEnde desc';
+        me.mapSorts.planStartUp = 'planStart asc';
+        me.mapSorts.planStartDown = 'planStart desc';
+        me.mapSorts.planChildrenSumEndeUp = 'planChildrenSumEnde asc';
+        me.mapSorts.planChildrenSumEndeDown = 'planChildrenSumEnde desc';
+        me.mapSorts.planChildrenSumStartUp = 'planChildrenSumStart asc';
+        me.mapSorts.planChildrenSumStartDown = 'planChildrenSumStart desc';
+        me.mapSorts.typeUp = 'type asc';
+        me.mapSorts.typeDown = 'type desc';
+        me.mapSorts.workflowStateUp = 'workflowState asc';
+        me.mapSorts.workflowStateDown = 'workflowState desc';
     };
     
     me.resetNodeList = function() {
@@ -117,17 +117,17 @@ Yaio.StaticNodeDataStore = function(appBase, config, defaultConfig) {
     };
 
     me.moveNode = function(fancynode, newParentKey, newPos, json) {
-        var msg = "moveNode for fancynode:" + fancynode.key + " newParentKey:" + newParentKey + " newPos:" + newPos;
+        var msg = 'moveNode for fancynode:' + fancynode.key + ' newParentKey:' + newParentKey + ' newPos:' + newPos;
         var node = me.getNodeDataById(fancynode.key, false);
         var parent = me.getNodeDataById(newParentKey, false);
         var oldParent = me.getNodeDataById(node.parentId, false);
         
-        if (node.parentId != newParentKey) {
+        if (node.parentId !== newParentKey) {
             // delete node form old parent and add to new with sortPos after last
             oldParent.childNodes.splice(oldParent.childNodes.indexOf(node.sysUID), 1);
 
             // update parentIdHierarchy
-            console.log(msg + " use newparent:" + newPos, parent);
+            console.log(msg + ' use newparent:' + newPos, parent);
             
             // set new parentId
             node.parentId = parent.sysUID;
@@ -136,7 +136,7 @@ Yaio.StaticNodeDataStore = function(appBase, config, defaultConfig) {
             
             // delete node from childList 
             parent.childNodes.splice(parent.childNodes.indexOf(node.sysUID), 1);
-            console.log(msg + " use oldparent:", parent);
+            console.log(msg + ' use oldparent:', parent);
         }
 
         // calc index where to add
@@ -158,15 +158,15 @@ Yaio.StaticNodeDataStore = function(appBase, config, defaultConfig) {
             addIdx = parent.childNodes.length;
         }
         // add node at addIdx
-        console.log(msg + " addNewNode at pos:" + addIdx);
+        console.log(msg + ' addNewNode at pos:' + addIdx);
         parent.childNodes.splice(addIdx, 0, node.sysUID);
 
         return node;
     };
 
     me.removeNodeById = function(nodeId) {
-        var msg = "removeNode node:" + nodeId;
-        
+        //var msg = 'removeNode node:' + nodeId;
+
         var node = me.getNodeDataById(nodeId, false);
         if (node) {
             // delete all children
@@ -191,102 +191,105 @@ Yaio.StaticNodeDataStore = function(appBase, config, defaultConfig) {
         var svcLogger = me.appBase.get('Logger');
 
         var node = JSON.parse(JSON.stringify(nodeObj));
-        var msg = "_saveNode node: " + options.mode + ' ' + nodeObj.sysUID;
+        var msg = '_saveNode node: ' + options.mode + ' ' + nodeObj.sysUID;
         var now = new Date();
-        console.log(msg + " START:", nodeObj);
+        console.log(msg + ' START:', nodeObj);
 
-        if (options.mode === "edit") {
+        if (options.mode === 'edit') {
             // mode update
             
             // merge orig and new node
             var orig = me.getNodeDataById(node.sysUID, false);
             for (var prop in node){
+                if (!node.hasOwnProperty(prop)) {
+                    continue;
+                }
                 orig[prop] = node[prop];
             }
             node = orig;
-        } else if (options.mode === "create") {
+        } else if (options.mode === 'create') {
             // mode create 
             
             // read parent
             var parent = me.getNodeDataById(options.sysUID, false);
             
             // set initial values
-            node['sysUID'] = "newDT" + now.toLocaleFormat('%y%m%d%H%M%S') + now.getMilliseconds() + me.curUId;
+            node.sysUID = 'newDT' + now.toLocaleFormat('%y%m%d%H%M%S') + now.getMilliseconds() + me.curUId;
             me.curUId++;
             
-            node['sysCreateDate'] = now.getTime();
-            node['childNodes'] = [];
-            node['className'] = options.className
-            node['metaNodePraefix'] = parent['metaNodePraefix'];
-            node['ebene'] = parent['ebene'] + 1;
-            node['sortPos'] = 0;
-            node['parentId'] = parent.sysUID;
+            node.sysCreateDate = now.getTime();
+            node.childNodes = [];
+            node.className = options.className;
+            node.metaNodePraefix = parent.metaNodePraefix;
+            node.ebene = parent.ebene + 1;
+            node.sortPos = 0;
+            node.parentId = parent.sysUID;
             var parentChilds = me.getNodeDataById(parent.sysUID, false);
             if (parentChilds.length > 0) {
-                node['sortPos'] = parentChilds[parentChilds.length].sortPos;
+                node.sortPos = parentChilds[parentChilds.length].sortPos;
             }
             
             // add to parent
-            parent.childNodes.push(node['sysUID']);
+            parent.childNodes.push(node.sysUID);
             
             // add to nodeList
-            me.nodeList.push(node['sysUID']);
+            me.nodeList.push(node.sysUID);
         } else {
             // unknown mode
-            svcLogger.logError("unknown mode=" + options.mode + " form formName=" + options.formName, false);
+            svcLogger.logError('unknown mode=' + options.mode + ' form formName=' + options.formName, false);
             return null;
         }
 
         // set common values
-        node['sysChangeDate'] = now.getTime();
-        node['sysChangeCount'] = (node['sysChangeCount'] > 0 ? node['sysChangeCount']+1 : 1);
-        node['state'] = node['type'];
-        node['workflowState'] = me.mapWorkflowStates[node['state']];
+        node.sysChangeDate = now.getTime();
+        node.sysChangeCount = (node.sysChangeCount > 0 ? node.sysChangeCount+1 : 1);
+        node.state = node.type;
+        node.workflowState = me.mapWorkflowStates[node.state];
         
         // save node
-        console.log(msg + " save node:", node);
-        me.nodeList[node['sysUID']] = node;
+        console.log(msg + ' save node:', node);
+        me.nodeList[node.sysUID] = node;
         
-        console.log(msg + " response:", node);
+        console.log(msg + ' response:', node);
 
         return node;
     };
 
     me.fulltextSearch = function(searchOptions) {
-        var msg = "fulltextSearch searchOptions: " + searchOptions;
+        var msg = 'fulltextSearch searchOptions: ' + searchOptions;
 
         // search ids
         var nodeId, node, flgFound, content;
         var searchResultIds = [];
-        var suchworte = searchOptions.fulltext.toLowerCase().split(" ");
-        var classes = searchOptions.strClassFilter.split(",");
-        var states = searchOptions.strWorkflowStateFilter.split(",");
-        var notPraefix = searchOptions.strNotNodePraefix.split(" ");
+        var suchworte = searchOptions.fulltext.toLowerCase().split(' ');
+        var classes = searchOptions.strClassFilter.split(',');
+        var states = searchOptions.strWorkflowStateFilter.split(',');
+        var notPraefix = searchOptions.strNotNodePraefix.split(' ');
         for (var idx = 0; idx < me.nodeList.length; idx++) {
             nodeId = me.nodeList[idx];
             node = me.getNodeDataById(nodeId, true);
-            content = node.nodeDesc + " " + node.name + " " + node.state;
+            content = node.nodeDesc + ' ' + node.name + ' ' + node.state;
 
             flgFound = false;
             // Fulltext
-            if (suchworte.length > 0 && !me.appBase.get("YaioExportedData").VolltextTreffer(content.toLowerCase(), suchworte)) {
+            if (suchworte.length > 0 && !me.appBase.get('YaioExportedData').VolltextTreffer(content.toLowerCase(), suchworte)) {
                 // words not found
                 continue;
             }
             // Classfilter
-            if (classes.length > 0 && !me.appBase.get("YaioExportedData").VolltextTreffer(node.workflowState, classes)) {
+            if (classes.length > 0 && !me.appBase.get('YaioExportedData').VolltextTreffer(node.workflowState, classes)) {
                 // words not found
                 continue;
             }
             // Workflowstate-Filter
-            if (states.length > 0 && !me.appBase.get("YaioExportedData").VolltextTreffer(node.className, states)) {
+            if (states.length > 0 && !me.appBase.get('YaioExportedData').VolltextTreffer(node.className, states)) {
                 // words not found
                 continue;
             }
             // NotNodePraefix-Filter
-            if (notPraefix.length > 0 && me.appBase.get("YaioExportedData").VolltextTreffer(node.metaNodePraefix, notPraefix, true, true)) {
+            if (notPraefix.length > 0 && me.appBase.get('YaioExportedData').VolltextTreffer(node.metaNodePraefix, notPraefix, true, true)) {
                 // blacklisted praefixes found
-                console.log("ignore nodeId " + nodeId + " because of " + node.metaNodePraefix);
+                console.log('ignore nodeId ' + nodeId + ' because of ' + node.metaNodePraefix);
                 continue;
             }
             
@@ -298,9 +301,9 @@ Yaio.StaticNodeDataStore = function(appBase, config, defaultConfig) {
         // read all data and sort
         var searchConfig = [];
         searchConfig.push(me.mapSorts[searchOptions.searchSort]);
-        searchConfig.push("ebene asc");
-        searchConfig.push("parentNode asc");
-        searchConfig.push("sortPos asc");
+        searchConfig.push('ebene asc');
+        searchConfig.push('parentNode asc');
+        searchConfig.push('sortPos asc');
         var tmpSearchResult = [];
         for (var idx = 0; idx < searchResultIds.length; idx++) {
             nodeId = searchResultIds[idx];
@@ -317,36 +320,36 @@ Yaio.StaticNodeDataStore = function(appBase, config, defaultConfig) {
         var searchResult = tmpSearchResult.slice((searchOptions.curPage - 1) * searchOptions.pageSize, ende);
         
         var searchResponse = { 
-            state: "OK", 
-            stateMsg: "search done",
+            state: 'OK',
+            stateMsg: 'search done',
             nodes: searchResult,
             curPage: searchOptions.curPage,
             pageSize: searchOptions.pageSize,
             count: searchResultIds.length
         };
-        console.log(msg + " response:", searchResponse);
+        console.log(msg + ' response:', searchResponse);
 
         return searchResponse;
     };
 
     me.dynamicSort = function (property) {
         var sortOrder = 1;
-        if (property.search(" desc") > 0) {
+        if (property.search(' desc') > 0) {
             sortOrder = -1;
         }
-        property = property.replace(/( desc)|( asc)$/, "").trim();
+        property = property.replace(/( desc)|( asc)$/, '').trim();
         return function (a,b) {
             var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
             result = result * sortOrder;
             // sort null and undefined to last
-            if (result == -1 && (a[property] == null || a[property] === "undefined")) {
+            if (result === -1 && (me.appBase.DataUtils.isUndefinedStringValue(a[property]))) {
                 result = 1;
-            } else if (result == 1 && (b[property] == null || b[property] === "undefined")) {
+            } else if (result === 1 && (me.appBase.DataUtils.isUndefinedStringValue(b[property]))) {
                 result = -1;
             }
-//            console.log("dynamicSort: " + sortOrder + " " + property + " a:" + a[property] + " b:" + b[property] + " res:" +  result * sortOrder);
+//            console.log('dynamicSort: ' + sortOrder + ' ' + property + ' a:' + a[property] + ' b:' + b[property] + ' res:' +  result * sortOrder);
             return result;
-        }
+        };
     };
     
     me.dynamicSortMultiple = function (props) {
@@ -360,7 +363,7 @@ Yaio.StaticNodeDataStore = function(appBase, config, defaultConfig) {
                 i++;
             }
             return result;
-        }
+        };
     };
     
     me.orderBy = function(list, sortConfig) {

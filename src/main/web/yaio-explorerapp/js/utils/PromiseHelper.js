@@ -51,9 +51,9 @@ Yaio.PromiseHelper = function(appBase) {
      
         function PromiseHelper() {
             var _this = this;
-            var $q = appBase.get("Angular.$q");
+            var $q = appBase.get('Angular.$q');
             _this._deferred = $q.defer();
-            _this.$rootScope = appBase.get("Angular.$rootScope");
+            _this.$rootScope = appBase.get('Angular.$rootScope');
         }
       
         PromiseHelper.prototype.resolve = function (data) {

@@ -42,22 +42,22 @@ describe('yaio language-packs', function() {
      * define tests
      */
     it('should check the homepage-button text and tooltip, switch to En-Version and back', function doCheckButton() {
-        return yaioLangPage.switchLanguageAndCheckTexts($(yaioLangPage.linkFrontpage), $(yaioLangPage.linkSwitchLangDe), "Startseite", "Zurück zur Startseite.")
+        return yaioLangPage.switchLanguageAndCheckTexts($(yaioLangPage.linkFrontpage), $(yaioLangPage.linkSwitchLangDe), 'Startseite', 'Zurück zur Startseite.')
             .then(function checkEn() {
-                return yaioLangPage.switchLanguageAndCheckTexts($(yaioLangPage.linkFrontpage), $(yaioLangPage.linkSwitchLangEn), "Home", "Back to the homepage.");
+                return yaioLangPage.switchLanguageAndCheckTexts($(yaioLangPage.linkFrontpage), $(yaioLangPage.linkSwitchLangEn), 'Home', 'Back to the homepage.');
             })
             .then(function checkDe2() {
-                return yaioLangPage.switchLanguageAndCheckTexts($(yaioLangPage.linkFrontpage), $(yaioLangPage.linkSwitchLangDe), "Startseite", "Zurück zur Startseite.");
+                return yaioLangPage.switchLanguageAndCheckTexts($(yaioLangPage.linkFrontpage), $(yaioLangPage.linkSwitchLangDe), 'Startseite', 'Zurück zur Startseite.');
             });
     });
 
     it('should check the masterplan-node text, switch to En-Version and back', function doCheckNode() {
-        return yaioLangPage.switchLanguageAndCheckTexts($(yaioLangPage.labelMasterplan), $(yaioLangPage.linkSwitchLangDe), "Überschritten - Masterplan")
+        return yaioLangPage.switchLanguageAndCheckTexts($(yaioLangPage.labelMasterplan), $(yaioLangPage.linkSwitchLangDe), 'Überschritten - Masterplan')
             .then(function checkEn() {
-                return yaioLangPage.switchLanguageAndCheckTexts($(yaioLangPage.labelMasterplan), $(yaioLangPage.linkSwitchLangEn), "short - Masterplan");
+                return yaioLangPage.switchLanguageAndCheckTexts($(yaioLangPage.labelMasterplan), $(yaioLangPage.linkSwitchLangEn), 'short - Masterplan');
             })
             .then(function checkDe2() {
-                return yaioLangPage.switchLanguageAndCheckTexts($(yaioLangPage.labelMasterplan), $(yaioLangPage.linkSwitchLangDe), "Überschritten - Masterplan");
+                return yaioLangPage.switchLanguageAndCheckTexts($(yaioLangPage.labelMasterplan), $(yaioLangPage.linkSwitchLangDe), 'Überschritten - Masterplan');
             });
     });
 });

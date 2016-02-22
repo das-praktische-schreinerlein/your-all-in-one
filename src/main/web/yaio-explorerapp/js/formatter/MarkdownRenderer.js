@@ -48,7 +48,7 @@ Yaio.MarkdownRenderer = function(appBase) {
         var sysUID;
         if (!dmsOnly && href && href.indexOf('yaio:') === 0) {
             sysUID = href.substr(5);
-            href = "/yaio-explorerapp/yaio-explorerapp.html#/showByAllIds/" + sysUID;
+            href = '/yaio-explorerapp/yaio-explorerapp.html#/showByAllIds/' + sysUID;
         } else if (href && href.indexOf('yaiodmsdownload:') === 0) {
             sysUID = href.substr('yaiodmsdownload:'.length);
             href = me.appBase.get('YaioAccessManager').getAvailiableNodeAction('dmsDownload', sysUID, false) + sysUID;

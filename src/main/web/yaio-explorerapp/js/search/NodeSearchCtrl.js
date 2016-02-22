@@ -18,7 +18,8 @@
  * @FeatureResult                returns new controller
  * @FeatureKeywords              GUI Configuration BusinessLogic
  */
-yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $routeParams, setFormErrors, authorization, yaioUtils) {
+yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $routeParams,
+                                              setFormErrors, authorization, yaioUtils) {
     'use strict';
 
     // include utils
@@ -32,12 +33,12 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
         pageSize: 20,
         searchSort: 'lastChangeDown',
         baseSysUID: yaioUtils.getConfig().masterSysUId,
-        fulltext: "",
+        fulltext: '',
         total: 0,
         strNotNodePraefix: yaioUtils.getConfig().excludeNodePraefix,
-        strWorkflowStateFilter: "",
+        strWorkflowStateFilter: '',
         arrWorkflowStateFilter: [],
-        strClassFilter: "",
+        strClassFilter: '',
         arrClassFilter: []
     };
     if ($routeParams.curPage) {
@@ -60,13 +61,13 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
     }
     if ($routeParams.strWorkflowStateFilter) {
         $scope.searchOptions.strWorkflowStateFilter = decodeURI($routeParams.strWorkflowStateFilter);
-        $scope.searchOptions.arrWorkflowStateFilter = $scope.searchOptions.strWorkflowStateFilter.split(",");
+        $scope.searchOptions.arrWorkflowStateFilter = $scope.searchOptions.strWorkflowStateFilter.split(',');
     }
     if ($routeParams.strClassFilter) {
         $scope.searchOptions.strClassFilter = decodeURI($routeParams.strClassFilter);
-        $scope.searchOptions.arrClassFilter = $scope.searchOptions.strClassFilter.split(",");
+        $scope.searchOptions.arrClassFilter = $scope.searchOptions.strClassFilter.split(',');
     }
-    console.log("NodeSearchCtrl - processing");
+    console.log('NodeSearchCtrl - processing');
     
     // pagination has to wait for event
     $scope.NodeListReady = false;
@@ -87,7 +88,7 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
         $rootScope.lastLocation = newUrl;
 
         // no cache!!!
-        console.log("load new Url:" + newUrl);
+        console.log('load new Url:' + newUrl);
         $location.path(newUrl);
     };
     
@@ -100,7 +101,7 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
      * @param event                  key-pressed event
      */
     $scope.checkEnterFulltextSearch = function(event) {
-        if (event.keyCode == 13) {
+        if (event.keyCode === 13) {
             $scope.doNewFulltextSearch();
         }
         
@@ -121,7 +122,7 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
         $rootScope.lastLocation = newUrl;
 
         // no cache!!!
-        console.log("load new Url:" + newUrl);
+        console.log('load new Url:' + newUrl);
         $location.path(newUrl);
     };
     
@@ -132,8 +133,8 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
             + '/' + encodeURI(searchOptions.searchSort)
             + '/' + encodeURI(searchOptions.baseSysUID)
             + '/' + encodeURI(searchOptions.fulltext)
-            + '/' + encodeURI(searchOptions.arrClassFilter.join(","))
-            + '/' + encodeURI(searchOptions.arrWorkflowStateFilter.join(","))
+            + '/' + encodeURI(searchOptions.arrClassFilter.join(','))
+            + '/' + encodeURI(searchOptions.arrWorkflowStateFilter.join(','))
             + '/' + encodeURI(searchOptions.strNotNodePraefix)
             + '/';
         return newUrl;
@@ -149,8 +150,8 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
      */
     $scope.doFulltextSearch = function() {
         // save lastLocation for login
-        $scope.searchOptions.strClassFilter = $scope.searchOptions.arrClassFilter.join(",");
-        $scope.searchOptions.strWorkflowStateFilter = $scope.searchOptions.arrWorkflowStateFilter.join(",");
+        $scope.searchOptions.strClassFilter = $scope.searchOptions.arrClassFilter.join(',');
+        $scope.searchOptions.strWorkflowStateFilter = $scope.searchOptions.arrWorkflowStateFilter.join(',');
         $rootScope.lastLocation = $scope.createSearchUri($scope.searchOptions, $scope.searchOptions.curPage);
 
         // search data
@@ -164,9 +165,9 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
                 var data = angularResponse.data;
                 var header = angularResponse.header;
                 var config = angularResponse.config;
-                var message = "error loading nodes with searchOptions: " + searchOptions;
+                var message = 'error loading nodes with searchOptions: ' + searchOptions;
                 yaioUtils.getService('Logger').logError(message, true);
-                message = "error data: " + data + " header:" + header + " config:" + config;
+                message = 'error data: ' + data + ' header:' + header + ' config:' + config;
                 yaioUtils.getService('Logger').logError(message, false);
             });
     };
@@ -174,9 +175,9 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
     $scope.doFulltextSearchSuccessHandler = function(searchOptions, yaioNodeSearchResponse) {
         // check response
         var state = yaioNodeSearchResponse.state;
-        if (state === "OK") {
+        if (state === 'OK') {
             // all fine
-            console.log("NodeSearchCtrl - OK loading nodes:" + yaioNodeSearchResponse.stateMsg + " searchOptions=" + searchOptions);
+            console.log('NodeSearchCtrl - OK loading nodes:' + yaioNodeSearchResponse.stateMsg + ' searchOptions=' + searchOptions);
             
             // add nodes to scope
             $scope.nodes = yaioNodeSearchResponse.nodes;
@@ -186,10 +187,10 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
             
             // set event for pagination
             $scope.NodeListReady = true;
-            $scope.$broadcast("NodeListReady");
+            $scope.$broadcast('NodeListReady');
         } else {
             // error
-            yaioUtils.getService('Logger').logError("error loading nodes:" + yaioNodeSearchResponse.stateMsg + " details:" + yaioNodeSearchResponse, true);
+            yaioUtils.getService('Logger').logError('error loading nodes:' + yaioNodeSearchResponse.stateMsg + ' details:' + yaioNodeSearchResponse, true);
         }
     };
 
@@ -202,64 +203,67 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
     $scope.renderNodeLine = function(node) {
         // we need a timeout to put the tr into DOM
         setTimeout(function(){
-                $scope.yaioUtils.renderNodeLine(node, "#tr" + node.sysUID, false);
-                console.log("renderNodeLine: done to:" + "#tr" + node.sysUID + $("#detail_sys_" + node.sysUID).length);
+                $scope.yaioUtils.renderNodeLine(node, '#tr' + node.sysUID, false);
+                console.log('renderNodeLine: done to:' + '#tr' + node.sysUID + $('#detail_sys_' + node.sysUID).length);
 
                 // render hierarchy
                 var parentNode = node.parentNode;
                 var parentStr = node.name;
-                while (parentNode != null && parentNode != "" && parentNode != "undefined") {
-                    parentStr = parentNode.name + " --> " + parentStr;
+                while (!yaioUtils.getService('DataUtils').isEmptyStringValue(parentNode)) {
+                    parentStr = parentNode.name + ' --> ' + parentStr;
                     parentNode = parentNode.parentNode;
                 }
-                parentStr = "<b>" + yaioUtils.getService('DataUtils').htmlEscapeText(parentStr) + "</b>";
+                parentStr = '<b>' + yaioUtils.getService('DataUtils').htmlEscapeText(parentStr) + '</b>';
                 
                 // extract search words
-                var searchExtract = "";
+                var searchExtract = '';
                 if ($scope.searchOptions.fulltext 
                     && $scope.searchOptions.fulltext.length > 0
-                    && node.nodeDesc != undefined) {
+                    && !yaioUtils.getService('DataUtils').isUndefinedStringValue(node.nodeDesc)) {
                     // split to searchwords
-                    var searchWords = $scope.searchOptions.fulltext.split(" ");
+                    var searchWords = $scope.searchOptions.fulltext.split(' ');
                     var searchWord, searchResults, splitLength, splitText;
 
                     var descText = node.nodeDesc;
-                    descText = descText.replace(/<WLBR>/g, "\n");
-                    descText = descText.replace(/<WLESC>/g, "\\");
-                    descText = descText.replace(/<WLTAB>/g, "\t");
+                    descText = descText.replace(/<WLBR>/g, '\n');
+                    descText = descText.replace(/<WLESC>/g, '\\');
+                    descText = descText.replace(/<WLTAB>/g, '\t');
                     descText = descText.toLowerCase();
                     
                     for (var idx in searchWords) {
+                        if (!searchWords.hasOwnProperty(idx)) {
+                            continue;
+                        }
                         searchWord = yaioUtils.getService('DataUtils').escapeRegExp(searchWords[idx]);
 
                         // split by searchwords
                         searchResults = descText.toLowerCase().split(searchWord.toLowerCase());
                         
                         // add dummy-element if desc start/ends with searchWord 
-                        if (descText.search(searchWord.toLowerCase()) == 0) {
-                            searchResults.insert(" ");
+                        if (descText.search(searchWord.toLowerCase()) === 0) {
+                            searchResults.insert(' ');
                         }
-                        if (descText.search(searchWord.toLowerCase()) == (descText.length - searchWord.length)) {
-                            searchResults.push(" ");
+                        if (descText.search(searchWord.toLowerCase()) === (descText.length - searchWord.length)) {
+                            searchResults.push(' ');
                         }
 
                         // iterate and show 50 chars before and behind
                         for (var idx2 = 0; idx2 < searchResults.length; idx2++) {
-//                            console.log("found " + searchWord + " after " + searchResults[idx2]);
+//                            console.log('found ' + searchWord + ' after ' + searchResults[idx2]);
                             if (idx2 > 0) {
                                 splitLength = (searchResults[idx2].length > 50 ? 50 : searchResults[idx2].length);
                                 splitText = searchResults[idx2].substr(0, splitLength);
-                                console.log("found " + searchWord + " after use " + splitLength + " extracted:" + splitText);
-                                searchExtract += "<b>"+ searchWord + "</b>" 
-                                    + yaioUtils.getService('DataUtils').htmlEscapeText(splitText) + "...";
+                                console.log('found ' + searchWord + ' after use ' + splitLength + ' extracted:' + splitText);
+                                searchExtract += '<b>'+ searchWord + '</b>'
+                                    + yaioUtils.getService('DataUtils').htmlEscapeText(splitText) + '...';
                             }
                             if (idx2 < searchResults.length) {
                                 splitLength = (searchResults[idx2].length > 50 ? 50 : searchResults[idx2].length);
                                 splitText = searchResults[idx2].substr(
                                         searchResults[idx2].length - splitLength, 
                                         searchResults[idx2].length);
-                                console.log("found " + searchWord + " before use " + splitLength + " extracted:" + splitText);
-                                searchExtract += "..." 
+                                console.log('found ' + searchWord + ' before use ' + splitLength + ' extracted:' + splitText);
+                                searchExtract += '...'
                                     + yaioUtils.getService('DataUtils').htmlEscapeText(splitText);
                             }
                         }
@@ -267,17 +271,17 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
                 }
                 
                 // add searchdata
-                console.log("renderNodeLine: add searchdata to:" + "#tr" + node.sysUID);
-                var $html = $("<div id='details_parent_" + node.sysUID + "'"
-                                + " class='field_nodeParent'>"
+                console.log('renderNodeLine: add searchdata to:' + '#tr' + node.sysUID);
+                var $html = $('<div id="details_parent_' + node.sysUID + '"'
+                                + ' class="field_nodeParent">'
                                 + parentStr
-                                + "</div>"
-                              + "<div id='details_searchdata_" + node.sysUID + "'"
-                                + " class='field_nodeSearchData'>"
+                                + '</div>'
+                              + '<div id="details_searchdata_' + node.sysUID + '"'
+                                + ' class="field_nodeSearchData">'
                                 + searchExtract
-                                + "</div>");
-                $("#detail_sys_" + node.sysUID).after($html);
-                console.log("renderNodeLine: added searchdata to:" + "#detail_sys_" + node.sysUID + $("#detail_sys_" + node.sysUID).length);
+                                + '</div>');
+                $('#detail_sys_' + node.sysUID).after($html);
+                console.log('renderNodeLine: added searchdata to:' + '#detail_sys_' + node.sysUID + $('#detail_sys_' + node.sysUID).length);
             }, 10);
     };
 
@@ -289,6 +293,9 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
      */
     $scope.recalcGanttBlocks = function() {
         for (var idx in $scope.nodes) {
+            if (!$scope.nodes.hasOwnProperty(idx)) {
+                continue;
+            }
             var node = $scope.nodes[idx];
             yaioUtils.getService('YaioNodeGanttRender').yaioRecalcGanttBlock(node);
         }

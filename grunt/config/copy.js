@@ -199,7 +199,7 @@
         var match;
 
         // iterate all matching comment-html-tags
-        while (match = myRegexp.exec(newContent)) {
+        while ((match = myRegexp.exec(newContent)) !== null) {
             // extract data
             var blockContent = match[3];
             var restBefore = RegExp.leftContext;
@@ -223,8 +223,7 @@
             '';
         var myRegexp = new RegExp(regExStr, 'gim');
         var match;
-        while (match = myRegexp.exec(newContent)) {
-            var blockContent = match[3];
+        while ((match = myRegexp.exec(newContent)) !== null) {
             var restBefore = RegExp.leftContext;
             var restAfter = RegExp.rightContext;
             newContent = restBefore + match[1] +
@@ -240,13 +239,12 @@
             '';
         var myRegexp = new RegExp(regExStr, 'gim');
         var match;
-        while (match = myRegexp.exec(newContent)) {
-            var blockContent = match[3];
+        while ((match = myRegexp.exec(newContent)) !== null) {
             var restBefore = RegExp.leftContext;
             var restAfter = RegExp.rightContext;
             newContent = restBefore + match[1] + restAfter;
         }
-        return newContent
+        return newContent;
     }
 
     function intendBlock(block, content, intend, intend2) {
@@ -256,7 +254,7 @@
             '';
         var myRegexp = new RegExp(regExStr, 'gim');
         var match;
-        while (match = myRegexp.exec(newContent)) {
+        while ((match = myRegexp.exec(newContent)) !== null) {
             var restBefore = RegExp.leftContext + match[1];
             var restAfter = RegExp.rightContext;
             var blockContent = match[4];
@@ -291,7 +289,7 @@
             '';
         var myRegexp = new RegExp(regExStr, 'gim');
         var match;
-        while (match = myRegexp.exec(newContent)) {
+        while ((match = myRegexp.exec(newContent)) !== null) {
             var blockContent = match[3];
             var restBefore = RegExp.leftContext;
             var restAfter = RegExp.rightContext;
@@ -308,13 +306,12 @@
     function patchLiBlock(block, content) {
         var newContent = content;
         var regExStr = '(.*?)' +
-            '[\\r\\n]+([ ]+\\* *)@' + block + ' *<ul>(.*?)<\\/ul> *[\\r\\n]'
-        '';
+            '[\\r\\n]+([ ]+\\* *)@' + block + ' *<ul>(.*?)<\\/ul> *[\\r\\n]';
         var myRegexp = new RegExp(regExStr, 'gim');
         var match;
 
         // iterate all matching comment-li-tags
-        while (match = myRegexp.exec(newContent)) {
+        while ((match = myRegexp.exec(newContent)) !== null) {
             newContent = RegExp.leftContext + match[1] + '\n';
 
             // extract data
