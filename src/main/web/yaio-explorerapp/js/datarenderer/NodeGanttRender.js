@@ -251,10 +251,10 @@ Yaio.NodeGanttRender = function(appBase) {
     
     
     /** 
-     * Shows the GanttBlock - Updates DOM<br>
-     * Toggles DataBlock, GanttBlock and the links #tabTogglerData, #tabTogglerGantt.<br>
-     * Hide all: td.block_nodedata, th.block_nodedata + #tabTogglerGantt<br>
-     * Show all: td.block_nodegantt, th.block_nodegantt + #tabTogglerData<br>
+     * Shows the GanttBlock - Updates DOM
+     * Toggles DataBlock, GanttBlock and the links #tabTogglerData, #tabTogglerGantt.
+     * Hide all: td.block_nodedata, th.block_nodedata + #tabTogglerGantt
+     * Show all: td.block_nodegantt, th.block_nodegantt + #tabTogglerData
      */
     me.yaioShowGanttBlock = function() {
         var svcUIToggler = me.appBase.get('UIToggler');
@@ -274,11 +274,11 @@ Yaio.NodeGanttRender = function(appBase) {
     
     
     /** 
-     * activate one of the gantt-blocks for the element - Updates DOM<br>
+     * activate one of the gantt-blocks for the element - Updates DOM
      * When flgMeOnly ist set: activate #gantt_ist_container_ + #gantt_plan_container 
-     * to display only the gantt with the data of this node<br>
+     * to display only the gantt with the data of this node
      * When flgMeOnly ist nmot set: activate #gantt_istChildrenSum_container_ + #gantt_planChildrenSum_container 
-     * to display only the gantt with the data of this node and children<br>
+     * to display only the gantt with the data of this node and children
      * @param {FancytreeNode} node             the FancytreeNode
      * @param {Boolean} flgMeOnly              true - display only the gantt for the node / false - node+children
      */
@@ -304,7 +304,7 @@ Yaio.NodeGanttRender = function(appBase) {
     };
     
     /** 
-     * recalc all gantt-blocks of the fancytree-nodes (iterates over getRooNode.visit() - Updates DOM<br>
+     * recalc all gantt-blocks of the fancytree-nodes (iterates over getRooNode.visit() - Updates DOM
      * calls yaioRecalcGanttBlock for every node and afterwards me.yaioRecalcMasterGanttBlockFromTree()
      */
     me.yaioRecalcFancytreeGanttBlocks = function() {
@@ -318,7 +318,7 @@ Yaio.NodeGanttRender = function(appBase) {
     };
     
     /** 
-     * recalc mastergantt-block for the basenode on top of the page - Updates DOM<br>
+     * recalc mastergantt-block for the basenode on top of the page - Updates DOM
      * calls yaioRecalcGanttBlock and yaioRecalcMasterGanttBlockFromTree
      * @param {Object} basenode               the basenode to recalc (java de.yaio.core.node.BaseNode)
      */
@@ -331,8 +331,8 @@ Yaio.NodeGanttRender = function(appBase) {
     };
     
     /** 
-     * recalc mastergantt-block from the tree-data - Updates DOM<br>
-     * extract nodeid of the masternode from '#masterTr.data-value'<br>
+     * recalc mastergantt-block from the tree-data - Updates DOM
+     * extract nodeid of the masternode from '#masterTr.data-value'
      * calls yaioRecalcMasterGanttBlockLine for plan+ist
      */
     me.yaioRecalcMasterGanttBlockFromTree = function() {
@@ -348,10 +348,10 @@ Yaio.NodeGanttRender = function(appBase) {
     };
     
     /** 
-     * Recalcs mastergantt-line for praefix (plan, ist) with the tree-data - Updates DOM<br>
-     * It extracts the data-rangeaufwand from gantt_${praefix}ChildrenSum_bar_$masterNodeId<br>
+     * Recalcs mastergantt-line for praefix (plan, ist) with the tree-data - Updates DOM
+     * It extracts the data-rangeaufwand from gantt_${praefix}ChildrenSum_bar_$masterNodeId
      * It iterates over all visible div.gantt_$praefix_bar, div.gantt_${praefix}ChildrenSum_bar
-     * and adds their data-rangeaufwand<br>
+     * and adds their data-rangeaufwand
      * At the end the sumRangeAufwand will be placed on #gantt_${praefix}ChildrenSum_aufwand_{masterNodeId}
      * @param {String} masterNodeId           id of the masterNode on top of the page
      * @param {String} praefix                datablock to racalc (plan, ist)
@@ -428,7 +428,7 @@ Yaio.NodeGanttRender = function(appBase) {
     };
     
     /** 
-     * recalc gantt-block for the basenode - Updates DOM<br>
+     * recalc gantt-block for the basenode - Updates DOM
      * calls fillGanttBlock for (plan, ist, planChildrenSum, istChildrenSum)
      * @param {Object} basenode               the basenode to recalc (java de.yaio.core.node.BaseNode)
      */

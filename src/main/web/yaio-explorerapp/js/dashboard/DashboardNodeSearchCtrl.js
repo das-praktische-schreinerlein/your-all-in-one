@@ -21,25 +21,32 @@
 yaioApp.controller('DashBoardNodeSearchCtrl', function($rootScope, $scope, yaioUtils) {
     'use strict';
 
-    // include utils
-    $scope.yaioUtils = yaioUtils;
+    /**
+     * init the controller
+     * @private
+     */
+    $scope._init = function () {
+        // include utils
+        $scope.yaioUtils = yaioUtils;
 
-    // create search
-    $scope.nodes = [];
-    $scope.searchOptions = {
-        curPage: 1,
-        pageSize: 10,
-        searchSort: 'lastChangeDown',
-        baseSysUID: yaioUtils.getConfig().masterSysUId,
-        fulltext: '',
-        total: 0,
-        strNotNodePraefix: yaioUtils.getConfig().excludeNodePraefix,
-        strWorkflowStateFilter: '',
-        strClassFilter: ''
+        // create search
+        $scope.nodes = [];
+        $scope.searchOptions = {
+            curPage: 1,
+            pageSize: 10,
+            searchSort: 'lastChangeDown',
+            baseSysUID: yaioUtils.getConfig().masterSysUId,
+            fulltext: '',
+            total: 0,
+            strNotNodePraefix: yaioUtils.getConfig().excludeNodePraefix,
+            strWorkflowStateFilter: '',
+            strClassFilter: ''
+        };
     };
 
     /**
      * create the search-uri to use
+     * @returns {String}              new search-uri
      */
     $scope.createSearchUri = function() {
         return '/search'
@@ -55,7 +62,7 @@ yaioApp.controller('DashBoardNodeSearchCtrl', function($rootScope, $scope, yaioU
     };
     
     /** 
-     * send ajax-request for fulltextsearch to server and add reszult to scope<br>
+     * send ajax-request for fulltextsearch to server and add reszult to scope
      */
     $scope.doFulltextSearch = function() {
         // search data
@@ -132,4 +139,7 @@ yaioApp.controller('DashBoardNodeSearchCtrl', function($rootScope, $scope, yaioU
                     '#detail_sys_' + domId + $('#detail_sys_' + domId).length);
             }, 10);
     };
+
+    // init
+    $scope._init();
 });

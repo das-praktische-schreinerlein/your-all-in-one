@@ -22,8 +22,14 @@ yaioApp.controller('ImporterCtrl', function($rootScope, $scope, $location, $rout
                                             setFormErrors, authorization, yaioUtils) {
     'use strict';
 
-    // include utils
-    $scope.yaioUtils = yaioUtils;
+    /**
+     * init the controller
+     * @private
+     */
+    $scope._init = function () {
+        // include utils
+        $scope.yaioUtils = yaioUtils;
+    };
 
     /** 
      * submit and close the importeditor
@@ -71,4 +77,7 @@ yaioApp.controller('ImporterCtrl', function($rootScope, $scope, $location, $rout
         console.log('showImportEditor done:' + ' url:' + url);
         return false;
     };
+
+    // init
+    $scope._init();
 });

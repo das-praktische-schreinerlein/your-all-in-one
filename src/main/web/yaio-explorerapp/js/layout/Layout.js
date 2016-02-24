@@ -45,7 +45,7 @@ Yaio.Layout = function(appBase) {
     };
     
     /** 
-     * add speechRecognition to name+nodeDesc-Label if availiable<br>
+     * add speechRecognition to name+nodeDesc-Label if availiable
      * set the flg webkitSpeechRecognitionAdded on the element, so that there is no doubling
      */
     me.addSpeechRecognitionToElements = function() {
@@ -53,7 +53,7 @@ Yaio.Layout = function(appBase) {
     };
     
     /** 
-     * add speechSynth to nodeDesc-Label if availiable<br>
+     * add speechSynth to nodeDesc-Label if availiable
      * set the flg speechSynthAdded on the element, so that there is no doubling
      */
     me.addSpeechSynthToElements = function() {

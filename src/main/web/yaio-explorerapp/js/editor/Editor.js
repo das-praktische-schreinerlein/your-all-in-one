@@ -401,7 +401,7 @@ Yaio.Editor = function(appBase) {
     
     /** 
      * a hack to call updatetrigger for the element because for speechregognition the popup
-     * cant call the trigger for another window (security)<br>
+     * cant call the trigger for another window (security)
      * the function binds to the current document-window
      * @param element                element (HTML-Element) to fire the trigger
      */

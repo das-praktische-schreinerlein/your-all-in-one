@@ -22,11 +22,25 @@ yaioApp.controller('AuthController', function($rootScope, $scope, $location, $ro
                                               setFormErrors, OutputOptionsEditor, authorization, yaioUtils) {
     'use strict';
 
-    // include utils
-    $scope.yaioUtils = yaioUtils;
+    /**
+     * init the controller
+     * @private
+     */
+    $scope._init = function () {
+        // include utils
+        $scope.yaioUtils = yaioUtils;
 
-    $scope.credentials = {};
-    
+        $scope.credentials = {};
+
+        if ($routeParams.logout) {
+            $scope.logout();
+        }
+    };
+
+    /**
+     * do login
+     * @returns {*|JQueryPromise<any>|JQueryPromise<U>|JQueryPromise<void>}
+     */
     $scope.login = function() {
         return yaioUtils.getService('YaioNodeData').yaioDoLogin($scope.credentials)
             .then(function success() {
@@ -51,7 +65,11 @@ yaioApp.controller('AuthController', function($rootScope, $scope, $location, $ro
                     $rootScope.authenticated = false;
             });
     };
-    
+
+    /**
+     * do logout
+     * @returns {*|JQueryPromise<any>|JQueryPromise<U>|JQueryPromise<void>}
+     */
     $scope.logout = function() {
         return yaioUtils.getService('YaioNodeData').yaioDoLogout()
             .then(function success() {
@@ -66,8 +84,7 @@ yaioApp.controller('AuthController', function($rootScope, $scope, $location, $ro
     };
     
     
-    if ($routeParams.logout) {
-        $scope.logout();
-    }
+    // init
+    $scope._init();
 });
 

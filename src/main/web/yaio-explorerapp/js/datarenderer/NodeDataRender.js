@@ -36,7 +36,7 @@ Yaio.NodeDataRender = function(appBase) {
     /* jshint maxstatements: 110 */
     /**
      * Callback for fancyftree. Renders the full block for corresponding basenode.
-     * Manipulates the default-fancytree-tablerow (replace+add+hide elements).<br>
+     * Manipulates the default-fancytree-tablerow (replace+add+hide elements).
      * <ul>
      *   <li>data.node.tr: Html-Obj of the table-line
      *   <li>data.node.data.basenode: the basenode (java de.yaio.core.node.BaseNode)
@@ -525,10 +525,10 @@ Yaio.NodeDataRender = function(appBase) {
     /* jshint maxstatements: 50 */
 
     /** 
-     * Shows the DataBlock<br> 
-     * Toggles DataBlock, GanttBlock and the links #tabTogglerData, #tabTogglerGantt.<br>
-     * Show all: td.block_nodedata, th.block_nodedata + #tabTogglerGantt<br>
-     * Hide all: td.block_nodegantt, th.block_nodegantt + #tabTogglerData<br>
+     * Shows the DataBlock
+     * Toggles DataBlock, GanttBlock and the links #tabTogglerData, #tabTogglerGantt.
+     * Show all: td.block_nodedata, th.block_nodedata + #tabTogglerGantt
+     * Hide all: td.block_nodegantt, th.block_nodegantt + #tabTogglerData
      */
     me.yaioShowDataBlock = function() {
         var svcUIToggler = me.appBase.get('UIToggler');

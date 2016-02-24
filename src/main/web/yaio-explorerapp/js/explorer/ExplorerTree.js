@@ -58,7 +58,7 @@ Yaio.ExplorerTree = function(appBase) {
     /* jshint maxcomplexity: 100 */
     /**
      * creates an fancytree on the html-element treeId and inits it with the data
-     * of masterNodeId<br>
+     * of masterNodeId
      * after init of the tree the doneHandler will be executed
      * updates global var treeInstances[treeId]
      * @param {String} treeId                 id of the html-element containing the tree
@@ -538,7 +538,7 @@ Yaio.ExplorerTree = function(appBase) {
     /**
      * updates data.result with the childlist of the node
      * Callbackhandler for FancyTree to convert the presponse from server to fancytree-data. 
-     * Fancytree runs it if nodedata is read from server.<br>
+     * Fancytree runs it if nodedata is read from server.
      * checks for data.response.state=OK, create FancydataNode from data.response.childNodes
      * and adds them to data.result.
      * @param {FancytreeEvent} event  fancytree-event

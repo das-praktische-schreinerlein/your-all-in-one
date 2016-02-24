@@ -21,15 +21,24 @@
 yaioApp.controller('DashboardCtrl', function($rootScope, $scope, $location, $routeParams, setFormErrors, OutputOptionsEditor, authorization, yaioUtils) {
     'use strict';
 
-    // include utils
-    $scope.yaioUtils = yaioUtils;
-    
-    // call authentificate 
-    authorization.authentificate(function () {
-        // check authentification
-        if (! $rootScope.authenticated) {
-            $location.path(yaioUtils.getConfig().appLoginUrl);
-            $scope.error = false;
-        }
-    });
+    /**
+     * init the controller
+     * @private
+     */
+    $scope._init = function () {
+        // include utils
+        $scope.yaioUtils = yaioUtils;
+
+        // call authentificate
+        authorization.authentificate(function () {
+            // check authentification
+            if (!$rootScope.authenticated) {
+                $location.path(yaioUtils.getConfig().appLoginUrl);
+                $scope.error = false;
+            }
+        });
+    };
+
+    // init
+    $scope._init();
 });

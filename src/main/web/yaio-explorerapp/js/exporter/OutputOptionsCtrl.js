@@ -22,14 +22,23 @@ yaioApp.controller('OutputOptionsCtrl', function($rootScope, $scope, $location, 
                                                  setFormErrors, OutputOptionsEditor, yaioUtils) {
     'use strict';
 
-    // include utils
-    $scope.yaioUtils = yaioUtils;
+    /**
+     * init the controller
+     * @private
+     */
+    $scope._init = function () {
+        // include utils
+        $scope.yaioUtils = yaioUtils;
 
-    // register the editor
-    $scope.outputOptionsEditor = OutputOptionsEditor;
-    // create options
-    $scope.oOptions = $scope.outputOptionsEditor.oOptions;
-    
-    console.log('OutputOptionsCtrl - started');
+        // register the editor
+        $scope.outputOptionsEditor = OutputOptionsEditor;
+        // create options
+        $scope.oOptions = $scope.outputOptionsEditor.oOptions;
+
+        console.log('OutputOptionsCtrl - started');
+    };
+
+    // init
+    $scope._init();
 });
 

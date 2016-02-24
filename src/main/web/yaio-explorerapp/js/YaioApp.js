@@ -24,7 +24,7 @@
 var yaioApp = angular.module('yaioExplorerApp', ['ngAnimate', 'ngRoute', 'pascalprecht.translate']);
 
 /** 
- * configures the routing for the app<br>
+ * configures the routing for the app
  * add new routes to the $routeProvider-instance
  * @FeatureDomain                Configuration
  * @FeatureResult                updates $routeProvider

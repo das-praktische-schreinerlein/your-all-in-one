@@ -22,37 +22,52 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
                                               setFormErrors, authorization, yaioUtils) {
     'use strict';
 
-    // include utils
-    $scope.yaioUtils = yaioUtils;
-    
-    // register pattern
-    $scope.CONST_PATTERN_CSSCLASS  = yaioApp.CONST_PATTERN_CSSCLASS ;
-    $scope.CONST_PATTERN_NUMBERS  = yaioApp.CONST_PATTERN_NUMBERS ;
-    $scope.CONST_PATTERN_TEXTCONST  = yaioApp.CONST_PATTERN_TEXTCONST ;
-    $scope.CONST_PATTERN_TITLE  = yaioApp.CONST_PATTERN_TITLE ;
-    $scope.CONST_PATTERN_SEG_TASK  = yaioApp.CONST_PATTERN_SEG_TASK ;
-    $scope.CONST_PATTERN_SEG_HOURS  = yaioApp.CONST_PATTERN_SEG_HOURS ;
-    $scope.CONST_PATTERN_SEG_STAND  = yaioApp.CONST_PATTERN_SEG_STAND ;
-    $scope.CONST_PATTERN_SEG_DATUM  = yaioApp.CONST_PATTERN_SEG_DATUM ;
-    $scope.CONST_PATTERN_SEG_STRING  = yaioApp.CONST_PATTERN_SEG_STRING ;
-    $scope.CONST_PATTERN_SEG_FLAG  = yaioApp.CONST_PATTERN_SEG_FLAG ;
-    $scope.CONST_PATTERN_SEG_INT  = yaioApp.CONST_PATTERN_SEG_INT ;
-    $scope.CONST_PATTERN_SEG_UID  = yaioApp.CONST_PATTERN_SEG_UID ;
-    $scope.CONST_PATTERN_SEG_ID  = yaioApp.CONST_PATTERN_SEG_ID ;
-    $scope.CONST_PATTERN_SEG_TAGS  = yaioApp.CONST_PATTERN_SEG_TAGS ;
-    $scope.CONST_PATTERN_SEG_PRAEFIX  = yaioApp.CONST_PATTERN_SEG_PRAEFIX ;
-    $scope.CONST_PATTERN_SEG_CHECKSUM  = yaioApp.CONST_PATTERN_SEG_CHECKSUM ;
-    $scope.CONST_PATTERN_SEG_TIME  = yaioApp.CONST_PATTERN_SEG_TIME ;
-    
     // create node
-    $scope.nodeForEdit = {};
     var nodeId = $rootScope.nodeId;
-    $scope.uploadFile = undefined;
-    
-    $scope.availiableSystemTemplates = [];
-    $scope.availiableOwnTemplates = [];
-    
-    /** 
+
+    /**
+     * configure controller
+     * @private
+     */
+    $scope._configure = function () {
+        // register pattern
+        $scope.CONST_PATTERN_CSSCLASS  = yaioApp.CONST_PATTERN_CSSCLASS ;
+        $scope.CONST_PATTERN_NUMBERS  = yaioApp.CONST_PATTERN_NUMBERS ;
+        $scope.CONST_PATTERN_TEXTCONST  = yaioApp.CONST_PATTERN_TEXTCONST ;
+        $scope.CONST_PATTERN_TITLE  = yaioApp.CONST_PATTERN_TITLE ;
+        $scope.CONST_PATTERN_SEG_TASK  = yaioApp.CONST_PATTERN_SEG_TASK ;
+        $scope.CONST_PATTERN_SEG_HOURS  = yaioApp.CONST_PATTERN_SEG_HOURS ;
+        $scope.CONST_PATTERN_SEG_STAND  = yaioApp.CONST_PATTERN_SEG_STAND ;
+        $scope.CONST_PATTERN_SEG_DATUM  = yaioApp.CONST_PATTERN_SEG_DATUM ;
+        $scope.CONST_PATTERN_SEG_STRING  = yaioApp.CONST_PATTERN_SEG_STRING ;
+        $scope.CONST_PATTERN_SEG_FLAG  = yaioApp.CONST_PATTERN_SEG_FLAG ;
+        $scope.CONST_PATTERN_SEG_INT  = yaioApp.CONST_PATTERN_SEG_INT ;
+        $scope.CONST_PATTERN_SEG_UID  = yaioApp.CONST_PATTERN_SEG_UID ;
+        $scope.CONST_PATTERN_SEG_ID  = yaioApp.CONST_PATTERN_SEG_ID ;
+        $scope.CONST_PATTERN_SEG_TAGS  = yaioApp.CONST_PATTERN_SEG_TAGS ;
+        $scope.CONST_PATTERN_SEG_PRAEFIX  = yaioApp.CONST_PATTERN_SEG_PRAEFIX ;
+        $scope.CONST_PATTERN_SEG_CHECKSUM  = yaioApp.CONST_PATTERN_SEG_CHECKSUM ;
+        $scope.CONST_PATTERN_SEG_TIME  = yaioApp.CONST_PATTERN_SEG_TIME ;
+    };
+
+    /**
+     * init the controller
+     * @private
+     */
+    $scope._init = function () {
+        // include utils
+        $scope.yaioUtils = yaioUtils;
+
+        $scope.nodeForEdit = {};
+        $scope.uploadFile = undefined;
+
+        $scope.availiableSystemTemplates = [];
+        $scope.availiableOwnTemplates = [];
+
+        $scope.loadAvailiableTemplates();
+    };
+
+    /**
      * discard and close the editor
      */
     $scope.discard = function() {
@@ -130,7 +145,7 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
     };
 
     /** 
-     * callbackhandler to perform actions when type has changed - updates istStand<br>
+     * callbackhandler to perform actions when type has changed - updates istStand
      * calls yaioUtils.getService('YaioEditor').calcIstStandFromState() for the node
      * if ERLEDIGT || VERWORFEN || EVENT_ERLEDIGT || EVENT_VERWORFEN: update istStand=100
      */
@@ -141,7 +156,7 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
     
     
     /** 
-     * callbackhandler to perform actions when istStand has changed - updates type<br>
+     * callbackhandler to perform actions when istStand has changed - updates type
      * recalcs the type/state depending on the istStand
      * <ul>
      *   <li>if className=TaskNode && 0: update type=OFFEN
@@ -158,7 +173,7 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
     };
     
     /** 
-     * callbackhandler to perform actions when type has changed - updates stand<br>
+     * callbackhandler to perform actions when type has changed - updates stand
      * if EVENT_ERLEDIGT || VERWORFEN: update stand=100;
      */
     $scope.doTaskNodeTypeChanged = function() {
@@ -171,7 +186,7 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
     };
     
     /** 
-     * callbackhandler to perform actions when UploadFile has changed - updates resLocRef and uploadFile<br>
+     * callbackhandler to perform actions when UploadFile has changed - updates resLocRef and uploadFile
      * set variable in scope with filename and updates resLocRef
      */
     $scope.doUploadFileUrlResNodeChanged = function() {
@@ -382,5 +397,6 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
     };
     
     // init
-    $scope.loadAvailiableTemplates();
+    $scope._configure();
+    $scope._init();
 });

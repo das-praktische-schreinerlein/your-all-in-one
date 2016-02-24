@@ -22,55 +22,73 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
                                               setFormErrors, authorization, yaioUtils) {
     'use strict';
 
-    // include utils
-    $scope.yaioUtils = yaioUtils;
+    /**
+     * init the controller
+     * @private
+     */
+    $scope._init = function () {
+        // include utils
+        $scope.yaioUtils = yaioUtils;
 
-    // create search
-    $scope.nodes = [];
+        // create search
+        $scope.nodes = [];
 
-    $scope.searchOptions = {
-        curPage: 1,
-        pageSize: 20,
-        searchSort: 'lastChangeDown',
-        baseSysUID: yaioUtils.getConfig().masterSysUId,
-        fulltext: '',
-        total: 0,
-        strNotNodePraefix: yaioUtils.getConfig().excludeNodePraefix,
-        strWorkflowStateFilter: '',
-        arrWorkflowStateFilter: [],
-        strClassFilter: '',
-        arrClassFilter: []
+        $scope.searchOptions = {
+            curPage: 1,
+            pageSize: 20,
+            searchSort: 'lastChangeDown',
+            baseSysUID: yaioUtils.getConfig().masterSysUId,
+            fulltext: '',
+            total: 0,
+            strNotNodePraefix: yaioUtils.getConfig().excludeNodePraefix,
+            strWorkflowStateFilter: '',
+            arrWorkflowStateFilter: [],
+            strClassFilter: '',
+            arrClassFilter: []
+        };
+        if ($routeParams.curPage) {
+            $scope.searchOptions.curPage = decodeURI($routeParams.curPage);
+        }
+        if ($routeParams.pageSize) {
+            $scope.searchOptions.pageSize = decodeURI($routeParams.pageSize);
+        }
+        if ($routeParams.searchSort) {
+            $scope.searchOptions.searchSort = decodeURI($routeParams.searchSort);
+        }
+        if ($routeParams.baseSysUID) {
+            $scope.searchOptions.baseSysUID = decodeURI($routeParams.baseSysUID);
+        }
+        if ($routeParams.fulltext) {
+            $scope.searchOptions.fulltext = decodeURI($routeParams.fulltext);
+        }
+        if ($routeParams.strNotNodePraefix) {
+            $scope.searchOptions.strNotNodePraefix = decodeURI($routeParams.strNotNodePraefix);
+        }
+        if ($routeParams.strWorkflowStateFilter) {
+            $scope.searchOptions.strWorkflowStateFilter = decodeURI($routeParams.strWorkflowStateFilter);
+            $scope.searchOptions.arrWorkflowStateFilter = $scope.searchOptions.strWorkflowStateFilter.split(',');
+        }
+        if ($routeParams.strClassFilter) {
+            $scope.searchOptions.strClassFilter = decodeURI($routeParams.strClassFilter);
+            $scope.searchOptions.arrClassFilter = $scope.searchOptions.strClassFilter.split(',');
+        }
+        console.log('NodeSearchCtrl - processing');
+
+        // pagination has to wait for event
+        $scope.NodeListReady = false;
+
+        // call authentificate
+        authorization.authentificate(function () {
+            // check authentification
+            if (! $rootScope.authenticated) {
+                $location.path(yaioUtils.getConfig().appLoginUrl);
+                $scope.error = false;
+            } else {
+                // do Search
+                $scope.doFulltextSearch();
+            }
+        });
     };
-    if ($routeParams.curPage) {
-        $scope.searchOptions.curPage = decodeURI($routeParams.curPage);
-    }
-    if ($routeParams.pageSize) {
-        $scope.searchOptions.pageSize = decodeURI($routeParams.pageSize);
-    }
-    if ($routeParams.searchSort) {
-        $scope.searchOptions.searchSort = decodeURI($routeParams.searchSort);
-    }
-    if ($routeParams.baseSysUID) {
-        $scope.searchOptions.baseSysUID = decodeURI($routeParams.baseSysUID);
-    }
-    if ($routeParams.fulltext) {
-        $scope.searchOptions.fulltext = decodeURI($routeParams.fulltext);
-    }
-    if ($routeParams.strNotNodePraefix) {
-        $scope.searchOptions.strNotNodePraefix = decodeURI($routeParams.strNotNodePraefix);
-    }
-    if ($routeParams.strWorkflowStateFilter) {
-        $scope.searchOptions.strWorkflowStateFilter = decodeURI($routeParams.strWorkflowStateFilter);
-        $scope.searchOptions.arrWorkflowStateFilter = $scope.searchOptions.strWorkflowStateFilter.split(',');
-    }
-    if ($routeParams.strClassFilter) {
-        $scope.searchOptions.strClassFilter = decodeURI($routeParams.strClassFilter);
-        $scope.searchOptions.arrClassFilter = $scope.searchOptions.strClassFilter.split(',');
-    }
-    console.log('NodeSearchCtrl - processing');
-    
-    // pagination has to wait for event
-    $scope.NodeListReady = false;
 
     /** 
      * pagination: do load next page - changes $location
@@ -121,7 +139,7 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
      * create the search-uri to use
      * @param {Object} searchOptions  current searchoptions (filter..) to use
      * @param {int} page              pagenumber to load
-     * @returns {string}              new search-uri
+     * @returns {String}              new search-uri
      */
     $scope.createSearchUri = function(searchOptions, page) {
         var newUrl = '/search'
@@ -293,16 +311,7 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
             yaioUtils.getService('YaioNodeGanttRender').yaioRecalcGanttBlock(node);
         }
     };
-    
-    // call authentificate 
-    authorization.authentificate(function () {
-        // check authentification
-        if (! $rootScope.authenticated) {
-            $location.path(yaioUtils.getConfig().appLoginUrl);
-            $scope.error = false;
-        } else {
-            // do Search
-            $scope.doFulltextSearch();
-        }
-    });
-});    
+
+    // init
+    $scope._init();
+});

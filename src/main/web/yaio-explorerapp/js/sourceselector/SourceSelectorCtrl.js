@@ -21,9 +21,25 @@
 yaioApp.controller('SourceSelectorCtrl', function($rootScope, $scope, $location, $routeParams, yaioUtils) {
     'use strict';
 
-    // include utils
-    $scope.yaioUtils = yaioUtils;
-    
+    /**
+     * init the controller
+     * @private
+     */
+    $scope._init = function () {
+        // include utils
+        $scope.yaioUtils = yaioUtils;
+
+        var dataSources = yaioUtils.getConfig().datasources;
+        var dataSourceName = $routeParams.newds;
+        if (dataSources.indexOf(dataSourceName) >= 0) {
+            $scope.switchDataSource(dataSourceName);
+        }
+    };
+
+    /**
+     * switch to new datasource
+     * @param {String} datasourceKey    servicename of the datasource
+     */
     $scope.switchDataSource = function(datasourceKey) {
         yaioUtils.getAppBase().configureService('YaioNodeData', function() { return yaioAppBase.get(datasourceKey);});
         yaioUtils.getAppBase().configureService('YaioAccessManager', function() { return yaioAppBase.get('YaioNodeData').getAccessManager(); });
@@ -36,10 +52,7 @@ yaioApp.controller('SourceSelectorCtrl', function($rootScope, $scope, $location,
             console.error('success connectService done:' + yaioUtils.getConfig().appFrontpageUrl);
         });
     };
-    
-    var dataSources = yaioUtils.getConfig().datasources;
-    var dataSourceName = $routeParams.newds;
-    if (dataSources.indexOf(dataSourceName) >= 0) {
-        $scope.switchDataSource(dataSourceName);
-    }
+
+    // init
+    $scope._init();
 });

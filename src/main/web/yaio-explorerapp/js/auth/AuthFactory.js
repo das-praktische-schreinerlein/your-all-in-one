@@ -22,23 +22,11 @@ yaioApp.factory('authorization', function ($rootScope, yaioUtils) {
     'use strict';
 
     return {
+        /**
+         * check if user is authentificated: sets $rootScope.authenticated and calls callback
+         * @param {function} callback    callback to call after check
+         */
         authentificate: function(callback) {
-//            return yaioUtils.getService('YaioNodeData').yaioDoCheckUser()
-//                .then(function success(data) {
-//                        // handle success
-//                        console.log('authentificate: success ' + data);
-//                        if (data) {
-//                            $rootScope.authenticated = true;
-//                        } else {
-//                            $rootScope.authenticated = false;
-//                        }
-//                        callback && callback();
-//                    }, function error(data) {
-//                        // handle error
-//                        console.log('authentificate: error ' + data);
-//                        $rootScope.authenticated = false;
-//                        callback && callback();
-//                });
             yaioUtils.getService('YaioNodeData').yaioDoCheckUser().success(function(data) {
                 console.log('authentificate: success ' + data);
                 if (data) {

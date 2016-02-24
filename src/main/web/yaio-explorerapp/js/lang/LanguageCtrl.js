@@ -21,11 +21,17 @@
 yaioApp.controller('LanguageCtrl', ['$translate', '$scope', function ($translate, $scope, yaioUtils) {
     'use strict';
 
-    // include utils
-    $scope.yaioUtils = yaioUtils;
+    /**
+     * init the controller
+     * @private
+     */
+    $scope._init = function () {
+        // include utils
+        $scope.yaioUtils = yaioUtils;
 
-    // define languageutils
-    $scope.currentLanguageKey = $translate.currentLanguageKey;
+        // define languageutils
+        $scope.currentLanguageKey = $translate.currentLanguageKey;
+    };
 
     /**
      * switch current language to key (swictehs language-buttons)
@@ -44,4 +50,7 @@ yaioApp.controller('LanguageCtrl', ['$translate', '$scope', function ($translate
         $('.button-lang').removeClass('button-lang-active').addClass('button-lang-inactive');
         $('#button_lang_' + langKey).removeClass('button-lang-inactive').addClass('button-lang-active');
     };
+
+    // init
+    $scope._init();
 }]);

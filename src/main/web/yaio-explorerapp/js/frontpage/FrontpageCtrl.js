@@ -22,27 +22,37 @@ yaioApp.controller('FrontPageCtrl', function($rootScope, $scope, $location, $rou
                                              setFormErrors, OutputOptionsEditor, authorization, yaioUtils) {
     'use strict';
 
-    // include utils
-    $scope.yaioUtils = yaioUtils;
-    
-    // set vars
     var nodeId = $routeParams.nodeId;
-    if (yaioUtils.getService('DataUtils').isUndefinedStringValue(nodeId)) {
-        nodeId = 'SysStart1';
-    }
-    console.log('FrontPageCtrl - processing nodeId=' + nodeId);
-    
-    $scope.frontpageNodeId = nodeId;
-    
-    // call authentificate 
-    authorization.authentificate(function () {
-        // check authentification
-        if (! $rootScope.authenticated) {
-            $location.path(yaioUtils.getConfig().appLoginUrl);
-            $scope.error = false;
-        } else {
-            // load data
-            $scope.frontPageUrl = yaioUtils.getService('YaioAccessManager').getAvailiableNodeAction('frontpagebaseurl', nodeId, false);
+
+    /**
+     * init the controller
+     * @private
+     */
+    $scope._init = function () {
+        // include utils
+        $scope.yaioUtils = yaioUtils;
+
+        // set vars
+        if (yaioUtils.getService('DataUtils').isUndefinedStringValue(nodeId)) {
+            nodeId = 'SysStart1';
         }
-    });
+        console.log('FrontPageCtrl - processing nodeId=' + nodeId);
+
+        $scope.frontpageNodeId = nodeId;
+
+        // call authentificate
+        authorization.authentificate(function () {
+            // check authentification
+            if (!$rootScope.authenticated) {
+                $location.path(yaioUtils.getConfig().appLoginUrl);
+                $scope.error = false;
+            } else {
+                // load data
+                $scope.frontPageUrl = yaioUtils.getService('YaioAccessManager').getAvailiableNodeAction('frontpagebaseurl', nodeId, false);
+            }
+        });
+    };
+
+    // init
+    $scope._init();
 });
