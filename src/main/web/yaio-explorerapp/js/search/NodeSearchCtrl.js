@@ -73,12 +73,9 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
     $scope.NodeListReady = false;
 
     /** 
-     * callbackhandler for pagination to load new page
-     * @FeatureDomain                GUI
-     * @FeatureResult                changes $location
-     * @FeatureKeywords              GUI Callback Pagination
-     * @param text                   page text
-     * @param page                   new pagenumber
+     * pagination: do load next page - changes $location
+     * @param {String} text                 page text
+     * @param {int} page                    new pagenumber
      */
     $scope.nextPageAct = function(text, page){
         console.log(text, page);
@@ -94,11 +91,8 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
     
     
     /** 
-     * callbackhandler for fulltextsearch if keyCode=13 (Enter) run doNewFulltextSearch
-     * @FeatureDomain                GUI
-     * @FeatureResult                starts doNewFulltextSearch if keyCode=13
-     * @FeatureKeywords              GUI Callback Fulltextsearch
-     * @param event                  key-pressed event
+     * callbackhandler for fulltextsearch if keyCode=13 (Enter) start doNewFulltextSearch
+     * @param {Event} event                  key-pressed event
      */
     $scope.checkEnterFulltextSearch = function(event) {
         if (event.keyCode === 13) {
@@ -109,10 +103,7 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
     };
     
     /** 
-     * callbackhandler for fulltextsearch set page=1 and start doFulltextSearch
-     * @FeatureDomain                GUI
-     * @FeatureResult                starts doFulltextSearch with page=1
-     * @FeatureKeywords              GUI Callback Fulltextsearch
+     * do fulltextsearch - set page=1 and start doFulltextSearch
      */
     $scope.doNewFulltextSearch = function() {
         $scope.searchOptions.curPage = 1;
@@ -125,7 +116,13 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
         console.log('load new Url:' + newUrl);
         $location.path(newUrl);
     };
-    
+
+    /**
+     * create the search-uri to use
+     * @param {Object} searchOptions  current searchoptions (filter..) to use
+     * @param {int} page              pagenumber to load
+     * @returns {string}              new search-uri
+     */
     $scope.createSearchUri = function(searchOptions, page) {
         var newUrl = '/search'
             + '/' + encodeURI(page)
@@ -141,12 +138,8 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
     };
     
     /** 
-     * send ajax-request for fulltextsearch to server and add reszult to scope<br>
-     * sends broadcast NodeListReady when result is ready
-     * @FeatureDomain                GUI
-     * @FeatureResult                Updates scope.nodes
-     * @FeatureResult                sends broadcast NodeListReady when result is ready
-     * @FeatureKeywords              GUI Callback Fulltextsearch
+     * do fulltextsearch and add result to $scope.nodes
+     * calls doFulltextSearchSuccessHandler when succeeded
      */
     $scope.doFulltextSearch = function() {
         // save lastLocation for login
@@ -171,7 +164,12 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
                 yaioUtils.getService('Logger').logError(message, false);
             });
     };
-    
+
+    /**
+     * sends broadcast NodeListReady when result is ready
+     * @param {Object} searchOptions           searchoptions with filter...
+     * @param {Object} yaioNodeSearchResponse  server-response with data and state
+     */
     $scope.doFulltextSearchSuccessHandler = function(searchOptions, yaioNodeSearchResponse) {
         // check response
         var state = yaioNodeSearchResponse.state;
@@ -195,10 +193,8 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
     };
 
     /** 
-     * callbackhandler to rendernodeLine for node
-     * @FeatureDomain                GUI
-     * @FeatureResult                renders nodeline
-     * @FeatureKeywords              GUI Callback
+     * render nodeLine for node (adds it as '#tr' + node.sysUID to fancytree)
+     * @param {Object} node          node to render
      */
     $scope.renderNodeLine = function(node) {
         // we need a timeout to put the tr into DOM
@@ -286,10 +282,7 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
     };
 
     /** 
-     * callbackhandler to recalc ganttblocks for nodes
-     * @FeatureDomain                GUI
-     * @FeatureResult                recalc ganttblocks
-     * @FeatureKeywords              GUI Callback
+     * recalc ganttblocks for all $scope.nodes
      */
     $scope.recalcGanttBlocks = function() {
         for (var idx in $scope.nodes) {

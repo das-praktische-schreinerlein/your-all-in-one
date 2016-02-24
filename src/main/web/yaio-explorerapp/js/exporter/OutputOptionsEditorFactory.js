@@ -66,10 +66,7 @@ yaioApp.factory('OutputOptionsEditor', function(yaioUtils) {
         oOptions: oOptions,
         
         /** 
-         * callbackhandler to discard and close the editor
-         * @FeatureDomain                Download
-         * @FeatureResult                updates layout
-         * @FeatureKeywords              GUI Callback
+         * discard and close the editor
          */
         discard: function() {
             yaioUtils.getService('UIToggler').toggleElement('#containerFormYaioEditorOutputOptions');
@@ -78,10 +75,7 @@ yaioApp.factory('OutputOptionsEditor', function(yaioUtils) {
         },
     
         /** 
-         * callbackhandler to send and close the editor
-         * @FeatureDomain                Download
-         * @FeatureResult                send request and updates layout
-         * @FeatureKeywords              GUI Callback
+         * submit the form and close the editor
          */
         send: function() {
             var formId = '#nodeFormOutputOptions';
@@ -92,13 +86,10 @@ yaioApp.factory('OutputOptionsEditor', function(yaioUtils) {
         },
         
         /** 
-         * callbackhandler to open the outputOptionsEditor
-         * @FeatureDomain                GUI Download
-         * @FeatureResult                open the outputOptionsEditor
-         * @FeatureKeywords              GUI Callback
-         * @param sysUID                 the sysUID of the current node
-         * @param newUrl                 the url to send
-         * @param newTarget              the target window-name
+         * open the outputOptionsEditor
+         * @param {String} sysUID                 the sysUID of the current node
+         * @param {String} newUrl                 the url submit the form to
+         * @param {String} newTarget              the target window-name
          */
         showOutputOptionsEditor: function(sysUID, newUrl, newTarget) {
             url = newUrl;

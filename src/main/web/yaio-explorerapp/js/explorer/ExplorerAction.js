@@ -32,7 +32,12 @@ Yaio.ExplorerAction = function(appBase) {
      */
     me._init = function() {
     };
-    
+
+    /**
+     * open node-hierarchy of treeId
+     * @param {String} treeId           id of the fancytree
+     * @param {Array} lstIdsHierarchy   node-hierarchy too open as list of node.id
+     */
     me.openNodeHierarchy = function(treeId, lstIdsHierarchy) {
         var svcLogger = me.appBase.get('Logger');
 
@@ -76,7 +81,12 @@ Yaio.ExplorerAction = function(appBase) {
         opts.activateLastNode = true;
         firstNode.setExpanded(true, opts);
     };
-    
+
+    /**
+     * open node-path of treeId till activeNodeId
+     * @param {String} treeId         id of the fancytree
+     * @param {String} activeNodeId   node to open path
+     */
     me.openNodeHierarchyForNodeId = function(treeId, activeNodeId) {
         var svcLogger = me.appBase.get('Logger');
 
@@ -105,8 +115,12 @@ Yaio.ExplorerAction = function(appBase) {
         // open Hierarchy
         me.openNodeHierarchy(treeId, lstIdsHierarchy);
     };
-    
-    
+
+    /**
+     * open node-hierarchy of treeId till level
+     * @param {String} treeId     id of the fancytree
+     * @param {int} level         open till level
+     */
     me.yaioOpenSubNodesForTree = function(treeId, level) {
         var svcLogger = me.appBase.get('Logger');
 
@@ -129,24 +143,43 @@ Yaio.ExplorerAction = function(appBase) {
         console.log('yaioOpenSubNodesForTree setExpanded:' + ' level:' + level);
         treeNode.setExpanded(true, opts);
     };
-    
+
+    /**
+     * save the node
+     * @param {FancyTreeNode} data     node to save
+     */
     me.yaioSaveNode = function(data) {
         var json = JSON.stringify({name: data.input.val()});
         me.appBase.get('YaioNodeData').yaioDoUpdateNode(data.node, json);
     };
-    
+
+    /**
+     * move the node as new child of parent
+     * @param {Object} node           node to copy
+     * @param {String} newParentKey   key of the new parentNode to add a copy of the node as child
+     * @param {int} newPos            position to move node to
+     */
     me.yaioMoveNode = function(node, newParentKey, newPos) {
         console.log('move node:' + node.key + ' to:' + newParentKey + ' Pos:' + newPos);
         var json = JSON.stringify({parentNode: newParentKey});
         me.appBase.get('YaioNodeData').yaioDoMoveNode(node, newParentKey, newPos, json);
     };
-    
+
+    /**
+     * make a copy of the node as new child of parent
+     * @param {Object} node           node to copy
+     * @param {String} newParentKey   key of the new parentNode to add a copy of the node as child
+     */
     me.yaioCopyNode = function(node, newParentKey) {
         console.log('copy node:' + node.key + ' to:' + newParentKey);
         var json = JSON.stringify({parentNode: newParentKey});
         me.appBase.get('YaioNodeData').yaioDoCopyNode(node, newParentKey, json);
     };
 
+    /**
+     * open confirmbox and remove node if confirmed
+     * @param {String} nodeId    id of the node to delete
+     */
     me.yaioRemoveNodeById = function(nodeId) {
         var svcLogger = me.appBase.get('Logger');
 
@@ -175,11 +208,8 @@ Yaio.ExplorerAction = function(appBase) {
     };
     
     /** 
-     * open the jirawindow for the node  
-     * @FeatureDomain                GUI
-     * @FeatureResult                GUI-result: opens jira window with jira-converted node-content
-     * @FeatureKeywords              GUI Convert
-     * @param nodeId                 id of the node
+     * opens jira window with jira-converted node-content
+     * @param {String} nodeId                 id of the node
      */
     me.openJiraExportWindow = function(nodeId) {
         var svcLogger = me.appBase.get('Logger');
@@ -235,10 +265,7 @@ Yaio.ExplorerAction = function(appBase) {
     
     
     /** 
-     * open the clipboardwindow with generated checklist and gantt-markdown
-     * @FeatureDomain                GUI
-     * @FeatureResult                GUI-result: opens clipboard window with checklist/ganttmarkdown-converted node-content
-     * @FeatureKeywords              GUI Convert
+     * opens clipboard window with checklist/ganttmarkdown-converted node-content
      */
     me.yaioExportExplorerLinesAsOverview = function() {
         var svcDataUtils = me.appBase.get('DataUtils');
@@ -267,9 +294,7 @@ Yaio.ExplorerAction = function(appBase) {
     
     /** 
      * open the nodeeditor with a new infornode with snaphot of current gui: checklist and gantt-markdown
-     * @FeatureDomain                GUI
-     * @FeatureResult                GUI-result: open the nodeeditor for new infonode with checklist/ganttmarkdown-converted node-content
-     * @FeatureKeywords              GUI Convert
+     * @param {Object} parentNode     parentNode to get the content from
      */
     me.yaioSnapshot = function(parentNode) {
         var svcDataUtils = me.appBase.get('DataUtils');
@@ -287,11 +312,8 @@ Yaio.ExplorerAction = function(appBase) {
     
     
     /** 
-     * open the txtwindow for the node  
-     * @FeatureDomain                GUI
-     * @FeatureResult                GUI-result: opens txt-window with txt node-content
-     * @FeatureKeywords              GUI Convert
-     * @param content                txt content
+     * opens txt-window with txt node-content
+     * @param {String} content                txt content
      */
     me.openTxtExportWindow = function(content) {
         // secure
@@ -314,10 +336,7 @@ Yaio.ExplorerAction = function(appBase) {
 
     /** 
      * open the dmsdownloadwindow for the node  
-     * @FeatureDomain                GUI
-     * @FeatureResult                GUI-result: opens dmsdownloadwindow
-     * @FeatureKeywords              GUI 
-     * @param nodeId                 id of the node
+     * @param {String} nodeId                 id of the node
      */
     me.openDMSDownloadWindow = function(nodeId) {
         var svcLogger = me.appBase.get('Logger');
@@ -367,10 +386,7 @@ Yaio.ExplorerAction = function(appBase) {
     
     /** 
      * open the dmsdownloadwindow for the extracted metadata of the node document 
-     * @FeatureDomain                GUI
-     * @FeatureResult                GUI-result: opens dmsdownloadwindow node-content
-     * @FeatureKeywords              GUI
-     * @param nodeId                 id of the node
+     * @param {String} nodeId                 id of the node
      */
     me.openDMSIndexDownloadWindow = function(nodeId) {
         var svcLogger = me.appBase.get('Logger');
@@ -427,6 +443,12 @@ Yaio.ExplorerAction = function(appBase) {
         });    
     };
 
+    /**
+     * create the dmsdownloadwindow for the extracted metadata of the node document
+     * @param {String} key                  id of the
+     * @param {Object} data                 data to show
+     * @param {String} parent               JQuery-Selector to append the download-window
+     */
     me.createDMSIndexDiv = function (key, data, parent) {
         var content = '' + data.content;
         var name = '' + data.parserName;
@@ -436,11 +458,8 @@ Yaio.ExplorerAction = function(appBase) {
     };
 
     /** 
-     * Toggle the '#detail_desc_' for the specified id with a slide.
-     * @FeatureDomain                Layout Toggler
-     * @FeatureResult                Updates DOM
-     * @FeatureKeywords              GUI Tree Rendering
-     * @param id                     sysUID of the node 
+     * Toggle the '#detail_desc_' for the specified id with a slide - updates DOM
+     * @param {String} id                     sysUID of the node
      */
     me.toggleNodeDescContainer = function(id) {
         var svcYaioFormatter = me.appBase.get('YaioFormatter');
@@ -463,7 +482,10 @@ Yaio.ExplorerAction = function(appBase) {
             }
         });
     };
-   
+
+    /**
+     * Toggle all desc-divs for nodes with '#detail_desc_' depending on state of #toggler_desc_all with a slide.
+     */
     me.toggleAllNodeDescContainer = function() {
         if (me.$('#toggler_desc_all').hasClass('toggler_hidden')) {
             // show all desc
@@ -484,10 +506,7 @@ Yaio.ExplorerAction = function(appBase) {
     
     /** 
      * Toggle the '#detail_sys_' for the specified id with a slide.
-     * @FeatureDomain                Layout Toggler
-     * @FeatureResult                Updates DOM
-     * @FeatureKeywords              GUI Tree Rendering
-     * @param id                     sysUID of the node 
+     * @param {String} id                     sysUID of the node
     */
     me.toggleNodeSysContainer = function(id) {
         me.$('#detail_sys_' + id).slideToggle(1000,function() {
@@ -501,7 +520,10 @@ Yaio.ExplorerAction = function(appBase) {
             }
         });
     };
-  
+
+    /**
+     * Toggle all sys-divs for nodes with '#detail_sys_' depending on state of #toggler_sys_all with a slide.
+     */
     me.toggleAllNodeSysContainer = function() {
         if (me.$('#toggler_sys_all').hasClass('toggler_hidden')) {
             // show all sys

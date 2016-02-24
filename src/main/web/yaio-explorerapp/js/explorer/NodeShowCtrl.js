@@ -117,7 +117,14 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
                 });
         }
     });
-    
+
+    /**
+     * callbackhandler if load of active nodeId succeeded
+     * opens the nodehirarchy till that activeId in current fancytree
+     * @param {String} nodeId                    active node id till the hirarchy-tre will opened
+     * @param {Object} options                   loadOptions
+     * @param {Object} yaioNodeActionResponse    server-response with nodedata + parenthirarchy
+     */
     $scope.loadActiveNodeIdSuccessHandler = function(nodeId, options, yaioNodeActionResponse) {
         // check response
         var state = yaioNodeActionResponse.state;
@@ -146,6 +153,13 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
         }
     };
 
+    /**
+     * callbackhandler if load of current nodeId succeeded
+     * renders the fancytree for the children of current node
+     * @param {String} nodeId                    active node id to open
+     * @param {Object} options                   loadOptions
+     * @param {Object} yaioNodeActionResponse    server-response with nodedata + children
+     */
     $scope.loadCurrentNodeIdSuccessHandler = function(nodeId, options, yaioNodeActionResponse) {
         // check response
         var state = yaioNodeActionResponse.state;
@@ -192,10 +206,7 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
     };
 
     /** 
-     * export GUI As Overview
-     * @FeatureDomain                Editor
-     * @FeatureResult                exportAsOverview
-     * @FeatureKeywords              GUI Callback
+     * buttoncommand to export visible nodehirarchy as overview into clipboardwindow
      */
     $scope.exportAsOverview = function() {
         console.log('exportAsOverview');
@@ -203,11 +214,8 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
         return false;
     };
 
-    /** 
-     * create snapshot of GUI
-     * @FeatureDomain                Editor
-     * @FeatureResult                snapshot
-     * @FeatureKeywords              GUI Callback
+    /**
+     * buttoncommand to open nodeeditor with the visible nodehirarchy as snaphot
      */
     $scope.snapshot = function() {
         console.log('snapshot');
@@ -216,10 +224,7 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
     };
 
     /** 
-     * callbackhandler to open all subnodes<level in the treeview
-     * @FeatureDomain                Editor
-     * @FeatureResult                open the subNodes till treeOpenLevel
-     * @FeatureKeywords              GUI Callback
+     * buttoncommand to open all subnodes < $scope.config.treeOpenLevel in the treeview
      */
     $scope.openSubNodes = function() {
         console.log('openSubNodes:' + ' level:' + $scope.config.treeOpenLevel);
@@ -227,11 +232,8 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
         return false;
     };
 
-    /** 
-     * callbackhandler to recalc ganttblocks for nodes
-     * @FeatureDomain                GUI
-     * @FeatureResult                recalc ganttblocks
-     * @FeatureKeywords              GUI Callback
+    /**
+     * callbackhandler to recalc ganttblocks for current treeview
      */
     $scope.recalcGanttBlocks = function() {
         yaioUtils.getService('YaioNodeGanttRender').yaioRecalcFancytreeGanttBlocks();
@@ -239,12 +241,11 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
         return false;
     };
 
-    /** 
-     * callbackhandler to recalc Gantt with Master-Ist/Plan-DateRange
-     * @FeatureDomain                GUI
-     * @FeatureResult                recalc ganttblocks
-     * @FeatureKeywords              GUI Callback
-     * @param flgShowIst             boolean if is set show ist, if not show plan
+    /**
+     * buttoncommand to recalc ganttblocks for current treeview and date-filter
+     * - from: $scope.node.istChildrenSumStart || $scope.node.planChildrenSumStart
+     * - to: $scope.node.istChildrenSumEnde || $scope.node.planChildrenSumEnde
+     * @param {Booolean} flgShowIst             if is set show IST, if not show PLAN
      */
     $scope.recalcGanttForIstOrPlan = function(flgShowIst) {
         var start = flgShowIst ? $scope.node.istChildrenSumStart : $scope.node.planChildrenSumStart;
@@ -253,7 +254,11 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
         $('#inputGanttRangeEnde').val(yaioUtils.getService('DataUtils').formatGermanDate(ende)).trigger('input').triggerHandler('change');
         return false;
     };
-    
+
+    /**
+     * callback to reload page after change of $scope.filterOptions.strWorkflowStateFilter or
+     * $scope.filterOptions.strStatCountFilter
+     */
     $scope.changeExplorerFilter = function() {
         var msg = 'changeExplorerFilter node: ' + nodeId;
         var newUrl = '/show/' + nodeId 
@@ -268,7 +273,11 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
         console.log(msg + ' RELOAD:' + newUrl);
         $location.path(newUrl);
     };
-    
+
+    /**
+     * callback to set explorerfilter for fancytree with $scope.filterOptions.strWorkflowStateFilter or
+     * $scope.filterOptions.strStatCountFilter
+     */
     $scope.setExplorerFilter = function() {
         // set new filter
         var nodeFilter = yaioUtils.getService('YaioExplorerTree').nodeFilter || {};
@@ -289,14 +298,22 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
         console.log('setExplorerFilter: set filter:', nodeFilter);
         yaioUtils.getService('YaioExplorerTree').setNodeFilter(nodeFilter);
     };
-    
-    
+
+
+    /**
+     * initialize the drag&drop
+     * @param {String} divId          id of the drag&drop-html-element
+     */
     $scope.initDragDropFileUploader = function(divId) {
         // change to https://www.npmjs.com/package/angular-draganddrop
         // Setup the Uploadfile-Listener
         var dropZone = document.getElementById(divId);
-        dropZone.addEventListener('dragover', function (event) { console.log('dragover:', event); yaioUtils.getService('YaioEditor').handleUploadFileUrlResNodeDragOver(event); }, false);
-        dropZone.addEventListener('drop', function (event) { console.log('drop:', event); yaioUtils.getService('YaioEditor').handleUploadFileUrlResNodeSelect(event); }, false);
+        dropZone.addEventListener('dragover', function (event) {
+            console.log('dragover:', event); yaioUtils.getService('YaioEditor').handleUploadFileUrlResNodeDragOver(event);
+        }, false);
+        dropZone.addEventListener('drop', function (event) {
+            console.log('drop:', event); yaioUtils.getService('YaioEditor').handleUploadFileUrlResNodeSelect(event);
+        }, false);
     };
 
 });

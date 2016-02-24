@@ -26,10 +26,7 @@ yaioApp.controller('ImporterCtrl', function($rootScope, $scope, $location, $rout
     $scope.yaioUtils = yaioUtils;
 
     /** 
-     * callbackhandler to send and close the importeditor
-     * @FeatureDomain                Download
-     * @FeatureResult                send request and updates layout
-     * @FeatureKeywords              GUI Callback
+     * submit and close the importeditor
      */
     $scope.sendImport = function() {
         var formId = '#nodeFormImport';
@@ -41,10 +38,7 @@ yaioApp.controller('ImporterCtrl', function($rootScope, $scope, $location, $rout
     };
     
     /** 
-     * callbackhandler to discard and close the editor
-     * @FeatureDomain                Download
-     * @FeatureResult                updates layout
-     * @FeatureKeywords              GUI Callback
+     * discard and close the editor
      */
     $scope.discardImport = function() {
         yaioUtils.getService('UIToggler').toggleElement('#containerFormYaioEditorImport');
@@ -53,13 +47,10 @@ yaioApp.controller('ImporterCtrl', function($rootScope, $scope, $location, $rout
     };
 
     /** 
-     * callbackhandler to open the importEditor
-     * @FeatureDomain                GUI Download
-     * @FeatureResult                open the importEditor
-     * @FeatureKeywords              GUI Callback
-     * @param sysUID                 the sysUID of the current node
-     * @param newUrl                 the url to send
-     * @param newTarget              the target window-name
+     * open the importEditor
+     * @param {String} sysUID                 the sysUID of the current node
+     * @param {String} newUrl                 the url to submit the for to
+     * @param {String} newTarget              the target window-name
      */
     $scope.showImportEditor = function(sysUID, newUrl, newTarget) {
         var url = newUrl;

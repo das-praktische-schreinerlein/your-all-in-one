@@ -33,30 +33,51 @@ yaioApp.factory('yaioUtils', ['$location', '$http', '$rootScope', '$q', function
 
     return {
         /** 
-         * callbackhandler to open helpsite
-         * @FeatureDomain                Help
-         * @FeatureResult                open the helpsite
-         * @FeatureKeywords              GUI Callback
-         * @param url                    the url of the helpsite
+         * open helpsite
+         * @param {String} url                    the url of the helpsite
          */
         showHelpSite: function(url) {
             console.log('showHelpSite:' + ' url:' + url);
             appBase.get('YaioLayout').yaioShowHelpSite(url);
             return false;
         },
-        
+
+        /**
+         * toggle the sys-container for the node
+         * @param {Object} node    node-data
+         */
         toggleSysContainerForNode: function(node) {
             appBase.get('YaioExplorerAction').toggleNodeSysContainer(node.sysUID);
         },
-        
+
+        /**
+         * toggle editor for the node
+         * @param {Object} node     node-data
+         * @param {String} mode     edit, create, createsymlink
+         * @param {Object} newNode  optional node to copy data from (for mode createsnapshot...)
+         */
         openNodeEditorForNode: function(node, mode, newNode) {
             appBase.get('YaioEditor').yaioOpenNodeEditorForNode(node, mode, newNode);
         },
-        
-        downloadAsFile: function(domId, content, filename, mime, encoding) {
-            return appBase.getService('FileUtils').downloadAsFile(appBase.$(domId), content, filename, mime, encoding);
+
+        /**
+         * download the content as file (create response and open in new window)
+         * @param {String} domId     id of the link to add the action
+         * @param {string} content   data to download
+         * @param {string} fileName  filename for save-dialog of the browser
+         * @param {string} mime      mimetype of the file
+         * @param {string} encoding  encoding to set
+         */
+        downloadAsFile: function(domId, content, fileName, mime, encoding) {
+            return appBase.getService('FileUtils').downloadAsFile(appBase.$(domId), content, fileName, mime, encoding);
         },
-        
+
+        /**
+         * Renders the full block for corresponding basenode.
+         * @param {Object} node           node-data to render
+         * @param {String} trIdSelector   tr-selector to append the rendered data
+         * @param {Boolean} flgMinimum    render only the minimal subset of data
+         */
         renderNodeLine: function(node, trIdSelector, flgMinimum) {
             // load me
             var data = {
@@ -72,19 +93,33 @@ yaioApp.factory('yaioUtils', ['$location', '$http', '$rootScope', '$q', function
             appBase.get('YaioNodeDataRender').renderColumnsForNode(null, data, true, flgMinimum);
         },
         
-        ganttOptions: { 
+
+        ganttOptions: {
             ganttRangeStart: ganttRangeStart, 
             ganttRangeEnd: ganttRangeEnd
         },
-        
+
+        /**
+         * return the current appBase
+         * @returns {JsHelferlein.AppBase}   the current appBase
+         */
         getAppBase: function() {
             return appBase;
         },
 
+        /**
+         * return the current instance of the service
+         * @param {String} service               servicename
+         * @returns {JsHelferlein.ServiceBase}   current instance of the service
+         */
         getService: function(service) {
             return appBase.get(service);
         },
 
+        /**
+         * return the current appBase-config
+         * @returns {JsHelferlein.ConfigBase}   current appBase-config
+         */
         getConfig: function() {
             return appBase.config;
         }

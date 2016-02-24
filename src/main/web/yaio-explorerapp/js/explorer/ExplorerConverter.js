@@ -37,10 +37,7 @@ Yaio.ExplorerConverter = function(appBase) {
     /**
      * extract data from explorerlines (table.fancytree-ext-table tr) and format
      * them as linked markdown-checklists ([state] - [title](yaio:number)
-     * @FeatureDomain                GUI
-     * @FeatureResult                return String - checklist in yaio-markdown-format
-     * @FeatureKeywords              Convert
-     * @return                       {String}  checklist in yaio-markdown-format
+     * @return {String}             checklist in yaio-markdown-format
      */
     me.convertExplorerLinesAsCheckList = function() {
         // get title
@@ -119,6 +116,11 @@ Yaio.ExplorerConverter = function(appBase) {
         return checkList;
     };
 
+    /**
+     * check block for matchers from checkListConfigs
+     * @param {JQuery} block      block to check
+     * @return {null|String}      key of checkListConfigs that matches
+     */
     me._extractCheckListStatefromStateSpan = function(block) {
         // iterate all configs
         var checkListConfigs = me.appBase.get('ChecklistParser').checkListConfigs;
@@ -142,9 +144,6 @@ Yaio.ExplorerConverter = function(appBase) {
     /**
      * extract data from explorerlines (table.fancytree-ext-table tr) and format
      * them as mermaid-gantt-markdown
-     * @FeatureDomain                GUI
-     * @FeatureResult                return String - mermaid-gantt-markdown
-     * @FeatureKeywords              Convert
      * @return                       {String}    mermaid-gantt-markdown
      */
     me.convertExplorerLinesAsGanttMarkdown = function() {
@@ -193,13 +192,10 @@ Yaio.ExplorerConverter = function(appBase) {
 
     /**
      * generate a mermaid-gantt-markdown-line for selector (if start, end-date can be extracted)
-     * @FeatureDomain                GUI
-     * @FeatureResult                return String - mermaid-gantt-markdown
-     * @FeatureKeywords              Convert
-     * @param title                  title of the line
-     * @param number                 referenc
-     * @param selector               seletor to filter the element with jquery
-     * @return                       {String}      mermaid-gantt-markdown-line
+     * @param {String} title         title of the line
+     * @param {int} number           reference
+     * @param {Object} selector      selector to filter the element with jquery
+     * @return {String}              mermaid-gantt-markdown-line
      */
     me._generateGanttMarkdownLineFromBlock = function(title, number, selector) {
         if (me.$(selector).size() > 0) {

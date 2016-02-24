@@ -26,7 +26,6 @@ yaioApp.controller('DashBoardNodeSearchCtrl', function($rootScope, $scope, yaioU
 
     // create search
     $scope.nodes = [];
-
     $scope.searchOptions = {
         curPage: 1,
         pageSize: 10,
@@ -39,10 +38,13 @@ yaioApp.controller('DashBoardNodeSearchCtrl', function($rootScope, $scope, yaioU
         strClassFilter: ''
     };
 
+    /**
+     * create the search-uri to use
+     */
     $scope.createSearchUri = function() {
-        var newUrl = '/search'
-            + '/' + encodeURI(1)
-            + '/' + encodeURI(20)
+        return '/search'
+            + '/' + encodeURI('1')
+            + '/' + encodeURI('20')
             + '/' + encodeURI($scope.searchOptions.searchSort)
             + '/' + encodeURI($scope.searchOptions.baseSysUID)
             + '/' + encodeURI($scope.searchOptions.fulltext)
@@ -50,16 +52,10 @@ yaioApp.controller('DashBoardNodeSearchCtrl', function($rootScope, $scope, yaioU
             + '/' + encodeURI($scope.searchOptions.strWorkflowStateFilter)
             + '/' + encodeURI($scope.searchOptions.strNotNodePraefix)
             + '/';
-        return newUrl;
     };
     
     /** 
      * send ajax-request for fulltextsearch to server and add reszult to scope<br>
-     * sends broadcast NodeListReady when result is ready
-     * @FeatureDomain                GUI
-     * @FeatureResult                Updates scope.nodes
-     * @FeatureResult                sends broadcast NodeListReady when result is ready
-     * @FeatureKeywords              GUI Callback Fulltextsearch
      */
     $scope.doFulltextSearch = function() {
         // search data
@@ -79,7 +75,12 @@ yaioApp.controller('DashBoardNodeSearchCtrl', function($rootScope, $scope, yaioU
                 yaioUtils.getService('Logger').logError(message, false);
             });
     };
-    
+
+    /**
+     * callback-successhandler for fulltextsearch: sets $scope.nodes and $scope.searchOptions.total
+     * @param {Object} searchOptions             searchOptions the fulltextsearch was done with
+     * @param {Object} yaioNodeSearchResponse    SearchResponse
+     */
     $scope.doFulltextSearchSuccessHandler = function(searchOptions, yaioNodeSearchResponse) {
         // check response
         var state = yaioNodeSearchResponse.state;
@@ -102,9 +103,7 @@ yaioApp.controller('DashBoardNodeSearchCtrl', function($rootScope, $scope, yaioU
 
     /** 
      * callbackhandler to rendernodeLine for node
-     * @FeatureDomain                GUI
-     * @FeatureResult                renders nodeline
-     * @FeatureKeywords              GUI Callback
+     * @param {Object} node    YaioNode render
      */
     $scope.renderNodeLine = function(node) {
         // we need a timeout to put the tr into DOM

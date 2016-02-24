@@ -53,10 +53,7 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
     $scope.availiableOwnTemplates = [];
     
     /** 
-     * callbackhandler to discard and close the editor
-     * @FeatureDomain                Editor
-     * @FeatureResult                updates layout
-     * @FeatureKeywords              GUI Callback
+     * discard and close the editor
      */
     $scope.discard = function() {
         yaioUtils.getService('YaioEditor').yaioCloseNodeEditor();
@@ -64,10 +61,7 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
     };
     
     /** 
-     * callbackhandler to validate the type of a newNode and open the corresponding form
-     * @FeatureDomain                Callback
-     * @FeatureResult                updates layout
-     * @FeatureKeywords              GUI Callback
+     * validate the type of a newNode and open the corresponding form
      */
     $scope.selectNewNodeType = function() {
         // hide all forms
@@ -96,19 +90,27 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
         $scope.nodeForEdit.mode = 'create';
         return false;
     };
-    
-    
-    $scope.selectCreateFromTemplate = function(formName) {
+
+
+    /**
+     * create a new node from template $scope.nodeForEdit.createFromTemplate
+     */
+    $scope.selectCreateFromTemplate = function() {
         // create new node by template
         var newParentKey = $scope.nodeForEdit.sysUID;
-        if ($scope.nodeForEdit.createFromTemplate && $scope.nodeForEdit.createFromTemplate !== '') {
+        if (!yaioUtils.getService('DataUtils').isEmpty($scope.nodeForEdit.createFromTemplate)) {
             var json = JSON.stringify({parentNode: newParentKey});
-            yaioUtils.getService('YaioNodeData').yaioDoCopyNode({key: $scope.nodeForEdit.createFromTemplate, sysUID: $scope.nodeForEdit.createFromTemplate}, newParentKey, json);
+            yaioUtils.getService('YaioNodeData').yaioDoCopyNode({
+                key: $scope.nodeForEdit.createFromTemplate,
+                sysUID: $scope.nodeForEdit.createFromTemplate}, newParentKey, json);
             yaioUtils.getService('YaioEditor').yaioCloseNodeEditor();
             return false;
         }
     };
-    
+
+    /**
+     * load available templates into form
+     */
     $scope.loadAvailiableTemplates = function() {
         yaioUtils.getService('YaioNodeData').yaioDoLoadAvailiableTemplates()
             .then(function sucess(angularResponse) {
@@ -128,12 +130,9 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
     };
 
     /** 
-     * callbackhandler to perform actions when type has changed<br>
+     * callbackhandler to perform actions when type has changed - updates istStand<br>
      * calls yaioUtils.getService('YaioEditor').calcIstStandFromState() for the node
      * if ERLEDIGT || VERWORFEN || EVENT_ERLEDIGT || EVENT_VERWORFEN: update istStand=100
-     * @FeatureDomain                Callback
-     * @FeatureResult                updates istStand
-     * @FeatureKeywords              GUI Callback
      */
     $scope.doTypeChanged = function() {
         $scope.nodeForEdit.istStand = yaioUtils.getService('YaioEditor').calcIstStandFromState($scope.nodeForEdit);
@@ -142,7 +141,7 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
     
     
     /** 
-     * callbackhandler to perform actions when istStand has changed<br>
+     * callbackhandler to perform actions when istStand has changed - updates type<br>
      * recalcs the type/state depending on the istStand
      * <ul>
      *   <li>if className=TaskNode && 0: update type=OFFEN
@@ -152,9 +151,6 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
      *   <li>if className=EventNode && >0&&<100 && ! EVENT_WARNING: update type=EVENT_RUNNING
      *   <li>if className=EventNode && 100 && != EVENT_VERWORFEN: update type=EVENT_ERLEDIGT
      * </ul>
-     * @FeatureDomain                Callback
-     * @FeatureResult                updates type
-     * @FeatureKeywords              GUI Callback
      */
     $scope.doIstStandChanged = function() {
         $scope.nodeForEdit.type = yaioUtils.getService('YaioEditor').calcTypeFromIstStand($scope.nodeForEdit);
@@ -162,11 +158,8 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
     };
     
     /** 
-     * callbackhandler to perform actions when type has changed<br>
+     * callbackhandler to perform actions when type has changed - updates stand<br>
      * if EVENT_ERLEDIGT || VERWORFEN: update stand=100;
-     * @FeatureDomain                Callback
-     * @FeatureResult                updates stand
-     * @FeatureKeywords              GUI Callback
      */
     $scope.doTaskNodeTypeChanged = function() {
         if (   $scope.nodeForEdit.type === 'ERLEDIGT'
@@ -178,24 +171,20 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
     };
     
     /** 
-     * callbackhandler to perform actions when UploadFile has changed<br>
+     * callbackhandler to perform actions when UploadFile has changed - updates resLocRef and uploadFile<br>
      * set variable in scope with filename and updates resLocRef
-     * @FeatureDomain                Callback
-     * @FeatureResult                updates resLocRef and uploadFile
-     * @FeatureKeywords              GUI Callback
      */
     $scope.doUploadFileUrlResNodeChanged = function() {
         var element = document.getElementById('inputUploadFileUrlResNode');
         if (element && element.files) {
-            $scope.setUploadFileUrlResNode(element.files[0]);
+            $scope.setUploadFileUrlResNode(element.files[0], false);
         }
     };
 
     /**
-     * set the uploadFile
-     * @FeatureDomain                Callback
-     * @FeatureResult                updates resLocRef and uploadFile
-     * @FeatureKeywords              GUI Callback
+     * set the uploadFile - updates resLocRef and uploadFile
+     * @param {File} uploadFile         Fileobject
+     * @param {Boolean} forceDoIndex    flag do index uploaded file
      */
     $scope.setUploadFileUrlResNode = function(uploadFile, forceDoIndex) {
         $scope.uploadFile = uploadFile;
@@ -214,11 +203,8 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
 
 
     /**
-     * callbackhandler to map the nodedata, create json,call webservice and 
-     * relocate to the new nodeId
-     * @FeatureDomain                Callback
-     * @FeatureResult                save node and updates layout
-     * @FeatureKeywords              GUI Callback
+     * save node and updates layout - map the nodedata, create json, call webservice and relocate to the new nodeId
+     * @param {String} formName    form to submit
      */
     $scope.save = function(formName) {
         // define json for common fields

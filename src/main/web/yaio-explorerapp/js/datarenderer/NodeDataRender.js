@@ -41,12 +41,10 @@ Yaio.NodeDataRender = function(appBase) {
      *   <li>data.node.tr: Html-Obj of the table-line
      *   <li>data.node.data.basenode: the basenode (java de.yaio.core.node.BaseNode)
      * </ul>
-     * @FeatureDomain                Layout Rendering
-     * @FeatureResult                Updates DOM
-     * @FeatureKeywords              GUI Tree Rendering
-     * @param event                  fancytree-event
-     * @param data                   the fancytreenode-data (basenode = data.node.data.basenode, tr = data.node.tr)
-     * @param preventActionsColum    dont replace Action-column
+     * @param {FancyTreeEvent} event           fancytree-event
+     * @param {FancyTreeData} data             the fancytreenode-data (basenode = data.node.data.basenode, tr = data.node.tr)
+     * @param {Boolean} preventActionsColum    dont replace Action-column
+     * @param {Boolean} flgRenderMinimum       render only the minimal subset of data
      */
     me.renderColumnsForNode = function(event, data, preventActionsColum, flgRenderMinimum) {
         var svcDataUtils = me.appBase.get('DataUtils');
@@ -315,13 +313,10 @@ Yaio.NodeDataRender = function(appBase) {
     /* jshint maxstatements: 100 */
     /**
      * Renders the DataBlock for basenode and returns a JQuery-Html-Obj.
-     * @FeatureDomain                Layout Rendering
-     * @FeatureResult                ReturnValue JQuery-Html-Object - the rendered datablock
-     * @FeatureKeywords              GUI Tree Rendering
-     * @param basenode               the nodedata to render (java de.yaio.core.node.BaseNode)
-     * @param fancynode              the corresponding fancynode
-     * @param preventActionsColum    dont replace Action-column
-     * @returns                      JQuery-Html-Object - the rendered datablock
+     * @param {Object} basenode               the nodedata to render (java de.yaio.core.node.BaseNode)
+     * @param {FancytreeNode} fancynode       the corresponding fancynode
+     * @param {Boolean} preventActionsColum   dont replace Action-column
+     * @returns {JQuery}                      JQuery-Html-Object - the rendered datablock
      */
     me.renderDataBlock = function(basenode, fancynode, preventActionsColum) {
         var svcDataUtils = me.appBase.get('DataUtils');
@@ -534,9 +529,6 @@ Yaio.NodeDataRender = function(appBase) {
      * Toggles DataBlock, GanttBlock and the links #tabTogglerData, #tabTogglerGantt.<br>
      * Show all: td.block_nodedata, th.block_nodedata + #tabTogglerGantt<br>
      * Hide all: td.block_nodegantt, th.block_nodegantt + #tabTogglerData<br>
-     * @FeatureDomain                Layout Toggler
-     * @FeatureResult                Updates DOM
-     * @FeatureKeywords              GUI Tree Rendering
      */
     me.yaioShowDataBlock = function() {
         var svcUIToggler = me.appBase.get('UIToggler');

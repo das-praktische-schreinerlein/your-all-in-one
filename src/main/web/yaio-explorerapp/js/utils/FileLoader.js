@@ -137,7 +137,16 @@ Yaio.FileLoader = function(appBase) {
                 me.downloadAsFile($link, contentData, contentFileName, mime, encoding, target);
             });
     };
-    
+
+    /**
+     * download the content as file (create response and open in new window)
+     * @param {jQuery} $link     jQuery-instance of the link to add the action
+     * @param {string} data      data to download
+     * @param {string} fileName  filename for save-dialog of the browser
+     * @param {string} mime      mimetype of the file
+     * @param {string} encoding  encoding to set
+     * @param {string} target    link-target (window-name)
+     */
     me.downloadAsFile = function($link, data, fileName, mime, encoding, target) {
         if (me.appBase.DataUtils.isUndefined(mime)) {
             mime = 'application/text';

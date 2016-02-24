@@ -26,6 +26,11 @@ yaioApp.controller('LanguageCtrl', ['$translate', '$scope', function ($translate
 
     // define languageutils
     $scope.currentLanguageKey = $translate.currentLanguageKey;
+
+    /**
+     * switch current language to key (swictehs language-buttons)
+     * @param {String} langKey    new langkey
+     */
     $scope.changeLanguage = function (langKey) {
         // change angularTranslate
         $translate.use(langKey);

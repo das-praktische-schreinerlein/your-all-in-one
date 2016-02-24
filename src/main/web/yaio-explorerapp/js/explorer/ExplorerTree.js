@@ -59,15 +59,11 @@ Yaio.ExplorerTree = function(appBase) {
     /**
      * creates an fancytree on the html-element treeId and inits it with the data
      * of masterNodeId<br>
-     * after init of the tree the doneHandler will be executed  
-     * @FeatureDomain                Initialisation
-     * @FeatureResult                updates html-element treeId with a fancytree
-     * @FeatureResult                calls doneHandler
-     * @FeatureResult                updates global var treeInstances[treeId]
-     * @FeatureKeywords              GUI Tree
-     * @param treeId                 id of the html-element containing the tree
-     * @param masterNodeId           the node.sysUID to load
-     * @param doneHandler            callback-function when tree is created
+     * after init of the tree the doneHandler will be executed
+     * updates global var treeInstances[treeId]
+     * @param {String} treeId                 id of the html-element containing the tree
+     * @param {String} masterNodeId           the node.sysUID to load
+     * @param {function} doneHandler          callback-function when tree is created
      */
     me.yaioCreateFancyTree = function(treeId, masterNodeId, doneHandler) {
         treeInstances[treeId] = {};
@@ -485,15 +481,12 @@ Yaio.ExplorerTree = function(appBase) {
      * Checks if the tree is in wished state and runs doneHandler.
      * If tree is not in state, it waits waitTime trys it till maxTries is reached.
      * If maxTries reached, doneHandler is done regardless of the state.
-     * @FeatureDomain                Initialisation
-     * @FeatureResult                calls doneHandler if tree is in state
-     * @FeatureKeywords              GUI Tree
-     * @param treeId                 id of the html-element containing the tree
-     * @param state                  the state the tree must reached to run doneHandler
-     * @param waitTime               millis to wait for next try if tree is not in state 
-     * @param maxTries               maximum of tries till donehandlder will run if tree is not in state 
-     * @param doneHandler            callback-function to run if tree is in state
-     * @param name                   name of the callback-function fpr logging
+     * @param {String} treeId         id of the html-element containing the tree
+     * @param {String} state          the state the tree must reached to run doneHandler
+     * @param {int} waitTime          millis to wait for next try if tree is not in state
+     * @param {int} maxTries          maximum of tries till donehandlder will run if tree is not in state
+     * @param {function} doneHandler  callback-function to run if tree is in state
+     * @param {String} name           name of the callback-function fpr logging
      */
     me.yaioDoOnFancyTreeState = function(treeId, state, waitTime, maxTries, doneHandler, name) {
         // check if donehandler
@@ -517,11 +510,8 @@ Yaio.ExplorerTree = function(appBase) {
     
     /** 
      * create an fancytree-datanode from an yaio.basenode  
-     * @FeatureDomain                Initialisation
-     * @FeatureResult                datanode - a datanode for FancyTree
-     * @FeatureKeywords              GUI Tree
-     * @param basenode               a basenode from yaio
-     * @returns                      a datanode for FancyTree
+     * @param {Object} basenode      a basenode from yaio
+     * @returns {FancytreeNode}      a datanode for FancyTree
      */
     me.createFancyDataFromNodeData = function(basenode) {
         var datanode = {
@@ -545,16 +535,14 @@ Yaio.ExplorerTree = function(appBase) {
         return datanode;
     };
     
-    /** 
+    /**
+     * updates data.result with the childlist of the node
      * Callbackhandler for FancyTree to convert the presponse from server to fancytree-data. 
      * Fancytree runs it if nodedata is read from server.<br>
      * checks for data.response.state=OK, create FancydataNode from data.response.childNodes
      * and adds them to data.result.
-     * @FeatureDomain                Initialisation
-     * @FeatureResult                updates data.result with the childlist of the node
-     * @FeatureKeywords              GUI Tree
-     * @param event                  fancytree-event
-     * @param data                   the serverresponse (java de.yaio.rest.controller.NodeActionReponse)
+     * @param {FancytreeEvent} event  fancytree-event
+     * @param {Object} data           the serverresponse (java de.yaio.rest.controller.NodeActionReponse)
      */
     me.postProcessNodeData = function(event, data) {
         var list = [];
@@ -593,10 +581,7 @@ Yaio.ExplorerTree = function(appBase) {
     
     /** 
      * checks if the node passes the current nodefilter
-     * @FeatureDomain                Initialisation
-     * @FeatureResult                return boolean: check passes or not
-     * @FeatureKeywords              GUI Tree
-     * @param node                   nodedata from serverresponse (java de.yaio.rest.controller.NodeActionReponse)
+     * @param {Object} node          nodedata from serverresponse (java de.yaio.rest.controller.NodeActionReponse)
      * @return {boolean}             check passes or not
      */
     me.filterNodeData = function(node) {
@@ -622,10 +607,19 @@ Yaio.ExplorerTree = function(appBase) {
         return true;
     };
 
+    /**
+     * set the filter to filter nodes while reading the data for the fancytree
+     * @param {Object} nodeFilter     object with the diffrent filter-fields
+     */
     me.setNodeFilter = function(nodeFilter) {
         me.nodeFilter = nodeFilter || {};
     };
-    
+
+    /**
+     * callbackhandler in state of fancytree node-loading failed
+     * @param {Object} e      error
+     * @param {Object} data   error-details
+     */
     me.yaioFancyTreeLoadError = function(e, data) {
         var error = data.error;
         if (error.status && error.statusText) {

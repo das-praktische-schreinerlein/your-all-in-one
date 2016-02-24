@@ -37,11 +37,8 @@ Yaio.MarkdownRenderer = function(appBase) {
     /**
      * parse yaio-links like yaio:, yaiodmsdownload:, yaiodmsidxdownload:, yaiodmsembed:, yaiodmsidxembed: from href
      * and replace if exists with dms-urls...
-     * @FeatureDomain                GUI
-     * @FeatureResult                returnValue String - mapped url
-     * @FeatureKeywords              Layout
-     * @param href                   the url to parse
-     * @param dmsOnly                parse dms only: not yaio:
+     * @param {String} href          the url to parse
+     * @param {Boolean} dmsOnly      parse dms only: not yaio:
      * @return  {String}             mapped url
      */
     me._parseLinks = function(href, dmsOnly) {

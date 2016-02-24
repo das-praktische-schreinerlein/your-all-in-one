@@ -35,6 +35,7 @@ Yaio.NodeGanttRender = function(appBase) {
 
     /* jshint maxstatements: 100 */
     /**
+     * Updates GUI: #gantt_' + type + '_container_' + basenode.sysUID
      * Calcs+renders the gantt-block of specified type: (ist, plan, planChildrenSum, 
      * istChildrenSum) for basenode. Updates this elements:
      * <ul>
@@ -42,13 +43,10 @@ Yaio.NodeGanttRender = function(appBase) {
      *   <li> #gantt_' + type + '_aufwand_' + basenode.sysUID
      *   <li> #gantt_' + type + '_bar_' + basenode.sysUID
      * </ul>
-     * @FeatureDomain                Layout Rendering
-     * @FeatureResult                Updates GUI: #gantt_' + type + '_container_' + basenode.sysUID
-     * @FeatureKeywords              GUI Tree Rendering
-     * @param basenode               the nodedata to render (java de.yaio.core.node.BaseNode)
-     * @param type                   the type of data to calc (ist, plan, planChildrenSum, istChildrenSum)
-     * @param label                  the label to show if aufwand >0
-     * @param $divLine               optional ganttContainer to use - if not set #gantt_' + type + '_container_' + basenode.sysUID will be used
+     * @param {Object} basenode               the nodedata to render (java de.yaio.core.node.BaseNode)
+     * @param {String} type                   the type of data to calc (ist, plan, planChildrenSum, istChildrenSum)
+     * @param {String} label                  the label to show if aufwand >0
+     * @param {JQuery} $divLine               optional ganttContainer to use - if not set #gantt_' + type + '_container_' + basenode.sysUID will be used
      */
     me.fillGanttBlock = function (basenode, type, label, $divLine) {
         var msg = 'ganttblock for node:' + basenode.sysUID;
@@ -169,21 +167,19 @@ Yaio.NodeGanttRender = function(appBase) {
     /* jshint maxstatements: 50 */
 
     /** 
-     * Create the gantt-block of specified type: (ist, plan, planChildrenSum, 
+     * Updates GUI: #gantt_' + type + '_container_' + basenode.sysUID
+     * Create the gantt-block of specified type: (ist, plan, planChildrenSum,
      * istChildrenSum) for basenode. Creates this elements:
      * <ul>
      *   <li> #gantt_' + type + '_container_' + basenode.sysUID
      *   <li> #gantt_' + type + '_aufwand_' + basenode.sysUID
      *   <li> #gantt_' + type + '_bar_' + basenode.sysUID
      * </ul>
-     * @FeatureDomain                Layout Rendering
-     * @FeatureResult                Updates GUI: #gantt_' + type + '_container_' + basenode.sysUID
-     * @FeatureKeywords              GUI Tree Rendering
-     * @param basenode               the nodedata to render (java de.yaio.core.node.BaseNode)
-     * @param type                   the type of data to calc (ist, plan, planChildrenSum, istChildrenSum)
-     * @param addStyle               optional css-class to add to t-element
-     * @param label                  the label to show if aufwand >0
-     * @returns                      JQuery-Html-Object - the rendered ganttblock
+     * @param {Object} basenode               the nodedata to render (java de.yaio.core.node.BaseNode)
+     * @param {String} type                   the type of data to calc (ist, plan, planChildrenSum, istChildrenSum)
+     * @param {String} addStyle               optional css-class to add to t-element
+     * @param {String} label                  the label to show if aufwand >0
+     * @returns {JQuery}                      JQuery-Html-Object - the rendered ganttblock
      */
     me.createGanttBlock = function(basenode, type, addStyle, label) {
         // create line
@@ -212,12 +208,9 @@ Yaio.NodeGanttRender = function(appBase) {
     /** 
      * renders the full GanttBlock (ist, plan, istChildrenSum, planChildrenSum) 
      * for basenode and returns a JQuery-Html-Obj.
-     * @FeatureDomain                Layout Rendering
-     * @FeatureResult                ReturnValue JQuery-Html-Object - the rendered ganttblock
-     * @FeatureKeywords              GUI Tree Rendering
-     * @param basenode               the nodedata to render (java de.yaio.core.node.BaseNode)
-     * @param fancynode              the corresponding fancynode
-     * @returns                      JQuery-Html-Object - the rendered ganttblock
+     * @param {Object} basenode               the nodedata to render (java de.yaio.core.node.BaseNode)
+     * @param {FancytreeNode} fancynode       the corresponding fancynode
+     * @returns {JQuery}                      JQuery-Html-Object - the rendered ganttblock
      */
     me.renderGanttBlock = function(basenode, fancynode) {
         // extract nodedata
@@ -258,13 +251,10 @@ Yaio.NodeGanttRender = function(appBase) {
     
     
     /** 
-     * Shows the GanttBlock<br> 
+     * Shows the GanttBlock - Updates DOM<br>
      * Toggles DataBlock, GanttBlock and the links #tabTogglerData, #tabTogglerGantt.<br>
      * Hide all: td.block_nodedata, th.block_nodedata + #tabTogglerGantt<br>
      * Show all: td.block_nodegantt, th.block_nodegantt + #tabTogglerData<br>
-     * @FeatureDomain                Layout Toggler
-     * @FeatureResult                Updates DOM
-     * @FeatureKeywords              GUI Tree Rendering
      */
     me.yaioShowGanttBlock = function() {
         var svcUIToggler = me.appBase.get('UIToggler');
@@ -284,16 +274,13 @@ Yaio.NodeGanttRender = function(appBase) {
     
     
     /** 
-     * activate one of the gantt-blocks for the element<br>
+     * activate one of the gantt-blocks for the element - Updates DOM<br>
      * When flgMeOnly ist set: activate #gantt_ist_container_ + #gantt_plan_container 
      * to display only the gantt with the data of this node<br>
      * When flgMeOnly ist nmot set: activate #gantt_istChildrenSum_container_ + #gantt_planChildrenSum_container 
      * to display only the gantt with the data of this node and children<br>
-     * @FeatureDomain                Gantt
-     * @FeatureResult                Updates DOM
-     * @FeatureKeywords              Gantt
-     * @param node                   the FancytreeNode
-     * @param flgMeOnly              true - display only the gantt for the node / false - node+children
+     * @param {FancytreeNode} node             the FancytreeNode
+     * @param {Boolean} flgMeOnly              true - display only the gantt for the node / false - node+children
      */
     me.yaioActivateGanttBlock = function(node, flgMeOnly) {
         if (flgMeOnly) {
@@ -317,11 +304,8 @@ Yaio.NodeGanttRender = function(appBase) {
     };
     
     /** 
-     * recalc all gantt-blocks of the fancytree-nodes (iterates over getRooNode.visit()<br>
+     * recalc all gantt-blocks of the fancytree-nodes (iterates over getRooNode.visit() - Updates DOM<br>
      * calls yaioRecalcGanttBlock for every node and afterwards me.yaioRecalcMasterGanttBlockFromTree()
-     * @FeatureDomain                Gantt
-     * @FeatureResult                Updates DOM
-     * @FeatureKeywords              Gantt
      */
     me.yaioRecalcFancytreeGanttBlocks = function() {
         if (me.$('#tree').length > 0) {
@@ -334,12 +318,9 @@ Yaio.NodeGanttRender = function(appBase) {
     };
     
     /** 
-     * recalc mastergantt-block for the basenode on top of the page<br>
+     * recalc mastergantt-block for the basenode on top of the page - Updates DOM<br>
      * calls yaioRecalcGanttBlock and yaioRecalcMasterGanttBlockFromTree
-     * @FeatureDomain                Gantt
-     * @FeatureResult                Updates DOM
-     * @FeatureKeywords              Gantt
-     * @param basenode               the basenode to recalc (java de.yaio.core.node.BaseNode)
+     * @param {Object} basenode               the basenode to recalc (java de.yaio.core.node.BaseNode)
      */
     me.yaioRecalcMasterGanttBlock = function(basenode) {
         // default: set with own
@@ -350,12 +331,9 @@ Yaio.NodeGanttRender = function(appBase) {
     };
     
     /** 
-     * recalc mastergantt-block from the tree-data<br>
+     * recalc mastergantt-block from the tree-data - Updates DOM<br>
      * extract nodeid of the masternode from '#masterTr.data-value'<br>
      * calls yaioRecalcMasterGanttBlockLine for plan+ist
-     * @FeatureDomain                Gantt
-     * @FeatureResult                Updates DOM
-     * @FeatureKeywords              Gantt
      */
     me.yaioRecalcMasterGanttBlockFromTree = function() {
         // calc from children
@@ -370,16 +348,13 @@ Yaio.NodeGanttRender = function(appBase) {
     };
     
     /** 
-     * Recalcs mastergantt-line for praefix (plan, ist) with the tree-data<br>
+     * Recalcs mastergantt-line for praefix (plan, ist) with the tree-data - Updates DOM<br>
      * It extracts the data-rangeaufwand from gantt_${praefix}ChildrenSum_bar_$masterNodeId<br>
      * It iterates over all visible div.gantt_$praefix_bar, div.gantt_${praefix}ChildrenSum_bar
      * and adds their data-rangeaufwand<br>
      * At the end the sumRangeAufwand will be placed on #gantt_${praefix}ChildrenSum_aufwand_{masterNodeId}
-     * @FeatureDomain                Gantt
-     * @FeatureResult                Updates DOM
-     * @FeatureKeywords              Gantt
-     * @param masterNodeId           id of the masterNode on top of the page
-     * @param praefix                datablock to racalc (plan, ist)
+     * @param {String} masterNodeId           id of the masterNode on top of the page
+     * @param {String} praefix                datablock to racalc (plan, ist)
      */
     me.yaioRecalcMasterGanttBlockLine = function(masterNodeId, praefix) {
         // calc rangeAufwand
@@ -453,12 +428,9 @@ Yaio.NodeGanttRender = function(appBase) {
     };
     
     /** 
-     * recalc gantt-block for the basenode<br>
+     * recalc gantt-block for the basenode - Updates DOM<br>
      * calls fillGanttBlock for (plan, ist, planChildrenSum, istChildrenSum)
-     * @FeatureDomain                Gantt
-     * @FeatureResult                Updates DOM
-     * @FeatureKeywords              Gantt
-     * @param basenode               the basenode to recalc (java de.yaio.core.node.BaseNode)
+     * @param {Object} basenode               the basenode to recalc (java de.yaio.core.node.BaseNode)
      */
     me.yaioRecalcGanttBlock = function(basenode) {
         me.fillGanttBlock(basenode, 'plan', 'Plan', null);

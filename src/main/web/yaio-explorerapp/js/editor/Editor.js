@@ -44,10 +44,7 @@ Yaio.Editor = function(appBase) {
 
 
     /** 
-     * reset editor (hide all form, empty all formfields)
-     * @FeatureDomain                GUI
-     * @FeatureResult                GUI-result: hide editor
-     * @FeatureKeywords              GUI Editor
+     * reset editor (hide all form, empty all formfields)- hide editor
      */
     me.yaioResetNodeEditor = function() {
         // reset editor
@@ -71,9 +68,6 @@ Yaio.Editor = function(appBase) {
     
     /** 
      * hide all editor-forms
-     * @FeatureDomain                GUI
-     * @FeatureResult                GUI-result: hide all editor-forms
-     * @FeatureKeywords              GUI Editor
      */
     me.yaioHideAllNodeEditorForms = function() {
         // reset editor
@@ -88,10 +82,7 @@ Yaio.Editor = function(appBase) {
     };
     
     /** 
-     * reset all formfields
-     * @FeatureDomain                GUI
-     * @FeatureResult                GUI-result: empty all formfields
-     * @FeatureKeywords              GUI Editor
+     * reset/empty all formfields
      */
     me.yaioResetNodeEditorFormFields = function() {
         // reset data
@@ -116,12 +107,9 @@ Yaio.Editor = function(appBase) {
     
     /** 
      * updates the formfield with the nodedata
-     * @FeatureDomain                GUI
-     * @FeatureResult                GUI-result: updates formfield
-     * @FeatureKeywords              GUI Editor
-     * @param field                  fieldconfig from me.appBase.config.configNodeTypeFields
-     * @param fieldSuffix            sufix of the fieldName to identify the form (nodeclass of basenode)
-     * @param basenode               the node to map the fieldvalue
+     * @param {Object} field                  fieldconfig from me.appBase.config.configNodeTypeFields
+     * @param {String} fieldSuffix            suffix of the fieldName to identify the form (nodeclass of basenode)
+     * @param {Object} basenode               the node to map the fieldvalue
      */
     me.yaioSetFormField = function(field, fieldSuffix, basenode) {
         var svcDataUtils = me.appBase.get('DataUtils');
@@ -175,13 +163,11 @@ Yaio.Editor = function(appBase) {
     };
     
     /** 
-     * open the nodeeditor for the node (toggle it fromleft), transfer the data from node to the formfields  
-     * @FeatureDomain                GUI
-     * @FeatureResult                GUI-result: reset forms+field, hide forms, open the spcific form for the nodeclass, updates fields
-     * @FeatureKeywords              GUI Editor
-     * @param nodeId                 id of the node
-     * @param mode                   edit, create, createsymlink
-     * @param newNode                optional basedata for the new node
+     * open the nodeeditor for the node (toggle it fromleft), transfer the data from node to the formfields
+     * reset forms+field, hide forms, open the spcific form for the nodeclass, updates fields
+     * @param {String} nodeId                 id of the node
+     * @param {String} mode                   edit, create, createsymlink
+     * @param {Object} newNode                optional basedata for the new node
      */
     me.yaioOpenNodeEditor = function(nodeId, mode, newNode) {
         var svcLogger = me.appBase.get('Logger');
@@ -218,13 +204,11 @@ Yaio.Editor = function(appBase) {
 
     /* jshint maxstatements: 100 */
     /**
-     * open the nodeeditor for the node (toggle it fromleft), transfer the data from node to the formfields  
-     * @FeatureDomain                GUI
-     * @FeatureResult                GUI-result: reset forms+field, hide forms, open the spcific form for the nodeclass, updates fields
-     * @FeatureKeywords              GUI Editor
-     * @param basenode               the node
-     * @param mode                   edit, create, createsymlink
-     * @param newNode                optional node to copy data from (for mode createsnapshot...)
+     * open the nodeeditor for the node (toggle it fromleft), transfer the data from node to the formfields
+     * reset forms+field, hide forms, open the spcific form for the nodeclass, updates fields
+     * @param {Object} basenode               the node
+     * @param {String} mode                   edit, create, createsymlink
+     * @param {Object} newNode                optional node to copy data from (for mode createsnapshot...)
      */
     me.yaioOpenNodeEditorForNode = function(basenode, mode, newNode) {
         var svcLogger = me.appBase.get('Logger');
@@ -408,9 +392,6 @@ Yaio.Editor = function(appBase) {
 
     /** 
      * close the nodeditor, toggle it to the left
-     * @FeatureDomain                GUI
-     * @FeatureResult                GUI-result: close the editor
-     * @FeatureKeywords              GUI Tree Editor
      */
     me.yaioCloseNodeEditor = function() {
         console.log('close editor');
@@ -429,11 +410,8 @@ Yaio.Editor = function(appBase) {
     };
 
     /** 
-     * handler for drag&drop-dragover
-     * @FeatureDomain                GUI
-     * @FeatureResult                GUI-result: show copy-hint
-     * @FeatureKeywords              GUI Editor
-     * @param evt                    Drag&Drop-event
+     * handler for drag&drop-dragover - show copy-hint
+     * @param {Event} evt                    Drag&Drop-event
      */
     me.handleUploadFileUrlResNodeDragOver = function(evt) {
         // Explicitly show this is a copy.
@@ -442,13 +420,11 @@ Yaio.Editor = function(appBase) {
         evt.dataTransfer.dropEffect = 'copy';
     };
 
-    /** 
+    /**
+     * show uploadform
      * handler for drag&drop-drag: open the UrlResNode-Editor with the filedata to create and upload the file
      * File-Drag&Drop&Read inspired by http://www.html5rocks.com/de/tutorials/file/dndfiles/
-     * @FeatureDomain                GUI
-     * @FeatureResult                GUI-result: show uploadform
-     * @FeatureKeywords              GUI Editor
-     * @param evt                    Drag&Drop-event
+     * @param {Event} evt                    Drag&Drop-event
      */
     me.handleUploadFileUrlResNodeSelect = function(evt) {
         evt.stopPropagation();
@@ -478,11 +454,8 @@ Yaio.Editor = function(appBase) {
     };
 
     /** 
-     * set uploadFile in angular
-     * @FeatureDomain                GUI
-     * @FeatureResult                GUI-result: init uploadFile
-     * @FeatureKeywords              GUI Editor
-     * @param basenode               the node-data sith attr: uploadfile
+     * set uploadFile in angular - init uploadFile
+     * @param {Object} basenode               the node-data with attr: uploadfile
      */
     me.setUploadFileUrlResNode = function (basenode) {
         // set uploadFile in scope
@@ -501,11 +474,8 @@ Yaio.Editor = function(appBase) {
     /** 
      * recalcs the istStand depending on the state/type
      * if ERLEDIGT || VERWORFEN || EVENT_ERLEDIGT || EVENT_VERWORFEN: update istStand=100
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                ReturnValue Integer - the recalced stand
-     * @FeatureKeywords              BusinessLogic
-     * @param basenode               the node to recalc
-     * @return                       istStand in %
+     * @param {Object} basenode      the node to recalc
+     * @return {int}                 istStand in %
      */
     me.calcIstStandFromState = function(basenode) {
         var istStand = basenode.istStand;
@@ -530,11 +500,8 @@ Yaio.Editor = function(appBase) {
      *   <li>if className=EventNode && >0&&<100 && ! EVENT_WARNING: update type=EVENT_RUNNING
      *   <li>if className=EventNode && 100 && != EVENT_VERWORFEN: update type=EVENT_ERLEDIGT
      * </ul>
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                ReturnValue String - the recalced type/state
-     * @FeatureKeywords              BusinessLogic
-     * @param basenode               the node to recalc
-     * @return string                the recalced type
+     * @param {Object} basenode        the node to recalc
+     * @return {String}                the recalced type
      */
     me.calcTypeFromIstStand = function(basenode) {
         var type = basenode.type;
