@@ -111,11 +111,11 @@ Yaio.ExplorerTree = function(appBase) {
                 // activate/deactivate gantt for node
                 if (flag) {
                     console.debug('onExpandCallBack: activate gantt - only own data for ' + node.key);
-                    me.appBase.get('YaioNodeGanttRender').yaioActivateGanttBlock(node, true);
+                    me.appBase.get('YaioNodeGanttRenderer').showGanttBlockForNode(node, true);
                 } else {
                     // I'm collapsed: show me and my childsum
                     console.debug('onExpandCallBack: activate gantt - sum data of me+children for ' + node.key);
-                    me.appBase.get('YaioNodeGanttRender').yaioActivateGanttBlock(node, false);
+                    me.appBase.get('YaioNodeGanttRenderer').showGanttBlockForNode(node, false);
                 }
             },
             
@@ -126,7 +126,7 @@ Yaio.ExplorerTree = function(appBase) {
     
             // render the extra nodedata in grid, sets state for callbaclfunction when tree is created
             renderColumns: function(event, data) {
-                me.appBase.get('YaioNodeDataRender').renderColumnsForNode(event, data);
+                me.appBase.get('YaioNodeDataRenderer').renderColumnsForNode(event, data);
                 treeInstances[treeId].state = 'rendering_done';
             },
     

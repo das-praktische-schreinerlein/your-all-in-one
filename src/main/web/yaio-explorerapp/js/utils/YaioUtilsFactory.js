@@ -90,7 +90,7 @@ yaioApp.factory('yaioUtils', ['$location', '$http', '$rootScope', '$q', function
             };
             
             console.log('renderNodeLine nodeId=' + node.sysUID + ' tr=' + $(trIdSelector).length);
-            appBase.get('YaioNodeDataRender').renderColumnsForNode(null, data, true, flgMinimum);
+            appBase.get('YaioNodeDataRenderer').renderColumnsForNode(null, data, true, flgMinimum);
         },
         
 

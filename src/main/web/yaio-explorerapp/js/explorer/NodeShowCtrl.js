@@ -200,7 +200,7 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
                     $scope.yaioUtils.renderNodeLine(yaioNodeActionResponse.node, '#masterTr', false);
 
                     // recalc gantt
-                    yaioUtils.getService('YaioNodeGanttRender').yaioRecalcMasterGanttBlock($scope.node);
+                    yaioUtils.getService('YaioNodeGanttRenderer').recalcMasterGanttBlock($scope.node);
                 }
             };
             templateIsLoadedTimer = setInterval(templateIsLoadedHandler, 100);
@@ -242,8 +242,8 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
      * callbackhandler to recalc ganttblocks for current treeview
      */
     $scope.recalcGanttBlocks = function() {
-        yaioUtils.getService('YaioNodeGanttRender').yaioRecalcFancytreeGanttBlocks();
-        yaioUtils.getService('YaioNodeGanttRender').yaioRecalcMasterGanttBlock($scope.node);
+        yaioUtils.getService('YaioNodeGanttRenderer').recalcGanttBlocksForTree();
+        yaioUtils.getService('YaioNodeGanttRenderer').recalcMasterGanttBlock($scope.node);
         return false;
     };
 

@@ -308,7 +308,7 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
                 continue;
             }
             var node = $scope.nodes[idx];
-            yaioUtils.getService('YaioNodeGanttRender').yaioRecalcGanttBlock(node);
+            yaioUtils.getService('YaioNodeGanttRenderer').recalcGanttBlockForNode(node);
         }
     };
 

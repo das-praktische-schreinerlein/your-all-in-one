@@ -55,8 +55,8 @@ window.YaioAppBase = function() {
         me.configureService('Yaio.StaticNodeDataStore', function() { return Yaio.StaticNodeDataStore(me); });
         me.configureService('Yaio.StaticNodeData', function() { return Yaio.StaticNodeData(me, Yaio.StaticNodeDataConfig()); });
         me.configureService('Yaio.FileNodeData', function() { return Yaio.FileNodeData(me, Yaio.FileNodeDataConfig()); });
-        me.configureService('Yaio.NodeDataRender', function() { return Yaio.NodeDataRender(me); });
-        me.configureService('Yaio.NodeGanttRender', function() { return Yaio.NodeGanttRender(me); });
+        me.configureService('Yaio.NodeDataRenderer', function() { return Yaio.NodeDataRenderer(me); });
+        me.configureService('Yaio.NodeGanttRenderer', function() { return Yaio.NodeGanttRenderer(me); });
         me.configureService('Yaio.ExplorerAction', function() { return Yaio.ExplorerAction(me); });
         me.configureService('Yaio.ExplorerTree', function() { return Yaio.ExplorerTree(me); });
         me.configureService('Yaio.ExportedData', function() { return Yaio.ExportedData(me); });
@@ -96,8 +96,8 @@ window.YaioAppBase = function() {
         me.configureService('YaioNodeData', function() { return me.get('YaioStaticNodeData'); });
         me.configureService('YaioAccessManager', function() { return me.get('YaioNodeData').getAccessManager(); });
         
-        me.configureService('YaioNodeDataRender', function() { return me.get('Yaio.NodeDataRender'); });
-        me.configureService('YaioNodeGanttRender', function() { return me.get('Yaio.NodeGanttRender'); });
+        me.configureService('YaioNodeDataRenderer', function() { return me.get('Yaio.NodeDataRenderer'); });
+        me.configureService('YaioNodeGanttRenderer', function() { return me.get('Yaio.NodeGanttRenderer'); });
         me.configureService('YaioExplorerAction', function() { return me.get('Yaio.ExplorerAction'); });
         me.configureService('YaioExplorerTree', function() { return me.get('Yaio.ExplorerTree'); });
         me.configureService('YaioExportedData', function() { return me.get('Yaio.ExportedData'); });

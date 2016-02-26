@@ -21,7 +21,7 @@
  * @copyright                    Copyright (c) 2014, Michael Schreiner
  * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-Yaio.NodeGanttRender = function(appBase) {
+Yaio.NodeGanttRenderer = function(appBase) {
     'use strict';
 
     // my own instance
@@ -256,7 +256,7 @@ Yaio.NodeGanttRender = function(appBase) {
      * Hide all: td.block_nodedata, th.block_nodedata + #tabTogglerGantt
      * Show all: td.block_nodegantt, th.block_nodegantt + #tabTogglerData
      */
-    me.yaioShowGanttBlock = function() {
+    me.showGanttView = function() {
         var svcUIToggler = me.appBase.get('UIToggler');
         
         svcUIToggler.toggleTableBlock('#tabTogglerGantt');
@@ -282,7 +282,7 @@ Yaio.NodeGanttRender = function(appBase) {
      * @param {FancytreeNode} node             the FancytreeNode
      * @param {Boolean} flgMeOnly              true - display only the gantt for the node / false - node+children
      */
-    me.yaioActivateGanttBlock = function(node, flgMeOnly) {
+    me.showGanttBlockForNode = function(node, flgMeOnly) {
         if (flgMeOnly) {
             console.debug('yaioActivateGanttBlock: activate gantt - only own data for ' + node.key);
             // I'm expanded: show only my own data
@@ -300,21 +300,21 @@ Yaio.NodeGanttRender = function(appBase) {
         }
     
         // recalc gantt tree
-        me.yaioRecalcMasterGanttBlockFromTree();
+        me.recalcMasterGanttBlockForTree();
     };
     
     /** 
      * recalc all gantt-blocks of the fancytree-nodes (iterates over getRooNode.visit() - Updates DOM
-     * calls yaioRecalcGanttBlock for every node and afterwards me.yaioRecalcMasterGanttBlockFromTree()
+     * calls yaioRecalcGanttBlock for every node and afterwards me.recalcMasterGanttBlockForTree()
      */
-    me.yaioRecalcFancytreeGanttBlocks = function() {
+    me.recalcGanttBlocksForTree = function() {
         if (me.$('#tree').length > 0) {
             // tree exists
             me.$('#tree').fancytree('getRootNode').visit(function(node){
-                me.yaioRecalcGanttBlock(node.data.basenode);
+                me.recalcGanttBlockForNode(node.data.basenode);
             });
         }
-        me.yaioRecalcMasterGanttBlockFromTree();
+        me.recalcMasterGanttBlockForTree();
     };
     
     /** 
@@ -322,12 +322,12 @@ Yaio.NodeGanttRender = function(appBase) {
      * calls yaioRecalcGanttBlock and yaioRecalcMasterGanttBlockFromTree
      * @param {Object} basenode               the basenode to recalc (java de.yaio.core.node.BaseNode)
      */
-    me.yaioRecalcMasterGanttBlock = function(basenode) {
+    me.recalcMasterGanttBlock = function(basenode) {
         // default: set with own
-        me.yaioRecalcGanttBlock(basenode);
+        me.recalcGanttBlockForNode(basenode);
     
         // calc from tree
-        me.yaioRecalcMasterGanttBlockFromTree();
+        me.recalcMasterGanttBlockForTree();
     };
     
     /** 
@@ -335,13 +335,13 @@ Yaio.NodeGanttRender = function(appBase) {
      * extract nodeid of the masternode from '#masterTr.data-value'
      * calls yaioRecalcMasterGanttBlockLine for plan+ist
      */
-    me.yaioRecalcMasterGanttBlockFromTree = function() {
+    me.recalcMasterGanttBlockForTree = function() {
         // calc from children
         var masterNodeId = me.$('#masterTr').attr('data-value');
         if (!me.appBase.DataUtils.isUndefinedStringValue(masterNodeId)) {
             console.log('yaioRecalcMasterGanttBlockFromTree calc for masterNodeId:', masterNodeId);
-            me.yaioRecalcMasterGanttBlockLine(masterNodeId, 'plan');
-            me.yaioRecalcMasterGanttBlockLine(masterNodeId, 'ist');
+            me.recalcMasterGanttBlockLine(masterNodeId, 'plan');
+            me.recalcMasterGanttBlockLine(masterNodeId, 'ist');
         } else {
             console.log('yaioRecalcMasterGanttBlockFromTree skip: no masterNodeId');
         }
@@ -356,7 +356,7 @@ Yaio.NodeGanttRender = function(appBase) {
      * @param {String} masterNodeId           id of the masterNode on top of the page
      * @param {String} praefix                datablock to racalc (plan, ist)
      */
-    me.yaioRecalcMasterGanttBlockLine = function(masterNodeId, praefix) {
+    me.recalcMasterGanttBlockLine = function(masterNodeId, praefix) {
         // calc rangeAufwand
         var sumRangeAufwand = 0;
     
@@ -432,7 +432,7 @@ Yaio.NodeGanttRender = function(appBase) {
      * calls fillGanttBlock for (plan, ist, planChildrenSum, istChildrenSum)
      * @param {Object} basenode               the basenode to recalc (java de.yaio.core.node.BaseNode)
      */
-    me.yaioRecalcGanttBlock = function(basenode) {
+    me.recalcGanttBlockForNode = function(basenode) {
         me.fillGanttBlock(basenode, 'plan', 'Plan', null);
         me.fillGanttBlock(basenode, 'planChildrenSum', 'PlanSum', null);
         me.fillGanttBlock(basenode, 'ist', 'Ist', null);
