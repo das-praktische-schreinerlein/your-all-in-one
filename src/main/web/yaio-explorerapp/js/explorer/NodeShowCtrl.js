@@ -151,7 +151,7 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
             nodeIdHierarchy.push(yaioNodeActionResponse.node.sysUID);
             
             // open Hierarchy
-            yaioUtils.getService('YaioExplorerAction').openNodeHierarchyForTreeId('#tree', nodeIdHierarchy);
+            yaioUtils.getService('YaioExplorerCommands').openNodeHierarchyForTreeId('#tree', nodeIdHierarchy);
         } else {
             // error
             yaioUtils.getService('Logger').logError('error loading activenode:' + yaioNodeActionResponse.stateMsg
@@ -194,7 +194,7 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
                     clearInterval(templateIsLoadedTimer);
                     
                     // load fencytree
-                    yaioUtils.getService('YaioExplorerTree').yaioCreateFancyTree('#tree', $scope.node.sysUID, options.loadActiveNodeIdHandler);
+                    yaioUtils.getService('YaioExplorerTree').createExplorerTree('#tree', $scope.node.sysUID, options.loadActiveNodeIdHandler);
                     
                     // load me
                     $scope.yaioUtils.renderNodeLine(yaioNodeActionResponse.node, '#masterTr', false);
@@ -216,7 +216,7 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
      */
     $scope.exportAsOverview = function() {
         console.log('exportAsOverview');
-        yaioUtils.getService('YaioExplorerAction').openClipBoardWithCurrentViewAsOverview();
+        yaioUtils.getService('YaioExplorerCommands').openClipBoardWithCurrentViewAsOverview();
         return false;
     };
 
@@ -225,7 +225,7 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
      */
     $scope.snapshot = function() {
         console.log('snapshot');
-        yaioUtils.getService('YaioExplorerAction').openNewInfoNodeWithCurrentViewAsSnapshotForParent($scope.node);
+        yaioUtils.getService('YaioExplorerCommands').openNewInfoNodeWithCurrentViewAsSnapshotForParent($scope.node);
         return false;
     };
 
@@ -234,7 +234,7 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
      */
     $scope.openSubNodes = function() {
         console.log('openSubNodes:' + ' level:' + $scope.config.treeOpenLevel);
-        yaioUtils.getService('YaioExplorerAction').openSubNodesForTreeId('#tree', $scope.config.treeOpenLevel);
+        yaioUtils.getService('YaioExplorerCommands').openSubNodesForTreeId('#tree', $scope.config.treeOpenLevel);
         return false;
     };
 
@@ -311,7 +311,7 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
      * @param {String} divId          id of the drag&drop-html-element
      */
     $scope.initDragDropFileUploader = function(divId) {
-        // change to https://www.npmjs.com/package/angular-draganddrop
+        // TODO change to https://www.npmjs.com/package/angular-draganddrop
         // Setup the Uploadfile-Listener
         var dropZone = document.getElementById(divId);
         dropZone.addEventListener('dragover', function (event) {

@@ -36,10 +36,16 @@ Yaio.Layout = function(appBase) {
     };
 
 
+    /**
+     * add preview to name+nodeDesc-Label if availiable
+     */
     me.addPreviewToElements = function() {
         me.appBase.YmfMarkdownEditorServiceHelper.addPreviewToElements('label[for="nodeDesc"');
     };
-    
+
+    /**
+     * add wysiwyg-editor to name+nodeDesc-Label if availiable
+     */
     me.addWysiwygToElements = function() {
         me.appBase.YmfMarkdownEditorServiceHelper.addWysiwygToElements('label[for="nodeDesc"');
     };

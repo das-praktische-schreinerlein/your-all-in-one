@@ -117,31 +117,6 @@ Yaio.ExplorerConverter = function(appBase) {
     };
 
     /**
-     * check block for matchers from checkListConfigs
-     * @param {JQuery} block      block to check
-     * @return {null|String}      key of checkListConfigs that matches
-     */
-    me._extractCheckListStatefromStateSpan = function(block) {
-        // iterate all configs
-        var checkListConfigs = me.appBase.get('ChecklistParser').checkListConfigs;
-        for (var idx in checkListConfigs) {
-            if (!checkListConfigs.hasOwnProperty(idx)) {
-                continue;
-            }
-            var matchers = checkListConfigs[idx].matchers;
-
-            // iterate all matchers
-            for (var idx2 in matchers) {
-                // check for matcher in style
-                if (block.hasClass('node-state-' + matchers[idx2])) {
-                    return idx;
-                }
-            }
-        }
-        return null;
-    };
-
-    /**
      * extract data from explorerlines (table.fancytree-ext-table tr) and format
      * them as mermaid-gantt-markdown
      * @return                       {String}    mermaid-gantt-markdown
@@ -187,6 +162,31 @@ Yaio.ExplorerConverter = function(appBase) {
         ganttMarkdown += ganttMarkdownPlan + ganttMarkdownIst  + '```\n';
 
         return ganttMarkdown;
+    };
+
+    /**
+     * check block for matchers from checkListConfigs
+     * @param {JQuery} block      block to check
+     * @return {null|String}      key of checkListConfigs that matches
+     */
+    me._extractCheckListStatefromStateSpan = function(block) {
+        // iterate all configs
+        var checkListConfigs = me.appBase.get('ChecklistParser').checkListConfigs;
+        for (var idx in checkListConfigs) {
+            if (!checkListConfigs.hasOwnProperty(idx)) {
+                continue;
+            }
+            var matchers = checkListConfigs[idx].matchers;
+
+            // iterate all matchers
+            for (var idx2 in matchers) {
+                // check for matcher in style
+                if (block.hasClass('node-state-' + matchers[idx2])) {
+                    return idx;
+                }
+            }
+        }
+        return null;
     };
 
 

@@ -50,10 +50,6 @@ Yaio.ExplorerTree = function(appBase) {
     me._init = function() {
     };
 
-    me.sourceHandler = function(nodeId) {
-        return me.appBase.get('YaioNodeData').loadNodeData(nodeId);
-    };
-
     /* jshint maxstatements: 100 */
     /* jshint maxcomplexity: 100 */
     /**
@@ -65,14 +61,14 @@ Yaio.ExplorerTree = function(appBase) {
      * @param {String} masterNodeId           the node.sysUID to load
      * @param {function} doneHandler          callback-function when tree is created
      */
-    me.yaioCreateFancyTree = function(treeId, masterNodeId, doneHandler) {
+    me.createExplorerTree = function(treeId, masterNodeId, doneHandler) {
         treeInstances[treeId] = {};
         treeInstances[treeId].state = 'loading';
         me.$(treeId).fancytree({
             
             // errorHandler
             loadError: function (e,data) { 
-                me.appBase.get('YaioExplorerTree').yaioFancyTreeLoadError(e, data); 
+                me._showLoadError(e, data);
             },
             
             // save masterNodeId
@@ -84,7 +80,7 @@ Yaio.ExplorerTree = function(appBase) {
             checkbox: true,
             titlesTabbable: true,     // Add all node titles to TAB chain
       
-            source: me.sourceHandler(masterNodeId),
+            source: me._sourceHandler(masterNodeId),
             
             // defaultoptions for ajax-request
             ajax: {
@@ -103,7 +99,7 @@ Yaio.ExplorerTree = function(appBase) {
             lazyLoad: function(event, data) {
                 var node = data.node;
                 console.debug('yaioCreateFancyTree load data for ' + node.key);
-                data.result = me.sourceHandler(node.key);
+                data.result = me._sourceHandler(node.key);
             },
       
             // callback if expanded-state of node changed, to show the matching gantt (only node or + childsum)
@@ -170,7 +166,7 @@ Yaio.ExplorerTree = function(appBase) {
                             newParentKey = node.key;
                             newPos = 9999;
                         }
-                        me.appBase.get('YaioExplorerAction').doMoveNode(data.otherNode, newParentKey, newPos);
+                        me.appBase.get('YaioExplorerCommands').doMoveNode(data.otherNode, newParentKey, newPos);
                         return true;
                     } else {
                         // discard
@@ -202,7 +198,7 @@ Yaio.ExplorerTree = function(appBase) {
                 handleCursorKeys: true
             }
         }).on('nodeCommand', function(event, data){
-            var svcYaioExplorerAction = me.appBase.get('YaioExplorerAction');
+            var svcYaioExplorerCommands = me.appBase.get('YaioExplorerCommands');
             
             // Custom event handler that is triggered by keydown-handler and
             // context menu:
@@ -256,7 +252,7 @@ Yaio.ExplorerTree = function(appBase) {
                                 newParentKey = tree.options.masterNodeId;
                             }
                             // move yaioNode
-                            svcYaioExplorerAction.doMoveNode(node, newParentKey, 9999);
+                            svcYaioExplorerCommands.doMoveNode(node, newParentKey, 9999);
                             me.clipboardNode = me.pasteMode = null;
                             return true;
                         } else {
@@ -279,7 +275,7 @@ Yaio.ExplorerTree = function(appBase) {
                                 newParentKey = tree.options.masterNodeId;
                             }
                             // copy yaioNode
-                            svcYaioExplorerAction.doCopyNode(node, newParentKey);
+                            svcYaioExplorerCommands.doCopyNode(node, newParentKey);
                             me.clipboardNode = me.pasteMode = null;
                             return true;
                         } else {
@@ -303,7 +299,7 @@ Yaio.ExplorerTree = function(appBase) {
                         }
                         
                         // move yaioNode
-                        svcYaioExplorerAction.doMoveNode(node, newParentKey, 9999);
+                        svcYaioExplorerCommands.doMoveNode(node, newParentKey, 9999);
                         return true;
                     } else {
                         // discard
@@ -325,7 +321,7 @@ Yaio.ExplorerTree = function(appBase) {
                             newParentKey = tree.options.masterNodeId;
                         }
                         // move yaioNode
-                        svcYaioExplorerAction.doMoveNode(node, newParentKey, 9999);
+                        svcYaioExplorerCommands.doMoveNode(node, newParentKey, 9999);
                         return true;
                     } else {
                         // discard
@@ -348,7 +344,7 @@ Yaio.ExplorerTree = function(appBase) {
                         newPos = node.getPrevSibling().data.basenode.sortPos - 2;
                     }
     
-                    svcYaioExplorerAction.doMoveNode(node, newParentKey, newPos);
+                    svcYaioExplorerCommands.doMoveNode(node, newParentKey, newPos);
                     break;
                 case 'moveDown':
                     if (! me.appBase.get('YaioAccessManager').getAvailiableNodeAction('move', node.key, false)) {
@@ -366,13 +362,13 @@ Yaio.ExplorerTree = function(appBase) {
                         newPos = node.getNextSibling().data.basenode.sortPos + 2;
                     }
     
-                    svcYaioExplorerAction.doMoveNode(node, newParentKey, newPos);
+                    svcYaioExplorerCommands.doMoveNode(node, newParentKey, newPos);
                     break;
                 case 'remove':
                     if (! me.appBase.get('YaioAccessManager').getAvailiableNodeAction('remove', node.key, false)) {
                         return false;
                     }
-                    svcYaioExplorerAction.doRemoveNodeByNodeId(node.key);
+                    svcYaioExplorerCommands.doRemoveNodeByNodeId(node.key);
                     break;
                 case 'addChild':
                     if (! me.appBase.get('YaioAccessManager').getAvailiableNodeAction('create', node.key, false)) {
@@ -381,10 +377,10 @@ Yaio.ExplorerTree = function(appBase) {
                     me.appBase.get('YaioNodeEditor').openNodeEditorForNodeId(node.key, 'create');
                     break;
                 case 'asTxt':
-                    svcYaioExplorerAction.openTxtExportWindowForContent(me.$('#container_content_desc_' + node.key).text());
+                    svcYaioExplorerCommands.openTxtExportWindowForContent(me.$('#container_content_desc_' + node.key).text());
                     break;
                 case 'asJira':
-                    svcYaioExplorerAction.openJiraExportWindowByNodeId(node.key);
+                    svcYaioExplorerCommands.openJiraExportWindowByNodeId(node.key);
                     break;
                 case 'focus':
                     window.location = '#/show/' + node.key;
@@ -423,7 +419,7 @@ Yaio.ExplorerTree = function(appBase) {
         
         // check if donehandler
         if (doneHandler) {
-            me.appBase.get('YaioExplorerTree').yaioDoOnFancyTreeState(treeId, 
+            me._onFancyTreeStateChange(treeId,
                     'rendering_done', 1000, 5, doneHandler, 'yaioCreateFancyTree.doneHandler');
         }
     
@@ -470,71 +466,15 @@ Yaio.ExplorerTree = function(appBase) {
     /* jshint maxstatements: 50 */
     /* jshint maxcomplexity: 50 */
 
+    /**
+     * set the filter to filter nodes while reading the data for the fancytree
+     * @param {Object} nodeFilter     object with the diffrent filter-fields
+     */
+    me.setNodeFilter = function(nodeFilter) {
+        me.nodeFilter = nodeFilter || {};
+    };
 
-    /*****************************************
-     *****************************************
-     * Service-Funktions (fancytree-callbacks)
-     *****************************************
-     *****************************************/
-    
-    /** 
-     * Checks if the tree is in wished state and runs doneHandler.
-     * If tree is not in state, it waits waitTime trys it till maxTries is reached.
-     * If maxTries reached, doneHandler is done regardless of the state.
-     * @param {String} treeId         id of the html-element containing the tree
-     * @param {String} state          the state the tree must reached to run doneHandler
-     * @param {int} waitTime          millis to wait for next try if tree is not in state
-     * @param {int} maxTries          maximum of tries till donehandlder will run if tree is not in state
-     * @param {function} doneHandler  callback-function to run if tree is in state
-     * @param {String} name           name of the callback-function fpr logging
-     */
-    me.yaioDoOnFancyTreeState = function(treeId, state, waitTime, maxTries, doneHandler, name) {
-        // check if donehandler
-        if (doneHandler) {
-            // only postprocess after rendering
-            if (treeInstances[treeId].state !== state && maxTries > 0) {
-                // wait if maxTries>0 or state is set to rendering_done
-                console.log('yaioDoOnFancyTreeState doneHandler:' + name + ') try=' + maxTries
-                        + ' wait=' + waitTime + 'ms for ' + treeId + '=' + state);
-                setTimeout(function() { 
-                    me.appBase.get('YaioExplorerTree').yaioDoOnFancyTreeState(treeId, state, waitTime, maxTries-1, doneHandler);
-                }, waitTime);
-            } else {
-                // maxTries=0 or state is set to rendering_done
-                console.log('yaioDoOnFancyTreeState call doneHandler:' + name + ' try=' + maxTries
-                        + ' for ' + treeId + '=' + state);
-                doneHandler();
-            } 
-        }
-    };
-    
-    /** 
-     * create an fancytree-datanode from an yaio.basenode  
-     * @param {Object} basenode      a basenode from yaio
-     * @returns {FancytreeNode}      a datanode for FancyTree
-     */
-    me.createFancyDataFromNodeData = function(basenode) {
-        var datanode = {
-           title: basenode.name,
-           key: basenode.sysUID, 
-           children: null,
-           lazy: true,
-           basenode: basenode
-        };
-        
-        // deactivate lazyload for node if no children avaiable
-        if (me.appBase.DataUtils.isUndefinedStringValue(basenode.statChildNodeCount) || basenode.statChildNodeCount <= 0) {
-            datanode.lazy = false;
-            datanode.children = [];
-        }
-    
-        if (basenode.className === 'UrlResNode') {
-            datanode.title = basenode.resLocName;
-        }
-        
-        return datanode;
-    };
-    
+
     /**
      * updates data.result with the childlist of the node
      * Callbackhandler for FancyTree to convert the presponse from server to fancytree-data. 
@@ -559,11 +499,11 @@ Yaio.ExplorerTree = function(appBase) {
                 for (var zaehler = 0; zaehler < data.response.childNodes.length; zaehler++) {
                     var childBaseNode = data.response.childNodes[zaehler];
                     
-                    if (! me.filterNodeData(childBaseNode)) {
+                    if (! me._filterNodeData(childBaseNode)) {
                         continue;
                     }
                     
-                    var datanode = me.appBase.get('YaioExplorerTree').createFancyDataFromNodeData(childBaseNode);
+                    var datanode = me.appBase.get('YaioExplorerTree')._createFancyDataFromNodeData(childBaseNode);
                     console.debug('add childnode for ' + baseNode.sysUID
                             + ' = ' + childBaseNode.sysUID + ' ' + childBaseNode.name);
                     list.push(datanode);
@@ -576,15 +516,45 @@ Yaio.ExplorerTree = function(appBase) {
         
         data.result = list;
     };
-    
-    
-    
-    /** 
+
+    me._sourceHandler = function(nodeId) {
+        return me.appBase.get('YaioNodeData').loadNodeData(nodeId);
+    };
+
+    /**
+     * create an fancytree-datanode from an yaio.basenode
+     * @param {Object} basenode      a basenode from yaio
+     * @returns {FancytreeNode}      a datanode for FancyTree
+     */
+    me._createFancyDataFromNodeData = function(basenode) {
+        var datanode = {
+            title: basenode.name,
+            key: basenode.sysUID,
+            children: null,
+            lazy: true,
+            basenode: basenode
+        };
+
+        // deactivate lazyload for node if no children avaiable
+        if (me.appBase.DataUtils.isUndefinedStringValue(basenode.statChildNodeCount) || basenode.statChildNodeCount <= 0) {
+            datanode.lazy = false;
+            datanode.children = [];
+        }
+
+        if (basenode.className === 'UrlResNode') {
+            datanode.title = basenode.resLocName;
+        }
+
+        return datanode;
+    };
+
+
+    /**
      * checks if the node passes the current nodefilter
      * @param {Object} node          nodedata from serverresponse (java de.yaio.rest.controller.NodeActionReponse)
      * @return {boolean}             check passes or not
      */
-    me.filterNodeData = function(node) {
+    me._filterNodeData = function(node) {
         if (! me.nodeFilter) {
             // no filter
             return true;
@@ -592,15 +562,15 @@ Yaio.ExplorerTree = function(appBase) {
         
         // check filter
         if (me.nodeFilter.classNames && !me.nodeFilter.classNames[node.className]) {
-            console.log('filterNodeData: skip node by className:' + node.className);
+            console.log('_filterNodeData: skip node by className:' + node.className);
             return false;
         }
         if (me.nodeFilter.workflowStates && !me.nodeFilter.workflowStates[node.workflowState]) {
-            console.log('filterNodeData: skip node by workflowState:' + node.workflowState);
+            console.log('_filterNodeData: skip node by workflowState:' + node.workflowState);
             return false;
         }
         if (me.nodeFilter.statCount && (node[me.nodeFilter.statCount] <= 0)) {
-            console.log('filterNodeData: skip node by statCount:' + me.nodeFilter.statCount);
+            console.log('_filterNodeData: skip node by statCount:' + me.nodeFilter.statCount);
             return false;
         }
         
@@ -608,19 +578,11 @@ Yaio.ExplorerTree = function(appBase) {
     };
 
     /**
-     * set the filter to filter nodes while reading the data for the fancytree
-     * @param {Object} nodeFilter     object with the diffrent filter-fields
-     */
-    me.setNodeFilter = function(nodeFilter) {
-        me.nodeFilter = nodeFilter || {};
-    };
-
-    /**
      * callbackhandler in state of fancytree node-loading failed
      * @param {Object} e      error
      * @param {Object} data   error-details
      */
-    me.yaioFancyTreeLoadError = function(e, data) {
+    me._showLoadError = function(e, data) {
         var error = data.error;
         if (error.status && error.statusText) {
             data.message = 'Ajax error: ' + data.message;
@@ -651,7 +613,37 @@ Yaio.ExplorerTree = function(appBase) {
                 + ' Details:' + data.details);
     };
 
-    
+    /**
+     * Checks if the tree is in wished state and runs doneHandler.
+     * If tree is not in state, it waits waitTime trys it till maxTries is reached.
+     * If maxTries reached, doneHandler is done regardless of the state.
+     * @param {String} treeId         id of the html-element containing the tree
+     * @param {String} state          the state the tree must reached to run doneHandler
+     * @param {int} waitTime          millis to wait for next try if tree is not in state
+     * @param {int} maxTries          maximum of tries till donehandlder will run if tree is not in state
+     * @param {function} doneHandler  callback-function to run if tree is in state
+     * @param {String} name           name of the callback-function fpr logging
+     */
+    me._onFancyTreeStateChange = function(treeId, state, waitTime, maxTries, doneHandler, name) {
+        // check if donehandler
+        if (doneHandler) {
+            // only postprocess after rendering
+            if (treeInstances[treeId].state !== state && maxTries > 0) {
+                // wait if maxTries>0 or state is set to rendering_done
+                console.log('_onFancyTreeStateChange doneHandler:' + name + ') try=' + maxTries
+                    + ' wait=' + waitTime + 'ms for ' + treeId + '=' + state);
+                setTimeout(function() {
+                    me._onFancyTreeStateChange(treeId, state, waitTime, maxTries-1, doneHandler);
+                }, waitTime);
+            } else {
+                // maxTries=0 or state is set to rendering_done
+                console.log('__onFancyTreeStateChange call doneHandler:' + name + ' try=' + maxTries
+                    + ' for ' + treeId + '=' + state);
+                doneHandler();
+            }
+        }
+    };
+
     me._init();
     
     return me;

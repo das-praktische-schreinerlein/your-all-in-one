@@ -128,7 +128,7 @@
                     // services
                     srcBase + 'yaio-explorerapp/js/datarenderer/*.js',
                     srcBase + 'yaio-explorerapp/js/dataservices/*.js',
-                    srcBase + 'yaio-explorerapp/js/explorer/ExplorerAction.js',
+                    srcBase + 'yaio-explorerapp/js/explorer/ExplorerCommands.js',
                     srcBase + 'yaio-explorerapp/js/explorer/ExplorerConverter.js',
                     srcBase + 'yaio-explorerapp/js/explorer/ExplorerTree.js',
                     // angular

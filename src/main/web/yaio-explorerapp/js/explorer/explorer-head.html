@@ -38,7 +38,7 @@
                         ng-if="yaioUtils.getService('YaioAccessManager').getAvailiableNodeAction('createsymlink', node.sysUID, true)"
                         id='cmdCreateSymLink{{ node.sysUID }}' class='yaio-icon-createsymlink'
                         lang='tech' data-tooltip='tooltip.command.NodeCreateSymLink'></a>
-                     <a onclick="javascript: yaioAppBase.get('YaioExplorerAction').yaioRemoveNodeById('{{node.sysUID}}'); return false;"
+                     <a onclick="javascript: yaioAppBase.get('YaioExplorerCommands').doRemoveNodeByNodeId('{{node.sysUID}}'); return false;"
                         ng-if="yaioUtils.getService('YaioAccessManager').getAvailiableNodeAction('delete', node.sysUID, true)"
                         id='cmdRemove{{node.sysUID}}' class='yaio-icon-remove'
                         lang='tech' data-tooltip='tooltip.command.NodeDelete'></a>

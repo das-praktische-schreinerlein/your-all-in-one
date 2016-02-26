@@ -21,7 +21,7 @@
  * @copyright                    Copyright (c) 2014, Michael Schreiner
  * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-Yaio.ExplorerAction = function(appBase) {
+Yaio.ExplorerCommands = function(appBase) {
     'use strict';
 
     // my own instance
@@ -157,7 +157,7 @@ Yaio.ExplorerAction = function(appBase) {
                     // handler when done
                     console.log(msg + ' RELOAD tree done:' + yaioNodeActionResponse.parentIdHierarchy);
                     console.log(msg + ' CALL openNodeHierarchy load hierarchy:' + yaioNodeActionResponse.parentIdHierarchy);
-                    me.appBase.get('YaioExplorerAction').openNodeHierarchyForTreeId('#tree', yaioNodeActionResponse.parentIdHierarchy);
+                    me.appBase.get('YaioExplorerCommands').openNodeHierarchyForTreeId('#tree', yaioNodeActionResponse.parentIdHierarchy);
                 });
             } else {
                 svcLogger.logError('got no hierarchy for:' + nodeId
@@ -210,7 +210,7 @@ Yaio.ExplorerAction = function(appBase) {
             }
             me.appBase.YaioNodeData.deleteNode(nodeId)
                 .done(function(yaioNodeActionResponse, textStatus, jqXhr ) {
-                    me.deleteNodeSuccessHandler(nodeId, yaioNodeActionResponse, textStatus, jqXhr);
+                    me._deleteNodeSuccessHandler(nodeId, yaioNodeActionResponse, textStatus, jqXhr);
                 });
         } else {
             // discard
@@ -219,52 +219,6 @@ Yaio.ExplorerAction = function(appBase) {
     };
 
     /**
-     * success-handler if deleteNode succeeded (resolves yaioNodeActionResponse.state)
-     * @param {String} nodeId                       nodeId to patch
-     * @param {Object} yaioNodeActionResponse       the serverresponse (java de.yaio.rest.controller.NodeActionReponse)
-     * @param {String} textStatus                   http-state as text
-     * @param {JQueryXHR} jqXhr                     jqXhr-Object
-     */
-    me.deleteNodeSuccessHandler = function(nodeId, yaioNodeActionResponse, textStatus, jqXhr) {
-        var svcLogger = me.appBase.get('Logger');
-        var msg = '_deleteNodeSuccessHandler for nodeId:' + nodeId;
-        console.log(msg + ' OK done!' + yaioNodeActionResponse.state);
-        if (yaioNodeActionResponse.state === 'OK') {
-            console.log(msg + ' OK removed node:' + nodeId + ' load:' + yaioNodeActionResponse.parentIdHierarchy);
-            if (yaioNodeActionResponse.parentIdHierarchy && yaioNodeActionResponse.parentIdHierarchy.length >= 0) {
-                // reload tree
-                var tree = me.$('#tree').fancytree('getTree');
-                tree.reload().done(function(){
-                    // handler when done
-                    console.log(msg + ' RELOAD tree done:' + yaioNodeActionResponse.parentIdHierarchy);
-                    console.log(msg + ' CALL openNodeHierarchy load hierarchy:' + yaioNodeActionResponse.parentIdHierarchy);
-                    me.appBase.get('YaioExplorerAction').openNodeHierarchyForTreeId('#tree', yaioNodeActionResponse.parentIdHierarchy);
-                });
-            } else {
-                svcLogger.logError('got no hierarchy for:' + nodeId
-                    + ' hierarchy:' + yaioNodeActionResponse.parentIdHierarchy, true);
-            }
-        } else {
-            svcLogger.logError('cant remove node:' + nodeId + ' error:' + yaioNodeActionResponse.stateMsg, false);
-            // check for violations
-            if (yaioNodeActionResponse.violations) {
-                // iterate violations
-                for (var idx in yaioNodeActionResponse.violations) {
-                    if (!yaioNodeActionResponse.violations.hasOwnProperty(idx)) {
-                        continue;
-                    }
-                    var violation = yaioNodeActionResponse.violations[idx];
-                    svcLogger.logError('violations while remove node:' + nodeId
-                        + ' field:' + violation.path + ' message:' + violation.message, false);
-                    window.alert('cant remove node because: ' + violation.path + ' (' + violation.message + ')');
-                }
-            }
-        }
-    };
-
-
-
-    /** 
      * opens jira window with jira-converted node-content
      * @param {String} nodeId                 id of the node
      */
@@ -478,7 +432,7 @@ Yaio.ExplorerAction = function(appBase) {
             parent.html('');
             for (var key in data.versions) {
                 if (data.versions.hasOwnProperty(key)) {
-                    me.createDMSIndexDiv(key, data.versions[key], parent);
+                    me._createDMSIndexDiv(key, data.versions[key], parent);
                 }
             }
         });
@@ -498,20 +452,6 @@ Yaio.ExplorerAction = function(appBase) {
               }
             }
         });    
-    };
-
-    /**
-     * create the dmsdownloadwindow for the extracted metadata of the node document
-     * @param {String} key                  id of the
-     * @param {Object} data                 data to show
-     * @param {String} parent               JQuery-Selector to append the download-window
-     */
-    me.createDMSIndexDiv = function (key, data, parent) {
-        var content = '' + data.content;
-        var name = '' + data.parserName;
-        content = me.appBase.DataUtils.htmlEscapeText(content);
-        content = content.replace(/\n/g, '<br />');
-        $(parent).append('<div class="downloadindex-container"><div class="downloadindex-name">' + name + '</div><br><pre>' + content + '<pre></div>');
     };
 
     /** 
@@ -592,7 +532,65 @@ Yaio.ExplorerAction = function(appBase) {
             me.$('div.fieldtype_sysToggler > a').addClass('toggler_hidden').removeClass('toggler_show');
         }
     };
-  
+
+    /**
+     * create the dmsdownloadwindow for the extracted metadata of the node document
+     * @param {String} key                  id of the
+     * @param {Object} data                 data to show
+     * @param {String} parent               JQuery-Selector to append the download-window
+     */
+    me._createDMSIndexDiv = function (key, data, parent) {
+        var content = '' + data.content;
+        var name = '' + data.parserName;
+        content = me.appBase.DataUtils.htmlEscapeText(content);
+        content = content.replace(/\n/g, '<br />');
+        $(parent).append('<div class="downloadindex-container"><div class="downloadindex-name">' + name + '</div><br><pre>' + content + '<pre></div>');
+    };
+
+    /**
+     * success-handler if deleteNode succeeded (resolves yaioNodeActionResponse.state)
+     * @param {String} nodeId                       nodeId to patch
+     * @param {Object} yaioNodeActionResponse       the serverresponse (java de.yaio.rest.controller.NodeActionReponse)
+     * @param {String} textStatus                   http-state as text
+     * @param {JQueryXHR} jqXhr                     jqXhr-Object
+     */
+    me._deleteNodeSuccessHandler = function(nodeId, yaioNodeActionResponse, textStatus, jqXhr) {
+        var svcLogger = me.appBase.get('Logger');
+        var msg = '_deleteNodeSuccessHandler for nodeId:' + nodeId;
+        console.log(msg + ' OK done!' + yaioNodeActionResponse.state);
+        if (yaioNodeActionResponse.state === 'OK') {
+            console.log(msg + ' OK removed node:' + nodeId + ' load:' + yaioNodeActionResponse.parentIdHierarchy);
+            if (yaioNodeActionResponse.parentIdHierarchy && yaioNodeActionResponse.parentIdHierarchy.length >= 0) {
+                // reload tree
+                var tree = me.$('#tree').fancytree('getTree');
+                tree.reload().done(function(){
+                    // handler when done
+                    console.log(msg + ' RELOAD tree done:' + yaioNodeActionResponse.parentIdHierarchy);
+                    console.log(msg + ' CALL openNodeHierarchy load hierarchy:' + yaioNodeActionResponse.parentIdHierarchy);
+                    me.appBase.get('YaioExplorerCommands').openNodeHierarchyForTreeId('#tree', yaioNodeActionResponse.parentIdHierarchy);
+                });
+            } else {
+                svcLogger.logError('got no hierarchy for:' + nodeId
+                    + ' hierarchy:' + yaioNodeActionResponse.parentIdHierarchy, true);
+            }
+        } else {
+            svcLogger.logError('cant remove node:' + nodeId + ' error:' + yaioNodeActionResponse.stateMsg, false);
+            // check for violations
+            if (yaioNodeActionResponse.violations) {
+                // iterate violations
+                for (var idx in yaioNodeActionResponse.violations) {
+                    if (!yaioNodeActionResponse.violations.hasOwnProperty(idx)) {
+                        continue;
+                    }
+                    var violation = yaioNodeActionResponse.violations[idx];
+                    svcLogger.logError('violations while remove node:' + nodeId
+                        + ' field:' + violation.path + ' message:' + violation.message, false);
+                    window.alert('cant remove node because: ' + violation.path + ' (' + violation.message + ')');
+                }
+            }
+        }
+    };
+
     me._init();
     
     return me;

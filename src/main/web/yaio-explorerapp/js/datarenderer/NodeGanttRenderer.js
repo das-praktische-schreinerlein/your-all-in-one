@@ -33,6 +33,98 @@ Yaio.NodeGanttRenderer = function(appBase) {
     me._init = function() {
     };
 
+    /**
+     * Shows the GanttBlock - Updates DOM
+     * Toggles DataBlock, GanttBlock and the links #tabTogglerData, #tabTogglerGantt.
+     * Hide all: td.block_nodedata, th.block_nodedata + #tabTogglerGantt
+     * Show all: td.block_nodegantt, th.block_nodegantt + #tabTogglerData
+     */
+    me.showGanttView = function() {
+        var svcUIToggler = me.appBase.get('UIToggler');
+
+        svcUIToggler.toggleTableBlock('#tabTogglerGantt');
+        svcUIToggler.toggleTableBlock('td.block_nodedata, th.block_nodedata');
+        setTimeout(function(){
+            svcUIToggler.toggleTableBlock('#tabTogglerData');
+            svcUIToggler.toggleTableBlock('td.block_nodegantt, th.block_nodegantt');
+        }, 400);
+        // set it to none: force
+        setTimeout(function(){
+            me.$('#tabTogglerGantt').css('display', 'none');
+            me.$('td.block_nodedata, th.block_nodedata').css('display', 'none');
+        }, 400);
+    };
+
+    /**
+     * activate one of the gantt-blocks for the element - Updates DOM
+     * When flgMeOnly ist set: activate #gantt_ist_container_ + #gantt_plan_container
+     * to display only the gantt with the data of this node
+     * When flgMeOnly ist nmot set: activate #gantt_istChildrenSum_container_ + #gantt_planChildrenSum_container
+     * to display only the gantt with the data of this node and children
+     * @param {FancytreeNode} node             the FancytreeNode
+     * @param {Boolean} flgMeOnly              true - display only the gantt for the node / false - node+children
+     */
+    me.showGanttBlockForNode = function(node, flgMeOnly) {
+        if (flgMeOnly) {
+            console.debug('yaioActivateGanttBlock: activate gantt - only own data for ' + node.key);
+            // I'm expanded: show only my own data
+            me.$('#gantt_istChildrenSum_container_' + node.key).css('display', 'none');
+            me.$('#gantt_planChildrenSum_container_' + node.key).css('display', 'none');
+            me.$('#gantt_ist_container_' + node.key).css('display', 'block');
+            me.$('#gantt_plan_container_' + node.key).css('display', 'block');
+        } else {
+            // I'm collapsed: show me and my childsum
+            console.debug('yaioActivateGanttBlock: activate gantt - sum data of me+children for ' + node.key);
+            me.$('#gantt_ist_container_' + node.key).css('display', 'none');
+            me.$('#gantt_plan_container_' + node.key).css('display', 'none');
+            me.$('#gantt_istChildrenSum_container_' + node.key).css('display', 'block');
+            me.$('#gantt_planChildrenSum_container_' + node.key).css('display', 'block');
+        }
+
+        // recalc gantt tree
+        me.recalcMasterGanttBlockForTree();
+    };
+
+    /**
+     * recalc gantt-block for the basenode - Updates DOM
+     * calls fillGanttBlock for (plan, ist, planChildrenSum, istChildrenSum)
+     * @param {Object} basenode               the basenode to recalc (java de.yaio.core.node.BaseNode)
+     */
+    me.recalcGanttBlockForNode = function(basenode) {
+        me._fillGanttBlock(basenode, 'plan', 'Plan', null);
+        me._fillGanttBlock(basenode, 'planChildrenSum', 'PlanSum', null);
+        me._fillGanttBlock(basenode, 'ist', 'Ist', null);
+        me._fillGanttBlock(basenode, 'istChildrenSum', 'IstSum', null);
+    };
+
+    /**
+     * recalc all gantt-blocks of the fancytree-nodes (iterates over getRooNode.visit() - Updates DOM
+     * calls yaioRecalcGanttBlock for every node and afterwards me.recalcMasterGanttBlockForTree()
+     */
+    me.recalcGanttBlocksForTree = function() {
+        if (me.$('#tree').length > 0) {
+            // tree exists
+            me.$('#tree').fancytree('getRootNode').visit(function(node){
+                me.recalcGanttBlockForNode(node.data.basenode);
+            });
+        }
+        me.recalcMasterGanttBlockForTree();
+    };
+
+    /**
+     * recalc mastergantt-block for the basenode on top of the page - Updates DOM
+     * calls yaioRecalcGanttBlock and yaioRecalcMasterGanttBlockFromTree
+     * @param {Object} basenode               the basenode to recalc (java de.yaio.core.node.BaseNode)
+     */
+    me.recalcMasterGanttBlock = function(basenode) {
+        // default: set with own
+        me.recalcGanttBlockForNode(basenode);
+
+        // calc from tree
+        me.recalcMasterGanttBlockForTree();
+    };
+
+
     /* jshint maxstatements: 100 */
     /**
      * Updates GUI: #gantt_' + type + '_container_' + basenode.sysUID
@@ -48,7 +140,7 @@ Yaio.NodeGanttRenderer = function(appBase) {
      * @param {String} label                  the label to show if aufwand >0
      * @param {JQuery} $divLine               optional ganttContainer to use - if not set #gantt_' + type + '_container_' + basenode.sysUID will be used
      */
-    me.fillGanttBlock = function (basenode, type, label, $divLine) {
+    me._fillGanttBlock = function (basenode, type, label, $divLine) {
         var msg = 'ganttblock for node:' + basenode.sysUID;
     
         // get divs
@@ -181,7 +273,7 @@ Yaio.NodeGanttRenderer = function(appBase) {
      * @param {String} label                  the label to show if aufwand >0
      * @returns {JQuery}                      JQuery-Html-Object - the rendered ganttblock
      */
-    me.createGanttBlock = function(basenode, type, addStyle, label) {
+    me._createGanttBlock = function(basenode, type, addStyle, label) {
         // create line
         var $divLine = me.$('<div id="gantt_' + type + '_container_' + basenode.sysUID + '"' +
                 ' class ="gantt_container gantt_' + type + '_container"' +
@@ -200,7 +292,7 @@ Yaio.NodeGanttRenderer = function(appBase) {
         $divLine.append($div);
         
         // fill gantt
-        me.fillGanttBlock(basenode, type, label, $divLine);
+        me._fillGanttBlock(basenode, type, label, $divLine);
         
         return $divLine;
     };
@@ -230,15 +322,15 @@ Yaio.NodeGanttRenderer = function(appBase) {
             var $div;
             
             // create plan
-            $div = me.createGanttBlock(basenode, 'plan', statestyle, 'Plan');
+            $div = me._createGanttBlock(basenode, 'plan', statestyle, 'Plan');
             $row.append($div);
-            $div = me.createGanttBlock(basenode, 'planChildrenSum', statestyle, 'PlanSum');
+            $div = me._createGanttBlock(basenode, 'planChildrenSum', statestyle, 'PlanSum');
             $row.append($div);
             
             // create ist and add statestyle
-            $div = me.createGanttBlock(basenode, 'ist', statestyle, 'Ist');
+            $div = me._createGanttBlock(basenode, 'ist', statestyle, 'Ist');
             $row.append($div);
-            $div = me.createGanttBlock(basenode, 'istChildrenSum', statestyle, 'IstSum');
+            $div = me._createGanttBlock(basenode, 'istChildrenSum', statestyle, 'IstSum');
             $row.append($div);
         } else {
             console.log('renderGanttBlock SKIP no task or event: ' + msg);
@@ -250,87 +342,7 @@ Yaio.NodeGanttRenderer = function(appBase) {
     };
     
     
-    /** 
-     * Shows the GanttBlock - Updates DOM
-     * Toggles DataBlock, GanttBlock and the links #tabTogglerData, #tabTogglerGantt.
-     * Hide all: td.block_nodedata, th.block_nodedata + #tabTogglerGantt
-     * Show all: td.block_nodegantt, th.block_nodegantt + #tabTogglerData
-     */
-    me.showGanttView = function() {
-        var svcUIToggler = me.appBase.get('UIToggler');
-        
-        svcUIToggler.toggleTableBlock('#tabTogglerGantt');
-        svcUIToggler.toggleTableBlock('td.block_nodedata, th.block_nodedata');
-        setTimeout(function(){
-            svcUIToggler.toggleTableBlock('#tabTogglerData');
-            svcUIToggler.toggleTableBlock('td.block_nodegantt, th.block_nodegantt');
-        }, 400);
-        // set it to none: force
-        setTimeout(function(){
-            me.$('#tabTogglerGantt').css('display', 'none');
-            me.$('td.block_nodedata, th.block_nodedata').css('display', 'none');
-        }, 400);
-    };
-    
-    
-    /** 
-     * activate one of the gantt-blocks for the element - Updates DOM
-     * When flgMeOnly ist set: activate #gantt_ist_container_ + #gantt_plan_container 
-     * to display only the gantt with the data of this node
-     * When flgMeOnly ist nmot set: activate #gantt_istChildrenSum_container_ + #gantt_planChildrenSum_container 
-     * to display only the gantt with the data of this node and children
-     * @param {FancytreeNode} node             the FancytreeNode
-     * @param {Boolean} flgMeOnly              true - display only the gantt for the node / false - node+children
-     */
-    me.showGanttBlockForNode = function(node, flgMeOnly) {
-        if (flgMeOnly) {
-            console.debug('yaioActivateGanttBlock: activate gantt - only own data for ' + node.key);
-            // I'm expanded: show only my own data
-            me.$('#gantt_istChildrenSum_container_' + node.key).css('display', 'none');
-            me.$('#gantt_planChildrenSum_container_' + node.key).css('display', 'none');
-            me.$('#gantt_ist_container_' + node.key).css('display', 'block');
-            me.$('#gantt_plan_container_' + node.key).css('display', 'block');
-        } else {
-            // I'm collapsed: show me and my childsum
-            console.debug('yaioActivateGanttBlock: activate gantt - sum data of me+children for ' + node.key);
-            me.$('#gantt_ist_container_' + node.key).css('display', 'none');
-            me.$('#gantt_plan_container_' + node.key).css('display', 'none');
-            me.$('#gantt_istChildrenSum_container_' + node.key).css('display', 'block');
-            me.$('#gantt_planChildrenSum_container_' + node.key).css('display', 'block');
-        }
-    
-        // recalc gantt tree
-        me.recalcMasterGanttBlockForTree();
-    };
-    
-    /** 
-     * recalc all gantt-blocks of the fancytree-nodes (iterates over getRooNode.visit() - Updates DOM
-     * calls yaioRecalcGanttBlock for every node and afterwards me.recalcMasterGanttBlockForTree()
-     */
-    me.recalcGanttBlocksForTree = function() {
-        if (me.$('#tree').length > 0) {
-            // tree exists
-            me.$('#tree').fancytree('getRootNode').visit(function(node){
-                me.recalcGanttBlockForNode(node.data.basenode);
-            });
-        }
-        me.recalcMasterGanttBlockForTree();
-    };
-    
-    /** 
-     * recalc mastergantt-block for the basenode on top of the page - Updates DOM
-     * calls yaioRecalcGanttBlock and yaioRecalcMasterGanttBlockFromTree
-     * @param {Object} basenode               the basenode to recalc (java de.yaio.core.node.BaseNode)
-     */
-    me.recalcMasterGanttBlock = function(basenode) {
-        // default: set with own
-        me.recalcGanttBlockForNode(basenode);
-    
-        // calc from tree
-        me.recalcMasterGanttBlockForTree();
-    };
-    
-    /** 
+    /**
      * recalc mastergantt-block from the tree-data - Updates DOM
      * extract nodeid of the masternode from '#masterTr.data-value'
      * calls yaioRecalcMasterGanttBlockLine for plan+ist
@@ -340,8 +352,8 @@ Yaio.NodeGanttRenderer = function(appBase) {
         var masterNodeId = me.$('#masterTr').attr('data-value');
         if (!me.appBase.DataUtils.isUndefinedStringValue(masterNodeId)) {
             console.log('yaioRecalcMasterGanttBlockFromTree calc for masterNodeId:', masterNodeId);
-            me.recalcMasterGanttBlockLine(masterNodeId, 'plan');
-            me.recalcMasterGanttBlockLine(masterNodeId, 'ist');
+            me._recalcMasterGanttBlockLine(masterNodeId, 'plan');
+            me._recalcMasterGanttBlockLine(masterNodeId, 'ist');
         } else {
             console.log('yaioRecalcMasterGanttBlockFromTree skip: no masterNodeId');
         }
@@ -356,7 +368,7 @@ Yaio.NodeGanttRenderer = function(appBase) {
      * @param {String} masterNodeId           id of the masterNode on top of the page
      * @param {String} praefix                datablock to racalc (plan, ist)
      */
-    me.recalcMasterGanttBlockLine = function(masterNodeId, praefix) {
+    me._recalcMasterGanttBlockLine = function(masterNodeId, praefix) {
         // calc rangeAufwand
         var sumRangeAufwand = 0;
     
@@ -425,18 +437,6 @@ Yaio.NodeGanttRenderer = function(appBase) {
         } else {
             console.log('yaioRecalcMasterGanttBlock type=' + praefix + ' hide gantt_aufwand_label because no calced rangeaufwand :' + sumRangeAufwand + ' for ' + masterNodeId);
         }
-    };
-    
-    /** 
-     * recalc gantt-block for the basenode - Updates DOM
-     * calls fillGanttBlock for (plan, ist, planChildrenSum, istChildrenSum)
-     * @param {Object} basenode               the basenode to recalc (java de.yaio.core.node.BaseNode)
-     */
-    me.recalcGanttBlockForNode = function(basenode) {
-        me.fillGanttBlock(basenode, 'plan', 'Plan', null);
-        me.fillGanttBlock(basenode, 'planChildrenSum', 'PlanSum', null);
-        me.fillGanttBlock(basenode, 'ist', 'Ist', null);
-        me.fillGanttBlock(basenode, 'istChildrenSum', 'IstSum', null);
     };
     
 

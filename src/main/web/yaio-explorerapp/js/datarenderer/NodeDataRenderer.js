@@ -47,7 +47,7 @@ Yaio.NodeDataRenderer = function(appBase) {
      */
     me.renderColumnsForNode = function(event, data, preventActionsColum, flgRenderMinimum) {
         var svcDataUtils = me.appBase.get('DataUtils');
-        var svcYaioExplorerAction = me.appBase.get('YaioExplorerAction');
+        var svcYaioExplorerCommands = me.appBase.get('YaioExplorerCommands');
         var svcYaioNodeGanttRenderer = me.appBase.get('YaioNodeGanttRenderer');
 
         // extract nodedata
@@ -103,13 +103,13 @@ Yaio.NodeDataRenderer = function(appBase) {
         $nameEle.html($div);
 
         // add nodeData
-        var $nodeDataBlock = me.renderDataBlock(basenode, preventActionsColum, flgRenderMinimum);
+        var $nodeDataBlock = me._renderDataBlock(basenode, preventActionsColum, flgRenderMinimum);
         $tdList.eq(colData).html($nodeDataBlock).addClass('block_nodedata');
 
         // add action-links
         if (!preventActionsColum && !flgRenderMinimum) {
             // generate actions
-            var actionHtml = me.renderNodeActionLinks(basenode);
+            var actionHtml = me._renderNodeActionLinks(basenode);
 
             // add actions
             $tdList.eq(colActions).html(actionHtml)
@@ -143,10 +143,10 @@ Yaio.NodeDataRenderer = function(appBase) {
         }
 
         // toogle sys
-        svcYaioExplorerAction.toggleNodeSysContainerForNodeId(basenode.sysUID);
+        svcYaioExplorerCommands.toggleNodeSysContainerForNodeId(basenode.sysUID);
         
         // toogle desc
-        svcYaioExplorerAction.toggleNodeDescContainerForNodeId(basenode.sysUID);
+        svcYaioExplorerCommands.toggleNodeDescContainerForNodeId(basenode.sysUID);
     
         // calc nodeData
         if (!flgRenderMinimum) {
@@ -154,6 +154,27 @@ Yaio.NodeDataRenderer = function(appBase) {
         }
     };
 
+    /**
+     * Shows the DataBlock
+     * Toggles DataBlock, GanttBlock and the links #tabTogglerData, #tabTogglerGantt.
+     * Show all: td.block_nodedata, th.block_nodedata + #tabTogglerGantt
+     * Hide all: td.block_nodegantt, th.block_nodegantt + #tabTogglerData
+     */
+    me.showDataView = function() {
+        var svcUIToggler = me.appBase.get('UIToggler');
+
+        svcUIToggler.toggleTableBlock('#tabTogglerData');
+        svcUIToggler.toggleTableBlock('td.block_nodegantt, th.block_nodegantt');
+        setTimeout(function(){
+            svcUIToggler.toggleTableBlock('#tabTogglerGantt');
+            svcUIToggler.toggleTableBlock('td.block_nodedata, th.block_nodedata');
+        }, 400);
+        // set it to none: force
+        setTimeout(function(){
+            me.$('#tabTogglerData').css('display', 'none');
+            me.$('td.block_nodegantt, th.block_nodegantt').css('display', 'none');
+        }, 400);
+    };
 
     /**
      * render the whole data-block for the node
@@ -162,21 +183,21 @@ Yaio.NodeDataRenderer = function(appBase) {
      * @param {Boolean} flgRenderMinimum       render only the minimal subset of data
      * @returns {JQuery}           html
      */
-    me.renderDataBlock = function(basenode, preventActionsColum, flgRenderMinimum) {
+    me._renderDataBlock = function(basenode, preventActionsColum, flgRenderMinimum) {
         var yaioAppBaseVarName = me.appBase.config.appBaseVarName,
             clickHandler;
 
         // render datablock
-        var $nodeDataBlock = me.renderBaseDataBlock(basenode, preventActionsColum);
+        var $nodeDataBlock = me._renderBaseDataBlock(basenode, preventActionsColum);
 
         // add SysData
-        var $sysDataBlock = me.renderSysDataBlock(basenode);
+        var $sysDataBlock = me._renderSysDataBlock(basenode);
         $nodeDataBlock.append($sysDataBlock);
 
         // add nodeDesc if set
         if (!me.appBase.DataUtils.isEmptyStringValue(basenode.nodeDesc) && !flgRenderMinimum) {
             // add  column
-            clickHandler = yaioAppBaseVarName + '.YaioExplorerAction.toggleNodeDescContainerForNodeId(\'' + basenode.sysUID + '\'); return false;';
+            clickHandler = yaioAppBaseVarName + '.YaioExplorerCommands.toggleNodeDescContainerForNodeId(\'' + basenode.sysUID + '\'); return false;';
             me.$($nodeDataBlock).find('div.container_data_row').append(
                 me.$('<div />').html('<a href="#"' +
                         ' onclick="' + clickHandler + '"' +
@@ -187,7 +208,7 @@ Yaio.NodeDataRenderer = function(appBase) {
                     .addClass('toggler_show')
             );
 
-            var $descDataBlock = me.renderDescBlock(basenode);
+            var $descDataBlock = me._renderDescBlock(basenode);
             $nodeDataBlock.append($descDataBlock);
 
             // disable draggable for td.block_nodedata
@@ -205,7 +226,7 @@ Yaio.NodeDataRenderer = function(appBase) {
      * @param {Object} basenode    yaio-node to render
      * @returns {JQuery}           html
      */
-    me.renderSysDataBlock = function(basenode) {
+    me._renderSysDataBlock = function(basenode) {
         var svcDataUtils = me.appBase.get('DataUtils');
         var $block = me.$('<div class="togglecontainer field_nodeSys" id="detail_sys_' + basenode.sysUID + '" />');
         $block.append(
@@ -250,7 +271,7 @@ Yaio.NodeDataRenderer = function(appBase) {
      * @param {Object} basenode    yaio-node to render
      * @returns {JQuery}           html
      */
-    me.renderDescBlock = function (basenode) {
+    me._renderDescBlock = function (basenode) {
         var yaioAppBaseVarName = me.appBase.config.appBaseVarName,
             clickHandler;
 
@@ -268,11 +289,11 @@ Yaio.NodeDataRenderer = function(appBase) {
             '" onclick="' + clickHandler + '">' +
             '<span lang="tech">im Originallayout anzeigen</span>';
 
-        clickHandler = yaioAppBaseVarName + '.YaioExplorerAction.openJiraExportWindowByNodeId(\'' + basenode.sysUID + '\'); return false;';
+        clickHandler = yaioAppBaseVarName + '.YaioExplorerCommands.openJiraExportWindowByNodeId(\'' + basenode.sysUID + '\'); return false;';
         commands += '<a class="button command-desc-jiraexport" onClick="' + clickHandler + '" lang="tech"' +
             ' data-tooltip="tooltip.command.OpenJiraExportWindow">common.command.OpenJiraExportWindow</a>';
 
-        clickHandler = yaioAppBaseVarName + '.YaioExplorerAction.openTxtExportWindowForContent(' + yaioAppBaseVarName + '.$(\'#container_content_desc_' + basenode.sysUID + '\').text()); return false;';
+        clickHandler = yaioAppBaseVarName + '.YaioExplorerCommands.openTxtExportWindowForContent(' + yaioAppBaseVarName + '.$(\'#container_content_desc_' + basenode.sysUID + '\').text()); return false;';
         commands += '<a class="button command-desc-txtexport" onClick="' + clickHandler + '" lang="tech"' +
             ' data-tooltip="tooltip.command.OpenTxtExportWindow">common.command.OpenTxtExportWindow</a>';
         if ('speechSynthesis' in window) {
@@ -305,14 +326,14 @@ Yaio.NodeDataRenderer = function(appBase) {
      * @param {Object} basenode    yaio-node to render
      * @returns {String}           html
      */
-    me.renderNodeActionLinks = function(basenode) {
+    me._renderNodeActionLinks = function(basenode) {
         var actionHtml = '',
             svcYaioAccessManager = me.appBase.get('YaioAccessManager'),
             yaioAppBaseVarName = me.appBase.config.appBaseVarName,
             clickHandler;
 
         if (svcYaioAccessManager.getAvailiableNodeAction('showsysdata', basenode.sysUID, false)) {
-            clickHandler = yaioAppBaseVarName + '.YaioExplorerAction.toggleNodeSysContainerForNodeId(\'' + basenode.sysUID + '\'); return false;';
+            clickHandler = yaioAppBaseVarName + '.YaioExplorerCommands.toggleNodeSysContainerForNodeId(\'' + basenode.sysUID + '\'); return false;';
             actionHtml += '<div class="fieldtype_sysToggler">' +
                 '<a onclick="javascript: ' + clickHandler + '"' +
                 ' id="toggler_sys_' + basenode.sysUID + '"' +
@@ -342,7 +363,7 @@ Yaio.NodeDataRenderer = function(appBase) {
                 ' lang="tech" data-tooltip="tooltip.command.NodeCreateSymLink"></a>';
         }
         if (svcYaioAccessManager.getAvailiableNodeAction('remove', basenode.sysUID, false)) {
-            clickHandler = yaioAppBaseVarName + '.YaioExplorerAction.doRemoveNodeByNodeId(\'' + basenode.sysUID + '\'); return false;';
+            clickHandler = yaioAppBaseVarName + '.YaioExplorerCommands.doRemoveNodeByNodeId(\'' + basenode.sysUID + '\'); return false;';
             actionHtml += '<a onclick="javascript: ' + clickHandler + '"' +
                 ' id="cmdRemove' + basenode.sysUID + '"' +
                 ' class="yaio-icon-remove"' +
@@ -358,7 +379,7 @@ Yaio.NodeDataRenderer = function(appBase) {
      * @param {Boolean} preventActionsColum   dont replace Action-column
      * @returns {JQuery}                      JQuery-Html-Object - the rendered datablock
      */
-    me.renderBaseDataBlock = function(basenode, preventActionsColum) {
+    me._renderBaseDataBlock = function(basenode, preventActionsColum) {
         var svcDataUtils = me.appBase.get('DataUtils');
 
         // extract nodedata
@@ -389,14 +410,14 @@ Yaio.NodeDataRenderer = function(appBase) {
             .addClass(statestyle));
         if (basenode.className === 'TaskNode' || basenode.className === 'EventNode') {
             // TaskNode
-            me.appendWorkflowBlocks(basenode, $row, statestyle);
+            me._appendWorkflowBlocks(basenode, $row, statestyle);
         } else if (basenode.className === 'InfoNode' || basenode.className === 'UrlResNode') {
             // render Info + UrlRes
 
             // Url only
             if (basenode.className === 'UrlResNode') {
                 // url
-                me.appendDownloadBlocks(basenode, $row, preventActionsColum);
+                me._appendDownloadBlocks(basenode, $row, preventActionsColum);
 
                 // url-data
                 var resLocData = svcDataUtils.htmlEscapeText(basenode.resLocRef);
@@ -417,14 +438,14 @@ Yaio.NodeDataRenderer = function(appBase) {
             // both
             if (   basenode.docLayoutTagCommand || basenode.docLayoutShortName
                 || basenode.docLayoutAddStyleClass || basenode.docLayoutFlgCloseDiv) {
-                me.appendDocLayoutBlocks(basenode, $row);
+                me._appendDocLayoutBlocks(basenode, $row);
             }
         } else if (basenode.className === 'SymLinkNode') {
             // render SymLinkNode
             me.appBase.get('YaioNodeData').getNodeForSymLink(basenode)
                 .done(function(yaioNodeActionResponse, textStatus, jqXhr ) {
                     console.log('call successHandler ' + msg + ' state:' + textStatus);
-                    me.getNodeForSymLinkSuccessHandler(basenode, yaioNodeActionResponse, textStatus, jqXhr);
+                    me._getNodeForSymLinkSuccessHandler(basenode, yaioNodeActionResponse, textStatus, jqXhr);
                 });
         } 
     
@@ -439,7 +460,7 @@ Yaio.NodeDataRenderer = function(appBase) {
      * @param {JQuery} $row                   JQuery-Html-Object to append the blockData
      * @param {String} statestyle             style for the workflow-state to add to blocks
      */
-    me.appendWorkflowBlocks = function(basenode, $row, statestyle) {
+    me._appendWorkflowBlocks = function(basenode, $row, statestyle) {
         var svcDataUtils = me.appBase.get('DataUtils');
         $row.append(
             me.$('<div />').html('&nbsp;' + svcDataUtils.formatNumbers(basenode.istChildrenSumStand, 0, '%'))
@@ -491,7 +512,7 @@ Yaio.NodeDataRenderer = function(appBase) {
      * @param {JQuery} $row                   JQuery-Html-Object to append the blockData
      * @param {Boolean} preventActionsColum   dont replace Action-column
      */
-    me.appendDownloadBlocks = function(basenode, $row, preventActionsColum) {
+    me._appendDownloadBlocks = function(basenode, $row, preventActionsColum) {
         var stateBlock;
         var svcDataUtils = me.appBase.get('DataUtils');
         var yaioAppBaseVarName = me.appBase.config.appBaseVarName;
@@ -505,7 +526,7 @@ Yaio.NodeDataRenderer = function(appBase) {
             stateBlock = svcDataUtils.htmlEscapeText(stateMapping[resContentDMSState]);
             if (resContentDMSState === 'UPLOAD_DONE' && !preventActionsColum) {
                 stateBlock = '<a href=""' +
-                    ' onClick="' + yaioAppBaseVarName + '.get(\'YaioExplorerAction\').openDMSDownloadWindowForNodeId(\''+ basenode.sysUID + '\'); return false;"' +
+                    ' onClick="' + yaioAppBaseVarName + '.get(\'YaioExplorerCommands\').openDMSDownloadWindowForNodeId(\''+ basenode.sysUID + '\'); return false;"' +
                     ' lang="tech" data-tooltip="tooltip.command.OpenDMSDownloadWindow_' + resContentDMSState + '">' + stateBlock + '</a>';
             } else if (stateMapping[resContentDMSState]) {
                 stateBlock = '<span lang="tech" data-tooltip="tooltip.command.OpenDMSDownloadWindow_' + resContentDMSState + '">' + stateBlock + '</span>';
@@ -528,7 +549,7 @@ Yaio.NodeDataRenderer = function(appBase) {
             stateBlock = svcDataUtils.htmlEscapeText(indexStateMapping[resIndexDMSState]);
             if (resIndexDMSState === 'INDEX_DONE' && !preventActionsColum) {
                 stateBlock = '<a href=""' +
-                    ' onClick="' + yaioAppBaseVarName + '.get(\'YaioExplorerAction\').openDMSIndexDownloadWindowForNodeId(\''+ basenode.sysUID + '\'); return false;"' +
+                    ' onClick="' + yaioAppBaseVarName + '.get(\'YaioExplorerCommands\').openDMSIndexDownloadWindowForNodeId(\''+ basenode.sysUID + '\'); return false;"' +
                     ' lang="tech" data-tooltip="tooltip.command.OpenDMSIndexDownloadWindow_' + resIndexDMSState + '">' +
                     stateBlock + '</a>';
             } else if (indexStateMapping[resIndexDMSState]) {
@@ -551,7 +572,7 @@ Yaio.NodeDataRenderer = function(appBase) {
      * @param {Object} basenode               the nodedata to render (java de.yaio.core.node.BaseNode)
      * @param {JQuery} $row                   JQuery-Html-Object to append the blockData
      */
-    me.appendDocLayoutBlocks = function(basenode, $row) {
+    me._appendDocLayoutBlocks = function(basenode, $row) {
         var svcDataUtils = me.appBase.get('DataUtils');
 
         // render both
@@ -606,28 +627,6 @@ Yaio.NodeDataRenderer = function(appBase) {
     };
 
 
-    /** 
-     * Shows the DataBlock
-     * Toggles DataBlock, GanttBlock and the links #tabTogglerData, #tabTogglerGantt.
-     * Show all: td.block_nodedata, th.block_nodedata + #tabTogglerGantt
-     * Hide all: td.block_nodegantt, th.block_nodegantt + #tabTogglerData
-     */
-    me.showDataView = function() {
-        var svcUIToggler = me.appBase.get('UIToggler');
-
-        svcUIToggler.toggleTableBlock('#tabTogglerData');
-        svcUIToggler.toggleTableBlock('td.block_nodegantt, th.block_nodegantt');
-        setTimeout(function(){
-            svcUIToggler.toggleTableBlock('#tabTogglerGantt');
-            svcUIToggler.toggleTableBlock('td.block_nodedata, th.block_nodedata');
-        }, 400);
-        // set it to none: force
-        setTimeout(function(){
-            me.$('#tabTogglerData').css('display', 'none');
-            me.$('td.block_nodegantt, th.block_nodegantt').css('display', 'none');
-        }, 400);
-    };
-
     /**
      * succes-handler if getNodeForSymLink succeeded (resolves yaioNodeActionResponse.state)
      * @param {Object} basenode                     node to get symlinked-data for
@@ -635,13 +634,13 @@ Yaio.NodeDataRenderer = function(appBase) {
      * @param {String} textStatus                   http-state as text
      * @param {JQueryXHR} jqXhr                     jqXhr-Object
      */
-    me.getNodeForSymLinkSuccessHandler = function(basenode, yaioNodeActionResponse, textStatus, jqXhr) {
+    me._getNodeForSymLinkSuccessHandler = function(basenode, yaioNodeActionResponse, textStatus, jqXhr) {
         var svcLogger = me.appBase.get('Logger');
         var msg = '_getNodeForSymLinkSuccessHandler for symLinkBaseId:' + basenode.sysUID;
         console.log(msg + ' OK done!' + yaioNodeActionResponse.state);
         if (yaioNodeActionResponse.state === 'OK') {
             if (yaioNodeActionResponse.node) {
-                var $nodeDataBlock = me.appBase.get('YaioNodeDataRenderer').renderBaseDataBlock(yaioNodeActionResponse.node);
+                var $nodeDataBlock = me._renderBaseDataBlock(yaioNodeActionResponse.node);
 
                 // load referring node
                 var tree = me.$('#tree').fancytree('getTree');

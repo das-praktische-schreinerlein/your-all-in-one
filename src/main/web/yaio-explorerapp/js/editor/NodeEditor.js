@@ -43,30 +43,7 @@ Yaio.NodeEditor = function(appBase) {
 
 
 
-    /** 
-     * reset editor (hide all form, empty all formfields)- hide editor
-     */
-    me.resetNodeEditor = function() {
-        // reset editor
-        console.log('yaioResetNodeEditor: show tree, hide editor');
-        
-        // show full tree
-        me.$('#containerYaioTree').css('width', '100%');
-        
-        // hide editor-container
-        me.$('#containerYaioEditor').css('width', '100%');
-        me.$('#containerYaioEditor').css('display', 'none');
-        
-        // hide editor-box
-        me.$('#containerBoxYaioEditor').css('width', '100%');
-        me.$('#containerBoxYaioEditor').css('display', 'none');
-        
-        // hide forms
-        me.hideAllNodeEditorForms();
-        me.resetNodeEditorFormFields();
-    };
-    
-    /** 
+    /**
      * hide all editor-forms
      */
     me.hideAllNodeEditorForms = function() {
@@ -80,89 +57,8 @@ Yaio.NodeEditor = function(appBase) {
         me.$('#containerFormYaioEditorUrlResNode').css('display', 'none');
         me.$('#containerFormYaioEditorSymLinkNode').css('display', 'none');
     };
-    
-    /** 
-     * reset/empty all formfields
-     */
-    me.resetNodeEditorFormFields = function() {
-        // reset data
-        // configure value mapping
-        var basenode = {};
-        for (var formName in me.appBase.config.configNodeTypeFields) {
-            if (!me.appBase.config.configNodeTypeFields.hasOwnProperty(formName)) {
-                continue;
-            }
-            var fields = [];
-            fields = fields.concat(me.appBase.config.configNodeTypeFields.Common.fields);
-            fields = fields.concat(me.appBase.config.configNodeTypeFields[formName].fields);
-            for (var idx in fields) {
-                if (!fields.hasOwnProperty(idx)) {
-                    continue;
-                }
-                var field = fields[idx];
-                me.setNodeEditorFormField(field, formName, basenode);
-            }
-        }
-    };
-    
-    /** 
-     * updates the formfield with the nodedata
-     * @param {Object} field                  fieldconfig from me.appBase.config.configNodeTypeFields
-     * @param {String} fieldSuffix            suffix of the fieldName to identify the form (nodeclass of basenode)
-     * @param {Object} basenode               the node to map the fieldvalue
-     */
-    me.setNodeEditorFormField = function(field, fieldSuffix, basenode) {
-        var svcDataUtils = me.appBase.get('DataUtils');
-        var fieldName = field.fieldName;
-        var fieldNameId = '#input' + fieldName.charAt(0).toUpperCase() + fieldName.slice(1) + fieldSuffix;
-        var value = basenode[fieldName];
-        
-        // convert value
-        if (field.datatype === 'integer' && (me.appBase.DataUtils.isEmptyStringValue(value))) {
-            // specical int
-            value = 0;
-        } else if (field.datatype === 'date')  {
-            // date
-            value = svcDataUtils.formatGermanDate(value);
-        } else if (field.datatype === 'datetime')  {
-            // date
-            value = svcDataUtils.formatGermanDateTime(value);
-        } else if (me.appBase.DataUtils.isUndefinedStringValue(value)) {
-            // alle other
-            value = '';
-        } 
-        
-        // reescape data for form
-        if (fieldName === 'nodeDesc') {
-            value = value.replace(/<WLBR>/g, '\n');
-            value = value.replace(/<WLESC>/g, '\\');
-            value = value.replace(/<WLTAB>/g, '\t');
-        }
-        
-        // set depending on the fieldtype
-        if (field.type === 'hidden') {
-            me.$(fieldNameId).val(value).trigger('input').triggerHandler('change');
-        } else if (field.type === 'select') {
-            me.$(fieldNameId).val(value).trigger('select').triggerHandler('change');
-        } else if (field.type === 'checkbox') {
-            if (value) {
-                me.$(fieldNameId).prop('checked', true);
-            } else {
-                me.$(fieldNameId).prop('checked', false);
-            }
-            me.$(fieldNameId).trigger('input').triggerHandler('change');
-        } else if (field.type === 'textarea') {
-            me.$(fieldNameId).val(value).trigger('select').triggerHandler('change');
-        } else {
-            // input
-            me.$(fieldNameId).val(value).trigger('input');
-        }
-        console.log('yaioSetFormField map nodefield:' + fieldName
-                + ' set:' + fieldNameId + '=' + value);
-        
-    };
-    
-    /** 
+
+    /**
      * open the nodeeditor for the node (toggle it fromleft), transfer the data from node to the formfields
      * reset forms+field, hide forms, open the spcific form for the nodeclass, updates fields
      * @param {String} nodeId                 id of the node
@@ -174,7 +70,7 @@ Yaio.NodeEditor = function(appBase) {
 
         // reset editor
         console.log('yaioOpenNodeEditor: reset editor');
-        me.resetNodeEditor();
+        me._resetNodeEditor();
         
         // check vars
         if (! nodeId) {
@@ -218,7 +114,7 @@ Yaio.NodeEditor = function(appBase) {
 
         // reset editor
         console.log('yaioOpenNodeEditor: reset editor');
-        me.resetNodeEditor();
+        me._resetNodeEditor();
         
         // check vars
         if (! basenode) {
@@ -332,7 +228,7 @@ Yaio.NodeEditor = function(appBase) {
                 continue;
             }
             var field = fields[idx];
-            me.setNodeEditorFormField(field, fieldSuffix, basenode);
+            me._setNodeEditorFormField(field, fieldSuffix, basenode);
         }
         
         // show editor
@@ -396,7 +292,7 @@ Yaio.NodeEditor = function(appBase) {
     me.closeNodeEditor = function() {
         console.log('close editor');
         me.appBase.get('UIToggler').toggleElement('#containerYaioEditor');
-        me.resetNodeEditor();
+        me._resetNodeEditor();
     };
     
     /** 
@@ -539,7 +435,111 @@ Yaio.NodeEditor = function(appBase) {
         
         return type;
     };
-    
+
+    /**
+     * reset editor (hide all form, empty all formfields)- hide editor
+     */
+    me._resetNodeEditor = function() {
+        // reset editor
+        console.log('yaioResetNodeEditor: show tree, hide editor');
+
+        // show full tree
+        me.$('#containerYaioTree').css('width', '100%');
+
+        // hide editor-container
+        me.$('#containerYaioEditor').css('width', '100%');
+        me.$('#containerYaioEditor').css('display', 'none');
+
+        // hide editor-box
+        me.$('#containerBoxYaioEditor').css('width', '100%');
+        me.$('#containerBoxYaioEditor').css('display', 'none');
+
+        // hide forms
+        me.hideAllNodeEditorForms();
+        me._resetNodeEditorFormFields();
+    };
+
+    /**
+     * reset/empty all formfields
+     */
+    me._resetNodeEditorFormFields = function() {
+        // reset data
+        // configure value mapping
+        var basenode = {};
+        for (var formName in me.appBase.config.configNodeTypeFields) {
+            if (!me.appBase.config.configNodeTypeFields.hasOwnProperty(formName)) {
+                continue;
+            }
+            var fields = [];
+            fields = fields.concat(me.appBase.config.configNodeTypeFields.Common.fields);
+            fields = fields.concat(me.appBase.config.configNodeTypeFields[formName].fields);
+            for (var idx in fields) {
+                if (!fields.hasOwnProperty(idx)) {
+                    continue;
+                }
+                var field = fields[idx];
+                me._setNodeEditorFormField(field, formName, basenode);
+            }
+        }
+    };
+
+    /**
+     * updates the formfield with the nodedata
+     * @param {Object} field                  fieldconfig from me.appBase.config.configNodeTypeFields
+     * @param {String} fieldSuffix            suffix of the fieldName to identify the form (nodeclass of basenode)
+     * @param {Object} basenode               the node to map the fieldvalue
+     */
+    me._setNodeEditorFormField = function(field, fieldSuffix, basenode) {
+        var svcDataUtils = me.appBase.get('DataUtils');
+        var fieldName = field.fieldName;
+        var fieldNameId = '#input' + fieldName.charAt(0).toUpperCase() + fieldName.slice(1) + fieldSuffix;
+        var value = basenode[fieldName];
+
+        // convert value
+        if (field.datatype === 'integer' && (me.appBase.DataUtils.isEmptyStringValue(value))) {
+            // specical int
+            value = 0;
+        } else if (field.datatype === 'date')  {
+            // date
+            value = svcDataUtils.formatGermanDate(value);
+        } else if (field.datatype === 'datetime')  {
+            // date
+            value = svcDataUtils.formatGermanDateTime(value);
+        } else if (me.appBase.DataUtils.isUndefinedStringValue(value)) {
+            // alle other
+            value = '';
+        }
+
+        // reescape data for form
+        if (fieldName === 'nodeDesc') {
+            value = value.replace(/<WLBR>/g, '\n');
+            value = value.replace(/<WLESC>/g, '\\');
+            value = value.replace(/<WLTAB>/g, '\t');
+        }
+
+        // set depending on the fieldtype
+        if (field.type === 'hidden') {
+            me.$(fieldNameId).val(value).trigger('input').triggerHandler('change');
+        } else if (field.type === 'select') {
+            me.$(fieldNameId).val(value).trigger('select').triggerHandler('change');
+        } else if (field.type === 'checkbox') {
+            if (value) {
+                me.$(fieldNameId).prop('checked', true);
+            } else {
+                me.$(fieldNameId).prop('checked', false);
+            }
+            me.$(fieldNameId).trigger('input').triggerHandler('change');
+        } else if (field.type === 'textarea') {
+            me.$(fieldNameId).val(value).trigger('select').triggerHandler('change');
+        } else {
+            // input
+            me.$(fieldNameId).val(value).trigger('input');
+        }
+        console.log('yaioSetFormField map nodefield:' + fieldName
+            + ' set:' + fieldNameId + '=' + value);
+
+    };
+
     me._init();
     
     return me;
