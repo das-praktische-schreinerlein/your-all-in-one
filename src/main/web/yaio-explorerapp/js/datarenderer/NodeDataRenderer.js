@@ -321,21 +321,21 @@ Yaio.NodeDataRenderer = function(appBase) {
                 '</div>';
         }
         if (svcYaioAccessManager.getAvailiableNodeAction('edit', basenode.sysUID, false)) {
-            clickHandler = yaioAppBaseVarName + '.YaioEditor.yaioOpenNodeEditor(\'' + basenode.sysUID + '\', \'edit\'); return false;';
+            clickHandler = yaioAppBaseVarName + '.YaioNodeEditor.openNodeEditorForNodeId(\'' + basenode.sysUID + '\', \'edit\'); return false;';
             actionHtml += '<a onclick="javascript: ' + clickHandler + '"' +
                 ' id="cmdEdit' + basenode.sysUID + '"' +
                 ' class="yaio-icon-edit"' +
                 ' lang="tech" data-tooltip="tooltip.command.NodeEdit"></a>';
         }
         if (svcYaioAccessManager.getAvailiableNodeAction('create', basenode.sysUID, false)) {
-            clickHandler = yaioAppBaseVarName + '.YaioEditor.yaioOpenNodeEditor(\'' + basenode.sysUID + '\', \'create\'); return false;';
+            clickHandler = yaioAppBaseVarName + '.YaioNodeEditor.openNodeEditorForNodeId(\'' + basenode.sysUID + '\', \'create\'); return false;';
             actionHtml += '<a onclick="javascript: ' + clickHandler + '"' +
                 ' id="cmdCreate' + basenode.sysUID + '"' +
                 ' class="yaio-icon-create"' +
                 ' lang="tech" data-tooltip="tooltip.command.NodeCreateChild"></a>';
         }
         if (svcYaioAccessManager.getAvailiableNodeAction('createsymlink', basenode.sysUID, false)) {
-            clickHandler = yaioAppBaseVarName + '.YaioEditor.yaioOpenNodeEditor(\'' + basenode.sysUID + '\', \'createsymlink\'); return false;';
+            clickHandler = yaioAppBaseVarName + '.YaioNodeEditor.openNodeEditorForNodeId(\'' + basenode.sysUID + '\', \'createsymlink\'); return false;';
             actionHtml += '<a onclick="javascript: ' + clickHandler + '"' +
                 ' id="cmdCreateSymLink' + basenode.sysUID + '"' +
                 ' class="yaio-icon-createsymlink"' +

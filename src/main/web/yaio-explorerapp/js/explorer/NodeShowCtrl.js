@@ -315,10 +315,10 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
         // Setup the Uploadfile-Listener
         var dropZone = document.getElementById(divId);
         dropZone.addEventListener('dragover', function (event) {
-            console.log('dragover:', event); yaioUtils.getService('YaioEditor').handleUploadFileUrlResNodeDragOver(event);
+            console.log('dragover:', event); yaioUtils.getService('YaioNodeEditor').handleUploadFileUrlResNodeDragOver(event);
         }, false);
         dropZone.addEventListener('drop', function (event) {
-            console.log('drop:', event); yaioUtils.getService('YaioEditor').handleUploadFileUrlResNodeSelect(event);
+            console.log('drop:', event); yaioUtils.getService('YaioNodeEditor').handleUploadFileUrlResNodeSelect(event);
         }, false);
     };
 

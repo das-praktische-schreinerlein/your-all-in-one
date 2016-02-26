@@ -28,7 +28,7 @@
  * Service-Funktions (editor)
  *****************************************
  *****************************************/
-Yaio.Editor = function(appBase) {
+Yaio.NodeEditor = function(appBase) {
     'use strict';
 
     // my own instance
@@ -46,7 +46,7 @@ Yaio.Editor = function(appBase) {
     /** 
      * reset editor (hide all form, empty all formfields)- hide editor
      */
-    me.yaioResetNodeEditor = function() {
+    me.resetNodeEditor = function() {
         // reset editor
         console.log('yaioResetNodeEditor: show tree, hide editor');
         
@@ -62,14 +62,14 @@ Yaio.Editor = function(appBase) {
         me.$('#containerBoxYaioEditor').css('display', 'none');
         
         // hide forms
-        me.yaioHideAllNodeEditorForms();
-        me.yaioResetNodeEditorFormFields();
+        me.hideAllNodeEditorForms();
+        me.resetNodeEditorFormFields();
     };
     
     /** 
      * hide all editor-forms
      */
-    me.yaioHideAllNodeEditorForms = function() {
+    me.hideAllNodeEditorForms = function() {
         // reset editor
         console.log('yaioHideAllNodeEditorForms: hide forms');
         // hide forms
@@ -84,7 +84,7 @@ Yaio.Editor = function(appBase) {
     /** 
      * reset/empty all formfields
      */
-    me.yaioResetNodeEditorFormFields = function() {
+    me.resetNodeEditorFormFields = function() {
         // reset data
         // configure value mapping
         var basenode = {};
@@ -100,7 +100,7 @@ Yaio.Editor = function(appBase) {
                     continue;
                 }
                 var field = fields[idx];
-                me.yaioSetFormField(field, formName, basenode);
+                me.setNodeEditorFormField(field, formName, basenode);
             }
         }
     };
@@ -111,7 +111,7 @@ Yaio.Editor = function(appBase) {
      * @param {String} fieldSuffix            suffix of the fieldName to identify the form (nodeclass of basenode)
      * @param {Object} basenode               the node to map the fieldvalue
      */
-    me.yaioSetFormField = function(field, fieldSuffix, basenode) {
+    me.setNodeEditorFormField = function(field, fieldSuffix, basenode) {
         var svcDataUtils = me.appBase.get('DataUtils');
         var fieldName = field.fieldName;
         var fieldNameId = '#input' + fieldName.charAt(0).toUpperCase() + fieldName.slice(1) + fieldSuffix;
@@ -169,12 +169,12 @@ Yaio.Editor = function(appBase) {
      * @param {String} mode                   edit, create, createsymlink
      * @param {Object} newNode                optional basedata for the new node
      */
-    me.yaioOpenNodeEditor = function(nodeId, mode, newNode) {
+    me.openNodeEditorForNodeId = function(nodeId, mode, newNode) {
         var svcLogger = me.appBase.get('Logger');
 
         // reset editor
         console.log('yaioOpenNodeEditor: reset editor');
-        me.yaioResetNodeEditor();
+        me.resetNodeEditor();
         
         // check vars
         if (! nodeId) {
@@ -199,7 +199,7 @@ Yaio.Editor = function(appBase) {
         var basenode = treeNode.data.basenode;
         
         // open editor
-        me.yaioOpenNodeEditorForNode(basenode, mode, newNode);
+        me.openNodeEditorForNode(basenode, mode, newNode);
     };
 
     /* jshint maxstatements: 100 */
@@ -210,7 +210,7 @@ Yaio.Editor = function(appBase) {
      * @param {String} mode                   edit, create, createsymlink
      * @param {Object} newNode                optional node to copy data from (for mode createsnapshot...)
      */
-    me.yaioOpenNodeEditorForNode = function(basenode, mode, newNode) {
+    me.openNodeEditorForNode = function(basenode, mode, newNode) {
         var svcLogger = me.appBase.get('Logger');
         var svcDataUtils = me.appBase.get('DataUtils');
         var svcYaioLayout = me.appBase.get('YaioLayout');
@@ -218,7 +218,7 @@ Yaio.Editor = function(appBase) {
 
         // reset editor
         console.log('yaioOpenNodeEditor: reset editor');
-        me.yaioResetNodeEditor();
+        me.resetNodeEditor();
         
         // check vars
         if (! basenode) {
@@ -332,7 +332,7 @@ Yaio.Editor = function(appBase) {
                 continue;
             }
             var field = fields[idx];
-            me.yaioSetFormField(field, fieldSuffix, basenode);
+            me.setNodeEditorFormField(field, fieldSuffix, basenode);
         }
         
         // show editor
@@ -393,10 +393,10 @@ Yaio.Editor = function(appBase) {
     /** 
      * close the nodeditor, toggle it to the left
      */
-    me.yaioCloseNodeEditor = function() {
+    me.closeNodeEditor = function() {
         console.log('close editor');
         me.appBase.get('UIToggler').toggleElement('#containerYaioEditor');
-        me.yaioResetNodeEditor();
+        me.resetNodeEditor();
     };
     
     /** 
@@ -450,7 +450,7 @@ Yaio.Editor = function(appBase) {
         };
 
         // open Editor
-        me.yaioOpenNodeEditorForNode(baseNode, 'createuploadurlresnode', baseNode);
+        me.openNodeEditorForNode(baseNode, 'createuploadurlresnode', baseNode);
     };
 
     /** 

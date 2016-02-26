@@ -57,7 +57,7 @@ yaioApp.factory('yaioUtils', ['$location', '$http', '$rootScope', '$q', function
          * @param {Object} newNode  optional node to copy data from (for mode createsnapshot...)
          */
         openNodeEditorForNode: function(node, mode, newNode) {
-            appBase.get('YaioEditor').yaioOpenNodeEditorForNode(node, mode, newNode);
+            appBase.get('YaioNodeEditor').openNodeEditorForNode(node, mode, newNode);
         },
 
         /**

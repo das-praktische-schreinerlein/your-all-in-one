@@ -71,7 +71,7 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
      * discard and close the editor
      */
     $scope.discard = function() {
-        yaioUtils.getService('YaioEditor').yaioCloseNodeEditor();
+        yaioUtils.getService('YaioNodeEditor').closeNodeEditor();
         return false;
     };
     
@@ -80,7 +80,7 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
      */
     $scope.selectNewNodeType = function() {
         // hide all forms
-        yaioUtils.getService('YaioEditor').yaioHideAllNodeEditorForms();
+        yaioUtils.getService('YaioNodeEditor').hideAllNodeEditorForms();
         
         // display createform and select nodeform
         $('#containerFormYaioEditorCreate').css('display', 'block');
@@ -120,7 +120,7 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
                     yaioUtils.getService('YaioExplorerAction').patchNodeSuccessHandler(srcId, yaioNodeActionResponse,
                         textStatus, jqXhr);
                 });
-            yaioUtils.getService('YaioEditor').yaioCloseNodeEditor();
+            yaioUtils.getService('YaioNodeEditor').closeNodeEditor();
             return false;
         }
     };
@@ -148,11 +148,11 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
 
     /** 
      * callbackhandler to perform actions when type has changed - updates istStand
-     * calls yaioUtils.getService('YaioEditor').calcIstStandFromState() for the node
+     * calls yaioUtils.getService('YaioNodeEditor').calcIstStandFromState() for the node
      * if ERLEDIGT || VERWORFEN || EVENT_ERLEDIGT || EVENT_VERWORFEN: update istStand=100
      */
     $scope.doTypeChanged = function() {
-        $scope.nodeForEdit.istStand = yaioUtils.getService('YaioEditor').calcIstStandFromState($scope.nodeForEdit);
+        $scope.nodeForEdit.istStand = yaioUtils.getService('YaioNodeEditor').calcIstStandFromState($scope.nodeForEdit);
         return false;
     };
     
@@ -170,7 +170,7 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
      * </ul>
      */
     $scope.doIstStandChanged = function() {
-        $scope.nodeForEdit.type = yaioUtils.getService('YaioEditor').calcTypeFromIstStand($scope.nodeForEdit);
+        $scope.nodeForEdit.type = yaioUtils.getService('YaioNodeEditor').calcTypeFromIstStand($scope.nodeForEdit);
         return false;
     };
     

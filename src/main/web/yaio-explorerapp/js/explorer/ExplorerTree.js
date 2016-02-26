@@ -186,7 +186,7 @@ Yaio.ExplorerTree = function(appBase) {
                         return false;
                     }
                     // open yaio-editor
-                    me.appBase.get('YaioEditor').yaioOpenNodeEditor(data.node.key, 'edit');
+                    me.appBase.get('YaioNodeEditor').openNodeEditorForNodeId(data.node.key, 'edit');
                     
                     // Return false to prevent edit mode
                     // dont use fancyeditor
@@ -217,7 +217,7 @@ Yaio.ExplorerTree = function(appBase) {
                         return false;
                     }
                     // open yaio-editor
-                    me.appBase.get('YaioEditor').yaioOpenNodeEditor(node.key, 'edit');
+                    me.appBase.get('YaioNodeEditor').openNodeEditorForNodeId(node.key, 'edit');
                     return true;
                 case 'cut':
                     if (! me.appBase.get('YaioAccessManager').getAvailiableNodeAction('move', node.key, false)) {
@@ -378,7 +378,7 @@ Yaio.ExplorerTree = function(appBase) {
                     if (! me.appBase.get('YaioAccessManager').getAvailiableNodeAction('create', node.key, false)) {
                         return false;
                     }
-                    me.appBase.get('YaioEditor').yaioOpenNodeEditor(node.key, 'create');
+                    me.appBase.get('YaioNodeEditor').openNodeEditorForNodeId(node.key, 'create');
                     break;
                 case 'asTxt':
                     svcYaioExplorerAction.openTxtExportWindowForContent(me.$('#container_content_desc_' + node.key).text());

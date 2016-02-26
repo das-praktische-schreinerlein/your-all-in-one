@@ -121,7 +121,7 @@
                     srcBase + 'yaio-explorerapp/js/utils/PromiseHelper.js',
                     srcBase + 'yaio-explorerapp/js/utils/Base.js',
                     srcBase + 'yaio-explorerapp/js/utils/FileLoader.js',
-                    srcBase + 'yaio-explorerapp/js/editor/Editor.js',
+                    srcBase + 'yaio-explorerapp/js/editor/NodeEditor.js',
                     srcBase + 'yaio-explorerapp/js/layout/Layout.js',
                     srcBase + 'yaio-explorerapp/js/formatter/MarkdownRenderer.js',
                     srcBase + 'yaio-explorerapp/js/utils/ExportedData.js',
@@ -160,7 +160,7 @@
                     srcBase + 'yaio-explorerapp/js/utils/PromiseHelper.js',
                     srcBase + 'yaio-explorerapp/js/utils/Base.js',
                     srcBase + 'yaio-explorerapp/js/utils/FileLoader.js',
-                    srcBase + 'yaio-explorerapp/js/editor/Editor.js',
+                    srcBase + 'yaio-explorerapp/js/editor/NodeEditor.js',
                     srcBase + 'yaio-explorerapp/js/layout/Layout.js',
                     srcBase + 'yaio-explorerapp/js/formatter/MarkdownRenderer.js',
                     srcBase + 'yaio-explorerapp/js/utils/ExportedData.js'

@@ -45,7 +45,7 @@ window.YaioAppBase = function() {
         me.configureService('Yaio.Base', function() { return Yaio.Base(me); });
         me.configureService('Yaio.FileLoader', function() { return Yaio.FileLoader(me); });
         me.configureService('Yaio.Layout', function() { return Yaio.Layout(me); });
-        me.configureService('Yaio.Editor', function() { return Yaio.Editor(me); });
+        me.configureService('Yaio.NodeEditor', function() { return Yaio.NodeEditor(me); });
         me.configureService('Yaio.MarkdownConverter', function() { return Yaio.MarkdownConverter(me); });
         me.configureService('Yaio.MarkdownRenderer', function() { return Yaio.MarkdownRenderer(me); });
         me.configureService('Yaio.ExplorerConverter', function() { return Yaio.ExplorerConverter(me); });
@@ -81,7 +81,7 @@ window.YaioAppBase = function() {
         me.configureService('YaioBase', function() { return me.get('Yaio.Base'); });
         me.configureService('YaioFileLoader', function() { return me.get('Yaio.FileLoader'); });
         me.configureService('YaioLayout', function() { return me.get('Yaio.Layout'); });
-        me.configureService('YaioEditor', function() { return me.get('Yaio.Editor'); });
+        me.configureService('YaioNodeEditor', function() { return me.get('Yaio.NodeEditor'); });
         me.configureService('YaioMarkdownConverter', function() { return me.get('YmfMarkdownConverter'); });
         me.configureService('YaioMarkdownRenderer', function() { return me.get('YmfMarkdownRenderer'); });
         me.configureService('YaioExplorerConverter', function() { return me.get('Yaio.ExplorerConverter'); });

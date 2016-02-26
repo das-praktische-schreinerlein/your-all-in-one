@@ -364,7 +364,7 @@ Yaio.ExplorerAction = function(appBase) {
         ganttSrc = svcDataUtils.htmlEscapeText(ganttSrc);
     
         // open editor
-        me.appBase.YaioEditor.yaioOpenNodeEditorForNode(parentNode, 'createsnapshot', {nodeDesc: checkListSrc + '\n\n' +  ganttSrc});
+        me.appBase.YaioNodeEditor.openNodeEditorForNode(parentNode, 'createsnapshot', {nodeDesc: checkListSrc + '\n\n' +  ganttSrc});
     };
     
     
