@@ -352,7 +352,6 @@ Yaio.NodeDataRenderer = function(appBase) {
         return actionHtml;
     };
 
-    /* jshint maxstatements: 100 */
     /**
      * Renders the BaseDataBlock for basenode and returns a JQuery-Html-Obj.
      * @param {Object} basenode               the nodedata to render (java de.yaio.core.node.BaseNode)
@@ -361,8 +360,7 @@ Yaio.NodeDataRenderer = function(appBase) {
      */
     me.renderBaseDataBlock = function(basenode, preventActionsColum) {
         var svcDataUtils = me.appBase.get('DataUtils');
-        var yaioAppBaseVarName = me.appBase.config.appBaseVarName;
-        
+
         // extract nodedata
         var nodestate = basenode.state;
         var statestyle = 'node-state-' + nodestate;   
@@ -391,100 +389,15 @@ Yaio.NodeDataRenderer = function(appBase) {
             .addClass(statestyle));
         if (basenode.className === 'TaskNode' || basenode.className === 'EventNode') {
             // TaskNode
-            $row.append(
-                me.$('<div />').html('&nbsp;' + svcDataUtils.formatNumbers(basenode.istChildrenSumStand, 0, '%'))
-                    .addClass('container_field')
-                    .addClass('fieldtype_additionaldata')
-                    .addClass('fieldtype_stand')
-                    .addClass('field_istChildrenSumStand')
-                    .addClass(statestyle)
-            );
-            $row.append(
-                me.$('<div />').html('&nbsp;' + svcDataUtils.formatNumbers(basenode.istChildrenSumAufwand, 1, 'h'))
-                    .addClass('container_field')
-                    .addClass('fieldtype_additionaldata')
-                    .addClass('fieldtype_aufwand')
-                    .addClass('field_istChildrenSumAufwand')
-                    .addClass(statestyle)
-            );
-            $row.append(
-                me.$('<div />').html('&nbsp;' + svcDataUtils.formatGermanDate(basenode.istChildrenSumStart)
-                        + '-' + svcDataUtils.formatGermanDate(basenode.istChildrenSumEnde))
-                    .addClass('container_field')
-                    .addClass('fieldtype_additionaldata')
-                    .addClass('fieldtype_fromto')
-                    .addClass('field_istChildrenSum')
-                    .addClass(statestyle)
-            );
-            $row.append(
-                me.$('<div />').html('&nbsp;' + svcDataUtils.formatNumbers(basenode.planChildrenSumAufwand, 1, 'h'))
-                    .addClass('container_field')
-                    .addClass('fieldtype_additionaldata')
-                    .addClass('fieldtype_aufwand')
-                    .addClass('field_planChildrenSumAufwand')
-                    .addClass(statestyle)
-            );
-            $row.append(
-                me.$('<div />').html('&nbsp;' + svcDataUtils.formatGermanDate(basenode.planChildrenSumStart)
-                        + '-' + svcDataUtils.formatGermanDate(basenode.planChildrenSumEnde))
-                    .addClass('container_field')
-                    .addClass('fieldtype_additionaldata')
-                    .addClass('fieldtype_fromto')
-                    .addClass('field_planChildrenSum')
-                    .addClass(statestyle)
-            );
+            me.appendWorkflowBlocks(basenode, $row, statestyle);
         } else if (basenode.className === 'InfoNode' || basenode.className === 'UrlResNode') {
             // render Info + UrlRes
-            
+
             // Url only
             if (basenode.className === 'UrlResNode') {
                 // url
-                
-                // upload content
-                var resContentDMSState = basenode.resContentDMSState;
-                var stateMapping = {'UPLOAD_DONE': 'Download', 'UPLOAD_OPEN': 'Webshoting', 'UPLOAD_FAILED': 'Webshot failed'};
-                if (stateMapping[resContentDMSState] 
-                    && me.appBase.get('YaioAccessManager').getAvailiableNodeAction('dmsDownload', basenode.sysUID, false)) {
-                    // url
-                    var stateBlock = svcDataUtils.htmlEscapeText(stateMapping[resContentDMSState]);
-                    if (resContentDMSState === 'UPLOAD_DONE' && !preventActionsColum) {
-                        stateBlock = '<a href="' + '" onClick="' + yaioAppBaseVarName + '.get(\'YaioExplorerAction\').openDMSDownloadWindowForNodeId(\''+ basenode.sysUID + '\'); return false;"'
-                                     +   ' lang="tech" data-tooltip="tooltip.command.OpenDMSDownloadWindow_' + resContentDMSState + '">' + stateBlock + '</a>';
-                    } else if (stateMapping[resContentDMSState]) {
-                        stateBlock = '<span lang="tech" data-tooltip="tooltip.command.OpenDMSDownloadWindow_' + resContentDMSState + '">' + stateBlock + '</span>';
-                    }
-                    $row.append(
-                        me.$('<div />').html(stateBlock)
-                            .addClass('container_field')
-                            .addClass('fieldtype_additionaldata')
-                            .addClass('fieldtype_uploadsstate')
-                            .addClass('field_resContentDMSState')
-                            .addClass('field_resContentDMSState_' + resContentDMSState)
-                    );
-                }
-                // extracted metadata
-                var resIndexDMSState = basenode.resIndexDMSState;
-                var indexStateMapping = {'INDEX_DONE': 'Metadata', 'INDEX_OPEN': 'Indexing', 'INDEX_FAILED': 'Indexing Failed'};
-                if (indexStateMapping[resIndexDMSState] 
-                    && me.appBase.get('YaioAccessManager').getAvailiableNodeAction('dmsDownload', basenode.sysUID, false)) {
-                    // url
-                    var stateBlock = svcDataUtils.htmlEscapeText(indexStateMapping[resIndexDMSState]);
-                    if (resIndexDMSState === 'INDEX_DONE' && !preventActionsColum) {
-                        stateBlock = '<a href="' + '" onClick="' + yaioAppBaseVarName + '.get(\'YaioExplorerAction\').openDMSIndexDownloadWindowForNodeId(\''+ basenode.sysUID + '\'); return false;"'
-                                     +   ' lang="tech" data-tooltip="tooltip.command.OpenDMSIndexDownloadWindow_' + resIndexDMSState + '">' + stateBlock + '</a>';
-                    } else if (indexStateMapping[resIndexDMSState]) {
-                        stateBlock = '<span lang="tech" data-tooltip="tooltip.command.OpenDMSIndexDownloadWindow_' + resIndexDMSState + '">' + stateBlock + '</span>';
-                    }
-                    $row.append(
-                        me.$('<div />').html(stateBlock)
-                            .addClass('container_field')
-                            .addClass('fieldtype_additionaldata')
-                            .addClass('fieldtype_uploadsstate')
-                            .addClass('field_resIndexDMSState')
-                            .addClass('field_resIndexDMSState_' + resIndexDMSState)
-                    );
-                }
-                
+                me.appendDownloadBlocks(basenode, $row, preventActionsColum);
+
                 // url-data
                 var resLocData = svcDataUtils.htmlEscapeText(basenode.resLocRef);
                 if (basenode.type === 'URLRES') {
@@ -504,55 +417,7 @@ Yaio.NodeDataRenderer = function(appBase) {
             // both
             if (   basenode.docLayoutTagCommand || basenode.docLayoutShortName
                 || basenode.docLayoutAddStyleClass || basenode.docLayoutFlgCloseDiv) {
-                // render both
-                $row.append(
-                    me.$('<div lang="tech" />').html('Layout ')
-                        .addClass('container_field')
-                        .addClass('fieldtype_additionaldata')
-                        .addClass('fieldtype_ueDocLayout')
-                        .addClass('field_ueDocLayout')
-                );
-
-                // check which docLayout is set    
-                if (basenode.docLayoutTagCommand) {
-                    $row.append(
-                        me.$('<div lang="tech" />').html('Tag: '
-                                + svcDataUtils.htmlEscapeText(basenode.docLayoutTagCommand))
-                            .addClass('container_field')
-                            .addClass('fieldtype_additionaldata')
-                            .addClass('fieldtype_docLayoutTagCommand')
-                            .addClass('field_docLayoutTagCommand')
-                    );
-                }
-                if (basenode.docLayoutAddStyleClass) {
-                    $row.append(
-                        me.$('<div lang="tech" />').html('Style: '
-                                + svcDataUtils.htmlEscapeText(basenode.docLayoutAddStyleClass))
-                            .addClass('container_field')
-                            .addClass('fieldtype_additionaldata')
-                            .addClass('fieldtype_docLayoutAddStyleClass')
-                            .addClass('field_docLayoutAddStyleClass')
-                    );
-                }
-                if (basenode.docLayoutShortName) {
-                    $row.append(
-                        me.$('<div lang="tech" />').html('Kurzname: '
-                                + svcDataUtils.htmlEscapeText(basenode.docLayoutShortName))
-                            .addClass('container_field')
-                            .addClass('fieldtype_additionaldata')
-                            .addClass('fieldtype_docLayoutShortName')
-                            .addClass('field_docLayoutShortName')
-                    );
-                }
-                if (basenode.docLayoutFlgCloseDiv) {
-                    $row.append(
-                        me.$('<div lang="tech" />').html('Block schlie&szligen!')
-                            .addClass('container_field')
-                            .addClass('fieldtype_additionaldata')
-                            .addClass('fieldtype_docLayoutFlgCloseDiv')
-                            .addClass('field_docLayoutFlgCloseDiv')
-                    );
-                }
+                me.appendDocLayoutBlocks(basenode, $row);
             }
         } else if (basenode.className === 'SymLinkNode') {
             // render SymLinkNode
@@ -567,7 +432,179 @@ Yaio.NodeDataRenderer = function(appBase) {
     
         return $table;
     };
-    /* jshint maxstatements: 50 */
+
+    /**
+     * append WorkflowBlocks to the row for the node
+     * @param {Object} basenode               the nodedata to render (java de.yaio.core.node.BaseNode)
+     * @param {JQuery} $row                   JQuery-Html-Object to append the blockData
+     * @param {String} statestyle             style for the workflow-state to add to blocks
+     */
+    me.appendWorkflowBlocks = function(basenode, $row, statestyle) {
+        var svcDataUtils = me.appBase.get('DataUtils');
+        $row.append(
+            me.$('<div />').html('&nbsp;' + svcDataUtils.formatNumbers(basenode.istChildrenSumStand, 0, '%'))
+                .addClass('container_field')
+                .addClass('fieldtype_additionaldata')
+                .addClass('fieldtype_stand')
+                .addClass('field_istChildrenSumStand')
+                .addClass(statestyle)
+        );
+        $row.append(
+            me.$('<div />').html('&nbsp;' + svcDataUtils.formatNumbers(basenode.istChildrenSumAufwand, 1, 'h'))
+                .addClass('container_field')
+                .addClass('fieldtype_additionaldata')
+                .addClass('fieldtype_aufwand')
+                .addClass('field_istChildrenSumAufwand')
+                .addClass(statestyle)
+        );
+        $row.append(
+            me.$('<div />').html('&nbsp;' + svcDataUtils.formatGermanDate(basenode.istChildrenSumStart)
+                    + '-' + svcDataUtils.formatGermanDate(basenode.istChildrenSumEnde))
+                .addClass('container_field')
+                .addClass('fieldtype_additionaldata')
+                .addClass('fieldtype_fromto')
+                .addClass('field_istChildrenSum')
+                .addClass(statestyle)
+        );
+        $row.append(
+            me.$('<div />').html('&nbsp;' + svcDataUtils.formatNumbers(basenode.planChildrenSumAufwand, 1, 'h'))
+                .addClass('container_field')
+                .addClass('fieldtype_additionaldata')
+                .addClass('fieldtype_aufwand')
+                .addClass('field_planChildrenSumAufwand')
+                .addClass(statestyle)
+        );
+        $row.append(
+            me.$('<div />').html('&nbsp;' + svcDataUtils.formatGermanDate(basenode.planChildrenSumStart)
+                    + '-' + svcDataUtils.formatGermanDate(basenode.planChildrenSumEnde))
+                .addClass('container_field')
+                .addClass('fieldtype_additionaldata')
+                .addClass('fieldtype_fromto')
+                .addClass('field_planChildrenSum')
+                .addClass(statestyle)
+        );
+    };
+
+    /**
+     * append DownloadBlocks to the row for the node
+     * @param {Object} basenode               the nodedata to render (java de.yaio.core.node.BaseNode)
+     * @param {JQuery} $row                   JQuery-Html-Object to append the blockData
+     * @param {Boolean} preventActionsColum   dont replace Action-column
+     */
+    me.appendDownloadBlocks = function(basenode, $row, preventActionsColum) {
+        var stateBlock;
+        var svcDataUtils = me.appBase.get('DataUtils');
+        var yaioAppBaseVarName = me.appBase.config.appBaseVarName;
+
+        // upload content
+        var resContentDMSState = basenode.resContentDMSState;
+        var stateMapping = {'UPLOAD_DONE': 'Download', 'UPLOAD_OPEN': 'Webshoting', 'UPLOAD_FAILED': 'Webshot failed'};
+        if (stateMapping[resContentDMSState]
+            && me.appBase.get('YaioAccessManager').getAvailiableNodeAction('dmsDownload', basenode.sysUID, false)) {
+            // url
+            stateBlock = svcDataUtils.htmlEscapeText(stateMapping[resContentDMSState]);
+            if (resContentDMSState === 'UPLOAD_DONE' && !preventActionsColum) {
+                stateBlock = '<a href=""' +
+                    ' onClick="' + yaioAppBaseVarName + '.get(\'YaioExplorerAction\').openDMSDownloadWindowForNodeId(\''+ basenode.sysUID + '\'); return false;"' +
+                    ' lang="tech" data-tooltip="tooltip.command.OpenDMSDownloadWindow_' + resContentDMSState + '">' + stateBlock + '</a>';
+            } else if (stateMapping[resContentDMSState]) {
+                stateBlock = '<span lang="tech" data-tooltip="tooltip.command.OpenDMSDownloadWindow_' + resContentDMSState + '">' + stateBlock + '</span>';
+            }
+            $row.append(
+                me.$('<div />').html(stateBlock)
+                    .addClass('container_field')
+                    .addClass('fieldtype_additionaldata')
+                    .addClass('fieldtype_uploadsstate')
+                    .addClass('field_resContentDMSState')
+                    .addClass('field_resContentDMSState_' + resContentDMSState)
+            );
+        }
+        // extracted metadata
+        var resIndexDMSState = basenode.resIndexDMSState;
+        var indexStateMapping = {'INDEX_DONE': 'Metadata', 'INDEX_OPEN': 'Indexing', 'INDEX_FAILED': 'Indexing Failed'};
+        if (indexStateMapping[resIndexDMSState]
+            && me.appBase.get('YaioAccessManager').getAvailiableNodeAction('dmsDownload', basenode.sysUID, false)) {
+            // url
+            stateBlock = svcDataUtils.htmlEscapeText(indexStateMapping[resIndexDMSState]);
+            if (resIndexDMSState === 'INDEX_DONE' && !preventActionsColum) {
+                stateBlock = '<a href=""' +
+                    ' onClick="' + yaioAppBaseVarName + '.get(\'YaioExplorerAction\').openDMSIndexDownloadWindowForNodeId(\''+ basenode.sysUID + '\'); return false;"' +
+                    ' lang="tech" data-tooltip="tooltip.command.OpenDMSIndexDownloadWindow_' + resIndexDMSState + '">' +
+                    stateBlock + '</a>';
+            } else if (indexStateMapping[resIndexDMSState]) {
+                stateBlock = '<span lang="tech" data-tooltip="tooltip.command.OpenDMSIndexDownloadWindow_' + resIndexDMSState + '">' +
+                    stateBlock + '</span>';
+            }
+            $row.append(
+                me.$('<div />').html(stateBlock)
+                    .addClass('container_field')
+                    .addClass('fieldtype_additionaldata')
+                    .addClass('fieldtype_uploadsstate')
+                    .addClass('field_resIndexDMSState')
+                    .addClass('field_resIndexDMSState_' + resIndexDMSState)
+            );
+        }
+    };
+
+    /**
+     * append DocLayoutBlocks to the row for the node
+     * @param {Object} basenode               the nodedata to render (java de.yaio.core.node.BaseNode)
+     * @param {JQuery} $row                   JQuery-Html-Object to append the blockData
+     */
+    me.appendDocLayoutBlocks = function(basenode, $row) {
+        var svcDataUtils = me.appBase.get('DataUtils');
+
+        // render both
+        $row.append(
+            me.$('<div lang="tech" />').html('Layout ')
+                .addClass('container_field')
+                .addClass('fieldtype_additionaldata')
+                .addClass('fieldtype_ueDocLayout')
+                .addClass('field_ueDocLayout')
+        );
+
+        // check which docLayout is set
+        if (basenode.docLayoutTagCommand) {
+            $row.append(
+                me.$('<div lang="tech" />').html('Tag: '
+                        + svcDataUtils.htmlEscapeText(basenode.docLayoutTagCommand))
+                    .addClass('container_field')
+                    .addClass('fieldtype_additionaldata')
+                    .addClass('fieldtype_docLayoutTagCommand')
+                    .addClass('field_docLayoutTagCommand')
+            );
+        }
+        if (basenode.docLayoutAddStyleClass) {
+            $row.append(
+                me.$('<div lang="tech" />').html('Style: '
+                        + svcDataUtils.htmlEscapeText(basenode.docLayoutAddStyleClass))
+                    .addClass('container_field')
+                    .addClass('fieldtype_additionaldata')
+                    .addClass('fieldtype_docLayoutAddStyleClass')
+                    .addClass('field_docLayoutAddStyleClass')
+            );
+        }
+        if (basenode.docLayoutShortName) {
+            $row.append(
+                me.$('<div lang="tech" />').html('Kurzname: '
+                        + svcDataUtils.htmlEscapeText(basenode.docLayoutShortName))
+                    .addClass('container_field')
+                    .addClass('fieldtype_additionaldata')
+                    .addClass('fieldtype_docLayoutShortName')
+                    .addClass('field_docLayoutShortName')
+            );
+        }
+        if (basenode.docLayoutFlgCloseDiv) {
+            $row.append(
+                me.$('<div lang="tech" />').html('Block schlie&szligen!')
+                    .addClass('container_field')
+                    .addClass('fieldtype_additionaldata')
+                    .addClass('fieldtype_docLayoutFlgCloseDiv')
+                    .addClass('field_docLayoutFlgCloseDiv')
+            );
+        }
+    };
+
 
     /** 
      * Shows the DataBlock
