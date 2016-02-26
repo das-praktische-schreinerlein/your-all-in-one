@@ -170,7 +170,7 @@ Yaio.ExplorerTree = function(appBase) {
                             newParentKey = node.key;
                             newPos = 9999;
                         }
-                        me.appBase.get('YaioExplorerAction').yaioMoveNode(data.otherNode, newParentKey, newPos);
+                        me.appBase.get('YaioExplorerAction').doMoveNode(data.otherNode, newParentKey, newPos);
                         return true;
                     } else {
                         // discard
@@ -256,7 +256,7 @@ Yaio.ExplorerTree = function(appBase) {
                                 newParentKey = tree.options.masterNodeId;
                             }
                             // move yaioNode
-                            svcYaioExplorerAction.yaioMoveNode(node, newParentKey, 9999);
+                            svcYaioExplorerAction.doMoveNode(node, newParentKey, 9999);
                             me.clipboardNode = me.pasteMode = null;
                             return true;
                         } else {
@@ -279,7 +279,7 @@ Yaio.ExplorerTree = function(appBase) {
                                 newParentKey = tree.options.masterNodeId;
                             }
                             // copy yaioNode
-                            svcYaioExplorerAction.yaioCopyNode(node, newParentKey);
+                            svcYaioExplorerAction.doCopyNode(node, newParentKey);
                             me.clipboardNode = me.pasteMode = null;
                             return true;
                         } else {
@@ -303,7 +303,7 @@ Yaio.ExplorerTree = function(appBase) {
                         }
                         
                         // move yaioNode
-                        svcYaioExplorerAction.yaioMoveNode(node, newParentKey, 9999);
+                        svcYaioExplorerAction.doMoveNode(node, newParentKey, 9999);
                         return true;
                     } else {
                         // discard
@@ -325,7 +325,7 @@ Yaio.ExplorerTree = function(appBase) {
                             newParentKey = tree.options.masterNodeId;
                         }
                         // move yaioNode
-                        svcYaioExplorerAction.yaioMoveNode(node, newParentKey, 9999);
+                        svcYaioExplorerAction.doMoveNode(node, newParentKey, 9999);
                         return true;
                     } else {
                         // discard
@@ -348,7 +348,7 @@ Yaio.ExplorerTree = function(appBase) {
                         newPos = node.getPrevSibling().data.basenode.sortPos - 2;
                     }
     
-                    svcYaioExplorerAction.yaioMoveNode(node, newParentKey, newPos);
+                    svcYaioExplorerAction.doMoveNode(node, newParentKey, newPos);
                     break;
                 case 'moveDown':
                     if (! me.appBase.get('YaioAccessManager').getAvailiableNodeAction('move', node.key, false)) {
@@ -366,13 +366,13 @@ Yaio.ExplorerTree = function(appBase) {
                         newPos = node.getNextSibling().data.basenode.sortPos + 2;
                     }
     
-                    svcYaioExplorerAction.yaioMoveNode(node, newParentKey, newPos);
+                    svcYaioExplorerAction.doMoveNode(node, newParentKey, newPos);
                     break;
                 case 'remove':
                     if (! me.appBase.get('YaioAccessManager').getAvailiableNodeAction('remove', node.key, false)) {
                         return false;
                     }
-                    svcYaioExplorerAction.yaioRemoveNodeById(node.key);
+                    svcYaioExplorerAction.doRemoveNodeByNodeId(node.key);
                     break;
                 case 'addChild':
                     if (! me.appBase.get('YaioAccessManager').getAvailiableNodeAction('create', node.key, false)) {
@@ -381,10 +381,10 @@ Yaio.ExplorerTree = function(appBase) {
                     me.appBase.get('YaioEditor').yaioOpenNodeEditor(node.key, 'create');
                     break;
                 case 'asTxt':
-                    svcYaioExplorerAction.openTxtExportWindow(me.$('#container_content_desc_' + node.key).text());
+                    svcYaioExplorerAction.openTxtExportWindowForContent(me.$('#container_content_desc_' + node.key).text());
                     break;
                 case 'asJira':
-                    svcYaioExplorerAction.openJiraExportWindow(node.key);
+                    svcYaioExplorerAction.openJiraExportWindowByNodeId(node.key);
                     break;
                 case 'focus':
                     window.location = '#/show/' + node.key;

@@ -32,7 +32,15 @@ Yaio.FileNodeData = function(appBase, config, defaultConfig) {
      */
     me._init = function() {
     };
-    
+
+    /**
+     * connect the dataservice
+     * - load uploaded jsonfile from #yaioLoadJSONFile
+     * - updateServiceConfig
+     * - updateAppConfig
+     * - load initial data)
+     * @returns {JQueryPromise<T>|JQueryPromise<*>}    promise if connect succeed or failed
+     */
     me.connectService = function() {
         // return promise
         var dfd = new $.Deferred();
@@ -51,8 +59,8 @@ Yaio.FileNodeData = function(appBase, config, defaultConfig) {
                     console.log('read fileName:' + file.name);
 
                     // update serviceconfig
-                    me.updateServiceConfig();
-                    me.updateAppConfig();
+                    me.configureDataService();
+                    me.reconfigureBaseApp();
 
                     // set content as json
                     window.yaioFileJSON = res.target.result;

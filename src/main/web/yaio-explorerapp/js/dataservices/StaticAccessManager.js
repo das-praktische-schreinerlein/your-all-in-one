@@ -28,7 +28,7 @@ Yaio.StaticAccessManager = function(appBase, config, defaultConfig) {
     var me = Yaio.AccessManager(appBase, config, defaultConfig);
 
     /**
-     * initialize the object
+     * initialize/configure AccessManager
      */
     me._init = function() {
         // urls
@@ -49,7 +49,10 @@ Yaio.StaticAccessManager = function(appBase, config, defaultConfig) {
         me.setAvailiableNodeAction('showsysdata', true);
         me.setAvailiableNodeAction('print', true);
     };
-    
+
+    /**
+     * @inheritdoc
+     */
     me.getAvailiableNodeAction = function(key, nodeId, flgMaster) {
         if (key === 'delete' && flgMaster) {
             return false;

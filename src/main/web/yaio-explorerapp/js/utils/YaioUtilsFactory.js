@@ -47,7 +47,7 @@ yaioApp.factory('yaioUtils', ['$location', '$http', '$rootScope', '$q', function
          * @param {Object} node    node-data
          */
         toggleSysContainerForNode: function(node) {
-            appBase.get('YaioExplorerAction').toggleNodeSysContainer(node.sysUID);
+            appBase.get('YaioExplorerAction').toggleNodeSysContainerForNodeId(node.sysUID);
         },
 
         /**

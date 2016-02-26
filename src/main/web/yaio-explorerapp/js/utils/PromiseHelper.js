@@ -65,7 +65,7 @@ Yaio.PromiseHelper = function(appBase) {
             this._deferred.reject(data);
             //this.$rootScope.$apply();
         };
-      
+
         PromiseHelper.prototype.getHttpPromiseMock = function () {
             var promise = this._deferred.promise;
             return wrapPromise(promise);

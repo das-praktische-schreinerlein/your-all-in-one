@@ -33,7 +33,11 @@ Yaio.NodeData = function(appBase, config, defaultConfig) {
     me._init = function() {
         me.AccessManager = null;
     };
-    
+
+    /**
+     * return the accessmanager for this service
+     * @returns {Yaio.AccessManager}    instance of Yaio.AccessManager
+     */
     me.getAccessManager = function() {
         if (! me.AccessManager) {
             me.AccessManager = me._createAccessManager();
@@ -46,20 +50,39 @@ Yaio.NodeData = function(appBase, config, defaultConfig) {
      * Service-Funktions (webservice)
      *****************************************
      *****************************************/
+
+    /**
+     * load the data of the node (own, parent, children)
+     * use promise as described on https://github.com/mar10/fancytree/wiki/TutorialLoadData#user-content-use-a-deferred-promise
+     * @param {String} nodeId     id of the node to load data for
+     * @returns {JQueryPromise<T>|JQueryPromise<*>|Object}    Object or JQueryPromise for FancyTree
+     */
     me.loadNodeData = function(nodeId) {
         me.logNotImplemented();
     };
 
+    /**
+     * connect the dataservice
+     * @abstract
+     * @returns {JQueryPromise<T>|JQueryPromise<*>}    promise if connect succeed or failed
+     */
     me.connectService = function() {
         me.logNotImplemented();
     };
-    
-    me.updateServiceConfig = function(yaioCommonApiConfig) {
+
+    /**
+     * update my config (this instance of NodeDataConfig)
+     * @param {Object} yaioCommonApiConfig  Common Api Config from yaio-server
+     */
+    me.configureDataService = function(yaioCommonApiConfig) {
         me.logNotImplemented();
     };
-    
-    me.updateAppConfig = function() {
-        var msg = 'updateAppConfig';
+
+    /**
+     * update appBase-config (plantUmlBaseUrl, masterSysUId, excludeNodePraefix) with my config (this instance of NodeDataConfig)
+     */
+    me.reconfigureBaseApp = function() {
+        var msg = 'reconfigureBaseApp';
         console.log(msg + ' with:', me.config);
         if (me.config.plantUmlBaseUrl) {
             me.appBase.config.plantUmlBaseUrl = me.config.plantUmlBaseUrl;
@@ -73,9 +96,13 @@ Yaio.NodeData = function(appBase, config, defaultConfig) {
         console.log(msg + ' to:', me.appBase.config);
     };
 
-    
-    me.yaioDoLoadAvailiableTemplates = function() {
-        var msg = 'yaioDoLoadTemplates';
+
+    /**
+     * read all available templates from configured parents accessmanager.systemTemplateId, accessmanager.ownTemplateId
+     * @return {Promise}     with obj { systemTemplates: [], ownTemplates: [] }
+     */
+    me.getAvailableTemplates = function() {
+        var msg = 'getAvailableTemplates';
         console.log(msg + ' START');
 
         var promiseHelper = me.appBase.get('YaioPromiseHelper').createAngularPromiseHelper();
@@ -89,7 +116,7 @@ Yaio.NodeData = function(appBase, config, defaultConfig) {
         var systemTemplateId = me.getAccessManager().getAvailiableNodeAction('systemTemplateId'); 
         var ownTemplateId = me.getAccessManager().getAvailiableNodeAction('ownTemplateId');
         if (systemTemplateId) {
-            me.yaioDoLoadNodeById(systemTemplateId, {})
+            me.getNodeById(systemTemplateId, {})
             .then(function sucess(systemAngularResponse) {
                 // handle success: systemTemplates
                 angularResponse.data = {systemTemplates: systemAngularResponse.data.childNodes, ownTemplates: []};
@@ -100,7 +127,7 @@ Yaio.NodeData = function(appBase, config, defaultConfig) {
                 }
                 
                 // load own templates
-                me.yaioDoLoadNodeById(ownTemplateId, {})
+                me.getNodeById(ownTemplateId, {})
                     .then(function sucess(ownAngularResponse) {
                         // handle success: ownTemplates
                         angularResponse.data = {systemTemplates: systemAngularResponse.data.childNodes, 
@@ -122,279 +149,268 @@ Yaio.NodeData = function(appBase, config, defaultConfig) {
 
         return ajaxCall();
     };
-    
-    me.yaioLoadSymLinkData = function(basenode, fancynode) {
-        var msg = 'yaioLoadSymLinkData for node:' + basenode.sysUID + ' symlink:' + basenode.symLinkRef + ' fancynode:' + fancynode.key;
+
+    /**
+     * get symlinked nodedata for basenode
+     * @param {Object} basenode                           node-data to get symlink-data
+     * @returns {JQueryPromise<T>|JQueryDeferred<T>|any}  promise if read succeed or failed with parameters { yaioNodeActionResponse, textStatus, jqXhr}
+     */
+    me.getNodeForSymLink = function(basenode) {
+        var msg = 'getNodeForSymLink for node:' + basenode.sysUID + ' symlink:' + basenode.symLinkRef;
         console.log(msg + ' START');
-        return me._yaioCallLoadSymLinkData(basenode, fancynode)
-            .done(function(yaioNodeActionResponse, textStatus, jqXhr ) {
-                console.log('call successHandler ' + msg + ' state:' + textStatus);
-                me._yaioLoadSymLinkDataSuccessHandler(basenode, fancynode, yaioNodeActionResponse, textStatus, jqXhr);
-            });
+        return me._getNodeForSymLink(basenode);
     };
-        
-    me.yaioDoUpdateNode = function(fancynode, json) {
-        var msg = 'yaioDoUpdateNode for fancynode:' + fancynode.key;
+
+    /**
+     * update node with values in json
+     * @param {String} nodeId                             nodeId to update
+     * @param {String} json                               json with the update-values
+     * @returns {JQueryPromise<T>|JQueryDeferred<T>|any}  promise if update succeed or failed  { yaioNodeActionResponse, textStatus, jqXhr}
+     */
+    me.updateNode = function(nodeId, json) {
+        var msg = 'updateNode for nodeId:' + nodeId;
         console.log(msg + ' START');
-        return me._yaioCallUpdateNode(fancynode, json)
-            .done(function(yaioNodeActionResponse, textStatus, jqXhr ) {
-                me._yaioPatchNodeSuccessHandler(fancynode, yaioNodeActionResponse, textStatus, jqXhr);
-            });
+        return me._updateNode(nodeId, json);
     };
-    
-    me.yaioDoMoveNode = function(fancynode, newParentKey, newPos, json) {
-        var msg = 'yaioDoMoveNode for fancynode:' + fancynode.key + ' newParentKey:' + newParentKey + ' newPos:' + newPos;
+
+    /**
+     * move node to newParentKey at position newPos
+     * @param {String} nodeId                             nodeId to move
+     * @param {String} newParentKey                       nodeId of the new parent
+     * @param {int} newPos                                sort-position in parents childList
+     * @returns {JQueryPromise<T>|JQueryDeferred<T>|any}  promise if update succeed or failed { yaioNodeActionResponse, textStatus, jqXhr}
+     */
+    me.moveNode = function(nodeId, newParentKey, newPos) {
+        var msg = 'moveNode for nodeId:' + nodeId + ' newParentKey:' + newParentKey + ' newPos:' + newPos;
         console.log(msg + ' START');
-        return me._yaioCallMoveNode(fancynode, newParentKey, newPos, json)
-            .done(function(yaioNodeActionResponse, textStatus, jqXhr ) {
-                me._yaioPatchNodeSuccessHandler(fancynode, yaioNodeActionResponse, textStatus, jqXhr);
-            });
+        return me._moveNode(nodeId, newParentKey, newPos);
     };
-    
-    me.yaioDoCopyNode = function(fancynode, newParentKey, json) {
-        var msg = 'yaioDoCopyNode for fancynode:' + fancynode.key + ' newParentKey:' + newParentKey;
+
+    /**
+     * copy node to newParentKey
+     * @param {String} nodeId                             nodeId to copy
+     * @param {String} newParentKey                       nodeId of the new parent
+     * @returns {JQueryPromise<T>|JQueryDeferred<T>|any}  promise if update succeed or failed { yaioNodeActionResponse, textStatus, jqXhr}
+     */
+    me.copyNode = function(nodeId, newParentKey) {
+        var msg = 'copyNode for nodeId:' + nodeId + ' newParentKey:' + newParentKey;
         console.log(msg + ' START');
-        return me._yaioCallCopyNode(fancynode, newParentKey, json)
-            .done(function(yaioNodeActionResponse, textStatus, jqXhr ) {
-                me._yaioPatchNodeSuccessHandler(fancynode, yaioNodeActionResponse, textStatus, jqXhr);
-            });
+        return me._copyNode(nodeId, newParentKey);
     };
-    
-    me.yaioDoRemoveNode = function(nodeId) {
-        var msg = 'yaioDoRemoveNode for nodeId:' + nodeId;
+
+    /**
+     * delete node
+     * @param {String} nodeId                             nodeId to delete
+     * @returns {JQueryPromise<T>|JQueryDeferred<T>|any}  promise if delete succeed or failed { yaioNodeActionResponse, textStatus, jqXhr}
+     */
+    me.deleteNode = function(nodeId) {
+        var msg = 'deleteNode for nodeId:' + nodeId;
         console.log(msg + ' START');
-        return me._yaioCallRemoveNode(nodeId)
-            .done(function(yaioNodeActionResponse, textStatus, jqXhr ) {
-                me._yaioRemoveNodeSuccessHandler(nodeId, yaioNodeActionResponse, textStatus, jqXhr);
-            });
+        return me._deleteNode(nodeId);
     };
-    
-    me.yaioDoSaveNode = function(nodeObj, options) {
-        var msg = 'yaioDoSaveNode for node:' + nodeObj.sysUID;
+
+    /**
+     * save (create/update) node
+     * @param {Object} nodeObj                            node with values to save
+     * @param {Object} options                            options
+     * @returns {JQueryPromise<T>|JQueryDeferred<T>|any}  promise if save succeed or failed
+     */
+    me.saveNode = function(nodeObj, options) {
+        var msg = 'saveNode for node:' + nodeObj.sysUID;
         console.log(msg + ' START');
-        return me._yaioCallSaveNode(nodeObj, options);
+        return me._saveNode(nodeObj, options);
     };
-    
-    me.yaioDoLoadNodeById = function(nodeId, options) {
-        var msg = 'yaioDoLoadNodeById for node:' + nodeId;
+
+    /**
+     * read node
+     * @param {String} nodeId                             nodeId to read
+     * @param {Object} options                            options
+     * @returns {JQueryPromise<T>|JQueryDeferred<T>|any}  promise if read succeed or failed
+     */
+    me.getNodeById = function(nodeId, options) {
+        var msg = 'getNodeById for node:' + nodeId;
         console.log(msg + ' START');
-        return me._yaioCallLoadNodeById(nodeId, options);
+        return me._getNodeById(nodeId, options);
     };
-    
-    me.yaioDoFulltextSearch = function(searchOptions) {
-        var msg = 'yaioDoFulltextSearch for searchOptions:' + searchOptions;
+
+    /**
+     * search node
+     * @param {Object} searchOptions                      filters and sorts...
+     * @returns {JQueryPromise<T>|JQueryDeferred<T>|any}  promise if search succeed or failed
+     */
+    me.searchNode = function(searchOptions) {
+        var msg = 'searchNode for searchOptions:' + searchOptions;
         console.log(msg + ' START');
-        return me._yaioCallFulltextSearch(searchOptions);
+        return me._searchNode(searchOptions);
     };
-    
-    me.yaioDoLogin = function(credentials) {
-        var msg = 'yaioDoLogin for credentials:' + credentials;
+
+    /**
+     * login to service
+     * @param {Object} credentials                        credentials to login with
+     * @returns {JQueryPromise<T>|JQueryDeferred<T>|any}  promise if login succeed or failed
+     */
+    me.loginToService = function(credentials) {
+        var msg = 'loginToService for credentials:' + credentials;
         console.log(msg + ' START');
-        return me._yaioCallLogin(credentials);
+        return me._loginToService(credentials);
     };
-    
-    me.yaioDoLogout = function(session) {
-        var msg = 'yaioDoLogout for session' + session;
+
+    /**
+     * logout from service
+     * @param {Object} session                            session to logout
+     * @returns {JQueryPromise<T>|JQueryDeferred<T>|any}  promise if logout succeed or failed
+     */
+    me.logoutFromService = function(session) {
+        var msg = 'logoutFromService for session' + session;
         console.log(msg + ' START');
-        return me._yaioCallLogout(session);
+        return me._logoutFromService(session);
     };
-    
-    me.yaioDoCheckUser = function(session) {
-        var msg = 'yaioDoCheckUser for session:' + session;
+
+    /**
+     * check current session of service
+     * @param {Object} session                            session to check
+     * @returns {JQueryPromise<T>|JQueryDeferred<T>|any}  promise if check succeed or failed returns { data: 'OK' }
+     */
+    me.checkSession = function(session) {
+        var msg = 'checkSession for session:' + session;
         console.log(msg + ' START');
-        return me._yaioCallCheckUser(session);
+        return me._checkSession(session);
     };
-    
+
+    /**
+     * implementation of: create an accessmanager for this service
+     * @abstract
+     * @returns {Yaio.AccessManager}    instance of Yaio.AccessManager
+     */
     me._createAccessManager = function() {
         me.logNotImplemented();
     };
-    
-    me._yaioCallLoadSymLinkData = function(basenode, fancynode) {
-        me.logNotImplemented();
-    };
-    
-    me._yaioLoadSymLinkDataSuccessHandler = function(basenode, fancynode, yaioNodeActionResponse, textStatus, jqXhr) {
-        var svcLogger = me.appBase.get('Logger');
-        var msg = '_yaioLoadSymLinkDataSuccessHandler for fancynode:' + fancynode.key;
-        console.log(msg + ' OK done!' + yaioNodeActionResponse.state);
-        if (yaioNodeActionResponse.state === 'OK') {
-            if (yaioNodeActionResponse.node) {
-                var $nodeDataBlock = me.appBase.get('YaioNodeDataRender').renderDataBlock(yaioNodeActionResponse.node, fancynode);
-                
-                // load referring node
-                var tree = me.$('#tree').fancytree('getTree');
-                if (!tree) {
-                    // tree not found
-                    svcLogger.logError('error yaioLoadSymLinkData: cant load tree - ' + msg, false);
-                    return null;
-                }
-                var rootNode = tree.rootNode;
-                if (! rootNode) {
-                    console.error(msg + ' openHierarchy: error for tree'
-                                + ' rootNode not found: ' + msg);
-                    return;
-                }
-                var treeNode = tree.getNodeByKey(basenode.sysUID);
-                if (! treeNode) {
-                    svcLogger.logError('error yaioLoadSymLinkData: cant load node - ' + msg, false);
-                    return null;
-                }
-                
-                // append Link in current hierarchy to referenced node
-                var newUrl = '#/show/' + tree.options.masterNodeId 
-                    + '/activate/' + yaioNodeActionResponse.node.sysUID + '/';
-                
-                // check if node-hierarchy exists (same tree)
-                var firstNodeId, firstNode;
-                var lstIdsHierarchy = [].concat(yaioNodeActionResponse.parentIdHierarchy);
-                while (! firstNode && lstIdsHierarchy.length > 0) {
-                    firstNodeId = lstIdsHierarchy.shift();
-                    firstNode = rootNode.mapChildren[firstNodeId];
-                }
-                if (! firstNode) {
-                    // load page for referenced node with full hierarchy
-                    //firstNodeId = yaioNodeActionResponse.parentIdHierarchy.shift();
-                    // we set it constant
-                    firstNodeId = me.appBase.config.masterSysUId;
-                    
-                    newUrl = '#/show/' + firstNodeId 
-                        + '/activate/' + yaioNodeActionResponse.node.sysUID + '/';
-                }
 
-                me.$(treeNode.tr).find('div.container_data_row').append(
-                        '<a href="' + newUrl + '"'
-                           + ' data-tooltip="Springe zum verkn&uuml;pften Element"'
-                           + ' class="button">OPEN</a>');
-                
-                // add datablock of referenced node
-                me.$(treeNode.tr).find('div.container_data_table').append($nodeDataBlock.html());
-
-                console.log(msg + ' DONE');
-            } else {
-                svcLogger.logError('ERROR got no ' + msg, true);
-            }
-        } else {
-            svcLogger.logError('ERROR cant load  ' + msg + ' error:' + yaioNodeActionResponse.stateMsg, true);
-        }
-    };
-    
-    me._yaioCallUpdateNode = function(fancynode, json) {
-        me.logNotImplemented();
-    };
-    
-    me._yaioCallMoveNode = function(fancynode, newParentKey, newPos, json) {
-        me.logNotImplemented();
-    };
-    
-    me._yaioCallCopyNode = function(fancynode, newParentKey, json) {
-        me.logNotImplemented();
-    };
-    
-    me._yaioCallPatchNode = function(fancynode, url, json) {
-        me.logNotImplemented();
-    };
-    
-    me._yaioPatchNodeSuccessHandler = function(fancynode, yaioNodeActionResponse, textStatus, jqXhr) {
-        var svcLogger = me.appBase.get('Logger');
-        var msg = '_yaioPatchNodeSuccessHandler for fancynode:' + fancynode.key;
-        console.log(msg + ' OK done!' + yaioNodeActionResponse.state);
-        if (yaioNodeActionResponse.state === 'OK') {
-            console.log(msg + ' OK saved fancynode:' + fancynode.key + ' load:' + yaioNodeActionResponse.parentIdHierarchy);
-            if (yaioNodeActionResponse.parentIdHierarchy && yaioNodeActionResponse.parentIdHierarchy.length > 0) {
-                // reload tree
-                var tree = me.$('#tree').fancytree('getTree');
-                tree.reload().done(function(){
-                    // handler when done
-                    console.log(msg + ' RELOAD tree done:' + yaioNodeActionResponse.parentIdHierarchy);
-                    console.log(msg + ' CALL openNodeHierarchy load hierarchy:' + yaioNodeActionResponse.parentIdHierarchy);
-                    me.appBase.get('YaioExplorerAction').openNodeHierarchy('#tree', yaioNodeActionResponse.parentIdHierarchy);
-                });
-            } else {
-                svcLogger.logError('got no hierarchy for:' + fancynode.key
-                        + ' hierarchy:' + yaioNodeActionResponse.parentIdHierarchy, true);
-            }
-        } else {
-            var message = 'cant save fancynode:' + fancynode.key + ' error:' + yaioNodeActionResponse.stateMsg;
-            // check for violations
-            if (yaioNodeActionResponse.violations) {
-                // iterate violations
-                message = message +  ' violations: ';
-                for (var idx in yaioNodeActionResponse.violations) {
-                    if (!yaioNodeActionResponse.violations.hasOwnProperty(idx)) {
-                        continue;
-                    }
-                    var violation = yaioNodeActionResponse.violations[idx];
-                    svcLogger.logError('violations while save fancynode:' + fancynode.key
-                            + ' field:' + violation.path + ' message:' + violation.message, false);
-                    message = message +  violation.path + ' (' + violation.message + '),';
-                }
-            }
-            svcLogger.logError(message, true);
-        }
-    };
-
-    me._yaioCallRemoveNode = function(nodeId) {
+    /**
+     * implementation of: get symlinked nodedata for basenode
+     * @abstract
+     * @param {Object} basenode                           node-data to get symlink-data
+     * @returns {JQueryPromise<T>|JQueryDeferred<T>|any}  promise if read succeed or failed with parameters { yaioNodeActionResponse, textStatus, jqXhr}
+     */
+    me._getNodeForSymLink = function(basenode) {
         me.logNotImplemented();
     };
 
-    me._yaioRemoveNodeSuccessHandler = function(nodeId, yaioNodeActionResponse, textStatus, jqXhr) {
-        var svcLogger = me.appBase.get('Logger');
-        var msg = '_yaioRemoveNodeSuccessHandler for nodeId:' + nodeId;
-        console.log(msg + ' OK done!' + yaioNodeActionResponse.state);
-        if (yaioNodeActionResponse.state === 'OK') {
-            console.log(msg + ' OK removed node:' + nodeId + ' load:' + yaioNodeActionResponse.parentIdHierarchy);
-            if (yaioNodeActionResponse.parentIdHierarchy && yaioNodeActionResponse.parentIdHierarchy.length >= 0) {
-                // reload tree
-                var tree = me.$('#tree').fancytree('getTree');
-                tree.reload().done(function(){
-                    // handler when done
-                    console.log(msg + ' RELOAD tree done:' + yaioNodeActionResponse.parentIdHierarchy);
-                    console.log(msg + ' CALL openNodeHierarchy load hierarchy:' + yaioNodeActionResponse.parentIdHierarchy);
-                    me.appBase.get('YaioExplorerAction').openNodeHierarchy('#tree', yaioNodeActionResponse.parentIdHierarchy);
-                });
-            } else {
-                svcLogger.logError('got no hierarchy for:' + nodeId
-                        + ' hierarchy:' + yaioNodeActionResponse.parentIdHierarchy, true);
-            }
-        } else {
-            svcLogger.logError('cant remove node:' + nodeId + ' error:' + yaioNodeActionResponse.stateMsg, false);
-            // check for violations
-            if (yaioNodeActionResponse.violations) {
-                // iterate violations
-                for (var idx in yaioNodeActionResponse.violations) {
-                    if (!yaioNodeActionResponse.violations.hasOwnProperty(idx)) {
-                        continue;
-                    }
-                    var violation = yaioNodeActionResponse.violations[idx];
-                    svcLogger.logError('violations while remove node:' + nodeId
-                            + ' field:' + violation.path + ' message:' + violation.message, false);
-                    window.alert('cant remove node because: ' + violation.path + ' (' + violation.message + ')');
-                }
-            }
-        }
-    };
-    
-    me._yaioCallSaveNode = function(nodeObj, options) {
+    /**
+     * implementation of: update node with values in json
+     * @abstract
+     * @param {String} nodeId                             nodeId to update
+     * @param {String} json                               json with the update-values
+     * @returns {JQueryPromise<T>|JQueryDeferred<T>|any}  promise if update succeed or failed  { yaioNodeActionResponse, textStatus, jqXhr}
+     */
+    me._updateNode = function(nodeId, json) {
         me.logNotImplemented();
     };
 
-    me._yaioCallLoadNodeById = function(nodeId, options) {
-        me.logNotImplemented();
-    };
-    
-    me._yaioCallFulltextSearch = function(searchOptions) {
-        me.logNotImplemented();
-    };
-
-    me._yaioCallLogin = function(credentials) {
-        me.logNotImplemented();
-    };
-
-    me._yaioCallLogout = function() {
+    /**
+     * implementation of: move node to newParentKey at position newPos
+     * @abstract
+     * @param {String} nodeId                             nodeId to move
+     * @param {String} newParentKey                       nodeId of the new parent
+     * @param {int} newPos                                sort-position in parents childList
+     * @returns {JQueryPromise<T>|JQueryDeferred<T>|any}  promise if update succeed or failed { yaioNodeActionResponse, textStatus, jqXhr}
+     */
+    me._moveNode = function(nodeId, newParentKey, newPos) {
         me.logNotImplemented();
     };
 
-    me._yaioCallCheckUser = function() {
+    /**
+     * implementation of: copy node to newParentKey
+     * @abstract
+     * @param {String} nodeId                             nodeId to copy
+     * @param {String} newParentKey                       nodeId of the new parent
+     * @returns {JQueryPromise<T>|JQueryDeferred<T>|any}  promise if update succeed or failed { yaioNodeActionResponse, textStatus, jqXhr}
+     */
+    me._copyNode = function(nodeId, newParentKey) {
+        me.logNotImplemented();
+    };
+
+    /**
+     * implementation of: patch node
+     * @abstract
+     * @param {String} nodeId                             nodeId to copy
+     * @param {String} url                                url to call
+     * @param {String} json                               json to submit
+     * @returns {JQueryPromise<T>|JQueryDeferred<T>|any}  promise if update succeed or failed { yaioNodeActionResponse, textStatus, jqXhr}
+     */
+    me._patchNode = function(nodeId, url, json) {
+        me.logNotImplemented();
+    };
+
+    /**
+     * implementation of delete node
+     * @abstract
+     * @param {String} nodeId                             nodeId to delete
+     * @returns {JQueryPromise<T>|JQueryDeferred<T>|any}  promise if delete succeed or failed { yaioNodeActionResponse, textStatus, jqXhr}
+     */
+    me._deleteNode = function(nodeId) {
+        me.logNotImplemented();
+    };
+
+    /**
+     * implementation of: save (create/update) node
+     * @abstract
+     * @param {Object} nodeObj                            node with values to save
+     * @param {Object} options                            options
+     * @returns {JQueryPromise<T>|JQueryDeferred<T>|any}  promise if save succeed or failed
+     */
+    me._saveNode = function(nodeObj, options) {
+        me.logNotImplemented();
+    };
+
+    /**
+     * implementation of: read node
+     * @abstract
+     * @param {String} nodeId                             nodeId to read
+     * @param {Object} options                            options
+     * @returns {JQueryPromise<T>|JQueryDeferred<T>|any}  promise if read succeed or failed
+     */
+    me._getNodeById = function(nodeId, options) {
+        me.logNotImplemented();
+    };
+
+    /**
+     * implementation of: search node
+     * @abstract
+     * @param {Object} searchOptions                      filters and sorts...
+     * @returns {JQueryPromise<T>|JQueryDeferred<T>|any}  promise if search succeed or failed
+     */
+    me._searchNode = function(searchOptions) {
+        me.logNotImplemented();
+    };
+
+    /**
+     * implementation of: login to service
+     * @abstract
+     * @param {Object} credentials                        credentials to login with
+     * @returns {JQueryPromise<T>|JQueryDeferred<T>|any}  promise if login succeed or failed
+     */
+    me._loginToService = function(credentials) {
+        me.logNotImplemented();
+    };
+
+    /**
+     * mplementation of: logout from service
+     * @abstract
+     * @param {Object} session                            session to logout
+     * @returns {JQueryPromise<T>|JQueryDeferred<T>|any}  promise if logout succeed or failed
+     */
+    me._logoutFromService = function(session) {
+        me.logNotImplemented();
+    };
+
+    /**
+     * implementation of: check current session of service
+     * @abstract
+     * @param {Object} session                            session to check
+     * @returns {JQueryPromise<T>|JQueryDeferred<T>|any}  promise if check succeed or failed returns { data: 'OK' }
+     */
+    me._checkSession = function(session) {
         me.logNotImplemented();
     };
 

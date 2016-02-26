@@ -116,9 +116,9 @@ Yaio.StaticNodeDataStore = function(appBase, config, defaultConfig) {
         return node;
     };
 
-    me.moveNode = function(fancynode, newParentKey, newPos, json) {
-        var msg = 'moveNode for fancynode:' + fancynode.key + ' newParentKey:' + newParentKey + ' newPos:' + newPos;
-        var node = me.getNodeDataById(fancynode.key, false);
+    me.moveNode = function(nodeId, newParentKey, newPos) {
+        var msg = 'moveNode for nodeId:' + nodeId + ' newParentKey:' + newParentKey + ' newPos:' + newPos;
+        var node = me.getNodeDataById(nodeId, false);
         var parent = me.getNodeDataById(newParentKey, false);
         var oldParent = me.getNodeDataById(node.parentId, false);
         

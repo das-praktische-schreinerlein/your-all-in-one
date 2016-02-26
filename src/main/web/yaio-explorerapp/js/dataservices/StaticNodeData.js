@@ -34,7 +34,12 @@ Yaio.StaticNodeData = function(appBase, config, defaultConfig) {
      */
     me._init = function() {
     };
-    
+
+    /**
+     * load the data of the node (own, parent, children)
+     * @param {String} nodeId     id of the node to load data for
+     * @returns {JQueryPromise<T>|JQueryPromise<*>}
+     */
     me.loadNodeData = function(nodeId) {
         // use promise as described on https://github.com/mar10/fancytree/wiki/TutorialLoadData#user-content-use-a-deferred-promise
         console.log('load data for node:' + nodeId);
@@ -48,11 +53,19 @@ Yaio.StaticNodeData = function(appBase, config, defaultConfig) {
 
         return res;
     };
-    
+
+    /**
+     * connect the dataservice
+     * - load static json from window.yaioStaticJSO
+     * - updateServiceConfig
+     * - updateAppConfig
+     * - load initial data)
+     * @returns {JQueryPromise<T>|JQueryPromise<*>}    promise if connect succeed or failed
+     */
     me.connectService = function() {
         // update serviceconfig
-        me.updateServiceConfig();
-        me.updateAppConfig();
+        me.configureDataService();
+        me.reconfigureBaseApp();
         
         // load data
         me._loadStaticJson(JSON.stringify(window.yaioStaticJSON));
@@ -63,8 +76,12 @@ Yaio.StaticNodeData = function(appBase, config, defaultConfig) {
         dfd.resolve('OK');
         return res;
     };
-    
-    me.updateServiceConfig = function(yaioCommonApiConfig) {
+
+    /**
+     * update my config (this instance of StaticNodeDataConfig)
+     * @param {Object} yaioCommonApiConfig  Common Api Config from yaio-server
+     */
+    me.configureDataService = function(yaioCommonApiConfig) {
     };
 
     me.exportNodeActionResponseJSONById = function(nodeId) {
@@ -76,6 +93,10 @@ Yaio.StaticNodeData = function(appBase, config, defaultConfig) {
      * Service-Funktions (webservice)
      *****************************************
      *****************************************/
+
+    /**
+     * @inheritdoc
+     */
     me._createAccessManager = function() {
         return Yaio.StaticAccessManager(me.appBase, me.config);
     };
@@ -111,10 +132,23 @@ Yaio.StaticNodeData = function(appBase, config, defaultConfig) {
         me.flgDataLoaded = true;
     };
 
+    /**
+     * TODO
+     * @param nodeId
+     * @param flgCopy
+     * @private
+     */
     me._getNodeDataById = function(nodeId, flgCopy) {
         return me.appBase.get('YaioStaticNodeDataStore').getNodeDataById(nodeId, flgCopy);
     };
 
+    /**
+     * TODO
+     * @param nodeId
+     * @param flgCopy
+     * @returns {Array}
+     * @private
+     */
     me._getParentIdHierarchyById = function(nodeId, flgCopy) {
         if (flgCopy) {
             return JSON.parse(JSON.stringify(me._getParentIdHierarchyById(nodeId, false)));
@@ -129,6 +163,13 @@ Yaio.StaticNodeData = function(appBase, config, defaultConfig) {
         return parentIdHirarchy;
     };
 
+    /**
+     * TODO
+     * @param nodeId
+     * @param flgCopy
+     * @returns {Array}
+     * @private
+     */
     me._getChildNodesById = function(nodeId, flgCopy) {
         // check for node
         var node = me._getNodeDataById(nodeId, false);
@@ -144,7 +185,13 @@ Yaio.StaticNodeData = function(appBase, config, defaultConfig) {
         
         return childNodes;
     };
-    
+
+    /**
+     * TODO
+     * @param nodeId
+     * @returns {{state: string, stateMsg: string, node, parentIdHierarchy: Array, childNodes: Array}}
+     * @private
+     */
     me._getNodeActionResponseById = function(nodeId) {
         // extract data
         var nodeData = me._getNodeDataById(nodeId, true);
@@ -174,6 +221,12 @@ Yaio.StaticNodeData = function(appBase, config, defaultConfig) {
         return nodeActionResponse;
     };
 
+    /**
+     * TODO
+     * @param nodeId
+     * @returns {{state: string, stateMsg: string, node, parentIdHierarchy: Array}}
+     * @private
+     */
     me._exportNodeActionResponseById = function(nodeId) {
         // extract data
         var nodeData = me._exportNodeJSONById(nodeId);
@@ -194,6 +247,11 @@ Yaio.StaticNodeData = function(appBase, config, defaultConfig) {
         return nodeActionResponse;
     };
 
+    /**
+     * TODO
+     * @param nodeId
+     * @private
+     */
     me._exportNodeJSONById = function(nodeId) {
         // extract data
         var node = me._getNodeDataById(nodeId, true);
@@ -206,10 +264,13 @@ Yaio.StaticNodeData = function(appBase, config, defaultConfig) {
         return node;
     };
 
-    me._yaioCallMoveNode = function(fancynode, newParentKey, newPos, json) {
-        //var msg = '_yaioCallMoveNode for fancynode:' + fancynode.key + ' newParentKey:' + newParentKey + ' newPos:' + newPos;
+    /**
+     * @inheritdoc
+     */
+    me._moveNode = function(nodeId, newParentKey, newPos) {
+        //var msg = '_moveNode for nodeId:' + nodeId + ' newParentKey:' + newParentKey + ' newPos:' + newPos;
 
-        var node = me.appBase.get('YaioStaticNodeDataStore').moveNode(fancynode, newParentKey, newPos, json);
+        var node = me.appBase.get('YaioStaticNodeDataStore').moveNode(nodeId, newParentKey, newPos);
 
         // create response for
         var nodeActionResponse = me._getNodeActionResponseById(node.sysUID);
@@ -221,7 +282,10 @@ Yaio.StaticNodeData = function(appBase, config, defaultConfig) {
         return res;
     };
 
-    me._yaioCallRemoveNode = function(nodeId) {
+    /**
+     * @inheritdoc
+     */
+    me._deleteNode = function(nodeId) {
         var node = me._getNodeDataById(nodeId, true);
         me.appBase.get('YaioStaticNodeDataStore').removeNodeById(nodeId);
         
@@ -234,9 +298,12 @@ Yaio.StaticNodeData = function(appBase, config, defaultConfig) {
 
         return res;
     };
-    
-    me._yaioCallLoadSymLinkData = function(basenode, fancynode) {
-        var msg = '_yaioCallLoadSymLinkData for node:' + basenode.sysUID + ' symlink:' + basenode.symLinkRef + ' fancynode:' + fancynode.key;
+
+    /**
+     * @inheritdoc
+     */
+    me._getNodeForSymLink = function(basenode) {
+        var msg = '_getNodeForSymLink for node:' + basenode.sysUID + ' symlink:' + basenode.symLinkRef;
         console.log(msg + ' START');
         var nodeActionResponse = me._getNodeActionResponseById(basenode.symLinkRef);
 
@@ -246,9 +313,12 @@ Yaio.StaticNodeData = function(appBase, config, defaultConfig) {
 
         return res;
     };
-    
-    me._yaioCallLoadNodeById = function(nodeId, options) {
-        var msg = '_yaioCallLoadNodeById node: ' + nodeId + ' options:' + options;
+
+    /**
+     * @inheritdoc
+     */
+    me._getNodeById = function(nodeId, options) {
+        var msg = '_getNodeById node: ' + nodeId + ' options:' + options;
         console.log(msg + ' START');
         
         // mock the ajax-request
@@ -264,9 +334,12 @@ Yaio.StaticNodeData = function(appBase, config, defaultConfig) {
         // do http
         return ajaxCall();
     };
-    
-    me._yaioCallSaveNode = function(nodeObj, options) {
-        var msg = '_yaioCallSaveNode node: ' + options.mode + ' ' + nodeObj.sysUID;
+
+    /**
+     * @inheritdoc
+     */
+    me._saveNode = function(nodeObj, options) {
+        var msg = '_saveNode node: ' + options.mode + ' ' + nodeObj.sysUID;
         console.log(msg + ' START:', nodeObj);
 
         var node = me.appBase.get('YaioStaticNodeDataStore').saveNode(nodeObj, options);
@@ -285,8 +358,11 @@ Yaio.StaticNodeData = function(appBase, config, defaultConfig) {
         return ajaxCall();
     };
 
-    me._yaioCallFulltextSearch = function(searchOptions) {
-        var msg = '_yaioCallFulltextSearch searchOptions: ' + searchOptions;
+    /**
+     * @inheritdoc
+     */
+    me._searchNode = function(searchOptions) {
+        var msg = '_searchNode searchOptions: ' + searchOptions;
         
         var searchResponse = me.appBase.get('YaioStaticNodeDataStore').fulltextSearch(searchOptions);
         
@@ -304,8 +380,11 @@ Yaio.StaticNodeData = function(appBase, config, defaultConfig) {
         return ajaxCall();
     };
 
-    me._yaioCallLogin = function(credentials) {
-        var msg = '_yaioCallLogin for credentials:' + credentials;
+    /**
+     * @inheritdoc
+     */
+    me._loginToService = function(credentials) {
+        var msg = '_loginToService for credentials:' + credentials;
         console.log(msg + ' START');
 
         // load data
@@ -321,9 +400,12 @@ Yaio.StaticNodeData = function(appBase, config, defaultConfig) {
         // do http
         return ajaxCall();
     };
-    
-    me._yaioCallLogout = function(session) {
-        var msg = '_yaioCallLogout for session' + session;
+
+    /**
+     * @inheritdoc
+     */
+    me._logoutFromService = function(session) {
+        var msg = '_logoutFromService for session' + session;
         console.log(msg + ' START');
 
         // load data
@@ -339,9 +421,12 @@ Yaio.StaticNodeData = function(appBase, config, defaultConfig) {
         // do http
         return ajaxCall();
     };
-    
-    me._yaioCallCheckUser = function(session) {
-        var msg = '_yaioCallCheckUser for session:' + session;
+
+    /**
+     * @inheritdoc
+     */
+    me._checkSession = function(session) {
+        var msg = '_checkSession for session:' + session;
         console.log(msg + ' START');
 
         // load data

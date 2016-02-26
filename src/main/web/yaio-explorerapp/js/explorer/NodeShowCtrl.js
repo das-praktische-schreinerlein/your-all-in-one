@@ -87,7 +87,7 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
                 if (activeNodeId) {
                     loadOptions.loadActiveNodeIdHandler = function () {
                         console.log('start loading activenode:' + activeNodeId);
-                        return yaioUtils.getService('YaioNodeData').yaioDoLoadNodeById(activeNodeId, {})
+                        return yaioUtils.getService('YaioNodeData').getNodeById(activeNodeId, {})
                             .then(function sucess(angularResponse) {
                                 // handle success
                                 $scope.loadActiveNodeIdSuccessHandler(activeNodeId, {}, angularResponse.data);
@@ -106,7 +106,7 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
 
                 // load data
                 console.log('NodeShowCtrl - processing nodeId=' + nodeId + ' activeNodeId=' + activeNodeId);
-                return yaioUtils.getService('YaioNodeData').yaioDoLoadNodeById(nodeId, loadOptions)
+                return yaioUtils.getService('YaioNodeData').getNodeById(nodeId, loadOptions)
                     .then(function sucess(angularResponse) {
                         // handle success
                         $scope.loadCurrentNodeIdSuccessHandler(nodeId, loadOptions, angularResponse.data);
@@ -151,7 +151,7 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
             nodeIdHierarchy.push(yaioNodeActionResponse.node.sysUID);
             
             // open Hierarchy
-            yaioUtils.getService('YaioExplorerAction').openNodeHierarchy('#tree', nodeIdHierarchy);
+            yaioUtils.getService('YaioExplorerAction').openNodeHierarchyForTreeId('#tree', nodeIdHierarchy);
         } else {
             // error
             yaioUtils.getService('Logger').logError('error loading activenode:' + yaioNodeActionResponse.stateMsg
@@ -216,7 +216,7 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
      */
     $scope.exportAsOverview = function() {
         console.log('exportAsOverview');
-        yaioUtils.getService('YaioExplorerAction').yaioExportExplorerLinesAsOverview();
+        yaioUtils.getService('YaioExplorerAction').openClipBoardWithCurrentViewAsOverview();
         return false;
     };
 
@@ -225,7 +225,7 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
      */
     $scope.snapshot = function() {
         console.log('snapshot');
-        yaioUtils.getService('YaioExplorerAction').yaioSnapshot($scope.node);
+        yaioUtils.getService('YaioExplorerAction').openNewInfoNodeWithCurrentViewAsSnapshotForParent($scope.node);
         return false;
     };
 
@@ -234,7 +234,7 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
      */
     $scope.openSubNodes = function() {
         console.log('openSubNodes:' + ' level:' + $scope.config.treeOpenLevel);
-        yaioUtils.getService('YaioExplorerAction').yaioOpenSubNodesForTree('#tree', $scope.config.treeOpenLevel);
+        yaioUtils.getService('YaioExplorerAction').openSubNodesForTreeId('#tree', $scope.config.treeOpenLevel);
         return false;
     };
 

@@ -167,7 +167,7 @@ yaioApp.controller('NodeSearchCtrl', function($rootScope, $scope, $location, $ro
 
         // search data
         var searchOptions = $scope.searchOptions;
-        return yaioUtils.getService('YaioNodeData').yaioDoFulltextSearch(searchOptions)
+        return yaioUtils.getService('YaioNodeData').searchNode(searchOptions)
             .then(function(angularResponse) {
                 // success handler
                 $scope.doFulltextSearchSuccessHandler(searchOptions, angularResponse.data);

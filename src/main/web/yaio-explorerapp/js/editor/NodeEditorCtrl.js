@@ -113,11 +113,13 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
     $scope.selectCreateFromTemplate = function() {
         // create new node by template
         var newParentKey = $scope.nodeForEdit.sysUID;
-        if (!yaioUtils.getService('DataUtils').isEmpty($scope.nodeForEdit.createFromTemplate)) {
-            var json = JSON.stringify({parentNode: newParentKey});
-            yaioUtils.getService('YaioNodeData').yaioDoCopyNode({
-                key: $scope.nodeForEdit.createFromTemplate,
-                sysUID: $scope.nodeForEdit.createFromTemplate}, newParentKey, json);
+        var srcId = $scope.nodeForEdit.createFromTemplate;
+        if (!yaioUtils.getService('DataUtils').isEmpty(srcId)) {
+            yaioUtils.getService('YaioNodeData').copyNode(srcId, newParentKey)
+                .done(function(yaioNodeActionResponse, textStatus, jqXhr ) {
+                    yaioUtils.getService('YaioNodeDataRender')._patchNodeSuccessHandler(srcId, yaioNodeActionResponse,
+                        textStatus, jqXhr);
+                });
             yaioUtils.getService('YaioEditor').yaioCloseNodeEditor();
             return false;
         }
@@ -127,7 +129,7 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
      * load available templates into form
      */
     $scope.loadAvailiableTemplates = function() {
-        yaioUtils.getService('YaioNodeData').yaioDoLoadAvailiableTemplates()
+        yaioUtils.getService('YaioNodeData').getAvailableTemplates()
             .then(function sucess(angularResponse) {
                     // handle success
                     $scope.availiableSystemTemplates = angularResponse.data.systemTemplates;
@@ -350,7 +352,8 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
                         var $formField = $('#' + options.formName).find('*[name="' + violation.path + '"]');
                         if (($formField.length > 0) && ($formField.is(':visible'))) {
                             // formfield is shown by showErrors
-                            console.log(msg + ' MAP violation ' + violation + ' = ' + violation.path + ':' + violation.message + ' to ' + options.formName + ' id=' + $($formField).attr('id'));
+                            console.log(msg + ' MAP violation ' + violation + ' = ' + violation.path + ':' +
+                                violation.message + ' to ' + options.formName + ' id=' + $($formField).attr('id'));
                         } else {
                             // another error: show userMessage
                             userMessage += '<br>' + violation.path + ':' + violation.message;
@@ -380,7 +383,7 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
                 sysUID: $scope.nodeForEdit.sysUID,
                 uploadFile: $scope.uploadFile
             };
-        return yaioUtils.getService('YaioNodeData').yaioDoSaveNode(nodeObj, options)
+        return yaioUtils.getService('YaioNodeData').saveNode(nodeObj, options)
             .then(function success(angularReponse) {
                     // handle success
                     return yaioSaveNodeSuccessHandler(nodeObj, options, angularReponse.data);

@@ -32,7 +32,13 @@ Yaio.ServerNodeData = function(appBase, config, defaultConfig) {
      */
     me._init = function() {
     };
-    
+
+    /**
+     * load the data of the node (own, parent, children)
+     * use promise as described on https://github.com/mar10/fancytree/wiki/TutorialLoadData#user-content-use-a-deferred-promise
+     * @param {String} nodeId     id of the node to load data for
+     * @returns {JQueryPromise<T>|JQueryPromise<*>|Object}    Object or JQueryPromise for FancyTree
+     */
     me.loadNodeData = function(nodeId) {
         console.log('load data for node:' + nodeId);
         return { 
@@ -40,15 +46,26 @@ Yaio.ServerNodeData = function(appBase, config, defaultConfig) {
             cache: false 
         };
     };
-    
+
+    /**
+     * connect the dataservice
+     * - load config from server
+     * - updateServiceConfig
+     * - updateAppConfig
+     * @returns {JQueryPromise<T>|JQueryPromise<*>}    promise if connect succeed or failed
+     */
     me.connectService = function() {
         var res = me._loadConfig();
         return res;
     };
-    
-    me.updateServiceConfig = function(yaioCommonApiConfig) {
+
+    /**
+     * update my config (this instance of ServerNodeDataConfig)
+     * @param {Object} yaioCommonApiConfig  Common Api Config from yaio-server
+     */
+    me.configureDataService = function(yaioCommonApiConfig) {
         if (yaioCommonApiConfig) {
-            var msg = 'updateServiceConfig for yaio';
+            var msg = 'configureService for yaio';
             console.log(msg + ' with:', yaioCommonApiConfig);
             
             // base
@@ -79,23 +96,32 @@ Yaio.ServerNodeData = function(appBase, config, defaultConfig) {
      * Service-Funktions (webservice)
      *****************************************
      *****************************************/
+
+    /**
+     * @inheritdoc
+     */
     me._createAccessManager = function() {
         return Yaio.ServerAccessManager(me.appBase, me.config);
     };
-    
+
+    /**
+     * TODO
+     * @returns {JQueryPromise<T>|JQueryPromise<*>}
+     * @private
+     */
     me._loadConfig = function() {
         // return promise
         var dfd = new $.Deferred();
         var res = dfd.promise();
 
         // load config from server
-        var resConfig = me._yaioCallLoadConfig();
+        var resConfig = me._loadConfigFromServer();
         resConfig.done(function(yaioCommonApiConfig, textStatus, jqXhr ) {
             var msg = '_loadConfig for yaio';
             console.log(msg + ' done');
             // update config
-            me.updateServiceConfig(yaioCommonApiConfig);
-            me.updateAppConfig();
+            me.configureDataService(yaioCommonApiConfig);
+            me.reconfigureBaseApp();
             
             // resolve promise
             dfd.resolve('OK');
@@ -103,12 +129,17 @@ Yaio.ServerNodeData = function(appBase, config, defaultConfig) {
 
         return res;
     };
-    
-    me._yaioCallLoadConfig = function() {
+
+    /**
+     * TODO
+     * @returns {*|JQueryXHR|{xhrFields}}
+     * @private
+     */
+    me._loadConfigFromServer = function() {
         var svcLogger = me.appBase.get('Logger');
 
         var url = me.config.configUrl;
-        var msg = '_yaioCallLoadConfig for yaio:' + url;
+        var msg = '_loadConfigFromServer for yaio:' + url;
         console.log(msg + ' START');
         return me.$.ajax({
             headers: {
@@ -131,26 +162,40 @@ Yaio.ServerNodeData = function(appBase, config, defaultConfig) {
             }
         });
     };
-    
-    me._yaioCallUpdateNode = function(fancynode, json) {
-        var url = me.config.restUpdateUrl + fancynode.key;
-        return me._yaioCallPatchNode(fancynode, url, json);
-    };
-    
-    me._yaioCallMoveNode = function(fancynode, newParentKey, newPos, json) {
-        var url = me.config.restMoveUrl+ fancynode.key + '/' + newParentKey + '/' + newPos;
-        return me._yaioCallPatchNode(fancynode, url, json);
+
+    /**
+     * @inheritdoc
+     */
+    me._updateNode = function(nodeId, json) {
+        var url = me.config.restUpdateUrl + nodeId;
+        return me._patchNode(nodeId, url, json);
     };
 
-    me._yaioCallCopyNode = function(fancynode, newParentKey, json) {
-        var url = me.config.restCopyUrl+ fancynode.key + '/' + newParentKey;
-        return me._yaioCallPatchNode(fancynode, url, json);
+    /**
+     * @inheritdoc
+     */
+    me._moveNode = function(nodeId, newParentKey, newPos) {
+        var json = JSON.stringify({parentNode: newParentKey});
+        var url = me.config.restMoveUrl + nodeId + '/' + newParentKey + '/' + newPos;
+        return me._patchNode(nodeId, url, json);
     };
 
-    me._yaioCallPatchNode = function(fancynode, url, json) {
+    /**
+     * @inheritdoc
+     */
+    me._copyNode = function(nodeId, newParentKey) {
+        var json = JSON.stringify({parentNode: newParentKey});
+        var url = me.config.restCopyUrl + nodeId + '/' + newParentKey;
+        return me._patchNode(nodeId, url, json);
+    };
+
+    /**
+     * @inheritdoc
+     */
+    me._patchNode = function(nodeId, url, json) {
         var svcLogger = me.appBase.get('Logger');
 
-        var msg = '_yaioCallPatchNode for fancynode:' + fancynode.key;
+        var msg = '_patchNode for nodeId:' + nodeId;
         console.log(msg + ' CALL: ' + 'url: '+ url + ' with:' + json);
         return me.$.ajax({
             headers : {
@@ -167,18 +212,21 @@ Yaio.ServerNodeData = function(appBase, config, defaultConfig) {
             error : function(jqXHR, textStatus, errorThrown) {
                 // log the error to the console
                 svcLogger.logError('The following error occured: ' + textStatus + ' ' + errorThrown, true);
-                svcLogger.logError('cant save fancynode:' + fancynode.key + ' error:' + textStatus);
+                svcLogger.logError('cant save nodeId:' + nodeId + ' error:' + textStatus);
             },
             complete : function() {
-                console.log('update fancynode:' + fancynode.key + ' ran');
+                console.log('update nodeId:' + nodeId + ' ran');
             }
         });
     };
-    
-    me._yaioCallLoadSymLinkData = function(basenode, fancynode) {
+
+    /**
+     * @inheritdoc
+     */
+    me._getNodeForSymLink = function(basenode) {
         var svcLogger = me.appBase.get('Logger');
 
-        var msg = '_yaioCallLoadSymLinkData for node:' + basenode.sysUID + ' symlink:' + basenode.symLinkRef + ' fancynode:' + fancynode.key;
+        var msg = '_getNodeForSymLink for node:' + basenode.sysUID + ' symlink:' + basenode.symLinkRef;
         console.log(msg + ' START');
         var url = me.config.restSymLinkUrl + basenode.symLinkRef;
         return me.$.ajax({
@@ -202,11 +250,14 @@ Yaio.ServerNodeData = function(appBase, config, defaultConfig) {
             }
         });
     };
-    
-    me._yaioCallRemoveNode = function(nodeId) {
+
+    /**
+     * @inheritdoc
+     */
+    me._deleteNode = function(nodeId) {
         var svcLogger = me.appBase.get('Logger');
 
-        var msg = '_yaioCallRemoveNode node:' + nodeId;
+        var msg = '_deleteNode node:' + nodeId;
         var url = me.config.restRemoveUrl + nodeId;
         console.log(msg + ' START: with:' + url);
         return me.$.ajax({
@@ -231,10 +282,13 @@ Yaio.ServerNodeData = function(appBase, config, defaultConfig) {
         });
     };
 
-    me._yaioCallSaveNode = function(nodeObj, options) {
+    /**
+     * @inheritdoc
+     */
+    me._saveNode = function(nodeObj, options) {
         var svcLogger = me.appBase.get('Logger');
 
-        var msg = '_yaioCallSaveNode node: ' + options.mode + ' ' + nodeObj.sysUID;
+        var msg = '_saveNode node: ' + options.mode + ' ' + nodeObj.sysUID;
         console.log(msg + ' START');
         // branch depending on mode
         var method, url, json, ajaxCall, formData;
@@ -318,8 +372,11 @@ Yaio.ServerNodeData = function(appBase, config, defaultConfig) {
         return ajaxCall();
     };
 
-    me._yaioCallLoadNodeById = function(nodeId, options) {
-        var msg = '_yaioCallLoadNodeById node: ' + nodeId + ' options:' + options;
+    /**
+     * @inheritdoc
+     */
+    me._getNodeById = function(nodeId, options) {
+        var msg = '_getNodeById node: ' + nodeId + ' options:' + options;
         console.log(msg + ' START');
         var restBaseUrl = me.config.restShowUrl;
         if (options.flgNodeByAllId) {
@@ -334,9 +391,12 @@ Yaio.ServerNodeData = function(appBase, config, defaultConfig) {
         console.log(msg + ' CALL url:' + url);
         return ajaxCall();
     };
-    
-    me._yaioCallFulltextSearch = function(searchOptions) {
-        var msg = '_yaioCallFulltextSearch searchOptions: ' + searchOptions;
+
+    /**
+     * @inheritdoc
+     */
+    me._searchNode = function(searchOptions) {
+        var msg = '_searchNode searchOptions: ' + searchOptions;
         var uri = encodeURI(searchOptions.curPage)
             + '/' + encodeURI(searchOptions.pageSize)
             + '/' + encodeURI(searchOptions.searchSort)
@@ -379,8 +439,11 @@ Yaio.ServerNodeData = function(appBase, config, defaultConfig) {
         return ajaxCall();
     };
 
-    me._yaioCallLogin = function(credentials) {
-        var msg = '_yaioCallLogin for credentials:' + credentials;
+    /**
+     * @inheritdoc
+     */
+    me._loginToService = function(credentials) {
+        var msg = '_loginToService for credentials:' + credentials;
         console.log(msg + ' START');
 
         // load data
@@ -398,9 +461,12 @@ Yaio.ServerNodeData = function(appBase, config, defaultConfig) {
         console.log(msg + ' CALL url:' + url);
         return ajaxCall();
     };
-    
-    me._yaioCallLogout = function(session) {
-        var msg = '_yaioCallLogout for session' + session;
+
+    /**
+     * @inheritdoc
+     */
+    me._logoutFromService = function(session) {
+        var msg = '_logoutFromService for session' + session;
         console.log(msg + ' START');
 
         // load data
@@ -413,9 +479,12 @@ Yaio.ServerNodeData = function(appBase, config, defaultConfig) {
         console.log(msg + ' CALL url:' + url);
         return ajaxCall();
     };
-    
-    me._yaioCallCheckUser = function(session) {
-        var msg = '_yaioCallCheckUser for session:' + session;
+
+    /**
+     * @inheritdoc
+     */
+    me._checkSession = function(session) {
+        var msg = '_checkSession for session:' + session;
         console.log(msg + ' START');
 
         // load data

@@ -28,7 +28,7 @@ Yaio.ServerAccessManager = function(appBase, config, defaultConfig) {
     var me = Yaio.AccessManager(appBase, config, defaultConfig);
 
     /**
-     * initialize the object
+     * initialize/configure AccessManager
      */
     me._init = function() {
         // urls
