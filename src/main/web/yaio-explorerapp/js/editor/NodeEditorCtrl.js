@@ -117,7 +117,7 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
         if (!yaioUtils.getService('DataUtils').isEmpty(srcId)) {
             yaioUtils.getService('YaioNodeData').copyNode(srcId, newParentKey)
                 .done(function(yaioNodeActionResponse, textStatus, jqXhr ) {
-                    yaioUtils.getService('YaioNodeDataRender')._patchNodeSuccessHandler(srcId, yaioNodeActionResponse,
+                    yaioUtils.getService('YaioExplorerAction').patchNodeSuccessHandler(srcId, yaioNodeActionResponse,
                         textStatus, jqXhr);
                 });
             yaioUtils.getService('YaioEditor').yaioCloseNodeEditor();
