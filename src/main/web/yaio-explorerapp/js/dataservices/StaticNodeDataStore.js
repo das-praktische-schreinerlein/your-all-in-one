@@ -78,11 +78,19 @@ Yaio.StaticNodeDataStore = function(appBase, config, defaultConfig) {
         me.mapSorts.workflowStateUp = 'workflowState asc';
         me.mapSorts.workflowStateDown = 'workflowState desc';
     };
-    
+
+
+    /**
+     * reset the loaded nodelist
+     */
     me.resetNodeList = function() {
         me.nodeList = [];
     };
 
+    /**
+     * load the static node-data (with all children) from node into storage
+     * @param {Object} node             node-data with child-hierarchy
+     */
     me.loadStaticNodeData = function (node) {
         if (! node) {
             return;
@@ -101,7 +109,13 @@ Yaio.StaticNodeDataStore = function(appBase, config, defaultConfig) {
             node.childNodes[i] = childNode.sysUID;
         }
     };
-    
+
+    /**
+     * get node data fro nodeId from storage
+     * @param {String} nodeId         nodeId to read data for
+     * @param {Boolean} flgCopy       return a copy or origin
+     * @returns {Object}              node-data for nodeid
+     */
     me.getNodeDataById = function(nodeId, flgCopy) {
         var node;
         if (flgCopy) {
@@ -116,6 +130,13 @@ Yaio.StaticNodeDataStore = function(appBase, config, defaultConfig) {
         return node;
     };
 
+    /**
+     * move node to newParentKey at position newPos
+     * @param {String} nodeId                             nodeId to move
+     * @param {String} newParentKey                       nodeId of the new parent
+     * @param {int} newPos                                sort-position in parents childList
+     * @returns {Object}                                  node with new data
+     */
     me.moveNode = function(nodeId, newParentKey, newPos) {
         var msg = 'moveNode for nodeId:' + nodeId + ' newParentKey:' + newParentKey + ' newPos:' + newPos;
         var node = me.getNodeDataById(nodeId, false);
@@ -164,6 +185,10 @@ Yaio.StaticNodeDataStore = function(appBase, config, defaultConfig) {
         return node;
     };
 
+    /**
+     * delete node fro storage
+     * @param {String} nodeId                             nodeId to delete
+     */
     me.removeNodeById = function(nodeId) {
         //var msg = 'removeNode node:' + nodeId;
 
@@ -187,6 +212,12 @@ Yaio.StaticNodeDataStore = function(appBase, config, defaultConfig) {
         me.nodeList.splice(me.nodeList.indexOf(nodeId), 1);
     };
 
+    /**
+     * save (create/update) node
+     * @param {Object} nodeObj      node with values to save
+     * @param {Object} options      options
+     * @returns {Object}            node-obj
+     */
     me.saveNode = function(nodeObj, options) {
         var svcLogger = me.appBase.get('Logger');
 
@@ -255,6 +286,11 @@ Yaio.StaticNodeDataStore = function(appBase, config, defaultConfig) {
         return node;
     };
 
+    /**
+     * search node
+     * @param {Object} searchOptions  filters and sorts...
+     * @returns {Object}              mocked yaioSearchResponse
+     */
     me.fulltextSearch = function(searchOptions) {
         var msg = 'fulltextSearch searchOptions: ' + searchOptions;
 
@@ -309,7 +345,7 @@ Yaio.StaticNodeDataStore = function(appBase, config, defaultConfig) {
             nodeId = searchResultIds[idx];
             tmpSearchResult.push(me.getNodeDataById(nodeId, true));
         }
-        me.orderBy(tmpSearchResult, searchConfig);
+        me._orderBy(tmpSearchResult, searchConfig);
         
         // paginate and read current searchresults
         var start = (searchOptions.curPage - 1) * searchOptions.pageSize;
@@ -332,7 +368,12 @@ Yaio.StaticNodeDataStore = function(appBase, config, defaultConfig) {
         return searchResponse;
     };
 
-    me.dynamicSort = function (property) {
+    /**
+     * create a dynamic sort-function
+     * @param {Object} property  property to sort the values by (name asc|desc)
+     * @returns {function}       function (a, b) which compares a.property and b.property
+     */
+    me._dynamicSort = function (property) {
         var sortOrder = 1;
         if (property.search(' desc') > 0) {
             sortOrder = -1;
@@ -351,23 +392,33 @@ Yaio.StaticNodeDataStore = function(appBase, config, defaultConfig) {
             return result;
         };
     };
-    
-    me.dynamicSortMultiple = function (props) {
+
+    /**
+     * create a dynamic sort-function for multiple "sorts sort1asc, sort2 desc"
+     * @param {Array} props   array of sort-properties to sort the values by (name asc|desc)
+     * @returns {function}    function (a, b) which compares a.propert1 and b.propert1 | a.propert2 and b.propert2
+     */
+    me._dynamicSortMultiple = function (props) {
         return function (obj1, obj2) {
             var i = 0, result = 0, numberOfProperties = props.length;
             /* try getting a different result from 0 (equal)
              * as long as we have extra properties to compare
              */
             while(result === 0 && i < numberOfProperties) {
-                result = me.dynamicSort(props[i])(obj1, obj2);
+                result = me._dynamicSort(props[i])(obj1, obj2);
                 i++;
             }
             return result;
         };
     };
-    
-    me.orderBy = function(list, sortConfig) {
-        list.sort(me.dynamicSortMultiple(sortConfig));
+
+    /**
+     * sort the list by sortConfig
+     * @param {Array} list        list of object to compare
+     * @param {Array} sortConfig  list of obj-properties to sort by
+     */
+    me._orderBy = function(list, sortConfig) {
+        list.sort(me._dynamicSortMultiple(sortConfig));
     };
 
     
