@@ -291,20 +291,24 @@ public class ConverterUtils {
                     String url = yaioInstance.get(Configurator.CONST_PROPNAME_YAIOINSTANCES_URL);
                     String desc = yaioInstance.get(Configurator.CONST_PROPNAME_YAIOINSTANCES_DESC);
                     res += "// add " + url + "\n";
-                    res += "yaioAppBase.configureService(\"Yaio.ServerNodeDataService_" + url + "\", function() { return Yaio.ServerNodeDataService(yaioAppBase, Yaio.ServerNodeDataServiceConfig(\"" + url + "\", \"" + name + "\",  \"" + desc + "\")); });\n";
-                    res += "yaioAppBase.configureService(\"YaioServerNodeData_" + url + "\", function() { return yaioAppBase.get(\"Yaio.ServerNodeDataService_" + url + "\"); });\n";
-                    res += "yaioAppBase.config.datasources.push(\"YaioServerNodeData_" + url + "\");\n";
+                    res += "yaioAppBase.configureService('Yaio.ServerNodeDBDriver_" + url + "', function() { return Yaio.ServerNodeDBDriver(yaioAppBase, Yaio.ServerNodeDBDriverConfig('" + url + "', '" + name + "',  '" + desc + "')); });\n";
+                    res += "yaioAppBase.configureService('YaioServerNodeDBDriver_" + url + "', function() { return yaioAppBase.get('Yaio.ServerNodeDBDriver_" + url + "'); });\n";
+                    res += "yaioAppBase.config.datasources.push('YaioServerNodeDBDriver_" + url + "');\n";
+                    res += "yaioAppBase.get('YaioDataSourceManager').addConnection('YaioServerNodeDBDriver_" + url + "', function () { return yaioAppBase.get('YaioServerNodeDBDriver_" + url + "'); });\n" ;
                     addResBaseUrls.add(url);
                 }
                 pattern = Pattern.compile("\\/\\/ CONFIGUREDATASOURCES_SNIP.*\\/\\/ CONFIGUREDATASOURCES_SNAP", Pattern.DOTALL);
                 replacement = "// CONFIGUREDATASOURCES_SNIP\n"
-                                + "yaioAppBase.configureService(\"Yaio.StaticNodeDataService\", function() { return Yaio.StaticNodeDataService(yaioAppBase, Yaio.StaticNodeDataServiceConfig(\"\", \"Statische InApp-Daten für '" + sysUID + "'\", \"Die statisch in der App hinterlegten Daten werden geladen.\")); });\n"
-                                + "yaioAppBase.config.datasources.push(\"YaioStaticNodeData\");\n" 
-                                + "yaioAppBase.config.datasources.push(\"YaioFileNodeData\");\n" 
+                                + "yaioAppBase.configureService('Yaio.StaticNodeDBDriver', function() { return Yaio.StaticNodeDBDriver(yaioAppBase, Yaio.StaticNodeDBDriverConfig('', 'Statische InApp-Daten für \"" + sysUID + "\"', 'Die statisch in der App hinterlegten Daten werden geladen.')); });\n"
+                                + "yaioAppBase.config.datasources.push('YaioStaticNodeDBDriver');\n" 
+                                + "yaioAppBase.get('YaioDataSourceManager').addConnection('YaioStaticNodeDBDriver', function () { return yaioAppBase.get('YaioStaticNodeDBDriver'); });\n"
+                                + "yaioAppBase.config.datasources.push('YaioFileNodeDBDriver');\n" 
+                                + "yaioAppBase.get('YaioDataSourceManager').addConnection('YaioFileNodeDBDriver', function () { return yaioAppBase.get('YaioFileNodeDBDriver'); });\n"
                                 // skip localhost-server on export 
-                                + (!flgExport ? "yaioAppBase.config.datasources.push(\"YaioServerNodeData_Local\");\n" : "") 
+                                + (!flgExport ? "yaioAppBase.config.datasources.push('YaioServerNodeDBDriver_Local');\n" : "") 
+                                + (!flgExport ? "yaioAppBase.get('YaioDataSourceManager').addConnection('YaioServerNodeDBDriver_Local', function () { return yaioAppBase.get('YaioServerNodeDBDriver_Local'); });\n" : "") 
                                 + "\n" + res + "\n"
-                                + "// CONFIGUREDATASOURCES_SNIP\n";
+                                + "// CONFIGUREDATASOURCES_SNAP\n";
                 matcher = pattern.matcher(content);
                 buffer = new StringBuffer();
                 while (matcher.find()) {
