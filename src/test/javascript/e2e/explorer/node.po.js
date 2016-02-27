@@ -404,17 +404,24 @@ var YAIONodePage = function() {
     me.openNodeEditorAndCreateUrlResNode = function (parentId) {
         var linkCmdCreateNode = $('#cmdCreate' + parentId);
         protractor.utils.waitUntilElementClickable(linkCmdCreateNode, protractor.utils.CONST_WAIT_NODEHIRARCHY);
-        expect(linkCmdCreateNode.getAttribute('id')).toEqual('cmdCreate' + parentId);
 
         // create child for parentId
         linkCmdCreateNode.click();
         protractor.utils.waitUntilElementPresent($(me.inputCreateNodeType), protractor.utils.CONST_WAIT_ELEMENT);
 
+        // select Aufgabe
+        $(me.inputCreateNodeType).sendKeys('Ressource\n');
+
         // set UrlResdata
         var nodeName = 'testUrlRes' + new Date().getTime();
         var inputNameUrlResNode = $(me.inputNameUrlResNode);
-        inputNameUrlReskNode.clear().then(function () {
+        inputNameUrlResNode.clear().then(function () {
             inputNameUrlResNode.sendKeys(nodeName);
+        });
+        var nodeUrl = 'http://bla.blub.de';
+        var inputResLocRefUrlResNode = $(me.inputResLocRefUrlResNode);
+        inputResLocRefUrlResNode.clear().then(function () {
+            inputResLocRefUrlResNode.sendKeys(nodeUrl);
         });
 
         // set desc
