@@ -39,21 +39,12 @@ Yaio.FileLoader = function(appBase) {
     me._init = function() {
     };
 
-    me.loadFile = function (fileName) {
-        var msg = 'loadFile fileName:' + fileName;
-
-        console.log('START ' + msg);
-        var req = me.$.ajax({
-            url : fileName,
-            type : 'GET',
-            complete : function() {
-                console.log('COMPLETE ' + msg);
-            }
-        });
-        
-        return req;
-    };
-
+    /**
+     * load content into containerFile insert it between <!-- REPLACECONTENT_START --> and <!-- REPLACECONTENT_END -->
+     * @param {String} containerFileName             name of the containerFile
+     * @param {String} content                       content
+     * @returns {JQueryPromise<T>|JQueryPromise<*>}  promise if load succeed or failed - resolves with content
+     */
     me.loadContentIntoContainerFile = function(containerFileName, content) {
         var msg = 'loadContentIntoContainerFile containerFileName:' + containerFileName;
 
@@ -62,7 +53,7 @@ Yaio.FileLoader = function(appBase) {
         var res = dfd.promise();
         
         console.log('START ' + msg);
-        me.loadFile(containerFileName)
+        me.appBase.FileUtils.loadFile(containerFileName)
             .then(function doneContainerFile(containerData) {
                 // do replacements
                 containerData = containerData.replace(/<!-- REPLACECONTENT_START -->[\s\S]*<!-- REPLACECONTENT_END -->/gi, 
@@ -83,7 +74,13 @@ Yaio.FileLoader = function(appBase) {
         
         return res;
     };
-        
+
+    /**
+     * load content of contentFileName into containerFile
+     * @param {String} containerFileName             name of the containerFile
+     * @param {String} contentFileName               name of the contentFile to insert into containerFile
+     * @returns {JQueryPromise<T>|JQueryPromise<*>}  promise if load succeed or failed - resolves with content
+     */
     me.loadStaticFileIntoContainerFile = function(containerFileName, contentFileName) {
         var msg = 'loadStaticFileIntoContainerFile containerFileName:' + containerFileName + ' contentFileName:' + contentFileName;
         // create promise
@@ -91,7 +88,7 @@ Yaio.FileLoader = function(appBase) {
         var res = dfd.promise();
         
         console.log('START ' + msg);
-        me.loadFile(contentFileName)
+        me.appBase.FileUtils.loadFile(contentFileName)
             .then(function doneContentFile(contentData) {
                 console.log(msg + ' doneContentFile DONE call loadContentIntoContainerFile');
                 me.loadContentIntoContainerFile(containerFileName, contentData) 
@@ -109,7 +106,12 @@ Yaio.FileLoader = function(appBase) {
         
         return res;
     };
-    
+
+    /**
+     * load content of contentFileName into containerFile: documentation-export.html
+     * @param {String} contentFileName               name of the contentFile to insert into containerFile
+     * @returns {JQueryPromise<T>|JQueryPromise<*>}  promise if load succeed or failed - resolves with content
+     */
     me.loadDocumentationContainerContent = function(contentFileName) {
         var msg = 'loadDocumentationContainerContent contentFileName:' + contentFileName;
         var containerFileName = '../exporttemplates/documentation-export.html';
@@ -134,59 +136,10 @@ Yaio.FileLoader = function(appBase) {
         var target = $link.attr('target');
         me.loadDocumentationContainerContent(contentFileName)
             .then(function doneContentFile(contentData) {
-                me.downloadAsFile($link, contentData, contentFileName, mime, encoding, target);
+                me.appBase.FileUtils.downloadAsFile($link, contentData, contentFileName, mime, encoding, target);
             });
     };
 
-    /**
-     * download the content as file (create response and open in new window)
-     * @param {jQuery} $link     jQuery-instance of the link to add the action
-     * @param {string} data      data to download
-     * @param {string} fileName  filename for save-dialog of the browser
-     * @param {string} mime      mimetype of the file
-     * @param {string} encoding  encoding to set
-     * @param {string} target    link-target (window-name)
-     */
-    me.downloadAsFile = function($link, data, fileName, mime, encoding, target) {
-        if (me.appBase.DataUtils.isUndefined(mime)) {
-            mime = 'application/text';
-        }
-        if (me.appBase.DataUtils.isUndefined(encoding)) {
-            mime = 'uft-8';
-        }
-        if (me.appBase.DataUtils.isUndefined(target)) {
-            target = '_blank';
-        }
-
-        // data URI
-        var dataURI = 'data:' + mime + ';charset=' + encoding + ','
-                + encodeURIComponent(data);
-    
-        // set link
-        var flgSafeMode = 0;
-        if (   (navigator.userAgent.indexOf('Trident') >= 0)
-            || (navigator.userAgent.indexOf('MSIE') >= 0)
-            || flgSafeMode) {
-           // IE or SafeMode
-           var popup = window.open('');
-           if (! popup) {
-               // warn message
-               me.appBase.get('Logger').logError('Leider kann der Download nicht angezeigt werden, da Ihr Popup-Blocker aktiv ist. Beachten Sie die Hinweise im Kopf des Browsers. ', true);
-           } else {
-               // set data to document
-               me.$(popup.document.body).html('<pre>' + me.htmlEscapeTextLazy(data) + '</pre>');
-           }
-           return false;
-       } else {
-            // all expect IE
-            $link.attr({
-                'download' : fileName,
-                'href' : dataURI,
-                'target' : target
-            });
-       }
-    };
-    
     me._init();
     
     return me;

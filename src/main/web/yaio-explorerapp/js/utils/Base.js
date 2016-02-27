@@ -22,11 +22,6 @@
  * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 
-/*****************************************
- *****************************************
- * Service-Funktions (base)
- *****************************************
- *****************************************/
 Yaio.Base = function(appBase) {
     'use strict';
 

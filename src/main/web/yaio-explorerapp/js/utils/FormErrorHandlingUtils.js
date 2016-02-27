@@ -21,9 +21,6 @@
 /** 
  * new function to set form-errors when using input-elements with attribute 'witherrors'
  * and element 'fielderrors' to show the corresponding errors
- * @FeatureDomain                Configuration
- * @FeatureResult                returns new function
- * @FeatureKeywords              GUI Configuration Taglibrary Errorhandling
  */
 yaioApp.factory('setFormErrors', function() {
     'use strict';
@@ -53,9 +50,6 @@ yaioApp.factory('setFormErrors', function() {
 /** 
  * adds the new attribute-directive 'witherrors' to set/show errors from
  * different sources (AngularJS, App, WebServices) for this element
- * @FeatureDomain                Configuration
- * @FeatureResult                returns new directive
- * @FeatureKeywords              GUI Configuration Taglibrary Errorhandling
  */
 yaioApp.directive('withErrors', ['setFormErrors', function(setFormErrors) {
     'use strict';
@@ -91,9 +85,6 @@ yaioApp.directive('withErrors', ['setFormErrors', function(setFormErrors) {
 /** 
  * extend the element with the new attribute-directive 'witherrors' to
  * set/show errors from different sources (AngularJS, App, WebServices) for this element
- * @FeatureDomain                Configuration
- * @FeatureResult                returns new callback
- * @FeatureKeywords              GUI Configuration Taglibrary Errorhandling
  */
 function directiveFieldsWithErrors () {
     'use strict';
@@ -140,9 +131,6 @@ function directiveFieldsWithErrors () {
 /** 
  * extend the element with the new attribute-directive 'witherrors' to
  * set/show errors from different sources (AngularJS, App, WebServices) for this element
- * @FeatureDomain                Configuration
- * @FeatureResult                returns updated directive
- * @FeatureKeywords              GUI Configuration Taglibrary Errorhandling
  */
 yaioApp.directive('input', function() {
     'use strict';
@@ -159,9 +147,6 @@ yaioApp.directive('input', function() {
 /** 
  * adds the new element-directive 'fielderrors' to set/show errors from
  * different sources (AngularJS, App, WebServices) for this element
- * @FeatureDomain                Configuration
- * @FeatureResult                returns new directive
- * @FeatureKeywords              GUI Configuration Taglibrary Errorhandling
  */
 yaioApp.directive('fielderrors', function() {
     'use strict';

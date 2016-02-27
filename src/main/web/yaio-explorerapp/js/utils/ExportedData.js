@@ -21,13 +21,6 @@
  * @copyright                    Copyright (c) 2014, Michael Schreiner
  * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-
-/*****************************************
- *****************************************
- * Servicefunctions for exported documentations
- *****************************************
- *****************************************/
-
 Yaio.ExportedData = function(appBase) {
     'use strict';
 
