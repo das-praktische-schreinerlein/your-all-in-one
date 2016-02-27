@@ -12,15 +12,15 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-Yaio.StaticNodeDataConfig = function(urlBase, name, desc) {
+Yaio.FileNodeDBDriverConfig = function(urlBase, name, desc) {
     'use strict';
 
     // my own instance
     var me = JsHelferlein.ConfigBase();
     
-    me.urlBase                      = '';
-    me.name                         = name || 'Statische InApp-Daten';
-    me.desc                         = desc || 'Die statisch in der App hinterlegten Daten werden geladen.';
+    me.urlBase                      = urlBase || window.location.host;
+    me.name                         = name || ('Dateiupload');
+    me.desc                         = desc || ('Daten werden aus einer Yaio-JSON-Datei geladen.');
     me.plantUmlBaseUrl              = 'http://www.plantuml.com/';
     me.excludeNodePraefix           = 'Sys* *Templ MyStart MyHelp JsUnitTest JsFuncTest JUnitTest';
     me.masterSysUId                 = 'MasterplanMasternode1';

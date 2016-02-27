@@ -21,7 +21,7 @@
  * @copyright                    Copyright (c) 2014, Michael Schreiner
  * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-Yaio.NodeData = function(appBase, config, defaultConfig) {
+Yaio.NodeRepository = function(appBase, config, defaultConfig) {
     'use strict';
 
     // my own instance
@@ -39,18 +39,9 @@ Yaio.NodeData = function(appBase, config, defaultConfig) {
      * @returns {Yaio.AccessManager}    instance of Yaio.AccessManager
      */
     me.getAccessManager = function() {
-        if (! me.AccessManager) {
-            me.AccessManager = me._createAccessManager();
-        }
-        return me.AccessManager;
+        return me.appBase.YaioDataSourceManager.getCurrentConnection().getAccessManager();
     };
     
-    /*****************************************
-     *****************************************
-     * Service-Funktions (webservice)
-     *****************************************
-     *****************************************/
-
     /**
      * load the data of the node (own, parent, children)
      * use promise as described on https://github.com/mar10/fancytree/wiki/TutorialLoadData#user-content-use-a-deferred-promise
@@ -58,16 +49,15 @@ Yaio.NodeData = function(appBase, config, defaultConfig) {
      * @returns {JQueryPromise<T>|JQueryPromise<*>|Object}    Object or JQueryPromise for FancyTree
      */
     me.loadNodeData = function(nodeId) {
-        me.logNotImplemented();
+        return me.appBase.YaioDataSourceManager.getCurrentConnection().loadNodeData(nodeId);
     };
 
     /**
      * connect the dataservice
-     * @abstract
      * @returns {JQueryPromise<T>|JQueryPromise<*>}    promise if connect succeed or failed
      */
     me.connectService = function() {
-        me.logNotImplemented();
+        return me.appBase.YaioDataSourceManager.getCurrentConnection().connectService();
     };
 
     /**
@@ -75,25 +65,14 @@ Yaio.NodeData = function(appBase, config, defaultConfig) {
      * @param {Object} yaioCommonApiConfig  Common Api Config from yaio-server
      */
     me.configureDataService = function(yaioCommonApiConfig) {
-        me.logNotImplemented();
+        return me.appBase.YaioDataSourceManager.getCurrentConnection().configureDataService(yaioCommonApiConfig);
     };
 
     /**
      * update appBase-config (plantUmlBaseUrl, masterSysUId, excludeNodePraefix) with my config (this instance of NodeDataConfig)
      */
     me.reconfigureBaseApp = function() {
-        var msg = 'reconfigureBaseApp';
-        console.log(msg + ' with:', me.config);
-        if (me.config.plantUmlBaseUrl) {
-            me.appBase.config.plantUmlBaseUrl = me.config.plantUmlBaseUrl;
-        }
-        if (me.config.masterSysUId) {
-            me.appBase.config.masterSysUId = me.config.masterSysUId;
-        }
-        if (me.config.excludeNodePraefix) {
-            me.appBase.config.excludeNodePraefix = me.config.excludeNodePraefix;
-        }
-        console.log(msg + ' to:', me.appBase.config);
+        return me.appBase.YaioDataSourceManager.getCurrentConnection().reconfigureBaseApp();
     };
 
 
@@ -278,140 +257,119 @@ Yaio.NodeData = function(appBase, config, defaultConfig) {
     };
 
     /**
-     * implementation of: create an accessmanager for this service
-     * @abstract
-     * @returns {Yaio.AccessManager}    instance of Yaio.AccessManager
-     */
-    me._createAccessManager = function() {
-        me.logNotImplemented();
-    };
-
-    /**
      * implementation of: get symlinked nodedata for basenode
-     * @abstract
      * @param {Object} basenode                           node-data to get symlink-data
      * @returns {JQueryPromise<T>|JQueryDeferred<T>|any}  promise if read succeed or failed with parameters { yaioNodeActionResponse, textStatus, jqXhr}
      */
     me._getNodeForSymLink = function(basenode) {
-        me.logNotImplemented();
+        return me.appBase.YaioDataSourceManager.getCurrentConnection().getNodeForSymLink(basenode);
     };
 
     /**
      * implementation of: update node with values in json
-     * @abstract
      * @param {String} nodeId                             nodeId to update
      * @param {String} json                               json with the update-values
      * @returns {JQueryPromise<T>|JQueryDeferred<T>|any}  promise if update succeed or failed  { yaioNodeActionResponse, textStatus, jqXhr}
      */
     me._updateNode = function(nodeId, json) {
-        me.logNotImplemented();
+        return me.appBase.YaioDataSourceManager.getCurrentConnection().updateNode(nodeId, json);
     };
 
     /**
      * implementation of: move node to newParentKey at position newPos
-     * @abstract
      * @param {String} nodeId                             nodeId to move
      * @param {String} newParentKey                       nodeId of the new parent
      * @param {int} newPos                                sort-position in parents childList
      * @returns {JQueryPromise<T>|JQueryDeferred<T>|any}  promise if update succeed or failed { yaioNodeActionResponse, textStatus, jqXhr}
      */
     me._moveNode = function(nodeId, newParentKey, newPos) {
-        me.logNotImplemented();
+        return me.appBase.YaioDataSourceManager.getCurrentConnection().moveNode(nodeId, newParentKey, newPos);
     };
 
     /**
      * implementation of: copy node to newParentKey
-     * @abstract
      * @param {String} nodeId                             nodeId to copy
      * @param {String} newParentKey                       nodeId of the new parent
      * @returns {JQueryPromise<T>|JQueryDeferred<T>|any}  promise if update succeed or failed { yaioNodeActionResponse, textStatus, jqXhr}
      */
     me._copyNode = function(nodeId, newParentKey) {
-        me.logNotImplemented();
+        return me.appBase.YaioDataSourceManager.getCurrentConnection().copyNode(nodeId, newParentKey);
     };
 
     /**
      * implementation of: patch node
-     * @abstract
      * @param {String} nodeId                             nodeId to copy
      * @param {String} url                                url to call
      * @param {String} json                               json to submit
      * @returns {JQueryPromise<T>|JQueryDeferred<T>|any}  promise if update succeed or failed { yaioNodeActionResponse, textStatus, jqXhr}
      */
     me._patchNode = function(nodeId, url, json) {
-        me.logNotImplemented();
+        return me.appBase.YaioDataSourceManager.getCurrentConnection().patchNode(nodeId, url, json);
     };
 
     /**
      * implementation of delete node
-     * @abstract
      * @param {String} nodeId                             nodeId to delete
      * @returns {JQueryPromise<T>|JQueryDeferred<T>|any}  promise if delete succeed or failed { yaioNodeActionResponse, textStatus, jqXhr}
      */
     me._deleteNode = function(nodeId) {
-        me.logNotImplemented();
+        return me.appBase.YaioDataSourceManager.getCurrentConnection().deleteNode(nodeId);
     };
 
     /**
      * implementation of: save (create/update) node
-     * @abstract
      * @param {Object} nodeObj                            node with values to save
      * @param {Object} options                            options
      * @returns {JQueryPromise<T>|JQueryDeferred<T>|any}  promise if save succeed or failed
      */
     me._saveNode = function(nodeObj, options) {
-        me.logNotImplemented();
+        return me.appBase.YaioDataSourceManager.getCurrentConnection().saveNode(nodeObj, options);
     };
 
     /**
      * implementation of: read node
-     * @abstract
      * @param {String} nodeId                             nodeId to read
      * @param {Object} options                            options
      * @returns {JQueryPromise<T>|JQueryDeferred<T>|any}  promise if read succeed or failed
      */
     me._getNodeById = function(nodeId, options) {
-        me.logNotImplemented();
+        return me.appBase.YaioDataSourceManager.getCurrentConnection().getNodeById(nodeId, options);
     };
 
     /**
      * implementation of: search node
-     * @abstract
      * @param {Object} searchOptions                      filters and sorts...
      * @returns {JQueryPromise<T>|JQueryDeferred<T>|any}  promise if search succeed or failed
      */
     me._searchNode = function(searchOptions) {
-        me.logNotImplemented();
+        return me.appBase.YaioDataSourceManager.getCurrentConnection().searchNode(searchOptions);
     };
 
     /**
      * implementation of: login to service
-     * @abstract
      * @param {Object} credentials                        credentials to login with
      * @returns {JQueryPromise<T>|JQueryDeferred<T>|any}  promise if login succeed or failed
      */
     me._loginToService = function(credentials) {
-        me.logNotImplemented();
+        return me.appBase.YaioDataSourceManager.getCurrentConnection().loginToService(credentials);
     };
 
     /**
-     * mplementation of: logout from service
-     * @abstract
+     * implementation of: logout from service
      * @param {Object} session                            session to logout
      * @returns {JQueryPromise<T>|JQueryDeferred<T>|any}  promise if logout succeed or failed
      */
     me._logoutFromService = function(session) {
-        me.logNotImplemented();
+        return me.appBase.YaioDataSourceManager.getCurrentConnection().logoutFromService(session);
     };
 
     /**
      * implementation of: check current session of service
-     * @abstract
      * @param {Object} session                            session to check
      * @returns {JQueryPromise<T>|JQueryDeferred<T>|any}  promise if check succeed or failed returns { data: 'OK' }
      */
     me._checkSession = function(session) {
-        me.logNotImplemented();
+        return me.appBase.YaioDataSourceManager.getCurrentConnection().checkSession(session);
     };
 
     me._init();

@@ -21,11 +21,11 @@
  * @copyright                    Copyright (c) 2014, Michael Schreiner
  * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-Yaio.FileNodeData = function(appBase, config, defaultConfig) {
+Yaio.FileNodeDBDriver = function(appBase, config, defaultConfig) {
     'use strict';
 
     // my own instance
-    var me = Yaio.StaticNodeData(appBase, config, defaultConfig);
+    var me = Yaio.StaticNodeDBDriver(appBase, config, defaultConfig);
     
     /**
      * initialize the object

@@ -87,7 +87,7 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
                 if (activeNodeId) {
                     loadOptions.loadActiveNodeIdHandler = function () {
                         console.log('start loading activenode:' + activeNodeId);
-                        return yaioUtils.getService('YaioNodeData').getNodeById(activeNodeId, {})
+                        return yaioUtils.getService('YaioNodeRepository').getNodeById(activeNodeId, {})
                             .then(function sucess(angularResponse) {
                                 // handle success
                                 $scope.loadActiveNodeIdSuccessHandler(activeNodeId, {}, angularResponse.data);
@@ -106,7 +106,7 @@ yaioApp.controller('NodeShowCtrl', function($rootScope, $scope, $location, $rout
 
                 // load data
                 console.log('NodeShowCtrl - processing nodeId=' + nodeId + ' activeNodeId=' + activeNodeId);
-                return yaioUtils.getService('YaioNodeData').getNodeById(nodeId, loadOptions)
+                return yaioUtils.getService('YaioNodeRepository').getNodeById(nodeId, loadOptions)
                     .then(function sucess(angularResponse) {
                         // handle success
                         $scope.loadCurrentNodeIdSuccessHandler(nodeId, loadOptions, angularResponse.data);

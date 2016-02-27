@@ -518,7 +518,7 @@ Yaio.ExplorerTree = function(appBase) {
     };
 
     me._sourceHandler = function(nodeId) {
-        return me.appBase.get('YaioNodeData').loadNodeData(nodeId);
+        return me.appBase.get('YaioNodeRepository').loadNodeData(nodeId);
     };
 
     /**

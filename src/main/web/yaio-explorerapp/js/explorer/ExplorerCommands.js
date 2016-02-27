@@ -118,7 +118,7 @@ Yaio.ExplorerCommands = function(appBase) {
      */
     me.doMoveNode = function(node, newParentKey, newPos) {
         console.log('move node:' + node.key + ' to:' + newParentKey + ' Pos:' + newPos);
-        me.appBase.YaioNodeData.moveNode(node.key, newParentKey, newPos)
+        me.appBase.YaioNodeRepository.moveNode(node.key, newParentKey, newPos)
             .done(function(yaioNodeActionResponse, textStatus, jqXhr ) {
                 me.patchNodeSuccessHandler(node.key, yaioNodeActionResponse, textStatus, jqXhr);
             });
@@ -131,7 +131,7 @@ Yaio.ExplorerCommands = function(appBase) {
      */
     me.doCopyNode = function(node, newParentKey) {
         console.log('copy node:' + node.key + ' to:' + newParentKey);
-        me.appBase.YaioNodeData.copyNode(node.key, newParentKey)
+        me.appBase.YaioNodeRepository.copyNode(node.key, newParentKey)
             .done(function(yaioNodeActionResponse, textStatus, jqXhr ) {
                 me.patchNodeSuccessHandler(node.key, yaioNodeActionResponse, textStatus, jqXhr);
             });
@@ -208,7 +208,7 @@ Yaio.ExplorerCommands = function(appBase) {
                     ' activeNode ' + nodeId + ' not found.', false);
                 return null;
             }
-            me.appBase.YaioNodeData.deleteNode(nodeId)
+            me.appBase.YaioNodeRepository.deleteNode(nodeId)
                 .done(function(yaioNodeActionResponse, textStatus, jqXhr ) {
                     me._deleteNodeSuccessHandler(nodeId, yaioNodeActionResponse, textStatus, jqXhr);
                 });

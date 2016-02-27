@@ -12,7 +12,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-Yaio.ServerNodeDataConfig = function(urlBase, name, desc) {
+Yaio.ServerNodeDBDriverConfig = function(urlBase, name, desc) {
     'use strict';
 
     // my own instance

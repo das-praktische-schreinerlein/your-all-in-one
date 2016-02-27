@@ -194,19 +194,25 @@ yaioAppBase.config.initResBasedUrls();
 
 // configure datasource
 // CONFIGUREDATASOURCES_SNIP
-yaioAppBase.config.datasources.push('YaioStaticNodeData');
-yaioAppBase.config.datasources.push('YaioFileNodeData');
-yaioAppBase.config.datasources.push('YaioServerNodeData_Local');
+yaioAppBase.config.datasources.push('YaioStaticNodeDBDriver');
+yaioAppBase.config.datasources.push('YaioFileNodeDBDriver');
+yaioAppBase.config.datasources.push('YaioServerNodeDBDriver_Local');
 // CONFIGUREDATASOURCES_SNAP
 var myUrl = window.location.href;
-if (myUrl.search('dsn=YaioStaticNodeData') > 0 || window.yaioUseStaticJson) {
+var datasourceKey = 'YaioServerNodeDBDriver_Local';
+if (myUrl.search('dsn=YaioStaticNodeDBDriver') > 0 || window.yaioUseStaticJson) {
     // load static
-    yaioAppBase.configureService('YaioNodeData', function() { return yaioAppBase.get('YaioStaticNodeData'); });
-} else if (yaioAppBase.config.datasources.indexOf('YaioServerNodeData_Local') > 0) {
+    datasourceKey = 'YaioStaticNodeDBDriver';
+} else if (yaioAppBase.config.datasources.indexOf('YaioServerNodeDBDriver_Local') > 0) {
     // default: local server
-    yaioAppBase.configureService('YaioNodeData', function() { return yaioAppBase.get('YaioServerNodeData_Local'); });
+    datasourceKey = 'YaioServerNodeDBDriver_Local';
 }
-yaioAppBase.get('YaioNodeData').connectService();
+yaioAppBase.YaioDataSourceManager.connectService(datasourceKey)
+    .done(function success() {
+        console.log('success connectService done:' + datasourceKey);
+    }).fail(function success() {
+        console.error('error connectService done:' + datasourceKey);
+    });
 
 // init
 yaioAppBase.publishDetectorStyles();

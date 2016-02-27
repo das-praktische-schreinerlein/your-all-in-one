@@ -22,7 +22,8 @@ window.YaioAppBase = function() {
     me._init = function () {
         me._configureDefaultServices();
     };
-    
+
+    /* jshint maxstatements: 100 */
     me._configureDefaultServices = function() {
         // instances
         me.configureService('Ymf.MarkdownEditorServiceHelper', function () {
@@ -51,10 +52,12 @@ window.YaioAppBase = function() {
         me.configureService('Yaio.ExplorerConverter', function() { return Yaio.ExplorerConverter(me); });
         me.configureService('Yaio.Formatter', function() { return Yaio.Formatter(me); });
         me.configureService('Yaio.MarkdownEditorController', function() { return Yaio.MarkdownEditorController(me); });
-        me.configureService('Yaio.ServerNodeData_Local', function() { return Yaio.ServerNodeData(me, Yaio.ServerNodeDataConfig()); });
+        me.configureService('Yaio.DataSourceManager', function() { return Yaio.DataSourceManager(me); });
+        me.configureService('Yaio.ServerNodeDBDriver_Local', function() { return Yaio.ServerNodeDBDriver(me, Yaio.ServerNodeDBDriverConfig()); });
         me.configureService('Yaio.StaticNodeDataStore', function() { return Yaio.StaticNodeDataStore(me); });
-        me.configureService('Yaio.StaticNodeData', function() { return Yaio.StaticNodeData(me, Yaio.StaticNodeDataConfig()); });
-        me.configureService('Yaio.FileNodeData', function() { return Yaio.FileNodeData(me, Yaio.FileNodeDataConfig()); });
+        me.configureService('Yaio.StaticNodeDBDriver', function() { return Yaio.StaticNodeDBDriver(me, Yaio.StaticNodeDBDriverConfig()); });
+        me.configureService('Yaio.FileNodeDBDriver', function() { return Yaio.FileNodeDBDriver(me, Yaio.FileNodeDBDriverConfig()); });
+        me.configureService('Yaio.NodeRepository', function() { return Yaio.NodeRepository(me); });
         me.configureService('Yaio.NodeDataRenderer', function() { return Yaio.NodeDataRenderer(me); });
         me.configureService('Yaio.NodeGanttRenderer', function() { return Yaio.NodeGanttRenderer(me); });
         me.configureService('Yaio.ExplorerCommands', function() { return Yaio.ExplorerCommands(me); });
@@ -88,20 +91,27 @@ window.YaioAppBase = function() {
         me.configureService('YaioFormatter', function() { return me.get('YmfRenderer'); });
         me.configureService('YaioMarkdownEditorController', function() { return me.get('YmfMarkdownEditorController'); });
 
-        // use NodeData with aliases
         me.configureService('YaioStaticNodeDataStore', function() { return me.get('Yaio.StaticNodeDataStore'); });
-        me.configureService('YaioStaticNodeData', function() { return me.get('Yaio.StaticNodeData'); });
-        me.configureService('YaioFileNodeData', function() { return me.get('Yaio.FileNodeData'); });
-        me.configureService('YaioServerNodeData_Local', function() { return me.get('Yaio.ServerNodeData_Local'); });
-        me.configureService('YaioNodeData', function() { return me.get('YaioStaticNodeData'); });
-        me.configureService('YaioAccessManager', function() { return me.get('YaioNodeData').getAccessManager(); });
-        
+        me.configureService('YaioStaticNodeDBDriver', function() { return me.get('Yaio.StaticNodeDBDriver'); });
+        me.configureService('YaioFileNodeDBDriver', function() { return me.get('Yaio.FileNodeDBDriver'); });
+        me.configureService('YaioServerNodeDBDriver_Local', function() { return me.get('Yaio.ServerNodeDBDriver_Local'); });
+        me.configureService('YaioNodeRepository', function() { return me.get('Yaio.NodeRepository'); });
+        me.configureService('YaioAccessManager', function() { return me.get('YaioNodeRepository').getAccessManager(); });
+        me.configureService('YaioDataSourceManager', function() {
+            var dsm = me.get('Yaio.DataSourceManager');
+            dsm.addConnection('YaioFileNodeDBDriver', function () { return me.get('YaioFileNodeDBDriver'); });
+            dsm.addConnection('YaioStaticNodeDBDriver', function () { return me.get('YaioStaticNodeDBDriver'); });
+            dsm.addConnection('YaioServerNodeDBDriver_Local', function () { return me.get('YaioServerNodeDBDriver_Local'); });
+            return dsm;
+        });
+
         me.configureService('YaioNodeDataRenderer', function() { return me.get('Yaio.NodeDataRenderer'); });
         me.configureService('YaioNodeGanttRenderer', function() { return me.get('Yaio.NodeGanttRenderer'); });
         me.configureService('YaioExplorerCommands', function() { return me.get('Yaio.ExplorerCommands'); });
         me.configureService('YaioExplorerTree', function() { return me.get('Yaio.ExplorerTree'); });
         me.configureService('YaioExportedData', function() { return me.get('Yaio.ExportedData'); });
     };
+    /* jshint maxstatements: 50 */
 
     // init all
     me._init();

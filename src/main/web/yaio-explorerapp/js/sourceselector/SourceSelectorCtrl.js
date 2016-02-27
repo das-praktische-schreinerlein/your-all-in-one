@@ -41,15 +41,12 @@ yaioApp.controller('SourceSelectorCtrl', function($rootScope, $scope, $location,
      * @param {String} datasourceKey    servicename of the datasource
      */
     $scope.switchDataSource = function(datasourceKey) {
-        yaioUtils.getAppBase().configureService('YaioNodeData', function() { return yaioAppBase.get(datasourceKey);});
-        yaioUtils.getAppBase().configureService('YaioAccessManager', function() { return yaioAppBase.get('YaioNodeData').getAccessManager(); });
-        
         // load data and open frontpage if succeed
-        yaioUtils.getAppBase().get('YaioNodeData').connectService().done(function success() {
-            console.error('success connectService:' + yaioUtils.getConfig().appFrontpageUrl);
+        yaioUtils.getAppBase().YaioDataSourceManager.connectService(datasourceKey).done(function success() {
+            console.log('success connectService:' + yaioUtils.getConfig().appFrontpageUrl);
             $location.path(yaioUtils.getConfig().appFrontpageUrl);
             yaioAppBase.get('Angular.$location').path(yaioAppBase.config.appFrontpageUrl);
-            console.error('success connectService done:' + yaioUtils.getConfig().appFrontpageUrl);
+            console.log('success connectService done:' + yaioUtils.getConfig().appFrontpageUrl);
         });
     };
 

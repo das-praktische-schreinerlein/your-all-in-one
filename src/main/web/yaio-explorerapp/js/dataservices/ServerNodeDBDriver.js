@@ -21,11 +21,11 @@
  * @copyright                    Copyright (c) 2014, Michael Schreiner
  * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-Yaio.ServerNodeData = function(appBase, config, defaultConfig) {
+Yaio.ServerNodeDBDriver = function(appBase, config, defaultConfig) {
     'use strict';
 
     // my own instance
-    var me = Yaio.NodeData(appBase, config, defaultConfig);
+    var me = Yaio.AbstractNodeDBDriver(appBase, config, defaultConfig);
 
     /**
      * initialize the object
@@ -60,7 +60,7 @@ Yaio.ServerNodeData = function(appBase, config, defaultConfig) {
     };
 
     /**
-     * update my config (this instance of ServerNodeDataConfig)
+     * update my config (this instance of ServerNodeDBDriverConfig)
      * @param {Object} yaioCommonApiConfig  Common Api Config from yaio-server
      */
     me.configureDataService = function(yaioCommonApiConfig) {
@@ -100,99 +100,33 @@ Yaio.ServerNodeData = function(appBase, config, defaultConfig) {
     /**
      * @inheritdoc
      */
-    me._createAccessManager = function() {
-        return Yaio.ServerAccessManager(me.appBase, me.config);
-    };
-
-    /**
-     * TODO
-     * @returns {JQueryPromise<T>|JQueryPromise<*>}
-     * @private
-     */
-    me._loadConfig = function() {
-        // return promise
-        var dfd = new $.Deferred();
-        var res = dfd.promise();
-
-        // load config from server
-        var resConfig = me._loadConfigFromServer();
-        resConfig.done(function(yaioCommonApiConfig, textStatus, jqXhr ) {
-            var msg = '_loadConfig for yaio';
-            console.log(msg + ' done');
-            // update config
-            me.configureDataService(yaioCommonApiConfig);
-            me.reconfigureBaseApp();
-            
-            // resolve promise
-            dfd.resolve('OK');
-        });
-
-        return res;
-    };
-
-    /**
-     * TODO
-     * @returns {*|JQueryXHR|{xhrFields}}
-     * @private
-     */
-    me._loadConfigFromServer = function() {
-        var svcLogger = me.appBase.get('Logger');
-
-        var url = me.config.configUrl;
-        var msg = '_loadConfigFromServer for yaio:' + url;
-        console.log(msg + ' START');
-        return me.$.ajax({
-            headers: {
-                'Accept' : 'application/json',
-                'Content-Type' : 'application/json'
-            },
-            xhrFields : {
-                // for CORS
-                withCredentials : true
-            },
-            url : url,
-            type : 'GET',
-            error : function(jqXHR, textStatus, errorThrown) {
-                // log the error to the console
-                svcLogger.logError('ERROR  ' + msg + ' The following error occured: ' + textStatus + ' ' + errorThrown, false);
-                svcLogger.logError('cant load ' + msg + ' error:' + textStatus, true);
-            },
-            complete : function() {
-                console.log('completed load ' + msg);
-            }
-        });
-    };
-
-    /**
-     * @inheritdoc
-     */
-    me._updateNode = function(nodeId, json) {
+    me.updateNode = function(nodeId, json) {
         var url = me.config.restUpdateUrl + nodeId;
-        return me._patchNode(nodeId, url, json);
+        return me.patchNode(nodeId, url, json);
     };
 
     /**
      * @inheritdoc
      */
-    me._moveNode = function(nodeId, newParentKey, newPos) {
+    me.moveNode = function(nodeId, newParentKey, newPos) {
         var json = JSON.stringify({parentNode: newParentKey});
         var url = me.config.restMoveUrl + nodeId + '/' + newParentKey + '/' + newPos;
-        return me._patchNode(nodeId, url, json);
+        return me.patchNode(nodeId, url, json);
     };
 
     /**
      * @inheritdoc
      */
-    me._copyNode = function(nodeId, newParentKey) {
+    me.copyNode = function(nodeId, newParentKey) {
         var json = JSON.stringify({parentNode: newParentKey});
         var url = me.config.restCopyUrl + nodeId + '/' + newParentKey;
-        return me._patchNode(nodeId, url, json);
+        return me.patchNode(nodeId, url, json);
     };
 
     /**
      * @inheritdoc
      */
-    me._patchNode = function(nodeId, url, json) {
+    me.patchNode = function(nodeId, url, json) {
         var svcLogger = me.appBase.get('Logger');
 
         var msg = '_patchNode for nodeId:' + nodeId;
@@ -223,7 +157,7 @@ Yaio.ServerNodeData = function(appBase, config, defaultConfig) {
     /**
      * @inheritdoc
      */
-    me._getNodeForSymLink = function(basenode) {
+    me.getNodeForSymLink = function(basenode) {
         var svcLogger = me.appBase.get('Logger');
 
         var msg = '_getNodeForSymLink for node:' + basenode.sysUID + ' symlink:' + basenode.symLinkRef;
@@ -254,7 +188,7 @@ Yaio.ServerNodeData = function(appBase, config, defaultConfig) {
     /**
      * @inheritdoc
      */
-    me._deleteNode = function(nodeId) {
+    me.deleteNode = function(nodeId) {
         var svcLogger = me.appBase.get('Logger');
 
         var msg = '_deleteNode node:' + nodeId;
@@ -285,7 +219,7 @@ Yaio.ServerNodeData = function(appBase, config, defaultConfig) {
     /**
      * @inheritdoc
      */
-    me._saveNode = function(nodeObj, options) {
+    me.saveNode = function(nodeObj, options) {
         var svcLogger = me.appBase.get('Logger');
 
         var msg = '_saveNode node: ' + options.mode + ' ' + nodeObj.sysUID;
@@ -375,7 +309,7 @@ Yaio.ServerNodeData = function(appBase, config, defaultConfig) {
     /**
      * @inheritdoc
      */
-    me._getNodeById = function(nodeId, options) {
+    me.getNodeById = function(nodeId, options) {
         var msg = '_getNodeById node: ' + nodeId + ' options:' + options;
         console.log(msg + ' START');
         var restBaseUrl = me.config.restShowUrl;
@@ -395,7 +329,7 @@ Yaio.ServerNodeData = function(appBase, config, defaultConfig) {
     /**
      * @inheritdoc
      */
-    me._searchNode = function(searchOptions) {
+    me.searchNode = function(searchOptions) {
         var msg = '_searchNode searchOptions: ' + searchOptions;
         var uri = encodeURI(searchOptions.curPage)
             + '/' + encodeURI(searchOptions.pageSize)
@@ -442,7 +376,7 @@ Yaio.ServerNodeData = function(appBase, config, defaultConfig) {
     /**
      * @inheritdoc
      */
-    me._loginToService = function(credentials) {
+    me.loginToService = function(credentials) {
         var msg = '_loginToService for credentials:' + credentials;
         console.log(msg + ' START');
 
@@ -465,7 +399,7 @@ Yaio.ServerNodeData = function(appBase, config, defaultConfig) {
     /**
      * @inheritdoc
      */
-    me._logoutFromService = function(session) {
+    me.logoutFromService = function(session) {
         var msg = '_logoutFromService for session' + session;
         console.log(msg + ' START');
 
@@ -483,7 +417,7 @@ Yaio.ServerNodeData = function(appBase, config, defaultConfig) {
     /**
      * @inheritdoc
      */
-    me._checkSession = function(session) {
+    me.checkSession = function(session) {
         var msg = '_checkSession for session:' + session;
         console.log(msg + ' START');
 
@@ -497,7 +431,73 @@ Yaio.ServerNodeData = function(appBase, config, defaultConfig) {
         console.log(msg + ' CALL url:' + url);
         return ajaxCall();
     };
-    
+
+    /**
+     * @inheritdoc
+     */
+    me._createAccessManager = function() {
+        return Yaio.ServerAccessManager(me.appBase, me.config);
+    };
+
+    /**
+     * TODO
+     * @returns {JQueryPromise<T>|JQueryPromise<*>}
+     * @private
+     */
+    me._loadConfig = function() {
+        // return promise
+        var dfd = new $.Deferred();
+        var res = dfd.promise();
+
+        // load config from server
+        var resConfig = me._loadConfigFromServer();
+        resConfig.done(function(yaioCommonApiConfig, textStatus, jqXhr ) {
+            var msg = '_loadConfig for yaio';
+            console.log(msg + ' done');
+            // update config
+            me.configureDataService(yaioCommonApiConfig);
+            me.reconfigureBaseApp();
+
+            // resolve promise
+            dfd.resolve('OK');
+        });
+
+        return res;
+    };
+
+    /**
+     * TODO
+     * @returns {*|JQueryXHR|{xhrFields}}
+     * @private
+     */
+    me._loadConfigFromServer = function() {
+        var svcLogger = me.appBase.get('Logger');
+
+        var url = me.config.configUrl;
+        var msg = '_loadConfigFromServer for yaio:' + url;
+        console.log(msg + ' START');
+        return me.$.ajax({
+            headers: {
+                'Accept' : 'application/json',
+                'Content-Type' : 'application/json'
+            },
+            xhrFields : {
+                // for CORS
+                withCredentials : true
+            },
+            url : url,
+            type : 'GET',
+            error : function(jqXHR, textStatus, errorThrown) {
+                // log the error to the console
+                svcLogger.logError('ERROR  ' + msg + ' The following error occured: ' + textStatus + ' ' + errorThrown, false);
+                svcLogger.logError('cant load ' + msg + ' error:' + textStatus, true);
+            },
+            complete : function() {
+                console.log('completed load ' + msg);
+            }
+        });
+    };
+
     me._init();
     
     return me;

@@ -28,7 +28,7 @@
                   <ul class="exporttypelist">
                      <li ng-if="yaioUtils.getService('YaioAccessManager').getAvailiableStaticExportLink('ExportStaticJsonDirect')" 
                          class="exporttype" data-tooltip="tooltip.command.ExportStaticJsonDirect" lang="tech">
-                        <a href="#" ng-click="yaioUtils.downloadAsFile('#exportLinkExportStaticJsonDirect', yaioUtils.getService('YaioNodeData').exportNodeActionResponseJSONById(node.sysUID), 'export-' + node.sysUID+ '.json', 'application/json', 'utf-8');" 
+                        <a href="#" ng-click="yaioUtils.downloadAsFile('#exportLinkExportStaticJsonDirect', yaioUtils.getService('YaioStaticNodeDBDriver').exportNodeActionResponseJSONById(node.sysUID), 'export-' + node.sysUID+ '.json', 'application/json', 'utf-8');"
                            class="button exporttype_" target="_blank" translate="common.command.ExportStaticJsonDirect" id="exportLinkExportStaticJsonDirect">StaticJson</a></li>
                   </ul>
                 </li>

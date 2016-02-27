@@ -115,7 +115,7 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
         var newParentKey = $scope.nodeForEdit.sysUID;
         var srcId = $scope.nodeForEdit.createFromTemplate;
         if (!yaioUtils.getService('DataUtils').isEmpty(srcId)) {
-            yaioUtils.getService('YaioNodeData').copyNode(srcId, newParentKey)
+            yaioUtils.getService('YaioNodeRepository').copyNode(srcId, newParentKey)
                 .done(function(yaioNodeActionResponse, textStatus, jqXhr ) {
                     yaioUtils.getService('YaioExplorerCommands').patchNodeSuccessHandler(srcId, yaioNodeActionResponse,
                         textStatus, jqXhr);
@@ -129,7 +129,7 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
      * load available templates into form
      */
     $scope.loadAvailiableTemplates = function() {
-        yaioUtils.getService('YaioNodeData').getAvailableTemplates()
+        yaioUtils.getService('YaioNodeRepository').getAvailableTemplates()
             .then(function sucess(angularResponse) {
                     // handle success
                     $scope.availiableSystemTemplates = angularResponse.data.systemTemplates;
@@ -383,7 +383,7 @@ yaioApp.controller('NodeEditorCtrl', function($rootScope, $scope, $location, $ro
                 sysUID: $scope.nodeForEdit.sysUID,
                 uploadFile: $scope.uploadFile
             };
-        return yaioUtils.getService('YaioNodeData').saveNode(nodeObj, options)
+        return yaioUtils.getService('YaioNodeRepository').saveNode(nodeObj, options)
             .then(function success(angularReponse) {
                     // handle success
                     return yaioSaveNodeSuccessHandler(nodeObj, options, angularReponse.data);

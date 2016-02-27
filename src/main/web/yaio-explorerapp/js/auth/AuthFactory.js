@@ -27,7 +27,7 @@ yaioApp.factory('authorization', function ($rootScope, yaioUtils) {
          * @param {function} callback    callback to call after check
          */
         authentificate: function(callback) {
-            yaioUtils.getService('YaioNodeData').checkSession().success(function(data) {
+            yaioUtils.getService('YaioNodeRepository').checkSession().success(function(data) {
                 console.log('authentificate: success ' + data);
                 if (data) {
                     $rootScope.authenticated = true;

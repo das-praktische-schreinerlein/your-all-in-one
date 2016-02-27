@@ -442,7 +442,7 @@ Yaio.NodeDataRenderer = function(appBase) {
             }
         } else if (basenode.className === 'SymLinkNode') {
             // render SymLinkNode
-            me.appBase.get('YaioNodeData').getNodeForSymLink(basenode)
+            me.appBase.get('YaioNodeRepository').getNodeForSymLink(basenode)
                 .done(function(yaioNodeActionResponse, textStatus, jqXhr ) {
                     console.log('call successHandler ' + msg + ' state:' + textStatus);
                     me._getNodeForSymLinkSuccessHandler(basenode, yaioNodeActionResponse, textStatus, jqXhr);

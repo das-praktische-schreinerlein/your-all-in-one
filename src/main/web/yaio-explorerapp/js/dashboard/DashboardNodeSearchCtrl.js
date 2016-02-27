@@ -67,7 +67,7 @@ yaioApp.controller('DashBoardNodeSearchCtrl', function($rootScope, $scope, yaioU
     $scope.doFulltextSearch = function() {
         // search data
         var searchOptions = $scope.searchOptions;
-        return yaioUtils.getService('YaioNodeData').searchNode(searchOptions)
+        return yaioUtils.getService('YaioNodeRepository').searchNode(searchOptions)
             .then(function(angularResponse) {
                 // success handler
                 $scope.doFulltextSearchSuccessHandler(searchOptions, angularResponse.data);
