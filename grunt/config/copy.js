@@ -82,7 +82,12 @@
                 // ymf
                 {expand: true, cwd: '<%= bowerSrcBase %>ymf/build/dist/', src: ['*.css'], dest: '<%= vendorDestBase %>css/ymf/', flatten: true, filter: 'isFile'},
                 {expand: true, cwd: '<%= bowerSrcBase %>ymf/build/dist/', src: ['*.js'], dest: '<%= vendorDestBase %>js/ymf/', flatten: true, filter: 'isFile'},
-                {expand: true, cwd: '<%= bowerSrcBase %>ymf/build/ymf-editorapp/', src: ['*.html'], dest: '<%= vendorDestBase %>html/ymf/', flatten: true, filter: 'isFile'}
+                {expand: true, cwd: '<%= bowerSrcBase %>ymf/build/ymf-editorapp/', src: ['*.html'], dest: '<%= vendorDestBase %>html/ymf/', flatten: true, filter: 'isFile'},
+
+                // yaio-explorerapp
+                {expand: true, cwd: '<%= bowerSrcBase %>yaio-explorerapp/build/dist/', src: ['*.css'], dest: '<%= vendorDestBase %>css/yaio-explorerapp/', flatten: true, filter: 'isFile'},
+                {expand: true, cwd: '<%= bowerSrcBase %>yaio-explorerapp/build/dist/', src: ['*.js'], dest: '<%= vendorDestBase %>js/yaio-explorerapp/', flatten: true, filter: 'isFile'},
+                {expand: true, cwd: '<%= bowerSrcBase %>yaio-explorerapp/build/', src: ['**/*.html','**/*.json'], dest: '<%= vendorDestBase %>html/yaio-explorerapp/', flatten: false, filter: 'isFile'}
             ]
         },
         // copy bower-binary resources (png...-files) to dest
@@ -91,7 +96,8 @@
                 {expand: true, cwd: '<%= bowerSrcBase %>fancytree/dist/', src: ['skin-win8/*.png', 'skin-win8/*.gif'], dest: '<%= vendorDestBase %>js/fancytree/', flatten: false},
                 {expand: true, cwd: '<%= bowerSrcBase %>fancytree/dist/', src: ['skin-lion/*.png', 'skin-lion/*.gif'], dest: '<%= vendorDestBase %>js/fancytree/', flatten: false},
                 {expand: true, cwd: '<%= bowerSrcBase %>jquery-ui/themes/smoothness', src: ['images/*.*'], dest: '<%= vendorDestBase %>css/jqueryui/', flatten: false},
-                {expand: true, cwd: '<%= bowerSrcBase %>ymf/build/dist/', src: ['*.png'], dest: '<%= vendorDestBase %>css/ymf/', flatten: false}
+                {expand: true, cwd: '<%= bowerSrcBase %>ymf/build/dist/', src: ['*.png'], dest: '<%= vendorDestBase %>css/ymf/', flatten: false},
+                {expand: true, cwd: '<%= bowerSrcBase %>yaio-explorerapp/build/dist/', src: ['*.png'], dest: '<%= vendorDestBase %>css/yaio-explorerapp/', flatten: false}
             ]
         },
         // copy vendor-files which must exists in specific pathes to dist
@@ -114,9 +120,9 @@
                 {expand: true, cwd: '<%= vendorSrcBase %>css/', src: ['yaio/**'], dest: '<%= destBase %>dist/vendors-<%= pkg.vendorversion %>/', flatten: false},
 
                 //
-                {expand: true, cwd: '<%= vendorDestBase %>html/ymf/', src: ['*.html'], dest: '<%= destBase %>yaio-explorerapp/', flatten: false},
-                {expand: true, cwd: '<%= vendorDestBase %>css/ymf/', src: ['*.png'], dest: '<%= destBase %>dist/', flatten: false},
-                {expand: true, cwd: '<%= vendorDestBase %>css/ymf/', src: ['*-icons-*.css'], dest: '<%= destBase %>dist/', flatten: false}
+                {expand: true, cwd: '<%= vendorDestBase %>css/yaio-explorerapp/', src: ['*.css', '*.png'], dest: '<%= destBase %>dist/', flatten: false},
+                {expand: true, cwd: '<%= vendorDestBase %>js/yaio-explorerapp/', src: ['*.js'], dest: '<%= destBase %>dist/', flatten: false},
+                {expand: true, cwd: '<%= vendorDestBase %>html/yaio-explorerapp/', src: ['**/*.html','**/*.json'], dest: '<%= destBase %>', flatten: false}
             ]
         },
         // copy archiv to dist
@@ -142,14 +148,6 @@
                 {expand: true, cwd: '<%= archivSrcBase %>', src: ['**'], dest: '<%= destBase %>dist/', flatten: false}
             ]
         },
-        // copy the yaio.sources to dist
-        yaiores2dist: {
-            files: [
-                {expand: true, cwd: '<%= srcBase %>pages/', src: ['*.html'], dest: '<%= destBase %>', flatten: false},
-                {expand: true, cwd: '<%= srcBase %>', src: ['yaio-explorerapp/**/*.html', 'yaio-explorerapp/**/*.json', 'yaio-explorerapp/static/**'], dest: '<%= destBase %>', flatten: false},
-                {expand: true, cwd: '<%= tplSrcBase %>', src: ['exporttemplates/*.html'], dest: '<%= destBase %>', flatten: false}
-            ]
-        }
     };
 
     /**
