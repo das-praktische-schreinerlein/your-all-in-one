@@ -34,7 +34,8 @@
     "strapdown": "das-praktische-schreinerlein/strapdown#0.4.1-yaio",
     "toastr": "CodeSeven/toastr#2.1.0",
     "ui-contextmenu": "1.7.0",
-    "ymf": "das-praktische-schreinerlein/your-markdown-fellow#0.1.0"
+    "yaio-explorerapp": "d:/Projekte/yaio-explorerapp/.git#master",
+    "ymf": "d:/Projekte/ymf/.git#master"
   },
   "exportsOverride": {
     "x": {
