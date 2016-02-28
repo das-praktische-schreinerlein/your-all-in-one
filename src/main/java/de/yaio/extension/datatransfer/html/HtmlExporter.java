@@ -19,6 +19,9 @@ import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
 import org.markdown4j.Markdown4jProcessor;
+import org.markdown4j.TablePlugin;
+
+import com.github.rjeschke.txtmark.Processor;
 
 import de.yaio.commons.data.DataUtils;
 import de.yaio.core.datadomain.DataDomain;
@@ -64,10 +67,11 @@ public class HtmlExporter extends WikiExporter {
     protected static final String CONST_FORMATTER_PLANCHILDRENSUM = PlanChildrenSumDataFormatterImpl.class.getName();
     
     protected static Markdown4jProcessor markdownProcessor = new Markdown4jProcessor();
-//    static {
+    static {
+        markdownProcessor.registerPlugins(new TablePlugin());
 //        markdownProcessor.addHtmlAttribute("style", "color:red", "blockquote", "h1");
 //        markdownProcessor.addStyleClass("", "img");
-//    }
+    }
 
     // Logger
     private static final Logger LOGGER =
@@ -961,7 +965,12 @@ public class HtmlExporter extends WikiExporter {
         String newDescText = this.prepareTextForMarkdown(descText);
         
         newDescText = newDescText.replaceAll("…", "...");
+        
         newDescText = markdownProcessor.process(newDescText);
+//        PegDownProcessor pegDownProcessor = new PegDownProcessor();
+//        newDescText = pegDownProcessor.markdownToHtml(newDescText);
+//        newDescText = Processor.process(newDescText);
+        
         newDescText = newDescText.replaceAll("…", "...");
         
         // add id to heading
@@ -971,6 +980,24 @@ public class HtmlExporter extends WikiExporter {
                         "\">").toString();
 
         // replace code-blocks
+//        newDescText = replaceDiagrammPattern(newDescText,
+//                        "<code>(yaio|jsh|ymf)*mermaid(" + Parser.CONST_PATTERN_SEG_DESC + "*?)<\\/code>", 
+//                        "<div id=\"inlineMermaid",
+//                        "\" class=\"mermaid\">$2</div>").toString();
+//        newDescText = replaceDiagrammPattern(newDescText,
+//                        "<code>(yaio|jsh|ymf)*freemind(" + Parser.CONST_PATTERN_SEG_DESC + "*?)<\\/code>", 
+//                        "<div id=\"inlineMindmap",
+//                        "\" class=\"yaiomindmap\">$2</div>").toString();
+//        newDescText = replaceDiagrammPattern(newDescText,
+//                        "<code>(yaio|jsh|ymf)*mindmap(" + Parser.CONST_PATTERN_SEG_DESC + "*?)<\\/code>", 
+//                        "<div id=\"inlineMindmap",
+//                        "\" class=\"yaiomindmap\">$2</div>").toString();
+//        newDescText = replaceDiagrammPattern(newDescText,
+//                        "<code>(yaio|jsh|ymf)*plantuml(" + Parser.CONST_PATTERN_SEG_DESC + "*?)<\\/code>", 
+//                        "<div id=\"yaioplantuml",
+//                        "\" class=\"yaioplantuml\">$2</div>").toString();
+
+        
         newDescText = replaceDiagrammPattern(newDescText,
                         "<code>", 
                         "<code id=\"inlineCode",

@@ -115,96 +115,33 @@
                     vendorDestBase + 'css/ymf/ymf-app-dist.css'
                 ],
                 projectJsFiles: [
-                    srcBase + 'yaio-explorerapp/js/jmat.js',
-                    srcBase + 'yaio-explorerapp/js/YaioAppBaseConfig.js',
-                    srcBase + 'yaio-explorerapp/js/YaioAppBase.js',
-                    srcBase + 'yaio-explorerapp/js/utils/PromiseHelper.js',
-                    srcBase + 'yaio-explorerapp/js/utils/Base.js',
-                    srcBase + 'yaio-explorerapp/js/utils/FileLoader.js',
-                    srcBase + 'yaio-explorerapp/js/editor/NodeEditor.js',
-                    srcBase + 'yaio-explorerapp/js/layout/Layout.js',
-                    srcBase + 'yaio-explorerapp/js/formatter/MarkdownRenderer.js',
-                    srcBase + 'yaio-explorerapp/js/utils/ExportedData.js',
-                    // services
-                    srcBase + 'yaio-explorerapp/js/datarenderer/*.js',
-                    srcBase + 'yaio-explorerapp/js/dataservices/*.js',
-                    srcBase + 'yaio-explorerapp/js/explorer/ExplorerCommands.js',
-                    srcBase + 'yaio-explorerapp/js/explorer/ExplorerConverter.js',
-                    srcBase + 'yaio-explorerapp/js/explorer/ExplorerTree.js',
-                    // angular
-                    srcBase + 'yaio-explorerapp/js/YaioApp.js',
-                    srcBase + 'yaio-explorerapp/js/utils/Constants.js',
-                    srcBase + 'yaio-explorerapp/js/utils/Directives.js',
-                    srcBase + 'yaio-explorerapp/js/utils/FormErrorHandlingUtils.js',
-                    srcBase + 'yaio-explorerapp/js/utils/YaioUtilsFactory.js',
-                    srcBase + 'yaio-explorerapp/js/auth/AuthFactory.js',
-                    srcBase + 'yaio-explorerapp/js/auth/AuthController.js',
-                    srcBase + 'yaio-explorerapp/js/lang/LanguageConfig.js',
-                    srcBase + 'yaio-explorerapp/js/lang/LanguageCtrl.js',
-                    srcBase + 'yaio-explorerapp/js/frontpage/FrontpageCtrl.js',
-                    srcBase + 'yaio-explorerapp/js/dashboard/*.js',
-                    srcBase + 'yaio-explorerapp/js/editor/NodeEditorCtrl.js',
-                    srcBase + 'yaio-explorerapp/js/importer/ImporterCtrl.js',
-                    srcBase + 'yaio-explorerapp/js/exporter/OutputOptionsCtrl.js',
-                    srcBase + 'yaio-explorerapp/js/exporter/OutputOptionsEditorFactory.js',
-                    srcBase + 'yaio-explorerapp/js/explorer/NodeShowCtrl.js',
-                    srcBase + 'yaio-explorerapp/js/search/NodeSearchCtrl.js',
-                    srcBase + 'yaio-explorerapp/js/sourceselector/SourceSelectorCtrl.js',
+                    vendorDestBase + 'js/yaio-explorerapp/yaio-app-dist-0.1.0.js',
                     // !!!! paging is vendor but patched :-(
                     vendorDestBase + 'js/angularjs/paging.js'
                 ],
                 projectSupportJsFiles: [
-                    srcBase + 'yaio-explorerapp/js/jmat.js',
-                    srcBase + 'yaio-explorerapp/js/YaioAppBaseConfig.js',
-                    srcBase + 'yaio-explorerapp/js/YaioAppBase.js',
-                    srcBase + 'yaio-explorerapp/js/utils/PromiseHelper.js',
-                    srcBase + 'yaio-explorerapp/js/utils/Base.js',
-                    srcBase + 'yaio-explorerapp/js/utils/FileLoader.js',
-                    srcBase + 'yaio-explorerapp/js/editor/NodeEditor.js',
-                    srcBase + 'yaio-explorerapp/js/layout/Layout.js',
-                    srcBase + 'yaio-explorerapp/js/formatter/MarkdownRenderer.js',
-                    srcBase + 'yaio-explorerapp/js/utils/ExportedData.js'
+                    vendorDestBase + 'js/yaio-explorerapp/yaio-support-dist-0.1.0.js'
                 ],
                 projectExportsJsFiles: [
-                    srcBase + 'yaio-explorerapp/js/utils/ExportedData.js'
+                    vendorDestBase + 'js/yaio-explorerapp/yaio-export-dist-0.1.0.js'
                 ],
                 projectCssFiles: [
-                    srcBase + 'yaio-explorerapp/js/layout/base.css',
-                    srcBase + 'yaio-explorerapp/js/layout/support.css',
-                    srcBase + 'yaio-explorerapp/js/layout/toc.css',
-                    srcBase + 'yaio-explorerapp/js/layout/yaio.css',
-                    srcBase + 'yaio-explorerapp/js/explorer/explorer.css',
-                    srcBase + 'yaio-explorerapp/js/datarenderer/gantt.css',
-                    srcBase + 'yaio-explorerapp/js/datarenderer/data.css',
-                    srcBase + 'yaio-explorerapp/js/formatter/formatter.css',
-                    srcBase + 'yaio-explorerapp/js/search/search.css',
-                    srcBase + 'yaio-explorerapp/js/editor/editor.css',
-                    srcBase + 'yaio-explorerapp/js/exporter/exporter.css',
-                    srcBase + 'yaio-explorerapp/js/sourceselector/sourceselector.css',
-                    srcBase + 'yaio-explorerapp/js/lang/lang.css',
-                    srcBase + 'yaio-explorerapp/js/auth/auth.css',
-                    srcBase + 'yaio-explorerapp/js/frontpage/frontpage.css',
-                    srcBase + 'yaio-explorerapp/js/dashboard/*.css'
+                    vendorDestBase + 'js/yaio-explorerapp/yaio-app-dist-0.1.0.css'
                 ],
                 projectSupportCssFiles: [
-                    srcBase + 'yaio-explorerapp/js/layout/base.css',
-                    srcBase + 'yaio-explorerapp/js/formatter/formatter.css',
-                    srcBase + 'yaio-explorerapp/js/layout/support.css'
+                    vendorDestBase + 'js/yaio-explorerapp/yaio-app-support-0.1.0.css'
                 ],
                 projectPrintCssFiles: [
                     // !!!! ymf is vendor but my project
-                    vendorDestBase + 'css/ymf/ymf-app-print.css',
-                    srcBase + 'yaio-explorerapp/js/layout/base-print.css'
+                    vendorDestBase + 'js/yaio-explorerapp/yaio-app-print-0.1.0.css'
                 ],
                 projectPrintDataOnlyCssFiles: [
                     // !!!! ymf is vendor but my project
-                    vendorDestBase + 'css/ymf/ymf-app-print-dataonly.css',
-                    srcBase + 'yaio-explorerapp/js/layout/base-print-dataonly.css'
+                    vendorDestBase + 'js/yaio-explorerapp/yaio-app-print-dataonly-0.1.0.css'
                 ],
                 projectResetCssFiles: [
                     // !!!! ymf is vendor but my project
-                    vendorDestBase + 'css/ymf/ymf-reset.css',
-                    srcBase + 'yaio-explorerapp/js/layout/reset.css'
+                    vendorDestBase + 'js/yaio-explorerapp/yaio-reset-0.1.0.css'
                 ],
                 vendorJsTestFiles: [
                     testSrcBase + 'unit/resources/js/jasmine/jasmine-jquery.js',
@@ -222,23 +159,14 @@
         // register tasks
         grunt.registerTask('default', ['distfull']);
 
-        grunt.registerTask('css-images', ['css_image']);
-        grunt.registerTask('sprites', ['sprite']);
-        grunt.registerTask('data-uri', ['dataUri']);
-        grunt.registerTask('images', ['sprites', 'css-images', 'data-uri']);
-
         grunt.registerTask('vendorslocal', ['copy:bower2vendors', 'copy:bowerbin2vendors']);
         grunt.registerTask('vendorsfull', ['clean:bower', 'bower', 'vendorslocal']);
-        grunt.registerTask('distyaio', ['images', 'concat', 'copy:yaiores2dist', 'replace:versionOnDist', 'replace:versionOnRes', 'copy:dist2archiv']);
-        grunt.registerTask('distlocal', ['vendorslocal', 'copy:vendors2dist', 'distyaio']);
-        grunt.registerTask('distfull', ['vendorsfull', 'clean:dist', 'copy:archiv2dist', 'images', 'concat', 'copy:vendors2dist', 'copy:yaiores2dist', 'replace:versionOnDist', 'replace:versionOnRes', 'copy:dist2archiv']);
+        grunt.registerTask('distfull', ['vendorsfull', 'clean:dist', 'copy:archiv2dist', 'concat', 'copy:vendors2dist', 'replace:versionOnDist', 'replace:versionOnRes', 'copy:dist2archiv']);
         grunt.registerTask('dist', ['distfull']);
-        grunt.registerTask('unit-test', ['dist', 'karma:continuous:start', 'watch:karma']);
         grunt.registerTask('e2e-test', ['dist', 'protractor:continuous', 'watch:protractor']);
 
         // load grunt tasks
         grunt.loadNpmTasks('grunt-bower-task');
-        grunt.loadNpmTasks('grunt-css-image');
         grunt.loadNpmTasks('grunt-contrib-clean');
         grunt.loadNpmTasks('grunt-contrib-copy');
         grunt.loadNpmTasks('grunt-contrib-concat');
@@ -246,10 +174,8 @@
         grunt.loadNpmTasks('grunt-contrib-watch');
         grunt.loadNpmTasks('grunt-data-uri');
         grunt.loadNpmTasks('grunt-jsdoc');
-        grunt.loadNpmTasks('grunt-karma');
         grunt.loadNpmTasks('grunt-protractor-runner');
         grunt.loadNpmTasks('grunt-replace');
-        grunt.loadNpmTasks('grunt-spritesmith');
     };
 
 })();
