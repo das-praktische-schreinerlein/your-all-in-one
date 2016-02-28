@@ -299,6 +299,7 @@ public class ConverterUtils {
                 }
                 pattern = Pattern.compile("\\/\\/ CONFIGUREDATASOURCES_SNIP.*\\/\\/ CONFIGUREDATASOURCES_SNAP", Pattern.DOTALL);
                 replacement = "// CONFIGUREDATASOURCES_SNIP\n"
+                                + "\n" + res + "\n"
                                 + "yaioAppBase.configureService('Yaio.StaticNodeDBDriver', function() { return Yaio.StaticNodeDBDriver(yaioAppBase, Yaio.StaticNodeDBDriverConfig('', 'Statische InApp-Daten für \"" + sysUID + "\"', 'Die statisch in der App hinterlegten Daten werden geladen.')); });\n"
                                 + "yaioAppBase.config.datasources.push('YaioStaticNodeDBDriver');\n" 
                                 + "yaioAppBase.get('YaioDataSourceManager').addConnection('YaioStaticNodeDBDriver', function () { return yaioAppBase.get('YaioStaticNodeDBDriver'); });\n"
@@ -307,7 +308,7 @@ public class ConverterUtils {
                                 // skip localhost-server on export 
                                 + (!flgExport ? "yaioAppBase.config.datasources.push('YaioServerNodeDBDriver_Local');\n" : "") 
                                 + (!flgExport ? "yaioAppBase.get('YaioDataSourceManager').addConnection('YaioServerNodeDBDriver_Local', function () { return yaioAppBase.get('YaioServerNodeDBDriver_Local'); });\n" : "") 
-                                + "\n" + res + "\n"
+                                + "datasourceKey = 'YaioServerNodeDBDriver_Local';\n"
                                 + "// CONFIGUREDATASOURCES_SNAP\n";
                 matcher = pattern.matcher(content);
                 buffer = new StringBuffer();
