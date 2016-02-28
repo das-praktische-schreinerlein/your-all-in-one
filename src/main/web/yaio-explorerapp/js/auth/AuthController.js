@@ -42,7 +42,7 @@ yaioApp.controller('AuthController', function($rootScope, $scope, $location, $ro
      * @returns {*|JQueryPromise<any>|JQueryPromise<U>|JQueryPromise<void>}
      */
     $scope.login = function() {
-        return yaioUtils.getService('YaioNodeRepository').loginToService($scope.credentials)
+        return yaioUtils.getService('YaioDataSourceManager').getCurrentConnection().loginToService($scope.credentials)
             .then(function success() {
                     // handle success
                     authorization.authentificate(function() {
@@ -71,7 +71,7 @@ yaioApp.controller('AuthController', function($rootScope, $scope, $location, $ro
      * @returns {*|JQueryPromise<any>|JQueryPromise<U>|JQueryPromise<void>}
      */
     $scope.logout = function() {
-        return yaioUtils.getService('YaioNodeRepository').logoutFromService()
+        return yaioUtils.getService('YaioDataSourceManager').getCurrentConnection().logoutFromService()
             .then(function success() {
                 // handle success
                 $rootScope.authenticated = false;

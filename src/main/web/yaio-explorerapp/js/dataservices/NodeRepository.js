@@ -224,39 +224,6 @@ Yaio.NodeRepository = function(appBase, config, defaultConfig) {
     };
 
     /**
-     * login to service
-     * @param {Object} credentials                        credentials to login with
-     * @returns {JQueryPromise<T>|JQueryDeferred<T>|any}  promise if login succeed or failed
-     */
-    me.loginToService = function(credentials) {
-        var msg = 'loginToService for credentials:' + credentials;
-        console.log(msg + ' START');
-        return me._loginToService(credentials);
-    };
-
-    /**
-     * logout from service
-     * @param {Object} session                            session to logout
-     * @returns {JQueryPromise<T>|JQueryDeferred<T>|any}  promise if logout succeed or failed
-     */
-    me.logoutFromService = function(session) {
-        var msg = 'logoutFromService for session' + session;
-        console.log(msg + ' START');
-        return me._logoutFromService(session);
-    };
-
-    /**
-     * check current session of service
-     * @param {Object} session                            session to check
-     * @returns {JQueryPromise<T>|JQueryDeferred<T>|any}  promise if check succeed or failed returns { data: 'OK' }
-     */
-    me.checkSession = function(session) {
-        var msg = 'checkSession for session:' + session;
-        console.log(msg + ' START');
-        return me._checkSession(session);
-    };
-
-    /**
      * implementation of: get symlinked nodedata for basenode
      * @param {Object} basenode                           node-data to get symlink-data
      * @returns {JQueryPromise<T>|JQueryDeferred<T>|any}  promise if read succeed or failed with parameters { yaioNodeActionResponse, textStatus, jqXhr}
@@ -343,33 +310,6 @@ Yaio.NodeRepository = function(appBase, config, defaultConfig) {
      */
     me._searchNode = function(searchOptions) {
         return me.appBase.YaioDataSourceManager.getCurrentConnection().searchNode(searchOptions);
-    };
-
-    /**
-     * implementation of: login to service
-     * @param {Object} credentials                        credentials to login with
-     * @returns {JQueryPromise<T>|JQueryDeferred<T>|any}  promise if login succeed or failed
-     */
-    me._loginToService = function(credentials) {
-        return me.appBase.YaioDataSourceManager.getCurrentConnection().loginToService(credentials);
-    };
-
-    /**
-     * implementation of: logout from service
-     * @param {Object} session                            session to logout
-     * @returns {JQueryPromise<T>|JQueryDeferred<T>|any}  promise if logout succeed or failed
-     */
-    me._logoutFromService = function(session) {
-        return me.appBase.YaioDataSourceManager.getCurrentConnection().logoutFromService(session);
-    };
-
-    /**
-     * implementation of: check current session of service
-     * @param {Object} session                            session to check
-     * @returns {JQueryPromise<T>|JQueryDeferred<T>|any}  promise if check succeed or failed returns { data: 'OK' }
-     */
-    me._checkSession = function(session) {
-        return me.appBase.YaioDataSourceManager.getCurrentConnection().checkSession(session);
     };
 
     me._init();
