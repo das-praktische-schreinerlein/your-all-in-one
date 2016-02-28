@@ -196,16 +196,16 @@ yaioAppBase.config.initResBasedUrls();
 // CONFIGUREDATASOURCES_SNIP
 yaioAppBase.config.datasources.push('YaioStaticNodeDBDriver');
 yaioAppBase.config.datasources.push('YaioFileNodeDBDriver');
-yaioAppBase.config.datasources.push('YaioServerNodeDBDriver_Local');
 // CONFIGUREDATASOURCES_SNAP
 var myUrl = window.location.href;
-var datasourceKey = 'YaioServerNodeDBDriver_Local';
+var datasourceKey = 'YaioStaticNodeDBDriver';
 if (myUrl.search('dsn=YaioStaticNodeDBDriver') > 0 || window.yaioUseStaticJson) {
     // load static
     datasourceKey = 'YaioStaticNodeDBDriver';
-} else if (yaioAppBase.config.datasources.indexOf('YaioServerNodeDBDriver_Local') > 0) {
-    // default: local server
+} else if (myUrl.search('dsn=YaioServerNodeDBDriver_Local') > 0) {
+    // add: local server
     datasourceKey = 'YaioServerNodeDBDriver_Local';
+    yaioAppBase.config.datasources.push('YaioServerNodeDBDriver_Local');
 }
 yaioAppBase.YaioDataSourceManager.connectService(datasourceKey)
     .done(function success() {
