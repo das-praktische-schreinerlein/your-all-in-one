@@ -44,8 +44,7 @@
 ## JS-ExplorerApp
 - functionality
     - Explorer-App with TreeView, Editor, Wysiwyg-Markdown-Editor...
-- packages
-    - src/main/web/yaio-explorerapp/
+- [yaio-explorerapp on Github](https://github.com/das-praktische-schreinerlein/yaio-explorerapp)
 - use external Libs
     - App-Framework: [AngularJS](https://angularjs.org/)
     - App-Routing: [Angular-Route](https://github.com/angular/bower-angular-route)
