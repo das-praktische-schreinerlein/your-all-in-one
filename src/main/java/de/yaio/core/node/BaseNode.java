@@ -552,10 +552,10 @@ public class BaseNode implements BaseData, MetaData, SysData,
             return this.getBaseNodeService().getWorkflowState(this);
         }
         return workflowState;
-    };
+    }
     public void setWorkflowState(final WorkflowState istState) {
         workflowState = istState;
-    };
+    }
 
     //
     // checks 
@@ -690,10 +690,6 @@ public class BaseNode implements BaseData, MetaData, SysData,
     /** 
      * initialize the Children from database (childNodes and childNodesByNameMapMap)
      * recursivly
-     * @FeatureDomain                Persistence
-     * @FeatureResult                updates memberfields childNodes
-     * @FeatureResult                updates memberfields childNodesByNameMapMap
-     * @FeatureKeywords              Persistence
      * @param pRecursionLevel        how many recursion-level will be read from DB
      */
     public void initChildNodesFromDB(final int pRecursionLevel) {
@@ -703,10 +699,6 @@ public class BaseNode implements BaseData, MetaData, SysData,
     /** 
      * initialize the Children from database (childNodes and childNodesByNameMapMap)
      * for all parents
-     * @FeatureDomain                Persistence
-     * @FeatureResult                updates memberfields childNodes otf the parents
-     * @FeatureResult                updates memberfields childNodesByNameMapMap of the parents
-     * @FeatureKeywords              Persistence
      */
     public void initChildNodesForParentsFromDB() {
         List<BaseNode> parentHierarchy = this.getBaseNodeService().getParentHierarchy(this);
@@ -720,9 +712,6 @@ public class BaseNode implements BaseData, MetaData, SysData,
      * check if entityManger contains objects<br>
      * if not: do persist
      * if yes or flgForceMerge is set: do merge
-     * @FeatureDomain                Persistence
-     * @FeatureResult                saves memberfields childNodes to database
-     * @FeatureKeywords              Persistence
      * @param pRecursionLevel        how many recursion-level will be saved to DB (0 = only my children)
      * @param flgForceMerge          force merge not persists
      * @throws Exception             ioExceptions possible
@@ -733,9 +722,6 @@ public class BaseNode implements BaseData, MetaData, SysData,
 
     /** 
      * remove the children from database recursivly
-     * @FeatureDomain                Persistence
-     * @FeatureResult                deletes all children with this,.getSysUID recursivly from db
-     * @FeatureKeywords              Persistence
      */
     public void removeChildNodesFromDB() {
         this.getBaseNodeDBService().removeChildNodesFromDB(this);

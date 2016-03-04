@@ -60,9 +60,6 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
     
     /** 
      * return the main instance of this service
-     * @FeatureDomain                Persistence
-     * @FeatureResult                return the main instance of this service
-     * @FeatureKeywords              Persistence
      * @return                       the main instance of this service
      */
     public static BaseWorkflowDataServiceImpl getInstance() {
@@ -81,8 +78,6 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
 
     /** 
      * add me as DataDomainRecalcer to the Service-Config
-     * @FeatureDomain                DataExport Presentation
-     * @FeatureKeywords              Config
      * @param nodeService            instance of the nodeService which will call me as recalcer
      */
     public static void configureDataDomainRecalcer(final NodeService nodeService) {
@@ -118,9 +113,6 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
      * returns the StandFaktor of the BaseWorkflowData-Node<br>
      * if instance of ExtendedWorkflowData then Plan/IstData is used<br>
      * if not: 0.0 is set
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                returnValue Double - standFaktor of the node
-     * @FeatureKeywords              BsuinessLogic
      * @param node                   node to process
      * @return                       standFaktor of the node
      * @throws Exception             parser/format-Exceptions possible
@@ -150,9 +142,6 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
      * initializes the ChildSumData<br>
      * if instance of ExtendedWorkflowData then Plan/IstData is used<br>
      * if not: alle is set to null
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                updates meberVars of node
-     * @FeatureKeywords              BsuinessLogic
      * @param node                   node to process
      * @throws Exception             parser/format-Exceptions possible
      */
@@ -470,9 +459,6 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
     
     /** 
      * return the recalced state (uses Plan/IstChildrenSum)
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                returnValue String - recalced state
-     * @FeatureKeywords              BsuinessLogic
      * @param baseNode               node to process
      * @return                       recalced state
      * @throws Exception             parser/format-Exceptions possible
@@ -494,9 +480,6 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
 
     /** 
      * return the recalced workflowstate for a BaseNode (uses Plan/Ist)
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                returnValue WorkflowState - recalced state
-     * @FeatureKeywords              BusinessLogic
      * @param node                   node to process
      * @return                       recalced state
      * @throws Exception             parser/format-Exceptions possible

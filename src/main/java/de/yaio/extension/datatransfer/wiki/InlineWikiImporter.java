@@ -45,9 +45,6 @@ public class InlineWikiImporter extends WikiImporter {
     
     /** 
      * Importer to import/parse nodes in Wiki-Format
-     * @FeatureDomain                Constructor
-     * @FeatureResult                initialize the importer
-     * @FeatureKeywords              Constructor
      * @param options                the importoptions for the parser...
      * @param strMetaIdPraefix       default meta id praefix 
      */

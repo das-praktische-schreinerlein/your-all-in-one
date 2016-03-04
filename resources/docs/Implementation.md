@@ -44,8 +44,7 @@
 ## JS-ExplorerApp
 - functionality
     - Explorer-App with TreeView, Editor, Wysiwyg-Markdown-Editor...
-- packages
-    - src/main/web/yaio-explorerapp/
+- use subproject [yaio-explorerapp on Github](https://github.com/das-praktische-schreinerlein/yaio-explorerapp)
 - use external Libs
     - App-Framework: [AngularJS](https://angularjs.org/)
     - App-Routing: [Angular-Route](https://github.com/angular/bower-angular-route)
@@ -66,13 +65,10 @@
     - UI-Features Fat Selectboxes: [Select2](https://github.com/select2/select2)
     - UI Search Pagination: [Angular-Paging](https://github.com/brantwills/Angular-Paging)
 
-## JS-Formatter
+## Wysiwyg-Markdown-Editor
 - functionality
-    - formatting of all markdown-sources: Markdown-Formatter, Diagramm-Formatter, Checklists, Wysiwyg-Markdown-Editor
-- packages
-    - src/main/web/yaio-explorerapp/js/layout/
-    - src/main/web/yaio-explorerapp/js/wysiwyg/
-    - src/main/web/yaio-explorerapp/wysiwyg.html
+    - online-markdown-editor: Markdown-Formatter, Diagramm-Formatter, Checklists, Wysiwyg-Markdown-Editor
+- use subproject [ymf on Github](https://github.com/das-praktische-schreinerlein/your-markdown-fellow)
 - use external Libs
     - Freemmind-Browser: [Freemind Flash-Browser](http://freemind.sourceforge.net/wiki/index.php/Flash_browser)
     - Html-Editor: [Ace](https://github.com/ajaxorg/ace-builds)
@@ -87,25 +83,25 @@
 ### yaio-commmons
 - functionality
     - common functions and utils for yaio
-- [yaio-commons on Github](https://github.com/das-praktische-schreinerlein/yaio-commons)
+- use subproject [yaio-commons on Github](https://github.com/das-praktische-schreinerlein/yaio-commons)
 
 ### yaio-pom-webstarter
 - functionality
     - starter pom for spring-boot-webapps
-- [yaio-pom-webstarter on Github](https://github.com/das-praktische-schreinerlein/yaio-pom-webstarter)
+- use subproject [yaio-pom-webstarter on Github](https://github.com/das-praktische-schreinerlein/yaio-pom-webstarter)
 
 ### yaio-plantuml-service
 - functionality
     - webservie to create plantuml-diagrams from source
     - inspired by [PlantUML Server](https://github.com/plantuml/plantuml-server)
-- [yaio-plantuml-service on Github](https://github.com/das-praktische-schreinerlein/yaio-plantuml-service)
+- use subproject [yaio-plantuml-service on Github](https://github.com/das-praktische-schreinerlein/yaio-plantuml-service)
 - use external libs
     - [Plantuml-Core](https://github.com/plantuml/plantuml)
 
 ### yaio-metaextract-service
 - functionality
     - webservice to extract text and metadata from uploaded files or urls
-- [yaio-metaextract-service on Github](https://github.com/das-praktische-schreinerlein/yaio-metaextract-service)
+- use subproject [yaio-metaextract-service on Github](https://github.com/das-praktische-schreinerlein/yaio-metaextract-service)
 - use external libs
     - [Apache Tika](https://tika.apache.org/1.11/gettingstarted.html)
     - [Tess4j](http://tess4j.sourceforge.net/)
@@ -114,14 +110,14 @@
 ### yaio-webshot-service
 - functionality
     - webservice to make a webshot of the url as png or pdf
-- [yaio-webshot-service on Github](https://github.com/das-praktische-schreinerlein/yaio-webshot-service)
+- use subproject [yaio-webshot-service on Github](https://github.com/das-praktische-schreinerlein/yaio-webshot-service)
 - use external libs
     - [Wkhtmltopdf](https://github.com/wkhtmltopdf/wkhtmltopdf)
 
 ### yaio-dms-service
 - functionality
     - webservice to store and retrieve documents with simple dms-functions
-- [yaio-dms-service on Github](https://github.com/das-praktische-schreinerlein/yaio-dms-service)
+- use subproject [yaio-dms-service on Github](https://github.com/das-praktische-schreinerlein/yaio-dms-service)
 
 ## Development
 - functionality

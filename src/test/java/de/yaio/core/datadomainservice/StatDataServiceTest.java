@@ -34,7 +34,6 @@ public class StatDataServiceTest extends DataDomainServiceTest {
     /** 
      * testobject for datadomain-logic: StatData
      * 
-     * @FeatureDomain                Test
      * @package                      de.yaio.core.datadomainservice
      * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
      * @category                     tests
@@ -61,9 +60,6 @@ public class StatDataServiceTest extends DataDomainServiceTest {
     
     /** 
      * setup the a TestObj for the test
-     * @FeatureDomain                Tests
-     * @FeatureResult                returnvalue TestObj - the dataobj for the test
-     * @FeatureKeywords              Test Config Initialisation
      * @return                       a new dataobj for the test
      * @throws Exception             possible Exception     */
     protected StatDataTestObj getNewStatDataTestObj() throws Exception  {

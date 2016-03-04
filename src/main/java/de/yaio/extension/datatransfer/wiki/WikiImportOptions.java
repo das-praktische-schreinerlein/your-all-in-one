@@ -45,9 +45,6 @@ public class WikiImportOptions extends ImportOptionsImpl {
 
     /** 
      * get the flag for WikiParser that Wiki-UE will be read or ignored
-     * @FeatureDomain                DataImport
-     * @FeatureResult                ResturnValue true/false = read/ignore
-     * @FeatureKeywords              DataImport ParserOptions
      * @return                       flgReadUe - true/false = read/ignore
      */
     public boolean isFlgReadUe() {
@@ -56,8 +53,6 @@ public class WikiImportOptions extends ImportOptionsImpl {
 
     /** 
      * set the flag for WikiParser that Wiki-UE will be read or ignored
-     * @FeatureDomain                DataImport
-     * @FeatureKeywords              DataImport ParserOptions
      * @param flgReadUe              true/false = read/ignore
      */
     public void setFlgReadUe(final boolean flgReadUe) {
@@ -66,9 +61,6 @@ public class WikiImportOptions extends ImportOptionsImpl {
 
     /** 
      * get the flag for WikiParser that Wiki-LIST will be read or ignored
-     * @FeatureDomain                DataImport
-     * @FeatureResult                ResturnValue true/false = read/ignore
-     * @FeatureKeywords              DataImport ParserOptions
      * @return                       flgReadList - true/false = read/ignore
      */
     public boolean isFlgReadList() {
@@ -77,8 +69,6 @@ public class WikiImportOptions extends ImportOptionsImpl {
 
     /** 
      * set the flag for WikiParser that Wiki-LIST will be read or ignored
-     * @FeatureDomain                DataImport
-     * @FeatureKeywords              DataImport ParserOptions
      * @param flgReadList            true/false = read/ignore
      */
     public void setFlgReadList(final boolean flgReadList) {
@@ -88,9 +78,6 @@ public class WikiImportOptions extends ImportOptionsImpl {
     /** 
      * get the flag for WikiParser that Nodes with status will 
      * be read or all others too
-     * @FeatureDomain                DataImport
-     * @FeatureResult                ResturnValue true/false = read only with Status/ read all
-     * @FeatureKeywords              DataImport ParserOptions
      * @return                       flgReadWithStatusOnly - true/false = read only with Status/ read all
      */
     public boolean isFlgReadWithStatusOnly() {
@@ -100,8 +87,6 @@ public class WikiImportOptions extends ImportOptionsImpl {
     /** 
      * set the flag for WikiParser that Nodes with status will 
      * be read or all others too
-     * @FeatureDomain                DataImport
-     * @FeatureKeywords              DataImport ParserOptions
      * @param flgReadWithStatusOnly  true/false = read only with Status/ read all
      */
     public void setFlgReadWithStatusOnly(final boolean flgReadWithStatusOnly) {
@@ -111,9 +96,6 @@ public class WikiImportOptions extends ImportOptionsImpl {
     /** 
      * get the flag for WikiParser that Nodes with Workflowstatus will 
      * be read or all others too
-     * @FeatureDomain                DataImport
-     * @FeatureResult                ResturnValue true/false = read only with WFStatus/ read all
-     * @FeatureKeywords              DataImport ParserOptions
      * @return                       flgReadWithWFStatusOnly - true/false = read only with WFStatus/ read all
      */
     public boolean isFlgReadWithWFStatusOnly() {
@@ -123,8 +105,6 @@ public class WikiImportOptions extends ImportOptionsImpl {
     /** 
      * set the flag for WikiParser that only Nodes with Workflowstatus will 
      * be read or all others too
-     * @FeatureDomain                DataImport
-     * @FeatureKeywords              DataImport ParserOptions
      * @param flgReadWithWFStatusOnly true/false = read only with WFStatus/ read all
      */
     public void setFlgReadWithWFStatusOnly(final boolean flgReadWithWFStatusOnly) {
@@ -134,9 +114,6 @@ public class WikiImportOptions extends ImportOptionsImpl {
     /** 
      * get the commaseparated string of node-stati for WikiImporter to filter 
      * on import
-     * @FeatureDomain                DataImport
-     * @FeatureResult                ResturnValue string = commaseparated list of node-stati to filter
-     * @FeatureKeywords              DataImport ParserOptions
      * @return                       strReadIfStatusInListOnly - commaseparated list of node-stati to filter
      */
     public String getStrReadIfStatusInListOnly() {
@@ -146,8 +123,6 @@ public class WikiImportOptions extends ImportOptionsImpl {
     /** 
      * set the commaseparated string of node-stati for WikiImporter to filter 
      * on import
-     * @FeatureDomain                DataImport
-     * @FeatureKeywords              DataImport ParserOptions
      * @param strReadIfStatusInListOnly commaseparated list of node-stati to filter
      */
     public void setStrReadIfStatusInListOnly(final String strReadIfStatusInListOnly) {

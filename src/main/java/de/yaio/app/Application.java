@@ -89,9 +89,6 @@ public class Application {
     
     /** 
      * Main-method to start the application
-     * @FeatureDomain                CLI
-     * @FeatureResult                initialize the application
-     * @FeatureKeywords              CLI
      * @param args                   the command line arguments
      */
     public static void main(final String[] args) {

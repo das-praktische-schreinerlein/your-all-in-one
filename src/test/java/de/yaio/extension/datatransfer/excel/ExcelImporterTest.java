@@ -51,8 +51,6 @@ public class ExcelImporterTest extends WikiImporterTest {
     
     /** 
      * parse the source and compare the result with expectedResult 
-     * @FeatureDomain                Tests
-     * @FeatureKeywords              Test
      * @param srcFile                the excelfile to parse
      * @param expectedResultFile     the file with the expected ppl-lines from parser
      * @throws Exception             possible Exception     */

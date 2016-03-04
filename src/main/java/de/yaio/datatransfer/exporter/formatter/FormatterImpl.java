@@ -65,8 +65,6 @@ public abstract class FormatterImpl implements Formatter {
 
     /** 
      * intend the string with " " on the left side till newLength
-     * @FeatureDomain                DataExport Presentation
-     * @FeatureKeywords              Format
      * @param src                    the string to format
      * @param newLength              max places behind comma
      * @return                       the formated string
@@ -89,8 +87,6 @@ public abstract class FormatterImpl implements Formatter {
 
     /** 
      * format the number to string (trim trailing 0)
-     * @FeatureDomain                DataExport Presentation
-     * @FeatureKeywords              Format
      * @param src                    the number to format
      * @param minStellen             min places behind comma
      * @param maxStellen             max places behind comma
@@ -157,8 +153,6 @@ public abstract class FormatterImpl implements Formatter {
 
     /** 
      * format the date to string
-     * @FeatureDomain                DataExport Presentation
-     * @FeatureKeywords              Format
      * @param src                    the date to format
      * @return                       the formated datestring
      */
@@ -182,8 +176,6 @@ public abstract class FormatterImpl implements Formatter {
 
     /** 
      * escape nonlatin chars to html-unicode sequences
-     * @FeatureDomain                DataExport Presentation
-     * @FeatureKeywords              Format
      * @param src                    the date to format
      * @param out                    the outputappender
      * @return                       the escaped string

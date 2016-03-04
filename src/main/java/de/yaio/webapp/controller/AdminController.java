@@ -44,8 +44,6 @@ public class AdminController {
 
     /** 
      * Request to recalc the specified node
-     * @FeatureDomain                Webservice
-     * @FeatureKeywords              Webservice Admin
      * @param sysUID                 sysUID to recalc
      * @return                       text-message
      */
@@ -87,8 +85,6 @@ public class AdminController {
 
     /** 
      * reset the yaio-instance
-     * @FeatureDomain                Webservice
-     * @FeatureKeywords              Webservice Admin
      * @return                       text-message
      */
     @ResponseBody

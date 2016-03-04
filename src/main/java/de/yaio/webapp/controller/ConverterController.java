@@ -56,10 +56,7 @@ public class ConverterController {
 
     /** 
      * parses the yaio-wiki-source to nodes and converts it to Html
-     * @FeatureDomain                Webservice
-     * @FeatureResult                resulting Html of the parsed yaio-wiki-source
-     * @FeatureKeywords              Webservice Html Converter
-     * @param source                 yaio-wiki-source to parse 
+     * @param source                 yaio-wiki-source to parse
      * @param response               response-obj to set encoding, headers...
      * @return                       resulting Html of the parsed yaio-wiki-source
      */
@@ -85,10 +82,7 @@ public class ConverterController {
 
     /** 
      * parses the yaio-wiki-source to nodes and converts it to ICal
-     * @FeatureDomain                Webservice
-     * @FeatureResult                resulting ICal of the parsed yaio-wiki-source
-     * @FeatureKeywords              Webservice ICal Converter
-     * @param source                 yaio-wiki-source to parse 
+     * @param source                 yaio-wiki-source to parse
      * @param response               response-obj to set encoding, headers...
      * @return                       resulting ICal of the parsed yaio-wiki-source
      */
@@ -104,10 +98,7 @@ public class ConverterController {
 
     /** 
      * parses the yaio-wiki-source to nodes and converts it to Mindmap
-     * @FeatureDomain                Webservice
-     * @FeatureResult                resulting Mindmap of the parsed yaio-wiki-source
-     * @FeatureKeywords              Webservice Mindmap Converter
-     * @param source                 yaio-wiki-source to parse 
+     * @param source                 yaio-wiki-source to parse
      * @param response               response-obj to set encoding, headers...
      * @return                       resulting Mindmap of the parsed yaio-wiki-source
      */
@@ -123,9 +114,6 @@ public class ConverterController {
 
     /** 
      * parses the yaio-wiki-source to nodes and converts it with help of the exporter
-     * @FeatureDomain                Webservice
-     * @FeatureResult                Converter-result of the parsed yaio-wiki-source
-     * @FeatureKeywords              Webservice Converter
      * @param exporter               exporter to use (mindmap, html...)
      * @param extension              file-extension
      * @param source                 yaio-wiki-source to parse 

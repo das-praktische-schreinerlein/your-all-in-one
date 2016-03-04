@@ -6,6 +6,9 @@ your-all-in-one - Le petit D'Artagnan
 collaboration-softwareproject: "D'Artagnan - Dein persönlicher Software-Musketier".
 
 More information about the prototype at [http://www.your-all-in-one.de/yaio/static/lepetit](http://www.your-all-in-one.de/yaio/static/lepetit )
+
+
+
 # Installation
 - **see common details on [resources/docs/Installation.md](resources/docs/Installation.md)**
 
@@ -20,6 +23,9 @@ More information about the prototype at [http://www.your-all-in-one.de/yaio/stat
 
 # History and milestones
 - **see details on [resources/docs/Changelog.md](resources/docs/Changelog.md)**
+- 2016
+   - spin off markdowneditor to spearate project [YMF Your-Markdown-Fellow](https://github.com/das-praktische-schreinerlein/your-markdown-fellow)
+   - improved grunt-process
 - 2015
    - improved layout 
    - secured app with user-login 

@@ -70,13 +70,13 @@ var Utils = {
     },
 
     formatGermanDate: function(millis) {
-        if (millis == null) {
-           return "";
+        if (millis === null) {
+           return '';
         }
         var date = new Date(millis);
         return this.padNumber(date.getDate(), 2)
-            + "." + this.padNumber(date.getMonth() + 1, 2)
-            + "." + date.getFullYear();
+            + '.' + this.padNumber(date.getMonth() + 1, 2)
+            + '.' + date.getFullYear();
     },
     padNumber: function (number, count) {
         var r = String(number);

@@ -83,9 +83,6 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
 
     /** 
      * return the instance of BaseNodeDBService
-     * @FeatureDomain                Persistence
-     * @FeatureResult                ReturnValue BaseNodeDBService - the instance of BaseNodeDBService
-     * @FeatureKeywords              Persistence
      * @return                       the instance of BaseNodeDBService
      */
     public static BaseNodeDBService getInstance() {

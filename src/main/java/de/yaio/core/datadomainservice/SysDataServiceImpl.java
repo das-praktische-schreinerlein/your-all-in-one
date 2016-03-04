@@ -47,9 +47,6 @@ public class SysDataServiceImpl extends DataDomainRecalcImpl implements SysDataS
 
     /** 
      * return the main instance of this service
-     * @FeatureDomain                Persistence
-     * @FeatureResult                return the main instance of this service
-     * @FeatureKeywords              Persistence
      * @return                       the main instance of this service
      */
     public static SysDataServiceImpl getInstance() {
@@ -58,8 +55,6 @@ public class SysDataServiceImpl extends DataDomainRecalcImpl implements SysDataS
 
     /** 
      * add me as DataDomainRecalcer to the Service-Config
-     * @FeatureDomain                DataExport Presentation
-     * @FeatureKeywords              Config
      * @param nodeService            instance of the nodeService which will call me as recalcer
      */
     public static void configureDataDomainRecalcer(final NodeService nodeService) {

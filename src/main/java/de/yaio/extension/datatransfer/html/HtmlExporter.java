@@ -19,6 +19,9 @@ import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
 import org.markdown4j.Markdown4jProcessor;
+import org.markdown4j.TablePlugin;
+
+import com.github.rjeschke.txtmark.Processor;
 
 import de.yaio.commons.data.DataUtils;
 import de.yaio.core.datadomain.DataDomain;
@@ -64,10 +67,11 @@ public class HtmlExporter extends WikiExporter {
     protected static final String CONST_FORMATTER_PLANCHILDRENSUM = PlanChildrenSumDataFormatterImpl.class.getName();
     
     protected static Markdown4jProcessor markdownProcessor = new Markdown4jProcessor();
-//    static {
+    static {
+        markdownProcessor.registerPlugins(new TablePlugin());
 //        markdownProcessor.addHtmlAttribute("style", "color:red", "blockquote", "h1");
 //        markdownProcessor.addStyleClass("", "img");
-//    }
+    }
 
     // Logger
     private static final Logger LOGGER =
@@ -77,9 +81,6 @@ public class HtmlExporter extends WikiExporter {
     
     /** 
      * service functions to export nodes as Html
-     * @FeatureDomain                Constructor
-     * @FeatureResult                initialize the exporter
-     * @FeatureKeywords              Constructor
      */
     public HtmlExporter() {
         super();
@@ -95,9 +96,6 @@ public class HtmlExporter extends WikiExporter {
     
     /** 
      * generate helper-OutputOptions for generation of the html
-     * @FeatureDomain                DataExport
-     * @FeatureResult                returnValue OutputOptions - OuputOptions for generation of the html
-     * @FeatureKeywords              Cofiguration helper
      * @param baseOOptions           Default OutputOptions to override
      * @return                       OuputOptions for generation of the html
      */
@@ -165,9 +163,6 @@ public class HtmlExporter extends WikiExporter {
 
     /** 
      * formats recursively node in html-docu-format
-     * @FeatureDomain                DataExport Presentation
-     * @FeatureResult                returnValue String - formatted output of node-hirarchy
-     * @FeatureKeywords              Layout
      * @param curNode                node for output recursively
      * @param oOptions               options for output (formatter)
      * @return                       formatted output of node-hierarchy and DataDomains
@@ -612,9 +607,6 @@ public class HtmlExporter extends WikiExporter {
 
     /** 
      * formats recursively node in html-project-format
-     * @FeatureDomain                DataExport Presentation
-     * @FeatureResult                returnValue String - formatted output of node-hirarchy
-     * @FeatureKeywords              Layout
      * @param curNode                node for output recursively
      * @param oOptions               options for output (formatter)
      * @return                       formatted output of node-hierarchy and DataDomains
@@ -891,9 +883,6 @@ public class HtmlExporter extends WikiExporter {
 
     /** 
      * generate a html-block for the node
-     * @FeatureDomain                DataExport Presentation
-     * @FeatureResult                returnValue String - htmlblock of the node
-     * @FeatureKeywords              Layout
      * @param curNode                the node
      * @param pData                  the formatted data to export in html-block
      * @param dataName               the name for idFields
@@ -926,9 +915,6 @@ public class HtmlExporter extends WikiExporter {
      * return the DocLoayoutTagCommand configured in the node<br>
      * if it is not set: CONST_LAYOUT_TAG_P<br>
      * if is has children: CONST_LAYOUT_TAG_UE
-     * @FeatureDomain                DataExport Presentation
-     * @FeatureResult                returnValue String - tagcommand
-     * @FeatureKeywords              Layout
      * @param curNode                node for output recursively
      * @return                       the tagcommand
      * @throws Exception             parser/format-Exceptions possible
@@ -949,9 +935,6 @@ public class HtmlExporter extends WikiExporter {
     
     /** 
      * format the descText as Markdown
-     * @FeatureDomain                DataExport Presentation
-     * @FeatureResult                returnValue String - formatted markdown
-     * @FeatureKeywords              Layout
      * @param descText               the string to format
      * @return                       formatted markdown
      * @throws IOException           IOException-Exceptions possible
@@ -961,7 +944,12 @@ public class HtmlExporter extends WikiExporter {
         String newDescText = this.prepareTextForMarkdown(descText);
         
         newDescText = newDescText.replaceAll("…", "...");
+        
         newDescText = markdownProcessor.process(newDescText);
+//        PegDownProcessor pegDownProcessor = new PegDownProcessor();
+//        newDescText = pegDownProcessor.markdownToHtml(newDescText);
+//        newDescText = Processor.process(newDescText);
+        
         newDescText = newDescText.replaceAll("…", "...");
         
         // add id to heading
@@ -971,6 +959,24 @@ public class HtmlExporter extends WikiExporter {
                         "\">").toString();
 
         // replace code-blocks
+//        newDescText = replaceDiagrammPattern(newDescText,
+//                        "<code>(yaio|jsh|ymf)*mermaid(" + Parser.CONST_PATTERN_SEG_DESC + "*?)<\\/code>", 
+//                        "<div id=\"inlineMermaid",
+//                        "\" class=\"mermaid\">$2</div>").toString();
+//        newDescText = replaceDiagrammPattern(newDescText,
+//                        "<code>(yaio|jsh|ymf)*freemind(" + Parser.CONST_PATTERN_SEG_DESC + "*?)<\\/code>", 
+//                        "<div id=\"inlineMindmap",
+//                        "\" class=\"yaiomindmap\">$2</div>").toString();
+//        newDescText = replaceDiagrammPattern(newDescText,
+//                        "<code>(yaio|jsh|ymf)*mindmap(" + Parser.CONST_PATTERN_SEG_DESC + "*?)<\\/code>", 
+//                        "<div id=\"inlineMindmap",
+//                        "\" class=\"yaiomindmap\">$2</div>").toString();
+//        newDescText = replaceDiagrammPattern(newDescText,
+//                        "<code>(yaio|jsh|ymf)*plantuml(" + Parser.CONST_PATTERN_SEG_DESC + "*?)<\\/code>", 
+//                        "<div id=\"yaioplantuml",
+//                        "\" class=\"yaioplantuml\">$2</div>").toString();
+
+        
         newDescText = replaceDiagrammPattern(newDescText,
                         "<code>", 
                         "<code id=\"inlineCode",
@@ -1009,9 +1015,6 @@ public class HtmlExporter extends WikiExporter {
     /** 
      * prepare the text to format as markdown
      * prefix empty lines inline code-segs (```) so that they will interprewted as codeline by markdown-parser
-     * @FeatureDomain                DataExport Presentation
-     * @FeatureResult                returnValue String - prepared text
-     * @FeatureKeywords              Layout
      * @param descText               the string to prepare
      * @return                       prpeared text to format as markdown
      */
@@ -1055,9 +1058,6 @@ public class HtmlExporter extends WikiExporter {
 
     /** 
      * search for the pattern and replace it with the replacementhead + htmlId + replacementTail
-     * @FeatureDomain                DataExport Presentation
-     * @FeatureResult                returnValue String - formatted diagramm-markdown
-     * @FeatureKeywords              Layout
      * @param text                   the haystack
      * @param patternString          the needle to replace
      * @param replacementHead        the head before the new htmlelement-id

@@ -33,18 +33,12 @@ public interface TriggeredDataDomainRecalc {
     
     /** 
      * recalcs the DataDomain connected to the Recalcer if it is triggered by db
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                updates memberVariables
-     * @FeatureKeywords              BsuinessLogic
      * @throws Exception             parser/format-Exceptions possible
      */
     void doSearchAndTrigger() throws Exception;
 
     /** 
      * recalcs the DataDomain connected to the Recalcer if it is triggered by db
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                updates memberVariables
-     * @FeatureKeywords              BsuinessLogic
      * @param node                   node to recalc
      * @throws Exception             parser/format-Exceptions possible
      */
@@ -52,9 +46,6 @@ public interface TriggeredDataDomainRecalc {
 
     /** 
      * returns the trigger-filter 
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                updates memberVariables
-     * @FeatureKeywords              BsuinessLogic
      * @return                       list of filters to get nodes to recalc
      * @throws Exception             parser/format-Exceptions possible
      */
@@ -62,9 +53,6 @@ public interface TriggeredDataDomainRecalc {
 
     /** 
      * returns the class of the DataDomain for which the service runs
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                returnValue Class - DataDomain for which the service runs
-     * @FeatureKeywords              Config
      * @return                       DataDomain for which the service runs
      */
     Class<?> getRecalcTargetClass();

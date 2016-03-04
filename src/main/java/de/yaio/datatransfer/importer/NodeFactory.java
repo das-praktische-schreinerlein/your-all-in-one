@@ -44,8 +44,6 @@ public interface NodeFactory {
      * bekannt gemacht<br>
      * muss ueberladen und mit den Configuratoren gefuellt werden, die dann
      * NodeFactory.addNodeTypeIdentifier aufrufen
-     * @FeatureDomain                DataImport
-     * @FeatureKeywords              Config
      */
     void initNodeTypeIdentifier();
 
@@ -53,8 +51,6 @@ public interface NodeFactory {
      * ueber diese Funktionen werden die Schlagworte und die dann zu 
      * über NodeFactory.getNodeTypeFromText zu instantiierenden Node-Klassen 
      * bekannt gemacht
-     * @FeatureDomain                DataImport
-     * @FeatureKeywords              Config
      * @param constMapNodetypeIdentifier Liste der Schlagworte (Typ, Status usw.)
      * @param classType              Klasse (Node) die bei Auffinden des Schlagwortes instanziiert wird
      */
@@ -63,9 +59,6 @@ public interface NodeFactory {
 
     /** 
      * liefert die Map der bekannten NodeTypeIdentifier zurueck
-     * @FeatureDomain                DataImport
-     * @FeatureResult                returnValue Map - Map der NodeTypeIdentifier  (Schlagwort = zu instanziierende Node-Klasse)
-     * @FeatureKeywords              Config
      * @return                       Map der konfigurierten NodeTypeIdentifier
      */
     Map<String, Class<?>> getHshNodeTypeIdentifier();
@@ -76,42 +69,30 @@ public interface NodeFactory {
      * bekannt gemacht<br>
      * muss ueberladen und mit den Configuratoren gefuellt werden,
      * die NodeFactory.addDataDomainParser aufrufen
-     * @FeatureDomain                DataImport
-     * @FeatureKeywords              Config
      */
     void initDataDomainParser();
 
     /** 
      * hängt den Parser für das spätere Extrahieren der NodeDaten aus dem 
      * Namen (NodeFactory.parseNodeDataDomains) in die Parserliste
-     * @FeatureDomain                DataImport
-     * @FeatureKeywords              Config
      * @param parser                 Instanz des Parsers
      */
     void addDataDomainParser(Parser parser);
 
     /** 
      * liefert die Liste der bekannten Parser zurueck
-     * @FeatureDomain                DataImport
-     * @FeatureResult                returnValue Collection - Liste der Parser
-     * @FeatureKeywords              Config
      * @return                       Liste der konfigurierten parser
      */
     Collection<Parser> getDataDomainParser();
 
     /** 
      * liefert die Map der bekannten Parser zurueck
-     * @FeatureDomain                DataImport
-     * @FeatureResult                returnValue Map - Map der Parser  (Position = Parser-Instanz)
-     * @FeatureKeywords              Config
      * @return                       Map der konfigurierten Parser
      */
     Set<Parser> getHshDataDomainParser();
     
     /** 
      * sets the MetaDataService to use for generating NodeNumbers
-     * @FeatureDomain                Service
-     * @FeatureKeywords              Config
      * @param metaDataService        to use for generating NodeNumbers
      */
     void setMetaDataService(MetaDataService metaDataService);
@@ -121,8 +102,6 @@ public interface NodeFactory {
      *   <ul>
      * <li>returnValue MetaDataService - current MetaDataService
      *   </ul> 
-     * @FeatureDomain                Service
-     * @FeatureKeywords              Config
      * @return                       MetaDataService to use for generating NodeNumbers
      */
     MetaDataService getMetaDataService();
@@ -136,11 +115,6 @@ public interface NodeFactory {
      * fuehrt alle ueber NodeFactory#initDataDomainParser() konfigurierten 
      * Parser aus und extrahiert mit diesen die Daten aus dem NodeNamen und 
      * belegt die Felder
-     * @FeatureDomain                DataImport
-     * @FeatureResult                returnValue int - Anzahl der gefundenen Fragmente
-     * @FeatureResult                updates memberVariable node.name = Parser etrahiert die Feldinhalte  aus dem Namen und löscht die Infos dort
-     * @FeatureResult                updates memberVariable node.XX = Parser etrahiert die Feldinhalte  aus dem Namen und belegt die Felder
-     * @FeatureKeywords              Parser
      * @param node                   zu parsenden Node
      * @param options                Parser-Optionen
      * @return                       Anzahl der gefundenen Fragmente
@@ -151,11 +125,6 @@ public interface NodeFactory {
     /** 
      * fuehrt den Parser aus, der die Daten aus dem NodeNamen extrahiert 
      * und die Felder belegt
-     * @FeatureDomain                DataImport
-     * @FeatureResult                returnValue int - Anzahl der gefundenen Fragmente
-     * @FeatureResult                updates memberVariable node.name = Parser etrahiert die Feldinhalte  aus dem Namen und löscht die Infos dort
-     * @FeatureResult                updates memberVariable node.XX = Parser etrahiert die Feldinhalte  aus dem Namen und belegt die Felder
-     * @FeatureKeywords              Parser
      * @param node                   zu parsenden Node
      * @param parser                 Instanz des auszufuehrenden Parsers
      * @param options                Parser-Optionen
@@ -171,10 +140,6 @@ public interface NodeFactory {
     /** 
      * erzeugt anhand von classType eine neue Node und initialisiet deren 
      * Basisdaten<br>
-     * @FeatureDomain                DataImport
-     * @FeatureResult                returnValue Node - erzeugt Node
-     * @FeatureResult                updates memberVariable node.xx = fuehrt NodeFactrory.parseNodeDataDomains  zur Initialisierung der Node aus
-     * @FeatureKeywords              Parser
      * @param classType              Klasse von Node abgeleitet
      * @param id                     id der Node
      * @param strFullSrc             Src der Node
@@ -191,9 +156,6 @@ public interface NodeFactory {
      * parst anhand der in NodeFactory.initNodeTypeIdentifier konfigurierten +
      * NodeTypeIdetifiern den passenden Klassennamen der Node die dann über
      * NodeFactory.createNodeObjFromText erzeugt werdne kann
-     * @FeatureDomain                DataImport
-     * @FeatureResult                returnValue Class - Klasse die anhand des Namens zugeordnet wurde (anhand der Daten aus NodeFactory.initNodeTypeIdentifier)
-     * @FeatureKeywords              Parser
      * @param strFullSrc             FullSrc der Node
      * @param srcName                NodeName
      * @return                       Klasse die anhand des Namens zugeordnet wurde (anhand der Daten aus NodeFactory.initNodeTypeIdentifier)

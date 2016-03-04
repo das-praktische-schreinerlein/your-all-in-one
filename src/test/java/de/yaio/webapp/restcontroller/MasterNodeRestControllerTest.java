@@ -28,8 +28,6 @@ import org.junit.Test;
 public class MasterNodeRestControllerTest extends BaseNodeRestControllerTest {
     /** 
      * test the masternode
-     * @FeatureDomain                TestService-function
-     * @FeatureKeywords              Test
      * @throws Exception             io-Exceptions possible
      */
     @Test

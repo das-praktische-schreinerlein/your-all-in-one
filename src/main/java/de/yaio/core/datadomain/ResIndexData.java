@@ -30,7 +30,7 @@ public interface ResIndexData extends DataDomain {
     int CONST_ORDER = 27;
 
     @XmlTransient
-    public static enum IndexWorkflowState {
+    enum IndexWorkflowState {
         // the order is important for the calculation of workflow!!!!
         NOINDEX, 
         INDEX_OPEN, 
@@ -39,12 +39,12 @@ public interface ResIndexData extends DataDomain {
         INDEX_DONE
     }
 
-    public String getResIndexDMSId();
-    public void setResIndexDMSId(String resContentIndexDMSId);
-    public String getResIndexDMSType();
-    public void setResIndexDMSType(String resContentIndexDMSType);
-    public IndexWorkflowState getResIndexDMSState();
-    public void setResIndexDMSState(IndexWorkflowState resContentIndexDMSState);
+    String getResIndexDMSId();
+    void setResIndexDMSId(String resContentIndexDMSId);
+    String getResIndexDMSType();
+    void setResIndexDMSType(String resContentIndexDMSType);
+    IndexWorkflowState getResIndexDMSState();
+    void setResIndexDMSState(IndexWorkflowState resContentIndexDMSState);
 
     void resetResIndexData();
 }

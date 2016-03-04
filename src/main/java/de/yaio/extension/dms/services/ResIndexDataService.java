@@ -34,9 +34,6 @@ public interface ResIndexDataService extends TriggeredDataDomainRecalc {
 
     /** 
      * index the uploaded ResLoc-data to dms
-     * @FeatureDomain                DMS
-     * @FeatureResult                updates membervars -
-     * @FeatureKeywords              DMS
      * @param node                   node
      * @throws Exception             parser/format-Exceptions possible
      */
@@ -45,9 +42,6 @@ public interface ResIndexDataService extends TriggeredDataDomainRecalc {
 
     /**
      * index the uploaded ResLoc-data to dms
-     * @FeatureDomain                DMS
-     * @FeatureResult                updates membervars
-     * @FeatureKeywords              DMS
      * @param datanode               node
      * @param fileName               original-filename
      * @param input                  the input to upload (uploadfile or url-webshot)

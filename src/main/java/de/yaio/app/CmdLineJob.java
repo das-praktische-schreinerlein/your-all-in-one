@@ -57,9 +57,6 @@ public abstract class CmdLineJob {
 
     /** 
      * baseclass for CommandLineJobs
-     * @FeatureDomain                Constructor
-     * @FeatureResult                initialize the application
-     * @FeatureKeywords              Constructor
      * @param args                   the command line arguments
      */
     public CmdLineJob(final String[] args) {
@@ -69,9 +66,6 @@ public abstract class CmdLineJob {
 
     /** 
      * returns jobname (Classname without package)
-     * @FeatureDomain                Tools - CLI-Handling
-     * @FeatureResult                returnValue String - jobname (Classname without package)
-     * @FeatureKeywords              CLI-Handling
      * @return                       String - jobname (Classname without package)
      * @throws Exception             possible Exception
      */
@@ -80,10 +74,7 @@ public abstract class CmdLineJob {
     }
 
     /** 
-     * prints usage of current commandlineoptions
-     * @FeatureDomain                Tools - CLI-Handling
-     * @FeatureResult                prints on STDOUT - usage
-     * @FeatureKeywords              CLI-Handling
+     * prints usage of current commandlineoption son STDOUT
      * @throws Exception             possible Exception
      */
     protected void printUsage() throws Exception  {
@@ -112,8 +103,6 @@ public abstract class CmdLineJob {
      *    <li>call doJob
      *    <li>call cleanUpAfterJob
      * </ul>
-     * @FeatureDomain                Jobhandling
-     * @FeatureKeywords              Jobhandling
      */
     public void startJobProcessing() {
         try {
@@ -204,8 +193,6 @@ public abstract class CmdLineJob {
 
     /** 
      * log errormessages
-     * @FeatureDomain                Jobhandling
-     * @FeatureKeywords              Jobhandling
      * @param errorMsg               the errormsg for output on System.out and Logger
      */
     public static void logErrorMsg(final String errorMsg) {
@@ -215,8 +202,6 @@ public abstract class CmdLineJob {
 
     /** 
      * handle throable (log errorme4ssages and exit if flgExit is set)
-     * @FeatureDomain                Jobhandling
-     * @FeatureKeywords              Jobhandling
      * @param e                      the exceptuiion/error...
      * @param flgExit                do exit if it is set
      */

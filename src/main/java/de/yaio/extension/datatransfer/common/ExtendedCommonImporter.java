@@ -51,9 +51,6 @@ public class ExtendedCommonImporter extends CommonImporter {
     
     /** 
      * create importer-object to import nodes
-     * @FeatureDomain                Constructor
-     * @FeatureResult                initialize the importer
-     * @FeatureKeywords              Constructor
      * @param defaultSourceType      the default sourcetype if commandline-option not set
      */
     public ExtendedCommonImporter(final String defaultSourceType) {
@@ -87,9 +84,6 @@ public class ExtendedCommonImporter extends CommonImporter {
 
     /** 
      * add Wiki-import-options to the availiableCmdLineOptions
-     * @FeatureDomain                CLI
-     * @FeatureResult                update availiableCmdLineOptions
-     * @FeatureKeywords              CLI
      * @param availiableCmdLineOptions the container with the availiableCmdLineOptions
      */
     public void addAvailiableWikiCmdLineOptions(final Options availiableCmdLineOptions) {
@@ -126,9 +120,6 @@ public class ExtendedCommonImporter extends CommonImporter {
     
     /** 
      * add Excel-import-options to the availiableCmdLineOptions
-     * @FeatureDomain                CLI
-     * @FeatureResult                update availiableCmdLineOptions
-     * @FeatureKeywords              CLI
      * @param availiableCmdLineOptions the container with the availiableCmdLineOptions
      */
     public void addAvailiableExcelCmdLineOptions(final Options availiableCmdLineOptions) {
@@ -136,9 +127,6 @@ public class ExtendedCommonImporter extends CommonImporter {
 
     /** 
      * add PPL-import-options to the availiableCmdLineOptions
-     * @FeatureDomain                CLI
-     * @FeatureResult                update availiableCmdLineOptions
-     * @FeatureKeywords              CLI
      * @param availiableCmdLineOptions the container with the availiableCmdLineOptions
      */
     public void addAvailiablePPLCmdLineOptions(final Options availiableCmdLineOptions) {
@@ -146,9 +134,6 @@ public class ExtendedCommonImporter extends CommonImporter {
 
     /** 
      * add Production-import-options to the availiableCmdLineOptions
-     * @FeatureDomain                CLI
-     * @FeatureResult                update availiableCmdLineOptions
-     * @FeatureKeywords              CLI
      * @param availiableCmdLineOptions the container with the availiableCmdLineOptions
      */
     public void addAvailiableProductiveImportCmdLineOptions(final Options availiableCmdLineOptions) {
@@ -168,9 +153,6 @@ public class ExtendedCommonImporter extends CommonImporter {
     /** 
      * import the data from PPL-File configured by cmdline-options and add 
      * them to the masterNode 
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                updates masternode
-     * @FeatureKeywords              BusinessLogic
      * @param masterNode             the masternode on which all other nodes are added
      * @throws Exception             parse/io-Exceptions possible
      */
@@ -196,9 +178,6 @@ public class ExtendedCommonImporter extends CommonImporter {
     /** 
      * import the data from Excel-File configured by cmdline-options and add 
      * them to the masterNode 
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                updates masternode
-     * @FeatureKeywords              BusinessLogic
      * @param masterNode             the masternode on which all other nodes are added
      * @throws Exception             parse/io-Exceptions possible
      */
@@ -218,9 +197,6 @@ public class ExtendedCommonImporter extends CommonImporter {
     /** 
      * import the nodes from Excel-File configured by cmdline-options and 
      * return them as PPL-String
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                returnValue String in PPL-format
-     * @FeatureKeywords              BusinessLogic
      * @return                       String with nodes in PPL-format
      * @throws Exception             parse/io-Exceptions possible
      */
@@ -273,9 +249,6 @@ public class ExtendedCommonImporter extends CommonImporter {
     /** 
      * import the data from Wiki-File configured by cmdline-options and add 
      * them to the masterNode 
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                updates masternode
-     * @FeatureKeywords              BusinessLogic
      * @param masterNode             the masternode on which all other nodes are added
      * @throws Exception             parse/io-Exceptions possible
      */
@@ -294,9 +267,6 @@ public class ExtendedCommonImporter extends CommonImporter {
     /** 
      * import the nodes from Wiki-File configured by cmdline-options and 
      * return them as PPL-String
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                returnValue String in PPL-format
-     * @FeatureKeywords              BusinessLogic
      * @return                       String with nodes in PPL-format
      * @throws Exception             parse/io-Exceptions possible
      */
@@ -390,9 +360,6 @@ public class ExtendedCommonImporter extends CommonImporter {
     
     /** 
      * create the commonly used PPLimporter
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                updates MemberVar pplImporter - for the import
-     * @FeatureKeywords              BusinessLogic
      */
     protected void createPPLImporter() {
         // create commonImporter
@@ -402,9 +369,6 @@ public class ExtendedCommonImporter extends CommonImporter {
 
     /** 
      * get the commonly used PPLimporter
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                returnValue an instance of PPLImporter
-     * @FeatureKeywords              BusinessLogic
      * @return                       an instance of PPLImporter
      */
     public PPLImporter getPPLImporter() {

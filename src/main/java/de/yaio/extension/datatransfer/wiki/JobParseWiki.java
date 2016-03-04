@@ -35,9 +35,6 @@ public class JobParseWiki extends CmdLineJob {
 
     /** 
      * job to import nodes in Wiki-Format and output as PPL
-     * @FeatureDomain                Constructor
-     * @FeatureResult                initialize the application
-     * @FeatureKeywords              Constructor
      * @param args                   the command line arguments
      */
     public JobParseWiki(final String[] args) {
@@ -68,9 +65,6 @@ public class JobParseWiki extends CmdLineJob {
     /** 
      * create the commonly used importer to imports the data from differenet 
      * sourcetypes
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                updates MemberVar commonImporter - for the import
-     * @FeatureKeywords              BusinessLogic
      */
     protected void createCommonImporter() {
         // create commonImporter
@@ -79,9 +73,6 @@ public class JobParseWiki extends CmdLineJob {
 
     /** 
      * Main-method to start the application
-     * @FeatureDomain                CLI
-     * @FeatureResult                initialize the application
-     * @FeatureKeywords              CLI
      * @param args                   the command line arguments
      */
     public static void main(final String[] args) {

@@ -100,7 +100,7 @@ describe('yaio nodelifecycle', function() {
                 var newNodeElement = yaioNodePage.openNodeEditorAndCreateSymLinkNode(yaioNodePage.jsFuncTestId);
                 newNodeElement.getText().then(function() {
                     deferred.fulfill(newNodeElement);
-                })
+                });
                 
                 return deferred.promise;
             })
@@ -114,7 +114,7 @@ describe('yaio nodelifecycle', function() {
                 var symlinkTargetElement = yaioNodePage.followSymLinkNodeById(nodeId, yaioNodePage.jsFuncTestId);
                 symlinkTargetElement.getText().then(function() {
                     deferred.fulfill(nodeId);
-                })
+                });
                 
                 return deferred.promise;
             })
@@ -124,12 +124,55 @@ describe('yaio nodelifecycle', function() {
                 var deletedElement = yaioNodePage.deleteNodeById(nodeId, yaioNodePage.jsFuncTestId);
                 deletedElement.isPresent().then(function() {
                     deferred.fulfill(deletedElement);
-                })
+                });
                 // check that element no more exists
                 expect(deletedElement.isPresent()).toEqual(false);
                 
                 return deferred.promise;
             });
+    });
+
+    it('should create/delete a UrlResNode', function doCreateSymLink() {
+        // When and Then
+
+return;        
+/**
+// navigate to Node
+        yaioNodePage.navigateToNode(yaioNodePage.jsFuncTestHierarchy)
+            .then(function doneNavigate(){
+                // create urlres
+                var deferred = protractor.promise.defer();
+                var newNodeElement = yaioNodePage.openNodeEditorAndCreateUrlResNode(yaioNodePage.jsFuncTestId);
+                newNodeElement.getText().then(function() {
+                    deferred.fulfill(newNodeElement);
+                });
+
+                return deferred.promise;
+            })
+            .then(function doneCreateUrlRes(newNodeElement) {
+                // extract nodeid from new task
+                return yaioNodePage.extractNodeIdFromNodeNameElement(newNodeElement);
+            })
+            .then(function doneExtractNodeId(nodeId) {
+                // do UrlRes
+                var deferred = protractor.promise.defer();
+                deferred.fulfill(nodeId);
+
+                return deferred.promise;
+            })
+            .then(function doneUrlRes(nodeId){
+                // delete this UrlRes
+                var deferred = protractor.promise.defer();
+                var deletedElement = yaioNodePage.deleteNodeById(nodeId, yaioNodePage.jsFuncTestId);
+                deletedElement.isPresent().then(function() {
+                    deferred.fulfill(deletedElement);
+                });
+                // check that element no more exists
+                expect(deletedElement.isPresent()).toEqual(false);
+
+                return deferred.promise;
+            });
+**/            
     });
 });
 

@@ -45,9 +45,6 @@ public class NodeSearchResponse {
 
     /** 
      * create a response-obj
-     * @FeatureDomain                Constructor
-     * @FeatureResult                a response-obj with the resulting nodes
-     * @FeatureKeywords              Constructor
      * @param state                  the resulting state of the request OK/ERROR
      * @param stateMsg               the corresponding message to the state
      * @param nodes                  the resulting nodes for the search page

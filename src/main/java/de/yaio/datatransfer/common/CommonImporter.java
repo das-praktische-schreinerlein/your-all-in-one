@@ -41,9 +41,6 @@ public class CommonImporter {
     
     /** 
      * create importer-object to import nodes
-     * @FeatureDomain                Constructor
-     * @FeatureResult                initialize the importer
-     * @FeatureKeywords              Constructor
      * @param defaultSourceType      the default sourcetype if commandline-option not set
      */
     public CommonImporter(final String defaultSourceType) {
@@ -58,9 +55,6 @@ public class CommonImporter {
     
     /** 
      * add common import-options to the availiableCmdLineOptions
-     * @FeatureDomain                CLI
-     * @FeatureResult                update availiableCmdLineOptions
-     * @FeatureKeywords              CLI
      * @param availiableCmdLineOptions the container with the availiableCmdLineOptions
      */
     public void addAvailiableCommonCmdLineOptions(final Options availiableCmdLineOptions) {
@@ -80,9 +74,6 @@ public class CommonImporter {
 
     /** 
      * add JPA-import-options to the availiableCmdLineOptions
-     * @FeatureDomain                CLI
-     * @FeatureResult                update availiableCmdLineOptions
-     * @FeatureKeywords              CLI
      * @param availiableCmdLineOptions the container with the availiableCmdLineOptions
      */
     public void addAvailiableJPACmdLineOptions(final Options availiableCmdLineOptions) {
@@ -95,9 +86,6 @@ public class CommonImporter {
 
     /** 
      * add Production-import-options to the availiableCmdLineOptions
-     * @FeatureDomain                CLI
-     * @FeatureResult                update availiableCmdLineOptions
-     * @FeatureKeywords              CLI
      * @param availiableCmdLineOptions the container with the availiableCmdLineOptions
      */
     public void addAvailiableProductiveImportCmdLineOptions(final Options availiableCmdLineOptions) {
@@ -117,9 +105,6 @@ public class CommonImporter {
     /** 
      * import the data from JPA configured by cmdline-options and add 
      * them to the masterNode 
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                updates masternode
-     * @FeatureKeywords              BusinessLogic
      * @param masterNode             the masternode on which all other nodes are added
      * @throws Exception             parse/io-Exceptions possible
      */
@@ -164,9 +149,6 @@ public class CommonImporter {
     /** 
      * import the data from source configured by cmdline-options and add 
      * them to the masterNode 
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                updates masternode
-     * @FeatureKeywords              BusinessLogic
      * @param masterNode             the masternode on which all other nodes are added
      * @throws Exception             parse/io-Exceptions possible
      */

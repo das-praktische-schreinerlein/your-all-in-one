@@ -71,37 +71,25 @@ public interface Parser extends Comparable<Parser> {
     /** Pattern to validate state */
     String CONST_PATTERN_SEG_STATE = "[-A-Za-z_]";
     /** Pattern to validate type */
-    String CONST_PATTERN_SEG_TYPE = "[-A-Za-z_]";;
+    String CONST_PATTERN_SEG_TYPE = "[-A-Za-z_]";
 
     /** if second of time are set to this value -> then ignore the seconds */
     int CONST_FLAG_NODATE_SECONDS = 59;
 
     /** 
      * returns the class of the DataDomain for which the parser runs
-     * @FeatureDomain                DataImport
-     * @FeatureResult                returnValue Class - DataDomain for which the parser runs
-     * @FeatureKeywords              Config
      * @return                       DataDomain for which the parser runs
      */
     Class<?> getTargetClass();
 
     /** 
      * returns position in the parser-queue
-     * @FeatureDomain                DataImport
-     * @FeatureResult                returnValue int - position in the parser-queue
-     * @FeatureKeywords              Config
      * @return                       position in the parser-queue
      */
     int getTargetOrder();
 
     /** 
      * parses DataDomain-data from the nodename
-     * @FeatureConditions            must not be implemented direct, but should call separate function
-     * @FeatureDomain                DataImport
-     * @FeatureResult                returnValue int - count elements found
-     * @FeatureResult                updates memberVariable node.name - found Pattern are deleted
-     * @FeatureResult                updates memberVariable node.* - found Pattern are set at MemberVars of the DataDomain
-     * @FeatureKeywords              Parser
      * @param node                   DataDomain to parse
      * @param options                ImportOptionen for the parser
      * @return                       count elements found
@@ -112,10 +100,6 @@ public interface Parser extends Comparable<Parser> {
     /** 
      * delete the matchingArea between first and last Matcher from node.name 
      * -> node.name = first + last
-     * @FeatureDomain                DataImport
-     * @FeatureResult                returnValue boolean - brackets found?
-     * @FeatureResult                updates memberVariable node.name - delete matching pattern
-     * @FeatureKeywords              Parser
      * @param node                   node to search and update
      * @param pattern                Pattern
      * @param matcher                Matcher

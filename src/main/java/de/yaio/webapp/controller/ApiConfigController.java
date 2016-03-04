@@ -40,9 +40,6 @@ public class ApiConfigController {
 
     /** 
      * serve the common API-Config from application.properties
-     * @FeatureDomain                Webservice
-     * @FeatureResult                CommonApiConfig - json-format of the configuration
-     * @FeatureKeywords              Webservice Configuration
      * @return                       CommonApiConfig - json of the CommonApiConfig
      */
     @ResponseBody

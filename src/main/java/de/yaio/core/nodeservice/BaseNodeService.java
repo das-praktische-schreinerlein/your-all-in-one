@@ -72,9 +72,6 @@ public class BaseNodeService extends NodeServiceImpl {
     
     /** 
      * return the main instance of this service
-     * @FeatureDomain                Persistence
-     * @FeatureResult                return the main instance of this service
-     * @FeatureKeywords              Persistence
      * @return                       the main instance of this service
      */
     public static BaseNodeService getInstance() {
@@ -83,9 +80,6 @@ public class BaseNodeService extends NodeServiceImpl {
 
     /** 
      * service-functions for the BaseNode
-     * @FeatureDomain                Constructor
-     * @FeatureResult                initialize the service-class
-     * @FeatureKeywords              Constructor
      */
     public BaseNodeService() {
         configureDataDomainRecalcer();
@@ -232,9 +226,6 @@ public class BaseNodeService extends NodeServiceImpl {
 
     /** 
      * add the child in childlist
-     * @FeatureDomain                Persistence
-     * @FeatureResult                updates childNodes
-     * @FeatureKeywords              Persistence
      * @param baseNode               basenode to add child
      * @param childNode              the child to add
      */
@@ -261,9 +252,6 @@ public class BaseNodeService extends NodeServiceImpl {
 
     /** 
      * move the child in childlist to the sortPos
-     * @FeatureDomain                Persistence
-     * @FeatureResult                reorder childNodes
-     * @FeatureKeywords              Persistence
      * @param baseNode               basenode to add child
      * @param child                  the child to move in list
      * @param newSortPos             the new position
@@ -341,9 +329,6 @@ public class BaseNodeService extends NodeServiceImpl {
     
     /** 
      * returns the max level of children for this node 
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                return maximum childLevel
-     * @FeatureKeywords              BusinessLogic
      * @param baseNode               node
      * @return                       maximum childLevel
      */
@@ -366,10 +351,6 @@ public class BaseNodeService extends NodeServiceImpl {
     /** 
      * initialize the Children from database (childNodes and childNodesByNameMapMap)
      * recursivly
-     * @FeatureDomain                Persistence
-     * @FeatureResult                updates memberfields childNodes
-     * @FeatureResult                updates memberfields childNodesByNameMapMap
-     * @FeatureKeywords              Persistence
      * @param baseNode               node
      * @param pRecursionLevel        how many recursion-level will be read from DB
      */
@@ -405,9 +386,6 @@ public class BaseNodeService extends NodeServiceImpl {
 
     /** 
      * returns parenthierarchy
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                return parenthierarchy
-     * @FeatureKeywords              BusinessLogic
      * @param baseNode               node
      * @param pdelimiter             text to delimit the diffrent parentnames
      * @param directionForward       if set reverse the order
@@ -441,9 +419,6 @@ public class BaseNodeService extends NodeServiceImpl {
     ///////////////////////
     /** 
      * returns WorkingId to identify in process (parsing...)
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                return WorkingId to identify in process (parsing...)
-     * @FeatureKeywords              BusinessLogic
      * @param baseNode               node
      * @return                       WorkingId to identify in process (parsing...)
      */
@@ -461,9 +436,6 @@ public class BaseNodeService extends NodeServiceImpl {
 
     /** 
      * returns name for logging
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                return name for logging
-     * @FeatureKeywords              BusinessLogic
      * @param baseNode               node
      * @return                       name for logging
      */
@@ -476,8 +448,6 @@ public class BaseNodeService extends NodeServiceImpl {
     
     /** 
      * generate a node hierarchy of node.getNameForLogger recursively intending with spaces
-     * @FeatureDomain                Tests
-     * @FeatureKeywords              NameUtil
      * @param praefix                intending spaces
      * @param node                   node to generate hierarchy for
      * @return                       resulting node hierarchy
@@ -492,9 +462,6 @@ public class BaseNodeService extends NodeServiceImpl {
     
     /** 
      * returns the data to create a checksum from
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                return datastring
-     * @FeatureKeywords              BusinessLogic
      * @param baseNode               node
      * @return                       datastring
      * @throws Exception             possible Exception
@@ -535,9 +502,6 @@ public class BaseNodeService extends NodeServiceImpl {
     /////////////////////////
     /** 
      * checks weather the state is a configurated workflow-state
-     * @FeatureDomain                Workflow
-     * @FeatureResult                returnValue boolean - workflow-state yes/no
-     * @FeatureKeywords              Worflow
      * @param state                  state to check
      * @return                       workflow-state yes/no
      */
@@ -547,9 +511,6 @@ public class BaseNodeService extends NodeServiceImpl {
 
     /** 
      * checks weather the state is a configurated workflow-state for DONE
-     * @FeatureDomain                Workflow
-     * @FeatureResult                returnValue boolean - workflow-DONE yes/no
-     * @FeatureKeywords              Worflow
      * @param state                  state to check
      * @return                       workflow-DONE yes/no
      */
@@ -559,9 +520,6 @@ public class BaseNodeService extends NodeServiceImpl {
 
     /** 
      * checks weather the state is a configurated workflow-state for OPEN
-     * @FeatureDomain                Workflow
-     * @FeatureResult                returnValue boolean - workflow-OPEN yes/no
-     * @FeatureKeywords              Worflow
      * @param state                  state to check
      * @return                       workflow-OPEN yes/no
      */
@@ -571,9 +529,6 @@ public class BaseNodeService extends NodeServiceImpl {
 
     /** 
      * checks weather the state is a configurated workflow-state for CANCELED
-     * @FeatureDomain                Workflow
-     * @FeatureResult                returnValue boolean - workflow-CANCELED yes/no
-     * @FeatureKeywords              Worflow
      * @param state                  state to check
      * @return                       workflow-CANCELED yes/no
      */
@@ -584,42 +539,33 @@ public class BaseNodeService extends NodeServiceImpl {
     /** 
      * returns the workflowstate of the node. 
      * if empty and no state do: NOWORKFLOW of Unplaned if it is a task/evvent
-     * @FeatureDomain                Workflow
-     * @FeatureResult                returnValue workflowstate
-     * @FeatureKeywords              Worflow
      * @param node                   node to get the workflow state from
      * @return                       workflowstate
      * @throws IllegalStateException if illegal state 
      */
     public WorkflowState getWorkflowState(final BaseWorkflowData node) throws IllegalStateException {
         return WorkflowState.NOWORKFLOW;
-    };
+    }
 
     /** 
      * returns the workflowstate for the state of the node. 
      * if empty and no state do: NOWORKFLOW of Unplaned if it is a task/event
-     * @FeatureDomain                Workflow
-     * @FeatureResult                returnValue workflowstate
-     * @FeatureKeywords              Worflow
      * @param node                   node to get the workflow state from
      * @return                       workflowstate
      * @throws IllegalStateException if illegal state 
      */
     public WorkflowState getWorkflowStateForState(final BaseWorkflowData node) throws IllegalStateException {
         return WorkflowState.NOWORKFLOW;
-    };
+    }
 
     /** 
      * returns the state for the workflowstate of the node. 
      * if empty and no workflowstate: return the given state of the node
-     * @FeatureDomain                Workflow
-     * @FeatureResult                returnValue state
-     * @FeatureKeywords              Worflow
      * @param node                   node to get the workflow state from
      * @return                       state
      * @throws IllegalStateException if illegal state 
      */
     public String getStateForWorkflowState(final BaseWorkflowData node) throws IllegalStateException {
         return node.getState();
-    };
+    }
 }

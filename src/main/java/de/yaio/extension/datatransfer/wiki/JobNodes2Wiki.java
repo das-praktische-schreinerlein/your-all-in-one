@@ -48,9 +48,6 @@ public class JobNodes2Wiki extends CmdLineJob {
     
     /** 
      * job to import nodes in PPL-Format and output as Wiki
-     * @FeatureDomain                Constructor
-     * @FeatureResult                initialize the application
-     * @FeatureKeywords              Constructor
      * @param args                   the command line arguments
      */
     public JobNodes2Wiki(final String[] args) {
@@ -83,9 +80,6 @@ public class JobNodes2Wiki extends CmdLineJob {
 
     /** 
      * add common output-options to the availiableCmdLineOptions
-     * @FeatureDomain                CLI
-     * @FeatureResult                update availiableCmdLineOptions
-     * @FeatureKeywords              CLI
      * @param availiableCmdLineOptions the container with the availiableCmdLineOptions
      */
     protected Options addAvailiableCommonOutputCmdLineOptions(final Options availiableCmdLineOptions) throws Exception {
@@ -106,9 +100,6 @@ public class JobNodes2Wiki extends CmdLineJob {
 
     /** 
      * add special wiki output-options to the availiableCmdLineOptions
-     * @FeatureDomain                CLI
-     * @FeatureResult                update availiableCmdLineOptions
-     * @FeatureKeywords              CLI
      * @param availiableCmdLineOptions the container with the availiableCmdLineOptions
      */
     protected Options addAvailiableOutputCmdLineOptions(final Options availiableCmdLineOptions) throws Exception {
@@ -247,9 +238,6 @@ public class JobNodes2Wiki extends CmdLineJob {
 
     /** 
      * create the masternode on which all other nodes are added
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                returnValue masternode
-     * @FeatureKeywords              BusinessLogic
      * @param name                   name of the masternode
      * @return                       masternode - the masternode on which all other nodes are added
      * @throws Exception             parse/io-Exceptions possible
@@ -262,9 +250,6 @@ public class JobNodes2Wiki extends CmdLineJob {
     /** 
      * import the data from source configured by cmdline-options and add 
      * them to the masterNode 
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                updates masternode
-     * @FeatureKeywords              BusinessLogic
      * @param masterNode             the masternode on which all other nodes are added
      * @throws Exception             parse/io-Exceptions possible
      */
@@ -274,9 +259,6 @@ public class JobNodes2Wiki extends CmdLineJob {
 
     /** 
      * publish the masternode and all children with the help of exporter
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                prints on STDOUT
-     * @FeatureKeywords              BusinessLogic
      * @param exporter               exporter to format the output
      * @param masterNode             the masternode to export
      * @param oOptions               Outputoptions
@@ -290,9 +272,6 @@ public class JobNodes2Wiki extends CmdLineJob {
 
     /** 
      * get the Outputoptions for export from commandline
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                Returnvalue OutputOptions - the parsed options from commandline
-     * @FeatureKeywords              BusinessLogic
      * @return                       oOptions - Outputoptions
      * @throws Exception             parse-Exceptions possible
      */
@@ -344,9 +323,6 @@ public class JobNodes2Wiki extends CmdLineJob {
     
     /** 
      * create the exporter for the export with publishResult
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                updates MemberVar exporter - to format the output
-     * @FeatureKeywords              BusinessLogic
      */
     public void createExporter() {
         exporter = new WikiExporter();
@@ -355,9 +331,6 @@ public class JobNodes2Wiki extends CmdLineJob {
     /** 
      * create the commonly used importer to imports the data from differenet 
      * sourcetypes
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                updates MemberVar commonImporter - for the import
-     * @FeatureKeywords              BusinessLogic
      */
     protected void createCommonImporter() {
         // create commonImporter
@@ -366,9 +339,6 @@ public class JobNodes2Wiki extends CmdLineJob {
     
     /** 
      * get the Class-logger
-     * @FeatureDomain                Logging
-     * @FeatureResult                returnValue Logger - use it !!!!
-     * @FeatureKeywords              Logging
      * @return                       logger - the logger
      */
     public static Logger getLogger() {
@@ -377,9 +347,6 @@ public class JobNodes2Wiki extends CmdLineJob {
 
     /** 
      * Main-method to start the application
-     * @FeatureDomain                CLI
-     * @FeatureResult                initialize the application
-     * @FeatureKeywords              CLI
      * @param args                   the command line arguments
      */
     public static void main(final String[] args) {

@@ -1,0 +1,10 @@
+{
+    "extends": ".jshintrc",
+    "globals": {
+        "$$": true,
+        "browser": true,
+        "by": true,
+        "element": true,
+        "protractor": true
+    }
+}

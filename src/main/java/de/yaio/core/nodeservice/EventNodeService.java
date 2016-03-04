@@ -112,9 +112,6 @@ public class EventNodeService extends TaskNodeService {
     
     /** 
      * return the main instance of this service
-     * @FeatureDomain                Persistence
-     * @FeatureResult                return the main instance of this service
-     * @FeatureKeywords              Persistence
      * @return                       the main instance of this service
      */
     public static EventNodeService getInstance() {

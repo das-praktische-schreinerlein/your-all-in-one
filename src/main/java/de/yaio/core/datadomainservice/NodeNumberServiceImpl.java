@@ -44,9 +44,6 @@ public class NodeNumberServiceImpl implements NodeNumberService {
 
     /** 
      * return the main instance of this service
-     * @FeatureDomain                Persistence
-     * @FeatureResult                return the main instance of this service
-     * @FeatureKeywords              Persistence
      * @return                       the main instance of this service
      */
     public static NodeNumberServiceImpl getInstance() {

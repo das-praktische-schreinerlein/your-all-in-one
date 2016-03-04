@@ -38,25 +38,18 @@ public interface Importer {
      * the sourcedata)<br>
      * must be override and call Exporter.addNodeTypeIdentifierVariantMapping 
      * for every nodeType 
-     * @FeatureDomain                DataImport
-     * @FeatureKeywords              Config
      */
     void initNodeTypeIdentifierVariantMapping();
 
     /** 
      * configure variants of NodeTypeIdentifier (used by parser to normalize 
      * the sourcedata)<br>
-     * @FeatureDomain                DataImport
-     * @FeatureKeywords              Config
      * @param constMapNodetypeIdentifier Map der Schlagwortvarianten (Variante = NodeTypeIdentifier)
      */
     void addNodeTypeIdentifierVariantMapping(Map<String, String> constMapNodetypeIdentifier);
 
     /** 
      * get variants for NodeTypeIdentifier
-     * @FeatureDomain                DataImport
-     * @FeatureResult                returnValue Map - Map of variants for NodeTypeIdentifier (variant = NodeTypeIdentifier)
-     * @FeatureKeywords              Config
      * @return                       variants for NodeTypeIdentifier
      */
     Map<String, String> getHshNodeTypeIdentifierVariantMapping();
@@ -65,24 +58,17 @@ public interface Importer {
      * configure special Workflow-NodeTypeIdentifier (used by Importer.isWFStatus)<br>
      * must be override and call Exporter.addWorkflowNodeTypeMapping 
      * for every nodeType 
-     * @FeatureDomain                DataImport
-     * @FeatureKeywords              Config
      */
     void initWorkflowNodeTypeMapping();
 
     /** 
      * configure special Workflow-NodeTypeIdentifier (used by Importer.isWFStatus)
-     * @FeatureDomain                DataImport
-     * @FeatureKeywords              Config
      * @param stateMap               Map der Schlagwortvarianten (Variante = NodeTypeIdentifier)
      */
     void addWorkflowNodeTypeMapping(Map<String, String> stateMap);
 
     /** 
      * retuns special Workflow-NodeTypeIdentifier
-     * @FeatureDomain                DataImport
-     * @FeatureResult                returnValue Map - Map of Workflow-NodeTypeIdentifier  (NodeTypeIdentifier)
-     * @FeatureKeywords              Config
      * @return                       Map of Workflow-NodeTypeIdentifier
      */
     Map<String, String> getHshWorkflowNodeTypeMapping();
@@ -90,9 +76,6 @@ public interface Importer {
     
     /** 
      * returns current NodeFactory for creation of Nodes
-     * @FeatureDomain                DataImport
-     * @FeatureResult                returnValue NodeFactory - current NodeFactory for creation of Nodes
-     * @FeatureKeywords              Config
      * @return                       current NodeFactory for creation of Nodes
      */
     NodeFactory getNodeFactory();
@@ -102,10 +85,6 @@ public interface Importer {
     ////////////////
     /** 
      * creates from strFullSrc with NodeFactory new Nodes and initializes them
-     * @FeatureDomain                DataImport
-     * @FeatureResult                returnValue Node - new node Node
-     * @FeatureResult                updates memberVariable node.xx = runs NodeFactrory.parseNodeDataDomains  to initialize node
-     * @FeatureKeywords              Parser
      * @param id                     id of the new Node
      * @param strFullSrc             source of the node to create
      * @param srcName                Name of the node (for parsing)
@@ -123,9 +102,6 @@ public interface Importer {
     /** 
      * checks Map of Workflow-NodeTypeIdentifier and
      * returns weather the state is a Workflow-state
-     * @FeatureDomain                Service
-     * @FeatureResult                returnValue boolean - true/false Workflow-state from getHshWorkflowNodeTypeMapping
-     * @FeatureKeywords              Service Workflow Parser
      * @param state                  the state to check
      * @return                       true/false Workflow-state from getHshWorkflowNodeTypeMapping
      */

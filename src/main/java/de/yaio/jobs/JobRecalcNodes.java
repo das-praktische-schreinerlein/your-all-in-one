@@ -37,9 +37,6 @@ public class JobRecalcNodes extends CmdLineJob {
 
     /** 
      * job to update the nodes in db
-     * @FeatureDomain                Constructor
-     * @FeatureResult                initialize the application
-     * @FeatureKeywords              Constructor
      * @param args                   the command line arguments
      */
     public JobRecalcNodes(final String[] args) {
@@ -89,9 +86,6 @@ public class JobRecalcNodes extends CmdLineJob {
 
     /** 
      * get the Class-logger
-     * @FeatureDomain                Logging
-     * @FeatureResult                returnValue Logger - use it !!!!
-     * @FeatureKeywords              Logging
      * @return                       logger - the logger
      */
     public static Logger getLogger() {
@@ -100,9 +94,6 @@ public class JobRecalcNodes extends CmdLineJob {
 
     /** 
      * Main-method to start the application
-     * @FeatureDomain                CLI
-     * @FeatureResult                initialize the application
-     * @FeatureKeywords              CLI
      * @param args                   the command line arguments
      */
     public static void main(final String[] args) {

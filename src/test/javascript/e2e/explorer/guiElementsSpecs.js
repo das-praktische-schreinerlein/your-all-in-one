@@ -41,7 +41,7 @@ describe('yaio explorer guielements', function() {
     /**
      * define tests
      */
-    it('should open/collapse tree when click on "Open till Level"', function doOpenCollapseTree() {
+    it('should open/collapse tree when click on Open till Level"', function doOpenCollapseTree() {
         // Given
         var countNodes = 0;
 

@@ -54,9 +54,6 @@ public class YaioMetaExtractClient {
     
     /**
      * create a metaextract of the url
-     * @FeatureDomain                DMS
-     * @FeatureResult                returns the metaextract as JSON
-     * @FeatureKeywords              DMS
      * @return                       returns the metaextract as JSON
      * @param url                    url to make a metaextract from
      * @throws IOException           if something went wrong
@@ -86,9 +83,6 @@ public class YaioMetaExtractClient {
 
     /**
      * create a metaextract of the file
-     * @FeatureDomain                DMS
-     * @FeatureResult                returns the metaextract as JSON
-     * @FeatureKeywords              DMS
      * @return                       returns the metaextract as JSON
      * @param fileName               file to make a metaextract from
      * @throws IOException           if something went wrong

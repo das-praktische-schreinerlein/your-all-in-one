@@ -45,9 +45,6 @@ public abstract class CallYaioInstance extends CmdLineJob {
 
     /** 
      * job to call yaio-instances for admin-purposes
-     * @FeatureDomain                Constructor
-     * @FeatureResult                initialize the application
-     * @FeatureKeywords              Constructor
      * @param args                   the command line arguments
      */
     public CallYaioInstance(final String[] args) {
@@ -98,10 +95,7 @@ public abstract class CallYaioInstance extends CmdLineJob {
     
     /** 
      * execute GET-Request for yaio-url with params
-     * @FeatureDomain                Tools - URL-Handling
-     * @FeatureResult                returnValues - ByteArray with the textresponse
-     * @FeatureKeywords              URL-Handling
-     * @param baseUrl                the route behind the yaioInstanceUrl to call
+     * @param route                  the route behind the yaioInstanceUrl to call
      * @param params                 params for the request
      * @return                       Response-Text as ByteArray
      * @throws IOException           possible Exception if Request-state <200 > 299 
@@ -116,10 +110,7 @@ public abstract class CallYaioInstance extends CmdLineJob {
     
     /** 
      * execute POST-Request for yaio-url with params
-     * @FeatureDomain                Tools - URL-Handling
-     * @FeatureResult                returnValues - ByteArray with the textresponse
-     * @FeatureKeywords              URL-Handling
-     * @param baseUrl                the route behind the yaioInstanceUrl to call
+     * @param route                  the route behind the yaioInstanceUrl to call
      * @param params                 params for the request
      * @param fileParams             files to upload
      * @return                       Response-Text as ByteArray

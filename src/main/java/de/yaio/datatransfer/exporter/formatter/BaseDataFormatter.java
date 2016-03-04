@@ -30,10 +30,6 @@ public interface BaseDataFormatter extends Formatter {
 
     /** 
      * formats DomainData: DataDomain and appends output to StringBuffer nodeOutput
-     * @FeatureConditions            formatter runs only if options.flgShowName for name and  flgShowState for state and flgShowType for type are set
-     * @FeatureDomain                Praesentation
-     * @FeatureResult                appends to nodeOutput
-     * @FeatureKeywords              Layout
      * @param node                   node to be formatted
      * @param nodeOutput             to append the output
      * @param options                options for formatter

@@ -123,19 +123,19 @@ public class SearchOptionsImpl implements SearchOptions {
     @Override
     public Map<String, String> getMapClassFilter() {
         return this.mpClassFilter;
-    };
+    }
     @Override
     public Map<String, String> getMapTypeFilter() {
         return this.mpTypeFilter;
-    };
+    }
     @Override
     public Map<String, String> getMapStateFilter() {
         return this.mpStateFilter;
-    };
+    }
     @Override
     public Map<String, WorkflowState> getMapWorkflowStateFilter() {
         return this.mpWorkflowStateFilter;
-    };
+    }
     
     public void initFilterMaps() {
         this.setStrReadIfStatusInListOnly(this.getStrReadIfStatusInListOnly());

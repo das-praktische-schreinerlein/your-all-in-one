@@ -88,9 +88,6 @@ public class NodeRestController {
     /** 
      * create an response.obj for the node with state OK and the corresponding message<br>
      * it will automaticaly set the parentHierarchy
-     * @FeatureDomain                Webservice
-     * @FeatureResult                NodeResponse (OK) with the node, hierarchy and OK-message
-     * @FeatureKeywords              Webservice 
      * @param node                   the node for the response
      * @param okMsg                  the message
      * @return                       NodeResponse (OK) with the node, hierarchy and OK-message
@@ -121,9 +118,6 @@ public class NodeRestController {
     
     /** 
      * Request to search childnodes of sysUID and return them as JSON
-     * @FeatureDomain                Webservice
-     * @FeatureResult                NodeResponse (OK, ERROR) with matching nodes
-     * @FeatureKeywords              Webservice Query
      * @param curPage                current page in result to display
      * @param pageSize               max items per page
      * @param sortConfig             use sort
@@ -144,9 +138,6 @@ public class NodeRestController {
     
     /** 
      * Request to search childnodes of sysUID and return them as JSON
-     * @FeatureDomain                Webservice
-     * @FeatureResult                NodeResponse (OK, ERROR) with matching nodes
-     * @FeatureKeywords              Webservice Query
      * @param curPage                current page in result to display
      * @param pageSize               max items per page
      * @param sortConfig             use sort
@@ -169,9 +160,6 @@ public class NodeRestController {
 
     /** 
      * Request to search childnodes of sysUID and return them as JSON
-     * @FeatureDomain                Webservice
-     * @FeatureResult                NodeResponse (OK, ERROR) with matching nodes
-     * @FeatureKeywords              Webservice Query
      * @param curPage                current page in result to display
      * @param pageSize               max items per page
      * @param sortConfig             use sort
@@ -192,9 +180,6 @@ public class NodeRestController {
 
     /** 
      * Request to read the node for sysUID and return it with children as JSON
-     * @FeatureDomain                Webservice
-     * @FeatureResult                NodeResponse (OK, ERROR) with the node for sysUID
-     * @FeatureKeywords              Webservice Query
      * @param sysUID                 sysUID to filter
      * @return                       NodeResponse (OK, ERROR) with the node for sysUID
      */
@@ -225,9 +210,6 @@ public class NodeRestController {
 
     /** 
      * Request to read the SymLinkRef-node for sysUID and return it with children as JSON
-     * @FeatureDomain                Webservice
-     * @FeatureResult                NodeResponse (OK, ERROR) with the node for sysUID
-     * @FeatureKeywords              Webservice Query
      * @param symLinkRef             symLinkRef to filter
      * @return                       NodeResponse (OK, ERROR) with the node for sysUID
      */
@@ -274,9 +256,6 @@ public class NodeRestController {
     
     /** 
      * Request to delete the node for sysUID and return its parent with children as JSON
-     * @FeatureDomain                Webservice
-     * @FeatureResult                NodeResponse (OK, ERROR) with the parentNode for sysUID
-     * @FeatureKeywords              Webservice Query
      * @param sysUID                 sysUID to delete
      * @return                       NodeResponse (OK, ERROR) with the node for sysUID
      */
@@ -322,9 +301,6 @@ public class NodeRestController {
 
     /** 
      * Request to update the BaseNode sysUID and return it with children as JSON
-     * @FeatureDomain                Webservice
-     * @FeatureResult                NodeResponse (OK, ERROR) with the node for sysUID
-     * @FeatureKeywords              Webservice Query
      * @param sysUID                 sysUID to filter
      * @param newNode                the node created from request-data
      * @return                       NodeResponse (OK, ERROR) with the node for sysUID
@@ -340,9 +316,6 @@ public class NodeRestController {
 
     /** 
      * Request to update the TaskNode sysUID and return it with children as JSON
-     * @FeatureDomain                Webservice
-     * @FeatureResult                NodeResponse (OK, ERROR) with the node for sysUID
-     * @FeatureKeywords              Webservice Query
      * @param sysUID                 sysUID to filter
      * @param newNode                the node created from request-data
      * @return                       NodeResponse (OK, ERROR) with the node for sysUID
@@ -358,9 +331,6 @@ public class NodeRestController {
 
     /** 
      * Request to create the new TaskNode with parentSysUID and return it with children as JSON
-     * @FeatureDomain                Webservice
-     * @FeatureResult                NodeResponse (OK, ERROR) with the new node for parentSysUID
-     * @FeatureKeywords              Webservice Query
      * @param parentSysUID           parentSysUID to add the newNode
      * @param newNode                the node created from request-data
      * @return                       NodeResponse (OK, ERROR) with the node for sysUID
@@ -376,9 +346,6 @@ public class NodeRestController {
 
     /** 
      * Request to update the EventNode sysUID and return it with children as JSON
-     * @FeatureDomain                Webservice
-     * @FeatureResult                NodeResponse (OK, ERROR) with the node for sysUID
-     * @FeatureKeywords              Webservice Query
      * @param sysUID                 sysUID to filter
      * @param newNode                the node created from request-data
      * @return                       NodeResponse (OK, ERROR) with the node for sysUID
@@ -394,9 +361,6 @@ public class NodeRestController {
 
     /** 
      * Request to create the new EventNode with parentSysUID and return it with children as JSON
-     * @FeatureDomain                Webservice
-     * @FeatureResult                NodeResponse (OK, ERROR) with the new node for parentSysUID
-     * @FeatureKeywords              Webservice Query
      * @param parentSysUID           parentSysUID to add the newNode
      * @param newNode                the node created from request-data
      * @return                       NodeResponse (OK, ERROR) with the node for sysUID
@@ -412,9 +376,6 @@ public class NodeRestController {
 
     /** 
      * Request to update the UrlresNode sysUID and return it with children as JSON
-     * @FeatureDomain                Webservice
-     * @FeatureResult                NodeResponse (OK, ERROR) with the node for sysUID
-     * @FeatureKeywords              Webservice Query
      * @param sysUID                 sysUID to filter
      * @param newNode                the node created from request-data
      * @param uploadFile             if it is a FileRes an optional uploaded file
@@ -438,9 +399,6 @@ public class NodeRestController {
 
     /** 
      * Request to create the new UrlResNode with parentSysUID and return it with children as JSON
-     * @FeatureDomain                Webservice
-     * @FeatureResult                NodeResponse (OK, ERROR) with the new node for parentSysUID
-     * @FeatureKeywords              Webservice Query
      * @param parentSysUID           parentSysUID to add the newNode
      * @param newNode                the node created from request-data
      * @param uploadFile             if it is a FileRes an optional uploaded file
@@ -464,9 +422,6 @@ public class NodeRestController {
 
     /** 
      * Request to update the InfoNode sysUID and return it with children as JSON
-     * @FeatureDomain                Webservice
-     * @FeatureResult                NodeResponse (OK, ERROR) with the node for sysUID
-     * @FeatureKeywords              Webservice Query
      * @param sysUID                 sysUID to filter
      * @param newNode                the node created from request-data
      * @return                       NodeResponse (OK, ERROR) with the node for sysUID
@@ -482,9 +437,6 @@ public class NodeRestController {
 
     /** 
      * Request to create the new InfoNode with parentSysUID and return it with children as JSON
-     * @FeatureDomain                Webservice
-     * @FeatureResult                NodeResponse (OK, ERROR) with the new node for parentSysUID
-     * @FeatureKeywords              Webservice Query
      * @param parentSysUID           parentSysUID to add the newNode
      * @param newNode                the node created from request-data
      * @return                       NodeResponse (OK, ERROR) with the node for sysUID
@@ -500,9 +452,6 @@ public class NodeRestController {
 
     /** 
      * Request to update the SymLinkNode sysUID and return it with children as JSON
-     * @FeatureDomain                Webservice
-     * @FeatureResult                NodeResponse (OK, ERROR) with the node for sysUID
-     * @FeatureKeywords              Webservice Query
      * @param sysUID                 sysUID to filter
      * @param newNode                the node created from request-data
      * @return                       NodeResponse (OK, ERROR) with the node for sysUID
@@ -518,9 +467,6 @@ public class NodeRestController {
 
     /** 
      * Request to create the new SymLinkNode with parentSysUID and return it with children as JSON
-     * @FeatureDomain                Webservice
-     * @FeatureResult                NodeResponse (OK, ERROR) with the new node for parentSysUID
-     * @FeatureKeywords              Webservice Query
      * @param parentSysUID           parentSysUID to add the newNode
      * @param newNode                the node created from request-data
      * @return                       NodeResponse (OK, ERROR) with the node for sysUID
@@ -536,9 +482,6 @@ public class NodeRestController {
 
     /** 
      * Request to move the node sysUID to newParentSysUID and return it with children as JSON
-     * @FeatureDomain                Webservice
-     * @FeatureResult                NodeResponse (OK, ERROR) with the node for sysUID
-     * @FeatureKeywords              Webservice Query
      * @param sysUID                 sysUID to filter
      * @param newParentSysUID        sysUID of the new parent
      * @param newSortPos             the new position in the list
@@ -596,12 +539,8 @@ public class NodeRestController {
 
     /** 
      * Request to copy the node sysUID to newParentSysUID and return it with children as JSON
-     * @FeatureDomain                Webservice
-     * @FeatureResult                NodeResponse (OK, ERROR) with the node for sysUID
-     * @FeatureKeywords              Webservice Query
      * @param sysUID                 sysUID to filter
      * @param newParentSysUID        sysUID of the new parent
-     * @param newSortPos             the new position in the list
      * @return                       NodeResponse (OK, ERROR) with the node for sysUID
      */
     @ResponseBody
@@ -654,9 +593,6 @@ public class NodeRestController {
 
     /** 
      * update the node sysUID and return it with children as JSON
-     * @FeatureDomain                Webservice
-     * @FeatureResult                NodeResponse (OK, ERROR) with the node for sysUID
-     * @FeatureKeywords              Webservice Query
      * @param sysUID                 sysUID to filter
      * @param newNode                the node created from request-data
      * @return                       NodeResponse (OK, ERROR) with the node for sysUID
@@ -667,9 +603,6 @@ public class NodeRestController {
     
     /** 
      * update the node sysUID and return it with children as JSON
-     * @FeatureDomain                Webservice
-     * @FeatureResult                NodeResponse (OK, ERROR) with the node for sysUID
-     * @FeatureKeywords              Webservice Query
      * @param sysUID                 sysUID to filter
      * @param newNode                the node created from request-data
      * @param addParams              map with additional params not set on the newNode
@@ -765,9 +698,6 @@ public class NodeRestController {
     
     /** 
      * create the node with parent parentSysUID and return it with children as JSON
-     * @FeatureDomain                Webservice
-     * @FeatureResult                NodeResponse (OK, ERROR) with the new node for parentSysUID
-     * @FeatureKeywords              Webservice Query
      * @param parentSysUID           sysUID of the parent to filter
      * @param origNode               the empty node to fill with the newNode-data
      * @param newNode                the node created from request-data
@@ -779,9 +709,6 @@ public class NodeRestController {
 
     /** 
      * create the node with parent parentSysUID and return it with children as JSON
-     * @FeatureDomain                Webservice
-     * @FeatureResult                NodeResponse (OK, ERROR) with the new node for parentSysUID
-     * @FeatureKeywords              Webservice Query
      * @param parentSysUID           sysUID of the parent to filter
      * @param origNode               the empty node to fill with the newNode-data
      * @param newNode                the node created from request-data
@@ -896,9 +823,6 @@ public class NodeRestController {
 
     /** 
      * recalc and merge the node and its parents recursively
-     * @FeatureDomain                Webservice
-     * @FeatureResult                List - list of the recalced and saved parenthierarchy
-     * @FeatureKeywords              Webservice 
      * @param node                   the node to recalc and merge
      * @return                       List - list of the recalced and saved parenthierarchy
      */
@@ -908,9 +832,6 @@ public class NodeRestController {
 
     /** 
      * common function to search childnodes of sysUID and return them as JSON
-     * @FeatureDomain                Webservice
-     * @FeatureResult                NodeResponse (OK, ERROR) with matching nodes
-     * @FeatureKeywords              Webservice Query
      * @param curPage                current page in result to display
      * @param pageSize               max items per page
      * @param sortConfig             use sort

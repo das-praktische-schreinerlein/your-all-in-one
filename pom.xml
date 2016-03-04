@@ -5,7 +5,7 @@
     <!-- the base -->
     <groupId>de.yaio</groupId>
     <artifactId>yaio</artifactId>
-    <version>0.1.0-beta-feature-YAIO2234-improvements-201512-merry-christmas-RELEASE</version>
+    <version>0.1.0-beta-feature-YAIO2304-improvements-201602-RELEASE</version>
     <name>yaio</name>
     <description>YourAllInOne D'Artagnan</description>
     <url>http://www.your-all-in-one.de</url>
@@ -752,35 +752,7 @@
                 <artifactId>maven-pmd-plugin</artifactId>
                 <version>${maven.pmd.plugin.version}</version>
             </plugin>
-            <plugin>
-                <groupId>com.kelveden</groupId>
-                <artifactId>maven-karma-plugin</artifactId>
-                <version>1.6</version>
-                <executions>
-                    <execution>
-                        <phase>${maven-karma-plugin.phase}</phase>
-                        <goals>
-                            <goal>start</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <!-- <karmaExecutable>${basedir}\node_modules\karma\bin\karma</karmaExecutable> -->
-                    <karmaExecutable>karma.cmd</karmaExecutable>
-                    <configFile>karma.yaio.conf.js</configFile>
-                    <!-- <junitReportFile>src/main/webapp/resources/test-results.xml</junitReportFile> -->
-                    <reportsDirectory>${project.build.directory}/karma-reports</reportsDirectory>
-                    <!-- <browsers>PhantomJS,IE</browsers> -->
-                    <autoWatch>false</autoWatch>
-                    <singleRun>true</singleRun>
-                    <colors>true</colors>
-                    <skipKarma>false</skipKarma>
-                    <skipTests>false</skipTests>
-                    <karmaFailureIgnore>false</karmaFailureIgnore>
-                    <!-- <reporters>story</reporters> -->
-                </configuration>
-            </plugin>
-            
+
             <!--  integration-tests -->
             <plugin>
                 <groupId>com.github.greengerong</groupId>
@@ -881,36 +853,6 @@
                 <configuration>
                     <targetJdk>${java.version}</targetJdk>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>gr.abiss.mvn.plugins</groupId>
-                <artifactId>maven-jstools-plugin</artifactId>
-                <version>0.7</version>
-                <configuration>
-                    <jsDir>src/main/web</jsDir>
-                    <includePrivate>true</includePrivate>
-                    <includeUndocumented>true</includeUndocumented>
-                </configuration>
-                <reportSets>
-                    <reportSet>
-                        <reports>
-                            <report>jslint</report>
-                            <report>jsdoc</report>
-                        </reports>
-                    </reportSet>
-                </reportSets>
-            </plugin>
-           <plugin>
-               <groupId>com.phasebash.jsdoc</groupId>
-               <artifactId>jsdoc3-maven-plugin</artifactId>
-               <version>1.1.0</version>
-               <configuration>
-                   <recursive>true</recursive>
-                   <directoryRoots>
-                       <directoryRoot>${basedir}/yaio-playground/src/main/web/yaio-explorerapp/js</directoryRoot>
-                       <directoryRoot>${basedir}/yaio-playground/src/test/javascript</directoryRoot>
-                   </directoryRoots>
-               </configuration>
             </plugin>
          </plugins>
     </reporting>

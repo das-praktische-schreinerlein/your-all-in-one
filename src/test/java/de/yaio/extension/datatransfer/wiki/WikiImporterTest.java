@@ -46,9 +46,6 @@ public class WikiImporterTest extends BaseTest {
     
     /** 
      * configure the importer for the tests
-     * @FeatureDomain                Tests
-     * @FeatureResult                returns importerObj - Importer
-     * @FeatureKeywords              Test Configuration
      * @return                       optionsObj
      * @throws Exception             io-Exceptions possible
      */
@@ -58,9 +55,6 @@ public class WikiImporterTest extends BaseTest {
     
     /** 
      * configure the importoptions for the tests
-     * @FeatureDomain                Tests
-     * @FeatureResult                returns importoptions - ImportOptions
-     * @FeatureKeywords              Test Configuration
      * @return                       optionsObj
      * @throws Exception             io-Exceptions possible
      */
@@ -70,8 +64,6 @@ public class WikiImporterTest extends BaseTest {
     
     /** 
      * do tests for import
-     * @FeatureDomain                Tests
-     * @FeatureKeywords              Test
      * @throws Exception             io-Exceptions possible
      */
     @Test
@@ -82,8 +74,6 @@ public class WikiImporterTest extends BaseTest {
 
     /** 
      * parse the source and compare the result with expectedResult 
-     * @FeatureDomain                Tests
-     * @FeatureKeywords              Test
      * @param srcFile                file with the source
      * @param expectedResultFile     file with the expected result
      * @throws Exception             io-Exceptions possible
@@ -95,8 +85,6 @@ public class WikiImporterTest extends BaseTest {
 
     /** 
      * parse the source and compare the result with expectedResult 
-     * @FeatureDomain                Tests
-     * @FeatureKeywords              Test
      * @param source                 the lines to parse
      * @param expectedResult         the expected ppl-lines from parser
      * @throws Exception             io-Exceptions possible

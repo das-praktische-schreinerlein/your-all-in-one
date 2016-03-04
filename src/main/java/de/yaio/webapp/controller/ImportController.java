@@ -61,8 +61,6 @@ public class ImportController {
     /** 
      * Request to import the uploaded wiki-file from param "file" to the 
      * node parentSysUID returning a simple message
-     * @FeatureDomain                Webservice
-     * @FeatureKeywords              Webservice Query
      * @param parentSysUID           sysUID to append the new nodes
      * @param file                   the uploaded file stream with the data to import
      * @return                       text-message
@@ -143,8 +141,6 @@ public class ImportController {
     /** 
      * Request to import the uploaded json-file from param "file" to the 
      * node parentSysUID returning a simple message
-     * @FeatureDomain                Webservice
-     * @FeatureKeywords              Webservice Query
      * @param parentSysUID           sysUID to append the new nodes
      * @param file                   the uploaded file stream with the data to import
      * @return                       text-message

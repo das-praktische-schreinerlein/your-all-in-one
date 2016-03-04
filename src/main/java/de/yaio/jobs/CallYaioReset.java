@@ -35,9 +35,6 @@ public class CallYaioReset extends CallYaioInstance {
 
     /** 
      * job to reste the db of an yaio-instance
-     * @FeatureDomain                Constructor
-     * @FeatureResult                initialize the application
-     * @FeatureKeywords              Constructor
      * @param args                   the command line arguments
      */
     public CallYaioReset(final String[] args) {
@@ -69,9 +66,6 @@ public class CallYaioReset extends CallYaioInstance {
 
     /** 
      * get the Class-logger
-     * @FeatureDomain                Logging
-     * @FeatureResult                returnValue Logger - use it !!!!
-     * @FeatureKeywords              Logging
      * @return                       logger - the logger
      */
     public static Logger getLogger() {
@@ -80,9 +74,6 @@ public class CallYaioReset extends CallYaioInstance {
 
     /** 
      * Main-method to start the application
-     * @FeatureDomain                CLI
-     * @FeatureResult                initialize the application
-     * @FeatureKeywords              CLI
      * @param args                   the command line arguments
      */
     public static void main(final String[] args) {

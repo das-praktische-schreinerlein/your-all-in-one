@@ -38,7 +38,6 @@ public abstract class BaseTest {
     /** 
      * testobject
      * 
-     * @FeatureDomain                Test
      * @package                      de.yaio
      * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
      * @category                     tests
@@ -51,9 +50,6 @@ public abstract class BaseTest {
 
     /** 
      * setup the a TestObj for the test
-     * @FeatureDomain                Tests
-     * @FeatureResult                returnvalue TestObj - the dataobj for the test
-     * @FeatureKeywords              Test Config Initialisation
      * @return                       the dataobj for the test
      * @throws Exception             io-Exceptions possible
      */
@@ -61,8 +57,6 @@ public abstract class BaseTest {
 
     /** 
      * setup the test
-     * @FeatureDomain                Tests
-     * @FeatureKeywords              Test Config Initialisation
      * @throws Exception             io-Exceptions possible
      */
     @Before
@@ -71,8 +65,6 @@ public abstract class BaseTest {
 
     /** 
      * teardown the test
-     * @FeatureDomain                Tests
-     * @FeatureKeywords              Test Config
      * @throws Exception             io-Exceptions possible
      */
     @After

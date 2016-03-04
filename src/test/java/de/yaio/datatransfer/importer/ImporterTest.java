@@ -42,7 +42,6 @@ public class ImporterTest extends BaseTest {
     /** 
      * testobject for importer-logic
      * 
-     * @FeatureDomain                Test
      * @package                      de.yaio.datatransfer.importer
      * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
      * @category                     tests
@@ -79,9 +78,6 @@ public class ImporterTest extends BaseTest {
     
     /** 
      * configure the importer for the tests
-     * @FeatureDomain                Tests
-     * @FeatureResult                updates membervars importerObj - Importer
-     * @FeatureKeywords              Test Configuration
      * @throws Exception             possible Exception     */
     @Before
     public void setupImporter() throws Exception {
@@ -95,8 +91,6 @@ public class ImporterTest extends BaseTest {
     
     /** 
      * do tests for creation of nodes from text
-     * @FeatureDomain                Tests
-     * @FeatureKeywords              Test
      * @throws Exception             possible Exception     */
     @Test
     public void testCreateNode() throws Exception {

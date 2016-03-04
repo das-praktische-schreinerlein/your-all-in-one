@@ -32,9 +32,6 @@ public class JPAImporter extends ImporterImpl {
 
     /** 
      * create object to import nodes from JPA
-     * @FeatureDomain                Constructor
-     * @FeatureResult                initialize the importer
-     * @FeatureKeywords              Constructor
      *  @param options                the importoptions for the parser...
      */
     public JPAImporter(final ImportOptions options) {
@@ -44,9 +41,6 @@ public class JPAImporter extends ImporterImpl {
 
     /** 
      * read Basenode with sysUID and all childnodes from JPA
-     * @FeatureDomain                Persistence
-     * @FeatureResult                returnValue - the basenode with sysUID
-     * @FeatureKeywords              Constructor
      *  @param sysUID                 the sysUID for the basenode to read from JPA
      *  @return                       the basenode with sysUID
      */

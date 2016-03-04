@@ -43,9 +43,6 @@ public class CSVExporter extends WikiExporter {
 
     /** 
      * export nodes as CSV
-     * @FeatureDomain                Constructor
-     * @FeatureResult                initialize the exporter
-     * @FeatureKeywords              Constructor
      */
     public CSVExporter() {
         super();
@@ -54,7 +51,7 @@ public class CSVExporter extends WikiExporter {
     @Override
     public void initDataDomainFormatter() {
         DescDataFormatterImpl.configureDataDomainFormatter(this);
-    };
+    }
 
     @Override
     public String getMasterNodeResult(final DataDomain masterNode, final OutputOptions oOptions)

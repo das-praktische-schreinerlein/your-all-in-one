@@ -33,9 +33,6 @@ public interface BaseNodeDBService {
 
     /** 
      * recalc and merge the node and its parents recursively
-     * @FeatureDomain                Webservice
-     * @FeatureResult                List - list of the recalced and saved parenthierarchy
-     * @FeatureKeywords              Webservice 
      * @param node                   the node to recalc and merge
      * @return                       List - list of the recalced and saved parenthierarchy
      * @throws Exception             io/DB-Exceptions possible
@@ -44,9 +41,6 @@ public interface BaseNodeDBService {
 
     /** 
      * read the children for the sysUID from database
-     * @FeatureDomain                Persistence
-     * @FeatureResult                returnValue List<BaseNode> - list of the children
-     * @FeatureKeywords              Persistence JPA
      * @param sysUID                 sysUID for the filter on parent_node
      * @return                       List of childnodes for basenode with sysUID
      */
@@ -54,9 +48,6 @@ public interface BaseNodeDBService {
 
     /** 
      * count the basenodes which match fulltext
-     * @FeatureDomain                Persistence
-     * @FeatureResult                returnValue List<BaseNode> - list of the nodes
-     * @FeatureKeywords              Persistence JPA
      * @param fulltext               fulltext to search in desc and name
      * @return                       total of matching nodes
      */
@@ -64,9 +55,6 @@ public interface BaseNodeDBService {
     
     /** 
      * read the basenodes which match fulltext
-     * @FeatureDomain                Persistence
-     * @FeatureResult                returnValue List<BaseNode> - list of the nodes
-     * @FeatureKeywords              Persistence JPA
      * @param fulltext               fulltext to search in desc and name
      * @param sortConfig             use sort
      * @param firstResult            resultrange for pagination
@@ -78,9 +66,6 @@ public interface BaseNodeDBService {
     
     /** 
      * count the basenodes which match fulltext
-     * @FeatureDomain                Persistence
-     * @FeatureResult                returnValue List<BaseNode> - list of the nodes
-     * @FeatureKeywords              Persistence JPA
      * @param fulltext               fulltext to search in desc and name
      * @param searchOptions          outputoptions with additional filter
      * @return                       total of matching nodes
@@ -89,9 +74,6 @@ public interface BaseNodeDBService {
 
     /** 
      * read the basenodes which match fulltext
-     * @FeatureDomain                Persistence
-     * @FeatureResult                returnValue List<BaseNode> - list of the nodes
-     * @FeatureKeywords              Persistence JPA
      * @param fulltext               fulltext to search in desc and name
      * @param searchOptions          outputoptions with additional filter
      * @param sortConfig             use sort
@@ -104,9 +86,6 @@ public interface BaseNodeDBService {
 
     /** 
      * read the matching nodes for the symLinkRef from database
-     * @FeatureDomain                Persistence
-     * @FeatureResult                returnValue List<BaseNode> - list of the the children
-     * @FeatureKeywords              Persistence JPA
      * @param symLinkRef             symLinkRef for the filter on node
      * @return                       List of machting nodes for symLinkRef
      */
@@ -114,9 +93,6 @@ public interface BaseNodeDBService {
 
     /** 
      * delete all nodes an create a new Masternode
-     * @FeatureDomain                Persistence
-     * @FeatureResult                returnValue BaseNode - the new BaseNode
-     * @FeatureKeywords              Persistence JPA
      * @return                       new Masternode
      */
     BaseNode resetYaio();
@@ -126,9 +102,6 @@ public interface BaseNodeDBService {
      * check if entityManger contains objects<br>
      * if not: do persist
      * if yes or flgForceMerge is set: do merge
-     * @FeatureDomain                Persistence
-     * @FeatureResult                saves memberfields childNodes to database
-     * @FeatureKeywords              Persistence
      * @param basenode               parentnode
      * @param pRecursionLevel        how many recursion-level will be saved to DB (0 = only my children)
      * @param flgForceMerge          force merge not persists
@@ -139,9 +112,6 @@ public interface BaseNodeDBService {
 
     /** 
      * remove the children from database recursivly
-     * @FeatureDomain                Persistence
-     * @FeatureResult                deletes all children with this,.getSysUID recursivly from db
-     * @FeatureKeywords              Persistence
      * @param basenode               parentnode
      */
     void removeChildNodesFromDB(final BaseNode basenode);

@@ -19,7 +19,7 @@ var YAIOSearchPage = function() {
     me.inputSearchOptionsStrNotNodePraefix = '#inputSearchOptionsStrNotNodePraefix';
     
     // pagination
-    me.paginationLinkStyles = "ul.pagination > li";
+    me.paginationLinkStyles = 'ul.pagination > li';
     me.linkPaginationLastPage = 'ul.pagination > li:last-of-type > span';
 
     // searchwords
@@ -63,7 +63,7 @@ var YAIOSearchPage = function() {
             .then( function setNode(nodes) {
                 // set node and extract url
                 currentNode = nodes[0];
-                return currentNode.getAttribute("href");
+                return currentNode.getAttribute('href');
             })
             .then( function setUrl(url) {
                 // set url

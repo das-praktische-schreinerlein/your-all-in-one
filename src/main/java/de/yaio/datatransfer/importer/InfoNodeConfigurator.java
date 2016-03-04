@@ -34,9 +34,7 @@ public class InfoNodeConfigurator {
      * ueber diese Funktionen werden die Schlagworte und die dann zu 
      * über NodeFactory.getNodeTypeFromText zu instantiierenden Node-Klassen 
      * bekannt gemacht
-     * @FeatureDomain                DataImport
-     * @FeatureKeywords              Config
-     * @param nodeFactory            instance of the nodeFactory which will use the config 
+     * @param nodeFactory            instance of the nodeFactory which will use the config
      */
     public static void configureNodeTypeIdentifier(final NodeFactory nodeFactory) {
         nodeFactory.addNodeTypeIdentifier(InfoNodeService.getInstance().getConfigState(), InfoNode.class);
@@ -45,9 +43,7 @@ public class InfoNodeConfigurator {
     /** 
      * configure variants of NodeTypeIdentifier (used by parser to normalize 
      * the sourcedata)<br>
-     * @FeatureDomain                DataImport
-     * @FeatureKeywords              Config
-     * @param importer               instance of the importer which will use the config 
+     * @param importer               instance of the importer which will use the config
      */
     public static void configureNodeTypes(final Importer importer) {
         importer.addNodeTypeIdentifierVariantMapping(InfoNodeService.getInstance().getConfigState());
@@ -55,9 +51,7 @@ public class InfoNodeConfigurator {
 
     /** 
      * configure special Workflow-NodeTypeIdentifier (used by Importer.isWFStatus)
-     * @FeatureDomain                DataImport
-     * @FeatureKeywords              Config
-     * @param importer               instance of the importer which will use the config 
+     * @param importer               instance of the importer which will use the config
      */
     public static void configureWorkflowNodeTypeMapping(final Importer importer) {
         // NOP 

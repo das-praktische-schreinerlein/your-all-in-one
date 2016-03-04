@@ -53,9 +53,6 @@ public class WikiExporterTest extends BaseTest {
     
     /** 
      * configure the exporter for the tests
-     * @FeatureDomain                Tests
-     * @FeatureResult                returnValue exporter - Exporter
-     * @FeatureKeywords              Test Configuration
      * @return                       Exporter
      * @throws Exception             io-Exceptions possible
      */
@@ -65,9 +62,6 @@ public class WikiExporterTest extends BaseTest {
     
     /** 
      * configure the exporter for the tests
-     * @FeatureDomain                Tests
-     * @FeatureResult                returnValue oOptions - OutputOptions
-     * @FeatureKeywords              Test Configuration
      * @return                       OutputOptions
      * @throws Exception             io-Exceptions possible
      */
@@ -89,8 +83,6 @@ public class WikiExporterTest extends BaseTest {
     
     /** 
      * do tests for Export
-     * @FeatureDomain                Tests
-     * @FeatureKeywords              Test
      * @throws Exception             io-Exceptions possible
      */
     @Test
@@ -101,8 +93,6 @@ public class WikiExporterTest extends BaseTest {
 
     /** 
      * parse the source, format it and compare the result with expectedResult 
-     * @FeatureDomain                Tests
-     * @FeatureKeywords              Test
      * @param srcFile                file with the source
      * @param expectedResultFile     file with the expected result
      * @throws Exception             io-Exceptions possible
@@ -114,8 +104,6 @@ public class WikiExporterTest extends BaseTest {
 
     /** 
      * parse the ppl-source, format it and compare the result with expectedResult 
-     * @FeatureDomain                Tests
-     * @FeatureKeywords              Test
      * @param source                 the ppl-lines to parse and to convert
      * @param expectedResult         the expected lines from exporter
      * @throws Exception             io-Exceptions possible

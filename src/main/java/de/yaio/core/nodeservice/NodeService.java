@@ -49,15 +49,11 @@ public interface NodeService {
     /** 
      * initialize all DataDomainRecalcer
      * must be override and call Exporter.addDataDomaineRecalcer for every Recalcer
-     * @FeatureDomain                BusinessLogic
-     * @FeatureKeywords              Config
      */
     void configureDataDomainRecalcer();
 
     /** 
      * add DataDomainRecalcer to the Service-Config
-     * @FeatureDomain                DataExport Presentation
-     * @FeatureKeywords              Config
      * @param dataDomainRecalcer     instance of the dataDomainRecalcer
      */
     void addDataDomainRecalcer(DataDomainRecalc dataDomainRecalcer);
@@ -65,9 +61,6 @@ public interface NodeService {
     
     /** 
      * recalcs the DataDomain of the node
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                updates memberVariables
-     * @FeatureKeywords              BsuinessLogic
      * @param node                   node to recalc
      * @param recurseDirection       Type of recursion (parent, me, children) NodeService.CONST_RECURSE_DIRECTION_*
      * @throws Exception             parser/format-Exceptions possible
@@ -76,9 +69,6 @@ public interface NodeService {
 
     /** 
      * recalcs the DataDomain of the node before the children are recalced
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                updates memberVariables
-     * @FeatureKeywords              BsuinessLogic
      * @param node                   node to recalc
      * @param recurceDirection       Type of recursion (parent, me, children) NodeService.CONST_RECURSE_DIRECTION_*
      * @throws Exception             parser/format-Exceptions possible
@@ -87,9 +77,6 @@ public interface NodeService {
 
     /** 
      * recalcs the DataDomain of the nodes children
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                updates children of the node
-     * @FeatureKeywords              BsuinessLogic
      * @param node                   node which children to recalc
      * @param recurceDirection       Type of recursion (parent, me, children) NodeService.CONST_RECURSE_DIRECTION_*
      * @throws Exception             parser/format-Exceptions possible
@@ -98,9 +85,6 @@ public interface NodeService {
 
     /** 
      * recalcs the DataDomain of the node after the children are recalced
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                updates memberVariables
-     * @FeatureKeywords              BsuinessLogic
      * @param node                   node to recalc
      * @param recurceDirection       Type of recursion (parent, me, children) NodeService.CONST_RECURSE_DIRECTION_*
      * @throws Exception             parser/format-Exceptions possible
@@ -110,10 +94,6 @@ public interface NodeService {
     
     /** 
      * recalc the WFData of the node
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                updates memberfields of dataDomain PlanChildrenSum
-     * @FeatureResult                updates memberfields of dataDomain IstChildrenSum
-     * @FeatureKeywords              BusinessLogic
      * @param baseNode               node to get the state from
      * @param recursionDirection     direction for recursivly recalc CONST_RECURSE_DIRECTION_* 
      * @throws Exception             parser/format-Exceptions possible
@@ -134,11 +114,6 @@ public interface NodeService {
     /** 
      * sets the parentNode of the baseNode and updates recursivly 
      * field Ebene of all childnodes 
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                updates memberVariable baseNode.parentNode
-     * @FeatureResult                updates memberVariable parentNode.childNodes
-     * @FeatureResult                updates memberVariable baseNode.ebene for all childs
-     * @FeatureKeywords              BusinessLogic
      * @param baseNode               node to set new parentNode
      * @param parentNode             new parentNode
      * @param flgRenewParent         flag force Renew of the parent, if nothing changed too 
@@ -147,9 +122,6 @@ public interface NodeService {
 
     /** 
      * get a List of the Ids of parent-hierarchy 
-     * @FeatureDomain                Persistence
-     * @FeatureResult                returnValue List<String> - list of the parent-sysUIDs, start with my own parent (not me)
-     * @FeatureKeywords              Persistence
      * @param baseNode               node
      * @return                       list of the parent-sysUIDs, start with my own parent (not baseNode)
      */
@@ -157,9 +129,6 @@ public interface NodeService {
 
     /** 
      * get a List of the parent-hierarchy
-     * @FeatureDomain                Persistence
-     * @FeatureResult                returnValue List<BaseNode> - list of the parents, start with my own parent (not me)
-     * @FeatureKeywords              Persistence
      * @param baseNode               node
      * @return                       list of the parents, start with my own parent (not baseNode)
      */
@@ -168,12 +137,9 @@ public interface NodeService {
     
     /** 
      * check if parentSysUID exists in parent-hierarchy
-     * @FeatureDomain                Persistence
-     * @FeatureResult                returnValue boolean - true/false weather parentSysUID exists or not in hierarchy
-     * @FeatureKeywords              Persistence
      * @param baseNode               node
      * @param parentSysUID           sysUID to search
      * @return                       list of the parents, start with my own parent (not baseNode)
      */
-    public boolean hasParent(final DataDomain baseNode, final String parentSysUID);
+     boolean hasParent(final DataDomain baseNode, final String parentSysUID);
 }

@@ -37,9 +37,6 @@ public class NodeRecalcer {
 
     /** 
      * service functions to recalc nodedata
-     * @FeatureDomain                Constructor
-     * @FeatureResult                initialize the recalcer
-     * @FeatureKeywords              Constructor
      */
     public NodeRecalcer() {
         super();
@@ -47,10 +44,6 @@ public class NodeRecalcer {
 
     /** 
      * read and recalc the masternode, all of its children and the parents and save it to db
-     * @FeatureDomain                Job
-     * @FeatureResult                ReturnValue String - a result message
-     * @FeatureResult                Updates node in db
-     * @FeatureKeywords              Job
      * @param sysUID                 sysUID of the masternode to read and recalc with alls children + parents
      * @return                       result-message
      * @throws Exception             possible io/db/recalc-Exceptions

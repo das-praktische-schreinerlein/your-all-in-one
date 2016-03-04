@@ -30,7 +30,6 @@ public class EventNodeRestControllerTest extends BaseNodeRestControllerTest {
     /** 
      * testobject for EventNode
      * 
-     * @FeatureDomain                Test
      * @package                      de.yaio.rest.controller
      * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
      * @category                     tests

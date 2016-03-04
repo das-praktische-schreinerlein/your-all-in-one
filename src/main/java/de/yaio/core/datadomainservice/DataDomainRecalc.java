@@ -33,9 +33,6 @@ public interface DataDomainRecalc extends Comparable<DataDomainRecalc> {
     /** 
      * recalcs the DataDomain connected to the Recalcer before the children 
      * are recalced
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                updates memberVariables
-     * @FeatureKeywords              BsuinessLogic
      * @param node                   node to recalc
      * @param recurceDirection       Type of recursion (parent, me, children) NodeService.CONST_RECURSE_DIRECTION_*
      * @throws Exception             parser/format-Exceptions possible
@@ -45,9 +42,6 @@ public interface DataDomainRecalc extends Comparable<DataDomainRecalc> {
     /** 
      * recalcs the DataDomain connected to the Recalcer after the children 
      * are recalced
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                updates memberVariables
-     * @FeatureKeywords              BsuinessLogic
      * @param node                   node to recalc
      * @param recurceDirection       Type of recursion (parent, me, children) NodeService.CONST_RECURSE_DIRECTION_*
      * @throws Exception             parser/format-Exceptions possible
@@ -56,18 +50,12 @@ public interface DataDomainRecalc extends Comparable<DataDomainRecalc> {
 
     /** 
      * returns the class of the DataDomain for which the service runs
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                returnValue Class - DataDomain for which the service runs
-     * @FeatureKeywords              Config
      * @return                       DataDomain for which the service runs
      */
     Class<?> getRecalcTargetClass();
 
     /** 
      * returns position in the service-queue
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                returnValue int - position in the service-queue
-     * @FeatureKeywords              Config
      * @return                       position in the service-queue
      */
     int getRecalcTargetOrder();

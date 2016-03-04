@@ -30,7 +30,6 @@ public class InfoNodeRestControllerTest extends BaseNodeRestControllerTest {
     /** 
      * testobject for InfoNode
      * 
-     * @FeatureDomain                Test
      * @package                      de.yaio.rest.controller
      * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
      * @category                     tests

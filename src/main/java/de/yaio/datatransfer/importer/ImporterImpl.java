@@ -44,9 +44,6 @@ public class ImporterImpl implements Importer {
 
     /** 
      * create Importer to import nodes
-     * @FeatureDomain                Constructor
-     * @FeatureResult                initialize the importer
-     * @FeatureKeywords              Constructor
      *  @param options                the importoptions for the parser...
      */
     public ImporterImpl(final ImportOptions options) {

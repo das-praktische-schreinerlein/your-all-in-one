@@ -46,7 +46,7 @@ public interface BaseWorkflowData extends DataDomain, IstChildrenSumData,
     Date CONST_MAXDATE = new Date(2147483647000L);
     
     @XmlTransient
-    public static enum WorkflowState {
+    enum WorkflowState {
         // the order is important for the calculation of workflow!!!!
         NOWORKFLOW, 
         NOTPLANED, CANCELED, DONE, 
@@ -65,9 +65,6 @@ public interface BaseWorkflowData extends DataDomain, IstChildrenSumData,
 
     /** 
      * checks weather the state is a configurated workflow-state
-     * @FeatureDomain                Workflow
-     * @FeatureResult                returnValue boolean - workflow-state yes/no
-     * @FeatureKeywords              Worflow
      * @param state                  state to check
      * @return                       workflow-state yes/no
      */
@@ -75,9 +72,6 @@ public interface BaseWorkflowData extends DataDomain, IstChildrenSumData,
 
     /** 
      * checks weather the state is a configurated workflow-state for DONE
-     * @FeatureDomain                Workflow
-     * @FeatureResult                returnValue boolean - workflow-DONE yes/no
-     * @FeatureKeywords              Worflow
      * @param state                  state to check
      * @return                       workflow-DONE yes/no
      */
@@ -85,9 +79,6 @@ public interface BaseWorkflowData extends DataDomain, IstChildrenSumData,
 
     /** 
      * checks weather the state is a configurated workflow-state for OPEN
-     * @FeatureDomain                Workflow
-     * @FeatureResult                returnValue boolean - workflow-OPEN yes/no
-     * @FeatureKeywords              Worflow
      * @param state                  state to check
      * @return                       workflow-OPEN yes/no
      */
@@ -95,9 +86,6 @@ public interface BaseWorkflowData extends DataDomain, IstChildrenSumData,
 
     /** 
      * checks weather the state is a configurated workflow-state for CANCELED
-     * @FeatureDomain                Workflow
-     * @FeatureResult                returnValue boolean - workflow-CANCELED yes/no
-     * @FeatureKeywords              Worflow
      * @param state                  state to check
      * @return                       workflow-CANCELED yes/no
      */

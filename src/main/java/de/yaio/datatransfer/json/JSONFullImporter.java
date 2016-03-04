@@ -54,9 +54,6 @@ public class JSONFullImporter extends ImporterImpl {
     
     /** 
      * service functions to export nodes as Wiki
-     * @FeatureDomain                Constructor
-     * @FeatureResult                initialize the exporter
-     * @FeatureKeywords              Constructor
      * @param options                importoptions
      */
     public JSONFullImporter(final ImportOptions options) {
@@ -66,9 +63,6 @@ public class JSONFullImporter extends ImporterImpl {
     
     /** 
      * parse a JSONResponse-String to a JSONResponse-Obj
-     * @FeatureDomain                JSONParser
-     * @FeatureResult                returns JSONResponse
-     * @FeatureKeywords              JSONParser
      * @param jsonSrc                json-source of a JSONResponse to parse
      * @return                       a JSONResponse-Obj
      * @throws JsonProcessingException possible

@@ -113,9 +113,6 @@ public class TaskNodeService extends BaseNodeService {
     
     /** 
      * return the main instance of this service
-     * @FeatureDomain                Persistence
-     * @FeatureResult                return the main instance of this service
-     * @FeatureKeywords              Persistence
      * @return                       the main instance of this service
      */
     public static TaskNodeService getInstance() {
@@ -206,7 +203,7 @@ public class TaskNodeService extends BaseNodeService {
             return WorkflowState.NOTPLANED;
         }
         return masterState;
-    };
+    }
 
     @Override
     public WorkflowState getWorkflowStateForState(final BaseWorkflowData node)  throws IllegalStateException {
@@ -225,7 +222,7 @@ public class TaskNodeService extends BaseNodeService {
             throw new IllegalStateException("No WorkflowState found for state=" + state);
         }
         return wfState;
-    };
+    }
     
     @Override
     public String getStateForWorkflowState(final BaseWorkflowData node)  throws IllegalStateException {
@@ -243,7 +240,7 @@ public class TaskNodeService extends BaseNodeService {
         }
         
         return state;
-    };
+    }
 
     @Override
     public String getDataBlocks4CheckSum(final DataDomain baseNode) throws Exception {

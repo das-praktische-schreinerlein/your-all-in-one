@@ -45,9 +45,6 @@ public class MindMapExporter extends WikiExporter {
 
     /** 
      * service functions to export nodes as Mindmap
-     * @FeatureDomain                Constructor
-     * @FeatureResult                initialize the exporter
-     * @FeatureKeywords              Constructor
      */
     public MindMapExporter() {
         super();
@@ -56,7 +53,7 @@ public class MindMapExporter extends WikiExporter {
     @Override
     public void initDataDomainFormatter() {
         super.initDataDomainFormatter();
-    };
+    }
 
     @Override
     public String getMasterNodeResult(final DataDomain masterNode, final OutputOptions oOptions)

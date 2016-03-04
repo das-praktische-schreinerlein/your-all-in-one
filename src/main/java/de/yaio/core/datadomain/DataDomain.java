@@ -58,20 +58,13 @@ public interface DataDomain {
     
     /** 
      * validates the node against the declared validation rules
-     * @FeatureDomain                Validation
-     * @FeatureResult                ReturnValue Set<ConstraintViolation<BaseNode>> - set of violations
-     * @FeatureKeywords              Validation
      * @return                       set of violations
      */
      Set<ConstraintViolation<BaseNode>> validateMe();
 
      /** 
-     * recalc the WFData of the node
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                upadtes memberfields of dataDomain PlanChildrenSum
-     * @FeatureResult                upadtes memberfields of dataDomain IstChildrenSum
-     * @FeatureKeywords              BusinessLogic
-     * @param recursionDirection     direction for recursivly recalc CONST_RECURSE_DIRECTION_* 
+     * recalc the WFData of the node, upadtes memberfields of dataDomain PlanChildrenSum+IstChildrenSum
+     * @param recursionDirection     direction for recursivly recalc CONST_RECURSE_DIRECTION_*
      * @throws Exception             possible Exception
      */
     void recalcData(int recursionDirection) throws Exception;

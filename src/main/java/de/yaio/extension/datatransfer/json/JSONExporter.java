@@ -39,9 +39,6 @@ public class JSONExporter extends CSVExporter {
 
     /** 
      * service functions to export nodes as JSON
-     * @FeatureDomain                Constructor
-     * @FeatureResult                initialize the exporter
-     * @FeatureKeywords              Constructor
      */
     public JSONExporter() {
         super();

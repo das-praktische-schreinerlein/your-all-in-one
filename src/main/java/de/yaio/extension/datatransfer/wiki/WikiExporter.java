@@ -42,9 +42,6 @@ public class WikiExporter extends ExporterImpl {
 
     /** 
      * service functions to export nodes as Wiki
-     * @FeatureDomain                Constructor
-     * @FeatureResult                initialize the exporter
-     * @FeatureKeywords              Constructor
      */
     public WikiExporter() {
         super();
@@ -55,9 +52,6 @@ public class WikiExporter extends ExporterImpl {
     ////////////////
     /** 
      * generate helper-OutputOptions for generation of the Wiki-namearea (show only name+state)
-     * @FeatureDomain                DataExport
-     * @FeatureResult                returnValue OutputOptions - OuputOptions for generation of the Wiki-namearea
-     * @FeatureKeywords              Cofiguration helper
      * @param baseOOptions           Default OutputOptions to override
      * @return                       OuputOptions for generation of the Wiki-namearea
      */
@@ -77,9 +71,6 @@ public class WikiExporter extends ExporterImpl {
 
     /** 
      * generate helper-OutputOptions for generation of the Wiki-dataarea (show all, hide name+state)
-     * @FeatureDomain                DataExport
-     * @FeatureResult                returnValue OutputOptions - OuputOptions for generation of the Wiki-dataarea
-     * @FeatureKeywords              Cofiguration helper
      * @param baseOOptions           Default OutputOptions to override
      * @return                       OuputOptions for generation of the Wiki-dataarea
      */
@@ -97,9 +88,6 @@ public class WikiExporter extends ExporterImpl {
     
     /** 
      * generate helper-OutputOptions for generation of the Wiki-descarea (show desc, hide all)
-     * @FeatureDomain                DataExport
-     * @FeatureResult                returnValue OutputOptions - OuputOptions for generation of the Wiki-descarea
-     * @FeatureKeywords              Cofiguration helper
      * @param baseOOptions           Default OutputOptions to override
      * @return                       OuputOptions for generation of the Wiki-descarea
      */

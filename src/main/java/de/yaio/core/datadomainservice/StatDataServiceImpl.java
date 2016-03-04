@@ -42,9 +42,6 @@ public class StatDataServiceImpl extends DataDomainRecalcImpl implements StatDat
     
     /** 
      * return the main instance of this service
-     * @FeatureDomain                Persistence
-     * @FeatureResult                return the main instance of this service
-     * @FeatureKeywords              Persistence
      * @return                       the main instance of this service
      */
     public static StatDataServiceImpl getInstance() {
@@ -53,8 +50,6 @@ public class StatDataServiceImpl extends DataDomainRecalcImpl implements StatDat
 
     /** 
      * add me as DataDomainRecalcer to the Service-Config
-     * @FeatureDomain                DataExport Presentation
-     * @FeatureKeywords              Config
      * @param nodeService            instance of the nodeService which will call me as recalcer
      */
     public static void configureDataDomainRecalcer(final NodeService nodeService) {

@@ -265,15 +265,15 @@ public class ImportOptionsImpl implements ImportOptions {
     @Override
     public Map<String, String> getMapClassFilter() {
         return this.mpClassFilter;
-    };
+    }
     @Override
     public Map<String, String> getMapTypeFilter() {
         return this.mpTypeFilter;
-    };
+    }
     @Override
     public Map<String, String> getMapStateFilter() {
         return this.mpStateFilter;
-    };
+    }
 
     protected int manageIntValues(final Integer value) {
         return value != null ? value : 0;

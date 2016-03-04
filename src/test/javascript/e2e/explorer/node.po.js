@@ -11,9 +11,9 @@ var YAIONodePage = function() {
 
     // nodeIds
     me.sysplayId = 'SysPlay1';
-    me.systestId = "SysTest1";
-    me.jsLayoutTestId = "DT2015061620443946714";
-    me.jsFuncTestId = "JsFuncTest1";
+    me.systestId = 'SysTest1';
+    me.jsLayoutTestId = 'DT2015061620443946714';
+    me.jsFuncTestId = 'JsFuncTest1';
     me.jsFuncTestHierarchy = ['SysPlay1', 'SysTest1', 'JsFuncTest1'];
     
     // explorer-link
@@ -51,10 +51,21 @@ var YAIONodePage = function() {
     me.inputTypeInfoNode = '#inputTypeInfoNode';
     me.editorInputNodeDescInfoNode = '#editorInputNodeDescInfoNode';
 
+    // urlresform
+    me.inputNameUrlResNode = '#inputNameUrlResNode';
+    me.inputTypeUrlResNode = '#inputTypeUrlResNode';
+    me.inputResLocRefUrlResNode = '#inputResLocRefUrlResNode';
+    me.inputResLocNameUrlResNode = '#inputResLocNameUrlResNode';
+    me.inputUploadFileUrlResNode = '#inputUploadFileUrlResNode';
+    me.inputResContentDMSStateUrlResNode = '#inputResContentDMSStateUrlResNode';
+    me.inputResIndexDMSStateUrlResNode = '#inputResIndexDMSStateUrlResNode';
+    me.editorInputNodeDescUrlResNode = '#editorInputNodeDescUrlResNode';
+    me.buttonSaveUrlRes = '#nodeFormUrlResNode fieldset button[translate="common.buttonSave"]';
+
     // utils
-    me.idUiDatePicker = "#ui-datepicker-div";
-    me.uiDatePickerDay1 = $$(me.idUiDatePicker + " table.ui-datepicker-calendar tbody tr td a").get(1);
-    me.uiDatePickerDay25 = $$(me.idUiDatePicker + " table.ui-datepicker-calendar tbody tr td a").get(25);
+    me.idUiDatePicker = '#ui-datepicker-div';
+    me.uiDatePickerDay1 = $$(me.idUiDatePicker + ' table.ui-datepicker-calendar tbody tr td a').get(1);
+    me.uiDatePickerDay25 = $$(me.idUiDatePicker + ' table.ui-datepicker-calendar tbody tr td a').get(25);
     
     /**
      * open masterpage
@@ -63,7 +74,7 @@ var YAIONodePage = function() {
     me.openMasternode = function () {
         browser.get(browser.params.yaioConfig.yaioBaseAppUrl + '/show/MasterplanMasternode1');
         return browser;
-    }
+    };
 
     /**
      * open explorer from frontpage and wait until present
@@ -108,7 +119,7 @@ var YAIONodePage = function() {
      * @returns {Promise}
      */
     me.expandNode = function (id, last) {
-        // console.log("expandNode: check for " + '#expander' + id);
+        // console.log('expandNode: check for ' + '#expander' + id);
         var expander = $('#expander' + id);
         var createChild = $('#cmdCreate' + id);
         var deferred = protractor.promise.defer();
@@ -144,7 +155,7 @@ var YAIONodePage = function() {
         protractor.utils.waitUntilElementClickable(linkCmdCreateNodeForMe, protractor.utils.CONST_WAIT_NODEHIRARCHY);
         
         // find symlink on nodeline
-        var focusMe = linkCmdCreateNodeForMe.element(by.xpath("../../td[1]/span/span[2]/a"));
+        var focusMe = linkCmdCreateNodeForMe.element(by.xpath('../../td[1]/span/span[2]/a'));
         protractor.utils.waitUntilElementPresent(focusMe, protractor.utils.CONST_WAIT_ELEMENT);
         expect(focusMe.isDisplayed()).toEqual(true);
         // click symlink
@@ -182,8 +193,8 @@ var YAIONodePage = function() {
         // set taskdata and submit form
         var taskName = 'testask' + new Date().getTime();
         $(me.inputNameTaskNode).sendKeys(taskName);
-        $(me.inputTypeTaskNode).sendKeys("+-- Offen\n");
-        $(me.inputPlanAufwandTaskNode).sendKeys("1");
+        $(me.inputTypeTaskNode).sendKeys('+-- Offen\n');
+        $(me.inputPlanAufwandTaskNode).sendKeys('1');
         $(me.inputPlanStartTaskNode).click();
         protractor.utils.waitUntilElementPresent(me.uiDatePickerDay1, protractor.utils.CONST_WAIT_ELEMENT);
         me.uiDatePickerDay1.click();
@@ -192,7 +203,7 @@ var YAIONodePage = function() {
         me.uiDatePickerDay25.click();
         
         // toggle and set desc
-        me.openAndEditDescForNodeType("Task", "fehlerhafte Task-Desc-Testdaten", true);
+        me.openAndEditDescForNodeType('Task', 'fehlerhafte Task-Desc-Testdaten', true);
         
         // define SearchElement
         var eleNewTaskName = element(by.cssContainingText(me.spanNodeName, taskName));
@@ -229,9 +240,9 @@ var YAIONodePage = function() {
         protractor.utils.waitUntilElementClickable(linkCmdEditNode, protractor.utils.CONST_WAIT_ELEMENT);
         expect(linkCmdEditNode.isDisplayed()).toEqual(true);
 
-        if (browser.browserName === "phantomjs") {
+        if (browser.browserName === 'phantomjs') {
             //phantomjs breaks while nodeedit, so we return the current taskname-element 
-            return $("#title" + nodeId);
+            return $('#title' + nodeId);
         }
         
         // define SearchElement
@@ -247,7 +258,7 @@ var YAIONodePage = function() {
             });
             var inputPlanAufwandTaskNode = $(me.inputPlanAufwandTaskNode);
             inputPlanAufwandTaskNode.clear().then(function () {
-                inputPlanAufwandTaskNode.sendKeys("10");
+                inputPlanAufwandTaskNode.sendKeys('10');
             });
             $(me.inputPlanStartTaskNode).click();
             protractor.utils.waitUntilElementPresent(me.uiDatePickerDay1, protractor.utils.CONST_WAIT_ELEMENT);
@@ -257,7 +268,7 @@ var YAIONodePage = function() {
             me.uiDatePickerDay25.click();
             
             // reset desc
-            me.openAndEditDescForNodeType("Task", " - berichtigt");
+            me.openAndEditDescForNodeType('Task', ' - berichtigt');
 
             // submit form
             var buttonSaveTask = $(me.buttonSaveTask);
@@ -300,7 +311,7 @@ var YAIONodePage = function() {
         });
         
         // set desc
-        me.openAndEditDescForNodeType("SymLink", "korrekte SymLink-Desc-Testdaten", true);
+        me.openAndEditDescForNodeType('SymLink', 'korrekte SymLink-Desc-Testdaten', true);
         
         // define SearchElement
         var eleNewSymLinkName = element(by.cssContainingText(me.spanNodeName, nodeName));
@@ -324,7 +335,7 @@ var YAIONodePage = function() {
         
         return eleNewSymLinkName;
     };
-    
+
     /**
      * open desc-editor of forn and set new content (if flgToggle is set toggle before to open layer)
      * @param   {String} nodeType    type of the node Task, SymLink...
@@ -344,7 +355,7 @@ var YAIONodePage = function() {
         protractor.utils.waitUntilElementPresent(editorInputNodeDesc, protractor.utils.CONST_WAIT_ELEMENT);
         browser.actions().doubleClick(editorInputNodeDesc).perform();
         return inputAceElm.sendKeys(newText);
-    }
+    };
     
     /**
      * follow SymLinkNode and wait until parent present
@@ -361,7 +372,7 @@ var YAIONodePage = function() {
         var linkCmdCreateNodeForParent = $('#cmdCreateSymLink' + parentId);
         
         // find symlink on nodeline
-        var symLink = linkCmdCreateNodeForMe.element(by.xpath("../../td[2]/div/div[1]/a"));
+        var symLink = linkCmdCreateNodeForMe.element(by.xpath('../../td[2]/div/div[1]/a'));
         protractor.utils.waitUntilElementPresent(symLink, protractor.utils.CONST_WAIT_ELEMENT);
         expect(symLink.isDisplayed()).toEqual(true);
         // click symlink
@@ -383,6 +394,60 @@ var YAIONodePage = function() {
         
 
         return linkCmdCreateNodeForMe;
+    };
+
+    /**
+     * create UrlResNode and wait until present
+     * @param   {String}  parentId  id of the parentNode
+     * @returns {Element}           element-filter on the newUrlResname
+     */
+    me.openNodeEditorAndCreateUrlResNode = function (parentId) {
+        var linkCmdCreateNode = $('#cmdCreate' + parentId);
+        protractor.utils.waitUntilElementClickable(linkCmdCreateNode, protractor.utils.CONST_WAIT_NODEHIRARCHY);
+
+        // create child for parentId
+        linkCmdCreateNode.click();
+        protractor.utils.waitUntilElementPresent($(me.inputCreateNodeType), protractor.utils.CONST_WAIT_ELEMENT);
+
+        // select Aufgabe
+        $(me.inputCreateNodeType).sendKeys('Ressource\n');
+
+        // set UrlResdata
+        var nodeName = 'testUrlRes' + new Date().getTime();
+        var inputNameUrlResNode = $(me.inputNameUrlResNode);
+        inputNameUrlResNode.clear().then(function () {
+            inputNameUrlResNode.sendKeys(nodeName);
+        });
+        var nodeUrl = 'http://bla.blub.de';
+        var inputResLocRefUrlResNode = $(me.inputResLocRefUrlResNode);
+        inputResLocRefUrlResNode.clear().then(function () {
+            inputResLocRefUrlResNode.sendKeys(nodeUrl);
+        });
+
+        // set desc
+        me.openAndEditDescForNodeType('UrlRes', 'korrekte UrlRes-Desc-Testdaten', true);
+
+        // define SearchElement
+        var eleNewUrlResName = element(by.cssContainingText(me.spanNodeName, nodeName));
+
+        // submit form
+        var buttonSaveUrlRes = $(me.buttonSaveUrlRes);
+        protractor.utils.waitUntilElementPresent(buttonSaveUrlRes, protractor.utils.CONST_WAIT_ELEMENT);
+        expect(buttonSaveUrlRes.isDisplayed()).toEqual(true);
+        buttonSaveUrlRes.click().then(function () {
+            // wait for result
+            browser.ignoreSynchronization = true;
+
+            // wait till parent- data is loaded
+            protractor.utils.waitUntilElementPresent(linkCmdCreateNode, protractor.utils.CONST_WAIT_NODEHIRARCHY);
+
+            // wait till data is loaded
+            protractor.utils.waitUntilElementPresent(eleNewUrlResName, protractor.utils.CONST_WAIT_ELEMENT);
+            expect(eleNewUrlResName.getText()).toEqual(nodeName);
+            browser.ignoreSynchronization = false;
+        });
+
+        return eleNewUrlResName;
     };
 
     /**
@@ -412,7 +477,7 @@ var YAIONodePage = function() {
         
         // bypassing PhantomJS 1.9.7/GhostDriver window.confirm (or alert) bug.
         // as WebDriver's switchTo().alert() is not implemented yet.
-        if (browser.browserName === "phantomjs") {
+        if (browser.browserName === 'phantomjs') {
             browser.executeScript('window.alert = function(msg) {}');
             browser.executeScript('window.confirm = function(msg) {console.error("confirm: " + msg); return true;}');
         }
@@ -422,7 +487,7 @@ var YAIONodePage = function() {
             browser.ignoreSynchronization = true;
             
             // switch to alert only if not phantomjs
-            if (browser.browserName !== "phantomjs") {
+            if (browser.browserName !== 'phantomjs') {
                 // accept delete
                 var alertDialog = browser.switchTo().alert();
                 expect(alertDialog.accept()).toBe(null);
@@ -444,11 +509,11 @@ var YAIONodePage = function() {
 
     /**
      * navigate to Node by id, open container with link, call checkHandler and close container
-     * @param   {Integer}  nodeId             nodeId of the node to show
-     * @param   {Function} checkHandler       handler which is called after opening the container (should return a promise)
-     * @param   {String}   containerIdPraefix prefix of the container-element
-     * @param   {String}   linkIdPraefix      prefix of the container-toggler
-     * @returns {Element}                     element-filter on the containerDesc
+     * @param {Int} nodeId                 nodeId of the node to show
+     * @param {Function} checkHandler      handler which is called after opening the container (should return a promise)
+     * @param {String} containerIdPraefix  prefix of the container-element
+     * @param {String} linkIdPraefix       prefix of the container-toggler
+     * @returns {Element}                  element-filter on the containerDesc
      */
     me.showContainerForNode = function (nodeId, checkHandler, containerIdPraefix, linkIdPraefix) {
         // check id
@@ -476,16 +541,16 @@ var YAIONodePage = function() {
                     protractor.utils.waitThatElementIsNotPresent(container, protractor.utils.CONST_WAIT_ELEMENT);
                     expect(container.isDisplayed()).toEqual(false);
                 });
-            }
+            };
             
-            if (checkHandler != "undefined") {
+            if (checkHandler !== undefined) {
                 checkHandler(container).then( function doneCheckHandler() {
                     // run CloseHandler
-                    closeContainer()
+                    closeContainer();
                 });
             } else  {
                 // run CloseHandler
-                closeContainer()
+                closeContainer();
             }
         });
 
@@ -496,9 +561,9 @@ var YAIONodePage = function() {
 
     /**
      * navigate to Node by id, call showDesc open/close
-     * @param   {Integer}  nodeId        nodeId of the node to show
-     * @param   {Function} checkHandler  handler which is called after opening of the desc (should return a promise)
-     * @returns {Element}                element-filter on the containerDesc
+     * @param {Int} nodeId              nodeId of the node to show
+     * @param {Function} checkHandler   handler which is called after opening of the desc (should return a promise)
+     * @returns {Element}               element-filter on the containerDesc
      */
     me.showDescForNode = function (nodeId, checkHandler) {
         return me.showContainerForNode(nodeId, checkHandler, '#container_content_desc_', '#toggler_desc_');
@@ -506,9 +571,9 @@ var YAIONodePage = function() {
 
     /**
      * navigate to Node by id, call showMetaData open/close
-     * @param   {Integer}  nodeId        nodeId of the node to show
-     * @param   {Function} checkHandler  handler which is called after opening of the desc (should return a promise)
-     * @returns {Element}                element-filter on the containerDesc
+     * @param {int} nodeId             nodeId of the node to show
+     * @param {Function} checkHandler  handler which is called after opening of the desc (should return a promise)
+     * @returns {Element}              element-filter on the containerDesc
      */
     me.showSysForNode = function (nodeId, checkHandler) {
         return me.showContainerForNode(nodeId, checkHandler, '#detail_sys_', '#toggler_sys_');
