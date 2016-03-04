@@ -69,9 +69,6 @@ public abstract class DataDomainTest extends BaseTest {
     
     /** 
      * setup the parser-obj to test
-     * @FeatureDomain                Tests
-     * @FeatureResult                updates membervar parser
-     * @FeatureKeywords              Test Config Initialisation
      * @throws Exception             in case of Problems when setup
      */
     @Before
@@ -79,9 +76,6 @@ public abstract class DataDomainTest extends BaseTest {
 
     /** 
      * setup the formatter-obj to test
-     * @FeatureDomain                Tests
-     * @FeatureResult                updates membervar formatter
-     * @FeatureKeywords              Test Config Initialisation
      * @throws Exception             in case of Problems when setup
      */
     @Before
@@ -89,8 +83,6 @@ public abstract class DataDomainTest extends BaseTest {
 
     /** 
      * do the parser-tests
-     * @FeatureDomain                Tests
-     * @FeatureKeywords              Test
      * @throws Exception             in case of Problems while test
      */
     @Test
@@ -100,8 +92,6 @@ public abstract class DataDomainTest extends BaseTest {
      * does a parser-test on the parser-obj with the dataobj<br>
      * calls parser.parseFromName() and compares the resulting dataobj.toString 
      * with myExpectedParserResult
-     * @FeatureDomain                Tests
-     * @FeatureKeywords              Test
      * @param myDataDomainObj        the dataobj to test
      * @param myExpectedParserResult the expected result
      * @param myImportOptions        Importoptions for the parser
@@ -127,8 +117,6 @@ public abstract class DataDomainTest extends BaseTest {
 
     /** 
      * do the formatter-tests
-     * @FeatureDomain                Tests
-     * @FeatureKeywords              Test
      * @throws Exception             io-Exceptions possible
      */
     @Test
@@ -138,8 +126,6 @@ public abstract class DataDomainTest extends BaseTest {
      * does a formatter-test on the formatter-obj with the dataobj
      * calls formatter.format() and compares the resulting String 
      * with myExpectedFormatterResult
-     * @FeatureDomain                Tests
-     * @FeatureKeywords              Test
      * @param myDataDomainObj        the dataobj to test
      * @param myExpectedFormatterResult the expected result
      * @param myOutputOptions        outputoptions for the formatter

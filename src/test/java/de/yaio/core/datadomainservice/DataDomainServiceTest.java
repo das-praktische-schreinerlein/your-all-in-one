@@ -59,9 +59,6 @@ public abstract class DataDomainServiceTest extends BaseTest {
     
     /** 
      * setup the datadomainservice-obj to test
-     * @FeatureDomain                Tests
-     * @FeatureResult                updates membervar dataDomainService
-     * @FeatureKeywords              Test Config Initialisation
      * @throws Exception             possible Exception     */
     @Before
     public abstract void setupDataDomainService() throws Exception;
@@ -69,8 +66,6 @@ public abstract class DataDomainServiceTest extends BaseTest {
     @Test
     /** 
      * do the ServiceRecalc-tests
-     * @FeatureDomain                Tests
-     * @FeatureKeywords              Test
      * @throws Exception             possible Exception     */
     public abstract void testServiceDoRecalc() throws Exception;
 
@@ -79,8 +74,6 @@ public abstract class DataDomainServiceTest extends BaseTest {
      * calls dataDomainService.doRecalcBeforeChildren and checks the result with checkServiceResult()<br>  
      * calls recalcData for every childNode<br>  
      * calls dataDomainService.doRecalcAfterChildren and checks the result with checkServiceResult()<br>  
-     * @FeatureDomain                Tests
-     * @FeatureKeywords              Test
      * @param testObj                the dataobj to test
      * @param expectedAfterDoBeforeChildren the expected result after call doRecalcBeforeChildren
      * @param expectedAfterDoAfterChildren the expected result after call doRecalcAfterChildren

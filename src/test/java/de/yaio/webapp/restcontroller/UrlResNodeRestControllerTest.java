@@ -42,7 +42,6 @@ public class UrlResNodeRestControllerTest extends BaseNodeRestControllerTest {
     /** 
      * testobject for UrlResNode
      * 
-     * @FeatureDomain                Test
      * @package                      de.yaio.rest.controller
      * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
      * @category                     tests

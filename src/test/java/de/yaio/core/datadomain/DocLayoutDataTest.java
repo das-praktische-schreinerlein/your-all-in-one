@@ -34,7 +34,6 @@ public class DocLayoutDataTest extends DataDomainTest {
     /** 
      * testobject for datadomain-logic: DocLayoutData
      * 
-     * @FeatureDomain                Test
      * @package                      de.yaio.core.datadomain
      * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
      * @category                     tests
@@ -72,9 +71,6 @@ public class DocLayoutDataTest extends DataDomainTest {
     
     /** 
      * setup the a TestObj for the test
-     * @FeatureDomain                Tests
-     * @FeatureResult                returnvalue TestObj - the dataobj for the test
-     * @FeatureKeywords              Test Config Initialisation
      * @return                       a new dataobj for the test
      * @throws Exception             possible Exception     */
     protected DocLayoutDataTestObj getNewDocLayoutDataTestObj() throws Exception  {

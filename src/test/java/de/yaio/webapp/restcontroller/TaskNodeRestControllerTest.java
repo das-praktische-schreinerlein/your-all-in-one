@@ -30,7 +30,6 @@ public class TaskNodeRestControllerTest extends BaseNodeRestControllerTest {
     /** 
      * testobject for TaskNode
      * 
-     * @FeatureDomain                Test
      * @package                      de.yaio.rest.controller
      * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
      * @category                     tests

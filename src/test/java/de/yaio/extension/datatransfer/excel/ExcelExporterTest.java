@@ -54,8 +54,6 @@ public class ExcelExporterTest extends WikiExporterTest {
 
     /** 
      * parse the ppl-source, format it and compare the result with expectedResult 
-     * @FeatureDomain                Tests
-     * @FeatureKeywords              Test
      * @param source                 the ppl-lines to parse and to convert
      * @param expectedResult         the expected lines from exporter
      * @throws Exception             possible Exception     */

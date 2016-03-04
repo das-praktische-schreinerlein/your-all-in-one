@@ -30,7 +30,6 @@ public class SymLinkNodeRestControllerTest extends BaseNodeRestControllerTest {
     /** 
      * testobject for SymLinkNode
      * 
-     * @FeatureDomain                Test
      * @package                      de.yaio.rest.controller
      * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
      * @category                     tests

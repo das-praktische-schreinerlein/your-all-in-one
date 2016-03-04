@@ -106,8 +106,6 @@ public abstract class BaseNodeRestControllerTest  extends BaseTest {
 
     /** 
      * test the node-life-cycle (create, show, update, delete) of a TaskNode
-     * @FeatureDomain                TestService-function
-     * @FeatureKeywords              Test
      * @throws Exception             io-Exceptions possible
      */
     @Test
@@ -130,8 +128,6 @@ public abstract class BaseNodeRestControllerTest  extends BaseTest {
     
     /** 
      * service-function to test the node-life-cycle (create, show, update, delete)
-     * @FeatureDomain                Test
-     * @FeatureKeywords              Test-servicefunction
      * @param node                   the node to create, show, update, delete
      * @throws Exception             io-Exceptions possible
      */
@@ -157,8 +153,6 @@ public abstract class BaseNodeRestControllerTest  extends BaseTest {
 
     /** 
      * service-function to test the response for getting a node
-     * @FeatureDomain                Test
-     * @FeatureKeywords              Test-servicefunction
      * @param id                     id of the requested node
      * @param name                   name of the requested node
      * @throws Exception             io-Exceptions possible
@@ -176,8 +170,6 @@ public abstract class BaseNodeRestControllerTest  extends BaseTest {
         
      /** 
      * do test the response for getting the masternode
-     * @FeatureDomain                Tests
-     * @FeatureKeywords              Test-servicefunction
      * @throws Exception             io-Exceptions possible
      */
     public void testShowMasternode() throws Exception {
@@ -187,8 +179,6 @@ public abstract class BaseNodeRestControllerTest  extends BaseTest {
 
     /** 
      * service-function to test the response for creating a node as child of the parentId
-     * @FeatureDomain                Test
-     * @FeatureKeywords              Test-servicefunction
      * @param parentId               parentId of the new task
      * @param node                   the node to create
      * @return                       the sysUID of the new node
@@ -221,8 +211,6 @@ public abstract class BaseNodeRestControllerTest  extends BaseTest {
 
     /** 
      * service-function to test the response for updating a node
-     * @FeatureDomain                Test
-     * @FeatureKeywords              Test-servicefunction
      * @param node                   the node to update on db
      * @return                       the ResultActions for more checks
      * @throws Exception             io-Exceptions possible
@@ -250,8 +238,6 @@ public abstract class BaseNodeRestControllerTest  extends BaseTest {
 
     /** 
      * service-function to test the response for deleting a node
-     * @FeatureDomain                Tests
-     * @FeatureKeywords              Test-servicefunction
      * @param sysuID                 sysuID of the node to delete
      * @return                       the ResultActions for more checks
      * @throws Exception             io-Exceptions possible
@@ -276,8 +262,6 @@ public abstract class BaseNodeRestControllerTest  extends BaseTest {
 
     /** 
      * service-function to test the standardchecks for the request
-     * @FeatureDomain                Tests
-     * @FeatureKeywords              Test-servicefunction
      * @param rb                     the reseust to test
      * @return                       the response for more checks
      * @throws Exception             io-Exception possible
@@ -318,8 +302,6 @@ public abstract class BaseNodeRestControllerTest  extends BaseTest {
 
     /** 
      * convert the obj to json to put it as request-parameter to the webservice
-     * @FeatureDomain                Tests
-     * @FeatureKeywords              Test-servicefunction
      * @param object                 the object to convert
      * @return                       json for the request
      * @throws IOException           io-Exceptions possible

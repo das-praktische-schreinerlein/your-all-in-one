@@ -43,7 +43,6 @@ public class NodeFactoryTest extends BaseTest {
     /** 
      * testobject for importer-logic
      * 
-     * @FeatureDomain                Test
      * @package                      de.yaio.datatransfer.importer
      * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
      * @category                     tests
@@ -76,9 +75,6 @@ public class NodeFactoryTest extends BaseTest {
     
     /** 
      * configure the nodefactory for the tests
-     * @FeatureDomain                Tests
-     * @FeatureResult                updates membervars nodeFactoryObj - NodeFactory
-     * @FeatureKeywords              Test Configuration
      * @throws Exception             possible Exception     */
     @Before
     public void setupNodeFactory() throws Exception {
@@ -88,8 +84,6 @@ public class NodeFactoryTest extends BaseTest {
 
     /** 
      * do tests for creation of nodes from text
-     * @FeatureDomain                Tests
-     * @FeatureKeywords              Test
      * @throws Exception             possible Exception     */
     @Test
     public void testCreateNode() throws Exception {

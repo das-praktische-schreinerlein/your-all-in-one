@@ -58,8 +58,6 @@ public class JSONFullImporterTest extends WikiImporterTest {
 
     /** 
      * parse the source and compare the result with expectedResult 
-     * @FeatureDomain                Tests
-     * @FeatureKeywords              Test
      * @param source                 the lines to parse
      * @param expectedResult         the expected ppl-lines from parser
      * @throws Exception             io-Exceptions possible
