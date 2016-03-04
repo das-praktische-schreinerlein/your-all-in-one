@@ -32,9 +32,6 @@ public interface MetaDataService {
 
     /** 
      * inititialize the MetaData-Fields of the node (id, praefix) 
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                updates memberVariable node.meta*
-     * @FeatureKeywords              BusinessLogic
      * @param node                   node to initialize
      * @throws Exception             parser/format-Exceptions possible
      */
@@ -42,9 +39,6 @@ public interface MetaDataService {
 
     /** 
      * get next human readable Node-number for this node-hierarchy (praefix)
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                returnValue Nodenumber - next available Node-number for this node-hierarchy (praefix)
-     * @FeatureKeywords              BusinessLogic
      * @param node                   node (praefix)
      * @return                       next available Node-number for this node-hierarchy (praefix)
      * @throws Exception             io-Exceptions possible
@@ -53,8 +47,6 @@ public interface MetaDataService {
 
     /** 
      * sets the NodeNumberService
-     * @FeatureDomain                BusinessLogic
-     * @FeatureKeywords              Config
      * @param nodeNumberService      service to get nodeNumbers
      * @throws Exception             io-Exceptions possible
      */
@@ -62,9 +54,6 @@ public interface MetaDataService {
 
     /** 
      * returns the NodeNumberService
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                returnValue nodeNumberService - service to get nodeNumbers
-     * @FeatureKeywords              Config
      * @return                       service to get nodeNumbers
      * @throws Exception             io-Exceptions possible
      */

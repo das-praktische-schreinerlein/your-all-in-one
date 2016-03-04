@@ -88,9 +88,6 @@ public class ExcelExporter extends WikiExporter {
     
     /** 
      * generate helper-OutputOptions for generation of the excel
-     * @FeatureDomain                DataExport
-     * @FeatureResult                returnValue OutputOptions - OuputOptions for generation
-     * @FeatureKeywords              Cofiguration helper
      * @param baseOOptions           Default OutputOptions to override
      * @return                       OuputOptions for generatio
      */
@@ -111,9 +108,6 @@ public class ExcelExporter extends WikiExporter {
 
     /** 
      * formats recursively nodes into workbook-sheet Planung
-     * @FeatureDomain                DataExport Presentation
-     * @FeatureResult                updates wb - insert lines
-     * @FeatureKeywords              Layout
      * @param wb                     Workbook to fill
      * @param masterNode             node for output recursively
      * @param oOptions               options for output (formatter)
@@ -844,9 +838,6 @@ public class ExcelExporter extends WikiExporter {
 
     /** 
      * formats recursively nodes into workbook-sheet Gannt
-     * @FeatureDomain                DataExport Presentation
-     * @FeatureResult                updates wb - insert lines
-     * @FeatureKeywords              Layout
      * @param wb                     Workbook to fill
      * @param masterNode             node for output recursively
      * @param oOptions               options for output (formatter)

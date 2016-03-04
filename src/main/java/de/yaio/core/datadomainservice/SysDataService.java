@@ -31,10 +31,7 @@ public interface SysDataService {
     int CONST_RECALC_ORDER = DataDomainRecalc.CONST_ORDER_NOOP;
 
     /** 
-     * inititialize the SysData-Fields of the node (sysChange, Checksum) 
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                updates memberVariable node.sys*
-     * @FeatureKeywords              BusinessLogic
+     * inititialize the SysData-Fields of the node (sysChange, Checksum) - updates memberVariable node.sys*
      * @param node                   node to initialize
      * @throws Exception             parser/format/io-Exceptions possible
      */
@@ -42,9 +39,6 @@ public interface SysDataService {
 
     /** 
      * calcs the checksum of the node 
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                returnValue String - checksum of the node
-     * @FeatureKeywords              BusinessLogic
      * @param node                   node to get the checksum
      * @return                       the checksum
      * @throws Exception             parser/format/io-Exceptions possible

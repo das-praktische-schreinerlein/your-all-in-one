@@ -30,11 +30,6 @@ public interface DescDataParser extends Parser {
 
     /** 
      * parses DataDomain: DescData from the nodename
-     * @FeatureDomain                DataImport
-     * @FeatureResult                returnValue int - count elements found
-     * @FeatureResult                updates memberVariable node.name - found Pattern are deleted
-     * @FeatureResult                updates memberVariable node.desc - found Pattern are set at MemberVars of the DataDomain
-     * @FeatureKeywords              Parser
      * @param node                   DataDomain to parse
      * @param options                ImportOptionen for the parser
      * @return                       count elements found

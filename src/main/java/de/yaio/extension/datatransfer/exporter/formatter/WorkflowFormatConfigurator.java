@@ -109,9 +109,7 @@ public class WorkflowFormatConfigurator {
     
     /** 
      * return the global WorkflowFormatConfigurator
-     * @FeatureDomain                Factory
-     * @FeatureResult                returnValue WorkflowFormatConfigurator
-     * @return                       the global WorkflowFormatConfigurator 
+     * @return                       the global WorkflowFormatConfigurator
      */
     public static WorkflowFormatConfigurator getWorkflowFormatConfigurator() {
         return me;
@@ -119,9 +117,7 @@ public class WorkflowFormatConfigurator {
 
     /** 
      * return the Mapping of color for which state
-     * @FeatureDomain                Presentation
-     * @FeatureResult                returnValue StateToColorMapping
-     * @return                       the StateToColorMapping 
+     * @return                       the StateToColorMapping
      */
     public Map<String, String> getConfigStateColor() {
         return CONST_STATI_COLOR;
@@ -129,9 +125,7 @@ public class WorkflowFormatConfigurator {
 
     /** 
      * return the Mapping of icon for which state
-     * @FeatureDomain                Presentation
-     * @FeatureResult                returnValue StateToIconMapping
-     * @return                       the StateToIconMapping 
+     * @return                       the StateToIconMapping
      */
     public Map<String, String> getConfigStateIcon() {
         return CONST_STATI_ICON;
@@ -139,8 +133,6 @@ public class WorkflowFormatConfigurator {
 
     /** 
      * return the mapped color for the state
-     * @FeatureDomain                Presentation
-     * @FeatureResult                returnValue color
      * @param state                  the state to get the mapped color
      * @return                       the mapped color
      */
@@ -151,8 +143,6 @@ public class WorkflowFormatConfigurator {
 
     /** 
      * return the mapped icon for the state
-     * @FeatureDomain                Presentation
-     * @FeatureResult                returnValue icon
      * @param state                  the state to get the mapped icon
      * @return                       the mapped icon
      */

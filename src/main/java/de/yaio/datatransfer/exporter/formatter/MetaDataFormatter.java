@@ -30,10 +30,6 @@ public interface MetaDataFormatter extends Formatter {
 
     /** 
      * formats DomainData: MetaData and appends output to StringBuffer nodeOutput
-     * @FeatureConditions            formatter runs only if options.flgShowMeta is set<br> show brackets if options.flgShowBrackets is set<br> fill with whitespace to options.intendSys
-     * @FeatureDomain                Praesentation
-     * @FeatureResult                appends to nodeOutput
-     * @FeatureKeywords              Layout
      * @param node                   node to be formatted
      * @param nodeOutput             to append the output
      * @param options                options for formatter

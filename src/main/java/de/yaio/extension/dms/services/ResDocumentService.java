@@ -49,9 +49,6 @@ public class ResDocumentService {
 
     /**
      * get content for version from dms
-     * @FeatureDomain                DMS
-     * @FeatureResult                returns Inputstream
-     * @FeatureKeywords              DMS
      * @param datanode               node
      * @param version                version of the request content 
      * @return                       Inputstream
@@ -75,9 +72,6 @@ public class ResDocumentService {
 
     /**
      * get metadata for version from dms
-     * @FeatureDomain                DMS
-     * @FeatureResult                returns StorageResourceVersion
-     * @FeatureKeywords              DMS
      * @param datanode               node
      * @param version                version of the request content 
      * @return                       StorageResourceVersion
@@ -101,9 +95,6 @@ public class ResDocumentService {
 
     /**
      * get index for version from dms
-     * @FeatureDomain                DMS
-     * @FeatureResult                returns Inputstream
-     * @FeatureKeywords              DMS
      * @param datanode               node
      * @param version                version of the request index 
      * @return                       Inputstream
@@ -127,9 +118,6 @@ public class ResDocumentService {
 
     /**
      * get metadata for version from dms
-     * @FeatureDomain                DMS
-     * @FeatureResult                returns StorageResourceVersion
-     * @FeatureKeywords              DMS
      * @param datanode               node
      * @param version                version of the request index 
      * @return                       StorageResourceVersion

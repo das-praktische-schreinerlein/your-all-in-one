@@ -75,9 +75,6 @@ public class DatatransferUtils {
 
     /** 
      * copy the node and all children to the new parent (recalc all and save to db)
-     * @FeatureDomain                WikiImporter
-     * @FeatureResult                copies and save ne node
-     * @FeatureKeywords              WikiImporter
      * @param node                   node to copy
      * @param newParent              parent for new node
      * @throws Exception             ParserExceptions possible
@@ -133,9 +130,6 @@ public class DatatransferUtils {
 
     /** 
      * move the node and all children to the new parent (recalc all and save to db)
-     * @FeatureDomain                WikiImporter
-     * @FeatureResult                copies and save ne node
-     * @FeatureKeywords              WikiImporter
      * @param node                   node to move
      * @param newParent              new parent for node
      * @param newSortPos             position for node  in childlist of newParent
@@ -197,9 +191,6 @@ public class DatatransferUtils {
 
     /** 
      * map the nodeData from newNode to origNode
-     * @FeatureDomain                Webservice
-     * @FeatureResult                boolean flgChange - true if data changed
-     * @FeatureKeywords              Webservice Query
      * @param origNode               the node to fill with the newNode-data
      * @param newNode                the new node created from request-data
      * @return                       true if data changed
@@ -443,9 +434,6 @@ public class DatatransferUtils {
 
     /** 
      * parse jsonSrc with JsonImporter and ImportOptions, and add it to the masternode
-     * @FeatureDomain                JsonImporter
-     * @FeatureResult                adds children from jsonSrc to masterNode
-     * @FeatureKeywords              JsonImporter
      * @param importOptions          importOptions for jsonImporter
      * @param masterNode             baseNode to add the children
      * @param jsonSrc                jsonSrc to parse with JsonImporter
@@ -484,9 +472,6 @@ public class DatatransferUtils {
     
     /** 
      * create a masternode for import (temporary)
-     * @FeatureDomain                Importer
-     * @FeatureResult                returns BaseNode
-     * @FeatureKeywords              Importer
      * @param sysUID                 sysUID
      * @param nodePraefix            metaNodePraefix
      * @param nodeNummer             metaNodeNumber
@@ -503,9 +488,6 @@ public class DatatransferUtils {
 
     /** 
      * call resetDataDomain recursively for all dataDomains not set in ImportOptions
-     * @FeatureDomain                Importer
-     * @FeatureResult                returns BaseNode
-     * @FeatureKeywords              Importer
      * @param node                   the node to reset
      * @param importOptions          importOptions with flags which DataDomains should be resetet
      * @param childrenOnly           reset for children only

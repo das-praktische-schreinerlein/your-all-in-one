@@ -64,9 +64,6 @@ public class DocumentController {
     
     /** 
      * Request to download the resource-content of UrlResNode with sysUID
-     * @FeatureDomain                Webservice
-     * @FeatureResult                Downloadfile
-     * @FeatureKeywords              Webservice Query
      * @param sysUID                 sysUID to export
      * @param response               the response-Obj to set contenttype and headers
      * @param flgEmbed               goal is to embed it (Content-Disposition inline)
@@ -112,9 +109,6 @@ public class DocumentController {
 
     /** 
      * Request to download the resource-content of UrlResNode with sysUID
-     * @FeatureDomain                Webservice
-     * @FeatureResult                Downloadfile
-     * @FeatureKeywords              Webservice Query
      * @param sysUID                 sysUID to export
      * @param response               the response-Obj to set contenttype and headers
      */
@@ -133,9 +127,6 @@ public class DocumentController {
 
     /** 
      * Request to embed the resource-content of UrlResNode with sysUID
-     * @FeatureDomain                Webservice
-     * @FeatureResult                Downloadfile
-     * @FeatureKeywords              Webservice Query
      * @param sysUID                 sysUID to export
      * @param response               the response-Obj to set contenttype and headers
      */
@@ -154,9 +145,6 @@ public class DocumentController {
 
     /** 
      * Request to download the resource-index of UrlResNode with sysUID
-     * @FeatureDomain                Webservice
-     * @FeatureResult                Downloadfile
-     * @FeatureKeywords              Webservice Query
      * @param sysUID                 sysUID to export
      * @param response               the response-Obj to set contenttype and headers
      */
@@ -175,9 +163,6 @@ public class DocumentController {
 
     /** 
      * Request to embed the resource-index of UrlResNode with sysUID
-     * @FeatureDomain                Webservice
-     * @FeatureResult                Downloadfile
-     * @FeatureKeywords              Webservice Query
      * @param sysUID                 sysUID to export
      * @param response               the response-Obj to set contenttype and headers
      */

@@ -35,9 +35,6 @@ public interface BaseWorkflowDataService {
 
     /** 
      * calcs the initial plandata
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                updates membervars -
-     * @FeatureKeywords              BusinessLogic Workflow
      * @param node                   node
      * @throws Exception             parser/format-Exceptions possible
      */
@@ -45,9 +42,6 @@ public interface BaseWorkflowDataService {
 
     /** 
      * recalcs the workflowdata
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                updates membervars -
-     * @FeatureKeywords              BusinessLogic Workflow
      * @param node                   node
      * @throws Exception             parser/format-Exceptions possible
      */
@@ -55,9 +49,6 @@ public interface BaseWorkflowDataService {
 
     /** 
      * recalcs the statedata
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                updates membervars -
-     * @FeatureKeywords              BusinessLogic Workflow
      * @param node                   node
      * @throws Exception             parser/format-Exceptions possible
      */
@@ -65,9 +56,6 @@ public interface BaseWorkflowDataService {
 
     /** 
      * calcs the currentStart for the node (prio: ist before plan)
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                returns date
-     * @FeatureKeywords              BusinessLogic Workflow
      * @param node                   node
      * @return                       current start
      * @throws Exception             parser/format-Exceptions possible
@@ -76,9 +64,6 @@ public interface BaseWorkflowDataService {
 
     /** 
      * calcs the currentEnde for the node (prio: ist before plan)
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                returns date
-     * @FeatureKeywords              BusinessLogic Workflow
      * @param node                   node
      * @return                       current end
      * @throws Exception             parser/format-Exceptions possible

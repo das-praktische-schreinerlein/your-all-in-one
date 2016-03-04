@@ -38,16 +38,12 @@ public interface Exporter {
      * initialize all formatters for formatting DataDomains with 
      * (Exporter.formatNodeDataDomains)<br>
      * must be override and call Exporter.addDataDomainFormatter for every formatter 
-     * @FeatureDomain                DataExport Presentation
-     * @FeatureKeywords              Config
      */
     void initDataDomainFormatter();
 
     /** 
      * add formatter for formatting DataDomains with (Exporter.formatNodeDataDomains) 
      * to the Exporter-Config
-     * @FeatureDomain                DataExport Presentation
-     * @FeatureKeywords              Config
      * @param formatter              instance of the formatter
      */
     void addDataDomainFormatter(Formatter formatter);
@@ -60,10 +56,6 @@ public interface Exporter {
      * runs all with Exporter#initDataDomainFormatter() configured formatter 
      * for the DataDomains of node<br>
      * appends the output to the StringBuffer nodeOutput
-     * @FeatureConditions            formatter must be configured for the DataDomain of the node (Formatter.getTargetClass)<br> oOptions must be set for the formatter 
-     * @FeatureDomain                DataExport Presentation
-     * @FeatureResult                updates nodeOutput - appends output of the formatter
-     * @FeatureKeywords              Layout
      * @param node                   node to be formatted
      * @param nodeOutput             StringBuffer to append output of the formatter
      * @param options                options for output (formatter) formatter
@@ -75,10 +67,6 @@ public interface Exporter {
     /** 
      * runs the formatter for the DataDomain (node)<br>
      * appends the output to the StringBuffer nodeOutput
-     * @FeatureConditions            formatter must be configured for the DataDomain of the node (Formatter.getTargetClass)<br> oOptions must be set for the formatter 
-     * @FeatureDomain                DataExport Presentation
-     * @FeatureResult                updates nodeOutput - appends output of the formatter
-     * @FeatureKeywords              Layout
      * @param node                   node to be formatted
      * @param formatter              formatter to be run
      * @param nodeOutput             StringBuffer to append output of the formatter
@@ -95,9 +83,6 @@ public interface Exporter {
     
     /** 
      * prepare node 4 export
-     * @FeatureDomain                DataExport Presentation
-     * @FeatureResult                updates node
-     * @FeatureKeywords              Layout
      * @param node                   node to prepare
      * @param oOptions               options for output (formatter)
      * @throws Exception             parser/format/io-Exceptions possible
@@ -107,10 +92,6 @@ public interface Exporter {
 
     /** 
      * formats recursively masterNode and all childnodes (runs formatter)
-     * @FeatureConditions            oOptions must be set for the formatter 
-     * @FeatureDomain                DataExport Presentation
-     * @FeatureResult                returnValue StringBuffer - formatted output of the Node-hierarchy
-     * @FeatureKeywords              Layout
      * @param masterNode             node for output recursively
      * @param oOptions               options for output (formatter)
      * @return                       formatted output of node-hierarchy and DataDomains
@@ -122,9 +103,6 @@ public interface Exporter {
     
     /** 
      * filters nodes only with type/state in OutputOptions.getStrReadIfStatusInListOnly
-     * @FeatureDomain                DataExport Presentation
-     * @FeatureResult                returnValue Node - MasterNode with filtered childnodes
-     * @FeatureKeywords              Praesentation Filter
      * @param masterNode             Masternode with childnodes to filter
      * @param oOptions               options with filter
      * @return                       new MasterNode with filtered childnodes
@@ -135,9 +113,6 @@ public interface Exporter {
 
     /** 
      * filters nodes only with type/state in mpStates
-     * @FeatureDomain                DataExport Presentation
-     * @FeatureResult                returnValue Node - MasterNode with filtered childnodes
-     * @FeatureKeywords              Praesentation Filter
      * @param node                   Masternode with childnodes to filter
      * @param oOptions               options with filter
      * @param mpStates               types/status to filter (TypIdentifier)
@@ -149,9 +124,6 @@ public interface Exporter {
 
     /** 
      * check if it the node passes the filter in oOptions
-     * @FeatureDomain                DataExport Presentation
-     * @FeatureResult                returnValue boolean - true/false = /matches/didnt match the filter
-     * @FeatureKeywords              Praesentation Filter
      * @param node                   node to check if it passes the filter
      * @param oOptions               options with filter
      * @return                       true/false = /matches/didnt match the filter
@@ -162,9 +134,6 @@ public interface Exporter {
 
     /** 
      * check weather the exporter reads the nodes by its own or needs an ready node hierarchy
-     * @FeatureDomain                DataExport Presentation
-     * @FeatureResult                returnValue boolean - true/false = reads the nodes by its own
-     * @FeatureKeywords              Praesentation Filter
      * @return                       true/false = reads the nodes by its own
      */
     boolean hasOwnNodeReader();

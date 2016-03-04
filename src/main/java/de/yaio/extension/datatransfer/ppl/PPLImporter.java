@@ -55,9 +55,6 @@ public class PPLImporter extends ImporterImpl {
             Logger.getLogger(PPLImporter.class);
     /** 
      * Importer to import/parse nodes in PPL-Format
-     * @FeatureDomain                Constructor
-     * @FeatureResult                initialize the importer
-     * @FeatureKeywords              Constructor
      *  @param options                the importoptions for the parser...
      */
     public PPLImporter(final ImportOptions options) {
@@ -70,9 +67,6 @@ public class PPLImporter extends ImporterImpl {
     
     /** 
      * extracts the nodes from PPL nodeSrc (single Line) and appends them to masterNode
-     * @FeatureDomain                import
-     * @FeatureResult                updates masterNode - appends from nodeSrc extracted Nodes
-     * @FeatureKeywords              Parser
      * @param masterNode             node to append extracted Nodes
      * @param nodeSrc                PPL nodeSrc to be parsed
      * @param delimiter              delimiter of PPL node-hirarchy
@@ -157,9 +151,6 @@ public class PPLImporter extends ImporterImpl {
 
     /** 
      * extracts the nodes from PPL lstNodeSrc (list of lines) and appends them to masterNode
-     * @FeatureDomain                import
-     * @FeatureResult                updates masterNode - appends from nodeSrc extracted Nodes
-     * @FeatureKeywords              Parser
      * @param masterNode             node to append extracted Nodes
      * @param lstNodeSrc             list of PPL nodeSrc to be parsed
      * @param delimiter              delimiter of PPL node-hirarchy
@@ -183,9 +174,6 @@ public class PPLImporter extends ImporterImpl {
 
     /** 
      * extracts the nodes from PPL nodeSrc (several lines) and appends them to masterNode
-     * @FeatureDomain                import
-     * @FeatureResult                updates masterNode - appends from nodeSrc extracted Nodes
-     * @FeatureKeywords              Parser
      * @param masterNode             node to append extracted Nodes
      * @param pNodesSrc              PPL nodeSrc (several lines) to be parsed
      * @param delimiter              delimiter of PPL node-hirarchy
@@ -217,9 +205,6 @@ public class PPLImporter extends ImporterImpl {
 
     /** 
      * extracts the nodes from file and appends them to masterNode
-     * @FeatureDomain                import
-     * @FeatureResult                updates masterNode - appends from nodeSrc extracted Nodes
-     * @FeatureKeywords              Parser
      * @param masterNode             node to append extracted Nodes
      * @param fileName               fileName with the PPL-nodeSrc
      * @param delimiter              delimiter of PPL node-hirarchy
@@ -234,9 +219,6 @@ public class PPLImporter extends ImporterImpl {
 
     /** 
      * read filecontent
-     * @FeatureDomain                import
-     * @FeatureResult                returnValue String - filecontent
-     * @FeatureKeywords              Tools
      * @param fileName               fileName to read
      * @throws Exception             io-Exceptions possible
      * @return                       filecontent
@@ -256,9 +238,6 @@ public class PPLImporter extends ImporterImpl {
      * Maybe the file will read twice if encoding changes at the end of the file:<br>
      * 1 run: to detect<br>
      * 2 run: to read in the best matching encoding
-     * @FeatureDomain                import
-     * @FeatureResult                returnValue String - filecontent
-     * @FeatureKeywords              Tools
      * @param file                   file to read
      * @throws Exception             io-Exceptions possible
      * @return                       filecontent - the file content as string in the best detcted encoding

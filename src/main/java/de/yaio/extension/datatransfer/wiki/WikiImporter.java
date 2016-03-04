@@ -83,7 +83,6 @@ public class WikiImporter extends ImporterImpl {
 
     /** 
      * helper single WikiStructLine
-     * @FeatureDomain                DataImport
      * @package                      de.schreiner.yaio.adapter.wiki
      * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
      * @category                     Parser helper
@@ -100,10 +99,7 @@ public class WikiImporter extends ImporterImpl {
 
         /** 
          * create object of WikiStructLine
-         * @FeatureDomain                Constructor
-         * @FeatureResult                initialize the exporter
-         * @FeatureKeywords              Constructor
-         * @param wiki                   the wiki-sourceline
+                     * @param wiki                   the wiki-sourceline
          * @param text                   the text
          * @param desc                   the optional desc
          */
@@ -119,10 +115,7 @@ public class WikiImporter extends ImporterImpl {
 
         /** 
          * get the wiki-hirarchy-line
-         * @FeatureDomain                DataImport
-         * @FeatureResult                ResturnValue wiki-hirarchy-line
-         * @FeatureKeywords              DataImport ParserOptions
-         * @return                       wiki-hirarchy-line
+                     * @return                       wiki-hirarchy-line
          */
         public String getHirarchy() {
             return this.hirarchy;
@@ -130,10 +123,7 @@ public class WikiImporter extends ImporterImpl {
 
         /** 
          * get clean wiki-text (replace \* -> "", \t - <WLTAB> and escaped desc
-         * @FeatureDomain                DataImport
-         * @FeatureResult                returnValue String - clean wiki-text
-         * @FeatureKeywords              helper formatter
-         * @return                       clean Wiki-text
+                     * @return                       clean Wiki-text
          */
         public String getCleanText() {
             // Standardzeile bereinigen
@@ -149,9 +139,7 @@ public class WikiImporter extends ImporterImpl {
 
         /** 
          * append to desc
-         * @FeatureDomain                DataImport
-         * @FeatureKeywords              helper
-         * @param desc                   desc to append
+                 * @param desc                   desc to append
          */
         public void addDesc(final String desc) {
             // an bestehende desc anfuegen
@@ -164,10 +152,7 @@ public class WikiImporter extends ImporterImpl {
 
         /** 
          * get escaped wiki-desc (\n -> <WLBR>, \t -> <WLTAB>
-         * @FeatureDomain                DataImport
-         * @FeatureResult                returnValue String - escaped desc
-         * @FeatureKeywords              helper formatter
-         * @param praefix                to set in front of the desc
+                     * @param praefix                to set in front of the desc
          * @return                       escaped desc
          */
         public String getEscapedDesc(final String praefix) {
@@ -227,9 +212,6 @@ public class WikiImporter extends ImporterImpl {
 
     /** 
      * Importer to import/parse nodes in Wiki-Format
-     * @FeatureDomain                Constructor
-     * @FeatureResult                initialize the importer
-     * @FeatureKeywords              Constructor
      *  @param options                the importoptions for the parser...
      */
     public WikiImporter(final ImportOptions options) {
@@ -238,9 +220,6 @@ public class WikiImporter extends ImporterImpl {
 
     /** 
      * generate helper-OutputOptions for generation of the Wiki-area (show all, hide calcSum+desc)
-     * @FeatureDomain                DataImport
-     * @FeatureResult                returnValue OutputOptions - OuputOptions for generation of the Wiki-area
-     * @FeatureKeywords              Cofiguration helper
      * @return                       OuputOptions for generation of the Wiki-area
      */
     public OutputOptions genOutputOptionsForBaseDataExport() {
@@ -256,9 +235,6 @@ public class WikiImporter extends ImporterImpl {
     
     /** 
      * search for pattern in haystack
-     * @FeatureDomain                DataImport
-     * @FeatureResult                returnValue List<MatchResult> - list of matching results
-     * @FeatureKeywords              helper parser
      * @param pattern                needle to find
      * @param haystack               haystack
      * @return                       list of matching results
@@ -279,9 +255,6 @@ public class WikiImporter extends ImporterImpl {
     
     /** 
      * extracts the list of WikiStructLine from Wiki nodeSrc (several Lines)
-     * @FeatureDomain                import
-     * @FeatureResult                returnValue List<WikiStructLine> - list of extracted WikiStructLine
-     * @FeatureKeywords              Parser
      * @param nodeSrc                nodeSrc to be parsed
      * @param inputOptions           ImportOptions for the parser
      * @return                       list of extracted WikiStructLine
@@ -342,11 +315,6 @@ public class WikiImporter extends ImporterImpl {
 
     /** 
      * filter only known NodeTypes from WikiStructLines
-     * @FeatureCondition             flgWFStatesOnly - filter only node with this isWFState = true
-     * @FeatureCondition             ImportOptions.strReadIfStatusInListOnly - filter only node with this nodeTypeIdentifier
-     * @FeatureDomain                import
-     * @FeatureResult                returnValue List<WikiStructLine> - list of filtered WikiStructLine
-     * @FeatureKeywords              Parser
      * @param lstWikiLines           lstWikiLines to filter
      * @param flgWFStatesOnly        filter only node with this isWFState = true
      * @param inputOptions           ImportOptions for the parser+filter
@@ -412,9 +380,6 @@ public class WikiImporter extends ImporterImpl {
 
     /** 
      * normalizes and sorts the WikiStructLine
-     * @FeatureDomain                import
-     * @FeatureResult                returnValue List<WikiStructLine> - list of normalized WikiStructLine
-     * @FeatureKeywords              Parser
      * @param lstWikiLines           WikiStructLines to be normalized
      * @param inputOptions           ImportOptions for the parser
      * @return                       list of sorted and normalized WikiStructLine
@@ -625,12 +590,6 @@ public class WikiImporter extends ImporterImpl {
     /** 
      * extracts the list of WikiStructLine from Wiki nodeSrc (several Lines)
      * normalize them with normalizeWikiStructLine and filter them if ImportOptions set
-     * @FeatureCondition             ImportOptions.flgReadWithStatusOnly - call filterTaskNodesFromWikiStructLines
-     * @FeatureCondition             ImportOptions.flgReadWithWFStatusOnly - call filterTaskNodesFromWikiStructLines
-     * @FeatureCondition             ImportOptions.strReadIfStatusInListOnly - call filterTaskNodesFromWikiStructLines
-     * @FeatureDomain                import
-     * @FeatureResult                returnValue List<WikiStructLine> - list of extracted WikiStructLine
-     * @FeatureKeywords              Parser
      * @param src                    src to be parsed
      * @param inputOptions           ImportOptions for the parser
      * @return                       list of extracted WikiStructLine
@@ -663,9 +622,6 @@ public class WikiImporter extends ImporterImpl {
 
     /** 
      * extracts the list of WikiStructLine from Wiki-file
-     * @FeatureDomain                import
-     * @FeatureResult                returnValue List<WikiStructLine> - list of extracted WikiStructLine
-     * @FeatureKeywords              Parser
      * @param fileName               fileName to be read and parsed
      * @param inputOptions           ImportOptions for the parser
      * @return                       list of extracted WikiStructLine

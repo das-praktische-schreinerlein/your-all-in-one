@@ -133,9 +133,7 @@ public class Configurator {
         /** 
          * create CommandlineOptions 
          * Bugfix-Class because Options.getOptions returns only shortoptions
-         * @FeatureDomain                Configuration
-         * @FeatureKeywords              Configuration
-         */
+                 */
         public CommandlineOptions() {
             super();
             if (LOGGER.isDebugEnabled()) {
@@ -201,9 +199,6 @@ public class Configurator {
     
     /** 
      * return new Instance of CommandlineOptions
-     * @FeatureDomain                Tools - CLI-Handling
-     * @FeatureResult                returnValue CommandlineOptions - a new instance to define CommandlineOptions
-     * @FeatureKeywords              CLI-Handling
      * @return                       a new instance to define CommandlineOptions
      */
     public static CommandlineOptions getNewOptionsInstance() {
@@ -225,9 +220,6 @@ public class Configurator {
     
     /** 
      * return the current static Configurator-instance
-     * @FeatureDomain                Configuration
-     * @FeatureResult                returnValue the current Configurator-instance for the app
-     * @FeatureKeywords              Configuration CLI-Handling
      * @return                       the current Configurator-instance
      * @throws Exception             parse/io-Exceptions possible
      */
@@ -247,9 +239,6 @@ public class Configurator {
     /** 
      * return the current SpringApplicationContext 
      * if is not set call ApplicationContext.initSpringApplicationContext()
-     * @FeatureDomain                Tools - CLI-Handling
-     * @FeatureResult                returnValue the current SpringApplicationContext
-     * @FeatureKeywords              CLI-Handling
      * @return                       the current SpringApplicationContext
      * @throws Exception             parse/io-Exceptions possible
      */
@@ -264,9 +253,6 @@ public class Configurator {
 
     /** 
      * return the current configFile from option config
-     * @FeatureDomain                Tools - CLI-Handling
-     * @FeatureResult                returnValue the current configFile
-     * @FeatureKeywords              CLI-Handling
      * @return                       the configFile from option config
      * @throws Exception             parse/io-Exceptions possible
      */
@@ -388,9 +374,6 @@ public class Configurator {
 
     /** 
      * return current CMD-Args
-     * @FeatureDomain                Tools - CLI-Handling
-     * @FeatureResult                returnValue String[] - current CMD-Args
-     * @FeatureKeywords              CLI-Handling
      * @return                       String[] - current CMD-Args
      */
     public String[] getCmdLineArgs() {
@@ -399,10 +382,7 @@ public class Configurator {
 
 
     /** 
-     * set current CMD-Args (throws exception if already set)
-     * @FeatureDomain                Tools - CLI-Handling
-     * @FeatureResult                updates cmdLineArgs
-     * @FeatureKeywords              CLI-Handling
+     * set current CMD-Args (throws exception if already set)- updates cmdLineArgs
      * @param cmdLineArgs            current CMD-Args
      */
     public void setCmdLineArgs(final String[] cmdLineArgs) {
@@ -416,9 +396,6 @@ public class Configurator {
     
     /** 
      * checks weather Commandline is valid
-     * @FeatureDomain                Tools - CLI-Handling
-     * @FeatureResult                returnValue boolean - valid Commandline?
-     * @FeatureKeywords              CLI-Handling
      * @return                       boolean - valid Commandline?
      * @throws Exception             parse-Exceptions possible
      */
@@ -428,9 +405,6 @@ public class Configurator {
 
     /** 
      * return current parsed CLI-Commandline (if not set, call initCommandLine)
-     * @FeatureDomain                Tools - CLI-Handling
-     * @FeatureResult                returnValue CommandLine - current CLI-Commandline
-     * @FeatureKeywords              CLI-Handling
      * @return                       CommandLine - current CLI-Commandline
      * @throws Exception             parse-Exceptions possible
      */
@@ -584,9 +558,6 @@ public class Configurator {
     /** 
      * read the properties from the given filepath (first by filesystem, 
      * if failed by classpath)
-     * @FeatureDomain                Configuration
-     * @FeatureResult                returnValue Properties - the properties read from propertyfile
-     * @FeatureKeywords              Configuration
      * @param filePath               path to the file (filesystem or classressource)
      * @return                       the properties read from propertyfile
      * @throws Exception             parse/io-Exceptions possible

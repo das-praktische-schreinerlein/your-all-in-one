@@ -51,8 +51,6 @@ public class DocLayoutDataFormatterImpl extends FormatterImpl implements DocLayo
     /** 
      * add me as formatter for formatting DataDomains with (Exporter.formatNodeDataDomains) 
      * to the Exporter-Config
-     * @FeatureDomain                DataExport Presentation
-     * @FeatureKeywords              Config
      * @param exporter               instance of the Exporter which will use me
      */
     public static void configureDataDomainFormatter(final Exporter exporter) {

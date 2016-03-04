@@ -58,9 +58,6 @@ public class ConverterUtils {
      * read the node and use the exporter to convert it with all children to 
      * exporter-format<br>
      * set headers (contentype, disposition) on the response-obj
-     * @FeatureDomain                Webservice
-     * @FeatureResult                String - wiki-format of the node
-     * @FeatureKeywords              Webservice Export
      * @param sysUID                 sysUID to export
      * @param exporter               the exporter to use
      * @param oOptions               the outputoptions for the exporter
@@ -89,9 +86,6 @@ public class ConverterUtils {
      * use the exporter to convert it with all children to 
      * exporter-format<br>
      * set headers (contentype, disposition) on the response-obj
-     * @FeatureDomain                Webservice
-     * @FeatureResult                String - wiki-format of the node
-     * @FeatureKeywords              Webservice Export
      * @param node                   node to export
      * @param exporter               the exporter to use
      * @param oOptions               the outputoptions for the exporter
@@ -126,9 +120,6 @@ public class ConverterUtils {
     /** 
      * read the node for sysUID and return it in html-format with all children<br>
      * use the setting of the output-options and set contect-header on response-obj
-     * @FeatureDomain                Webservice
-     * @FeatureResult                String - html-format of the node
-     * @FeatureKeywords              Webservice Query
      * @param sysUID                 sysUID to export
      * @param oOptions               the outputOptions 
      * @param response               the response-Obj to set contenttype and headers
@@ -156,9 +147,6 @@ public class ConverterUtils {
     /** 
      * read the node for sysUID and return it in html-format with all children<br>
      * use the setting of the output-options and set contect-header on response-obj
-     * @FeatureDomain                Webservice
-     * @FeatureResult                String - html-format of the node
-     * @FeatureKeywords              Webservice Query
      * @param basenode               basenode to export
      * @param oOptions               the outputOptions 
      * @param response               the response-Obj to set contenttype and headers
@@ -225,9 +213,6 @@ public class ConverterUtils {
     /** 
      * read the node for sysUID, return it in Json-format with all children<br>
      * include it into the yaioOfflineApp and set contect-header on response-obj
-     * @FeatureDomain                Webservice
-     * @FeatureResult                String - yaioOfflineApp-html-format of the node
-     * @FeatureKeywords              Webservice Query
      * @param sysUID                 basenode to export
      * @param response               the response-Obj to set contenttype and headers
      * @param pTplFile               path to tplFile-resource (if null=defaultfile will used; if empty=ignored)

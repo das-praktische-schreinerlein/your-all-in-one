@@ -42,9 +42,6 @@ public class BaseAppController {
     
     /** 
      * Request to read the yaioApp-html-format with all Sys1-children
-     * @FeatureDomain                Webservice
-     * @FeatureResult                String - yaioApp-html-format of the node
-     * @FeatureKeywords              Webservice Query
      * @param response               the response-Obj to set contenttype and headers
      * @return                       String - yaioApp-html-format of the node
      */

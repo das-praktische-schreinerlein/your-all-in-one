@@ -31,9 +31,6 @@ public interface NodeNumberService {
     
     /** 
      * get next human readable Node-number for this node-hierarchy (praefix)
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                returnValue Nodenumber - next available Node-number for this node-hierarchy (praefix)
-     * @FeatureKeywords              BusinessLogic
      * @param node                   node (praefix)
      * @return                       next available Node-number for this node-hierarchy (praefix)
      * @throws Exception             io-Exceptions possible
@@ -41,10 +38,7 @@ public interface NodeNumberService {
     Object getNextNodeNumber(MetaData node) throws Exception;
     
     /** 
-     * initialize next human readable Node-number for this node-hierarchy (praefix)
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                updates memberVar - MAP_CUR_NEXTNODEID
-     * @FeatureKeywords              BusinessLogic
+     * initialize next human readable Node-number for this node-hierarchy (praefix) - updates memberVar - MAP_CUR_NEXTNODEID
      * @param praefix                node-praefix
      * @param number                 next available Node-number for this node-hierarchy (praefix)
      * @throws Exception             io-Exceptions possible
@@ -53,9 +47,6 @@ public interface NodeNumberService {
 
     /** 
      * get map with next human readable Node-number per node-hierarchy (praefix)
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                returnValue Map<String, Integer> - map <praefix, nextId>
-     * @FeatureKeywords              Config
      * @return                       map <praefix, nextId>
      * @throws Exception             io-Exceptions possible
      */
@@ -63,18 +54,13 @@ public interface NodeNumberService {
 
     /** 
      * exports map with next human readable Node-number to file
-     * @FeatureDomain                BusinessLogic
-     * @FeatureKeywords              Config
      * @param strPathIdDB            filename
      * @throws Exception             io-Exceptions possible
      */
     void exportNextNodeNumbersToFile(String strPathIdDB) throws Exception;
 
     /** 
-     * initialize next human readable Node-number from file
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                updates memberVar - MAP_CUR_NEXTNODEID
-     * @FeatureKeywords              Config
+     * initialize next human readable Node-number from file - updates memberVar - MAP_CUR_NEXTNODEID
      * @param strPathIdDB            path to the idFile
      * @param forceReload            force reload
      * @throws Exception             parser/format/io-Exceptions possible

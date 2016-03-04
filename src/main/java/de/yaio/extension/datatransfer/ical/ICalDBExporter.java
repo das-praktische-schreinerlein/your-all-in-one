@@ -47,9 +47,6 @@ public class ICalDBExporter extends ICalExporter {
 
     /** 
      * service functions to export nodes as ICal
-     * @FeatureDomain                Constructor
-     * @FeatureResult                initialize the exporter
-     * @FeatureKeywords              Constructor
      */
     public ICalDBExporter() {
         super();
@@ -79,9 +76,6 @@ public class ICalDBExporter extends ICalExporter {
     
     /** 
      * formats recursively node in ICal-format
-     * @FeatureDomain                DataExport Presentation
-     * @FeatureResult                returnValue String - formatted output of node-hirarchy
-     * @FeatureKeywords              Layout
      * @param parentNode             node for output recursively
      * @param poOptions              options for output (formatter)
      * @return                       formatted output of node-hierarchy and DataDomains

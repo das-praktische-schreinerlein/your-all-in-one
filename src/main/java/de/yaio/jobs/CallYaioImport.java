@@ -40,9 +40,6 @@ public class CallYaioImport extends CallYaioInstance {
 
     /** 
      * job to import nodes to db
-     * @FeatureDomain                Constructor
-     * @FeatureResult                initialize the application
-     * @FeatureKeywords              Constructor
      * @param args                   the command line arguments
      */
     public CallYaioImport(final String[] args) {
@@ -92,9 +89,6 @@ public class CallYaioImport extends CallYaioInstance {
 
     /** 
      * get the Class-logger
-     * @FeatureDomain                Logging
-     * @FeatureResult                returnValue Logger - use it !!!!
-     * @FeatureKeywords              Logging
      * @return                       logger - the logger
      */
     public static Logger getLogger() {
@@ -103,9 +97,6 @@ public class CallYaioImport extends CallYaioInstance {
 
     /** 
      * Main-method to start the application
-     * @FeatureDomain                CLI
-     * @FeatureResult                initialize the application
-     * @FeatureKeywords              CLI
      * @param args                   the command line arguments
      */
     public static void main(final String[] args) {

@@ -31,10 +31,7 @@ public interface StatDataService {
     int CONST_RECALC_ORDER = 15;
 
     /** 
-     * update the childrenCount-Fields of the node 
-     * @FeatureDomain                BusinessLogic
-     * @FeatureResult                updates memberVariable node.childNodeCount
-     * @FeatureKeywords              BusinessLogic
+     * update the childrenCount-Fields of the node - updates memberVariable node.childNodeCount
      * @param node                   node to initialize
      * @throws Exception             parser/format-Exceptions possible
      */

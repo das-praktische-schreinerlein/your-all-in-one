@@ -41,9 +41,6 @@ public class MetaDataServiceImpl extends DataDomainRecalcImpl implements MetaDat
     
     /** 
      * return the main instance of this service
-     * @FeatureDomain                Persistence
-     * @FeatureResult                return the main instance of this service
-     * @FeatureKeywords              Persistence
      * @return                       the main instance of this service
      */
     public static MetaDataServiceImpl getInstance() {
@@ -62,8 +59,6 @@ public class MetaDataServiceImpl extends DataDomainRecalcImpl implements MetaDat
 
     /** 
      * add me as DataDomainRecalcer to the Service-Config
-     * @FeatureDomain                DataExport Presentation
-     * @FeatureKeywords              Config
      * @param nodeService            instance of the nodeService which will call me as recalcer
      */
     public static void configureDataDomainRecalcer(final NodeService nodeService) {

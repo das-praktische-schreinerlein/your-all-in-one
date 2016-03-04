@@ -38,9 +38,6 @@ public class PPLExporter extends ExporterImpl {
 
     /** 
      * service functions to export nodes as PPL
-     * @FeatureDomain                Constructor
-     * @FeatureResult                initialize the exporter
-     * @FeatureKeywords              Constructor
      */
     public PPLExporter() {
         super();

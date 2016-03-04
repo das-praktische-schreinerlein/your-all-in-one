@@ -51,9 +51,6 @@ public class DataDomainDeserializer extends JsonDeserializer<DataDomain> {
     
     /** 
      * deserialize a JSONNode to a DataDomain: create BaseNode by className and craete Children fom childNodes
-     * @FeatureDomain                JSONParser
-     * @FeatureResult                returns JSONResponse
-     * @FeatureKeywords              JSONParser
      * @param node                   the jsonNODE to deserialize
      * @return                       the created BaseNode with children
      * @throws IOException           possible

@@ -38,9 +38,6 @@ public class NodeActionResponse extends CommonJSONResponse {
 
     /** 
      * create a response-obj
-     * @FeatureDomain                Constructor
-     * @FeatureResult                a response-obj with the resulting node-data
-     * @FeatureKeywords              Constructor
      * @param state                  the resulting state of the request OK/ERROR
      * @param stateMsg               the corresponding message to the state
      * @param node                   the resulting node for the request (update/insert/move/show)

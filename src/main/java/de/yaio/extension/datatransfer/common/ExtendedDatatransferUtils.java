@@ -53,9 +53,6 @@ public class ExtendedDatatransferUtils extends DatatransferUtils {
 
     /** 
      * copy the node and all children to the new parent (recalc all and save to db)
-     * @FeatureDomain                WikiImporter
-     * @FeatureResult                copies and save ne node
-     * @FeatureKeywords              WikiImporter
      * @param node                   node to copy
      * @param newParent              parent for new node
      * @throws Exception             ParserExceptions possible
@@ -110,9 +107,6 @@ public class ExtendedDatatransferUtils extends DatatransferUtils {
     /** 
      * parse wikiSrc with an InlineWikiImporter and add it to an InfoNode named Masternode<br>
      * metaNodePraefix will be Inline, metaNodeNumber will start by 1 and increment
-     * @FeatureDomain                WikiImporter
-     * @FeatureResult                BaseNode - masternode with the children from wikiSrc
-     * @FeatureKeywords              WikiImporter
      * @param wikiSrc                wikiSrc to parse with InlineWikiImporter
      * @return                       BaseNode - masternode with the children from wikiSrc
      * @throws Exception             ParserExceptions possible
@@ -137,9 +131,6 @@ public class ExtendedDatatransferUtils extends DatatransferUtils {
     /** 
      * parse wikiSrc with an InlineWikiImporter and add it to the masternode<br>
      * metaNodePraefix will be Inline, metaNodeNumber will start by 1 and increment
-     * @FeatureDomain                WikiImporter
-     * @FeatureResult                adds children from wikiSrc to masterNode
-     * @FeatureKeywords              WikiImporter
      * @param masterNode             baseNode to add the children
      * @param wikiSrc                wikiSrc to parse with InlineWikiImporter
      * @throws Exception             ParserExceptions possible
@@ -158,9 +149,6 @@ public class ExtendedDatatransferUtils extends DatatransferUtils {
 
     /** 
      * parse wikiSrc with an WikiImporter and add it to the masternode
-     * @FeatureDomain                WikiImporter
-     * @FeatureResult                adds children from wikiSrc to masterNode
-     * @FeatureKeywords              WikiImporter
      * @param masterNode             baseNode to add the children
      * @param wikiSrc                wikiSrc to parse with WikiImporter
      * @throws Exception             ParserExceptions possible
@@ -180,9 +168,6 @@ public class ExtendedDatatransferUtils extends DatatransferUtils {
     
     /** 
      * parse wikiSrc with WikiImporter and WikiImportOptions, and add it to the masternode
-     * @FeatureDomain                WikiImporter
-     * @FeatureResult                adds children from wikiSrc to masterNode
-     * @FeatureKeywords              WikiImporter
      * @param wikiImporter           wikiImporter for parsing
      * @param inputOptions           importOptions for wikiImporter
      * @param masterNode             baseNode to add the children
@@ -214,9 +199,6 @@ public class ExtendedDatatransferUtils extends DatatransferUtils {
     /** 
      * parse jsonSrc with JsonImporter, export as wiki and reimport from wiki to ensure valid syntax, 
      * and add it to the masternode
-     * @FeatureDomain                JsonImporter
-     * @FeatureResult                adds children from jsonSrc to masterNode
-     * @FeatureKeywords              JsonImporter
      * @param inputOptions           importOptions for wikiImporter
      * @param masterNode             baseNode to add the children
      * @param jsonSrc                jsonSrc to parse with JsonImporter

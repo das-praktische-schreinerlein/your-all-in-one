@@ -73,9 +73,6 @@ public class ICalExporter extends WikiExporter {
 
     /** 
      * service functions to export nodes as ICal
-     * @FeatureDomain                Constructor
-     * @FeatureResult                initialize the exporter
-     * @FeatureKeywords              Constructor
      */
     public ICalExporter() {
         super();
@@ -117,9 +114,6 @@ public class ICalExporter extends WikiExporter {
 
     /** 
      * formats recursively node in ICal-format
-     * @FeatureDomain                DataExport Presentation
-     * @FeatureResult                returnValue String - formatted output of node-hirarchy
-     * @FeatureKeywords              Layout
      * @param paramCurNode           node for output recursively
      * @param oOptions               options for output (formatter)
      * @return                       formatted output of node-hierarchy and DataDomains
@@ -232,9 +226,6 @@ public class ICalExporter extends WikiExporter {
 
     /** 
      * formats single TaskNode in ICal-format
-     * @FeatureDomain                DataExport Presentation
-     * @FeatureResult                returnValue String - formatted output of single node
-     * @FeatureKeywords              Layout
      * @param paramCurNode           node for output
      * @param oOptions               options for output (formatter)
      * @return                       formatted output
@@ -381,9 +372,6 @@ public class ICalExporter extends WikiExporter {
 
     /** 
      * formats single EventNode in ICal-format
-     * @FeatureDomain                DataExport Presentation
-     * @FeatureResult                returnValue String - formatted output of single node
-     * @FeatureKeywords              Layout
      * @param paramCurNode           node for output
      * @param oOptions               options for output (formatter)
      * @return                       formatted output
@@ -580,9 +568,6 @@ public class ICalExporter extends WikiExporter {
     
     /** 
      * get header for a ICal-calendar
-     * @FeatureDomain                DataExport Presentation
-     * @FeatureResult                returnValue String - header for ICal-calendar
-     * @FeatureKeywords              Layout
      * @param masterNode             node for output
      * @param oOptions               options for output (formatter)
      * @return                       header for ICal-calendar
@@ -618,9 +603,6 @@ public class ICalExporter extends WikiExporter {
 
     /** 
      * get footer for a ICal-calendar
-     * @FeatureDomain                DataExport Presentation
-     * @FeatureResult                returnValue String - footer for ICal-calendar
-     * @FeatureKeywords              Layout
      * @param masterNode             node for output
      * @param oOptions               options for output (formatter)
      * @return                       footer for ICal-calendar

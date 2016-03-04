@@ -41,9 +41,6 @@ public class JPAExporter extends ExporterImpl {
 
     /** 
      * service functions to export nodes to JPA
-     * @FeatureDomain                Constructor
-     * @FeatureResult                initialize the exporter
-     * @FeatureKeywords              Constructor
      */
     public JPAExporter() {
         super();

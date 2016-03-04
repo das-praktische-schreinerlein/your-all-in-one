@@ -68,9 +68,6 @@ public class Calculator {
     /** 
      * executes the action with value1 and value2<br>
      * result = action(value1, value2)
-     * @FeatureDomain                Tools - Calculation
-     * @FeatureResult                returnValue Object - result of the calculation
-     * @FeatureKeywords              Calculator
      * @param arg1                   value1 for calculation
      * @param arg2                   value1 for calculation
      * @param action                 calculation action CONST_CALCULATE_ACTION_*
@@ -243,9 +240,6 @@ public class Calculator {
      * compare the values value1 and value2<br>
      * if one of these is null, this will LT than the other<br>
      * if both are null, they are equal<br>
-     * @FeatureDomain                Tools - Calculation
-     * @FeatureResult                returnValue -1/0/+1
-     * @FeatureKeywords              Calculator
      * @param arg1                   value1 for comparison
      * @param arg2                   value1 for comparison
      * @return                       result of the comparison (LT,EQU, GT - -1/0/+1)
@@ -303,9 +297,6 @@ public class Calculator {
 
     /** 
      * check if the value is a valid aufwand (!= null and >= CONST_DOUBLE_NULL)
-     * @FeatureDomain                Tools - Calculation
-     * @FeatureResult                returnValue boolean - result of the check
-     * @FeatureKeywords              Calculator
      * @param arg1                   value1 for check
      * @return                       result of the check
      */
@@ -318,9 +309,6 @@ public class Calculator {
 
     /** 
      * check if the value is a valid stand (!= null and >= CONST_DOUBLE_NULL)
-     * @FeatureDomain                Tools - Calculation
-     * @FeatureResult                returnValue boolean - result of the check
-     * @FeatureKeywords              Calculator
      * @param arg1                   value1 for check
      * @return                       result of the check
      */

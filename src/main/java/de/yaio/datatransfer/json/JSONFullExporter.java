@@ -64,9 +64,6 @@ public class JSONFullExporter extends ExporterImpl {
     
     /** 
      * service functions to export nodes as Wiki
-     * @FeatureDomain                Constructor
-     * @FeatureResult                initialize the exporter
-     * @FeatureKeywords              Constructor
      */
     public JSONFullExporter() {
         super();

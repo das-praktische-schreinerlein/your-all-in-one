@@ -43,9 +43,6 @@ public class CSVExporter extends WikiExporter {
 
     /** 
      * export nodes as CSV
-     * @FeatureDomain                Constructor
-     * @FeatureResult                initialize the exporter
-     * @FeatureKeywords              Constructor
      */
     public CSVExporter() {
         super();

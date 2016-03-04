@@ -45,9 +45,6 @@ public class MindMapExporter extends WikiExporter {
 
     /** 
      * service functions to export nodes as Mindmap
-     * @FeatureDomain                Constructor
-     * @FeatureResult                initialize the exporter
-     * @FeatureKeywords              Constructor
      */
     public MindMapExporter() {
         super();

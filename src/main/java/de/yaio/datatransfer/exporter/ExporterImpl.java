@@ -61,9 +61,6 @@ public class ExporterImpl implements Exporter {
 
     /** 
      * create Exporter to export nodes
-     * @FeatureDomain                Constructor
-     * @FeatureResult                initialize the exporter
-     * @FeatureKeywords              Constructor
      */
     public ExporterImpl() {
         // NodeTypes konfigurieren
@@ -154,9 +151,6 @@ public class ExporterImpl implements Exporter {
 
     /** 
      * formats recursively node and all childnodes (runs formatter)
-     * @FeatureDomain                DataExport Presentation
-     * @FeatureResult                returnValue StringBuffer - formatted output of node-hierarchy and DataDomains
-     * @FeatureKeywords              Layout
      * @param node                   node for output recursively
      * @param praefix                string to use as prefix in front of nodeoutput
      * @param oOptions               options for output (formatter)

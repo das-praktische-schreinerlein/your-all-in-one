@@ -81,9 +81,6 @@ public class HtmlExporter extends WikiExporter {
     
     /** 
      * service functions to export nodes as Html
-     * @FeatureDomain                Constructor
-     * @FeatureResult                initialize the exporter
-     * @FeatureKeywords              Constructor
      */
     public HtmlExporter() {
         super();
@@ -99,9 +96,6 @@ public class HtmlExporter extends WikiExporter {
     
     /** 
      * generate helper-OutputOptions for generation of the html
-     * @FeatureDomain                DataExport
-     * @FeatureResult                returnValue OutputOptions - OuputOptions for generation of the html
-     * @FeatureKeywords              Cofiguration helper
      * @param baseOOptions           Default OutputOptions to override
      * @return                       OuputOptions for generation of the html
      */
@@ -169,9 +163,6 @@ public class HtmlExporter extends WikiExporter {
 
     /** 
      * formats recursively node in html-docu-format
-     * @FeatureDomain                DataExport Presentation
-     * @FeatureResult                returnValue String - formatted output of node-hirarchy
-     * @FeatureKeywords              Layout
      * @param curNode                node for output recursively
      * @param oOptions               options for output (formatter)
      * @return                       formatted output of node-hierarchy and DataDomains
@@ -616,9 +607,6 @@ public class HtmlExporter extends WikiExporter {
 
     /** 
      * formats recursively node in html-project-format
-     * @FeatureDomain                DataExport Presentation
-     * @FeatureResult                returnValue String - formatted output of node-hirarchy
-     * @FeatureKeywords              Layout
      * @param curNode                node for output recursively
      * @param oOptions               options for output (formatter)
      * @return                       formatted output of node-hierarchy and DataDomains
@@ -895,9 +883,6 @@ public class HtmlExporter extends WikiExporter {
 
     /** 
      * generate a html-block for the node
-     * @FeatureDomain                DataExport Presentation
-     * @FeatureResult                returnValue String - htmlblock of the node
-     * @FeatureKeywords              Layout
      * @param curNode                the node
      * @param pData                  the formatted data to export in html-block
      * @param dataName               the name for idFields
@@ -930,9 +915,6 @@ public class HtmlExporter extends WikiExporter {
      * return the DocLoayoutTagCommand configured in the node<br>
      * if it is not set: CONST_LAYOUT_TAG_P<br>
      * if is has children: CONST_LAYOUT_TAG_UE
-     * @FeatureDomain                DataExport Presentation
-     * @FeatureResult                returnValue String - tagcommand
-     * @FeatureKeywords              Layout
      * @param curNode                node for output recursively
      * @return                       the tagcommand
      * @throws Exception             parser/format-Exceptions possible
@@ -953,9 +935,6 @@ public class HtmlExporter extends WikiExporter {
     
     /** 
      * format the descText as Markdown
-     * @FeatureDomain                DataExport Presentation
-     * @FeatureResult                returnValue String - formatted markdown
-     * @FeatureKeywords              Layout
      * @param descText               the string to format
      * @return                       formatted markdown
      * @throws IOException           IOException-Exceptions possible
@@ -1036,9 +1015,6 @@ public class HtmlExporter extends WikiExporter {
     /** 
      * prepare the text to format as markdown
      * prefix empty lines inline code-segs (```) so that they will interprewted as codeline by markdown-parser
-     * @FeatureDomain                DataExport Presentation
-     * @FeatureResult                returnValue String - prepared text
-     * @FeatureKeywords              Layout
      * @param descText               the string to prepare
      * @return                       prpeared text to format as markdown
      */
@@ -1082,9 +1058,6 @@ public class HtmlExporter extends WikiExporter {
 
     /** 
      * search for the pattern and replace it with the replacementhead + htmlId + replacementTail
-     * @FeatureDomain                DataExport Presentation
-     * @FeatureResult                returnValue String - formatted diagramm-markdown
-     * @FeatureKeywords              Layout
      * @param text                   the haystack
      * @param patternString          the needle to replace
      * @param replacementHead        the head before the new htmlelement-id

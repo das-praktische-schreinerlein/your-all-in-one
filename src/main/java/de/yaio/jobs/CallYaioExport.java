@@ -42,9 +42,6 @@ public class CallYaioExport extends CallYaioInstance {
 
     /** 
      * job to export nodes from db
-     * @FeatureDomain                Constructor
-     * @FeatureResult                initialize the application
-     * @FeatureKeywords              Constructor
      * @param args                   the command line arguments
      */
     public CallYaioExport(final String[] args) {
@@ -107,9 +104,6 @@ public class CallYaioExport extends CallYaioInstance {
 
     /** 
      * get the Class-logger
-     * @FeatureDomain                Logging
-     * @FeatureResult                returnValue Logger - use it !!!!
-     * @FeatureKeywords              Logging
      * @return                       logger - the logger
      */
     public static Logger getLogger() {
@@ -118,9 +112,6 @@ public class CallYaioExport extends CallYaioInstance {
 
     /** 
      * Main-method to start the application
-     * @FeatureDomain                CLI
-     * @FeatureResult                initialize the application
-     * @FeatureKeywords              CLI
      * @param args                   the command line arguments
      */
     public static void main(final String[] args) {

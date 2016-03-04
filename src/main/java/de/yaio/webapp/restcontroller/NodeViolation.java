@@ -38,9 +38,6 @@ public class NodeViolation {
     /** 
      * create a violation-obj (masquerading spring-violations which will
      * cause exceptions because the path is at response-time no more available..)
-     * @FeatureDomain                Constructor
-     * @FeatureResult                a violation-obj
-     * @FeatureKeywords              Constructor
      * @param path                   the path to the resource which caused the violation (fieldname)
      * @param message                the userfriendly error-message
      * @param messageTemplate        the technical messagetemplate

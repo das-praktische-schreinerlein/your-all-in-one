@@ -70,9 +70,7 @@ public class PlanDataParserImpl  extends ParserImpl implements PlanDataParser {
     /** 
      * hängt den Parser für das spätere Extrahieren der NodeDaten aus dem 
      * Namen (NodeFactory.parseNodeDataDomains) in die Parserliste
-     * @FeatureDomain                DataImport
-     * @FeatureKeywords              Config
-     * @param nodeFactory            instance of the nodeFactory which will use the parser 
+     * @param nodeFactory            instance of the nodeFactory which will use the parser
      */
     public static void configureDataDomainParser(final NodeFactory nodeFactory) {
         nodeFactory.addDataDomainParser(new PlanDataParserImpl());

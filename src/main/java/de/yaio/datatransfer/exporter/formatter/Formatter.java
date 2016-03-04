@@ -32,28 +32,18 @@ public interface Formatter extends Comparable<Formatter> {
     
     /** 
      * returns the class of the DataDomain for which the formatter runs
-     * @FeatureDomain                Praesentation
-     * @FeatureResult                returnValue Class - DataDomain for which the formatter runs
-     * @FeatureKeywords              Config
      * @return                       DataDomain for which the formatter runs
      */
     Class<?> getTargetClass();
 
     /** 
      * returns position in the formatter-queue
-     * @FeatureDomain                Praesentation
-     * @FeatureResult                returnValue int - position in the formatter-queue
-     * @FeatureKeywords              Config
      * @return                       position in the formatter-queue
      */
     int getTargetOrder();
 
     /** 
      * formats DomainData and appends output to StringBuffer nodeOutput
-     * @FeatureConditions            formatter runs only if options.flgShow* for DataDomain is set<br> must not be implemented direct, but should call separate function
-     * @FeatureDomain                Praesentation
-     * @FeatureResult                appends to nodeOutput
-     * @FeatureKeywords              Layout
      * @param node                   node to be formatted
      * @param nodeOutput             to append the output
      * @param options                options for formatter

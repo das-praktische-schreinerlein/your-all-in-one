@@ -30,9 +30,6 @@ public class JobNodes2MindMap extends JobNodes2Wiki {
     
     /** 
      * job to import nodes and output as Mindmap
-     * @FeatureDomain                Constructor
-     * @FeatureResult                initialize the application
-     * @FeatureKeywords              Constructor
      * @param args                   the command line arguments
      */
     public JobNodes2MindMap(final String[] args) {
@@ -46,9 +43,6 @@ public class JobNodes2MindMap extends JobNodes2Wiki {
 
     /** 
      * Main-method to start the application
-     * @FeatureDomain                CLI
-     * @FeatureResult                initialize the application
-     * @FeatureKeywords              CLI
      * @param args                   the command line arguments
      */
     public static void main(final String[] args) {

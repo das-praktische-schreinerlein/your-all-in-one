@@ -68,9 +68,6 @@ public class NodeFactoryImpl implements NodeFactory {
 
     /** 
      * create Factory to create nodes
-     * @FeatureDomain                Constructor
-     * @FeatureResult                initialize the importer
-     * @FeatureKeywords              Constructor
      *  @param options                the importoptions for the parser...
      */
     public NodeFactoryImpl(final ImportOptions options) {

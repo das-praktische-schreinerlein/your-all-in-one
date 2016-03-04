@@ -54,9 +54,6 @@ public class YaioWebshotClient {
     
     /**
      * create a webshot of the url
-     * @FeatureDomain                DMS
-     * @FeatureResult                returns the webshot as png-file
-     * @FeatureKeywords              DMS
      * @return                       returns the webshot as png-file
      * @param url                    url to make a webshot from
      * @throws IOException           if something went wrong

@@ -34,9 +34,6 @@ public interface DMSClient {
 
     /**
      * uploads the input to the configured dms
-     * @FeatureDomain                DMS
-     * @FeatureResult                StorageResource
-     * @FeatureKeywords              DMS
      * @return                       StorageResource
      * @param id                     id of the content in dms
      * @param origFileName           original filename
@@ -48,9 +45,6 @@ public interface DMSClient {
 
     /**
      * updates the input in the configured dms
-     * @FeatureDomain                DMS
-     * @FeatureResult                StorageResource
-     * @FeatureKeywords              DMS
      * @return                       StorageResource
      * @param id                     id of the content in dms
      * @param origFileName           original filename
@@ -62,9 +56,6 @@ public interface DMSClient {
 
     /**
      * read the content from configured dms
-     * @FeatureDomain                DMS
-     * @FeatureResult                inputstream wirh the binary content
-     * @FeatureKeywords              DMS
      * @param id                     id of the content in dms
      * @param version                version of the content
      * @throws IOException           if something went wrong
@@ -74,9 +65,6 @@ public interface DMSClient {
 
     /**
      * read the content from configured dms
-     * @FeatureDomain                DMS
-     * @FeatureResult                file wirh the binary content
-     * @FeatureKeywords              DMS
      * @param id                     id of the content in dms
      * @param version                version of the content
      * @param useOriginalExtension   if checked then there will be a second call to get the orginial fileextension for the tmp-file
@@ -88,9 +76,6 @@ public interface DMSClient {
 
     /**
      * read the metadata for content from configured dms
-     * @FeatureDomain                DMS
-     * @FeatureResult                StorageResourceVersion
-     * @FeatureKeywords              DMS
      * @param id                     id of the content in dms
      * @param version                version of the content
      * @return                       StorageResourceVersion
