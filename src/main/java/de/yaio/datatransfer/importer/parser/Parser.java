@@ -71,7 +71,7 @@ public interface Parser extends Comparable<Parser> {
     /** Pattern to validate state */
     String CONST_PATTERN_SEG_STATE = "[-A-Za-z_]";
     /** Pattern to validate type */
-    String CONST_PATTERN_SEG_TYPE = "[-A-Za-z_]";;
+    String CONST_PATTERN_SEG_TYPE = "[-A-Za-z_]";
 
     /** if second of time are set to this value -> then ignore the seconds */
     int CONST_FLAG_NODATE_SECONDS = 59;

@@ -552,10 +552,10 @@ public class BaseNode implements BaseData, MetaData, SysData,
             return this.getBaseNodeService().getWorkflowState(this);
         }
         return workflowState;
-    };
+    }
     public void setWorkflowState(final WorkflowState istState) {
         workflowState = istState;
-    };
+    }
 
     //
     // checks 

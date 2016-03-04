@@ -48,7 +48,7 @@ public class JPAExporter extends ExporterImpl {
 
     @Override
     public void initDataDomainFormatter() {
-    };
+    }
 
     @Override
     @Transactional

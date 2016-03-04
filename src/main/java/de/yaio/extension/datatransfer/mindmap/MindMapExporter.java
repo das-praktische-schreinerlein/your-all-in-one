@@ -53,7 +53,7 @@ public class MindMapExporter extends WikiExporter {
     @Override
     public void initDataDomainFormatter() {
         super.initDataDomainFormatter();
-    };
+    }
 
     @Override
     public String getMasterNodeResult(final DataDomain masterNode, final OutputOptions oOptions)

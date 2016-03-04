@@ -51,7 +51,7 @@ public class CSVExporter extends WikiExporter {
     @Override
     public void initDataDomainFormatter() {
         DescDataFormatterImpl.configureDataDomainFormatter(this);
-    };
+    }
 
     @Override
     public String getMasterNodeResult(final DataDomain masterNode, final OutputOptions oOptions)

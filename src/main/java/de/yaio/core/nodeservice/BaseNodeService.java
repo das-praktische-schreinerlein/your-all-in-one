@@ -545,7 +545,7 @@ public class BaseNodeService extends NodeServiceImpl {
      */
     public WorkflowState getWorkflowState(final BaseWorkflowData node) throws IllegalStateException {
         return WorkflowState.NOWORKFLOW;
-    };
+    }
 
     /** 
      * returns the workflowstate for the state of the node. 
@@ -556,7 +556,7 @@ public class BaseNodeService extends NodeServiceImpl {
      */
     public WorkflowState getWorkflowStateForState(final BaseWorkflowData node) throws IllegalStateException {
         return WorkflowState.NOWORKFLOW;
-    };
+    }
 
     /** 
      * returns the state for the workflowstate of the node. 
@@ -567,5 +567,5 @@ public class BaseNodeService extends NodeServiceImpl {
      */
     public String getStateForWorkflowState(final BaseWorkflowData node) throws IllegalStateException {
         return node.getState();
-    };
+    }
 }

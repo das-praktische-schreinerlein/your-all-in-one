@@ -81,7 +81,7 @@ public class ICalExporter extends WikiExporter {
     @Override
     public void initDataDomainFormatter() {
         DescDataFormatterImpl.configureDataDomainFormatter(this);
-    };
+    }
 
     @Override
     public StringBuffer getNodeResult(final DataDomain curNode,  final String praefix,
