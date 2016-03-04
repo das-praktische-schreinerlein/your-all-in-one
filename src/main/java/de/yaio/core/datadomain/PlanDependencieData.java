@@ -32,7 +32,7 @@ public interface PlanDependencieData extends DataDomain {
     int CONST_ORDER = 55;
 
     @XmlTransient
-    public static enum DurationMeasure {
+    enum DurationMeasure {
         min, 
         h, 
         d, 
@@ -41,13 +41,13 @@ public interface PlanDependencieData extends DataDomain {
     }
     
     @XmlTransient
-    public static enum PredecessorType {
+    enum PredecessorType {
         parent, 
         predecessor
     }
 
     @XmlTransient
-    public static enum PredecessorDependencieType {
+    enum PredecessorDependencieType {
         NO, 
         StartStart,
         EndStart,

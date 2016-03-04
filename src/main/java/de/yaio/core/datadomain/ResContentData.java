@@ -30,7 +30,7 @@ public interface ResContentData extends DataDomain {
     int CONST_ORDER = 26;
 
     @XmlTransient
-    public static enum UploadWorkflowState {
+    enum UploadWorkflowState {
         // the order is important for the calculation of workflow!!!!
         NOUPLOAD, 
         UPLOAD_OPEN, 
@@ -39,17 +39,17 @@ public interface ResContentData extends DataDomain {
         UPLOAD_DONE
     }
     
-    public String getResContentMime();
-    public void setResContentMime(String resContentMime);
-    public Long getResContentSize();
-    public void setResContentSize(Long resContentSize);
+    String getResContentMime();
+    void setResContentMime(String resContentMime);
+    Long getResContentSize();
+    void setResContentSize(Long resContentSize);
     
-    public String getResContentDMSId();
-    public void setResContentDMSId(String resContentDMSId);
-    public String getResContentDMSType();
-    public void setResContentDMSType(String resContentDMSType);
-    public UploadWorkflowState getResContentDMSState();
-    public void setResContentDMSState(UploadWorkflowState resContentDMSState);
+    String getResContentDMSId();
+    void setResContentDMSId(String resContentDMSId);
+    String getResContentDMSType();
+    void setResContentDMSType(String resContentDMSType);
+    UploadWorkflowState getResContentDMSState();
+    void setResContentDMSState(UploadWorkflowState resContentDMSState);
 
     void resetResContentData();
 }

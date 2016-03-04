@@ -27,7 +27,7 @@ import java.util.Map;
  */
 public interface ImportOptions {
     
-    static final String CONST_DEFAULT_META_NODE_PRAEFIX = "UNKNOWN";
+    String CONST_DEFAULT_META_NODE_PRAEFIX = "UNKNOWN";
     
     
     boolean isFlgParseDesc();
