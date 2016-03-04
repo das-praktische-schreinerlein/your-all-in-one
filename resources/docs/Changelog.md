@@ -1,5 +1,49 @@
 # Changelog
 
+## Changelog for release: feature-YAIO2304-improvements-201602-RELEASE
+- **Subprojekte (YAIO2347)**
+    - moved [ymf](https://github.com/das-praktische-schreinerlein/your-markdown-fellow) and jshelferlein into separate projects (YAIO2348) 
+    - moved whole [yaio-explorerapp](https://github.com/das-praktische-schreinerlein/yaio-explorerapp) into separate project (YAIO2349) 
+- **GUI (YAIO2309)**
+    - optimized print-control (YAIO2350) 
+    - improved responsive layout (YAIO2351) 
+    - added option to disable printWidget of YMF (YAIO2352) 
+    - added slimbox for markdown-jsh-images (YAIO2353) 
+    - add localserver only to config if used as parameter: dsn (YAIO2354) 
+    - set datasource to "server" (YAIO2355) 
+- **neue Funktionen (YAIO2310)**
+    - added extended markdown-layout (YAIO2356) 
+    - added and fixed toggler (YAIO2357) 
+    - use boxes in inlinelexer too (YAIO2358) 
+    - improved markdown-layout (tables, boxes) (YAIO2359) 
+    - added example for extended markdown (YAIO2360) 
+- **Code-Verbesserungen (YAIO2311)**
+    - Use own Maven-Repo for my githuh-java-libs (YAIO2322) 
+    - codestyle (YAIO2361) 
+    - use configurated appBaseVarName (YAIO2362) 
+    - improved package-structure (YAIO2363) 
+    - moved parser from MarkdownRenderer into separate services improved package-structure (renaming path) (YAIO2364) 
+    - renamed package and fixed node-styles (YAIO2365) 
+    - improved naming (YAIO2366) 
+    - use slimbox via ymf (YAIO2367) 
+    - use new YmfServiceHelper to addServiceLinks (YAIO2368) 
+    - codestyle: jshint (singlequotes...) (YAIO2369) 
+    - codestyle: jshint (YAIO2370) 
+    - improved documentation improved structure of the angular-controller (YAIO2371) 
+    - improved documentation improved structure improved naming (YAIO2372) 
+    - introduced datasource-manager (YAIO2373) 
+- **Bugfixes (YAIO2312)**
+    - bugfix webshot-config (disable debug-messages) (YAIO2377) 
+    - fixed css-includes (YAIO2378) 
+    - fixed unit-tests (YAIO2379) 
+    - fixed tests (YAIO2380) 
+    - fixed callUpdateTriggerForElement if aceEditor is set on the parent (YAIO2381) 
+    - fixed relative pathes (YAIO2382) 
+- **Admin/Doku-Funktionen (YAIO2313)**
+    - added sprite, embed-icon (YAIO2374) 
+    - updated documentation (YAIO2376) 
+    - improved grunt config (YAIO2375) 
+
 ## Changelog for release: feature-YAIO2234-improvements-201512-RELEASE
 - **external yaio-services (YAIO2280)**
     - introduced yaio-common-utils moved several utils to yaio-common (YAIO2281) 
