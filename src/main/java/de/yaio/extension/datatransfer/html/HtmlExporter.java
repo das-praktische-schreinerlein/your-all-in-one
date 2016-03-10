@@ -13,16 +13,7 @@
  */
 package de.yaio.extension.datatransfer.html;
 
-import java.io.IOException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.apache.log4j.Logger;
-import org.markdown4j.Markdown4jProcessor;
-import org.markdown4j.TablePlugin;
-
-import com.github.rjeschke.txtmark.Processor;
-
+import de.yaio.commons.converter.YmfMarkdownProvider;
 import de.yaio.commons.data.DataUtils;
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.node.BaseNode;
@@ -32,13 +23,14 @@ import de.yaio.core.node.UrlResNode;
 import de.yaio.core.nodeservice.UrlResNodeService;
 import de.yaio.datatransfer.exporter.OutputOptions;
 import de.yaio.datatransfer.exporter.OutputOptionsImpl;
-import de.yaio.datatransfer.exporter.formatter.DescDataFormatterImpl;
-import de.yaio.datatransfer.exporter.formatter.IstChildrenSumDataFormatterImpl;
-import de.yaio.datatransfer.exporter.formatter.IstDataFormatterImpl;
-import de.yaio.datatransfer.exporter.formatter.PlanChildrenSumDataFormatterImpl;
-import de.yaio.datatransfer.exporter.formatter.PlanDataFormatterImpl;
-import de.yaio.datatransfer.importer.parser.Parser;
+import de.yaio.datatransfer.exporter.formatter.*;
 import de.yaio.extension.datatransfer.wiki.WikiExporter;
+import org.apache.log4j.Logger;
+import org.pegdown.JshConfig;
+
+import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /** 
  * export of Nodes as Html
@@ -65,13 +57,8 @@ public class HtmlExporter extends WikiExporter {
     protected static final String CONST_FORMATTER_PLAN = PlanDataFormatterImpl.class.getName();
     protected static final String CONST_FORMATTER_ISTCHILDRENSUM = IstChildrenSumDataFormatterImpl.class.getName();
     protected static final String CONST_FORMATTER_PLANCHILDRENSUM = PlanChildrenSumDataFormatterImpl.class.getName();
-    
-    protected static Markdown4jProcessor markdownProcessor = new Markdown4jProcessor();
-    static {
-        markdownProcessor.registerPlugins(new TablePlugin());
-//        markdownProcessor.addHtmlAttribute("style", "color:red", "blockquote", "h1");
-//        markdownProcessor.addStyleClass("", "img");
-    }
+
+    protected YmfMarkdownProvider markdownProvider = new YmfMarkdownProvider();
 
     // Logger
     private static final Logger LOGGER =
@@ -940,79 +927,19 @@ public class HtmlExporter extends WikiExporter {
      * @throws IOException           IOException-Exceptions possible
      */
     public String formatTextAsMarkdown(final String descText) throws IOException {
-        // prepare descText
-        String newDescText = this.prepareTextForMarkdown(descText);
-        
-        newDescText = newDescText.replaceAll("…", "...");
-        
-        newDescText = markdownProcessor.process(newDescText);
-//        PegDownProcessor pegDownProcessor = new PegDownProcessor();
-//        newDescText = pegDownProcessor.markdownToHtml(newDescText);
-//        newDescText = Processor.process(newDescText);
-        
-        newDescText = newDescText.replaceAll("…", "...");
-        
-        // add id to heading
-        newDescText = replaceDiagrammPattern(newDescText,
-                        "<h([0-9]*)>", 
-                        "<h$1 id=\"heading_",
-                        "\">").toString();
+        JshConfig config = new JshConfig();
+        config.setStylePrefix("jsh-");
+        config.setAppBaseVarName("ymfAppBase");
 
-        // replace code-blocks
-//        newDescText = replaceDiagrammPattern(newDescText,
-//                        "<code>(yaio|jsh|ymf)*mermaid(" + Parser.CONST_PATTERN_SEG_DESC + "*?)<\\/code>", 
-//                        "<div id=\"inlineMermaid",
-//                        "\" class=\"mermaid\">$2</div>").toString();
-//        newDescText = replaceDiagrammPattern(newDescText,
-//                        "<code>(yaio|jsh|ymf)*freemind(" + Parser.CONST_PATTERN_SEG_DESC + "*?)<\\/code>", 
-//                        "<div id=\"inlineMindmap",
-//                        "\" class=\"yaiomindmap\">$2</div>").toString();
-//        newDescText = replaceDiagrammPattern(newDescText,
-//                        "<code>(yaio|jsh|ymf)*mindmap(" + Parser.CONST_PATTERN_SEG_DESC + "*?)<\\/code>", 
-//                        "<div id=\"inlineMindmap",
-//                        "\" class=\"yaiomindmap\">$2</div>").toString();
-//        newDescText = replaceDiagrammPattern(newDescText,
-//                        "<code>(yaio|jsh|ymf)*plantuml(" + Parser.CONST_PATTERN_SEG_DESC + "*?)<\\/code>", 
-//                        "<div id=\"yaioplantuml",
-//                        "\" class=\"yaioplantuml\">$2</div>").toString();
-
-        
-        newDescText = replaceDiagrammPattern(newDescText,
-                        "<code>", 
-                        "<code id=\"inlineCode",
-                        "\" class=\"txt\">").toString();
-        newDescText = replaceDiagrammPattern(newDescText,
-                        "<pre><code class=\\\"mermaid\\\">(" + Parser.CONST_PATTERN_SEG_DESC + "*?)<\\/code><\\/pre>", 
-                        "<div id=\"inlineMermaid",
-                        "\" class=\"mermaid\">$1</div>").toString();
-        newDescText = replaceDiagrammPattern(newDescText,
-                        "<pre><code class=\\\"yaiofreemind\\\">(" + Parser.CONST_PATTERN_SEG_DESC 
-                            + "*?)<\\/code><\\/pre>", 
-                        "<div id=\"inlineMindmap",
-                        "\" class=\"yaiomindmap\">$1</div>").toString();
-        newDescText = replaceDiagrammPattern(newDescText,
-                        "<pre><code class=\\\"yaiomindmap\\\">(" + Parser.CONST_PATTERN_SEG_DESC 
-                            + "*?)<\\/code><\\/pre>", 
-                        "<div id=\"inlineMindmap",
-                        "\" class=\"yaiomindmap\">$1</div>").toString();
-        newDescText = replaceDiagrammPattern(newDescText,
-                        "<pre><code class=\\\"yaioplantuml\\\">(" + Parser.CONST_PATTERN_SEG_DESC 
-                            + "*?)<\\/code><\\/pre>", 
-                        "<div id=\"yaioplantuml",
-                        "\" class=\"yaioplantuml\">$1</div>").toString();
-        
+        String newDescText = markdownProvider.convertMarkdownToHtml(config, descText);
         // replace yaio-links
-        newDescText = newDescText.replaceAll("href=\"yaio:", "href=\"" + "/yaio-explorerapp/yaio-explorerapp.html#/showByAllIds/");
-        
-        // reescape > and replace markdown-hack "."
-        newDescText = newDescText.replaceAll("&amp;gt;", "&gt;");
-        newDescText = newDescText.replaceAll("\n\\.\n", "\n");
-        
+        newDescText = newDescText.replaceAll("href=\"yaio:",
+                "href=\"" + "/yaio-explorerapp/yaio-explorerapp.html#/showByAllIds/");
+
         return newDescText;
     }
 
-
-    /** 
+    /**
      * prepare the text to format as markdown
      * prefix empty lines inline code-segs (```) so that they will interprewted as codeline by markdown-parser
      * @param descText               the string to prepare

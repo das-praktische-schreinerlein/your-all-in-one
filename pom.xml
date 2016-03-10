@@ -76,6 +76,7 @@
         <yaio-webshot-service.version>0.5.0</yaio-webshot-service.version>
         <yaio-dms-service.version>0.3.0</yaio-dms-service.version>
         <yaio-metaextract-service.version>0.2.0</yaio-metaextract-service.version>
+        <jsh-pegdown.version>0.1.0</jsh-pegdown.version>
 
         <!--  versions -->
         <roo.version>1.2.4.RELEASE</roo.version>
@@ -122,7 +123,7 @@
         -->
 
         <!-- Plugin versions -->
-        <frontend-maven-plugin.version>0.0.23</frontend-maven-plugin.version>
+        <frontend-maven-plugin.version>0.0.27</frontend-maven-plugin.version>
         <maven.surefire.plugin.version>2.14</maven.surefire.plugin.version>
         <maven.failsafe.plugin.version>2.14</maven.failsafe.plugin.version>
         <maven.surefire.report.plugin.version>2.14</maven.surefire.report.plugin.version>
@@ -373,12 +374,7 @@
             <version>${json-path.version}</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>com.github.eirslett</groupId>
-            <artifactId>frontend-maven-plugin</artifactId>
-            <version>${frontend-maven-plugin.version}</version>
-        </dependency>
- 
+
         <!-- swagger -->
         <dependency>
             <groupId>io.springfox</groupId>
@@ -485,6 +481,14 @@
             <artifactId>yaio-metaextract-service</artifactId>
             <version>${yaio-metaextract-service.version}</version>
         </dependency>
+        <dependency>
+            <groupId>de.yaio.converter</groupId>
+            <!--
+            <groupId>com.github.das-praktische-schreinerlein</groupId>
+             -->
+            <artifactId>jsh-pegdown</artifactId>
+            <version>${jsh-pegdown.version}</version>
+        </dependency>
 
     </dependencies>
 
@@ -522,7 +526,7 @@
                <groupId>com.github.eirslett</groupId>
                <artifactId>frontend-maven-plugin</artifactId>
                <version>${frontend-maven-plugin.version}</version>
-               
+
                <executions>
                    <execution>
                        <id>install node and npm</id>
