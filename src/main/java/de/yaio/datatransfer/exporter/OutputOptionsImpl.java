@@ -16,7 +16,7 @@ package de.yaio.datatransfer.exporter;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.collections.MapUtils;
+import org.apache.commons.collections4.MapUtils;
 
 import de.yaio.commons.data.DataUtils;
 import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;

@@ -15,7 +15,7 @@ package de.yaio.extension.datatransfer.ical;
 
 import java.util.List;
 
-import org.apache.commons.collections.MapUtils;
+import org.apache.commons.collections4.MapUtils;
 import org.apache.log4j.Logger;
 
 import de.yaio.core.datadomain.DataDomain;
