@@ -95,7 +95,7 @@ More information about the prototype at [http://www.your-all-in-one.de/yaio/stat
 - **Java-Core-Frameworks**
     - Encoding detector: [icu4j](http://icu-project.org/)
     - Excel Ex/Import: [Apache Poi](https://github.com/apache/poi)
-    - Markdown-Formatter: [Markdown4j](https://code.google.com/p/markdown4j/)
+    - Markdown-Formatter: [Pegdown](https://github.com/sirthias/pegdown)
     - Persistence, Validation...: [Spring-Framework](https://github.com/spring-projects/spring-framework)
     - Persistence: [Hibernate](https://github.com/hibernate/)
     - Persistence: [Spring-roo](https://github.com/spring-projects/spring-roo)
