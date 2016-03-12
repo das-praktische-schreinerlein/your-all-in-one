@@ -5,7 +5,7 @@
     <!-- the base -->
     <groupId>de.yaio</groupId>
     <artifactId>yaio</artifactId>
-    <version>0.1.0-beta-feature-YAIO2304-improvements-201602-RELEASE</version>
+    <version>0.1.0-beta-feature-YAIO2383-improvements-201603-RC</version>
     <name>yaio</name>
     <description>YourAllInOne D'Artagnan</description>
     <url>http://www.your-all-in-one.de</url>
@@ -71,11 +71,12 @@
          -->
          
         <!-- Yaio versions -->
-        <yaio-commons.version>0.2.0</yaio-commons.version>
-        <yaio-plantuml-service.version>0.4.0</yaio-plantuml-service.version>
-        <yaio-webshot-service.version>0.5.0</yaio-webshot-service.version>
-        <yaio-dms-service.version>0.3.0</yaio-dms-service.version>
-        <yaio-metaextract-service.version>0.2.0</yaio-metaextract-service.version>
+        <yaio-commons.version>[0.3.0,0.4.0)</yaio-commons.version>
+        <yaio-plantuml-service.version>[0.4.0,0.5.0)</yaio-plantuml-service.version>
+        <yaio-webshot-service.version>[0.5.0,0.6.0)</yaio-webshot-service.version>
+        <yaio-dms-service.version>[0.3.0,0.4.0)</yaio-dms-service.version>
+        <yaio-metaextract-service.version>[0.2.0,0.3.0)</yaio-metaextract-service.version>
+        <jsh-pegdown.version>[0.1.0,0.2.0)</jsh-pegdown.version>
 
         <!--  versions -->
         <roo.version>1.2.4.RELEASE</roo.version>
@@ -109,7 +110,6 @@
 
         <poi.version>3.12</poi.version> <!-- POI 3.13 breaks Excel-Exporter so we should use tika 1.9 with 3.12 -->
         <icu4j.version>54.1</icu4j.version>
-        <markdown4j>2.2-cj-1.0</markdown4j>
         <swagger.version>2.1.2</swagger.version>
         <biweekly.version>0.4.2</biweekly.version>
 
@@ -122,7 +122,7 @@
         -->
 
         <!-- Plugin versions -->
-        <frontend-maven-plugin.version>0.0.23</frontend-maven-plugin.version>
+        <frontend-maven-plugin.version>0.0.27</frontend-maven-plugin.version>
         <maven.surefire.plugin.version>2.14</maven.surefire.plugin.version>
         <maven.failsafe.plugin.version>2.14</maven.failsafe.plugin.version>
         <maven.surefire.report.plugin.version>2.14</maven.surefire.report.plugin.version>
@@ -252,12 +252,6 @@
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>${spring.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <version>${spring.version}</version>
         </dependency>
@@ -373,12 +367,7 @@
             <version>${json-path.version}</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>com.github.eirslett</groupId>
-            <artifactId>frontend-maven-plugin</artifactId>
-            <version>${frontend-maven-plugin.version}</version>
-        </dependency>
- 
+
         <!-- swagger -->
         <dependency>
             <groupId>io.springfox</groupId>
@@ -431,12 +420,6 @@
             <artifactId>icu4j</artifactId>
             <version>${icu4j.version}</version>
         </dependency>
-        <!-- markdown -->
-        <dependency>
-            <groupId>org.commonjava.googlecode.markdown4j</groupId>
-            <artifactId>markdown4j</artifactId>
-            <version>${markdown4j}</version>
-        </dependency>
         <!-- admin -->
         <dependency>
            <groupId>net.sf.biweekly</groupId>
@@ -485,6 +468,14 @@
             <artifactId>yaio-metaextract-service</artifactId>
             <version>${yaio-metaextract-service.version}</version>
         </dependency>
+        <dependency>
+            <groupId>de.yaio.converter</groupId>
+            <!--
+            <groupId>com.github.das-praktische-schreinerlein</groupId>
+             -->
+            <artifactId>jsh-pegdown</artifactId>
+            <version>${jsh-pegdown.version}</version>
+        </dependency>
 
     </dependencies>
 
@@ -522,7 +513,7 @@
                <groupId>com.github.eirslett</groupId>
                <artifactId>frontend-maven-plugin</artifactId>
                <version>${frontend-maven-plugin.version}</version>
-               
+
                <executions>
                    <execution>
                        <id>install node and npm</id>

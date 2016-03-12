@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.collections.map.SingletonMap;
+import org.apache.commons.collections4.map.SingletonMap;
 import org.apache.log4j.Logger;
 
 import de.yaio.core.datadomain.BaseWorkflowData;
