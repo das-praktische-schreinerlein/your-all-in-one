@@ -71,12 +71,12 @@
          -->
          
         <!-- Yaio versions -->
-        <yaio-commons.version>0.2.1</yaio-commons.version>
-        <yaio-plantuml-service.version>0.4.0</yaio-plantuml-service.version>
-        <yaio-webshot-service.version>0.5.1</yaio-webshot-service.version>
-        <yaio-dms-service.version>0.3.0</yaio-dms-service.version>
-        <yaio-metaextract-service.version>0.2.1</yaio-metaextract-service.version>
-        <jsh-pegdown.version>0.1.0</jsh-pegdown.version>
+        <yaio-commons.version>[0.3.0,0.4.0)</yaio-commons.version>
+        <yaio-plantuml-service.version>[0.4.0,0.5.0)</yaio-plantuml-service.version>
+        <yaio-webshot-service.version>[0.5.0,0.6.0)</yaio-webshot-service.version>
+        <yaio-dms-service.version>[0.3.0,0.4.0)</yaio-dms-service.version>
+        <yaio-metaextract-service.version>[0.2.0,0.3.0)</yaio-metaextract-service.version>
+        <jsh-pegdown.version>[0.1.0,0.2.0)</jsh-pegdown.version>
 
         <!--  versions -->
         <roo.version>1.2.4.RELEASE</roo.version>
@@ -110,7 +110,6 @@
 
         <poi.version>3.12</poi.version> <!-- POI 3.13 breaks Excel-Exporter so we should use tika 1.9 with 3.12 -->
         <icu4j.version>54.1</icu4j.version>
-        <markdown4j>2.2-cj-1.0</markdown4j>
         <swagger.version>2.1.2</swagger.version>
         <biweekly.version>0.4.2</biweekly.version>
 
@@ -420,12 +419,6 @@
             <groupId>com.ibm.icu</groupId>
             <artifactId>icu4j</artifactId>
             <version>${icu4j.version}</version>
-        </dependency>
-        <!-- markdown -->
-        <dependency>
-            <groupId>org.commonjava.googlecode.markdown4j</groupId>
-            <artifactId>markdown4j</artifactId>
-            <version>${markdown4j}</version>
         </dependency>
         <!-- admin -->
         <dependency>
