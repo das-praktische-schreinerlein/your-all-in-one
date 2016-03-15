@@ -51,6 +51,8 @@ public class HtmlExporter extends WikiExporter {
     protected static final String CONST_LAYOUT_TAG_TR = "TR";
     protected static final String CONST_LAYOUT_TAG_DIRECT = "DIRECT";
     protected static final String CONST_LAYOUT_TAG_ENDDIV = "ENDDIV";
+    protected static final String CONST_LAYOUT_TAG_DESCONLY = "DESC";
+
     
     protected static final String CONST_FORMATTER_DESC = DescDataFormatterImpl.class.getName();
     protected static final String CONST_FORMATTER_IST = IstDataFormatterImpl.class.getName();
@@ -547,35 +549,67 @@ public class HtmlExporter extends WikiExporter {
             } else if (CONST_LAYOUT_TAG_ENDDIV.equalsIgnoreCase(layoutCommand)) {
                 // ENDDIV
                 res += "</div></div>\n\n\n";
-            } else { 
-                //if (CONST_LAYOUT_TAG_P.equalsIgnoreCase(layoutCommand) || 1 == 1) {
-                // DEFAULT: Block
+            } else if (CONST_LAYOUT_TAG_P.equalsIgnoreCase(layoutCommand)) {
                 String tag = "p";
                 res += "<" + tag + " class='" + tag + "-portdesc"
-                    + (addStyle.length() > 0
+                        + (addStyle.length() > 0
                         ? " " + tag + "-portdesc-" + addStyle : "") + "'"
-                    +   " id='p_" + curNode.getSysUID() + "'>"
-                    + "<span class='" + tag + "-portdesc-ue"
-                    + (addStyle.length() > 0
+                        +   " id='p_" + curNode.getSysUID() + "'>"
+                        + "<span class='" + tag + "-portdesc-ue"
+                        + (addStyle.length() > 0
                         ? " " + tag + "-portdesc-ue-" + addStyle : "") + "'"
-                    +   " id='pSpanUe_" + curNode.getSysUID() + "'>"
-                    + ue
-                    + "</span>"
-                    + "<span class='" + tag + "-portdesc-desc"
-                    + (addStyle.length() > 0
+                        + " id='pSpanUe_" + curNode.getSysUID() + "'>"
+                        + ue
+                        + "</span>"
+                        + "<span class='" + tag + "-portdesc-desc"
+                        + (addStyle.length() > 0
                         ? " " + tag + "-portdesc-desc-" + addStyle : "") + "'"
-                    +   " id='pSpanDesc_" + curNode.getSysUID() + "'>"
-                    + content
-                    + "</span>";
+                        + " id='pSpanDesc_" + curNode.getSysUID() + "'>"
+                        + content
+                        + "</span>";
 
                 // eventuelles SPAN fuer Detailbeschreibung
                 if (descFull != null && descFull.length() > 0) {
                     res +=  "<span class='" + tag + "-portdesc-descdetail"
-                        + (addStyle.length() > 0
+                            + (addStyle.length() > 0
                             ? " " + tag + "-portdesc-descdetail-" + addStyle : "") + "'"
-                        +   " id='pSpanDescDetail_" + curNode.getSysUID() + "'>"
+                            +   " id='pSpanDescDetail_" + curNode.getSysUID() + "'>"
+                            + descFull
+                            + "</span>";
+
+                }
+                res +=  "</" + tag + ">\n";
+            } else {
+                // DEFAULT: Block
+                String tag = "div";
+                res += "<" + tag + " class='" + tag + "-portdesc"
+                    + (addStyle.length() > 0 ? " " + tag + "-portdesc-" + addStyle : "") + "'"
+                    + " id='div_" + curNode.getSysUID() + "'>";
+                if (!CONST_LAYOUT_TAG_DESCONLY.equalsIgnoreCase(layoutCommand)) {
+                    res += "<div class='" + tag + "-portdesc-ue-container"
+                            + (addStyle.length() > 0 ? " " + tag + "-portdesc-ue-container" + addStyle : "") + "'"
+                            + " id='divDivUe_" + curNode.getSysUID() + "'>"
+                            + "<span class='" + tag + "-portdesc-ue"
+                            + (addStyle.length() > 0 ? " " + tag + "-portdesc-ue-" + addStyle : "") + "'"
+                            + " id='divSpanUe_" + curNode.getSysUID() + "'>"
+                            + ue
+                            + "</span>"
+                            + "<span class='" + tag + "-portdesc-desc"
+                            + (addStyle.length() > 0
+                            ? " " + tag + "-portdesc-desc-" + addStyle : "") + "'"
+                            + " id='divSpanDesc_" + curNode.getSysUID() + "'>"
+                            + content
+                            + "</span>"
+                            + "</div>";
+                }
+
+                // eventuelles DIV fuer Detailbeschreibung
+                if (descFull != null && descFull.length() > 0) {
+                    res +=  "<div class='" + tag + "-portdesc-descdetail"
+                        + (addStyle.length() > 0 ? " " + tag + "-portdesc-descdetail-" + addStyle : "") + "'"
+                        + " id='divDivDescDetail_" + curNode.getSysUID() + "'>"
                         + descFull
-                        + "</span>";
+                        + "</div>";
 
                 }
                 res +=  "</" + tag + ">\n";
@@ -910,10 +944,11 @@ public class HtmlExporter extends WikiExporter {
         String command = curNode.getDocLayoutTagCommand();
         if (command == null || (!(command.length() > 0))) {
             // kein Tag definiert (Standard-Tags)
-            command = CONST_LAYOUT_TAG_P;
+//            command = CONST_LAYOUT_TAG_P;
+            command = "";
             if (curNode.getChildNodes().size() > 0) {
                 // falls Kindselemente: Ue
-                command = CONST_LAYOUT_TAG_UE;
+//                command = CONST_LAYOUT_TAG_UE;
             }
         }
         return command;
