@@ -1,42 +1,65 @@
 = INFO - Startseite                                                                                                                                           [NodeMeta: SysStart,1,,] [NodeSys: SysStart1,,,,]
-* **INFO - D'Artagnan sagt Guten Tag...**                                       [DocLayout: DIV,nextactions,WhatTodo,]
+Hier finden Sie die Startseite für D'Artagnan. Bitte nehmen Sie hier keine Änderungen vor, da dieser Bereich bei jedem neuen Update überschrieben wird.
+
+* INFO - D'Artagnan sagt Guten Tag...                                           [DocLayout: DESC,nextactions,,]
+<!---BOX jsh-md-background-info--->
+<!---STYLE h1:yaio-color-ue--->
+# D'Artagnan sagt Guten Tag...
+<!---/STYLE h1:yaio-color-ue--->
+<!---CONTAINER links--->
+
+<!---STYLE li ul splitter1 splitter2:jsh-md-list-horiz--->
+<!---STYLE a splitter2:jsh-md-text-big jsh-md-text-bold--->
 - Du kennst D'Artagnan noch nicht?<br>Du möchtest erst einmal die Möglichkeiten sehen, die D'Artagnan dir bietet?<br><br> [Zur Einführung](/yaio-explorerapp/yaio-explorerapp.html#/frontpage/SysIntro1)
 - Du hast schon viel von D'Artagnan gehört? D'Artagnan hat viele Neuerungen erfahren. Am besten du schaust Dir die Hilfeseite an.<br><br> [Nichts wie zu Hilfeseite](/yaio-explorerapp/yaio-explorerapp.html#/frontpage/SysHelp1)
 - Du kennst Dich mit D'Artagnan schon sehr gut aus und möchtest sofort fleißig arbeiten<br><br> [ Auf zum Projektexplorer](/yaio-explorerapp/yaio-explorerapp.html#/show/MasterplanMasternode1)
 - Du benötigst dringend diese Information, die in den Tiefen von D'Artagnan versteckt dokumentiert ist?<br><br> [Auf zur Suche](/yaio-explorerapp/yaio-explorerapp.html#/search/)
 - Du möchtest nur den integrierten WySiWyG-Editor benutzen?<br><br> [Auf zum WySiWyG](/yaio-explorerapp/wysiwyg.html)
 - Du möchtest wissen wie es weitergeht?<br><br> [Auf zur Roadmap](/yaio-explorerapp/yaio-explorerapp.html#/frontpage/SysRoad1)
-  ** INFO - Ende:                                                               [DocLayout: P,startmesg3,,X]                                                    
 
-  ** INFO - Neuigkeiten - Le petit D'Artagnan jetzt in 3D                                       [DocLayout: DIV,intro,Lepetit3D,]
-# Erwachsen
-Le petit D'Artagnan wird langsam erwachsen. Mit "Version 2.0 3D" hat er läuft er jetzt auch im Browser und kann seine Daten in einer Datenbank speichern.
+<!---/STYLE a splitter2:jsh-md-text-big jsh-md-text-bold--->
+<!---/STYLE li ul splitter1 splitter2:jsh-md-list-horiz--->
+<!---/CONTAINER--->
+<!---/BOX--->
+
+<!---BOX --->
+<!---STYLE h1:yaio-color-ue--->
+# Neuigkeiten - Le petit D'Artagnan jetzt in 3D
+<!---/STYLE h1:yaio-color-ue--->
+
+## Erwachsen
+
+Le petit D'Artagnan wird langsam erwachsen. Mit “Version 2.0 3D” hat er läuft er jetzt auch im Browser und kann seine Daten in einer Datenbank speichern.
 
 Die bestehenden Funktionen beherrscht er natürlich immer noch und sie wurden sogar verbessert, aber er hat auch unglaublich viel dazugelernt.
 
 ## Details
-Aber schauen wir im Detail, was "Le petit D'Artagngan 3D" nun so alles bietet:
 
-### D'Artagnan unterstützt Dich derzeit bei folgenden Aufgaben 
-- **Planung**: Planung von Projekten, Terminen  
-- **Projektmanagement**: Terminverfolgung, Aufwandsdokumentation und Erinnerungen
-- **Dokumentation**: Dokumentation von durchgeführten Arbeiten, Konzepten, Recherchen
-- **Informationsmanagement**: Informationsmanagement mit der Verlinkung von Webseiten, Bildern, Dateien
+Aber schauen wir im Detail, was “Le petit D'Artagngan 3D” nun so alles bietet:
 
-### Er bietet eine intuitive Web-GUI die von jedem modernen Browser unterstützt wird
-- **Startseite**: Startseite mit kurzer Einführung
-- **Projektexplorer**: Einen Projektexplorer mit einer Baumansicht des gesamten Projekts und Termin/Informationsübersicht
-- **Gantt-Ansicht**: Einem Gantt-Diagramm des aktuellen Projekts mit Plan/Ist-Daten
-- **Suche**: Eine Suchseite mit der Möglichkeit der unstrukturierten Volltextsuche innerhalb des Projekts.
+## D'Artagnan unterstützt Dich derzeit bei folgenden Aufgaben
+
+- **Planung:** Planung von Projekten, Terminen
+- **Projektmanagement:** Terminverfolgung, Aufwandsdokumentation und Erinnerungen
+- **Dokumentation:** Dokumentation von durchgeführten Arbeiten, Konzepten, Recherchen
+- **Informationsmanagement:** Informationsmanagement mit der Verlinkung von Webseiten, Bildern, Dateien
+
+## Er bietet eine intuitive Web-GUI die von jedem modernen Browser unterstützt wird
+
+- **Startseite:** Startseite mit kurzer Einführung
+- **Projektexplorer:** Einen Projektexplorer mit einer Baumansicht des gesamten Projekts und Termin/Informationsübersicht
+- **Gantt-Ansicht:** Einem Gantt-Diagramm des aktuellen Projekts mit Plan/Ist-Daten
+- **Suche:** Eine Suchseite mit der Möglichkeit der unstrukturierten Volltextsuche innerhalb des Projekts.
 - innerhalb der Listen an jedem Eintrag die Möglichkeit zur Bearbeitung, Anlegen von Kindsknoten, Anlegen eines Symlinks auf sich, Löschen des Knotens
 
-### Highlights: Was zeichnet D'Artagnan aus
+## Highlights: Was zeichnet D'Artagnan aus
+
 - **einfache Nutzerführung**
     - Start+Übersichtsseiten, Dokumentation, Hilfe, Onlinehilfe, **Tooltipps mit Hilfstexten**
     - **Projektexplorer zur Visualisierung und einfachen Navigation innerhalb der Daten**
     - **zweckmäßige Editoren** für die verschiedenen Informationen (Aufgaben, Konzepte...)
 - **hilfreiche Features in der GUI integriert**
-    - **Markdown als Dokumentationsformat** mit speziellen Erweiterungen für **Prozess- und Sequenz-Diagramme, sowie Mindmaps und Checklisten**
+	- Markdown als Dokumentationsformat mit speziellen Erweiterungen für **Prozess- und Sequenz-Diagramme, sowie Mindmaps und Checklisten**
     - **W**hat**Y**ou**S**ee**I**s**W**hat**Y**ou**G**et-Editoren, Vorschau-Funktionen
     - Volltextsuche, Gantt-Ansicht
     - Exporter und Importer für verschiedene Formate (Mindmap, Excel, Wiki, Html, Txt, Jira, ICal, Checklisten...)
@@ -46,25 +69,27 @@ Aber schauen wir im Detail, was "Le petit D'Artagngan 3D" nun so alles bietet:
     - integrierte Datenbank (Hsqldb)
     - Backend basierend auf Spring, Frontend-GUI basierend auf Angular-JS, JQuery, Fancytree und weiteren bewährten Frameworks
     - **WebKalender mit Terminen+Tasks pro Projekt** im ICal-Format direkt in Thunderbird+Outlook einbindbar
-    - **Html-Dokumentationen** (wie diese hier) direkt verlinkbar
+	- **Html-Dokumentationen **(wie diese hier) direkt verlinkbar
 - **Kommandozeilen-Tools zur Administration**
     - **Export der Daten in verschiedenene Formate** (Mindmap, Excel, Wiki, Html, ICal...)
     - Import der Daten aus verschiedenen Formaten (MExcel, Wiki, PPL)
     - Recalc, Reset usw.
 
-### Features: Was sind die Informationen die man derzeit in D'Artagnan speichern kann
+## Features: Was sind die Informationen die man derzeit in D'Artagnan speichern kann
+
 - Derzeit lassen sich so **Aufgaben, Infos, Urls, Symlinks, Events und Dateiverweise** speichern
 - Aufgaben+Events lassen sich mit Titel, Status, Plandaten (geplanter Aufwand, Starttermin, Endetermin) und Ist-Daten (benötigter Aufwand, realer Starttermin, realer Endetermin, Umsetzungsstand) versehen
 - Infos, Urls und Dateiressourcen stellen Titel, Ressource und Layoutbefehle für die Darstellung in Dokumentationen zur Verfügung
 - mit Hilfe von Symlinks kann man auf andere Knoten im Projektbaum verweisen
 - Alle Knoten stellen ein Bemerkungsfeld zur Verfügung in welchem kurze Bemerkungen/Kommentare aber auch ganze Artikel mit  Markdown formatiert und bei Quelltexten mit Syntaxhighlighting versehen, dokumentiert werden können.
 
-### Aufbau
+## Aufbau
+
 - Die Kernanwendung mit Datenbank wird von der Kommandozeile aus gestartet
 - es öffnet sich automatisch der **Browser** mit der Startseite -> die Datenpflege kann beginnen
 - neben dem Explorerfenster und verschiedenen Masken zum Export und zur Datenpflege gibt es auch eine Volltextsuche
 - man hat die Möglichkeit im linken Bereich des Explorerfensters im Projektbaum zu navigieren, rechts die Aktionen für die Knoten auszuführen, sich den erweiterten Inhalt einblenden oder im Seitenkopf in den Gantt-Ansicht  mit Darstellung des zeitlichen Verlauf wechseln
-- Teilbäume des Projekts (oder das Ganze ;-) lassen sich in verschiedene Export-Formate wie **Mindmap, Wiki, ICal, Html usw. exportieren**
-- zusätzlich besteht die Möglichkeit mit **Template-Vorlagen** zu arbeiten. Dazu kann man sich entweder einen bestehenden Teilbaum als Wiki exportieren und bearbeiten, oder ein völlig neues Wiki-Dokument erstellen und eine Aufgabe strukturieren. Diese Datei kann dann als neuer Teilbaum ins System importiert werden. **Passende Vorlagen für Projekte, Bugs, Backup und anderes liegen bei**. Übrigens wurde auch die Dokumentation die Sie gerade lesen auf diesem Wege importiert ;-)
+- Teilbäume des Projekts (oder das Ganze ;-) lassen sich in verschiedene Export-Formate wie **Mindmap, Wiki, ICal, Html** usw. exportieren
+- zusätzlich besteht die Möglichkeit mit Template-Vorlagen zu arbeiten. Dazu kann man sich entweder einen bestehenden Teilbaum als Wiki exportieren und bearbeiten, oder ein völlig neues Wiki-Dokument erstellen und eine Aufgabe strukturieren. Diese Datei kann dann als neuer Teilbaum ins System importiert werden. **Passende Vorlagen für Projekte, Bugs, Backup und anderes liegen bei**. Übrigens wurde auch die Dokumentation die Sie gerade lesen auf diesem Wege importiert ;-)
 
-  ** INFO - Ende                                                                [DocLayout: P,,,X]                                                              
+<!---/BOX--->
