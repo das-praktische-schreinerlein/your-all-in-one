@@ -114,10 +114,7 @@ public class ImportController {
                 
                 // create new response
                 response = NodeRestController.createResponseObj(
-                                node, "data for node '" + parentSysUID + "' imported");
-                
-                // add children
-                response.childNodes = new ArrayList<BaseNode>(node.getChildNodes());
+                                node, "data for node '" + parentSysUID + "' imported", true);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -191,11 +188,7 @@ public class ImportController {
                 
                 // create new response
                 response = NodeRestController.createResponseObj(
-                                node, "data for node '" + parentSysUID + "' imported");
-                
-                // add children
-                response.childNodes = new ArrayList<BaseNode>(node.getChildNodes());
-
+                                node, "data for node '" + parentSysUID + "' imported", true);
             } catch (Exception e) {
                 e.printStackTrace();
                 return new NodeActionResponse(
