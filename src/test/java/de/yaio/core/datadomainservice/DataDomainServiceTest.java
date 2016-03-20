@@ -82,7 +82,7 @@ public abstract class DataDomainServiceTest extends BaseTest {
     public void testServiceDoRecalc(final TestObj testObj, 
                     final String expectedAfterDoBeforeChildren,
                     final String expectedAfterDoAfterChildren,
-                    final int recurseDirection) throws Exception {
+                    final NodeService.RecalcRecurseDirection recurseDirection) throws Exception {
         
         DataDomain myDataDomainObj = (DataDomain) testObj;
         
@@ -95,7 +95,7 @@ public abstract class DataDomainServiceTest extends BaseTest {
         testService.checkToStringResult(testObj, expectedAfterDoBeforeChildren);
         
         // recalc children
-        if (recurseDirection == NodeService.CONST_RECURSE_DIRECTION_CHILDREN) {
+        if (recurseDirection == NodeService.RecalcRecurseDirection.CHILDREN) {
             for (String name : myDataDomainObj.getChildNodesByNameMap().keySet()) {
                 myDataDomainObj.getChildNodesByNameMap().get(name).recalcData(recurseDirection);
             }

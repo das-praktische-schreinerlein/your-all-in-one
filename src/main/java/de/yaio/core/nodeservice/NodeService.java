@@ -21,6 +21,8 @@ import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.datadomainservice.DataDomainRecalc;
 import de.yaio.core.node.BaseNode;
 
+import javax.xml.bind.annotation.XmlTransient;
+
 /** 
  * interface for businesslogic of nodes
  * 
@@ -32,14 +34,17 @@ import de.yaio.core.node.BaseNode;
  * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public interface NodeService {
-    
-    /** constants for recursion of recalc-functions: recurse all children */
-    int CONST_RECURSE_DIRECTION_CHILDREN = -1;
-    /** constants for recursion of recalc-functions: recurse only me */
-    int CONST_RECURSE_DIRECTION_ONLYME = 0;
-    /** constants for recursion of recalc-functions: recurse parents */
-    int CONST_RECURSE_DIRECTION_PARENT = 1;
-    
+
+    @XmlTransient
+    enum RecalcRecurseDirection {
+        /** constants for recursion of recalc-functions: recurse all children */
+        CHILDREN,
+        /** constants for recursion of recalc-functions: recurse only me */
+        ONLYME,
+        /** constants for recursion of recalc-functions: recurse parents */
+        PARENT
+    }
+
     /** constants for recursion of DB-functions: recurse all children */
     int CONST_DB_RECURSIONLEVEL_ALL_CHILDREN = -1;
 
@@ -62,34 +67,34 @@ public interface NodeService {
     /** 
      * recalcs the DataDomain of the node
      * @param node                   node to recalc
-     * @param recurseDirection       Type of recursion (parent, me, children) NodeService.CONST_RECURSE_DIRECTION_*
+     * @param recurseDirection       Type of recursion (parent, me, children) NodeService.RecalcRecurseDirection.*
      * @throws Exception             parser/format-Exceptions possible
      */
-    void doRecalc(DataDomain node, int recurseDirection) throws Exception;
+    void doRecalc(DataDomain node, NodeService.RecalcRecurseDirection recurseDirection) throws Exception;
 
     /** 
      * recalcs the DataDomain of the node before the children are recalced
      * @param node                   node to recalc
-     * @param recurceDirection       Type of recursion (parent, me, children) NodeService.CONST_RECURSE_DIRECTION_*
+     * @param recurseDirection       Type of recursion (parent, me, children) NodeService.RecalcRecurseDirection.*
      * @throws Exception             parser/format-Exceptions possible
      */
-    void doRecalcBeforeChildren(DataDomain node, int recurceDirection) throws Exception;
+    void doRecalcBeforeChildren(DataDomain node, NodeService.RecalcRecurseDirection recurseDirection) throws Exception;
 
     /** 
      * recalcs the DataDomain of the nodes children
      * @param node                   node which children to recalc
-     * @param recurceDirection       Type of recursion (parent, me, children) NodeService.CONST_RECURSE_DIRECTION_*
+     * @param recurseDirection       Type of recursion (parent, me, children) NodeService.RecalcRecurseDirection.*
      * @throws Exception             parser/format-Exceptions possible
      */
-    void doRecalcChildren(DataDomain node, int recurceDirection) throws Exception;
+    void doRecalcChildren(DataDomain node, NodeService.RecalcRecurseDirection recurseDirection) throws Exception;
 
     /** 
      * recalcs the DataDomain of the node after the children are recalced
      * @param node                   node to recalc
-     * @param recurceDirection       Type of recursion (parent, me, children) NodeService.CONST_RECURSE_DIRECTION_*
+     * @param recurseDirection       Type of recursion (parent, me, children) NodeService.RecalcRecurseDirection.*
      * @throws Exception             parser/format-Exceptions possible
      */
-    void doRecalcAfterChildren(DataDomain node, int recurceDirection) throws Exception;
+    void doRecalcAfterChildren(DataDomain node, NodeService.RecalcRecurseDirection recurseDirection) throws Exception;
     
     
     /** 
@@ -98,7 +103,7 @@ public interface NodeService {
      * @param recursionDirection     direction for recursivly recalc CONST_RECURSE_DIRECTION_* 
      * @throws Exception             parser/format-Exceptions possible
      */
-    void recalcData(DataDomain baseNode, int recursionDirection) throws Exception;
+    void recalcData(DataDomain baseNode, NodeService.RecalcRecurseDirection recursionDirection) throws Exception;
 
 
     ///////////////////////

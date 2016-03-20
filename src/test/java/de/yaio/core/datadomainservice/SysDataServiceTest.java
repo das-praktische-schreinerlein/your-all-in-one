@@ -81,7 +81,7 @@ public class SysDataServiceTest extends DataDomainServiceTest {
         SysDataTestObj myDataDomainObj = null; 
         String expectedAfterDoBeforeChildren = null;
         String expectedAfterDoAfterChildren = null;
-        int recurseDirection = NodeService.CONST_RECURSE_DIRECTION_CHILDREN;
+        NodeService.RecalcRecurseDirection recurseDirection = NodeService.RecalcRecurseDirection.CHILDREN;
         
         // check sys
         myDataDomainObj = getNewSysDataTestObj(); 

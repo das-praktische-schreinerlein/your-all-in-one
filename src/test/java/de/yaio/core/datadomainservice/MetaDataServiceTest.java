@@ -81,7 +81,7 @@ public class MetaDataServiceTest extends DataDomainServiceTest {
         MetaDataTestObj myDataDomainObj2 = null;
         String expectedAfterDoBeforeChildren = null;
         String expectedAfterDoAfterChildren = null;
-        int recurseDirection = NodeService.CONST_RECURSE_DIRECTION_CHILDREN;
+        NodeService.RecalcRecurseDirection recurseDirection = NodeService.RecalcRecurseDirection.CHILDREN;
         
         // empty Meta
         myDataDomainObj = getNewMetaDataTestObj(); 

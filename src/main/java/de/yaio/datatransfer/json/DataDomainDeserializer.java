@@ -73,7 +73,7 @@ public class DataDomainDeserializer extends JsonDeserializer<DataDomain> {
         } catch (ClassNotFoundException e) {
             try {
                 result = (DataDomain) mapper.treeToValue(node, Class.forName("de.yaio.core.node." + className));
-                result.recalcData(NodeService.CONST_RECURSE_DIRECTION_ONLYME);
+                result.recalcData(NodeService.RecalcRecurseDirection.ONLYME);
             } catch (ClassNotFoundException e2) {
                 throw new IOException("cant instattiate className: " + e2.getMessage());
             } catch (Exception e2) {

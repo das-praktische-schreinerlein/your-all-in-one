@@ -121,7 +121,7 @@ public class BaseNodeService extends NodeServiceImpl {
     // recalc
     ///////////////////////
     @Override
-    public void recalcData(final DataDomain baseNode, final int recursionDirection) throws Exception {
+    public void recalcData(final DataDomain baseNode, final NodeService.RecalcRecurseDirection recursionDirection) throws Exception {
         this.doRecalc(baseNode, recursionDirection);
     }
 

@@ -19,6 +19,7 @@ import java.util.Set;
 import javax.validation.ConstraintViolation;
 
 import de.yaio.core.node.BaseNode;
+import de.yaio.core.nodeservice.NodeService;
 
 /** 
  * interface for DataDomains of the Node
@@ -67,7 +68,7 @@ public interface DataDomain {
      * @param recursionDirection     direction for recursivly recalc CONST_RECURSE_DIRECTION_*
      * @throws Exception             possible Exception
      */
-    void recalcData(int recursionDirection) throws Exception;
+    void recalcData(NodeService.RecalcRecurseDirection recursionDirection) throws Exception;
 
     String getNameForLogger();
 

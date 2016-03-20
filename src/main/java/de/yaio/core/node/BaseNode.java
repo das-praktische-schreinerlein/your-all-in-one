@@ -41,6 +41,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlTransient;
 
+import de.yaio.core.nodeservice.NodeService;
 import org.apache.log4j.Logger;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.roo.addon.javabean.RooJavaBean;
@@ -789,7 +790,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     //####################
     
     @Override
-    public void recalcData(final int recursionDirection) throws Exception {
+    public void recalcData(final NodeService.RecalcRecurseDirection recursionDirection) throws Exception {
         getBaseNodeService().recalcData(this, recursionDirection);
     }
     

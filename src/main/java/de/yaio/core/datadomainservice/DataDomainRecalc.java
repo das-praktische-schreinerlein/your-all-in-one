@@ -14,6 +14,7 @@
 package de.yaio.core.datadomainservice;
 
 import de.yaio.core.datadomain.DataDomain;
+import de.yaio.core.nodeservice.NodeService;
 
 /** 
  * interface for baseservice with businesslogic of datadomains
@@ -34,19 +35,19 @@ public interface DataDomainRecalc extends Comparable<DataDomainRecalc> {
      * recalcs the DataDomain connected to the Recalcer before the children 
      * are recalced
      * @param node                   node to recalc
-     * @param recurceDirection       Type of recursion (parent, me, children) NodeService.CONST_RECURSE_DIRECTION_*
+     * @param recurseDirection       Type of recursion (parent, me, children) RecalcRecurseDirection.*
      * @throws Exception             parser/format-Exceptions possible
      */
-    void doRecalcBeforeChildren(DataDomain node, int recurceDirection) throws Exception;
+    void doRecalcBeforeChildren(DataDomain node, NodeService.RecalcRecurseDirection recurseDirection) throws Exception;
 
     /** 
      * recalcs the DataDomain connected to the Recalcer after the children 
      * are recalced
      * @param node                   node to recalc
-     * @param recurceDirection       Type of recursion (parent, me, children) NodeService.CONST_RECURSE_DIRECTION_*
+     * @param recurseDirection       Type of recursion (parent, me, children) RecalcRecurseDirection.*
      * @throws Exception             parser/format-Exceptions possible
      */
-    void doRecalcAfterChildren(DataDomain node, int recurceDirection) throws Exception;
+    void doRecalcAfterChildren(DataDomain node, NodeService.RecalcRecurseDirection recurseDirection) throws Exception;
 
     /** 
      * returns the class of the DataDomain for which the service runs

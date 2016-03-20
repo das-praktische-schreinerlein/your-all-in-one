@@ -98,7 +98,7 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
                 node.initChildNodesFromDB(0);
 
                 // recalc me
-                node.recalcData(BaseNodeService.CONST_RECURSE_DIRECTION_ONLYME);
+                node.recalcData(BaseNodeService.RecalcRecurseDirection.ONLYME);
 
                 // save me
                 node.merge();

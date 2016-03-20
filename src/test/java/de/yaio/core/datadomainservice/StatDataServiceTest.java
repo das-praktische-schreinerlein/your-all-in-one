@@ -87,7 +87,7 @@ public class StatDataServiceTest extends DataDomainServiceTest {
         StatDataTestObj myDataDomainObj3 = null;
         String expectedAfterDoBeforeChildren = null;
         String expectedAfterDoAfterChildren = null;
-        int recurseDirection = NodeService.CONST_RECURSE_DIRECTION_CHILDREN;
+        NodeService.RecalcRecurseDirection recurseDirection = NodeService.RecalcRecurseDirection.CHILDREN;
         
         // empty BaseWorkflow calculate UNKNOWN without %
         myDataDomainObj = getNewStatDataTestObj(); 

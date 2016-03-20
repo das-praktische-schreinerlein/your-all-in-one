@@ -66,7 +66,7 @@ public class JSONExporter extends CSVExporter {
 //        }
 //
 //        // recalcData
-//        masterNode.recalcData(NodeService.CONST_RECURSE_DIRECTION_CHILDREN);
+//        masterNode.recalcData(NodeService.RecalcRecurseDirection.CHILDREN);
 //
 //        // generate
 //        String res = this.getNodeResult(masterNode, "", oOptions).toString();

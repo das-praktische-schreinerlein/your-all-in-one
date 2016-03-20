@@ -58,12 +58,12 @@ public class StatDataServiceImpl extends DataDomainRecalcImpl implements StatDat
     }
     
     @Override
-    public void doRecalcBeforeChildren(final DataDomain node, final int recurceDirection) throws Exception {
+    public void doRecalcBeforeChildren(final DataDomain node, final NodeService.RecalcRecurseDirection recurseDirection) throws Exception {
         // NOP
     }
 
     @Override
-    public void doRecalcAfterChildren(final DataDomain node, final int recurceDirection) throws Exception {
+    public void doRecalcAfterChildren(final DataDomain node, final NodeService.RecalcRecurseDirection recurseDirection) throws Exception {
         if (node == null) {
             return;
         }

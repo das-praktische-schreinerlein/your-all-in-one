@@ -65,7 +65,7 @@ public class JPAExporter extends ExporterImpl {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("recalc children for:" + masterNode.getNameForLogger());
         }
-        masterNode.recalcData(BaseNodeService.CONST_RECURSE_DIRECTION_CHILDREN);
+        masterNode.recalcData(BaseNodeService.RecalcRecurseDirection.CHILDREN);
 
         // iterate the new children, look for them and delete them in db
         for (BaseNode newChildNode : masterNode.getChildNodes()) {

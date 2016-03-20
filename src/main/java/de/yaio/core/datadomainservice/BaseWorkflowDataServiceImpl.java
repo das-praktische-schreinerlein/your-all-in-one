@@ -86,7 +86,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
     }
     
     @Override
-    public void doRecalcBeforeChildren(final DataDomain node, final int recurceDirection) throws Exception {
+    public void doRecalcBeforeChildren(final DataDomain node, final NodeService.RecalcRecurseDirection recurseDirection) throws Exception {
         
         // Check if node is compatibel
         if (!BaseWorkflowData.class.isInstance(node)) {
@@ -98,7 +98,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
     }
 
     @Override
-    public void doRecalcAfterChildren(final DataDomain node, final int recurceDirection) throws Exception {
+    public void doRecalcAfterChildren(final DataDomain node, final NodeService.RecalcRecurseDirection recurseDirection) throws Exception {
         // Check if node is compatibel
         if (!BaseWorkflowData.class.isInstance(node)) {
                 throw new IllegalArgumentException();

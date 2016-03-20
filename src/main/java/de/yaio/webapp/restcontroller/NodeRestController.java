@@ -743,7 +743,7 @@ public class NodeRestController {
             origNode.setParentNode(parentNode);
             
             // recalc data
-            origNode.recalcData(BaseNodeService.CONST_RECURSE_DIRECTION_ONLYME);
+            origNode.recalcData(BaseNodeService.RecalcRecurseDirection.ONLYME);
             
             // save
             origNode.persist();

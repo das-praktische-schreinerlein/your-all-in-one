@@ -97,7 +97,7 @@ public class JSONFullExporter extends ExporterImpl {
         // recalcData
         if (oOptions.isFlgRecalc()) {
             // if set do it for all
-            masterNode.recalcData(NodeService.CONST_RECURSE_DIRECTION_CHILDREN);
+            masterNode.recalcData(NodeService.RecalcRecurseDirection.CHILDREN);
         }
         
 

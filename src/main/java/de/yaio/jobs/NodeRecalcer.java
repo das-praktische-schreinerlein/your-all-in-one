@@ -68,7 +68,7 @@ public class NodeRecalcer {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("recalc all children for node:" + sysUID);
             }
-            masterDbNode.recalcData(NodeService.CONST_RECURSE_DIRECTION_CHILDREN);
+            masterDbNode.recalcData(NodeService.RecalcRecurseDirection.CHILDREN);
 
             // recalc+save masterNode and parents
             if (LOGGER.isDebugEnabled()) {

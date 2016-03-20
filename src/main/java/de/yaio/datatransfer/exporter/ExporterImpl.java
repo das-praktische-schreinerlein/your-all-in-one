@@ -275,7 +275,7 @@ public class ExporterImpl implements Exporter {
         }
 
         // Daten neu berechnen
-// TODO check it       node.recalcData(NodeService.CONST_RECURSE_DIRECTION_ONLYME);
+// TODO check it       node.recalcData(NodeService.RecalcRecurseDirection.ONLYME);
         
         // Wenn Status nicht im Filter und keine Kindselemente vorhanden
         String state = ((BaseWorkflowData) node).getState();
