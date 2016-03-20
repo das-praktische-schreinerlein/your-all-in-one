@@ -398,7 +398,7 @@ public class HtmlExporter extends WikiExporter {
                 // Ueberschrift
                 String tag = "h" + tagEbene;
                 res += "<" + tag + " class='yaio-doc-" + tag
-                    + (addStyle.length() > 0 ? " yaio-doc-" + tag + addStyle : "") + "'"
+                    + (addStyle.length() > 0 ? " yaio-doc-" + tag + "-" + addStyle : "") + "'"
                     +   " id='" + tag + "_" + curNode.getSysUID() + "'>"
                     + ue
                     + "</" + tag + ">\n";
@@ -828,32 +828,32 @@ public class HtmlExporter extends WikiExporter {
         }
 
         // Result erzeugen
-        res = "<div id='node_" + curNode.getSysUID() + "_master' data-pjebene='" + curNode.getEbene() + "' class=' yaio-pj-node-block " + styleClassesBlock + "'>\n"
-            + "  <div id='node_" + curNode.getSysUID() + "_datacontainer' class=' yaio-pj-node-line-ue " + styleClassesUe + "'>\n"
-            + "    <div id='node_" + curNode.getSysUID() + "_namecontainer' class=' yaio-pj-node-area-name-container'>\n"
-            + "      <div id='node_" + curNode.getSysUID() + "_namecontainer2' class=' yaio-pj-node-area-name-container2 " + styleClassesNameContainer2 + "'>\n"
-            + "        <div id='node_" + curNode.getSysUID() + "_stateshort' class=' yaio-pj-node-area-stateshort " + styleClassesStateShort + "'>-</div>\n"
-            + "        <div id='node_" + curNode.getSysUID() + "_name' class=' yaio-pj-node-area-name " + styleClassesName + "'>"
+        res = "<div id='node_" + curNode.getSysUID() + "_master' data-pjebene='" + curNode.getEbene() + "' class='yaio-pj-node-block " + styleClassesBlock + "'>\n"
+            + "  <div id='node_" + curNode.getSysUID() + "_datacontainer' class='yaio-pj-node-line-ue " + styleClassesUe + "'>\n"
+            + "    <div id='node_" + curNode.getSysUID() + "_namecontainer' class='yaio-pj-node-area-name-container'>\n"
+            + "      <div id='node_" + curNode.getSysUID() + "_namecontainer2' class='yaio-pj-node-area-name-container2 " + styleClassesNameContainer2 + "'>\n"
+            + "        <div id='node_" + curNode.getSysUID() + "_stateshort' class='yaio-pj-node-area-stateshort " + styleClassesStateShort + "'>-</div>\n"
+            + "        <div id='node_" + curNode.getSysUID() + "_name' class='yaio-pj-node-area-name " + styleClassesName + "'>"
             +            blockName + "</div>\n"
             + "      </div>\n"
             + "    </div>\n"
-            + "    <div id='node_" + curNode.getSysUID() + "_state' class=' yaio-pj-node-area-state " + styleClassesState + "'>" + labelState + "</div>\n"
-//                    + "    <div id='node_" + curNode.getSysUID() + "_name' class=' yaio-pj-node-area-name " + styleClassesState + " " + styleClassesName + "'>" + labelState + " - " + blockName + "</div>"
-            + "    <div id='node_" + curNode.getSysUID() + "_istplan' class=' yaio-pj-node-area-istplan " + styleClassesState + "'>" + blockIstCalcSum + blockPlanCalcSum + blockIst + blockPlan + "</div>\n"
+            + "    <div id='node_" + curNode.getSysUID() + "_state' class='yaio-pj-node-area-state " + styleClassesState + "'>" + labelState + "</div>\n"
+//                    + "    <div id='node_" + curNode.getSysUID() + "_name' class='yaio-pj-node-area-name " + styleClassesState + " " + styleClassesName + "'>" + labelState + " - " + blockName + "</div>"
+            + "    <div id='node_" + curNode.getSysUID() + "_istplan' class='yaio-pj-node-area-istplan " + styleClassesState + "'>" + blockIstCalcSum + blockPlanCalcSum + blockIst + blockPlan + "</div>\n"
             + "  </div>\n"
-            + "  <div id='node_" + curNode.getSysUID() + "_desccontainer' class=' yaio-pj-node-container-desc'>" + blockDesc + "</div>\n";
+            + "  <div id='node_" + curNode.getSysUID() + "_desccontainer' class='yaio-pj-node-container-desc'>" + blockDesc + "</div>\n";
 
         // Children einfuegen
         if (curNode.getChildNodes().size() > 0) {
-            res +=  "  <div id='node_" + curNode.getSysUID() + "_childrencontainer' data-pjebene='" + curNode.getEbene() + "' class=' yaio-pj-node-container-children'>" + blockChildren + "</div>\n";
+            res +=  "  <div id='node_" + curNode.getSysUID() + "_childrencontainer' data-pjebene='" + curNode.getEbene() + "' class='yaio-pj-node-container-children'>" + blockChildren + "</div>\n";
         }
 
 //                // Trenner einfuegen
 //                if (curNode.getLstChildProjektNodes().size() > 0) {
-//                    res += "  <div id='node_" + curNode.getSysUID() + "_datacontainer_dummy' class=' yaio-pj-node-line-ue yaio-pj-node-line-trenner '>"
-//                        + "    <div id='node_" + curNode.getSysUID() + "_state_dummy' class=' yaio-pj-node-area-state yaio-pj-node-trenner-area-state'>&nbsp;</div>"
-//                        + "    <div id='node_" + curNode.getSysUID() + "_name_dummy' class=' yaio-pj-node-area-name " + styleClassesName + " yaio-pj-node-trenner-area-name'><span class=' yaio-pj-node-trenner-area-intend'>&nbsp;</span></div>"
-//                        + "    <div id='node_" + curNode.getSysUID() + "_istplan' class=' yaio-pj-node-area-istplan '><span class=' yaio-pj-node-trenner-area-intend'>&nbsp;</span></div>"
+//                    res += "  <div id='node_" + curNode.getSysUID() + "_datacontainer_dummy' class='yaio-pj-node-line-ue yaio-pj-node-line-trenner '>"
+//                        + "    <div id='node_" + curNode.getSysUID() + "_state_dummy' class='yaio-pj-node-area-state yaio-pj-node-trenner-area-state'>&nbsp;</div>"
+//                        + "    <div id='node_" + curNode.getSysUID() + "_name_dummy' class='yaio-pj-node-area-name " + styleClassesName + " yaio-pj-node-trenner-area-name'><span class='yaio-pj-node-trenner-area-intend'>&nbsp;</span></div>"
+//                        + "    <div id='node_" + curNode.getSysUID() + "_istplan' class='yaio-pj-node-area-istplan '><span class='yaio-pj-node-trenner-area-intend'>&nbsp;</span></div>"
 //                        + "  </div>\n";
 //                }
 
@@ -906,7 +906,7 @@ public class HtmlExporter extends WikiExporter {
                 data = "&nbsp;";
             }
             res = "<div id='node_" + curNode.getSysUID() +  "_" + dataName + "' "
-                + " class=' yaio-pj-node-data-block yaio-pj-node-block-" + dataName + " " + styleClasses + "'>"
+                + " class='yaio-pj-node-data-block yaio-pj-node-block-" + dataName + " " + styleClasses + "'>"
                 + data + "</div>";
         }
         return res;
