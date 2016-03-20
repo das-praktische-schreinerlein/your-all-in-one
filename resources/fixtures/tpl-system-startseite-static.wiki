@@ -19,8 +19,7 @@ Also suche Dir einen D'Artagnan-Server um alle Features nutzen zu können. **LOS
 
 Aber zum Rumstöbern und zur Dokumentation reichten die Funktionen die Dir zur Verfügung stehen definitiv aus:-)
 
-<!---STYLE li ul splitter1 splitter2:jsh-md-list-horiz--->
-<!---STYLE splitter2:jsh-md-text-big--->
+<!---STYLE a li ul splitter1 splitter2:jsh-md-list-horiz jsh-md-text-big list-nextactions--->
 - Du kennst D'Artagnan noch nicht? Du möchtest erst einmal die Möglichkeiten sehen, die D'Artagnan dir bietet?:|:[Zur Hilfe/Einführung](#/frontpage/SysHelp1)
 - Du kennst Dich mit D'Artagnan schon sehr gut aus und möchtest sofort fleißig arbeiten:|:[Auf zum Projektexplorer](#/show/MasterplanMasternode1)
 - Du willst Dir einen Überblick über den aktuellen Stand deines Projektes verschaffen?:|:[Nicht leichter als mit dem Dashboard](#/dashboard)
@@ -28,8 +27,7 @@ Aber zum Rumstöbern und zur Dokumentation reichten die Funktionen die Dir zur V
 - Du möchtest nur den integrierten WySiWyG-Editor benutzen?:|:[Auf zum WySiWyG](ymf-editorapp.html)
 - Du möchtest mehr über das Projekt erfahren?:|:[Auf nach Github](https://github.com/das-praktische-schreinerlein/your-all-in-one/)
 
-<!---/STYLE splitter2:jsh-md-text-big--->
-<!---/STYLE li ul splitter1 splitter2:jsh-md-list-horiz--->
+<!---/STYLE a li ul splitter1 splitter2:jsh-md-list-horiz jsh-md-text-big list-nextactions--->
 <!---/CONTAINER--->
 <!---/BOX--->
 

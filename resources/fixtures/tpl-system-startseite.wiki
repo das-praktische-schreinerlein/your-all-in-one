@@ -8,8 +8,7 @@ Hier finden Sie die Startseite für D'Artagnan. Bitte nehmen Sie hier keine Änd
 <!---/STYLE h1:yaio-color-ue--->
 <!---CONTAINER links--->
 
-<!---STYLE li ul splitter1 splitter2:jsh-md-list-horiz--->
-<!---STYLE a splitter2:jsh-md-text-big jsh-md-text-bold--->
+<!---STYLE a li ul splitter1 splitter2:jsh-md-list-horiz jsh-md-text-big list-nextactions--->
 - Du kennst D'Artagnan noch nicht?<br>Du möchtest erst einmal die Möglichkeiten sehen, die D'Artagnan dir bietet?<br><br> [Zur Einführung](/yaio-explorerapp/yaio-explorerapp.html#/frontpage/SysIntro1)
 - Du hast schon viel von D'Artagnan gehört? D'Artagnan hat viele Neuerungen erfahren. Am besten du schaust Dir die Hilfeseite an.<br><br> [Nichts wie zu Hilfeseite](/yaio-explorerapp/yaio-explorerapp.html#/frontpage/SysHelp1)
 - Du kennst Dich mit D'Artagnan schon sehr gut aus und möchtest sofort fleißig arbeiten<br><br> [ Auf zum Projektexplorer](/yaio-explorerapp/yaio-explorerapp.html#/show/MasterplanMasternode1)
@@ -17,8 +16,7 @@ Hier finden Sie die Startseite für D'Artagnan. Bitte nehmen Sie hier keine Änd
 - Du möchtest nur den integrierten WySiWyG-Editor benutzen?<br><br> [Auf zum WySiWyG](/yaio-explorerapp/wysiwyg.html)
 - Du möchtest wissen wie es weitergeht?<br><br> [Auf zur Roadmap](/yaio-explorerapp/yaio-explorerapp.html#/frontpage/SysRoad1)
 
-<!---/STYLE a splitter2:jsh-md-text-big jsh-md-text-bold--->
-<!---/STYLE li ul splitter1 splitter2:jsh-md-list-horiz--->
+<!---/STYLE a li ul splitter1 splitter2:jsh-md-list-horiz jsh-md-text-big list-nextactions--->
 <!---/CONTAINER--->
 <!---/BOX--->
 
