@@ -48,7 +48,7 @@ public class MetaDataTest extends DataDomainTest {
                      .append(this.getMetaNodePraefix()).append("|")
                      .append(this.getMetaNodeNummer()).append("|")
                      .append(this.getMetaNodeTypeTags()).append("|")
-                     .append(this.getMetaNodeSubTypeTags()).append("|");
+                     .append(this.getMetaNodeSubType()).append("|");
             return resBuffer.toString();
             
         }
@@ -110,7 +110,7 @@ public class MetaDataTest extends DataDomainTest {
 
         // full
         mytestObj.setMetaNodeTypeTags("Tags");
-        mytestObj.setMetaNodeSubTypeTags("SubTags");
+        mytestObj.setMetaNodeSubType("SubTags");
         expected = "                                                                                                                                                                [NodeMeta: Praefix,Id,Tags,SubTags]";
         testFormatter(mytestObj, expected, outputOptions);
 
