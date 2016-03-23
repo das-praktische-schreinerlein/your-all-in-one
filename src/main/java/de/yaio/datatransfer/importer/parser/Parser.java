@@ -50,7 +50,7 @@ public interface Parser extends Comparable<Parser> {
     /** Pattern to parse ID-segments */
     String CONST_PATTERN_SEG_ID = "[0-9]";
     /** Pattern to parse Tag-segments */
-    String CONST_PATTERN_SEG_TAGS = "[-0-9\\p{L}+_\\*\\.;]";
+    String CONST_PATTERN_SEG_TAGS = "[-0-9\\p{L}+ _\\*\\.;]";
     /** Pattern to parse SubType-segments */
     String CONST_PATTERN_SEG_SUBTYPE = "[a-zA-Z_\\.]";
     /** Pattern to parse ID-Praefix-segments */
