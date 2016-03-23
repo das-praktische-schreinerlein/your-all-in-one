@@ -118,9 +118,11 @@ public class SysDataServiceImpl extends DataDomainRecalcImpl implements SysDataS
                            + " cmp=" + newChecksum.equals(checksum)
                            + " nullchecksum=" + (checksum == null));
             }
+            if (!newChecksum.equals(checksum)) {
+                flgChanged = true;
+            }
             checksum = newChecksum;
             node.setSysCurChecksum(checksum);
-            flgChanged = true;
             node.setFlgForceUpdate(true);
         }
 
