@@ -32,8 +32,8 @@ public interface MetaData extends DataDomain {
     void setMetaNodeNummer(String metaNodeNummer);
     String getMetaNodeTypeTags();
     void setMetaNodeTypeTags(String metaNodeTypeTags);
-    String getMetaNodeSubTypeTags();
-    void setMetaNodeSubTypeTags(String metaNodeSubTypeTags);
+    String getMetaNodeSubType();
+    void setMetaNodeSubType(String metaNodeSubType);
     
     void initMetaData() throws Exception;
 

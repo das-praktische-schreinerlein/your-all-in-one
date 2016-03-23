@@ -491,7 +491,7 @@ public class BaseNodeService extends NodeServiceImpl {
             .append(" metaNodePraefix=").append(node.getMetaNodePraefix())
             .append(" metaNodeNummer=").append(node.getMetaNodeNummer())
             .append(" metaNodeTypeTags=").append(node.getMetaNodeTypeTags())
-            .append(" metaNodeSubTypeTags=").append(node.getMetaNodeSubTypeTags())
+            .append(" metaNodeSubType=").append(node.getMetaNodeSubType())
             .append(" desc=").append(node.getNodeDesc());
         return data.toString();
     }

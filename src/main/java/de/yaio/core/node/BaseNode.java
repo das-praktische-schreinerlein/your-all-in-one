@@ -240,9 +240,9 @@ public class BaseNode implements BaseData, MetaData, SysData,
     /**
      */
     @Size(max = 255)
-    @Pattern(regexp = "(" + Parser.CONST_PATTERN_SEG_TAGS + ")*?", 
-             message = "metaNodeSubTypeTags can only contain characters.")
-    private String metaNodeSubTypeTags;
+    @Pattern(regexp = "(" + Parser.CONST_PATTERN_SEG_SUBTYPE + ")*?",
+             message = "metaNodeSubType can only contain characters.")
+    private String metaNodeSubType;
 
     /**
      * first date of planed work
@@ -961,7 +961,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     public void resetMetaData() {
         this.setMetaNodeNummer(null);
         this.setMetaNodePraefix("UNKNOWN");
-        this.setMetaNodeSubTypeTags(null);
+        this.setMetaNodeSubType(null);
         this.setMetaNodeTypeTags(null);
     }
 }

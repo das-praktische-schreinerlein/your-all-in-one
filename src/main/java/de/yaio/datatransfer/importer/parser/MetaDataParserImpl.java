@@ -119,7 +119,7 @@ public class MetaDataParserImpl  extends ParserImpl implements MetaDataParser {
             if (matcher.group(matcherindex) != null) {
                 node.setMetaNodeNummer(matcher.group(matcherindex));
             }
-            // Checksum
+            // NodeType
             matcherindex = 4;
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Pattern: " + pattern + " " 
@@ -128,14 +128,14 @@ public class MetaDataParserImpl  extends ParserImpl implements MetaDataParser {
             if (matcher.group(matcherindex) != null) {
                 node.setMetaNodeTypeTags(matcher.group(matcherindex));
             }
-            // ChangeDate
+            // SubNodeType
             matcherindex = 5;
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Pattern: " + pattern + " " 
                     + matcherindex + ":" + matcher.group(matcherindex));
             }
             if (matcher.group(matcherindex) != null) {
-                node.setMetaNodeSubTypeTags(matcher.group(matcherindex));
+                node.setMetaNodeSubType(matcher.group(matcherindex));
             }
 
             found++;

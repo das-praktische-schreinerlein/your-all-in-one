@@ -93,7 +93,7 @@ public class MetaDataFormatterImpl extends FormatterImpl implements MetaDataForm
         String praefix = node.getMetaNodePraefix();
         String id = node.getMetaNodeNummer();
         String nodeType = node.getMetaNodeTypeTags();
-        String nodeSubType = node.getMetaNodeSubTypeTags();
+        String nodeSubType = node.getMetaNodeSubType();
 
         // Ausgabe erzeugen
         if (!StringUtils.isEmpty(praefix)

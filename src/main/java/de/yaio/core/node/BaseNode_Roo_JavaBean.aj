@@ -158,12 +158,12 @@ privileged aspect BaseNode_Roo_JavaBean {
         this.metaNodeTypeTags = metaNodeTypeTags;
     }
     
-    public String BaseNode.getMetaNodeSubTypeTags() {
-        return this.metaNodeSubTypeTags;
+    public String BaseNode.getMetaNodeSubType() {
+        return this.metaNodeSubType;
     }
     
-    public void BaseNode.setMetaNodeSubTypeTags(String metaNodeSubTypeTags) {
-        this.metaNodeSubTypeTags = metaNodeSubTypeTags;
+    public void BaseNode.setMetaNodeSubType(String metaNodeSubType) {
+        this.metaNodeSubType = metaNodeSubType;
     }
     
     public Date BaseNode.getPlanStart() {
