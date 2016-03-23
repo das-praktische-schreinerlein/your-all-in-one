@@ -218,9 +218,16 @@ public class DatatransferUtils {
         }
         // check for type
         if (Calculator.compareValues(
-                        origNode.getType(), newNode.getType()) 
+                        origNode.getType(), newNode.getType())
                         != Calculator.CONST_COMPARE_EQ) {
             origNode.setType(newNode.getType());
+            flgChange = true;
+        }
+        // check for subType
+        if (Calculator.compareValues(
+                origNode.getMetaNodeSubType(), newNode.getMetaNodeSubType())
+                != Calculator.CONST_COMPARE_EQ) {
+            origNode.setMetaNodeSubType(newNode.getMetaNodeSubType());
             flgChange = true;
         }
         // check for nodeDesc
