@@ -267,36 +267,30 @@ public class Configurator {
         return configPath;
     }
 
-    protected void initSpringApplicationContext() throws Exception {
-        // check
-        if (applicationContext != null) {
-            throw new IllegalStateException("initSpringApplicationContext: "
-                            + "applicationContext already set");
-        }
-        
+    public Properties initProperties()  throws Exception {
         // get Configpath
         String configPath = this.getConfigFile();
-        
+
         // read properties
         Properties props = readProperties(configPath);
 
         // add all properties to system
         for (String propName : props.stringPropertyNames()) {
             System.setProperty(propName, props.getProperty(propName));
-                LOGGER.info("set System.prop:" + propName + "=" + props.getProperty(propName));
+            LOGGER.info("set System.prop:" + propName + "=" + props.getProperty(propName));
         }
-        
+
         // load PostProcessorReplacements
         String replacerConfigPath = props.getProperty(
-                        CONST_PROPNAME_EXPORTCONTROLLER_REPLACER);
+                CONST_PROPNAME_EXPORTCONTROLLER_REPLACER);
         if (replacerConfigPath != null) {
             Properties replacerConfig = readProperties(replacerConfigPath);
-            
+
             // load defined
             int count = replacerConfig.size() / 2;
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.info("check PostProcessorReplacements_documentation found:" 
-                    + count + " in file:" + replacerConfigPath + " props:" + replacerConfig);
+                LOGGER.info("check PostProcessorReplacements_documentation found:"
+                        + count + " in file:" + replacerConfigPath + " props:" + replacerConfig);
             }
             for (int zaehler = 0; zaehler <= count; zaehler++) {
                 String keyName = CONST_PROPNAME_EXPORTCONTROLLER_REPLACER_DOCUMENTATION_SRC + "." + (zaehler + 1);
@@ -304,21 +298,21 @@ public class Configurator {
                 String valueName = CONST_PROPNAME_EXPORTCONTROLLER_REPLACER_DOCUMENTATION_TARGET + "." + (zaehler + 1);
                 String target = replacerConfig.getProperty(valueName);
                 if (LOGGER.isDebugEnabled()) {
-                    LOGGER.info("check PostProcessorReplacements_documentation:" 
-                        + zaehler + " " + keyName + "=" + valueName 
-                        + " / " + pattern + "=" + target);
+                    LOGGER.info("check PostProcessorReplacements_documentation:"
+                            + zaehler + " " + keyName + "=" + valueName
+                            + " / " + pattern + "=" + target);
                 }
                 if (pattern != null) {
                     PostProcessorReplacements_documentation.put(
-                                    pattern, 
-                                    target != null ? target : "");
-                        LOGGER.info("set PostProcessorReplacements_documentation:" 
-                                    + pattern + "=" + target);
+                            pattern,
+                            target != null ? target : "");
+                    LOGGER.info("set PostProcessorReplacements_documentation:"
+                            + pattern + "=" + target);
                 }
             }
         }
-        
-       // load defined
+
+        // load defined
         int count = props.size() / 3;
         for (int zaehler = 0; zaehler <= count; zaehler++) {
             String keyName = CONST_PROPNAME_YAIOINSTANCES_NAME + "." + (zaehler + 1);
@@ -328,10 +322,10 @@ public class Configurator {
             String urlName = CONST_PROPNAME_YAIOINSTANCES_URL + "." + (zaehler + 1);
             String url = props.getProperty(urlName);
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.info("check YaioInstances:" 
-                    + zaehler + " " + keyName + "=" + name 
-                    + " / " + urlName + "=" + url
-                    + " / " + descName + "=" + desc);
+                LOGGER.info("check YaioInstances:"
+                        + zaehler + " " + keyName + "=" + name
+                        + " / " + urlName + "=" + url
+                        + " / " + descName + "=" + desc);
             }
             if (!StringUtils.isEmpty(name) && !StringUtils.isEmpty(url)) {
                 Map<String, String> data = new HashMap<String, String>();
@@ -339,9 +333,21 @@ public class Configurator {
                 data.put(CONST_PROPNAME_YAIOINSTANCES_DESC, desc);
                 data.put(CONST_PROPNAME_YAIOINSTANCES_URL, url);
                 this.knownYaioInstances.put(name, data);
-                    LOGGER.info("set YaioInstances:" + name + "=" + url + " " + desc);
+                LOGGER.info("set YaioInstances:" + name + "=" + url + " " + desc);
             }
         }
+
+        return props;
+    }
+
+    protected void initSpringApplicationContext() throws Exception {
+        // check
+        if (applicationContext != null) {
+            throw new IllegalStateException("initSpringApplicationContext: "
+                            + "applicationContext already set");
+        }
+
+        Properties props = this.initProperties();
 
         // define the applicationConfigPath
         String applicationConfigPath = 
