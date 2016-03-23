@@ -223,11 +223,19 @@ public class DatatransferUtils {
             origNode.setType(newNode.getType());
             flgChange = true;
         }
-        // check for subType
+
+        // check for metaNodeSubType
         if (Calculator.compareValues(
                 origNode.getMetaNodeSubType(), newNode.getMetaNodeSubType())
                 != Calculator.CONST_COMPARE_EQ) {
             origNode.setMetaNodeSubType(newNode.getMetaNodeSubType());
+            flgChange = true;
+        }
+        // check for metMetaNodeTypeTags
+        if (Calculator.compareValues(
+                origNode.getMetaNodeTypeTags(), newNode.getMetaNodeTypeTags())
+                != Calculator.CONST_COMPARE_EQ) {
+            origNode.setMetaNodeTypeTags(newNode.getMetaNodeTypeTags());
             flgChange = true;
         }
         // check for nodeDesc
