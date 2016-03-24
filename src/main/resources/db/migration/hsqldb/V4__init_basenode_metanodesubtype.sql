@@ -78,7 +78,7 @@ update BASE_NODE set META_NODE_SUB_TYPE='InfoNodeMetaNodeSubType.CONTAINER'
 where
   META_NODE_SUB_TYPE is null and
   DTYPE in ('InfoNode') and
-  STAT_CHILD_NODE_COUNT > 1
+  STAT_CHILD_NODE_COUNT > 0
 ;
 ----- snapshot
 update BASE_NODE set META_NODE_SUB_TYPE='InfoNodeMetaNodeSubType.SNAPSHOT'
