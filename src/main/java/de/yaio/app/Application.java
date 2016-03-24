@@ -20,6 +20,7 @@ import java.util.List;
 import javax.annotation.PreDestroy;
 import javax.servlet.MultipartConfigElement;
 
+import de.yaio.jobs.YaioFlyway;
 import org.apache.commons.cli.Option;
 import org.apache.log4j.Logger;
 import org.apache.tomcat.util.http.fileupload.FileUpload;
@@ -116,10 +117,14 @@ public class Application {
                 LOGGER.info("Illegal CmdArgs Exit: 1");
                 System.exit(CmdLineJob.CONST_EXITCODE_FAILED_ARGS);
             }
-            
+
+            // do flyway
+            String flyWayRes = YaioFlyway.doFlyway();
+            LOGGER.info(flyWayRes);
+
             // initApplicationContext
             Configurator.getInstance().getSpringApplicationContext();
-            
+
             // gets NodeNumberService
             nodeNumberService = 
                             BaseNode.getConfiguredMetaDataService().getNodeNumberService();
