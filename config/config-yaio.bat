@@ -46,6 +46,7 @@ set APPPROPAGATOR=%BASEPATH%..\sbin\apppropagator.jar
 set CP="%YAIOAPP%;%APPPROPAGATOR%;"
 set CFGFILE=%BASEPATH%..\config\application.properties
 set CFG=--config %CFGFILE% 
+set FLYWAYCFG=%CFG%
 set JAVAOPTIONS=-Xmx768m -Xms128m -Dspring.config.location=file:%CFGFILE% -Dlog4j.configuration=file:%BASEPATH%..\config\log4j.properties
 
 rem change CodePage
@@ -69,6 +70,7 @@ set PROG_CALLYAIOIMPORT=de.yaio.jobs.CallYaioImport
 set PROG_APP=de.yaio.app.Application
 set PROG_APPPROPAGATOR=de.yitf.app.apppropagator.UpnpAppPropagator
 set PROG_RECALC=de.yaio.jobs.JobRecalcNodes
+set PROG_FLYWAY=de.yaio.jobs.JobYaioFlyway
 set PROG_DIFF=
 set PROG_WINMERGE="C:\ProgrammePortable\PortableApps\PortableApps\WinMergePortable\WinMergePortable.exe"
 
