@@ -555,6 +555,27 @@
                </executions>
             </plugin>
 
+            <!-- run flyway before tests -->
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>4.0</version>
+                <executions>
+                    <execution>
+                        <phase>process-test-resources</phase>
+                        <goals>
+                            <goal>migrate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <locations>
+                        <location>filesystem:src/main/resources/db/migration/hsqldb</location>
+                    </locations>
+                    <configFile>./config/application.properties</configFile>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
