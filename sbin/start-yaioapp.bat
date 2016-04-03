@@ -24,7 +24,7 @@ set YAIOCONFIGPATH=%YAIOSCRIPTPATH%..\config\
 rem init config
 call %YAIOCONFIGPATH%\config-yaio.bat %YAIOSCRIPTPATH%
 
-set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_FLYWAY% %FLYWAYCFGFILE%
+set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_FLYWAY% %FLYWAYCFG%
 echo "run-flyway: %CMD%"
 %CMD%
 
