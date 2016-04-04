@@ -19,16 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
@@ -126,13 +117,13 @@ public class BaseNode implements BaseData, MetaData, SysData,
     
     /**
      */
-    @Size(min = 1, max = 64000)
+    @Size(min = 1, max = 64000000)
     @Transient
     private String fullSrc;
 
     /**
      */
-    @Size(max = 64000)
+    @Size(max = 64000000)
     private String srcName;
 
     /**
@@ -151,8 +142,8 @@ public class BaseNode implements BaseData, MetaData, SysData,
 
     /**
      */
-    @Size(max = 64000)
-    @Pattern(regexp = "(" + Parser.CONST_PATTERN_SEG_DESC + "*)?", 
+    @Size(max = 64000000)
+    @Pattern(regexp = "(" + Parser.CONST_PATTERN_SEG_DESC + "*)?",
              message = "desc can only contain characters.")
     private String nodeDesc;
 
