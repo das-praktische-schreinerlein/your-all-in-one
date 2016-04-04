@@ -502,7 +502,13 @@
         </resources>
         <testResources>
             <testResource>
-                <directory>${project.basedir}/src/test/java</directory>
+                <directory>${project.basedir}/src/test/java/unit</directory>
+                <excludes>
+                    <exclude>**/*.java</exclude>
+                </excludes>
+            </testResource>
+            <testResource>
+                <directory>${project.basedir}/src/test/java/functional</directory>
                 <excludes>
                     <exclude>**/*.java</exclude>
                 </excludes>
