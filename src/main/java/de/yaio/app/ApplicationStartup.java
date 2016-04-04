@@ -13,6 +13,7 @@
  */
 package de.yaio.app;
 
+import de.yaio.jobs.StatDataRecalcer;
 import de.yaio.jobs.SysDataRecalcer;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationListener;
@@ -36,6 +37,7 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
     @Override
     public void onApplicationEvent(final ContextRefreshedEvent event) {
         recalcSysData();
+        recalcStatData();
     }
 
     /**
@@ -48,6 +50,19 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
             LOGGER.info("recalcing SysData done:" + res);
         } catch (Exception ex) {
             LOGGER.error("ERROR while recalcSysData on startup", ex);
+        }
+    }
+
+    /**
+     * recalc the statData on startup
+     */
+    protected void recalcStatData() {
+        try {
+            StatDataRecalcer recalcer = new StatDataRecalcer();
+            String res = recalcer.recalcStatData();
+            LOGGER.info("recalcing StatData done:" + res);
+        } catch (Exception ex) {
+            LOGGER.error("ERROR while recalcStatData on startup", ex);
         }
     }
 }
