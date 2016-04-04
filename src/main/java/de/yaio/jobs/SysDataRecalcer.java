@@ -76,7 +76,6 @@ public class SysDataRecalcer {
                 }
 
                 node.merge();
-                // recalc+save masterNode and parents
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("save node:" + node.getNameForLogger());
                 }
@@ -86,7 +85,6 @@ public class SysDataRecalcer {
             LOGGER.info("done update nodes for recalc sysData:" + count);
         }
 
-        // add it to masterDBNode
         return "update sysData for nodes done";
     }
 }
