@@ -54,7 +54,7 @@ public interface Parser extends Comparable<Parser> {
     /** Pattern to parse SubType-segments */
     String CONST_PATTERN_SEG_SUBTYPE = "[a-zA-Z_\\.]";
     /** Pattern to parse ID-Praefix-segments */
-    String CONST_PATTERN_SEG_PRAEFIX = "[A-Za-z]";
+    String CONST_PATTERN_SEG_PRAEFIX = "[0-9A-Za-z]";
     /** Pattern to parse Checksum-segments */
     String CONST_PATTERN_SEG_CHECKSUM = "[0-9A-Za-z]";
     /** Pattern to parse Time-segments */
