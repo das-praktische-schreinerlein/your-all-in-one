@@ -66,6 +66,7 @@ public class StatDataRecalcer {
             query.setMaxResults(maxPerRun);
             List<BaseNode> nodes = query.getResultList();
             for (BaseNode node: nodes) {
+                node.initChildNodesFromDB(0);
                 statDataService.updateChildrenCount(node);
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("updated statdata node:" + node.getNameForLogger());
