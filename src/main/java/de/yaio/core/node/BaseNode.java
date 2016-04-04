@@ -220,7 +220,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
      */
     @Size(max = 10)
     @Pattern(regexp = "(" + Parser.CONST_PATTERN_SEG_PRAEFIX + "*)?", 
-             message = "metaNodePraefix can only contain characters.")
+             message = "metaNodePraefix can only contain characters and numbers.")
     private String metaNodePraefix;
 
     /**
