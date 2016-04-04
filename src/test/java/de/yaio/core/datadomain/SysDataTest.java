@@ -86,8 +86,8 @@ public class SysDataTest extends DataDomainTest {
 
         // normal
         mytestObj = getNewSysDataTestObj();
-        mytestObj.setName("Name [NodeSys: DT201404081141327673,08.04.2014 11:41,8BD061519EBEF22082D731304768276C,10.04.2014 10:04,9]");
-        expected = "Name|DT201404081141327673|Tue Apr 08 11:41:00 CEST 2014|8BD061519EBEF22082D731304768276C|Thu Apr 10 10:04:00 CEST 2014|9|";
+        mytestObj.setName("Name [NodeSys: DT201404081141327673,08.04.2014 11:41,BD87EF8392D672FE28B4D861A43A9F5F,10.04.2014 10:04,9]");
+        expected = "Name|DT201404081141327673|Tue Apr 08 11:41:00 CEST 2014|BD87EF8392D672FE28B4D861A43A9F5F|Thu Apr 10 10:04:00 CEST 2014|9|";
         testParser(mytestObj, expected, importOptions);
     }
 
@@ -101,15 +101,15 @@ public class SysDataTest extends DataDomainTest {
         mytestObj.setName("Name XX  ");
         mytestObj.setSysUID("DT201404081141327673");
         mytestObj.setSysCreateDate(DTF.parse("08.04.2014 11:41"));
-        mytestObj.setSysCurChecksum("8BD061519EBEF22082D731304768276C");
+        mytestObj.setSysCurChecksum("BD87EF8392D672FE28B4D861A43A9F5F");
         mytestObj.setSysChangeDate(DTF.parse("10.04.2014 10:04"));
         mytestObj.setSysChangeCount(9);
-        expected = "                                                                                                                                                                [NodeSys: DT201404081141327673,08.04.2014 11:41,8BD061519EBEF22082D731304768276C,10.04.2014 10:04,9]";
+        expected = "                                                                                                                                                                [NodeSys: DT201404081141327673,08.04.2014 11:41,BD87EF8392D672FE28B4D861A43A9F5F,10.04.2014 10:04,9]";
         testFormatter(mytestObj, expected, outputOptions);
 
         // intend Sys
         outputOptions.setIntendSys(10);
-        expected = "          [NodeSys: DT201404081141327673,08.04.2014 11:41,8BD061519EBEF22082D731304768276C,10.04.2014 10:04,9]";
+        expected = "          [NodeSys: DT201404081141327673,08.04.2014 11:41,BD87EF8392D672FE28B4D861A43A9F5F,10.04.2014 10:04,9]";
         testFormatter(mytestObj, expected, outputOptions);
 
         // dont show
