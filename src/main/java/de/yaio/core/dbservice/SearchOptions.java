@@ -39,4 +39,6 @@ public interface SearchOptions {
     Map<String, String> getMapClassFilter();
     Map<String, String> getMapTypeFilter();
     Map<String, String> getMapStateFilter();
+    Map<String, String> getMapMetaNodeSubTypeFilter();
+    Map<String, String> getMapMetaNodeTypeTagsFilter();
 }

@@ -290,8 +290,24 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
             childNode.remove();
         }
     }
-    
-    
+
+
+    protected List<DBFilter> createMapStringContainsFilter(final String fieldName, final Set<String> values) {
+        int idx = 0;
+        List<DBFilter> dbFilters = new ArrayList<DBFilter>();
+        if (values != null) {
+            List<String> sqlList = new ArrayList<String>();
+            List<DBFilter.Parameter> parameters = new ArrayList<DBFilter.Parameter>();
+            for (String value : values) {
+                sqlList.add("(" + "lower(" + fieldName + ") like lower(:mapStringContainsFilter" + fieldName + idx + ")" + ")");
+                parameters.add(new DBFilter.Parameter("mapStringContainsFilter" + fieldName + idx, "%"+ value + "%"));
+                idx++;
+            }
+            dbFilters.add(new DBFilter("(" + StringUtils.join(sqlList, " or ") + ")", parameters));
+        }
+        return dbFilters;
+    }
+
     protected List<DBFilter> createMapStringFilter(final String fieldName, final Set<String> values) {
         int idx = 0;
         List<DBFilter> dbFilters = new ArrayList<DBFilter>();
@@ -337,7 +353,11 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
                         searchOptions.getMapClassFilter() != null ? searchOptions.getMapClassFilter().keySet() : null));
         dbFilters.addAll(createMapStringFilter("type", 
                         searchOptions.getMapTypeFilter() != null ? searchOptions.getMapTypeFilter().keySet() : null));
-        
+        dbFilters.addAll(createMapStringFilter("meta_node_sub_type",
+                searchOptions.getMapMetaNodeSubTypeFilter() != null ? searchOptions.getMapMetaNodeSubTypeFilter().keySet() : null));
+        dbFilters.addAll(createMapStringContainsFilter("meta_node_type_tags",
+                searchOptions.getMapMetaNodeTypeTagsFilter() != null ? searchOptions.getMapMetaNodeTypeTagsFilter().keySet() : null));
+
         // create filter for wfstate (convert enum to integer)
         Map<String, WorkflowState> wfStateMap = searchOptions.getMapWorkflowStateFilter();
         if (MapUtils.isNotEmpty(wfStateMap)) {

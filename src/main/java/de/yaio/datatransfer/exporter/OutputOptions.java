@@ -101,5 +101,8 @@ public interface OutputOptions extends SearchOptions {
     String getStrTypeFilter();
     void setStrTypeFilter(String strTypeFilter);
 
+    String getStrMetaNodeTypeTagsFilter();
+    String getStrMetaNodeSubTypeFilter();
+
     void initFilterMaps();
 }

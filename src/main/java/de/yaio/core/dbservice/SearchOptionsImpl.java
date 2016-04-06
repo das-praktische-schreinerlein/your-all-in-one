@@ -40,11 +40,15 @@ public class SearchOptionsImpl implements SearchOptions {
     protected String strClassFilter = "";
     protected String strTypeFilter = "";
     protected String strWorkflowStateFilter = "";
+    protected String strMetaNodeSubTypeFilter = "";
+    protected String strMetaNodeTypeTagsFilter = "";
 
     protected Map<String, String> mpClassFilter = null;
     protected Map<String, String> mpTypeFilter = null;
     protected Map<String, String> mpStateFilter = null;
     protected Map<String, WorkflowState> mpWorkflowStateFilter = null;
+    protected Map<String, String> mpMetaNodeSubTypeFilter = null;
+    protected Map<String, String> mpMetaNodeTypeTagsFilter = null;
 
     public SearchOptionsImpl() {
         super();
@@ -119,7 +123,23 @@ public class SearchOptionsImpl implements SearchOptions {
             this.mpWorkflowStateFilter.put(state, WorkflowState.valueOf(state));
         }
     }
-    
+
+    public String getStrMetaNodeSubTypeFilter() {
+        return strMetaNodeSubTypeFilter;
+    }
+    public void setStrMetaNodeSubTypeFilter(final String strMetaNodeSubTypeFilter) {
+        this.strMetaNodeSubTypeFilter = strMetaNodeSubTypeFilter;
+        this.mpMetaNodeSubTypeFilter = DataUtils.initMapFromCsvString(this.strMetaNodeSubTypeFilter);
+    }
+
+    public String getStrMetaNodeTypeTagsFilter() {
+        return strMetaNodeTypeTagsFilter;
+    }
+    public void setStrMetaNodeTypeTagsFilter(final String strMetaNodeTypeTagsFilter) {
+        this.strMetaNodeTypeTagsFilter = strMetaNodeTypeTagsFilter;
+        this.mpMetaNodeTypeTagsFilter = DataUtils.initMapFromCsvString(this.strMetaNodeTypeTagsFilter);
+    }
+
     @Override
     public Map<String, String> getMapClassFilter() {
         return this.mpClassFilter;
@@ -136,12 +156,22 @@ public class SearchOptionsImpl implements SearchOptions {
     public Map<String, WorkflowState> getMapWorkflowStateFilter() {
         return this.mpWorkflowStateFilter;
     }
-    
+    @Override
+    public Map<String, String> getMapMetaNodeSubTypeFilter() {
+        return this.mpMetaNodeSubTypeFilter;
+    }
+    @Override
+    public Map<String, String> getMapMetaNodeTypeTagsFilter() {
+        return this.mpMetaNodeTypeTagsFilter;
+    }
+
     public void initFilterMaps() {
         this.setStrReadIfStatusInListOnly(this.getStrReadIfStatusInListOnly());
         this.setStrClassFilter(this.getStrClassFilter());
         this.setStrTypeFilter(this.getStrTypeFilter());
         this.setStrWorkflowStateFilter(this.getStrWorkflowStateFilter());
+        this.setStrMetaNodeSubTypeFilter(this.getStrMetaNodeSubTypeFilter());
+        this.setStrMetaNodeTypeTagsFilter(this.getStrMetaNodeTypeTagsFilter());
     }
     
     public void resetDefaults() {
@@ -152,6 +182,8 @@ public class SearchOptionsImpl implements SearchOptions {
         this.setStrClassFilter("");
         this.setStrTypeFilter("");
         this.setStrWorkflowStateFilter("");
+        this.setStrMetaNodeSubTypeFilter("");
+        this.setStrMetaNodeTypeTagsFilter("");
     }
 
     @Override
@@ -163,10 +195,14 @@ public class SearchOptionsImpl implements SearchOptions {
                         + ", strClassFilter=" + this.strClassFilter
                         + ", strTypeFilter=" + this.strTypeFilter
                         + ", strWorkflowStateFilter=" + this.strWorkflowStateFilter
+                        + ", strMetaNodeSubTypeFilter=" + this.strMetaNodeSubTypeFilter
+                        + ", strMetaNodeTypeTagsFilter=" + this.strMetaNodeTypeTagsFilter
                         + ", mpStateFilter=" + this.mpStateFilter
                         + ", mpClassFilter=" + this.mpClassFilter
                         + ", mpTypeFilter=" + this.mpTypeFilter
                         + ", mpWorkflowStateFilter=" + this.mpWorkflowStateFilter
+                        + ", mpMetaNodeSubTypeFilter=" + this.mpMetaNodeSubTypeFilter
+                        + ", mpMetaNodeTypeTagsFilter=" + this.mpMetaNodeTypeTagsFilter
                         + "]";
     }
 
