@@ -118,7 +118,8 @@ public class SysDataServiceImpl extends DataDomainRecalcImpl implements SysDataS
                            + " cmp=" + newChecksum.equals(checksum)
                            + " nullchecksum=" + (checksum == null));
             }
-            if (!newChecksum.equals(checksum)) {
+            // set flgChanged only if checksum was not empty
+            if ((checksum != null) && !newChecksum.equals(checksum)) {
                 flgChanged = true;
             }
             checksum = newChecksum;
@@ -129,6 +130,7 @@ public class SysDataServiceImpl extends DataDomainRecalcImpl implements SysDataS
         // AenderungsDatum
         Date changed = node.getSysChangeDate();
         if (changed == null || flgChanged) {
+            flgChanged = true;
             node.setSysChangeDate(new Date());
         }
 
