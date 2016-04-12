@@ -13,9 +13,12 @@
  */
 package de.yaio.app;
 
+import de.yaio.jobs.NodeRecalcer;
 import de.yaio.jobs.StatDataRecalcer;
 import de.yaio.jobs.SysDataRecalcer;
+import opennlp.tools.util.StringUtil;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -28,6 +31,15 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
 
     private static final Logger LOGGER = Logger.getLogger(ApplicationStartup.class);
 
+    @Value(value = "${yaio.startup.recalcSysData}")
+    private Boolean onStartupRecalcSysData;
+
+    @Value(value = "${yaio.startup.recalcStatData}")
+    private Boolean onStartupRecalcStatData;
+
+    @Value(value = "${yaio.startup.recalcMasterSysUID}")
+    private String onStartupRecalcMasterSysUID;
+
     /*
      * This method is called during Spring's startup.
      *
@@ -36,8 +48,16 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
      */
     @Override
     public void onApplicationEvent(final ContextRefreshedEvent event) {
-        recalcSysData();
-        recalcStatData();
+        if (!StringUtil.isEmpty(onStartupRecalcMasterSysUID)) {
+            recalcAllData();
+            return;
+        }
+        if (onStartupRecalcSysData != null && onStartupRecalcSysData) {
+            recalcSysData();
+        }
+        if (onStartupRecalcStatData != null && onStartupRecalcStatData) {
+            recalcStatData();
+        }
     }
 
     /**
@@ -60,6 +80,19 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
         try {
             StatDataRecalcer recalcer = new StatDataRecalcer();
             String res = recalcer.recalcStatData();
+            LOGGER.info("recalcing StatData done:" + res);
+        } catch (Exception ex) {
+            LOGGER.error("ERROR while recalcStatData on startup", ex);
+        }
+    }
+
+    /**
+     * recalc the statData on startup
+     */
+    protected void recalcAllData() {
+        try {
+            NodeRecalcer recalcer = new NodeRecalcer();
+            String res = recalcer.findAndRecalcMasternode(this.onStartupRecalcMasterSysUID);
             LOGGER.info("recalcing StatData done:" + res);
         } catch (Exception ex) {
             LOGGER.error("ERROR while recalcStatData on startup", ex);
