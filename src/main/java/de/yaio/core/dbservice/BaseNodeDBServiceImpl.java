@@ -13,13 +13,7 @@
  */
 package de.yaio.core.dbservice;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import javax.persistence.TypedQuery;
 
@@ -292,6 +286,17 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
     }
 
 
+    protected List<DBFilter> createDateFilter(final String filterName, final String fieldName, final Date value, final String command) {
+        List<DBFilter> dbFilters = new ArrayList<>();
+        if (value != null) {
+            String sql = fieldName + " " + command + " :createDateFilter" + filterName;
+            List<DBFilter.Parameter> parameters = new ArrayList<>();
+            parameters.add(new DBFilter.Parameter("createDateFilter"  + filterName, value));
+            dbFilters.add(new DBFilter("(" + sql + ")", parameters));
+        }
+        return dbFilters;
+    }
+
     protected List<DBFilter> createMapStringContainsFilter(final String fieldName, final Set<String> values) {
         int idx = 0;
         List<DBFilter> dbFilters = new ArrayList<DBFilter>();
@@ -374,6 +379,16 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
         List<DBFilter.Parameter> parameters = new ArrayList<DBFilter.Parameter>();
         parameters.add(new DBFilter.Parameter("ltmaxEbene", new Integer(searchOptions.getMaxEbene())));
         dbFilters.add(new DBFilter(sql, parameters));
+
+        // create datefilter
+        dbFilters.addAll(createDateFilter("istStartGE", "ist_start", searchOptions.getIstStartGE(), ">="));
+        dbFilters.addAll(createDateFilter("istStartLE", "ist_start", searchOptions.getIstStartLE(), "<="));
+        dbFilters.addAll(createDateFilter("istEndeGE", "ist_ende", searchOptions.getIstEndeGE(), ">="));
+        dbFilters.addAll(createDateFilter("istEndeLE", "ist_ende", searchOptions.getIstEndeLE(), "<="));
+        dbFilters.addAll(createDateFilter("planStartGE", "plan_start", searchOptions.getPlanStartGE(), ">="));
+        dbFilters.addAll(createDateFilter("planStartLE", "plan_start", searchOptions.getPlanStartLE(), "<="));
+        dbFilters.addAll(createDateFilter("planEndeGE", "plan_ende", searchOptions.getPlanEndeGE(), ">="));
+        dbFilters.addAll(createDateFilter("planEndeLE", "plan_ende", searchOptions.getPlanEndeLE(), "<="));
 
         return dbFilters;
     }

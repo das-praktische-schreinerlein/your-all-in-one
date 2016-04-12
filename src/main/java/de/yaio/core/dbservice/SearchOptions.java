@@ -13,6 +13,7 @@
  */
 package de.yaio.core.dbservice;
 
+import java.util.Date;
 import java.util.Map;
 
 import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
@@ -34,6 +35,14 @@ public interface SearchOptions {
     void setStrNotNodePraefix(String strNotNodePraefix);
     int getFlgConcreteToDosOnly();
     void setFlgConcreteToDosOnly(Integer flgConcreteToDosOnly);
+    Date getIstStartLE();
+    Date getIstStartGE();
+    Date getIstEndeLE();
+    Date getIstEndeGE();
+    Date getPlanStartLE();
+    Date getPlanStartGE();
+    Date getPlanEndeLE();
+    Date getPlanEndeGE();
 
     Map<String, WorkflowState> getMapWorkflowStateFilter();
     Map<String, String> getMapClassFilter();

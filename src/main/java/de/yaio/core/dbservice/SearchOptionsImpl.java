@@ -13,6 +13,7 @@
  */
 package de.yaio.core.dbservice;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,6 +51,15 @@ public class SearchOptionsImpl implements SearchOptions {
     protected Map<String, String> mpMetaNodeSubTypeFilter = null;
     protected Map<String, String> mpMetaNodeTypeTagsFilter = null;
 
+    protected Date istStartLE = null;
+    protected Date istStartGE = null;
+    protected Date istEndeLE = null;
+    protected Date istEndeGE = null;
+    protected Date planStartLE = null;
+    protected Date planStartGE = null;
+    protected Date planEndeLE = null;
+    protected Date planEndeGE = null;
+
     public SearchOptionsImpl() {
         super();
     }
@@ -76,6 +86,78 @@ public class SearchOptionsImpl implements SearchOptions {
     @Override
     public void setFlgConcreteToDosOnly(final Integer flgConcreteToDosOnly) {
         this.flgConcreteToDosOnly = flgConcreteToDosOnly;
+    }
+
+    @Override
+    public Date getPlanEndeGE() {
+        return planEndeGE;
+    }
+
+    public void setPlanEndeGE(Date planEndeGE) {
+        this.planEndeGE = planEndeGE;
+    }
+
+    @Override
+    public Date getIstStartLE() {
+        return istStartLE;
+    }
+
+    public void setIstStartLE(Date istStartLE) {
+        this.istStartLE = istStartLE;
+    }
+
+    @Override
+    public Date getIstStartGE() {
+        return istStartGE;
+    }
+
+    public void setIstStartGE(Date istStartGE) {
+        this.istStartGE = istStartGE;
+    }
+
+    @Override
+    public Date getIstEndeLE() {
+        return istEndeLE;
+    }
+
+    public void setIstEndeLE(Date istEndeLE) {
+        this.istEndeLE = istEndeLE;
+    }
+
+    @Override
+    public Date getIstEndeGE() {
+        return istEndeGE;
+    }
+
+    public void setIstEndeGE(Date istEndeGE) {
+        this.istEndeGE = istEndeGE;
+    }
+
+    @Override
+    public Date getPlanStartLE() {
+        return planStartLE;
+    }
+
+    public void setPlanStartLE(Date planStartLE) {
+        this.planStartLE = planStartLE;
+    }
+
+    @Override
+    public Date getPlanStartGE() {
+        return planStartGE;
+    }
+
+    public void setPlanStartGE(Date planStartGE) {
+        this.planStartGE = planStartGE;
+    }
+
+    @Override
+    public Date getPlanEndeLE() {
+        return planEndeLE;
+    }
+
+    public void setPlanEndeLE(Date planEndeLE) {
+        this.planEndeLE = planEndeLE;
     }
 
     @Override
