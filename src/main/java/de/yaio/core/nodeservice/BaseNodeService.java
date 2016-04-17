@@ -24,7 +24,7 @@ import org.apache.commons.collections4.map.SingletonMap;
 import org.apache.log4j.Logger;
 
 import de.yaio.core.datadomain.BaseWorkflowData;
-import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
+import de.yaio.core.datadomain.WorkflowState;
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.datadomainservice.BaseWorkflowDataServiceImpl;
 import de.yaio.core.datadomainservice.MetaDataServiceImpl;

@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import de.yaio.commons.data.DataUtils;
 import de.yaio.core.datadomain.BaseWorkflowData;
-import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
+import de.yaio.core.datadomain.WorkflowState;
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.datadomain.ExtendedWorkflowData;
 import de.yaio.core.datadomain.IstChildrenSumData;

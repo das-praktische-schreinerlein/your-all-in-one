@@ -16,7 +16,7 @@ package de.yaio.core.nodeservice;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
+import de.yaio.core.datadomain.WorkflowState;
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.node.UrlResNode;
 

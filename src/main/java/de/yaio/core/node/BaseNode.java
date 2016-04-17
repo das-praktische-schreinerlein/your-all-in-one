@@ -32,8 +32,10 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlTransient;
 
+import de.yaio.core.datadomain.*;
 import de.yaio.core.nodeservice.NodeService;
 import org.apache.log4j.Logger;
+import org.hibernate.annotations.Type;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
@@ -41,13 +43,6 @@ import org.springframework.roo.addon.tostring.RooToString;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import de.yaio.core.datadomain.BaseData;
-import de.yaio.core.datadomain.BaseWorkflowData;
-import de.yaio.core.datadomain.DataDomain;
-import de.yaio.core.datadomain.DescData;
-import de.yaio.core.datadomain.MetaData;
-import de.yaio.core.datadomain.StatData;
-import de.yaio.core.datadomain.SysData;
 import de.yaio.core.datadomainservice.MetaDataService;
 import de.yaio.core.datadomainservice.MetaDataServiceImpl;
 import de.yaio.core.datadomainservice.SysDataService;
@@ -466,6 +461,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
      * summary of all children workflowstate with the highest priority
      */
     @Enumerated
+    @Type(type="de.yaio.core.datadomain.WorkflowStateUserType")
     private WorkflowState workflowState;
 
     /**

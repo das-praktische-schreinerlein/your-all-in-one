@@ -20,7 +20,7 @@ import de.yaio.core.dbservice.SearchOptionsImpl;
 import org.apache.commons.collections4.MapUtils;
 
 import de.yaio.commons.data.DataUtils;
-import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
+import de.yaio.core.datadomain.WorkflowState;
 
 /** 
  * options for export of Nodes, initialized with default-values
