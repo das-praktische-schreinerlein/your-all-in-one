@@ -43,6 +43,10 @@ public interface SearchOptions {
     Date getPlanStartGE();
     Date getPlanEndeLE();
     Date getPlanEndeGE();
+    String getIstStartIsNull();
+    String getIstEndeIsNull();
+    String getPlanStartIsNull();
+    String getPlanEndeIsNull();
 
     Map<String, WorkflowState> getMapWorkflowStateFilter();
     Map<String, String> getMapClassFilter();

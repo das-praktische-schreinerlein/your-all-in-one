@@ -60,6 +60,11 @@ public class SearchOptionsImpl implements SearchOptions {
     protected Date planEndeLE = null;
     protected Date planEndeGE = null;
 
+    protected String istStartIsNull = null;
+    protected String istEndeIsNull = null;
+    protected String planStartIsNull = null;
+    protected String planEndeIsNull = null;
+
     public SearchOptionsImpl() {
         super();
     }
@@ -159,6 +164,43 @@ public class SearchOptionsImpl implements SearchOptions {
     public void setPlanEndeLE(Date planEndeLE) {
         this.planEndeLE = planEndeLE;
     }
+
+    @Override
+    public String getPlanEndeIsNull() {
+        return planEndeIsNull;
+    }
+
+    public void setPlanEndeIsNull(String planEndeIsNull) {
+        this.planEndeIsNull = planEndeIsNull;
+    }
+
+    @Override
+    public String getIstStartIsNull() {
+        return istStartIsNull;
+    }
+
+    public void setIstStartIsNull(String istStartIsNull) {
+        this.istStartIsNull = istStartIsNull;
+    }
+
+    @Override
+    public String getIstEndeIsNull() {
+        return istEndeIsNull;
+    }
+
+    public void setIstEndeIsNull(String istEndeIsNull) {
+        this.istEndeIsNull = istEndeIsNull;
+    }
+
+    @Override
+    public String getPlanStartIsNull() {
+        return planStartIsNull;
+    }
+
+    public void setPlanStartIsNull(String planStartIsNull) {
+        this.planStartIsNull = planStartIsNull;
+    }
+
 
     @Override
     public String getStrNotNodePraefix() {
