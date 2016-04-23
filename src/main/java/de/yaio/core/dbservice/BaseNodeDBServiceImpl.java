@@ -297,6 +297,23 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
         return dbFilters;
     }
 
+    protected List<DBFilter> createIsNullFilter(final String filterName, final String fieldName, final String value) {
+        List<DBFilter> dbFilters = new ArrayList<>();
+        if (StringUtils.isEmpty(value)) {
+            return dbFilters;
+        } else if (Boolean.parseBoolean(value)) {
+            String sql = fieldName + " is null ";
+            List<DBFilter.Parameter> parameters = new ArrayList<>();
+            dbFilters.add(new DBFilter("(" + sql + ")", parameters));
+        } else {
+            String sql = fieldName + " is not null ";
+            List<DBFilter.Parameter> parameters = new ArrayList<>();
+            dbFilters.add(new DBFilter("(" + sql + ")", parameters));
+        }
+
+    return dbFilters;
+    }
+
     protected List<DBFilter> createMapStringContainsFilter(final String fieldName, final Set<String> values) {
         int idx = 0;
         List<DBFilter> dbFilters = new ArrayList<DBFilter>();
@@ -366,10 +383,9 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
         // create filter for wfstate (convert enum to integer)
         Map<String, WorkflowState> wfStateMap = searchOptions.getMapWorkflowStateFilter();
         if (MapUtils.isNotEmpty(wfStateMap)) {
-            List<WorkflowState> wfStates = Arrays.asList(WorkflowState.values());
             Set<Integer>wfStateValues = new HashSet<Integer>();
             for (WorkflowState state : wfStateMap.values()) {
-                wfStateValues.add(wfStates.indexOf(state));
+                wfStateValues.add(state.getValue());
             }
             dbFilters.addAll(createMapIntFilter("workflow_state", wfStateValues));
         }
@@ -381,6 +397,10 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
         dbFilters.add(new DBFilter(sql, parameters));
 
         // create datefilter
+        dbFilters.addAll(createIsNullFilter("istStartIsNull", "ist_start", searchOptions.getIstStartIsNull()));
+        dbFilters.addAll(createIsNullFilter("istEndeIsNull", "ist_ende", searchOptions.getIstEndeIsNull()));
+        dbFilters.addAll(createIsNullFilter("planStartIsNull", "plan_start", searchOptions.getPlanStartIsNull()));
+        dbFilters.addAll(createIsNullFilter("planEndeIsNull", "plan_ende", searchOptions.getPlanEndeIsNull()));
         dbFilters.addAll(createDateFilter("istStartGE", "ist_start", searchOptions.getIstStartGE(), ">="));
         dbFilters.addAll(createDateFilter("istStartLE", "ist_start", searchOptions.getIstStartLE(), "<="));
         dbFilters.addAll(createDateFilter("istEndeGE", "ist_ende", searchOptions.getIstEndeGE(), ">="));
