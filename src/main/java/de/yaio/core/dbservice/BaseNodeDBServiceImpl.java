@@ -299,13 +299,11 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
 
     protected List<DBFilter> createIsNullFilter(final String filterName, final String fieldName, final String value) {
         List<DBFilter> dbFilters = new ArrayList<>();
-        if (StringUtils.isEmpty(value)) {
-            return dbFilters;
-        } else if (Boolean.parseBoolean(value)) {
+        if ("true".equalsIgnoreCase(value)) {
             String sql = fieldName + " is null ";
             List<DBFilter.Parameter> parameters = new ArrayList<>();
             dbFilters.add(new DBFilter("(" + sql + ")", parameters));
-        } else {
+        } else if ("false".equalsIgnoreCase(value)) {
             String sql = fieldName + " is not null ";
             List<DBFilter.Parameter> parameters = new ArrayList<>();
             dbFilters.add(new DBFilter("(" + sql + ")", parameters));
