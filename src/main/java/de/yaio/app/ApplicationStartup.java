@@ -13,6 +13,7 @@
  */
 package de.yaio.app;
 
+import de.yaio.jobs.CachedDataRecalcer;
 import de.yaio.jobs.NodeRecalcer;
 import de.yaio.jobs.StatDataRecalcer;
 import de.yaio.jobs.SysDataRecalcer;
@@ -37,6 +38,9 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
     @Value(value = "${yaio.startup.recalcStatData}")
     private Boolean onStartupRecalcStatData;
 
+    @Value(value = "${yaio.startup.recalcCachedData}")
+    private Boolean onStartupRecalcCachedData;
+
     @Value(value = "${yaio.startup.recalcMasterSysUID}")
     private String onStartupRecalcMasterSysUID;
 
@@ -57,6 +61,9 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
         }
         if (onStartupRecalcStatData != null && onStartupRecalcStatData) {
             recalcStatData();
+        }
+        if (onStartupRecalcCachedData != null && onStartupRecalcCachedData) {
+            recalcCachedData();
         }
     }
 
@@ -85,6 +92,20 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
             LOGGER.error("ERROR while recalcStatData on startup", ex);
         }
     }
+
+    /**
+     * recalc the sysData on startup
+     */
+    protected void recalcCachedData() {
+        try {
+            CachedDataRecalcer recalcer = new CachedDataRecalcer();
+            String res = recalcer.recalcCachedData();
+            LOGGER.info("recalcing CachedData done:" + res);
+        } catch (Exception ex) {
+            LOGGER.error("ERROR while recalcCachedData on startup", ex);
+        }
+    }
+
 
     /**
      * recalc the statData on startup
