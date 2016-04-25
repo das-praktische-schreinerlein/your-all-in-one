@@ -15,7 +15,6 @@ package de.yaio.core.datadomainservice;
 
 import de.yaio.core.datadomain.CachedData;
 import de.yaio.core.datadomain.DataDomain;
-import de.yaio.core.datadomain.SysData;
 import de.yaio.core.node.BaseNode;
 import de.yaio.core.nodeservice.NodeService;
 import org.apache.commons.lang3.StringUtils;
@@ -76,12 +75,12 @@ public class CachedDataServiceImpl extends DataDomainRecalcImpl implements Cache
     
     @Override
     public Class<?> getRecalcTargetClass() {
-        return SysData.class;
+        return CachedData.class;
     }
 
     @Override
     public int getRecalcTargetOrder() {
-        return SysDataService.CONST_RECALC_ORDER;
+        return CachedDataService.CONST_RECALC_ORDER;
     }
     
     
