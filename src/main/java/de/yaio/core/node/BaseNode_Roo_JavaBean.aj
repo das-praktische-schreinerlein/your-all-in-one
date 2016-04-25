@@ -461,5 +461,12 @@ privileged aspect BaseNode_Roo_JavaBean {
     public void BaseNode.setClassName(String className) {
         this.className = className;
     }
-    
+
+    public String BaseNode.getCachedParentHierarchy() {
+        return this.cachedParentHierarchy;
+    }
+
+    public void BaseNode.setCachedParentHierarchy(String cachedParentHierarchy) {
+        this.cachedParentHierarchy = cachedParentHierarchy;
+    }
 }

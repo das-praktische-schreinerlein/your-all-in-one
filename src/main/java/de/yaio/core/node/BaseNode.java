@@ -66,7 +66,7 @@ import de.yaio.datatransfer.importer.parser.Parser;
 @RooToString
 @RooJpaActiveRecord
 public class BaseNode implements BaseData, MetaData, SysData, 
-    DescData, BaseWorkflowData, StatData {
+    DescData, BaseWorkflowData, StatData, CachedData {
     
     // Validator
     protected static ValidatorFactory validationFactory = Validation.buildDefaultValidatorFactory();
@@ -465,6 +465,13 @@ public class BaseNode implements BaseData, MetaData, SysData,
     private WorkflowState workflowState;
 
     /**
+     * the cached parentHierarchy as ,id1,,id2,,id3,
+     */
+    @Size(max = 2000)
+    private String cachedParentHierarchy;
+
+
+    /**
      * position in list
      */
     @Min(0L)
@@ -670,7 +677,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
         }
         return true;
     }    
-    
+
     //####################
     // persistence-functions
     //####################
@@ -950,5 +957,10 @@ public class BaseNode implements BaseData, MetaData, SysData,
         this.setMetaNodePraefix("UNKNOWN");
         this.setMetaNodeSubType(null);
         this.setMetaNodeTypeTags(null);
+    }
+
+    @Override
+    public void resetCachedData() {
+        this.setCachedParentHierarchy(null);
     }
 }
