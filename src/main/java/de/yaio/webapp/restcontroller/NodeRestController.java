@@ -837,25 +837,21 @@ public class NodeRestController {
                         "OK", "no node found", 
                         null, curPage, pageSize, 0L);
 
-        // find the baseNode
+        // search nodes
         BaseNodeDBService baseNodeDBService = BaseNodeDBServiceImpl.getInstance();
-        BaseNode node = BaseNode.findBaseNode(sysUID);
-        if (node != null) {
-            // search nodes
-            List<BaseNode> resultList = baseNodeDBService.findExtendedSearchBaseNodeEntries(fulltext, searchOptions,
-                            sortConfig, (curPage.intValue() - 1) * pageSize.intValue(), 
-                            pageSize.intValue());
+        List<BaseNode> resultList = baseNodeDBService.findExtendedSearchBaseNodeEntries(fulltext, sysUID, searchOptions,
+                        sortConfig, (curPage.intValue() - 1) * pageSize.intValue(),
+                        pageSize.intValue());
 
-            // create response
-            response.setCount(baseNodeDBService.countExtendedSearchBaseNodes(fulltext, searchOptions));
-            
-            // add node
-            response.setNodes(resultList);
-            
-            // set state
-            response.setStateMsg("node found");
-        }
-        
+        // create response
+        response.setCount(baseNodeDBService.countExtendedSearchBaseNodes(fulltext, sysUID, searchOptions));
+
+        // add node
+        response.setNodes(resultList);
+
+        // set state
+        response.setStateMsg("node found");
+
         return response;
     }
 }

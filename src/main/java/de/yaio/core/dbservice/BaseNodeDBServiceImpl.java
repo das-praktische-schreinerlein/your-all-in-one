@@ -149,19 +149,19 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
     
     @SuppressWarnings("unchecked")
     @Override
-    public long countExtendedSearchBaseNodes(final String fulltext, final SearchOptions searchOptions) {
+    public long countExtendedSearchBaseNodes(final String fulltext, final String rootSysUID, final SearchOptions searchOptions) {
         TypedQuery<Long> query = 
-                        (TypedQuery<Long>) this.createExtendedSearchQuery(true, fulltext, searchOptions, null);
+                        (TypedQuery<Long>) this.createExtendedSearchQuery(true, fulltext, rootSysUID, searchOptions, null);
         return query.getSingleResult();
     }
     
     
     @SuppressWarnings("unchecked")
     @Override
-    public List<BaseNode> findExtendedSearchBaseNodeEntries(final String fulltext, final SearchOptions searchOptions,
+    public List<BaseNode> findExtendedSearchBaseNodeEntries(final String fulltext, final String rootSysUID, final SearchOptions searchOptions,
                     final String sortConfig, final int firstResult, final int maxResults) {
         TypedQuery<BaseNode> query = (TypedQuery<BaseNode>) this.createExtendedSearchQuery(
-                        false, fulltext, searchOptions, sortConfig);
+                        false, fulltext, rootSysUID, searchOptions, sortConfig);
         query.setFirstResult(firstResult);
         query.setMaxResults(maxResults);
         
@@ -457,10 +457,21 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
     protected List<DBFilter> createConcreteTodosOnlyFilter(final Integer pFlgConcreteTodosOnly) {
         List<DBFilter> dbFilters = new ArrayList<DBFilter>();
 
-        // tokenize words
         if (pFlgConcreteTodosOnly != null && pFlgConcreteTodosOnly > 0) {
             String sql = "planAufwand > 0";
             List<DBFilter.Parameter> parameters = new ArrayList<DBFilter.Parameter>();
+            dbFilters.add(new DBFilter(sql, parameters));
+        }
+        return dbFilters;
+    }
+
+    protected List<DBFilter> createRootSysUIDFilter(final String pRootSysUID) {
+        List<DBFilter> dbFilters = new ArrayList<DBFilter>();
+
+        if (!StringUtils.isEmpty(pRootSysUID)) {
+            String sql = "cachedParentHierarchy like :cachedParentHierarchy";
+            List<DBFilter.Parameter> parameters = new ArrayList<DBFilter.Parameter>();
+            parameters.add(new DBFilter.Parameter("cachedParentHierarchy", "%,"+ pRootSysUID + ",%"));
             dbFilters.add(new DBFilter(sql, parameters));
         }
         return dbFilters;
@@ -491,11 +502,12 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
 
     protected TypedQuery<?> createFulltextQuery(final boolean flgCount, final String pfulltext, 
                     final String sortConfig) {
-        return createExtendedSearchQuery(flgCount, pfulltext, null, sortConfig);
+        return createExtendedSearchQuery(flgCount, pfulltext, null, null, sortConfig);
     }
 
-    protected TypedQuery<?> createExtendedSearchQuery(final boolean flgCount, final String pfulltext, 
-                                                   final SearchOptions searchOptions, final String sortConfig) {
+    protected TypedQuery<?> createExtendedSearchQuery(final boolean flgCount, final String pfulltext,
+                                                      final String rootSysUID, final SearchOptions searchOptions,
+                                                      final String sortConfig) {
         // setup class
         Class<?> resClass = BaseNode.class;
         if (flgCount) {
@@ -504,6 +516,7 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
         
         // create filter
         List<DBFilter> dbFilters = new ArrayList<DBFilter>();
+        dbFilters.addAll(createRootSysUIDFilter(rootSysUID));
         dbFilters.addAll(createFulltextFilter(pfulltext));
         dbFilters.addAll(createNotNodePraefixFilter(searchOptions.getStrNotNodePraefix()));
         dbFilters.addAll(createSearchOptionsFilter(searchOptions));

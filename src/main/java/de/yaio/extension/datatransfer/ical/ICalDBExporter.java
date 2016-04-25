@@ -106,7 +106,7 @@ public class ICalDBExporter extends ICalExporter {
             oOptions.setStrClassFilter("EventNode,TaskNode");
         }
         BaseNodeDBService dbService = parentNode.getBaseNodeDBService();
-        List<BaseNode> matchingNodes = dbService.findExtendedSearchBaseNodeEntries(null, oOptions, null, 0, 99999);
+        List<BaseNode> matchingNodes = dbService.findExtendedSearchBaseNodeEntries(null, parentNode.getSysUID(), oOptions, null, 0, 99999);
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("node:" + parentNode.getWorkingId() 
                 + " iterate matching nodes for search:" + matchingNodes.size());
