@@ -15,10 +15,7 @@ package de.yaio.jobs;
 
 import de.yaio.core.datadomainservice.CachedDataService;
 import de.yaio.core.datadomainservice.CachedDataServiceImpl;
-import de.yaio.core.datadomainservice.SysDataService;
-import de.yaio.core.datadomainservice.SysDataServiceImpl;
 import de.yaio.core.node.BaseNode;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,7 +23,7 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 /** 
- * recalc sysData
+ * recalc cachedData
  */
 public class CachedDataRecalcer {
 
