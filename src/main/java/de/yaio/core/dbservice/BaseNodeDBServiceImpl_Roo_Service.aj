@@ -3,12 +3,11 @@
 
 package de.yaio.core.dbservice;
 
-import java.util.List;
-
+import de.yaio.core.node.BaseNode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import de.yaio.core.node.BaseNode;
+import java.util.List;
 
 privileged aspect BaseNodeDBServiceImpl_Roo_Service {
     

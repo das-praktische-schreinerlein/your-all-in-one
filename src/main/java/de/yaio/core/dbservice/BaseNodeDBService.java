@@ -12,11 +12,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 package de.yaio.core.dbservice;
-import java.util.List;
-
-import org.springframework.roo.addon.layers.service.RooService;
 
 import de.yaio.core.node.BaseNode;
+import org.springframework.roo.addon.layers.service.RooService;
+
+import java.util.List;
 
 /** 
  * dbservices for BaseNodes

@@ -13,14 +13,13 @@
  */
 package de.yaio.core.dbservice;
 
+import de.yaio.commons.data.DataUtils;
+import de.yaio.core.datadomain.WorkflowState;
+import org.apache.commons.collections4.MapUtils;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.apache.commons.collections4.MapUtils;
-
-import de.yaio.commons.data.DataUtils;
-import de.yaio.core.datadomain.WorkflowState;
 
 /** 
  * options for search of Nodes, initialized with default-values

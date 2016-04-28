@@ -3,9 +3,9 @@
 
 package de.yaio.core.dbservice;
 
-import java.util.List;
-
 import de.yaio.core.node.BaseNode;
+
+import java.util.List;
 
 privileged aspect BaseNodeDBService_Roo_Service {
     

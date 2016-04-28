@@ -13,10 +13,10 @@
  */
 package de.yaio.core.dbservice;
 
+import de.yaio.core.datadomain.WorkflowState;
+
 import java.util.Date;
 import java.util.Map;
-
-import de.yaio.core.datadomain.WorkflowState;
 
 /** 
  * interface for options for search of Nodes
