@@ -13,18 +13,6 @@
  */
 package de.yaio.webapp.controller;
 
-import java.io.File;
-import java.util.ArrayList;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-
 import de.yaio.core.node.BaseNode;
 import de.yaio.datatransfer.jpa.JPAExporter;
 import de.yaio.extension.datatransfer.common.ExtendedDatatransferUtils;
@@ -33,6 +21,12 @@ import de.yaio.extension.datatransfer.wiki.WikiImportOptions;
 import de.yaio.extension.datatransfer.wiki.WikiImporter;
 import de.yaio.webapp.restcontroller.NodeActionResponse;
 import de.yaio.webapp.restcontroller.NodeRestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
 
 /** 
  * Upload-Services to import BaseNodes in different 

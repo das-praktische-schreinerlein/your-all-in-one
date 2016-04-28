@@ -13,46 +13,29 @@
  */
 package de.yaio.webapp.restcontroller;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.collections4.MapUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-
 import de.yaio.core.dbservice.BaseNodeDBService;
 import de.yaio.core.dbservice.BaseNodeDBServiceImpl;
 import de.yaio.core.dbservice.SearchOptions;
 import de.yaio.core.dbservice.SearchOptionsImpl;
-import de.yaio.core.node.BaseNode;
-import de.yaio.core.node.EventNode;
-import de.yaio.core.node.InfoNode;
-import de.yaio.core.node.SymLinkNode;
-import de.yaio.core.node.TaskNode;
-import de.yaio.core.node.UrlResNode;
+import de.yaio.core.node.*;
 import de.yaio.core.nodeservice.BaseNodeService;
 import de.yaio.core.nodeservice.UrlResNodeService;
 import de.yaio.datatransfer.common.DatatransferUtils;
 import de.yaio.extension.datatransfer.common.ExtendedDatatransferUtils;
 import de.yaio.extension.dms.services.ResContentDataService;
 import de.yaio.webapp.controller.CommonApiConfig;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.MapUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import java.util.*;
 
 /** 
  * the controller for RESTful Web Services for BaseNodes<br>
@@ -507,7 +490,7 @@ public class NodeRestController {
 
         try {
             // move node
-            datatransferUtils.moveNode(node, newParent, newSortPos);
+            node = datatransferUtils.moveNode(node, newParent, newSortPos);
 
             // create response
             response = createResponseObj(node, "node '" + sysUID + "' moved to " + newParentSysUID, false);

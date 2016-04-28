@@ -13,22 +13,17 @@
  */
 package de.yaio.webapp.config;
 
-import static springfox.documentation.builders.PathSelectors.regex;
-
+import de.yaio.webapp.controller.*;
+import de.yaio.webapp.restcontroller.NodeRestController;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
-import de.yaio.webapp.controller.AdminController;
-import de.yaio.webapp.controller.ApiConfigController;
-import de.yaio.webapp.controller.ConverterController;
-import de.yaio.webapp.controller.ExportController;
-import de.yaio.webapp.controller.ImportController;
-import de.yaio.webapp.restcontroller.NodeRestController;
+
+import static springfox.documentation.builders.PathSelectors.regex;
 
 /** 
  * configure swagger

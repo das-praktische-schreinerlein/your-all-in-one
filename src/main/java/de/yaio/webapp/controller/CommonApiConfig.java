@@ -13,10 +13,9 @@
  */
 package de.yaio.webapp.controller;
 
+import de.yaio.webapp.restcontroller.NodeRestController;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
-import de.yaio.webapp.restcontroller.NodeRestController;
 
 
 /** 
