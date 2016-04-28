@@ -17,7 +17,7 @@ import de.yaio.jobs.CachedDataRecalcer;
 import de.yaio.jobs.NodeRecalcer;
 import de.yaio.jobs.StatDataRecalcer;
 import de.yaio.jobs.SysDataRecalcer;
-import opennlp.tools.util.StringUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
@@ -52,7 +52,7 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
      */
     @Override
     public void onApplicationEvent(final ContextRefreshedEvent event) {
-        if (!StringUtil.isEmpty(onStartupRecalcMasterSysUID)) {
+        if (!StringUtils.isEmpty(onStartupRecalcMasterSysUID)) {
             recalcAllData();
             return;
         }
