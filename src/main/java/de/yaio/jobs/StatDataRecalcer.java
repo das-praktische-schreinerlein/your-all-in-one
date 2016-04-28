@@ -16,7 +16,6 @@ package de.yaio.jobs;
 import de.yaio.core.datadomainservice.StatDataService;
 import de.yaio.core.datadomainservice.StatDataServiceImpl;
 import de.yaio.core.node.BaseNode;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.transaction.annotation.Transactional;
 

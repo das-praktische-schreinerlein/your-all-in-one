@@ -13,15 +13,14 @@
  */
 package de.yaio.jobs;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import de.yaio.app.CallYaioInstance;
+import de.yaio.app.Configurator;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.log4j.Logger;
 
-import de.yaio.app.CallYaioInstance;
-import de.yaio.app.Configurator;
+import java.util.HashMap;
+import java.util.Map;
 
 /** 
  * job to call yaio-instance to import nodes to db
