@@ -13,12 +13,11 @@
  */
 package de.yaio.utils;
 
-import java.util.Calendar;
-import java.util.Date;
-
+import de.yaio.core.datadomain.PlanDependencieData.DurationMeasure;
 import org.apache.log4j.Logger;
 
-import de.yaio.core.datadomain.PlanDependencieData.DurationMeasure;
+import java.util.Calendar;
+import java.util.Date;
 
 /** 
  * Utils for calculating predecessor

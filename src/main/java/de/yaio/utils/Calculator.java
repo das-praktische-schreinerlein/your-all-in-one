@@ -13,14 +13,13 @@
  */
 package de.yaio.utils;
 
-import java.sql.Timestamp;
-import java.util.Date;
-
-import org.apache.log4j.Logger;
-
-import de.yaio.core.datadomain.WorkflowState;
 import de.yaio.core.datadomain.ResContentData.UploadWorkflowState;
 import de.yaio.core.datadomain.ResIndexData.IndexWorkflowState;
+import de.yaio.core.datadomain.WorkflowState;
+import org.apache.log4j.Logger;
+
+import java.sql.Timestamp;
+import java.util.Date;
 
 /** 
  * Utils for calculating
