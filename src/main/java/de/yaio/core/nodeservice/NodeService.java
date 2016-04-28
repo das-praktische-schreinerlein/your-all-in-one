@@ -13,15 +13,14 @@
  */
 package de.yaio.core.nodeservice;
 
-import java.util.List;
-import java.util.Map;
-
-import de.yaio.core.datadomain.WorkflowState;
 import de.yaio.core.datadomain.DataDomain;
+import de.yaio.core.datadomain.WorkflowState;
 import de.yaio.core.datadomainservice.DataDomainRecalc;
 import de.yaio.core.node.BaseNode;
 
 import javax.xml.bind.annotation.XmlTransient;
+import java.util.List;
+import java.util.Map;
 
 /** 
  * interface for businesslogic of nodes

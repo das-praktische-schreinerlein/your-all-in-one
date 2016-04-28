@@ -13,10 +13,10 @@
  */
 package de.yaio.core.nodeservice;
 
+import de.yaio.core.datadomain.WorkflowState;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import de.yaio.core.datadomain.WorkflowState;
 
 
 /** 

@@ -13,15 +13,14 @@
  */
 package de.yaio.core.nodeservice;
 
+import de.yaio.core.datadomain.DataDomain;
+import de.yaio.core.datadomainservice.DataDomainRecalc;
+import org.apache.log4j.Logger;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
-
-import org.apache.log4j.Logger;
-
-import de.yaio.core.datadomain.DataDomain;
-import de.yaio.core.datadomainservice.DataDomainRecalc;
 
 
 /** 

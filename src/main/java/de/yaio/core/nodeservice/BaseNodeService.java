@@ -13,21 +13,15 @@
  */
 package de.yaio.core.nodeservice;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
+import de.yaio.core.datadomain.BaseWorkflowData;
+import de.yaio.core.datadomain.DataDomain;
+import de.yaio.core.datadomain.WorkflowState;
 import de.yaio.core.datadomainservice.*;
+import de.yaio.core.node.BaseNode;
 import org.apache.commons.collections4.map.SingletonMap;
 import org.apache.log4j.Logger;
 
-import de.yaio.core.datadomain.BaseWorkflowData;
-import de.yaio.core.datadomain.WorkflowState;
-import de.yaio.core.datadomain.DataDomain;
-import de.yaio.core.node.BaseNode;
+import java.util.*;
 
 
 /** 
