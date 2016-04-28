@@ -40,7 +40,7 @@ public interface SysData extends DataDomain {
     void setSysChangeDate(Date sysChangeDate);
 
     String getDataBlocks4CheckSum() throws Exception;
-    void initSysData() throws Exception;
+    void initSysData(boolean flgForceUpdate) throws Exception;
 
     void resetSysData();
 }

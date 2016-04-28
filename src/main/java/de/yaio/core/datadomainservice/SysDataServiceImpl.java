@@ -13,16 +13,16 @@
  */
 package de.yaio.core.datadomainservice;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import org.apache.log4j.Logger;
-
 import de.yaio.commons.data.DataUtils;
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.datadomain.SysData;
 import de.yaio.core.nodeservice.NodeService;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /** 
  * businesslogic for dataDomain: SysData
@@ -64,7 +64,16 @@ public class SysDataServiceImpl extends DataDomainRecalcImpl implements SysDataS
     
     @Override
     public void doRecalcBeforeChildren(final DataDomain node, final NodeService.RecalcRecurseDirection recurseDirection) throws Exception {
-        // NOP
+        if (node == null) {
+            return;
+        }
+        // Check if node is compatibel
+        if (!SysData.class.isInstance(node)) {
+            throw new IllegalArgumentException();
+        }
+
+        // Roll
+        this.initSysData((SysData) node, false);
     }
 
     @Override
@@ -78,7 +87,7 @@ public class SysDataServiceImpl extends DataDomainRecalcImpl implements SysDataS
         }
 
         // Roll
-        this.initSysData((SysData) node);
+        this.updateSysData((SysData) node);
     }
     
     @Override
@@ -93,7 +102,7 @@ public class SysDataServiceImpl extends DataDomainRecalcImpl implements SysDataS
     
     
     @Override
-    public void initSysData(final SysData node) throws Exception {
+    public void initSysData(final SysData node, final boolean flgForceUpdate) throws Exception {
         // UID generieren, wenn noch nicht belegt
         String uid = node.getSysUID();
         if (uid == null || uid.length() < 1) {
@@ -108,15 +117,23 @@ public class SysDataServiceImpl extends DataDomainRecalcImpl implements SysDataS
         }
 
         // Checksum testen und ggf. aktualisieren
+        if (StringUtils.isEmpty(node.getSysCurChecksum()) || node.getSysChangeDate() == null || flgForceUpdate) {
+            updateSysData(node);
+        }
+    }
+
+    @Override
+    public void updateSysData(final SysData node) throws Exception {
+        // Checksum testen und ggf. aktualisieren
         String checksum = node.getSysCurChecksum();
         String newChecksum = this.getCheckSum(node);
         boolean flgChanged = false;
         if ((checksum == null) || (!newChecksum.equals(checksum))) {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("initSysData checksum changed old:" + checksum 
-                           + " new:" + newChecksum 
-                           + " cmp=" + newChecksum.equals(checksum)
-                           + " nullchecksum=" + (checksum == null));
+                LOGGER.debug("initSysData checksum changed old:" + checksum
+                        + " new:" + newChecksum
+                        + " cmp=" + newChecksum.equals(checksum)
+                        + " nullchecksum=" + (checksum == null));
             }
             // set flgChanged only if checksum was not empty
             if ((checksum != null) && !newChecksum.equals(checksum)) {
@@ -142,6 +159,7 @@ public class SysDataServiceImpl extends DataDomainRecalcImpl implements SysDataS
             changedCount++;
             node.setSysChangeCount(changedCount);
         }
+
     }
 
     @Override

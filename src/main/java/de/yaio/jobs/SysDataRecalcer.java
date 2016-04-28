@@ -15,9 +15,7 @@ package de.yaio.jobs;
 
 import de.yaio.core.datadomainservice.SysDataService;
 import de.yaio.core.datadomainservice.SysDataServiceImpl;
-import de.yaio.core.dbservice.BaseNodeDBServiceImpl;
 import de.yaio.core.node.BaseNode;
-import de.yaio.core.nodeservice.NodeService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.transaction.annotation.Transactional;
@@ -58,7 +56,7 @@ public class SysDataRecalcer {
         }
         int maxPerRun = 500;
         int maxRun = new Long(count / maxPerRun).intValue();
-        TypedQuery<BaseNode> query = BaseNode.entityManager().createQuery("SELECT o FROM BaseNode o", BaseNode.class);
+        TypedQuery<BaseNode> query = BaseNode.entityManager().createQuery("SELECT o FROM BaseNode o where sysCurChecksum is null", BaseNode.class);
 
         for (int run = 0; run <= maxRun; run++) {
             if (LOGGER.isInfoEnabled()) {
@@ -69,7 +67,7 @@ public class SysDataRecalcer {
             List<BaseNode> nodes = query.getResultList();
             for (BaseNode node: nodes) {
                 String curCheckSum = node.getSysCurChecksum();
-                sysDataService.initSysData(node);
+                sysDataService.initSysData(node, true);
                 String newCheckSum = node.getSysCurChecksum();
                 if (LOGGER.isDebugEnabled() && !StringUtils.isEmpty(newCheckSum) && !newCheckSum.equals(curCheckSum)) {
                     LOGGER.debug("updated sysdata node:" + node.getNameForLogger());

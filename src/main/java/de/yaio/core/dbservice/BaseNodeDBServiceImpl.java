@@ -13,20 +13,18 @@
  */
 package de.yaio.core.dbservice;
 
-import java.util.*;
-
-import javax.persistence.TypedQuery;
-
-import org.apache.commons.collections4.MapUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
-
 import de.yaio.core.datadomain.WorkflowState;
 import de.yaio.core.node.BaseNode;
 import de.yaio.core.node.TaskNode;
 import de.yaio.core.nodeservice.BaseNodeService;
 import de.yaio.core.nodeservice.NodeService;
 import de.yaio.core.nodeservice.TaskNodeService;
+import org.apache.commons.collections4.MapUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
+
+import javax.persistence.TypedQuery;
+import java.util.*;
 
 
 /** 
@@ -212,7 +210,7 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
 //                childNode.initMetaData();
 //            }
             if (childNode.getSysUID() == null) {
-                childNode.initSysData();
+                childNode.initSysData(true);
             }
 
             // persist to DB
