@@ -14,12 +14,11 @@
 
 package de.yaio.core.datadomain;
 
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlTransient;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.Date;
 
 /** 
  * interface for BaseWorkflow (service-functions) of the Node

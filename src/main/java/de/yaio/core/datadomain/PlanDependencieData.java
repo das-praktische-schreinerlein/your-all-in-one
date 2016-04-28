@@ -13,9 +13,9 @@
  */
 package de.yaio.core.datadomain;
 
-import javax.xml.bind.annotation.XmlTransient;
-
 import de.yaio.core.node.BaseNode;
+
+import javax.xml.bind.annotation.XmlTransient;
 
 /** 
  * interface for DataDomain: PlanDependencies (duration, inheritance, 

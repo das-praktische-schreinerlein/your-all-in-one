@@ -13,13 +13,12 @@
  */
 package de.yaio.core.datadomain;
 
-import java.util.Map;
-import java.util.Set;
-
-import javax.validation.ConstraintViolation;
-
 import de.yaio.core.node.BaseNode;
 import de.yaio.core.nodeservice.NodeService;
+
+import javax.validation.ConstraintViolation;
+import java.util.Map;
+import java.util.Set;
 
 /** 
  * interface for DataDomains of the Node
