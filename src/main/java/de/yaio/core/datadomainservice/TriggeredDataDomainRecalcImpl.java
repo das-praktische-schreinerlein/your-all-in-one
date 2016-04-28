@@ -13,16 +13,14 @@
  */
 package de.yaio.core.datadomainservice;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.TypedQuery;
-
+import de.yaio.core.dbservice.DBFilter;
+import de.yaio.core.node.BaseNode;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
-import de.yaio.core.dbservice.DBFilter;
-import de.yaio.core.node.BaseNode;
+import javax.persistence.TypedQuery;
+import java.util.ArrayList;
+import java.util.List;
 
 /** 
  * baseservice for businesslogic of datadomains

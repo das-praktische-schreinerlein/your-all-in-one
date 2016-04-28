@@ -13,9 +13,9 @@
  */
 package de.yaio.core.datadomainservice;
 
-import java.util.Map;
-
 import de.yaio.core.datadomain.MetaData;
+
+import java.util.Map;
 
 /** 
  * interface with businesslogic for dataDomain: MetaData to manage Nodenumbers

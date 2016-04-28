@@ -13,14 +13,13 @@
  */
 package de.yaio.core.datadomainservice;
 
-import org.apache.log4j.Logger;
-
 import de.yaio.core.datadomain.BaseWorkflowData;
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.datadomain.StatData;
 import de.yaio.core.node.InfoNode;
 import de.yaio.core.node.UrlResNode;
 import de.yaio.core.nodeservice.NodeService;
+import org.apache.log4j.Logger;
 
 /** 
  * businesslogic for dataDomain: StatData
