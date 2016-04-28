@@ -98,8 +98,8 @@ public class SysDataServiceTest extends DataDomainServiceTest {
 
         // new record (passes only on fast computers ;-)
         myDataDomainObj = getNewSysDataTestObj(); 
-        expectedAfterDoBeforeChildren = "Name XX2|DT201404081141327673|null|null|null|null|";
-        expectedAfterDoAfterChildren = "Name XX2|DT201404081141327673|" + new Date() + "|E7FA4150920D398AC180C7EEA1E14676|" + new Date() + "|1|";
+        expectedAfterDoBeforeChildren = "Name XX2|DT201404081141327673|" + new Date() + "|E7FA4150920D398AC180C7EEA1E14676|" + new Date() + "|1|";
+        expectedAfterDoAfterChildren = expectedAfterDoBeforeChildren;
         myDataDomainObj.setName("Name XX2");
         myDataDomainObj.setSysUID("DT201404081141327673"); // cant be computed because of Milliseconds
         this.testServiceDoRecalc(myDataDomainObj, expectedAfterDoBeforeChildren, 
