@@ -13,12 +13,12 @@
  */
 package de.yaio.extension.dms.services;
 
-import java.io.IOException;
-import java.io.InputStream;
-
 import de.yaio.core.datadomain.ResContentData;
 import de.yaio.core.datadomain.ResLocData;
 import de.yaio.core.datadomainservice.TriggeredDataDomainRecalc;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 /** 
  * businesslogic for dataDomain: ResContentData (upload url/file to dms)

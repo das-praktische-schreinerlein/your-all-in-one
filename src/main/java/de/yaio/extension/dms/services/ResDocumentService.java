@@ -13,19 +13,18 @@
  */
 package de.yaio.extension.dms.services;
 
-import java.io.IOException;
-import java.io.InputStream;
-
-import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import de.yaio.core.datadomain.ResContentData;
 import de.yaio.core.datadomain.ResIndexData;
 import de.yaio.core.node.UrlResNode;
 import de.yaio.extension.dms.utils.DMSClient;
 import de.yaio.services.dms.storage.StorageResourceVersion;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 /** 
  * businesslogic for dataDomain: ResContentData (upload url/file to dms)

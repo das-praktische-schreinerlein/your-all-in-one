@@ -13,12 +13,11 @@
  */
 package de.yaio.extension.dms.jobs;
 
+import de.yaio.extension.dms.services.ResIndexDataService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
-import de.yaio.extension.dms.services.ResIndexDataService;
 
 /** 
  * job to index the file/url-documents
