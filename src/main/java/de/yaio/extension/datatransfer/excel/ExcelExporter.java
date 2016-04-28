@@ -13,28 +13,6 @@
  */
 package de.yaio.extension.datatransfer.excel;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.apache.log4j.Logger;
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFConditionalFormattingRule;
-import org.apache.poi.hssf.usermodel.HSSFPatternFormatting;
-import org.apache.poi.hssf.usermodel.HSSFPrintSetup;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFSheetConditionalFormatting;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.hssf.util.HSSFColor;
-import org.apache.poi.ss.usermodel.ComparisonOperator;
-import org.apache.poi.ss.util.CellRangeAddress;
-
 import de.yaio.commons.data.DataUtils;
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.node.BaseNode;
@@ -46,6 +24,14 @@ import de.yaio.datatransfer.exporter.formatter.IstDataFormatterImpl;
 import de.yaio.datatransfer.exporter.formatter.PlanDataFormatterImpl;
 import de.yaio.extension.datatransfer.wiki.WikiExporter;
 import de.yaio.utils.ExcelService;
+import org.apache.log4j.Logger;
+import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.ss.usermodel.ComparisonOperator;
+import org.apache.poi.ss.util.CellRangeAddress;
+
+import java.io.File;
+import java.util.*;
 
 /** 
  * export of Nodes as Excel
