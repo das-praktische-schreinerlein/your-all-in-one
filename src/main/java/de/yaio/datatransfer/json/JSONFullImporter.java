@@ -13,10 +13,6 @@
  */
 package de.yaio.datatransfer.json;
 
-import java.io.IOException;
-
-import org.apache.log4j.Logger;
-
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.Version;
@@ -24,10 +20,12 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.datatransfer.importer.ImportOptions;
 import de.yaio.datatransfer.importer.ImporterImpl;
+import org.apache.log4j.Logger;
+
+import java.io.IOException;
 
 /** 
  * import nodes in JSON-Format

@@ -13,31 +13,15 @@
  */
 package de.yaio.datatransfer.importer;
 
-import java.lang.reflect.Constructor;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
-
-import org.apache.log4j.Logger;
-
 import de.yaio.core.datadomain.BaseData;
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.datadomainservice.MetaDataService;
 import de.yaio.core.node.BaseNode;
-import de.yaio.datatransfer.importer.parser.BaseDataParserImpl;
-import de.yaio.datatransfer.importer.parser.DescDataParserImpl;
-import de.yaio.datatransfer.importer.parser.DocLayoutDataParserImpl;
-import de.yaio.datatransfer.importer.parser.IstDataParserImpl;
-import de.yaio.datatransfer.importer.parser.MetaDataParserImpl;
-import de.yaio.datatransfer.importer.parser.Parser;
-import de.yaio.datatransfer.importer.parser.PlanCalcDataParserImpl;
-import de.yaio.datatransfer.importer.parser.PlanDataParserImpl;
-import de.yaio.datatransfer.importer.parser.ResLocDataParserImpl;
-import de.yaio.datatransfer.importer.parser.SymLinkDataParserImpl;
-import de.yaio.datatransfer.importer.parser.SysDataParserImpl;
+import de.yaio.datatransfer.importer.parser.*;
+import org.apache.log4j.Logger;
+
+import java.lang.reflect.Constructor;
+import java.util.*;
 
 /** 
  *    factory-functions for creation of Nodes

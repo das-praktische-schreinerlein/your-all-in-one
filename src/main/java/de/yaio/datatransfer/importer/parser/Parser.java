@@ -13,11 +13,11 @@
  */
 package de.yaio.datatransfer.importer.parser;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.datatransfer.importer.ImportOptions;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /** 
  * interface with service-functions for parsing of dataDomains

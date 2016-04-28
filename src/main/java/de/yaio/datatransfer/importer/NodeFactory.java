@@ -14,13 +14,13 @@
  */
 package de.yaio.datatransfer.importer;
 
-import java.util.Collection;
-import java.util.Map;
-import java.util.Set;
-
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.datadomainservice.MetaDataService;
 import de.yaio.datatransfer.importer.parser.Parser;
+
+import java.util.Collection;
+import java.util.Map;
+import java.util.Set;
 
 /** 
  *    interface with factory-functions for creation of Nodes

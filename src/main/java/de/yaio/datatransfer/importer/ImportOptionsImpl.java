@@ -13,9 +13,9 @@
  */
 package de.yaio.datatransfer.importer;
 
-import java.util.Map;
-
 import de.yaio.commons.data.DataUtils;
+
+import java.util.Map;
 
 /** 
  *    options for import of Nodes

@@ -13,11 +13,11 @@
  */
 package de.yaio.datatransfer.importer;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.datatransfer.importer.parser.Parser;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /** 
  *    service-functions for import of Nodes

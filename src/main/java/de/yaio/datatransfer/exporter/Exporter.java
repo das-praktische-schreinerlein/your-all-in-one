@@ -13,10 +13,10 @@
  */
 package de.yaio.datatransfer.exporter;
 
-import java.util.Map;
-
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.datatransfer.exporter.formatter.Formatter;
+
+import java.util.Map;
 
 /** 
  * interface with service-functions for export of Nodes

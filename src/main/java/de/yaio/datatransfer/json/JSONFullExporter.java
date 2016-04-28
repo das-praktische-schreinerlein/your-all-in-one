@@ -13,12 +13,6 @@
  */
 package de.yaio.datatransfer.json;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.log4j.Logger;
-
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -26,17 +20,16 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
-
 import de.yaio.core.datadomain.DataDomain;
-import de.yaio.core.node.BaseNode;
-import de.yaio.core.node.EventNode;
-import de.yaio.core.node.InfoNode;
-import de.yaio.core.node.SymLinkNode;
-import de.yaio.core.node.TaskNode;
-import de.yaio.core.node.UrlResNode;
+import de.yaio.core.node.*;
 import de.yaio.core.nodeservice.NodeService;
 import de.yaio.datatransfer.exporter.ExporterImpl;
 import de.yaio.datatransfer.exporter.OutputOptions;
+import org.apache.log4j.Logger;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 /** 
  * export nodes in JSON-Format

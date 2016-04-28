@@ -13,12 +13,11 @@
  */
 package de.yaio.datatransfer.exporter.formatter;
 
-import org.apache.log4j.Logger;
-
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.datadomain.DescData;
 import de.yaio.datatransfer.exporter.Exporter;
 import de.yaio.datatransfer.exporter.OutputOptions;
+import org.apache.log4j.Logger;
 
 /** 
  * service-functions for formatting of dataDomain: DescData

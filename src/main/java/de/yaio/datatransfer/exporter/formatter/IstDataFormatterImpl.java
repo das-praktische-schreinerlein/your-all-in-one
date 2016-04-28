@@ -13,15 +13,14 @@
  */
 package de.yaio.datatransfer.exporter.formatter;
 
-import java.util.Date;
-
-import org.apache.log4j.Logger;
-
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.datadomain.IstData;
 import de.yaio.datatransfer.exporter.Exporter;
 import de.yaio.datatransfer.exporter.OutputOptions;
 import de.yaio.utils.Calculator;
+import org.apache.log4j.Logger;
+
+import java.util.Date;
 
 /** 
  * service-functions for formatting of dataDomain: IstData
