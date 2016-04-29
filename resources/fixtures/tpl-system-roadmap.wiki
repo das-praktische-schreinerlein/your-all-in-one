@@ -155,6 +155,82 @@ Resume: Also, für jeden die passende Version, damit er sich überall und in jed
 <!---/STYLE h1:yaio-color-ue--->
 
 <!---CONTAINER changelog--->
+## Changelog for release: feature-YAIO2383-improvements-201604-RELEASE
+- **Subprojekte**
+    - create new subproject [jsh-pregdown](https://github.com/das-praktische-schreinerlein/jsh-pegdown) my own markdown-parser based on pegdown
+- **YaioServer (YAIO2505)**
+    - **GUI (YAIO2506)**
+        - use own namespace for yaio-styles (YAIO2507)
+        - improved layout of the frontpage (YAIO2508)
+    - **Code-Verbesserungen (YAIO2509)**
+        - use new markdown-parser base don pegdown (YAIO2510)
+        - improved html-export: added new option - desconly (YAIO2511)
+        - responseobj: add childNode in servicefunction (YAIO2512)
+        - change sysData.Change only if checksum was not empty before (YAIO2514)
+        - improved function-structure (YAIO2515)
+        - inproved structure of the tests (unit, functional) (YAIO2516)
+        - use user-defined int-ids for enum-hibernate-mapping (YAIO2540)
+    - **neue Funktionen (YAIO2517)**
+        - renamed metaNodeSubTypeTags to metaNodeSubType and added to mapping (YAIO2518)
+        - added metaNodeTypeTags to mapping (YAIO2519)
+        - tags are spaceseparated (YAIO2520)
+        - added new searchfilter for tags and subtype (YAIO2521)
+        - added new isNull-filter and searchoptions for ist+plan-date (YAIO2547)
+        - Introduce SubTypes (YAIO2405)
+        - added filter for plan/ist-datesearch (YAIO2522)
+    - **Admin/Doku-Funktionen (YAIO2523)**
+        - improved versioning (YAIO2524)
+        - fixed some codestyle-hints (YAIO2525)
+        - use enum instead of int and constants (YAIO2526)
+        - improved recalc on startup (YAIO2527)
+        - added support for db-migrations (YAIO2528)
+        - added flyway (YAIO2529)
+        - added scripts to support generation of changelog (YAIO2530)
+    - **Bugfixes (YAIO2531)**
+        - bugfix: vulnerability of apache-commons (YAIO2532)
+        - updated apache-commons to 4.1 (YAIO2533)
+        - extend metaNodePrefix (YAIO2534)
+        - fixed comments (YAIO2535)
+        - fixed tests: checksum changed after renaming metaNodeSubTypeTags to metaNodeSubType (YAIO2536)
+        - extend longvar-columns (YAIO2537)
+        - Fix SYS_CHANGE_DATE that was overwriten when introducing new Checksum-config (YAIO2430)
+        - Fix hbm2ddl (hibernate should only validate) (YAIO2403)
+        - Bugfix: fix repositories (YAIO2402)
+- **YaioApp (YAIO2475)**
+    - **GUI (YAIO2476)**
+        - added new workboard and improved dashboard-functions (YAIO2477)
+        - added nodecard-view (YAIO2478)
+        - Feature - merge/extend filter for overview/search (YAIO2545)
+        - improved dashboard-strcuture - added new workboard for running/late/short (YAIO2557)
+    - **Code-Verbesserungen (YAIO2479)**
+        - moved vendor-yaio-styles to exporttemplates (YAIO2480)
+        - added new layout-tag: desconly (YAIO2481)
+        - added own yaio-namespace for styles (YAIO2482)
+        - improved frontpage-layout (YAIO2483)
+        - improved parameter-handling for search (easy to add new searchfilter) (YAIO2484)
+        - improved template-structure for search and dashboard (YAIO2485)
+    - **neue Funktionen (YAIO2486)**
+        - introduce metaNodeSubType and metaNodeTypeTags (YAIO2487)
+        - added new searchfilter fopr tags and subtype (YAIO2488)
+        - added service-functions for dates (YAIO2489)
+        - added datefilter (YAIO2490)
+        - added ist+plan-date/optimized parameterhandling (YAIO2552)
+        - Introduce tags in GUI (YAIO2406)
+        - Feature - hirarchy-filter (YAIO2544)
+    - **Admin/Doku-Funktionen (YAIO2491)**
+        - improved documentation (YAIO2492)
+        - improved naming (YAIO2493)
+        - codeclean (YAIO2494)
+    - **Bugfixes (YAIO2495)**
+        - fixed search: gant-view was disabled (YAIO2496)
+        - bugfix: load accessmanager only when needed and not before connect! (YAIO2497)
+        - bugfix: open editor only if uploadfile available (YAIO2498)
+        - bugfix: fixed upload - events where removed after first upload by angular (YAIO2499)
+        - bugfix: hide icons on printversion (YAIO2500)
+        - bugfix: improved yaio-versioning (YAIO2501)
+        - fixed icon-path (YAIO2502)
+        - bugfix: prevent sysdata from showing null/undefined (YAIO2503)
+
 ## Changelog for release: feature-YAIO2304-improvements-201602-RELEASE
 - **Subprojekte (YAIO2347)**
     - moved [ymf](https://github.com/das-praktische-schreinerlein/your-markdown-fellow) and jshelferlein into separate projects (YAIO2348) 
