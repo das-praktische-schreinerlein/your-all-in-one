@@ -1,11 +1,23 @@
 = INFO - Roadmap                                                                                                                                           [NodeMeta: SysRoad,1,,] [NodeSys: SysRoad1,,,,]
+Hier finden Sie das Informationen und Hintergründe über die Roadmap der Entwicklung von D'Artagnan.
 
-* **INFO - Wie wird es weitergehen...**                                     [DocLayout: DIV,weiter,Wie Weiter,]                                                
+* **INFO - Wie wird es weitergehen...**                                     [DocLayout: DESC,,,]                                                
+<!---BOX--->
+<!---STYLE h1:yaio-color-ue--->
+# Die Roadmap!!!!
+<!---/STYLE h1:yaio-color-ue--->
 Ja, Ja D'Artagnan ist noch lange (und wohl niemals ;-) fertig. Ständig fallen mir weitere kleine Features ein, die ich noch unterbringen möchte.
 Deshalb hioer eine kleine Übersicht, was die auf lange Sicht geplant und was davon auch schon umgesetzt wurde.
-** INFO - Ende [DocLayout: P,,,X]                                                      
 
-** **INFO - Die Vision**                                     [DocLayout: DIV,vision,Vision,]                                                
+<!---/BOX--->
+
+** **INFO - Die Vision**                                     [DocLayout: DESC,,,]                                               
+<!---BOX--->
+<!---STYLE h1:yaio-color-ue--->
+# Die Vision!!!! <!---TOGGLER roadvision,text--->
+<!---/STYLE h1:yaio-color-ue--->
+
+<!---CONTAINER roadvision--->
 ## Welche Versionen wird es geben?
 Für jeden die passende: Nicht jeder hat die gleichen Ansprüche. Deshalb wird D'Artagnan in verschiedenen Versionen nutzbar sein.
 
@@ -35,7 +47,7 @@ Resume: Also, für jeden die passende Version, damit er sich überall und in jed
     - Infos: Infos, Ideen, Dokumentation usw.
     - Kontakte: Kontakte (gruppiert nach den beteiligten Kontakten)
     - ...
-- ** *Ui-Ui-Ui der Inbegriff von - Work in Progress* **
+- **Ui-Ui-Ui der Inbegriff von - Work in Progress**
 
 ## Und weiter mit Ideenfetzen
 - **Features**
@@ -48,12 +60,18 @@ Resume: Also, für jeden die passende Version, damit er sich überall und in jed
     - Emails: Dokumentation von Emails mit allen Metainformationen (Beteiligte, Zeit, Inhalt, Anhänge...)
     - Kontakte: Dokumentation von Kontakten und Verknüpfung mit Email. Telefonaten, Sitzungsprotokollen usw.
     - Layout: Formatierung für den Dokumentations-Export (DIV,UE,P,LI,TR) 
-*** INFO - Ende [DocLayout: P,,,X]                                                      
+<!---/CONTAINER--->
+<!---/BOX--->
 
-** **INFO - technische Roadmap**                                     [DocLayout: DIV,roadmap,Roadmap,]                                                
-# Roadmap
+** **INFO - technische Roadmap**                                                                          [DocLayout: DESC,,,]                                               
+<!---BOX--->
+<!---STYLE h1:yaio-color-ue--->
+# Roadmap <!---TOGGLER roadmap,text--->
+<!---/STYLE h1:yaio-color-ue--->
 
+<!---CONTAINER roadmap--->
 ## short term
+- many things :-)
 
 ## mid term
 - **Dokumentation (YAIO1143)**
@@ -61,13 +79,8 @@ Resume: Also, für jeden die passende Version, damit er sich überall und in jed
     - Code-Dokumentation Prio2-Klassen (YAIO1145)
     - Modellierung (YAIO644)
 - **Erweiterungen (YAIO1921)**
-    - Neue Funktionen(YAIO2123)
-        - Taskanlegen über Fixture-Import(YAIO2159)
-        - Im/Export als JSON(YAIO2095)
-        - Copy/Move über GUI+JSON(YAIO2096)
     - Ergonomie (YAIO1923)
         - Kontextmenü über Icon öffnen (YAIO2092)
-        - neues Iconset als sprite einbinden (YAIO2093)
         - externe CSS-Styles definieren (YAIO1724)
         - DryRun-Modus für Import (YAIO1712)
         - OutputOptions im Cookie speichern (YAIO1674)
@@ -88,7 +101,6 @@ Resume: Also, für jeden die passende Version, damit er sich überall und in jed
     - Java-Codeabdeckung für neue Java-Funktionen(YAIO2098)
     - Layout-Tests(YAIO2100)
     - Optionen in Config auslagern (YAIO1638)
-    - eigene JS-Klassen (YAIO1927)
     - DB-Zugriffe von BaseNodeDBService machen und nicht von BaseNode (YAIO1553)
     - checksum+version per json uebertragen, beim speichern kontrollieren und ggf. Warnung (YAIO1541)
     - für Formular eigene Angular-Directive (Tag mit Layout, ganze Form-Elemente, ganze Forms) (YAIO1550)
@@ -133,10 +145,249 @@ Resume: Also, für jeden die passende Version, damit er sich überall und in jed
     - An Node Kalender aufrufen, Tag auswählen und speichern wie viele Stunden ich an diesem Tag dort gearbeitet habe (YAIO201)
     - Im Kalender Tag aufrufen, aus Selectbox Node auswählen und Stunden angeben (YAIO202)
     - Datenmodell: Tag,Projekt,Mitarbeiter,Stunden (YAIO203)
-*** INFO - Ende [DocLayout: P,,,X]                                                      
+<!---/CONTAINER--->
+<!---/BOX--->
 
-** **INFO - Der Blick zurück...**                                     [DocLayout: DIV,changelog,Chnagelog,]                                                
-# Changelog
+** **INFO - Der Blick zurück...**                                     [DocLayout: DESC,,,]                                               
+<!---BOX--->
+<!---STYLE h1:yaio-color-ue--->
+# Changelog - Der Blick zurück...<!---TOGGLER changelog,text--->
+<!---/STYLE h1:yaio-color-ue--->
+
+<!---CONTAINER changelog--->
+## Changelog for release: feature-YAIO2383-improvements-201604-RELEASE
+- **Subprojekte**
+    - create new subproject [jsh-pregdown](https://github.com/das-praktische-schreinerlein/jsh-pegdown) my own markdown-parser based on pegdown
+- **YaioServer (YAIO2505)**
+    - **GUI (YAIO2506)**
+        - use own namespace for yaio-styles (YAIO2507)
+        - improved layout of the frontpage (YAIO2508)
+    - **Code-Verbesserungen (YAIO2509)**
+        - use new markdown-parser base don pegdown (YAIO2510)
+        - improved html-export: added new option - desconly (YAIO2511)
+        - responseobj: add childNode in servicefunction (YAIO2512)
+        - change sysData.Change only if checksum was not empty before (YAIO2514)
+        - improved function-structure (YAIO2515)
+        - inproved structure of the tests (unit, functional) (YAIO2516)
+        - use user-defined int-ids for enum-hibernate-mapping (YAIO2540)
+    - **neue Funktionen (YAIO2517)**
+        - renamed metaNodeSubTypeTags to metaNodeSubType and added to mapping (YAIO2518)
+        - added metaNodeTypeTags to mapping (YAIO2519)
+        - tags are spaceseparated (YAIO2520)
+        - added new searchfilter for tags and subtype (YAIO2521)
+        - added new isNull-filter and searchoptions for ist+plan-date (YAIO2547)
+        - Introduce SubTypes (YAIO2405)
+        - added filter for plan/ist-datesearch (YAIO2522)
+    - **Admin/Doku-Funktionen (YAIO2523)**
+        - improved versioning (YAIO2524)
+        - fixed some codestyle-hints (YAIO2525)
+        - use enum instead of int and constants (YAIO2526)
+        - improved recalc on startup (YAIO2527)
+        - added support for db-migrations (YAIO2528)
+        - added flyway (YAIO2529)
+        - added scripts to support generation of changelog (YAIO2530)
+    - **Bugfixes (YAIO2531)**
+        - bugfix: vulnerability of apache-commons (YAIO2532)
+        - updated apache-commons to 4.1 (YAIO2533)
+        - extend metaNodePrefix (YAIO2534)
+        - fixed comments (YAIO2535)
+        - fixed tests: checksum changed after renaming metaNodeSubTypeTags to metaNodeSubType (YAIO2536)
+        - extend longvar-columns (YAIO2537)
+        - Fix SYS_CHANGE_DATE that was overwriten when introducing new Checksum-config (YAIO2430)
+        - Fix hbm2ddl (hibernate should only validate) (YAIO2403)
+        - Bugfix: fix repositories (YAIO2402)
+- **YaioApp (YAIO2475)**
+    - **GUI (YAIO2476)**
+        - added new workboard and improved dashboard-functions (YAIO2477)
+        - added nodecard-view (YAIO2478)
+        - Feature - merge/extend filter for overview/search (YAIO2545)
+        - improved dashboard-strcuture - added new workboard for running/late/short (YAIO2557)
+    - **Code-Verbesserungen (YAIO2479)**
+        - moved vendor-yaio-styles to exporttemplates (YAIO2480)
+        - added new layout-tag: desconly (YAIO2481)
+        - added own yaio-namespace for styles (YAIO2482)
+        - improved frontpage-layout (YAIO2483)
+        - improved parameter-handling for search (easy to add new searchfilter) (YAIO2484)
+        - improved template-structure for search and dashboard (YAIO2485)
+    - **neue Funktionen (YAIO2486)**
+        - introduce metaNodeSubType and metaNodeTypeTags (YAIO2487)
+        - added new searchfilter fopr tags and subtype (YAIO2488)
+        - added service-functions for dates (YAIO2489)
+        - added datefilter (YAIO2490)
+        - added ist+plan-date/optimized parameterhandling (YAIO2552)
+        - Introduce tags in GUI (YAIO2406)
+        - Feature - hirarchy-filter (YAIO2544)
+    - **Admin/Doku-Funktionen (YAIO2491)**
+        - improved documentation (YAIO2492)
+        - improved naming (YAIO2493)
+        - codeclean (YAIO2494)
+    - **Bugfixes (YAIO2495)**
+        - fixed search: gant-view was disabled (YAIO2496)
+        - bugfix: load accessmanager only when needed and not before connect! (YAIO2497)
+        - bugfix: open editor only if uploadfile available (YAIO2498)
+        - bugfix: fixed upload - events where removed after first upload by angular (YAIO2499)
+        - bugfix: hide icons on printversion (YAIO2500)
+        - bugfix: improved yaio-versioning (YAIO2501)
+        - fixed icon-path (YAIO2502)
+        - bugfix: prevent sysdata from showing null/undefined (YAIO2503)
+
+## Changelog for release: feature-YAIO2304-improvements-201602-RELEASE
+- **Subprojekte (YAIO2347)**
+    - moved [ymf](https://github.com/das-praktische-schreinerlein/your-markdown-fellow) and jshelferlein into separate projects (YAIO2348) 
+    - moved whole [yaio-explorerapp](https://github.com/das-praktische-schreinerlein/yaio-explorerapp) into separate project (YAIO2349) 
+- **GUI (YAIO2309)**
+    - optimized print-control (YAIO2350) 
+    - improved responsive layout (YAIO2351) 
+    - added option to disable printWidget of YMF (YAIO2352) 
+    - added slimbox for markdown-jsh-images (YAIO2353) 
+    - add localserver only to config if used as parameter: dsn (YAIO2354) 
+    - set datasource to "server" (YAIO2355) 
+- **neue Funktionen (YAIO2310)**
+    - added extended markdown-layout (YAIO2356) 
+    - added and fixed toggler (YAIO2357) 
+    - use boxes in inlinelexer too (YAIO2358) 
+    - improved markdown-layout (tables, boxes) (YAIO2359) 
+    - added example for extended markdown (YAIO2360) 
+- **Code-Verbesserungen (YAIO2311)**
+    - Use own Maven-Repo for my githuh-java-libs (YAIO2322) 
+    - codestyle (YAIO2361) 
+    - use configurated appBaseVarName (YAIO2362) 
+    - improved package-structure (YAIO2363) 
+    - moved parser from MarkdownRenderer into separate services improved package-structure (renaming path) (YAIO2364) 
+    - renamed package and fixed node-styles (YAIO2365) 
+    - improved naming (YAIO2366) 
+    - use slimbox via ymf (YAIO2367) 
+    - use new YmfServiceHelper to addServiceLinks (YAIO2368) 
+    - codestyle: jshint (singlequotes...) (YAIO2369) 
+    - codestyle: jshint (YAIO2370) 
+    - improved documentation improved structure of the angular-controller (YAIO2371) 
+    - improved documentation improved structure improved naming (YAIO2372) 
+    - introduced datasource-manager (YAIO2373) 
+- **Bugfixes (YAIO2312)**
+    - bugfix webshot-config (disable debug-messages) (YAIO2377) 
+    - fixed css-includes (YAIO2378) 
+    - fixed unit-tests (YAIO2379) 
+    - fixed tests (YAIO2380) 
+    - fixed callUpdateTriggerForElement if aceEditor is set on the parent (YAIO2381) 
+    - fixed relative pathes (YAIO2382) 
+- **Admin/Doku-Funktionen (YAIO2313)**
+    - added sprite, embed-icon (YAIO2374) 
+    - updated documentation (YAIO2376) 
+    - improved grunt config (YAIO2375) 
+
+## Changelog for release: feature-YAIO2234-improvements-201512-RELEASE
+- **external yaio-services (YAIO2280)**
+    - introduced yaio-common-utils moved several utils to yaio-common (YAIO2281) 
+    - use own yaio-plantuml-service (YAIO2282) 
+    - use yaio-pom-webstarter (YAIO2283) 
+    - use metaextract-service to extract metadata from urls/files (YAIO2284) 
+    - use webshot-service to webshot urls (YAIO2285) 
+    - use yaio-dms-service with common StorageUtils (YAIO2286) 
+- **neue Funktionen (YAIO2240)**
+    - added statistics and filter for url/info-nodes (YAIO2287) 
+    - FileUpload mit Indexierung und Speicherung im CMS (YAIO2234) 
+    - UrlRes per Crawler als Text speichern (analog lynx) (YAIO2231) 
+    - **Added DMS with File/Url-Upload DMS with Webshots and MetaExtraction (YAIO2288)**
+        - added dms-functions added possibility of webshots for saved urls (YAIO2289) 
+        - added drag&drop-uploader (YAIO2290) 
+        - added fileupload (YAIO2291) 
+        - added functions to recalc when triggered by Cronjob from DB (YAIO2292) 
+        - added indexer-service (YAIO2293) 
+        - added NetFirewall to secure my private network (YAIO2294) 
+        - added optional for dms-download to get the real file-extension for better metaextract (YAIO2295) 
+        - added options for markdown to use yaio-dms-links for images (YAIO2296) 
+        - data for the included tesseract ocr (YAIO2297) 
+        - enabled scheduling for triggered-service (YAIO2298) 
+        - disable functions per flag (YAIO2299) 
+        - improved dmsclient (YAIO2300) 
+        - improved layout (YAIO2301) 
+        - improved layout and show all parser-results (YAIO2302) 
+        - improved styling of dms (YAIO2303) 
+        - UrlRes mit ScreenCapture (YAIO2232) 
+- **Code-Verbesserungen (YAIO2241)**
+    - added ConfigController (YAIO2242) 
+    - externalize config (YAIO2243) 
+    - ServerNodeDataService loads config from server externalize config (YAIO2244) 
+    - codeclean (YAIO2245) 
+    - optimized pom for options (YAIO2246) 
+    - added http-utils (YAIO2247) 
+    - added prototype of ical-generation with biweekly (YAIO2248) 
+    - improved naming (YAIO2249) 
+    - improved package-structure (YAIO2250) 
+    - updated spring-boot.version to 1.3.0 (YAIO2251) 
+    - service-functions to reset data per datadomain (YAIO2252) 
+    - recalc nodes with different scripts/stages (YAIO2253) 
+    - splitted services into recalc and triggered (YAIO2254) 
+- **Bugfixes (YAIO2242)**
+    - bugfix: unknown var for calcing yaio-hrefs (YAIO2255) 
+    - compatibility poi for yaio and tika (YAIO2256) 
+    - fixed config (YAIO2257) 
+    - fixed html-export for fileres (YAIO2258) 
+    - fixed plantuml-integration in htlm-export (YAIO2259) 
+    - fixed security issue on nodecreation: map newNodeData from paramNode to an empty newNode (YAIO2260) 
+    - fixed tests for fileupload (YAIO2261) 
+    - fixed triggered-service (YAIO2262) 
+    - fixed typos (YAIO2263) 
+    - fixed webshots-service (YAIO2264) 
+    - use another promise-handler (YAIO2265) 
+- **Admin/Doku-Funktionen (YAIO2243)**
+    - Eigenes Dok-Format von <h4> -> @ migrieren (YAIO2238) 
+    - autom Class-Dokumentation von YAIO mit PlantUML (YAIO2237) 
+    - added devtools for documentation (YAIO2239) 
+    - add js-resporting-tools (YAIO2240) 
+    - use tool to analyse deps (YAIO2241) 
+
+## Changelog for release: feature-YAIO2168-improvements-201509-RELEASE
+- **Admin/Doku-Funktionen (YAIO2228)**
+    - added swagger for api-documentation (YAIO2229)
+    - added scripts to recalc data per project (YAIO2230)
+- **neue Funktionen (YAIO2174)**
+    - added json-export from server (YAIO2175)
+    - improved searchfunctions (YAIO2220)
+    - added fat multiselect-boxes for search (YAIO2221)
+    - added nodefilter on show-view (YAIO2222)
+    - added dashboard (YAIO2223)
+    - added new function: copy/MoveNode per GUI (YAIO2224)
+    - added new function: edit to contextmenu improved nodeCommand-handling (contextmenu) (YAIO2225)
+    - added new function: create nodes by template (YAIO2226)
+    - added plantUML as new diagram-type (YAIO2231)
+    - Taskanlegen über Fixture-Import (YAIO2159)
+    - job to recalc nodes (YAIO2227)
+    - Server (YAIO2184)
+        - added export as yaioOfflineApp (YAIO2185)
+        - added json-import to server (YAIO2186)
+    - App (YAIO2215)
+        - added StaticNodeDataService to use YaioApp without Server (YAIO2176)
+            - added json-export of static data (YAIO2177)
+            - added save, create, remove for static-datasource (YAIO2178)
+            - added move for static datasources (YAIO2179)
+            - added search for static datasource (YAIO2180)
+            - introduced staticdatastore for better structure (YAIO2181)
+        - added FileLoader for YaioJson (YAIO2183)
+        - add datasourceselect per parameter (YAIO2216)
+        - added sourceselector to switch between server, static, file (YAIO2182)
+        - added FileService to load static files (YAIO2217)
+        - added module to load/render static content (helpsite...) in offline version (YAIO2218)
+        - added static help-content (YAIO2219)
+- **Code-Verbesserungen (YAIO2187)**
+    - codeclean (YAIO2188)
+    - use relative resBaseUrl (YAIO2211)
+    - fork vendors with yaio-patches on github and use them (YAIO2189)
+    - improved package structure: new service datatransferUtils (YAIO2212)
+    - Verbesserungen YaioApp (YAIO2190)
+        - modular contentloading (YAIO2191)
+        - modularize templates (YAIO2192)
+        - configure services by name and use aliases for usage (YAIO2193)
+        - introduce NodeDataService-interface and implementation (YAIO2194)
+        - added accessmanager to configure urls and check permissions (YAIO2195)
+    - improved naming for unknown task/event-state: not planed (YAIO2213)
+- **Bugfixes (YAIO2196)**
+    - bugfix: hide speechsynth if not availiable (YAIO2197)
+    - bugfix: dont use const in js (YAIO2205)
+    - fixed tests for iexplorer, firefox (YAIO2198)
+    - bugfix: open all exports with target _blank (YAIO2206)
+    - fixed logout (YAIO2199)
+    - fixed migration-scripts (YAIO2207)
 
 ## Changelog for release: feature-YAIO2137-improvements-201507-RELEASE
 - **GUI (YAIO2143)**
@@ -279,4 +530,5 @@ Resume: Also, für jeden die passende Version, damit er sich überall und in jed
     - Export als CSV (TAB) (YAIO253)
     - Export als JSON (YAIO254)
     - Volltextsuche im Javascript V1 (YAIO152)
-*** INFO - Ende [DocLayout: P,,,X]                                                      
+<!---/CONTAINER--->
+<!---/BOX--->

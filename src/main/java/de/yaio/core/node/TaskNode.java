@@ -12,22 +12,20 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 package de.yaio.core.node;
-import java.util.Date;
-
-import javax.persistence.Transient;
-import javax.xml.bind.annotation.XmlTransient;
-
-import org.springframework.roo.addon.javabean.RooJavaBean;
-import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
-import org.springframework.roo.addon.tostring.RooToString;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import de.yaio.core.datadomain.ExtendedWorkflowData;
 import de.yaio.core.datadomainservice.BaseWorkflowDataServiceImpl;
 import de.yaio.core.nodeservice.BaseNodeService;
 import de.yaio.core.nodeservice.NodeService;
 import de.yaio.core.nodeservice.TaskNodeService;
+import org.springframework.roo.addon.javabean.RooJavaBean;
+import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
+import org.springframework.roo.addon.tostring.RooToString;
+
+import javax.persistence.Transient;
+import javax.xml.bind.annotation.XmlTransient;
+import java.util.Date;
 
 /** 
  * bean for (projects, tasks, todos) with TaskNode-data like (Plan, is) 

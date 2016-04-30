@@ -13,56 +13,33 @@
  */
 package de.yaio.webapp.restcontroller;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.collections4.MapUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-
 import de.yaio.core.dbservice.BaseNodeDBService;
 import de.yaio.core.dbservice.BaseNodeDBServiceImpl;
 import de.yaio.core.dbservice.SearchOptions;
 import de.yaio.core.dbservice.SearchOptionsImpl;
-import de.yaio.core.node.BaseNode;
-import de.yaio.core.node.EventNode;
-import de.yaio.core.node.InfoNode;
-import de.yaio.core.node.SymLinkNode;
-import de.yaio.core.node.TaskNode;
-import de.yaio.core.node.UrlResNode;
+import de.yaio.core.node.*;
 import de.yaio.core.nodeservice.BaseNodeService;
 import de.yaio.core.nodeservice.UrlResNodeService;
 import de.yaio.datatransfer.common.DatatransferUtils;
 import de.yaio.extension.datatransfer.common.ExtendedDatatransferUtils;
 import de.yaio.extension.dms.services.ResContentDataService;
 import de.yaio.webapp.controller.CommonApiConfig;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.MapUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import java.util.*;
 
 /** 
  * the controller for RESTful Web Services for BaseNodes<br>
  *  
- * @FeatureDomain                Webservice
- * @package                      de.yaio.webapp.restcontroller
- * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category                     collaboration
- * @copyright                    Copyright (c) 2014, Michael Schreiner
- * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 @Controller
 @RequestMapping("/nodes")
@@ -90,9 +67,10 @@ public class NodeRestController {
      * it will automaticaly set the parentHierarchy
      * @param node                   the node for the response
      * @param okMsg                  the message
+     * @param addChildren            add the children of the node to the response
      * @return                       NodeResponse (OK) with the node, hierarchy and OK-message
      */
-    public static NodeActionResponse createResponseObj(final BaseNode node, final String okMsg) {
+    public static NodeActionResponse createResponseObj(final BaseNode node, final String okMsg, boolean addChildren) {
         // extract parents
         List<String> parentIdHierarchy = node.getBaseNodeService().getParentIdHierarchy(node);
         
@@ -111,6 +89,11 @@ public class NodeRestController {
         NodeActionResponse response = new NodeActionResponse(
                         "OK", okMsg, 
                         node, parentIdHierarchy, null, null);
+
+        if (addChildren) {
+            // add children
+            response.setChildNodes(new ArrayList<>(node.getChildNodes()));
+        }
         
         return response;
     }
@@ -199,10 +182,7 @@ public class NodeRestController {
             node.initChildNodesFromDB(0);
             
             // create response
-            response = createResponseObj(node, "node '" + sysUID + "' found");
-            
-            // add children
-            response.childNodes = new ArrayList<BaseNode>(node.getChildNodes());
+            response = createResponseObj(node, "node '" + sysUID + "' found", true);
         }
         
         return response;
@@ -244,10 +224,7 @@ public class NodeRestController {
             node.initChildNodesFromDB(0);
             
             // create response
-            response = createResponseObj(node, "node '" + symLinkRef + "' found");
-            
-            // add children
-            response.childNodes = new ArrayList<BaseNode>(node.getChildNodes());
+            response = createResponseObj(node, "node '" + symLinkRef + "' found", true);
         }
         
         return response;
@@ -290,10 +267,7 @@ public class NodeRestController {
             }
             
             // create response
-            response = createResponseObj(parent, "node '" + sysUID + "' deleted");
-            
-            // add children
-            response.childNodes = new ArrayList<BaseNode>(parent.getChildNodes());
+            response = createResponseObj(parent, "node '" + sysUID + "' deleted", true);
         }
         
         return response;
@@ -389,8 +363,8 @@ public class NodeRestController {
                                                @RequestPart("node") final UrlResNode newNode,
                                                @RequestPart(value = "uploadFile", required = false) final MultipartFile uploadFile) {
         // create default response
-        Map<String, MultipartFile> addFileParams = new HashMap<String, MultipartFile>();
-        Map<String, Object> addParams = new HashMap<String, Object>();
+        Map<String, MultipartFile> addFileParams = new HashMap<>();
+        Map<String, Object> addParams = new HashMap<>();
         addFileParams.put("uploadFile", uploadFile);
         LOGGER.info("updateUrlResNode with file:" + addFileParams.get("uploadFile") 
                         + " for node:" + newNode.getNameForLogger());
@@ -412,9 +386,9 @@ public class NodeRestController {
                                                @RequestPart("node") final UrlResNode newNode,
                                                @RequestPart(value = "uploadFile", required = false) final MultipartFile uploadFile) {
         // create default response
-        Map<String, MultipartFile> addFileParams = new HashMap<String, MultipartFile>();
+        Map<String, MultipartFile> addFileParams = new HashMap<>();
         addFileParams.put("uploadFile", uploadFile);
-        Map<String, Object> addParams = new HashMap<String, Object>();
+        Map<String, Object> addParams = new HashMap<>();
         LOGGER.info("createUrlResNode with file:" + addFileParams.get("uploadFile") 
                         + " for node:" + newNode.getNameForLogger());
         return this.createNode(parentSysUID, new UrlResNode(), newNode, addParams, addFileParams);
@@ -516,11 +490,10 @@ public class NodeRestController {
 
         try {
             // move node
-            datatransferUtils.moveNode(node, newParent, newSortPos);
+            node = datatransferUtils.moveNode(node, newParent, newSortPos);
 
             // create response
-            response = createResponseObj(node, "node '" + sysUID 
-                            + "' moved to " + newParentSysUID);
+            response = createResponseObj(node, "node '" + sysUID + "' moved to " + newParentSysUID, false);
 
         } catch (Throwable ex) {
             // errorhandling
@@ -573,8 +546,7 @@ public class NodeRestController {
             datatransferUtils.copyNode(node, newParent);
 
             // create response
-            response = createResponseObj(node, "node '" + sysUID 
-                            + "' copied to " + newParentSysUID);
+            response = createResponseObj(node, "node '" + sysUID + "' copied to " + newParentSysUID, false);
 
         } catch (Throwable ex) {
             // errorhandling
@@ -631,7 +603,7 @@ public class NodeRestController {
             flgChange = datatransferUtils.mapNodeData(node, newNode);
 
             // handle uploads for UrlResNode
-            if (commonApiConfig != null && commonApiConfig.dmsAvailable == true
+            if (commonApiConfig != null && commonApiConfig.dmsAvailable
                     && UrlResNode.class.isInstance(node)
                     && MapUtils.isNotEmpty(addFileParams)
                     && addFileParams.containsKey("uploadFile") 
@@ -653,14 +625,14 @@ public class NodeRestController {
             }
 
             // create response
-            response = createResponseObj(node, "node '" + sysUID + "' updated");
+            response = createResponseObj(node, "node '" + sysUID + "' updated", false);
 
         } catch (ConstraintViolationException ex) {
             // validation errors
             Set<ConstraintViolation<?>> cViolations = ex.getConstraintViolations();
             
             // convert to Violation
-            List<NodeViolation>violations = new ArrayList<NodeViolation>();
+            List<NodeViolation>violations = new ArrayList<>();
             for (ConstraintViolation<?> cViolation : cViolations) {
                 violations.add(
                       new NodeViolation(cViolation.getPropertyPath().toString(), 
@@ -743,13 +715,13 @@ public class NodeRestController {
             origNode.setParentNode(parentNode);
             
             // recalc data
-            origNode.recalcData(BaseNodeService.CONST_RECURSE_DIRECTION_ONLYME);
+            origNode.recalcData(BaseNodeService.RecalcRecurseDirection.ONLYME);
             
             // save
             origNode.persist();
 
             // handle uploads for UrlResNode
-            if (commonApiConfig != null && commonApiConfig.dmsAvailable == true
+            if (commonApiConfig != null && commonApiConfig.dmsAvailable
                     && UrlResNode.class.isInstance(origNode)
                     && MapUtils.isNotEmpty(addFileParams)
                     && addFileParams.containsKey("uploadFile") 
@@ -764,15 +736,15 @@ public class NodeRestController {
             updateMeAndMyParents(origNode);
 
             // create response
-            response = createResponseObj(origNode, "node '" + origNode.getSysUID() 
-                            + "' created for parentNode=" + parentSysUID);
+            response = createResponseObj(origNode, "node '" + origNode.getSysUID() +
+                    "' created for parentNode=" + parentSysUID, false);
 
         } catch (ConstraintViolationException ex) {
             // validation errors
             Set<ConstraintViolation<?>> cViolations = ex.getConstraintViolations();
             
             // convert to Violation
-            List<NodeViolation>violations = new ArrayList<NodeViolation>();
+            List<NodeViolation>violations = new ArrayList<>();
             for (ConstraintViolation<?> cViolation : cViolations) {
                 violations.add(
                       new NodeViolation(cViolation.getPropertyPath().toString(), 
@@ -848,25 +820,21 @@ public class NodeRestController {
                         "OK", "no node found", 
                         null, curPage, pageSize, 0L);
 
-        // find the baseNode
+        // search nodes
         BaseNodeDBService baseNodeDBService = BaseNodeDBServiceImpl.getInstance();
-        BaseNode node = BaseNode.findBaseNode(sysUID);
-        if (node != null) {
-            // search nodes
-            List<BaseNode> resultList = baseNodeDBService.findExtendedSearchBaseNodeEntries(fulltext, searchOptions,
-                            sortConfig, (curPage.intValue() - 1) * pageSize.intValue(), 
-                            pageSize.intValue());
+        List<BaseNode> resultList = baseNodeDBService.findExtendedSearchBaseNodeEntries(fulltext, sysUID, searchOptions,
+                        sortConfig, (curPage.intValue() - 1) * pageSize.intValue(),
+                        pageSize.intValue());
 
-            // create response
-            response.setCount(baseNodeDBService.countExtendedSearchBaseNodes(fulltext, searchOptions));
-            
-            // add node
-            response.setNodes(resultList);
-            
-            // set state
-            response.setStateMsg("node found");
-        }
-        
+        // create response
+        response.setCount(baseNodeDBService.countExtendedSearchBaseNodes(fulltext, sysUID, searchOptions));
+
+        // add node
+        response.setNodes(resultList);
+
+        // set state
+        response.setStateMsg("node found");
+
         return response;
     }
 }

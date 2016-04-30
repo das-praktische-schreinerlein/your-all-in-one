@@ -13,6 +13,17 @@
  */
 package de.yaio.extension.datatransfer.ppl;
 
+import com.ibm.icu.text.CharsetDetector;
+import com.ibm.icu.text.CharsetMatch;
+import de.yaio.core.datadomain.DataDomain;
+import de.yaio.core.node.BaseNode;
+import de.yaio.datatransfer.importer.ImportOptions;
+import de.yaio.datatransfer.importer.ImporterImpl;
+import org.apache.commons.io.IOUtils;
+import org.apache.log4j.Logger;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,20 +31,6 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.Set;
-
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-
-import org.apache.commons.io.IOUtils;
-import org.apache.log4j.Logger;
-
-import com.ibm.icu.text.CharsetDetector;
-import com.ibm.icu.text.CharsetMatch;
-
-import de.yaio.core.datadomain.DataDomain;
-import de.yaio.core.node.BaseNode;
-import de.yaio.datatransfer.importer.ImportOptions;
-import de.yaio.datatransfer.importer.ImporterImpl;
 
 /** 
  * import of Nodes in PPL-Format

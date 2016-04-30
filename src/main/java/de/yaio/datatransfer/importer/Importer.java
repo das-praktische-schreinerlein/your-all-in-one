@@ -13,9 +13,9 @@
  */
 package de.yaio.datatransfer.importer;
 
-import java.util.Map;
-
 import de.yaio.core.datadomain.DataDomain;
+
+import java.util.Map;
 
 /** 
  *    interface with service-functions for import of Nodes

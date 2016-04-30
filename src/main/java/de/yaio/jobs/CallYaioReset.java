@@ -13,10 +13,9 @@
  */
 package de.yaio.jobs;
 
+import de.yaio.app.CallYaioInstance;
 import org.apache.commons.cli.Options;
 import org.apache.log4j.Logger;
-
-import de.yaio.app.CallYaioInstance;
 
 /** 
  * job to call yaio-instance to reset db

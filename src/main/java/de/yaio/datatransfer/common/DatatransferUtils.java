@@ -13,37 +13,13 @@
  */
 package de.yaio.datatransfer.common;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-
-import org.apache.log4j.Logger;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import de.yaio.core.datadomain.DocLayoutData;
-import de.yaio.core.datadomain.IstChildrenSumData;
-import de.yaio.core.datadomain.IstData;
-import de.yaio.core.datadomain.MetaData;
-import de.yaio.core.datadomain.PlanCalcData;
-import de.yaio.core.datadomain.PlanChildrenSumData;
-import de.yaio.core.datadomain.PlanData;
-import de.yaio.core.datadomain.ResContentData;
+import de.yaio.core.datadomain.*;
 import de.yaio.core.datadomain.ResContentData.UploadWorkflowState;
-import de.yaio.core.datadomain.ResIndexData;
 import de.yaio.core.datadomain.ResIndexData.IndexWorkflowState;
-import de.yaio.core.datadomain.ResLocData;
-import de.yaio.core.datadomain.SymLinkData;
-import de.yaio.core.datadomain.SysData;
 import de.yaio.core.dbservice.BaseNodeDBServiceImpl;
-import de.yaio.core.node.BaseNode;
-import de.yaio.core.node.EventNode;
-import de.yaio.core.node.InfoNode;
-import de.yaio.core.node.SymLinkNode;
-import de.yaio.core.node.TaskNode;
-import de.yaio.core.node.UrlResNode;
+import de.yaio.core.node.*;
+import de.yaio.core.nodeservice.BaseNodeService;
+import de.yaio.core.nodeservice.NodeService;
 import de.yaio.core.nodeservice.UrlResNodeService;
 import de.yaio.datatransfer.exporter.OutputOptions;
 import de.yaio.datatransfer.exporter.OutputOptionsImpl;
@@ -54,6 +30,15 @@ import de.yaio.datatransfer.json.JSONFullExporter;
 import de.yaio.datatransfer.json.JSONFullImporter;
 import de.yaio.datatransfer.json.JSONResponse;
 import de.yaio.utils.Calculator;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import java.util.HashSet;
+import java.util.Set;
 
 /** 
  * Services to parse text to nodes and convert them in different 
@@ -95,30 +80,24 @@ public class DatatransferUtils {
         OutputOptions oOptions = new OutputOptionsImpl();
         oOptions.setFlgShowIst(false);
         oOptions.setFlgShowSysData(false);
-        oOptions.setFlgShowMetaData(false);
+        oOptions.setFlgShowMetaData(true);
         String jsonSrc = exporter.getMasterNodeResult(node, oOptions);
 
         // create dummy masternode
         BaseNode masterNode = createTemporaryMasternode(
                         newParent.getSysUID(), newParent.getMetaNodePraefix(), newParent.getMetaNodeNummer());
-        
+        masterNode.setCachedParentHierarchy(newParent.getCachedParentHierarchy());
+
         // Parser+Options anlegen
-        ImportOptions importOptions = new ImportOptionsImpl();
-        importOptions.setAllFlgParse(false);
-        importOptions.setFlgParseDesc(true);
-        importOptions.setFlgParseDocLayout(true);
-        importOptions.setFlgParsePlan(true);
-        importOptions.setFlgParsePlanCalc(true);
-        importOptions.setFlgParseResLoc(true);
-        importOptions.setFlgParseSymLink(true);
+        ImportOptions importOptions = createCopyImportOptions();
         parseNodesFromJson(importOptions, masterNode, jsonSrc);
-        
+
         // JPA-Exporter
         JPAExporter jpaExporter = new JPAExporter();
         jpaExporter.getMasterNodeResult(masterNode, null);
 
         // renew old parent only if different from newParent
-        if (newParent.getSysUID() != oldParent.getSysUID()) {
+        if (!newParent.getSysUID().equals(oldParent.getSysUID())) {
             // renew oldParent
             oldParent = BaseNode.findBaseNode(oldParent.getSysUID());
             oldParent.initChildNodesFromDB(0);
@@ -136,57 +115,72 @@ public class DatatransferUtils {
      * @throws Exception             ParserExceptions possible
      */
     @Transactional
-    public void moveNode(final BaseNode node, final BaseNode newParent, final Integer newSortPos) throws Exception {
-        // map the data
-        boolean flgChangedParent = false;
-        boolean flgChangedPosition = false;
+    public BaseNode moveNode(final BaseNode node, final BaseNode newParent, final Integer newSortPos) throws Exception {
+        BaseNode resultNode = node;
 
         // read children for old parent
         BaseNode oldParent = node.getParentNode();
         oldParent.initChildNodesFromDB(0);
 
-        // read children for both parents
-        newParent.initChildNodesFromDB(0);
+        if (!newParent.getSysUID().equals(oldParent.getSysUID())) {
+            // changed parent
+            if (LOGGER.isInfoEnabled()) {
+                LOGGER.info("moveNode:" + node.getNameForLogger() + " from " +
+                        oldParent.getNameForLogger() + " -> " + newParent.getNameForLogger());
+            }
 
-        // check for new parent
-        if (newParent.getSysUID() != oldParent.getSysUID()) {
+            // read children for new parent and me
+            newParent.initChildNodesFromDB(NodeService.CONST_DB_RECURSIONLEVEL_ALL_CHILDREN);
+            node.initChildNodesFromDB(NodeService.CONST_DB_RECURSIONLEVEL_ALL_CHILDREN);
+
             // reset sortpos
             node.setSortPos(null);
-            flgChangedPosition = true;
 
             // set new parent
-            flgChangedParent = true;
             node.setParentNode(newParent);
-        } else {
-            // check if position changed
-            if (node.getSortPos().intValue() != newSortPos.intValue()) {
-                flgChangedPosition = true;
-            }
-        }
 
-        // check for needed update
-        if (flgChangedParent || flgChangedPosition) {
             // recalc the position
             newParent.getBaseNodeService().moveChildToSortPos(newParent, node, newSortPos);
+
+            // reset cached data for my children and recalc
+            this.resetCachedData(node, false);
+            node.recalcData(BaseNodeService.RecalcRecurseDirection.CHILDREN);
+
+            // save all children of node recursively
+            node.saveChildNodesToDB(NodeService.CONST_DB_RECURSIONLEVEL_ALL_CHILDREN, true);
 
             // save children of newParent
             newParent.saveChildNodesToDB(0, true);
 
-            // recalc and save
+            // recalc and save parents
             BaseNodeDBServiceImpl.getInstance().updateMeAndMyParents(node);
 
-            // renew old parent only if changed
-            if (flgChangedParent) {
-                // renew oldParent
-                oldParent = BaseNode.findBaseNode(oldParent.getSysUID());
+            // renew oldParent
+            oldParent = BaseNode.findBaseNode(oldParent.getSysUID());
 
-                // recalc old parent
-                BaseNodeDBServiceImpl.getInstance().updateMeAndMyParents(oldParent);
+            // recalc old parent
+            BaseNodeDBServiceImpl.getInstance().updateMeAndMyParents(oldParent);
+        } else if (node.getSortPos().intValue() != newSortPos.intValue()) {
+            // changed only position
+            if (LOGGER.isInfoEnabled()) {
+                LOGGER.info("moveSortPos:" + node.getNameForLogger() + " from " +
+                        node.getSortPos() + " -> " + newSortPos + " for parent:" + oldParent.getNameForLogger());
             }
+
+            // reread resultNode from map to get the right instance
+            resultNode = (BaseNode)oldParent.getChildNodesByNameMap().get(node.getIdForChildByNameMap());
+
+            // recalc the position
+            oldParent.getBaseNodeService().moveChildToSortPos(oldParent, resultNode, newSortPos);
+
+            // save children of old parent
+            oldParent.saveChildNodesToDB(0, true);
         } else {
             // read children for node
             node.initChildNodesFromDB(0);
         }
+
+        return resultNode;
     }
 
     /** 
@@ -218,9 +212,24 @@ public class DatatransferUtils {
         }
         // check for type
         if (Calculator.compareValues(
-                        origNode.getType(), newNode.getType()) 
+                        origNode.getType(), newNode.getType())
                         != Calculator.CONST_COMPARE_EQ) {
             origNode.setType(newNode.getType());
+            flgChange = true;
+        }
+
+        // check for metaNodeSubType
+        if (Calculator.compareValues(
+                origNode.getMetaNodeSubType(), newNode.getMetaNodeSubType())
+                != Calculator.CONST_COMPARE_EQ) {
+            origNode.setMetaNodeSubType(newNode.getMetaNodeSubType());
+            flgChange = true;
+        }
+        // check for metMetaNodeTypeTags
+        if (Calculator.compareValues(
+                origNode.getMetaNodeTypeTags(), newNode.getMetaNodeTypeTags())
+                != Calculator.CONST_COMPARE_EQ) {
+            origNode.setMetaNodeTypeTags(newNode.getMetaNodeTypeTags());
             flgChange = true;
         }
         // check for nodeDesc
@@ -498,6 +507,9 @@ public class DatatransferUtils {
         }
         if (!childrenOnly) {
             // reset calced data
+            if (CachedData.class.isInstance(node)) {
+                ((CachedData) node).resetCachedData();
+            }
             if (IstChildrenSumData.class.isInstance(node)) {
                 ((IstChildrenSumData) node).resetIstChildrenSumData();
             }
@@ -510,6 +522,7 @@ public class DatatransferUtils {
             if (ResIndexData.class.isInstance(node)) {
                 ((ResIndexData) node).resetResIndexData();
             }
+
             
             // reset if flag is not set
             if (!importOptions.isFlgParseDesc()) {
@@ -545,5 +558,79 @@ public class DatatransferUtils {
             resetRestrictedData(childNode, importOptions, false);
         }
     }
-    
+
+    /**
+     * call resetDataDomain recursively for all dataDomains of type cached...
+     * @param node                   the node to reset
+     * @param childrenOnly           reset for children only
+     */
+    public void resetCachedData(final BaseNode node, final boolean childrenOnly) {
+        if (!childrenOnly) {
+            if (CachedData.class.isInstance(node)) {
+                ((CachedData) node).resetCachedData();
+            }
+        }
+        for (BaseNode childNode : node.getChildNodes()) {
+            resetCachedData(childNode, false);
+        }
+    }
+
+    protected ImportOptions createCopyImportOptions() {
+        ImportOptions importOptions = new ImportOptionsImpl();
+        importOptions.setAllFlgParse(false);
+        importOptions.setFlgParseDesc(true);
+        importOptions.setFlgParseDocLayout(true);
+        importOptions.setFlgParsePlan(true);
+        importOptions.setFlgParsePlanCalc(true);
+        importOptions.setFlgParseResLoc(true);
+        importOptions.setFlgParseSymLink(true);
+
+        return importOptions;
+    }
+
+    protected BaseNode clearEmptyDefaultNodes(final BaseNode node) {
+        if (node == null) {
+            return null;
+        }
+        if (node.getChildNodes().size() != 1) {
+            return node;
+        }
+
+        BaseNode resultNode = node;
+
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info("clearEmptyDefaultNodes:" + node.getNameForLogger());
+        }
+
+        BaseNode child = node.getChildNodes().iterator().next();
+        if (StringUtils.isEmpty(node.getNodeDesc()) &&
+                node.getEbene() > 0 &&
+                "DEFAULT".equals(node.getName()) &&
+                StringUtils.isEmpty(node.getType())) {
+            // delete this node
+            if (LOGGER.isInfoEnabled()) {
+                LOGGER.info("clearEmptyDefaultNodes remove:" + node.getNameForLogger());
+            }
+            BaseNode parent = node.getParentNode();
+
+            if (parent != null) {
+                // remove from parent
+                parent.getChildNodes().remove(node);
+                parent.getChildNodesByNameMap().remove(node.getIdForChildByNameMap());
+            }
+
+            // add child to parent
+            child.setParentNode(parent);
+
+            // check tree
+            resultNode = this.clearEmptyDefaultNodes(child);
+            if (LOGGER.isInfoEnabled()) {
+                LOGGER.info("use:" + resultNode.getNameForLogger());
+            }
+        } else {
+            // Im ok but check my children
+            this.clearEmptyDefaultNodes(child);
+        }
+        return resultNode;
+    }
 }

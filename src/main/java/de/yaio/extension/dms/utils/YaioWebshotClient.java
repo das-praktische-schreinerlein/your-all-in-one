@@ -13,10 +13,7 @@
  */
 package de.yaio.extension.dms.utils;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
+import de.yaio.commons.http.HttpUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
@@ -24,7 +21,9 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import de.yaio.commons.http.HttpUtils;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /** 
  * businesslogic for webshot

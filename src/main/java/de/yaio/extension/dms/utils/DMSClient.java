@@ -13,12 +13,12 @@
  */
 package de.yaio.extension.dms.utils;
 
+import de.yaio.services.dms.storage.StorageResource;
+import de.yaio.services.dms.storage.StorageResourceVersion;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-
-import de.yaio.services.dms.storage.StorageResource;
-import de.yaio.services.dms.storage.StorageResourceVersion;
 
 /** 
  * businesslogic for dms

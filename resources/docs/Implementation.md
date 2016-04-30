@@ -27,7 +27,7 @@
 - use external libs
     - Encoding detector: [icu4j](http://icu-project.org/)
     - Excel Ex/Import: [Apache Poi](https://github.com/apache/poi)
-    - Markdown-Formatter: [Markdown4j](https://code.google.com/p/markdown4j/)
+    - Markdown-Formatter: [Pegdown](https://github.com/sirthias/pegdown)
 
 ## Java-Frontend
 - functionality

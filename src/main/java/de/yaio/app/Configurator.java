@@ -13,29 +13,18 @@
  */
 package de.yaio.app;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Properties;
-
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.Option;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
-import org.apache.commons.cli.PosixParser;
+import org.apache.commons.cli.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.*;
 
 
 
@@ -267,36 +256,30 @@ public class Configurator {
         return configPath;
     }
 
-    protected void initSpringApplicationContext() throws Exception {
-        // check
-        if (applicationContext != null) {
-            throw new IllegalStateException("initSpringApplicationContext: "
-                            + "applicationContext already set");
-        }
-        
+    public Properties initProperties()  throws Exception {
         // get Configpath
         String configPath = this.getConfigFile();
-        
+
         // read properties
         Properties props = readProperties(configPath);
 
         // add all properties to system
         for (String propName : props.stringPropertyNames()) {
             System.setProperty(propName, props.getProperty(propName));
-                LOGGER.info("set System.prop:" + propName + "=" + props.getProperty(propName));
+            LOGGER.info("set System.prop:" + propName + "=" + props.getProperty(propName));
         }
-        
+
         // load PostProcessorReplacements
         String replacerConfigPath = props.getProperty(
-                        CONST_PROPNAME_EXPORTCONTROLLER_REPLACER);
+                CONST_PROPNAME_EXPORTCONTROLLER_REPLACER);
         if (replacerConfigPath != null) {
             Properties replacerConfig = readProperties(replacerConfigPath);
-            
+
             // load defined
             int count = replacerConfig.size() / 2;
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.info("check PostProcessorReplacements_documentation found:" 
-                    + count + " in file:" + replacerConfigPath + " props:" + replacerConfig);
+                LOGGER.info("check PostProcessorReplacements_documentation found:"
+                        + count + " in file:" + replacerConfigPath + " props:" + replacerConfig);
             }
             for (int zaehler = 0; zaehler <= count; zaehler++) {
                 String keyName = CONST_PROPNAME_EXPORTCONTROLLER_REPLACER_DOCUMENTATION_SRC + "." + (zaehler + 1);
@@ -304,21 +287,21 @@ public class Configurator {
                 String valueName = CONST_PROPNAME_EXPORTCONTROLLER_REPLACER_DOCUMENTATION_TARGET + "." + (zaehler + 1);
                 String target = replacerConfig.getProperty(valueName);
                 if (LOGGER.isDebugEnabled()) {
-                    LOGGER.info("check PostProcessorReplacements_documentation:" 
-                        + zaehler + " " + keyName + "=" + valueName 
-                        + " / " + pattern + "=" + target);
+                    LOGGER.info("check PostProcessorReplacements_documentation:"
+                            + zaehler + " " + keyName + "=" + valueName
+                            + " / " + pattern + "=" + target);
                 }
                 if (pattern != null) {
                     PostProcessorReplacements_documentation.put(
-                                    pattern, 
-                                    target != null ? target : "");
-                        LOGGER.info("set PostProcessorReplacements_documentation:" 
-                                    + pattern + "=" + target);
+                            pattern,
+                            target != null ? target : "");
+                    LOGGER.info("set PostProcessorReplacements_documentation:"
+                            + pattern + "=" + target);
                 }
             }
         }
-        
-       // load defined
+
+        // load defined
         int count = props.size() / 3;
         for (int zaehler = 0; zaehler <= count; zaehler++) {
             String keyName = CONST_PROPNAME_YAIOINSTANCES_NAME + "." + (zaehler + 1);
@@ -328,10 +311,10 @@ public class Configurator {
             String urlName = CONST_PROPNAME_YAIOINSTANCES_URL + "." + (zaehler + 1);
             String url = props.getProperty(urlName);
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.info("check YaioInstances:" 
-                    + zaehler + " " + keyName + "=" + name 
-                    + " / " + urlName + "=" + url
-                    + " / " + descName + "=" + desc);
+                LOGGER.info("check YaioInstances:"
+                        + zaehler + " " + keyName + "=" + name
+                        + " / " + urlName + "=" + url
+                        + " / " + descName + "=" + desc);
             }
             if (!StringUtils.isEmpty(name) && !StringUtils.isEmpty(url)) {
                 Map<String, String> data = new HashMap<String, String>();
@@ -339,9 +322,21 @@ public class Configurator {
                 data.put(CONST_PROPNAME_YAIOINSTANCES_DESC, desc);
                 data.put(CONST_PROPNAME_YAIOINSTANCES_URL, url);
                 this.knownYaioInstances.put(name, data);
-                    LOGGER.info("set YaioInstances:" + name + "=" + url + " " + desc);
+                LOGGER.info("set YaioInstances:" + name + "=" + url + " " + desc);
             }
         }
+
+        return props;
+    }
+
+    protected void initSpringApplicationContext() throws Exception {
+        // check
+        if (applicationContext != null) {
+            throw new IllegalStateException("initSpringApplicationContext: "
+                            + "applicationContext already set");
+        }
+
+        Properties props = this.initProperties();
 
         // define the applicationConfigPath
         String applicationConfigPath = 

@@ -13,18 +13,13 @@
  */
 package de.yaio.datatransfer.json;
 
-import java.io.IOException;
-
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.ObjectCodec;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
+import com.fasterxml.jackson.databind.*;
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.nodeservice.NodeService;
+
+import java.io.IOException;
 
 /** 
  * deserializer for DataDomain-nodes
@@ -73,7 +68,7 @@ public class DataDomainDeserializer extends JsonDeserializer<DataDomain> {
         } catch (ClassNotFoundException e) {
             try {
                 result = (DataDomain) mapper.treeToValue(node, Class.forName("de.yaio.core.node." + className));
-                result.recalcData(NodeService.CONST_RECURSE_DIRECTION_ONLYME);
+                result.recalcData(NodeService.RecalcRecurseDirection.ONLYME);
             } catch (ClassNotFoundException e2) {
                 throw new IOException("cant instattiate className: " + e2.getMessage());
             } catch (Exception e2) {

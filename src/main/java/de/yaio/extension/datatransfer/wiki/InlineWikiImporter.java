@@ -13,11 +13,11 @@
  */
 package de.yaio.extension.datatransfer.wiki;
 
-import java.util.regex.Pattern;
-
 import de.yaio.core.datadomain.MetaData;
 import de.yaio.core.node.BaseNode;
 import de.yaio.datatransfer.importer.ImportOptions;
+
+import java.util.regex.Pattern;
 
 /** 
  * import of Nodes in InlineWiki-Format
@@ -62,7 +62,7 @@ public class InlineWikiImporter extends WikiImporter {
             metaCurNode.setMetaNodePraefix(strMetaIdPraefix);
         }
         // initsysdata
-        curNode.initSysData();
+        curNode.initSysData(true);
     }
 
     @Override

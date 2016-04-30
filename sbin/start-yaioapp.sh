@@ -24,11 +24,15 @@ YAIOCONFIGPATH=${YAIOSCRIPTPATH}../config/
 # init config
 . ${YAIOCONFIGPATH}/config-yaio.sh ${YAIOSCRIPTPATH}
 
+CMD="java ${JAVAOPTIONS} -cp ${CP} ${PROG_FLYWAY} ${FLYWAYCFGFILE}"
+echo "run-flyway: ${CMD}"
+${CMD} &
+
 # add --debug option to see the startprocess of spring-boot
 CMD="java ${JAVAOPTIONS} -cp ${CP} ${PROG_APP} ${CFG} ${NEWID_OPTIONS}"
 echo "start-yaioapp: ${CMD}"
 ${CMD} &
 
 CMD="java ${JAVAOPTIONS} -cp ${CP} ${PROG_APPPROPAGATOR} ${CFG}"
-echo "stop-apppropagator: ${CMD}"
+echo "start-apppropagator: ${CMD}"
 ${CMD} &

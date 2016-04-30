@@ -13,13 +13,7 @@
  */
 package de.yaio.datatransfer.exporter;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.apache.commons.collections4.MapUtils;
-
-import de.yaio.commons.data.DataUtils;
-import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
+import de.yaio.core.dbservice.SearchOptionsImpl;
 
 /** 
  * options for export of Nodes, initialized with default-values
@@ -31,7 +25,7 @@ import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
  * @copyright                    Copyright (c) 2014, Michael Schreiner
  * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-public class OutputOptionsImpl implements OutputOptions {
+public class OutputOptionsImpl extends SearchOptionsImpl implements OutputOptions {
     protected boolean flgDoIntend = true;
     protected boolean flgShowBrackets = true;
     protected Integer intendFuncArea = 80;
@@ -42,7 +36,6 @@ public class OutputOptionsImpl implements OutputOptions {
     protected Integer intend = 2;
     protected Integer intendLi = 2;
     protected Integer intendSys = 160;
-    protected Integer flgConcreteToDosOnly = 0;
     protected boolean flgTrimDesc = true;
     protected boolean flgReEscapeDesc = true;
     protected boolean flgShowDescWithUe = false;
@@ -67,17 +60,6 @@ public class OutputOptionsImpl implements OutputOptions {
     protected boolean flgUsePublicBaseRef = false;
 
     
-    protected String strNotNodePraefix = "";
-    protected String strReadIfStatusInListOnly = "";
-    protected String strClassFilter = "";
-    protected String strTypeFilter = "";
-    protected String strWorkflowStateFilter = "";
-    
-    protected Map<String, String> mpClassFilter = null;
-    protected Map<String, String> mpTypeFilter = null;
-    protected Map<String, String> mpStateFilter = null;
-    protected Map<String, WorkflowState> mpWorkflowStateFilter = null;
-
     public OutputOptionsImpl() {
         super();
     }
@@ -113,7 +95,9 @@ public class OutputOptionsImpl implements OutputOptions {
         this.strReadIfStatusInListOnly = baseOptions.getStrReadIfStatusInListOnly();
         this.strClassFilter = baseOptions.getStrClassFilter();
         this.strTypeFilter = baseOptions.getStrTypeFilter();
-        
+        this.strMetaNodeSubTypeFilter = baseOptions.getStrMetaNodeSubTypeFilter();
+        this.strMetaNodeTypeTagsFilter = baseOptions.getStrMetaNodeTypeTagsFilter();
+
         this.initFilterMaps();
     }
 
@@ -273,15 +257,6 @@ public class OutputOptionsImpl implements OutputOptions {
         this.intendSys = intendSys;
     }
 
-    @Override
-    public int getFlgConcreteToDosOnly() {
-        return manageIntValues(flgConcreteToDosOnly);
-    }
-    @Override
-    public void setFlgConcreteToDosOnly(final Integer flgConcreteToDosOnly) {
-        this.flgConcreteToDosOnly = flgConcreteToDosOnly;
-    }
-
     public boolean isFlgTrimDesc() {
         return flgTrimDesc;
     }
@@ -313,81 +288,6 @@ public class OutputOptionsImpl implements OutputOptions {
         this.flgShowDescInNextLine = flgShowDescInNextLine;
     }
 
-    @Override
-    public String getStrNotNodePraefix() {
-        return this.strNotNodePraefix;
-    }
-
-    @Override
-    public void setStrNotNodePraefix(final String strNotNodePraefix) {
-        this.strNotNodePraefix = strNotNodePraefix;
-    }
-    
-    public String getStrReadIfStatusInListOnly() {
-        return strReadIfStatusInListOnly;
-    }
-    public void setStrReadIfStatusInListOnly(final String strReadIfStatusInListOnly) {
-        this.strReadIfStatusInListOnly = strReadIfStatusInListOnly;
-        this.mpStateFilter = DataUtils.initMapFromCsvString(this.strReadIfStatusInListOnly);
-    }
-    public String getStrClassFilter() {
-        return strClassFilter;
-    }
-    public void setStrClassFilter(final String strClassFilter) {
-        this.strClassFilter = strClassFilter;
-        this.mpClassFilter = DataUtils.initMapFromCsvString(this.strClassFilter);
-    }
-    public String getStrTypeFilter() {
-        return strTypeFilter;
-    }
-    public void setStrTypeFilter(final String strTypeFilter) {
-        this.strTypeFilter = strTypeFilter;
-        this.mpTypeFilter = DataUtils.initMapFromCsvString(this.strTypeFilter);
-    }
-    public String getStrWorkflowStateFilter() {
-        return strWorkflowStateFilter;
-    }
-    public void setStrWorkflowStateFilter(final String strWorkflowStateFilter) {
-        this.strWorkflowStateFilter = strWorkflowStateFilter;
-        this.mpWorkflowStateFilter = new HashMap<String, WorkflowState>();
-        Map<String, String> tmp = DataUtils.initMapFromCsvString(this.strWorkflowStateFilter);
-        if (MapUtils.isEmpty(tmp)) {
-            return;
-        }
-        for (String state : tmp.keySet()) {
-            this.mpWorkflowStateFilter.put(state, WorkflowState.valueOf(state));
-        }
-    }
-    
-    public int manageIntValues(final Integer value) {
-        return value != null ? value : 0;
-    }
-    
-    
-    @Override
-    public Map<String, String> getMapClassFilter() {
-        return this.mpClassFilter;
-    }
-    @Override
-    public Map<String, String> getMapTypeFilter() {
-        return this.mpTypeFilter;
-    }
-    @Override
-    public Map<String, String> getMapStateFilter() {
-        return this.mpStateFilter;
-    }
-    @Override
-    public Map<String, WorkflowState> getMapWorkflowStateFilter() {
-        return this.mpWorkflowStateFilter;
-    }
-    
-    public void initFilterMaps() {
-        this.setStrReadIfStatusInListOnly(this.getStrReadIfStatusInListOnly());
-        this.setStrClassFilter(this.getStrClassFilter());
-        this.setStrTypeFilter(this.getStrTypeFilter());
-        this.setStrWorkflowStateFilter(this.getStrWorkflowStateFilter());
-    }
-    
     public void setAllFlgShow(final boolean value) {
         setFlgShowType(value);
         setFlgShowState(value);
@@ -405,6 +305,7 @@ public class OutputOptionsImpl implements OutputOptions {
     }
     
     public void resetDefaults() {
+        super.resetDefaults();
         this.flgDoIntend = false;
         this.flgShowBrackets = false;
         this.intendFuncArea = 0;
@@ -438,11 +339,6 @@ public class OutputOptionsImpl implements OutputOptions {
         this.flgRecalc = false;
         this.flgProcessDocLayout = false;
         this.flgUsePublicBaseRef = false;
-        this.setStrNotNodePraefix("");
-        this.setStrReadIfStatusInListOnly("");
-        this.setStrClassFilter("");
-        this.setStrTypeFilter("");
-        this.setStrWorkflowStateFilter("");
     }
 
     @Override
@@ -482,10 +378,14 @@ public class OutputOptionsImpl implements OutputOptions {
                         + ", strClassFilter=" + this.strClassFilter 
                         + ", strTypeFilter=" + this.strTypeFilter 
                         + ", strWorkflowStateFilter=" + this.strWorkflowStateFilter
-                        + ", mpStateFilter=" + this.mpStateFilter 
-                        + ", mpClassFilter=" + this.mpClassFilter 
-                        + ", mpTypeFilter=" + this.mpTypeFilter 
+                        + ", strMetaNodeSubTypeFilter=" + this.strMetaNodeSubTypeFilter
+                        + ", strMetaNodeTypeTagsFilter=" + this.strMetaNodeTypeTagsFilter
+                        + ", mpStateFilter=" + this.mpStateFilter
+                        + ", mpClassFilter=" + this.mpClassFilter
+                        + ", mpTypeFilter=" + this.mpTypeFilter
                         + ", mpWorkflowStateFilter=" + this.mpWorkflowStateFilter
+                        + ", mpMetaNodeSubTypeFilter=" + this.mpMetaNodeSubTypeFilter
+                        + ", mpMetaNodeTypeTagsFilter=" + this.mpMetaNodeTypeTagsFilter
                         + "]";
     }
 }

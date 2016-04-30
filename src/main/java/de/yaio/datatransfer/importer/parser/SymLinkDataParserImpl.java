@@ -13,15 +13,14 @@
  */
 package de.yaio.datatransfer.importer.parser;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.apache.log4j.Logger;
-
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.datadomain.SymLinkData;
 import de.yaio.datatransfer.importer.ImportOptions;
 import de.yaio.datatransfer.importer.NodeFactory;
+import org.apache.log4j.Logger;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /** 
  * service-functions for parsing of dataDomain: SymLinkData

@@ -12,50 +12,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 package de.yaio.core.node;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Transient;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
-import javax.validation.constraints.AssertTrue;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlTransient;
-
-import org.apache.log4j.Logger;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.roo.addon.javabean.RooJavaBean;
-import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
-import org.springframework.roo.addon.tostring.RooToString;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import de.yaio.core.datadomain.BaseData;
-import de.yaio.core.datadomain.BaseWorkflowData;
-import de.yaio.core.datadomain.DataDomain;
-import de.yaio.core.datadomain.DescData;
-import de.yaio.core.datadomain.MetaData;
-import de.yaio.core.datadomain.StatData;
-import de.yaio.core.datadomain.SysData;
+import de.yaio.core.datadomain.*;
 import de.yaio.core.datadomainservice.MetaDataService;
 import de.yaio.core.datadomainservice.MetaDataServiceImpl;
 import de.yaio.core.datadomainservice.SysDataService;
@@ -63,7 +22,23 @@ import de.yaio.core.datadomainservice.SysDataServiceImpl;
 import de.yaio.core.dbservice.BaseNodeDBService;
 import de.yaio.core.dbservice.BaseNodeDBServiceImpl;
 import de.yaio.core.nodeservice.BaseNodeService;
+import de.yaio.core.nodeservice.NodeService;
 import de.yaio.datatransfer.importer.parser.Parser;
+import org.apache.log4j.Logger;
+import org.hibernate.annotations.Type;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.roo.addon.javabean.RooJavaBean;
+import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
+import org.springframework.roo.addon.tostring.RooToString;
+
+import javax.persistence.*;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
+import javax.validation.constraints.*;
+import javax.xml.bind.annotation.XmlTransient;
+import java.util.*;
 
 /** 
  * bean with Node-data (as base) and belonging businesslogic
@@ -79,7 +54,7 @@ import de.yaio.datatransfer.importer.parser.Parser;
 @RooToString
 @RooJpaActiveRecord
 public class BaseNode implements BaseData, MetaData, SysData, 
-    DescData, BaseWorkflowData, StatData {
+    DescData, BaseWorkflowData, StatData, CachedData {
     
     // Validator
     protected static ValidatorFactory validationFactory = Validation.buildDefaultValidatorFactory();
@@ -125,13 +100,13 @@ public class BaseNode implements BaseData, MetaData, SysData,
     
     /**
      */
-    @Size(min = 1, max = 64000)
+    @Size(min = 1, max = 64000000)
     @Transient
     private String fullSrc;
 
     /**
      */
-    @Size(max = 64000)
+    @Size(max = 64000000)
     private String srcName;
 
     /**
@@ -150,8 +125,8 @@ public class BaseNode implements BaseData, MetaData, SysData,
 
     /**
      */
-    @Size(max = 64000)
-    @Pattern(regexp = "(" + Parser.CONST_PATTERN_SEG_DESC + "*)?", 
+    @Size(max = 64000000)
+    @Pattern(regexp = "(" + Parser.CONST_PATTERN_SEG_DESC + "*)?",
              message = "desc can only contain characters.")
     private String nodeDesc;
 
@@ -219,7 +194,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
      */
     @Size(max = 10)
     @Pattern(regexp = "(" + Parser.CONST_PATTERN_SEG_PRAEFIX + "*)?", 
-             message = "metaNodePraefix can only contain characters.")
+             message = "metaNodePraefix can only contain characters and numbers.")
     private String metaNodePraefix;
 
     /**
@@ -239,9 +214,9 @@ public class BaseNode implements BaseData, MetaData, SysData,
     /**
      */
     @Size(max = 255)
-    @Pattern(regexp = "(" + Parser.CONST_PATTERN_SEG_TAGS + ")*?", 
-             message = "metaNodeSubTypeTags can only contain characters.")
-    private String metaNodeSubTypeTags;
+    @Pattern(regexp = "(" + Parser.CONST_PATTERN_SEG_SUBTYPE + ")*?",
+             message = "metaNodeSubType can only contain characters.")
+    private String metaNodeSubType;
 
     /**
      * first date of planed work
@@ -474,7 +449,15 @@ public class BaseNode implements BaseData, MetaData, SysData,
      * summary of all children workflowstate with the highest priority
      */
     @Enumerated
+    @Type(type="de.yaio.core.datadomain.WorkflowStateUserType")
     private WorkflowState workflowState;
+
+    /**
+     * the cached parentHierarchy as ,id1,,id2,,id3,
+     */
+    @Size(max = 2000)
+    private String cachedParentHierarchy;
+
 
     /**
      * position in list
@@ -682,7 +665,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
         }
         return true;
     }    
-    
+
     //####################
     // persistence-functions
     //####################
@@ -789,7 +772,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     //####################
     
     @Override
-    public void recalcData(final int recursionDirection) throws Exception {
+    public void recalcData(final NodeService.RecalcRecurseDirection recursionDirection) throws Exception {
         getBaseNodeService().recalcData(this, recursionDirection);
     }
     
@@ -799,8 +782,8 @@ public class BaseNode implements BaseData, MetaData, SysData,
     }
 
     @Override
-    public void initSysData() throws Exception {
-        getSysDataService().initSysData(this);
+    public void initSysData(boolean flgForceUpdate) throws Exception {
+        getSysDataService().initSysData(this, flgForceUpdate);
     }
 
     @Override
@@ -959,8 +942,11 @@ public class BaseNode implements BaseData, MetaData, SysData,
     @Override
     public void resetMetaData() {
         this.setMetaNodeNummer(null);
-        this.setMetaNodePraefix("UNKNOWN");
-        this.setMetaNodeSubTypeTags(null);
-        this.setMetaNodeTypeTags(null);
+        this.setMetaNodePraefix(null);
+    }
+
+    @Override
+    public void resetCachedData() {
+        this.setCachedParentHierarchy(null);
     }
 }

@@ -13,9 +13,9 @@
  */
 package de.yaio.webapp.restcontroller;
 
-import java.util.List;
-
 import de.yaio.core.node.BaseNode;
+
+import java.util.List;
 
 /** 
  * responseobject for search-functions of the NodeController

@@ -1,0 +1,32 @@
+= DOKU - Über D'Artagnan                                                                                                                                          [NodeMeta: SysInfo,1,,][NodeSys: SysInfo1,,,,]
+Hier finden Sie das Informationen und Hintergründe über D'Artagnan. Bitte nehmen Sie hier keine Änderungen vor, da dieser Bereich bei jedem neuen Update überschrieben wird.
+
+* INFO - Das ist D'Artagnan                                                     [DocLayout: DESC,,,]
+<!---STYLE h1:yaio-color-ue--->
+# Was ist "D'Artagnan"?  <!---TOGGLER Ziele,text--->
+<!---/STYLE h1:yaio-color-ue--->
+
+- **In einem Satz** - "D'Artagnan" ist Kalender, Organizer, Notizzettel, Checkliste, Projektplanung, Projektdokumentation, Wiki, HowTo, Adressbuch, Dokumentenmanagement...
+
+- **Der Blick aufs Ganze** - Er ist quasi Alles in Einem, da er alle deine Informationen miteinander verlinkt. Er ist der Würfel, auf dem du dein gesamtes Leben von allen Seiten aus verschiedenen Sichten betrachten kannst.
+
+- **Dein digitales Leben** - "D'Artagnan" ist "dein digitales Leben". Alles, was schriftlich niedergelegt, geplant, dokumentiert, gespeichert wird, kannst du mit "D'Artagnan" zentral abrufen und vernetzen.
+
+- **Alles in Einem** - Alles, was früher auf verschiedenen fliegenden Notizzetteln, Ordnern oder digital in verschiedenen Programmen (Email, Datei, Office, Organizer) gespeichert wurde, stellt "D'Artagnan" an einer Stelle, unter einer Oberfläche zur Verfügung.
+
+- **Alles in Deiner Hand** -  In Zeiten, wo offenbar wird, dass deine Daten nur dann sicher sind, wenn sie lokal bei dir liegen, soll D'Artagnan dir die Kontrolle zurückgeben. Für Teamarbeit und Synchronisation braucht es keine Google-Calendar, Dropbox oder andere Web-Dienste, wo die NSA oder wer auch immer mithört. Mit Hilfe von D'Artagnan und anderen freien Tools bekommst DU die Kontrolle zurück.
+
+## Was erwartet Euch hier?
+
+Überblick: Wer mehr über D'Artagnan wissen möchte, kann sich sich auf folgenden externen Seiten einen kleinen Überblick verschaffen.
+
+- [Die Vision](http://www.your-all-in-one.de/yaio/static/vision): Die Vision hinter D'Artagnan
+- [Die Roadmap](http://www.your-all-in-one.de/yaio/static/roadmap): Die Roadmap der weiteren Entwicklung
+- [Die Person](http://www.your-it-fellow.de/): Die Person hinter D'Artagnan
+- [Der Prototyp - Le petit D'Artagnan](http://www.your-all-in-one.de/yaio/static/lepetit): Einige Informationen zum ersten Prototyp "Le petit D'Artagnan"
+- [Die Arbeitsweise](http://www.your-all-in-one.de/yaio/static/lepetithow): Die Arbeitsweise und Funktionen des Prototypen
+- [Das Fallbeispiel](http://www.your-all-in-one.de/yaio/static/lepetitexample): Ein Fallbeispiel zur Arbeitsweise mit dem Prototypen
+
+## Interesse?
+
+Ich hoffe, die Informationen auf dieser Seite können euch einen kurzen Eindruck vom Projekt vermitteln. Sollte Interesse an einer Zusammenarbeit bestehen, freue ich mich [von euch zu hören :-)](http://www.your-all-in-one.de/yaio/contact/form)

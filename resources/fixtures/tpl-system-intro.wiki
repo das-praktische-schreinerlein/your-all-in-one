@@ -1,11 +1,20 @@
 = INFO - Einführung                                                                                                                                           [NodeMeta: SysIntro,1,,] [NodeSys: SysIntro1,,,,]
-* INFO - Du willst mehr erfahren?                                       [DocLayout: DIV,thatsit,ThatsIt,]
-# Du bist es leid?
+Hier finden Sie das Informationen und Hintergründe über D'Artagnan. Bitte nehmen Sie hier keine Änderungen vor, da dieser Bereich bei jedem neuen Update überschrieben wird.
+
+* INFO - Du willst mehr erfahren?                                               [DocLayout: DESC,,,]
+<!---BOX--->
+<!---STYLE h1:yaio-color-ue--->
+# Du willst mehr erfahren? <!---TOGGLER intro,text--->
+<!---/STYLE h1:yaio-color-ue--->
+<!---CONTAINER intro--->
+
+## Du bist es leid?
+
 - Ist das Projekt wieder völlig aus dem Ruder gelaufen?
 - Hat man bei der Urlaubsplanung wieder mal die Hälfte vergessen?
 - Du bist es leid, dein Leben nach Programmen auszurichten - Nichts dort zu finden, wo du es suchst - Im Chaos von Nachrichten, Terminen und Notizen unterzugehen?
 
-# Ich bin es leid!
+## Ich bin es leid!
 Und deshalb habe ich D'Artagnan erfunden. Meinen persönlichen Helfer, der mich vor dem alltäglichen Informations-Overkill schützt.  
 
 ## Was ist "D'Artagnan"?
@@ -53,10 +62,17 @@ Projekt
 
 ### Hebe den Wissensschatz
 - Nichts wird vergessen. Die im Laufe des Projekts erstellten Dokumente, Notizen und Abläufe sind **für Recherchezwecke immer schnell erreichbar**. 
-  ** INFO - Ende:                                                               [DocLayout: P,startmesg3,,X]
 
-  ** INFO - Wie unterstützt er Dich?                                       [DocLayout: DIV,intro,Wie,]
-# Starten und Los!
+<!---/CONTAINER--->
+<!---/BOX--->
+  ** INFO - Wie unterstützt er Dich?                                            [DocLayout: DESC,,,]
+<!---BOX--->
+<!---STYLE h1:yaio-color-ue--->
+# Wie unterstützt er Dich? <!---TOGGLER undlos,text--->
+<!---/STYLE h1:yaio-color-ue--->
+
+<!---CONTAINER undlos--->
+## Starten und Los!
 Er bietet eine intuitive Web-GUI die von jedem modernen Browser unterstützt wird
 - **Startseite**: Startseite mit kurzer Einführung
 - **Projektexplorer**: Einen Projektexplorer mit einer Baumansicht des gesamten Projekts und Termin/Informationsübersicht
@@ -64,7 +80,7 @@ Er bietet eine intuitive Web-GUI die von jedem modernen Browser unterstützt wir
 - **Suche**: Eine Suchseite mit der Möglichkeit der unstrukturierten Volltextsuche innerhalb des Projekts.
 - innerhalb der Listen an jedem Eintrag die Möglichkeit zur Bearbeitung, Anlegen von Kindsknoten, Anlegen eines Symlinks auf sich, Löschen des Knotens
 
-# Das zeichnet D'Artagnan aus!
+## Das zeichnet D'Artagnan aus!
 - **einfache Nutzerführung**
     - Start+Übersichtsseiten, Dokumentation, Hilfe, Onlinehilfe, **Tooltipps mit Hilfstexten**
     - **Projektexplorer zur Visualisierung und einfachen Navigation innerhalb der Daten**
@@ -76,7 +92,7 @@ Er bietet eine intuitive Web-GUI die von jedem modernen Browser unterstützt wir
     - Exporter und Importer für verschiedene Formate (Mindmap, Excel, Wiki, Html, Txt, Jira, ICal, Checklisten...)
     - **Vorlese-Funktion, Diktat-Funktion** für moderne Browser wie Google-Chrome
 
-# Einfacher Aufbau!
+## Einfacher Aufbau!
 - **Komponenten**
     - eigener Server von Kommandozeile aus startbar (Spring Boot, Jetty)
     - integrierte Datenbank (Hsqldb)
@@ -87,12 +103,18 @@ Er bietet eine intuitive Web-GUI die von jedem modernen Browser unterstützt wir
     - **Export der Daten in verschiedenene Formate** (Mindmap, Excel, Wiki, Html, ICal...)
     - Import der Daten aus verschiedenen Formaten (MExcel, Wiki, PPL)
     - Recalc, Reset usw.
-  ** INFO - Ende:                                                               [DocLayout: P,startmesg3,,X]
   
-  ** INFO - Was ist D'Artagnan?                                       [DocLayout: DIV,intro,Was,]
-# Er ist dein zentrales Werkzeug.
+<!---/CONTAINER--->
+<!---/BOX--->
+  ** INFO - Was ist D'Artagnan?                                                 [DocLayout: DESC,,,]
+<!---BOX--->
+<!---STYLE h1:yaio-color-ue--->
+# Was ist D'Artagnan? <!---TOGGLER was,text--->
+<!---/STYLE h1:yaio-color-ue--->
+<!---CONTAINER was--->
+## Er ist dein zentrales Werkzeug.
 
-## Planung/Projektmanagement
+### Planung/Projektmanagement
 - du kannst **Projekte und Aufgaben strukturieren** und planen (Aufwand, Zeitraum)
 - den **Stand dokumentieren** (direkt an der Aufgabe angeben, in welchem Zeitraum du **wie lange gearbeitet** hast und **wie viel % schon erledigt** sind), im Bemerkungsfeld kannst du **wichtige Informationen für und aus der Umsetzung dokumentieren**
 - gibt es wichtige Hinweise/Howtos die bei der Aufgabe helfen können, oder dokumentiert werden sollen, kannst du eine InfoNode an der Aufgabe anlegen, wo diese Informationen dann gespeichert werden
@@ -101,7 +123,7 @@ Er bietet eine intuitive Web-GUI die von jedem modernen Browser unterstützt wir
 - Um **Prozesse oder Abläufe** zu visualisieren, bietet dir D'Artagnan eine einfache Erweiterung der Markdown-Syntax an, so dass die Diagramme direkt im Text definiert und angezeigt werdne können
 - Sollte eine Aufgabe umfangreicher werden, dann unterteile sie doch einfach in **Unteraufgaben die du im Baum als Kindsknoten** anlegst. D'Artagnan zeigt die dann auch den aufsummierten Aufwand+Stand an und schließt die Elternaufgabe automatisch wenn alle Unteraufgaben erledigt sind.
 
-## Dokumentation/Howto/Infowiki
+### Dokumentation/Howto/Infowiki
 - Ein weiteres Ziel von D'Artagnan ist der Gebrauch als **Dokumentationssystem und DokuWiki**
 - Dazu kann man über die Info+UrlResNodes einen Informationsbaum aufbauen.
 - Umfangreichere Artikel lassen sich mit Markdown und automatischem **Syntaxhighlighting für Quellcodebereiche** strukturieren und formatieren.
@@ -111,27 +133,35 @@ Er bietet eine intuitive Web-GUI die von jedem modernen Browser unterstützt wir
 - Diese Layoutinformationen wertet YAIO dann in der Darstellung im Explorer bzw. beim Export als Html-Seite aus und formatiert die Inhalte in ansprechender Weise.
 - Somit stellt das System **2 Layout-Formatierungsmechanismen** zur Verfügung, die einzeln aber auch im Zusammenspiel die **Erstellung umfangreicher Dokumentationen bzw. Webseiten** ermöglichen. Die Startseite+Hilfe von YAIO bzw. die Portalinhalte von http://www.your-all-in-one.de und http://www.your-it-fellow.de werden zum Beispiel vollständig über diese Mechanismen gepflegt und layoutet.
 
-## Verlinkung
+### Verlinkung
 - Neben der **Verlinkung auf externe Ressourcen (Urls, Dateien)** lassen sich über **SymLinks**, aber auch **innerhalb von D'Artagnan Projekte oder Informationen verknüpfen**. So macht es zum Beispiel Sinn von einer regelmäßigen Aufgabe (Backup) jeweils auf den Vorgänger zu verweisen oder auf das zentrale Howto in welchem die auszuführenden Befehle detailliert beschrieben sind.
 
 ## AllInOne
 - Damit lässt sich in EINEM zentralen System neben der Planung, Umsetzung und Projektmanagement auch noch die Dokumentation erstellen und recherchieren.
 - **Alles in einer Oberfläche, alles in einem Baum**
-  ** INFO - Ende                                                                [DocLayout: P,,,X]                                                              
-  ** INFO - Wofür ist er da?                                       [DocLayout: DIV,intro,Was,]
-# Ziele
 
-## Hilfe
+<!---/CONTAINER--->
+<!---/BOX--->
+  ** INFO - Wofür ist er da?                                                    [DocLayout: DESC,,,]
+<!---BOX--->
+<!---STYLE h1:yaio-color-ue--->
+# Wofür ist er da? <!---TOGGLER Ziele,text--->
+<!---/STYLE h1:yaio-color-ue--->
+
+<!---CONTAINER Ziele--->
+## Ziele 
+
+### Hilfe
 - Planung+Strukturierung von Aufgaben, Projekten + Terminen mit Aufwand, Start+Ende, Kontierung, Visualisierung+Export als Gantt, Mindmap, Kalender
 - Projektverfolgung mit Stand, Aufwand, Zeitraum, Visualisierung mit Farben, Statusverfolgung, Visualisierung+Export in verschiedene Formate
 - Dokumentation von Konzepten, Quellcodes, URLs, Dateien innerhalb der Planung+Umsetzung oder auch als Wiki
 
-## Unterstützung
+### Unterstützung
 - Projektmanagement: Planung und Verfolgung von Aufgaben, Projekten und Terminen mit Aufwand, Zeitraum und Stand
 - Dokumentation: Dokumentation von Konzepten und Umsetzung innerhalb der Projekte
 - Wissenspeicher: Ablage von Notizen, Howtos Urls und Dateien in einem strukturierten Wiki
 
 ## Alles in einer Oberfläche, alles in einem Baum
 
-  ** INFO - Ende                                                                [DocLayout: P,,,X]                                                              
-  
+<!---/CONTAINER--->
+<!---/BOX--->

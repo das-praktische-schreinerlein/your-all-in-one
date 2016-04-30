@@ -13,24 +13,9 @@
  */
 package de.yaio.core.datadomainservice;
 
-import java.util.Date;
-
-import javax.xml.bind.annotation.XmlTransient;
-
-import org.apache.log4j.Logger;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import de.yaio.commons.data.DataUtils;
-import de.yaio.core.datadomain.BaseWorkflowData;
-import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
-import de.yaio.core.datadomain.DataDomain;
-import de.yaio.core.datadomain.ExtendedWorkflowData;
-import de.yaio.core.datadomain.IstChildrenSumData;
-import de.yaio.core.datadomain.IstData;
-import de.yaio.core.datadomain.PlanCalcData;
-import de.yaio.core.datadomain.PlanChildrenSumData;
-import de.yaio.core.datadomain.PlanData;
+import de.yaio.core.datadomain.*;
 import de.yaio.core.datadomain.PlanDependencieData.PredecessorDependencieType;
 import de.yaio.core.node.EventNode;
 import de.yaio.core.node.TaskNode;
@@ -38,6 +23,10 @@ import de.yaio.core.nodeservice.BaseNodeService;
 import de.yaio.core.nodeservice.NodeService;
 import de.yaio.utils.Calculator;
 import de.yaio.utils.PredecessorCalculator;
+import org.apache.log4j.Logger;
+
+import javax.xml.bind.annotation.XmlTransient;
+import java.util.Date;
 
 /** 
  * businesslogic for dataDomain: BaseWorkflowData
@@ -86,7 +75,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
     }
     
     @Override
-    public void doRecalcBeforeChildren(final DataDomain node, final int recurceDirection) throws Exception {
+    public void doRecalcBeforeChildren(final DataDomain node, final NodeService.RecalcRecurseDirection recurseDirection) throws Exception {
         
         // Check if node is compatibel
         if (!BaseWorkflowData.class.isInstance(node)) {
@@ -98,7 +87,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
     }
 
     @Override
-    public void doRecalcAfterChildren(final DataDomain node, final int recurceDirection) throws Exception {
+    public void doRecalcAfterChildren(final DataDomain node, final NodeService.RecalcRecurseDirection recurseDirection) throws Exception {
         // Check if node is compatibel
         if (!BaseWorkflowData.class.isInstance(node)) {
                 throw new IllegalArgumentException();

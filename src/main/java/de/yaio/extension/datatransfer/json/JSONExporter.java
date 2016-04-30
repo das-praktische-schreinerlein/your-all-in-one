@@ -13,14 +13,14 @@
  */
 package de.yaio.extension.datatransfer.json;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.node.BaseNode;
 import de.yaio.datatransfer.exporter.OutputOptions;
 import de.yaio.extension.datatransfer.csv.CSVExporter;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /** 
  * export of Nodes in JSON-format
@@ -66,7 +66,7 @@ public class JSONExporter extends CSVExporter {
 //        }
 //
 //        // recalcData
-//        masterNode.recalcData(NodeService.CONST_RECURSE_DIRECTION_CHILDREN);
+//        masterNode.recalcData(NodeService.RecalcRecurseDirection.CHILDREN);
 //
 //        // generate
 //        String res = this.getNodeResult(masterNode, "", oOptions).toString();

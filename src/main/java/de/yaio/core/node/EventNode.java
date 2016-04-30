@@ -12,16 +12,15 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 package de.yaio.core.node;
-import javax.xml.bind.annotation.XmlTransient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import de.yaio.core.nodeservice.BaseNodeService;
+import de.yaio.core.nodeservice.EventNodeService;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import de.yaio.core.nodeservice.BaseNodeService;
-import de.yaio.core.nodeservice.EventNodeService;
+import javax.xml.bind.annotation.XmlTransient;
 
 /** 
  * bean with EventNode-data (calendar-events) and matching businesslogic

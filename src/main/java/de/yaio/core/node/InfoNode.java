@@ -12,17 +12,16 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 package de.yaio.core.node;
-import javax.xml.bind.annotation.XmlTransient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import de.yaio.core.datadomain.DocLayoutData;
+import de.yaio.core.nodeservice.BaseNodeService;
+import de.yaio.core.nodeservice.InfoNodeService;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import de.yaio.core.datadomain.DocLayoutData;
-import de.yaio.core.nodeservice.BaseNodeService;
-import de.yaio.core.nodeservice.InfoNodeService;
+import javax.xml.bind.annotation.XmlTransient;
 
 /** 
  * bean with InfoNode-data (ideas, documentation...) and belonging businesslogic

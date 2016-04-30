@@ -13,12 +13,11 @@
  */
 package de.yaio.jobs;
 
+import de.yaio.app.CmdLineJob;
+import de.yaio.app.Configurator;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.log4j.Logger;
-
-import de.yaio.app.CmdLineJob;
-import de.yaio.app.Configurator;
 
 /** 
  * job to recalc nodes in db

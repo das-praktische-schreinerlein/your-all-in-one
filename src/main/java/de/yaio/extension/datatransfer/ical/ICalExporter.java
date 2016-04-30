@@ -13,33 +13,13 @@
  */
 package de.yaio.extension.datatransfer.ical;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-
-import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
-
 import biweekly.ICalDataType;
 import biweekly.ICalendar;
 import biweekly.component.VAlarm;
 import biweekly.component.VEvent;
 import biweekly.component.VTodo;
 import biweekly.parameter.Related;
-import biweekly.property.Created;
-import biweekly.property.DateDue;
-import biweekly.property.DateEnd;
-import biweekly.property.DateStart;
-import biweekly.property.DateTimeStamp;
-import biweekly.property.Description;
-import biweekly.property.LastModified;
-import biweekly.property.Location;
-import biweekly.property.Status;
-import biweekly.property.Summary;
-import biweekly.property.Trigger;
-import biweekly.property.Uid;
+import biweekly.property.*;
 import biweekly.util.Duration;
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.node.BaseNode;
@@ -51,6 +31,14 @@ import de.yaio.datatransfer.exporter.formatter.DescDataFormatterImpl;
 import de.yaio.datatransfer.exporter.formatter.Formatter;
 import de.yaio.datatransfer.exporter.formatter.FormatterImpl;
 import de.yaio.extension.datatransfer.wiki.WikiExporter;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 /** 
  * export of Nodes as ICal

@@ -13,15 +13,14 @@
  */
 package de.yaio.core.datadomainservice;
 
+import de.yaio.core.datadomain.MetaData;
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-
-import org.apache.commons.lang3.StringUtils;
-
-import de.yaio.core.datadomain.MetaData;
 
 /** 
  * businesslogic for dataDomain: MetaData to manage Nodenumbers

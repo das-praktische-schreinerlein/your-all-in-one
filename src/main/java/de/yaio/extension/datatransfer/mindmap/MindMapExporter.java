@@ -13,8 +13,6 @@
  */
 package de.yaio.extension.datatransfer.mindmap;
 
-import org.apache.log4j.Logger;
-
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.node.BaseNode;
 import de.yaio.datatransfer.exporter.OutputOptions;
@@ -22,6 +20,7 @@ import de.yaio.datatransfer.exporter.OutputOptionsImpl;
 import de.yaio.datatransfer.exporter.formatter.FormatterImpl;
 import de.yaio.extension.datatransfer.exporter.formatter.WorkflowFormatConfigurator;
 import de.yaio.extension.datatransfer.wiki.WikiExporter;
+import org.apache.log4j.Logger;
 
 /** 
  * export of Nodes as Mindmap

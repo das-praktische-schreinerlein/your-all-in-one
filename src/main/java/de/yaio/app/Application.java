@@ -13,13 +13,9 @@
  */
 package de.yaio.app;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.annotation.PreDestroy;
-import javax.servlet.MultipartConfigElement;
-
+import de.yaio.core.datadomainservice.NodeNumberService;
+import de.yaio.core.node.BaseNode;
+import de.yaio.jobs.YaioFlyway;
 import org.apache.commons.cli.Option;
 import org.apache.log4j.Logger;
 import org.apache.tomcat.util.http.fileupload.FileUpload;
@@ -35,8 +31,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-import de.yaio.core.datadomainservice.NodeNumberService;
-import de.yaio.core.node.BaseNode;
+import javax.annotation.PreDestroy;
+import javax.servlet.MultipartConfigElement;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /** 
  * the yaio-app as spring boot application
@@ -116,10 +115,14 @@ public class Application {
                 LOGGER.info("Illegal CmdArgs Exit: 1");
                 System.exit(CmdLineJob.CONST_EXITCODE_FAILED_ARGS);
             }
-            
+
+            // do flyway
+            String flyWayRes = YaioFlyway.doFlyway();
+            LOGGER.info(flyWayRes);
+
             // initApplicationContext
             Configurator.getInstance().getSpringApplicationContext();
-            
+
             // gets NodeNumberService
             nodeNumberService = 
                             BaseNode.getConfiguredMetaDataService().getNodeNumberService();

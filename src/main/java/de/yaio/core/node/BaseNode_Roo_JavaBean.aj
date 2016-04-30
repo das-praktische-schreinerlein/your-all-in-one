@@ -3,14 +3,14 @@
 
 package de.yaio.core.node;
 
-import java.util.Date;
-import java.util.Map;
-import java.util.Set;
-
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.datadomain.PlanDependencieData.DurationMeasure;
 import de.yaio.core.datadomain.PlanDependencieData.PredecessorDependencieType;
 import de.yaio.core.datadomain.PlanDependencieData.PredecessorType;
+
+import java.util.Date;
+import java.util.Map;
+import java.util.Set;
 
 privileged aspect BaseNode_Roo_JavaBean {
     
@@ -158,12 +158,12 @@ privileged aspect BaseNode_Roo_JavaBean {
         this.metaNodeTypeTags = metaNodeTypeTags;
     }
     
-    public String BaseNode.getMetaNodeSubTypeTags() {
-        return this.metaNodeSubTypeTags;
+    public String BaseNode.getMetaNodeSubType() {
+        return this.metaNodeSubType;
     }
     
-    public void BaseNode.setMetaNodeSubTypeTags(String metaNodeSubTypeTags) {
-        this.metaNodeSubTypeTags = metaNodeSubTypeTags;
+    public void BaseNode.setMetaNodeSubType(String metaNodeSubType) {
+        this.metaNodeSubType = metaNodeSubType;
     }
     
     public Date BaseNode.getPlanStart() {
@@ -461,5 +461,12 @@ privileged aspect BaseNode_Roo_JavaBean {
     public void BaseNode.setClassName(String className) {
         this.className = className;
     }
-    
+
+    public String BaseNode.getCachedParentHierarchy() {
+        return this.cachedParentHierarchy;
+    }
+
+    public void BaseNode.setCachedParentHierarchy(String cachedParentHierarchy) {
+        this.cachedParentHierarchy = cachedParentHierarchy;
+    }
 }

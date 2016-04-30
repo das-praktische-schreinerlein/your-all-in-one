@@ -1,0 +1,102 @@
+= INFO - Startseite (Static)                                                                                                                                    [NodeMeta: SysStatStart,1,,][NodeSys: SysStatStart1,,,,]
+Hier finden Sie die Startseite für die statische D'Artagnan-Version. Bitte nehmen Sie hier keine Änderungen vor, da dieser Bereich bei jedem neuen Update überschrieben wird.
+
+* INFO - Der schlanke D'Artagnan sagt Guten Tag...                                           [DocLayout: DESC,nextactions,,]
+<!---BOX jsh-md-background-info--->
+# Der "abgespeckte" D'Artagnan sagt Guten Tag...
+<!---CONTAINER links--->
+Du stehst hier im Angesicht der **abgespeckten Version von D'Artagnan**. Entweder war jemand so gütig Dir einen statischen Daten-Snapshot einer D'Artagnan-Installation zur Ansicht der Daten zu übergeben (Herzlichen Glückwunsch) oder hast das Glück eine statische Demo-Version von D'Artganan ansehen zu können. Beides schön :-)
+
+Aber ohne den D'Artganan-Server stehen Dir leider in dieser Version nicht alle Funktionen zur Verfügung:
+
+- Du kannst die Änderungen nur in einer Datei abspeichern und nicht mit den anderen Kollegen auf dem zentralen D'Artagnan-Server
+- Du kannst keine Dateien hochladen, Webshots erzeugen oder Texte aus den Dokumente extrahieren
+- Status/Stand/Plan/Ist-Daten usw. werden in der "abgespeckten" Version ohne Server leider nicht automatische berechnet -> du musst das hier schon alles selbst machen :-(
+- die ganzen schönen Im/Exporte stehen nicht zur Verfügung
+- und so weiter und so fort...
+
+Also suche Dir einen D'Artagnan-Server um alle Features nutzen zu können. **LOS!!!**
+
+Aber zum Rumstöbern und zur Dokumentation reichten die Funktionen die Dir zur Verfügung stehen definitiv aus:-)
+
+<!---STYLE a li ul splitter1 splitter2:jsh-md-list-horiz jsh-md-text-big list-nextactions--->
+- Du kennst D'Artagnan noch nicht? Du möchtest erst einmal die Möglichkeiten sehen, die D'Artagnan dir bietet?:|:[Zur Hilfe/Einführung](#/frontpage/SysHelp1)
+- Du kennst Dich mit D'Artagnan schon sehr gut aus und möchtest sofort fleißig arbeiten:|:[Auf zum Projektexplorer](#/show/MasterplanMasternode1)
+- Du willst Dir einen Überblick über den aktuellen Stand deines Projektes verschaffen?:|:[Nicht leichter als mit dem Dashboard](#/dashboard)
+- Du benötigst dringend diese Information, die in den Tiefen von D'Artagnan versteckt dokumentiert ist?:|:[Auf zur Suche](#/search/)
+- Du möchtest nur den integrierten WySiWyG-Editor benutzen?:|:[Auf zum WySiWyG](ymf-editorapp.html)
+- Du möchtest mehr über das Projekt erfahren?:|:[Auf nach Github](https://github.com/das-praktische-schreinerlein/your-all-in-one/)
+
+<!---/STYLE a li ul splitter1 splitter2:jsh-md-list-horiz jsh-md-text-big list-nextactions--->
+<!---/CONTAINER--->
+<!---/BOX--->
+
+<!---BOX --->
+# Neuigkeiten - Le petit D'Artagnan jetzt in 3D
+
+## Erwachsen
+
+Le petit D'Artagnan wird langsam erwachsen. Mit “Version 2.0 3D” hat er läuft er jetzt auch im Browser und kann seine Daten in einer Datenbank speichern.
+
+Die bestehenden Funktionen beherrscht er natürlich immer noch und sie wurden sogar verbessert, aber er hat auch unglaublich viel dazugelernt.
+
+## Details
+
+Aber schauen wir im Detail, was “Le petit D'Artagngan 3D” nun so alles bietet:
+
+## D'Artagnan unterstützt Dich derzeit bei folgenden Aufgaben
+
+- **Planung:** Planung von Projekten, Terminen
+- **Projektmanagement:** Terminverfolgung, Aufwandsdokumentation und Erinnerungen
+- **Dokumentation:** Dokumentation von durchgeführten Arbeiten, Konzepten, Recherchen
+- **Informationsmanagement:** Informationsmanagement mit der Verlinkung von Webseiten, Bildern, Dateien
+
+## Er bietet eine intuitive Web-GUI die von jedem modernen Browser unterstützt wird
+
+- **Startseite:** Startseite mit kurzer Einführung
+- **Projektexplorer:** Einen Projektexplorer mit einer Baumansicht des gesamten Projekts und Termin/Informationsübersicht
+- **Gantt-Ansicht:** Einem Gantt-Diagramm des aktuellen Projekts mit Plan/Ist-Daten
+- **Suche:** Eine Suchseite mit der Möglichkeit der unstrukturierten Volltextsuche innerhalb des Projekts.
+- innerhalb der Listen an jedem Eintrag die Möglichkeit zur Bearbeitung, Anlegen von Kindsknoten, Anlegen eines Symlinks auf sich, Löschen des Knotens
+
+## Highlights: Was zeichnet D'Artagnan aus
+
+- **einfache Nutzerführung**
+	- Start+Übersichtsseiten, Dokumentation, Hilfe, Onlinehilfe, **Tooltipps mit Hilfstexten**
+	- **Projektexplorer zur Visualisierung und einfachen Navigation innerhalb der Daten**
+	- **zweckmäßige Editoren** für die verschiedenen Informationen (Aufgaben, Konzepte...)
+- **hilfreiche Features in der GUI integriert**
+	- Markdown als Dokumentationsformat mit speziellen Erweiterungen für **Prozess- und Sequenz-Diagramme, sowie Mindmaps und Checklisten**
+	- **W**hat**Y**ou**S**ee**I**s**W**hat**Y**ou**G**et-Editoren, Vorschau-Funktionen
+	- Volltextsuche, Gantt-Ansicht
+	- Exporter und Importer für verschiedene Formate (Mindmap, Excel, Wiki, Html, Txt, Jira, ICal, Checklisten...)
+	- für moderne Browser wie Google-Chrome: **Vorlese-Funktion, Diktat-Funktion**
+- **Komponenten**
+	- eigener Server von Kommandozeile aus startbar (Spring Boot, Jetty)
+	- integrierte Datenbank (Hsqldb)
+	- Backend basierend auf Spring, Frontend-GUI basierend auf Angular-JS, JQuery, Fancytree und weiteren bewährten Frameworks
+	- **WebKalender mit Terminen+Tasks pro Projekt** im ICal-Format direkt in Thunderbird+Outlook einbindbar
+	- **Html-Dokumentationen **(wie diese hier) direkt verlinkbar
+- **Kommandozeilen-Tools zur Administration**
+	- **Export der Daten in verschiedenene Formate** (Mindmap, Excel, Wiki, Html, ICal...)
+	- Import der Daten aus verschiedenen Formaten (MExcel, Wiki, PPL)
+	- Recalc, Reset usw.
+
+## Features: Was sind die Informationen die man derzeit in D'Artagnan speichern kann
+
+- Derzeit lassen sich so **Aufgaben, Infos, Urls, Symlinks, Events und Dateiverweise** speichern
+- Aufgaben+Events lassen sich mit Titel, Status, Plandaten (geplanter Aufwand, Starttermin, Endetermin) und Ist-Daten (benötigter Aufwand, realer Starttermin, realer Endetermin, Umsetzungsstand) versehen
+- Infos, Urls und Dateiressourcen stellen Titel, Ressource und Layoutbefehle für die Darstellung in Dokumentationen zur Verfügung
+- mit Hilfe von Symlinks kann man auf andere Knoten im Projektbaum verweisen
+- Alle Knoten stellen ein Bemerkungsfeld zur Verfügung in welchem kurze Bemerkungen/Kommentare aber auch ganze Artikel mit Markdown formatiert und bei Quelltexten mit Syntaxhighlighting versehen, dokumentiert werden können.
+
+## Aufbau
+
+- Die Kernanwendung mit Datenbank wird von der Kommandozeile aus gestartet
+- es öffnet sich automatisch der **Browser** mit der Startseite -> die Datenpflege kann beginnen
+- neben dem Explorerfenster und verschiedenen Masken zum Export und zur Datenpflege gibt es auch eine Volltextsuche
+- man hat die Möglichkeit im linken Bereich des Explorerfensters im Projektbaum zu navigieren, rechts die Aktionen für die Knoten auszuführen, sich den erweiterten Inhalt einblenden oder im Seitenkopf in den Gantt-Ansicht mit Darstellung des zeitlichen Verlauf wechseln
+- Teilbäume des Projekts (oder das Ganze ;-) lassen sich in verschiedene Export-Formate wie **Mindmap, Wiki, ICal, Html** usw. exportieren
+- zusätzlich besteht die Möglichkeit mit Template-Vorlagen zu arbeiten. Dazu kann man sich entweder einen bestehenden Teilbaum als Wiki exportieren und bearbeiten, oder ein völlig neues Wiki-Dokument erstellen und eine Aufgabe strukturieren. Diese Datei kann dann als neuer Teilbaum ins System importiert werden. **Passende Vorlagen für Projekte, Bugs, Backup und anderes liegen bei**. Übrigens wurde auch die Dokumentation die Sie gerade lesen auf diesem Wege importiert ;-)
+
+<!---/BOX--->

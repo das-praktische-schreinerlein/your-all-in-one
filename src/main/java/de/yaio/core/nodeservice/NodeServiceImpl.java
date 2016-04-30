@@ -13,15 +13,14 @@
  */
 package de.yaio.core.nodeservice;
 
+import de.yaio.core.datadomain.DataDomain;
+import de.yaio.core.datadomainservice.DataDomainRecalc;
+import org.apache.log4j.Logger;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
-
-import org.apache.log4j.Logger;
-
-import de.yaio.core.datadomain.DataDomain;
-import de.yaio.core.datadomainservice.DataDomainRecalc;
 
 
 /** 
@@ -67,29 +66,29 @@ public abstract class NodeServiceImpl implements NodeService {
     // service-functions for recalc
     //////////////
     @Override
-    public void doRecalc(final DataDomain node, final int recurceDirection) throws Exception {
-        this.doRecalcBeforeChildren(node, recurceDirection);
-        if (recurceDirection == CONST_RECURSE_DIRECTION_CHILDREN) {
-            this.doRecalcChildren(node, recurceDirection);
+    public void doRecalc(final DataDomain node, final NodeService.RecalcRecurseDirection recurseDirection) throws Exception {
+        this.doRecalcBeforeChildren(node, recurseDirection);
+        if (recurseDirection == NodeService.RecalcRecurseDirection.CHILDREN) {
+            this.doRecalcChildren(node, recurseDirection);
         }
-        this.doRecalcAfterChildren(node, recurceDirection);
+        this.doRecalcAfterChildren(node, recurseDirection);
         
         // Recalc parents
-        if (recurceDirection == CONST_RECURSE_DIRECTION_PARENT) {
+        if (recurseDirection == NodeService.RecalcRecurseDirection.PARENT) {
             DataDomain parent = node.getParentNode();
             if (parent != null) {
-                this.doRecalc(parent, recurceDirection);
+                this.doRecalc(parent, recurseDirection);
             }
         }
     }
 
 
     @Override
-    public void doRecalcBeforeChildren(final DataDomain node, final int recurceDirection) throws Exception {
+    public void doRecalcBeforeChildren(final DataDomain node, final NodeService.RecalcRecurseDirection recurseDirection) throws Exception {
         for (DataDomainRecalc recalcer : this.hshDataDomainRecalcer) {
             if (recalcer.getRecalcTargetClass().isInstance(node)) {
                 LOGGER.debug("doRecalcBeforeChildren " + recalcer.getClass().getName());
-                recalcer.doRecalcBeforeChildren(node, recurceDirection);
+                recalcer.doRecalcBeforeChildren(node, recurseDirection);
             } else {
                 LOGGER.debug("doRecalcBeforeChildren SKIP: Node is not of type + " 
                         + recalcer.getRecalcTargetClass().getName() 
@@ -100,20 +99,20 @@ public abstract class NodeServiceImpl implements NodeService {
 
 
     @Override
-    public void doRecalcChildren(final DataDomain node, final int recurceDirection) throws Exception {
-        if (recurceDirection == CONST_RECURSE_DIRECTION_CHILDREN) {
+    public void doRecalcChildren(final DataDomain node, final NodeService.RecalcRecurseDirection recurseDirection) throws Exception {
+        if (recurseDirection == NodeService.RecalcRecurseDirection.CHILDREN) {
             for (String name : node.getChildNodesByNameMap().keySet()) {
-                node.getChildNodesByNameMap().get(name).recalcData(recurceDirection);
+                node.getChildNodesByNameMap().get(name).recalcData(recurseDirection);
             }
         }
     }
 
     @Override
-    public void doRecalcAfterChildren(final DataDomain node, final int recurceDirection) throws Exception {
+    public void doRecalcAfterChildren(final DataDomain node, final NodeService.RecalcRecurseDirection recurseDirection) throws Exception {
         for (DataDomainRecalc recalcer : this.hshDataDomainRecalcer) {
             if (recalcer.getRecalcTargetClass().isInstance(node)) {
                 LOGGER.debug("doRecalcAfterChildren " + recalcer.getClass().getName());
-                recalcer.doRecalcAfterChildren(node, recurceDirection);
+                recalcer.doRecalcAfterChildren(node, recurseDirection);
             } else {
                 LOGGER.debug("doRecalcAfterChildren SKIP: Node is not of type + " 
                         + recalcer.getRecalcTargetClass().getName() 

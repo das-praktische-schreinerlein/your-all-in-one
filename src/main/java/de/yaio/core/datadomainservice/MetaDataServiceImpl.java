@@ -13,11 +13,10 @@
  */
 package de.yaio.core.datadomainservice;
 
-import org.apache.log4j.Logger;
-
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.datadomain.MetaData;
 import de.yaio.core.nodeservice.NodeService;
+import org.apache.log4j.Logger;
 
 /** 
  * businesslogic for dataDomain: MetaData
@@ -67,7 +66,7 @@ public class MetaDataServiceImpl extends DataDomainRecalcImpl implements MetaDat
     }
     
     @Override
-    public void doRecalcBeforeChildren(final DataDomain node, final int recurceDirection) throws Exception {
+    public void doRecalcBeforeChildren(final DataDomain node, final NodeService.RecalcRecurseDirection recurseDirection) throws Exception {
         if (node == null) {
             return;
         }
@@ -81,7 +80,7 @@ public class MetaDataServiceImpl extends DataDomainRecalcImpl implements MetaDat
     }
 
     @Override
-    public void doRecalcAfterChildren(final DataDomain node, final int recurceDirection) throws Exception {
+    public void doRecalcAfterChildren(final DataDomain node, final NodeService.RecalcRecurseDirection recurseDirection) throws Exception {
         // NOP
     }
     

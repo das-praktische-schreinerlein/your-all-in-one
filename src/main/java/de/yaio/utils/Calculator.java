@@ -13,14 +13,13 @@
  */
 package de.yaio.utils;
 
-import java.sql.Timestamp;
-import java.util.Date;
-
-import org.apache.log4j.Logger;
-
-import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
 import de.yaio.core.datadomain.ResContentData.UploadWorkflowState;
 import de.yaio.core.datadomain.ResIndexData.IndexWorkflowState;
+import de.yaio.core.datadomain.WorkflowState;
+import org.apache.log4j.Logger;
+
+import java.sql.Timestamp;
+import java.util.Date;
 
 /** 
  * Utils for calculating
@@ -91,7 +90,7 @@ public class Calculator {
                     WorkflowState a2 = (WorkflowState) arg2;
                     
                     // compare the workflowstates by their order
-                    res = a1.ordinal() >= a2.ordinal() ? a1 : a2;
+                    res = a1.getValue() >= a2.getValue() ? a1 : a2;
                     
                     // special case: if DONE && OPEN -> RUNNING
                     if (a1 == WorkflowState.DONE && a2 == WorkflowState.OPEN) {

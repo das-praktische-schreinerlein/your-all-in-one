@@ -13,14 +13,14 @@
  */
 package de.yaio.datatransfer.importer.parser;
 
+import de.yaio.commons.data.DataUtils;
+import de.yaio.core.datadomain.DataDomain;
+
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import de.yaio.commons.data.DataUtils;
-import de.yaio.core.datadomain.DataDomain;
 
 /** 
  * service-functions for parsing of dataDomains

@@ -13,10 +13,10 @@
  */
 package de.yaio.core.datadomainservice;
 
-import java.util.List;
-
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.dbservice.DBFilter;
+
+import java.util.List;
 
 
 /** 

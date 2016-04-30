@@ -14,9 +14,9 @@
 
 package de.yaio.datatransfer.json;
 
-import java.util.List;
-
 import de.yaio.core.datadomain.DataDomain;
+
+import java.util.List;
 
 /** 
  * abstract structure of the basic json-response

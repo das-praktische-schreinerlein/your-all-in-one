@@ -13,10 +13,10 @@
  */
 package de.yaio.core.datadomainservice;
 
-import java.util.Date;
-
 import de.yaio.core.datadomain.BaseWorkflowData;
 import de.yaio.core.datadomain.ExtendedWorkflowData;
+
+import java.util.Date;
 
 /** 
  * businesslogic for dataDomain: BaseWorkflowData

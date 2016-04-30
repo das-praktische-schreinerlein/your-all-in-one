@@ -12,12 +12,12 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 package de.yaio.datatransfer.json;
-import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import de.yaio.core.node.BaseNode;
+
+import java.util.Set;
 
 /** 
  * bean with overrides for BaseNode-data for JsonExport

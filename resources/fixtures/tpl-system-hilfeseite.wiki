@@ -1,16 +1,29 @@
 = DOKU - Hilfesystem                                                                                                                                          [NodeMeta: SysHelp,1,,] [NodeSys: SysHelp1,,,,]
 Hier finden Sie das Standardhilfesystem von D'Artagnan. Bitte nehmen Sie hier keine Änderungen vor, da dieser Bereich bei jedem neuen Update überschrieben wird. Für eigene Erweiterungen der Hilfe benutzen Sie bitte den Punkt “Hilfesystem” unter “Eigene Erweiterungen”.
 
-* **INFO - Hilfe!!!!**                                       [DocLayout: DIV,intro,Hilfe,]
-# Wie kann ich helfen??
+* INFO - Hilfe!!!!                                                              [DocLayout: DESC,,,]
+<!---BOX--->
+<!---STYLE h1:yaio-color-ue--->
+# Hilfe!!!!
+<!---/STYLE h1:yaio-color-ue--->
+
+## Wie kann ich helfen?? <!---TOGGLER hilfe-start,text--->
+<!---CONTAINER hilfe-start--->
+
 Damit du nicht völlig vom Funktionsumfang von D'Artagnan erschlagen wirst, gibt es auf den folgenden Seiten eine kleine Tour durch die Oberfläche und D'Artagnans Fähigkeiten, dich bei deiner Arbeit zu unterstützen.
 Wem es zu viel ist, der kann sich bei Bedarf auch anhand die kleinen Hilfstexte, die sich überall in der Oberfläche verbergen, informieren.
 
 ![Hilfe](/examples/help/hilfe-screen-hilfe-tooltip.png "Hilfe")
 
-  ** INFO - Ende:                                                               [DocLayout: P,startmesg3,,X]                                                    
-  ** **INFO - Grundaufbau**                                       [DocLayout: DIV,intro,Grundaufbau,]
-# Der Grundaufbau von D'Artagnan
+<!---/CONTAINER--->
+<!---/BOX--->
+  ** INFO - Grundaufbau                                                         [DocLayout: DESC,,,]
+<!---BOX--->
+<!---STYLE h1:yaio-color-ue--->
+# Der Grundaufbau von D'Artagnan <!---TOGGLER grundaufbau,text--->
+<!---/STYLE h1:yaio-color-ue--->
+
+<!---CONTAINER grundaufbau--->
 Die Oberfläche von D'Artagnan besteht aus folgenden Komponenten:
 
 - **Startseite mit kurzer Einführung**
@@ -89,9 +102,15 @@ Wurde der passende Knoten gefunden, lässt sich dieser über den vorderen Naviga
 
 ![Suche Übersicht](/examples/help/hilfe-screen-suche-uebersicht.png "Suche Kindsknoten")
 
-** INFO - Ende:                                                               [DocLayout: P,startmesg3,,X]                                                    
-  ** **INFO - Ziel**                                       [DocLayout: DIV,intro,Ziel,]
-# Was kann D'Artagnan?
+<!---/CONTAINER--->
+<!---/BOX--->
+  ** INFO - Ziel                                                                [DocLayout: DESC,,,]
+<!---BOX--->
+<!---STYLE h1:yaio-color-ue--->
+# Was kann D'Artagnan? <!---TOGGLER ziel,text--->
+<!---/STYLE h1:yaio-color-ue--->
+
+<!---CONTAINER ziel--->
 Was kann D'Artagnan eigentlich für mich tun?
 
 ## Knotentypen
@@ -157,9 +176,15 @@ D'Artagnan bietet Dir das Handwerkszeug um deine Projekte zu strukturieren, plan
 
 Wie Dich die Oberfläche dabei unterstützt, erfährst Du im Folgenden Kapitel.
 
-** INFO - Ende:                                                               [DocLayout: P,startmesg3,,X]                                                    
-  ** **INFO - Funktionen**                                       [DocLayout: DIV,intro,Funktionen,]
-# Was bietet D'Artagnan?
+<!---/CONTAINER--->
+<!---/BOX--->
+  ** INFO - Funktionen                                                          [DocLayout: DESC,,,]
+<!---BOX--->
+<!---STYLE h1:yaio-color-ue--->
+# Was bietet D'Artagnan? <!---TOGGLER Funktionen,text--->
+<!---/STYLE h1:yaio-color-ue--->
+
+<!---CONTAINER Funktionen--->
 Im folgenden werden die verfügbaren Funktionen von D'Artagnan näher beschrieben.
 
 ## Navigieren innerhalb des Projektbaumes
@@ -189,7 +214,6 @@ Sind für die Eingabefelder irgendwelche Restriktionen (z.B. Eingabeformat TT.MM
 Zusätzlich bietet der Editor auch ein großes Bemerkungsfeld an, für welches eine Spracherkennung, sowie erweiterte Formatierungsmöglichkeiten des Textes vorgesehen sind. Dazu im folgenden Abschnitt mehr.
 
 ![Knoten-Editor Eingabefelder](/examples/help/hilfe-screen-knoteneditor-fields.png "Knoten-Editor Eingabefelder")
-
 
 #### Diktat/Spracherkennung
 Sollte der Browser Spracherkennung unterstützen (z.B. Google Chrome), wird neben den Textfeldern ein kleines Mikrofon eingeblendet, durch welches sich ein Fenster zur Spracherkennung öffnen lässt. Die Spracherkennung wird dabei durch Klick auf das Mikrofon aktiviert. Meistens muss man dem Fenster noch den Zugriff erlauben (man beachte dazu die Meldungen des Browsers). Wenn die Spracherkennung die Worte erkennt, schreibt sie diese in das Textfeld, wo man sie noch Nachbearbeiten kann. Durch Klick auf Schließen, wird der Text dann in den Knoten-Editor übernommen.
@@ -307,16 +331,26 @@ Bei erfolgreichem Import erfolgt nur eine kurze Meldung in einem neuen Browserfe
 ## Templates benutzen
 Für regelmäßig wiederkehrende Aufgaben und Vorgänge (Backup, Urlaube, Projekte..) hat es sich bewährt ein abgeschlossenes Projekt nur mit Plan+Layout-Daten als Wiki-Datei zu exportieren und dieses dann etwas zu bearbeiten und verallgemeinern. Anschließend kann man diese Wiki-Datei als Projektvorlage einsetzen. Sie wird dann, wie oben beschrieben, importiert und innerhalb von D'Artagnan an die Gegebenheiten angepasst. So bleiben aber einmal erstellte Abläufe, Checklisten und Zeitaufwende erhalten. Man nutzt quasi seine Erfahrungen :-)
 
-** INFO - Ende:                                                               [DocLayout: P,startmesg3,,X]                                                    
-  ** **INFO - Best Practises**                                       [DocLayout: DIV,intro,Best Practises,]
-# Wie arbeite ich mit D'Artagnan?
+<!---/CONTAINER--->
+<!---/BOX--->
+  ** INFO - Best Practises                                                      [DocLayout: DESC,,,]
+<!---BOX--->
+<!---STYLE h1:yaio-color-ue--->
+# Wie arbeite ich mit D'Artagnan? <!---TOGGLER Practises,text--->
+<!---/STYLE h1:yaio-color-ue--->
+<!---CONTAINER Practises--->
 
 - Aufgaben, Urlaub
 
-  ** INFO - Ende:                                                               [DocLayout: P,startmesg3,,X]                                                    
-  ** **INFO - Installation**                                       [DocLayout: DIV,intro,Installation,]
-# Einiges zur Installation
+<!---/CONTAINER--->
+<!---/BOX--->
+  ** INFO - Installation                                                        [DocLayout: DESC,,,]
+<!---BOX--->
+<!---STYLE h1:yaio-color-ue--->
+# Einiges zur Installation <!---TOGGLER Installation,text--->
+<!---/STYLE h1:yaio-color-ue--->
 
+<!---CONTAINER Installation--->
 There are several ways to install your own D'Artagnan-Box.
 
 ## A) linux: use installer
@@ -437,10 +471,16 @@ run example
 
 Take a look at the Wiki, Mindmaps, Excel, html, ICal...
 
-  ** INFO - Ende                                                                [DocLayout: P,,,X]                                                              
-  ** **INFO - Administration**                                       [DocLayout: DIV,intro,Administration,]
-# Einiges zur Administration
+<!---/CONTAINER--->
+<!---/BOX--->
+  ** INFO - Administration                                                      [DocLayout: DESC,,,]
+<!---BOX--->
+<!---STYLE h1:yaio-color-ue--->
+# Einiges zur Administration <!---TOGGLER Administration,text--->
+<!---/STYLE h1:yaio-color-ue--->
+<!---CONTAINER Administration--->
 
 ## Update der Startseite/Hilfe...
 
-  ** INFO - Ende                                                                [DocLayout: P,,,X]                                                              
+<!---/CONTAINER--->
+<!---/BOX--->

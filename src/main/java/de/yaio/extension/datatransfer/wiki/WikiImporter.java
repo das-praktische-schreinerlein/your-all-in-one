@@ -13,17 +13,6 @@
  */
 package de.yaio.extension.datatransfer.wiki;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.regex.MatchResult;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
-
 import de.yaio.core.node.BaseNode;
 import de.yaio.core.nodeservice.BaseNodeService;
 import de.yaio.datatransfer.exporter.OutputOptions;
@@ -34,6 +23,16 @@ import de.yaio.datatransfer.importer.ImporterImpl;
 import de.yaio.extension.datatransfer.ppl.PPLExporter;
 import de.yaio.extension.datatransfer.ppl.PPLImporter;
 import de.yaio.extension.datatransfer.ppl.PPLService;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.MatchResult;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /** 
  * import of Nodes in Wiki-Format
@@ -584,7 +583,7 @@ public class WikiImporter extends ImporterImpl {
     
     protected void initNodeData(final BaseNode curNode) throws Exception {
         curNode.initMetaData();
-        curNode.initSysData();
+        curNode.initSysData(true);
     }
 
     /** 

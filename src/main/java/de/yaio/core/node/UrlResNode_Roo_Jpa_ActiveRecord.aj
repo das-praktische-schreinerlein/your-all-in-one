@@ -3,9 +3,9 @@
 
 package de.yaio.core.node;
 
-import java.util.List;
-
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 privileged aspect UrlResNode_Roo_Jpa_ActiveRecord {
     

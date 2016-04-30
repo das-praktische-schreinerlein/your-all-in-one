@@ -13,11 +13,11 @@
  */
 package de.yaio.datatransfer.importer.parser;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.datatransfer.importer.ImportOptions;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /** 
  * interface with service-functions for parsing of dataDomains
@@ -50,9 +50,11 @@ public interface Parser extends Comparable<Parser> {
     /** Pattern to parse ID-segments */
     String CONST_PATTERN_SEG_ID = "[0-9]";
     /** Pattern to parse Tag-segments */
-    String CONST_PATTERN_SEG_TAGS = "[-0-9\\p{L}+_\\*\\.;]";
+    String CONST_PATTERN_SEG_TAGS = "[-0-9\\p{L}+ _\\*\\.;]";
+    /** Pattern to parse SubType-segments */
+    String CONST_PATTERN_SEG_SUBTYPE = "[a-zA-Z_\\.]";
     /** Pattern to parse ID-Praefix-segments */
-    String CONST_PATTERN_SEG_PRAEFIX = "[A-Za-z]";
+    String CONST_PATTERN_SEG_PRAEFIX = "[0-9A-Za-z]";
     /** Pattern to parse Checksum-segments */
     String CONST_PATTERN_SEG_CHECKSUM = "[0-9A-Za-z]";
     /** Pattern to parse Time-segments */

@@ -13,24 +13,15 @@
  */
 package de.yaio.core.nodeservice;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
+import de.yaio.core.datadomain.BaseWorkflowData;
+import de.yaio.core.datadomain.DataDomain;
+import de.yaio.core.datadomain.WorkflowState;
+import de.yaio.core.datadomainservice.*;
+import de.yaio.core.node.BaseNode;
 import org.apache.commons.collections4.map.SingletonMap;
 import org.apache.log4j.Logger;
 
-import de.yaio.core.datadomain.BaseWorkflowData;
-import de.yaio.core.datadomain.BaseWorkflowData.WorkflowState;
-import de.yaio.core.datadomain.DataDomain;
-import de.yaio.core.datadomainservice.BaseWorkflowDataServiceImpl;
-import de.yaio.core.datadomainservice.MetaDataServiceImpl;
-import de.yaio.core.datadomainservice.StatDataServiceImpl;
-import de.yaio.core.datadomainservice.SysDataServiceImpl;
-import de.yaio.core.node.BaseNode;
+import java.util.*;
 
 
 /** 
@@ -96,6 +87,7 @@ public class BaseNodeService extends NodeServiceImpl {
         SysDataServiceImpl.configureDataDomainRecalcer(this);
         BaseWorkflowDataServiceImpl.configureDataDomainRecalcer(this);
         StatDataServiceImpl.configureDataDomainRecalcer(this);
+        CachedDataServiceImpl.configureDataDomainRecalcer(this);
     }
 
     @Override
@@ -121,7 +113,7 @@ public class BaseNodeService extends NodeServiceImpl {
     // recalc
     ///////////////////////
     @Override
-    public void recalcData(final DataDomain baseNode, final int recursionDirection) throws Exception {
+    public void recalcData(final DataDomain baseNode, final NodeService.RecalcRecurseDirection recursionDirection) throws Exception {
         this.doRecalc(baseNode, recursionDirection);
     }
 
@@ -491,7 +483,7 @@ public class BaseNodeService extends NodeServiceImpl {
             .append(" metaNodePraefix=").append(node.getMetaNodePraefix())
             .append(" metaNodeNummer=").append(node.getMetaNodeNummer())
             .append(" metaNodeTypeTags=").append(node.getMetaNodeTypeTags())
-            .append(" metaNodeSubTypeTags=").append(node.getMetaNodeSubTypeTags())
+            .append(" metaNodeSubType=").append(node.getMetaNodeSubType())
             .append(" desc=").append(node.getNodeDesc());
         return data.toString();
     }

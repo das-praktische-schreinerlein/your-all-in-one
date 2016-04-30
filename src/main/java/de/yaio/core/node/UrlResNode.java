@@ -12,22 +12,21 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 package de.yaio.core.node;
-import javax.persistence.Transient;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlTransient;
-
-import org.springframework.roo.addon.javabean.RooJavaBean;
-import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
-import org.springframework.roo.addon.tostring.RooToString;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import de.yaio.core.datadomain.ResContentData;
 import de.yaio.core.datadomain.ResIndexData;
 import de.yaio.core.datadomain.ResLocData;
 import de.yaio.core.nodeservice.BaseNodeService;
 import de.yaio.core.nodeservice.UrlResNodeService;
+import org.springframework.roo.addon.javabean.RooJavaBean;
+import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
+import org.springframework.roo.addon.tostring.RooToString;
+
+import javax.persistence.Transient;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlTransient;
 
 /** 
  * bean with UrlResNode-data (files, urls, links) and matching businesslogic

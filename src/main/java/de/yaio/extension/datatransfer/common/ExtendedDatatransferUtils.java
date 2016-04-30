@@ -13,18 +13,13 @@
  */
 package de.yaio.extension.datatransfer.common;
 
-import java.util.List;
-
-import org.apache.log4j.Logger;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import de.yaio.core.dbservice.BaseNodeDBServiceImpl;
 import de.yaio.core.node.BaseNode;
 import de.yaio.datatransfer.common.DatatransferUtils;
 import de.yaio.datatransfer.exporter.Exporter;
 import de.yaio.datatransfer.exporter.OutputOptions;
 import de.yaio.datatransfer.exporter.OutputOptionsImpl;
+import de.yaio.datatransfer.importer.ImportOptions;
 import de.yaio.datatransfer.jpa.JPAExporter;
 import de.yaio.extension.datatransfer.ppl.PPLImporter;
 import de.yaio.extension.datatransfer.wiki.InlineWikiImporter;
@@ -32,6 +27,11 @@ import de.yaio.extension.datatransfer.wiki.WikiExporter;
 import de.yaio.extension.datatransfer.wiki.WikiImportOptions;
 import de.yaio.extension.datatransfer.wiki.WikiImporter;
 import de.yaio.extension.datatransfer.wiki.WikiImporter.WikiStructLine;
+import org.apache.log4j.Logger;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /** 
  * Services to parse text to nodes and convert them in different 
@@ -74,13 +74,14 @@ public class ExtendedDatatransferUtils extends DatatransferUtils {
         OutputOptions oOptions = new OutputOptionsImpl();
         oOptions.setFlgShowIst(false);
         oOptions.setFlgShowSysData(false);
-        oOptions.setFlgShowMetaData(false);
+        oOptions.setFlgShowMetaData(true);
         String wikiSrc = exporter.getMasterNodeResult(node, oOptions);
 
         // create dummy masternode
         BaseNode masterNode = createTemporaryMasternode(
                         newParent.getSysUID(), newParent.getMetaNodePraefix(), newParent.getMetaNodeNummer());
-        
+        masterNode.setCachedParentHierarchy(newParent.getCachedParentHierarchy());
+
         // Parser+Options anlegen
         WikiImportOptions inputOptions = new WikiImportOptions();
         inputOptions.setFlgReadList(true);
@@ -88,13 +89,25 @@ public class ExtendedDatatransferUtils extends DatatransferUtils {
         inputOptions.setStrDefaultMetaNodePraefix(masterNode.getMetaNodePraefix());
         WikiImporter wikiImporter = new WikiImporter(inputOptions);
         parseNodesFromWiki(wikiImporter, inputOptions, masterNode, wikiSrc);
-        
+
+        // check hierarchy
+        WikiExporter wiki = new WikiExporter();
+        String wikiStr = wiki.getMasterNodeResult(node, oOptions);
+        LOGGER.info("wikiStr:" + wikiStr);
+
+        // remove empty default-nodes
+        masterNode = clearEmptyDefaultNodes(masterNode);
+
+        // reset data
+        ImportOptions importOptions = createCopyImportOptions();
+        resetRestrictedData(masterNode, importOptions, true);
+
         // JPA-Exporter
         JPAExporter jpaExporter = new JPAExporter();
         jpaExporter.getMasterNodeResult(masterNode, null);
 
         // renew old parent only if different from newParent
-        if (newParent.getSysUID() != oldParent.getSysUID()) {
+        if (!newParent.getSysUID().equals(oldParent.getSysUID())) {
             // renew oldParent
             oldParent = BaseNode.findBaseNode(oldParent.getSysUID());
             oldParent.initChildNodesFromDB(0);

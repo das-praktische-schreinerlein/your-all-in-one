@@ -13,15 +13,14 @@
  */
 package de.yaio.datatransfer.importer.parser;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.apache.log4j.Logger;
-
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.datadomain.MetaData;
 import de.yaio.datatransfer.importer.ImportOptions;
 import de.yaio.datatransfer.importer.NodeFactory;
+import org.apache.log4j.Logger;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /** 
  * service-functions for parsing of dataDomain: MetaData
@@ -119,7 +118,7 @@ public class MetaDataParserImpl  extends ParserImpl implements MetaDataParser {
             if (matcher.group(matcherindex) != null) {
                 node.setMetaNodeNummer(matcher.group(matcherindex));
             }
-            // Checksum
+            // NodeType
             matcherindex = 4;
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Pattern: " + pattern + " " 
@@ -128,14 +127,14 @@ public class MetaDataParserImpl  extends ParserImpl implements MetaDataParser {
             if (matcher.group(matcherindex) != null) {
                 node.setMetaNodeTypeTags(matcher.group(matcherindex));
             }
-            // ChangeDate
+            // SubNodeType
             matcherindex = 5;
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Pattern: " + pattern + " " 
                     + matcherindex + ":" + matcher.group(matcherindex));
             }
             if (matcher.group(matcherindex) != null) {
-                node.setMetaNodeSubTypeTags(matcher.group(matcherindex));
+                node.setMetaNodeSubType(matcher.group(matcherindex));
             }
 
             found++;

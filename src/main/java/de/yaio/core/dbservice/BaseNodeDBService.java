@@ -12,11 +12,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 package de.yaio.core.dbservice;
-import java.util.List;
-
-import org.springframework.roo.addon.layers.service.RooService;
 
 import de.yaio.core.node.BaseNode;
+import org.springframework.roo.addon.layers.service.RooService;
+
+import java.util.List;
 
 /** 
  * dbservices for BaseNodes
@@ -67,21 +67,23 @@ public interface BaseNodeDBService {
     /** 
      * count the basenodes which match fulltext
      * @param fulltext               fulltext to search in desc and name
+     * @param rootSysUID             sysUID of the rootElement
      * @param searchOptions          outputoptions with additional filter
      * @return                       total of matching nodes
      */
-    long countExtendedSearchBaseNodes(final String fulltext, final SearchOptions searchOptions);
+    long countExtendedSearchBaseNodes(final String fulltext, final String rootSysUID, final SearchOptions searchOptions);
 
     /** 
      * read the basenodes which match fulltext
      * @param fulltext               fulltext to search in desc and name
+     * @param rootSysUID             sysUID of the rootElement
      * @param searchOptions          outputoptions with additional filter
      * @param sortConfig             use sort
      * @param firstResult            resultrange for pagination
      * @param maxResults             resultrange for pagination
      * @return                       List of matching nodes
      */
-    List<BaseNode> findExtendedSearchBaseNodeEntries(final String fulltext, final SearchOptions searchOptions,
+    List<BaseNode> findExtendedSearchBaseNodeEntries(final String fulltext, final String rootSysUID, final SearchOptions searchOptions,
                     final String sortConfig, final int firstResult, final int maxResults);
 
     /** 

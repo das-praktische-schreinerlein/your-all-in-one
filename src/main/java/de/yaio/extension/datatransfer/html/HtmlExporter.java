@@ -51,6 +51,8 @@ public class HtmlExporter extends WikiExporter {
     protected static final String CONST_LAYOUT_TAG_TR = "TR";
     protected static final String CONST_LAYOUT_TAG_DIRECT = "DIRECT";
     protected static final String CONST_LAYOUT_TAG_ENDDIV = "ENDDIV";
+    protected static final String CONST_LAYOUT_TAG_DESCONLY = "DESC";
+
     
     protected static final String CONST_FORMATTER_DESC = DescDataFormatterImpl.class.getName();
     protected static final String CONST_FORMATTER_IST = IstDataFormatterImpl.class.getName();
@@ -206,9 +208,9 @@ public class HtmlExporter extends WikiExporter {
                     if (!flgTableStarted) {
                         // Liste starten
                         String addStyle = node.getDocLayoutAddStyleClass();
-                        blockChildren += "<table class='table-portdesc"
+                        blockChildren += "<table class='yaio-doc-table"
                                       + (addStyle.length() > 0
-                                          ? " table-portdesc-" + addStyle : "")
+                                          ? "yaio-doc-table-" + addStyle : "")
                                       +   "' id='table_" + node.getSysUID() + "'>\n";
                         flgTableStarted = true;
                     }
@@ -224,9 +226,9 @@ public class HtmlExporter extends WikiExporter {
                     if (!flgListStarted) {
                         // Liste starten
                         String addStyle = node.getDocLayoutAddStyleClass();
-                        blockChildren += "<ul class='ul-portdesc"
+                        blockChildren += "<ul class='yaio-doc-ul"
                                       + (addStyle.length() > 0
-                                          ? " ul-portdesc-" + addStyle : "")
+                                          ? " yaio-doc-ul-" + addStyle : "")
                                       +   "' id='ul_" + node.getSysUID() + "'>\n";
                         flgListStarted = true;
                     }
@@ -395,9 +397,8 @@ public class HtmlExporter extends WikiExporter {
             if (CONST_LAYOUT_TAG_UE.equalsIgnoreCase(layoutCommand)) {
                 // Ueberschrift
                 String tag = "h" + tagEbene;
-                res += "<" + tag + " class='" + tag + "-portdesc"
-                    + (addStyle.length() > 0
-                        ? " " + tag + "-portdesc-" + addStyle : "") + "'"
+                res += "<" + tag + " class='yaio-doc-" + tag
+                    + (addStyle.length() > 0 ? " yaio-doc-" + tag + "-" + addStyle : "") + "'"
                     +   " id='" + tag + "_" + curNode.getSysUID() + "'>"
                     + ue
                     + "</" + tag + ">\n";
@@ -405,16 +406,14 @@ public class HtmlExporter extends WikiExporter {
                 // optionaler Contentbereich
                 if (content.length() > 0 || (descFull != null && descFull.length() > 0)) {
                     tag = "p";
-                    res += "<" + tag + " class='" + tag + "-portdesc"
-                        + (addStyle.length() > 0
-                            ? " " + tag + "-portdesc-" + addStyle : "") + "'"
+                    res += "<" + tag + " class='yaio-doc-" + tag
+                        + (addStyle.length() > 0 ? " yaio-doc-" + tag + "-" + addStyle : "") + "'"
                         +   " id='" + tag + "_" + curNode.getSysUID() + "'>";
                     
                     // content
                     if (content.length() > 0) {
-                        res += "<span class='" + tag + "-portdesc-desc"
-                                        + (addStyle.length() > 0
-                                            ? " " + tag + "-portdesc-desc-" + addStyle : "") + "'"
+                        res += "<span class='yaio-doc-" + tag + "-desc"
+                                        + (addStyle.length() > 0 ? " yaio-doc-" + tag + "-desc-" + addStyle : "") + "'"
                                         +   " id='pSpanDesc_" + curNode.getSysUID() + "'>"
                                         + content
                                         + "</span>";
@@ -422,9 +421,8 @@ public class HtmlExporter extends WikiExporter {
 
                     // eventuelles SPAN fuer Detailbeschreibung
                     if (descFull != null && descFull.length() > 0) {
-                        res +=  "<span class='" + tag + "-portdesc-descdetail"
-                            + (addStyle.length() > 0
-                                ? " " + tag + "-portdesc-descdetail-" + addStyle : "") + "'"
+                        res +=  "<span class='yaio-doc-" + tag + "-descdetail"
+                            + (addStyle.length() > 0 ? " yaio-doc-" + tag + "-descdetail-" + addStyle : "") + "'"
                             +   " id='pSpanDescDetail_" + curNode.getSysUID() + "'>"
                             + descFull
                             + "</span>";
@@ -435,28 +433,24 @@ public class HtmlExporter extends WikiExporter {
             } else if (CONST_LAYOUT_TAG_LI.equalsIgnoreCase(layoutCommand)) {
                 // Aufzaehlung
                 String tag = "li";
-                res += "<" + tag + " class='" + tag + "-portdesc"
-                    + (addStyle.length() > 0
-                        ? " " + tag + "-portdesc-" + addStyle : "") + "'"
+                res += "<" + tag + " class='yaio-doc-" + tag + ""
+                    + (addStyle.length() > 0 ? " yaio-doc-" + tag + "-" + addStyle : "") + "'"
                     +   " id='li_" + curNode.getSysUID() + "'>"
-                    + "<span class='" + tag + "-portdesc-ue"
-                    + (addStyle.length() > 0
-                        ? " " + tag + "-portdesc-ue-" + addStyle : "") + "'"
+                    + "<span class='yaio-doc-" + tag + "-ue"
+                    + (addStyle.length() > 0 ? " yaio-doc-" + tag + "-ue-" + addStyle : "") + "'"
                     +   " id='liSpanUe_" + curNode.getSysUID() + "'>"
                     + ue
                     + "</span>"
-                    + "<span class='" + tag + "-portdesc-desc"
-                    + (addStyle.length() > 0
-                        ? " " + tag + "-portdesc-desc-" + addStyle : "") + "'"
+                    + "<span class='yaio-doc-" + tag + "-desc"
+                    + (addStyle.length() > 0 ? " yaio-doc-" + tag + "-desc-" + addStyle : "") + "'"
                     +   " id='liSpanDesc_" + curNode.getSysUID() + "'>"
                     + content
                     + "</span>";
 
                 // eventuelles SPAN fuer Detailbeschreibung
                 if (descFull != null && descFull.length() > 0) {
-                    res +=  "<span class='" + tag + "-portdesc-descdetail"
-                        + (addStyle.length() > 0
-                            ? " " + tag + "-portdesc-descdetail-" + addStyle : "") + "'"
+                    res +=  "<span class='yaio-doc-" + tag + "-descdetail"
+                        + (addStyle.length() > 0 ? " yaio-doc-" + tag + "-descdetail-" + addStyle : "") + "'"
                         +   " id='liSpanDescDetail_" + curNode.getSysUID() + "'>"
                         + descFull
                         + "</span>";
@@ -468,9 +462,8 @@ public class HtmlExporter extends WikiExporter {
 
                 // TR Zeile oeffnen
                 String tag = "tr";
-                res += "<" + tag + " class='" + tag + "-portdesc"
-                    + (addStyle.length() > 0
-                        ? " " + tag + "-portdesc-" + addStyle : "") + "'"
+                res += "<" + tag + " class='yaio-doc-" + tag + ""
+                    + (addStyle.length() > 0 ? " yaio-doc-" + tag + "-" + addStyle : "") + "'"
                     +   " id='tr_" + curNode.getSysUID() + "'>";
 
                 // TD Spalten einfuegen
@@ -484,14 +477,12 @@ public class HtmlExporter extends WikiExporter {
                         "<script>yaioAppBase.get('YaioExportedData').calcColumns('" + tdId + "', 'SUM', '', '');</script>");
 
                     // TD-Spalte erzeugen
-                    res += "<td class='"
-                            + tag + "-portdesc " + tag + "-portdesc-" + zaehler
-                            + (addStyle.length() > 0
-                                ? " " + tag + "-portdesc-" + addStyle + " "
-                                  + tag + "-portdesc-" + zaehler + "-" + addStyle : "") + "'"
-                        + " id='" + tdId + "'>"
-                        + tdContent
-                        + "</td>";
+                    res += "<td class='yaio-doc-" + tag + " yaio-doc-" + tag + "-" + zaehler
+                            + (addStyle.length() > 0 ? " yaio-doc-" + tag + "-" + addStyle
+                            + " yaio-doc-" + tag + "-" + zaehler + "-" + addStyle : "") + "'"
+                            + " id='" + tdId + "'>"
+                            + tdContent
+                            + "</td>";
                 }
 
                 // TR Zeile schliessen
@@ -499,14 +490,12 @@ public class HtmlExporter extends WikiExporter {
                 res += "</" + tag + ">\n";
             } else if (CONST_LAYOUT_TAG_DIV.equalsIgnoreCase(layoutCommand)) {
                 // DIV
-                res += "<div class='box box-portdesc add2toc-h1"
-                    + (addStyle.length() > 0
-                        ? " box-portdesc-" + addStyle : "") + "'"
+                res += "<div class='box yaio-doc-box add2toc-h1"
+                    + (addStyle.length() > 0 ? " yaio-doc-box-" + addStyle : "") + "'"
                     + (shortName.length() > 0 ? " toclabel='" + shortName + "'" : "")
                     + " id='box_" + curNode.getSysUID() + "'>"
-                    + "<div class='boxline boxline-ue" + tagEbene + " h" + tagEbene + "-portdesc"
-                    + (addStyle.length() > 0
-                        ? " h" + tagEbene + "-portdesc-" + addStyle : "") + "'"
+                    + "<div class='boxline boxline-ue" + tagEbene + " yaio-doc-h" + tagEbene
+                    + (addStyle.length() > 0 ? " yaio-doc-h" + tagEbene + "-" + addStyle : "") + "'"
                     + " id='ue_" + curNode.getSysUID() + "'>"
                     + ue
                     + "</div>\n"
@@ -517,16 +506,14 @@ public class HtmlExporter extends WikiExporter {
                 // optionaler Contentbereich
                 if (content.length() > 0 || (descFull != null && descFull.length() > 0)) {
                     String tag = "p";
-                    res += "<" + tag + " class='" + tag + "-portdesc"
-                        + (addStyle.length() > 0
-                            ? " " + tag + "-portdesc-" + addStyle : "") + "'"
+                    res += "<" + tag + " class='yaio-doc-" + tag + ""
+                        + (addStyle.length() > 0 ? " yaio-doc-" + tag + "-" + addStyle : "") + "'"
                         +   " id='" + tag + "_" + curNode.getSysUID() + "'>";
                     
                     // content
                     if (content.length() > 0) {
-                        res += "<span class='" + tag + "-portdesc-desc"
-                                        + (addStyle.length() > 0
-                                            ? " " + tag + "-portdesc-desc-" + addStyle : "") + "'"
+                        res += "<span class='yaio-doc-" + tag + "-desc"
+                                        + (addStyle.length() > 0 ? " yaio-doc-" + tag + "-desc-" + addStyle : "") + "'"
                                         +   " id='pSpanDesc_" + curNode.getSysUID() + "'>"
                                         + content
                                         + "</span>";
@@ -534,9 +521,8 @@ public class HtmlExporter extends WikiExporter {
 
                     // eventuelles SPAN fuer Detailbeschreibung
                     if (descFull != null && descFull.length() > 0) {
-                        res +=  "<span class='" + tag + "-portdesc-descdetail"
-                            + (addStyle.length() > 0
-                                ? " " + tag + "-portdesc-descdetail-" + addStyle : "") + "'"
+                        res +=  "<span class='yaio-doc-" + tag + "-descdetail"
+                            + (addStyle.length() > 0 ? " yaio-doc-" + tag + "-descdetail-" + addStyle : "") + "'"
                             +   " id='pSpanDescDetail_" + curNode.getSysUID() + "'>"
                             + descFull
                             + "</span>";
@@ -547,35 +533,63 @@ public class HtmlExporter extends WikiExporter {
             } else if (CONST_LAYOUT_TAG_ENDDIV.equalsIgnoreCase(layoutCommand)) {
                 // ENDDIV
                 res += "</div></div>\n\n\n";
-            } else { 
-                //if (CONST_LAYOUT_TAG_P.equalsIgnoreCase(layoutCommand) || 1 == 1) {
-                // DEFAULT: Block
+            } else if (CONST_LAYOUT_TAG_P.equalsIgnoreCase(layoutCommand)) {
                 String tag = "p";
-                res += "<" + tag + " class='" + tag + "-portdesc"
-                    + (addStyle.length() > 0
-                        ? " " + tag + "-portdesc-" + addStyle : "") + "'"
-                    +   " id='p_" + curNode.getSysUID() + "'>"
-                    + "<span class='" + tag + "-portdesc-ue"
-                    + (addStyle.length() > 0
-                        ? " " + tag + "-portdesc-ue-" + addStyle : "") + "'"
-                    +   " id='pSpanUe_" + curNode.getSysUID() + "'>"
-                    + ue
-                    + "</span>"
-                    + "<span class='" + tag + "-portdesc-desc"
-                    + (addStyle.length() > 0
-                        ? " " + tag + "-portdesc-desc-" + addStyle : "") + "'"
-                    +   " id='pSpanDesc_" + curNode.getSysUID() + "'>"
-                    + content
-                    + "</span>";
+                res += "<" + tag + " class='yaio-doc-" + tag + ""
+                        + (addStyle.length() > 0
+                        ? " yaio-doc-" + tag + "-" + addStyle : "") + "'"
+                        +   " id='p_" + curNode.getSysUID() + "'>"
+                        + "<span class='yaio-doc-" + tag + "-ue"
+                        + (addStyle.length() > 0 ? " yaio-doc-" + tag + "-ue-" + addStyle : "") + "'"
+                        + " id='pSpanUe_" + curNode.getSysUID() + "'>"
+                        + ue
+                        + "</span>"
+                        + "<span class='yaio-doc-" + tag + "-desc"
+                        + (addStyle.length() > 0 ? " yaio-doc-" + tag + "-desc-" + addStyle : "") + "'"
+                        + " id='pSpanDesc_" + curNode.getSysUID() + "'>"
+                        + content
+                        + "</span>";
 
                 // eventuelles SPAN fuer Detailbeschreibung
                 if (descFull != null && descFull.length() > 0) {
-                    res +=  "<span class='" + tag + "-portdesc-descdetail"
-                        + (addStyle.length() > 0
-                            ? " " + tag + "-portdesc-descdetail-" + addStyle : "") + "'"
-                        +   " id='pSpanDescDetail_" + curNode.getSysUID() + "'>"
+                    res +=  "<span class='yaio-doc-" + tag + "-descdetail"
+                            + (addStyle.length() > 0 ? " yaio-doc-" + tag + "-descdetail-" + addStyle : "") + "'"
+                            +   " id='pSpanDescDetail_" + curNode.getSysUID() + "'>"
+                            + descFull
+                            + "</span>";
+
+                }
+                res +=  "</" + tag + ">\n";
+            } else {
+                // DEFAULT: Block
+                String tag = "div";
+                res += "<" + tag + " class='yaio-doc-" + tag + ""
+                    + (addStyle.length() > 0 ? " yaio-doc-" + tag + "-" + addStyle : "") + "'"
+                    + " id='div_" + curNode.getSysUID() + "'>";
+                if (!CONST_LAYOUT_TAG_DESCONLY.equalsIgnoreCase(layoutCommand)) {
+                    res += "<div class='yaio-doc-" + tag + "-ue-container"
+                            + (addStyle.length() > 0 ? " yaio-doc-" + tag + "-ue-container" + addStyle : "") + "'"
+                            + " id='divDivUe_" + curNode.getSysUID() + "'>"
+                            + "<span class='yaio-doc-" + tag + "-ue"
+                            + (addStyle.length() > 0 ? " yaio-doc-" + tag + "-ue-" + addStyle : "") + "'"
+                            + " id='divSpanUe_" + curNode.getSysUID() + "'>"
+                            + ue
+                            + "</span>"
+                            + "<span class='yaio-doc-" + tag + "-desc"
+                            + (addStyle.length() > 0 ? " yaio-doc-" + tag + "-desc-" + addStyle : "") + "'"
+                            + " id='divSpanDesc_" + curNode.getSysUID() + "'>"
+                            + content
+                            + "</span>"
+                            + "</div>";
+                }
+
+                // eventuelles DIV fuer Detailbeschreibung
+                if (descFull != null && descFull.length() > 0) {
+                    res +=  "<div class='yaio-doc-" + tag + "-descdetail"
+                        + (addStyle.length() > 0 ? " yaio-doc-" + tag + "-descdetail-" + addStyle : "") + "'"
+                        + " id='divDivDescDetail_" + curNode.getSysUID() + "'>"
                         + descFull
-                        + "</span>";
+                        + "</div>";
 
                 }
                 res +=  "</" + tag + ">\n";
@@ -631,17 +645,17 @@ public class HtmlExporter extends WikiExporter {
         // Status
         if (oOptions.isFlgShowState()) {
             labelState = curNode.getState();
-            styleClassesState = "node-state-" + labelState;
+            styleClassesState = "yaio-node-state-" + labelState;
         }
-        styleClassesStateShort = "node-state-" + labelState;
+        styleClassesStateShort = "yaio-node-state-" + labelState;
 
         // pruefen ob innerhalb der Ue-Ebenen-Begrenzung
         if (curNode.getEbene() <= oOptions.getMaxUeEbene()) {
             // als Ue darstellen
-            styleClassesUe = "node-style-ue node-style-ue" + curNode.getEbene();
+            styleClassesUe = "yaio-pj-node-style-ue yaio-pj-node-style-ue" + curNode.getEbene();
         } else {
             // als Aufzaehlung darstellen
-            styleClassesUe = "node-style-list node-style-list" + curNode.getEbene();
+            styleClassesUe = "yaio-pj-node-style-list yaio-pj-node-style-list" + curNode.getEbene();
         }
 
         // alle Kindselemente durchlaufen
@@ -659,20 +673,20 @@ public class HtmlExporter extends WikiExporter {
                 blockChildren += this.getNodeResult(node, "", oOptions);
             }
             if (blockChildren.length() > 0) {
-                blockChildren = "<div id='node_" + curNode.getSysUID() +  "_cildren' class='node-block-children'>\n"
+                blockChildren = "<div id='node_" + curNode.getSysUID() +  "_cildren' class='yaio-pj-node-block-children'>\n"
                                 + blockChildren
                                 + "</div>\n";
             }
 
-            styleClassesUe += " node-type-twig node-type-twig" + curNode.getEbene();
-            styleClassesBlock += " node-block-twig node-block-twig" + curNode.getEbene();
+            styleClassesUe += " yaio-pj-node-type-twig yaio-pj-node-type-twig" + curNode.getEbene();
+            styleClassesBlock += " yaio-pj-node-block-twig yaio-pj-node-block-twig" + curNode.getEbene();
         } else {
             // Blatt
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("node:" + curNode.getSysUID() + " no subnodes");
             }
-            styleClassesUe += " node-type-leaf node-type-leaf" + curNode.getEbene();
-            styleClassesBlock += " node-block-leaf node-block-leaf" + curNode.getEbene();
+            styleClassesUe += " yaio-pj-node-type-leaf yaio-pj-node-type-leaf" + curNode.getEbene();
+            styleClassesBlock += " yaio-pj-node-block-leaf yaio-pj-node-block-leaf" + curNode.getEbene();
         }
         // check if children matches (childRes filled)
         if (blockChildren.length() > 0) {
@@ -703,7 +717,7 @@ public class HtmlExporter extends WikiExporter {
         name = name.replaceAll("<WLTAB>", "\t");
         name = DataUtils.htmlEscapeText(name);
         blockName = name + " (" + curNode.getWorkingId() + ")";
-        styleClassesNameContainer2 = " node-level" + curNode.getEbene();
+        styleClassesNameContainer2 = " yaio-pj-node-level" + curNode.getEbene();
         if (UrlResNode.class.isInstance(curNode)) {
             // URLRes
             UrlResNode urlResNode = (UrlResNode) curNode;
@@ -727,7 +741,7 @@ public class HtmlExporter extends WikiExporter {
             }
             
             blockName = "<a href='" + urlResNode.getResLocRef() + "' "
-                            + " target='_blank' class='a-node-urlres'>"
+                            + " target='_blank' class='yaio-pj-node-a-urlres'>"
                             + label + "</a>";
             if (UrlResNodeService.CONST_NODETYPE_IDENTIFIER_FILERES.equals(urlResNode.getType())) {
 //                url = "/dms/download/" + urlResNode.getResContentDMSId();
@@ -740,7 +754,7 @@ public class HtmlExporter extends WikiExporter {
             blockName = name + " (" + curNode.getWorkingId() + ")"
                 + " &gt; " + "<a onclick=\"javascript:yaioAppBase.get('YaioExportedData').openNode('" 
                 +    symlinkNode.getSymLinkRef() + "');return false;\""
-                + " class='a-node-symlink'>"
+                + " class='yaio-pj-node-a-symlink'>"
                 + symlinkNode.getSymLinkRef() + symlinkNode.getSymLinkName() + "</a>";
         }
 
@@ -814,32 +828,32 @@ public class HtmlExporter extends WikiExporter {
         }
 
         // Result erzeugen
-        res = "<div id='node_" + curNode.getSysUID() + "_master' data-pjebene='" + curNode.getEbene() + "' class='node-block " + styleClassesBlock + "'>\n"
-            + "  <div id='node_" + curNode.getSysUID() + "_datacontainer' class='node-line-ue " + styleClassesUe + "'>\n"
-            + "    <div id='node_" + curNode.getSysUID() + "_namecontainer' class='node-area-name-container'>\n"
-            + "      <div id='node_" + curNode.getSysUID() + "_namecontainer2' class='node-area-name-container2 " + styleClassesNameContainer2 + "'>\n"
-            + "        <div id='node_" + curNode.getSysUID() + "_stateshort' class='node-area-stateshort " + styleClassesStateShort + "'>-</div>\n"
-            + "        <div id='node_" + curNode.getSysUID() + "_name' class='node-area-name " + styleClassesName + "'>"
+        res = "<div id='node_" + curNode.getSysUID() + "_master' data-pjebene='" + curNode.getEbene() + "' class='yaio-pj-node-block " + styleClassesBlock + "'>\n"
+            + "  <div id='node_" + curNode.getSysUID() + "_datacontainer' class='yaio-pj-node-line-ue " + styleClassesUe + "'>\n"
+            + "    <div id='node_" + curNode.getSysUID() + "_namecontainer' class='yaio-pj-node-area-name-container'>\n"
+            + "      <div id='node_" + curNode.getSysUID() + "_namecontainer2' class='yaio-pj-node-area-name-container2 " + styleClassesNameContainer2 + "'>\n"
+            + "        <div id='node_" + curNode.getSysUID() + "_stateshort' class='yaio-pj-node-area-stateshort " + styleClassesStateShort + "'>-</div>\n"
+            + "        <div id='node_" + curNode.getSysUID() + "_name' class='yaio-pj-node-area-name " + styleClassesName + "'>"
             +            blockName + "</div>\n"
             + "      </div>\n"
             + "    </div>\n"
-            + "    <div id='node_" + curNode.getSysUID() + "_state' class='node-area-state " + styleClassesState + "'>" + labelState + "</div>\n"
-//                    + "    <div id='node_" + curNode.getSysUID() + "_name' class='node-area-name " + styleClassesState + " " + styleClassesName + "'>" + labelState + " - " + blockName + "</div>"
-            + "    <div id='node_" + curNode.getSysUID() + "_istplan' class='node-area-istplan " + styleClassesState + "'>" + blockIstCalcSum + blockPlanCalcSum + blockIst + blockPlan + "</div>\n"
+            + "    <div id='node_" + curNode.getSysUID() + "_state' class='yaio-pj-node-area-state " + styleClassesState + "'>" + labelState + "</div>\n"
+//                    + "    <div id='node_" + curNode.getSysUID() + "_name' class='yaio-pj-node-area-name " + styleClassesState + " " + styleClassesName + "'>" + labelState + " - " + blockName + "</div>"
+            + "    <div id='node_" + curNode.getSysUID() + "_istplan' class='yaio-pj-node-area-istplan " + styleClassesState + "'>" + blockIstCalcSum + blockPlanCalcSum + blockIst + blockPlan + "</div>\n"
             + "  </div>\n"
-            + "  <div id='node_" + curNode.getSysUID() + "_desccontainer' class='node-container-desc'>" + blockDesc + "</div>\n";
+            + "  <div id='node_" + curNode.getSysUID() + "_desccontainer' class='yaio-pj-node-container-desc'>" + blockDesc + "</div>\n";
 
         // Children einfuegen
         if (curNode.getChildNodes().size() > 0) {
-            res +=  "  <div id='node_" + curNode.getSysUID() + "_childrencontainer' data-pjebene='" + curNode.getEbene() + "' class='node-container-children'>" + blockChildren + "</div>\n";
+            res +=  "  <div id='node_" + curNode.getSysUID() + "_childrencontainer' data-pjebene='" + curNode.getEbene() + "' class='yaio-pj-node-container-children'>" + blockChildren + "</div>\n";
         }
 
 //                // Trenner einfuegen
 //                if (curNode.getLstChildProjektNodes().size() > 0) {
-//                    res += "  <div id='node_" + curNode.getSysUID() + "_datacontainer_dummy' class='node-line-ue node-line-trenner '>"
-//                        + "    <div id='node_" + curNode.getSysUID() + "_state_dummy' class='node-area-state node-trenner-area-state'>&nbsp;</div>"
-//                        + "    <div id='node_" + curNode.getSysUID() + "_name_dummy' class='node-area-name " + styleClassesName + " node-trenner-area-name'><span class='node-trenner-area-intend'>&nbsp;</span></div>"
-//                        + "    <div id='node_" + curNode.getSysUID() + "_istplan' class='node-area-istplan '><span class='node-trenner-area-intend'>&nbsp;</span></div>"
+//                    res += "  <div id='node_" + curNode.getSysUID() + "_datacontainer_dummy' class='yaio-pj-node-line-ue yaio-pj-node-line-trenner '>"
+//                        + "    <div id='node_" + curNode.getSysUID() + "_state_dummy' class='yaio-pj-node-area-state yaio-pj-node-trenner-area-state'>&nbsp;</div>"
+//                        + "    <div id='node_" + curNode.getSysUID() + "_name_dummy' class='yaio-pj-node-area-name " + styleClassesName + " yaio-pj-node-trenner-area-name'><span class='yaio-pj-node-trenner-area-intend'>&nbsp;</span></div>"
+//                        + "    <div id='node_" + curNode.getSysUID() + "_istplan' class='yaio-pj-node-area-istplan '><span class='yaio-pj-node-trenner-area-intend'>&nbsp;</span></div>"
 //                        + "  </div>\n";
 //                }
 
@@ -885,14 +899,14 @@ public class HtmlExporter extends WikiExporter {
         if (flgShow) {
             String styleClasses = "";
             if (data != null && data.length() > 0) {
-                styleClasses = "node-block-" + dataName + "-set";
+                styleClasses = "yaio-pj-node-block-" + dataName + "-set";
 //                data = data.replaceAll(" ", "&nbsp;");
             } else {
-                styleClasses = "node-block-" + dataName + "-empty";
+                styleClasses = "yaio-pj-node-block-" + dataName + "-empty";
                 data = "&nbsp;";
             }
             res = "<div id='node_" + curNode.getSysUID() +  "_" + dataName + "' "
-                + " class='node-data-block node-block-" + dataName + " " + styleClasses + "'>"
+                + " class='yaio-pj-node-data-block yaio-pj-node-block-" + dataName + " " + styleClasses + "'>"
                 + data + "</div>";
         }
         return res;
@@ -910,10 +924,11 @@ public class HtmlExporter extends WikiExporter {
         String command = curNode.getDocLayoutTagCommand();
         if (command == null || (!(command.length() > 0))) {
             // kein Tag definiert (Standard-Tags)
-            command = CONST_LAYOUT_TAG_P;
+//            command = CONST_LAYOUT_TAG_P;
+            command = "";
             if (curNode.getChildNodes().size() > 0) {
                 // falls Kindselemente: Ue
-                command = CONST_LAYOUT_TAG_UE;
+//                command = CONST_LAYOUT_TAG_UE;
             }
         }
         return command;

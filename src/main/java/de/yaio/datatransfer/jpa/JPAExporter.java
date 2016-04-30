@@ -13,9 +13,6 @@
  */
 package de.yaio.datatransfer.jpa;
 
-import org.apache.log4j.Logger;
-import org.springframework.transaction.annotation.Transactional;
-
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.dbservice.BaseNodeDBServiceImpl;
 import de.yaio.core.node.BaseNode;
@@ -23,6 +20,8 @@ import de.yaio.core.nodeservice.BaseNodeService;
 import de.yaio.core.nodeservice.NodeService;
 import de.yaio.datatransfer.exporter.ExporterImpl;
 import de.yaio.datatransfer.exporter.OutputOptions;
+import org.apache.log4j.Logger;
+import org.springframework.transaction.annotation.Transactional;
 
 /** 
  * export of Nodes to JPA
@@ -65,7 +64,7 @@ public class JPAExporter extends ExporterImpl {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("recalc children for:" + masterNode.getNameForLogger());
         }
-        masterNode.recalcData(BaseNodeService.CONST_RECURSE_DIRECTION_CHILDREN);
+        masterNode.recalcData(BaseNodeService.RecalcRecurseDirection.CHILDREN);
 
         // iterate the new children, look for them and delete them in db
         for (BaseNode newChildNode : masterNode.getChildNodes()) {
@@ -84,6 +83,9 @@ public class JPAExporter extends ExporterImpl {
         // look for this masternode in DB
         BaseNode masterDbNode = BaseNode.findBaseNode(masterNode.getSysUID());
         if (masterDbNode != null) {
+            if (LOGGER.isInfoEnabled()) {
+                LOGGER.info("copy children to existing master:" + masterNode.getNameForLogger());
+            }
             // read masternode with all children
             masterDbNode.initChildNodesFromDB(0);
             
@@ -93,6 +95,7 @@ public class JPAExporter extends ExporterImpl {
                     LOGGER.debug("add newchildren for existing master:" + masterNode.getNameForLogger() 
                                     + " child:" + newChildNode.getNameForLogger());
                 }
+                LOGGER.info("save new master for:" + masterNode.getNameForLogger());
                 // add to masterNode
                 newChildNode.setParentNode(masterDbNode);
                 
@@ -108,8 +111,8 @@ public class JPAExporter extends ExporterImpl {
             BaseNodeDBServiceImpl.getInstance().updateMeAndMyParents(masterDbNode);
             
         } else {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("save new master for:" + masterNode.getNameForLogger());
+            if (LOGGER.isInfoEnabled()) {
+                LOGGER.info("save new master for:" + masterNode.getNameForLogger());
             }
             // create masterDBNode and persist children
             masterNode.persist();

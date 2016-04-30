@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 echo off
 # <h4>FeatureDomain:</h4>
 #     Collaboration
@@ -32,6 +33,10 @@ ${CMD}
 # start webdriver
 CMD="${YAIOBASEPATH}../node_modules/.bin/webdriver-manager start"
 echo "start webdriver ${CMD}"
+${CMD} &
+
+CMD="java ${JAVAOPTIONS} -cp ${CP} ${PROG_FLYWAY} ${FLYWAYCFGFILE}"
+echo "run-flyway: ${CMD}"
 ${CMD} &
 
 # add --debug option to see the startprocess of spring-boot

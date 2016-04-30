@@ -13,11 +13,6 @@
  */
 package de.yaio.extension.datatransfer.ical;
 
-import java.util.List;
-
-import org.apache.commons.collections4.MapUtils;
-import org.apache.log4j.Logger;
-
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.dbservice.BaseNodeDBService;
 import de.yaio.core.node.BaseNode;
@@ -28,6 +23,10 @@ import de.yaio.datatransfer.exporter.OutputOptions;
 import de.yaio.datatransfer.exporter.OutputOptionsImpl;
 import de.yaio.datatransfer.exporter.formatter.FormatterImpl;
 import de.yaio.utils.Calculator;
+import org.apache.commons.collections4.MapUtils;
+import org.apache.log4j.Logger;
+
+import java.util.List;
 
 /** 
  * export of Nodes as ICal from database
@@ -106,7 +105,7 @@ public class ICalDBExporter extends ICalExporter {
             oOptions.setStrClassFilter("EventNode,TaskNode");
         }
         BaseNodeDBService dbService = parentNode.getBaseNodeDBService();
-        List<BaseNode> matchingNodes = dbService.findExtendedSearchBaseNodeEntries(null, oOptions, null, 0, 99999);
+        List<BaseNode> matchingNodes = dbService.findExtendedSearchBaseNodeEntries(null, parentNode.getSysUID(), oOptions, null, 0, 99999);
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("node:" + parentNode.getWorkingId() 
                 + " iterate matching nodes for search:" + matchingNodes.size());

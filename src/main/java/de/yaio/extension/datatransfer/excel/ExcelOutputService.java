@@ -14,13 +14,12 @@
 package de.yaio.extension.datatransfer.excel;
 
 
+import de.yaio.utils.ExcelService;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
-
-import de.yaio.utils.ExcelService;
 
 
 public class ExcelOutputService extends ExcelService {
