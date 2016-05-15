@@ -50,7 +50,7 @@ public abstract class TriggeredDataDomainRecalcImpl implements TriggeredDataDoma
             query.setFirstResult(0);
             query.setMaxResults(500);
             List<BaseNode> results = query.getResultList();
-            LOGGER.info("got results:" + results.size() + " for query: do ierate nodes");
+            LOGGER.info("got results:" + results.size() + " for query: do iterate nodes");
             
             // iterate all node
             for (BaseNode node : results) {
@@ -62,6 +62,10 @@ public abstract class TriggeredDataDomainRecalcImpl implements TriggeredDataDoma
                 flgAllDone = true;
             }
         }
+    }
+
+    protected String createSort() throws Exception {
+        return "order by ebene desc";
     }
 
     protected TypedQuery<?> createQuery() throws Exception {
@@ -80,11 +84,11 @@ public abstract class TriggeredDataDomainRecalcImpl implements TriggeredDataDoma
         }
 
         // create sort
-        String sort = "";
+        String sort = this.createSort();
 
         // setup select
         String select = "SELECT o FROM BaseNode o"
-                        + filter;
+                        + filter + " " + sort;
         LOGGER.info(select);
 
         // create query
