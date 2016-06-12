@@ -19,6 +19,8 @@ import de.yaio.core.node.TaskNode;
 import de.yaio.core.nodeservice.BaseNodeService;
 import de.yaio.core.nodeservice.NodeService;
 import de.yaio.core.nodeservice.TaskNodeService;
+import de.yaio.utils.db.DBFilter;
+import de.yaio.utils.db.DBFilterFactory;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -38,35 +40,6 @@ import java.util.*;
  * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class BaseNodeDBServiceImpl implements BaseNodeDBService {
-    protected static final Map<String, String> CONST_AVAILIABLE_SORTS = new HashMap<String, String>();
-    static {
-        CONST_AVAILIABLE_SORTS.put("default", "");
-        CONST_AVAILIABLE_SORTS.put("createdUp", sortNullBehind("sysCreateDate", "asc"));
-        CONST_AVAILIABLE_SORTS.put("createdDown", sortNullBehind("sysCreateDate", "desc"));
-        CONST_AVAILIABLE_SORTS.put("istEndeUp", sortNullBehind("istChildrenSumEnde", "asc"));
-        CONST_AVAILIABLE_SORTS.put("istEndeDown", sortNullBehind("istChildrenSumEnde", "desc"));
-        CONST_AVAILIABLE_SORTS.put("istStartUp", sortNullBehind("istChildrenSumStart", "asc"));
-        CONST_AVAILIABLE_SORTS.put("istStartDown", sortNullBehind("istChildrenSumStart", "desc"));
-        CONST_AVAILIABLE_SORTS.put("lastChangeUp", sortNullBehind("sysChangeDate", "asc"));
-        CONST_AVAILIABLE_SORTS.put("lastChangeDown", sortNullBehind("sysChangeDate", "desc"));
-        CONST_AVAILIABLE_SORTS.put("nameUp", "name asc");
-        CONST_AVAILIABLE_SORTS.put("nameDown", "name desc");
-        CONST_AVAILIABLE_SORTS.put("nodeNumberUp", "metaNodePraefix asc, metaNodeNummer asc");
-        CONST_AVAILIABLE_SORTS.put("nodeNumberDown", "metaNodePraefix desc, metaNodeNummer desc");
-        CONST_AVAILIABLE_SORTS.put("planEndeUp", sortNullBehind("planEnde", "asc"));
-        CONST_AVAILIABLE_SORTS.put("planEndeDown", sortNullBehind("planEnde", "desc"));
-        CONST_AVAILIABLE_SORTS.put("planStartUp", sortNullBehind("planStart", "asc"));
-        CONST_AVAILIABLE_SORTS.put("planStartDown", sortNullBehind("planStart", "desc"));
-        CONST_AVAILIABLE_SORTS.put("planChildrenSumEndeUp", sortNullBehind("planChildrenSumEnde", "asc"));
-        CONST_AVAILIABLE_SORTS.put("planChildrenSumEndeDown", sortNullBehind("planChildrenSumEnde", "desc"));
-        CONST_AVAILIABLE_SORTS.put("planChildrenSumStartUp", sortNullBehind("planChildrenSumStart", "asc"));
-        CONST_AVAILIABLE_SORTS.put("planChildrenSumStartDown", sortNullBehind("planChildrenSumStart", "desc"));
-        CONST_AVAILIABLE_SORTS.put("typeUp", "type asc");
-        CONST_AVAILIABLE_SORTS.put("typeDown", "type desc");
-        CONST_AVAILIABLE_SORTS.put("workflowStateUp", "workflowState asc");
-        CONST_AVAILIABLE_SORTS.put("workflowStateDown", "workflowState desc");
-    }
-    
     protected static BaseNodeDBService instance = new BaseNodeDBServiceImpl();
     
     // Logger
@@ -128,28 +101,9 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
 
     @SuppressWarnings("unchecked")
     @Override
-    public long countFulltextBaseNodes(final String fulltext) {
-        TypedQuery<Long> query = (TypedQuery<Long>) this.createFulltextQuery(true, fulltext, null);
-        return query.getSingleResult();
-    }
-    
-    
-    @SuppressWarnings("unchecked")
-    @Override
-    public List<BaseNode> findFulltextBaseNodeEntries(final String fulltext, final String sortConfig,
-                    final int firstResult, final int maxResults) {
-        TypedQuery<BaseNode> query = (TypedQuery<BaseNode>) this.createFulltextQuery(false, fulltext, sortConfig);
-        query.setFirstResult(firstResult);
-        query.setMaxResults(maxResults);
-        
-        return query.getResultList();
-    }
-    
-    @SuppressWarnings("unchecked")
-    @Override
     public long countExtendedSearchBaseNodes(final String fulltext, final String rootSysUID, final SearchOptions searchOptions) {
         TypedQuery<Long> query = 
-                        (TypedQuery<Long>) this.createExtendedSearchQuery(true, fulltext, rootSysUID, searchOptions, null);
+                        (TypedQuery<Long>) BaseNodeQueryFactory.createExtendedSearchQuery(true, fulltext, rootSysUID, searchOptions, null);
         return query.getSingleResult();
     }
     
@@ -158,7 +112,7 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
     @Override
     public List<BaseNode> findExtendedSearchBaseNodeEntries(final String fulltext, final String rootSysUID, final SearchOptions searchOptions,
                     final String sortConfig, final int firstResult, final int maxResults) {
-        TypedQuery<BaseNode> query = (TypedQuery<BaseNode>) this.createExtendedSearchQuery(
+        TypedQuery<BaseNode> query = (TypedQuery<BaseNode>) BaseNodeQueryFactory.createExtendedSearchQuery(
                         false, fulltext, rootSysUID, searchOptions, sortConfig);
         query.setFirstResult(firstResult);
         query.setMaxResults(maxResults);
@@ -281,282 +235,5 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
             // remove this child
             childNode.remove();
         }
-    }
-
-
-    protected List<DBFilter> createDateFilter(final String filterName, final String fieldName, final Date value, final String command) {
-        List<DBFilter> dbFilters = new ArrayList<>();
-        if (value != null) {
-            String sql = fieldName + " " + command + " :createDateFilter" + filterName;
-            List<DBFilter.Parameter> parameters = new ArrayList<>();
-            parameters.add(new DBFilter.Parameter("createDateFilter"  + filterName, value));
-            dbFilters.add(new DBFilter("(" + sql + ")", parameters));
-        }
-        return dbFilters;
-    }
-
-    protected List<DBFilter> createIsNullFilter(final String filterName, final String fieldName, final String value) {
-        List<DBFilter> dbFilters = new ArrayList<>();
-        if ("true".equalsIgnoreCase(value)) {
-            String sql = fieldName + " is null ";
-            List<DBFilter.Parameter> parameters = new ArrayList<>();
-            dbFilters.add(new DBFilter("(" + sql + ")", parameters));
-        } else if ("false".equalsIgnoreCase(value)) {
-            String sql = fieldName + " is not null ";
-            List<DBFilter.Parameter> parameters = new ArrayList<>();
-            dbFilters.add(new DBFilter("(" + sql + ")", parameters));
-        }
-
-    return dbFilters;
-    }
-
-    protected List<DBFilter> createMapStringContainsFilter(final String fieldName, final Set<String> values) {
-        int idx = 0;
-        List<DBFilter> dbFilters = new ArrayList<DBFilter>();
-        if (values != null) {
-            List<String> sqlList = new ArrayList<String>();
-            List<DBFilter.Parameter> parameters = new ArrayList<DBFilter.Parameter>();
-            for (String value : values) {
-                sqlList.add("(" + "lower(" + fieldName + ") like lower(:mapStringContainsFilter" + fieldName + idx + ")" + ")");
-                parameters.add(new DBFilter.Parameter("mapStringContainsFilter" + fieldName + idx, "%"+ value + "%"));
-                idx++;
-            }
-            dbFilters.add(new DBFilter("(" + StringUtils.join(sqlList, " or ") + ")", parameters));
-        }
-        return dbFilters;
-    }
-
-    protected List<DBFilter> createMapStringFilter(final String fieldName, final Set<String> values) {
-        int idx = 0;
-        List<DBFilter> dbFilters = new ArrayList<DBFilter>();
-        if (values != null) {
-            List<String> sqlList = new ArrayList<String>();
-            List<DBFilter.Parameter> parameters = new ArrayList<DBFilter.Parameter>();
-            for (String value : values) {
-                sqlList.add("(" + "lower(" + fieldName + ") = lower(:mapStringFilter" + fieldName + idx + ")" + ")");
-                parameters.add(new DBFilter.Parameter("mapStringFilter" + fieldName + idx, value));
-                idx++;
-            }
-            dbFilters.add(new DBFilter("(" + StringUtils.join(sqlList, " or ") + ")", parameters));
-        }
-        return dbFilters;
-    }
-
-    protected List<DBFilter> createMapIntFilter(final String fieldName, final Set<Integer> values) {
-        int idx = 0;
-        List<DBFilter> dbFilters = new ArrayList<DBFilter>();
-        if (values != null) {
-            List<String> sqlList = new ArrayList<String>();
-            List<DBFilter.Parameter> parameters = new ArrayList<DBFilter.Parameter>();
-            for (Integer value : values) {
-                sqlList.add("(" + fieldName + " = :mapIntFilter" + fieldName + idx + ")");
-                parameters.add(new DBFilter.Parameter("mapIntFilter" + fieldName + idx, value));
-                idx++;
-            }
-            dbFilters.add(new DBFilter("(" + StringUtils.join(sqlList, " or ") + ")", parameters));
-        }
-        return dbFilters;
-    }
-    
-    protected List<DBFilter> createSearchOptionsFilter(final SearchOptions searchOptions) {
-        List<DBFilter> dbFilters = new ArrayList<DBFilter>();
-        if (searchOptions == null) {
-            return dbFilters;
-        }
-
-        // create filters for maps
-        dbFilters.addAll(createMapStringFilter("state", 
-                        searchOptions.getMapStateFilter() != null ? searchOptions.getMapStateFilter().keySet() : null));
-        dbFilters.addAll(createMapStringFilter("dtype", 
-                        searchOptions.getMapClassFilter() != null ? searchOptions.getMapClassFilter().keySet() : null));
-        dbFilters.addAll(createMapStringFilter("type", 
-                        searchOptions.getMapTypeFilter() != null ? searchOptions.getMapTypeFilter().keySet() : null));
-        dbFilters.addAll(createMapStringFilter("meta_node_sub_type",
-                searchOptions.getMapMetaNodeSubTypeFilter() != null ? searchOptions.getMapMetaNodeSubTypeFilter().keySet() : null));
-        dbFilters.addAll(createMapStringContainsFilter("meta_node_type_tags",
-                searchOptions.getMapMetaNodeTypeTagsFilter() != null ? searchOptions.getMapMetaNodeTypeTagsFilter().keySet() : null));
-
-        // create filter for wfstate (convert enum to integer)
-        Map<String, WorkflowState> wfStateMap = searchOptions.getMapWorkflowStateFilter();
-        if (MapUtils.isNotEmpty(wfStateMap)) {
-            Set<Integer>wfStateValues = new HashSet<Integer>();
-            for (WorkflowState state : wfStateMap.values()) {
-                wfStateValues.add(state.getValue());
-            }
-            dbFilters.addAll(createMapIntFilter("workflow_state", wfStateValues));
-        }
-        
-        // create filter for ebene
-        String sql = "(ebene <= :ltmaxEbene)";
-        List<DBFilter.Parameter> parameters = new ArrayList<DBFilter.Parameter>();
-        parameters.add(new DBFilter.Parameter("ltmaxEbene", new Integer(searchOptions.getMaxEbene())));
-        dbFilters.add(new DBFilter(sql, parameters));
-
-        // create datefilter
-        dbFilters.addAll(createIsNullFilter("istStartIsNull", "ist_start", searchOptions.getIstStartIsNull()));
-        dbFilters.addAll(createIsNullFilter("istEndeIsNull", "ist_ende", searchOptions.getIstEndeIsNull()));
-        dbFilters.addAll(createIsNullFilter("planStartIsNull", "plan_start", searchOptions.getPlanStartIsNull()));
-        dbFilters.addAll(createIsNullFilter("planEndeIsNull", "plan_ende", searchOptions.getPlanEndeIsNull()));
-        dbFilters.addAll(createDateFilter("istStartGE", "ist_start", searchOptions.getIstStartGE(), ">="));
-        dbFilters.addAll(createDateFilter("istStartLE", "ist_start", searchOptions.getIstStartLE(), "<="));
-        dbFilters.addAll(createDateFilter("istEndeGE", "ist_ende", searchOptions.getIstEndeGE(), ">="));
-        dbFilters.addAll(createDateFilter("istEndeLE", "ist_ende", searchOptions.getIstEndeLE(), "<="));
-        dbFilters.addAll(createDateFilter("planStartGE", "plan_start", searchOptions.getPlanStartGE(), ">="));
-        dbFilters.addAll(createDateFilter("planStartLE", "plan_start", searchOptions.getPlanStartLE(), "<="));
-        dbFilters.addAll(createDateFilter("planEndeGE", "plan_ende", searchOptions.getPlanEndeGE(), ">="));
-        dbFilters.addAll(createDateFilter("planEndeLE", "plan_ende", searchOptions.getPlanEndeLE(), "<="));
-
-        return dbFilters;
-    }
-
-    protected List<DBFilter> createFulltextFilter(final String pfulltext) {
-        List<DBFilter> dbFilters = new ArrayList<DBFilter>();
-
-        // tokenize words
-        String[] searchWords = null;
-        if (!StringUtils.isEmpty(pfulltext)) {
-            String fulltext = pfulltext.replace("  ", " ");
-            searchWords = fulltext.split(" ");
-            for (int idx = 0; idx < searchWords.length; idx++) {
-                String sql = "(lower(name) like lower(:fulltext" + idx + ")"
-                                + " or lower(node_desc) like lower(:fulltext" + idx + ")"
-                                + " or lower(sym_link_ref) like lower(:fulltext" + idx + ")"
-                                + " or lower(sym_link_name) like lower(:fulltext" + idx + ")"
-                                + " or lower(res_loc_name) like lower(:fulltext" + idx + ")"
-                                + " or lower(res_loc_ref) like lower(:fulltext" + idx + ")"
-                                + ")";
-                List<DBFilter.Parameter> parameters = new ArrayList<DBFilter.Parameter>();
-                parameters.add(new DBFilter.Parameter("fulltext" + idx, "%" + searchWords[idx] + "%"));
-                dbFilters.add(new DBFilter(sql, parameters));
-            }
-        }
-        return dbFilters;
-    }
-    
-    protected List<DBFilter> createNotNodePraefixFilter(final String pfulltext) {
-        List<DBFilter> dbFilters = new ArrayList<DBFilter>();
-
-        // tokenize words
-        String[] searchWords = null;
-        if (!StringUtils.isEmpty(pfulltext)) {
-            String fulltext = pfulltext.replace("  ", " ");
-            searchWords = fulltext.split(" ");
-            for (int idx = 0; idx < searchWords.length; idx++) {
-                String sql = "not (lower(meta_node_praefix) like lower(:notnodepraefix" + idx + ")"
-                                + ")";
-                List<DBFilter.Parameter> parameters = new ArrayList<DBFilter.Parameter>();
-                parameters.add(new DBFilter.Parameter("notnodepraefix" + idx, searchWords[idx]));
-                dbFilters.add(new DBFilter(sql, parameters));
-            }
-        }
-        return dbFilters;
-    }
-
-    protected List<DBFilter> createConcreteTodosOnlyFilter(final Integer pFlgConcreteTodosOnly) {
-        List<DBFilter> dbFilters = new ArrayList<DBFilter>();
-
-        if (pFlgConcreteTodosOnly != null && pFlgConcreteTodosOnly > 0) {
-            String sql = "planAufwand > 0";
-            List<DBFilter.Parameter> parameters = new ArrayList<DBFilter.Parameter>();
-            dbFilters.add(new DBFilter(sql, parameters));
-        }
-        return dbFilters;
-    }
-
-    protected List<DBFilter> createRootSysUIDFilter(final String pRootSysUID) {
-        List<DBFilter> dbFilters = new ArrayList<DBFilter>();
-
-        if (!StringUtils.isEmpty(pRootSysUID)) {
-            String sql = "cachedParentHierarchy like :cachedParentHierarchy";
-            List<DBFilter.Parameter> parameters = new ArrayList<DBFilter.Parameter>();
-            parameters.add(new DBFilter.Parameter("cachedParentHierarchy", "%,"+ pRootSysUID + ",%"));
-            dbFilters.add(new DBFilter(sql, parameters));
-        }
-        return dbFilters;
-    }
-
-    protected String createSort(final String sortConfig) {
-        // setup sort
-        String sort = "";
-        if (sortConfig != null) {
-            sort = CONST_AVAILIABLE_SORTS.get(sortConfig);
-            if (sort != null) {
-                if (sort.length() > 0) {
-                    sort = sort + ", ";
-                }
-            } else {
-                throw new IllegalArgumentException("Unknown sort:" + sortConfig);
-            }
-        }
-        // setup order
-        String order = "asc";
-        
-        return " order by " + sort
-            + " statWorkflowTodoCount asc"
-            + ", ebene desc"
-            + ", parent_node " + order 
-            + ", sort_pos " + order;
-    }
-
-    protected TypedQuery<?> createFulltextQuery(final boolean flgCount, final String pfulltext, 
-                    final String sortConfig) {
-        return createExtendedSearchQuery(flgCount, pfulltext, null, null, sortConfig);
-    }
-
-    protected TypedQuery<?> createExtendedSearchQuery(final boolean flgCount, final String pfulltext,
-                                                      final String rootSysUID, final SearchOptions searchOptions,
-                                                      final String sortConfig) {
-        // setup class
-        Class<?> resClass = BaseNode.class;
-        if (flgCount) {
-            resClass = Long.class;
-        }
-        
-        // create filter
-        List<DBFilter> dbFilters = new ArrayList<DBFilter>();
-        dbFilters.addAll(createRootSysUIDFilter(rootSysUID));
-        dbFilters.addAll(createFulltextFilter(pfulltext));
-        dbFilters.addAll(createNotNodePraefixFilter(searchOptions.getStrNotNodePraefix()));
-        dbFilters.addAll(createSearchOptionsFilter(searchOptions));
-        dbFilters.addAll(createConcreteTodosOnlyFilter(searchOptions.getFlgConcreteToDosOnly()));
-        String filter = "";
-        if (dbFilters.size() > 0) {
-            List<String>sqlList = new ArrayList<String>();
-            for (DBFilter dbFilter : dbFilters) {
-                sqlList.add(dbFilter.getSql());
-            }
-            filter = " where " + StringUtils.join(sqlList, " and ");
-        }
-
-        // create sort
-        String sort = createSort(sortConfig);
-        
-        // setup select
-        String select = "SELECT o FROM BaseNode o"
-                      + filter
-                      + sort;
-        if (flgCount) {
-            select = "SELECT COUNT(o) FROM BaseNode o"
-                   + filter;
-        }
-        LOGGER.info(select);
-        
-        // create query
-        TypedQuery<?> query = BaseNode.entityManager().createQuery(select, resClass);
-        
-        // add parameters
-        if (dbFilters.size() > 0) {
-            for (DBFilter dbFilter : dbFilters) {
-                for (DBFilter.Parameter parameter : dbFilter.getParameters()) {
-                    query.setParameter(parameter.getName(), parameter.getValue());
-                }
-            }
-        }
-        
-        return query;
-    }
-    
-    protected static String sortNullBehind(final String fieldName, final String order) {
-        return "CASE WHEN " + fieldName + " IS NULL THEN 1 ELSE 0 END, " + fieldName + " " + order;
     }
 }

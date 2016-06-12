@@ -46,25 +46,7 @@ public interface BaseNodeDBService {
      */
     List<BaseNode> findChildNodes(String sysUID);
 
-    /** 
-     * count the basenodes which match fulltext
-     * @param fulltext               fulltext to search in desc and name
-     * @return                       total of matching nodes
-     */
-    long countFulltextBaseNodes(String fulltext);
-    
-    /** 
-     * read the basenodes which match fulltext
-     * @param fulltext               fulltext to search in desc and name
-     * @param sortConfig             use sort
-     * @param firstResult            resultrange for pagination
-     * @param maxResults             resultrange for pagination
-     * @return                       List of matching nodes
-     */
-    List<BaseNode> findFulltextBaseNodeEntries(String fulltext, 
-                    String sortConfig, int firstResult, int maxResults);
-    
-    /** 
+    /**
      * count the basenodes which match fulltext
      * @param fulltext               fulltext to search in desc and name
      * @param rootSysUID             sysUID of the rootElement

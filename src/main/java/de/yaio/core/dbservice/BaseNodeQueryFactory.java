@@ -11,10 +11,10 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package de.yaio.core.datadomainservice;
+package de.yaio.core.dbservice;
 
-import de.yaio.utils.db.DBFilter;
 import de.yaio.core.node.BaseNode;
+import de.yaio.utils.db.DBFilter;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
@@ -23,60 +23,44 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** 
- * baseservice for businesslogic of datadomains
+ * factory to create queries for BaseNode
  * 
- * @FeatureDomain                BusinessLogic
- * @package                      de.yaio.core.dataservice
+ * @FeatureDomain                Persistence
+ * @package                      de.yaio.core.dbservice
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
  * @category                     collaboration
  * @copyright                    Copyright (c) 2014, Michael Schreiner
  * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-public abstract class TriggeredDataDomainRecalcImpl implements TriggeredDataDomainRecalc {
-
+public class BaseNodeQueryFactory {
     // Logger
     private static final Logger LOGGER =
-            Logger.getLogger(TriggeredDataDomainRecalcImpl.class);
+            Logger.getLogger(BaseNodeQueryFactory.class);
 
-    @Override
-    public void doSearchAndTrigger() throws Exception {
-        int maxPerRun = 500;
-
-        // repeat until no more entries available
-        boolean flgAllDone = false;
-        while (!flgAllDone) {
-            // create query and read
-            TypedQuery<BaseNode> query = (TypedQuery<BaseNode>)this.createQuery();
-            query.setFirstResult(0);
-            query.setMaxResults(500);
-            List<BaseNode> results = query.getResultList();
-            LOGGER.info("got results:" + results.size() + " for query: do iterate nodes");
-            
-            // iterate all node
-            for (BaseNode node : results) {
-                this.doRecalcWhenTriggered(node);
-            }
-            
-            // stop if no more entries available
-            if (results.size() < maxPerRun) {
-                flgAllDone = true;
-            }
-        }
+    public static TypedQuery<?> createFulltextQuery(final boolean flgCount, final String pfulltext,
+                                                final String sortConfig) {
+        return createExtendedSearchQuery(flgCount, pfulltext, null, null, sortConfig);
     }
 
-    protected String createSort() throws Exception {
-        return "order by ebene desc";
-    }
-
-    protected TypedQuery<?> createQuery() throws Exception {
+    public static TypedQuery<?> createExtendedSearchQuery(final boolean flgCount, final String pfulltext,
+                                                      final String rootSysUID, final SearchOptions searchOptions,
+                                                      final String sortConfig) {
         // setup class
         Class<?> resClass = BaseNode.class;
+        if (flgCount) {
+            resClass = Long.class;
+        }
 
         // create filter
-        List<DBFilter> dbFilters = this.getDBTriggerFilter();
+        List<DBFilter> dbFilters = new ArrayList<>();
+        dbFilters.addAll(BaseNodeFilterFactory.createRootSysUIDFilter(rootSysUID));
+        dbFilters.addAll(BaseNodeFilterFactory.createFulltextFilter(pfulltext));
+        dbFilters.addAll(BaseNodeFilterFactory.createNotNodePraefixFilter(searchOptions.getStrNotNodePraefix()));
+        dbFilters.addAll(BaseNodeFilterFactory.createSearchOptionsFilter(searchOptions));
+        dbFilters.addAll(BaseNodeFilterFactory.createConcreteTodosOnlyFilter(searchOptions.getFlgConcreteToDosOnly()));
         String filter = "";
         if (dbFilters.size() > 0) {
-            List<String>sqlList = new ArrayList<String>();
+            List<String>sqlList = new ArrayList<>();
             for (DBFilter dbFilter : dbFilters) {
                 sqlList.add(dbFilter.getSql());
             }
@@ -84,11 +68,16 @@ public abstract class TriggeredDataDomainRecalcImpl implements TriggeredDataDoma
         }
 
         // create sort
-        String sort = this.createSort();
+        String sort = BaseNodeSortFactory.createSort(sortConfig);
 
         // setup select
         String select = "SELECT o FROM BaseNode o"
-                        + filter + " " + sort;
+                + filter
+                + sort;
+        if (flgCount) {
+            select = "SELECT COUNT(o) FROM BaseNode o"
+                    + filter;
+        }
         LOGGER.info(select);
 
         // create query

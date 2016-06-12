@@ -16,7 +16,7 @@ package de.yaio.core.datadomainservice;
 import de.yaio.core.datadomain.BaseWorkflowData;
 import de.yaio.core.datadomain.DataDomain;
 import de.yaio.core.datadomain.WorkflowState;
-import de.yaio.core.dbservice.DBFilter;
+import de.yaio.utils.db.DBFilter;
 import de.yaio.core.node.BaseNode;
 import de.yaio.core.nodeservice.NodeService;
 import org.apache.log4j.Logger;

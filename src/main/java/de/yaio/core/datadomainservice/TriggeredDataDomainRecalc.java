@@ -14,7 +14,7 @@
 package de.yaio.core.datadomainservice;
 
 import de.yaio.core.datadomain.DataDomain;
-import de.yaio.core.dbservice.DBFilter;
+import de.yaio.utils.db.DBFilter;
 
 import java.util.List;
 

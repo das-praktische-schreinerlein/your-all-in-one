@@ -21,7 +21,7 @@ import de.yaio.core.datadomain.ResIndexData;
 import de.yaio.core.datadomain.ResIndexData.IndexWorkflowState;
 import de.yaio.core.datadomain.ResLocData;
 import de.yaio.core.datadomainservice.TriggeredDataDomainRecalcImpl;
-import de.yaio.core.dbservice.DBFilter;
+import de.yaio.utils.db.DBFilter;
 import de.yaio.core.node.UrlResNode;
 import de.yaio.core.nodeservice.UrlResNodeService;
 import de.yaio.extension.dms.utils.DMSClient;
