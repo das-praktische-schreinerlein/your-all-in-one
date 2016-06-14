@@ -22,7 +22,7 @@ import java.util.List;
  * structure of the basic json-response
  * 
  * @FeatureDomain                DatenExport Praesentation
- * @package                      de.yaio.extension.datatransfer.wiki
+ * @package                      de.yaio.extension.datatransfer.json
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
  * @category                     collaboration
  * @copyright                    Copyright (c) 2014, Michael Schreiner
