@@ -91,7 +91,7 @@ public class BaseNodeQueryFactory {
     }
 
     /**
-     * create query to calc the effort (planned or ist) for all tasks matching the filter between start/end and return
+     * create query to calc the effort (planned or ist) of tasks matching the filter between start/end and return
      * for every day a record with date, count of tasks running/planned and sum of effort per day on this date
      * @param type                   type of effort to read IST/PLAN
      * @param start                  start of the interval to calc
@@ -172,7 +172,7 @@ public class BaseNodeQueryFactory {
     }
 
     /**
-     * create a query to read count of planned/real tasks for all tasks matching the filter between start/end and return
+     * create a query to read count of planned/real tasks matching the filter between start/end and return
      * a record with date and count of tasks on this date
      * @param type                   type of event to read IST/PLAN
      * @param start                  start of the interval to calc
@@ -216,7 +216,7 @@ public class BaseNodeQueryFactory {
 
 
     /**
-     * read count of planned/real start/end for all tasks matching the filter between start/end and return
+     * read count of planned/real start/end tasks matching the filter between start/end and return
      * a record with date and count of tasks on this date
      * @param type                   type of event to read IST/PLAN
      * @param timeType               type of event to read START/END
