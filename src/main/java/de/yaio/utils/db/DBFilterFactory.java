@@ -14,6 +14,7 @@
 package de.yaio.utils.db;
 
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.Query;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,6 +32,15 @@ import java.util.Set;
  * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class DBFilterFactory {
+
+    /**
+     * create a date-filter of form "{fieldName} {command} :createDateFilter{filterName}"
+     * @param filterName            name of the filter as suffix for parameters
+     * @param fieldName             name of the dbfield to filter
+     * @param value                 value of the dbfilter (used as parameter)
+     * @param command               command to use (=, <, >, <=, >=, like)
+     * @return                      a dbfilter
+     */
     public static List<DBFilter> createDateFilter(final String filterName, final String fieldName, final Date value, final String command) {
         List<DBFilter> dbFilters = new ArrayList<>();
         if (value != null) {
@@ -42,6 +52,13 @@ public class DBFilterFactory {
         return dbFilters;
     }
 
+    /**
+     * create a isnull-filter of form "{fieldName} is null" if value=true or "{fieldName} is not null" if value=false
+     * @param filterName            name of the filter as suffix for parameters
+     * @param fieldName             name of the dbfield to filter
+     * @param value                 value of the dbfilter (true, false)
+     * @return                      a dbfilter
+     */
     public static List<DBFilter> createIsNullFilter(final String filterName, final String fieldName, final String value) {
         List<DBFilter> dbFilters = new ArrayList<>();
         if ("true".equalsIgnoreCase(value)) {
@@ -57,6 +74,12 @@ public class DBFilterFactory {
         return dbFilters;
     }
 
+    /**
+     * create or-joined string-filters for every value "lower({fieldName}) like lower(:mapStringContainsFilter{fieldName}{idx})"
+     * @param fieldName             name of the dbfield to filter
+     * @param values                value of the dbfilter (used as parameter)
+     * @return                      a dbfilter
+     */
     public static List<DBFilter> createMapStringContainsFilter(final String fieldName, final Set<String> values) {
         int idx = 0;
         List<DBFilter> dbFilters = new ArrayList<DBFilter>();
@@ -73,6 +96,12 @@ public class DBFilterFactory {
         return dbFilters;
     }
 
+    /**
+     * create or-joined string-filters for every value "lower({fieldName}) = lower(:mapStringFilter{fieldName}{idx})"
+     * @param fieldName             name of the dbfield to filter
+     * @param values                value of the dbfilter (used as parameter)
+     * @return                      a dbfilter
+     */
     public static List<DBFilter> createMapStringFilter(final String fieldName, final Set<String> values) {
         int idx = 0;
         List<DBFilter> dbFilters = new ArrayList<DBFilter>();
@@ -89,6 +118,12 @@ public class DBFilterFactory {
         return dbFilters;
     }
 
+    /**
+     * create or-joined int-filters for every value "{fieldName} = :mapIntFilter{fieldName}{idx}"
+     * @param fieldName             name of the dbfield to filter
+     * @param values                value of the dbfilter (used as parameter)
+     * @return                      a dbfilter
+     */
     public static List<DBFilter> createMapIntFilter(final String fieldName, final Set<Integer> values) {
         int idx = 0;
         List<DBFilter> dbFilters = new ArrayList<DBFilter>();
@@ -104,5 +139,4 @@ public class DBFilterFactory {
         }
         return dbFilters;
     }
-
 }
