@@ -82,7 +82,7 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
                 parentHierarchy = updateMeAndMyParents(node.getParentNode());
             } else {
                 // i am root -> create hierarchylist
-                parentHierarchy = new ArrayList<BaseNode>();
+                parentHierarchy = new ArrayList<>();
             }
             
             // add me to hierarchylist
@@ -128,6 +128,34 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
                         + " order by sort_pos asc", 
                         BaseNode.class
                         ).setParameter("symLinkRef", symLinkRef).getResultList();
+    }
+
+    @Override
+    public List<List> calcAufwandPerDayStatistic(final BaseNodeQueryFactory.IstPlanPerDayStatisticQueryType type,
+                                           final Date start, final Date end, final String pfulltext,
+                                           final String rootSysUID, final SearchOptions searchOptions) {
+        return BaseNodeQueryFactory.createAufwandPerDayStatisticQuery(type, start, end, pfulltext, rootSysUID, searchOptions).getResultList();
+    }
+
+    @Override
+    public List<List> calcCountPerDayStatistic(final BaseNodeQueryFactory.IstPlanPerDayStatisticQueryType type,
+                                         final BaseNodeQueryFactory.StartEndPerDayStatisticQueryType timeType,
+                                         final Date start, final Date end, final String pfulltext,
+                                         final String rootSysUID, final SearchOptions searchOptions) {
+        return BaseNodeQueryFactory.createCountPerDayStatisticQuery(type, timeType, start, end, pfulltext, rootSysUID, searchOptions).getResultList();
+    }
+
+    @Override
+    public List<List> calcDonePerDayStatistic(final Date start, final Date end, final String pfulltext,
+                                        final String rootSysUID, final SearchOptions searchOptions) {
+        return BaseNodeQueryFactory.createDonePerDayStatisticQuery(start, end, pfulltext, rootSysUID, searchOptions).getResultList();
+    }
+
+    @Override
+    public List<List> calcRunningPerDayStatistic(final BaseNodeQueryFactory.IstPlanPerDayStatisticQueryType type,
+                                           final Date start, final Date end, final String pfulltext,
+                                           final String rootSysUID, final SearchOptions searchOptions) {
+        return BaseNodeQueryFactory.createRunningPerDayStatisticQuery(type, start, end, pfulltext, rootSysUID, searchOptions).getResultList();
     }
 
     @Override

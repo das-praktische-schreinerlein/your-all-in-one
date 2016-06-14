@@ -32,6 +32,35 @@ import java.util.*;
  * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class BaseNodeFilterFactory {
+
+    /**
+     * generate common dbfilters for the parameters
+     * @param pfulltext              filter: optional fulltext the tasks must contain
+     * @param rootSysUID             filter: SysUID of the root element whose children have to read
+     * @param searchOptions          filter: optional searchOptions
+     * @return                       list of dbfilters created
+     */
+    public static List<DBFilter> createCommonFilter(final String pfulltext,
+                              final String rootSysUID, final SearchOptions searchOptions) {
+        // create filter
+        List<DBFilter> dbFilters = new ArrayList<>();
+        dbFilters.addAll(BaseNodeFilterFactory.createRootSysUIDFilter(rootSysUID));
+        dbFilters.addAll(BaseNodeFilterFactory.createFulltextFilter(pfulltext));
+        if (searchOptions == null) {
+            return dbFilters;
+        }
+
+        dbFilters.addAll(BaseNodeFilterFactory.createNotNodePraefixFilter(searchOptions.getStrNotNodePraefix()));
+        dbFilters.addAll(BaseNodeFilterFactory.createSearchOptionsFilter(searchOptions));
+        dbFilters.addAll(BaseNodeFilterFactory.createConcreteTodosOnlyFilter(searchOptions.getFlgConcreteToDosOnly()));
+        return dbFilters;
+    }
+
+    /**
+     * generate dbfilters for the searchOptions
+     * @param searchOptions          filter: optional searchOptions
+     * @return                       list of dbfilters created
+     */
     public static List<DBFilter> createSearchOptionsFilter(final SearchOptions searchOptions) {
         List<DBFilter> dbFilters = new ArrayList<>();
         if (searchOptions == null) {
@@ -83,12 +112,17 @@ public class BaseNodeFilterFactory {
         return dbFilters;
     }
 
+    /**
+     * generate dbfilters for the fulltext-parameter
+     * @param pfulltext              filter: optional fulltext the tasks must contain
+     * @return                       list of dbfilters created
+     */
     public static List<DBFilter> createFulltextFilter(final String pfulltext) {
         List<DBFilter> dbFilters = new ArrayList<>();
 
         // tokenize words
         String[] searchWords;
-        if (!StringUtils.isEmpty(pfulltext)) {
+        if (!StringUtils.isEmpty(pfulltext) && !"DirtyEmptyFulltextPlaceHolder".equals(pfulltext)) {
             String fulltext = pfulltext.replace("  ", " ");
             searchWords = fulltext.split(" ");
             for (int idx = 0; idx < searchWords.length; idx++) {
@@ -107,14 +141,19 @@ public class BaseNodeFilterFactory {
         return dbFilters;
     }
 
-    public static List<DBFilter> createNotNodePraefixFilter(final String pfulltext) {
+    /**
+     * generate common dbfilters for notnodepraefix which must not be used
+     * @param pnotnodepraefix        filter: optional notnodepraefix the meta_node_praefix must not contain
+     * @return                       list of dbfilters created
+     */
+    public static List<DBFilter> createNotNodePraefixFilter(final String pnotnodepraefix) {
         List<DBFilter> dbFilters = new ArrayList<>();
 
         // tokenize words
         String[] searchWords;
-        if (!StringUtils.isEmpty(pfulltext)) {
-            String fulltext = pfulltext.replace("  ", " ");
-            searchWords = fulltext.split(" ");
+        if (!StringUtils.isEmpty(pnotnodepraefix)) {
+            String notnodepraefix = pnotnodepraefix.replace("  ", " ");
+            searchWords = notnodepraefix.split(" ");
             for (int idx = 0; idx < searchWords.length; idx++) {
                 String sql = "not (lower(meta_node_praefix) like lower(:notnodepraefix" + idx + ")"
                         + ")";
@@ -126,22 +165,32 @@ public class BaseNodeFilterFactory {
         return dbFilters;
     }
 
+    /**
+     * generate common dbfilters for tasks that must have a concreteToDo (effort > 0)
+     * @param pFlgConcreteTodosOnly  filter: pFlgConcreteTodosOnly > 0
+     * @return                       list of dbfilters created
+     */
     public static List<DBFilter> createConcreteTodosOnlyFilter(final Integer pFlgConcreteTodosOnly) {
         List<DBFilter> dbFilters = new ArrayList<>();
 
         if (pFlgConcreteTodosOnly != null && pFlgConcreteTodosOnly > 0) {
-            String sql = "planAufwand > 0";
+            String sql = "plan_Aufwand > 0";
             List<DBFilter.Parameter> parameters = new ArrayList<>();
             dbFilters.add(new DBFilter(sql, parameters));
         }
         return dbFilters;
     }
 
+    /**
+     * generate common dbfilters for tasks that are children of pRootSysUID (cachedParentHierarchy must contain pRootSysUID)
+     * @param pRootSysUID            filter: SysUID of the root element whose children have to read
+     * @return                       list of dbfilters created
+     */
     public static List<DBFilter> createRootSysUIDFilter(final String pRootSysUID) {
         List<DBFilter> dbFilters = new ArrayList<>();
 
         if (!StringUtils.isEmpty(pRootSysUID)) {
-            String sql = "cachedParentHierarchy like :cachedParentHierarchy";
+            String sql = "cached_Parent_Hierarchy like :cachedParentHierarchy";
             List<DBFilter.Parameter> parameters = new ArrayList<>();
             parameters.add(new DBFilter.Parameter("cachedParentHierarchy", "%,"+ pRootSysUID + ",%"));
             dbFilters.add(new DBFilter(sql, parameters));

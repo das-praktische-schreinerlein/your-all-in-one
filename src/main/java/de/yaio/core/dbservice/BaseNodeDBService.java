@@ -16,6 +16,7 @@ package de.yaio.core.dbservice;
 import de.yaio.core.node.BaseNode;
 import org.springframework.roo.addon.layers.service.RooService;
 
+import java.util.Date;
 import java.util.List;
 
 /** 
@@ -75,7 +76,70 @@ public interface BaseNodeDBService {
      */
     List<BaseNode> findSymLinkBaseNode(String symLinkRef);
 
-    /** 
+
+    /**
+     * calc the effort (planned or ist) for all tasks matching the filter between start/end and return for every day
+     * a record with date, count of tasks running/planned and sum of effort per day on this date
+     * @param type                   type of effort to read IST/PLAN
+     * @param start                  start of the interval to calc
+     * @param end                    end of the interval to calc
+     * @param pfulltext              filter: optional fulltext the tasks must contain
+     * @param rootSysUID             filter: SysUID of the root element whose children have to read
+     * @param searchOptions          filter: optional searchOptions
+     * @return                       List of List(NR, DATE, TASKCOUNT, EFFORTSUM)
+     */
+    List<List> calcAufwandPerDayStatistic(final BaseNodeQueryFactory.IstPlanPerDayStatisticQueryType type,
+                                    final Date start, final Date end, final String pfulltext,
+                                    final String rootSysUID, final SearchOptions searchOptions);
+
+
+    /**
+     * read count of planned/real start/end for all tasks matching the filter between start/end and return
+     * a record with date and count of tasks on this date
+     * @param type                   type of event to read IST/PLAN
+     * @param timeType               type of event to read START/END
+     * @param start                  start of the interval to calc
+     * @param end                    end of the interval to calc
+     * @param pfulltext              filter: optional fulltext the tasks must contain
+     * @param rootSysUID             filter: SysUID of the root element whose children have to read
+     * @param searchOptions          filter: optional searchOptions
+     * @return                       List of List(NR, DATE, TASKCOUNT)
+     */
+    List<List> calcCountPerDayStatistic(final BaseNodeQueryFactory.IstPlanPerDayStatisticQueryType type,
+                                  final BaseNodeQueryFactory.StartEndPerDayStatisticQueryType timeType,
+                                  final Date start, final Date end, final String pfulltext,
+                                  final String rootSysUID, final SearchOptions searchOptions);
+
+    /**
+     * read count of tasks done matching the filter between start/end and return
+     * a record with date and count of tasks on this date
+     * @param start                  start of the interval to calc
+     * @param end                    end of the interval to calc
+     * @param pfulltext              filter: optional fulltext the tasks must contain
+     * @param rootSysUID             filter: SysUID of the root element whose children have to read
+     * @param searchOptions          filter: optional searchOptions
+     * @return                       List of List(NR, DATE, TASKCOUNT)
+     */
+    List<List> calcDonePerDayStatistic(final Date start, final Date end, final String pfulltext,
+                                        final String rootSysUID, final SearchOptions searchOptions);
+
+
+    /**
+     * read count of planned/real tasks for all tasks matching the filter between start/end and return
+     * a record with date and count of tasks on this date
+     * @param type                   type of event to read IST/PLAN
+     * @param start                  start of the interval to calc
+     * @param end                    end of the interval to calc
+     * @param pfulltext              filter: optional fulltext the tasks must contain
+     * @param rootSysUID             filter: SysUID of the root element whose children have to read
+     * @param searchOptions          filter: optional searchOptions
+     * @return                       List of List(NR, DATE, TASKCOUNT)
+     */
+    List<List> calcRunningPerDayStatistic(final BaseNodeQueryFactory.IstPlanPerDayStatisticQueryType type,
+                                           final Date start, final Date end, final String pfulltext,
+                                           final String rootSysUID, final SearchOptions searchOptions);
+
+    /**
      * delete all nodes an create a new Masternode
      * @return                       new Masternode
      */
