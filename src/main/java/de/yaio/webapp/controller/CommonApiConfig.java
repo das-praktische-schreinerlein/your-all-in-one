@@ -14,6 +14,7 @@
 package de.yaio.webapp.controller;
 
 import de.yaio.webapp.restcontroller.NodeRestController;
+import de.yaio.webapp.restcontroller.StatisticsController;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -72,4 +73,5 @@ public class CommonApiConfig {
     public String exportApiVersion = ExportController.API_VERSION;
     public String importApiVersion = ExportController.API_VERSION;
     public String restApiVersion = NodeRestController.API_VERSION;
+    public String statisticsApiVersion = StatisticsController.API_VERSION;
 }
