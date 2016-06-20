@@ -13,6 +13,8 @@
  */
 package de.yaio.app;
 
+import de.yaio.core.datadomainservice.NodeNumberService;
+import de.yaio.core.node.BaseNode;
 import de.yaio.jobs.CachedDataRecalcer;
 import de.yaio.jobs.NodeRecalcer;
 import de.yaio.jobs.StatDataRecalcer;
@@ -29,6 +31,9 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class ApplicationStartup implements ApplicationListener<ContextRefreshedEvent> {
+
+    protected static NodeNumberService nodeNumberService;
+    protected static String strPathIdDB;
 
     private static final Logger LOGGER = Logger.getLogger(ApplicationStartup.class);
 
@@ -52,6 +57,8 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
      */
     @Override
     public void onApplicationEvent(final ContextRefreshedEvent event) {
+        initMetaDataService();
+
         if (!StringUtils.isEmpty(onStartupRecalcMasterSysUID)) {
             recalcAllData();
             return;
@@ -64,6 +71,26 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
         }
         if (onStartupRecalcCachedData != null && onStartupRecalcCachedData) {
             recalcCachedData();
+        }
+    }
+
+    /**
+     * init metadataservice on startup
+     */
+    protected void initMetaDataService() {
+        try {
+            // gets NodeNumberService
+            nodeNumberService =
+                    BaseNode.getConfiguredMetaDataService().getNodeNumberService();
+
+            // Id-Datei einlesen
+            strPathIdDB = Configurator.getInstance().getCommandLine().getOptionValue("pathiddb", null);
+            if (strPathIdDB != null) {
+                nodeNumberService.initNextNodeNumbersFromFile(strPathIdDB, false);
+            }
+            LOGGER.info("initMetaDataService done");
+        } catch (Exception ex) {
+            LOGGER.error("ERROR while initMetaDataService on startup", ex);
         }
     }
 

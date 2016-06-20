@@ -81,12 +81,9 @@ import java.util.List;
                 })
 @EnableScheduling
 public class Application {
-    protected static ApplicationContext springApplicationContext;
-    protected static NodeNumberService nodeNumberService;
-    protected static String strPathIdDB;
     private static final Logger LOGGER = Logger.getLogger(Application.class);
-    
-    /** 
+
+    /**
      * Main-method to start the application
      * @param args                   the command line arguments
      */
@@ -120,23 +117,11 @@ public class Application {
             String flyWayRes = YaioFlyway.doFlyway();
             LOGGER.info(flyWayRes);
 
-            // initApplicationContext
-            Configurator.getInstance().getSpringApplicationContext();
-
-            // gets NodeNumberService
-            nodeNumberService = 
-                            BaseNode.getConfiguredMetaDataService().getNodeNumberService();
-            
-            // Id-Datei einlesen
-            strPathIdDB = Configurator.getInstance().getCommandLine().getOptionValue(
-                                            "pathiddb", null);
-            if (strPathIdDB != null) {
-                nodeNumberService.initNextNodeNumbersFromFile(strPathIdDB, false);
-            }
+            Configurator.getInstance().initProperties();
 
             // inform spring about configfile
             List<String> newArgs = new ArrayList<String>(Arrays.asList(args));
-            
+
             // initApp
             LOGGER.info("start application with args:" + newArgs);
             SpringApplication.run(Application.class, newArgs.toArray(new String[0]));
@@ -181,15 +166,7 @@ public class Application {
 
     @PreDestroy
     protected static void cleanUpAfterJob() throws Exception {
-        // Ids speichern
-        LOGGER.info("cleanUpAfterJob start");
-        if (strPathIdDB != null && nodeNumberService != null) {
-            // save to file
-            LOGGER.info("cleanUpAfterJob export nextNodeNumbers to " + strPathIdDB);
-            nodeNumberService.exportNextNodeNumbersToFile(strPathIdDB);
-        }
-
-        // TODO: hack to close HSLDB-connection -> Hibernate doesn't close the 
+        // TODO: hack to close HSLDB-connection -> Hibernate doesn't close the
         //       database and so the content is not written to file
         LOGGER.info("hack: close hsqldb");
         org.hsqldb.DatabaseManager.closeDatabases(0);
