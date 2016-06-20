@@ -53,24 +53,24 @@ rem change CodePage
 CHCP 1252
 
 rem set progs
-set PROG_WP=de.yaio.extension.datatransfer.wiki.JobParseWiki
-set PROG_WN=de.yaio.extension.datatransfer.wiki.JobNodes2Wiki
-set PROG_EX=de.yaio.extension.datatransfer.excel.JobNodes2Excel
-set PROG_EP=de.yaio.extension.datatransfer.excel.JobParseExcel
-set PROG_HN=de.yaio.extension.datatransfer.html.JobNodes2Html
-set PROG_MM=de.yaio.extension.datatransfer.mindmap.JobNodes2MindMap
-set PROG_ICalN=de.yaio.extension.datatransfer.ical.JobNodes2ICal
-set PROG_CSVN=de.yaio.extension.datatransfer.csv.JobNodes2CSV
-set PROG_JSONN=de.yaio.extension.datatransfer.json.JobNodes2JSON
-set PROG_JPAN=de.yaio.extension.datatransfer.jpa.JobNodes2JPA
-set PROG_CALLYAIORESET=de.yaio.jobs.CallYaioReset
-set PROG_CALLYAIORECALC=de.yaio.jobs.CallYaioRecalcNodes
-set PROG_CALLYAIOEXPORT=de.yaio.jobs.CallYaioExport
-set PROG_CALLYAIOIMPORT=de.yaio.jobs.CallYaioImport
-set PROG_APP=de.yaio.app.Application
+set PROG_WP=de.yaio.app.extension.datatransfer.wiki.JobParseWiki
+set PROG_WN=de.yaio.app.extension.datatransfer.wiki.JobNodes2Wiki
+set PROG_EX=de.yaio.app.extension.datatransfer.excel.JobNodes2Excel
+set PROG_EP=de.yaio.app.extension.datatransfer.excel.JobParseExcel
+set PROG_HN=de.yaio.app.extension.datatransfer.html.JobNodes2Html
+set PROG_MM=de.yaio.app.extension.datatransfer.mindmap.JobNodes2MindMap
+set PROG_ICalN=de.yaio.app.extension.datatransfer.ical.JobNodes2ICal
+set PROG_CSVN=de.yaio.app.extension.datatransfer.csv.JobNodes2CSV
+set PROG_JSONN=de.yaio.app.extension.datatransfer.json.JobNodes2JSON
+set PROG_JPAN=de.yaio.app.extension.datatransfer.jpa.JobNodes2JPA
+set PROG_CALLYAIORESET=de.yaio.app.jobs.clients.CallYaioReset
+set PROG_CALLYAIORECALC=de.yaio.app.jobs.clients.CallYaioRecalcNodes
+set PROG_CALLYAIOEXPORT=de.yaio.app.jobs.clients.CallYaioExport
+set PROG_CALLYAIOIMPORT=de.yaio.app.jobs.clients.CallYaioImport
+set PROG_APP=de.yaio.app.webapp.Application
 set PROG_APPPROPAGATOR=de.yitf.app.apppropagator.UpnpAppPropagator
-set PROG_RECALC=de.yaio.jobs.JobRecalcNodes
-set PROG_FLYWAY=de.yaio.jobs.JobYaioFlyway
+set PROG_RECALC=de.yaio.app.jobs.batch.JobRecalcNodes
+set PROG_FLYWAY=de.yaio.app.jobs.batch.JobYaioFlyway
 set PROG_DIFF=
 set PROG_WINMERGE="C:\ProgrammePortable\PortableApps\PortableApps\WinMergePortable\WinMergePortable.exe"
 

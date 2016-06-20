@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 #/!/bin/bash
 echo off
 
@@ -40,24 +41,24 @@ export JAVAOPTIONS="-Xmx768m -Xms128m -Djava.net.preferIPv4Stack=true -Djava.net
 
 
 # set progs
-export PROG_WP=de.yaio.extension.datatransfer.wiki.JobParseWiki
-export PROG_WN=de.yaio.extension.datatransfer.wiki.JobNodes2Wiki
-export PROG_EX=de.yaio.extension.datatransfer.excel.JobNodes2Excel
-export PROG_EP=de.yaio.extension.datatransfer.excel.JobParseExcel
-export PROG_HN=de.yaio.extension.datatransfer.html.JobNodes2Html
-export PROG_MM=de.yaio.extension.datatransfer.mindmap.JobNodes2MindMap
-export PROG_ICalN=de.yaio.extension.datatransfer.ical.JobNodes2ICal
-export PROG_CSVN=de.yaio.extension.datatransfer.csv.JobNodes2CSV
-export PROG_JSONN=de.yaio.extension.datatransfer.json.JobNodes2JSON
-export PROG_JPAN=de.yaio.extension.datatransfer.jpa.JobNodes2JPA
-export PROG_CALLYAIORESET=de.yaio.jobs.CallYaioReset
-export PROG_CALLYAIORECALC=de.yaio.jobs.CallYaioRecalc
-export PROG_CALLYAIOEXPORT=de.yaio.jobs.CallYaioExport
-export PROG_CALLYAIOIMPORT=de.yaio.jobs.CallYaioImport
-export PROG_APP=de.yaio.app.Application
+export PROG_WP=de.yaio.app.extension.datatransfer.wiki.JobParseWiki
+export PROG_WN=de.yaio.app.extension.datatransfer.wiki.JobNodes2Wiki
+export PROG_EX=de.yaio.app.extension.datatransfer.excel.JobNodes2Excel
+export PROG_EP=de.yaio.app.extension.datatransfer.excel.JobParseExcel
+export PROG_HN=de.yaio.app.extension.datatransfer.html.JobNodes2Html
+export PROG_MM=de.yaio.app.extension.datatransfer.mindmap.JobNodes2MindMap
+export PROG_ICalN=de.yaio.app.extension.datatransfer.ical.JobNodes2ICal
+export PROG_CSVN=de.yaio.app.extension.datatransfer.csv.JobNodes2CSV
+export PROG_JSONN=de.yaio.app.extension.datatransfer.json.JobNodes2JSON
+export PROG_JPAN=de.yaio.app.extension.datatransfer.jpa.JobNodes2JPA
+export PROG_CALLYAIORESET=de.yaio.app.jobs.clients.CallYaioReset
+export PROG_CALLYAIORECALC=de.yaio.app.jobs.clients.CallYaioRecalc
+export PROG_CALLYAIOEXPORT=de.yaio.app.jobs.clients.CallYaioExport
+export PROG_CALLYAIOIMPORT=de.yaio.app.jobs.clients.CallYaioImport
+export PROG_APP=de.yaio.app.webapp.Application
 export PROG_APPPROPAGATOR=de.yitf.app.apppropagator.UpnpAppPropagator
-export PROG_RECALC=de.yaio.jobs.JobRecalcNodes
-export PROG_FLYWAY=de.yaio.jobs.JobYaioFlyway
+export PROG_RECALC=de.yaio.app.jobs.batch.JobRecalcNodes
+export PROG_FLYWAY=de.yaio.app.jobs.batch.JobYaioFlyway
 export PROG_DIFF=
 export PROG_WINMERGE="C:/ProgrammePortable/PortableApps/PortableApps/WinMergePortable/WinMergePortable.exe"
 
