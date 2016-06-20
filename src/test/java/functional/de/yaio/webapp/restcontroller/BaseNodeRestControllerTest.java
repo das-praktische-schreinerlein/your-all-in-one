@@ -13,34 +13,29 @@
  */
 package de.yaio.webapp.restcontroller;
 
-import static org.hamcrest.core.Is.is;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.io.IOException;
-import java.nio.charset.Charset;
-
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jayway.jsonpath.JsonPath;
+import de.yaio.BaseTest;
+import de.yaio.app.Configurator;
+import de.yaio.core.datadomainservice.NodeNumberService;
+import de.yaio.core.node.BaseNode;
 import org.apache.log4j.Logger;
 import org.hamcrest.core.IsNull;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jayway.jsonpath.JsonPath;
+import java.io.IOException;
+import java.nio.charset.Charset;
 
-import de.yaio.BaseTest;
-import de.yaio.app.Configurator;
-import de.yaio.core.datadomainservice.NodeNumberService;
-import de.yaio.core.node.BaseNode;
+import static org.hamcrest.core.Is.is;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /** 
  * test: RESTFull webservices
@@ -52,7 +47,6 @@ import de.yaio.core.node.BaseNode;
  * @copyright                    Copyright (c) 2014, Michael Schreiner
  * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-@ContextConfiguration("/META-INF/spring/defaultApplicationContext.xml")
 public abstract class BaseNodeRestControllerTest  extends BaseTest {
     /** masternodeId **/
     public static final String CONST_MASTERNODE_ID = "MasterplanMasternode1";
@@ -70,13 +64,13 @@ public abstract class BaseNodeRestControllerTest  extends BaseTest {
     
     protected BaseNode baseNode;
     protected MockMvc mockMvc;
-    
+
     @Override
     public void setUp() throws Exception {
         // initApplicationContext
         String[] args = new String[2];
         args[0] = "--config";
-        args[1] = "./config/application.properties";
+        args[1] = "./target/test-classes/config/application-test.properties";
         if (Configurator.getInstance().getCmdLineArgs() == null) {
             Configurator.getInstance().getAvailiableCmdLineOptions();
             Configurator.getInstance().setCmdLineArgs(args);

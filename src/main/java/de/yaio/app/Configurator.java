@@ -16,10 +16,8 @@ package de.yaio.app;
 import org.apache.commons.cli.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
-import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -69,12 +67,6 @@ public class Configurator {
                     "yaio.staticdatasource.mastersysuid";
     
 
-    /** property: file location of the spring-application-config **/
-    public static final String CONST_PROPNAME_APPLICATIONCONFIG_PATH = 
-                    "config.spring.applicationconfig.path";
-    protected static final String CONST_DEFAULT_APPLICATIONCONFIG_PATH = 
-                    "/META-INF/spring/applicationContext.xml";
-    
     private static final Logger LOGGER = Logger.getLogger(Configurator.class);
 
     // must be instantiated after LOGGER because it is used in constructor
@@ -338,25 +330,10 @@ public class Configurator {
 
         Properties props = this.initProperties();
 
-        // define the applicationConfigPath
-        String applicationConfigPath = 
-                        props.getProperty(CONST_PROPNAME_APPLICATIONCONFIG_PATH, 
-                                        CONST_DEFAULT_APPLICATIONCONFIG_PATH);
-        
         // init applicationContext
-        try {
-            applicationContext = new FileSystemXmlApplicationContext(applicationConfigPath);
-        } catch (BeansException ex) {
-            // try it from jar
-            try {
-                applicationContext = new ClassPathXmlApplicationContext(applicationConfigPath);
-            } catch (BeansException ex2) {
-                throw new Exception("cant instantiate Application - "
-                                + "read applicationConfigPath: " + applicationConfigPath 
-                                + " Exception1:" + ex
-                                + " Exception2:" + ex2);
-            }
-        }
+        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
+        applicationContext.register(de.yaio.app.SpringConfig.class);
+        applicationContext.refresh();
     }
 
     /* 
