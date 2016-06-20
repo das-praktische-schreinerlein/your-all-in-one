@@ -62,7 +62,7 @@
           ##################
          -->
         <!--  project -->
-        <start-class>de.yaio.rest.Application</start-class>
+        <start-class>de.yaio.app.webapp.Application</start-class>
 
         <!--
           ##################
