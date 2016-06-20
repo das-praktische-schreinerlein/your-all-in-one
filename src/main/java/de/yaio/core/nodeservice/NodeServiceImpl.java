@@ -55,8 +55,8 @@ public abstract class NodeServiceImpl implements NodeService {
                 LOGGER.debug("SKIP: Targetorder < 0 TargetOrder:" 
                         + dataDomainRecalcer.getRecalcTargetOrder()
                         + " Recalcer:" + dataDomainRecalcer.getClass().getName());
-                return;
             }
+            return;
         }
         this.hshDataDomainRecalcer.add(dataDomainRecalcer);
         this.hshDataDomainRecalcerByClass.put(dataDomainRecalcer.getClass(), dataDomainRecalcer);

@@ -28,7 +28,7 @@ import de.yaio.core.datadomain.MetaData;
 public interface MetaDataService {
 
     /** the position in the recalc-order at which the recalcer will run */
-    int CONST_RECALC_ORDER = 1;
+    int CONST_RECALC_ORDER = 5;
 
     /** 
      * inititialize the MetaData-Fields of the node (id, praefix) 

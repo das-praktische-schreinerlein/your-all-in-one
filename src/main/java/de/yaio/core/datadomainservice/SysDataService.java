@@ -28,7 +28,7 @@ import de.yaio.core.datadomain.SysData;
 public interface SysDataService {
     
     /** the position in the recalc-order at which the recalcer will run */
-    int CONST_RECALC_ORDER = DataDomainRecalc.CONST_ORDER_NOOP;
+    int CONST_RECALC_ORDER = 2;
 
     /** 
      * inititialize the SysData-Fields of the node (sysChange, Checksum) - updates memberVariable node.sys*
