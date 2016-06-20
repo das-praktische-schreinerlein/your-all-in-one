@@ -29,7 +29,7 @@ export IMPORT_OPTIONS_JPA="--addnodestosysuid ${MASTERNODEID}"
 # set Path
 export YAIOCONFIGPATH=${BASEPATH}/../config/
 export YAIOSCRIPTPATH=${BASEPATH}/../sbin/
-export YAIORESPATH=${BASEPATH}/../ressources/
+export YAIORESPATH=${BASEPATH}/../resources/
 export YAIOVARPATH=${BASEPATH}/../var/
 export YAIOAPP=${BASEPATH}../target/yaio.jar
 export APPPROPAGATOR=${BASEPATH}../sbin/apppropagator.jar

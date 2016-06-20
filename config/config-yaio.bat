@@ -39,7 +39,7 @@ rem ##############################
 rem set Path
 set YAIOCONFIGPATH=%BASEPATH%\..\config\
 set YAIOSCRIPTPATH=%BASEPATH%\..\sbin\
-set YAIORESPATH=%BASEPATH%\..\ressources\
+set YAIORESPATH=%BASEPATH%\..\resources\
 set YAIOVARPATH=%BASEPATH%\..\var\
 set YAIOAPP=%BASEPATH%..\target\yaio.jar
 set APPPROPAGATOR=%BASEPATH%..\sbin\apppropagator.jar
