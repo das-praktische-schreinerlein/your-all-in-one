@@ -26,11 +26,11 @@ rem # Configure filebased yaio
 rem Gen Wiki-Only
 set PARSEONLY=
 rem parse ppl from wiki an generate 
-set FLG_PARSE_PPL_FROM_WIKI=
+set FLG_PARSE_PPL_FROM_WIKI=1
 rem import the ppl to db
 set FLG_IMPORT_PPL_TO_DB=
 rem the generate src: ppl or jpa
-set GEN_SRC=jpa
+set GEN_SRC=ppl
 rem the masternode
 set MASTERNODEID=MasterplanMasternode1
 set IMPORT_OPTIONS_JPA=--addnodestosysuid %MASTERNODEID%
@@ -53,21 +53,21 @@ rem change CodePage
 CHCP 1252
 
 rem set progs
-set PROG_WP=de.yaio.app.extension.datatransfer.wiki.JobParseWiki
-set PROG_WN=de.yaio.app.extension.datatransfer.wiki.JobNodes2Wiki
-set PROG_EX=de.yaio.app.extension.datatransfer.excel.JobNodes2Excel
-set PROG_EP=de.yaio.app.extension.datatransfer.excel.JobParseExcel
-set PROG_HN=de.yaio.app.extension.datatransfer.html.JobNodes2Html
-set PROG_MM=de.yaio.app.extension.datatransfer.mindmap.JobNodes2MindMap
-set PROG_ICalN=de.yaio.app.extension.datatransfer.ical.JobNodes2ICal
-set PROG_CSVN=de.yaio.app.extension.datatransfer.csv.JobNodes2CSV
-set PROG_JSONN=de.yaio.app.extension.datatransfer.json.JobNodes2JSON
-set PROG_JPAN=de.yaio.app.extension.datatransfer.jpa.JobNodes2JPA
-set PROG_CALLYAIORESET=de.yaio.app.jobs.clients.CallYaioReset
-set PROG_CALLYAIORECALC=de.yaio.app.jobs.clients.CallYaioRecalcNodes
-set PROG_CALLYAIOEXPORT=de.yaio.app.jobs.clients.CallYaioExport
-set PROG_CALLYAIOIMPORT=de.yaio.app.jobs.clients.CallYaioImport
-set PROG_APP=de.yaio.app.webapp.Application
+set PROG_WP=de.yaio.app.cli.importer.JobParseWiki
+set PROG_WN=de.yaio.app.cli.converter.JobNodes2Wiki
+set PROG_EX=de.yaio.app.cli.converter.JobNodes2Excel
+set PROG_EP=de.yaio.app.cli.importer.JobParseExcel
+set PROG_HN=de.yaio.app.cli.converter.JobNodes2Html
+set PROG_MM=de.yaio.app.cli.converter.JobNodes2MindMap
+set PROG_ICalN=de.yaio.app.cli.converter.JobNodes2ICal
+set PROG_CSVN=de.yaio.app.cli.converter.JobNodes2CSV
+set PROG_JSONN=de.yaio.app.cli.converter.JobNodes2JSON
+set PROG_JPAN=de.yaio.app.cli.converter.JobNodes2JPA
+set PROG_CALLYAIORESET=de.yaio.app.clients.CallYaioReset
+set PROG_CALLYAIORECALC=de.yaio.app.clients.CallYaioRecalcNodes
+set PROG_CALLYAIOEXPORT=de.yaio.app.clients.CallYaioExport
+set PROG_CALLYAIOIMPORT=de.yaio.app.clients.CallYaioImport
+set PROG_APP=de.yaio.app.server.Application
 set PROG_APPPROPAGATOR=de.yitf.app.apppropagator.UpnpAppPropagator
 set PROG_RECALC=de.yaio.app.jobs.batch.JobRecalcNodes
 set PROG_FLYWAY=de.yaio.app.jobs.batch.JobYaioFlyway
