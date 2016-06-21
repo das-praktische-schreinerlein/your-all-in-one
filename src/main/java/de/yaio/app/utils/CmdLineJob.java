@@ -11,9 +11,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package de.yaio.app.jobs.utils;
+package de.yaio.app.utils;
 
-import de.yaio.app.config.Configurator;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
@@ -54,15 +53,13 @@ public abstract class CmdLineJob {
 
     private static final Logger LOGGER = Logger.getLogger(CmdLineJob.class);
     
-    protected String jobConfFile = null;
-
-    /** 
+    /**
      * baseclass for CommandLineJobs
      * @param args                   the command line arguments
      */
     public CmdLineJob(final String[] args) {
         // set args
-        Configurator.getInstance().setCmdLineArgs(args);
+        this.getCmdLineHelper().setCmdLineArgs(args);
     }
 
     /** 
@@ -81,7 +78,11 @@ public abstract class CmdLineJob {
     protected void printUsage() throws Exception  {
         HelpFormatter formatter = new HelpFormatter();
         formatter.printHelp(this.getJobName(), 
-                        Configurator.getInstance().getAvailiableCmdLineOptions());
+                        this.getCmdLineHelper().getAvailiableCmdLineOptions());
+    }
+
+    protected CmdLineHelper getCmdLineHelper() {
+        return CmdLineHelper.getInstance();
     }
 
     /**
@@ -99,7 +100,7 @@ public abstract class CmdLineJob {
     /** 
      * do the jobprocessing
      * <ul>
-     *    <li>initialize Configurator and Commandline
+     *    <li>initialize YaioCmdLineHelper and Commandline
      *    <li>call initJob
      *    <li>call doJob
      *    <li>call cleanUpAfterJob
@@ -115,28 +116,28 @@ public abstract class CmdLineJob {
                                 + "add commandLineOptions:" + newAvailiableCmdLineOptions);
             }
 
-            Configurator.getInstance().addAvailiableCmdLineOptions(newAvailiableCmdLineOptions);
+            this.getCmdLineHelper().addAvailiableCmdLineOptions(newAvailiableCmdLineOptions);
 
             // parse cmdArgs
             LOGGER.info("initCommandLine");
-            Configurator.getInstance().getCommandLine();
+            this.getCmdLineHelper().getCommandLine();
 
             // check for unknown Args
             String strCmdLineArgs = "";
-            for (String arg : Configurator.getInstance().getCmdLineArgs()) {
+            for (String arg : this.getCmdLineHelper().getCmdLineArgs()) {
                 strCmdLineArgs += ", " + arg;
             }
             LOGGER.info("used CmdLineArgs: " 
                             + strCmdLineArgs);
-            if (Configurator.getInstance().getCommandLine() != null) {
+            if (this.getCmdLineHelper().getCommandLine() != null) {
                 strCmdLineArgs = "";
-                for (String arg : Configurator.getInstance().getCommandLine().getArgs()) {
+                for (String arg : this.getCmdLineHelper().getCommandLine().getArgs()) {
                     strCmdLineArgs += ", " + arg;
                 }
                 LOGGER.info("unknown CmdLineArgs: " 
                             + strCmdLineArgs);
                 strCmdLineArgs = "";
-                for (Option option : Configurator.getInstance().getCommandLine().getOptions()) {
+                for (Option option : this.getCmdLineHelper().getCommandLine().getOptions()) {
                     strCmdLineArgs += ", " + option.toString();
                 }
                 LOGGER.info("used Options: " + strCmdLineArgs);
@@ -144,7 +145,7 @@ public abstract class CmdLineJob {
 
             // validate cmdLine
             LOGGER.info("validate CmdLine");
-            if (!Configurator.getInstance().validateCmdLine()) {
+            if (!this.getCmdLineHelper().validateCmdLine()) {
                 logErrorMsg("Illegal CmdArgs: print Usage");
                 this.printUsage();
                 LOGGER.info("Exit: 1");
@@ -152,7 +153,7 @@ public abstract class CmdLineJob {
             }
 
             // print Usage
-            if (Configurator.getInstance().getCommandLine().hasOption("h")) {
+            if (this.getCmdLineHelper().getCommandLine().hasOption("h")) {
                 LOGGER.info("print Usage");
                 this.printUsage();
                 LOGGER.info("Exit: " + CONST_EXITCODE_OK);
@@ -160,7 +161,7 @@ public abstract class CmdLineJob {
             }
 
             // set debug
-            if (Configurator.getInstance().getCommandLine().hasOption("debug")) {
+            if (this.getCmdLineHelper().getCommandLine().hasOption("debug")) {
                 LOGGER.info("activate debug");
                 Logger.getRootLogger().setLevel(org.apache.log4j.Level.ALL);
             }
@@ -228,8 +229,5 @@ public abstract class CmdLineJob {
 
 
     protected void cleanUpAfterJob() throws Exception {
-        // TODO: hack to close HSLDB-connection -> Hibernate doesn't close the 
-        //       database and so the content is not written to file
-        org.hsqldb.DatabaseManager.closeDatabases(0);
     }
 }
