@@ -10,9 +10,9 @@
 ./gen-puml-for-java.sh "../src/main/java/" "../resources/docs/classes/yaio-classes-importer" "Importer" "de.yaio.app.datatransfer.importer.*" "/de/yaio/app/datatransfer/importer/"
 ./gen-puml-for-java.sh "../src/main/java/" "../resources/docs/classes/yaio-classes-extension-exporter" "Extension Exporter" "de.yaio.app.extension.datatransfer.exporter.*" "/de/yaio/app/extension/datatransfer/exporter/"
 ./gen-puml-for-java.sh "../src/main/java/" "../resources/docs/classes/yaio-classes-extension-importer" "Extension Importer" "de.yaio.app.extension.datatransfer.importer.*" "/de/yaio/app/extension/datatransfer/importer/"
-./gen-puml-for-java.sh "../src/main/java/" "../resources/docs/classes/yaio-classes-jobs" "Jobs" "de.yaio.app.jobs.*" "/de/yaio/app/jobs/"
-./gen-puml-for-java.sh "../src/main/java/" "../resources/docs/classes/yaio-classes-rest" "RESTfull" "de.yaio.app.webapp.restcontroller.*" "/de/yaio/app/webapp/restcontroller/"
-./gen-puml-for-java.sh "../src/main/java/" "../resources/docs/classes/yaio-classes-webapp" "Webapp+Rest" "de.yaio.app.webapp.*" "/de/yaio/app/webapp/"
+./gen-puml-for-java.sh "../src/main/java/" "../resources/docs/classes/yaio-classes-cli" "Jobs" "de.yaio.app.cli.*" "/de/yaio/app/cli/"
+./gen-puml-for-java.sh "../src/main/java/" "../resources/docs/classes/yaio-classes-rest" "RESTfull" "de.yaio.app.server.restcontroller.*" "/de/yaio/app/server/restcontroller/"
+./gen-puml-for-java.sh "../src/main/java/" "../resources/docs/classes/yaio-classes-server" "Webapp+Rest" "de.yaio.app.server.*" "/de/yaio/app/server/"
 ./gen-puml-for-java.sh "../src/main/java/" "../resources/docs/classes/yaio-classes-app" "App/Config" "de.yaio.app.config.*" "/de/yaio/app/config/"
 ./gen-puml-for-java.sh "../src/main/java/" "../resources/docs/classes/yaio-classes-all" "All" "de.yaio.*" "/de/yaio/"
 
