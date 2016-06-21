@@ -11,9 +11,10 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package de.yaio.app.jobs.utils;
+package de.yaio.app.clients;
 
-import de.yaio.app.config.Configurator;
+import de.yaio.app.cli.YaioCmdLineHelper;
+import de.yaio.app.utils.CmdLineJob;
 import de.yaio.commons.data.DataUtils;
 import de.yaio.commons.http.HttpUtils;
 import org.apache.commons.cli.Option;
@@ -54,7 +55,7 @@ public abstract class CallYaioInstance extends CmdLineJob {
     @Override
     protected Options addAvailiableCmdLineOptions() throws Exception {
         Options availiableCmdLineOptions = 
-                        Configurator.getNewOptionsInstance();
+                        YaioCmdLineHelper.getNewOptionsInstance();
 
         // add default-Options
         Option yaioinstanceOption = new Option(null, "yaioinstance", true,
@@ -81,15 +82,15 @@ public abstract class CallYaioInstance extends CmdLineJob {
     
     @Override
     protected void initJob() throws Exception {
-        password = Configurator.getInstance().getCommandLine().getOptionValue("password");
-        username = Configurator.getInstance().getCommandLine().getOptionValue("username");
+        password = this.getCmdLineHelper().getCommandLine().getOptionValue("password");
+        username = this.getCmdLineHelper().getCommandLine().getOptionValue("username");
         yaioInstanceUrl = DataUtils.extractWebUrl(
-                        Configurator.getInstance().getCommandLine().getOptionValue("yaioinstance"));
+                        this.getCmdLineHelper().getCommandLine().getOptionValue("yaioinstance"));
         LOGGER.info("connectData:" + yaioInstanceUrl + " user:" + username 
-                        + " from:" + Configurator.getInstance().getCommandLine().getOptionValue("yaioinstance"));
+                        + " from:" + this.getCmdLineHelper().getCommandLine().getOptionValue("yaioinstance"));
         if (yaioInstanceUrl == null) {
             throw new IllegalArgumentException("cant parse yaioinstance:" + 
-                            Configurator.getInstance().getCommandLine().getOptionValue("yaioinstance"));
+                            this.getCmdLineHelper().getCommandLine().getOptionValue("yaioinstance"));
         }
     }
     

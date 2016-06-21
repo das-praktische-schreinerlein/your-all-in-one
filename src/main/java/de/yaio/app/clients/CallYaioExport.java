@@ -11,32 +11,37 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package de.yaio.app.jobs.clients;
+package de.yaio.app.clients;
 
-import de.yaio.app.jobs.utils.CallYaioInstance;
+import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
+import java.io.FileWriter;
+import java.io.Writer;
+
 /** 
- * job to call yaio-instance to reset db
+ * job to call yaio-instance to export nodes from db
  * 
  * @FeatureDomain                DatenExport Praesentation
- * @package                      de.yaio.jobs
+ * @package                      de.yaio.cli
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
  * @category                     collaboration
  * @copyright                    Copyright (c) 2014, Michael Schreiner
  * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-public class CallYaioReset extends CallYaioInstance {
+public class CallYaioExport extends CallYaioInstance {
 
     private static final Logger LOGGER =
-        Logger.getLogger(CallYaioReset.class);
+        Logger.getLogger(CallYaioExport.class);
 
     /** 
-     * job to reste the db of an yaio-instance
+     * job to export nodes from db
      * @param args                   the command line arguments
      */
-    public CallYaioReset(final String[] args) {
+    public CallYaioExport(final String[] args) {
         super(args);
     }
 
@@ -44,6 +49,24 @@ public class CallYaioReset extends CallYaioInstance {
     protected Options addAvailiableCmdLineOptions() throws Exception {
         Options availiableCmdLineOptions = super.addAvailiableCmdLineOptions();
         
+        // endpoint for export
+        Option formatOption = new Option(null, "format", true,
+                "exportformat (endpoint like wiki,csv,html ...)");
+        formatOption.setRequired(true);
+        availiableCmdLineOptions.addOption(formatOption);
+
+        // sysuid for export
+        Option sysuidOption = new Option(null, "sysuid", true,
+                "SysUID of Masternode to export");
+        sysuidOption.setRequired(true);
+        availiableCmdLineOptions.addOption(sysuidOption);
+
+        // sysuid for export
+        Option outfileNameOption = new Option(null, "outfile", true,
+                "Filename to write");
+        sysuidOption.setRequired(false);
+        availiableCmdLineOptions.addOption(outfileNameOption);
+
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("addAvailiableCmdLineOptions: " + availiableCmdLineOptions);
         }
@@ -53,10 +76,23 @@ public class CallYaioReset extends CallYaioInstance {
 
     @Override
     public void doJob() throws Exception {
-        // call url
-        byte[] result = this.callGetUrl("/admin/reset", null);
+        // get options
+        String sysUID = this.getCmdLineHelper().getCommandLine().getOptionValue("sysuid");
+        String format = this.getCmdLineHelper().getCommandLine().getOptionValue("format");
+        String outfileName = this.getCmdLineHelper().getCommandLine().getOptionValue("outfile");
         
-        System.out.write(result);
+        // call url
+        byte[] result = this.callGetUrl("/exports/" + format + "/" + sysUID, null);
+        
+        if (!StringUtils.isEmpty(outfileName)) {
+            // write to file
+            Writer output = new FileWriter(outfileName);
+            IOUtils.write(result, output);
+            output.close();
+        } else {
+            // write to stdout
+            System.out.write(result);
+        }
     }
 
     // #############
@@ -76,7 +112,7 @@ public class CallYaioReset extends CallYaioInstance {
      * @param args                   the command line arguments
      */
     public static void main(final String[] args) {
-        CallYaioReset me = new CallYaioReset(args);
+        CallYaioExport me = new CallYaioExport(args);
         me.startJobProcessing();
     }
 }

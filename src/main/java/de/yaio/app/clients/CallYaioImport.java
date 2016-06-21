@@ -11,10 +11,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package de.yaio.app.jobs.clients;
+package de.yaio.app.clients;
 
-import de.yaio.app.config.Configurator;
-import de.yaio.app.jobs.utils.CallYaioInstance;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.log4j.Logger;
@@ -26,7 +24,7 @@ import java.util.Map;
  * job to call yaio-instance to import nodes to db
  * 
  * @FeatureDomain                DatenExport Praesentation
- * @package                      de.yaio.jobs
+ * @package                      de.yaio.cli
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
  * @category                     collaboration
  * @copyright                    Copyright (c) 2014, Michael Schreiner
@@ -71,8 +69,8 @@ public class CallYaioImport extends CallYaioInstance {
     @Override
     public void doJob() throws Exception {
         // get options
-        String parentsysUID = Configurator.getInstance().getCommandLine().getOptionValue("parentsysuid");
-        String importfile = Configurator.getInstance().getCommandLine().getOptionValue("importfile");
+        String parentsysUID = this.getCmdLineHelper().getCommandLine().getOptionValue("parentsysuid");
+        String importfile = this.getCmdLineHelper().getCommandLine().getOptionValue("importfile");
         
         // call url
         Map<String, String> files = new HashMap<String, String>();
