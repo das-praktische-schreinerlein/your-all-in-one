@@ -13,7 +13,7 @@
  */
 package de.yaio.app.datatransfer.common;
 
-import de.yaio.app.config.Configurator;
+import de.yaio.app.cli.YaioCmdLineHelper;
 import de.yaio.app.core.datadomain.DataDomain;
 import de.yaio.app.datatransfer.jpa.JPAImporter;
 import de.yaio.app.core.node.BaseNode;
@@ -89,8 +89,7 @@ public class CommonImporter {
      */
     public void addAvailiableProductiveImportCmdLineOptions(final Options availiableCmdLineOptions) {
         // Id-File
-        Option pathIdDB = new Option("", "pathiddb", true,
-                "Pfad zur ID-Datenbank");
+        Option pathIdDB = new Option("", "pathiddb", true, "Pfad zur ID-Datenbank");
         pathIdDB.setRequired(true);
         availiableCmdLineOptions.addOption(pathIdDB);
     }
@@ -114,14 +113,14 @@ public class CommonImporter {
         
         // check exportsysuid
         String exportSysUID = 
-                        Configurator.getInstance().getCommandLine().getOptionValue(
+                        YaioCmdLineHelper.getInstance().getCommandLine().getOptionValue(
                                         "exportsysuid");
         if (exportSysUID == null || "".equalsIgnoreCase(exportSysUID)) {
             throw new IllegalArgumentException("For sourcetype=jpa a exportsysuid is expected");
         }
         
         // initApplicationContext
-        Configurator.getInstance().getSpringApplicationContext();
+        YaioCmdLineHelper.getInstance().getSpringApplicationContext();
 
         // create own importer
         JPAImporter jpaImporter = new JPAImporter(null);
@@ -153,9 +152,8 @@ public class CommonImporter {
      */
     public void importDataToMasterNode(final DataDomain masterNode) throws Exception {
         // check datasource
-        String sourceType = 
-                        Configurator.getInstance().getCommandLine().getOptionValue(
-                                        "sourcetype", defaultSourceType);
+        String sourceType =
+                        YaioCmdLineHelper.getInstance().getCommandLine().getOptionValue("sourcetype", defaultSourceType);
         if ("jpa".equalsIgnoreCase(sourceType)) {
             // from jpa
             this.importDataToMasterNodeFromJPA(masterNode);
