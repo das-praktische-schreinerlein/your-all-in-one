@@ -11,14 +11,15 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package de.yaio.app.extension.datatransfer.excel;
+package de.yaio.app.cli.converter;
 
-import de.yaio.app.config.Configurator;
+import de.yaio.app.cli.YaioCmdLineHelper;
 import de.yaio.app.core.datadomain.DataDomain;
 import de.yaio.app.datatransfer.exporter.Exporter;
 import de.yaio.app.datatransfer.exporter.OutputOptions;
 import de.yaio.app.core.node.BaseNode;
-import de.yaio.app.extension.datatransfer.wiki.JobNodes2Wiki;
+import de.yaio.app.extension.datatransfer.excel.ExcelExporter;
+import de.yaio.app.extension.datatransfer.excel.ExcelOutputOptions;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 
@@ -60,14 +61,14 @@ public class JobNodes2Excel extends JobNodes2Wiki {
     public void publishResult(final Exporter exporter, final DataDomain masterNode,
                               final OutputOptions oOptions) throws Exception {
         String outFile = "test.xls";
-        if (Configurator.getInstance().getCommandLine().getArgs().length > 1) {
+        if (this.getCmdLineHelper().getCommandLine().getArgs().length > 1) {
             // aus Datei
-            outFile = Configurator.getInstance().getCommandLine().getArgs()[1];
+            outFile = this.getCmdLineHelper().getCommandLine().getArgs()[1];
         }
 
         ExcelOutputOptions excelOptions = new ExcelOutputOptions(oOptions);
         excelOptions.flgMergeExcelPlanungGantSheets = 
-                        Configurator.getInstance().getCommandLine().hasOption("mergeexcelplanunggantsheets");
+                        YaioCmdLineHelper.getInstance().getCommandLine().hasOption("mergeexcelplanunggantsheets");
 
         // Masternode ausgeben
         ((ExcelExporter) exporter).toExcel((BaseNode) masterNode, outFile, excelOptions);

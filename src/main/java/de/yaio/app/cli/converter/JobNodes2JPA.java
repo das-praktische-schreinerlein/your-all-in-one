@@ -11,13 +11,11 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package de.yaio.app.extension.datatransfer.jpa;
+package de.yaio.app.cli.converter;
 
-import de.yaio.app.config.Configurator;
 import de.yaio.app.core.datadomain.DataDomain;
 import de.yaio.app.core.node.BaseNode;
 import de.yaio.app.datatransfer.jpa.JPAExporter;
-import de.yaio.app.extension.datatransfer.wiki.JobNodes2Wiki;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.log4j.Logger;
@@ -55,10 +53,10 @@ public class JobNodes2JPA extends JobNodes2Wiki {
         DataDomain masterNode = null;
 
         // initApplicationContext
-        Configurator.getInstance().getSpringApplicationContext();
+        this.getYaioCmdLineHelper().getInstance().getSpringApplicationContext();
 
         // check for sysUID
-        String sysUID = Configurator.getInstance().getCommandLine().getOptionValue("addnodestosysuid");
+        String sysUID = this.getCmdLineHelper().getCommandLine().getOptionValue("addnodestosysuid");
         if (sysUID != null || !"".equalsIgnoreCase(sysUID)) {
             // if is set: read masternode from JPA
             if (LOGGER.isInfoEnabled()) {

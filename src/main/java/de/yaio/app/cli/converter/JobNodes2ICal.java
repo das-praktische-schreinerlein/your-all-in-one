@@ -11,34 +11,47 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package de.yaio.app.extension.datatransfer.csv;
+package de.yaio.app.cli.converter;
 
-import de.yaio.app.extension.datatransfer.wiki.JobNodes2Wiki;
+import de.yaio.app.extension.datatransfer.ical.ICalDBExporter;
+import de.yaio.app.extension.datatransfer.ical.ICalExporter;
 
 /** 
- * job for import of Nodes in PPL-Format and output in CSV-format
+ * job for import of Nodes in PPL-Format and output as ICal
  * 
  * @FeatureDomain                DatenExport Praesentation
- * @package                      de.yaio.extension.datatransfer.csv
+ * @package                      de.yaio.extension.datatransfer.ical
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
  * @category                     collaboration
  * @copyright                    Copyright (c) 2014, Michael Schreiner
  * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-public class JobNodes2CSV extends JobNodes2Wiki {
+public class JobNodes2ICal extends JobNodes2Wiki {
     
     
     /** 
-     * create job-object to import nodes and output as CSV
+     * job to import nodes and output as ICal
      * @param args                   the command line arguments
      */
-    public JobNodes2CSV(final String[] args) {
+    public JobNodes2ICal(final String[] args) {
         super(args);
     }
 
     @Override
     public void createExporter() {
-        exporter = new CSVExporter();
+        String sourceType = "";
+        try {
+            sourceType = this.getCmdLineHelper().getCommandLine().getOptionValue("sourcetype", "");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if ("jpa".equalsIgnoreCase(sourceType)) {
+            // from jpa: use dbExporter
+            exporter = new ICalDBExporter();
+        } else {
+            // all other
+            exporter = new ICalExporter();
+        }
     }
 
     /** 
@@ -46,7 +59,7 @@ public class JobNodes2CSV extends JobNodes2Wiki {
      * @param args                   the command line arguments
      */
     public static void main(final String[] args) {
-        JobNodes2CSV me = new JobNodes2CSV(args);
+        JobNodes2ICal me = new JobNodes2ICal(args);
         me.startJobProcessing();
     }
 }

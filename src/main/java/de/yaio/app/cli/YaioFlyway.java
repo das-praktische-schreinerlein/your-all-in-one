@@ -11,9 +11,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package de.yaio.app.jobs;
+package de.yaio.app.cli;
 
-import de.yaio.app.config.Configurator;
 import org.apache.log4j.Logger;
 import org.flywaydb.core.Flyway;
 
@@ -35,7 +34,7 @@ public class YaioFlyway {
      */
     public static String doFlyway() throws Exception {
         // do flyWay before applicationContext
-        Properties props = Configurator.getInstance().initProperties();
+        Properties props = YaioCmdLineHelper.getInstance().initProperties();
         if ("true".equalsIgnoreCase(props.getProperty("yaio.flyway.enabled", "false"))) {
             Flyway flyWay = new Flyway();
             flyWay.configure(props);

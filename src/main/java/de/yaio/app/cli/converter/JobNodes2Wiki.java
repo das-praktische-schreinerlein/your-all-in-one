@@ -11,15 +11,16 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package de.yaio.app.extension.datatransfer.wiki;
+package de.yaio.app.cli.converter;
 
-import de.yaio.app.config.Configurator;
+import de.yaio.app.cli.YaioCmdLineHelper;
 import de.yaio.app.core.datadomain.DataDomain;
 import de.yaio.app.datatransfer.exporter.Exporter;
 import de.yaio.app.datatransfer.exporter.OutputOptions;
 import de.yaio.app.datatransfer.exporter.OutputOptionsImpl;
 import de.yaio.app.extension.datatransfer.common.ExtendedCommonImporter;
-import de.yaio.app.jobs.utils.CmdLineJob;
+import de.yaio.app.extension.datatransfer.wiki.WikiExporter;
+import de.yaio.app.cli.YaioCmdLineJob;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
@@ -35,12 +36,12 @@ import org.apache.log4j.Logger;
  * @copyright                    Copyright (c) 2014, Michael Schreiner
  * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-public class JobNodes2Wiki extends CmdLineJob {
+public class JobNodes2Wiki extends YaioCmdLineJob {
 
     private static final Logger LOGGER = Logger.getLogger(JobNodes2Wiki.class);
 
     /**
-     * the exporter to format the masternode-data 
+     * the converter to format the masternode-data
      */
     public Exporter exporter;
     protected ExtendedCommonImporter commonImporter;
@@ -57,7 +58,7 @@ public class JobNodes2Wiki extends CmdLineJob {
     @Override
     protected Options addAvailiableCmdLineOptions() throws Exception {
         Options availiableCmdLineOptions = 
-                        Configurator.getNewOptionsInstance();
+                        YaioCmdLineHelper.getNewOptionsInstance();
 
         // add Options
         commonImporter.addAvailiableCommonCmdLineOptions(availiableCmdLineOptions);
@@ -214,7 +215,7 @@ public class JobNodes2Wiki extends CmdLineJob {
         createExporter();
         
         // Mastername extrahieren
-        String masterName = Configurator.getInstance().getCommandLine().getOptionValue("m", "Master");
+        String masterName = this.getCmdLineHelper().getCommandLine().getOptionValue("m", "Master");
         DataDomain masterNode = createMasternode(masterName);
 
         // Output-Options parsen
@@ -257,8 +258,8 @@ public class JobNodes2Wiki extends CmdLineJob {
     }
 
     /** 
-     * publish the masternode and all children with the help of exporter
-     * @param exporter               exporter to format the output
+     * publish the masternode and all children with the help of converter
+     * @param exporter               converter to format the output
      * @param masterNode             the masternode to export
      * @param oOptions               Outputoptions
      * @throws Exception             parse/io-Exceptions possible
@@ -276,7 +277,7 @@ public class JobNodes2Wiki extends CmdLineJob {
      */
     public OutputOptions getOutputOptions() throws Exception {
         // Konfiguration
-        CommandLine cmdLine = Configurator.getInstance().getCommandLine();
+        CommandLine cmdLine = this.getCmdLineHelper().getCommandLine();
         OutputOptions oOptions = new OutputOptionsImpl();
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("DefaultOutputOptions: " + oOptions);
@@ -321,7 +322,7 @@ public class JobNodes2Wiki extends CmdLineJob {
     // ######################
     
     /** 
-     * create the exporter for the export with publishResult
+     * create the converter for the export with publishResult
      */
     public void createExporter() {
         exporter = new WikiExporter();

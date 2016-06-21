@@ -11,11 +11,10 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package de.yaio.app.extension.datatransfer.excel;
+package de.yaio.app.cli.importer;
 
-import de.yaio.app.config.Configurator;
+import de.yaio.app.cli.YaioCmdLineHelper;
 import de.yaio.app.extension.datatransfer.common.ExtendedCommonImporter;
-import de.yaio.app.extension.datatransfer.wiki.JobParseWiki;
 import org.apache.commons.cli.Options;
 
 /** 
@@ -47,7 +46,7 @@ public class JobParseExcel extends JobParseWiki {
     @Override
     protected Options addAvailiableCmdLineOptions() throws Exception {
         Options availiableCmdLineOptions = 
-                        Configurator.getNewOptionsInstance();
+                        YaioCmdLineHelper.getNewOptionsInstance();
         
         // add Options
         commonImporter.addAvailiableCommonCmdLineOptions(availiableCmdLineOptions);

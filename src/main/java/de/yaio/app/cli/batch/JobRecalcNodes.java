@@ -11,40 +11,53 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package de.yaio.app.jobs.batch;
+package de.yaio.app.cli.batch;
 
-import de.yaio.app.config.Configurator;
-import de.yaio.app.jobs.YaioFlyway;
-import de.yaio.app.jobs.utils.CmdLineJob;
+import de.yaio.app.cli.YaioCmdLineHelper;
+import de.yaio.app.core.recalcer.NodeRecalcer;
+import de.yaio.app.cli.YaioCmdLineJob;
+import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.log4j.Logger;
 
-/**
- * job to do flyway on db
+/** 
+ * job to recalc nodes in db
  * 
+ * @FeatureDomain                DatenExport Praesentation
+ * @package                      de.yaio.cli
+ * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
+ * @category                     collaboration
+ * @copyright                    Copyright (c) 2014, Michael Schreiner
+ * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-public class JobYaioFlyway extends CmdLineJob {
+public class JobRecalcNodes extends YaioCmdLineJob {
 
     private static final Logger LOGGER =
-        Logger.getLogger(JobYaioFlyway.class);
+        Logger.getLogger(JobRecalcNodes.class);
 
-    /**
-     * job to do flyway on db
+    /** 
+     * job to update the nodes in db
      * @param args                   the command line arguments
      */
-    public JobYaioFlyway(final String[] args) {
+    public JobRecalcNodes(final String[] args) {
         super(args);
     }
 
     @Override
     protected Options addAvailiableCmdLineOptions() throws Exception {
         Options availiableCmdLineOptions = 
-                        Configurator.getNewOptionsInstance();
+                        YaioCmdLineHelper.getNewOptionsInstance();
 
-        // add default-Options
-        Configurator.getInstance().addAvailiableBaseCmdLineOptions(
+        // add dfeault-Options
+        this.getCmdLineHelper().addAvailiableBaseCmdLineOptions(
                         availiableCmdLineOptions);
         
+        // sysuid for export
+        Option sysuidOption = new Option(null, "sysuid", true,
+                "SysUID of Masternode to recalc");
+        sysuidOption.setRequired(true);
+        availiableCmdLineOptions.addOption(sysuidOption);
+
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("addAvailiableCmdLineOptions: " + availiableCmdLineOptions);
         }
@@ -54,7 +67,17 @@ public class JobYaioFlyway extends CmdLineJob {
 
     @Override
     public void doJob() throws Exception {
-        System.out.println(YaioFlyway.doFlyway());
+        // initApplicationContext
+        this.getYaioCmdLineHelper().getSpringApplicationContext();
+        
+        // extract sysUID
+        String sysUID = this.getCmdLineHelper().getCommandLine().getOptionValue("sysuid");
+
+        // create recalcer
+        NodeRecalcer nodeRecalcer = new NodeRecalcer();
+        
+        // recalc
+        System.out.println(nodeRecalcer.findAndRecalcMasternode(sysUID));
     }
 
     // #############
@@ -74,7 +97,7 @@ public class JobYaioFlyway extends CmdLineJob {
      * @param args                   the command line arguments
      */
     public static void main(final String[] args) {
-        JobYaioFlyway me = new JobYaioFlyway(args);
+        JobRecalcNodes me = new JobRecalcNodes(args);
         me.startJobProcessing();
     }
 }
