@@ -11,7 +11,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package de.yaio.app.webapp;
+package de.yaio.app.server;
 
 
 //@ContextConfiguration(locations={"./config/applicationContext.xml"}, 
@@ -34,11 +34,11 @@ package de.yaio.app.webapp;
 //        String[] args = new String[2];
 //        args[0] = "--config";
 //        args[1] = "./config/application.properties";
-//        if (Configurator.getInstance().getCmdLineArgs() == null) {
-//            Configurator.getInstance().getAvailiableCmdLineOptions();
-//            Configurator.getInstance().setCmdLineArgs(args);
-//            Configurator.getInstance().getCommandLine();
-//            Configurator.getInstance().getSpringApplicationContext();
+//        if (YaioCmdLineHelper.getInstance().getCmdLineArgs() == null) {
+//            YaioCmdLineHelper.getInstance().getAvailiableCmdLineOptions();
+//            YaioCmdLineHelper.getInstance().setCmdLineArgs(args);
+//            YaioCmdLineHelper.getInstance().getCommandLine();
+//            YaioCmdLineHelper.getInstance().getSpringApplicationContext();
 //        }
 //
 //        Swagger2Controller controller = new Swagger2Controller();

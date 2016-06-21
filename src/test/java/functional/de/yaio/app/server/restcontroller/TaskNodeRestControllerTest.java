@@ -11,12 +11,12 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package de.yaio.app.webapp.restcontroller;
+package de.yaio.app.server.restcontroller;
 
-import de.yaio.app.core.node.SymLinkNode;
+import de.yaio.app.core.node.TaskNode;
 
 /** 
- * test: RESTFull webservices for SymLinkNodes
+ * test: RESTFull webservices for TaskNodes
  * 
  * @FeatureDomain                Tests
  * @package                      de.yaio.rest.controller
@@ -25,10 +25,10 @@ import de.yaio.app.core.node.SymLinkNode;
  * @copyright                    Copyright (c) 2014, Michael Schreiner
  * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-public class SymLinkNodeRestControllerTest extends BaseNodeRestControllerTest {
+public class TaskNodeRestControllerTest extends BaseNodeRestControllerTest {
     
     /** 
-     * testobject for SymLinkNode
+     * testobject for TaskNode
      * 
      * @package                      de.yaio.rest.controller
      * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
@@ -36,7 +36,7 @@ public class SymLinkNodeRestControllerTest extends BaseNodeRestControllerTest {
      * @copyright                    Copyright (c) 2014, Michael Schreiner
      * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
      */
-    public class SymLinkNodeRestControllerTestObj extends SymLinkNode implements TestObj {
+    public class TaskNodeRestControllerTestObj extends TaskNode implements TestObj {
         @Override
         public String toString() {
             StringBuffer resBuffer = new StringBuffer();
@@ -47,7 +47,7 @@ public class SymLinkNodeRestControllerTest extends BaseNodeRestControllerTest {
         
         @Override
         public String getClassName() {
-            return "SymLinkNode";
+            return "TaskNode";
             
         }
     }
@@ -58,9 +58,9 @@ public class SymLinkNodeRestControllerTest extends BaseNodeRestControllerTest {
     @Override
     public TestObj setupNewTestObj() throws Exception {
      // create, show, update, delete task
-        String name1 = "Test-SymLinkNode";
+        String name1 = "Test-TaskNode";
         
-        SymLinkNodeRestControllerTestObj node = new SymLinkNodeRestControllerTestObj();
+        TaskNodeRestControllerTestObj node = new TaskNodeRestControllerTestObj();
         node.setName(name1);
         
         return node;

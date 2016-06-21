@@ -1,4 +1,4 @@
-package de.yaio.app.webapp.restcontroller;
+package de.yaio.app.server.restcontroller;
 //package de.yaio.rest.controller;
 //
 //import static org.junit.Assert.fail;

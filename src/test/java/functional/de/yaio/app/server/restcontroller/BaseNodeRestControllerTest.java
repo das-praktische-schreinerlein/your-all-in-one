@@ -11,16 +11,15 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package de.yaio.app.webapp.restcontroller;
+package de.yaio.app.server.restcontroller;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
 import de.yaio.app.BaseTest;
-import de.yaio.app.config.Configurator;
+import de.yaio.app.cli.YaioCmdLineHelper;
 import de.yaio.app.core.datadomainservice.NodeNumberService;
 import de.yaio.app.core.node.BaseNode;
-import de.yaio.app.webapp.restcontroller.NodeRestController;
 import org.apache.log4j.Logger;
 import org.hamcrest.core.IsNull;
 import org.junit.Test;
@@ -72,11 +71,11 @@ public abstract class BaseNodeRestControllerTest  extends BaseTest {
         String[] args = new String[2];
         args[0] = "--config";
         args[1] = "./target/test-classes/config/application-test.properties";
-        if (Configurator.getInstance().getCmdLineArgs() == null) {
-            Configurator.getInstance().getAvailiableCmdLineOptions();
-            Configurator.getInstance().setCmdLineArgs(args);
-            Configurator.getInstance().getCommandLine();
-            Configurator.getInstance().getSpringApplicationContext();
+        if (YaioCmdLineHelper.getInstance().getCmdLineArgs() == null) {
+            YaioCmdLineHelper.getInstance().getAvailiableCmdLineOptions();
+            YaioCmdLineHelper.getInstance().setCmdLineArgs(args);
+            YaioCmdLineHelper.getInstance().getCommandLine();
+            YaioCmdLineHelper.getInstance().getSpringApplicationContext();
             
             // gets NodeNumberService
             NodeNumberService nodeNumberService = 
