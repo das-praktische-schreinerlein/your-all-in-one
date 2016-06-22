@@ -13,9 +13,10 @@
  */
 package de.yaio.app.server;
 
-import de.yaio.app.cli.YaioCmdLineJob;
 import de.yaio.app.cli.YaioCmdLineHelper;
-import de.yaio.app.cli.YaioFlyway;
+import de.yaio.app.system.YaioFlyway;
+import de.yaio.app.config.PersistenceConfig;
+import de.yaio.app.utils.CmdLineJob;
 import org.apache.commons.cli.Option;
 import org.apache.log4j.Logger;
 import org.apache.tomcat.util.http.fileupload.FileUpload;
@@ -23,11 +24,9 @@ import org.apache.tomcat.util.http.fileupload.FileUploadBase;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.context.embedded.MultipartConfigFactory;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.*;
 import org.springframework.context.annotation.ComponentScan.Filter;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.FilterType;
+import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 import javax.annotation.PreDestroy;
@@ -47,7 +46,9 @@ import java.util.List;
  * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 @Configuration
+@EnableSpringConfigured // <context:spring-configured/>
 @EnableAutoConfiguration(exclude = {
+                de.yaio.app.config.MinimalContextConfig.class,
                 de.yaio.services.webshot.WebshotApplication.class, 
                 de.yaio.services.webshot.WebshotWebSecurityConfig.class,
                 de.yaio.services.webshot.WebshotWebSecurityConfig.WebshotServiceSecurityConfigurerAdapter.class,
@@ -61,10 +62,12 @@ import java.util.List;
                 de.yaio.services.metaextract.MetaExtractWebSecurityConfig.class,
                 de.yaio.services.metaextract.MetaExtractWebSecurityConfig.MetaExtractServiceSecurityConfigurerAdapter.class
                 })
-@ComponentScan(basePackages = {"de.yaio.app", "de.yaio.services"},
+@ComponentScan(basePackages = {"de.yaio.app.core", "de.yaio.app.datatransfer",
+                               "de.yaio.app.extension", "de.yaio.app.server", "de.yaio.services"},
                 excludeFilters = {
                     @Filter(type = FilterType.ASSIGNABLE_TYPE, value = {
-                        de.yaio.services.webshot.WebshotApplication.class, 
+                        de.yaio.app.config.MinimalContextConfig.class,
+                        de.yaio.services.webshot.WebshotApplication.class,
                         de.yaio.services.webshot.WebshotWebSecurityConfig.class,
                         de.yaio.services.webshot.WebshotWebSecurityConfig.WebshotServiceSecurityConfigurerAdapter.class,
                         de.yaio.services.dms.DMSApplication.class,
@@ -79,6 +82,7 @@ import java.util.List;
                     })
                 })
 @EnableScheduling
+@Import(PersistenceConfig.class)
 public class Application {
     private static final Logger LOGGER = Logger.getLogger(Application.class);
 
@@ -109,7 +113,7 @@ public class Application {
             LOGGER.info("validate CmdLine");
             if (!YaioCmdLineHelper.getInstance().validateCmdLine()) {
                 LOGGER.info("Illegal CmdArgs Exit: 1");
-                System.exit(YaioCmdLineJob.CONST_EXITCODE_FAILED_ARGS);
+                System.exit(CmdLineJob.CONST_EXITCODE_FAILED_ARGS);
             }
 
             // do flyway
@@ -143,7 +147,7 @@ public class Application {
                 LOGGER.fatal(ex2);
                 LOGGER.info("Exit: 1");
             }
-            System.exit(YaioCmdLineJob.CONST_EXITCODE_FAILED_ARGS);
+            System.exit(CmdLineJob.CONST_EXITCODE_FAILED_ARGS);
         }
     }
     

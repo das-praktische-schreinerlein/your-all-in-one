@@ -1,39 +1,21 @@
 package de.yaio.app.config;
 
 import org.apache.commons.dbcp.BasicDataSource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.*;
-import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean;
+import org.springframework.context.annotation.AdviceMode;
+import org.springframework.context.annotation.Bean;
 import org.springframework.orm.jpa.JpaTransactionManager;
-import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaDialect;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
-import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.transaction.aspectj.AnnotationTransactionAspect;
 
-import javax.sql.DataSource;
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
-@Configuration  // <context:spring-configured/>
-@EnableSpringConfigured // <context:spring-configured/>
-@ComponentScan(basePackages = {"de.schreiner"},
-        excludeFilters={@ComponentScan.Filter(type=FilterType.ANNOTATION, value=org.springframework.stereotype.Controller.class),
-                @ComponentScan.Filter(type=FilterType.REGEX, pattern={".*_Roo_.*"})}
-)
 @EnableTransactionManagement(mode = AdviceMode.ASPECTJ)
-@EnableAutoConfiguration
 public class PersistenceConfig {
     //${jdbc.driverClassName}
     @Value("${spring.datasource.driver-class-name}")     private String driverClassName;

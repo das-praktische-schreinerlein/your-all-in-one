@@ -13,10 +13,8 @@
  */
 package de.yaio.app.cli;
 
-import de.yaio.app.config.PersistenceConfig;
+import de.yaio.app.config.MinimalContextConfig;
 import de.yaio.app.utils.CmdLineHelper;
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.Options;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
@@ -194,7 +192,7 @@ public class YaioCmdLineHelper extends CmdLineHelper {
 
         // init applicationContext
         AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
-        applicationContext.register(PersistenceConfig.class);
+        applicationContext.register(MinimalContextConfig.class);
         applicationContext.refresh();
     }
 
