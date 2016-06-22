@@ -63,7 +63,9 @@ import java.util.List;
                 de.yaio.services.metaextract.MetaExtractWebSecurityConfig.MetaExtractServiceSecurityConfigurerAdapter.class
                 })
 @ComponentScan(basePackages = {"de.yaio.app.core", "de.yaio.app.datatransfer",
-                               "de.yaio.app.extension", "de.yaio.app.server", "de.yaio.services"},
+                               "de.yaio.app.extension", "de.yaio.app.server",
+                               "de.yaio.services.webshot", "de.yaio.services.dms",
+                               "de.yaio.services.plantuml", "de.yaio.services.metaextract"},
                 excludeFilters = {
                     @Filter(type = FilterType.ASSIGNABLE_TYPE, value = {
                         de.yaio.app.config.MinimalContextConfig.class,
