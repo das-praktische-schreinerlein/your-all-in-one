@@ -11,8 +11,9 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package de.yaio.app.cli;
+package de.yaio.app.system;
 
+import de.yaio.app.cli.YaioCmdLineHelper;
 import org.apache.log4j.Logger;
 import org.flywaydb.core.Flyway;
 

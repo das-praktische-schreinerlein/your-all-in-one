@@ -15,7 +15,7 @@ package de.yaio.app.cli.batch;
 
 import de.yaio.app.cli.YaioCmdLineJob;
 import de.yaio.app.cli.YaioCmdLineHelper;
-import de.yaio.app.cli.YaioFlyway;
+import de.yaio.app.system.YaioFlyway;
 import org.apache.commons.cli.Options;
 import org.apache.log4j.Logger;
 
