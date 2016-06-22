@@ -26,11 +26,11 @@ rem # Configure filebased yaio
 rem Gen Wiki-Only
 set PARSEONLY=
 rem parse ppl from wiki an generate 
-set FLG_PARSE_PPL_FROM_WIKI=1
+set FLG_PARSE_PPL_FROM_WIKI=
 rem import the ppl to db
 set FLG_IMPORT_PPL_TO_DB=
 rem the generate src: ppl or jpa
-set GEN_SRC=ppl
+set GEN_SRC=
 rem the masternode
 set MASTERNODEID=MasterplanMasternode1
 set IMPORT_OPTIONS_JPA=--addnodestosysuid %MASTERNODEID%
@@ -69,8 +69,8 @@ set PROG_CALLYAIOEXPORT=de.yaio.app.clients.CallYaioExport
 set PROG_CALLYAIOIMPORT=de.yaio.app.clients.CallYaioImport
 set PROG_APP=de.yaio.app.server.Application
 set PROG_APPPROPAGATOR=de.yitf.app.apppropagator.UpnpAppPropagator
-set PROG_RECALC=de.yaio.app.jobs.batch.JobRecalcNodes
-set PROG_FLYWAY=de.yaio.app.jobs.batch.JobYaioFlyway
+set PROG_RECALC=de.yaio.app.cli.batch.JobRecalcNodes
+set PROG_FLYWAY=de.yaio.app.system.JobYaioFlyway
 set PROG_DIFF=
 set PROG_WINMERGE="C:\ProgrammePortable\PortableApps\PortableApps\WinMergePortable\WinMergePortable.exe"
 

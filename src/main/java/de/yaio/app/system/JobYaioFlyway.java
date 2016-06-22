@@ -11,11 +11,10 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package de.yaio.app.cli.batch;
+package de.yaio.app.system;
 
 import de.yaio.app.cli.YaioCmdLineJob;
-import de.yaio.app.cli.YaioCmdLineHelper;
-import de.yaio.app.system.YaioFlyway;
+import de.yaio.app.utils.CmdLineHelper;
 import org.apache.commons.cli.Options;
 import org.apache.log4j.Logger;
 
@@ -38,8 +37,7 @@ public class JobYaioFlyway extends YaioCmdLineJob {
 
     @Override
     protected Options addAvailiableCmdLineOptions() throws Exception {
-        Options availiableCmdLineOptions = 
-                        YaioCmdLineHelper.getNewOptionsInstance();
+        Options availiableCmdLineOptions = CmdLineHelper.getNewOptionsInstance();
 
         // add default-Options
         this.getCmdLineHelper().addAvailiableBaseCmdLineOptions(

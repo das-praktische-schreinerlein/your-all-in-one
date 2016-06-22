@@ -57,8 +57,8 @@ export PROG_CALLYAIOEXPORT=de.yaio.app.clients.CallYaioExport
 export PROG_CALLYAIOIMPORT=de.yaio.app.clients.CallYaioImport
 export PROG_APP=de.yaio.app.server.Application
 export PROG_APPPROPAGATOR=de.yitf.app.apppropagator.UpnpAppPropagator
-export PROG_RECALC=de.yaio.app.jobs.batch.JobRecalcNodes
-export PROG_FLYWAY=de.yaio.app.jobs.batch.JobYaioFlyway
+export PROG_RECALC=de.yaio.app.cli.batch.JobRecalcNodes
+export PROG_FLYWAY=de.yaio.app.system.JobYaioFlyway
 export PROG_DIFF=
 export PROG_WINMERGE="C:/ProgrammePortable/PortableApps/PortableApps/WinMergePortable/WinMergePortable.exe"
 
