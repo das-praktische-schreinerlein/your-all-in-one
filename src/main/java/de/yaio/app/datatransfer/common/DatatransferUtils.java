@@ -22,7 +22,7 @@ import de.yaio.app.datatransfer.exporter.OutputOptionsImpl;
 import de.yaio.app.datatransfer.importer.ImportOptions;
 import de.yaio.app.datatransfer.json.JSONFullExporter;
 import de.yaio.app.datatransfer.json.JSONResponse;
-import de.yaio.app.utils.Calculator;
+import de.yaio.app.core.utils.Calculator;
 import de.yaio.app.core.datadomain.ResContentData.UploadWorkflowState;
 import de.yaio.app.core.nodeservice.BaseNodeService;
 import de.yaio.app.core.nodeservice.NodeService;

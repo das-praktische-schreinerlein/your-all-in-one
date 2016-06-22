@@ -11,12 +11,11 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package de.yaio.app.extension.datatransfer.common;
+package de.yaio.app.cli.importer;
 
 import de.yaio.app.cli.YaioCmdLineHelper;
 import de.yaio.app.core.datadomain.DataDomain;
 import de.yaio.app.core.datadomainservice.NodeNumberService;
-import de.yaio.app.datatransfer.common.CommonImporter;
 import de.yaio.app.datatransfer.importer.ImportOptions;
 import de.yaio.app.datatransfer.importer.ImportOptionsImpl;
 import de.yaio.app.extension.datatransfer.excel.ExcelImporter;

@@ -13,7 +13,7 @@
  */
 package de.yaio.app.clients;
 
-import de.yaio.app.cli.YaioCmdLineHelper;
+import de.yaio.app.utils.CmdLineHelper;
 import de.yaio.app.utils.CmdLineJob;
 import de.yaio.commons.data.DataUtils;
 import de.yaio.commons.http.HttpUtils;
@@ -54,8 +54,7 @@ public abstract class CallYaioInstance extends CmdLineJob {
 
     @Override
     protected Options addAvailiableCmdLineOptions() throws Exception {
-        Options availiableCmdLineOptions = 
-                        YaioCmdLineHelper.getNewOptionsInstance();
+        Options availiableCmdLineOptions = CmdLineHelper.getNewOptionsInstance();
 
         // add default-Options
         Option yaioinstanceOption = new Option(null, "yaioinstance", true,

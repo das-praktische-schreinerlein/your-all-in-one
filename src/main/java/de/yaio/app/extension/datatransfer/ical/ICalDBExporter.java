@@ -18,7 +18,7 @@ import de.yaio.app.core.node.EventNode;
 import de.yaio.app.core.node.InfoNode;
 import de.yaio.app.core.node.TaskNode;
 import de.yaio.app.datatransfer.exporter.OutputOptions;
-import de.yaio.app.utils.Calculator;
+import de.yaio.app.core.utils.Calculator;
 import de.yaio.app.core.dbservice.BaseNodeDBService;
 import de.yaio.app.core.node.BaseNode;
 import de.yaio.app.datatransfer.exporter.OutputOptionsImpl;

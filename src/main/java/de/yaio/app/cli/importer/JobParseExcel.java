@@ -14,7 +14,6 @@
 package de.yaio.app.cli.importer;
 
 import de.yaio.app.cli.YaioCmdLineHelper;
-import de.yaio.app.extension.datatransfer.common.ExtendedCommonImporter;
 import org.apache.commons.cli.Options;
 
 /** 

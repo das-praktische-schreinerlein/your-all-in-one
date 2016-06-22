@@ -18,7 +18,7 @@ import de.yaio.app.core.datadomain.DataDomain;
 import de.yaio.app.datatransfer.exporter.Exporter;
 import de.yaio.app.datatransfer.exporter.OutputOptions;
 import de.yaio.app.datatransfer.exporter.OutputOptionsImpl;
-import de.yaio.app.extension.datatransfer.common.ExtendedCommonImporter;
+import de.yaio.app.cli.importer.ExtendedCommonImporter;
 import de.yaio.app.extension.datatransfer.wiki.WikiExporter;
 import de.yaio.app.cli.YaioCmdLineJob;
 import org.apache.commons.cli.CommandLine;
