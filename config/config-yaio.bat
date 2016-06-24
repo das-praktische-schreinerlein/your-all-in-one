@@ -25,14 +25,20 @@ rem ##############################
 rem # Configure filebased yaio
 rem Gen Wiki-Only
 set PARSEONLY=
+echo %OVERRIDE_PARSEONLY%
+IF NOT [%OVERRIDE_PARSEONLY%] == [] set PARSEONLY=%OVERRIDE_PARSEONLY%
 rem parse ppl from wiki an generate 
 set FLG_PARSE_PPL_FROM_WIKI=
+IF NOT [%OVERRIDE_FLG_PARSE_PPL_FROM_WIKI%] == [] set FLG_PARSE_PPL_FROM_WIKI=%OVERRIDE_FLG_PARSE_PPL_FROM_WIKI%
 rem import the ppl to db
 set FLG_IMPORT_PPL_TO_DB=
+IF NOT [%OVERRIDE_FLG_IMPORT_PPL_TO_DB%] == [] set FLG_IMPORT_PPL_TO_DB=%OVERRIDE_FLG_IMPORT_PPL_TO_DB%
 rem the generate src: ppl or jpa
-set GEN_SRC=
+set GEN_SRC=ppl
+IF NOT [%OVERRIDE_GEN_SRC%] == [] set GEN_SRC=%OVERRIDE_GEN_SRC%
 rem the masternode
 set MASTERNODEID=MasterplanMasternode1
+IF NOT [%OVERRIDE_MASTERNODEID%] == [] set MASTERNODEID=%OVERRIDE_MASTERNODEID%
 set IMPORT_OPTIONS_JPA=--addnodestosysuid %MASTERNODEID%
 rem ##############################
 
@@ -44,7 +50,7 @@ set YAIOVARPATH=%BASEPATH%\..\var\
 set YAIOAPP=%BASEPATH%..\target\yaio.jar
 set APPPROPAGATOR=%BASEPATH%..\sbin\apppropagator.jar
 set CP="%YAIOAPP%;%APPPROPAGATOR%;"
-set CFGFILE=%BASEPATH%..\config\application.properties
+set CFGFILE=%BASEPATH%..\config\yaio-application.properties
 set CFG=--config %CFGFILE% 
 set FLYWAYCFG=%CFG%
 set JAVAOPTIONS=-Xmx768m -Xms128m -Dspring.config.location=file:%CFGFILE% -Dlog4j.configuration=file:%BASEPATH%..\config\log4j.properties
