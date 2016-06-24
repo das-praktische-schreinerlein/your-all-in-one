@@ -17,9 +17,14 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
 import de.yaio.app.BaseTest;
-import de.yaio.app.cli.YaioCmdLineHelper;
+import de.yaio.app.MinimalTestContextConfig;
+import de.yaio.app.config.YaioConfigurationHelper;
+import de.yaio.app.config.ContextHelper;
 import de.yaio.app.core.datadomainservice.NodeNumberService;
 import de.yaio.app.core.node.BaseNode;
+import de.yaio.app.utils.CmdLineHelper;
+import de.yaio.app.utils.config.Configuration;
+import de.yaio.app.utils.config.ConfigurationHelper;
 import org.apache.log4j.Logger;
 import org.hamcrest.core.IsNull;
 import org.junit.Test;
@@ -68,14 +73,29 @@ public abstract class BaseNodeRestControllerTest  extends BaseTest {
     @Override
     public void setUp() throws Exception {
         // initApplicationContext
+        CmdLineHelper cmdLineHelper = CmdLineHelper.getInstance();
+        ConfigurationHelper configurationHelper = YaioConfigurationHelper.getInstance();
+        ContextHelper contextHelper = ContextHelper.getInstance();
+
         String[] args = new String[2];
         args[0] = "--config";
         args[1] = "./target/test-classes/config/application-test.properties";
-        if (YaioCmdLineHelper.getInstance().getCmdLineArgs() == null) {
-            YaioCmdLineHelper.getInstance().getAvailiableCmdLineOptions();
-            YaioCmdLineHelper.getInstance().setCmdLineArgs(args);
-            YaioCmdLineHelper.getInstance().getCommandLine();
-            YaioCmdLineHelper.getInstance().getSpringApplicationContext();
+        if (cmdLineHelper.getCmdLineArgs() == null) {
+            cmdLineHelper.getAvailiableCmdLineOptions();
+            cmdLineHelper.setCmdLineArgs(args);
+            cmdLineHelper.getCommandLine();
+
+            // init configuration and context
+            Configuration config = configurationHelper.initConfiguration(cmdLineHelper);
+            config.publishProperties();
+            contextHelper.addSpringConfig(MinimalTestContextConfig.class);
+
+            LOGGER.info("start test with args:" + config.argsAsList() +
+                    " options:" + config.optionsAsProperties() +
+                    " properties:" + config.propertiesAsProperties() +
+                    " contextConfigs:" + ContextHelper.getInstance().getSpringConfig());
+
+            contextHelper.getSpringApplicationContext();
             
             // gets NodeNumberService
             NodeNumberService nodeNumberService = 
