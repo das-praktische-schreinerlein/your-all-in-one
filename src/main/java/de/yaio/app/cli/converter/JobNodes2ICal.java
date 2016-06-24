@@ -15,6 +15,7 @@ package de.yaio.app.cli.converter;
 
 import de.yaio.app.extension.datatransfer.ical.ICalDBExporter;
 import de.yaio.app.extension.datatransfer.ical.ICalExporter;
+import de.yaio.app.utils.config.ConfigurationOption;
 
 /** 
  * job for import of Nodes in PPL-Format and output as ICal
@@ -41,7 +42,7 @@ public class JobNodes2ICal extends JobNodes2Wiki {
     public void createExporter() {
         String sourceType = "";
         try {
-            sourceType = this.getCmdLineHelper().getCommandLine().getOptionValue("sourcetype", "");
+            sourceType = ConfigurationOption.stringValueOf(this.getConfiguration().getCliOption("sourcetype", ""));
         } catch (Exception e) {
             e.printStackTrace();
         }

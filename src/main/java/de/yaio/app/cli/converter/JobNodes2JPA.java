@@ -13,11 +13,15 @@
  */
 package de.yaio.app.cli.converter;
 
+import de.yaio.app.config.ContextHelper;
+import de.yaio.app.config.JobConfig;
 import de.yaio.app.core.datadomain.DataDomain;
 import de.yaio.app.core.node.BaseNode;
 import de.yaio.app.datatransfer.jpa.JPAExporter;
+import de.yaio.app.utils.config.ConfigurationOption;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 /** 
@@ -47,17 +51,22 @@ public class JobNodes2JPA extends JobNodes2Wiki {
     public void createExporter() {
         exporter = new JPAExporter();
     }
-    
+
+    @Override
+    protected void configureContext() throws Exception {
+        ContextHelper.getInstance().addSpringConfig(JobConfig.class);
+    };
+
     @Override
     public DataDomain createMasternode(final String name) throws Exception {
         DataDomain masterNode = null;
 
         // initApplicationContext
-        this.getYaioCmdLineHelper().getInstance().getSpringApplicationContext();
+        ContextHelper.getInstance().getSpringApplicationContext();
 
         // check for sysUID
-        String sysUID = this.getCmdLineHelper().getCommandLine().getOptionValue("addnodestosysuid");
-        if (sysUID != null || !"".equalsIgnoreCase(sysUID)) {
+        String sysUID = ConfigurationOption.stringValueOf(this.getConfiguration().getCliOption("addnodestosysuid"));
+        if (!StringUtils.isEmpty(sysUID)) {
             // if is set: read masternode from JPA
             if (LOGGER.isInfoEnabled()) {
                 LOGGER.info("read Masternode from JPA:" + sysUID);

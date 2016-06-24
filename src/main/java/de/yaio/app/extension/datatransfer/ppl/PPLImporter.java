@@ -279,10 +279,10 @@ public class PPLImporter extends ImporterImpl {
             detector.setText(checkBuffer);
             match = detector.detect();
             if (lastEncoding == null || !match.getName().equals(lastEncoding)) {
-                LOGGER.info("run " + run + " match charset: " + match.getName() 
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("run " + run + " match charset: " + match.getName()
                                 + " lang:" + match.getLanguage() 
                                 + " conf:" + match.getConfidence());
-                if (LOGGER.isDebugEnabled()) {
                     for (CharsetMatch possibleMatch : detector.detectAll()) {
                         LOGGER.debug("run " + run + " possible charset: " + possibleMatch.getName() 
                                         + " lang:" + possibleMatch.getLanguage() 
@@ -301,9 +301,11 @@ public class PPLImporter extends ImporterImpl {
                         if (run > 1 
                             && !match.getName().equals(bestEncoding)) {
                             // if we are not on first run, set changed flag
-                            LOGGER.info("changed best charset from: " + bestEncoding 
-                                            + "=" + bestConfidence
-                                            + " to " + match.getName() + "=" + match.getConfidence());
+                            if (LOGGER.isDebugEnabled()) {
+                                LOGGER.debug("changed best charset from: " + bestEncoding
+                                        + "=" + bestConfidence
+                                        + " to " + match.getName() + "=" + match.getConfidence());
+                            }
                             flgEncodingChanged = true;
                         }
                         bestConfidence = match.getConfidence();
@@ -343,9 +345,11 @@ public class PPLImporter extends ImporterImpl {
         String result;
         if (flgEncodingChanged) {
             // if Encoding changed, read new and use the best encoding
-            LOGGER.info("read file " + file.getAbsoluteFile() 
-                         + " a second time because of changed best charset: " 
-                         + bestEncoding + "=" + bestConfidence);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("read file " + file.getAbsoluteFile()
+                        + " a second time because of changed best charset: "
+                        + bestEncoding + "=" + bestConfidence);
+            }
             input = new FileInputStream(file);
             fileStream = new BufferedInputStream(input);
             result = IOUtils.toString(fileStream, bestEncoding);
@@ -358,8 +362,10 @@ public class PPLImporter extends ImporterImpl {
             }
         } else {
             // we used the best encoding :-)
-            LOGGER.info("read file " + file.getAbsoluteFile() 
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("read file " + file.getAbsoluteFile()
                         + " with charset: " + bestEncoding + "=" + bestConfidence);
+            }
             result = fileContent.toString();
         }
         

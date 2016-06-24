@@ -13,10 +13,13 @@
  */
 package de.yaio.app.server;
 
-import de.yaio.app.cli.YaioCmdLineHelper;
-import de.yaio.app.system.YaioFlyway;
+import de.yaio.app.config.ContextHelper;
 import de.yaio.app.config.PersistenceConfig;
+import de.yaio.app.config.YaioConfigurationHelper;
+import de.yaio.app.system.YaioFlyway;
+import de.yaio.app.utils.CmdLineHelper;
 import de.yaio.app.utils.CmdLineJob;
+import de.yaio.app.utils.config.ConfigurationHelper;
 import org.apache.commons.cli.Option;
 import org.apache.log4j.Logger;
 import org.apache.tomcat.util.http.fileupload.FileUpload;
@@ -48,7 +51,7 @@ import java.util.List;
 @Configuration
 @EnableSpringConfigured // <context:spring-configured/>
 @EnableAutoConfiguration(exclude = {
-                de.yaio.app.config.MinimalContextConfig.class,
+                de.yaio.app.config.JobConfig.class,
                 de.yaio.services.webshot.WebshotApplication.class, 
                 de.yaio.services.webshot.WebshotWebSecurityConfig.class,
                 de.yaio.services.webshot.WebshotWebSecurityConfig.WebshotServiceSecurityConfigurerAdapter.class,
@@ -68,7 +71,7 @@ import java.util.List;
                                "de.yaio.services.plantuml", "de.yaio.services.metaextract"},
                 excludeFilters = {
                     @Filter(type = FilterType.ASSIGNABLE_TYPE, value = {
-                        de.yaio.app.config.MinimalContextConfig.class,
+                        de.yaio.app.config.JobConfig.class,
                         de.yaio.services.webshot.WebshotApplication.class,
                         de.yaio.services.webshot.WebshotWebSecurityConfig.class,
                         de.yaio.services.webshot.WebshotWebSecurityConfig.WebshotServiceSecurityConfigurerAdapter.class,
@@ -94,38 +97,46 @@ public class Application {
      */
     public static void main(final String[] args) {
         try {
+            CmdLineHelper cmdLineHelper = CmdLineHelper.getInstance();
+            ConfigurationHelper configurationHelper = YaioConfigurationHelper.getInstance();
+
             // parse cmdArgs
             LOGGER.info("initCommandLine");
             Option pathIdDB = new Option(null, "pathiddb", true,
                             "Pfad zur ID-Datenbank");
                     pathIdDB.setRequired(true);
-            YaioCmdLineHelper.getInstance().getAvailiableCmdLineOptions().addOption(pathIdDB);
-            YaioCmdLineHelper.getInstance().setCmdLineArgs(args);
-            YaioCmdLineHelper.getInstance().getCommandLine();
+            cmdLineHelper.getAvailiableCmdLineOptions().addOption(pathIdDB);
+            cmdLineHelper.setCmdLineArgs(args);
+            cmdLineHelper.getCommandLine();
 
             // check for unknown Args
-            LOGGER.info("used CmdLineArgs: " 
-                            + YaioCmdLineHelper.getInstance().getCmdLineArgs());
-            if (YaioCmdLineHelper.getInstance().getCommandLine() != null) {
-                LOGGER.info("unknown CmdLineArgs: " 
-                            + YaioCmdLineHelper.getInstance().getCommandLine().getArgs());
+            LOGGER.info("used CmdLineArgs: " + cmdLineHelper.getCmdLineArgs());
+            if (cmdLineHelper.getCommandLine() != null) {
+                LOGGER.info("unknown CmdLineArgs: " + cmdLineHelper.getCommandLine().getArgs());
             }
 
             // validate cmdLine
             LOGGER.info("validate CmdLine");
-            if (!YaioCmdLineHelper.getInstance().validateCmdLine()) {
+            if (!cmdLineHelper.validateCmdLine()) {
                 LOGGER.info("Illegal CmdArgs Exit: 1");
                 System.exit(CmdLineJob.CONST_EXITCODE_FAILED_ARGS);
             }
+
+            // init configuration
+            de.yaio.app.utils.config.Configuration config = configurationHelper.initConfiguration();
+            config.publishProperties();
+
+            LOGGER.info("start application with args:" + config.argsAsList() +
+                    " options:" + config.optionsAsProperties() +
+                    " properties:" + config.propertiesAsProperties() +
+                    " contextConfigs:" + ContextHelper.getInstance().getSpringConfig());
 
             // do flyway
             String flyWayRes = YaioFlyway.doFlyway();
             LOGGER.info(flyWayRes);
 
-            YaioCmdLineHelper.getInstance().initProperties();
-
             // inform spring about configfile
-            List<String> newArgs = new ArrayList<String>(Arrays.asList(args));
+            List<String> newArgs = new ArrayList<>(Arrays.asList(args));
 
             // initApp
             LOGGER.info("start application with args:" + newArgs);

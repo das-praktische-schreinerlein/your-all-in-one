@@ -13,8 +13,12 @@
  */
 package de.yaio.app.system;
 
-import de.yaio.app.cli.YaioCmdLineJob;
+import de.yaio.app.config.ContextHelper;
+import de.yaio.app.config.JobConfig;
+import de.yaio.app.config.YaioConfigurationHelper;
 import de.yaio.app.utils.CmdLineHelper;
+import de.yaio.app.utils.CmdLineJob;
+import de.yaio.app.utils.config.Configuration;
 import org.apache.commons.cli.Options;
 import org.apache.log4j.Logger;
 
@@ -22,7 +26,7 @@ import org.apache.log4j.Logger;
  * job to do flyway on db
  * 
  */
-public class JobYaioFlyway extends YaioCmdLineJob {
+public class JobYaioFlyway extends CmdLineJob {
 
     private static final Logger LOGGER =
         Logger.getLogger(JobYaioFlyway.class);
@@ -51,8 +55,30 @@ public class JobYaioFlyway extends YaioCmdLineJob {
     }
 
     @Override
+    protected void initJob() throws Exception {
+        YaioConfigurationHelper configurationHelper = YaioConfigurationHelper.getInstance();
+        Configuration config = configurationHelper.initConfiguration();
+        config.publishProperties();
+
+        ContextHelper.getInstance().addSpringConfig(JobConfig.class);
+        ContextHelper.getInstance().getSpringApplicationContext();
+
+        LOGGER.info("start job with args:" + config.argsAsList() +
+                " options:" + config.optionsAsProperties() +
+                " properties:" + config.propertiesAsProperties() +
+                " contextConfigs:" + ContextHelper.getInstance().getSpringConfig());
+    };
+
+    @Override
     public void doJob() throws Exception {
         System.out.println(YaioFlyway.doFlyway());
+    }
+
+    @Override
+    protected void cleanUpAfterJob() throws Exception {
+        // TODO: hack to close HSLDB-connection -> Hibernate doesn't close the
+        //       database and so the content is not written to file
+        org.hsqldb.DatabaseManager.closeDatabases(0);
     }
 
     // #############

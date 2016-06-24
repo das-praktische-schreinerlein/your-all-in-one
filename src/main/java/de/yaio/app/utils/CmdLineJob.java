@@ -100,7 +100,7 @@ public abstract class CmdLineJob {
     /** 
      * do the jobprocessing
      * <ul>
-     *    <li>initialize YaioCmdLineHelper and Commandline
+     *    <li>initialize CmdLineHelper and Commandline
      *    <li>call initJob
      *    <li>call doJob
      *    <li>call cleanUpAfterJob
@@ -221,13 +221,9 @@ public abstract class CmdLineJob {
         }
     }
 
-    protected void initJob() throws Exception {
-    }
+    protected  abstract void initJob() throws Exception;
 
     protected abstract void doJob() throws Exception;
 
-
-
-    protected void cleanUpAfterJob() throws Exception {
-    }
+    protected  abstract void cleanUpAfterJob() throws Exception;
 }

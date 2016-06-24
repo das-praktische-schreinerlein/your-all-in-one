@@ -13,7 +13,7 @@
  */
 package de.yaio.app.server;
 
-import de.yaio.app.cli.YaioCmdLineHelper;
+import de.yaio.app.config.YaioConfiguration;
 import de.yaio.app.core.datadomainservice.NodeNumberService;
 import de.yaio.app.core.node.BaseNode;
 import org.apache.log4j.Logger;
@@ -50,7 +50,7 @@ public class ApplicationShutdown implements ApplicationListener<ContextClosedEve
             // Ids speichern
             LOGGER.info("shutdownMetaDataService start");
             nodeNumberService = BaseNode.getConfiguredMetaDataService().getNodeNumberService();
-            strPathIdDB = YaioCmdLineHelper.getInstance().getCommandLine().getOptionValue("pathiddb", null);
+            strPathIdDB = YaioConfiguration.getInstance().getCliOption("pathiddb", null).getStringValue();
             if (strPathIdDB != null && nodeNumberService != null) {
                 // save to file
                 LOGGER.info("shutdownMetaDataService export nextNodeNumbers to " + strPathIdDB +

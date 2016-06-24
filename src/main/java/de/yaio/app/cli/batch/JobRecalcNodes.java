@@ -13,9 +13,12 @@
  */
 package de.yaio.app.cli.batch;
 
-import de.yaio.app.cli.YaioCmdLineHelper;
-import de.yaio.app.core.recalcer.NodeRecalcer;
 import de.yaio.app.cli.YaioCmdLineJob;
+import de.yaio.app.config.ContextHelper;
+import de.yaio.app.config.JobConfig;
+import de.yaio.app.core.recalcer.NodeRecalcer;
+import de.yaio.app.utils.CmdLineHelper;
+import de.yaio.app.utils.config.ConfigurationOption;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.log4j.Logger;
@@ -45,16 +48,13 @@ public class JobRecalcNodes extends YaioCmdLineJob {
 
     @Override
     protected Options addAvailiableCmdLineOptions() throws Exception {
-        Options availiableCmdLineOptions = 
-                        YaioCmdLineHelper.getNewOptionsInstance();
+        Options availiableCmdLineOptions = CmdLineHelper.getNewOptionsInstance();
 
         // add dfeault-Options
-        this.getCmdLineHelper().addAvailiableBaseCmdLineOptions(
-                        availiableCmdLineOptions);
+        this.getCmdLineHelper().addAvailiableBaseCmdLineOptions(availiableCmdLineOptions);
         
         // sysuid for export
-        Option sysuidOption = new Option(null, "sysuid", true,
-                "SysUID of Masternode to recalc");
+        Option sysuidOption = new Option(null, "sysuid", true, "SysUID of Masternode to recalc");
         sysuidOption.setRequired(true);
         availiableCmdLineOptions.addOption(sysuidOption);
 
@@ -66,12 +66,17 @@ public class JobRecalcNodes extends YaioCmdLineJob {
     }
 
     @Override
+    protected void configureContext() throws Exception {
+        ContextHelper.getInstance().addSpringConfig(JobConfig.class);
+    };
+
+    @Override
     public void doJob() throws Exception {
         // initApplicationContext
-        this.getYaioCmdLineHelper().getSpringApplicationContext();
+        ContextHelper.getInstance().getSpringApplicationContext();
         
         // extract sysUID
-        String sysUID = this.getCmdLineHelper().getCommandLine().getOptionValue("sysuid");
+        String sysUID = ConfigurationOption.stringValueOf(this.getConfiguration().getCliOption("sysuid"));
 
         // create recalcer
         NodeRecalcer nodeRecalcer = new NodeRecalcer();

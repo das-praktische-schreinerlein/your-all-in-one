@@ -13,13 +13,13 @@
  */
 package de.yaio.app.server;
 
-import de.yaio.app.cli.YaioCmdLineHelper;
-import de.yaio.app.core.recalcer.SysDataRecalcer;
+import de.yaio.app.config.YaioConfiguration;
 import de.yaio.app.core.datadomainservice.NodeNumberService;
 import de.yaio.app.core.node.BaseNode;
 import de.yaio.app.core.recalcer.CachedDataRecalcer;
 import de.yaio.app.core.recalcer.NodeRecalcer;
 import de.yaio.app.core.recalcer.StatDataRecalcer;
+import de.yaio.app.core.recalcer.SysDataRecalcer;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
@@ -86,7 +86,7 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
                     BaseNode.getConfiguredMetaDataService().getNodeNumberService();
 
             // Id-Datei einlesen
-            strPathIdDB = YaioCmdLineHelper.getInstance().getCommandLine().getOptionValue("pathiddb", null);
+            strPathIdDB = YaioConfiguration.getInstance().getCliOption("pathiddb", null).getStringValue();
             if (strPathIdDB != null) {
                 if (nodeNumberService.isInitialised()) {
                     LOGGER.info("initMetaDataService from:" + strPathIdDB + " overwrite:" + nodeNumberService.getNextNodeNumberMap());

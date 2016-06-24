@@ -13,11 +13,11 @@
  */
 package de.yaio.app.system;
 
-import de.yaio.app.cli.YaioCmdLineHelper;
+import de.yaio.app.config.YaioConfiguration;
+import de.yaio.app.utils.config.Configuration;
+import de.yaio.app.utils.config.ConfigurationOption;
 import org.apache.log4j.Logger;
 import org.flywaydb.core.Flyway;
-
-import java.util.Properties;
 
 /** 
  * do flyway on db
@@ -35,10 +35,11 @@ public class YaioFlyway {
      */
     public static String doFlyway() throws Exception {
         // do flyWay before applicationContext
-        Properties props = YaioCmdLineHelper.getInstance().initProperties();
-        if ("true".equalsIgnoreCase(props.getProperty("yaio.flyway.enabled", "false"))) {
+        Configuration config = YaioConfiguration.getInstance();
+        if ("true".equalsIgnoreCase(
+                ConfigurationOption.stringValueOf(config.getProperty("yaio.flyway.enabled", "false")))) {
             Flyway flyWay = new Flyway();
-            flyWay.configure(props);
+            flyWay.configure(config.propertiesAsProperties());
             int migrationsDone = flyWay.migrate();
             if (LOGGER.isInfoEnabled()) {
                 LOGGER.info("flyway: " + migrationsDone + " done");

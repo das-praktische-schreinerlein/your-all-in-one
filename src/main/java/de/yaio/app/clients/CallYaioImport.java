@@ -13,6 +13,7 @@
  */
 package de.yaio.app.clients;
 
+import de.yaio.app.utils.config.ConfigurationOption;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.log4j.Logger;
@@ -48,14 +49,12 @@ public class CallYaioImport extends CallYaioInstance {
         Options availiableCmdLineOptions = super.addAvailiableCmdLineOptions();
         
         // file to import
-        Option formatOption = new Option(null, "importfile", true,
-                "file to import (in wikiformat)");
+        Option formatOption = new Option(null, "importfile", true, "file to import (in wikiformat)");
         formatOption.setRequired(true);
         availiableCmdLineOptions.addOption(formatOption);
 
         // sysuid for import
-        Option parentsysuidOption = new Option(null, "parentsysuid", true,
-                "SysUID of Masternode to append importfile");
+        Option parentsysuidOption = new Option(null, "parentsysuid", true, "SysUID of Masternode to append importfile");
         parentsysuidOption.setRequired(true);
         availiableCmdLineOptions.addOption(parentsysuidOption);
 
@@ -69,8 +68,8 @@ public class CallYaioImport extends CallYaioInstance {
     @Override
     public void doJob() throws Exception {
         // get options
-        String parentsysUID = this.getCmdLineHelper().getCommandLine().getOptionValue("parentsysuid");
-        String importfile = this.getCmdLineHelper().getCommandLine().getOptionValue("importfile");
+        String parentsysUID = ConfigurationOption.stringValueOf(this.getConfiguration().getCliOption("parentsysuid"));
+        String importfile = ConfigurationOption.stringValueOf(this.getConfiguration().getCliOption("importfile"));
         
         // call url
         Map<String, String> files = new HashMap<String, String>();

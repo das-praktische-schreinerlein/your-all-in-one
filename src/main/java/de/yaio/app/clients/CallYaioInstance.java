@@ -13,8 +13,14 @@
  */
 package de.yaio.app.clients;
 
+import de.yaio.app.config.ContextHelper;
+import de.yaio.app.config.YaioConfiguration;
+import de.yaio.app.config.YaioConfigurationHelper;
 import de.yaio.app.utils.CmdLineHelper;
 import de.yaio.app.utils.CmdLineJob;
+import de.yaio.app.utils.config.Configuration;
+import de.yaio.app.utils.config.ConfigurationHelper;
+import de.yaio.app.utils.config.ConfigurationOption;
 import de.yaio.commons.data.DataUtils;
 import de.yaio.commons.http.HttpUtils;
 import org.apache.commons.cli.Option;
@@ -24,6 +30,7 @@ import org.apache.log4j.Logger;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
+import java.util.Properties;
 
 /** 
  * job to call admin-int5erface of yaio-instances
@@ -44,6 +51,8 @@ public abstract class CallYaioInstance extends CmdLineJob {
     protected String username;
     protected URL yaioInstanceUrl;
 
+    YaioConfigurationHelper configurationHelper = YaioConfigurationHelper.getInstance();
+
     /** 
      * job to call yaio-instances for admin-purposes
      * @param args                   the command line arguments
@@ -62,13 +71,11 @@ public abstract class CallYaioInstance extends CmdLineJob {
         yaioinstanceOption.setRequired(true);
         availiableCmdLineOptions.addOption(yaioinstanceOption);
 
-        Option usernameOption = new Option(null, "username", true,
-                        "admin-username for login");
+        Option usernameOption = new Option(null, "username", true, "admin-username for login");
         usernameOption.setRequired(true);
         availiableCmdLineOptions.addOption(usernameOption);
 
-        Option passwordOption = new Option(null, "password", true,
-                        "admin-password for login");
+        Option passwordOption = new Option(null, "password", true, "admin-password for login");
         passwordOption.setRequired(true);
         availiableCmdLineOptions.addOption(passwordOption);
         
@@ -78,21 +85,35 @@ public abstract class CallYaioInstance extends CmdLineJob {
         
         return availiableCmdLineOptions;
     }
-    
+
+    protected YaioConfiguration getConfiguration() throws Exception {
+        return configurationHelper.getYaioConfigurationInstance();
+    }
+
     @Override
     protected void initJob() throws Exception {
-        password = this.getCmdLineHelper().getCommandLine().getOptionValue("password");
-        username = this.getCmdLineHelper().getCommandLine().getOptionValue("username");
-        yaioInstanceUrl = DataUtils.extractWebUrl(
-                        this.getCmdLineHelper().getCommandLine().getOptionValue("yaioinstance"));
-        LOGGER.info("connectData:" + yaioInstanceUrl + " user:" + username 
-                        + " from:" + this.getCmdLineHelper().getCommandLine().getOptionValue("yaioinstance"));
+        // init configuration without config-file
+        Configuration config = configurationHelper.initConfiguration(this.getCmdLineHelper(), new Properties());
+        config.publishProperties();
+
+        // configure common parameters
+        password = ConfigurationOption.stringValueOf(this.getConfiguration().getCliOption("password"));
+        username = ConfigurationOption.stringValueOf(this.getConfiguration().getCliOption("username"));
+        String yaioInstance = ConfigurationOption.stringValueOf(this.getConfiguration().getCliOption("yaioinstance"));
+        yaioInstanceUrl = DataUtils.extractWebUrl(yaioInstance);
+        LOGGER.info("connectData:" + yaioInstanceUrl + " user:" + username + " from:" + yaioInstance);
         if (yaioInstanceUrl == null) {
-            throw new IllegalArgumentException("cant parse yaioinstance:" + 
-                            this.getCmdLineHelper().getCommandLine().getOptionValue("yaioinstance"));
+            throw new IllegalArgumentException("cant parse yaioinstance:" + yaioInstance);
         }
+
+        LOGGER.info("call instance with args:" + getConfiguration().argsAsList() +
+                " options:" + getConfiguration().optionsAsProperties() +
+                " properties:" + getConfiguration().propertiesAsProperties());
     }
-    
+
+    protected void cleanUpAfterJob() throws Exception {
+    }
+
     /** 
      * execute GET-Request for yaio-url with params
      * @param route                  the route behind the yaioInstanceUrl to call

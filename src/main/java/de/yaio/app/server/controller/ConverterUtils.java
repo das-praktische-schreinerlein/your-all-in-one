@@ -13,7 +13,7 @@
  */
 package de.yaio.app.server.controller;
 
-import de.yaio.app.cli.YaioCmdLineHelper;
+import de.yaio.app.config.YaioConfiguration;
 import de.yaio.app.core.node.BaseNode;
 import de.yaio.app.datatransfer.exporter.Exporter;
 import de.yaio.app.datatransfer.exporter.OutputOptions;
@@ -269,10 +269,11 @@ public class ConverterUtils {
 
                 // include yaioinstances
                 res = "";
-                for (String name : YaioCmdLineHelper.getInstance().getKnownYaioInstances().keySet()) {
-                    Map<String, String> yaioInstance = YaioCmdLineHelper.getInstance().getKnownYaioInstances().get(name);
-                    String url = yaioInstance.get(YaioCmdLineHelper.CONST_PROPNAME_YAIOINSTANCES_URL);
-                    String desc = yaioInstance.get(YaioCmdLineHelper.CONST_PROPNAME_YAIOINSTANCES_DESC);
+                Map<String, Map<String, String>> knownYaioInstances = YaioConfiguration.getInstance().getKnownYaioInstances();
+                for (String name : knownYaioInstances.keySet()) {
+                    Map<String, String> yaioInstance = knownYaioInstances.get(name);
+                    String url = yaioInstance.get(YaioConfiguration.CONST_PROPNAME_YAIOINSTANCES_URL);
+                    String desc = yaioInstance.get(YaioConfiguration.CONST_PROPNAME_YAIOINSTANCES_DESC);
                     res += "// add " + url + "\n";
                     res += "yaioAppBase.configureService('Yaio.ServerNodeDBDriver_" + url + "', function() { return Yaio.ServerNodeDBDriver(yaioAppBase, Yaio.ServerNodeDBDriverConfig('" + url + "', '" + name + "',  '" + desc + "')); });\n";
                     res += "yaioAppBase.configureService('YaioServerNodeDBDriver_" + url + "', function() { return yaioAppBase.get('Yaio.ServerNodeDBDriver_" + url + "'); });\n";

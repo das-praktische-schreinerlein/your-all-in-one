@@ -13,11 +13,11 @@
  */
 package de.yaio.app.server.controller;
 
-import de.yaio.app.cli.YaioCmdLineHelper;
-import de.yaio.app.datatransfer.exporter.OutputOptions;
+import de.yaio.app.config.YaioConfiguration;
 import de.yaio.app.core.node.BaseNode;
 import de.yaio.app.datatransfer.exporter.EmptyOutputOptionsImpl;
 import de.yaio.app.datatransfer.exporter.Exporter;
+import de.yaio.app.datatransfer.exporter.OutputOptions;
 import de.yaio.app.datatransfer.exporter.OutputOptionsImpl;
 import de.yaio.app.datatransfer.json.JSONFullExporter;
 import de.yaio.app.extension.datatransfer.csv.CSVExporter;
@@ -35,6 +35,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 /** 
  * controller with Download-Services to export BaseNodes in different 
@@ -535,8 +536,9 @@ public class ExportController {
         String res = converterUtils.commonExportNodeAsHtml(sysUID, oOptions, response, 
                         "/static/exporttemplates/documentation-export.html");
         // replace static pathes...
-        for (String pattern : YaioCmdLineHelper.PostProcessorReplacements_documentation.keySet()) {
-            res = res.replace(pattern, YaioCmdLineHelper.PostProcessorReplacements_documentation.get(pattern));
+        Map<String, String> replacements = YaioConfiguration.getInstance().getPostProcessorReplacements();
+        for (String pattern : replacements.keySet()) {
+            res = res.replace(pattern, replacements.get(pattern));
         }
         return res;
     }
@@ -555,8 +557,9 @@ public class ExportController {
                                                 final HttpServletResponse response) {
         String res = converterUtils.commonExportNodeAsYaioApp(sysUID, response, null, true);
         // replace static pathes...
-        for (String pattern : YaioCmdLineHelper.PostProcessorReplacements_documentation.keySet()) {
-            res = res.replace(pattern, YaioCmdLineHelper.PostProcessorReplacements_documentation.get(pattern));
+        Map<String, String> replacements = YaioConfiguration.getInstance().getPostProcessorReplacements();
+        for (String pattern : replacements.keySet()) {
+            res = res.replace(pattern, replacements.get(pattern));
         }
         
         return res;

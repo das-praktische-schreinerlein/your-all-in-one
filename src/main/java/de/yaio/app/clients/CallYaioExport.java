@@ -13,6 +13,7 @@
  */
 package de.yaio.app.clients;
 
+import de.yaio.app.utils.config.ConfigurationOption;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.io.IOUtils;
@@ -25,12 +26,7 @@ import java.io.Writer;
 /** 
  * job to call yaio-instance to export nodes from db
  * 
- * @FeatureDomain                DatenExport Praesentation
- * @package                      de.yaio.cli
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category                     collaboration
- * @copyright                    Copyright (c) 2014, Michael Schreiner
- * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class CallYaioExport extends CallYaioInstance {
 
@@ -49,21 +45,15 @@ public class CallYaioExport extends CallYaioInstance {
     protected Options addAvailiableCmdLineOptions() throws Exception {
         Options availiableCmdLineOptions = super.addAvailiableCmdLineOptions();
         
-        // endpoint for export
-        Option formatOption = new Option(null, "format", true,
-                "exportformat (endpoint like wiki,csv,html ...)");
+        Option formatOption = new Option(null, "format", true, "exportformat (endpoint like wiki,csv,html ...)");
         formatOption.setRequired(true);
         availiableCmdLineOptions.addOption(formatOption);
 
-        // sysuid for export
-        Option sysuidOption = new Option(null, "sysuid", true,
-                "SysUID of Masternode to export");
+        Option sysuidOption = new Option(null, "sysuid", true, "SysUID of Masternode to export");
         sysuidOption.setRequired(true);
         availiableCmdLineOptions.addOption(sysuidOption);
 
-        // sysuid for export
-        Option outfileNameOption = new Option(null, "outfile", true,
-                "Filename to write");
+        Option outfileNameOption = new Option(null, "outfile", true, "Filename to write");
         sysuidOption.setRequired(false);
         availiableCmdLineOptions.addOption(outfileNameOption);
 
@@ -77,9 +67,9 @@ public class CallYaioExport extends CallYaioInstance {
     @Override
     public void doJob() throws Exception {
         // get options
-        String sysUID = this.getCmdLineHelper().getCommandLine().getOptionValue("sysuid");
-        String format = this.getCmdLineHelper().getCommandLine().getOptionValue("format");
-        String outfileName = this.getCmdLineHelper().getCommandLine().getOptionValue("outfile");
+        String sysUID = ConfigurationOption.stringValueOf(this.getConfiguration().getCliOption("sysuid"));
+        String format = ConfigurationOption.stringValueOf(this.getConfiguration().getCliOption("format"));
+        String outfileName = ConfigurationOption.stringValueOf(this.getConfiguration().getCliOption("outfile"));
         
         // call url
         byte[] result = this.callGetUrl("/exports/" + format + "/" + sysUID, null);

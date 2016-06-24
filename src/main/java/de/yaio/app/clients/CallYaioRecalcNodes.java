@@ -13,6 +13,7 @@
  */
 package de.yaio.app.clients;
 
+import de.yaio.app.utils.config.ConfigurationOption;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.log4j.Logger;
@@ -45,8 +46,7 @@ public class CallYaioRecalcNodes extends CallYaioInstance {
         Options availiableCmdLineOptions = super.addAvailiableCmdLineOptions();
         
         // sysuid for export
-        Option sysuidOption = new Option(null, "sysuid", true,
-                "SysUID of Masternode to recalc");
+        Option sysuidOption = new Option(null, "sysuid", true, "SysUID of Masternode to recalc");
         sysuidOption.setRequired(true);
         availiableCmdLineOptions.addOption(sysuidOption);
 
@@ -60,7 +60,7 @@ public class CallYaioRecalcNodes extends CallYaioInstance {
     @Override
     public void doJob() throws Exception {
         // get options
-        String sysUID = this.getCmdLineHelper().getCommandLine().getOptionValue("sysuid");
+        String sysUID = ConfigurationOption.stringValueOf(this.getConfiguration().getCliOption("sysuid"));
         
         // call url
         byte[] result = this.callGetUrl("/admin/recalc/" + sysUID, null);

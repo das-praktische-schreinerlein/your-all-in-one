@@ -13,7 +13,7 @@
  */
 package de.yaio.app.cli.importer;
 
-import de.yaio.app.cli.YaioCmdLineHelper;
+import de.yaio.app.utils.CmdLineHelper;
 import org.apache.commons.cli.Options;
 
 /** 
@@ -44,8 +44,7 @@ public class JobParseExcel extends JobParseWiki {
 
     @Override
     protected Options addAvailiableCmdLineOptions() throws Exception {
-        Options availiableCmdLineOptions = 
-                        YaioCmdLineHelper.getNewOptionsInstance();
+        Options availiableCmdLineOptions = CmdLineHelper.getNewOptionsInstance();
         
         // add Options
         commonImporter.addAvailiableCommonCmdLineOptions(availiableCmdLineOptions);

@@ -13,12 +13,15 @@
  */
 package de.yaio.app.cli.importer;
 
-import de.yaio.app.cli.YaioCmdLineHelper;
+import de.yaio.app.config.ContextHelper;
+import de.yaio.app.config.YaioConfiguration;
 import de.yaio.app.core.datadomain.DataDomain;
-import de.yaio.app.datatransfer.jpa.JPAImporter;
 import de.yaio.app.core.node.BaseNode;
+import de.yaio.app.datatransfer.jpa.JPAImporter;
+import de.yaio.app.utils.config.ConfigurationOption;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 /** 
@@ -58,14 +61,12 @@ public class CommonImporter {
      */
     public void addAvailiableCommonCmdLineOptions(final Options availiableCmdLineOptions) {
         // sourceType
-        Option sourceType = new Option("", "sourcetype", true,
-                "Source to read from (jpa).");
+        Option sourceType = new Option("", "sourcetype", true, "Source to read from (jpa).");
         sourceType.setRequired(false);
         availiableCmdLineOptions.addOption(sourceType);
     
         // Hirarchy-Delimiter  
-        Option delimiterOption = new Option("", "delimiter", true,
-                "Hirarchy-Delimiter (default TAB)");
+        Option delimiterOption = new Option("", "delimiter", true, "Hirarchy-Delimiter (default TAB)");
         delimiterOption.setRequired(false);
         availiableCmdLineOptions.addOption(delimiterOption);
     }
@@ -77,8 +78,7 @@ public class CommonImporter {
      */
     public void addAvailiableJPACmdLineOptions(final Options availiableCmdLineOptions) {
         // exportsysuid
-        Option exportSysUid = new Option("", "exportsysuid", true,
-                "SysUId of the masterNode to export.");
+        Option exportSysUid = new Option("", "exportsysuid", true, "SysUId of the masterNode to export.");
         exportSysUid.setRequired(false);
         availiableCmdLineOptions.addOption(exportSysUid);
     }
@@ -93,7 +93,7 @@ public class CommonImporter {
         pathIdDB.setRequired(true);
         availiableCmdLineOptions.addOption(pathIdDB);
     }
-    
+
     /*
      * ##############
      * import-logic
@@ -107,21 +107,15 @@ public class CommonImporter {
      * @throws Exception             parse/io-Exceptions possible
      */
     public void importDataToMasterNodeFromJPA(final DataDomain masterNode) throws Exception {
-        if (LOGGER.isInfoEnabled()) {
-            LOGGER.info("read from JPA");
-        }
-        
+        // initApplicationContext
+        ContextHelper.getInstance().getSpringApplicationContext();
+
         // check exportsysuid
-        String exportSysUID = 
-                        YaioCmdLineHelper.getInstance().getCommandLine().getOptionValue(
-                                        "exportsysuid");
-        if (exportSysUID == null || "".equalsIgnoreCase(exportSysUID)) {
+        String exportSysUID = YaioConfiguration.getInstance().getCliOption("exportsysuid", null).getStringValue();
+        if (StringUtils.isEmpty(exportSysUID)) {
             throw new IllegalArgumentException("For sourcetype=jpa a exportsysuid is expected");
         }
         
-        // initApplicationContext
-        YaioCmdLineHelper.getInstance().getSpringApplicationContext();
-
         // create own importer
         JPAImporter jpaImporter = new JPAImporter(null);
         if (LOGGER.isInfoEnabled()) {
@@ -129,8 +123,7 @@ public class CommonImporter {
         }
 
         // read data
-        DataDomain jpaNode = 
-                        jpaImporter.getBaseNodeBySysUID(exportSysUID);
+        DataDomain jpaNode = jpaImporter.getBaseNodeBySysUID(exportSysUID);
         BaseNode baseNode = (BaseNode) jpaNode;
         if (baseNode == null) {
             throw new IllegalArgumentException("node not found sysUID=" + exportSysUID);
@@ -152,8 +145,8 @@ public class CommonImporter {
      */
     public void importDataToMasterNode(final DataDomain masterNode) throws Exception {
         // check datasource
-        String sourceType =
-                        YaioCmdLineHelper.getInstance().getCommandLine().getOptionValue("sourcetype", defaultSourceType);
+        String sourceType = ConfigurationOption.stringValueOf(
+                YaioConfiguration.getInstance().getCliOption("sourcetype", defaultSourceType));
         if ("jpa".equalsIgnoreCase(sourceType)) {
             // from jpa
             this.importDataToMasterNodeFromJPA(masterNode);

@@ -13,7 +13,7 @@
  */
 package de.yaio.app.cli.importer;
 
-import de.yaio.app.cli.YaioCmdLineHelper;
+import de.yaio.app.config.YaioConfiguration;
 import de.yaio.app.core.datadomain.DataDomain;
 import de.yaio.app.core.datadomainservice.NodeNumberService;
 import de.yaio.app.datatransfer.importer.ImportOptions;
@@ -23,8 +23,10 @@ import de.yaio.app.extension.datatransfer.ppl.PPLImporter;
 import de.yaio.app.extension.datatransfer.wiki.WikiImportOptions;
 import de.yaio.app.extension.datatransfer.wiki.WikiImporter;
 import de.yaio.app.extension.datatransfer.wiki.WikiImporter.WikiStructLine;
+import de.yaio.app.utils.config.ConfigurationOption;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import java.util.List;
@@ -136,8 +138,7 @@ public class ExtendedCommonImporter extends CommonImporter {
      */
     public void addAvailiableProductiveImportCmdLineOptions(final Options availiableCmdLineOptions) {
         // Id-File
-        Option pathIdDB = new Option("", "pathiddb", true,
-                "Pfad zur ID-Datenbank");
+        Option pathIdDB = new Option("", "pathiddb", true, "Pfad zur ID-Datenbank");
         pathIdDB.setRequired(true);
         availiableCmdLineOptions.addOption(pathIdDB);
     }
@@ -156,18 +157,17 @@ public class ExtendedCommonImporter extends CommonImporter {
      */
     public void importDataToMasterNodeFromPPLFile(final DataDomain masterNode) throws Exception {
         // check srcFile
-        if (YaioCmdLineHelper.getInstance().getCommandLine().getArgs().length <= 0) {
+        if (YaioConfiguration.getInstance().getArgNames().size() <= 0) {
             throw new IllegalArgumentException("Import from PPL-File requires filename.");
         }
-        String srcFile = YaioCmdLineHelper.getInstance().getCommandLine().getArgs()[0];
+        String srcFile = ConfigurationOption.stringValueOf(YaioConfiguration.getInstance().getArg(0));
         if (LOGGER.isInfoEnabled()) {
             LOGGER.info("read from PPL file:" + srcFile);
         }
 
         // config
-        String delimiter = 
-                        YaioCmdLineHelper.getInstance().getCommandLine().getOptionValue(
-                                        "delimiter", "\t");
+        String delimiter = ConfigurationOption.stringValueOf(
+                YaioConfiguration.getInstance().getCliOption("delimiter", "\t"));
         
         // export PPL 
         pplImporter.extractNodesFromFile(masterNode, srcFile, delimiter);
@@ -181,9 +181,8 @@ public class ExtendedCommonImporter extends CommonImporter {
      */
     public void importDataToMasterNodeFromExcel(final DataDomain masterNode) throws Exception {
         // config
-        String delimiter = 
-                        YaioCmdLineHelper.getInstance().getCommandLine().getOptionValue(
-                                        "delimiter", "\t");
+        String delimiter = ConfigurationOption.stringValueOf(
+                YaioConfiguration.getInstance().getCliOption("delimiter", "\t"));
 
         // create Importer
         String pplSource = this.extractDataFromExcel();
@@ -200,10 +199,10 @@ public class ExtendedCommonImporter extends CommonImporter {
      */
     public String extractDataFromExcel() throws Exception {
         // check srcFile
-        if (YaioCmdLineHelper.getInstance().getCommandLine().getArgs().length <= 0) {
+        if (YaioConfiguration.getInstance().getArgNames().size() <= 0) {
             throw new IllegalArgumentException("Import from Excel-File requires filename.");
         }
-        String srcFile = YaioCmdLineHelper.getInstance().getCommandLine().getArgs()[0];
+        String srcFile = ConfigurationOption.stringValueOf(YaioConfiguration.getInstance().getArg(0));
         if (LOGGER.isInfoEnabled()) {
             LOGGER.info("read from PPL file:" + srcFile);
         }
@@ -218,10 +217,8 @@ public class ExtendedCommonImporter extends CommonImporter {
                         excelImporter.getNodeFactory().getMetaDataService().getNodeNumberService();
 
         // Id-Datei einlesen
-        String strPathIdDB = 
-                        YaioCmdLineHelper.getInstance().getCommandLine().getOptionValue(
-                                        "pathiddb", null);
-        if (strPathIdDB != null) {
+        String strPathIdDB = ConfigurationOption.stringValueOf(YaioConfiguration.getInstance().getCliOption("pathiddb"));
+        if (!StringUtils.isEmpty(strPathIdDB)) {
             nodeNumberService.initNextNodeNumbersFromFile(strPathIdDB, false);
         }
 
@@ -229,7 +226,7 @@ public class ExtendedCommonImporter extends CommonImporter {
         List<String> lstPPLLines = excelImporter.fromExcel(srcFile);
 
         // Ids speichern
-        if (strPathIdDB != null) {
+        if (!StringUtils.isEmpty(strPathIdDB)) {
             // save to file
             nodeNumberService.exportNextNodeNumbersToFile(strPathIdDB);
         }
@@ -252,8 +249,8 @@ public class ExtendedCommonImporter extends CommonImporter {
      */
     public void importDataToMasterNodeFromWiki(final DataDomain masterNode) throws Exception {
         // config
-        String delimiter = 
-                        YaioCmdLineHelper.getInstance().getCommandLine().getOptionValue("delimiter", "\t");
+        String delimiter = ConfigurationOption.stringValueOf(
+                YaioConfiguration.getInstance().getCliOption("delimiter", "\t"));
 
         // parse PPL-source
         String pplSource = this.extractDataFromWiki();
@@ -269,10 +266,10 @@ public class ExtendedCommonImporter extends CommonImporter {
      */
     public String extractDataFromWiki() throws Exception {
         // check srcFile
-        if (YaioCmdLineHelper.getInstance().getCommandLine().getArgs().length <= 0) {
+        if (YaioConfiguration.getInstance().getArgNames().size() <= 0) {
             throw new IllegalArgumentException("Import from Wiki-File requires filename.");
         }
-        String srcFile = YaioCmdLineHelper.getInstance().getCommandLine().getArgs()[0];
+        String srcFile = ConfigurationOption.stringValueOf(YaioConfiguration.getInstance().getArg(0));
         if (LOGGER.isInfoEnabled()) {
             LOGGER.info("read from PPL file:" + srcFile);
         }
@@ -281,19 +278,16 @@ public class ExtendedCommonImporter extends CommonImporter {
         WikiImportOptions inputOptions = new WikiImportOptions();
         inputOptions.setFlgReadList(true);
         inputOptions.setFlgReadUe(true);
-        inputOptions.setFlgReadWithStatusOnly(
-                        YaioCmdLineHelper.getInstance().getCommandLine().hasOption("s"));
-        inputOptions.setFlgReadWithWFStatusOnly(
-                        YaioCmdLineHelper.getInstance().getCommandLine().hasOption("w"));
-        if (YaioCmdLineHelper.getInstance().getCommandLine().hasOption("l")) {
+        inputOptions.setFlgReadWithStatusOnly(YaioConfiguration.getInstance().hasCliOption("s"));
+        inputOptions.setFlgReadWithWFStatusOnly(YaioConfiguration.getInstance().hasCliOption("w"));
+        if (YaioConfiguration.getInstance().hasCliOption("l")) {
             inputOptions.setFlgReadList(false);
         }
-        if (YaioCmdLineHelper.getInstance().getCommandLine().hasOption("u")) {
+        if (YaioConfiguration.getInstance().hasCliOption("u")) {
             inputOptions.setFlgReadUe(false);
         }
         inputOptions.setStrReadIfStatusInListOnly(
-                YaioCmdLineHelper.getInstance().getCommandLine().getOptionValue(
-                                "onlyifstateinlist", null));
+                ConfigurationOption.stringValueOf(YaioConfiguration.getInstance().getCliOption("onlyifstateinlist")));
         WikiImporter wikiImporter = new WikiImporter(inputOptions);
         
         // gets NodeNumberService
@@ -301,10 +295,8 @@ public class ExtendedCommonImporter extends CommonImporter {
                 pplImporter.getNodeFactory().getMetaDataService().getNodeNumberService();
         
         // Id-Datei einlesen
-        String strPathIdDB = 
-                        YaioCmdLineHelper.getInstance().getCommandLine().getOptionValue(
-                                        "pathiddb", null);
-        if (strPathIdDB != null) {
+        String strPathIdDB = ConfigurationOption.stringValueOf(YaioConfiguration.getInstance().getCliOption("pathiddb"));
+        if (!StringUtils.isEmpty(strPathIdDB)) {
             nodeNumberService.initNextNodeNumbersFromFile(strPathIdDB, false);
         }
 
@@ -313,7 +305,7 @@ public class ExtendedCommonImporter extends CommonImporter {
         lstWikiLines = wikiImporter.extractWikiStructLinesFromFile(srcFile, inputOptions);
 
         // Ids speichern
-        if (strPathIdDB != null) {
+        if (!StringUtils.isEmpty(strPathIdDB)) {
             // save to file
             nodeNumberService.exportNextNodeNumbersToFile(strPathIdDB);
         }
@@ -331,9 +323,8 @@ public class ExtendedCommonImporter extends CommonImporter {
     @Override
     public void importDataToMasterNode(final DataDomain masterNode) throws Exception {
         // check datasource
-        String sourceType = 
-                        YaioCmdLineHelper.getInstance().getCommandLine().getOptionValue(
-                                        "sourcetype", defaultSourceType);
+        String sourceType = ConfigurationOption.stringValueOf(
+                YaioConfiguration.getInstance().getCliOption("sourcetype", defaultSourceType));
         if ("excel".equalsIgnoreCase(sourceType)) {
             // from excel
             this.importDataToMasterNodeFromExcel(masterNode);

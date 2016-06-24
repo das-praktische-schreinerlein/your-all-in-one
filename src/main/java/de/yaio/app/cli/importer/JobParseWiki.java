@@ -13,8 +13,11 @@
  */
 package de.yaio.app.cli.importer;
 
-import de.yaio.app.cli.YaioCmdLineHelper;
 import de.yaio.app.cli.YaioCmdLineJob;
+import de.yaio.app.config.ContextHelper;
+import de.yaio.app.config.JobConfig;
+import de.yaio.app.utils.CmdLineHelper;
+import de.yaio.app.utils.config.ConfigurationOption;
 import org.apache.commons.cli.Options;
 
 /** 
@@ -43,7 +46,7 @@ public class JobParseWiki extends YaioCmdLineJob {
     @Override
     protected Options addAvailiableCmdLineOptions() throws Exception {
         Options availiableCmdLineOptions = 
-                        YaioCmdLineHelper.getNewOptionsInstance();
+                        CmdLineHelper.getNewOptionsInstance();
         
         // add Options
         commonImporter.addAvailiableCommonCmdLineOptions(availiableCmdLineOptions);
@@ -60,7 +63,17 @@ public class JobParseWiki extends YaioCmdLineJob {
         System.out.println(pplSource);
     }
 
-    /** 
+    @Override
+    protected void configureContext() throws Exception {
+        String sourceType = ConfigurationOption.stringValueOf(this.getConfiguration().getCliOption("sourcetype", ""));
+        if ("jpa".equalsIgnoreCase(sourceType)) {
+            ContextHelper.getInstance().addSpringConfig(JobConfig.class);
+            // initApplicationContext
+            ContextHelper.getInstance().getSpringApplicationContext();
+        }
+    };
+
+    /**
      * create the commonly used importer to imports the data from differenet 
      * sourcetypes
      */

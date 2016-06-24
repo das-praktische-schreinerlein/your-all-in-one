@@ -13,7 +13,8 @@
  */
 package de.yaio.app.server.controller;
 
-import de.yaio.app.cli.YaioCmdLineHelper;
+import de.yaio.app.config.YaioConfiguration;
+import de.yaio.app.utils.config.ConfigurationOption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,7 +48,8 @@ public class BaseAppController {
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, produces = "text/html")
     public String exportNodeAsYaioApp(final HttpServletResponse response) {
-        String sysUID = System.getProperty(YaioCmdLineHelper.CONST_PROPNAME_YAIOEXPORT_STATIC_MASTERID);
+        String sysUID = ConfigurationOption.stringValueOf(YaioConfiguration.getInstance().getProperty(
+                YaioConfiguration.CONST_PROPNAME_YAIOEXPORT_STATIC_MASTERID));
         String res = converterUtils.commonExportNodeAsYaioApp(sysUID, response, "/static/yaio-explorerapp/yaio-explorerapp.html", false);
         
         return res;

@@ -13,7 +13,8 @@
  */
 package de.yaio.app.server.config;
 
-import de.yaio.app.cli.YaioCmdLineHelper;
+import de.yaio.app.config.YaioConfiguration;
+import de.yaio.app.utils.CmdLineHelper;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -175,7 +176,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         @Autowired
         public void configureGlobal(final AuthenticationManagerBuilder auth) throws Exception {
-            Properties users = YaioCmdLineHelper.readProperties(System.getProperty(CONST_FILELOCATION_APIUSERS));
+            Properties users = CmdLineHelper.getInstance().readProperties(System.getProperty(CONST_FILELOCATION_APIUSERS));
             InMemoryUserDetailsManager im = new InMemoryUserDetailsManager(users);
             auth.userDetailsService(im);
         }
@@ -232,9 +233,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         String xframeAllowedDomains = System.getProperty("yaio.my-domain", "dummy") 
                         + "," + System.getProperty("yaio.security.xframe-allowed-domains", "");
         List<String> xframeAllowedDomainsList = Arrays.asList(xframeAllowedDomains.split(","));
-        for (String name : YaioCmdLineHelper.getInstance().getKnownYaioInstances().keySet()) {
-            Map<String, String> yaioInstance = YaioCmdLineHelper.getInstance().getKnownYaioInstances().get(name);
-            String url = yaioInstance.get(YaioCmdLineHelper.CONST_PROPNAME_YAIOINSTANCES_URL);
+
+        Map<String, Map<String, String>> knownYaioInstances = YaioConfiguration.getInstance().getKnownYaioInstances();
+        for (String name : knownYaioInstances.keySet()) {
+            Map<String, String> yaioInstance = knownYaioInstances.get(name);
+            String url = yaioInstance.get(YaioConfiguration.CONST_PROPNAME_YAIOINSTANCES_URL);
             url = url.replace("http://", "");
             url = url.replace("https://", "");
             url = url.replace("/", "");

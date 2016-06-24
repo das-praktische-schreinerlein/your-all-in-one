@@ -13,6 +13,7 @@
  */
 package de.yaio.app.utils;
 
+import de.yaio.app.utils.config.Configuration;
 import org.apache.commons.cli.*;
 import org.apache.log4j.Logger;
 
@@ -36,12 +37,6 @@ import java.util.*;
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 public class CmdLineHelper {
-
-    /** property: masterid to export for static datasource */
-    public static final String CONST_PROPNAME_YAIOEXPORT_STATIC_MASTERID = 
-                    "yaio.staticdatasource.mastersysuid";
-    
-
     private static final Logger LOGGER = Logger.getLogger(CmdLineHelper.class);
 
     // must be instantiated after LOGGER because it is used in constructor
@@ -50,6 +45,8 @@ public class CmdLineHelper {
     protected CommandLine commandLine;
     protected String[] cmdLineArgs;
     protected Options availiableCmdLineOptions;
+
+    protected Configuration configuration;
     
     protected CmdLineHelper() {
         initConfigurator();
@@ -70,15 +67,12 @@ public class CmdLineHelper {
      */
     public static class CommandlineOptions extends Options {
         
-        /**
-         * 
-         */
-        private static final long serialVersionUID = 1L;
-
         /** a protected (not private!!!) map of the options with the long key */
         protected Map<String, Option> mylongOpts = new HashMap<String, Option>();
-        
-        /** 
+
+        private static final long serialVersionUID = 1L;
+
+        /**
          * create CommandlineOptions 
          * Bugfix-Class because Options.getOptions returns only shortoptions
                  */
@@ -88,7 +82,7 @@ public class CmdLineHelper {
                 LOGGER.debug("new FixedOptions");
             }
         }
-        
+
         /**
          * Retrieve a read-only list of options in this set
          * override original because this only retrieved the shortoptions
@@ -152,68 +146,18 @@ public class CmdLineHelper {
     public static CommandlineOptions getNewOptionsInstance() {
         return new CommandlineOptions();
     }
-    
-    
-    /* 
-     ***********************
-     ***********************
-     * base
-     ***********************
-     ***********************
-     */
-    protected void initConfigurator() {
-        this.createAvailiableCmdLineOptions();
-    }
-    
-    
-    /** 
-     * return the current static YaioCmdLineHelper-instance
-     * @return                       the current YaioCmdLineHelper-instance
+
+
+    /**
+     * return the current static CmdLineHelper-instance
+     * @return                       the current CmdLineHelper-instance
      * @throws Exception             parse/io-Exceptions possible
      */
     public static CmdLineHelper getInstance() {
         return instance;
     }
-    
 
     /**
-     * return the current configFile from option config
-     * @return                       the configFile from option config
-     * @throws Exception             parse/io-Exceptions possible
-     */
-    public String getConfigFile() throws Exception {
-        // check
-        if (commandLine == null) {
-            throw new IllegalStateException("getConfigFile: cant get configfile because commandLine is not set");
-        }
-        String configPath = commandLine.getOptionValue("config");
-        return configPath;
-    }
-
-    public Properties initProperties()  throws Exception {
-        // get Configpath
-        String configPath = this.getConfigFile();
-
-        // read properties
-        Properties props = readProperties(configPath);
-
-        // add all properties to system
-        for (String propName : props.stringPropertyNames()) {
-            System.setProperty(propName, props.getProperty(propName));
-            LOGGER.info("set System.prop:" + propName + "=" + props.getProperty(propName));
-        }
-        return props;
-    }
-
-    /*
-     ***********************
-     ***********************
-     * CommandLine
-     ***********************
-     ***********************
-     */
-
-    /** 
      * return current CMD-Args
      * @return                       String[] - current CMD-Args
      */
@@ -287,35 +231,36 @@ public class CmdLineHelper {
         configOption.setRequired(true);
         availiableCmdLineOptions.addOption(configOption);
 
-        // Hilfe-Option
+        // Hilfe-ConfigurationOption
         Option helpOption = new Option("h", "help", false, "usage");
         helpOption.setRequired(false);
         availiableCmdLineOptions.addOption(helpOption);
 
-        // debug-Option
+        // debug-ConfigurationOption
         Option debugOption = new Option(null, "debug", false, "debug");
         debugOption.setRequired(false);
         availiableCmdLineOptions.addOption(debugOption);
     }
 
+
     /**
      * <h1>Bereich:</h1>
-     *     Tools - CLI-Config
+     *     Tools - CLI-Handling
      * <h1>Funktionalitaet:</h1>
-     *     konfiguriert die verfuegbaren CLI-Optionen
+     *     erzeugt aus den CMD-Args ein CLI-Commandline-Object
      * <h1>Nebenwirkungen:</h1>
-     *     updates availiableCmdLineOptions
+     *     Rueckgabe als CommandLine
+     * @param cmdArgs                Parameter aus z.B. main
+     * @param availiableCmdLineOptions verfuegbare CLI-Optionen
+     * @return                       CommandLine
+     * @throws ParseException        pase-Exceptions possible
      */
-    protected void createAvailiableCmdLineOptions() {
-        if (availiableCmdLineOptions != null) {
-            throw new IllegalStateException("createAvailiableCmdLineOptions: "
-                            + "cant create availiableCmdLineOptions "
-                            + "because availiableCmdLineOptions already set");
-        }
-        availiableCmdLineOptions = getNewOptionsInstance();
-        this.addAvailiableBaseCmdLineOptions(availiableCmdLineOptions);
+    public static CommandLine createCommandLineFromCmdArgs(final String[] cmdArgs,
+                                                           final Options availiableCmdLineOptions) throws ParseException {
+        CommandLineParser parser = new PosixParser();
+        return parser.parse(availiableCmdLineOptions, cmdArgs);
     }
-    
+
     /**
      * <h1>Bereich:</h1>
      *     Tools - CLI-Config
@@ -359,7 +304,63 @@ public class CmdLineHelper {
         }
         
     }
-    
+
+    /**
+     * read the properties from the given filepath (first by filesystem,
+     * if failed by classpath)
+     * @param filePath               path to the file (filesystem or classressource)
+     * @return                       the properties read from propertyfile
+     * @throws Exception             parse/io-Exceptions possible
+     */
+    public Properties readProperties(final String filePath) throws Exception {
+        Properties prop = new Properties();
+
+        // first try it from fileystem
+        try {
+            InputStream in = new FileInputStream(new File(filePath));
+            prop.load(in);
+            in.close();
+            //CHECKSTYLE.OFF: IllegalCatch - Much more readable than catching x exceptions
+        } catch (Throwable ex) {
+            //CHECKSTYLE.ON: IllegalCatch
+            // try it from jar
+            try {
+                InputStream in = instance.getClass().getResourceAsStream(filePath);
+                prop.load(in);
+                in.close();
+                //CHECKSTYLE.OFF: IllegalCatch - Much more readable than catching x exceptions
+            } catch (Throwable ex2) {
+                //CHECKSTYLE.ON: IllegalCatch
+                throw new Exception("cant read propertiesfile: " + filePath
+                        + " Exception1:" + ex
+                        + " Exception2:" + ex2);
+            }
+        }
+        return prop;
+    }
+
+    protected void initConfigurator() {
+        this.createAvailiableCmdLineOptions();
+    }
+
+    /**
+     * <h1>Bereich:</h1>
+     *     Tools - CLI-Config
+     * <h1>Funktionalitaet:</h1>
+     *     konfiguriert die verfuegbaren CLI-Optionen
+     * <h1>Nebenwirkungen:</h1>
+     *     updates availiableCmdLineOptions
+     */
+    protected void createAvailiableCmdLineOptions() {
+        if (availiableCmdLineOptions != null) {
+            throw new IllegalStateException("createAvailiableCmdLineOptions: "
+                    + "cant create availiableCmdLineOptions "
+                    + "because availiableCmdLineOptions already set");
+        }
+        availiableCmdLineOptions = getNewOptionsInstance();
+        this.addAvailiableBaseCmdLineOptions(availiableCmdLineOptions);
+    }
+
 
 
     protected void initCommandLine() throws Exception {
@@ -386,66 +387,19 @@ public class CmdLineHelper {
         // validate
         this.validateCmdLine();
     }
-    
-    
-    /* 
-     ***********************
-     ***********************
-     * public service-functions
-     ***********************
-     ***********************
-     */
-    
-    /** 
-     * read the properties from the given filepath (first by filesystem, 
-     * if failed by classpath)
-     * @param filePath               path to the file (filesystem or classressource)
-     * @return                       the properties read from propertyfile
+
+    /**
+     * return the current configFile from option config
+     * @return                       the configFile from option config
      * @throws Exception             parse/io-Exceptions possible
      */
-    public static Properties readProperties(final String filePath) throws Exception {
-        Properties prop = new Properties();
-        
-        // first try it from fileystem
-        try {
-            InputStream in = new FileInputStream(new File(filePath));
-            prop.load(in);
-            in.close();
-            //CHECKSTYLE.OFF: IllegalCatch - Much more readable than catching x exceptions
-        } catch (Throwable ex) {
-            //CHECKSTYLE.ON: IllegalCatch
-            // try it from jar
-            try {
-                InputStream in = instance.getClass().getResourceAsStream(filePath);
-                prop.load(in);
-                in.close();
-                //CHECKSTYLE.OFF: IllegalCatch - Much more readable than catching x exceptions
-            } catch (Throwable ex2) {
-                //CHECKSTYLE.ON: IllegalCatch
-                throw new Exception("cant read propertiesfile: " + filePath 
-                                + " Exception1:" + ex
-                                + " Exception2:" + ex2);
-            }
+    public String getConfigFile() throws Exception {
+        // check
+        if (commandLine == null) {
+            throw new IllegalStateException("getConfigFile: cant get configfile because commandLine is not set");
         }
-        return prop;
+        String configPath = commandLine.getOptionValue("config");
+        return configPath;
     }
-    
-    
-    /**
-     * <h1>Bereich:</h1>
-     *     Tools - CLI-Handling
-     * <h1>Funktionalitaet:</h1>
-     *     erzeugt aus den CMD-Args ein CLI-Commandline-Object
-     * <h1>Nebenwirkungen:</h1>
-     *     Rueckgabe als CommandLine
-     * @param cmdArgs                Parameter aus z.B. main
-     * @param availiableCmdLineOptions verfuegbare CLI-Optionen
-     * @return                       CommandLine
-     * @throws ParseException        pase-Exceptions possible
-     */
-    public static CommandLine createCommandLineFromCmdArgs(final String[] cmdArgs,
-            final Options availiableCmdLineOptions) throws ParseException {
-        CommandLineParser parser = new PosixParser();
-        return parser.parse(availiableCmdLineOptions, cmdArgs);
-    }
+
 }

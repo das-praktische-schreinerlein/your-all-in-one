@@ -15,5 +15,5 @@ import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
 )
 @EnableAutoConfiguration
 @Import(PersistenceConfig.class)
-public class MinimalContextConfig {
+public class JobConfig {
 }
