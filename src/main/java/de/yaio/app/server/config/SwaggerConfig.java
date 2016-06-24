@@ -15,6 +15,7 @@ package de.yaio.app.server.config;
 
 import de.yaio.app.server.controller.*;
 import de.yaio.app.server.restcontroller.NodeRestController;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -37,6 +38,7 @@ import static springfox.documentation.builders.PathSelectors.regex;
  */
 @Configuration
 @EnableSwagger2
+@ConditionalOnProperty(prefix = "springfox", value = "enable")
 public class SwaggerConfig {
 
     /**
