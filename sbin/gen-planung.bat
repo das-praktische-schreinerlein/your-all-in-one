@@ -65,7 +65,7 @@ if NOT "%PARSEONLY%" EQU "" goto end
 if "%GEN_SRC%" EQU "ppl" goto configure_ppl
 if "%GEN_SRC%" EQU "jpa" goto configure_jpa
 
-echo "unknown %GEN_SRC%";
+echo "unknown GEN_SRC:%GEN_SRC%";
 halt;
 goto end
 

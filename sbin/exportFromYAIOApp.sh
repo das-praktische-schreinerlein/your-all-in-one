@@ -1,4 +1,4 @@
-echo off
+#!/usr/bin/env bash
 #  <h4>FeatureDomain:</h4>
 #      Collaboration
 #  <h4>FeatureDescription:</h4>

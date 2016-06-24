@@ -1,5 +1,4 @@
 #!/bin/bash
-echo off
 # <h4>FeatureDomain:</h4>
 #     Collaboration
 # <h4>FeatureDescription:</h4>
