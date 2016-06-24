@@ -589,7 +589,7 @@
                     <locations>
                         <location>filesystem:src/main/resources/db/migration/hsqldb</location>
                     </locations>
-                    <configFile>./config/application.properties</configFile>
+                    <configFile>./config/yaio-application.properties</configFile>
                 </configuration>
             </plugin>
 
