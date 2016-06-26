@@ -5,9 +5,9 @@
 
     <parent>
         <groupId>de.yaio</groupId>
-        <artifactId>yaio-app-pom-springboot</artifactId>
+        <artifactId>yaio-app-pom-parent</artifactId>
         <version>0.1.0-SNAPSHOT</version>
-        <relativePath>../yaio-app-pom-springboot/pom.xml</relativePath>
+        <relativePath>../yaio-app-pom-parent/pom.xml</relativePath>
     </parent>
 
     <!-- the base -->

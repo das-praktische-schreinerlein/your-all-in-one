@@ -53,125 +53,42 @@
 
         <plugins>
             <!-- grunt-integration to prepare resources -->
-            <!--
-                        <plugin>
-                            <groupId>com.github.eirslett</groupId>
-                            <artifactId>frontend-maven-plugin</artifactId>
-                            <version>${frontend-maven-plugin.version}</version>
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <version>${frontend-maven-plugin.version}</version>
 
-                            <executions>
-                                <execution>
-                                    <id>install node and npm</id>
-                                    <phase>${frontend-maven-plugin.phase}</phase>
-                                    <goals>
-                                        <goal>install-node-and-npm</goal>
-                                    </goals>
-                                    <configuration>
-                                        <nodeVersion>${node.version}</nodeVersion>
-                                        <npmVersion>${npm.version}</npmVersion>
-                                    </configuration>
-                                </execution>
-                                <execution>
-                                    <id>npm install</id>
-                                    <phase>${frontend-maven-plugin.phase}</phase>
-                                    <goals>
-                                        <goal>npm</goal>
-                                    </goals>
-                                    <configuration>
-                                        <arguments>install</arguments>
-                                    </configuration>
-                                </execution>
-                                <execution>
-                                    <id>grunt build</id>
-                                    <phase>${frontend-maven-plugin.phase}</phase>
-                                    <goals>
-                                        <goal>grunt</goal>
-                                    </goals>
-                                    <configuration>
-                                        <arguments>dist</arguments>
-                                    </configuration>
-                                </execution>
-                            </executions>
-                        </plugin>
-                        -->
-
-            <!-- checkstyle -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>${maven.checkstyle.plugin.version}</version>
-                <configuration>
-                    <configLocation>/checkstyle.xml</configLocation>
-                    <consoleOutput>true</consoleOutput>
-                    <violationSeverity>info</violationSeverity>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>findbugs-maven-plugin</artifactId>
-                <version>${maven.findbugs.plugin.version}</version>
-                <configuration>
-                    <failOnError>false</failOnError>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-pmd-plugin</artifactId>
-                <version>${maven.pmd.plugin.version}</version>
-            </plugin>
-
-            <!--  integration-tests -->
-            <plugin>
-                <groupId>com.github.greengerong</groupId>
-                <artifactId>maven-ng-protractor</artifactId>
-                <version>${maven.ng.protractor.version}</version>
-                <configuration>
-                    <protractor>${basedir}/node_modules/.bin/protractor</protractor>
-                    <configFile>${project.basedir}/protractor.yaio.conf.js</configFile>
-                </configuration>
                 <executions>
                     <execution>
-                        <id>ng-protractor</id>
-                        <phase>${maven.ng.protractor.phase}</phase>
+                        <id>install node and npm</id>
+                        <phase>${frontend-maven-plugin.phase}</phase>
                         <goals>
-                            <goal>run</goal>
+                            <goal>install-node-and-npm</goal>
                         </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <version>${maven.antrun.plugin.version}</version>
-                <executions>
-                    <execution>
-                        <id>start-third-parties</id>
-                        <phase>${maven-antrun-plugin.phase.pre-integration-test}</phase>
                         <configuration>
-                            <target>
-                                <!-- clean all instances -->
-                                <exec executable="cmd.exe"><arg value="/C" /><arg value="${basedir}/sbin/stop-yaioapp.bat" /></exec>
-                                <!-- start instance -->
-                                <exec executable="cmd.exe"><arg value="/C" /><arg value="${basedir}/sbin/start-yaioapp-test.bat" /></exec>
-                                <!-- wait till instance is up -->
-                                <sleep seconds="60" />
-                            </target>
+                            <nodeVersion>${node.version}</nodeVersion>
+                            <npmVersion>${npm.version}</npmVersion>
                         </configuration>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
                     </execution>
                     <execution>
-                        <id>stop-third-parties</id>
-                        <phase>${maven-antrun-plugin.phase.post-integration-test}</phase>
-                        <configuration>
-                            <target>
-                                <!-- clean all instances -->
-                                <exec executable="cmd.exe"><arg value="/C" /><arg value="${basedir}/sbin/stop-yaioapp.bat" /></exec>
-                            </target>
-                        </configuration>
+                        <id>npm install</id>
+                        <phase>${frontend-maven-plugin.phase}</phase>
                         <goals>
-                            <goal>run</goal>
+                            <goal>npm</goal>
                         </goals>
+                        <configuration>
+                            <arguments>install</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>grunt build</id>
+                        <phase>${frontend-maven-plugin.phase}</phase>
+                        <goals>
+                            <goal>grunt</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>dist</arguments>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
