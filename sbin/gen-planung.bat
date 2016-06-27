@@ -30,7 +30,7 @@ set BASEPATH=%YAIOBASEPATH%
 set YAIOCONFIGPATH=%YAIOSCRIPTPATH%..\config\
 
 rem init config
-call %YAIOCONFIGPATH%\config-yaio.bat %YAIOSCRIPTPATH%
+call %YAIOCONFIGPATH%\config-cli.bat %YAIOSCRIPTPATH%
 
 rem 
 rem parse from wiki

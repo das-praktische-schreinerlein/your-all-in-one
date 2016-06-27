@@ -28,7 +28,7 @@ set YAIOCONFIGPATH=%YAIOSCRIPTPATH%..\config\
 set BASEPATH=%YAIOBASEPATH%
 
 rem init config
-call %YAIOCONFIGPATH%\config-yaio.bat %BASEPATH%
+call %YAIOCONFIGPATH%\config-cli.bat %BASEPATH%
 
 rem save old outputoptions
 set OUTPUT_OPTIONS_OLD=%OUTPUT_OPTIONS%

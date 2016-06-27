@@ -22,7 +22,7 @@ set BASEPATH=%YAIOBASEPATH%
 set YAIOCONFIGPATH=%YAIOSCRIPTPATH%..\config\
 
 rem init config
-call %YAIOCONFIGPATH%\config-yaio.bat %YAIOSCRIPTPATH%
+call %YAIOCONFIGPATH%\config-cli.bat %YAIOSCRIPTPATH%
 
 rem add --debug option to see the startprocess of spring-boot
 set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_RECALC% %CFG% --sysuid %MASTERNODEID%

@@ -23,7 +23,7 @@ set YAIOCONFIGPATH=%YAIOSCRIPTPATH%..\config\
 
 rem init config
 
-call %YAIOCONFIGPATH%\config-yaio.bat %YAIOSCRIPTPATH%
+call %YAIOCONFIGPATH%\config-client.bat %YAIOSCRIPTPATH%
 set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_CALLYAIORECALC% %YAIOAPPURLCONFIG% -sysuid %MASTERNODEID%
 echo "callYaioRecalcNodes: %CMD%"
 %CMD%

@@ -22,7 +22,7 @@ BASEPATH=${YAIOBASEPATH}
 YAIOCONFIGPATH=${YAIOSCRIPTPATH}../config/
 
 # init config
-. ${YAIOCONFIGPATH}/config-yaio.sh ${YAIOSCRIPTPATH}
+. ${YAIOCONFIGPATH}/config-cli.sh ${YAIOSCRIPTPATH}
 
 # add --debug option to see the startprocess of spring-boot
 CMD="java ${JAVAOPTIONS} -cp ${CP} ${PROG_RECALC} ${CFG} --sysuid ${MASTERNODEID}"
