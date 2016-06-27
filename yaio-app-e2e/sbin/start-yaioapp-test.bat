@@ -24,7 +24,7 @@ set YAIOCONFIGPATH=%YAIOSCRIPTPATH%..\config\
 
 rem init config
 cd %YAIOCONFIGPATH%\..
-call %YAIOCONFIGPATH%\config-yaio.bat %YAIOSCRIPTPATH%
+call %YAIOCONFIGPATH%\config-server.bat %YAIOSCRIPTPATH%
 
 set YAIOAPP=%BASEPATH%..\yaio-app-e2e\target\yaio.jar
 set CP="%YAIOAPP%;%APPPROPAGATOR%;"
