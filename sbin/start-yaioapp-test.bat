@@ -22,6 +22,7 @@ set BASEPATH=%YAIOBASEPATH%
 set YAIOCONFIGPATH=%YAIOSCRIPTPATH%..\config\
 
 rem init config
+cd %YAIOCONFIGPATH%\..
 call %YAIOCONFIGPATH%\config-yaio.bat %YAIOSCRIPTPATH%
 
 rem init webdriver
