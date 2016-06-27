@@ -1,28 +1,12 @@
 echo off
+rem ##############################
+rem # Configure filebased yaio
+rem ##############################
 
 rem set CONFIG
 set BASEPATH=%1%
 set FLGWP=%2%
 
-rem set pathes
-set GRAPHVIZ_DOT=D:\ProgrammeShared\graphviz-2.38\bin\dot.exe
-
-rem set appconfig
-set YAIOINSTANCE=yaio-playground.local
-set YAIOAPPURLCONFIG=-config dummy -yaioinstance %YAIOINSTANCE% -username admin -password secret
-set STARTURL=http://%YAIOINSTANCE%/index.html
-
-rem ##############################
-rem # Configure appbased yaio
-rem Gen Wiki-Only
-set WIKIONLY=
-rem Show Diffs
-set SHOWINMERGE=1
-rem ##############################
-
-
-rem ##############################
-rem # Configure filebased yaio
 rem Gen Wiki-Only
 set PARSEONLY=
 echo %OVERRIDE_PARSEONLY%
@@ -40,16 +24,15 @@ rem the masternode
 set MASTERNODEID=MasterplanMasternode1
 IF NOT [%OVERRIDE_MASTERNODEID%] == [] set MASTERNODEID=%OVERRIDE_MASTERNODEID%
 set IMPORT_OPTIONS_JPA=--addnodestosysuid %MASTERNODEID%
-rem ##############################
 
 rem set Path
 set YAIOCONFIGPATH=%BASEPATH%\..\config\
 set YAIOSCRIPTPATH=%BASEPATH%\..\sbin\
 set YAIORESPATH=%BASEPATH%\..\resources\
 set YAIOVARPATH=%BASEPATH%\..\var\
-set YAIOAPP=%BASEPATH%..\target\yaio.jar
-set APPPROPAGATOR=%BASEPATH%..\sbin\apppropagator.jar
-set CP="%YAIOAPP%;%APPPROPAGATOR%;"
+rem TODO
+set YAIOAPP=%BASEPATH%..\target\yaio-app-cli-full.jar
+set CP="%YAIOAPP%;"
 set CFGFILE=%BASEPATH%..\config\yaio-application.properties
 set CFG=--config %CFGFILE% 
 set FLYWAYCFG=%CFG%
@@ -69,12 +52,6 @@ set PROG_ICalN=de.yaio.app.cli.converter.JobNodes2ICal
 set PROG_CSVN=de.yaio.app.cli.converter.JobNodes2CSV
 set PROG_JSONN=de.yaio.app.cli.converter.JobNodes2JSON
 set PROG_JPAN=de.yaio.app.cli.converter.JobNodes2JPA
-set PROG_CALLYAIORESET=de.yaio.app.clients.CallYaioReset
-set PROG_CALLYAIORECALC=de.yaio.app.clients.CallYaioRecalcNodes
-set PROG_CALLYAIOEXPORT=de.yaio.app.clients.CallYaioExport
-set PROG_CALLYAIOIMPORT=de.yaio.app.clients.CallYaioImport
-set PROG_APP=de.yaio.app.server.Application
-set PROG_APPPROPAGATOR=de.yitf.app.apppropagator.UpnpAppPropagator
 set PROG_RECALC=de.yaio.app.cli.batch.JobRecalcNodes
 set PROG_FLYWAY=de.yaio.app.system.JobYaioFlyway
 set PROG_DIFF=

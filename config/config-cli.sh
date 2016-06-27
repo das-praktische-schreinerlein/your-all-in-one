@@ -6,14 +6,6 @@ echo off
 export BASEPATH=${1}
 export FLGWP=${2}
 
-# set pathes
-export GRAPHVIZ_DOT=/usr/bin/dot
-
-# set appconfig
-export YAIOINSTANCE=yaio-playground.local
-export YAIOAPPURLCONFIG=-config dummy -yaioinstance ${YAIOINSTANCE} -username admin -password secret
-export STARTURL=http://${YAIOINSTANCE}/index.html
-
 # Gen Wiki-Only
 export PARSEONLY=
 # parse ppl from wiki an generate 
@@ -31,9 +23,8 @@ export YAIOCONFIGPATH=${BASEPATH}/../config/
 export YAIOSCRIPTPATH=${BASEPATH}/../sbin/
 export YAIORESPATH=${BASEPATH}/../resources/
 export YAIOVARPATH=${BASEPATH}/../var/
-export YAIOAPP=${BASEPATH}../target/yaio.jar
-export APPPROPAGATOR=${BASEPATH}../sbin/apppropagator.jar
-export CP="${YAIOAPP}:${APPPROPAGATOR}:${BASEPATH}../target/"
+export YAIOAPP=${BASEPATH}../target/yaio-app-cli-full.jar
+export CP="${YAIOAPP}"
 export CFGFILE=${BASEPATH}../config/yaio-application.properties
 export CFG="--config ${CFGFILE}"
 export FLYWAYCFG=${CFG}
@@ -51,12 +42,6 @@ export PROG_ICalN=de.yaio.app.cli.converter.JobNodes2ICal
 export PROG_CSVN=de.yaio.app.cli.converter.JobNodes2CSV
 export PROG_JSONN=de.yaio.app.cli.converter.JobNodes2JSON
 export PROG_JPAN=de.yaio.app.cli.converter.JobNodes2JPA
-export PROG_CALLYAIORESET=de.yaio.app.clients.CallYaioReset
-export PROG_CALLYAIORECALC=de.yaio.app.clients.CallYaioRecalcNodes
-export PROG_CALLYAIOEXPORT=de.yaio.app.clients.CallYaioExport
-export PROG_CALLYAIOIMPORT=de.yaio.app.clients.CallYaioImport
-export PROG_APP=de.yaio.app.server.Application
-export PROG_APPPROPAGATOR=de.yitf.app.apppropagator.UpnpAppPropagator
 export PROG_RECALC=de.yaio.app.cli.batch.JobRecalcNodes
 export PROG_FLYWAY=de.yaio.app.system.JobYaioFlyway
 export PROG_DIFF=
