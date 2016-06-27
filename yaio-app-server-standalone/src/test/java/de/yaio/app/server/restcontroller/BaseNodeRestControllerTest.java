@@ -80,7 +80,7 @@ public abstract class BaseNodeRestControllerTest  extends BaseTest {
 
         String[] args = new String[2];
         args[0] = "--config";
-        args[1] = "./yaio-app-server-standalone/target/test-classes/config/application-test.properties";
+        args[1] = "/config/application-test.properties"; // load as resource
         if (cmdLineHelper.getCmdLineArgs() == null) {
             cmdLineHelper.getAvailiableCmdLineOptions();
             cmdLineHelper.setCmdLineArgs(args);
