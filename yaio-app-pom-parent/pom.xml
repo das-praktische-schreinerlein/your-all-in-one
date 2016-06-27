@@ -112,6 +112,7 @@
         <hibernate-validator.version>4.3.1.Final</hibernate-validator.version>
         <hibernate-jpa-2.0-api.version>1.0.1.Final</hibernate-jpa-2.0-api.version>
         <flyway-core.version>4.0</flyway-core.version>
+        <flyway.version>4.0</flyway.version>
         <jta.version>1.1</jta.version>
 
         <servlet-api.version>2.5</servlet-api.version>
