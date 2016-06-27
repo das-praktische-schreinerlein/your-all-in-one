@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>de.yaio</groupId>
+        <artifactId>yaio-app-pom-parent</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+        <relativePath>../yaio-app-pom-parent/pom.xml</relativePath>
+    </parent>
+
+    <!-- the base -->
+    <groupId>de.yaio</groupId>
+    <artifactId>yaio-app-e2e</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <name>yaio-app-e2e</name>
+    <description>e2e modules for yaio-apps</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>de.yaio</groupId>
+            <artifactId>yaio-app-server-full</artifactId>
+            <version>${yaio-app-server.version}</version>
+        </dependency>
+    </dependencies>
+
+    <!-- build options -->
+    <build>
+        <plugins>
+            <!-- grunt-integration to prepare resources -->
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <version>${frontend-maven-plugin.version}</version>
+
+                <executions>
+                    <execution>
+                        <id>install node and npm</id>
+                        <phase>${frontend-maven-plugin.phase}</phase>
+                        <goals>
+                            <goal>install-node-and-npm</goal>
+                        </goals>
+                        <configuration>
+                            <nodeVersion>${node.version}</nodeVersion>
+                            <npmVersion>${npm.version}</npmVersion>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>npm install</id>
+                        <phase>${frontend-maven-plugin.phase}</phase>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>install</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>grunt build</id>
+                        <phase>${frontend-maven-plugin.phase}</phase>
+                        <goals>
+                            <goal>grunt</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>e2e-prepare</arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!--  integration-tests -->
+            <plugin>
+                <groupId>com.github.greengerong</groupId>
+                <artifactId>maven-ng-protractor</artifactId>
+                <version>${maven.ng.protractor.version}</version>
+                <configuration>
+                    <protractor>${yaioBaseDir}/yaio-app-e2e/node_modules/.bin/protractor</protractor>
+                    <configFile>${yaioBaseDir}/yaio-app-e2e/protractor.yaio.conf.js</configFile>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>ng-protractor</id>
+                        <phase>${maven.ng.protractor.phase}</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>${maven.antrun.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>start-third-parties</id>
+                        <phase>${maven-antrun-plugin.phase.pre-integration-test}</phase>
+                        <configuration>
+                            <target>
+                                <!-- clean all instances -->
+                                <exec executable="cmd.exe"><arg value="/C" /><arg value="${yaioBaseDir}/sbin/stop-yaioapp.bat" /></exec>
+                                <!-- start instance -->
+                                <exec executable="cmd.exe"><arg value="/C" /><arg value="${yaioBaseDir}/sbin/start-yaioapp-test.bat" /></exec>
+                                <!-- wait till instance is up -->
+                                <sleep seconds="60" />
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>stop-third-parties</id>
+                        <phase>${maven-antrun-plugin.phase.post-integration-test}</phase>
+                        <configuration>
+                            <target>
+                                <!-- clean all instances -->
+                                <exec executable="cmd.exe"><arg value="/C" /><arg value="${yaioBaseDir}/sbin/stop-yaioapp.bat" /></exec>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+
+    </build>
+
+</project>

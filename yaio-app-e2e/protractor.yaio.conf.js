@@ -8,7 +8,7 @@
     var downloadPath = 'd:/tmp/';
 
     // basics
-    var baseDir = './src/test/javascript/e2e/';
+    var baseDir = './bower/_dest/js/yaio-explorerapp/src/test/javascript/e2e/';
     var testDir = baseDir;
 
     // imports

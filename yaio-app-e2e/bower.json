@@ -1,0 +1,24 @@
+{
+  "name": "yaio",
+  "description": "YourAllInOne D'Artagnan",
+  "version": "0.0.1",
+  "authors": [
+    {
+      "name": "Michael Schreiner",
+      "email": "michael.schreiner@your-it-fellow.de",
+      "homepage": "http://www.your-it-fellow.de"
+    }
+  ],
+  "homepage": "http://www.your-all-in-one.de",
+  "dependencies": {
+    "yaio-explorerapp": "das-praktische-schreinerlein/yaio-explorerapp#0.3.x"
+  },
+  "exportsOverride": {
+    "x": {
+      "js": "**/*.js",
+      "css": "**/*.css"
+    }
+  },
+  "private": "true",
+  "devDependencies": {}
+}
