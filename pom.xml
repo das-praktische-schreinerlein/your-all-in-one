@@ -9,7 +9,7 @@
     </parent>
 
     <!-- the base -->
-    <groupId>de.yaio</groupId>
+    <groupId>de.yaio.app</groupId>
     <artifactId>yaio</artifactId>
     <version>0.1.0-SNAPSHOT</version>
     <name>yaio</name>

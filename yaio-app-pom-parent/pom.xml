@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!-- the base -->
-    <groupId>de.yaio</groupId>
+    <groupId>de.yaio.app</groupId>
     <artifactId>yaio-app-pom-parent</artifactId>
     <version>0.1.0-SNAPSHOT</version>
     <name>yaio-app-pom-parent</name>
@@ -18,7 +18,7 @@
     <packaging>pom</packaging>
 
     <parent>
-        <groupId>de.yaio</groupId>
+        <groupId>de.yaio.app</groupId>
         <artifactId>yaio</artifactId>
         <version>0.1.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
@@ -41,12 +41,12 @@
         <frontend-maven-plugin.phase>generate-resources</frontend-maven-plugin.phase>
         <!-- karma tests - deactivate it with "mvn package -Dmaven-karma-plugin.phase=none" -->
         <maven-karma-plugin.phase>test</maven-karma-plugin.phase>
-        <!-- protractor tests - deactivate it with "mvn package -Dmaven.ng.protractor=none" -->
-        <maven.ng.protractor.phase>integration-test</maven.ng.protractor.phase>
-        <!-- prepare integration tests - deactivate it with "mvn package -Dmaven-antrun-plugin.phase.pre-integration-test=none" -->
-        <maven-antrun-plugin.phase.pre-integration-test>pre-integration-test</maven-antrun-plugin.phase.pre-integration-test>
-        <!-- post integration tests - deactivate it with "mvn package -Dmaven-antrun-plugin.phase.post-integration-test=none" -->
-        <maven-antrun-plugin.phase.post-integration-test>post-integration-test</maven-antrun-plugin.phase.post-integration-test>
+        <!-- protractor tests default:integration-test- deactivate it with "mvn package -Dmaven.ng.protractor=none" -->
+        <maven.ng.protractor.phase>none</maven.ng.protractor.phase>
+        <!-- prepare integration tests default:pre-integration-test - deactivate it with "mvn package -Dmaven-antrun-plugin.phase.pre-integration-test=none" -->
+        <maven-antrun-plugin.phase.pre-integration-test>none</maven-antrun-plugin.phase.pre-integration-test>
+        <!-- post integration tests default: post-integration-test - deactivate it with "mvn package -Dmaven-antrun-plugin.phase.post-integration-test=none" -->
+        <maven-antrun-plugin.phase.post-integration-test>none</maven-antrun-plugin.phase.post-integration-test>
 
         <!--  maven install -->
         <groupId>${project.groupId}</groupId>

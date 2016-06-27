@@ -4,14 +4,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>de.yaio</groupId>
+        <groupId>de.yaio.app</groupId>
         <artifactId>yaio-app-pom-parent</artifactId>
         <version>0.1.0-SNAPSHOT</version>
         <relativePath>../yaio-app-pom-parent/pom.xml</relativePath>
     </parent>
 
     <!-- the base -->
-    <groupId>de.yaio</groupId>
+    <groupId>de.yaio.app</groupId>
     <artifactId>yaio-app-e2e</artifactId>
     <version>0.1.0-SNAPSHOT</version>
     <name>yaio-app-e2e</name>
@@ -19,7 +19,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>de.yaio</groupId>
+            <groupId>de.yaio.app</groupId>
             <artifactId>yaio-app-server-full</artifactId>
             <version>${yaio-app-server.version}</version>
         </dependency>
