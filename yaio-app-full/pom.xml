@@ -20,12 +20,12 @@
     <dependencies>
         <dependency>
             <groupId>de.yaio</groupId>
-            <artifactId>yaio-app-cli-full</artifactId>
+            <artifactId>yaio-app-cli</artifactId>
             <version>${yaio-app-cli.version}</version>
         </dependency>
         <dependency>
             <groupId>de.yaio</groupId>
-            <artifactId>yaio-app-serverclient-full</artifactId>
+            <artifactId>yaio-app-serverclient</artifactId>
             <version>${yaio-app-serverclient.version}</version>
         </dependency>
         <dependency>
