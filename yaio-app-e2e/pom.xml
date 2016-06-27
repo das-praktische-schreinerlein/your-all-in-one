@@ -27,7 +27,48 @@
 
     <!-- build options -->
     <build>
+        <finalName>yaio</finalName>
         <plugins>
+            <!-- shade and big-jar -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.3</version>
+                <executions>
+                    <execution>
+                        <phase>${packaging.assembly-phase}</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--
+                use this because of jar-manifest-problems in super-duper-all-in-one-jars
+                look at  http://robert-reiz.com/2011/11/14/832/
+             -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>2.3</version>
+                <executions>
+                    <execution>
+                        <phase>${packaging.shade-phase}</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <minimizeJar>false</minimizeJar>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
             <!-- grunt-integration to prepare resources -->
             <plugin>
                 <groupId>com.github.eirslett</groupId>
@@ -100,7 +141,7 @@
                                 <!-- clean all instances -->
                                 <exec executable="cmd.exe"><arg value="/C" /><arg value="${yaioBaseDir}/sbin/stop-yaioapp.bat" /></exec>
                                 <!-- start instance -->
-                                <exec executable="cmd.exe"><arg value="/C" /><arg value="${yaioBaseDir}/sbin/start-yaioapp-test.bat" /></exec>
+                                <exec executable="cmd.exe"><arg value="/C" /><arg value="${yaioBaseDir}/yaio-app-e2e/sbin/start-yaioapp-test.bat" /></exec>
                                 <!-- wait till instance is up -->
                                 <sleep seconds="60" />
                             </target>

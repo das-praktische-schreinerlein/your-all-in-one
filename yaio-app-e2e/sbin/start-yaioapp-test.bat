@@ -16,7 +16,8 @@ rem @copyright Copyright (c) 2011-2014, Michael Schreiner
 rem @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
 
 rem set pathes
-set YAIOSCRIPTPATH=%~dp0
+set ORIGYAIOSCRIPTPATH=%~dp0
+set YAIOSCRIPTPATH=%ORIGYAIOSCRIPTPATH%\..\..\sbin\
 set YAIOBASEPATH=%YAIOSCRIPTPATH%
 set BASEPATH=%YAIOBASEPATH%
 set YAIOCONFIGPATH=%YAIOSCRIPTPATH%..\config\
@@ -25,16 +26,20 @@ rem init config
 cd %YAIOCONFIGPATH%\..
 call %YAIOCONFIGPATH%\config-yaio.bat %YAIOSCRIPTPATH%
 
+set YAIOAPP=%BASEPATH%..\yaio-app-e2e\target\yaio.jar
+
 rem init webdriver
-rem set CMD=%YAIOBASEPATH%../node_modules/.bin/webdriver-manager update --ie
-rem echo "update webdriver %CMD%"
-rem call %CMD%
+set CMD=%ORIGYAIOSCRIPTPATH%../node_modules/.bin/webdriver-manager update --ie
+echo "update webdriver %CMD%"
+call %CMD%
 
 rem start webdriver
-set CMD=%YAIOBASEPATH%../node_modules/.bin/webdriver-manager start
+cd %ORIGYAIOSCRIPTPATH%\..
+set CMD=%ORIGYAIOSCRIPTPATH%../node_modules/.bin/webdriver-manager start
 echo "start webdriver %CMD%"
 start %CMD%
 
+cd %YAIOSCRIPTPATH%\..
 set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_FLYWAY% %FLYWAYCFG%
 echo "run-flyway: %CMD%"
 %CMD%
