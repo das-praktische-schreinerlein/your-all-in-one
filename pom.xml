@@ -29,6 +29,7 @@
         <module>yaio-app-server-standalone</module>
         <module>yaio-app-server-full</module>
         <module>yaio-app-full</module>
+        <module>yaio-app-e2e</module>
     </modules>
 
     <profiles>
