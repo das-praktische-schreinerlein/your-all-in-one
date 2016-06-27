@@ -35,7 +35,6 @@
     var vendorSrcBase = 'vendors/src/';
     var vendorDestBase = 'vendors/';
     var archivSrcBase = 'vendors/archiv/';
-    var testSrcBase = 'src/test/javascript/';
 
     /**
      * configure tasks
@@ -57,7 +56,6 @@
                 vendorSrcBase: vendorSrcBase,
                 vendorDestBase: vendorDestBase,
                 archivSrcBase: archivSrcBase,
-                testSrcBase: testSrcBase,
 
                 // define files
                 vendorJsFiles: [
@@ -142,16 +140,6 @@
                 projectResetCssFiles: [
                     // !!!! ymf is vendor but my project
                     vendorDestBase + 'js/yaio-explorerapp/yaio-reset-0.1.0.css'
-                ],
-                vendorJsTestFiles: [
-                    testSrcBase + 'unit/resources/js/jasmine/jasmine-jquery.js',
-                    testSrcBase + 'unit/jasmine-config.js'
-                ],
-                projectUnitJsTestFiles: [
-                    testSrcBase + 'unit/yaio-explorerapp/**/*_test.js'
-                ],
-                projectE2EJsTestFiles: [
-                    testSrcBase + 'e2e/yaio-explorerapp/**/*_test.js'
                 ]
             }
         });
@@ -163,7 +151,6 @@
         grunt.registerTask('vendorsfull', ['clean:bower', 'bower', 'vendorslocal']);
         grunt.registerTask('distfull', ['vendorsfull', 'clean:dist', 'copy:archiv2dist', 'concat', 'copy:vendors2dist', 'replace:versionOnDist', 'replace:versionOnRes', 'copy:dist2archiv']);
         grunt.registerTask('dist', ['distfull']);
-        grunt.registerTask('e2e-test', ['dist', 'protractor:continuous', 'watch:protractor']);
 
         // load grunt tasks
         grunt.loadNpmTasks('grunt-bower-task');
@@ -174,7 +161,6 @@
         grunt.loadNpmTasks('grunt-contrib-watch');
         grunt.loadNpmTasks('grunt-data-uri');
         grunt.loadNpmTasks('grunt-jsdoc');
-        grunt.loadNpmTasks('grunt-protractor-runner');
         grunt.loadNpmTasks('grunt-replace');
     };
 
