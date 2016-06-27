@@ -25,7 +25,7 @@ set YAIOSCRIPTPATH=%BASEPATH%\..\sbin\
 set YAIORESPATH=%BASEPATH%\..\resources\
 set YAIOVARPATH=%BASEPATH%\..\var\
 rem TODO
-set YAIOAPP=%BASEPATH%..\target\yaio-app-serverclient-full.jar
+set YAIOAPP=%BASEPATH%..\dist\yaio-app-serverclient-full.jar
 set CP="%YAIOAPP%;"
 set CFGFILE=%BASEPATH%..\config\yaio-application.properties
 set CFG=--config %CFGFILE% 
