@@ -26,6 +26,7 @@ YAIOCONFIGPATH=${YAIOSCRIPTPATH}../config/
 # init config
 . ${YAIOCONFIGPATH}/config-yaio.sh ${YAIOSCRIPTPATH}
 YAIOAPP=$BASEPATH/../yaio-app-e2e/target/yaio.jar
+CP="${YAIOAPP}:${APPPROPAGATOR}:${BASEPATH}../target/"
 
 cd $ORIGYAIOSCRIPTPATH\..
 

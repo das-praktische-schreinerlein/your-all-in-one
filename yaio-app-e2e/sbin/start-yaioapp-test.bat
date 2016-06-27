@@ -27,6 +27,7 @@ cd %YAIOCONFIGPATH%\..
 call %YAIOCONFIGPATH%\config-yaio.bat %YAIOSCRIPTPATH%
 
 set YAIOAPP=%BASEPATH%..\yaio-app-e2e\target\yaio.jar
+set CP="%YAIOAPP%;%APPPROPAGATOR%;"
 
 rem init webdriver
 set CMD=%ORIGYAIOSCRIPTPATH%../node_modules/.bin/webdriver-manager update --ie
