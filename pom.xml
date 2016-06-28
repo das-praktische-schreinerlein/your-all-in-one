@@ -15,6 +15,10 @@
     <name>yaio</name>
     <description>YourAllInOne D'Artagnan</description>
     <url>http://www.your-all-in-one.de</url>
+    <organization>
+        <name>Your-All-In-One</name>
+        <url>http://www.your-all-in-one.de</url>
+    </organization>
 
     <modules>
         <module>yaio-app-pom-parent</module>
@@ -29,8 +33,18 @@
         <module>yaio-app-server-standalone</module>
         <module>yaio-app-server-full</module>
         <module>yaio-app-full</module>
+<!--
+        deactivated:
         <module>yaio-app-e2e</module>
+-->
     </modules>
+
+    <distributionManagement>
+        <site>
+            <id>${project.artifactId}-site</id>
+            <url>/site/${project.artifactId}/</url>
+        </site>
+    </distributionManagement>
 
     <profiles>
         <profile>
@@ -44,6 +58,19 @@
         </profile>
     </profiles>
         
-    <!-- packaging jar or war and version -->
     <packaging>pom</packaging>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.0</version>
+                <configuration>
+                    <stagingDirectory>/site/test/</stagingDirectory>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
 </project>
