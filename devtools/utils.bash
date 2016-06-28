@@ -2,8 +2,8 @@
 
 PLANTUMLDEPCLI=D:\\ProgrammeShared\\plantuml-dependency-cli-1.4.0\\plantuml-dependency-cli-1.4.0-jar-with-dependencies.jar
 PLANTUMLDOCLET="D:\\ProgrammeShared\\plantUmlDoclet.jar"
-JAVADOCBIN=/cygdrive/d/Programme/Java/javadoc1.7.exec
-FINDBIN=/cygdrive/c//ProgrammePortable/PortableApps/PortableApps/CygwinPortable/App/Cygwin/bin/find
+JAVADOCBIN=/cygdrive/C/Programme/Java/jdk1.8.0_74/bin/javadoc.exe
+FINDBIN=/cygdrive/C/Programme/cygwin64/bin/find
 
 # usage:
 #     replace_text_in_file SRCFILE SRC INSERTFILE

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>de.yaio.app</groupId>
+        <artifactId>yaio-app-pom-parent</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+        <relativePath>../yaio-app-pom-parent/pom.xml</relativePath>
+    </parent>
+
+    <!-- the base -->
+    <groupId>de.yaio.app</groupId>
+    <artifactId>yaio-app-webapp</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <name>yaio-app-webapp</name>
+    <description>webapp modules for yaio-apps</description>
+
+
+    <!-- build options -->
+    <build>
+        <!-- for actuator-infos -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/generated-resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <testResources>
+            <testResource>
+                <directory>${project.basedir}/src/test/java/</directory>
+                <excludes>
+                    <exclude>**/*.java</exclude>
+                </excludes>
+            </testResource>
+            <testResource>
+                <directory>${project.basedir}/src/test/java/</directory>
+                <excludes>
+                    <exclude>**/*.java</exclude>
+                </excludes>
+            </testResource>
+            <testResource>
+                <directory>${project.basedir}/src/test/resources</directory>
+            </testResource>
+        </testResources>
+
+        <plugins>
+            <!-- grunt-integration to prepare resources -->
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <version>${frontend-maven-plugin.version}</version>
+
+                <executions>
+                    <execution>
+                        <id>install node and npm</id>
+                        <phase>${frontend-maven-plugin.phase}</phase>
+                        <goals>
+                            <goal>install-node-and-npm</goal>
+                        </goals>
+                        <configuration>
+                            <nodeVersion>${node.version}</nodeVersion>
+                            <npmVersion>${npm.version}</npmVersion>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>npm install</id>
+                        <phase>${frontend-maven-plugin.phase}</phase>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>install</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>grunt build</id>
+                        <phase>${frontend-maven-plugin.phase}</phase>
+                        <goals>
+                            <goal>grunt</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>dist</arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>${maven.antrun.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>copy-jar</id>
+                        <phase>install</phase>
+                        <configuration>
+                            <target>
+                                <copy file="${yaioBaseDir}/${project.artifactId}/target/${project.artifactId}-${project.version}.jar" tofile="${yaioBaseDir}/dist/${project.artifactId}-${project.version}.jar" />
+                                <copy file="${yaioBaseDir}/${project.artifactId}/target/${project.artifactId}-${project.version}.jar" tofile="${yaioBaseDir}/dist/${project.artifactId}.jar" />
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

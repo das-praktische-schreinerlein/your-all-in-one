@@ -1,5 +1,4 @@
 #!/bin/bash
-echo off
 # <h4>FeatureDomain:</h4>
 #     Collaboration
 # <h4>FeatureDescription:</h4>
@@ -23,7 +22,7 @@ BASEPATH=${YAIOBASEPATH}
 YAIOCONFIGPATH=${YAIOSCRIPTPATH}../config/
 
 # init config
-. ${YAIOCONFIGPATH}/config-yaio.sh ${YAIOSCRIPTPATH}
+. ${YAIOCONFIGPATH}/config-server.sh ${YAIOSCRIPTPATH}
 
 # add --debug option to see the startprocess of spring-boot
 CMD="java ${JAVAOPTIONS} -cp ${CP} ${PROG_APP} ${CFG} ${NEWID_OPTIONS}"

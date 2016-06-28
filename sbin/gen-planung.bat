@@ -30,7 +30,7 @@ set BASEPATH=%YAIOBASEPATH%
 set YAIOCONFIGPATH=%YAIOSCRIPTPATH%..\config\
 
 rem init config
-call %YAIOCONFIGPATH%\config-yaio.bat %YAIOSCRIPTPATH%
+call %YAIOCONFIGPATH%\config-cli.bat %YAIOSCRIPTPATH%
 
 rem 
 rem parse from wiki
@@ -65,7 +65,7 @@ if NOT "%PARSEONLY%" EQU "" goto end
 if "%GEN_SRC%" EQU "ppl" goto configure_ppl
 if "%GEN_SRC%" EQU "jpa" goto configure_jpa
 
-echo "unknown %GEN_SRC%";
+echo "unknown GEN_SRC:%GEN_SRC%";
 halt;
 goto end
 

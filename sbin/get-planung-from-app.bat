@@ -28,7 +28,7 @@ set BASEPATH=%YAIOBASEPATH%
 set YAIOCONFIGPATH=%YAIOSCRIPTPATH%..\config\
 
 rem init config
-call %YAIOCONFIGPATH%\config-yaio.bat %YAIOSCRIPTPATH%
+call %YAIOCONFIGPATH%\config-client.bat %YAIOSCRIPTPATH%
 
 rem export wiki
 :dowiki

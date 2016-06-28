@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>de.yaio.app</groupId>
+        <artifactId>yaio</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <!-- the base -->
+    <groupId>de.yaio.app</groupId>
+    <artifactId>yaio-app-pom-parent</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <name>yaio-app-pom-parent</name>
+    <description>a POM for yaio-apps</description>
+    <url>https://github.com/das-praktische-schreinerlein/yaio</url>
+
+    <packaging>pom</packaging>
+
+    <properties>
+        <!--
+          ##################
+          # Projectdata
+          ##################
+         -->
+        <!-- packaging - change it with "mvn package -Dpackaging.type=jar" -->
+        <packaging.type>pom</packaging.type>
+        <!-- assembly a jar with all dependencies - activate it with "mvn package -Dpackaging.assembly-phase=package" -->
+        <packaging.assembly-phase>none</packaging.assembly-phase>
+        <!-- shade to an ueber-jar - deactivate it with "mvn package -Dpackaging.shade-phase=none" -->
+        <packaging.shade-phase>package</packaging.shade-phase>
+        <packaging.springboot-phase>package</packaging.springboot-phase>
+        <!-- generate resources - deactivate it with "mvn package -Dfrontend-maven-plugin.phase=none" -->
+        <frontend-maven-plugin.phase>generate-resources</frontend-maven-plugin.phase>
+        <!-- karma tests - deactivate it with "mvn package -Dmaven-karma-plugin.phase=none" -->
+        <maven-karma-plugin.phase>test</maven-karma-plugin.phase>
+        <!-- protractor tests default:integration-test- deactivate it with "mvn package -Dmaven.ng.protractor=none" -->
+        <maven.ng.protractor.phase>none</maven.ng.protractor.phase>
+        <!-- prepare integration tests default:pre-integration-test - deactivate it with "mvn package -Dmaven-antrun-plugin.phase.pre-integration-test=none" -->
+        <maven-antrun-plugin.phase.pre-integration-test>none</maven-antrun-plugin.phase.pre-integration-test>
+        <!-- post integration tests default: post-integration-test - deactivate it with "mvn package -Dmaven-antrun-plugin.phase.post-integration-test=none" -->
+        <maven-antrun-plugin.phase.post-integration-test>none</maven-antrun-plugin.phase.post-integration-test>
+
+        <!--  maven install -->
+        <groupId>${project.groupId}</groupId>
+        <artifactId>${project.artifactId}</artifactId>
+        <version>${project.version}</version>
+        <packaging>${packaging.type}</packaging>
+        <file>target/${project.artifactId}-${project.version}.${packaging.type}</file>
+
+
+        <!--  project -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!--
+          ##################
+          # Versions
+          ##################
+         -->
+        <!--  versions -->
+        <java.version>1.7</java.version>
+
+        <yaio-app-pom-parent.version>0.1.0-SNAPSHOT</yaio-app-pom-parent.version>
+        <yaio-app-core.version>0.1.0-SNAPSHOT</yaio-app-core.version>
+        <yaio-app-pom-springboot.version>0.1.0-SNAPSHOT</yaio-app-pom-springboot.version>
+        <yaio-app-cli.version>0.1.0-SNAPSHOT</yaio-app-cli.version>
+        <yaio-app-serverclient.version>0.1.0-SNAPSHOT</yaio-app-serverclient.version>
+        <yaio-app-pom-springboot-web.version>0.1.0-SNAPSHOT</yaio-app-pom-springboot-web.version>
+        <yaio-app-webapp.version>0.1.0-SNAPSHOT</yaio-app-webapp.version>
+        <yaio-app-server.version>0.1.0-SNAPSHOT</yaio-app-server.version>
+
+        <!--
+          ##################
+          # dependency versions
+          ##################
+         -->
+
+        <!-- Yaio versions -->
+        <yaio-commons.version>[0.3.0,0.4.0)</yaio-commons.version>
+        <yaio-plantuml-service.version>[0.4.0,0.5.0)</yaio-plantuml-service.version>
+        <yaio-webshot-service.version>[0.5.0,0.6.0)</yaio-webshot-service.version>
+        <yaio-metaextract-service.version>[0.2.0,0.3.0)</yaio-metaextract-service.version>
+        <yaio-dms-service.version>[0.3.0,0.4.0)</yaio-dms-service.version>
+        <jsh-pegdown.version>[0.1.0-SNAPSHOT,0.2.0)</jsh-pegdown.version>
+
+        <!--  versions -->
+        <roo.version>1.2.4.RELEASE</roo.version>
+        <aspectj.version>1.8.6</aspectj.version>
+
+        <!-- seen on https://github.com/spring-projects/spring-boot/blob/333cd001073e7e1a5e9d69e1bea2e26fcf9a61f7/spring-boot-dependencies/pom.xml -->
+        <springboot.version>1.3.0.RELEASE</springboot.version>
+
+        <!-- managed -->
+        <!--
+        <spring.version>4.2.3.RELEASE</spring.version>
+
+            <slf4j.version>1.7.5</slf4j.version>
+            <log4j.version>1.2.17</log4j.version>
+
+            <mysql-connector-java.version>5.1.18</mysql-connector-java.version>
+        <hsqldb.version>2.3.3</hsqldb.version>
+        -->
+        <hibernate-core.version>4.2.2.Final</hibernate-core.version>
+        <hibernate-entitymanager.version>4.2.2.Final</hibernate-entitymanager.version>
+        <hibernate-validator.version>4.3.1.Final</hibernate-validator.version>
+        <hibernate-jpa-2.0-api.version>1.0.1.Final</hibernate-jpa-2.0-api.version>
+        <flyway-core.version>4.0</flyway-core.version>
+        <flyway.version>4.0</flyway.version>
+        <jta.version>1.1</jta.version>
+
+        <servlet-api.version>2.5</servlet-api.version>
+        <flexjson.version>2.1</flexjson.version>
+        <validation-api.version>1.0.0.GA</validation-api.version>
+
+        <commons-pool.version>1.5.6</commons-pool.version>
+        <commons-dbcp.version>1.4</commons-dbcp.version>
+        <commons-cli.version>1.2</commons-cli.version>
+        <commons-io.version>2.1</commons-io.version>
+        <commons-compress>1.10</commons-compress>
+
+        <poi.version>3.12</poi.version> <!-- POI 3.13 breaks Excel-Exporter so we should use tika 1.9 with 3.12 -->
+        <icu4j.version>54.1</icu4j.version>
+        <swagger.version>2.1.2</swagger.version>
+        <biweekly.version>0.4.2</biweekly.version>
+
+        <!-- test-scope -->
+        <json-path.version>0.8.1</json-path.version>
+        <junit.version>4.11</junit.version>
+        <!-- deactivated
+            <selenium-java.version>2.41.0</selenium-java.version>
+            <selenium-firefox-driver.version>2.41.0</selenium-firefox-driver.version>
+        -->
+
+        <!-- Plugin versions -->
+        <frontend-maven-plugin.version>0.0.27</frontend-maven-plugin.version>
+        <maven.surefire.plugin.version>2.14</maven.surefire.plugin.version>
+        <maven.failsafe.plugin.version>2.14</maven.failsafe.plugin.version>
+        <maven.surefire.report.plugin.version>2.14</maven.surefire.report.plugin.version>
+        <maven.javadoc.plugin.version>2.9.1</maven.javadoc.plugin.version>
+        <maven.checkstyle.plugin.version>2.12.1</maven.checkstyle.plugin.version>
+        <maven.findbugs.plugin.version>2.5.5</maven.findbugs.plugin.version>
+        <maven.pmd.plugin.version>3.1</maven.pmd.plugin.version>
+        <maven.antrun.plugin.version>1.6</maven.antrun.plugin.version>
+        <maven.ng.protractor.version>0.0.2</maven.ng.protractor.version>
+        <node.version>v0.10.35</node.version>
+        <npm.version>1.3.15</npm.version>
+    </properties>
+
+    <!-- use these repositories to solve dependencies and get jars -->
+    <repositories>
+        <repository>
+            <id>git-das-praktische-schreinerlein</id>
+            <name>das-praktische-schreinerlein's Git based repo</name>
+            <url>https://github.com/das-praktische-schreinerlein/maven-repo/raw/master/</url>
+        </repository>
+        <repository>
+            <id>spring-maven-release</id>
+            <name>Spring Maven Release Repository</name>
+            <url>http://maven.springframework.org/release</url>
+        </repository>
+        <repository>
+            <id>spring-roo-repository</id>
+            <name>Spring Roo Repository</name>
+            <url>http://spring-roo-repository.springsource.org/release</url>
+        </repository>
+        <!-- spring boot -->
+        <repository>
+            <id>spring-releases</id>
+            <name>Spring Releases</name>
+            <url>http://repo.spring.io/libs-release</url>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>spring-maven-release</id>
+            <name>Spring Maven Release Repository</name>
+            <url>http://maven.springframework.org/release</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>spring-maven-milestone</id>
+            <name>Spring Maven Milestone Repository</name>
+            <url>http://maven.springframework.org/milestone</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>spring-roo-repository</id>
+            <name>Spring Roo Repository</name>
+            <url>http://spring-roo-repository.springsource.org/release</url>
+        </pluginRepository>
+        <!-- spring boot -->
+        <pluginRepository>
+            <id>spring-releases</id>
+            <name>Spring Releases</name>
+            <url>http://repo.spring.io/libs-release</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <dependencies>
+        <!--  tests -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>${hsqldb.version}</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/generated-resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <testResources>
+            <testResource>
+                <directory>${project.basedir}/src/test/java/</directory>
+                <excludes>
+                    <exclude>**/*.java</exclude>
+                </excludes>
+            </testResource>
+            <testResource>
+                <directory>${project.basedir}/src/test/java/</directory>
+                <excludes>
+                    <exclude>**/*.java</exclude>
+                </excludes>
+            </testResource>
+            <testResource>
+                <directory>${project.basedir}/src/test/resources</directory>
+            </testResource>
+        </testResources>
+
+        <plugins>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>2.2</version>
+                    <!-- <configuration> <webXml>target/web.xml</webXml> </configuration> -->
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>2.5.1</version>
+                    <configuration>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                        <encoding>${project.build.sourceEncoding}</encoding>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>2.6</version>
+                    <configuration>
+                        <encoding>${project.build.sourceEncoding}</encoding>
+                        <nonFilteredFileExtensions>
+                            <nonFilteredFileExtension>swf</nonFilteredFileExtension>
+                            <nonFilteredFileExtension>pdf</nonFilteredFileExtension>
+                        </nonFilteredFileExtensions>
+                    </configuration>
+                </plugin>
+
+                <!--  tests -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.12</version>
+                    <configuration>
+                        <printSummary>true</printSummary>
+                        <redirectTestOutputToFile>true</redirectTestOutputToFile>
+                        <excludes>
+                            <exclude>**/*_Roo_*</exclude>
+                        </excludes>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-report-plugin</artifactId>
+                    <version>${maven.surefire.report.plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>generate-test-report</id>
+                            <phase>test</phase>
+                            <goals>
+                                <goal>report-only</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>generate-integration-test-report</id>
+                            <phase>integration-test</phase>
+                            <goals>
+                                <goal>failsafe-report-only</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>2.7</version>
+                </plugin>
+                <!-- IDE -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-idea-plugin</artifactId>
+                    <version>2.2</version>
+                    <configuration>
+                        <downloadSources>true</downloadSources>
+                        <dependenciesAsLibraries>true</dependenciesAsLibraries>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>tomcat-maven-plugin</artifactId>
+                    <version>1.1</version>
+                </plugin>
+
+                <!-- checkstyle -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>${maven.checkstyle.plugin.version}</version>
+                    <configuration>
+                        <configLocation>/checkstyle.xml</configLocation>
+                        <consoleOutput>true</consoleOutput>
+                        <violationSeverity>error</violationSeverity>
+                    </configuration>
+                </plugin>
+<!--
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>findbugs-maven-plugin</artifactId>
+                    <version>${maven.findbugs.plugin.version}</version>
+                    <configuration>
+                        <failOnError>false</failOnError>
+                    </configuration>
+                </plugin>
+-->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-pmd-plugin</artifactId>
+                    <version>${maven.pmd.plugin.version}</version>
+                </plugin>
+
+            <plugin>
+                <groupId>org.commonjava.maven.plugins</groupId>
+                <artifactId>directory-maven-plugin</artifactId>
+                <version>0.1</version>
+                <executions>
+                    <execution>
+                        <id>directories</id>
+                        <goals>
+                            <goal>highest-basedir</goal>
+                        </goals>
+                        <phase>initialize</phase>
+                        <configuration>
+                            <property>yaioBaseDir</property>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+                <version>${maven.surefire.report.plugin.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${maven.javadoc.plugin.version}</version>
+                <configuration>
+                    <aggregate>true</aggregate>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>${maven.checkstyle.plugin.version}</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>checkstyle</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+<!--
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>findbugs-maven-plugin</artifactId>
+                <version>${maven.findbugs.plugin.version}</version>
+                <configuration>
+                    <failOnError>false</failOnError>
+                </configuration>
+            </plugin>
+-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>${maven.pmd.plugin.version}</version>
+                <configuration>
+                    <targetJdk>${java.version}</targetJdk>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9</version>
+                <configuration>
+                    <failOnError>false</failOnError>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
+
+</project>

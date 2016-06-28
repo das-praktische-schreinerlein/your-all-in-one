@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>de.yaio.app</groupId>
+        <artifactId>yaio-app-pom-springboot-web</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+        <relativePath>../yaio-app-pom-springboot-web/pom.xml</relativePath>
+    </parent>
+
+    <!-- the base -->
+    <groupId>de.yaio.app</groupId>
+    <artifactId>yaio-app-server-standalone</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <name>yaio-app-server-standalone</name>
+    <description>server-standalone modules for yaio-apps</description>
+
+    <dependencies>
+        <!-- swagger -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-staticdocs</artifactId>
+            <version>${swagger.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Yaio -->
+        <dependency>
+            <groupId>de.yaio.app</groupId>
+            <artifactId>yaio-app-core</artifactId>
+            <version>${yaio-app-core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.yaio.app</groupId>
+            <artifactId>yaio-app-webapp</artifactId>
+            <version>${yaio-app-webapp.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>de.yaio</groupId>
+            <artifactId>yaio-commons</artifactId>
+            <version>${yaio-commons.version}</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>de.yaio.services</groupId>
+            <artifactId>yaio-plantuml-service</artifactId>
+            <version>${yaio-plantuml-service.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.yaio.services</groupId>
+            <artifactId>yaio-webshot-service</artifactId>
+            <version>${yaio-webshot-service.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.yaio.services</groupId>
+            <artifactId>yaio-metaextract-service</artifactId>
+            <version>${yaio-metaextract-service.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- run flyway before tests -->
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>4.0</version>
+                <executions>
+                    <execution>
+                        <phase>process-test-resources</phase>
+                        <goals>
+                            <goal>migrate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <locations>
+                        <location>filesystem:${yaioBaseDir}/yaio-app-core/src/main/resources/db/migration/hsqldb</location>
+                    </locations>
+                    <configFile>./src/test/resources/config/application-test.properties</configFile>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

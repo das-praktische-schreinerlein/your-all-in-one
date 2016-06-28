@@ -1,4 +1,4 @@
-echo off
+#!/usr/bin/env bash
 # <h4>FeatureDomain:</h4>
 #     Collaboration
 # <h4>FeatureDescription:</h4>
@@ -22,7 +22,7 @@ BASEPATH=${YAIOBASEPATH}
 YAIOCONFIGPATH=${YAIOSCRIPTPATH}../config/
 
 # init config
-. ${YAIOCONFIGPATH}/config-yaio.sh ${YAIOSCRIPTPATH}
+. ${YAIOCONFIGPATH}/config-server.sh ${YAIOSCRIPTPATH}
 
 CMD="java ${JAVAOPTIONS} -cp ${CP} ${PROG_FLYWAY} ${FLYWAYCFGFILE}"
 echo "run-flyway: ${CMD}"

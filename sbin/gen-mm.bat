@@ -27,7 +27,7 @@ set YAIOCONFIGPATH=%YAIOSCRIPTPATH%..\config\
 set BASEPATH=%YAIOBASEPATH%
 
 rem init config
-call %YAIOCONFIGPATH%\config-yaio.bat %BASEPATH%
+call %YAIOCONFIGPATH%\config-cli.bat %BASEPATH%
 
 rem nur Plandaten (kein IST/Status) set OUTPUT_OPTIONS=-p
 call %YAIOSCRIPTPATH%genWikiFromPPL.bat %MMPATH% %SRCFILE% %PROJNAME%

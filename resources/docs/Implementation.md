@@ -48,6 +48,8 @@
 - use external Libs
     - App-Framework: [AngularJS](https://angularjs.org/)
     - App-Routing: [Angular-Route](https://github.com/angular/bower-angular-route)
+    - charts: [c3](http://c3js.org)
+    - charts: [d3](https://d3js.org)
     - DOM-Manipulation: [findAndReplaceDOMText](https://github.com/padolsey/findAndReplaceDOMText)
     - Explorer-Visualisation: [fancytree](https://github.com/mar10/fancytree)
     - Html-Editor: [Ace](https://github.com/ajaxorg/ace-builds)
