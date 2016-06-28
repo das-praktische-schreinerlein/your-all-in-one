@@ -342,9 +342,10 @@
                     <configuration>
                         <configLocation>/checkstyle.xml</configLocation>
                         <consoleOutput>true</consoleOutput>
-                        <violationSeverity>info</violationSeverity>
+                        <violationSeverity>error</violationSeverity>
                     </configuration>
                 </plugin>
+<!--
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>findbugs-maven-plugin</artifactId>
@@ -353,6 +354,7 @@
                         <failOnError>false</failOnError>
                     </configuration>
                 </plugin>
+-->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-pmd-plugin</artifactId>
@@ -406,6 +408,7 @@
                     </reportSet>
                 </reportSets>
             </plugin>
+<!--
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>findbugs-maven-plugin</artifactId>
@@ -414,6 +417,7 @@
                     <failOnError>false</failOnError>
                 </configuration>
             </plugin>
+-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
