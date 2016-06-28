@@ -17,8 +17,6 @@
     <name>yaio-app-webapp</name>
     <description>webapp modules for yaio-apps</description>
 
-    <dependencies>
-    </dependencies>
 
     <!-- build options -->
     <build>

@@ -3,6 +3,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>de.yaio.app</groupId>
+        <artifactId>yaio</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
     <!-- the base -->
     <groupId>de.yaio.app</groupId>
     <artifactId>yaio-app-pom-parent</artifactId>
@@ -10,19 +17,8 @@
     <name>yaio-app-pom-parent</name>
     <description>a POM for yaio-apps</description>
     <url>https://github.com/das-praktische-schreinerlein/yaio</url>
-    <organization>
-        <name>Your-All-In-One</name>
-        <url>http://www.your-all-in-one.de</url>
-    </organization>
 
     <packaging>pom</packaging>
-
-    <parent>
-        <groupId>de.yaio.app</groupId>
-        <artifactId>yaio</artifactId>
-        <version>0.1.0-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
-    </parent>
 
     <properties>
         <!--
