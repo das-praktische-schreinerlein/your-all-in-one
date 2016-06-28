@@ -1,6 +1,8 @@
 /.idea
 /.settings
 /bower
+/dist
+/logs
 /node
 /node_modules
 /yaio-app-e2e/bower
