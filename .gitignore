@@ -17,7 +17,7 @@
 /yaio-app-webapp/src/main/generated-resources
 /storage
 /tmp
-/target
+/*/target
 /var/hsqldb/yaio.lck
 /yaio-app-webapp/vendors/html
 /yaio-app-webapp/vendors/js
