@@ -17,7 +17,7 @@ import de.yaio.app.core.datadomain.ResContentData;
 import de.yaio.app.core.datadomain.ResIndexData;
 import de.yaio.app.core.node.UrlResNode;
 import de.yaio.app.extension.dms.utils.DMSClient;
-import de.yaio.services.dms.storage.StorageResourceVersion;
+import de.yaio.services.dms.api.model.StorageResourceVersion;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,7 +76,7 @@ public class ResDocumentService {
      * @return                       StorageResourceVersion
      * @throws IOException           Exceptions possible
      */
-    public StorageResourceVersion getMetaDataForResContentFromDMS(final ResContentData datanode, final Integer version) 
+    public StorageResourceVersion getMetaDataForResContentFromDMS(final ResContentData datanode, final Integer version)
                     throws IOException {
         if (!UrlResNode.class.isInstance(datanode)) {
             throw new IllegalArgumentException();

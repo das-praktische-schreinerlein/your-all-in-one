@@ -13,8 +13,8 @@
  */
 package de.yaio.app.extension.dms.utils;
 
-import de.yaio.services.dms.storage.StorageResource;
-import de.yaio.services.dms.storage.StorageResourceVersion;
+import de.yaio.services.dms.api.model.StorageResource;
+import de.yaio.services.dms.api.model.StorageResourceVersion;
 
 import java.io.File;
 import java.io.IOException;
@@ -51,8 +51,8 @@ public interface DMSClient {
      * @param input                  the data to store in dms
      * @throws IOException           if something went wrong
      */
-    StorageResource updateContentInDMS(String id, String origFileName, 
-                                                 InputStream input) throws IOException;
+    StorageResource updateContentInDMS(String id, String origFileName,
+                                       InputStream input) throws IOException;
 
     /**
      * read the content from configured dms

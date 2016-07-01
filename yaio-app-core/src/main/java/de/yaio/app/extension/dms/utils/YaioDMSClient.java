@@ -14,9 +14,9 @@
 package de.yaio.app.extension.dms.utils;
 
 import de.yaio.commons.http.HttpUtils;
-import de.yaio.services.dms.storage.StorageResource;
-import de.yaio.services.dms.storage.StorageResourceVersion;
-import de.yaio.services.dms.storage.StorageUtils;
+import de.yaio.services.dms.api.model.StorageFactory;
+import de.yaio.services.dms.api.model.StorageResource;
+import de.yaio.services.dms.api.model.StorageResourceVersion;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
@@ -62,14 +62,14 @@ public class YaioDMSClient implements DMSClient {
 
     // StorageUtils
     @Autowired
-    protected StorageUtils storageUtils;
+    protected StorageFactory storageUtils;
 
     @Value("${yaio.dms-client.yaio-dms-service.buffersize}")
     private int BUFFER_SIZE;
 
     @Override
     public StorageResource addContentToDMS(final String srcId, final String origFileName,
-                                        final InputStream input) throws IOException {
+                                           final InputStream input) throws IOException {
         return saveResContentInDMS(true, srcId, origFileName, input);
     }
 

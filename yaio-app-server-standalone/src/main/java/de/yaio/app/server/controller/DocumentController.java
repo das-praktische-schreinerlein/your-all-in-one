@@ -17,7 +17,7 @@ import de.yaio.app.core.node.UrlResNode;
 import de.yaio.commons.data.DataUtils;
 import de.yaio.app.core.node.BaseNode;
 import de.yaio.app.extension.dms.services.ResDocumentService;
-import de.yaio.services.dms.storage.StorageResourceVersion;
+import de.yaio.services.dms.api.model.StorageResourceVersion;
 import org.apache.log4j.Logger;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;

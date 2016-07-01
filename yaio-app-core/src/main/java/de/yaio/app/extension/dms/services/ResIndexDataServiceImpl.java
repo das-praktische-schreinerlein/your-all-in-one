@@ -26,7 +26,7 @@ import de.yaio.app.utils.db.DBFilter;
 import de.yaio.app.core.node.UrlResNode;
 import de.yaio.app.core.nodeservice.UrlResNodeService;
 import de.yaio.app.extension.dms.utils.DMSClient;
-import de.yaio.services.dms.storage.StorageResource;
+import de.yaio.services.dms.api.model.StorageResource;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

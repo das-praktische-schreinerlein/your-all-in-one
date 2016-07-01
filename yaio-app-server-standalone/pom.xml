@@ -53,23 +53,6 @@
             <artifactId>yaio-commons</artifactId>
             <version>${yaio-commons.version}</version>
         </dependency>
-
-
-        <dependency>
-            <groupId>de.yaio.services</groupId>
-            <artifactId>yaio-plantuml-service</artifactId>
-            <version>${yaio-plantuml-service.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>de.yaio.services</groupId>
-            <artifactId>yaio-webshot-service</artifactId>
-            <version>${yaio-webshot-service.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>de.yaio.services</groupId>
-            <artifactId>yaio-metaextract-service</artifactId>
-            <version>${yaio-metaextract-service.version}</version>
-        </dependency>
     </dependencies>
 
     <build>

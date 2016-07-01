@@ -14,17 +14,17 @@
 package de.yaio.app.extension.dms.services;
 
 import de.yaio.app.core.datadomain.DataDomain;
-import de.yaio.app.extension.dms.utils.YaioWebshotClient;
-import de.yaio.commons.data.DataUtils;
 import de.yaio.app.core.datadomain.ResContentData;
 import de.yaio.app.core.datadomain.ResContentData.UploadWorkflowState;
 import de.yaio.app.core.datadomain.ResLocData;
 import de.yaio.app.core.datadomainservice.TriggeredDataDomainRecalcImpl;
-import de.yaio.app.utils.db.DBFilter;
 import de.yaio.app.core.node.UrlResNode;
 import de.yaio.app.core.nodeservice.UrlResNodeService;
 import de.yaio.app.extension.dms.utils.DMSClient;
-import de.yaio.services.dms.storage.StorageResource;
+import de.yaio.app.extension.dms.utils.YaioWebshotClient;
+import de.yaio.app.utils.db.DBFilter;
+import de.yaio.commons.data.DataUtils;
+import de.yaio.services.dms.api.model.StorageResource;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

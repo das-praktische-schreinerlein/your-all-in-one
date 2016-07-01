@@ -50,40 +50,20 @@ import java.util.List;
  */
 @Configuration
 @EnableSpringConfigured // <context:spring-configured/>
-@EnableAutoConfiguration(exclude = {
-                de.yaio.app.config.JobConfig.class,
-                de.yaio.services.webshot.WebshotApplication.class, 
-                de.yaio.services.webshot.WebshotWebSecurityConfig.class,
-                de.yaio.services.webshot.WebshotWebSecurityConfig.WebshotServiceSecurityConfigurerAdapter.class,
-                de.yaio.services.dms.DMSApplication.class,
-                de.yaio.services.dms.DMSWebSecurityConfig.class,
-                de.yaio.services.dms.DMSWebSecurityConfig.DMSServiceSecurityConfigurerAdapter.class,
-                de.yaio.services.plantuml.PlantumlApplication.class,
-                de.yaio.services.plantuml.PlantumlWebSecurityConfig.class,
-                de.yaio.services.plantuml.PlantumlWebSecurityConfig.PlantumlServiceSecurityConfigurerAdapter.class,
-                de.yaio.services.metaextract.MetaExtractApplication.class,
-                de.yaio.services.metaextract.MetaExtractWebSecurityConfig.class,
-                de.yaio.services.metaextract.MetaExtractWebSecurityConfig.MetaExtractServiceSecurityConfigurerAdapter.class
-                })
+@EnableAutoConfiguration()
 @ComponentScan(basePackages = {"de.yaio.app.core", "de.yaio.app.datatransfer",
                                "de.yaio.app.extension", "de.yaio.app.server",
                                "de.yaio.services.webshot", "de.yaio.services.dms",
                                "de.yaio.services.plantuml", "de.yaio.services.metaextract"},
                 excludeFilters = {
                     @Filter(type = FilterType.ASSIGNABLE_TYPE, value = {
-                        de.yaio.app.config.JobConfig.class,
-                        de.yaio.services.webshot.WebshotApplication.class,
-                        de.yaio.services.webshot.WebshotWebSecurityConfig.class,
-                        de.yaio.services.webshot.WebshotWebSecurityConfig.WebshotServiceSecurityConfigurerAdapter.class,
-                        de.yaio.services.dms.DMSApplication.class,
-                        de.yaio.services.dms.DMSWebSecurityConfig.class,
-                        de.yaio.services.dms.DMSWebSecurityConfig.DMSServiceSecurityConfigurerAdapter.class,
-                        de.yaio.services.plantuml.PlantumlApplication.class,
-                        de.yaio.services.plantuml.PlantumlWebSecurityConfig.class,
-                        de.yaio.services.plantuml.PlantumlWebSecurityConfig.PlantumlServiceSecurityConfigurerAdapter.class,
-                        de.yaio.services.metaextract.MetaExtractApplication.class,
-                        de.yaio.services.metaextract.MetaExtractWebSecurityConfig.class,
-                        de.yaio.services.metaextract.MetaExtractWebSecurityConfig.MetaExtractServiceSecurityConfigurerAdapter.class
+                        de.yaio.app.config.JobConfig.class
+                    }),
+                    @Filter(type=FilterType.REGEX, pattern={
+                            "de.yaio.services.dms.server.configuration.*",
+                            "de.yaio.services.metaextract.server.configuration.*",
+                            "de.yaio.services.plantuml.server.configuration.*",
+                            "de.yaio.services.webshot.server.configuration.*"
                     })
                 })
 @EnableScheduling
