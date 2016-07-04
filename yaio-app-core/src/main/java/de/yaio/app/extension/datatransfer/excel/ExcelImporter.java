@@ -81,9 +81,7 @@ public class ExcelImporter extends ImporterImpl {
             throw new IllegalArgumentException("cant parse excelfile:" + inFileName, ex);
         }
 
-        List<String> lines = this.parsePlanungSheet(wb);
-
-        return lines;
+        return this.parsePlanungSheet(wb);
     }
 
     public List<String> parsePlanungSheet(final HSSFWorkbook wb) throws ParserException {
@@ -93,8 +91,7 @@ public class ExcelImporter extends ImporterImpl {
 
         // Parameter pruefen
         if (wb == null) {
-            throw new IllegalArgumentException("Workbook must not be null: '"
-                    + wb + "'");
+            throw new IllegalArgumentException("Workbook must not be null");
         }
 
         List<String> lines = new ArrayList<String>();
@@ -333,10 +330,8 @@ public class ExcelImporter extends ImporterImpl {
         // validate node
         Set<ConstraintViolation<BaseNode>> violations = node.validateMe();
         if (violations.size() > 0) {
-            ConstraintViolationException ex = new ConstraintViolationException(
-                            "error while validating newNode" + node.getNameForLogger(), 
+            throw new ConstraintViolationException("error while validating newNode" + node.getNameForLogger(),
                             new HashSet<ConstraintViolation<?>>(violations));
-            throw ex;
         }
 
         // Ausgabetext

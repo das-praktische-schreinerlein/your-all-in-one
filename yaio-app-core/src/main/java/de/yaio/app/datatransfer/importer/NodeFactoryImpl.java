@@ -236,7 +236,7 @@ public class NodeFactoryImpl implements NodeFactory {
         for (Iterator<String> iter = hshCurNodeTypeIdentifier.keySet().iterator();
                 iter.hasNext();) {
             // die Identifier durchlaufen und den ersten Treffer benutzen
-            String typeIdentifier = iter.next().toString();
+            String typeIdentifier = iter.next();
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Check typeIdentifier:" + typeIdentifier + " for Name:" + srcName);
             }

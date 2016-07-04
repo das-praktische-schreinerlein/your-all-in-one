@@ -598,13 +598,10 @@ public class ICalExporter extends WikiExporter {
      */
     public String getCalFooter(final DataDomain masterNode, 
                                   final OutputOptions oOptions) {
-        String icalRes = "END:VCALENDAR\n";
-
-        return icalRes;
+        return "END:VCALENDAR\n";
     }
     
     public ICalendar createICalendar() {
-        ICalendar ical = new ICalendar();
-        return ical;
+        return new ICalendar();
     }
 }

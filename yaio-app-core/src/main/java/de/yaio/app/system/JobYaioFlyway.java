@@ -66,7 +66,7 @@ public class JobYaioFlyway extends CmdLineJob {
                 " options:" + config.optionsAsProperties() +
                 " properties:" + config.propertiesAsProperties() +
                 " contextConfigs:" + ContextHelper.getInstance().getSpringConfig());
-    };
+    }
 
     @Override
     public void doJob() {

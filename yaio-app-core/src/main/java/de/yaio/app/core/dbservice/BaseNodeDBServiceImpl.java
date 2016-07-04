@@ -27,12 +27,7 @@ import java.util.*;
 /** 
  * implementation of dbservices for BaseNodes
  * 
- * @FeatureDomain                Persistence
- * @package                      de.yaio.core.node
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category                     collaboration
- * @copyright                    Copyright (c) 2014, Michael Schreiner
- * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class BaseNodeDBServiceImpl implements BaseNodeDBService {
     protected static BaseNodeDBService instance = new BaseNodeDBServiceImpl();
@@ -96,17 +91,20 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
 
     @SuppressWarnings("unchecked")
     @Override
-    public long countExtendedSearchBaseNodes(final String fulltext, final String rootSysUID, final SearchOptions searchOptions) {
-        TypedQuery<Long> query = 
-                        (TypedQuery<Long>) BaseNodeQueryFactory.createExtendedSearchQuery(true, fulltext, rootSysUID, searchOptions, null);
+    public long countExtendedSearchBaseNodes(final String fulltext, final String rootSysUID,
+                                             final SearchOptions searchOptions) {
+        TypedQuery<Long> query = (TypedQuery<Long>) BaseNodeQueryFactory.createExtendedSearchQuery(true, fulltext,
+                rootSysUID, searchOptions, null);
         return query.getSingleResult();
     }
     
     
     @SuppressWarnings("unchecked")
     @Override
-    public List<BaseNode> findExtendedSearchBaseNodeEntries(final String fulltext, final String rootSysUID, final SearchOptions searchOptions,
-                    final String sortConfig, final int firstResult, final int maxResults) {
+    public List<BaseNode> findExtendedSearchBaseNodeEntries(final String fulltext, final String rootSysUID,
+                                                            final SearchOptions searchOptions,
+                                                            final String sortConfig, final int firstResult,
+                                                            final int maxResults) {
         TypedQuery<BaseNode> query = (TypedQuery<BaseNode>) BaseNodeQueryFactory.createExtendedSearchQuery(
                         false, fulltext, rootSysUID, searchOptions, sortConfig);
         query.setFirstResult(firstResult);
@@ -129,7 +127,8 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
     public List<List> calcAufwandPerDayStatistic(final BaseNodeQueryFactory.IstPlanPerDayStatisticQueryType type,
                                            final Date start, final Date end, final String pfulltext,
                                            final String rootSysUID, final SearchOptions searchOptions) {
-        return BaseNodeQueryFactory.createAufwandPerDayStatisticQuery(type, start, end, pfulltext, rootSysUID, searchOptions).getResultList();
+        return BaseNodeQueryFactory.createAufwandPerDayStatisticQuery(type, start, end, pfulltext, rootSysUID,
+                searchOptions).getResultList();
     }
 
     @Override
@@ -137,20 +136,23 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
                                          final BaseNodeQueryFactory.StartEndPerDayStatisticQueryType timeType,
                                          final Date start, final Date end, final String pfulltext,
                                          final String rootSysUID, final SearchOptions searchOptions) {
-        return BaseNodeQueryFactory.createCountPerDayStatisticQuery(type, timeType, start, end, pfulltext, rootSysUID, searchOptions).getResultList();
+        return BaseNodeQueryFactory.createCountPerDayStatisticQuery(type, timeType, start, end, pfulltext,
+                rootSysUID, searchOptions).getResultList();
     }
 
     @Override
     public List<List> calcDonePerDayStatistic(final Date start, final Date end, final String pfulltext,
                                         final String rootSysUID, final SearchOptions searchOptions) {
-        return BaseNodeQueryFactory.createDonePerDayStatisticQuery(start, end, pfulltext, rootSysUID, searchOptions).getResultList();
+        return BaseNodeQueryFactory.createDonePerDayStatisticQuery(start, end, pfulltext, rootSysUID,
+                searchOptions).getResultList();
     }
 
     @Override
     public List<List> calcRunningPerDayStatistic(final BaseNodeQueryFactory.IstPlanPerDayStatisticQueryType type,
                                            final Date start, final Date end, final String pfulltext,
                                            final String rootSysUID, final SearchOptions searchOptions) {
-        return BaseNodeQueryFactory.createRunningPerDayStatisticQuery(type, start, end, pfulltext, rootSysUID, searchOptions).getResultList();
+        return BaseNodeQueryFactory.createRunningPerDayStatisticQuery(type, start, end, pfulltext, rootSysUID,
+                searchOptions).getResultList();
     }
 
     @Override

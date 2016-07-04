@@ -17,7 +17,6 @@ import de.yaio.app.core.node.TaskNode;
 import de.yaio.app.datatransfer.common.ParserException;
 import de.yaio.app.datatransfer.exporter.formatter.IstDataFormatterImpl;
 import de.yaio.app.datatransfer.importer.parser.IstDataParserImpl;
-import de.yaio.app.datatransfer.importer.parser.Parser;
 
 import java.text.ParseException;
 

@@ -15,7 +15,6 @@ package de.yaio.app.extension.datatransfer.wiki;
 
 import de.yaio.app.core.node.BaseNode;
 import de.yaio.app.core.nodeservice.BaseNodeService;
-import de.yaio.app.datatransfer.common.ConverterException;
 import de.yaio.app.datatransfer.common.ParserException;
 import de.yaio.app.datatransfer.exporter.OutputOptions;
 import de.yaio.app.datatransfer.exporter.OutputOptionsImpl;

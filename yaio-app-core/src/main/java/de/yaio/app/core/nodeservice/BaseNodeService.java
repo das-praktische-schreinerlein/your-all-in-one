@@ -392,14 +392,14 @@ public class BaseNodeService extends NodeServiceImpl {
         if (baseNode.getParentNode() != null) {
             if (directionForward) {
                 parentNames = baseNode.getParentNode().getParentNameHirarchry(delimiter,
-                    directionForward)
+                    true)
                     + delimiter
                     + baseNode.getParentNode().getName();
             } else {
                 parentNames = baseNode.getParentNode().getName()
                     + delimiter
                     + baseNode.getParentNode().getParentNameHirarchry(delimiter,
-                        directionForward);
+                        false);
             }
         }
 
@@ -433,9 +433,7 @@ public class BaseNodeService extends NodeServiceImpl {
      */
     public String getNameForLogger(final DataDomain baseNode) {
         BaseNode node = (BaseNode) baseNode;
-        String nameForLogger = "sysUID_" + node.getSysUID() 
-                        + "_name_" + node.getName() + "_srcName_" + node.getSrcName();
-        return nameForLogger;    
+        return "sysUID_" + node.getSysUID() + "_name_" + node.getName() + "_srcName_" + node.getSrcName();
     }
     
     /** 

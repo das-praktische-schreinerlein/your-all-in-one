@@ -13,7 +13,9 @@
  */
 package de.yaio.app.core.datadomainservice;
 
-/** 
+import javax.validation.constraints.NotNull;
+
+/**
  * baseservice for businesslogic of datadomains
  * 
  * @FeatureDomain                BusinessLogic

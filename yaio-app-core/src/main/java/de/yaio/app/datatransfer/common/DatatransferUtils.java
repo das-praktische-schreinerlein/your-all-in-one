@@ -430,10 +430,9 @@ public class DatatransferUtils {
         // validate
         Set<ConstraintViolation<BaseNode>> violations = newNode.validateMe();
         if (violations.size() > 0) {
-            ConstraintViolationException ex = new ConstraintViolationException(
+            throw new ConstraintViolationException(
                             "error while validating newNode" + newNode.getNameForLogger(), 
                             new HashSet<ConstraintViolation<?>>(violations));
-            throw ex;
         }
 
         return flgChange;

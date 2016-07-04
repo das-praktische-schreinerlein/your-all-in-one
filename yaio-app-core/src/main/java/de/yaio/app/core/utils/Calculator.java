@@ -75,7 +75,7 @@ public class Calculator {
      */
     public static Object calculate(final Object arg1, final Object arg2, 
                                    final int action) {
-        Object res = null;
+        Object res;
 
         // test ob beide belegt
         if (arg1 != null && arg2 != null) {

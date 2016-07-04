@@ -134,10 +134,8 @@ public class ImporterImpl implements Importer {
         NodeFactory myNodeFactory = this.getNodeFactory();
 
         Class<?> classType = myNodeFactory.getNodeTypeFromText(strFullSrc, srcName);
-        DataDomain myNode = myNodeFactory.createNodeObjFromText(
+        return myNodeFactory.createNodeObjFromText(
                 classType, curId++, strFullSrc, srcName, curParentNode);
-
-        return myNode;
     }
     
 }

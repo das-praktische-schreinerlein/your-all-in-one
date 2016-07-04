@@ -137,9 +137,7 @@ public class YaioDMSClient implements DMSClient {
         
         // configure
         String metaJson = EntityUtils.toString(entity);
-        StorageResourceVersion resourceVersion = storageUtils.parseStorageResourceVersionFromJson(metaJson);
-
-        return resourceVersion;
+        return storageUtils.parseStorageResourceVersionFromJson(metaJson);
     }
 
 
@@ -196,8 +194,6 @@ public class YaioDMSClient implements DMSClient {
 
         // configure
         String metaJson = EntityUtils.toString(entity);
-        StorageResource resource = storageUtils.parseStorageResourceFromJson(metaJson);
-
-        return resource;
+        return storageUtils.parseStorageResourceFromJson(metaJson);
     }
 }

@@ -21,12 +21,7 @@ import org.springframework.mock.staticmock.MockStaticEntityMethods;
 /** 
  * baseinterface for tests<br>
  * 
- * @FeatureDomain                Tests
- * @package                      de.yaio
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category                     tests
- * @copyright                    Copyright (c) 2014, Michael Schreiner
- * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 
 @RunWith(JUnit4.class)
@@ -38,11 +33,7 @@ public abstract class BaseTest {
     /** 
      * testobject
      * 
-     * @package                      de.yaio
      * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
-     * @category                     tests
-     * @copyright                    Copyright (c) 2014, Michael Schreiner
-     * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
      */
     public interface TestObj  {
         String toString();
@@ -59,12 +50,12 @@ public abstract class BaseTest {
      */
     @Before
     public void setUp() {
-    };
+    }
 
     /** 
      * teardown the test
      */
     @After
     public void tearDown() {
-    };
+    }
 }

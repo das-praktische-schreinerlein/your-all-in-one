@@ -109,5 +109,5 @@ public abstract class DataDomainServiceTest extends BaseTest {
         }
         dataDomainService.doRecalcAfterChildren(myDataDomainObj, recurseDirection);
         testService.checkToStringResult(testObj, expectedAfterDoAfterChildren);
-    };
+    }
 }

@@ -17,15 +17,14 @@ import de.yaio.app.core.datadomain.BaseWorkflowData;
 import de.yaio.app.core.datadomain.DataDomain;
 import de.yaio.app.core.datadomain.WorkflowState;
 import de.yaio.app.core.node.BaseNode;
-import de.yaio.app.utils.db.DBFilter;
 import de.yaio.app.core.nodeservice.NodeService;
+import de.yaio.app.utils.db.DBFilter;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
-import java.util.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**

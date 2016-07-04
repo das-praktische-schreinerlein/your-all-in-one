@@ -398,8 +398,7 @@ public class CmdLineHelper {
         if (commandLine == null) {
             throw new IllegalStateException("getConfigFile: cant get configfile because commandLine is not set");
         }
-        String configPath = commandLine.getOptionValue("config");
-        return configPath;
+        return commandLine.getOptionValue("config");
     }
 
 }
