@@ -57,7 +57,7 @@ public class SymLinkNodeService extends BaseNodeService {
     }
 
     @Override
-    public String getDataBlocks4CheckSum(final DataDomain baseNode) throws Exception {
+    public String getDataBlocks4CheckSum(final DataDomain baseNode) {
         SymLinkNode node = (SymLinkNode) baseNode;
 
         // Content erzeugen

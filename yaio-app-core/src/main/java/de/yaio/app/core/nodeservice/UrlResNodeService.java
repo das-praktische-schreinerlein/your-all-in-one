@@ -79,7 +79,7 @@ public class UrlResNodeService extends InfoNodeService {
     }
 
     @Override
-    public String getDataBlocks4CheckSum(final DataDomain baseNode) throws Exception {
+    public String getDataBlocks4CheckSum(final DataDomain baseNode) {
         UrlResNode node = (UrlResNode) baseNode;
         
         // Content erzeugen

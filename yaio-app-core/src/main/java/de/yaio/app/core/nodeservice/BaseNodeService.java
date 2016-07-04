@@ -113,7 +113,7 @@ public class BaseNodeService extends NodeServiceImpl {
     // recalc
     ///////////////////////
     @Override
-    public void recalcData(final DataDomain baseNode, final NodeService.RecalcRecurseDirection recursionDirection) throws Exception {
+    public void recalcData(final DataDomain baseNode, final NodeService.RecalcRecurseDirection recursionDirection) {
         this.doRecalc(baseNode, recursionDirection);
     }
 
@@ -456,9 +456,8 @@ public class BaseNodeService extends NodeServiceImpl {
      * returns the data to create a checksum from
      * @param baseNode               node
      * @return                       datastring
-     * @throws Exception             possible Exception
      */
-    public String getDataBlocks4CheckSum(final DataDomain baseNode) throws Exception {
+    public String getDataBlocks4CheckSum(final DataDomain baseNode) {
         BaseNode node = (BaseNode) baseNode;
 
         // Content erzeugen

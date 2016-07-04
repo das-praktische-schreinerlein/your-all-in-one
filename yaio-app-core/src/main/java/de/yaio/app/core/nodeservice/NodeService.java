@@ -67,42 +67,37 @@ public interface NodeService {
      * recalcs the DataDomain of the node
      * @param node                   node to recalc
      * @param recurseDirection       Type of recursion (parent, me, children) NodeService.RecalcRecurseDirection.*
-     * @throws Exception             parser/format-Exceptions possible
      */
-    void doRecalc(DataDomain node, NodeService.RecalcRecurseDirection recurseDirection) throws Exception;
+    void doRecalc(DataDomain node, NodeService.RecalcRecurseDirection recurseDirection);
 
     /** 
      * recalcs the DataDomain of the node before the children are recalced
      * @param node                   node to recalc
      * @param recurseDirection       Type of recursion (parent, me, children) NodeService.RecalcRecurseDirection.*
-     * @throws Exception             parser/format-Exceptions possible
      */
-    void doRecalcBeforeChildren(DataDomain node, NodeService.RecalcRecurseDirection recurseDirection) throws Exception;
+    void doRecalcBeforeChildren(DataDomain node, NodeService.RecalcRecurseDirection recurseDirection);
 
     /** 
      * recalcs the DataDomain of the nodes children
      * @param node                   node which children to recalc
      * @param recurseDirection       Type of recursion (parent, me, children) NodeService.RecalcRecurseDirection.*
-     * @throws Exception             parser/format-Exceptions possible
      */
-    void doRecalcChildren(DataDomain node, NodeService.RecalcRecurseDirection recurseDirection) throws Exception;
+    void doRecalcChildren(DataDomain node, NodeService.RecalcRecurseDirection recurseDirection);
 
     /** 
      * recalcs the DataDomain of the node after the children are recalced
      * @param node                   node to recalc
      * @param recurseDirection       Type of recursion (parent, me, children) NodeService.RecalcRecurseDirection.*
-     * @throws Exception             parser/format-Exceptions possible
      */
-    void doRecalcAfterChildren(DataDomain node, NodeService.RecalcRecurseDirection recurseDirection) throws Exception;
+    void doRecalcAfterChildren(DataDomain node, NodeService.RecalcRecurseDirection recurseDirection);
     
     
     /** 
      * recalc the WFData of the node
      * @param baseNode               node to get the state from
      * @param recursionDirection     direction for recursivly recalc CONST_RECURSE_DIRECTION_* 
-     * @throws Exception             parser/format-Exceptions possible
      */
-    void recalcData(DataDomain baseNode, NodeService.RecalcRecurseDirection recursionDirection) throws Exception;
+    void recalcData(DataDomain baseNode, NodeService.RecalcRecurseDirection recursionDirection);
 
 
     ///////////////////////
