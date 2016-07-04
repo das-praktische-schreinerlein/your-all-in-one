@@ -231,18 +231,16 @@ public class JobNodes2Wiki extends YaioCmdLineJob {
      * create the masternode on which all other nodes are added
      * @param name                   name of the masternode
      * @return                       masternode - the masternode on which all other nodes are added
-     * @throws Exception             parse/io-Exceptions possible
+     * @throws ParserException       parse/io-Exceptions possible
      */
     public DataDomain createMasternode(final String name) throws ParserException {
-        DataDomain masterNode  = commonImporter.getPPLImporter().createNodeObjFromText(1, name, name, null);
-        return masterNode;
+        return commonImporter.getPPLImporter().createNodeObjFromText(1, name, name, null);
     }
 
     /** 
      * import the data from source configured by cmdline-options and add 
      * them to the masterNode 
      * @param masterNode             the masternode on which all other nodes are added
-     * @throws Exception             parse/io-Exceptions possible
      */
     public void importDataToMasterNode(final DataDomain masterNode) {
         commonImporter.importDataToMasterNode(masterNode);
@@ -253,7 +251,7 @@ public class JobNodes2Wiki extends YaioCmdLineJob {
      * @param exporter               converter to format the output
      * @param masterNode             the masternode to export
      * @param oOptions               Outputoptions
-     * @throws Exception             parse/io-Exceptions possible
+     * @throws ConverterException             parse/io-Exceptions possible
      */
     public void publishResult(final Exporter exporter, final DataDomain masterNode, 
             final OutputOptions oOptions) throws ConverterException {
@@ -263,7 +261,6 @@ public class JobNodes2Wiki extends YaioCmdLineJob {
     /** 
      * get the Outputoptions for export from commandline
      * @return                       oOptions - Outputoptions
-     * @throws Exception             parse-Exceptions possible
      */
     public OutputOptions getOutputOptions() {
         // Konfiguration
@@ -311,7 +308,7 @@ public class JobNodes2Wiki extends YaioCmdLineJob {
             // initApplicationContext
             ContextHelper.getInstance().getSpringApplicationContext();
         }
-    };
+    }
 
 
     // ######################

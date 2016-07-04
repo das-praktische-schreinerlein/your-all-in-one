@@ -63,7 +63,7 @@ public class JobRecalcNodes extends YaioCmdLineJob {
     @Override
     protected void configureContext() {
         ContextHelper.getInstance().addSpringConfig(JobConfig.class);
-    };
+    }
 
     @Override
     public void doJob() {

@@ -76,7 +76,7 @@ public class JobParseWiki extends YaioCmdLineJob {
             // initApplicationContext
             ContextHelper.getInstance().getSpringApplicationContext();
         }
-    };
+    }
 
     /**
      * create the commonly used importer to imports the data from differenet 

@@ -51,11 +51,11 @@ public class JobNodes2JPA extends JobNodes2Wiki {
     @Override
     protected void configureContext() {
         ContextHelper.getInstance().addSpringConfig(JobConfig.class);
-    };
+    }
 
     @Override
     public DataDomain createMasternode(final String name) throws ParserException {
-        DataDomain masterNode = null;
+        DataDomain masterNode;
 
         // initApplicationContext
         ContextHelper.getInstance().getSpringApplicationContext();

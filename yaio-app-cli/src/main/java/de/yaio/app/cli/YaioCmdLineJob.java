@@ -13,7 +13,6 @@
  */
 package de.yaio.app.cli;
 
-import de.yaio.app.cli.importer.CommonImporter;
 import de.yaio.app.config.ContextHelper;
 import de.yaio.app.config.YaioConfiguration;
 import de.yaio.app.config.YaioConfigurationHelper;
@@ -63,7 +62,7 @@ public abstract class YaioCmdLineJob extends CmdLineJob {
                 " options:" + getConfiguration().optionsAsProperties() +
                 " properties:" + getConfiguration().propertiesAsProperties() +
                 " contextConfigs:" + ContextHelper.getInstance().getSpringConfig());
-    };
+    }
 
     protected void cleanUpAfterJob() {
         // TODO: hack to close HSLDB-connection -> Hibernate doesn't close the
