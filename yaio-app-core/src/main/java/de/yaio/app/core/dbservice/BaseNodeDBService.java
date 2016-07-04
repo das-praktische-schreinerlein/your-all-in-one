@@ -36,9 +36,8 @@ public interface BaseNodeDBService {
      * recalc and merge the node and its parents recursively
      * @param node                   the node to recalc and merge
      * @return                       List - list of the recalced and saved parenthierarchy
-     * @throws Exception             io/DB-Exceptions possible
      */
-    List<BaseNode> updateMeAndMyParents(BaseNode node) throws Exception;
+    List<BaseNode> updateMeAndMyParents(BaseNode node);
 
     /** 
      * read the children for the sysUID from database
@@ -153,10 +152,9 @@ public interface BaseNodeDBService {
      * @param basenode               parentnode
      * @param pRecursionLevel        how many recursion-level will be saved to DB (0 = only my children)
      * @param flgForceMerge          force merge not persists
-     * @throws Exception             ioExceptions possible
      */
     void saveChildNodesToDB(final BaseNode basenode, final int pRecursionLevel, 
-                            final boolean flgForceMerge) throws Exception;
+                            final boolean flgForceMerge);
 
     /** 
      * remove the children from database recursivly

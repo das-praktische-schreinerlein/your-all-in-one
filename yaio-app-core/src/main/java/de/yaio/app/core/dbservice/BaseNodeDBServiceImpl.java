@@ -50,7 +50,7 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
     }
     
     @Override
-    public List<BaseNode> updateMeAndMyParents(final BaseNode node) throws Exception {
+    public List<BaseNode> updateMeAndMyParents(final BaseNode node) {
         List<BaseNode> parentHierarchy = null;
         if (node != null) {
             try {
@@ -175,7 +175,7 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
     
     @Override
     public void saveChildNodesToDB(final BaseNode baseNode, final int pRecursionLevel, 
-                                   final boolean flgForceMerge) throws Exception {
+                                   final boolean flgForceMerge) {
         // set new level if it is not -1
         int recursionLevel = pRecursionLevel;
         recursionLevel = recursionLevel > 0 ? recursionLevel-- : recursionLevel;
