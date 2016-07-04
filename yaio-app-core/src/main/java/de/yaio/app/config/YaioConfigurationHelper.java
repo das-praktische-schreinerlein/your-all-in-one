@@ -54,16 +54,16 @@ public class YaioConfigurationHelper extends ConfigurationHelper {
     }
 
     @Override
-    public Configuration getConfigurationInstance() throws Exception {
+    public Configuration getConfigurationInstance() {
         return getYaioConfigurationInstance();
     }
 
-    public YaioConfiguration getYaioConfigurationInstance() throws Exception {
+    public YaioConfiguration getYaioConfigurationInstance() {
         return YaioConfiguration.getInstance();
     }
 
     @Override
-    protected void initCalcedProperties(final CmdLineHelper cmdLineHelper) throws Exception {
+    protected void initCalcedProperties(final CmdLineHelper cmdLineHelper) {
         // load PostProcessorReplacements
         super.initCalcedProperties(cmdLineHelper);
         String replacerConfigPath = ConfigurationOption.stringValueOf(
