@@ -14,6 +14,7 @@
 package de.yaio.app.datatransfer.importer.parser;
 
 import de.yaio.app.core.datadomain.DataDomain;
+import de.yaio.app.datatransfer.common.ParserException;
 import de.yaio.app.datatransfer.importer.ImportOptions;
 
 import java.util.regex.Matcher;
@@ -95,9 +96,9 @@ public interface Parser extends Comparable<Parser> {
      * @param node                   DataDomain to parse
      * @param options                ImportOptionen for the parser
      * @return                       count elements found
-     * @throws Exception             parser-Exceptions possible
+     * @throws ParserException       parser-Exceptions possible
      */
-    int parseFromName(DataDomain node, ImportOptions options) throws Exception;
+    int parseFromName(DataDomain node, ImportOptions options) throws ParserException;
 
     /** 
      * delete the matchingArea between first and last Matcher from node.name 
@@ -108,8 +109,7 @@ public interface Parser extends Comparable<Parser> {
      * @param first                  first Matcher to set as new name
      * @param last                   last Matcher to append to new name
      * @return                       brackets found ?
-     * @throws Exception             parser-Exceptions possible
      */
     boolean trimNodeName(DataDomain node, Pattern pattern, 
-            Matcher matcher, int first, int last) throws Exception;
+            Matcher matcher, int first, int last);
 }

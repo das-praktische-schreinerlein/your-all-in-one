@@ -68,7 +68,7 @@ public class DocLayoutDataParserImpl  extends ParserImpl implements DocLayoutDat
     }
 
     @Override
-    public int parseFromName(final DataDomain node, final ImportOptions options) throws Exception {
+    public int parseFromName(final DataDomain node, final ImportOptions options) {
         if (node == null) {
             return 0;
         }
@@ -81,7 +81,7 @@ public class DocLayoutDataParserImpl  extends ParserImpl implements DocLayoutDat
     }
 
     @Override
-    public int parseDocLayoutDataFromName(final DocLayoutData node, final ImportOptions options) throws Exception {
+    public int parseDocLayoutDataFromName(final DocLayoutData node, final ImportOptions options) {
         int found = 0;
 
         // Check for valid data

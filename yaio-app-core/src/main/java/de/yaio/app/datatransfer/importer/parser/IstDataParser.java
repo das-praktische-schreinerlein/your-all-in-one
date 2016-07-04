@@ -14,6 +14,7 @@
 package de.yaio.app.datatransfer.importer.parser;
 
 import de.yaio.app.core.datadomain.IstData;
+import de.yaio.app.datatransfer.common.ParserException;
 import de.yaio.app.datatransfer.importer.ImportOptions;
 
 /** 
@@ -33,7 +34,7 @@ public interface IstDataParser extends Parser {
      * @param node                   DataDomain to parse
      * @param options                ImportOptionen for the parser
      * @return                       count elements found
-     * @throws Exception             parser-Exceptions possible
+     * @throws ParserException        parser-Exceptions possible
      */
-    int parseIstDataFromName(IstData node, ImportOptions options) throws Exception;
+    int parseIstDataFromName(IstData node, ImportOptions options) throws ParserException;
 }

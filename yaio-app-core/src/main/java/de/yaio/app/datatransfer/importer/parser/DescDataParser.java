@@ -33,7 +33,6 @@ public interface DescDataParser extends Parser {
      * @param node                   DataDomain to parse
      * @param options                ImportOptionen for the parser
      * @return                       count elements found
-     * @throws Exception             parser-Exceptions possible
      */
-    int parseDescDataFromName(DescData node, ImportOptions options) throws Exception;
+    int parseDescDataFromName(DescData node, ImportOptions options);
 }

@@ -13,8 +13,9 @@
  */
 package de.yaio.app.datatransfer.importer.parser;
 
-import de.yaio.app.datatransfer.importer.ImportOptions;
 import de.yaio.app.core.datadomain.PlanData;
+import de.yaio.app.datatransfer.common.ParserException;
+import de.yaio.app.datatransfer.importer.ImportOptions;
 
 /** 
  * interface with service-functions for parsing of dataDomain: PlanData
@@ -33,7 +34,7 @@ public interface PlanDataParser extends Parser {
      * @param node                   DataDomain to parse
      * @param options                ImportOptionen for the parser
      * @return                       count elements found
-     * @throws Exception             parser-Exceptions possible
+     * @throws ParserException       parser-Exceptions possible
      */
-    int parsePlanDataFromName(PlanData node, ImportOptions options) throws Exception;
+    int parsePlanDataFromName(PlanData node, ImportOptions options) throws ParserException;
 }

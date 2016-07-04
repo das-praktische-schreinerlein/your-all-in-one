@@ -40,12 +40,12 @@ public class BaseDataParserImpl  extends ParserImpl implements BaseDataParser {
     }
 
     @Override
-    public int parseFromName(final DataDomain node, final ImportOptions options) throws Exception {
+    public int parseFromName(final DataDomain node, final ImportOptions options) {
         return parseBaseDataFromName(node, options);
     }
 
     @Override
-    public int parseBaseDataFromName(final DataDomain node, final ImportOptions options) throws Exception {
+    public int parseBaseDataFromName(final DataDomain node, final ImportOptions options) {
 
         return 0;
     }

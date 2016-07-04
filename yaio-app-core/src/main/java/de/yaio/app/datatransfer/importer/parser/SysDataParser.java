@@ -13,8 +13,9 @@
  */
 package de.yaio.app.datatransfer.importer.parser;
 
-import de.yaio.app.datatransfer.importer.ImportOptions;
 import de.yaio.app.core.datadomain.SysData;
+import de.yaio.app.datatransfer.common.ParserException;
+import de.yaio.app.datatransfer.importer.ImportOptions;
 
 /** 
  * interface with service-functions for parsing of dataDomain: SysData
@@ -33,7 +34,7 @@ public interface SysDataParser extends Parser {
      * @param node                   DataDomain to parse
      * @param options                ImportOptionen for the parser
      * @return                       count elements found
-     * @throws Exception             parser-Exceptions possible
+     * @throws ParserException       parser-Exceptions possible
      */
-    int parseSysDataFromName(SysData node, ImportOptions options) throws Exception;
+    int parseSysDataFromName(SysData node, ImportOptions options) throws ParserException;
 }

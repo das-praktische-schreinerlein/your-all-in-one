@@ -15,10 +15,12 @@ package de.yaio.app.datatransfer.importer.parser;
 
 import de.yaio.app.core.datadomain.DataDomain;
 import de.yaio.app.core.datadomain.SysData;
+import de.yaio.app.datatransfer.common.ParserException;
 import de.yaio.app.datatransfer.importer.ImportOptions;
 import de.yaio.app.datatransfer.importer.NodeFactory;
 import org.apache.log4j.Logger;
 
+import java.text.ParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -70,7 +72,7 @@ public class SysDataParserImpl  extends ParserImpl implements SysDataParser {
     }
 
     @Override
-    public int parseFromName(final DataDomain node, final ImportOptions options) throws Exception {
+    public int parseFromName(final DataDomain node, final ImportOptions options) throws ParserException{
         if (node == null) {
             return 0;
         }
@@ -82,7 +84,7 @@ public class SysDataParserImpl  extends ParserImpl implements SysDataParser {
     }
 
     @Override
-    public int parseSysDataFromName(final SysData node, final ImportOptions options) throws Exception {
+    public int parseSysDataFromName(final SysData node, final ImportOptions options) throws ParserException {
         int found = 0;
 
         // Check for valid data
@@ -118,7 +120,11 @@ public class SysDataParserImpl  extends ParserImpl implements SysDataParser {
                     + matcherindex + ":" + matcher.group(matcherindex));
             }
             if (matcher.group(matcherindex) != null) {
-                node.setSysCreateDate(DTF.parse(matcher.group(matcherindex)));
+                try {
+                    node.setSysCreateDate(DTF.parse(matcher.group(matcherindex)));
+                } catch (ParseException ex) {
+                    throw new ParserException("cant parse SysCreateDat", node.getName(), ex);
+                }
             }
             // Checksum
             matcherindex = 4;
@@ -136,7 +142,11 @@ public class SysDataParserImpl  extends ParserImpl implements SysDataParser {
                     + matcherindex + ":" + matcher.group(matcherindex));
             }
             if (matcher.group(matcherindex) != null) {
-                node.setSysChangeDate(DTF.parse(matcher.group(matcherindex)));
+                try {
+                    node.setSysChangeDate(DTF.parse(matcher.group(matcherindex)));
+                } catch (ParseException ex) {
+                    throw new ParserException("cant parse SysChangeDate", node.getName(), ex);
+                }
             }
             // ChangeCount
             matcherindex = 6;
