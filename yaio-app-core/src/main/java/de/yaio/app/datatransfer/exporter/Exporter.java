@@ -14,6 +14,7 @@
 package de.yaio.app.datatransfer.exporter;
 
 import de.yaio.app.core.datadomain.DataDomain;
+import de.yaio.app.datatransfer.common.ConverterException;
 import de.yaio.app.datatransfer.exporter.formatter.Formatter;
 
 import java.util.Map;
@@ -59,10 +60,9 @@ public interface Exporter {
      * @param node                   node to be formatted
      * @param nodeOutput             StringBuffer to append output of the formatter
      * @param options                options for output (formatter) formatter
-     * @throws Exception             parser/format-Exceptions possible
      */
     void formatNodeDataDomains(DataDomain node, StringBuffer nodeOutput, 
-            OutputOptions options) throws Exception;
+            OutputOptions options);
 
     /** 
      * runs the formatter for the DataDomain (node)<br>
@@ -71,10 +71,9 @@ public interface Exporter {
      * @param formatter              formatter to be run
      * @param nodeOutput             StringBuffer to append output of the formatter
      * @param options                options for output (formatter) formatter
-     * @throws Exception             parser/format-Exceptions possible
      */
     void formatNodeDataDomain(DataDomain node, Formatter formatter, 
-            StringBuffer nodeOutput, OutputOptions options) throws Exception;
+            StringBuffer nodeOutput, OutputOptions options);
 
 
     ////////////////
@@ -85,20 +84,17 @@ public interface Exporter {
      * prepare node 4 export
      * @param node                   node to prepare
      * @param oOptions               options for output (formatter)
-     * @throws Exception             parser/format/io-Exceptions possible
      */
-    void prepareNodeForExport(DataDomain node, OutputOptions oOptions)
-            throws Exception;
+    void prepareNodeForExport(DataDomain node, OutputOptions oOptions);
 
     /** 
      * formats recursively masterNode and all childnodes (runs formatter)
      * @param masterNode             node for output recursively
      * @param oOptions               options for output (formatter)
      * @return                       formatted output of node-hierarchy and DataDomains
-     * @throws Exception             parser/format/io-Exceptions possible
+     * @throws ConverterException    parser/format/io-Exceptions possible
      */
-    String getMasterNodeResult(DataDomain masterNode, OutputOptions oOptions)
-            throws Exception;
+    String getMasterNodeResult(DataDomain masterNode, OutputOptions oOptions) throws ConverterException;
 
     
     /** 
@@ -106,10 +102,8 @@ public interface Exporter {
      * @param masterNode             Masternode with childnodes to filter
      * @param oOptions               options with filter
      * @return                       new MasterNode with filtered childnodes
-     * @throws Exception             parser/format-Exceptions possible
      */
-    DataDomain filterNodes(DataDomain masterNode, OutputOptions oOptions)
-            throws Exception;
+    DataDomain filterNodes(DataDomain masterNode, OutputOptions oOptions);
 
     /** 
      * filters nodes only with type/state in mpStates
@@ -117,20 +111,17 @@ public interface Exporter {
      * @param oOptions               options with filter
      * @param mpStates               types/status to filter (TypIdentifier)
      * @return                       new MasterNode with filtered childnodes
-     * @throws Exception             parser/format-Exceptions possible
      */
     DataDomain filterNodeByState(DataDomain node, OutputOptions oOptions,
-            Map<String, Object> mpStates) throws Exception;
+            Map<String, Object> mpStates);
 
     /** 
      * check if it the node passes the filter in oOptions
      * @param node                   node to check if it passes the filter
      * @param oOptions               options with filter
      * @return                       true/false = /matches/didnt match the filter
-     * @throws Exception             parser/format-Exceptions possible
      */
-    boolean isNodeMatchingFilter(DataDomain node, OutputOptions oOptions)
-                    throws Exception;
+    boolean isNodeMatchingFilter(DataDomain node, OutputOptions oOptions);
 
     /** 
      * check weather the exporter reads the nodes by its own or needs an ready node hierarchy

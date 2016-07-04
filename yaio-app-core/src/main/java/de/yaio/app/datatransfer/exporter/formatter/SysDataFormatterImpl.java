@@ -60,7 +60,7 @@ public class SysDataFormatterImpl extends FormatterImpl implements SysDataFormat
 
     @Override
     public void format(final DataDomain node, final StringBuffer nodeOutput,
-                       final OutputOptions options) throws Exception {
+                       final OutputOptions options) {
         // Check if node is compatibel
         if (node != null) {
             if (!SysData.class.isInstance(node)) {
@@ -72,7 +72,7 @@ public class SysDataFormatterImpl extends FormatterImpl implements SysDataFormat
 
     @Override
     public void formatSysData(final SysData node, final StringBuffer nodeOutput, 
-                              final OutputOptions oOptions) throws Exception {
+                              final OutputOptions oOptions) {
         // exit if Flg not set
         if (!oOptions.isFlgShowSysData()) {
             if (LOGGER.isDebugEnabled()) {

@@ -33,7 +33,6 @@ public interface PlanDataFormatter extends Formatter {
      * @param node                   node to be formatted
      * @param nodeOutput             to append the output
      * @param options                options for formatter
-     * @throws Exception             parser/format-Exceptions possible
      */
-    void formatPlanData(PlanData node, StringBuffer nodeOutput, OutputOptions options) throws Exception;
+    void formatPlanData(PlanData node, StringBuffer nodeOutput, OutputOptions options);
 }

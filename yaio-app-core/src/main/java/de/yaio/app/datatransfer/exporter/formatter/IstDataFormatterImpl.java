@@ -61,7 +61,7 @@ public class IstDataFormatterImpl extends FormatterImpl implements IstDataFormat
 
     @Override
     public void format(final DataDomain node, final StringBuffer nodeOutput, 
-                       final OutputOptions options) throws Exception {
+                       final OutputOptions options) {
         // Check if node is compatibel
         if (node != null) {
             if (!IstData.class.isInstance(node)) {
@@ -73,7 +73,7 @@ public class IstDataFormatterImpl extends FormatterImpl implements IstDataFormat
 
     @Override
     public void formatIstData(final IstData node, final StringBuffer nodeOutput, 
-                              final OutputOptions oOptions) throws Exception {
+                              final OutputOptions oOptions) {
         // exit if Flg not set
         if (oOptions == null || !oOptions.isFlgShowIst()) {
             if (LOGGER.isDebugEnabled()) {

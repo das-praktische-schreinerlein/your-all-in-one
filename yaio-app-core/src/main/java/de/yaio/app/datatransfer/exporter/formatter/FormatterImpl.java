@@ -59,7 +59,7 @@ public abstract class FormatterImpl implements Formatter {
     }
 
     @Override
-    public abstract void format(DataDomain node, StringBuffer nodeOutput, OutputOptions options) throws Exception;
+    public abstract void format(DataDomain node, StringBuffer nodeOutput, OutputOptions options);
 
 
     /** 
