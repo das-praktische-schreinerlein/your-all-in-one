@@ -66,7 +66,7 @@ public class MetaDataServiceImpl extends DataDomainRecalcImpl implements MetaDat
     }
     
     @Override
-    public void doRecalcBeforeChildren(final DataDomain node, final NodeService.RecalcRecurseDirection recurseDirection) throws Exception {
+    public void doRecalcBeforeChildren(final DataDomain node, final NodeService.RecalcRecurseDirection recurseDirection) {
         if (node == null) {
             return;
         }
@@ -80,12 +80,12 @@ public class MetaDataServiceImpl extends DataDomainRecalcImpl implements MetaDat
     }
 
     @Override
-    public void doRecalcAfterChildren(final DataDomain node, final NodeService.RecalcRecurseDirection recurseDirection) throws Exception {
+    public void doRecalcAfterChildren(final DataDomain node, final NodeService.RecalcRecurseDirection recurseDirection) {
         // NOP
     }
     
     @Override
-    public void initMetaData(final MetaData node) throws Exception {
+    public void initMetaData(final MetaData node) {
         // Daten einlesen
         String praefix = node.getMetaNodePraefix();
         String id = node.getMetaNodeNummer();
@@ -114,19 +114,18 @@ public class MetaDataServiceImpl extends DataDomainRecalcImpl implements MetaDat
     }
 
     @Override
-    public Object getNextNodeNumber(final MetaData node) throws Exception {
+    public Object getNextNodeNumber(final MetaData node) {
         return getNodeNumberService().getNextNodeNumber(node);
     }
 
     @Override
-    public void setNodeNumberService(final NodeNumberService newNodeNumberService)
-            throws Exception {
+    public void setNodeNumberService(final NodeNumberService newNodeNumberService) {
         this.nodeNumberService = newNodeNumberService;
         
     }
 
     @Override
-    public NodeNumberService getNodeNumberService() throws Exception {
+    public NodeNumberService getNodeNumberService() {
         return nodeNumberService;
     }
 }

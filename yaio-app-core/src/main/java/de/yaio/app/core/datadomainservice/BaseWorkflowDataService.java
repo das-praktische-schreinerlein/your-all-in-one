@@ -36,23 +36,20 @@ public interface BaseWorkflowDataService {
     /** 
      * calcs the initial plandata
      * @param node                   node
-     * @throws Exception             parser/format-Exceptions possible
      */
-    void calcPlanData(BaseWorkflowData node) throws Exception;
+    void calcPlanData(BaseWorkflowData node);
 
     /** 
      * recalcs the workflowdata
      * @param node                   node
-     * @throws Exception             parser/format-Exceptions possible
      */
-    void recalcWorkflowData(BaseWorkflowData node) throws Exception;
+    void recalcWorkflowData(BaseWorkflowData node);
 
     /** 
      * recalcs the statedata
      * @param node                   node
-     * @throws Exception             parser/format-Exceptions possible
      */
-    void recalcStateData(BaseWorkflowData node) throws Exception;
+    void recalcStateData(BaseWorkflowData node);
 
     /** 
      * calcs the currentStart for the node (prio: ist before plan)

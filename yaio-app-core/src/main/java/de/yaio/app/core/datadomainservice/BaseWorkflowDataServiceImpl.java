@@ -74,7 +74,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
     }
     
     @Override
-    public void doRecalcBeforeChildren(final DataDomain node, final NodeService.RecalcRecurseDirection recurseDirection) throws Exception {
+    public void doRecalcBeforeChildren(final DataDomain node, final NodeService.RecalcRecurseDirection recurseDirection) {
         
         // Check if node is compatibel
         if (!BaseWorkflowData.class.isInstance(node)) {
@@ -86,7 +86,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
     }
 
     @Override
-    public void doRecalcAfterChildren(final DataDomain node, final NodeService.RecalcRecurseDirection recurseDirection) throws Exception {
+    public void doRecalcAfterChildren(final DataDomain node, final NodeService.RecalcRecurseDirection recurseDirection) {
         // Check if node is compatibel
         if (!BaseWorkflowData.class.isInstance(node)) {
                 throw new IllegalArgumentException();
@@ -103,9 +103,8 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
      * if not: 0.0 is set
      * @param node                   node to process
      * @return                       standFaktor of the node
-     * @throws Exception             parser/format-Exceptions possible
      */
-    public Double getMyStandFaktor(final BaseWorkflowData node) throws Exception {
+    public Double getMyStandFaktor(final BaseWorkflowData node) {
         Double standFaktor = 0.0;
         
         // check if node is extended
@@ -131,9 +130,8 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
      * if instance of ExtendedWorkflowData then Plan/IstData is used<br>
      * if not: alle is set to null
      * @param node                   node to process
-     * @throws Exception             parser/format-Exceptions possible
      */
-    public void initChildSumData(final BaseWorkflowData node) throws Exception {
+    public void initChildSumData(final BaseWorkflowData node) {
         PlanChildrenSumData planChildrenSumData = node;
         IstChildrenSumData istChildrenSumData = node;
 
@@ -168,7 +166,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
     }
 
     @Override
-    public void calcPlanData(final BaseWorkflowData baseNode) throws Exception {
+    public void calcPlanData(final BaseWorkflowData baseNode) {
         // init calcedData
         if (ExtendedWorkflowData.class.isInstance(baseNode)) {
             // init with own Workflowdata
@@ -233,7 +231,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
         }
     }
     
-    public String getPlanCalcCheckSum(final PlanCalcData node) throws Exception {
+    public String getPlanCalcCheckSum(final PlanCalcData node) {
         // Daten holen
         String data = getDataBlocks4PlanCalcCheckSum(node);
         if (LOGGER.isDebugEnabled()) {
@@ -246,7 +244,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
 
     @XmlTransient
     @JsonIgnore
-    public String getDataBlocks4PlanCalcCheckSum(final PlanCalcData node) throws Exception {
+    public String getDataBlocks4PlanCalcCheckSum(final PlanCalcData node) {
         // Content erzeugen
         StringBuffer data = new StringBuffer();
         
@@ -334,7 +332,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
     }
     
     @Override
-    public void recalcWorkflowData(final BaseWorkflowData baseNode) throws Exception {
+    public void recalcWorkflowData(final BaseWorkflowData baseNode) {
         // init ChildSumData
         this.initChildSumData(baseNode);
         
@@ -437,7 +435,7 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
     }
 
     @Override
-    public void recalcStateData(final BaseWorkflowData baseNode) throws Exception {
+    public void recalcStateData(final BaseWorkflowData baseNode) {
         if (baseNode == null) {
             return;
         }
@@ -449,9 +447,8 @@ public class BaseWorkflowDataServiceImpl extends DataDomainRecalcImpl
      * return the recalced state (uses Plan/IstChildrenSum)
      * @param baseNode               node to process
      * @return                       recalced state
-     * @throws Exception             parser/format-Exceptions possible
      */
-    public String getRecalcedState(final BaseWorkflowData baseNode) throws Exception {
+    public String getRecalcedState(final BaseWorkflowData baseNode) {
         if (!ExtendedWorkflowData.class.isInstance(baseNode)) {
            // Normal Node
            return baseNode.getState();

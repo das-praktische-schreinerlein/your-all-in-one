@@ -36,18 +36,16 @@ public interface DataDomainRecalc extends Comparable<DataDomainRecalc> {
      * are recalced
      * @param node                   node to recalc
      * @param recurseDirection       Type of recursion (parent, me, children) RecalcRecurseDirection.*
-     * @throws Exception             parser/format-Exceptions possible
      */
-    void doRecalcBeforeChildren(DataDomain node, NodeService.RecalcRecurseDirection recurseDirection) throws Exception;
+    void doRecalcBeforeChildren(DataDomain node, NodeService.RecalcRecurseDirection recurseDirection);
 
     /** 
      * recalcs the DataDomain connected to the Recalcer after the children 
      * are recalced
      * @param node                   node to recalc
      * @param recurseDirection       Type of recursion (parent, me, children) RecalcRecurseDirection.*
-     * @throws Exception             parser/format-Exceptions possible
      */
-    void doRecalcAfterChildren(DataDomain node, NodeService.RecalcRecurseDirection recurseDirection) throws Exception;
+    void doRecalcAfterChildren(DataDomain node, NodeService.RecalcRecurseDirection recurseDirection);
 
     /** 
      * returns the class of the DataDomain for which the service runs

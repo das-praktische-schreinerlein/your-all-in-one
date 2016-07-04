@@ -33,23 +33,20 @@ public interface TriggeredDataDomainRecalc {
     
     /** 
      * recalcs the DataDomain connected to the Recalcer if it is triggered by db
-     * @throws Exception             parser/format-Exceptions possible
      */
-    void doSearchAndTrigger() throws Exception;
+    void doSearchAndTrigger();
 
     /** 
      * recalcs the DataDomain connected to the Recalcer if it is triggered by db
      * @param node                   node to recalc
-     * @throws Exception             parser/format-Exceptions possible
      */
-    void doRecalcWhenTriggered(DataDomain node) throws Exception;
+    void doRecalcWhenTriggered(DataDomain node);
 
     /** 
      * returns the trigger-filter 
      * @return                       list of filters to get nodes to recalc
-     * @throws Exception             parser/format-Exceptions possible
      */
-    List<DBFilter> getDBTriggerFilter() throws Exception;
+    List<DBFilter> getDBTriggerFilter();
 
     /** 
      * returns the class of the DataDomain for which the service runs
