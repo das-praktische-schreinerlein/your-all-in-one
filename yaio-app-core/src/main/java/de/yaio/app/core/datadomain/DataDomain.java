@@ -66,9 +66,8 @@ public interface DataDomain {
      /** 
      * recalc the WFData of the node, upadtes memberfields of dataDomain PlanChildrenSum+IstChildrenSum
      * @param recursionDirection     direction for recursivly recalc CONST_RECURSE_DIRECTION_*
-     * @throws Exception             possible Exception
      */
-    void recalcData(NodeService.RecalcRecurseDirection recursionDirection) throws Exception;
+    void recalcData(NodeService.RecalcRecurseDirection recursionDirection);
 
     String getNameForLogger();
 

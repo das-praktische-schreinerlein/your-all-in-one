@@ -35,7 +35,7 @@ public interface MetaData extends DataDomain {
     String getMetaNodeSubType();
     void setMetaNodeSubType(String metaNodeSubType);
     
-    void initMetaData() throws Exception;
+    void initMetaData();
 
     void resetMetaData();
 }
