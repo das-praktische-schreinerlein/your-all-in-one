@@ -45,11 +45,9 @@ public class NodeRecalcer {
      * read and recalc the masternode, all of its children and the parents and save it to db
      * @param sysUID                 sysUID of the masternode to read and recalc with alls children + parents
      * @return                       result-message
-     * @throws Exception             possible io/db/recalc-Exceptions
      */
     @Transactional
-    public String findAndRecalcMasternode(final String sysUID)
-            throws Exception {
+    public String findAndRecalcMasternode(final String sysUID) {
         // look for this masternode in DB
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("read node:" + sysUID);

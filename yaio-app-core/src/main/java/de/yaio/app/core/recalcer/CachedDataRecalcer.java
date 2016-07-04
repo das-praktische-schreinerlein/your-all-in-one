@@ -43,10 +43,9 @@ public class CachedDataRecalcer {
     /** 
      * read all nodes and recalc cachedData
      * @return                       result-message
-     * @throws Exception             possible io/db/recalc-Exceptions
      */
     @Transactional
-    public String recalcCachedData() throws Exception {
+    public String recalcCachedData() {
 
         long count = BaseNode.countBaseNodes();
         // look for this masternode in DB

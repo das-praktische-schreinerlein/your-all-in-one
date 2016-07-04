@@ -44,10 +44,9 @@ public class SysDataRecalcer {
     /** 
      * read all nodes and recalc sysdata
      * @return                       result-message
-     * @throws Exception             possible io/db/recalc-Exceptions
      */
     @Transactional
-    public String recalcSysData() throws Exception {
+    public String recalcSysData() {
 
         long count = BaseNode.countBaseNodes();
         // look for this masternode in DB
