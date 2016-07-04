@@ -697,9 +697,8 @@ public class BaseNode implements BaseData, MetaData, SysData,
      * if yes or flgForceMerge is set: do merge
      * @param pRecursionLevel        how many recursion-level will be saved to DB (0 = only my children)
      * @param flgForceMerge          force merge not persists
-     * @throws Exception             ioExceptions possible
      */
-    public void saveChildNodesToDB(final int pRecursionLevel, final boolean flgForceMerge) throws Exception {
+    public void saveChildNodesToDB(final int pRecursionLevel, final boolean flgForceMerge) {
         this.getBaseNodeDBService().saveChildNodesToDB(this, pRecursionLevel, flgForceMerge);
     }
 
@@ -772,24 +771,24 @@ public class BaseNode implements BaseData, MetaData, SysData,
     //####################
     
     @Override
-    public void recalcData(final NodeService.RecalcRecurseDirection recursionDirection) throws Exception {
+    public void recalcData(final NodeService.RecalcRecurseDirection recursionDirection) {
         getBaseNodeService().recalcData(this, recursionDirection);
     }
     
     @Override
-    public void initMetaData() throws Exception {
+    public void initMetaData() {
         getMetaDataService().initMetaData(this);
     }
 
     @Override
-    public void initSysData(boolean flgForceUpdate) throws Exception {
+    public void initSysData(boolean flgForceUpdate) {
         getSysDataService().initSysData(this, flgForceUpdate);
     }
 
     @Override
     @XmlTransient
     @JsonIgnore
-    public String getDataBlocks4CheckSum() throws Exception {
+    public String getDataBlocks4CheckSum() {
         return getBaseNodeService().getDataBlocks4CheckSum(this);
     }
 
