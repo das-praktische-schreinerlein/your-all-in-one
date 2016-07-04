@@ -72,7 +72,7 @@ public abstract class BaseNodeRestControllerTest  extends BaseTest {
     protected MockMvc mockMvc;
 
     @Override
-    public void setUp() throws Exception {
+    public void setUp() {
         // initApplicationContext
         CmdLineHelper cmdLineHelper = CmdLineHelper.getInstance();
         ConfigurationHelper configurationHelper = YaioConfigurationHelper.getInstance();
@@ -109,7 +109,7 @@ public abstract class BaseNodeRestControllerTest  extends BaseTest {
     };
 
     @Override
-    public void tearDown() throws Exception {
+    public void tearDown() {
     };
     
     

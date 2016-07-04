@@ -13,18 +13,19 @@
  */
 package de.yaio.app.extension.datatransfer.html;
 
-import de.yaio.app.datatransfer.exporter.OutputOptions;
-import de.yaio.app.datatransfer.exporter.formatter.*;
-import de.yaio.commons.converter.YmfMarkdownProvider;
-import de.yaio.commons.data.DataUtils;
 import de.yaio.app.core.datadomain.DataDomain;
 import de.yaio.app.core.node.BaseNode;
 import de.yaio.app.core.node.InfoNode;
 import de.yaio.app.core.node.SymLinkNode;
 import de.yaio.app.core.node.UrlResNode;
 import de.yaio.app.core.nodeservice.UrlResNodeService;
+import de.yaio.app.datatransfer.common.ConverterException;
+import de.yaio.app.datatransfer.exporter.OutputOptions;
 import de.yaio.app.datatransfer.exporter.OutputOptionsImpl;
+import de.yaio.app.datatransfer.exporter.formatter.*;
 import de.yaio.app.extension.datatransfer.wiki.WikiExporter;
+import de.yaio.commons.converter.YmfMarkdownProvider;
+import de.yaio.commons.data.DataUtils;
 import org.apache.log4j.Logger;
 import org.pegdown.JshConfig;
 
@@ -35,13 +36,8 @@ import java.util.regex.Pattern;
 /** 
  * export of Nodes as Html
  * 
- * @FeatureDomain                DatenExport Praesentation
- * @package                      de.yaio.extension.datatransfer.html
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category                     collaboration
- * @copyright                    Copyright (c) 2014, Michael Schreiner
- * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
- */
+*/
 public class HtmlExporter extends WikiExporter {
     
     protected static final String CONST_LAYOUT_TAG_DIV = "DIV";
@@ -77,7 +73,7 @@ public class HtmlExporter extends WikiExporter {
     
     @Override
     public String getMasterNodeResult(final DataDomain masterNode,
-            final OutputOptions poOptions) throws Exception {
+            final OutputOptions poOptions) throws ConverterException {
         OutputOptions oOptions = genOutputOptionsForHtml(poOptions);
         return super.getMasterNodeResult(masterNode, oOptions);
     }
@@ -108,7 +104,7 @@ public class HtmlExporter extends WikiExporter {
 
     @Override
     public StringBuffer getNodeResult(final DataDomain node,  final String praefix,
-            final OutputOptions oOptions) throws Exception {
+            final OutputOptions oOptions) throws ConverterException {
         StringBuffer res = new StringBuffer();
 
         // Template-Nodes ignorieren
@@ -155,10 +151,10 @@ public class HtmlExporter extends WikiExporter {
      * @param curNode                node for output recursively
      * @param oOptions               options for output (formatter)
      * @return                       formatted output of node-hierarchy and DataDomains
-     * @throws Exception             parser/format-Exceptions possible
+     * @throws ConverterException    parser/format-Exceptions possible
      */
     public String genHtmlDokuLayoutForNode(final BaseNode curNode,
-        final OutputOptions oOptions) throws Exception {
+        final OutputOptions oOptions) throws ConverterException  {
         String res = "";
 
         // max. Ebene pruefen
@@ -611,10 +607,10 @@ public class HtmlExporter extends WikiExporter {
      * @param curNode                node for output recursively
      * @param oOptions               options for output (formatter)
      * @return                       formatted output of node-hierarchy and DataDomains
-     * @throws Exception             parser/format-Exceptions possible
+     * @throws ConverterException    parser/format-Exceptions possible
      */
     public String genHtmlProjektLayoutForNode(final BaseNode curNode,
-        final OutputOptions oOptions) throws Exception {
+        final OutputOptions oOptions) throws ConverterException {
         String res = "";
 
         // max. Ebene pruefen
@@ -939,14 +935,19 @@ public class HtmlExporter extends WikiExporter {
      * format the descText as Markdown
      * @param descText               the string to format
      * @return                       formatted markdown
-     * @throws IOException           IOException-Exceptions possible
+     * @throws ConverterException    IOException-Exceptions possible
      */
-    public String formatTextAsMarkdown(final String descText) throws IOException {
+    public String formatTextAsMarkdown(final String descText) throws ConverterException {
         JshConfig config = new JshConfig();
         config.setStylePrefix("jsh-");
         config.setAppBaseVarName("ymfAppBase");
 
-        String newDescText = markdownProvider.convertMarkdownToHtml(config, descText);
+        String newDescText = null;
+        try {
+            newDescText = markdownProvider.convertMarkdownToHtml(config, descText);
+        } catch (IOException ex) {
+            throw new ConverterException("cant parse markdown", descText, ex);
+        }
         // replace yaio-links
         newDescText = newDescText.replaceAll("href=\"yaio:",
                 "href=\"" + "/yaio-explorerapp/yaio-explorerapp.html#/showByAllIds/");

@@ -309,7 +309,7 @@ public class ExcelOutputService extends ExcelService {
     }
 
     // TODO Doku
-   public HSSFCellStyle convertCss2Modul(HSSFCellStyle style, HSSFWorkbook wb){
+   public HSSFCellStyle convertCss2Modul(HSSFCellStyle style, HSSFWorkbook wb) {
         HSSFCellStyle style2 = copyStyle(style, wb);
         style2.setBorderTop(HSSFCellStyle.BORDER_DOUBLE);
         style2.setLocked(true);

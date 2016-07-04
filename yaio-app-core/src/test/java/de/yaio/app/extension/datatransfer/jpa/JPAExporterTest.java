@@ -12,13 +12,13 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 package de.yaio.app.extension.datatransfer.jpa;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-import org.springframework.mock.staticmock.MockStaticEntityMethods;
 
 import de.yaio.app.datatransfer.exporter.Exporter;
 import de.yaio.app.datatransfer.jpa.JPAExporter;
 import de.yaio.app.extension.datatransfer.wiki.WikiExporterTest;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
+import org.springframework.mock.staticmock.MockStaticEntityMethods;
 
 /** 
  * test of the jpa-exporter-logic<br>
@@ -36,12 +36,12 @@ import de.yaio.app.extension.datatransfer.wiki.WikiExporterTest;
 public class JPAExporterTest extends WikiExporterTest {
 
     @Override
-    public Exporter setupNewExporter() throws Exception {
+    public Exporter setupNewExporter() {
         return new JPAExporter();
     }
     
     @Override
-    public void testExport() throws Exception {
+    public void testExport() {
         //testExportFromFixture("FixtureJPAExportSource.ppl", "FixtureJPAExportResult.log"); 
     }
 }

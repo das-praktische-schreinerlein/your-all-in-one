@@ -12,15 +12,16 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 package de.yaio.app;
-import static org.junit.Assert.assertEquals;
+
+import de.yaio.app.BaseTest.TestObj;
+import org.apache.log4j.Logger;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import org.apache.log4j.Logger;
-
-import de.yaio.app.BaseTest.TestObj;
+import static org.junit.Assert.assertEquals;
 
 /** 
  * services for tests<br>
@@ -43,10 +44,8 @@ public class TestServices {
      * compares the resulting dataobj.toString with myExpecteResult
      * @param myTestObj              the dataobj to test
      * @param myExpectedResult       the expected result
-     * @throws Exception             io-Exceptions possible
      */
-    public void checkToStringResult(final TestObj myTestObj, 
-                    final String myExpectedResult) throws Exception {
+    public void checkToStringResult(final TestObj myTestObj, final String myExpectedResult) {
         // Master ausgeben
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("got result of:" + myTestObj.toString());
@@ -60,10 +59,8 @@ public class TestServices {
      * compares the resulting string line by line with myExpecteResult
      * @param result                 the string to test
      * @param myExpectedResult       the expected result
-     * @throws Exception             io-Exceptions possible
      */
-    public void checkStringLineByLine(final String result, final String myExpectedResult) 
-                    throws Exception {
+    public void checkStringLineByLine(final String result, final String myExpectedResult) {
         // Master ausgeben
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("got result of:" + result);
@@ -95,9 +92,9 @@ public class TestServices {
      * @param base                   base to get the packagepath for srcFile
      * @param srcFile                file to load from package
      * @return                       resulting filecontent
-     * @throws Exception             io-Exceptions possible
+     * @throws IOException           io-Exceptions possible
      */
-    public StringBuffer readFixture(final Class<?> base, final String srcFile) throws Exception {
+    public StringBuffer readFixture(final Class<?> base, final String srcFile) throws IOException {
         // open resource
         InputStream is = base.getResourceAsStream(srcFile);
         BufferedReader br = new BufferedReader(new InputStreamReader(is));

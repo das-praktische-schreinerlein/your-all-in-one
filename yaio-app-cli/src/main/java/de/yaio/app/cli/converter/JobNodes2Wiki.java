@@ -18,6 +18,8 @@ import de.yaio.app.cli.importer.ExtendedCommonImporter;
 import de.yaio.app.config.ContextHelper;
 import de.yaio.app.config.JobConfig;
 import de.yaio.app.core.datadomain.DataDomain;
+import de.yaio.app.datatransfer.common.ConverterException;
+import de.yaio.app.datatransfer.common.ParserException;
 import de.yaio.app.datatransfer.exporter.Exporter;
 import de.yaio.app.datatransfer.exporter.OutputOptions;
 import de.yaio.app.datatransfer.exporter.OutputOptionsImpl;
@@ -32,12 +34,7 @@ import org.apache.log4j.Logger;
 /** 
  * job to import nodes in PPL-Format and output as Wiki
  * 
- * @FeatureDomain                DatenExport Praesentation
- * @package                      de.yaio.extension.datatransfer.wiki
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category                     collaboration
- * @copyright                    Copyright (c) 2014, Michael Schreiner
- * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class JobNodes2Wiki extends YaioCmdLineJob {
 
@@ -46,7 +43,7 @@ public class JobNodes2Wiki extends YaioCmdLineJob {
     /**
      * the converter to format the masternode-data
      */
-    public Exporter exporter;
+    protected Exporter exporter;
     protected ExtendedCommonImporter commonImporter;
     
     /** 
@@ -59,7 +56,7 @@ public class JobNodes2Wiki extends YaioCmdLineJob {
     }
 
     @Override
-    protected Options addAvailiableCmdLineOptions() throws Exception {
+    protected Options addAvailiableCmdLineOptions() {
         Options availiableCmdLineOptions = 
                         CmdLineHelper.getNewOptionsInstance();
 
@@ -85,7 +82,7 @@ public class JobNodes2Wiki extends YaioCmdLineJob {
      * add common output-options to the availiableCmdLineOptions
      * @param availiableCmdLineOptions the container with the availiableCmdLineOptions
      */
-    protected Options addAvailiableCommonOutputCmdLineOptions(final Options availiableCmdLineOptions) throws Exception {
+    protected Options addAvailiableCommonOutputCmdLineOptions(final Options availiableCmdLineOptions) {
         // Mastername
         Option masternameOption = new Option("m", "mastername", true, "Name of Masternode (default Master)");
         masternameOption.setRequired(false);
@@ -103,7 +100,7 @@ public class JobNodes2Wiki extends YaioCmdLineJob {
      * add special wiki output-options to the availiableCmdLineOptions
      * @param availiableCmdLineOptions the container with the availiableCmdLineOptions
      */
-    protected Options addAvailiableOutputCmdLineOptions(final Options availiableCmdLineOptions) throws Exception {
+    protected Options addAvailiableOutputCmdLineOptions(final Options availiableCmdLineOptions) {
 
         // Show ChildrenSum
         Option flgShowChildrenSumOption = new Option("", "calcsum", false, "Show ChildrenSum (default false)");
@@ -195,13 +192,18 @@ public class JobNodes2Wiki extends YaioCmdLineJob {
     }
 
     @Override
-    public void doJob() throws Exception {
+    public void doJob() {
         // init
         createExporter();
         
         // Mastername extrahieren
         String masterName = ConfigurationOption.stringValueOf(this.getConfiguration().getCliOption("m", "Master"));
-        DataDomain masterNode = createMasternode(masterName);
+        DataDomain masterNode;
+        try {
+            masterNode = createMasternode(masterName);
+        } catch (ParserException ex) {
+            throw new IllegalArgumentException("cant create masternode - error while parsing masternode", ex);
+        }
 
         // Output-Options parsen
         OutputOptions oOptions =
@@ -214,7 +216,11 @@ public class JobNodes2Wiki extends YaioCmdLineJob {
         masterNode = exporter.filterNodes(masterNode, oOptions);
 
         // Masternode ausgeben
-        this.publishResult(exporter, masterNode, oOptions);
+        try {
+            this.publishResult(exporter, masterNode, oOptions);
+        } catch (ConverterException ex) {
+            throw new IllegalArgumentException("cant pubish masternode - error while converting masternode", ex);
+        }
     }
 
     // #############
@@ -227,7 +233,7 @@ public class JobNodes2Wiki extends YaioCmdLineJob {
      * @return                       masternode - the masternode on which all other nodes are added
      * @throws Exception             parse/io-Exceptions possible
      */
-    public DataDomain createMasternode(final String name) throws Exception {
+    public DataDomain createMasternode(final String name) throws ParserException {
         DataDomain masterNode  = commonImporter.getPPLImporter().createNodeObjFromText(1, name, name, null);
         return masterNode;
     }
@@ -238,7 +244,7 @@ public class JobNodes2Wiki extends YaioCmdLineJob {
      * @param masterNode             the masternode on which all other nodes are added
      * @throws Exception             parse/io-Exceptions possible
      */
-    public void importDataToMasterNode(final DataDomain masterNode) throws Exception {
+    public void importDataToMasterNode(final DataDomain masterNode) {
         commonImporter.importDataToMasterNode(masterNode);
     }
 
@@ -250,7 +256,7 @@ public class JobNodes2Wiki extends YaioCmdLineJob {
      * @throws Exception             parse/io-Exceptions possible
      */
     public void publishResult(final Exporter exporter, final DataDomain masterNode, 
-            final OutputOptions oOptions) throws Exception {
+            final OutputOptions oOptions) throws ConverterException {
         System.out.println(exporter.getMasterNodeResult(masterNode, oOptions));
     }
 
@@ -259,7 +265,7 @@ public class JobNodes2Wiki extends YaioCmdLineJob {
      * @return                       oOptions - Outputoptions
      * @throws Exception             parse-Exceptions possible
      */
-    public OutputOptions getOutputOptions() throws Exception {
+    public OutputOptions getOutputOptions() {
         // Konfiguration
         CommandLine cmdLine = this.getCmdLineHelper().getCommandLine();
         OutputOptions oOptions = new OutputOptionsImpl();
@@ -298,7 +304,7 @@ public class JobNodes2Wiki extends YaioCmdLineJob {
     }
 
     @Override
-    protected void configureContext() throws Exception {
+    protected void configureContext() {
         String sourceType = ConfigurationOption.stringValueOf(this.getConfiguration().getCliOption("sourcetype", ""));
         if ("jpa".equalsIgnoreCase(sourceType)) {
             ContextHelper.getInstance().addSpringConfig(JobConfig.class);

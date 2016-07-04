@@ -44,7 +44,7 @@ public class MasterNodeRestControllerTest extends BaseNodeRestControllerTest {
      * @see de.yaio.app.BaseTest#setupNewTestObj()
      */
     @Override
-    public TestObj setupNewTestObj() throws Exception {
+    public TestObj setupNewTestObj() {
         return null;
     }
 }

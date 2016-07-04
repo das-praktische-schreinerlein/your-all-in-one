@@ -12,11 +12,16 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 package de.yaio.app.core.datadomain;
-import static org.junit.Assert.assertEquals;
 
-import java.text.DateFormat;
-
-import de.yaio.app.core.datadomain.DataDomain;
+import de.yaio.app.BaseTest;
+import de.yaio.app.datatransfer.common.ParserException;
+import de.yaio.app.datatransfer.exporter.OutputOptions;
+import de.yaio.app.datatransfer.exporter.OutputOptionsImpl;
+import de.yaio.app.datatransfer.exporter.formatter.Formatter;
+import de.yaio.app.datatransfer.importer.ImportOptions;
+import de.yaio.app.datatransfer.importer.ImportOptionsImpl;
+import de.yaio.app.datatransfer.importer.parser.Parser;
+import de.yaio.commons.data.DataUtils;
 import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,14 +29,10 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.springframework.mock.staticmock.MockStaticEntityMethods;
 
-import de.yaio.app.BaseTest;
-import de.yaio.commons.data.DataUtils;
-import de.yaio.app.datatransfer.exporter.OutputOptions;
-import de.yaio.app.datatransfer.exporter.OutputOptionsImpl;
-import de.yaio.app.datatransfer.exporter.formatter.Formatter;
-import de.yaio.app.datatransfer.importer.ImportOptions;
-import de.yaio.app.datatransfer.importer.ImportOptionsImpl;
-import de.yaio.app.datatransfer.importer.parser.Parser;
+import java.text.DateFormat;
+import java.text.ParseException;
+
+import static org.junit.Assert.assertEquals;
 
 /** 
  * interface for test of the datadomain-logic<br>
@@ -70,24 +71,21 @@ public abstract class DataDomainTest extends BaseTest {
     
     /** 
      * setup the parser-obj to test
-     * @throws Exception             in case of Problems when setup
      */
     @Before
-    public abstract void setupParser() throws Exception;
+    public abstract void setupParser();
 
     /** 
      * setup the formatter-obj to test
-     * @throws Exception             in case of Problems when setup
      */
     @Before
-    public abstract void setupFormatter() throws Exception;
+    public abstract void setupFormatter();
 
     /** 
      * do the parser-tests
-     * @throws Exception             in case of Problems while test
      */
     @Test
-    public abstract void testParser() throws Exception;
+    public abstract void testParser() throws ParserException;
 
     /** 
      * does a parser-test on the parser-obj with the dataobj<br>
@@ -96,10 +94,10 @@ public abstract class DataDomainTest extends BaseTest {
      * @param myDataDomainObj        the dataobj to test
      * @param myExpectedParserResult the expected result
      * @param myImportOptions        Importoptions for the parser
-     * @throws Exception             io-Exceptions possible
+     * @throws ParserException       parser-Exceptions possible
      */
     public void testParser(final DataDomain myDataDomainObj, final String myExpectedParserResult,
-                           final ImportOptions myImportOptions) throws Exception {
+                           final ImportOptions myImportOptions) throws ParserException {
         // Master ausgeben
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("do parsing of:" + myDataDomainObj.getName());
@@ -118,10 +116,10 @@ public abstract class DataDomainTest extends BaseTest {
 
     /** 
      * do the formatter-tests
-     * @throws Exception             io-Exceptions possible
+     * @throws ParserException      parser-Exceptions possible
      */
     @Test
-    public abstract void testFormatter() throws Exception;
+    public abstract void testFormatter() throws ParseException;
 
     /** 
      * does a formatter-test on the formatter-obj with the dataobj
@@ -130,10 +128,10 @@ public abstract class DataDomainTest extends BaseTest {
      * @param myDataDomainObj        the dataobj to test
      * @param myExpectedFormatterResult the expected result
      * @param myOutputOptions        outputoptions for the formatter
-     * @throws Exception             io-Exceptions possible
+     * @throws ParseException        ParseException possible
      */
     public void testFormatter(final DataDomain myDataDomainObj, final String myExpectedFormatterResult, 
-            final OutputOptions myOutputOptions) throws Exception {
+            final OutputOptions myOutputOptions) throws ParseException {
         // init
         StringBuffer resBuffer = new StringBuffer();
         

@@ -12,19 +12,20 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 package de.yaio.app.extension.datatransfer.wiki;
-import java.util.List;
 
-import de.yaio.app.extension.datatransfer.wiki.WikiImportOptions;
-import de.yaio.app.extension.datatransfer.wiki.WikiImporter;
+import de.yaio.app.BaseTest;
+import de.yaio.app.datatransfer.common.ConverterException;
+import de.yaio.app.datatransfer.common.ParserException;
+import de.yaio.app.datatransfer.importer.ImportOptions;
+import de.yaio.app.datatransfer.importer.Importer;
+import de.yaio.app.extension.datatransfer.wiki.WikiImporter.WikiStructLine;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.springframework.mock.staticmock.MockStaticEntityMethods;
 
-import de.yaio.app.BaseTest;
-import de.yaio.app.datatransfer.importer.ImportOptions;
-import de.yaio.app.datatransfer.importer.Importer;
-import de.yaio.app.extension.datatransfer.wiki.WikiImporter.WikiStructLine;
+import java.io.IOException;
+import java.util.List;
 
 /** 
  * test of the wiki-importer-logic<br>
@@ -42,7 +43,7 @@ import de.yaio.app.extension.datatransfer.wiki.WikiImporter.WikiStructLine;
 public class WikiImporterTest extends BaseTest {
 
     @Override
-    public TestObj setupNewTestObj() throws Exception {
+    public TestObj setupNewTestObj() {
         return null;
     }
     
@@ -51,7 +52,7 @@ public class WikiImporterTest extends BaseTest {
      * @return                       optionsObj
      * @throws Exception             io-Exceptions possible
      */
-    public Importer setupNewImporter() throws Exception {
+    public Importer setupNewImporter() {
         return new WikiImporter(setupNewImportOptions());
     }
     
@@ -60,16 +61,18 @@ public class WikiImporterTest extends BaseTest {
      * @return                       optionsObj
      * @throws Exception             io-Exceptions possible
      */
-    public ImportOptions setupNewImportOptions() throws Exception {
+    public ImportOptions setupNewImportOptions() {
         return new WikiImportOptions();
     }
     
     /** 
      * do tests for import
-     * @throws Exception             io-Exceptions possible
+     * @throws ConverterException         Exceptions possible
+     * @throws ParserException            Exceptions possible
+     * @throws IOException                Exceptions possible
      */
     @Test
-    public void testImport() throws Exception {
+    public void testImport() throws ConverterException, ParserException, IOException {
         testImportFromFixture("FixtureWikiImportSource.wiki", "FixtureWikiImportResult.ppl"); 
         //testImportFromFixture("FixtureWikiImportSourceISO.wiki", "FixtureWikiImportResultISO.ppl"); 
     }
@@ -78,9 +81,12 @@ public class WikiImporterTest extends BaseTest {
      * parse the source and compare the result with expectedResult 
      * @param srcFile                file with the source
      * @param expectedResultFile     file with the expected result
-     * @throws Exception             io-Exceptions possible
+     * @throws ConverterException         Exceptions possible
+     * @throws ParserException            Exceptions possible
+     * @throws IOException                Exceptions possible
      */
-    public void testImportFromFixture(final String srcFile, final String expectedResultFile) throws Exception {
+    public void testImportFromFixture(final String srcFile, final String expectedResultFile)
+            throws ConverterException, ParserException, IOException {
         testImport(this.testService.readFixture(this.getClass(), srcFile).toString(), 
                    this.testService.readFixture(this.getClass(), expectedResultFile).toString()); 
     }
@@ -89,9 +95,12 @@ public class WikiImporterTest extends BaseTest {
      * parse the source and compare the result with expectedResult 
      * @param source                 the lines to parse
      * @param expectedResult         the expected ppl-lines from parser
-     * @throws Exception             io-Exceptions possible
+     * @throws ConverterException         Exceptions possible
+     * @throws ParserException            Exceptions possible
+     * @throws IOException                Exceptions possible
      */
-    public void testImport(final String source, final String expectedResult) throws Exception {
+    public void testImport(final String source, final String expectedResult)
+            throws ConverterException, ParserException, IOException {
         // configure Importer
         WikiImporter importerObj = (WikiImporter) setupNewImporter();
         WikiImportOptions importoptions = (WikiImportOptions) setupNewImportOptions();

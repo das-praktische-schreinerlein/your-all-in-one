@@ -152,7 +152,7 @@ public class Configuration {
         return retArgs;
     }
 
-    public void publishProperties() throws Exception {
+    public void publishProperties() {
         for (ConfigurationOption option: properties.values()) {
             System.setProperty(option.getName(), option.getStringValue());
         }

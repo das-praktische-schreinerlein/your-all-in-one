@@ -21,6 +21,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.Writer;
 
 /** 
@@ -42,7 +43,7 @@ public class CallYaioExport extends CallYaioInstance {
     }
 
     @Override
-    protected Options addAvailiableCmdLineOptions() throws Exception {
+    protected Options addAvailiableCmdLineOptions() {
         Options availiableCmdLineOptions = super.addAvailiableCmdLineOptions();
         
         Option formatOption = new Option(null, "format", true, "exportformat (endpoint like wiki,csv,html ...)");
@@ -65,23 +66,44 @@ public class CallYaioExport extends CallYaioInstance {
     }
 
     @Override
-    public void doJob() throws Exception {
+    public void doJob() {
         // get options
         String sysUID = ConfigurationOption.stringValueOf(this.getConfiguration().getCliOption("sysuid"));
         String format = ConfigurationOption.stringValueOf(this.getConfiguration().getCliOption("format"));
         String outfileName = ConfigurationOption.stringValueOf(this.getConfiguration().getCliOption("outfile"));
         
         // call url
-        byte[] result = this.callGetUrl("/exports/" + format + "/" + sysUID, null);
-        
+        byte[] result;
+        try {
+            result = this.callGetUrl("/exports/" + format + "/" + sysUID, null);
+        } catch (IOException ex) {
+            throw new RuntimeException("error while calling exportUrl", ex);
+        }
+
         if (!StringUtils.isEmpty(outfileName)) {
             // write to file
-            Writer output = new FileWriter(outfileName);
-            IOUtils.write(result, output);
-            output.close();
+            Writer output = null;
+            try {
+                output = new FileWriter(outfileName);
+                IOUtils.write(result, output);
+            } catch (IOException ex) {
+                throw new RuntimeException("error while writing to outputfile", ex);
+            } finally {
+                try {
+                    if (output != null) {
+                        output.close();
+                    }
+                } catch (IOException ex) {
+                    getLogger().warn("error while closing output", ex);
+                }
+            }
         } else {
             // write to stdout
-            System.out.write(result);
+            try {
+                System.out.write(result);
+            } catch (IOException ex) {
+                throw new RuntimeException("error while writing to stdout", ex);
+            }
         }
     }
 

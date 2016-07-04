@@ -12,17 +12,18 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 package de.yaio.app.extension.datatransfer.excel;
-import java.io.InputStream;
-import java.util.List;
 
-import de.yaio.app.extension.datatransfer.excel.ExcelImporter;
+import de.yaio.app.datatransfer.common.ParserException;
+import de.yaio.app.datatransfer.importer.Importer;
+import de.yaio.app.extension.datatransfer.wiki.WikiImporterTest;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.springframework.mock.staticmock.MockStaticEntityMethods;
 
-import de.yaio.app.datatransfer.importer.Importer;
-import de.yaio.app.extension.datatransfer.wiki.WikiImporterTest;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
 
 /** 
  * test of the excel-importer-logic<br>
@@ -40,12 +41,12 @@ import de.yaio.app.extension.datatransfer.wiki.WikiImporterTest;
 public class ExcelImporterTest extends WikiImporterTest {
 
     @Override
-    public Importer setupNewImporter() throws Exception {
+    public Importer setupNewImporter() {
         return new ExcelImporter(setupNewImportOptions());
     }
     
     @Override
-    public void testImport() throws Exception {
+    public void testImport() throws ParserException, IOException {
         testImportExcelFile("FixtureExcelImportSource.xls", "FixtureExcelImportResult.ppl"); 
     }
 
@@ -54,8 +55,11 @@ public class ExcelImporterTest extends WikiImporterTest {
      * parse the source and compare the result with expectedResult 
      * @param srcFile                the excelfile to parse
      * @param expectedResultFile     the file with the expected ppl-lines from parser
-     * @throws Exception             possible Exception     */
-    public void testImportExcelFile(final String srcFile, final String expectedResultFile) throws Exception {
+     * @throws ParserException       possible Exception
+     * @throws IOException           possible Exception
+     **/
+    public void testImportExcelFile(final String srcFile, final String expectedResultFile)
+            throws ParserException, IOException {
         // configure Importer
         ExcelImporter importerObj = (ExcelImporter) setupNewImporter();
         

@@ -18,6 +18,8 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.log4j.Logger;
 
+import java.io.IOException;
+
 /** 
  * job to call yaio-instance to recalc nodes in db
  * 
@@ -42,7 +44,7 @@ public class CallYaioRecalcNodes extends CallYaioInstance {
     }
 
     @Override
-    protected Options addAvailiableCmdLineOptions() throws Exception {
+    protected Options addAvailiableCmdLineOptions() {
         Options availiableCmdLineOptions = super.addAvailiableCmdLineOptions();
         
         // sysuid for export
@@ -58,14 +60,23 @@ public class CallYaioRecalcNodes extends CallYaioInstance {
     }
 
     @Override
-    public void doJob() throws Exception {
+    public void doJob() {
         // get options
         String sysUID = ConfigurationOption.stringValueOf(this.getConfiguration().getCliOption("sysuid"));
         
         // call url
-        byte[] result = this.callGetUrl("/admin/recalc/" + sysUID, null);
-        
-        System.out.write(result);
+        byte[] result;
+        try {
+            result = this.callGetUrl("/admin/recalc/" + sysUID, null);
+        } catch (IOException ex) {
+            throw new RuntimeException("error while calling recalcUrl", ex);
+        }
+
+        try {
+            System.out.write(result);
+        } catch (IOException ex) {
+            throw new RuntimeException("error while writing to stdout", ex);
+        }
     }
 
     // #############

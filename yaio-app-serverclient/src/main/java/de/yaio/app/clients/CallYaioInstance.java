@@ -28,6 +28,7 @@ import org.apache.commons.cli.Options;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
 import java.util.Properties;
@@ -62,7 +63,7 @@ public abstract class CallYaioInstance extends CmdLineJob {
     }
 
     @Override
-    protected Options addAvailiableCmdLineOptions() throws Exception {
+    protected Options addAvailiableCmdLineOptions() {
         Options availiableCmdLineOptions = CmdLineHelper.getNewOptionsInstance();
 
         // add default-Options
@@ -86,12 +87,12 @@ public abstract class CallYaioInstance extends CmdLineJob {
         return availiableCmdLineOptions;
     }
 
-    protected YaioConfiguration getConfiguration() throws Exception {
+    protected YaioConfiguration getConfiguration() {
         return configurationHelper.getYaioConfigurationInstance();
     }
 
     @Override
-    protected void initJob() throws Exception {
+    protected void initJob() {
         // init configuration without config-file
         Configuration config = configurationHelper.initConfiguration(this.getCmdLineHelper(), new Properties());
         config.publishProperties();
@@ -100,9 +101,10 @@ public abstract class CallYaioInstance extends CmdLineJob {
         password = ConfigurationOption.stringValueOf(this.getConfiguration().getCliOption("password"));
         username = ConfigurationOption.stringValueOf(this.getConfiguration().getCliOption("username"));
         String yaioInstance = ConfigurationOption.stringValueOf(this.getConfiguration().getCliOption("yaioinstance"));
-        yaioInstanceUrl = DataUtils.extractWebUrl(yaioInstance);
-        LOGGER.info("connectData:" + yaioInstanceUrl + " user:" + username + " from:" + yaioInstance);
-        if (yaioInstanceUrl == null) {
+        try {
+            yaioInstanceUrl = DataUtils.extractWebUrl(yaioInstance);
+            LOGGER.info("connectData:" + yaioInstanceUrl + " user:" + username + " from:" + yaioInstance);
+        } catch (MalformedURLException ex) {
             throw new IllegalArgumentException("cant parse yaioinstance:" + yaioInstance);
         }
 
@@ -112,7 +114,7 @@ public abstract class CallYaioInstance extends CmdLineJob {
     }
 
     @Override
-    protected void cleanUpAfterJob() throws Exception {
+    protected void cleanUpAfterJob() {
     }
 
     /** 

@@ -55,21 +55,21 @@ public class StatDataServiceTest extends DataDomainServiceTest {
     }
 
     @Override
-    public TestObj setupNewTestObj() throws Exception {
+    public TestObj setupNewTestObj() {
         return new StatDataTestObj();
     }
     
     /** 
      * setup the a TestObj for the test
      * @return                       a new dataobj for the test
-     * @throws Exception             possible Exception     */
-    protected StatDataTestObj getNewStatDataTestObj() throws Exception  {
+     **/
+    protected StatDataTestObj getNewStatDataTestObj() {
         return (StatDataTestObj) setupNewTestObj();
     }
 
 
     @Override
-    public void setupDataDomainService() throws Exception {
+    public void setupDataDomainService() {
         NodeServiceImpl nodeService = (NodeServiceImpl) TaskNode.getConfiguredNodeService();
         dataDomainService = nodeService.hshDataDomainRecalcerByClass.get(StatDataServiceImpl.class);
 
@@ -81,7 +81,7 @@ public class StatDataServiceTest extends DataDomainServiceTest {
     }
 
     @Override
-    public void testServiceDoRecalc() throws Exception {
+    public void testServiceDoRecalc() {
         // init Vars
         StatDataTestObj myDataDomainObj = null; 
         StatDataTestObj myDataDomainObj2 = null;

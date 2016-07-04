@@ -14,8 +14,11 @@
 package de.yaio.app.core.datadomain;
 
 import de.yaio.app.core.node.InfoNode;
+import de.yaio.app.datatransfer.common.ParserException;
 import de.yaio.app.datatransfer.exporter.formatter.SysDataFormatterImpl;
 import de.yaio.app.datatransfer.importer.parser.SysDataParserImpl;
+
+import java.text.ParseException;
 
 /** 
  * test of the datadomain-logic: SysData<br>
@@ -56,17 +59,17 @@ public class SysDataTest extends DataDomainTest {
     }
 
     @Override
-    public void setupParser() throws Exception {
+    public void setupParser() {
         parser = new SysDataParserImpl();
     }
 
     @Override
-    public void setupFormatter() throws Exception {
+    public void setupFormatter() {
         formatter = new SysDataFormatterImpl();
     }
 
     @Override
-    public TestObj setupNewTestObj() throws Exception {
+    public TestObj setupNewTestObj() {
         return new SysDataTestObj();
     }
     
@@ -74,13 +77,13 @@ public class SysDataTest extends DataDomainTest {
     /** 
      * setup the a TestObj for the test
      * @return                       a new dataobj for the test
-     * @throws Exception             possible Exception     */
-    protected SysDataTestObj getNewSysDataTestObj() throws Exception  {
+     **/
+    protected SysDataTestObj getNewSysDataTestObj() {
         return (SysDataTestObj) setupNewTestObj();
     }
 
     @Override
-    public void testParser() throws Exception {
+    public void testParser() throws ParserException {
         SysDataTestObj mytestObj = null;
         String expected = null;
 
@@ -92,7 +95,7 @@ public class SysDataTest extends DataDomainTest {
     }
 
     @Override
-    public void testFormatter() throws Exception {
+    public void testFormatter() throws ParseException {
         SysDataTestObj mytestObj = null;
         String expected = null;
         

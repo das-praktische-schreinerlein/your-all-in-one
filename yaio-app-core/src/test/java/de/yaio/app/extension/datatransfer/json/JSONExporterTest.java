@@ -12,13 +12,16 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 package de.yaio.app.extension.datatransfer.json;
-import de.yaio.app.extension.datatransfer.json.JSONExporter;
+
+import de.yaio.app.datatransfer.common.ConverterException;
+import de.yaio.app.datatransfer.common.ParserException;
+import de.yaio.app.datatransfer.exporter.Exporter;
+import de.yaio.app.extension.datatransfer.csv.CSVExporterTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.springframework.mock.staticmock.MockStaticEntityMethods;
 
-import de.yaio.app.datatransfer.exporter.Exporter;
-import de.yaio.app.extension.datatransfer.csv.CSVExporterTest;
+import java.io.IOException;
 
 /** 
  * test of the json-exporter-logic<br>
@@ -36,13 +39,13 @@ import de.yaio.app.extension.datatransfer.csv.CSVExporterTest;
 public class JSONExporterTest extends CSVExporterTest {
 
     @Override
-    public Exporter setupNewExporter() throws Exception {
+    public Exporter setupNewExporter() {
         return new JSONExporter();
     }
     
     
     @Override
-    public void testExport() throws Exception {
+    public void testExport() throws ConverterException, ParserException, IOException {
         testExportFromFixture("FixtureJSONExportSource.ppl", "FixtureJSONExportResult.json"); 
     }
 }

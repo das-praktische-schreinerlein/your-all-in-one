@@ -18,6 +18,7 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.log4j.Logger;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,7 +46,7 @@ public class CallYaioImport extends CallYaioInstance {
     }
 
     @Override
-    protected Options addAvailiableCmdLineOptions() throws Exception {
+    protected Options addAvailiableCmdLineOptions() {
         Options availiableCmdLineOptions = super.addAvailiableCmdLineOptions();
         
         // file to import
@@ -66,7 +67,7 @@ public class CallYaioImport extends CallYaioInstance {
     }
 
     @Override
-    public void doJob() throws Exception {
+    public void doJob() {
         // get options
         String parentsysUID = ConfigurationOption.stringValueOf(this.getConfiguration().getCliOption("parentsysuid"));
         String importfile = ConfigurationOption.stringValueOf(this.getConfiguration().getCliOption("importfile"));
@@ -74,9 +75,18 @@ public class CallYaioImport extends CallYaioInstance {
         // call url
         Map<String, String> files = new HashMap<String, String>();
         files.put("file", importfile);
-        byte[] result = this.callPostUrl("/imports/wiki/" + parentsysUID, null, files);
-        
-        System.out.write(result);
+        byte[] result;
+        try {
+            result = this.callPostUrl("/imports/wiki/" + parentsysUID, null, files);
+        } catch (IOException ex) {
+            throw new RuntimeException("error while calling importUrl", ex);
+        }
+
+        try {
+            System.out.write(result);
+        } catch (IOException ex) {
+            throw new RuntimeException("error while writing to stdout", ex);
+        }
     }
 
     // #############

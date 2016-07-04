@@ -14,23 +14,21 @@
 package de.yaio.app.extension.datatransfer.mindmap;
 
 import de.yaio.app.core.datadomain.DataDomain;
+import de.yaio.app.core.node.BaseNode;
+import de.yaio.app.datatransfer.common.ConverterException;
 import de.yaio.app.datatransfer.exporter.OutputOptions;
 import de.yaio.app.datatransfer.exporter.OutputOptionsImpl;
+import de.yaio.app.datatransfer.exporter.formatter.FormatterImpl;
 import de.yaio.app.extension.datatransfer.exporter.formatter.WorkflowFormatConfigurator;
 import de.yaio.app.extension.datatransfer.wiki.WikiExporter;
-import de.yaio.app.core.node.BaseNode;
-import de.yaio.app.datatransfer.exporter.formatter.FormatterImpl;
 import org.apache.log4j.Logger;
+
+import java.io.IOException;
 
 /** 
  * export of Nodes as Mindmap
  * 
- * @FeatureDomain                DatenExport Praesentation
- * @package                      de.yaio.extension.datatransfer.ical
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category                     collaboration
- * @copyright                    Copyright (c) 2014, Michael Schreiner
- * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class MindMapExporter extends WikiExporter {
     
@@ -56,7 +54,7 @@ public class MindMapExporter extends WikiExporter {
 
     @Override
     public String getMasterNodeResult(final DataDomain masterNode, final OutputOptions oOptions)
-            throws Exception {
+           throws ConverterException {
         StringBuffer res = new StringBuffer();
         
         // show Header
@@ -66,8 +64,12 @@ public class MindMapExporter extends WikiExporter {
         res.append(super.getMasterNodeResult(masterNode, oOptions));
         
         // escape res
-        res = FormatterImpl.escapeNonLatin(res.toString(), new StringBuffer());
-        
+        try {
+            res = FormatterImpl.escapeNonLatin(res.toString(), new StringBuffer());
+        } catch (IOException ex) {
+            throw new ConverterException("error while escapeNonLatin for MindmapExport", res, ex);
+        }
+
         // show footer
         res.append("</map>");
         
@@ -96,7 +98,7 @@ public class MindMapExporter extends WikiExporter {
 
     @Override
     public StringBuffer getNodeResult(final DataDomain node,  final String praefix,
-            final OutputOptions oOptions) throws Exception {
+            final OutputOptions oOptions) {
         StringBuffer res = new StringBuffer();
 
         // Template-Nodes ignorieren

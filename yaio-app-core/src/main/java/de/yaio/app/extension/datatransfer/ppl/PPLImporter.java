@@ -16,18 +16,16 @@ package de.yaio.app.extension.datatransfer.ppl;
 import com.ibm.icu.text.CharsetDetector;
 import com.ibm.icu.text.CharsetMatch;
 import de.yaio.app.core.datadomain.DataDomain;
-import de.yaio.app.datatransfer.importer.ImportOptions;
 import de.yaio.app.core.node.BaseNode;
+import de.yaio.app.datatransfer.common.ParserException;
+import de.yaio.app.datatransfer.importer.ImportOptions;
 import de.yaio.app.datatransfer.importer.ImporterImpl;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.Set;
@@ -67,11 +65,11 @@ public class PPLImporter extends ImporterImpl {
      * @param masterNode             node to append extracted Nodes
      * @param nodeSrc                PPL nodeSrc to be parsed
      * @param delimiter              delimiter of PPL node-hirarchy
-     * @throws Exception             parser/format-Exceptions possible
+     * @throws ParserException       parser/format-Exceptions possible
      */
     public void extractNodeFromSrcLine(final DataDomain masterNode,
                                        final String nodeSrc, 
-                                       final String delimiter) throws Exception {
+                                       final String delimiter) throws ParserException {
         // Parameter pruefen
         if (masterNode == null) {
             throw new IllegalArgumentException("Masternode must not be null: '" + masterNode + "'");
@@ -151,11 +149,11 @@ public class PPLImporter extends ImporterImpl {
      * @param masterNode             node to append extracted Nodes
      * @param lstNodeSrc             list of PPL nodeSrc to be parsed
      * @param delimiter              delimiter of PPL node-hirarchy
-     * @throws Exception             parser/format-Exceptions possible
+     * @throws ParserException       parser/format-Exceptions possible
      */
     public void extractNodesFromLines(final DataDomain masterNode, 
                                       final String[] lstNodeSrc, 
-                                      final String delimiter) throws Exception {
+                                      final String delimiter) throws ParserException {
         // Parameter pruefen
         if (lstNodeSrc == null || lstNodeSrc.length <= 0) {
             throw new IllegalArgumentException("LstNodeSrc must not be empty: '" + lstNodeSrc + "'");
@@ -174,11 +172,11 @@ public class PPLImporter extends ImporterImpl {
      * @param masterNode             node to append extracted Nodes
      * @param pNodesSrc              PPL nodeSrc (several lines) to be parsed
      * @param delimiter              delimiter of PPL node-hirarchy
-     * @throws Exception             parser/format-Exceptions possible
+     * @throws ParserException       parser/format-Exceptions possible
      */
     public void extractNodesFromLines(final DataDomain masterNode, 
                                       final String pNodesSrc, 
-                                      final String delimiter) throws Exception {
+                                      final String delimiter) throws ParserException {
         String nodesSrc = pNodesSrc;
         if (nodesSrc == null || nodesSrc.trim().length() <= 0) {
             throw new IllegalArgumentException("NodesSrc must not be empty: '" + nodesSrc + "'");
@@ -205,11 +203,12 @@ public class PPLImporter extends ImporterImpl {
      * @param masterNode             node to append extracted Nodes
      * @param fileName               fileName with the PPL-nodeSrc
      * @param delimiter              delimiter of PPL node-hirarchy
-     * @throws Exception             parser/format/io-Exceptions possible
+     * @throws ParserException       parser-Exceptions possible
+     * @throws IOException           io-Exceptions possible
      */
     public void extractNodesFromFile(final DataDomain masterNode, 
                                      final String fileName, 
-                                     final String delimiter) throws Exception {
+                                     final String delimiter) throws IOException, ParserException {
         String fileContent = readFromFile(fileName);
         this.extractNodesFromLines(masterNode, fileContent, delimiter);
     }
@@ -217,10 +216,10 @@ public class PPLImporter extends ImporterImpl {
     /** 
      * read filecontent
      * @param fileName               fileName to read
-     * @throws Exception             io-Exceptions possible
      * @return                       filecontent
+     * @throws IOException           io-Exceptions possible
      */
-    public static String readFromFile(final String fileName) throws Exception {
+    public static String readFromFile(final String fileName) throws IOException {
         // Parameter pruefen
         if (fileName == null || fileName.trim().length() <= 0) {
             throw new IllegalArgumentException("FileName must not be empty: '" + fileName + "'");
@@ -236,10 +235,10 @@ public class PPLImporter extends ImporterImpl {
      * 1 run: to detect<br>
      * 2 run: to read in the best matching encoding
      * @param file                   file to read
-     * @throws Exception             io-Exceptions possible
      * @return                       filecontent - the file content as string in the best detcted encoding
+     * @throws IOException           io-Exceptions possible
      */
-    public static String readFromInput(final File file) throws Exception {
+    public static String readFromInput(final File file) throws IOException {
 
         // init detector and converter
         CharsetDetector detector;

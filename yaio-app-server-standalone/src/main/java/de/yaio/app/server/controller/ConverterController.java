@@ -14,32 +14,30 @@
 package de.yaio.app.server.controller;
 
 import de.yaio.app.core.node.BaseNode;
+import de.yaio.app.datatransfer.common.ConverterException;
+import de.yaio.app.datatransfer.common.ParserException;
 import de.yaio.app.datatransfer.exporter.Exporter;
 import de.yaio.app.datatransfer.exporter.OutputOptions;
 import de.yaio.app.datatransfer.exporter.OutputOptionsImpl;
 import de.yaio.app.extension.datatransfer.common.ExtendedDatatransferUtils;
 import de.yaio.app.extension.datatransfer.ical.ICalDBExporter;
 import de.yaio.app.extension.datatransfer.mindmap.MindMapExporter;
-import de.yaio.app.server.restcontroller.NodeActionResponse;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import static org.apache.http.HttpStatus.SC_BAD_REQUEST;
+import static org.apache.http.HttpStatus.SC_INTERNAL_SERVER_ERROR;
 
 /** 
  * Services to parse text to nodes and convert them in different 
  * formats (wiki, ppl, excel..)
  *  
- * @FeatureDomain                Webservice
- * @package                      de.yaio.server.controller
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category                     collaboration
- * @copyright                    Copyright (c) 2014, Michael Schreiner
- * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 @Controller
 @RequestMapping("/converters")
@@ -53,7 +51,10 @@ public class ConverterController {
     @Autowired
     protected ExtendedDatatransferUtils datatransferUtils;
 
-    /** 
+    // Logger
+    private static final Logger LOGGER = Logger.getLogger(ConverterController.class);
+
+    /**
      * parses the yaio-wiki-source to nodes and converts it to Html
      * @param source                 yaio-wiki-source to parse
      * @param response               response-obj to set encoding, headers...
@@ -64,19 +65,11 @@ public class ConverterController {
                     value = "/html",
                     produces = "text/html")
     public String convertToIHtml(@RequestParam(value = "source") final String source, 
-                                 final HttpServletResponse response) {
-        try {
-                OutputOptions oOptions = new OutputOptionsImpl();
-                BaseNode masterNode = datatransferUtils.parseInlineNodesFromString(source);
-                String tplFile = "/static/exporttemplates/projektplan-export.html";
-                return converterUtils.commonExportNodeAsHtml(masterNode, oOptions, response, tplFile);
-            } catch (Exception e) {
-                e.printStackTrace();
-                return new NodeActionResponse(
-                    "ERROR", 
-                    "cant convert source => " + e, 
-                    null, null, null, null).getStateMsg();
-            }
+                                 final HttpServletResponse response) throws ParserException, ConverterException {
+        OutputOptions oOptions = new OutputOptionsImpl();
+        BaseNode masterNode = datatransferUtils.parseInlineNodesFromString(source);
+        String tplFile = "/static/exporttemplates/projektplan-export.html";
+        return converterUtils.commonExportNodeAsHtml(masterNode, oOptions, response, tplFile);
     }
 
     /** 
@@ -90,7 +83,7 @@ public class ConverterController {
                     value = "/ical",
                     produces = "application/ical")
     public String convertToICal(@RequestParam(value = "source") final String source, 
-                                final HttpServletResponse response) {
+                                final HttpServletResponse response) throws ParserException, ConverterException {
         Exporter exporter = new ICalDBExporter();
         return commonConvertSource(exporter, ".ics", source, response);
     }
@@ -106,7 +99,7 @@ public class ConverterController {
                     value = "/mindmap",
                     produces = "application/mindmap")
     public String convertToMindmap(@RequestParam(value = "source") final String source, 
-                                   final HttpServletResponse response) {
+                                   final HttpServletResponse response) throws ParserException, ConverterException {
         Exporter exporter = new MindMapExporter();
         return commonConvertSource(exporter, ".mm", source, response);
     }
@@ -119,23 +112,37 @@ public class ConverterController {
      * @param response               response-obj to set encoding, headers...
      * @return                       Converter-result of the parsed yaio-wiki-source
      */
-    protected String commonConvertSource(final Exporter exporter,
+    private String commonConvertSource(final Exporter exporter,
                                          final String extension,
                                          final String source,
-                                         final HttpServletResponse response) {
-        try {
-            OutputOptions oOptions = new OutputOptionsImpl();
+                                         final HttpServletResponse response) throws ParserException, ConverterException {
+        OutputOptions oOptions = new OutputOptionsImpl();
 
-            BaseNode masterNode = datatransferUtils.parseInlineNodesFromString(source);
-            String res = converterUtils.exportNode(masterNode, exporter, oOptions, extension, response);
-            return res;
+        BaseNode masterNode = datatransferUtils.parseInlineNodesFromString(source);
+        return converterUtils.exportNode(masterNode, exporter, oOptions, extension, response);
+    }
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new NodeActionResponse(
-                            "ERROR", 
-                            "cant convert source => " + e, 
-                            null, null, null, null).getStateMsg();
-        }
+    @ExceptionHandler(ParserException.class)
+    public String handleCustomException(final HttpServletRequest request, final ParserException e,
+                                        final HttpServletResponse response) {
+        LOGGER.info("ParserException while running request:" + request.toString(), e);
+        response.setStatus(SC_BAD_REQUEST);
+        return "cant parse source => " + e.getMessage();
+    }
+
+    @ExceptionHandler(ConverterException.class)
+    public String handleCustomException(final HttpServletRequest request, final ConverterException e,
+                                        final HttpServletResponse response) {
+        LOGGER.info("ConverterException while running request:" + request.toString(), e);
+        response.setStatus(SC_BAD_REQUEST);
+        return "cant convert parsed source => " + e.getMessage();
+    }
+
+    @ExceptionHandler(value = {Exception.class, RuntimeException.class})
+    public String handleAllException(final HttpServletRequest request, final Exception e,
+                                     final HttpServletResponse response) {
+        LOGGER.warn("error while running request:" + request.toString(), e);
+        response.setStatus(SC_INTERNAL_SERVER_ERROR);
+        return "cant convert source";
     }
 }

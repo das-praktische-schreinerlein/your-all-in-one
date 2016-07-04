@@ -22,18 +22,20 @@ import biweekly.parameter.Related;
 import biweekly.property.*;
 import biweekly.util.Duration;
 import de.yaio.app.core.datadomain.DataDomain;
+import de.yaio.app.core.node.BaseNode;
 import de.yaio.app.core.node.EventNode;
 import de.yaio.app.core.node.InfoNode;
 import de.yaio.app.core.node.TaskNode;
+import de.yaio.app.datatransfer.common.ConverterException;
 import de.yaio.app.datatransfer.exporter.OutputOptions;
 import de.yaio.app.datatransfer.exporter.formatter.DescDataFormatterImpl;
+import de.yaio.app.datatransfer.exporter.formatter.Formatter;
 import de.yaio.app.datatransfer.exporter.formatter.FormatterImpl;
 import de.yaio.app.extension.datatransfer.wiki.WikiExporter;
-import de.yaio.app.core.node.BaseNode;
-import de.yaio.app.datatransfer.exporter.formatter.Formatter;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -73,7 +75,7 @@ public class ICalExporter extends WikiExporter {
 
     @Override
     public StringBuffer getNodeResult(final DataDomain curNode, final String praefix,
-                                      final OutputOptions oOptions) throws Exception {
+                                      final OutputOptions oOptions) {
         StringBuffer res = new StringBuffer();
 
         // Template-Nodes ignorieren
@@ -105,10 +107,8 @@ public class ICalExporter extends WikiExporter {
      * @param paramCurNode           node for output recursively
      * @param oOptions               options for output (formatter)
      * @return                       formatted output of node-hierarchy and DataDomains
-     * @throws Exception             parser/format-Exceptions possible
      */
-    public String genICalForNode(final BaseNode paramCurNode, 
-        final OutputOptions oOptions) throws Exception {
+    public String genICalForNode(final BaseNode paramCurNode, final OutputOptions oOptions) {
         String res = "";
 
         // max. Ebene pruefen
@@ -217,10 +217,8 @@ public class ICalExporter extends WikiExporter {
      * @param paramCurNode           node for output
      * @param oOptions               options for output (formatter)
      * @return                       formatted output
-     * @throws Exception             parser/format-Exceptions possible
      */
-    public String genICalForTaskNode(final TaskNode paramCurNode, 
-        final OutputOptions oOptions) throws Exception {
+    public String genICalForTaskNode(final TaskNode paramCurNode, final OutputOptions oOptions) {
         String res = "";
 
         // max. Ebene pruefen
@@ -363,10 +361,8 @@ public class ICalExporter extends WikiExporter {
      * @param paramCurNode           node for output
      * @param oOptions               options for output (formatter)
      * @return                       formatted output
-     * @throws Exception             parser/format-Exceptions possible
      */
-    public String genICalForEventNode(final EventNode paramCurNode, 
-        final OutputOptions oOptions) throws Exception {
+    public String genICalForEventNode(final EventNode paramCurNode, final OutputOptions oOptions) {
         String res = "";
 
         // max. Ebene pruefen
@@ -537,7 +533,7 @@ public class ICalExporter extends WikiExporter {
 
     @Override
     public String getMasterNodeResult(final DataDomain masterNode, 
-            final OutputOptions oOptions) throws Exception {
+            final OutputOptions oOptions) throws ConverterException {
         String icalRes = getCalHeader(masterNode, oOptions);
 
         icalRes += super.getMasterNodeResult(masterNode, oOptions);
@@ -547,7 +543,12 @@ public class ICalExporter extends WikiExporter {
         
         // Hack wegen UFT8-Sonderzeichen
         // escape non latin
-        StringBuilder sb = FormatterImpl.escapeNonLatin(icalRes, new StringBuilder());
+        StringBuilder sb;
+        try {
+            sb = FormatterImpl.escapeNonLatin(icalRes, new StringBuilder());
+        } catch (IOException ex) {
+            throw new ConverterException("error while escapeNonLatin for icalExport", icalRes, ex);
+        }
         icalRes = sb.toString();
         icalRes = icalRes.replaceAll("\n", "\r\n");
         

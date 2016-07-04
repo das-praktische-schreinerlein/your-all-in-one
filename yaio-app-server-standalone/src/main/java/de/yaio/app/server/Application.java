@@ -161,7 +161,7 @@ public class Application {
     }
 
     @PreDestroy
-    protected static void cleanUpAfterJob() throws Exception {
+    protected static void cleanUpAfterJob() {
         // TODO: hack to close HSLDB-connection -> Hibernate doesn't close the
         //       database and so the content is not written to file
         LOGGER.info("hack: close hsqldb");

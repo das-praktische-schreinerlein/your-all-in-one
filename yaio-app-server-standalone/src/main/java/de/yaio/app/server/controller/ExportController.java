@@ -15,6 +15,7 @@ package de.yaio.app.server.controller;
 
 import de.yaio.app.config.YaioConfiguration;
 import de.yaio.app.core.node.BaseNode;
+import de.yaio.app.datatransfer.common.ConverterException;
 import de.yaio.app.datatransfer.exporter.EmptyOutputOptionsImpl;
 import de.yaio.app.datatransfer.exporter.Exporter;
 import de.yaio.app.datatransfer.exporter.OutputOptions;
@@ -34,19 +35,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
+
+import static org.apache.http.HttpStatus.SC_BAD_REQUEST;
+import static org.apache.http.HttpStatus.SC_INTERNAL_SERVER_ERROR;
 
 /** 
  * controller with Download-Services to export BaseNodes in different 
  * formats (wiki, excel..)
  *  
- * @FeatureDomain                Webservice
- * @package                      de.yaio.server.controller
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category                     collaboration
- * @copyright                    Copyright (c) 2014, Michael Schreiner
- * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 @Controller
 @RequestMapping("/exports")
@@ -55,14 +55,12 @@ public class ExportController {
     /** API-Version **/
     public static final String API_VERSION = "1.0.0";
 
-    
-    // Logger
-    private static final Logger LOGGER =
-            Logger.getLogger(ExportController.class);
-   
     @Autowired
     protected ConverterUtils converterUtils;
-    
+
+    // Logger
+    private static final Logger LOGGER = Logger.getLogger(ExportController.class);
+
     /** 
      * Request to read the node for sysUID and return it in wiki-format with all children<br>
      * use the settings of the default-output-options
@@ -75,14 +73,13 @@ public class ExportController {
                     value = "/wiki/{sysUID}", 
                     produces = "application/wiki")
     public String exportNodeAsWiki(@PathVariable(value = "sysUID") final String sysUID, 
-                                   final HttpServletResponse response) {
+                                   final HttpServletResponse response) throws ConverterException {
         // configure
         Exporter exporter = new WikiExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
         
         // run
-        String res = converterUtils.exportNode(sysUID, exporter, oOptions, ".wiki", response);
-        return res;
+        return converterUtils.exportNode(sysUID, exporter, oOptions, ".wiki", response);
     }
 
     /** 
@@ -101,13 +98,12 @@ public class ExportController {
                     consumes = "application/x-www-form-urlencoded")
     public String exportNodeAsWiki(@PathVariable(value = "sysUID") final String sysUID,
                                    @ModelAttribute final EmptyOutputOptionsImpl oOptions,
-                                   final HttpServletResponse response) {
+                                   final HttpServletResponse response) throws ConverterException {
         // configure
         Exporter exporter = new WikiExporter();
         
         // run
-        String res = converterUtils.exportNode(sysUID, exporter, oOptions, ".wiki", response);
-        return res;
+        return converterUtils.exportNode(sysUID, exporter, oOptions, ".wiki", response);
     }
 
     /** 
@@ -121,14 +117,13 @@ public class ExportController {
                     value = "/mindmap/{sysUID}", 
                     produces = "application/mindmap")
     public String exportNodeAsMindMap(@PathVariable(value = "sysUID") final String sysUID, 
-                                      final HttpServletResponse response) {
+                                      final HttpServletResponse response) throws ConverterException {
         // configure
         Exporter exporter = new MindMapExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
         
         // run
-        String res = converterUtils.exportNode(sysUID, exporter, oOptions, ".mm", response);
-        return res;
+        return converterUtils.exportNode(sysUID, exporter, oOptions, ".mm", response);
     }
     /** 
      * Request to read the node for sysUID and return it in mindmap-format with all children<br>
@@ -146,13 +141,12 @@ public class ExportController {
                     consumes = "application/x-www-form-urlencoded")
     public String exportNodeAsMindMap(@PathVariable(value = "sysUID") final String sysUID,
                                       @ModelAttribute final EmptyOutputOptionsImpl oOptions,
-                                      final HttpServletResponse response) {
+                                      final HttpServletResponse response) throws ConverterException {
         // configure
         Exporter exporter = new MindMapExporter();
         
         // run
-        String res = converterUtils.exportNode(sysUID, exporter, oOptions, ".mm", response);
-        return res;
+        return converterUtils.exportNode(sysUID, exporter, oOptions, ".mm", response);
     }
 
     /** 
@@ -166,14 +160,13 @@ public class ExportController {
                     value = "/csv/{sysUID}", 
                     produces = "application/csv")
     public String exportNodeAsCsv(@PathVariable(value = "sysUID") final String sysUID, 
-                                  final HttpServletResponse response) {
+                                  final HttpServletResponse response) throws ConverterException {
         // configure
         Exporter exporter = new CSVExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
         
         // run
-        String res = converterUtils.exportNode(sysUID, exporter, oOptions, ".csv", response);
-        return res;
+        return converterUtils.exportNode(sysUID, exporter, oOptions, ".csv", response);
     }
     
     /** 
@@ -192,13 +185,12 @@ public class ExportController {
                     consumes = "application/x-www-form-urlencoded")
     public String exportNodeAsCsv(@PathVariable(value = "sysUID") final String sysUID,
                                   @ModelAttribute final EmptyOutputOptionsImpl oOptions,
-                                  final HttpServletResponse response) {
+                                  final HttpServletResponse response) throws ConverterException {
         // configure
         Exporter exporter = new CSVExporter();
         
         // run
-        String res = converterUtils.exportNode(sysUID, exporter, oOptions, ".csv", response);
-        return res;
+        return converterUtils.exportNode(sysUID, exporter, oOptions, ".csv", response);
     }
 
     /** 
@@ -212,14 +204,13 @@ public class ExportController {
                     value = "/json/{sysUID}", 
                     produces = "application/json")
     public String exportNodeAsJson(@PathVariable(value = "sysUID") final String sysUID, 
-                                  final HttpServletResponse response) {
+                                  final HttpServletResponse response) throws ConverterException {
         // configure
         Exporter exporter = new JSONFullExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
         
         // run
-        String res = converterUtils.exportNode(sysUID, exporter, oOptions, ".json", response);
-        return res;
+        return converterUtils.exportNode(sysUID, exporter, oOptions, ".json", response);
     }
     
     /** 
@@ -233,14 +224,13 @@ public class ExportController {
                     value = "/ppl/{sysUID}", 
                     produces = "application/ppl")
     public String exportNodeAsPpl(@PathVariable(value = "sysUID") final String sysUID, 
-                                  final HttpServletResponse response) {
+                                  final HttpServletResponse response) throws ConverterException {
         // configure
         Exporter exporter = new PPLExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
         
         // run
-        String res = converterUtils.exportNode(sysUID, exporter, oOptions, ".ppl", response);
-        return res;
+        return converterUtils.exportNode(sysUID, exporter, oOptions, ".ppl", response);
     }
 
     /** 
@@ -259,13 +249,12 @@ public class ExportController {
                     consumes = "application/x-www-form-urlencoded")
     public String exportNodeAsPpl(@PathVariable(value = "sysUID") final String sysUID,
                                   @ModelAttribute final EmptyOutputOptionsImpl oOptions,
-                                  final HttpServletResponse response) {
+                                  final HttpServletResponse response) throws ConverterException {
         // configure
         Exporter exporter = new PPLExporter();
         
         // run
-        String res = converterUtils.exportNode(sysUID, exporter, oOptions, ".ppl", response);
-        return res;
+        return converterUtils.exportNode(sysUID, exporter, oOptions, ".ppl", response);
     }
 
     /** 
@@ -279,7 +268,7 @@ public class ExportController {
                     value = "/ical/{sysUID}", 
                     produces = "application/ical")
     public String exportNodeAsICal(@PathVariable(value = "sysUID") final String sysUID, 
-                                   final HttpServletResponse response) {
+                                   final HttpServletResponse response) throws ConverterException {
         // configure
         Exporter exporter = new ICalDBExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
@@ -288,8 +277,7 @@ public class ExportController {
         oOptions.setStrNotNodePraefix(System.getProperty("yaio.exportcontroller.excludenodepraefix", ""));
         
         // run
-        String res = converterUtils.exportNode(sysUID, exporter, oOptions, ".ics", response);
-        return res;
+        return converterUtils.exportNode(sysUID, exporter, oOptions, ".ics", response);
     }
 
     /** 
@@ -304,7 +292,7 @@ public class ExportController {
                     value = "/icalevents/{sysUID}", 
                     produces = "application/ical")
     public String exportNodeAsICalOnlyEvents(@PathVariable(value = "sysUID") final String sysUID, 
-                                             final HttpServletResponse response) {
+                                             final HttpServletResponse response) throws ConverterException {
         // configure
         Exporter exporter = new ICalDBExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
@@ -314,8 +302,7 @@ public class ExportController {
         oOptions.setStrClassFilter("EventNode");
         
         // run
-        String res = converterUtils.exportNode(sysUID, exporter, oOptions, ".ics", response);
-        return res;
+        return converterUtils.exportNode(sysUID, exporter, oOptions, ".ics", response);
     }
 
     /** 
@@ -330,7 +317,7 @@ public class ExportController {
                     value = "/icaltasks/{sysUID}", 
                     produces = "application/ical")
     public String exportNodeAsICalOnlyTasks(@PathVariable(value = "sysUID") final String sysUID, 
-                                            final HttpServletResponse response) {
+                                            final HttpServletResponse response) throws ConverterException {
         // configure
         Exporter exporter = new ICalDBExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
@@ -340,8 +327,7 @@ public class ExportController {
         oOptions.setStrClassFilter("TaskNode");
         
         // run
-        String res = converterUtils.exportNode(sysUID, exporter, oOptions, ".ics", response);
-        return res;
+        return converterUtils.exportNode(sysUID, exporter, oOptions, ".ics", response);
     }
 
     /** 
@@ -357,7 +343,7 @@ public class ExportController {
                     value = "/icaltaskstodo/{sysUID}", 
                     produces = "application/ical")
     public String exportNodeAsICalOnlyTasksTodo(@PathVariable(value = "sysUID") final String sysUID, 
-                                                final HttpServletResponse response) {
+                                                final HttpServletResponse response) throws ConverterException {
         // configure
         Exporter exporter = new ICalDBExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
@@ -368,8 +354,7 @@ public class ExportController {
         oOptions.setStrTypeFilter("OFFEN,RUNNING,LATE,WARNING");
         
         // run
-        String res = converterUtils.exportNode(sysUID, exporter, oOptions, ".ics", response);
-        return res;
+        return converterUtils.exportNode(sysUID, exporter, oOptions, ".ics", response);
     }
 
     /** 
@@ -385,7 +370,7 @@ public class ExportController {
                     value = "/icaltaskslate/{sysUID}", 
                     produces = "application/ical")
     public String exportNodeAsICalOnlyTasksLate(@PathVariable(value = "sysUID") final String sysUID, 
-                                                final HttpServletResponse response) {
+                                                final HttpServletResponse response) throws ConverterException {
         // configure
         Exporter exporter = new ICalDBExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
@@ -396,8 +381,7 @@ public class ExportController {
         oOptions.setStrTypeFilter("LATE,WARNING");
         
         // run
-        String res = converterUtils.exportNode(sysUID, exporter, oOptions, ".ics", response);
-        return res;
+        return converterUtils.exportNode(sysUID, exporter, oOptions, ".ics", response);
     }
 
     /** 
@@ -416,13 +400,12 @@ public class ExportController {
                     consumes = "application/x-www-form-urlencoded")
     public String exportNodeAsICal(@PathVariable(value = "sysUID") final String sysUID,
                                    @ModelAttribute final EmptyOutputOptionsImpl oOptions,
-                                   final HttpServletResponse response) {
+                                   final HttpServletResponse response) throws ConverterException {
         // configure
         Exporter exporter = new ICalDBExporter();
         
         // run
-        String res = converterUtils.exportNode(sysUID, exporter, oOptions, ".ics", response);
-        return res;
+        return converterUtils.exportNode(sysUID, exporter, oOptions, ".ics", response);
     }
     
     
@@ -438,7 +421,7 @@ public class ExportController {
                     value = "/html/{sysUID}", 
                     produces = "text/html")
     public String exportNodeAsHtml(@PathVariable(value = "sysUID") final String sysUID, 
-                                   final HttpServletResponse response) {
+                                   final HttpServletResponse response) throws ConverterException {
         // configure
         OutputOptions oOptions = new OutputOptionsImpl();
         return converterUtils.commonExportNodeAsHtml(sysUID, oOptions, response, null);
@@ -456,7 +439,7 @@ public class ExportController {
                     value = "/htmllayoutfragment/{sysUID}", 
                     produces = "text/html")
     public String exportNodeAsHtmlFragment(@PathVariable(value = "sysUID") final String sysUID, 
-                                           final HttpServletResponse response) {
+                                           final HttpServletResponse response) throws ConverterException {
         // configure
         OutputOptions oOptions = new OutputOptionsImpl();
         oOptions.setFlgProcessDocLayout(true);
@@ -477,7 +460,7 @@ public class ExportController {
                     value = "/htmlfrontpagefragment/{sysUID}", 
                     produces = "text/html")
     public String exportNodeAsHtmlFrontpageFragment(@PathVariable(value = "sysUID") final String sysUID, 
-                                                    final HttpServletResponse response) {
+                                                    final HttpServletResponse response) throws ConverterException {
         // configure
         OutputOptions oOptions = new OutputOptionsImpl();
         oOptions.setFlgProcessDocLayout(true);
@@ -507,7 +490,7 @@ public class ExportController {
                     consumes = "application/x-www-form-urlencoded")
     public String exportNodeAsHtml(@PathVariable(value = "sysUID") final String sysUID,
                                    @ModelAttribute final EmptyOutputOptionsImpl oOptions,
-                                   final HttpServletResponse response) {
+                                   final HttpServletResponse response) throws ConverterException {
         return converterUtils.commonExportNodeAsHtml(sysUID, oOptions, response, null);
     }
 
@@ -522,7 +505,7 @@ public class ExportController {
                     value = "/documentation/{sysUID}", 
                     produces = "text/html")
     public String exportDocumentationNodeAsHtml(@PathVariable(value = "sysUID") final String sysUID, 
-                                                final HttpServletResponse response) {
+                                                final HttpServletResponse response) throws ConverterException {
         // set Options
         OutputOptions oOptions = new OutputOptionsImpl();
         oOptions.setAllFlgShow(false);
@@ -554,7 +537,7 @@ public class ExportController {
                     value = "/yaioapp/{sysUID}", 
                     produces = "text/html")
     public String exportNodeAsYaioApp(@PathVariable(value = "sysUID") final String sysUID, 
-                                                final HttpServletResponse response) {
+                                                final HttpServletResponse response) throws ConverterException {
         String res = converterUtils.commonExportNodeAsYaioApp(sysUID, response, null, true);
         // replace static pathes...
         Map<String, String> replacements = YaioConfiguration.getInstance().getPostProcessorReplacements();
@@ -565,57 +548,7 @@ public class ExportController {
         return res;
     }
 
-    /** 
-     * Request to read the node for sysUID and return it in excel-format with all children
-     * @param sysUID                 sysUID to export
-     * @param oOptions               the outputOptions
-     * @param response               the response-Obj to set contenttype and headers
-     * @return                       ByteArrayOutputStream - excel-format of the node
-     */
-    public String commonExportNodeAsExcel(final String sysUID, 
-                                          final ExcelOutputOptions oOptions,
-                                          final HttpServletResponse response) {
-        ServletOutputStream out;
-        HSSFWorkbook wb;
-
-        // configure
-        ExcelExporter exporter = new ExcelExporter();
-
-        // find a specific node
-        BaseNode node = BaseNode.findBaseNode(sysUID);
-
-        if (node != null) {
-            // read all childnodes
-            node.initChildNodesFromDB(-1);
-            
-            // export node with converter
-            try {
-                // renew oOptions
-                oOptions.initFilterMaps();
-
-                // WorkBook erzeugen
-                wb = exporter.toExcel(node, oOptions);
-                
-                // set headers to force download
-                response.setContentType("application/force-download");
-                response.setHeader("Content-Disposition", 
-                                "attachment; filename=" + sysUID + ".xls");
-
-                // get outputstream
-                out = response.getOutputStream();
-                
-                // write outputstream
-                wb.write(out);
-                out.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            } 
-        }
-        
-        return null;
-    }
-
-        /** 
+    /**
      * Request to read the node for sysUID and return it in excel-format with all children
      * @param sysUID                 sysUID to export
      * @param response               the response-Obj to set contenttype and headers
@@ -649,5 +582,72 @@ public class ExportController {
                                     @ModelAttribute final ExcelOutputOptions oOptions,
            final HttpServletResponse response) {
         return this.commonExportNodeAsExcel(sysUID, oOptions, response);
+    }
+
+    @ExceptionHandler(ConverterException.class)
+    public String handleCustomException(final HttpServletRequest request, final ConverterException e,
+                                        final HttpServletResponse response) {
+        LOGGER.info("ConverterException while running request:" + request.toString(), e);
+        response.setStatus(SC_BAD_REQUEST);
+        return "cant export node => " + e.getMessage();
+    }
+
+    @ExceptionHandler(value = {Exception.class, RuntimeException.class})
+    public String handleAllException(final HttpServletRequest request, final Exception e,
+                                     final HttpServletResponse response) {
+        LOGGER.warn("error while running request:" + request.toString(), e);
+        response.setStatus(SC_INTERNAL_SERVER_ERROR);
+        return "cant export node";
+    }
+
+
+    /**
+     * Request to read the node for sysUID and return it in excel-format with all children
+     * @param sysUID                 sysUID to export
+     * @param oOptions               the outputOptions
+     * @param response               the response-Obj to set contenttype and headers
+     * @return                       ByteArrayOutputStream - excel-format of the node
+     */
+    protected String commonExportNodeAsExcel(final String sysUID,
+                                             final ExcelOutputOptions oOptions,
+                                             final HttpServletResponse response) {
+        ServletOutputStream out;
+        HSSFWorkbook wb;
+
+        // configure
+        ExcelExporter exporter = new ExcelExporter();
+
+        // find a specific node
+        BaseNode node = BaseNode.findBaseNode(sysUID);
+
+        if (node != null) {
+            // read all childnodes
+            node.initChildNodesFromDB(-1);
+
+            // export node with converter
+            try {
+                // renew oOptions
+                oOptions.initFilterMaps();
+
+                // WorkBook erzeugen
+                wb = exporter.toExcel(node, oOptions);
+
+                // set headers to force download
+                response.setContentType("application/force-download");
+                response.setHeader("Content-Disposition",
+                        "attachment; filename=" + sysUID + ".xls");
+
+                // get outputstream
+                out = response.getOutputStream();
+
+                // write outputstream
+                wb.write(out);
+                out.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return null;
     }
 }

@@ -65,17 +65,15 @@ public abstract class CmdLineJob {
     /** 
      * returns jobname (Classname without package)
      * @return                       String - jobname (Classname without package)
-     * @throws Exception             possible Exception
      */
-    protected String getJobName() throws Exception  {
+    protected String getJobName() {
         return this.getClass().getName();
     }
 
     /** 
      * prints usage of current commandlineoption son STDOUT
-     * @throws Exception             possible Exception
      */
-    protected void printUsage() throws Exception  {
+    protected void printUsage() {
         HelpFormatter formatter = new HelpFormatter();
         formatter.printHelp(this.getJobName(), 
                         this.getCmdLineHelper().getAvailiableCmdLineOptions());
@@ -93,9 +91,8 @@ public abstract class CmdLineJob {
      * <h1>Nebenwirkungen:</h1>
      *     Rueckgabe als Options
      * @return                       Options
-     * @throws Exception             possible Exception
      */
-    protected abstract Options addAvailiableCmdLineOptions() throws Exception;
+    protected abstract Options addAvailiableCmdLineOptions();
 
     /** 
      * do the jobprocessing
@@ -221,9 +218,9 @@ public abstract class CmdLineJob {
         }
     }
 
-    protected  abstract void initJob() throws Exception;
+    protected  abstract void initJob();
 
-    protected abstract void doJob() throws Exception;
+    protected abstract void doJob();
 
-    protected  abstract void cleanUpAfterJob() throws Exception;
+    protected  abstract void cleanUpAfterJob();
 }

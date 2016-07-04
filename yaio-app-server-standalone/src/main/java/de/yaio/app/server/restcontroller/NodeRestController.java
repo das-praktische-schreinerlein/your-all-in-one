@@ -18,6 +18,7 @@ import de.yaio.app.core.dbservice.SearchOptions;
 import de.yaio.app.core.dbservice.SearchOptionsImpl;
 import de.yaio.app.core.node.*;
 import de.yaio.app.core.nodeservice.UrlResNodeService;
+import de.yaio.app.datatransfer.common.ConverterException;
 import de.yaio.app.extension.dms.services.ResContentDataService;
 import de.yaio.app.core.dbservice.BaseNodeDBService;
 import de.yaio.app.core.nodeservice.BaseNodeService;
@@ -28,14 +29,22 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.access.SingletonBeanFactoryLocator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.ConstraintValidatorContext;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import java.io.IOException;
 import java.util.*;
+
+import static org.apache.http.HttpStatus.SC_BAD_REQUEST;
+import static org.apache.http.HttpStatus.SC_INTERNAL_SERVER_ERROR;
 
 /** 
  * the controller for RESTful Web Services for BaseNodes<br>
@@ -54,14 +63,12 @@ public class NodeRestController {
     @Autowired
     private CommonApiConfig commonApiConfig;
 
-    // Logger
-    private static final Logger LOGGER =
-            Logger.getLogger(NodeRestController.class);
-    
-
     //@Autowired TODO: failed on unitstest...
     protected DatatransferUtils datatransferUtils = new ExtendedDatatransferUtils();
-    
+
+    // Logger
+    private static final Logger LOGGER = Logger.getLogger(NodeRestController.class);
+
     /** 
      * create an response.obj for the node with state OK and the corresponding message<br>
      * it will automaticaly set the parentHierarchy
@@ -258,11 +265,9 @@ public class NodeRestController {
             try {
                 // recalc parent
                 updateMeAndMyParents(parent);
-            } catch (Exception e) {
-                LOGGER.error("violationerrors while deleting node '" 
-                                + sysUID + "':", e);
-                LOGGER.error("error deleting node '" 
-                                + node);
+            } catch (RuntimeException e) {
+                LOGGER.info("violationerrors while deleting node '" + sysUID + "':", e);
+                LOGGER.info("error deleting node '" + node);
                 e.printStackTrace();
             }
             
@@ -466,7 +471,8 @@ public class NodeRestController {
                     value = "/move/{sysUID}/{newParentSysUID}/{newSortPos}")
     public NodeActionResponse moveNode(@PathVariable(value = "sysUID") final String sysUID,
                                        @PathVariable(value = "newParentSysUID") final String newParentSysUID,
-                                       @PathVariable(value = "newSortPos") final Integer newSortPos) {
+                                       @PathVariable(value = "newSortPos") final Integer newSortPos)
+            throws ConverterException {
         // create default response
         NodeActionResponse response = new NodeActionResponse(
                         "ERROR", "node '" + sysUID + "' doesnt exists", 
@@ -488,25 +494,12 @@ public class NodeRestController {
             return response;
         }
 
-        try {
-            // move node
-            node = datatransferUtils.moveNode(node, newParent, newSortPos);
+        // move node
+        node = datatransferUtils.moveNode(node, newParent, newSortPos);
 
-            // create response
-            response = createResponseObj(node, "node '" + sysUID + "' moved to " + newParentSysUID, false);
+        // create response
+        response = createResponseObj(node, "node '" + sysUID + "' moved to " + newParentSysUID, false);
 
-        } catch (Throwable ex) {
-            // errorhandling
-            ex.printStackTrace();
-            LOGGER.error("error while moving node  '" 
-                         + sysUID + "' to '" + newParentSysUID + "'-" + newSortPos 
-                         + ":", ex);
-            LOGGER.error("error moving node '" + node);
-            response = new NodeActionResponse(
-                            "ERROR", "error while moving node '" + sysUID + "':" + ex, 
-                            null, null, null, null);
-        }
-        
         return response;
     }
 
@@ -520,7 +513,8 @@ public class NodeRestController {
     @RequestMapping(method = RequestMethod.PATCH, 
                     value = "/copy/{sysUID}/{newParentSysUID}")
     public NodeActionResponse copyNode(@PathVariable(value = "sysUID") final String sysUID,
-                                       @PathVariable(value = "newParentSysUID") final String newParentSysUID) {
+                                       @PathVariable(value = "newParentSysUID") final String newParentSysUID)
+            throws ConverterException {
         // create default response
         NodeActionResponse response = new NodeActionResponse(
                         "ERROR", "node '" + sysUID + "' doesnt exists", 
@@ -541,27 +535,33 @@ public class NodeRestController {
                             null, null, null, null);
             return response;
         }
-        try {
-            // copy node
-            datatransferUtils.copyNode(node, newParent);
 
-            // create response
-            response = createResponseObj(node, "node '" + sysUID + "' copied to " + newParentSysUID, false);
+        // copy node
+        datatransferUtils.copyNode(node, newParent);
 
-        } catch (Throwable ex) {
-            // errorhandling
-            ex.printStackTrace();
-            LOGGER.error("error while copying node  '" 
-                         + sysUID + "' to '" + newParentSysUID + "'" 
-                         + ":", ex);
-            LOGGER.error("error copying node '" + node);
-            response = new NodeActionResponse(
-                            "ERROR", "error while copying node '" + sysUID + "':" + ex, 
-                            null, null, null, null);
-        }
-        
+        // create response
+        response = createResponseObj(node, "node '" + sysUID + "' copied to " + newParentSysUID, false);
+
+
         return response;
     }
+
+    @ExceptionHandler(ConverterException.class)
+    public String handleCustomException(final HttpServletRequest request, final ConverterException e,
+                                        final HttpServletResponse response) {
+        LOGGER.info("ConverterException while running request:" + request.toString(), e);
+        response.setStatus(SC_BAD_REQUEST);
+        return "cant do action on node => " + e.getMessage();
+    }
+
+    @ExceptionHandler(value = {Exception.class, RuntimeException.class})
+    public String handleAllException(final HttpServletRequest request, final Exception e,
+                                     final HttpServletResponse response) {
+        LOGGER.warn("error while running request:" + request.toString(), e);
+        response.setStatus(SC_INTERNAL_SERVER_ERROR);
+        return "cant do action on node";
+    }
+
 
     /** 
      * update the node sysUID and return it with children as JSON
@@ -600,7 +600,11 @@ public class NodeRestController {
 
         try {
             // map data
-            flgChange = datatransferUtils.mapNodeData(node, newNode);
+            try {
+                flgChange = datatransferUtils.mapNodeData(node, newNode);
+            } catch (IllegalAccessException ex) {
+                throw new IllegalArgumentException("cant map nodedata", ex);
+            }
 
             // handle uploads for UrlResNode
             if (commonApiConfig != null && commonApiConfig.dmsAvailable
@@ -611,7 +615,17 @@ public class NodeRestController {
                     && !addFileParams.get("uploadFile").isEmpty()) {
                 LOGGER.info("got handleUploadFile for " + addFileParams.get("uploadFile") 
                                 + " for node:" + node.getNameForLogger());
-                flgChange = this.handleUploadFile((UrlResNode) node, addFileParams.get("uploadFile")) || flgChange;
+                try {
+                    flgChange = this.handleUploadFile((UrlResNode) node, addFileParams.get("uploadFile")) || flgChange;
+                } catch (IOException ex) {
+                    LOGGER.info("error on handleUploadFile while updating node", ex);
+                    LOGGER.info("error creating updating '" + node);
+                    return new NodeActionResponse(
+                            "ERROR", "error on handleUploadFile while updating node",
+                            null, null, null, Collections.singletonList(new NodeViolation("uploadFile",
+                            "uploadFile cant be handled",
+                            ex.getMessage())));
+                }
             }
 
             // check for needed update
@@ -640,28 +654,14 @@ public class NodeRestController {
                                       cViolation.getMessageTemplate()));
             }
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.error("violationerrors while updating node '" 
-                                + sysUID + "':", ex);
-                LOGGER.error("error updating node '" 
-                                + node);
+                LOGGER.info("violationerrors while updating node", ex);
+                LOGGER.info("error updating node '" + node);
             }
 
             // create response
             response = new NodeActionResponse(
-                            "ERROR", "violationerrors while updating node '" + sysUID + "':" + ex, 
+                            "ERROR", "violationerrors while updating node",
                             null, null, null, violations);
-            
-            
-        } catch (Throwable ex) {
-            // errorhandling
-            ex.printStackTrace();
-            LOGGER.error("error while updating node '" 
-                            + sysUID + "':", ex);
-            LOGGER.error("error updating node '" 
-                            + node);
-            response = new NodeActionResponse(
-                            "ERROR", "error while updating node '" + sysUID + "':" + ex, 
-                            null, null, null, null);
         }
         
         return response;
@@ -709,8 +709,12 @@ public class NodeRestController {
             
             // init some vars and map NodeData
             origNode.setEbene(parentNode.getEbene() + 1);
-            datatransferUtils.mapNodeData(origNode, newNode);
-            
+            try {
+                datatransferUtils.mapNodeData(origNode, newNode);
+            } catch (IllegalAccessException ex) {
+                throw new IllegalArgumentException("cant map nodedata", ex);
+            }
+
             // add new Node
             origNode.setParentNode(parentNode);
             
@@ -729,7 +733,17 @@ public class NodeRestController {
                     && !addFileParams.get("uploadFile").isEmpty()) {
                 LOGGER.info("got handleUploadFile for " + addFileParams.get("uploadFile")
                                 + " for node:" + origNode.getNameForLogger());
-                this.handleUploadFile((UrlResNode) origNode, addFileParams.get("uploadFile"));
+                try {
+                    this.handleUploadFile((UrlResNode) origNode, addFileParams.get("uploadFile"));
+                } catch (IOException ex) {
+                    LOGGER.info("error on handleUploadFile while creating node for parent '" + parentSysUID + "':", ex);
+                    LOGGER.info("error creating node '" + origNode);
+                    return new NodeActionResponse(
+                            "ERROR", "error on handleUploadFile while creating node",
+                            null, null, null, Collections.singletonList(new NodeViolation("uploadFile",
+                            "uploadFile cant be handled",
+                            ex.getMessage())));
+                }
             }
 
             // recalc 
@@ -742,44 +756,28 @@ public class NodeRestController {
         } catch (ConstraintViolationException ex) {
             // validation errors
             Set<ConstraintViolation<?>> cViolations = ex.getConstraintViolations();
-            
+
             // convert to Violation
-            List<NodeViolation>violations = new ArrayList<>();
+            List<NodeViolation> violations = new ArrayList<>();
             for (ConstraintViolation<?> cViolation : cViolations) {
                 violations.add(
-                      new NodeViolation(cViolation.getPropertyPath().toString(), 
-                                      cViolation.getMessage(),
-                                      cViolation.getMessageTemplate()));
+                        new NodeViolation(cViolation.getPropertyPath().toString(),
+                                cViolation.getMessage(),
+                                cViolation.getMessageTemplate()));
             }
-            
+
             // create response
-            LOGGER.error("violationerrors while creating node for parent '" 
-                            + parentSysUID + "':", ex);
-            LOGGER.error("error creating node '" 
-                            + origNode);
-            response = new NodeActionResponse(
-                            "ERROR", "violationerrors while creating node for parent '" 
-                            + parentSysUID + "':" + ex, 
-                            null, null, null, violations);
-            
-            
-        } catch (Throwable ex) {
-            // errorhandling
-            ex.printStackTrace();
-            LOGGER.error("error while creating node for parent '" 
-                            + parentSysUID + "':" + ex, ex);
-            LOGGER.error("error creating node '" 
-                            + origNode);
-            response = new NodeActionResponse(
-                            "ERROR", "error while creating node for parent '" 
-                            + parentSysUID + "':" + ex, 
-                            null, null, null, null);
+            LOGGER.info("violationerrors while creating node for parent '" + parentSysUID + "':", ex);
+            LOGGER.info("error creating node '" + origNode);
+            response = new NodeActionResponse("ERROR", "violationerrors while creating node",
+                    null, null, null, violations);
         }
-        
+            
+            
         return response;
     }
 
-    protected boolean handleUploadFile(final UrlResNode node, final MultipartFile uploadFile) throws Exception {
+    protected boolean handleUploadFile(final UrlResNode node, final MultipartFile uploadFile) throws IOException {
         String type = node.getType();
         if (uploadFile != null && !uploadFile.isEmpty()) {
             // check for uploadfile
@@ -798,7 +796,7 @@ public class NodeRestController {
      * @param node                   the node to recalc and merge
      * @return                       List - list of the recalced and saved parenthierarchy
      */
-    protected List<BaseNode> updateMeAndMyParents(final BaseNode node) throws Exception {
+    protected List<BaseNode> updateMeAndMyParents(final BaseNode node) {
         return BaseNodeDBServiceImpl.getInstance().updateMeAndMyParents(node);
     }
 

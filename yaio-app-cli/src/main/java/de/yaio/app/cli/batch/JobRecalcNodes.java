@@ -26,12 +26,7 @@ import org.apache.log4j.Logger;
 /** 
  * job to recalc nodes in db
  * 
- * @FeatureDomain                DatenExport Praesentation
- * @package                      de.yaio.cli
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category                     collaboration
- * @copyright                    Copyright (c) 2014, Michael Schreiner
- * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class JobRecalcNodes extends YaioCmdLineJob {
 
@@ -47,7 +42,7 @@ public class JobRecalcNodes extends YaioCmdLineJob {
     }
 
     @Override
-    protected Options addAvailiableCmdLineOptions() throws Exception {
+    protected Options addAvailiableCmdLineOptions() {
         Options availiableCmdLineOptions = CmdLineHelper.getNewOptionsInstance();
 
         // add dfeault-Options
@@ -66,12 +61,12 @@ public class JobRecalcNodes extends YaioCmdLineJob {
     }
 
     @Override
-    protected void configureContext() throws Exception {
+    protected void configureContext() {
         ContextHelper.getInstance().addSpringConfig(JobConfig.class);
     };
 
     @Override
-    public void doJob() throws Exception {
+    public void doJob() {
         // initApplicationContext
         ContextHelper.getInstance().getSpringApplicationContext();
         

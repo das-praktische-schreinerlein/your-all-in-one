@@ -16,6 +16,8 @@ package de.yaio.app.core.datadomain;
 import de.yaio.app.core.node.TaskNode;
 import de.yaio.app.datatransfer.exporter.formatter.PlanChildrenSumDataFormatterImpl;
 
+import java.text.ParseException;
+
 /** 
  * test of the datadomain-logic: PlanChildrenSumData<br>
  * test: parser, formatter
@@ -53,34 +55,34 @@ public class PlanChildrenSumDataTest extends DataDomainTest {
     }
 
     @Override
-    public void setupParser() throws Exception {
+    public void setupParser() {
     }
 
     @Override
-    public void setupFormatter() throws Exception {
+    public void setupFormatter() {
         outputOptions.setFlgShowChildrenSum(true);
         formatter = new PlanChildrenSumDataFormatterImpl();
     }
 
     @Override
-    public TestObj setupNewTestObj() throws Exception {
+    public TestObj setupNewTestObj() {
         return new PlanChildrenSumDataTestObj();
     }
     
     /** 
      * setup the a TestObj for the test
      * @return                       a new dataobj for the test
-     * @throws Exception             possible Exception     */
-    protected PlanChildrenSumDataTestObj getNewPlanChildrenSumDataTestObj() throws Exception  {
+     **/
+    protected PlanChildrenSumDataTestObj getNewPlanChildrenSumDataTestObj() {
         return (PlanChildrenSumDataTestObj) setupNewTestObj();
     }
 
     @Override
-    public void testParser() throws Exception {
+    public void testParser() {
     }
 
     @Override
-    public void testFormatter() throws Exception {
+    public void testFormatter() throws ParseException {
         PlanChildrenSumDataTestObj mytestObj = null;
         String expected = null;
         

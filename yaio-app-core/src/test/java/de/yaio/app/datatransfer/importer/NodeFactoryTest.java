@@ -12,18 +12,17 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 package de.yaio.app.datatransfer.importer;
-import de.yaio.app.datatransfer.importer.NodeFactory;
-import de.yaio.app.datatransfer.importer.NodeFactoryImpl;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-import org.springframework.mock.staticmock.MockStaticEntityMethods;
 
 import de.yaio.app.BaseTest;
 import de.yaio.app.core.datadomain.DataDomain;
 import de.yaio.app.core.node.BaseNode;
 import de.yaio.app.core.node.TaskNode;
+import de.yaio.app.datatransfer.common.ParserException;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
+import org.springframework.mock.staticmock.MockStaticEntityMethods;
 
 /** 
  * test of the importer-logic<br>
@@ -71,24 +70,24 @@ public class NodeFactoryTest extends BaseTest {
     }
 
     @Override
-    public TestObj setupNewTestObj() throws Exception {
+    public TestObj setupNewTestObj() {
         return null;
     }
     
     /** 
      * configure the nodefactory for the tests
-     * @throws Exception             possible Exception     */
+     **/
     @Before
-    public void setupNodeFactory() throws Exception {
+    public void setupNodeFactory() {
         nodeFactoryObj = new NodeFactoryImpl(null);
         TestNode.configureNodeTypeIdentifier(nodeFactoryObj);
     }
 
     /** 
      * do tests for creation of nodes from text
-     * @throws Exception             possible Exception     */
+     **/
     @Test
-    public void testCreateNode() throws Exception {
+    public void testCreateNode() throws ParserException {
         String expected = null;
         String src = null;
         NodeFactoryTestObj testObj = null;

@@ -54,7 +54,7 @@ public class InlineWikiImporter extends WikiImporter {
     }
 
     @Override
-    protected void initNodeData(final BaseNode curNode) throws Exception {
+    protected void initNodeData(final BaseNode curNode) {
         // set metadata to local values so that they change not the global scope
         if (MetaData.class.isInstance(curNode)) {
             MetaData metaCurNode = (MetaData) curNode;

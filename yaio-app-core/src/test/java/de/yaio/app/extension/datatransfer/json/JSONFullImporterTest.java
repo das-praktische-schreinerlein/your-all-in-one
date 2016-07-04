@@ -12,18 +12,22 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 package de.yaio.app.extension.datatransfer.json;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-import org.springframework.mock.staticmock.MockStaticEntityMethods;
 
 import de.yaio.app.core.datadomain.DataDomain;
+import de.yaio.app.datatransfer.common.ConverterException;
+import de.yaio.app.datatransfer.common.ParserException;
 import de.yaio.app.datatransfer.importer.ImportOptions;
 import de.yaio.app.datatransfer.importer.ImportOptionsImpl;
 import de.yaio.app.datatransfer.importer.Importer;
 import de.yaio.app.datatransfer.json.JSONFullImporter;
 import de.yaio.app.datatransfer.json.JSONResponse;
 import de.yaio.app.extension.datatransfer.wiki.WikiImporterTest;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
+import org.springframework.mock.staticmock.MockStaticEntityMethods;
+
+import java.io.IOException;
 
 /** 
  * test of the wiki-importer-logic<br>
@@ -41,18 +45,18 @@ import de.yaio.app.extension.datatransfer.wiki.WikiImporterTest;
 public class JSONFullImporterTest extends WikiImporterTest {
 
     @Override
-    public Importer setupNewImporter() throws Exception {
+    public Importer setupNewImporter() {
         return new JSONFullImporter(setupNewImportOptions());
     }
     
     @Override
-    public ImportOptions setupNewImportOptions() throws Exception {
+    public ImportOptions setupNewImportOptions() {
         return new ImportOptionsImpl();
     }
     
     @Test
     @Override
-    public void testImport() throws Exception {
+    public void testImport() throws ConverterException, ParserException, IOException {
         testImportFromFixture("FixtureJSONFullImportSource.json", "FixtureJSONFullImportResult.txt"); 
     }
 
@@ -60,9 +64,11 @@ public class JSONFullImporterTest extends WikiImporterTest {
      * parse the source and compare the result with expectedResult 
      * @param source                 the lines to parse
      * @param expectedResult         the expected ppl-lines from parser
-     * @throws Exception             io-Exceptions possible
+     * @throws IOException           Exceptions possible
+     * @throws ParserException       Exceptions possible
+     * @throws ConverterException    Exceptions possible
      */
-    public void testImport(final String source, final String expectedResult) throws Exception {
+    public void testImport(final String source, final String expectedResult) throws ConverterException, ParserException, IOException {
         // configure Importer
         JSONFullImporter importerObj = (JSONFullImporter) setupNewImporter();
         

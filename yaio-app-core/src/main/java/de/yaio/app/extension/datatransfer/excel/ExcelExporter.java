@@ -14,16 +14,16 @@
 package de.yaio.app.extension.datatransfer.excel;
 
 import de.yaio.app.core.datadomain.DataDomain;
+import de.yaio.app.core.node.BaseNode;
 import de.yaio.app.core.node.TaskNode;
 import de.yaio.app.datatransfer.exporter.OutputOptions;
+import de.yaio.app.datatransfer.exporter.formatter.DescDataFormatterImpl;
 import de.yaio.app.datatransfer.exporter.formatter.DocLayoutDataFormatterImpl;
 import de.yaio.app.datatransfer.exporter.formatter.IstDataFormatterImpl;
-import de.yaio.commons.data.DataUtils;
-import de.yaio.app.core.node.BaseNode;
-import de.yaio.app.datatransfer.exporter.formatter.DescDataFormatterImpl;
 import de.yaio.app.datatransfer.exporter.formatter.PlanDataFormatterImpl;
 import de.yaio.app.extension.datatransfer.wiki.WikiExporter;
 import de.yaio.app.utils.ExcelService;
+import de.yaio.commons.data.DataUtils;
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.HSSFColor;
@@ -31,6 +31,8 @@ import org.apache.poi.ss.usermodel.ComparisonOperator;
 import org.apache.poi.ss.util.CellRangeAddress;
 
 import java.io.File;
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.*;
 
 /** 
@@ -62,14 +64,14 @@ public class ExcelExporter extends WikiExporter {
     
     @Override
     public String getMasterNodeResult(final DataDomain masterNode,
-            final OutputOptions oOptions) throws Exception {
-        throw new IllegalAccessException("This function must not be used!!!");
+            final OutputOptions oOptions) {
+        throw new UnsupportedOperationException("This function must not be used!!!");
     }
 
     @Override
     public StringBuffer getNodeResult(final DataDomain node,  final String praefix,
-            final OutputOptions oOptions) throws Exception {
-        throw new IllegalAccessException("This function must not be used!!!");
+            final OutputOptions oOptions) {
+        throw new UnsupportedOperationException("This function must not be used!!!");
     }
     
     /** 
@@ -97,11 +99,9 @@ public class ExcelExporter extends WikiExporter {
      * @param wb                     Workbook to fill
      * @param masterNode             node for output recursively
      * @param oOptions               options for output (formatter)
-     * @throws Exception             possible Exception
      */
     public void fillPlanungSheet(final HSSFWorkbook wb, final BaseNode masterNode,
-                final ExcelOutputOptions oOptions)
-        throws Exception {
+                final ExcelOutputOptions oOptions) {
 
         // ExcelService anlegen
         this.exlSv = new ExcelOutputService(wb);
@@ -201,8 +201,7 @@ public class ExcelExporter extends WikiExporter {
     // TODO Doku
     public int createPlanungLines4Node(final HSSFSheet sheet, final BaseNode node,
             final int startRownNum, final int vorgaengerRownNum,
-            final ExcelOutputOptions oOptions)
-    throws Exception {
+            final ExcelOutputOptions oOptions) {
         // Parameter pruefen
         if (sheet == null) {
             throw new IllegalArgumentException("Sheet must not be null: '"
@@ -256,8 +255,7 @@ public class ExcelExporter extends WikiExporter {
 
     // TODO Doku
     public void createPlanungLineUe(final HSSFSheet sheet, final int startRownNum,
-            final ExcelOutputOptions oOptions)
-    throws Exception {
+            final ExcelOutputOptions oOptions) {
         // Parameter pruefen
         if (sheet == null) {
             throw new IllegalArgumentException("Sheet must not be null: '"
@@ -327,8 +325,7 @@ public class ExcelExporter extends WikiExporter {
     // TODO Doku
     public void createPlanungLine4Node(final HSSFSheet sheet, final BaseNode node,
             final int startRownNum, final List<Integer> lstChildRowNum, final int vorgaengerRownNum,
-            final ExcelOutputOptions oOptions)
-    throws Exception {
+            final ExcelOutputOptions oOptions) {
         // Parameter pruefen
         if (sheet == null) {
             throw new IllegalArgumentException("Sheet must not be null: '"
@@ -549,7 +546,12 @@ public class ExcelExporter extends WikiExporter {
 
             // StartDatum berechnen
             Date date = projektNode.getPlanStart();
-            Date MINDATE = DataUtils.getDF().parse("01.01.1970");
+            Date MINDATE = null;
+            try {
+                MINDATE = DataUtils.getDF().parse("01.01.1970");
+            } catch (ParseException ex) {
+                throw new IllegalStateException("MINDATE not parsable", ex);
+            }
             if ((date == null || date.before(MINDATE)) && vorgaengerRownNum >= 0) {
                 // falls leer mit dem Ende des Vorgaengers belegen
                 String formula = ExcelService.getColName(ExcelNodeService.CONST_PLANUNG_COL_PLAN_DATE_ENDE) 
@@ -827,11 +829,9 @@ public class ExcelExporter extends WikiExporter {
      * @param wb                     Workbook to fill
      * @param masterNode             node for output recursively
      * @param oOptions               options for output (formatter)
-     * @throws Exception             possible Exception
      */
     public void fillGantSheet(final HSSFWorkbook wb, final BaseNode masterNode,
-            final ExcelOutputOptions oOptions)
-    throws Exception {
+            final ExcelOutputOptions oOptions) {
 
         // ExcelService anlegen
         this.exlSv = new ExcelOutputService(wb);
@@ -901,7 +901,7 @@ public class ExcelExporter extends WikiExporter {
 
     // TODO Doku
     public void formatGantSheetDiag(final HSSFSheet sheet, final int lastRownNum,
-            final ExcelOutputOptions oOptions, final int versatz) throws Exception {
+            final ExcelOutputOptions oOptions, final int versatz) {
         // Parameter pruefen
         if (sheet == null) {
             throw new IllegalArgumentException("Sheet must not be null: '"
@@ -1007,8 +1007,7 @@ public class ExcelExporter extends WikiExporter {
 
     // TODO Doku
     public int createGantLines4Node(final HSSFSheet sheet, final BaseNode node,
-            final int startRownNum, final ExcelOutputOptions oOptions)
-    throws Exception {
+            final int startRownNum, final ExcelOutputOptions oOptions) {
         // Parameter pruefen
         if (sheet == null) {
             throw new IllegalArgumentException("Sheet must not be null: '"
@@ -1048,8 +1047,7 @@ public class ExcelExporter extends WikiExporter {
 
     // TODO Doku
     public void createGantLineUe(final HSSFSheet sheet, final int startRownNum,
-            final ExcelOutputOptions oOptions)
-    throws Exception {
+            final ExcelOutputOptions oOptions) {
         // Parameter pruefen
         if (sheet == null) {
             throw new IllegalArgumentException("Sheet must not be null: '"
@@ -1107,8 +1105,7 @@ public class ExcelExporter extends WikiExporter {
 
     // TODO Doku
     public void createGantLineDiagUe(final HSSFSheet sheet, final int startRownNum,
-            final ExcelOutputOptions oOptions, final int versatz)
-    throws Exception {
+            final ExcelOutputOptions oOptions, final int versatz) {
         // Parameter pruefen
         if (sheet == null) {
             throw new IllegalArgumentException("Sheet must not be null: '"
@@ -1195,8 +1192,7 @@ public class ExcelExporter extends WikiExporter {
     // TODO Doku
     public void createGantLine4Node(final HSSFSheet sheet, final BaseNode node,
             final int startRownNum, final List<Integer> lstChildRowNum,
-            final ExcelOutputOptions oOptions)
-    throws Exception {
+            final ExcelOutputOptions oOptions) {
         // Parameter pruefen
         if (sheet == null) {
             throw new IllegalArgumentException("Sheet must not be null: '"
@@ -1247,8 +1243,7 @@ public class ExcelExporter extends WikiExporter {
     // TODO Doku
     public void createGantLineDiag4Node(final HSSFSheet sheet, final BaseNode node,
             final int startRownNum, final List<Integer> lstChildRowNum,
-            final ExcelOutputOptions oOptions, final int versatz)
-    throws Exception {
+            final ExcelOutputOptions oOptions, final int versatz) {
         // Parameter pruefen
         if (sheet == null) {
             throw new IllegalArgumentException("Sheet must not be null: '"
@@ -1492,8 +1487,7 @@ public class ExcelExporter extends WikiExporter {
     }
 
     // TODO Doku
-    public HSSFWorkbook toExcel(final BaseNode pmasterNode,
-                                final ExcelOutputOptions poOptions) throws Exception {
+    public HSSFWorkbook toExcel(final BaseNode pmasterNode, final ExcelOutputOptions poOptions) {
 
         BaseNode masterNode = pmasterNode;
         ExcelOutputOptions oOptions = poOptions;
@@ -1530,8 +1524,7 @@ public class ExcelExporter extends WikiExporter {
     }
 
     // TODO Doku
-    public void toExcel(final BaseNode masterNode, final String outFile,
-            final ExcelOutputOptions oOptions) throws Exception {
+    public void toExcel(final BaseNode masterNode, final String outFile, final ExcelOutputOptions oOptions) {
 
         // Parameter pruefen
         if (outFile == null) {
@@ -1542,7 +1535,11 @@ public class ExcelExporter extends WikiExporter {
         HSSFWorkbook wb = this.toExcel(masterNode, oOptions);
 
         File file = new File(outFile);
-        ExcelService.writeWorkbookToFile(file, wb);
+        try {
+            ExcelService.writeWorkbookToFile(file, wb);
+        } catch (IOException ex) {
+            throw new IllegalArgumentException("cant write HSSFWorkbook to file", ex);
+        }
     }
 
     // TODO Doku

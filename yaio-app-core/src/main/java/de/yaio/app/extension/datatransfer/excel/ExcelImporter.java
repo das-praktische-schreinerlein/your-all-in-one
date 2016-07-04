@@ -15,7 +15,9 @@ package de.yaio.app.extension.datatransfer.excel;
 
 import de.yaio.app.core.node.BaseNode;
 import de.yaio.app.core.node.TaskNode;
+import de.yaio.app.core.nodeservice.BaseNodeService;
 import de.yaio.app.core.nodeservice.TaskNodeService;
+import de.yaio.app.datatransfer.common.ParserException;
 import de.yaio.app.datatransfer.exporter.OutputOptions;
 import de.yaio.app.datatransfer.exporter.OutputOptionsImpl;
 import de.yaio.app.datatransfer.importer.ImportOptions;
@@ -25,7 +27,6 @@ import de.yaio.app.extension.datatransfer.ppl.PPLExporter;
 import de.yaio.app.extension.datatransfer.ppl.PPLImporter;
 import de.yaio.app.utils.ExcelService;
 import de.yaio.commons.data.DataUtils;
-import de.yaio.app.core.nodeservice.BaseNodeService;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFFormulaEvaluator;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -35,7 +36,9 @@ import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
 import java.util.*;
 
 /** 
@@ -61,7 +64,7 @@ public class ExcelImporter extends ImporterImpl {
         super(options);
     }
 
-    public List<String> fromExcel(final String inFileName) throws Exception {
+    public List<String> fromExcel(final String inFileName) throws ParserException {
 
         // Parameter pruefen
         if (inFileName == null) {
@@ -69,17 +72,21 @@ public class ExcelImporter extends ImporterImpl {
         }
 
         // WorkBook erzeugen
-        File inFile = new File(inFileName);
-        InputStream is = new FileInputStream(inFile);
-        HSSFWorkbook wb = new HSSFWorkbook(is);
+        HSSFWorkbook wb = null;
+        try {
+            File inFile = new File(inFileName);
+            InputStream is = new FileInputStream(inFile);
+            wb = new HSSFWorkbook(is);
+        } catch (IOException ex) {
+            throw new IllegalArgumentException("cant parse excelfile:" + inFileName, ex);
+        }
 
         List<String> lines = this.parsePlanungSheet(wb);
 
         return lines;
     }
 
-    public List<String> parsePlanungSheet(final HSSFWorkbook wb)
-                    throws Exception {
+    public List<String> parsePlanungSheet(final HSSFWorkbook wb) throws ParserException {
 
         // ExcelService anlegen
         this.exlSv = new ExcelOutputService(wb);
@@ -117,8 +124,13 @@ public class ExcelImporter extends ImporterImpl {
     }
 
     public String parsePlanungLine(final HSSFSheet sheet, final HSSFFormulaEvaluator formulaEval,
-            final int startRownNum) throws Exception {
-        Date MINDATE = DataUtils.getDF().parse("01.01.1970");
+            final int startRownNum) throws ParserException {
+        Date MINDATE = null;
+        try {
+            MINDATE = DataUtils.getDF().parse("01.01.1970");
+        } catch (ParseException ex) {
+            throw new IllegalStateException("MINDATE not parsable", ex);
+        }
 
         // auf Bereich pruefen
         if (startRownNum > sheet.getLastRowNum()) {

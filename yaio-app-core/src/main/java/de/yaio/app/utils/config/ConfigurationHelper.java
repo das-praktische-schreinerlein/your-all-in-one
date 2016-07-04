@@ -25,21 +25,21 @@ public abstract class ConfigurationHelper {
     protected ConfigurationHelper() {
     }
 
-    public Configuration initConfiguration() throws Exception {
+    public Configuration initConfiguration() {
         return initConfiguration(CmdLineHelper.getInstance());
     }
 
-    public Configuration initConfiguration(final CmdLineHelper cmdLineHelper) throws Exception {
+    public Configuration initConfiguration(final CmdLineHelper cmdLineHelper) {
         String configFile = cmdLineHelper.getConfigFile();
         return initConfiguration(cmdLineHelper, configFile);
     }
 
-    public Configuration initConfiguration(final CmdLineHelper cmdLineHelper, final String configFile) throws Exception {
+    public Configuration initConfiguration(final CmdLineHelper cmdLineHelper, final String configFile) {
         Properties props = cmdLineHelper.readProperties(configFile);
         return initConfiguration(cmdLineHelper, props);
     }
 
-    public Configuration initConfiguration(final CmdLineHelper cmdLineHelper, final Properties props) throws Exception {
+    public Configuration initConfiguration(final CmdLineHelper cmdLineHelper, final Properties props) {
         Configuration localConfiguration = getConfigurationInstance();
         localConfiguration.putArgs(cmdLineHelper.getCommandLine().getArgs());
         localConfiguration.putCliOptions(cmdLineHelper.getCommandLine().getOptions());
@@ -49,8 +49,8 @@ public abstract class ConfigurationHelper {
         return localConfiguration;
     }
 
-    public abstract Configuration getConfigurationInstance() throws Exception;
+    public abstract Configuration getConfigurationInstance();
 
-    protected void initCalcedProperties(final CmdLineHelper cmdLineHelper) throws Exception {
+    protected void initCalcedProperties(final CmdLineHelper cmdLineHelper) {
     }
 }

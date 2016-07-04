@@ -14,18 +14,20 @@
 package de.yaio.app.extension.datatransfer.ical;
 
 import de.yaio.app.core.datadomain.DataDomain;
+import de.yaio.app.core.dbservice.BaseNodeDBService;
+import de.yaio.app.core.node.BaseNode;
 import de.yaio.app.core.node.EventNode;
 import de.yaio.app.core.node.InfoNode;
 import de.yaio.app.core.node.TaskNode;
-import de.yaio.app.datatransfer.exporter.OutputOptions;
 import de.yaio.app.core.utils.Calculator;
-import de.yaio.app.core.dbservice.BaseNodeDBService;
-import de.yaio.app.core.node.BaseNode;
+import de.yaio.app.datatransfer.common.ConverterException;
+import de.yaio.app.datatransfer.exporter.OutputOptions;
 import de.yaio.app.datatransfer.exporter.OutputOptionsImpl;
 import de.yaio.app.datatransfer.exporter.formatter.FormatterImpl;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.log4j.Logger;
 
+import java.io.IOException;
 import java.util.List;
 
 /** 
@@ -53,7 +55,7 @@ public class ICalDBExporter extends ICalExporter {
 
     @Override
     public String getMasterNodeResult(final DataDomain masterNode,
-            final OutputOptions oOptions) throws Exception {
+            final OutputOptions oOptions) throws ConverterException {
         // Parameter pruefen
         if (masterNode == null) {
             throw new IllegalArgumentException("Masternode must not be null: '" + masterNode + "'");
@@ -66,7 +68,12 @@ public class ICalDBExporter extends ICalExporter {
         
         // Hack wegen UFT8-Sonderzeichen
         // escape non latin
-        StringBuilder sb = FormatterImpl.escapeNonLatin(icalRes, new StringBuilder());
+        StringBuilder sb;
+        try {
+            sb = FormatterImpl.escapeNonLatin(icalRes, new StringBuilder());
+        } catch (IOException ex) {
+            throw new ConverterException("error while escapeNonLatin for ICalDBExport", icalRes, ex);
+        }
         icalRes = sb.toString();
         icalRes = icalRes.replaceAll("\n", "\r\n");
         
@@ -78,10 +85,9 @@ public class ICalDBExporter extends ICalExporter {
      * @param parentNode             node for output recursively
      * @param poOptions              options for output (formatter)
      * @return                       formatted output of node-hierarchy and DataDomains
-     * @throws Exception             parser/format-Exceptions possible
      */
     public String genICalForNode(final BaseNode parentNode, 
-        final OutputOptions poOptions) throws Exception {
+        final OutputOptions poOptions) {
         OutputOptions oOptions = new OutputOptionsImpl(poOptions);
         String res = "";
 

@@ -182,18 +182,16 @@ public class CmdLineHelper {
     /** 
      * checks weather Commandline is valid
      * @return                       boolean - valid Commandline?
-     * @throws Exception             parse-Exceptions possible
      */
-    public boolean validateCmdLine() throws Exception {
+    public boolean validateCmdLine() {
         return true;
     }
 
     /** 
      * return current parsed CLI-Commandline (if not set, call initCommandLine)
      * @return                       CommandLine - current CLI-Commandline
-     * @throws Exception             parse-Exceptions possible
      */
-    public CommandLine getCommandLine() throws Exception {
+    public CommandLine getCommandLine() {
         // check weather exists
         if (commandLine == null) {
             this.initCommandLine();
@@ -269,9 +267,8 @@ public class CmdLineHelper {
      * <h1>Nebenwirkungen:</h1>
      *     Rueckgabe als Options
      * @param newAvailiableCmdLineOptions cmd-options to add to availiableCmdLineOptions 
-     * @throws Exception             parseExceptions possible
      */
-    public void addAvailiableCmdLineOptions(final Options newAvailiableCmdLineOptions) throws Exception {
+    public void addAvailiableCmdLineOptions(final Options newAvailiableCmdLineOptions) {
         if (commandLine != null) {
             throw new IllegalStateException("addAvailiableCmdLineOptions: "
                             + "cant add availiableCmdLineOptions "
@@ -310,9 +307,8 @@ public class CmdLineHelper {
      * if failed by classpath)
      * @param filePath               path to the file (filesystem or classressource)
      * @return                       the properties read from propertyfile
-     * @throws Exception             parse/io-Exceptions possible
      */
-    public Properties readProperties(final String filePath) throws Exception {
+    public Properties readProperties(final String filePath) {
         Properties prop = new Properties();
 
         // first try it from fileystem
@@ -331,7 +327,7 @@ public class CmdLineHelper {
                 //CHECKSTYLE.OFF: IllegalCatch - Much more readable than catching x exceptions
             } catch (Throwable ex2) {
                 //CHECKSTYLE.ON: IllegalCatch
-                throw new Exception("cant read propertiesfile: " + filePath
+                throw new IllegalArgumentException("cant read propertiesfile: " + filePath
                         + " Exception1:" + ex
                         + " Exception2:" + ex2);
             }
@@ -363,7 +359,7 @@ public class CmdLineHelper {
 
 
 
-    protected void initCommandLine() throws Exception {
+    protected void initCommandLine() {
         //check
         if (commandLine != null) {
             throw new IllegalStateException("initCommandLine: "
@@ -381,8 +377,13 @@ public class CmdLineHelper {
         }
         
         // create commandline
-        this.commandLine = createCommandLineFromCmdArgs(cmdLineArgs, 
-                        availiableCmdLineOptions);
+        try {
+            this.commandLine = createCommandLineFromCmdArgs(cmdLineArgs, availiableCmdLineOptions);
+        } catch (ParseException ex) {
+            throw new IllegalArgumentException("initCommandLine: "
+                    + "cant init commandLine because "
+                    + "cmdLineArgs are invalid:" + cmdLineArgs.toString());
+        }
         
         // validate
         this.validateCmdLine();
@@ -391,9 +392,8 @@ public class CmdLineHelper {
     /**
      * return the current configFile from option config
      * @return                       the configFile from option config
-     * @throws Exception             parse/io-Exceptions possible
      */
-    public String getConfigFile() throws Exception {
+    public String getConfigFile() {
         // check
         if (commandLine == null) {
             throw new IllegalStateException("getConfigFile: cant get configfile because commandLine is not set");

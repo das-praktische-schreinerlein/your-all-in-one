@@ -12,20 +12,23 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 package de.yaio.app.extension.datatransfer.wiki;
-import de.yaio.app.extension.datatransfer.wiki.WikiExporter;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-import org.springframework.mock.staticmock.MockStaticEntityMethods;
 
 import de.yaio.app.BaseTest;
 import de.yaio.app.core.datadomain.DataDomain;
+import de.yaio.app.datatransfer.common.ConverterException;
+import de.yaio.app.datatransfer.common.ParserException;
 import de.yaio.app.datatransfer.exporter.Exporter;
 import de.yaio.app.datatransfer.exporter.OutputOptions;
 import de.yaio.app.datatransfer.exporter.OutputOptionsImpl;
 import de.yaio.app.datatransfer.importer.ImportOptions;
 import de.yaio.app.datatransfer.importer.ImportOptionsImpl;
 import de.yaio.app.extension.datatransfer.ppl.PPLImporter;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
+import org.springframework.mock.staticmock.MockStaticEntityMethods;
+
+import java.io.IOException;
 
 /** 
  * test of the wiki-exporter-logic<br>
@@ -48,25 +51,23 @@ public class WikiExporterTest extends BaseTest {
     protected OutputOptions oOptions = null;   
 
     @Override
-    public TestObj setupNewTestObj() throws Exception {
+    public TestObj setupNewTestObj() {
         return null;
     }
     
     /** 
      * configure the exporter for the tests
      * @return                       Exporter
-     * @throws Exception             io-Exceptions possible
      */
-    public Exporter setupNewExporter() throws Exception {
+    public Exporter setupNewExporter() {
         return new WikiExporter();
     }
     
     /** 
      * configure the exporter for the tests
      * @return                       OutputOptions
-     * @throws Exception             io-Exceptions possible
      */
-    public OutputOptions setupNewOutputOptions() throws Exception {
+    public OutputOptions setupNewOutputOptions() {
         OutputOptions oOptions = new OutputOptionsImpl();
         oOptions.setFlgRecalc(true);
         return oOptions;
@@ -74,7 +75,7 @@ public class WikiExporterTest extends BaseTest {
     
     
     @Override
-    public void setUp() throws Exception {
+    public void setUp() {
         // setup environment
         importoptions = new ImportOptionsImpl();
         importerObj = new PPLImporter(importoptions);
@@ -84,10 +85,12 @@ public class WikiExporterTest extends BaseTest {
     
     /** 
      * do tests for Export
-     * @throws Exception             io-Exceptions possible
+     * @throws ConverterException         Exceptions possible
+     * @throws ParserException            Exceptions possible
+     * @throws IOException                Exceptions possible
      */
     @Test
-    public void testExport() throws Exception {
+    public void testExport() throws ConverterException, ParserException, IOException {
         testExportFromFixture("FixtureWikiExportSource.ppl", "FixtureWikiExportResult.wiki"); 
 //        testExportFromFixture("FixtureWikiExportSourceISO.ppl", "FixtureWikiExportResultISO.wiki"); 
     }
@@ -96,9 +99,12 @@ public class WikiExporterTest extends BaseTest {
      * parse the source, format it and compare the result with expectedResult 
      * @param srcFile                file with the source
      * @param expectedResultFile     file with the expected result
-     * @throws Exception             io-Exceptions possible
+     * @throws ConverterException         Exceptions possible
+     * @throws ParserException            Exceptions possible
+     * @throws IOException                Exceptions possible
      */
-    public void testExportFromFixture(final String srcFile, final String expectedResultFile) throws Exception {
+    public void testExportFromFixture(final String srcFile, final String expectedResultFile) throws ConverterException,
+            ParserException, IOException {
         testExport(this.testService.readFixture(this.getClass(), srcFile).toString(), 
                    this.testService.readFixture(this.getClass(), expectedResultFile).toString()); 
     }
@@ -107,9 +113,12 @@ public class WikiExporterTest extends BaseTest {
      * parse the ppl-source, format it and compare the result with expectedResult 
      * @param source                 the ppl-lines to parse and to convert
      * @param expectedResult         the expected lines from exporter
-     * @throws Exception             io-Exceptions possible
+     * @throws ConverterException         Exceptions possible
+     * @throws ParserException            Exceptions possible
+     * @throws IOException                Exceptions possible
      */
-    public synchronized void testExport(final String source, final String expectedResult) throws Exception {
+    public synchronized void testExport(final String source, final String expectedResult) throws ConverterException,
+            ParserException, IOException {
         // format source
         DataDomain masterNode  = importerObj.createNodeObjFromText(1, "Test", "Test", null);
         String delimiter = "\t";

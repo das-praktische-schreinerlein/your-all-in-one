@@ -13,10 +13,11 @@
  */
 package de.yaio.app.core.datadomainservice;
 
-import de.yaio.app.core.datadomainservice.BaseWorkflowDataServiceImpl;
 import de.yaio.app.core.node.TaskNode;
 import de.yaio.app.core.nodeservice.NodeService;
 import de.yaio.app.core.nodeservice.NodeServiceImpl;
+
+import java.text.ParseException;
 
 /** 
  * Testsuite for the datadomainservice-logic: BaseWorkflowData<br>
@@ -67,21 +68,21 @@ public class BaseWorkflowDataServiceTest extends DataDomainServiceTest {
     }
 
     @Override
-    public TestObj setupNewTestObj() throws Exception {
+    public TestObj setupNewTestObj() {
         return new BaseWorkflowDataTestObj();
     }
     
     /** 
      * setup the a TestObj for the test
      * @return                       a new dataobj for the test
-     * @throws Exception             possible Exception     */
-    protected BaseWorkflowDataTestObj getNewBaseWorkflowDataTestObj() throws Exception  {
+     **/
+    protected BaseWorkflowDataTestObj getNewBaseWorkflowDataTestObj() {
         return (BaseWorkflowDataTestObj) setupNewTestObj();
     }
 
 
     @Override
-    public void setupDataDomainService() throws Exception {
+    public void setupDataDomainService() {
         NodeServiceImpl nodeService = (NodeServiceImpl) TaskNode.getConfiguredNodeService();
         dataDomainService = nodeService.hshDataDomainRecalcerByClass.get(BaseWorkflowDataServiceImpl.class);
 
@@ -93,7 +94,7 @@ public class BaseWorkflowDataServiceTest extends DataDomainServiceTest {
     }
 
     @Override
-    public void testServiceDoRecalc() throws Exception {
+    public void testServiceDoRecalc() {
         // init Vars
         BaseWorkflowDataTestObj myDataDomainObj = null; 
         BaseWorkflowDataTestObj myDataDomainObj2 = null;
@@ -157,7 +158,11 @@ public class BaseWorkflowDataServiceTest extends DataDomainServiceTest {
         myDataDomainObj3.setSrcName("test3");
         myDataDomainObj3.setEbene(2);
         myDataDomainObj3.setPlanAufwand(20.0);
-        myDataDomainObj3.setPlanStart(DF.parse("22.10.2013"));
+        try {
+            myDataDomainObj3.setPlanStart(DF.parse("22.10.2013"));
+        } catch (ParseException ex) {
+            throw new IllegalArgumentException("cant parse 22.10.2013", ex);
+        }
         myDataDomainObj3.setParentNode(myDataDomainObj);
         expectedAfterDoBeforeChildren = 
                         "null|OFFEN|null|null|null|null|null|null|null|null|50.0|null|null|null|null|null|";

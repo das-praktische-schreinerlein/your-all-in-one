@@ -13,7 +13,9 @@
  */
 package de.yaio.app.cli.importer;
 
+import de.yaio.app.config.YaioConfiguration;
 import de.yaio.app.utils.CmdLineHelper;
+import de.yaio.app.utils.config.ConfigurationOption;
 import org.apache.commons.cli.Options;
 
 /** 
@@ -43,7 +45,7 @@ public class JobParseExcel extends JobParseWiki {
     }
 
     @Override
-    protected Options addAvailiableCmdLineOptions() throws Exception {
+    protected Options addAvailiableCmdLineOptions() {
         Options availiableCmdLineOptions = CmdLineHelper.getNewOptionsInstance();
         
         // add Options
@@ -55,9 +57,15 @@ public class JobParseExcel extends JobParseWiki {
     }
 
     @Override
-    public void doJob() throws Exception {
+    public void doJob() {
+        // check srcFile
+        if (YaioConfiguration.getInstance().getArgNames().size() <= 0) {
+            throw new IllegalArgumentException("Import from Excel-File requires filename.");
+        }
+        String srcFile = ConfigurationOption.stringValueOf(YaioConfiguration.getInstance().getArg(0));
+
         // parse PPL-source
-        String pplSource = commonImporter.extractDataFromExcel();
+        String pplSource = commonImporter.extractDataFromExcel(srcFile);
         System.out.println(pplSource);
     }
 

@@ -14,8 +14,12 @@
 package de.yaio.app.core.datadomain;
 
 import de.yaio.app.core.node.TaskNode;
+import de.yaio.app.datatransfer.common.ParserException;
 import de.yaio.app.datatransfer.exporter.formatter.IstDataFormatterImpl;
 import de.yaio.app.datatransfer.importer.parser.IstDataParserImpl;
+import de.yaio.app.datatransfer.importer.parser.Parser;
+
+import java.text.ParseException;
 
 /** 
  * test of the datadomain-logic: IstData<br>
@@ -55,30 +59,30 @@ public class IstDataTest extends DataDomainTest {
     }
 
     @Override
-    public void setupParser() throws Exception {
+    public void setupParser() {
         parser = new IstDataParserImpl();
     }
 
     @Override
-    public void setupFormatter() throws Exception {
+    public void setupFormatter() {
         formatter = new IstDataFormatterImpl();
     }
 
     @Override
-    public TestObj setupNewTestObj() throws Exception {
+    public TestObj setupNewTestObj() {
         return new IstDataTestObj();
     }
     
     /** 
      * setup the a TestObj for the test
      * @return                       a new dataobj for the test
-     * @throws Exception             possible Exception     */
-    protected IstDataTestObj getNewIstDataTestObj() throws Exception  {
+     **/
+    protected IstDataTestObj getNewIstDataTestObj() {
         return (IstDataTestObj) setupNewTestObj();
     }
 
     @Override
-    public void testParser() throws Exception {
+    public void testParser() throws ParserException {
         IstDataTestObj mytestObj = null;
         String expected = null;
 
@@ -120,7 +124,7 @@ public class IstDataTest extends DataDomainTest {
     }
 
     @Override
-    public void testFormatter() throws Exception {
+    public void testFormatter() throws ParseException {
         IstDataTestObj mytestObj = null;
         String expected = null;
         

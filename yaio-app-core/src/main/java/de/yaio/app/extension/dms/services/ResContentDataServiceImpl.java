@@ -64,7 +64,7 @@ public class ResContentDataServiceImpl extends TriggeredDataDomainRecalcImpl imp
 
     @Override
     @Transactional
-    public void doRecalcWhenTriggered(final DataDomain datanode) throws Exception {
+    public void doRecalcWhenTriggered(final DataDomain datanode) {
         if (datanode == null) {
             return;
         }
@@ -101,7 +101,7 @@ public class ResContentDataServiceImpl extends TriggeredDataDomainRecalcImpl imp
     }
 
     @Override
-    public List<DBFilter> getDBTriggerFilter() throws IOException {
+    public List<DBFilter> getDBTriggerFilter() {
         List<DBFilter> dbFilters = new ArrayList<DBFilter>();
 
         // filter upload open only

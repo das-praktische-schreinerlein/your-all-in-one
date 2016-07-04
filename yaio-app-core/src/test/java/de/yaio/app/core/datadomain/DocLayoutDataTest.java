@@ -14,8 +14,11 @@
 package de.yaio.app.core.datadomain;
 
 import de.yaio.app.core.node.InfoNode;
+import de.yaio.app.datatransfer.common.ParserException;
 import de.yaio.app.datatransfer.exporter.formatter.DocLayoutDataFormatterImpl;
 import de.yaio.app.datatransfer.importer.parser.DocLayoutDataParserImpl;
+
+import java.text.ParseException;
 
 /** 
  * test of the datadomain-logic: DocLayoutData<br>
@@ -55,30 +58,30 @@ public class DocLayoutDataTest extends DataDomainTest {
     }
 
     @Override
-    public void setupParser() throws Exception {
+    public void setupParser() {
         parser = new DocLayoutDataParserImpl();
     }
 
     @Override
-    public void setupFormatter() throws Exception {
+    public void setupFormatter() {
         formatter = new DocLayoutDataFormatterImpl();
     }
 
     @Override
-    public TestObj setupNewTestObj() throws Exception {
+    public TestObj setupNewTestObj() {
         return new DocLayoutDataTestObj();
     }
     
     /** 
      * setup the a TestObj for the test
      * @return                       a new dataobj for the test
-     * @throws Exception             possible Exception     */
-    protected DocLayoutDataTestObj getNewDocLayoutDataTestObj() throws Exception  {
+     */
+    protected DocLayoutDataTestObj getNewDocLayoutDataTestObj() {
         return (DocLayoutDataTestObj) setupNewTestObj();
     }
 
     @Override
-    public void testParser() throws Exception {
+    public void testParser() throws ParserException {
         DocLayoutDataTestObj mytestObj = null;
         String expected = null;
 
@@ -96,7 +99,7 @@ public class DocLayoutDataTest extends DataDomainTest {
     }
 
     @Override
-    public void testFormatter() throws Exception {
+    public void testFormatter() throws ParseException {
         DocLayoutDataTestObj mytestObj = null;
         String expected = null;
         

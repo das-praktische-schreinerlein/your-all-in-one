@@ -12,13 +12,16 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 package de.yaio.app.extension.datatransfer.mindmap;
-import de.yaio.app.extension.datatransfer.mindmap.MindMapExporter;
+
+import de.yaio.app.datatransfer.common.ConverterException;
+import de.yaio.app.datatransfer.common.ParserException;
+import de.yaio.app.datatransfer.exporter.Exporter;
 import de.yaio.app.extension.datatransfer.wiki.WikiExporterTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.springframework.mock.staticmock.MockStaticEntityMethods;
 
-import de.yaio.app.datatransfer.exporter.Exporter;
+import java.io.IOException;
 
 /** 
  * test of the MindMap-exporter-logic<br>
@@ -36,12 +39,12 @@ import de.yaio.app.datatransfer.exporter.Exporter;
 public class MindMapExporterTest extends WikiExporterTest {
 
     @Override
-    public Exporter setupNewExporter() throws Exception {
+    public Exporter setupNewExporter() {
         return new MindMapExporter();
     }
     
     @Override
-    public void testExport() throws Exception {
+    public void testExport() throws ConverterException, ParserException, IOException {
         testExportFromFixture("FixtureMindMapExportSource.ppl", "FixtureMindMapExportResult.mm");
     }
 }

@@ -31,9 +31,8 @@ public class YaioFlyway {
     /**
      * do flyway on db
      * @return                       result-message
-     * @throws Exception             possible io/db/recalc-Exceptions
      */
-    public static String doFlyway() throws Exception {
+    public static String doFlyway() {
         // do flyWay before applicationContext
         Configuration config = YaioConfiguration.getInstance();
         if ("true".equalsIgnoreCase(

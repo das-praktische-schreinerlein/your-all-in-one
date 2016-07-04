@@ -56,7 +56,7 @@ public class InfoNodeRestControllerTest extends BaseNodeRestControllerTest {
      * @see de.yaio.app.BaseTest#setupNewTestObj()
      */
     @Override
-    public TestObj setupNewTestObj() throws Exception {
+    public TestObj setupNewTestObj() {
      // create, show, update, delete task
         String name1 = "Test-InfoNode";
         
