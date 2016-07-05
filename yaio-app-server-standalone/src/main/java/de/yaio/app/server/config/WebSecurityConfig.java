@@ -14,7 +14,8 @@
 package de.yaio.app.server.config;
 
 import de.yaio.app.config.YaioConfiguration;
-import de.yaio.app.utils.CmdLineHelper;
+import de.yaio.app.utils.io.IOExceptionWithCause;
+import de.yaio.app.utils.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -176,7 +177,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         @Autowired
         public void configureGlobal(final AuthenticationManagerBuilder auth) throws Exception {
-            Properties users = CmdLineHelper.getInstance().readProperties(System.getProperty(CONST_FILELOCATION_APIUSERS));
+            Properties users;
+            try {
+                users = IOUtils.getInstance().readProperties(System.getProperty(CONST_FILELOCATION_APIUSERS));
+            } catch (IOExceptionWithCause ex) {
+                throw new IllegalArgumentException("cant read propertyFile for AuthenticationManager", ex);
+            }
             InMemoryUserDetailsManager im = new InMemoryUserDetailsManager(users);
             auth.userDetailsService(im);
         }
