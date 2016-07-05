@@ -13,7 +13,7 @@
  */
 package de.yaio.app.core.datadomain;
 
-import de.yaio.app.utils.PersistentIntEnumable;
+import de.yaio.app.utils.db.PersistentIntEnumable;
 
 /**
  * enum to define the workflows and their corresponding integer-value (for hibernate and state-calculation)

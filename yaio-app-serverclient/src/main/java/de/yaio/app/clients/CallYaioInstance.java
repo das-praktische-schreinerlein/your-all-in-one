@@ -13,13 +13,11 @@
  */
 package de.yaio.app.clients;
 
-import de.yaio.app.config.ContextHelper;
 import de.yaio.app.config.YaioConfiguration;
 import de.yaio.app.config.YaioConfigurationHelper;
-import de.yaio.app.utils.CmdLineHelper;
-import de.yaio.app.utils.CmdLineJob;
+import de.yaio.app.utils.cli.CmdLineHelper;
+import de.yaio.app.utils.cli.CmdLineJob;
 import de.yaio.app.utils.config.Configuration;
-import de.yaio.app.utils.config.ConfigurationHelper;
 import de.yaio.app.utils.config.ConfigurationOption;
 import de.yaio.commons.data.DataUtils;
 import de.yaio.commons.http.HttpUtils;

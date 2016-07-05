@@ -22,7 +22,7 @@ import de.yaio.app.config.YaioConfigurationHelper;
 import de.yaio.app.config.ContextHelper;
 import de.yaio.app.core.datadomainservice.NodeNumberService;
 import de.yaio.app.core.node.BaseNode;
-import de.yaio.app.utils.CmdLineHelper;
+import de.yaio.app.utils.cli.CmdLineHelper;
 import de.yaio.app.utils.config.Configuration;
 import de.yaio.app.utils.config.ConfigurationHelper;
 import org.apache.log4j.Logger;
@@ -36,7 +36,6 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 

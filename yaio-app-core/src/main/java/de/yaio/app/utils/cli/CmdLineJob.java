@@ -11,7 +11,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package de.yaio.app.utils;
+package de.yaio.app.utils.cli;
 
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
@@ -30,11 +30,7 @@ import org.apache.log4j.Logger;
  * <li>genAvailiableCmdLineOptions
  * </ul>
  *
- * @FeatureDomain                Tools - CLI-Handling
- * @package                      de.yaio.utils
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @copyright                    Copyright (c) 2013, Michael Schreiner
- * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this

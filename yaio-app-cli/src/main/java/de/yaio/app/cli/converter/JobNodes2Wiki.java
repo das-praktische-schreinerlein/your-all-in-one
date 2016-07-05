@@ -24,7 +24,7 @@ import de.yaio.app.datatransfer.exporter.Exporter;
 import de.yaio.app.datatransfer.exporter.OutputOptions;
 import de.yaio.app.datatransfer.exporter.OutputOptionsImpl;
 import de.yaio.app.extension.datatransfer.wiki.WikiExporter;
-import de.yaio.app.utils.CmdLineHelper;
+import de.yaio.app.utils.cli.CmdLineHelper;
 import de.yaio.app.utils.config.ConfigurationOption;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Option;

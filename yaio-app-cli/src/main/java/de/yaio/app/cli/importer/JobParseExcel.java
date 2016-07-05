@@ -14,7 +14,7 @@
 package de.yaio.app.cli.importer;
 
 import de.yaio.app.config.YaioConfiguration;
-import de.yaio.app.utils.CmdLineHelper;
+import de.yaio.app.utils.cli.CmdLineHelper;
 import de.yaio.app.utils.config.ConfigurationOption;
 import org.apache.commons.cli.Options;
 
