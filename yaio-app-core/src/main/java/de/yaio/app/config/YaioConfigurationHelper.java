@@ -13,12 +13,12 @@
  */
 package de.yaio.app.config;
 
-import de.yaio.app.utils.io.IOExceptionWithCause;
-import de.yaio.app.utils.cli.CmdLineHelper;
-import de.yaio.app.utils.config.Configuration;
-import de.yaio.app.utils.config.ConfigurationHelper;
-import de.yaio.app.utils.config.ConfigurationOption;
-import de.yaio.app.utils.io.IOUtils;
+import de.yaio.commons.io.IOExceptionWithCause;
+import de.yaio.commons.cli.CmdLineHelper;
+import de.yaio.commons.config.Configuration;
+import de.yaio.commons.config.ConfigurationHelper;
+import de.yaio.commons.config.ConfigurationOption;
+import de.yaio.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 

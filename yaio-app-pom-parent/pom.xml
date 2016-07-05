@@ -79,7 +79,7 @@
          -->
 
         <!-- Yaio versions -->
-        <yaio-commons.version>[0.3.0,0.4.0)</yaio-commons.version>
+        <yaio-commons.version>[0.4.0-SNAPSHOT,0.5.0)</yaio-commons.version>
         <yaio-plantuml-service.version>[0.5.0-SNAPSHOT,0.6.0)</yaio-plantuml-service.version>
         <yaio-webshot-service.version>[0.6.0-SNAPSHOT,0.7.0)</yaio-webshot-service.version>
         <yaio-metaextract-service.version>[0.3.0-SNAPSHOT,0.4.0)</yaio-metaextract-service.version>
@@ -117,7 +117,6 @@
 
         <commons-pool.version>1.5.6</commons-pool.version>
         <commons-dbcp.version>1.4</commons-dbcp.version>
-        <commons-cli.version>1.2</commons-cli.version>
         <commons-io.version>2.1</commons-io.version>
         <commons-compress>1.10</commons-compress>
 

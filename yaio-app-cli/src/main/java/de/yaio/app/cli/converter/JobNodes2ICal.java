@@ -15,7 +15,7 @@ package de.yaio.app.cli.converter;
 
 import de.yaio.app.extension.datatransfer.ical.ICalDBExporter;
 import de.yaio.app.extension.datatransfer.ical.ICalExporter;
-import de.yaio.app.utils.config.ConfigurationOption;
+import de.yaio.commons.config.ConfigurationOption;
 
 /** 
  * job for import of Nodes in PPL-Format and output as ICal

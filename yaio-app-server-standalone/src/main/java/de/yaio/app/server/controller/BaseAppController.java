@@ -15,7 +15,7 @@ package de.yaio.app.server.controller;
 
 import de.yaio.app.config.YaioConfiguration;
 import de.yaio.app.datatransfer.common.ConverterException;
-import de.yaio.app.utils.config.ConfigurationOption;
+import de.yaio.commons.config.ConfigurationOption;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

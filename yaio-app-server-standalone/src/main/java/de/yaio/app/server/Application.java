@@ -17,9 +17,9 @@ import de.yaio.app.config.ContextHelper;
 import de.yaio.app.config.PersistenceConfig;
 import de.yaio.app.config.YaioConfigurationHelper;
 import de.yaio.app.system.YaioFlyway;
-import de.yaio.app.utils.cli.CmdLineHelper;
-import de.yaio.app.utils.cli.CmdLineJob;
-import de.yaio.app.utils.config.ConfigurationHelper;
+import de.yaio.commons.cli.CmdLineHelper;
+import de.yaio.commons.cli.CmdLineJob;
+import de.yaio.commons.config.ConfigurationHelper;
 import org.apache.commons.cli.Option;
 import org.apache.log4j.Logger;
 import org.apache.tomcat.util.http.fileupload.FileUpload;
@@ -103,7 +103,7 @@ public class Application {
             }
 
             // init configuration
-            de.yaio.app.utils.config.Configuration config = configurationHelper.initConfiguration();
+            de.yaio.commons.config.Configuration config = configurationHelper.initConfiguration();
             config.publishProperties();
 
             LOGGER.info("start application with args:" + config.argsAsList() +

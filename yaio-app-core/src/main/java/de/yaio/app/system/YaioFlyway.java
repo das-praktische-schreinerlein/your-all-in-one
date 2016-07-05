@@ -14,8 +14,8 @@
 package de.yaio.app.system;
 
 import de.yaio.app.config.YaioConfiguration;
-import de.yaio.app.utils.config.Configuration;
-import de.yaio.app.utils.config.ConfigurationOption;
+import de.yaio.commons.config.Configuration;
+import de.yaio.commons.config.ConfigurationOption;
 import org.apache.log4j.Logger;
 import org.flywaydb.core.Flyway;
 

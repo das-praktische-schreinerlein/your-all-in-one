@@ -19,7 +19,7 @@ import de.yaio.app.datatransfer.exporter.Exporter;
 import de.yaio.app.datatransfer.exporter.OutputOptions;
 import de.yaio.app.extension.datatransfer.excel.ExcelExporter;
 import de.yaio.app.extension.datatransfer.excel.ExcelOutputOptions;
-import de.yaio.app.utils.config.ConfigurationOption;
+import de.yaio.commons.config.ConfigurationOption;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 

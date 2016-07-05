@@ -15,10 +15,10 @@ package de.yaio.app.clients;
 
 import de.yaio.app.config.YaioConfiguration;
 import de.yaio.app.config.YaioConfigurationHelper;
-import de.yaio.app.utils.cli.CmdLineHelper;
-import de.yaio.app.utils.cli.CmdLineJob;
-import de.yaio.app.utils.config.Configuration;
-import de.yaio.app.utils.config.ConfigurationOption;
+import de.yaio.commons.cli.CmdLineHelper;
+import de.yaio.commons.cli.CmdLineJob;
+import de.yaio.commons.config.Configuration;
+import de.yaio.commons.config.ConfigurationOption;
 import de.yaio.commons.data.DataUtils;
 import de.yaio.commons.http.HttpUtils;
 import org.apache.commons.cli.Option;

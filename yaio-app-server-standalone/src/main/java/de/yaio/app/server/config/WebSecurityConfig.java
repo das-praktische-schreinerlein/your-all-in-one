@@ -14,8 +14,8 @@
 package de.yaio.app.server.config;
 
 import de.yaio.app.config.YaioConfiguration;
-import de.yaio.app.utils.io.IOExceptionWithCause;
-import de.yaio.app.utils.io.IOUtils;
+import de.yaio.commons.io.IOExceptionWithCause;
+import de.yaio.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

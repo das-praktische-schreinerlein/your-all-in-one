@@ -13,7 +13,7 @@
  */
 package de.yaio.app.config;
 
-import de.yaio.app.utils.config.Configuration;
+import de.yaio.commons.config.Configuration;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
