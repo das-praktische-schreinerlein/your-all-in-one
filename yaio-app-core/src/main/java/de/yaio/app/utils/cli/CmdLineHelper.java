@@ -11,26 +11,19 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package de.yaio.app.utils;
+package de.yaio.app.utils.cli;
 
 import de.yaio.app.utils.config.Configuration;
 import org.apache.commons.cli.*;
 import org.apache.log4j.Logger;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.util.*;
 
 
 /**
  * baseclass for configuration
  *
- * @FeatureDomain                Configuration
- * @package                      de.yaio.utils
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @copyright                    Copyright (c) 2013, Michael Schreiner
- * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -300,39 +293,6 @@ public class CmdLineHelper {
             }
         }
         
-    }
-
-    /**
-     * read the properties from the given filepath (first by filesystem,
-     * if failed by classpath)
-     * @param filePath               path to the file (filesystem or classressource)
-     * @return                       the properties read from propertyfile
-     */
-    public Properties readProperties(final String filePath) {
-        Properties prop = new Properties();
-
-        // first try it from fileystem
-        try {
-            InputStream in = new FileInputStream(new File(filePath));
-            prop.load(in);
-            in.close();
-            //CHECKSTYLE.OFF: IllegalCatch - Much more readable than catching x exceptions
-        } catch (Throwable ex) {
-            //CHECKSTYLE.ON: IllegalCatch
-            // try it from jar
-            try {
-                InputStream in = instance.getClass().getResourceAsStream(filePath);
-                prop.load(in);
-                in.close();
-                //CHECKSTYLE.OFF: IllegalCatch - Much more readable than catching x exceptions
-            } catch (Throwable ex2) {
-                //CHECKSTYLE.ON: IllegalCatch
-                throw new IllegalArgumentException("cant read propertiesfile: " + filePath
-                        + " Exception1:" + ex
-                        + " Exception2:" + ex2);
-            }
-        }
-        return prop;
     }
 
     protected void initConfigurator() {

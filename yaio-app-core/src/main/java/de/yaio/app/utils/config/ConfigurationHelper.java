@@ -13,15 +13,14 @@
  */
 package de.yaio.app.utils.config;
 
-import de.yaio.app.utils.CmdLineHelper;
-import org.apache.log4j.Logger;
+import de.yaio.app.utils.io.IOExceptionWithCause;
+import de.yaio.app.utils.cli.CmdLineHelper;
+import de.yaio.app.utils.io.IOUtils;
 
 import java.util.Properties;
 
 
 public abstract class ConfigurationHelper {
-    private static final Logger LOGGER = Logger.getLogger(ConfigurationHelper.class);
-
     protected ConfigurationHelper() {
     }
 
@@ -35,7 +34,12 @@ public abstract class ConfigurationHelper {
     }
 
     public Configuration initConfiguration(final CmdLineHelper cmdLineHelper, final String configFile) {
-        Properties props = cmdLineHelper.readProperties(configFile);
+        Properties props;
+        try {
+            props = IOUtils.getInstance().readProperties(configFile);
+        } catch (IOExceptionWithCause ex) {
+            throw new IllegalArgumentException("cant read propertyFile for config", ex);
+        }
         return initConfiguration(cmdLineHelper, props);
     }
 
