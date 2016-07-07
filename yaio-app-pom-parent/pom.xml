@@ -71,10 +71,10 @@
 
         <!-- Yaio versions -->
         <yaio-commons.version>[0.4.0-SNAPSHOT,0.5.0)</yaio-commons.version>
-        <yaio-plantuml-service.version>[0.5.0-SNAPSHOT,0.6.0)</yaio-plantuml-service.version>
-        <yaio-webshot-service.version>[0.6.0-SNAPSHOT,0.7.0)</yaio-webshot-service.version>
-        <yaio-metaextract-service.version>[0.3.0-SNAPSHOT,0.4.0)</yaio-metaextract-service.version>
-        <yaio-dms-service.version>[0.4.0-SNAPSHOT,0.5.0)</yaio-dms-service.version>
+        <yaio-plantuml-service.version>[0.5.0,0.6.0)</yaio-plantuml-service.version>
+        <yaio-webshot-service.version>[0.6.0,0.7.0)</yaio-webshot-service.version>
+        <yaio-metaextract-service.version>[0.3.0,0.4.0)</yaio-metaextract-service.version>
+        <yaio-dms-service.version>[0.4.0,0.5.0)</yaio-dms-service.version>
         <jsh-pegdown.version>[0.1.0-SNAPSHOT,0.2.0)</jsh-pegdown.version>
 
         <!--  versions -->
