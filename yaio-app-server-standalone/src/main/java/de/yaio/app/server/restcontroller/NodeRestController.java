@@ -25,6 +25,7 @@ import de.yaio.app.core.nodeservice.BaseNodeService;
 import de.yaio.app.datatransfer.common.DatatransferUtils;
 import de.yaio.app.extension.datatransfer.common.ExtendedDatatransferUtils;
 import de.yaio.app.server.controller.CommonApiConfig;
+import de.yaio.commons.io.IOExceptionWithCause;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -617,14 +618,22 @@ public class NodeRestController {
                                 + " for node:" + node.getNameForLogger());
                 try {
                     flgChange = this.handleUploadFile((UrlResNode) node, addFileParams.get("uploadFile")) || flgChange;
-                } catch (IOException ex) {
-                    LOGGER.info("error on handleUploadFile while updating node", ex);
-                    LOGGER.info("error creating updating '" + node);
+                } catch (IOExceptionWithCause ex) {
+                    LOGGER.info("IOExceptionWithCause on handleUploadFile while updating node", ex);
+                    LOGGER.info("error updating node '" + node);
                     return new NodeActionResponse(
                             "ERROR", "error on handleUploadFile while updating node",
                             null, null, null, Collections.singletonList(new NodeViolation("uploadFile",
                             "uploadFile cant be handled",
                             ex.getMessage())));
+                } catch (IOException ex) {
+                    LOGGER.warn("IOException on handleUploadFile while updating node", ex);
+                    LOGGER.warn("error updating node: '" + node);
+                    return new NodeActionResponse(
+                            "ERROR", "error on handleUploadFile while updating node",
+                            null, null, null, Collections.singletonList(new NodeViolation("uploadFile",
+                            "uploadFile cant be handled",
+                            "internal error")));
                 }
             }
 
@@ -735,14 +744,22 @@ public class NodeRestController {
                                 + " for node:" + origNode.getNameForLogger());
                 try {
                     this.handleUploadFile((UrlResNode) origNode, addFileParams.get("uploadFile"));
-                } catch (IOException ex) {
-                    LOGGER.info("error on handleUploadFile while creating node for parent '" + parentSysUID + "':", ex);
-                    LOGGER.info("error creating node '" + origNode);
+                } catch (IOExceptionWithCause ex) {
+                    LOGGER.info("IOExceptionWithCause on handleUploadFile while creating node", ex);
+                    LOGGER.info("IOExceptionWithCause creating node for parent " + parentSysUID + ":" + origNode);
                     return new NodeActionResponse(
                             "ERROR", "error on handleUploadFile while creating node",
                             null, null, null, Collections.singletonList(new NodeViolation("uploadFile",
                             "uploadFile cant be handled",
                             ex.getMessage())));
+                } catch (IOException ex) {
+                    LOGGER.warn("IOException on handleUploadFile while creating node", ex);
+                    LOGGER.warn("IOException creating node for parent " + parentSysUID + ":" + origNode);
+                    return new NodeActionResponse(
+                            "ERROR", "error on handleUploadFile while creating node",
+                            null, null, null, Collections.singletonList(new NodeViolation("uploadFile",
+                            "uploadFile cant be handled",
+                            "internal error")));
                 }
             }
 
@@ -777,7 +794,8 @@ public class NodeRestController {
         return response;
     }
 
-    protected boolean handleUploadFile(final UrlResNode node, final MultipartFile uploadFile) throws IOException {
+    protected boolean handleUploadFile(final UrlResNode node, final MultipartFile uploadFile)
+            throws IOExceptionWithCause, IOException {
         String type = node.getType();
         if (uploadFile != null && !uploadFile.isEmpty()) {
             // check for uploadfile

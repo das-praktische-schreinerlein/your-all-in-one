@@ -14,18 +14,19 @@
 package de.yaio.app.extension.dms.services;
 
 import de.yaio.app.core.datadomain.DataDomain;
-import de.yaio.app.extension.dms.utils.YaioMetaExtractClient;
-import de.yaio.commons.data.DataUtils;
 import de.yaio.app.core.datadomain.ResContentData;
 import de.yaio.app.core.datadomain.ResContentData.UploadWorkflowState;
 import de.yaio.app.core.datadomain.ResIndexData;
 import de.yaio.app.core.datadomain.ResIndexData.IndexWorkflowState;
 import de.yaio.app.core.datadomain.ResLocData;
 import de.yaio.app.core.datadomainservice.TriggeredDataDomainRecalcImpl;
-import de.yaio.app.utils.db.DBFilter;
 import de.yaio.app.core.node.UrlResNode;
 import de.yaio.app.core.nodeservice.UrlResNodeService;
 import de.yaio.app.extension.dms.utils.DMSClient;
+import de.yaio.app.extension.dms.utils.YaioMetaExtractClient;
+import de.yaio.app.utils.db.DBFilter;
+import de.yaio.commons.data.DataUtils;
+import de.yaio.commons.io.IOExceptionWithCause;
 import de.yaio.services.dms.api.model.StorageResource;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -43,12 +44,7 @@ import java.util.List;
 /** 
  * businesslogic for dataDomain: ResContentData (upload url/file to dms)
  * 
- * @FeatureDomain                BusinessLogic
- * @package                      de.yaio.extension.dms
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category                     collaboration
- * @copyright                    Copyright (c) 2014, Michael Schreiner
- * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 @Service
 public class ResIndexDataServiceImpl extends TriggeredDataDomainRecalcImpl implements ResIndexDataService {
@@ -92,9 +88,9 @@ public class ResIndexDataServiceImpl extends TriggeredDataDomainRecalcImpl imple
         try {
             // upload
             this.indexResLoc((ResLocData) datanode);
-        } catch (RuntimeException ex) {
+        } catch (IOExceptionWithCause ex) {
             // error: reset id and set to failed
-            LOGGER.error("error while indexing node to dms:" + datanode.getNameForLogger(), ex);
+            LOGGER.info("error while indexing node to dms:" + datanode.getNameForLogger(), ex);
             node.setResIndexDMSState(IndexWorkflowState.INDEX_FAILED);
         }
 
@@ -117,7 +113,7 @@ public class ResIndexDataServiceImpl extends TriggeredDataDomainRecalcImpl imple
     }
 
     @Override
-    public void indexResLoc(final ResLocData datanode) {
+    public void indexResLoc(final ResLocData datanode) throws IOExceptionWithCause {
         if (!ResIndexData.class.isInstance(datanode)) {
             throw new IllegalArgumentException();
         }
@@ -131,7 +127,6 @@ public class ResIndexDataServiceImpl extends TriggeredDataDomainRecalcImpl imple
         byte[] response;
         if (UrlResNodeService.CONST_NODETYPE_IDENTIFIER_URLRES.equals(node.getType())) {
             // get metadata from url
-            // get metadata from file
             try {
                 response = metaextractProvider.getMetaExtractFromUrl(datanode.getResLocRef());
             } catch (IOException ex) {

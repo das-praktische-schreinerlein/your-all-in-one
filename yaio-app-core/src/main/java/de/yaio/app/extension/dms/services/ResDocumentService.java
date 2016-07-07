@@ -29,12 +29,7 @@ import java.io.InputStream;
 /** 
  * businesslogic for dataDomain: ResContentData (upload url/file to dms)
  * 
- * @FeatureDomain                BusinessLogic
- * @package                      de.yaio.extension.dms
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category                     collaboration
- * @copyright                    Copyright (c) 2014, Michael Schreiner
- * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 @Service
 public class ResDocumentService {

@@ -24,6 +24,7 @@ import de.yaio.app.extension.dms.utils.DMSClient;
 import de.yaio.app.extension.dms.utils.YaioWebshotClient;
 import de.yaio.app.utils.db.DBFilter;
 import de.yaio.commons.data.DataUtils;
+import de.yaio.commons.io.IOExceptionWithCause;
 import de.yaio.services.dms.api.model.StorageResource;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -40,12 +41,7 @@ import java.util.List;
 /** 
  * businesslogic for dataDomain: ResContentData (upload url/file to dms)
  * 
- * @FeatureDomain                BusinessLogic
- * @package                      de.yaio.extension.dms
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category                     collaboration
- * @copyright                    Copyright (c) 2014, Michael Schreiner
- * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 @Service
 public class ResContentDataServiceImpl extends TriggeredDataDomainRecalcImpl implements ResContentDataService {
@@ -90,7 +86,7 @@ public class ResContentDataServiceImpl extends TriggeredDataDomainRecalcImpl imp
         try {
             // upload
             this.uploadResLocToDMS((ResLocData) datanode);
-        } catch (IOException ex) {
+        } catch (IOExceptionWithCause ex) {
             // error: reset id and set to failed
             LOGGER.error("error while uploading node to dms:" + datanode.getNameForLogger(), ex);
             node.setResContentDMSState(UploadWorkflowState.UPLOAD_FAILED);
@@ -114,22 +110,31 @@ public class ResContentDataServiceImpl extends TriggeredDataDomainRecalcImpl imp
     }
 
     @Override
-    public void uploadResLocToDMS(final ResLocData datanode) throws IOException {
+    public void uploadResLocToDMS(final ResLocData datanode) throws IOExceptionWithCause {
         if (!ResContentData.class.isInstance(datanode)) {
             throw new IllegalArgumentException();
         }
         
         // get image from url
-        byte[] response = webshotProvider.getWebShotFromUrl(datanode.getResLocRef());
+        byte[] response;
+        try {
+            response = webshotProvider.getWebShotFromUrl(datanode.getResLocRef());
+        } catch (IOException ex) {
+            throw new IllegalArgumentException("cant get webshot for url", ex);
+        }
 
         // push image to dms
         InputStream input = new ByteArrayInputStream(response);
-        this.uploadResContentToDMS((ResContentData) datanode, datanode.getResLocRef() + ".png", input);
+        try {
+            this.uploadResContentToDMS((ResContentData) datanode, datanode.getResLocRef() + ".png", input);
+        } catch (IOException ex) {
+            throw new IllegalArgumentException("cant upload webshot to dms", ex);
+        }
     }
 
     @Override
     public void uploadResContentToDMS(final ResContentData datanode, final String fileName, 
-                                      final InputStream input) throws IOException {
+                                      final InputStream input) throws IOExceptionWithCause, IOException {
         if (!UrlResNode.class.isInstance(datanode)) {
             throw new IllegalArgumentException();
         }

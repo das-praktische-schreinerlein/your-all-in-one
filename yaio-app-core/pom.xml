@@ -25,6 +25,16 @@
             <version>${yaio-dms-service.version}</version>
         </dependency>
         <dependency>
+            <groupId>de.yaio.services</groupId>
+            <artifactId>yaio-metaextract-service-client</artifactId>
+            <version>${yaio-metaextract-service.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.yaio.services</groupId>
+            <artifactId>yaio-webshot-service-client</artifactId>
+            <version>${yaio-webshot-service.version}</version>
+        </dependency>
+        <dependency>
             <groupId>de.yaio.converter</groupId>
             <artifactId>jsh-pegdown</artifactId>
             <version>${jsh-pegdown.version}</version>
