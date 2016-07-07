@@ -47,7 +47,8 @@ public class YaioWebshotClient {
      * create a webshot of the url
      * @return                       returns the webshot as png-file
      * @param url                    url to make a webshot from
-     * @throws IOException           if something went wrong
+     * @throws IOExceptionWithCause  if something logical went wrong
+     * @throws IOException           if something physical went wrong
      */
     public byte[] getWebShotFromUrl(final String url) throws IOExceptionWithCause, IOException {
         return client.getWebShotFromUrl(url);

@@ -46,7 +46,8 @@ public class YaioMetaExtractClient {
      * create a metaextract of the url
      * @return                       returns the metaextract as JSON
      * @param url                    url to make a metaextract from
-     * @throws IOException           if something went wrong
+     * @throws IOExceptionWithCause  if something logical went wrong
+     * @throws IOException           if something physical went wrong
      */
     public byte[] getMetaExtractFromUrl(final String url) throws IOException, IOExceptionWithCause {
         return client.getMetaExtractFromUrl(url);
@@ -56,7 +57,8 @@ public class YaioMetaExtractClient {
      * create a metaextract of the file
      * @return                       returns the metaextract as JSON
      * @param fileName               file to make a metaextract from
-     * @throws IOException           if something went wrong
+     * @throws IOExceptionWithCause  if something logical went wrong
+     * @throws IOException           if something physical went wrong
      */
     public byte[] getMetaExtractFromFile(final String fileName) throws IOException, IOExceptionWithCause {
         return client.getMetaExtractFromFile(fileName);
