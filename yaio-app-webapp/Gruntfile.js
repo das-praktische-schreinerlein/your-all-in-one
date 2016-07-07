@@ -66,6 +66,8 @@
                     vendorDestBase + 'js/jqueryui/jquery-ui-sliderAccess.js',
                     vendorDestBase + 'js/jqueryui/jquery-ui-timepicker-addon.js',
                     vendorDestBase + 'js/jquery/jquery-lang.js',
+                    vendorDestBase + 'js/d3/d3.min.js',
+                    vendorDestBase + 'js/c3/c3.min.js',
 // loaded standalone because of plugins
 //              vendorDestBase + 'js/fancytree/jquery.fancytree.js',
 //              vendorDestBase + 'js/fancytree/jquery.fancytree.dnd.js',
@@ -98,6 +100,7 @@
                     vendorDestBase + 'js/ymf/ymf-app-dist.js'
                 ],
                 vendorCssFiles: [
+                    vendorDestBase + 'css/c3/c3.min.css',
                     vendorDestBase + 'css/jqueryui/jquery-ui.css',
                     vendorDestBase + 'css/jqueryui/jquery-ui-timepicker-addon.css',
 // loaded standalone because of plugins
