@@ -90,7 +90,11 @@ public class ResIndexDataServiceImpl extends TriggeredDataDomainRecalcImpl imple
             this.indexResLoc((ResLocData) datanode);
         } catch (IOExceptionWithCause ex) {
             // error: reset id and set to failed
-            LOGGER.info("error while indexing node to dms:" + datanode.getNameForLogger(), ex);
+            LOGGER.info("IOExceptionWithCause while indexing node to dms:" + datanode.getNameForLogger(), ex);
+            node.setResIndexDMSState(IndexWorkflowState.INDEX_FAILED);
+        } catch (IOException ex) {
+            // error: reset id and set to failed
+            LOGGER.info("IOException while indexing node to dms:" + datanode.getNameForLogger(), ex);
             node.setResIndexDMSState(IndexWorkflowState.INDEX_FAILED);
         }
 
@@ -113,7 +117,7 @@ public class ResIndexDataServiceImpl extends TriggeredDataDomainRecalcImpl imple
     }
 
     @Override
-    public void indexResLoc(final ResLocData datanode) throws IOExceptionWithCause {
+    public void indexResLoc(final ResLocData datanode) throws IOExceptionWithCause, IOException {
         if (!ResIndexData.class.isInstance(datanode)) {
             throw new IllegalArgumentException();
         }
@@ -127,24 +131,12 @@ public class ResIndexDataServiceImpl extends TriggeredDataDomainRecalcImpl imple
         byte[] response;
         if (UrlResNodeService.CONST_NODETYPE_IDENTIFIER_URLRES.equals(node.getType())) {
             // get metadata from url
-            try {
-                response = metaextractProvider.getMetaExtractFromUrl(datanode.getResLocRef());
-            } catch (IOException ex) {
-                throw new IllegalArgumentException("cant extract metadata from url", ex);
-            }
+            response = metaextractProvider.getMetaExtractFromUrl(datanode.getResLocRef());
         } else {
             // get metadata from file
             File contentFile;
-            try {
-                contentFile = dmsProvider.getContentFileFromDMS(node.getResContentDMSId(), 0, true);
-            } catch (IOException ex) {
-                throw new IllegalArgumentException("cant read data from dms", ex);
-            }
-            try {
-                response = metaextractProvider.getMetaExtractFromFile(contentFile.getCanonicalPath());
-            } catch (IOException ex) {
-                throw new IllegalArgumentException("cant extract metadata from contentfile", ex);
-            }
+            contentFile = dmsProvider.getContentFileFromDMS(node.getResContentDMSId(), 0, true);
+            response = metaextractProvider.getMetaExtractFromFile(contentFile.getCanonicalPath());
         }
 
         // push metadata to dms
@@ -154,7 +146,7 @@ public class ResIndexDataServiceImpl extends TriggeredDataDomainRecalcImpl imple
 
     @Override
     public void uploadResIndexToDMS(final ResIndexData datanode, final String fileName, 
-                                    final InputStream input) {
+                                    final InputStream input) throws IOExceptionWithCause, IOException {
         if (!UrlResNode.class.isInstance(datanode)) {
             throw new IllegalArgumentException();
         }
@@ -163,18 +155,14 @@ public class ResIndexDataServiceImpl extends TriggeredDataDomainRecalcImpl imple
         
         String normfileName = DataUtils.normalizeFileName(fileName);
         String resIndexDMSId = node.getResIndexDMSId();
-        try {
-            if (StringUtils.isEmpty(resIndexDMSId)) {
-                // add new file
-                resIndexDMSId = node.getSysUID() + "-" + "index";
-                StorageResource resource = dmsProvider.addContentToDMS(resIndexDMSId, normfileName, input);
-                node.setResIndexDMSId(resource.getDMSId());
-            } else {
-                // update file
-                dmsProvider.updateContentInDMS(resIndexDMSId, normfileName, input);
-            }
-        } catch (IOException ex) {
-            throw new IllegalArgumentException("cant write indexdata to dms", ex);
+        if (StringUtils.isEmpty(resIndexDMSId)) {
+            // add new file
+            resIndexDMSId = node.getSysUID() + "-" + "index";
+            StorageResource resource = dmsProvider.addContentToDMS(resIndexDMSId, normfileName, input);
+            node.setResIndexDMSId(resource.getDMSId());
+        } else {
+            // update file
+            dmsProvider.updateContentInDMS(resIndexDMSId, normfileName, input);
         }
 
         // everything fine

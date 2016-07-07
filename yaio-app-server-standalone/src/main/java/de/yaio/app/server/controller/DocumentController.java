@@ -17,6 +17,7 @@ import de.yaio.app.core.node.BaseNode;
 import de.yaio.app.core.node.UrlResNode;
 import de.yaio.app.extension.dms.services.ResDocumentService;
 import de.yaio.commons.data.DataUtils;
+import de.yaio.commons.io.IOExceptionWithCause;
 import de.yaio.services.dms.api.model.StorageResourceVersion;
 import org.apache.log4j.Logger;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
@@ -63,7 +64,7 @@ public class DocumentController {
     @RequestMapping(method = RequestMethod.GET, 
                     value = "/download/{sysUID}")
     public void downloadResource(@PathVariable(value = "sysUID") final String sysUID, 
-                                 final HttpServletResponse response) throws IOException{
+                                 final HttpServletResponse response) throws IOExceptionWithCause, IOException{
         this.commondRequestResource(sysUID, response, false, false);
     }
 
@@ -76,7 +77,7 @@ public class DocumentController {
     @RequestMapping(method = RequestMethod.GET, 
                     value = "/embed/{sysUID}")
     public void embedResource(@PathVariable(value = "sysUID") final String sysUID, 
-                              final HttpServletResponse response) throws IOException {
+                              final HttpServletResponse response) throws IOExceptionWithCause, IOException {
         this.commondRequestResource(sysUID, response, true, false);
     }
 
@@ -89,7 +90,7 @@ public class DocumentController {
     @RequestMapping(method = RequestMethod.GET, 
                     value = "/indexdownload/{sysUID}")
     public void downloadIndexResource(@PathVariable(value = "sysUID") final String sysUID, 
-                                      final HttpServletResponse response) throws IOException {
+                                      final HttpServletResponse response) throws IOExceptionWithCause, IOException {
         this.commondRequestResource(sysUID, response, false, true);
     }
 
@@ -102,15 +103,22 @@ public class DocumentController {
     @RequestMapping(method = RequestMethod.GET, 
                     value = "/indexembed/{sysUID}")
     public void embedIndexResource(@PathVariable(value = "sysUID") final String sysUID, 
-                                   final HttpServletResponse response) throws IOException {
+                                   final HttpServletResponse response) throws IOExceptionWithCause, IOException {
         this.commondRequestResource(sysUID, response, true, true);
+    }
+
+    @ExceptionHandler(IOExceptionWithCause.class)
+    public void handleCustomException(final HttpServletRequest request, final IOExceptionWithCause e,
+                                      final HttpServletResponse response) {
+        LOGGER.info("IOExceptionWithCause while running request:" + request.toString(), e);
+        response.setStatus(SC_NOT_FOUND);
     }
 
     @ExceptionHandler(IOException.class)
     public void handleCustomException(final HttpServletRequest request, final IOException e,
                                         final HttpServletResponse response) {
         LOGGER.info("IOException while running request:" + request.toString(), e);
-        response.setStatus(SC_NOT_FOUND);
+        response.setStatus(SC_INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(value = {Exception.class, RuntimeException.class})
@@ -131,7 +139,7 @@ public class DocumentController {
     protected void commondRequestResource(final String sysUID,
                                           final HttpServletResponse response,
                                           final boolean flgEmbed,
-                                          final boolean flgIndexData) throws IOException {
+                                          final boolean flgIndexData) throws IOExceptionWithCause, IOException {
         BaseNode baseNode = BaseNode.findBaseNode(sysUID);
         if (sysUID == null) {
             // node not found

@@ -21,7 +21,7 @@
         <!-- YAIO -->
         <dependency>
             <groupId>de.yaio.services</groupId>
-            <artifactId>yaio-dms-service-api</artifactId>
+            <artifactId>yaio-dms-service-client</artifactId>
             <version>${yaio-dms-service.version}</version>
         </dependency>
         <dependency>

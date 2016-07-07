@@ -32,8 +32,9 @@ public interface ResIndexDataService extends TriggeredDataDomainRecalc {
      * index the uploaded ResLoc-data to dms
      * @param node                   node
      * @throws IOExceptionWithCause  if something logical went wrong
+     * @throws IOException           if something physical went wrong
      */
-    void indexResLoc(ResLocData node) throws IOExceptionWithCause;
+    void indexResLoc(ResLocData node) throws IOExceptionWithCause, IOException;
 
 
     /**

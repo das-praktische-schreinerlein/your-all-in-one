@@ -88,7 +88,11 @@ public class ResContentDataServiceImpl extends TriggeredDataDomainRecalcImpl imp
             this.uploadResLocToDMS((ResLocData) datanode);
         } catch (IOExceptionWithCause ex) {
             // error: reset id and set to failed
-            LOGGER.error("error while uploading node to dms:" + datanode.getNameForLogger(), ex);
+            LOGGER.info("IOExceptionWithCause while uploading node to dms:" + datanode.getNameForLogger(), ex);
+            node.setResContentDMSState(UploadWorkflowState.UPLOAD_FAILED);
+        } catch (IOException ex) {
+            // error: reset id and set to failed
+            LOGGER.error("IOException while uploading node to dms:" + datanode.getNameForLogger(), ex);
             node.setResContentDMSState(UploadWorkflowState.UPLOAD_FAILED);
         }
 
@@ -110,26 +114,18 @@ public class ResContentDataServiceImpl extends TriggeredDataDomainRecalcImpl imp
     }
 
     @Override
-    public void uploadResLocToDMS(final ResLocData datanode) throws IOExceptionWithCause {
+    public void uploadResLocToDMS(final ResLocData datanode) throws IOExceptionWithCause, IOException {
         if (!ResContentData.class.isInstance(datanode)) {
             throw new IllegalArgumentException();
         }
         
         // get image from url
         byte[] response;
-        try {
-            response = webshotProvider.getWebShotFromUrl(datanode.getResLocRef());
-        } catch (IOException ex) {
-            throw new IllegalArgumentException("cant get webshot for url", ex);
-        }
+        response = webshotProvider.getWebShotFromUrl(datanode.getResLocRef());
 
         // push image to dms
         InputStream input = new ByteArrayInputStream(response);
-        try {
-            this.uploadResContentToDMS((ResContentData) datanode, datanode.getResLocRef() + ".png", input);
-        } catch (IOException ex) {
-            throw new IllegalArgumentException("cant upload webshot to dms", ex);
-        }
+        this.uploadResContentToDMS((ResContentData) datanode, datanode.getResLocRef() + ".png", input);
     }
 
     @Override

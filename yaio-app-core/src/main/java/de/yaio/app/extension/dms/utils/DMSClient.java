@@ -13,6 +13,7 @@
  */
 package de.yaio.app.extension.dms.utils;
 
+import de.yaio.commons.io.IOExceptionWithCause;
 import de.yaio.services.dms.api.model.StorageResource;
 import de.yaio.services.dms.api.model.StorageResourceVersion;
 
@@ -41,7 +42,7 @@ public interface DMSClient {
      * @throws IOException           if something went wrong
      */
     StorageResource addContentToDMS(String id, String origFileName, 
-                                                 InputStream input) throws IOException;
+                                                 InputStream input) throws IOExceptionWithCause, IOException;
 
     /**
      * updates the input in the configured dms
@@ -52,7 +53,7 @@ public interface DMSClient {
      * @throws IOException           if something went wrong
      */
     StorageResource updateContentInDMS(String id, String origFileName,
-                                       InputStream input) throws IOException;
+                                       InputStream input) throws IOExceptionWithCause, IOException;
 
     /**
      * read the content from configured dms
@@ -61,7 +62,7 @@ public interface DMSClient {
      * @throws IOException           if something went wrong
      * @return                       inputstream wirh the binary content
      */
-    InputStream getContentFromDMS(final String id, final Integer version) throws IOException;
+    InputStream getContentFromDMS(final String id, final Integer version) throws IOExceptionWithCause, IOException;
 
     /**
      * read the content from configured dms
@@ -72,7 +73,7 @@ public interface DMSClient {
      * @return                       file the binary content
      */
     File getContentFileFromDMS(final String id, final Integer version, 
-                               final boolean useOriginalExtension) throws IOException;
+                               final boolean useOriginalExtension) throws IOExceptionWithCause, IOException;
 
     /**
      * read the metadata for content from configured dms
@@ -81,5 +82,6 @@ public interface DMSClient {
      * @return                       StorageResourceVersion
      * @throws IOException           if something went wrong
      */
-    StorageResourceVersion getMetaDataForContentFromDMS(final String id, final Integer version) throws IOException;
+    StorageResourceVersion getMetaDataForContentFromDMS(final String id, final Integer version)
+            throws IOExceptionWithCause, IOException;
 }
