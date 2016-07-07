@@ -18,6 +18,7 @@ import de.yaio.services.webshot.client.WebshotClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 
 /** 
@@ -39,7 +40,8 @@ public class YaioWebshotClient {
 
     protected WebshotClient client;
 
-    public YaioWebshotClient() {
+    @PostConstruct
+    public void initClient() {
         client = WebshotClient.createClient(webshoturl, webshotusername, webshotpassword);
     }
 

@@ -19,6 +19,7 @@ import de.yaio.services.dms.api.model.StorageResourceVersion;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -48,7 +49,8 @@ public class YaioDMSClient implements DMSClient {
 
     protected de.yaio.services.dms.client.DMSClient client;
 
-    public YaioDMSClient() {
+    @PostConstruct
+    public void initClient() {
         client = de.yaio.services.dms.client.DMSClient.createClient(
                 dmsappId, dmsurl, dmsusername, dmspassword, BUFFER_SIZE);
     }

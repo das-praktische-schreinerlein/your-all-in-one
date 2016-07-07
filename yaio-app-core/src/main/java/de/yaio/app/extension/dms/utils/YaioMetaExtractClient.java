@@ -18,6 +18,7 @@ import de.yaio.services.metaextract.client.MetaExtractClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 
 /** 
@@ -38,7 +39,8 @@ public class YaioMetaExtractClient {
 
     protected MetaExtractClient client;
 
-    public YaioMetaExtractClient() {
+    @PostConstruct
+    public void initClient() {
         client = MetaExtractClient.createClient(metaextracturl, metaextractusername, metaextractpassword);
     }
     
