@@ -63,15 +63,6 @@
         <!--  versions -->
         <java.version>1.7</java.version>
 
-        <yaio-app-pom-parent.version>0.1.0-SNAPSHOT</yaio-app-pom-parent.version>
-        <yaio-app-core.version>0.1.0-SNAPSHOT</yaio-app-core.version>
-        <yaio-app-pom-springboot.version>0.1.0-SNAPSHOT</yaio-app-pom-springboot.version>
-        <yaio-app-cli.version>0.1.0-SNAPSHOT</yaio-app-cli.version>
-        <yaio-app-serverclient.version>0.1.0-SNAPSHOT</yaio-app-serverclient.version>
-        <yaio-app-pom-springboot-web.version>0.1.0-SNAPSHOT</yaio-app-pom-springboot-web.version>
-        <yaio-app-webapp.version>0.1.0-SNAPSHOT</yaio-app-webapp.version>
-        <yaio-app-server.version>0.1.0-SNAPSHOT</yaio-app-server.version>
-
         <!--
           ##################
           # dependency versions
