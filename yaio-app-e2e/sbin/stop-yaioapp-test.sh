@@ -30,7 +30,7 @@ CP="${YAIOAPP}:${APPPROPAGATOR}:${BASEPATH}../target/"
 cd $ORIGYAIOSCRIPTPATH\..
 
 # add --debug option to see the startprocess of spring-boot
-CMD="java ${JAVAOPTIONS} -cp ${CP} ${PROG_APP} ${CFG} ${NEWID_OPTIONS}"
+CMD="java ${JAVAOPTIONS} -cp \"${CP}\" ${PROG_APP} ${CFG} ${NEWID_OPTIONS}"
 echo "stop-yaioapp: ${CMD}"
 pid=`ps aux | grep "${CMD}" | grep -v grep | awk '{print $2}'`
 echo "kill $pid"

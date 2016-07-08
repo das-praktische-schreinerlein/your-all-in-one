@@ -21,6 +21,6 @@ SRCFILE=${2}
 SYSUID=${3}
 
 #  export data from running yaio
-CMD=java ${JAVAOPTIONS} -cp ${CP} ${PROG_CALLYAIOIMPORT} ${YAIOAPPURLCONFIG} -parentsysuid ${SYSUID} -importfile ${MMPATH}\${SRCFILE}
+CMD=java ${JAVAOPTIONS} -cp "${CP}" ${PROG_CALLYAIOIMPORT} ${YAIOAPPURLCONFIG} -parentsysuid ${SYSUID} -importfile ${MMPATH}\${SRCFILE}
 #  echo "${CMD}"
 ${CMD}

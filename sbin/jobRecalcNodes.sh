@@ -25,6 +25,6 @@ YAIOCONFIGPATH=${YAIOSCRIPTPATH}../config/
 . ${YAIOCONFIGPATH}/config-cli.sh ${YAIOSCRIPTPATH}
 
 # add --debug option to see the startprocess of spring-boot
-CMD="java ${JAVAOPTIONS} -cp ${CP} ${PROG_RECALC} ${CFG} --sysuid ${MASTERNODEID}"
+CMD="java ${JAVAOPTIONS} -cp \"${CP}\" ${PROG_RECALC} ${CFG} --sysuid ${MASTERNODEID}"
 echo "jobRecalcNode: ${CMD}"
 ${CMD}
