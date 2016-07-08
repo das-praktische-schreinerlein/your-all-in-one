@@ -16,13 +16,18 @@
 # @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
 
 # set pathes
-YAIOSCRIPTPATH=$(dirname $0)/
+ORIGYAIOSCRIPTPATH=$(dirname $0)
+YAIOSCRIPTPATH=../../sbin/
 YAIOBASEPATH=${YAIOSCRIPTPATH}
 BASEPATH=${YAIOBASEPATH}
 YAIOCONFIGPATH=${YAIOSCRIPTPATH}../config/
 
 # init config
 . ${YAIOCONFIGPATH}/config-server.sh ${YAIOSCRIPTPATH}
+YAIOAPP=$BASEPATH/../yaio-app-e2e/target/yaio.jar
+CP="${YAIOAPP}:${APPPROPAGATOR}:${BASEPATH}../target/"
+
+cd $ORIGYAIOSCRIPTPATH\..
 
 # add --debug option to see the startprocess of spring-boot
 CMD="java ${JAVAOPTIONS} -cp ${CP} ${PROG_APP} ${CFG} ${NEWID_OPTIONS}"
@@ -32,8 +37,8 @@ echo "kill $pid"
 kill TERM $pid
 
 
-CMD="java ${JAVAOPTIONS} -cp ${CP} ${PROG_APPPROPAGATOR} ${CFG}"
-echo "stop-apppropagator: ${CMD}"
+CMD="${ORIGYAIOSCRIPTPATH}../node_modules/.bin/webdriver-manager start"
+echo "stop-webdriver: ${CMD}"
 pid=`ps aux | grep "${CMD}" | grep -v grep | awk '{print $2}'`
 echo "kill $pid"
 kill TERM $pid
