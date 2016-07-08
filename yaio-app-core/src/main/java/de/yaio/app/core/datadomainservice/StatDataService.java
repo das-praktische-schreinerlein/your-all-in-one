@@ -33,7 +33,6 @@ public interface StatDataService {
     /** 
      * update the childrenCount-Fields of the node - updates memberVariable node.childNodeCount
      * @param node                   node to initialize
-     * @throws Exception             parser/format-Exceptions possible
      */
-    void updateChildrenCount(StatData node) throws Exception;
+    void updateChildrenCount(StatData node);
 }

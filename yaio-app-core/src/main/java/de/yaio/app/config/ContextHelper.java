@@ -13,7 +13,7 @@
  */
 package de.yaio.app.config;
 
-import de.yaio.app.utils.config.Configuration;
+import de.yaio.commons.config.Configuration;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -49,7 +49,7 @@ public class ContextHelper {
         return ContextHelper.yaioinstance;
     }
 
-    public void addSpringConfig(Class...contextConfig) throws Exception {
+    public void addSpringConfig(Class...contextConfig) {
         // check weather exists
         if (applicationContext != null) {
             throw new IllegalStateException("context allreday initialized");
@@ -58,7 +58,7 @@ public class ContextHelper {
         configClasses.addAll(Arrays.asList(contextConfig));
     }
 
-    public List<Class> getSpringConfig() throws Exception {
+    public List<Class> getSpringConfig() {
         return configClasses;
     }
 
@@ -66,9 +66,8 @@ public class ContextHelper {
      * return the current SpringApplicationContext
      * if is not set call ApplicationContext.initSpringApplicationContext()
      * @return                       the current SpringApplicationContext
-     * @throws Exception             parse/io-Exceptions possible
      */
-    public ApplicationContext getSpringApplicationContext() throws Exception {
+    public ApplicationContext getSpringApplicationContext() {
         // check weather exists
         if (applicationContext == null) {
             this.initSpringApplicationContext();
@@ -77,7 +76,7 @@ public class ContextHelper {
         return applicationContext;
     }
 
-    protected void initSpringApplicationContext() throws Exception {
+    protected void initSpringApplicationContext() {
         // check
         if (applicationContext != null) {
             throw new IllegalStateException("initSpringApplicationContext: "

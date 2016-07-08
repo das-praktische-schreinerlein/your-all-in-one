@@ -15,6 +15,7 @@ package de.yaio.app.datatransfer.exporter;
 
 import de.yaio.app.core.datadomain.BaseWorkflowData;
 import de.yaio.app.core.datadomain.DataDomain;
+import de.yaio.app.datatransfer.common.ConverterException;
 import de.yaio.app.datatransfer.exporter.formatter.*;
 import de.yaio.app.core.node.BaseNode;
 import org.apache.commons.collections4.MapUtils;
@@ -92,7 +93,7 @@ public class ExporterImpl implements Exporter {
     //////////////
     @Override
     public void formatNodeDataDomains(final DataDomain node,
-            final StringBuffer nodeOutput, final OutputOptions options)  throws Exception {
+            final StringBuffer nodeOutput, final OutputOptions options) {
         for (de.yaio.app.datatransfer.exporter.formatter.Formatter formatter : this.hshDataDomainFormatter) {
             this.formatNodeDataDomain(node, formatter, nodeOutput, options);
         }
@@ -100,7 +101,7 @@ public class ExporterImpl implements Exporter {
 
     @Override
     public void formatNodeDataDomain(final DataDomain node, final de.yaio.app.datatransfer.exporter.formatter.Formatter formatter,
-            final StringBuffer nodeOutput, final OutputOptions options) throws Exception {
+            final StringBuffer nodeOutput, final OutputOptions options) {
         // nur formatieren, wenn zustaendig
         if (formatter.getTargetClass().isInstance(node)) {
             formatter.format(node, nodeOutput, options);
@@ -117,7 +118,7 @@ public class ExporterImpl implements Exporter {
     ////////////////
     @Override
     public String getMasterNodeResult(final DataDomain masterNode,
-            final OutputOptions oOptions) throws Exception {
+            final OutputOptions oOptions) throws ConverterException {
         // Parameter pruefen
         if (masterNode == null) {
             throw new IllegalArgumentException("Masternode must not be null: '" + masterNode + "'");
@@ -128,7 +129,7 @@ public class ExporterImpl implements Exporter {
 
     @Override
     public void prepareNodeForExport(final DataDomain node,
-            final OutputOptions oOptions) throws Exception {
+            final OutputOptions oOptions) {
     }
 
     /** 
@@ -137,10 +138,10 @@ public class ExporterImpl implements Exporter {
      * @param praefix                string to use as prefix in front of nodeoutput
      * @param oOptions               options for output (formatter)
      * @return                       formatted output of node-hierarchy and DataDomains
-     * @throws Exception             parser/format/io-Exceptions possible
+     * @throws ConverterException    parser/format/io-Exceptions possible
      */
     public StringBuffer getNodeResult(final DataDomain node, final String praefix,
-            final OutputOptions oOptions) throws Exception {
+            final OutputOptions oOptions) throws ConverterException {
         // Parameter pruefen
         if (node == null) {
             throw new IllegalArgumentException("Node must not be null: '" + node + "'");
@@ -162,7 +163,7 @@ public class ExporterImpl implements Exporter {
 
     @Override
     public DataDomain filterNodes(final DataDomain pMasterNode,
-            final OutputOptions oOptions) throws Exception {
+            final OutputOptions oOptions) {
         DataDomain masterNode = pMasterNode;
 
         // Filter konfigurieren
@@ -196,7 +197,7 @@ public class ExporterImpl implements Exporter {
 
     @Override
     public DataDomain filterNodeByState(final DataDomain node,
-            final OutputOptions oOptions, final Map<String, Object> mpStates) throws Exception {
+            final OutputOptions oOptions, final Map<String, Object> mpStates) {
 
         // wenn kein Workflow-Element loeschen
         if (!BaseWorkflowData.class.isInstance(node)) {
@@ -280,7 +281,7 @@ public class ExporterImpl implements Exporter {
 
     @Override
     public boolean isNodeMatchingFilter(final DataDomain node,
-            final OutputOptions oOptions) throws Exception {
+            final OutputOptions oOptions) {
         // check config
         Map<String, String> mpStates = oOptions.getMapStateFilter();
         Map<String, String> mpClasses = oOptions.getMapClassFilter();

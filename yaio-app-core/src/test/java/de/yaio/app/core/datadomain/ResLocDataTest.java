@@ -14,8 +14,11 @@
 package de.yaio.app.core.datadomain;
 
 import de.yaio.app.core.node.UrlResNode;
+import de.yaio.app.datatransfer.common.ParserException;
 import de.yaio.app.datatransfer.exporter.formatter.ResLocDataFormatterImpl;
 import de.yaio.app.datatransfer.importer.parser.ResLocDataParserImpl;
+
+import java.text.ParseException;
 
 /** 
  * test of the datadomain-logic: ResLocData<br>
@@ -54,30 +57,30 @@ public class ResLocDataTest extends DataDomainTest {
     }
 
     @Override
-    public void setupParser() throws Exception {
+    public void setupParser() {
         parser = new ResLocDataParserImpl();
     }
 
     @Override
-    public void setupFormatter() throws Exception {
+    public void setupFormatter() {
         formatter = new ResLocDataFormatterImpl();
     }
 
     @Override
-    public TestObj setupNewTestObj() throws Exception {
+    public TestObj setupNewTestObj() {
         return new ResLocDataTestObj();
     }
     
     /** 
      * setup the a TestObj for the test
      * @return                       a new dataobj for the test
-     * @throws Exception             possible Exception     */
-    protected ResLocDataTestObj getNewResLocDataTestObj() throws Exception  {
+     **/
+    protected ResLocDataTestObj getNewResLocDataTestObj() {
         return (ResLocDataTestObj) setupNewTestObj();
     }
 
     @Override
-    public void testParser() throws Exception {
+    public void testParser() throws ParserException {
         ResLocDataTestObj mytestObj = null;
         String expected = null;
 
@@ -113,7 +116,7 @@ public class ResLocDataTest extends DataDomainTest {
     }
 
     @Override
-    public void testFormatter() throws Exception {
+    public void testFormatter() throws ParseException {
         ResLocDataTestObj mytestObj = null;
         String expected = null;
         

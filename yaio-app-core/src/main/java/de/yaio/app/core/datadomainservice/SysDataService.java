@@ -34,22 +34,19 @@ public interface SysDataService {
      * inititialize the SysData-Fields of the node (sysChange, Checksum) - updates memberVariable node.sys*
      * @param node                   node to initialize
      * @param flgForceUpdate         not only init empty values but force update
-     * @throws Exception             parser/format/io-Exceptions possible
      */
-    void initSysData(SysData node, boolean flgForceUpdate) throws Exception;
+    void initSysData(SysData node, boolean flgForceUpdate);
 
     /**
      * update the SysData-Fields of the node (sysChange, Checksum) - updates memberVariable node.sys*
      * @param node                   node to initialize
-     * @throws Exception             parser/format/io-Exceptions possible
      */
-    void updateSysData(SysData node) throws Exception;
+    void updateSysData(SysData node);
 
     /**
      * calcs the checksum of the node 
      * @param node                   node to get the checksum
      * @return                       the checksum
-     * @throws Exception             parser/format/io-Exceptions possible
      */
-    String getCheckSum(SysData node) throws Exception;
+    String getCheckSum(SysData node);
 }

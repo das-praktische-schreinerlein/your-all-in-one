@@ -69,8 +69,7 @@ public class JSONFullImporter extends ImporterImpl {
     public JSONResponse parseJSONResponse(final String jsonSrc) throws JsonProcessingException, IOException {
         ObjectReader jsonReader = mapper.reader(JSONResponse.class);
 
-        JSONResponse response = jsonReader.readValue(jsonSrc);
-        return response;
+        return jsonReader.readValue(jsonSrc);
     }
     
     ////////////////

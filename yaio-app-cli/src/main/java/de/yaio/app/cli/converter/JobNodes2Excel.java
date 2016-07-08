@@ -19,19 +19,14 @@ import de.yaio.app.datatransfer.exporter.Exporter;
 import de.yaio.app.datatransfer.exporter.OutputOptions;
 import de.yaio.app.extension.datatransfer.excel.ExcelExporter;
 import de.yaio.app.extension.datatransfer.excel.ExcelOutputOptions;
-import de.yaio.app.utils.config.ConfigurationOption;
+import de.yaio.commons.config.ConfigurationOption;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 
 /** 
  * job for import of Nodes in PPL-Format and output as Excel
  * 
- * @FeatureDomain                DatenExport Praesentation
- * @package                      de.yaio.extension.datatransfer.excel
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category                     collaboration
- * @copyright                    Copyright (c) 2014, Michael Schreiner
- * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class JobNodes2Excel extends JobNodes2Wiki {
     
@@ -45,7 +40,7 @@ public class JobNodes2Excel extends JobNodes2Wiki {
     }
     
     @Override
-    protected Options addAvailiableCmdLineOptions() throws Exception {
+    protected Options addAvailiableCmdLineOptions() {
         Options availiableCmdLineOptions = super.addAvailiableCmdLineOptions();
         
         // Excel-ConfigurationOption
@@ -58,7 +53,7 @@ public class JobNodes2Excel extends JobNodes2Wiki {
     
     @Override
     public void publishResult(final Exporter exporter, final DataDomain masterNode,
-                              final OutputOptions oOptions) throws Exception {
+                              final OutputOptions oOptions) {
         String outFile = "test.xls";
         if (this.getConfiguration().getArgNames().size() > 1) {
             // aus Datei

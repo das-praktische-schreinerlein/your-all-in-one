@@ -14,19 +14,20 @@
 package de.yaio.app.extension.dms.services;
 
 import de.yaio.app.core.datadomain.DataDomain;
-import de.yaio.app.extension.dms.utils.YaioMetaExtractClient;
-import de.yaio.commons.data.DataUtils;
 import de.yaio.app.core.datadomain.ResContentData;
 import de.yaio.app.core.datadomain.ResContentData.UploadWorkflowState;
 import de.yaio.app.core.datadomain.ResIndexData;
 import de.yaio.app.core.datadomain.ResIndexData.IndexWorkflowState;
 import de.yaio.app.core.datadomain.ResLocData;
 import de.yaio.app.core.datadomainservice.TriggeredDataDomainRecalcImpl;
-import de.yaio.app.utils.db.DBFilter;
 import de.yaio.app.core.node.UrlResNode;
 import de.yaio.app.core.nodeservice.UrlResNodeService;
 import de.yaio.app.extension.dms.utils.DMSClient;
-import de.yaio.services.dms.storage.StorageResource;
+import de.yaio.app.extension.dms.utils.YaioMetaExtractClient;
+import de.yaio.app.utils.db.DBFilter;
+import de.yaio.commons.data.DataUtils;
+import de.yaio.commons.io.IOExceptionWithCause;
+import de.yaio.services.dms.api.model.StorageResource;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,12 +44,7 @@ import java.util.List;
 /** 
  * businesslogic for dataDomain: ResContentData (upload url/file to dms)
  * 
- * @FeatureDomain                BusinessLogic
- * @package                      de.yaio.extension.dms
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category                     collaboration
- * @copyright                    Copyright (c) 2014, Michael Schreiner
- * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 @Service
 public class ResIndexDataServiceImpl extends TriggeredDataDomainRecalcImpl implements ResIndexDataService {
@@ -67,7 +63,7 @@ public class ResIndexDataServiceImpl extends TriggeredDataDomainRecalcImpl imple
 
     @Override
     @Transactional
-    public void doRecalcWhenTriggered(final DataDomain datanode) throws Exception {
+    public void doRecalcWhenTriggered(final DataDomain datanode) {
         if (datanode == null) {
             return;
         }
@@ -92,9 +88,13 @@ public class ResIndexDataServiceImpl extends TriggeredDataDomainRecalcImpl imple
         try {
             // upload
             this.indexResLoc((ResLocData) datanode);
+        } catch (IOExceptionWithCause ex) {
+            // error: reset id and set to failed
+            LOGGER.info("IOExceptionWithCause while indexing node to dms:" + datanode.getNameForLogger(), ex);
+            node.setResIndexDMSState(IndexWorkflowState.INDEX_FAILED);
         } catch (IOException ex) {
             // error: reset id and set to failed
-            LOGGER.error("error while indexing node to dms:" + datanode.getNameForLogger(), ex);
+            LOGGER.info("IOException while indexing node to dms:" + datanode.getNameForLogger(), ex);
             node.setResIndexDMSState(IndexWorkflowState.INDEX_FAILED);
         }
 
@@ -103,7 +103,7 @@ public class ResIndexDataServiceImpl extends TriggeredDataDomainRecalcImpl imple
     }
 
     @Override
-    public List<DBFilter> getDBTriggerFilter() throws IOException {
+    public List<DBFilter> getDBTriggerFilter() {
         List<DBFilter> dbFilters = new ArrayList<DBFilter>();
 
         // filter upload open only
@@ -117,7 +117,7 @@ public class ResIndexDataServiceImpl extends TriggeredDataDomainRecalcImpl imple
     }
 
     @Override
-    public void indexResLoc(final ResLocData datanode) throws IOException {
+    public void indexResLoc(final ResLocData datanode) throws IOExceptionWithCause, IOException {
         if (!ResIndexData.class.isInstance(datanode)) {
             throw new IllegalArgumentException();
         }
@@ -126,7 +126,7 @@ public class ResIndexDataServiceImpl extends TriggeredDataDomainRecalcImpl imple
             throw new IllegalArgumentException();
         }
         UrlResNode node = (UrlResNode) datanode;
-        
+
         // extract metadata
         byte[] response;
         if (UrlResNodeService.CONST_NODETYPE_IDENTIFIER_URLRES.equals(node.getType())) {
@@ -134,7 +134,8 @@ public class ResIndexDataServiceImpl extends TriggeredDataDomainRecalcImpl imple
             response = metaextractProvider.getMetaExtractFromUrl(datanode.getResLocRef());
         } else {
             // get metadata from file
-            File contentFile = dmsProvider.getContentFileFromDMS(node.getResContentDMSId(), 0, true);
+            File contentFile;
+            contentFile = dmsProvider.getContentFileFromDMS(node.getResContentDMSId(), 0, true);
             response = metaextractProvider.getMetaExtractFromFile(contentFile.getCanonicalPath());
         }
 
@@ -145,7 +146,7 @@ public class ResIndexDataServiceImpl extends TriggeredDataDomainRecalcImpl imple
 
     @Override
     public void uploadResIndexToDMS(final ResIndexData datanode, final String fileName, 
-                                    final InputStream input) throws IOException {
+                                    final InputStream input) throws IOExceptionWithCause, IOException {
         if (!UrlResNode.class.isInstance(datanode)) {
             throw new IllegalArgumentException();
         }

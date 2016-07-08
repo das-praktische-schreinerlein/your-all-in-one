@@ -44,7 +44,7 @@ public class JobDmsIndexer {
                initialDelayString = "${yaio.dms-client.jobs.indexer.initialDelay}"
 //               cron = "${yaio.dms-client.jobs.indexer.cron}"
                )
-    public void doSearchAndTrigger() throws Exception {
+    public void doSearchAndTrigger() {
         LOGGER.info("start job");
         resIndexService.doSearchAndTrigger();
         LOGGER.info("end job");

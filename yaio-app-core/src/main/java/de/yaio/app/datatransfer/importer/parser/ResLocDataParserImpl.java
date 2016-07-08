@@ -69,7 +69,7 @@ public class ResLocDataParserImpl  extends ParserImpl implements ResLocDataParse
     }
 
     @Override
-    public int parseFromName(final DataDomain node, final ImportOptions options) throws Exception {
+    public int parseFromName(final DataDomain node, final ImportOptions options) {
         if (node == null) {
             return 0;
         }
@@ -82,7 +82,7 @@ public class ResLocDataParserImpl  extends ParserImpl implements ResLocDataParse
     }
 
     @Override
-    public int parseResLocDataFromName(final ResLocData node, final ImportOptions options) throws Exception {
+    public int parseResLocDataFromName(final ResLocData node, final ImportOptions options) {
         int found = 0;
 
         // Check for valid data

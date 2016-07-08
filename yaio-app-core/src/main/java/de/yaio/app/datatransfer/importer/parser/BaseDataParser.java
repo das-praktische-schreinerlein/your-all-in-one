@@ -33,7 +33,6 @@ public interface BaseDataParser extends Parser {
      * @param node                   DataDomain to parse
      * @param options                ImportOptionen for the parser
      * @return                       count elements found
-     * @throws Exception             parser-Exceptions possible
      */
-    int parseBaseDataFromName(DataDomain node, ImportOptions options) throws Exception;
+    int parseBaseDataFromName(DataDomain node, ImportOptions options);
 }

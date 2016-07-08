@@ -33,7 +33,6 @@ public interface ResLocDataParser extends Parser {
      * @param node                   DataDomain to parse
      * @param options                ImportOptionen for the parser
      * @return                       count elements found
-     * @throws Exception             parser-Exceptions possible
      */
-    int parseResLocDataFromName(ResLocData node, ImportOptions options) throws Exception;
+    int parseResLocDataFromName(ResLocData node, ImportOptions options);
 }

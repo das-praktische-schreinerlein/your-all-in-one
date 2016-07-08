@@ -22,12 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 /** 
  * Services to export the current webconfig
  *  
- * @FeatureDomain                Webservice
- * @package                      de.yaio.server.controller
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category                     collaboration
- * @copyright                    Copyright (c) 2014, Michael Schreiner
- * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 @Controller
 @RequestMapping("/apiconfig")

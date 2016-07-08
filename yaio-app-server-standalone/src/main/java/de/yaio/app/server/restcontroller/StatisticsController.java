@@ -13,18 +13,21 @@
  */
 package de.yaio.app.server.restcontroller;
 
+import de.yaio.app.core.dbservice.BaseNodeDBService;
 import de.yaio.app.core.dbservice.BaseNodeDBServiceImpl;
 import de.yaio.app.core.dbservice.BaseNodeQueryFactory;
 import de.yaio.app.core.dbservice.SearchOptionsImpl;
-import de.yaio.app.core.dbservice.BaseNodeDBService;
-import de.yaio.app.server.controller.CommonApiConfig;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.log4j.Logger;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.List;
+
+import static org.apache.http.HttpStatus.SC_INTERNAL_SERVER_ERROR;
 
 /** 
  * the controller gor getting statistics
@@ -37,8 +40,8 @@ public class StatisticsController {
     /** API-Version **/
     public static final String API_VERSION = "1.0.0";
 
-    @Autowired
-    private CommonApiConfig commonApiConfig;
+    // Logger
+    private static final Logger LOGGER = Logger.getLogger(StatisticsController.class);
 
     /**
      * calc the effort (ist) for all tasks matching the filter between start/end and return for every day
@@ -62,10 +65,7 @@ public class StatisticsController {
         BaseNodeDBService baseNodeDBService = BaseNodeDBServiceImpl.getInstance();
         List values = baseNodeDBService.calcAufwandPerDayStatistic(BaseNodeQueryFactory.IstPlanPerDayStatisticQueryType.IST,
                 start, end, fulltext, sysUID, searchOptions);
-        StatisticsResponse response = new StatisticsResponse(
-                "OK", "data fetched", values);
-
-        return response;
+        return new StatisticsResponse( "OK", "data fetched", values);
     }
 
     /**
@@ -90,10 +90,7 @@ public class StatisticsController {
         BaseNodeDBService baseNodeDBService = BaseNodeDBServiceImpl.getInstance();
         List values = baseNodeDBService.calcAufwandPerDayStatistic(BaseNodeQueryFactory.IstPlanPerDayStatisticQueryType.PLAN,
                 start, end, fulltext, sysUID, searchOptions);
-        StatisticsResponse response = new StatisticsResponse(
-                "OK", "data fetched", values);
-
-        return response;
+        return new StatisticsResponse( "OK", "data fetched", values);
     }
 
     /**
@@ -117,10 +114,7 @@ public class StatisticsController {
         // create default response
         BaseNodeDBService baseNodeDBService = BaseNodeDBServiceImpl.getInstance();
         List values = baseNodeDBService.calcDonePerDayStatistic(start, end, fulltext, sysUID, searchOptions);
-        StatisticsResponse response = new StatisticsResponse(
-                "OK", "data fetched", values);
-
-        return response;
+        return new StatisticsResponse( "OK", "data fetched", values);
     }
 
     /**
@@ -145,10 +139,7 @@ public class StatisticsController {
         BaseNodeDBService baseNodeDBService = BaseNodeDBServiceImpl.getInstance();
         List values = baseNodeDBService.calcRunningPerDayStatistic(BaseNodeQueryFactory.IstPlanPerDayStatisticQueryType.IST,
                 start, end, fulltext, sysUID, searchOptions);
-        StatisticsResponse response = new StatisticsResponse(
-                "OK", "data fetched", values);
-
-        return response;
+        return new StatisticsResponse( "OK", "data fetched", values);
     }
 
     /**
@@ -173,10 +164,7 @@ public class StatisticsController {
         BaseNodeDBService baseNodeDBService = BaseNodeDBServiceImpl.getInstance();
         List values = baseNodeDBService.calcRunningPerDayStatistic(BaseNodeQueryFactory.IstPlanPerDayStatisticQueryType.PLAN,
                 start, end, fulltext, sysUID, searchOptions);
-        StatisticsResponse response = new StatisticsResponse(
-                "OK", "data fetched", values);
-
-        return response;
+        return new StatisticsResponse( "OK", "data fetched", values);
     }
 
     /**
@@ -202,10 +190,7 @@ public class StatisticsController {
         List values = baseNodeDBService.calcCountPerDayStatistic(BaseNodeQueryFactory.IstPlanPerDayStatisticQueryType.IST,
                 BaseNodeQueryFactory.StartEndPerDayStatisticQueryType.START,
                 start, end, fulltext, sysUID, searchOptions);
-        StatisticsResponse response = new StatisticsResponse(
-                "OK", "data fetched", values);
-
-        return response;
+        return new StatisticsResponse( "OK", "data fetched", values);
     }
 
     /**
@@ -231,10 +216,7 @@ public class StatisticsController {
         List values = baseNodeDBService.calcCountPerDayStatistic(BaseNodeQueryFactory.IstPlanPerDayStatisticQueryType.PLAN,
                 BaseNodeQueryFactory.StartEndPerDayStatisticQueryType.START,
                 start, end, fulltext, sysUID, searchOptions);
-        StatisticsResponse response = new StatisticsResponse(
-                "OK", "data fetched", values);
-
-        return response;
+        return new StatisticsResponse( "OK", "data fetched", values);
     }
 
     /**
@@ -260,10 +242,7 @@ public class StatisticsController {
         List values = baseNodeDBService.calcCountPerDayStatistic(BaseNodeQueryFactory.IstPlanPerDayStatisticQueryType.PLAN,
                 BaseNodeQueryFactory.StartEndPerDayStatisticQueryType.ENDE,
                 start, end, fulltext, sysUID, searchOptions);
-        StatisticsResponse response = new StatisticsResponse(
-                "OK", "data fetched", values);
-
-        return response;
+        return new StatisticsResponse( "OK", "data fetched", values);
     }
 
     /**
@@ -289,9 +268,14 @@ public class StatisticsController {
         List values = baseNodeDBService.calcCountPerDayStatistic(BaseNodeQueryFactory.IstPlanPerDayStatisticQueryType.IST,
                 BaseNodeQueryFactory.StartEndPerDayStatisticQueryType.ENDE,
                 start, end, fulltext, sysUID, searchOptions);
-        StatisticsResponse response = new StatisticsResponse(
-                "OK", "data fetched", values);
+        return new StatisticsResponse( "OK", "data fetched", values);
+    }
 
-        return response;
+    @ExceptionHandler(value = {Exception.class, RuntimeException.class})
+    public StatisticsResponse handleAllException(final HttpServletRequest request, final Exception e,
+                                     final HttpServletResponse response) {
+        LOGGER.warn("error while running request:" + request.toString(), e);
+        response.setStatus(SC_INTERNAL_SERVER_ERROR);
+        return new StatisticsResponse( "ERROR", "error while fetching data", null);
     }
 }

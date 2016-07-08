@@ -13,12 +13,11 @@
  */
 package de.yaio.app.cli;
 
-import de.yaio.app.cli.importer.CommonImporter;
 import de.yaio.app.config.ContextHelper;
 import de.yaio.app.config.YaioConfiguration;
 import de.yaio.app.config.YaioConfigurationHelper;
-import de.yaio.app.utils.CmdLineJob;
-import de.yaio.app.utils.config.Configuration;
+import de.yaio.commons.cli.CmdLineJob;
+import de.yaio.commons.config.Configuration;
 import org.apache.log4j.Logger;
 
 
@@ -46,13 +45,13 @@ public abstract class YaioCmdLineJob extends CmdLineJob {
         super(args);
     }
 
-    protected YaioConfiguration getConfiguration() throws Exception {
+    protected YaioConfiguration getConfiguration() {
         return configurationHelper.getYaioConfigurationInstance();
     }
 
-    protected abstract void configureContext() throws Exception;
+    protected abstract void configureContext();
 
-    protected void initJob() throws Exception {
+    protected void initJob() {
         // init configuration
         Configuration config = configurationHelper.initConfiguration();
         config.publishProperties();
@@ -63,9 +62,9 @@ public abstract class YaioCmdLineJob extends CmdLineJob {
                 " options:" + getConfiguration().optionsAsProperties() +
                 " properties:" + getConfiguration().propertiesAsProperties() +
                 " contextConfigs:" + ContextHelper.getInstance().getSpringConfig());
-    };
+    }
 
-    protected void cleanUpAfterJob() throws Exception {
+    protected void cleanUpAfterJob() {
         // TODO: hack to close HSLDB-connection -> Hibernate doesn't close the
         //       database and so the content is not written to file
         org.hsqldb.DatabaseManager.closeDatabases(0);

@@ -16,6 +16,7 @@ package de.yaio.app.datatransfer.importer;
 
 import de.yaio.app.core.datadomain.DataDomain;
 import de.yaio.app.core.datadomainservice.MetaDataService;
+import de.yaio.app.datatransfer.common.ParserException;
 import de.yaio.app.datatransfer.importer.parser.Parser;
 
 import java.util.Collection;
@@ -118,9 +119,9 @@ public interface NodeFactory {
      * @param node                   zu parsenden Node
      * @param options                Parser-Optionen
      * @return                       Anzahl der gefundenen Fragmente
-     * @throws Exception             parser/format-Exceptions possible
+     * @throws ParserException        parser/format-Exceptions possible
      */
-    int parseNodeDataDomains(DataDomain node, ImportOptions options) throws Exception;
+    int parseNodeDataDomains(DataDomain node, ImportOptions options) throws ParserException;
 
     /** 
      * fuehrt den Parser aus, der die Daten aus dem NodeNamen extrahiert 
@@ -129,9 +130,9 @@ public interface NodeFactory {
      * @param parser                 Instanz des auszufuehrenden Parsers
      * @param options                Parser-Optionen
      * @return                       Anzahl der gefundenen Fragmente
-     * @throws Exception             parser/format-Exceptions possible
+     * @throws ParserException        parser/format-Exceptions possible
      */
-    int parseNodeDataDomain(DataDomain node, Parser parser, ImportOptions options) throws Exception;
+    int parseNodeDataDomain(DataDomain node, Parser parser, ImportOptions options) throws ParserException;
 
     ////////////////
     // Generierungs-Funktionen
@@ -146,11 +147,10 @@ public interface NodeFactory {
      * @param srcName                Name der Node (wird geparst)
      * @param curParentNode          ParentNode
      * @return                       erzeugte Node-Instanz
-     * @throws Exception             parser/format-Exceptions possible
+     * @throws ParserException        parser/format-Exceptions possible
      */
     DataDomain createNodeObjFromText(Class<?> classType, int id,
-            String strFullSrc, String srcName, DataDomain curParentNode)
-                    throws Exception;
+            String strFullSrc, String srcName, DataDomain curParentNode) throws ParserException;
 
     /** 
      * parst anhand der in NodeFactory.initNodeTypeIdentifier konfigurierten +
@@ -159,8 +159,7 @@ public interface NodeFactory {
      * @param strFullSrc             FullSrc der Node
      * @param srcName                NodeName
      * @return                       Klasse die anhand des Namens zugeordnet wurde (anhand der Daten aus NodeFactory.initNodeTypeIdentifier)
-     * @throws Exception             parser/format-Exceptions possible
+     * @throws ParserException        parser/format-Exceptions possible
      */
-    Class<?> getNodeTypeFromText(String strFullSrc, String srcName)
-            throws Exception;
+    Class<?> getNodeTypeFromText(String strFullSrc, String srcName) throws ParserException;
 }

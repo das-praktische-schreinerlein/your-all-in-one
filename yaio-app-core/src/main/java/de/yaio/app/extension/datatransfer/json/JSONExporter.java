@@ -14,8 +14,9 @@
 package de.yaio.app.extension.datatransfer.json;
 
 import de.yaio.app.core.datadomain.DataDomain;
-import de.yaio.app.datatransfer.exporter.OutputOptions;
 import de.yaio.app.core.node.BaseNode;
+import de.yaio.app.datatransfer.common.ConverterException;
+import de.yaio.app.datatransfer.exporter.OutputOptions;
 import de.yaio.app.extension.datatransfer.csv.CSVExporter;
 
 import java.text.DateFormat;
@@ -46,7 +47,7 @@ public class JSONExporter extends CSVExporter {
 
     @Override
     public String getMasterNodeResult(final DataDomain masterNode, final OutputOptions oOptions)
-            throws Exception {
+           throws ConverterException {
         
 //        // Parameter pruefen
 //        if (masterNode == null) {

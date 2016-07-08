@@ -33,9 +33,8 @@ public interface NodeNumberService {
      * get next human readable Node-number for this node-hierarchy (praefix)
      * @param node                   node (praefix)
      * @return                       next available Node-number for this node-hierarchy (praefix)
-     * @throws Exception             io-Exceptions possible
      */
-    Object getNextNodeNumber(MetaData node) throws Exception;
+    Object getNextNodeNumber(MetaData node);
 
     boolean isInitialised();
 
@@ -43,30 +42,26 @@ public interface NodeNumberService {
      * initialize next human readable Node-number for this node-hierarchy (praefix) - updates memberVar - MAP_CUR_NEXTNODEID
      * @param praefix                node-praefix
      * @param number                 next available Node-number for this node-hierarchy (praefix)
-     * @throws Exception             io-Exceptions possible
      */
-    void initNextNodeNumber(String praefix, Integer number) throws Exception;
+    void initNextNodeNumber(String praefix, Integer number);
 
     /** 
      * get map with next human readable Node-number per node-hierarchy (praefix)
      * @return                       map <praefix, nextId>
-     * @throws Exception             io-Exceptions possible
      */
-    Map<String, Integer> getNextNodeNumberMap() throws Exception;
+    Map<String, Integer> getNextNodeNumberMap();
 
     /** 
      * exports map with next human readable Node-number to file
      * @param strPathIdDB            filename
-     * @throws Exception             io-Exceptions possible
      */
-    void exportNextNodeNumbersToFile(String strPathIdDB) throws Exception;
+    void exportNextNodeNumbersToFile(String strPathIdDB);
 
     /** 
      * initialize next human readable Node-number from file - updates memberVar - MAP_CUR_NEXTNODEID
      * @param strPathIdDB            path to the idFile
      * @param forceReload            force reload
-     * @throws Exception             parser/format/io-Exceptions possible
      */
-    void initNextNodeNumbersFromFile(String strPathIdDB, boolean forceReload) throws Exception;
+    void initNextNodeNumbersFromFile(String strPathIdDB, boolean forceReload);
 }
 

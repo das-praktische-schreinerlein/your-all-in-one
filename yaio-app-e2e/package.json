@@ -27,9 +27,8 @@
     "jasmine-core": "2.2.0",
     "jasmine-spec-reporter": "<2.0.0",
     "load-grunt-config": "0.19.1",
-    "phantomjs": "1.9.17",
-    "protractor": "2.1.0",
-    "protractor-screenshot-reporter": "0.0.5",
-    "selenium": "2.20.0"
+    "phantomjs": "2.1",
+    "protractor": "2.5.1",
+    "protractor-screenshot-reporter": "0.0.5"
   }
 }

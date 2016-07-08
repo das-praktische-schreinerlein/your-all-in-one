@@ -57,27 +57,27 @@ public class MetaDataServiceTest extends DataDomainServiceTest {
     }
 
     @Override
-    public TestObj setupNewTestObj() throws Exception {
+    public TestObj setupNewTestObj() {
         return new MetaDataTestObj();
     }
     
     /** 
      * setup the a TestObj for the test
      * @return                       a new dataobj for the test
-     * @throws Exception             possible Exception     */
-    protected MetaDataTestObj getNewMetaDataTestObj() throws Exception  {
+     **/
+    protected MetaDataTestObj getNewMetaDataTestObj() {
         return (MetaDataTestObj) setupNewTestObj();
     }
 
 
     @Override
-    public void setupDataDomainService() throws Exception {
+    public void setupDataDomainService() {
         NodeServiceImpl nodeService = (NodeServiceImpl) TaskNode.getConfiguredNodeService();
         dataDomainService = nodeService.hshDataDomainRecalcerByClass.get(MetaDataServiceImpl.class);
     }
 
     @Override
-    public void testServiceDoRecalc() throws Exception {
+    public void testServiceDoRecalc() {
         // init Vars
         MetaDataTestObj myDataDomainObj = null; 
         MetaDataTestObj myDataDomainObj2 = null;

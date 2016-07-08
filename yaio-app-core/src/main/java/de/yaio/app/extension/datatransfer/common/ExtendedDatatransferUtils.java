@@ -14,6 +14,7 @@
 package de.yaio.app.extension.datatransfer.common;
 
 import de.yaio.app.core.dbservice.BaseNodeDBServiceImpl;
+import de.yaio.app.datatransfer.common.ConverterException;
 import de.yaio.app.datatransfer.exporter.Exporter;
 import de.yaio.app.datatransfer.exporter.OutputOptions;
 import de.yaio.app.datatransfer.exporter.OutputOptionsImpl;
@@ -31,6 +32,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import de.yaio.app.datatransfer.common.ParserException;
 import java.util.List;
 
 /** 
@@ -55,11 +57,11 @@ public class ExtendedDatatransferUtils extends DatatransferUtils {
      * copy the node and all children to the new parent (recalc all and save to db)
      * @param node                   node to copy
      * @param newParent              parent for new node
-     * @throws Exception             ParserExceptions possible
+     * @throws ConverterException    ParserExceptions possible
      */
     @Transactional
     @Override
-    public void copyNode(final BaseNode node, final BaseNode newParent) throws Exception {
+    public void copyNode(final BaseNode node, final BaseNode newParent) throws ConverterException {
         // read old parent
         BaseNode oldParent = node.getParentNode();
 
@@ -88,7 +90,11 @@ public class ExtendedDatatransferUtils extends DatatransferUtils {
         inputOptions.setFlgReadUe(true);
         inputOptions.setStrDefaultMetaNodePraefix(masterNode.getMetaNodePraefix());
         WikiImporter wikiImporter = new WikiImporter(inputOptions);
-        parseNodesFromWiki(wikiImporter, inputOptions, masterNode, wikiSrc);
+        try {
+            parseNodesFromWiki(wikiImporter, inputOptions, masterNode, wikiSrc);
+        } catch (ParserException ex) {
+            throw new ConverterException("cant parse node to copy from wiki", wikiSrc, ex);
+        }
 
         // check hierarchy
         WikiExporter wiki = new WikiExporter();
@@ -122,9 +128,9 @@ public class ExtendedDatatransferUtils extends DatatransferUtils {
      * metaNodePraefix will be Inline, metaNodeNumber will start by 1 and increment
      * @param wikiSrc                wikiSrc to parse with InlineWikiImporter
      * @return                       BaseNode - masternode with the children from wikiSrc
-     * @throws Exception             ParserExceptions possible
+     * @throws ParserException       ParserExceptions possible
      */
-    public BaseNode parseInlineNodesFromString(final String wikiSrc) throws Exception {
+    public BaseNode parseInlineNodesFromString(final String wikiSrc) throws ParserException {
         // PPL-Importer
         PPLImporter pplImporter = new PPLImporter(null);
         // create dummy masternode
@@ -146,10 +152,10 @@ public class ExtendedDatatransferUtils extends DatatransferUtils {
      * metaNodePraefix will be Inline, metaNodeNumber will start by 1 and increment
      * @param masterNode             baseNode to add the children
      * @param wikiSrc                wikiSrc to parse with InlineWikiImporter
-     * @throws Exception             ParserExceptions possible
+     * @throws ParserException       ParserExceptions possible
      */
     public void parseInlineNodesFromString(final BaseNode masterNode, 
-                                           final String wikiSrc) throws Exception {
+                                           final String wikiSrc) throws ParserException {
         
         // Parser+Options anlegen
         WikiImportOptions inputOptions = new WikiImportOptions();
@@ -164,10 +170,10 @@ public class ExtendedDatatransferUtils extends DatatransferUtils {
      * parse wikiSrc with an WikiImporter and add it to the masternode
      * @param masterNode             baseNode to add the children
      * @param wikiSrc                wikiSrc to parse with WikiImporter
-     * @throws Exception             ParserExceptions possible
+     * @throws ParserException       ParserExceptions possible
      */
     public void parseNodesFromString(final BaseNode masterNode, 
-                                     final String wikiSrc) throws Exception {
+                                     final String wikiSrc) throws ParserException {
         // Parser+Options anlegen
         WikiImportOptions inputOptions = new WikiImportOptions();
         inputOptions.setFlgReadList(true);
@@ -185,12 +191,12 @@ public class ExtendedDatatransferUtils extends DatatransferUtils {
      * @param inputOptions           importOptions for wikiImporter
      * @param masterNode             baseNode to add the children
      * @param wikiSrc                wikiSrc to parse with WikiImporter
-     * @throws Exception             ParserExceptions possible
+     * @throws ParserException       ParserExceptions possible
      */
     public void parseNodesFromWiki(final WikiImporter wikiImporter, 
                                       final WikiImportOptions inputOptions,
                                       final BaseNode masterNode, 
-                                      final String wikiSrc) throws Exception {
+                                      final String wikiSrc) throws ParserException {
         // parse src
         List<WikiStructLine> lstWikiLines;
         lstWikiLines = wikiImporter.extractWikiStructLinesFromSrc(wikiSrc, inputOptions);
@@ -215,11 +221,11 @@ public class ExtendedDatatransferUtils extends DatatransferUtils {
      * @param inputOptions           importOptions for wikiImporter
      * @param masterNode             baseNode to add the children
      * @param jsonSrc                jsonSrc to parse with JsonImporter
-     * @throws Exception             ParserExceptions possible
+     * @throws ParserException       ParserExceptions possible
      */
     public void parseValidatedNodesFromJson(final WikiImportOptions inputOptions,
                                     final BaseNode masterNode, 
-                                    final String jsonSrc) throws Exception {
+                                    final String jsonSrc) throws ParserException {
         // parse json to dummy-masternode
         BaseNode tmpMasterNode = 
              createTemporaryMasternode("dummy", masterNode.getMetaNodePraefix(), masterNode.getMetaNodeNummer());
@@ -228,7 +234,12 @@ public class ExtendedDatatransferUtils extends DatatransferUtils {
         // export as wiki
         Exporter exporter = new WikiExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
-        String wikiSrc = exporter.getMasterNodeResult(tmpMasterNode, oOptions);
+        String wikiSrc;
+        try {
+            wikiSrc = exporter.getMasterNodeResult(tmpMasterNode, oOptions);
+        } catch (ConverterException ex) {
+            throw new ParserException("error while converting json to wiki", jsonSrc, ex);
+        }
         
         // import from wiki
         WikiImportOptions tmpInputOptions = new WikiImportOptions();

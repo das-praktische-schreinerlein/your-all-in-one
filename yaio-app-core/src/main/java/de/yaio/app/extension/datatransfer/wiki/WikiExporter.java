@@ -14,10 +14,11 @@
 package de.yaio.app.extension.datatransfer.wiki;
 
 import de.yaio.app.core.datadomain.DataDomain;
-import de.yaio.app.datatransfer.exporter.OutputOptions;
 import de.yaio.app.core.node.BaseNode;
 import de.yaio.app.core.nodeservice.NodeService;
+import de.yaio.app.datatransfer.common.ConverterException;
 import de.yaio.app.datatransfer.exporter.ExporterImpl;
+import de.yaio.app.datatransfer.exporter.OutputOptions;
 import de.yaio.app.datatransfer.exporter.OutputOptionsImpl;
 import org.apache.log4j.Logger;
 
@@ -110,7 +111,7 @@ public class WikiExporter extends ExporterImpl {
     ////////////////
     @Override
     public String getMasterNodeResult(final DataDomain pMasterNode,
-            final OutputOptions oOptions) throws Exception {
+            final OutputOptions oOptions) throws ConverterException {
         DataDomain masterNode = pMasterNode;
         // Parameter pruefen
         if (masterNode == null) {
@@ -143,7 +144,7 @@ public class WikiExporter extends ExporterImpl {
     ////////////////
     @Override
     public StringBuffer getNodeResult(final DataDomain curNode,  final String praefix,
-            final OutputOptions oOptions) throws Exception {
+            final OutputOptions oOptions) throws ConverterException {
         StringBuffer res = new StringBuffer();
 
         // max. Ebene pruefen

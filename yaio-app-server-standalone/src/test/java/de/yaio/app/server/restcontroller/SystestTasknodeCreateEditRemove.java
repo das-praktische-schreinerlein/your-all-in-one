@@ -239,7 +239,7 @@ package de.yaio.app.server.restcontroller;
 //    }
 //
 //    @After
-//    public void tearDown() throws Exception {
+//    public void tearDown() {
 ////        selenium.stop();
 //    }
 //}

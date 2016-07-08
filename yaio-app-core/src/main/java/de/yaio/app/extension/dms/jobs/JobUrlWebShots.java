@@ -44,7 +44,7 @@ public class JobUrlWebShots {
                initialDelayString = "${yaio.dms-client.jobs.urlwebshots.initialDelay}"
 //               cron = "${yaio.dms-client.jobs.urlwebshots.cron}"
                )
-    public void doSearchAndTrigger() throws Exception {
+    public void doSearchAndTrigger() {
         LOGGER.info("start job");
         resContentService.doSearchAndTrigger();
         LOGGER.info("end job");

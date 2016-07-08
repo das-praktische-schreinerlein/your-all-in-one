@@ -16,10 +16,10 @@ package de.yaio.app.datatransfer.jpa;
 import de.yaio.app.core.datadomain.DataDomain;
 import de.yaio.app.core.dbservice.BaseNodeDBServiceImpl;
 import de.yaio.app.core.node.BaseNode;
-import de.yaio.app.datatransfer.exporter.ExporterImpl;
-import de.yaio.app.datatransfer.exporter.OutputOptions;
 import de.yaio.app.core.nodeservice.BaseNodeService;
 import de.yaio.app.core.nodeservice.NodeService;
+import de.yaio.app.datatransfer.exporter.ExporterImpl;
+import de.yaio.app.datatransfer.exporter.OutputOptions;
 import org.apache.log4j.Logger;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,8 +51,7 @@ public class JPAExporter extends ExporterImpl {
 
     @Override
     @Transactional
-    public String getMasterNodeResult(final DataDomain tmpMasterNode, final OutputOptions oOptions)
-            throws Exception {
+    public String getMasterNodeResult(final DataDomain tmpMasterNode, final OutputOptions oOptions) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("save node:" + tmpMasterNode.getNameForLogger());
         }
@@ -127,7 +126,7 @@ public class JPAExporter extends ExporterImpl {
 
     @Override
     public StringBuffer getNodeResult(final DataDomain node,  final String praefix,
-            final OutputOptions oOptions) throws Exception {
+            final OutputOptions oOptions) {
         throw new IllegalStateException("This function should not be used, but you used it for " + node);
     }
 }

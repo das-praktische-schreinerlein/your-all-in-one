@@ -16,6 +16,7 @@ package de.yaio.app.cli.importer;
 import de.yaio.app.config.YaioConfiguration;
 import de.yaio.app.core.datadomain.DataDomain;
 import de.yaio.app.core.datadomainservice.NodeNumberService;
+import de.yaio.app.datatransfer.common.ParserException;
 import de.yaio.app.datatransfer.importer.ImportOptions;
 import de.yaio.app.datatransfer.importer.ImportOptionsImpl;
 import de.yaio.app.extension.datatransfer.excel.ExcelImporter;
@@ -23,23 +24,19 @@ import de.yaio.app.extension.datatransfer.ppl.PPLImporter;
 import de.yaio.app.extension.datatransfer.wiki.WikiImportOptions;
 import de.yaio.app.extension.datatransfer.wiki.WikiImporter;
 import de.yaio.app.extension.datatransfer.wiki.WikiImporter.WikiStructLine;
-import de.yaio.app.utils.config.ConfigurationOption;
+import de.yaio.commons.config.ConfigurationOption;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
+import java.io.IOException;
 import java.util.List;
 
 /** 
  * class for import of Nodes
  * 
- * @FeatureDomain                DatenExport Praesentation
- * @package                      de.yaio.extension.datatransfer.common
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category                     collaboration
- * @copyright                    Copyright (c) 2014, Michael Schreiner
- * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class ExtendedCommonImporter extends CommonImporter {
     
@@ -153,9 +150,9 @@ public class ExtendedCommonImporter extends CommonImporter {
      * import the data from PPL-File configured by cmdline-options and add 
      * them to the masterNode 
      * @param masterNode             the masternode on which all other nodes are added
-     * @throws Exception             parse/io-Exceptions possible
+     * @throws ParserException       parse/io-Exceptions possible
      */
-    public void importDataToMasterNodeFromPPLFile(final DataDomain masterNode) throws Exception {
+    public void importDataToMasterNodeFromPPLFile(final DataDomain masterNode) {
         // check srcFile
         if (YaioConfiguration.getInstance().getArgNames().size() <= 0) {
             throw new IllegalArgumentException("Import from PPL-File requires filename.");
@@ -170,7 +167,13 @@ public class ExtendedCommonImporter extends CommonImporter {
                 YaioConfiguration.getInstance().getCliOption("delimiter", "\t"));
         
         // export PPL 
-        pplImporter.extractNodesFromFile(masterNode, srcFile, delimiter);
+        try {
+            pplImporter.extractNodesFromFile(masterNode, srcFile, delimiter);
+        } catch (IOException ex) {
+            throw new IllegalArgumentException("error while reading pplfile", ex);
+        } catch (ParserException ex) {
+            throw new IllegalArgumentException("error while parsing pplfile", ex);
+        }
     }
 
     /** 
@@ -179,34 +182,34 @@ public class ExtendedCommonImporter extends CommonImporter {
      * @param masterNode             the masternode on which all other nodes are added
      * @throws Exception             parse/io-Exceptions possible
      */
-    public void importDataToMasterNodeFromExcel(final DataDomain masterNode) throws Exception {
+    public void importDataToMasterNodeFromExcel(final DataDomain masterNode) {
         // config
         String delimiter = ConfigurationOption.stringValueOf(
                 YaioConfiguration.getInstance().getCliOption("delimiter", "\t"));
 
-        // create Importer
-        String pplSource = this.extractDataFromExcel();
-
-        // parse PPL-source
-        pplImporter.extractNodesFromLines(masterNode, pplSource, delimiter);
+        // check srcFile
+        if (YaioConfiguration.getInstance().getArgNames().size() <= 0) {
+            throw new IllegalArgumentException("Import from Excel-File requires filename.");
+        }
+        String srcFile = ConfigurationOption.stringValueOf(YaioConfiguration.getInstance().getArg(0));
+        String pplSource = this.extractDataFromExcel(srcFile);
+        try {
+            // parse PPL-source
+            pplImporter.extractNodesFromLines(masterNode, pplSource, delimiter);
+        } catch (ParserException ex) {
+            throw new IllegalArgumentException("error while parsing excelfile", ex);
+        }
     }
 
     /** 
      * import the nodes from Excel-File configured by cmdline-options and 
      * return them as PPL-String
      * @return                       String with nodes in PPL-format
-     * @throws Exception             parse/io-Exceptions possible
      */
-    public String extractDataFromExcel() throws Exception {
-        // check srcFile
-        if (YaioConfiguration.getInstance().getArgNames().size() <= 0) {
-            throw new IllegalArgumentException("Import from Excel-File requires filename.");
-        }
-        String srcFile = ConfigurationOption.stringValueOf(YaioConfiguration.getInstance().getArg(0));
+    public String extractDataFromExcel(final String srcFile) {
         if (LOGGER.isInfoEnabled()) {
-            LOGGER.info("read from PPL file:" + srcFile);
+            LOGGER.info("read from Excel file:" + srcFile);
         }
-
 
         // init importer
         ImportOptions inputOptions = new ImportOptionsImpl();
@@ -223,7 +226,12 @@ public class ExtendedCommonImporter extends CommonImporter {
         }
 
         // parse excel-file
-        List<String> lstPPLLines = excelImporter.fromExcel(srcFile);
+        List<String> lstPPLLines;
+        try {
+            lstPPLLines = excelImporter.fromExcel(srcFile);
+        } catch (ParserException ex) {
+            throw new IllegalArgumentException("cant extract data from excel - error while parsing srcFile", ex);
+        }
 
         // Ids speichern
         if (!StringUtils.isEmpty(strPathIdDB)) {
@@ -232,7 +240,7 @@ public class ExtendedCommonImporter extends CommonImporter {
         }
 
         // add to PPL-source
-        StringBuffer resBuf = new StringBuffer();
+        StringBuilder resBuf = new StringBuilder();
         if (lstPPLLines != null) {
             for (String line : lstPPLLines) {
                 resBuf.append(line).append("\n");
@@ -245,16 +253,25 @@ public class ExtendedCommonImporter extends CommonImporter {
      * import the data from Wiki-File configured by cmdline-options and add 
      * them to the masterNode 
      * @param masterNode             the masternode on which all other nodes are added
-     * @throws Exception             parse/io-Exceptions possible
      */
-    public void importDataToMasterNodeFromWiki(final DataDomain masterNode) throws Exception {
+    public void importDataToMasterNodeFromWiki(final DataDomain masterNode) {
         // config
         String delimiter = ConfigurationOption.stringValueOf(
                 YaioConfiguration.getInstance().getCliOption("delimiter", "\t"));
+        // check srcFile
+        if (YaioConfiguration.getInstance().getArgNames().size() <= 0) {
+            throw new IllegalArgumentException("Import from Wiki-File requires filename.");
+        }
+        String srcFile = ConfigurationOption.stringValueOf(YaioConfiguration.getInstance().getArg(0));
 
         // parse PPL-source
-        String pplSource = this.extractDataFromWiki();
-        pplImporter.extractNodesFromLines(masterNode, pplSource, delimiter);
+        String pplSource = this.extractDataFromWiki(srcFile);
+        try {
+            // parse PPL-source
+            pplImporter.extractNodesFromLines(masterNode, pplSource, delimiter);
+        } catch (ParserException ex) {
+            throw new IllegalArgumentException("error while parsing wikifile", ex);
+        }
     }
     
     
@@ -262,16 +279,10 @@ public class ExtendedCommonImporter extends CommonImporter {
      * import the nodes from Wiki-File configured by cmdline-options and 
      * return them as PPL-String
      * @return                       String with nodes in PPL-format
-     * @throws Exception             parse/io-Exceptions possible
      */
-    public String extractDataFromWiki() throws Exception {
-        // check srcFile
-        if (YaioConfiguration.getInstance().getArgNames().size() <= 0) {
-            throw new IllegalArgumentException("Import from Wiki-File requires filename.");
-        }
-        String srcFile = ConfigurationOption.stringValueOf(YaioConfiguration.getInstance().getArg(0));
+    public String extractDataFromWiki(final String srcFile) {
         if (LOGGER.isInfoEnabled()) {
-            LOGGER.info("read from PPL file:" + srcFile);
+            LOGGER.info("read from Wiki file:" + srcFile);
         }
 
         // Parser+Options anlegen
@@ -302,7 +313,13 @@ public class ExtendedCommonImporter extends CommonImporter {
 
         // parse file
         List<WikiStructLine> lstWikiLines;
-        lstWikiLines = wikiImporter.extractWikiStructLinesFromFile(srcFile, inputOptions);
+        try {
+            lstWikiLines = wikiImporter.extractWikiStructLinesFromFile(srcFile, inputOptions);
+        } catch (IOException ex) {
+            throw new IllegalArgumentException("cant extract data from wiki - error while reading srcFile", ex);
+        } catch (ParserException ex) {
+            throw new IllegalArgumentException("cant extract data from wiki - error while parsing srcFile", ex);
+        }
 
         // Ids speichern
         if (!StringUtils.isEmpty(strPathIdDB)) {
@@ -311,7 +328,7 @@ public class ExtendedCommonImporter extends CommonImporter {
         }
 
         // add to PPL-source
-        StringBuffer resBuf = new StringBuffer();
+        StringBuilder resBuf = new StringBuilder();
         if (lstWikiLines != null) {
             for (WikiStructLine wk : lstWikiLines) {
                 resBuf.append(wk.getHirarchy()).append("\n");
@@ -321,7 +338,7 @@ public class ExtendedCommonImporter extends CommonImporter {
     }
     
     @Override
-    public void importDataToMasterNode(final DataDomain masterNode) throws Exception {
+    public void importDataToMasterNode(final DataDomain masterNode) {
         // check datasource
         String sourceType = ConfigurationOption.stringValueOf(
                 YaioConfiguration.getInstance().getCliOption("sourcetype", defaultSourceType));

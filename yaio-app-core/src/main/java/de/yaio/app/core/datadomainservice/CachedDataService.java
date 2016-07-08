@@ -33,7 +33,6 @@ public interface CachedDataService {
     /** 
      * update the ParentHierarchy-Fields of the node
      * @param node                   node to initialize
-     * @throws Exception             parser/format-Exceptions possible
      */
-    void initParentHierarchy(CachedData node) throws Exception;
+    void initParentHierarchy(CachedData node);
 }

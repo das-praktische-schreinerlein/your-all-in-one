@@ -66,7 +66,7 @@ public abstract class NodeServiceImpl implements NodeService {
     // service-functions for recalc
     //////////////
     @Override
-    public void doRecalc(final DataDomain node, final NodeService.RecalcRecurseDirection recurseDirection) throws Exception {
+    public void doRecalc(final DataDomain node, final NodeService.RecalcRecurseDirection recurseDirection) {
         this.doRecalcBeforeChildren(node, recurseDirection);
         if (recurseDirection == NodeService.RecalcRecurseDirection.CHILDREN) {
             this.doRecalcChildren(node, recurseDirection);
@@ -84,7 +84,7 @@ public abstract class NodeServiceImpl implements NodeService {
 
 
     @Override
-    public void doRecalcBeforeChildren(final DataDomain node, final NodeService.RecalcRecurseDirection recurseDirection) throws Exception {
+    public void doRecalcBeforeChildren(final DataDomain node, final NodeService.RecalcRecurseDirection recurseDirection) {
         for (DataDomainRecalc recalcer : this.hshDataDomainRecalcer) {
             if (recalcer.getRecalcTargetClass().isInstance(node)) {
                 LOGGER.debug("doRecalcBeforeChildren " + recalcer.getClass().getName());
@@ -99,7 +99,7 @@ public abstract class NodeServiceImpl implements NodeService {
 
 
     @Override
-    public void doRecalcChildren(final DataDomain node, final NodeService.RecalcRecurseDirection recurseDirection) throws Exception {
+    public void doRecalcChildren(final DataDomain node, final NodeService.RecalcRecurseDirection recurseDirection) {
         if (recurseDirection == NodeService.RecalcRecurseDirection.CHILDREN) {
             for (String name : node.getChildNodesByNameMap().keySet()) {
                 node.getChildNodesByNameMap().get(name).recalcData(recurseDirection);
@@ -108,7 +108,7 @@ public abstract class NodeServiceImpl implements NodeService {
     }
 
     @Override
-    public void doRecalcAfterChildren(final DataDomain node, final NodeService.RecalcRecurseDirection recurseDirection) throws Exception {
+    public void doRecalcAfterChildren(final DataDomain node, final NodeService.RecalcRecurseDirection recurseDirection) {
         for (DataDomainRecalc recalcer : this.hshDataDomainRecalcer) {
             if (recalcer.getRecalcTargetClass().isInstance(node)) {
                 LOGGER.debug("doRecalcAfterChildren " + recalcer.getClass().getName());

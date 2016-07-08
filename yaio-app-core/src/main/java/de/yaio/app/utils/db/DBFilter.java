@@ -19,12 +19,7 @@ import java.util.List;
 /** 
  * implementation of dbfilter
  * 
- * @FeatureDomain                Persistence
- * @package                      de.yaio.utils.db
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category                     collaboration
- * @copyright                    Copyright (c) 2014, Michael Schreiner
- * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class DBFilter {
     /**
@@ -58,7 +53,7 @@ public class DBFilter {
     }
     
     protected String sql;
-    protected List<Parameter> parameters = new ArrayList<Parameter>();
+    protected List<Parameter> parameters = new ArrayList<>();
 
     /**
      * @param sql                    sql of the filter

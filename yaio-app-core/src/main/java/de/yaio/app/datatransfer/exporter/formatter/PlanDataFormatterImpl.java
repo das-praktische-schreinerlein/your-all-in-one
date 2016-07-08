@@ -61,7 +61,7 @@ public class PlanDataFormatterImpl extends FormatterImpl implements PlanDataForm
 
     @Override
     public void format(final DataDomain node, final StringBuffer nodeOutput,
-                       final OutputOptions options) throws Exception {
+                       final OutputOptions options) {
         // Check if node is compatibel
         if (node != null) {
             if (!PlanData.class.isInstance(node)) {
@@ -73,7 +73,7 @@ public class PlanDataFormatterImpl extends FormatterImpl implements PlanDataForm
 
     @Override
     public void formatPlanData(final PlanData node, final StringBuffer nodeOutput, 
-                               final OutputOptions oOptions) throws Exception {
+                               final OutputOptions oOptions) {
         // exit if Flg not set
         if (oOptions == null || !oOptions.isFlgShowPlan()) {
             if (LOGGER.isDebugEnabled()) {

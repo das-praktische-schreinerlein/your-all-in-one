@@ -14,12 +14,13 @@
 package de.yaio.app.extension.datatransfer.csv;
 
 import de.yaio.app.core.datadomain.DataDomain;
+import de.yaio.app.core.node.BaseNode;
+import de.yaio.app.datatransfer.common.ConverterException;
 import de.yaio.app.datatransfer.exporter.OutputOptions;
 import de.yaio.app.datatransfer.exporter.formatter.BaseDataFormatterImpl;
 import de.yaio.app.datatransfer.exporter.formatter.DescDataFormatterImpl;
 import de.yaio.app.datatransfer.exporter.formatter.FormatterImpl;
 import de.yaio.app.extension.datatransfer.wiki.WikiExporter;
-import de.yaio.app.core.node.BaseNode;
 import org.apache.log4j.Logger;
 
 import java.util.Date;
@@ -53,9 +54,8 @@ public class CSVExporter extends WikiExporter {
     }
 
     @Override
-    public String getMasterNodeResult(final DataDomain masterNode, final OutputOptions oOptions)
-            throws Exception {
-        StringBuffer res = new StringBuffer();
+    public String getMasterNodeResult(final DataDomain masterNode, final OutputOptions oOptions) throws ConverterException {
+        StringBuilder res = new StringBuilder();
         
         // show Header
         res.append(this.getLineStart()).append("UId")
@@ -89,7 +89,7 @@ public class CSVExporter extends WikiExporter {
 
     @Override
     public StringBuffer getNodeResult(final DataDomain node,  final String praefix,
-            final OutputOptions oOptions) throws Exception {
+            final OutputOptions oOptions) {
         StringBuffer res = new StringBuffer();
 
         // Template-Nodes ignorieren

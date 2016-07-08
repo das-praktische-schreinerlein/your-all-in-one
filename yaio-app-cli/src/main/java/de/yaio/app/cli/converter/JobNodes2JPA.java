@@ -17,8 +17,9 @@ import de.yaio.app.config.ContextHelper;
 import de.yaio.app.config.JobConfig;
 import de.yaio.app.core.datadomain.DataDomain;
 import de.yaio.app.core.node.BaseNode;
+import de.yaio.app.datatransfer.common.ParserException;
 import de.yaio.app.datatransfer.jpa.JPAExporter;
-import de.yaio.app.utils.config.ConfigurationOption;
+import de.yaio.commons.config.ConfigurationOption;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.lang3.StringUtils;
@@ -27,12 +28,7 @@ import org.apache.log4j.Logger;
 /** 
  * job for import of Nodes in PPL-Format and output to JPA-Provider
  * 
- * @FeatureDomain                DatenExport Praesentation
- * @package                      de.yaio.extension.datatransfer.jpa
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category                     collaboration
- * @copyright                    Copyright (c) 2014, Michael Schreiner
- * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class JobNodes2JPA extends JobNodes2Wiki {
     
@@ -53,13 +49,13 @@ public class JobNodes2JPA extends JobNodes2Wiki {
     }
 
     @Override
-    protected void configureContext() throws Exception {
+    protected void configureContext() {
         ContextHelper.getInstance().addSpringConfig(JobConfig.class);
-    };
+    }
 
     @Override
-    public DataDomain createMasternode(final String name) throws Exception {
-        DataDomain masterNode = null;
+    public DataDomain createMasternode(final String name) throws ParserException {
+        DataDomain masterNode;
 
         // initApplicationContext
         ContextHelper.getInstance().getSpringApplicationContext();
@@ -88,7 +84,7 @@ public class JobNodes2JPA extends JobNodes2Wiki {
     }
     
     @Override
-    protected Options addAvailiableOutputCmdLineOptions(final Options availiableCmdLineOptions) throws Exception {
+    protected Options addAvailiableOutputCmdLineOptions(final Options availiableCmdLineOptions) {
         // sysuid for export
         Option addnodestosysuidOption = new Option("", "addnodestosysuid", true,
                 "SysUID of Masternode to add the new nodes");

@@ -39,7 +39,7 @@ public abstract class TriggeredDataDomainRecalcImpl implements TriggeredDataDoma
             Logger.getLogger(TriggeredDataDomainRecalcImpl.class);
 
     @Override
-    public void doSearchAndTrigger() throws Exception {
+    public void doSearchAndTrigger() {
         int maxPerRun = 500;
 
         // repeat until no more entries available
@@ -66,11 +66,11 @@ public abstract class TriggeredDataDomainRecalcImpl implements TriggeredDataDoma
         }
     }
 
-    protected String createSort() throws Exception {
+    protected String createSort() {
         return "order by ebene desc";
     }
 
-    protected TypedQuery<?> createQuery() throws Exception {
+    protected TypedQuery<?> createQuery() {
         // setup class
         Class<?> resClass = BaseNode.class;
 

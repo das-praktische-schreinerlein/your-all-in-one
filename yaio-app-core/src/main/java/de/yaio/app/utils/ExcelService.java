@@ -60,7 +60,13 @@ public class ExcelService {
         try {
             wb.write(out);
         } finally {
-            out.close();
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException ex2) {
+                    ex2.printStackTrace();
+                }
+            }
         }
     }
 
@@ -112,7 +118,7 @@ public class ExcelService {
                 double value = cellValue.getNumberValue();
                 setCellNumeric(sheet, rownum, cellnum, value);
             } else if (cellValue.getCellType() == HSSFCell.CELL_TYPE_STRING) {
-                String value = cellValue.getStringValue().toString();
+                String value = cellValue.getStringValue();
                 // System.err.println("Value:'" + value + "'" + " lenght:" + value.length());
                 if (value != null && !"".equals(value) && value.length() > 0) {
                     setCellString(sheet, rownum, cellnum, value);
@@ -316,9 +322,7 @@ public class ExcelService {
             sheetName = "";
         }
         String element = sheetName + ExcelService.getColName(col) + ExcelService.getRowNum(row);
-        String formula =
-                "IF(" + element + ">0" + CONST_PARAM_DELIM + element + CONST_PARAM_DELIM + "\"\")";
-        return formula;
+        return "IF(" + element + ">0" + CONST_PARAM_DELIM + element + CONST_PARAM_DELIM + "\"\")";
     }
 
     public static String genCase4Values(final String pSheetName, final Integer baseRow, 

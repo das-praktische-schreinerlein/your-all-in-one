@@ -43,10 +43,9 @@ public class StatDataRecalcer {
     /** 
      * read all nodes and recalc statdata
      * @return                       result-message
-     * @throws Exception             possible io/db/recalc-Exceptions
      */
     @Transactional
-    public String recalcStatData() throws Exception {
+    public String recalcStatData() {
 
         long count = BaseNode.countBaseNodes();
         // look for this masternode in DB

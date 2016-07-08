@@ -3,8 +3,8 @@
 
     // configure
     var baseUrl = 'http://yaio-playground.local';
-    var chromeBin = 'C:/ProgrammePortable/PortableApps/PortableApps/GoogleChromePortable/App/Chrome-bin/chrome.exe';
-    var firefoxBin = 'C:/ProgrammePortable/PortableApps/PortableApps/FirefoxPortable/App/Firefox/firefox.exe';
+    var chromeBin = 'D:/ProgrammePortable/PortableApps/PortableApps/GoogleChromePortable/App/Chrome-bin/chrome.exe';
+    var firefoxBin = 'D:/ProgrammePortable/PortableApps/PortableApps/FirefoxPortable/App/Firefox/firefox.exe';
     var downloadPath = 'd:/tmp/';
 
     // basics

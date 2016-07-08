@@ -18,7 +18,7 @@ import de.yaio.app.config.YaioConfiguration;
 import de.yaio.app.core.datadomain.DataDomain;
 import de.yaio.app.core.node.BaseNode;
 import de.yaio.app.datatransfer.jpa.JPAImporter;
-import de.yaio.app.utils.config.ConfigurationOption;
+import de.yaio.commons.config.ConfigurationOption;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.lang3.StringUtils;
@@ -27,12 +27,7 @@ import org.apache.log4j.Logger;
 /** 
  * class for import of Nodes
  * 
- * @FeatureDomain                DatenExport Praesentation
- * @package                      de.yaio.extension.datatransfer.common
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category                     collaboration
- * @copyright                    Copyright (c) 2014, Michael Schreiner
- * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class CommonImporter {
     
@@ -106,7 +101,7 @@ public class CommonImporter {
      * @param masterNode             the masternode on which all other nodes are added
      * @throws Exception             parse/io-Exceptions possible
      */
-    public void importDataToMasterNodeFromJPA(final DataDomain masterNode) throws Exception {
+    public void importDataToMasterNodeFromJPA(final DataDomain masterNode) {
         // initApplicationContext
         ContextHelper.getInstance().getSpringApplicationContext();
 
@@ -143,7 +138,7 @@ public class CommonImporter {
      * @param masterNode             the masternode on which all other nodes are added
      * @throws Exception             parse/io-Exceptions possible
      */
-    public void importDataToMasterNode(final DataDomain masterNode) throws Exception {
+    public void importDataToMasterNode(final DataDomain masterNode) {
         // check datasource
         String sourceType = ConfigurationOption.stringValueOf(
                 YaioConfiguration.getInstance().getCliOption("sourcetype", defaultSourceType));

@@ -15,10 +15,12 @@ package de.yaio.app.datatransfer.importer.parser;
 
 import de.yaio.app.core.datadomain.DataDomain;
 import de.yaio.app.core.datadomain.IstData;
+import de.yaio.app.datatransfer.common.ParserException;
 import de.yaio.app.datatransfer.importer.ImportOptions;
 import de.yaio.app.datatransfer.importer.NodeFactory;
 import org.apache.log4j.Logger;
 
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.regex.Matcher;
@@ -77,7 +79,7 @@ public class IstDataParserImpl  extends ParserImpl implements IstDataParser {
     }
 
     @Override
-    public int parseFromName(final DataDomain node, final ImportOptions options) throws Exception {
+    public int parseFromName(final DataDomain node, final ImportOptions options) throws ParserException {
         if (node == null) {
             return 0;
         }
@@ -89,7 +91,7 @@ public class IstDataParserImpl  extends ParserImpl implements IstDataParser {
     }
 
     @Override
-    public int parseIstDataFromName(final IstData node, final ImportOptions options) throws Exception {
+    public int parseIstDataFromName(final IstData node, final ImportOptions options) throws ParserException {
         int found = 0;
 
         // Check for valid data
@@ -140,7 +142,11 @@ public class IstDataParserImpl  extends ParserImpl implements IstDataParser {
                         + " for node:" + node.getNameForLogger());
             }
             if (matcher.group(matcherindex) != null) {
-                calDate.setTime(DF.parse(matcher.group(matcherindex)));
+                try {
+                    calDate.setTime(DF.parse(matcher.group(matcherindex)));
+                } catch (ParseException ex) {
+                    throw new ParserException("cant parse istCalcStart", node.getName(), ex);
+                }
                 calDate.set(Calendar.SECOND, CONST_FLAG_NODATE_SECONDS);
                 node.setIstStart(calDate.getTime());
             }
@@ -153,7 +159,11 @@ public class IstDataParserImpl  extends ParserImpl implements IstDataParser {
             }
             if (matcher.group(matcherindex) != null && node.getIstStart() != null) {
                 calDate.setTime(node.getIstStart());
-                timeOffsett = TF.parse(matcher.group(matcherindex));
+                try {
+                    timeOffsett = TF.parse(matcher.group(matcherindex));
+                } catch (ParseException ex) {
+                    throw new ParserException("cant parse timeoffsett of istCalcStart", node.getName(), ex);
+                }
 
                 // zum Datum addieren
                 calTime.setTime(timeOffsett);
@@ -170,7 +180,11 @@ public class IstDataParserImpl  extends ParserImpl implements IstDataParser {
                         + " for node:" + node.getNameForLogger());
             }
             if (matcher.group(matcherindex) != null) {
-                calDate.setTime(DF.parse(matcher.group(matcherindex)));
+                try {
+                    calDate.setTime(DF.parse(matcher.group(matcherindex)));
+                } catch (ParseException ex) {
+                    throw new ParserException("cant parse istCalcEnd", node.getName(), ex);
+                }
                 calDate.set(Calendar.SECOND, CONST_FLAG_NODATE_SECONDS);
                 node.setIstEnde(calDate.getTime());
             }
@@ -183,7 +197,11 @@ public class IstDataParserImpl  extends ParserImpl implements IstDataParser {
             }
             if (matcher.group(matcherindex) != null && node.getIstEnde() != null) {
                 calDate.setTime(node.getIstEnde());
-                timeOffsett = TF.parse(matcher.group(matcherindex));
+                try {
+                    timeOffsett = TF.parse(matcher.group(matcherindex));
+                } catch (ParseException ex) {
+                    throw new ParserException("cant parse timeoffsett of istCalcEnd", node.getName(), ex);
+                }
 
                 // zum Datum addieren
                 calTime.setTime(timeOffsett);

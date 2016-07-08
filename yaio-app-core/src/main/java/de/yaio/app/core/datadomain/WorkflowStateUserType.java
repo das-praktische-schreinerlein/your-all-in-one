@@ -13,7 +13,7 @@
  */
 package de.yaio.app.core.datadomain;
 
-import de.yaio.app.utils.PersistentIntEnumUserType;
+import de.yaio.app.utils.db.PersistentIntEnumUserType;
 
 /**
  * support mapping of WorkflowState to hibernate

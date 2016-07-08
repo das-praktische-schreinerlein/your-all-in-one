@@ -23,12 +23,7 @@ import java.util.Set;
 /** 
  * factory to create common dbfilter
  * 
- * @FeatureDomain                Persistence
- * @package                      de.yaio.utils.db
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category                     collaboration
- * @copyright                    Copyright (c) 2014, Michael Schreiner
- * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class DBFilterFactory {
 
@@ -40,7 +35,8 @@ public class DBFilterFactory {
      * @param command               command to use (=, <, >, <=, >=, like)
      * @return                      a dbfilter
      */
-    public static List<DBFilter> createDateFilter(final String filterName, final String fieldName, final Date value, final String command) {
+    public static List<DBFilter> createDateFilter(final String filterName, final String fieldName,
+                                                  final Date value, final String command) {
         List<DBFilter> dbFilters = new ArrayList<>();
         if (value != null) {
             String sql = fieldName + " " + command + " :createDateFilter" + filterName;
@@ -58,7 +54,8 @@ public class DBFilterFactory {
      * @param value                 value of the dbfilter (true, false)
      * @return                      a dbfilter
      */
-    public static List<DBFilter> createIsNullFilter(final String filterName, final String fieldName, final String value) {
+    public static List<DBFilter> createIsNullFilter(final String filterName, final String fieldName,
+                                                    final String value) {
         List<DBFilter> dbFilters = new ArrayList<>();
         if ("true".equalsIgnoreCase(value)) {
             String sql = fieldName + " is null ";
@@ -81,12 +78,13 @@ public class DBFilterFactory {
      */
     public static List<DBFilter> createMapStringContainsFilter(final String fieldName, final Set<String> values) {
         int idx = 0;
-        List<DBFilter> dbFilters = new ArrayList<DBFilter>();
+        List<DBFilter> dbFilters = new ArrayList<>();
         if (values != null) {
-            List<String> sqlList = new ArrayList<String>();
-            List<DBFilter.Parameter> parameters = new ArrayList<DBFilter.Parameter>();
+            List<String> sqlList = new ArrayList<>();
+            List<DBFilter.Parameter> parameters = new ArrayList<>();
             for (String value : values) {
-                sqlList.add("(" + "lower(" + fieldName + ") like lower(:mapStringContainsFilter" + fieldName + idx + ")" + ")");
+                sqlList.add("(" + "lower(" + fieldName + ") like " +
+                        "lower(:mapStringContainsFilter" + fieldName + idx + ")" + ")");
                 parameters.add(new DBFilter.Parameter("mapStringContainsFilter" + fieldName + idx, "%"+ value + "%"));
                 idx++;
             }
@@ -103,10 +101,10 @@ public class DBFilterFactory {
      */
     public static List<DBFilter> createMapStringFilter(final String fieldName, final Set<String> values) {
         int idx = 0;
-        List<DBFilter> dbFilters = new ArrayList<DBFilter>();
+        List<DBFilter> dbFilters = new ArrayList<>();
         if (values != null) {
-            List<String> sqlList = new ArrayList<String>();
-            List<DBFilter.Parameter> parameters = new ArrayList<DBFilter.Parameter>();
+            List<String> sqlList = new ArrayList<>();
+            List<DBFilter.Parameter> parameters = new ArrayList<>();
             for (String value : values) {
                 sqlList.add("(" + "lower(" + fieldName + ") = lower(:mapStringFilter" + fieldName + idx + ")" + ")");
                 parameters.add(new DBFilter.Parameter("mapStringFilter" + fieldName + idx, value));
@@ -125,10 +123,10 @@ public class DBFilterFactory {
      */
     public static List<DBFilter> createMapIntFilter(final String fieldName, final Set<Integer> values) {
         int idx = 0;
-        List<DBFilter> dbFilters = new ArrayList<DBFilter>();
+        List<DBFilter> dbFilters = new ArrayList<>();
         if (values != null) {
-            List<String> sqlList = new ArrayList<String>();
-            List<DBFilter.Parameter> parameters = new ArrayList<DBFilter.Parameter>();
+            List<String> sqlList = new ArrayList<>();
+            List<DBFilter.Parameter> parameters = new ArrayList<>();
             for (Integer value : values) {
                 sqlList.add("(" + fieldName + " = :mapIntFilter" + fieldName + idx + ")");
                 parameters.add(new DBFilter.Parameter("mapIntFilter" + fieldName + idx, value));

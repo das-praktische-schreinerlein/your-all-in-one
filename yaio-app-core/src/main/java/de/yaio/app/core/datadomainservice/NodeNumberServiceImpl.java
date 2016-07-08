@@ -17,7 +17,9 @@ import de.yaio.app.core.datadomain.MetaData;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -50,12 +52,12 @@ public class NodeNumberServiceImpl implements NodeNumberService {
     }
 
     @Override
-    public synchronized Object getNextNodeNumber(final MetaData node) throws Exception {
+    public synchronized Object getNextNodeNumber(final MetaData node) {
         String praefix = node.getMetaNodePraefix();
 
         // pruefen ob VAR_VUR_UD initialisiert ist
         if (MAP_CUR_NEXTNODEID == null) {
-            throw new Exception("Error: CurId not initialized");
+            throw new IllegalStateException("MAP_CUR_NEXTNODEID not initialized");
         }
         // aktuellen Wert abfragen
         Integer curId = (Integer) MAP_CUR_NEXTNODEID.get(praefix);
@@ -73,7 +75,7 @@ public class NodeNumberServiceImpl implements NodeNumberService {
     }
     
     @Override
-    public synchronized void initNextNodeNumber(final String praefix, final Integer number) throws Exception {
+    public synchronized void initNextNodeNumber(final String praefix, final Integer number) {
         // falls nicht belegt: Map anlegen
         if (MAP_CUR_NEXTNODEID == null) {
             MAP_CUR_NEXTNODEID = new HashMap<String, Integer>();
@@ -82,18 +84,17 @@ public class NodeNumberServiceImpl implements NodeNumberService {
     }
 
     @Override
-    public Map<String, Integer> getNextNodeNumberMap() throws Exception {
+    public Map<String, Integer> getNextNodeNumberMap() {
         return new HashMap<String, Integer>(MAP_CUR_NEXTNODEID);
     }
 
     @Override
-    public boolean isInitialised(){
+    public boolean isInitialised() {
         return MAP_CUR_NEXTNODEID != null;
     }
 
     @Override
-    public void exportNextNodeNumbersToFile(final String strPathIdDB)
-            throws Exception {
+    public void exportNextNodeNumbersToFile(final String strPathIdDB) {
         Properties props = new Properties();
         Map<String, Integer> nodeIds = this.getNextNodeNumberMap();  
 
@@ -103,13 +104,19 @@ public class NodeNumberServiceImpl implements NodeNumberService {
         }
 
         // Properties exportieren
-        FileOutputStream out = new FileOutputStream(strPathIdDB);
-        props.store(out, null);
+        try {
+            FileOutputStream out = new FileOutputStream(strPathIdDB);
+            props.store(out, null);
+        } catch (FileNotFoundException ex) {
+            throw new IllegalArgumentException("nextnodenumberfile not exists", ex);
+        } catch (IOException ex) {
+            throw new IllegalArgumentException("cant write to nextnodenumberfile", ex);
+        }
     }
     
 
     @Override
-    public void initNextNodeNumbersFromFile(final String strPathIdDB, final boolean forceReload) throws Exception {
+    public void initNextNodeNumbersFromFile(final String strPathIdDB, final boolean forceReload) {
         if (!StringUtils.isEmpty(lastFileName) && !forceReload) {
             // already read and no force
             return;
@@ -117,10 +124,24 @@ public class NodeNumberServiceImpl implements NodeNumberService {
         
         // ID-DB einlesen
         Properties props = new Properties();
-        FileInputStream in = new FileInputStream(strPathIdDB);
-        props.load(in);
-        in.close();
-        
+        FileInputStream in = null;
+        try {
+            in = new FileInputStream(strPathIdDB);
+            props.load(in);
+        } catch (FileNotFoundException ex) {
+            throw new IllegalArgumentException("nextnodenumberfile not exists", ex);
+        } catch (IOException ex) {
+            throw new IllegalArgumentException("cant write to nextnodenumberfile", ex);
+        } finally {
+            try {
+                if (in != null) {
+                    in.close();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+
         // set filename
         lastFileName = strPathIdDB;
 

@@ -36,6 +36,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -43,12 +44,7 @@ import java.util.Set;
  * Services to parse text to nodes and convert them in different 
  * formats (wiki, ppl, excel..)
  *  
- * @FeatureDomain                Webservice
- * @package                      de.yaio.webapp.controller
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category                     collaboration
- * @copyright                    Copyright (c) 2014, Michael Schreiner
- * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 @Service
 public class DatatransferUtils {
@@ -61,10 +57,10 @@ public class DatatransferUtils {
      * copy the node and all children to the new parent (recalc all and save to db)
      * @param node                   node to copy
      * @param newParent              parent for new node
-     * @throws Exception             ParserExceptions possible
+     * @throws ConverterException    ConverterException possible
      */
     @Transactional
-    public void copyNode(final BaseNode node, final BaseNode newParent) throws Exception {
+    public void copyNode(final BaseNode node, final BaseNode newParent) throws ConverterException {
         // read old parent
         BaseNode oldParent = node.getParentNode();
 
@@ -89,7 +85,11 @@ public class DatatransferUtils {
 
         // Parser+Options anlegen
         ImportOptions importOptions = createCopyImportOptions();
-        parseNodesFromJson(importOptions, masterNode, jsonSrc);
+        try {
+            parseNodesFromJson(importOptions, masterNode, jsonSrc);
+        } catch (ParserException ex) {
+            throw new ConverterException("cant parse node to copy from json", jsonSrc, ex);
+        }
 
         // JPA-Exporter
         JPAExporter jpaExporter = new JPAExporter();
@@ -111,10 +111,9 @@ public class DatatransferUtils {
      * @param node                   node to move
      * @param newParent              new parent for node
      * @param newSortPos             position for node  in childlist of newParent
-     * @throws Exception             ParserExceptions possible
      */
     @Transactional
-    public BaseNode moveNode(final BaseNode node, final BaseNode newParent, final Integer newSortPos) throws Exception {
+    public BaseNode moveNode(final BaseNode node, final BaseNode newParent, final Integer newSortPos) {
         BaseNode resultNode = node;
 
         // read children for old parent
@@ -189,14 +188,14 @@ public class DatatransferUtils {
      * @return                       true if data changed
      * @throws IllegalAccessException thrown if class of origNode!=newNode
      */
-    public boolean mapNodeData(final BaseNode origNode, final BaseNode newNode) 
+    public boolean mapNodeData(final BaseNode origNode, final BaseNode newNode)
                     throws IllegalAccessException {
         boolean flgChange = false;
         
         // check class
         if (!origNode.getClassName().equals(newNode.getClassName())) {
             // class differ!!
-            throw new IllegalAccessException("cant map origNode (" + origNode.getClassName() + "):" 
+            throw new IllegalAccessException("cant map origNode (" + origNode.getClassName() + "):"
                             + origNode.getSysUID() + " with newNode:" + newNode.getClassName());
         }
         
@@ -431,10 +430,9 @@ public class DatatransferUtils {
         // validate
         Set<ConstraintViolation<BaseNode>> violations = newNode.validateMe();
         if (violations.size() > 0) {
-            ConstraintViolationException ex = new ConstraintViolationException(
+            throw new ConstraintViolationException(
                             "error while validating newNode" + newNode.getNameForLogger(), 
                             new HashSet<ConstraintViolation<?>>(violations));
-            throw ex;
         }
 
         return flgChange;
@@ -445,14 +443,19 @@ public class DatatransferUtils {
      * @param importOptions          importOptions for jsonImporter
      * @param masterNode             baseNode to add the children
      * @param jsonSrc                jsonSrc to parse with JsonImporter
-     * @throws Exception             ParserExceptions possible
+     * @throws ParserException       ParserExceptions possible
      */
     public void parseNodesFromJson(final ImportOptions importOptions,
                                    final BaseNode masterNode, 
-                                   final String jsonSrc) throws Exception {
+                                   final String jsonSrc) throws ParserException {
         // extract 
         JSONFullImporter jsonImporter = new JSONFullImporter(importOptions);
-        JSONResponse response = jsonImporter.parseJSONResponse(jsonSrc);
+        JSONResponse response = null;
+        try {
+            response = jsonImporter.parseJSONResponse(jsonSrc);
+        } catch (IOException ex) {
+            throw new IllegalArgumentException("cant parse json from jsonSrc", ex);
+        }
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("parse Response:" + response);
         }

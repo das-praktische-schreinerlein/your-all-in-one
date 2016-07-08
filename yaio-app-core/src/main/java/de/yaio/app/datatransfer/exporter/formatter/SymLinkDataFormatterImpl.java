@@ -59,7 +59,7 @@ public class SymLinkDataFormatterImpl extends FormatterImpl implements SymLinkDa
 
     @Override
     public void format(final DataDomain node, final StringBuffer nodeOutput, 
-                       final OutputOptions options) throws Exception {
+                       final OutputOptions options) {
         // Check if node is compatibel
         if (node != null) {
             if (!SymLinkData.class.isInstance(node)) {
@@ -71,7 +71,7 @@ public class SymLinkDataFormatterImpl extends FormatterImpl implements SymLinkDa
 
     @Override
     public void formatSymLinkData(final SymLinkData node, final StringBuffer nodeOutput, 
-                                  final OutputOptions oOptions) throws Exception {
+                                  final OutputOptions oOptions) {
         // exit if Flg not set
         if (!oOptions.isFlgShowSymLink()) {
             if (LOGGER.isDebugEnabled()) {

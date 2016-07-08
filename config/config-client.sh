@@ -24,7 +24,7 @@ export YAIOSCRIPTPATH=${BASEPATH}/../sbin/
 export YAIORESPATH=${BASEPATH}/../resources/
 export YAIOVARPATH=${BASEPATH}/../var/
 export YAIOAPP=${BASEPATH}../dist/yaio-app-serverclient-full.jar
-export CP="${YAIOAPP}:"
+export CP="${YAIOAPP}"
 export CFGFILE=${BASEPATH}../config/yaio-application.properties
 export CFG="--config ${CFGFILE}"
 export JAVAOPTIONS="-Xmx768m -Xms128m -Djava.net.preferIPv4Stack=true -Djava.net.preferIPv4Addresses -Dspring.config.location=file:${CFGFILE} -Dlog4j.configuration=file:${BASEPATH}../config/log4j.properties"

@@ -40,6 +40,8 @@
                 {expand: true, cwd: '<%= bowerSrcBase %>angular-translate', src: ['*.js'], dest: '<%= vendorDestBase %>js/angularjs/', flatten: false},
                 {expand: true, cwd: '<%= bowerSrcBase %>angular-translate-loader-static-files', src: ['angular-translate-loader-static-files.js'], dest: '<%= vendorDestBase %>js/angularjs/', flatten: false},
                 {expand: true, cwd: '<%= bowerSrcBase %>angular-update-meta/dist', src: ['update-meta.js'], dest: '<%= vendorDestBase %>js/angularjs/', flatten: false},
+                {expand: true, cwd: '<%= bowerSrcBase %>c3/', src: ['c3.min.js'], dest: '<%= vendorDestBase %>js/c3/', flatten: false},
+                {expand: true, cwd: '<%= bowerSrcBase %>d3/', src: ['d3.min.js'], dest: '<%= vendorDestBase %>js/d3/', flatten: false},
                 {expand: true, cwd: '<%= bowerSrcBase %>fancytree/dist/', src: ['skin-win8/*.js', 'skin-win8/*.css', 'jquery.fancytree.js'], dest: '<%= vendorDestBase %>js/fancytree/', flatten: false},
                 {expand: true, cwd: '<%= bowerSrcBase %>fancytree/dist/src', src: ['jquery.fancytree.dnd.js',
                     'jquery.fancytree.edit.js',
@@ -71,6 +73,7 @@
                 {expand: true, cwd: '<%= bowerSrcBase %>toastr', src: ['build/toastr.min.js'], dest: '<%= vendorDestBase %>js/toastr/', flatten: true},
                 {expand: true, cwd: '<%= bowerSrcBase %>ui-contextmenu', src: ['jquery.ui-contextmenu.min.js'], dest: '<%= vendorDestBase %>js/jqueryui/', flatten: true},
                 // CSS
+                {expand: true, cwd: '<%= bowerSrcBase %>c3/', src: ['c3.min.css'], dest: '<%= vendorDestBase %>css/c3/', flatten: false},
                 {expand: true, cwd: '<%= bowerSrcBase %>highlightjs/', src: ['**/default.css'], dest: '<%= vendorDestBase %>css/highlightjs/', flatten: true},
                 {expand: true, cwd: '<%= bowerSrcBase %>jquery-ui/themes/smoothness', src: ['jquery-ui.css'], dest: '<%= vendorDestBase %>css/jqueryui/', flatten: false},
                 {expand: true, cwd: '<%= bowerSrcBase %>jqueryui-timepicker-addon', src: ['dist/jquery-ui-timepicker-addon.css'], dest: '<%= vendorDestBase %>css/jqueryui/', flatten: true},

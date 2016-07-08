@@ -14,8 +14,11 @@
 package de.yaio.app.core.datadomain;
 
 import de.yaio.app.core.node.SymLinkNode;
+import de.yaio.app.datatransfer.common.ParserException;
 import de.yaio.app.datatransfer.exporter.formatter.SymLinkDataFormatterImpl;
 import de.yaio.app.datatransfer.importer.parser.SymLinkDataParserImpl;
+
+import java.text.ParseException;
 
 /** 
  * test of the datadomain-logic: SymLinkData<br>
@@ -54,30 +57,30 @@ public class SymLinkDataTest extends DataDomainTest {
     }
 
     @Override
-    public void setupParser() throws Exception {
+    public void setupParser() {
         parser = new SymLinkDataParserImpl();
     }
 
     @Override
-    public void setupFormatter() throws Exception {
+    public void setupFormatter() {
         formatter = new SymLinkDataFormatterImpl();
     }
 
     @Override
-    public TestObj setupNewTestObj() throws Exception {
+    public TestObj setupNewTestObj() {
         return new SymLinkDataTestObj();
     }
     
     /** 
      * setup the a TestObj for the test
      * @return                       a new dataobj for the test
-     * @throws Exception             possible Exception     */
-    protected SymLinkDataTestObj getNewSymLinkDataTestObj() throws Exception  {
+     **/
+    protected SymLinkDataTestObj getNewSymLinkDataTestObj() {
         return (SymLinkDataTestObj) setupNewTestObj();
     }
 
     @Override
-    public void testParser() throws Exception {
+    public void testParser() throws ParserException {
         SymLinkDataTestObj mytestObj = null;
         String expected = null;
 
@@ -101,7 +104,7 @@ public class SymLinkDataTest extends DataDomainTest {
     }
 
     @Override
-    public void testFormatter() throws Exception {
+    public void testFormatter() throws ParseException {
         SymLinkDataTestObj mytestObj = null;
         String expected = null;
         

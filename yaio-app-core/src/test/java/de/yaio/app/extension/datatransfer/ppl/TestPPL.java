@@ -90,7 +90,7 @@ public class TestPPL {
             }
 
             // Test
-            assertEquals(expected, res.toString());
+            assertEquals(expected, res);
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

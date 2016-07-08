@@ -243,7 +243,7 @@ public class TaskNodeService extends BaseNodeService {
     }
 
     @Override
-    public String getDataBlocks4CheckSum(final DataDomain baseNode) throws Exception {
+    public String getDataBlocks4CheckSum(final DataDomain baseNode) {
         TaskNode node = (TaskNode) baseNode;
 
         // Content erzeugen

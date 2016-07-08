@@ -51,23 +51,20 @@ public abstract class BaseTest {
     /** 
      * setup the a TestObj for the test
      * @return                       the dataobj for the test
-     * @throws Exception             io-Exceptions possible
      */
-    public abstract TestObj setupNewTestObj() throws Exception;
+    public abstract TestObj setupNewTestObj();
 
     /** 
      * setup the test
-     * @throws Exception             io-Exceptions possible
      */
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
     };
 
     /** 
      * teardown the test
-     * @throws Exception             io-Exceptions possible
      */
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
     };
 }

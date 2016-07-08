@@ -12,15 +12,18 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 package de.yaio.app.extension.datatransfer.html;
-import de.yaio.app.extension.datatransfer.html.HtmlExporter;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-import org.springframework.mock.staticmock.MockStaticEntityMethods;
 
+import de.yaio.app.datatransfer.common.ConverterException;
+import de.yaio.app.datatransfer.common.ParserException;
 import de.yaio.app.datatransfer.exporter.Exporter;
 import de.yaio.app.datatransfer.exporter.OutputOptions;
 import de.yaio.app.datatransfer.exporter.OutputOptionsImpl;
 import de.yaio.app.extension.datatransfer.wiki.WikiExporterTest;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
+import org.springframework.mock.staticmock.MockStaticEntityMethods;
+
+import java.io.IOException;
 
 /** 
  * test of the Html-exporter-logic<br>
@@ -38,12 +41,12 @@ import de.yaio.app.extension.datatransfer.wiki.WikiExporterTest;
 public class HtmlExporterTest extends WikiExporterTest {
 
     @Override
-    public Exporter setupNewExporter() throws Exception {
+    public Exporter setupNewExporter() {
         return new HtmlExporter();
     }
     
     @Override
-    public OutputOptions setupNewOutputOptions() throws Exception {
+    public OutputOptions setupNewOutputOptions() {
         OutputOptions oOptions = new OutputOptionsImpl();
         oOptions.setFlgRecalc(true);
         oOptions.setFlgShowChildrenSum(true);
@@ -51,7 +54,7 @@ public class HtmlExporterTest extends WikiExporterTest {
     }
     
     @Override
-    public void testExport() throws Exception {
+    public void testExport() throws ConverterException, ParserException, IOException {
         testExportFromFixture("FixtureHtmlExportSource.ppl", "FixtureHtmlExportResult.html");
         
         // DocLayout-test

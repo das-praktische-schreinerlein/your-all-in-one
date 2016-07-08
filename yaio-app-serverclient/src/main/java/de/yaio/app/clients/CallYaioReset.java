@@ -16,6 +16,8 @@ package de.yaio.app.clients;
 import org.apache.commons.cli.Options;
 import org.apache.log4j.Logger;
 
+import java.io.IOException;
+
 /** 
  * job to call yaio-instance to reset db
  * 
@@ -40,7 +42,7 @@ public class CallYaioReset extends CallYaioInstance {
     }
 
     @Override
-    protected Options addAvailiableCmdLineOptions() throws Exception {
+    protected Options addAvailiableCmdLineOptions() {
         Options availiableCmdLineOptions = super.addAvailiableCmdLineOptions();
         
         if (LOGGER.isDebugEnabled()) {
@@ -51,11 +53,21 @@ public class CallYaioReset extends CallYaioInstance {
     }
 
     @Override
-    public void doJob() throws Exception {
+    public void doJob() {
         // call url
-        byte[] result = this.callGetUrl("/admin/reset", null);
-        
-        System.out.write(result);
+        byte[] result;
+        try {
+            result = this.callGetUrl("/admin/reset", null);
+        } catch (IOException ex) {
+            throw new RuntimeException("error while calling resetUrl", ex);
+        }
+
+
+        try {
+            System.out.write(result);
+        } catch (IOException ex) {
+            throw new RuntimeException("error while writing to stdout", ex);
+        }
     }
 
     // #############

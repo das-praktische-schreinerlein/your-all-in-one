@@ -55,7 +55,7 @@ public class CachedDataServiceImpl extends DataDomainRecalcImpl implements Cache
     }
     
     @Override
-    public void doRecalcBeforeChildren(final DataDomain node, final NodeService.RecalcRecurseDirection recurseDirection) throws Exception {
+    public void doRecalcBeforeChildren(final DataDomain node, final NodeService.RecalcRecurseDirection recurseDirection) {
         if (node == null) {
             return;
         }
@@ -69,7 +69,7 @@ public class CachedDataServiceImpl extends DataDomainRecalcImpl implements Cache
     }
 
     @Override
-    public void doRecalcAfterChildren(final DataDomain node, final NodeService.RecalcRecurseDirection recurseDirection) throws Exception {
+    public void doRecalcAfterChildren(final DataDomain node, final NodeService.RecalcRecurseDirection recurseDirection) {
         // NOP
     }
     
@@ -85,7 +85,7 @@ public class CachedDataServiceImpl extends DataDomainRecalcImpl implements Cache
     
     
     @Override
-    public void initParentHierarchy(final CachedData node) throws Exception {
+    public void initParentHierarchy(final CachedData node) {
         if (!StringUtils.isEmpty(node.getCachedParentHierarchy())) {
             return;
         }

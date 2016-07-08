@@ -57,12 +57,12 @@ public class StatDataServiceImpl extends DataDomainRecalcImpl implements StatDat
     }
     
     @Override
-    public void doRecalcBeforeChildren(final DataDomain node, final NodeService.RecalcRecurseDirection recurseDirection) throws Exception {
+    public void doRecalcBeforeChildren(final DataDomain node, final NodeService.RecalcRecurseDirection recurseDirection) {
         // NOP
     }
 
     @Override
-    public void doRecalcAfterChildren(final DataDomain node, final NodeService.RecalcRecurseDirection recurseDirection) throws Exception {
+    public void doRecalcAfterChildren(final DataDomain node, final NodeService.RecalcRecurseDirection recurseDirection) {
         if (node == null) {
             return;
         }
@@ -87,7 +87,7 @@ public class StatDataServiceImpl extends DataDomainRecalcImpl implements StatDat
     }
 
     @Override
-    public void updateChildrenCount(final StatData node) throws Exception {
+    public void updateChildrenCount(final StatData node) {
         int childCount = node.getChildNodesByNameMap().size();
         int wfCount = 0;
         int wfToDoCount = 0;

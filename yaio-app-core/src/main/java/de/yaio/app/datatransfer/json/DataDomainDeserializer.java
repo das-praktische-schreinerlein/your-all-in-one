@@ -40,8 +40,7 @@ public class DataDomainDeserializer extends JsonDeserializer<DataDomain> {
         JsonNode node = oc.readTree(jsonParser);
         
         // create obj from node
-        DataDomain result = deserializeJSONNode(node);
-        return result;
+        return deserializeJSONNode(node);
     }
     
     /** 

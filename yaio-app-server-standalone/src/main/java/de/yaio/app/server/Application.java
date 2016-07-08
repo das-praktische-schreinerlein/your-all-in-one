@@ -17,9 +17,9 @@ import de.yaio.app.config.ContextHelper;
 import de.yaio.app.config.PersistenceConfig;
 import de.yaio.app.config.YaioConfigurationHelper;
 import de.yaio.app.system.YaioFlyway;
-import de.yaio.app.utils.CmdLineHelper;
-import de.yaio.app.utils.CmdLineJob;
-import de.yaio.app.utils.config.ConfigurationHelper;
+import de.yaio.commons.cli.CmdLineHelper;
+import de.yaio.commons.cli.CmdLineJob;
+import de.yaio.commons.config.ConfigurationHelper;
 import org.apache.commons.cli.Option;
 import org.apache.log4j.Logger;
 import org.apache.tomcat.util.http.fileupload.FileUpload;
@@ -50,40 +50,20 @@ import java.util.List;
  */
 @Configuration
 @EnableSpringConfigured // <context:spring-configured/>
-@EnableAutoConfiguration(exclude = {
-                de.yaio.app.config.JobConfig.class,
-                de.yaio.services.webshot.WebshotApplication.class, 
-                de.yaio.services.webshot.WebshotWebSecurityConfig.class,
-                de.yaio.services.webshot.WebshotWebSecurityConfig.WebshotServiceSecurityConfigurerAdapter.class,
-                de.yaio.services.dms.DMSApplication.class,
-                de.yaio.services.dms.DMSWebSecurityConfig.class,
-                de.yaio.services.dms.DMSWebSecurityConfig.DMSServiceSecurityConfigurerAdapter.class,
-                de.yaio.services.plantuml.PlantumlApplication.class,
-                de.yaio.services.plantuml.PlantumlWebSecurityConfig.class,
-                de.yaio.services.plantuml.PlantumlWebSecurityConfig.PlantumlServiceSecurityConfigurerAdapter.class,
-                de.yaio.services.metaextract.MetaExtractApplication.class,
-                de.yaio.services.metaextract.MetaExtractWebSecurityConfig.class,
-                de.yaio.services.metaextract.MetaExtractWebSecurityConfig.MetaExtractServiceSecurityConfigurerAdapter.class
-                })
+@EnableAutoConfiguration()
 @ComponentScan(basePackages = {"de.yaio.app.core", "de.yaio.app.datatransfer",
                                "de.yaio.app.extension", "de.yaio.app.server",
                                "de.yaio.services.webshot", "de.yaio.services.dms",
                                "de.yaio.services.plantuml", "de.yaio.services.metaextract"},
                 excludeFilters = {
                     @Filter(type = FilterType.ASSIGNABLE_TYPE, value = {
-                        de.yaio.app.config.JobConfig.class,
-                        de.yaio.services.webshot.WebshotApplication.class,
-                        de.yaio.services.webshot.WebshotWebSecurityConfig.class,
-                        de.yaio.services.webshot.WebshotWebSecurityConfig.WebshotServiceSecurityConfigurerAdapter.class,
-                        de.yaio.services.dms.DMSApplication.class,
-                        de.yaio.services.dms.DMSWebSecurityConfig.class,
-                        de.yaio.services.dms.DMSWebSecurityConfig.DMSServiceSecurityConfigurerAdapter.class,
-                        de.yaio.services.plantuml.PlantumlApplication.class,
-                        de.yaio.services.plantuml.PlantumlWebSecurityConfig.class,
-                        de.yaio.services.plantuml.PlantumlWebSecurityConfig.PlantumlServiceSecurityConfigurerAdapter.class,
-                        de.yaio.services.metaextract.MetaExtractApplication.class,
-                        de.yaio.services.metaextract.MetaExtractWebSecurityConfig.class,
-                        de.yaio.services.metaextract.MetaExtractWebSecurityConfig.MetaExtractServiceSecurityConfigurerAdapter.class
+                        de.yaio.app.config.JobConfig.class
+                    }),
+                    @Filter(type=FilterType.REGEX, pattern={
+                            "de.yaio.services.dms.server.configuration.*",
+                            "de.yaio.services.metaextract.server.configuration.*",
+                            "de.yaio.services.plantuml.server.configuration.*",
+                            "de.yaio.services.webshot.server.configuration.*"
                     })
                 })
 @EnableScheduling
@@ -123,7 +103,7 @@ public class Application {
             }
 
             // init configuration
-            de.yaio.app.utils.config.Configuration config = configurationHelper.initConfiguration();
+            de.yaio.commons.config.Configuration config = configurationHelper.initConfiguration();
             config.publishProperties();
 
             LOGGER.info("start application with args:" + config.argsAsList() +
@@ -181,7 +161,7 @@ public class Application {
     }
 
     @PreDestroy
-    protected static void cleanUpAfterJob() throws Exception {
+    protected static void cleanUpAfterJob() {
         // TODO: hack to close HSLDB-connection -> Hibernate doesn't close the
         //       database and so the content is not written to file
         LOGGER.info("hack: close hsqldb");

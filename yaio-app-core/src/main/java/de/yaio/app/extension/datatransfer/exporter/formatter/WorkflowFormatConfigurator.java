@@ -132,8 +132,7 @@ public class WorkflowFormatConfigurator {
      * @return                       the mapped color
      */
     public String getStateColor(final String state) {
-        String color = (String) this.getConfigStateColor().get(state);
-        return color;
+        return (String) this.getConfigStateColor().get(state);
     }
 
     /** 
@@ -142,8 +141,7 @@ public class WorkflowFormatConfigurator {
      * @return                       the mapped icon
      */
     public String getStateIcon(final String state) {
-        String icon = (String) this.getConfigStateIcon().get(state);
-        return icon;
+        return (String) this.getConfigStateIcon().get(state);
     }
 
 }

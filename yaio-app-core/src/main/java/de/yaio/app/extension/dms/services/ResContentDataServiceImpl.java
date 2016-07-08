@@ -14,17 +14,18 @@
 package de.yaio.app.extension.dms.services;
 
 import de.yaio.app.core.datadomain.DataDomain;
-import de.yaio.app.extension.dms.utils.YaioWebshotClient;
-import de.yaio.commons.data.DataUtils;
 import de.yaio.app.core.datadomain.ResContentData;
 import de.yaio.app.core.datadomain.ResContentData.UploadWorkflowState;
 import de.yaio.app.core.datadomain.ResLocData;
 import de.yaio.app.core.datadomainservice.TriggeredDataDomainRecalcImpl;
-import de.yaio.app.utils.db.DBFilter;
 import de.yaio.app.core.node.UrlResNode;
 import de.yaio.app.core.nodeservice.UrlResNodeService;
 import de.yaio.app.extension.dms.utils.DMSClient;
-import de.yaio.services.dms.storage.StorageResource;
+import de.yaio.app.extension.dms.utils.YaioWebshotClient;
+import de.yaio.app.utils.db.DBFilter;
+import de.yaio.commons.data.DataUtils;
+import de.yaio.commons.io.IOExceptionWithCause;
+import de.yaio.services.dms.api.model.StorageResource;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,12 +41,7 @@ import java.util.List;
 /** 
  * businesslogic for dataDomain: ResContentData (upload url/file to dms)
  * 
- * @FeatureDomain                BusinessLogic
- * @package                      de.yaio.extension.dms
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category                     collaboration
- * @copyright                    Copyright (c) 2014, Michael Schreiner
- * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 @Service
 public class ResContentDataServiceImpl extends TriggeredDataDomainRecalcImpl implements ResContentDataService {
@@ -64,7 +60,7 @@ public class ResContentDataServiceImpl extends TriggeredDataDomainRecalcImpl imp
 
     @Override
     @Transactional
-    public void doRecalcWhenTriggered(final DataDomain datanode) throws Exception {
+    public void doRecalcWhenTriggered(final DataDomain datanode) {
         if (datanode == null) {
             return;
         }
@@ -90,9 +86,13 @@ public class ResContentDataServiceImpl extends TriggeredDataDomainRecalcImpl imp
         try {
             // upload
             this.uploadResLocToDMS((ResLocData) datanode);
+        } catch (IOExceptionWithCause ex) {
+            // error: reset id and set to failed
+            LOGGER.info("IOExceptionWithCause while uploading node to dms:" + datanode.getNameForLogger(), ex);
+            node.setResContentDMSState(UploadWorkflowState.UPLOAD_FAILED);
         } catch (IOException ex) {
             // error: reset id and set to failed
-            LOGGER.error("error while uploading node to dms:" + datanode.getNameForLogger(), ex);
+            LOGGER.error("IOException while uploading node to dms:" + datanode.getNameForLogger(), ex);
             node.setResContentDMSState(UploadWorkflowState.UPLOAD_FAILED);
         }
 
@@ -101,7 +101,7 @@ public class ResContentDataServiceImpl extends TriggeredDataDomainRecalcImpl imp
     }
 
     @Override
-    public List<DBFilter> getDBTriggerFilter() throws IOException {
+    public List<DBFilter> getDBTriggerFilter() {
         List<DBFilter> dbFilters = new ArrayList<DBFilter>();
 
         // filter upload open only
@@ -114,13 +114,14 @@ public class ResContentDataServiceImpl extends TriggeredDataDomainRecalcImpl imp
     }
 
     @Override
-    public void uploadResLocToDMS(final ResLocData datanode) throws IOException {
+    public void uploadResLocToDMS(final ResLocData datanode) throws IOExceptionWithCause, IOException {
         if (!ResContentData.class.isInstance(datanode)) {
             throw new IllegalArgumentException();
         }
         
         // get image from url
-        byte[] response = webshotProvider.getWebShotFromUrl(datanode.getResLocRef());
+        byte[] response;
+        response = webshotProvider.getWebShotFromUrl(datanode.getResLocRef());
 
         // push image to dms
         InputStream input = new ByteArrayInputStream(response);
@@ -129,7 +130,7 @@ public class ResContentDataServiceImpl extends TriggeredDataDomainRecalcImpl imp
 
     @Override
     public void uploadResContentToDMS(final ResContentData datanode, final String fileName, 
-                                      final InputStream input) throws IOException {
+                                      final InputStream input) throws IOExceptionWithCause, IOException {
         if (!UrlResNode.class.isInstance(datanode)) {
             throw new IllegalArgumentException();
         }

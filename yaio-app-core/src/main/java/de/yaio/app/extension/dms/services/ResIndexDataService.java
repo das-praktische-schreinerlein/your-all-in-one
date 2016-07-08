@@ -16,6 +16,7 @@ package de.yaio.app.extension.dms.services;
 import de.yaio.app.core.datadomain.ResIndexData;
 import de.yaio.app.core.datadomain.ResLocData;
 import de.yaio.app.core.datadomainservice.TriggeredDataDomainRecalc;
+import de.yaio.commons.io.IOExceptionWithCause;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,21 +24,17 @@ import java.io.InputStream;
 /** 
  * businesslogic for dataDomain: ResIndexData (index url/file to dms)
  * 
- * @FeatureDomain                BusinessLogic
- * @package                      de.yaio.extension.dms
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category                     collaboration
- * @copyright                    Copyright (c) 2014, Michael Schreiner
- * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public interface ResIndexDataService extends TriggeredDataDomainRecalc {
 
     /** 
      * index the uploaded ResLoc-data to dms
      * @param node                   node
-     * @throws Exception             parser/format-Exceptions possible
+     * @throws IOExceptionWithCause  if something logical went wrong
+     * @throws IOException           if something physical went wrong
      */
-    void indexResLoc(ResLocData node) throws Exception;
+    void indexResLoc(ResLocData node) throws IOExceptionWithCause, IOException;
 
 
     /**
@@ -45,7 +42,9 @@ public interface ResIndexDataService extends TriggeredDataDomainRecalc {
      * @param datanode               node
      * @param fileName               original-filename
      * @param input                  the input to upload (uploadfile or url-webshot)
-     * @throws IOException           Exceptions possible
+     * @throws IOExceptionWithCause  if something logical went wrong
+     * @throws IOException           if something physical went wrong
      */
-    void uploadResIndexToDMS(ResIndexData datanode, String fileName, InputStream input) throws IOException;
+    void uploadResIndexToDMS(ResIndexData datanode, String fileName, InputStream input)
+            throws IOExceptionWithCause, IOException;
 }

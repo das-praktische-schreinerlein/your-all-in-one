@@ -14,6 +14,7 @@
 package de.yaio.app.datatransfer.importer;
 
 import de.yaio.app.core.datadomain.DataDomain;
+import de.yaio.app.datatransfer.common.ParserException;
 
 import java.util.Map;
 
@@ -90,11 +91,10 @@ public interface Importer {
      * @param srcName                Name of the node (for parsing)
      * @param curParentNode          ParentNode
      * @return                       new Node-instance
-     * @throws Exception             parser/format-Exceptions possible
+     * @throws ParserException       parser/format-Exceptions possible
      */
     DataDomain createNodeObjFromText(int id, String strFullSrc, String srcName,
-                                     DataDomain curParentNode)
-                    throws Exception;
+                                     DataDomain curParentNode) throws ParserException;
 
     ////////////////
     // Service-Funktionen

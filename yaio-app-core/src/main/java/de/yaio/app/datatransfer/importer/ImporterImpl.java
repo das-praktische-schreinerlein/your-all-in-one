@@ -14,6 +14,7 @@
 package de.yaio.app.datatransfer.importer;
 
 import de.yaio.app.core.datadomain.DataDomain;
+import de.yaio.app.datatransfer.common.ParserException;
 import de.yaio.app.datatransfer.importer.parser.Parser;
 
 import java.util.HashMap;
@@ -129,14 +130,12 @@ public class ImporterImpl implements Importer {
 
     @Override
     public DataDomain createNodeObjFromText(final int id, final String strFullSrc,
-                                            final String srcName, final DataDomain curParentNode) throws Exception {
+                                            final String srcName, final DataDomain curParentNode) throws ParserException {
         NodeFactory myNodeFactory = this.getNodeFactory();
 
         Class<?> classType = myNodeFactory.getNodeTypeFromText(strFullSrc, srcName);
-        DataDomain myNode = myNodeFactory.createNodeObjFromText(
+        return myNodeFactory.createNodeObjFromText(
                 classType, curId++, strFullSrc, srcName, curParentNode);
-
-        return myNode;
     }
     
 }

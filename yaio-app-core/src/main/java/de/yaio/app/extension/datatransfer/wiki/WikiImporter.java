@@ -13,19 +13,21 @@
  */
 package de.yaio.app.extension.datatransfer.wiki;
 
+import de.yaio.app.core.node.BaseNode;
+import de.yaio.app.core.nodeservice.BaseNodeService;
+import de.yaio.app.datatransfer.common.ParserException;
 import de.yaio.app.datatransfer.exporter.OutputOptions;
 import de.yaio.app.datatransfer.exporter.OutputOptionsImpl;
 import de.yaio.app.datatransfer.importer.ImportOptions;
-import de.yaio.app.extension.datatransfer.ppl.PPLImporter;
-import de.yaio.app.core.node.BaseNode;
-import de.yaio.app.core.nodeservice.BaseNodeService;
 import de.yaio.app.datatransfer.importer.ImportOptionsImpl;
 import de.yaio.app.datatransfer.importer.ImporterImpl;
 import de.yaio.app.extension.datatransfer.ppl.PPLExporter;
+import de.yaio.app.extension.datatransfer.ppl.PPLImporter;
 import de.yaio.app.extension.datatransfer.ppl.PPLService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -257,10 +259,9 @@ public class WikiImporter extends ImporterImpl {
      * @param nodeSrc                nodeSrc to be parsed
      * @param inputOptions           ImportOptions for the parser
      * @return                       list of extracted WikiStructLine
-     * @throws Exception             parser/format-Exceptions possible
      */
     public List<WikiStructLine> extractWikiStructLines(final String nodeSrc,
-            final WikiImportOptions inputOptions) throws Exception {
+            final WikiImportOptions inputOptions) {
         List<WikiStructLine> wikiLines = new ArrayList<WikiStructLine>();
 
         if (nodeSrc == null) {
@@ -382,10 +383,10 @@ public class WikiImporter extends ImporterImpl {
      * @param lstWikiLines           WikiStructLines to be normalized
      * @param inputOptions           ImportOptions for the parser
      * @return                       list of sorted and normalized WikiStructLine
-     * @throws Exception             parser/format-Exceptions possible
+     * @throws ParserException       parser/format-Exceptions possible
      */
     public List<WikiStructLine> normalizeWikiStructLines(final List<WikiStructLine> lstWikiLines, 
-            final WikiImportOptions inputOptions) throws Exception {
+            final WikiImportOptions inputOptions) throws ParserException {
         // temporaere Arbeitslisten
         List<WikiStructLine> lstWikiTab = new ArrayList<WikiStructLine>();
         List<WikiStructLine> lastUe = new ArrayList<WikiStructLine>();
@@ -393,7 +394,8 @@ public class WikiImporter extends ImporterImpl {
 
         if (lstWikiLines != null) {
             // Dummy-Masternode
-            BaseNode masterNode = (BaseNode) importer.createNodeObjFromText(1, "Master", "Master", null);
+            BaseNode masterNode = null;
+            masterNode = (BaseNode) importer.createNodeObjFromText(1, "Master", "Master", null);
             OutputOptions oOptions = new OutputOptionsImpl();
 
             // alle Wikilines iterieren
@@ -581,7 +583,7 @@ public class WikiImporter extends ImporterImpl {
         return lstWikiTab;
     }
     
-    protected void initNodeData(final BaseNode curNode) throws Exception {
+    protected void initNodeData(final BaseNode curNode) {
         curNode.initMetaData();
         curNode.initSysData(true);
     }
@@ -592,10 +594,10 @@ public class WikiImporter extends ImporterImpl {
      * @param src                    src to be parsed
      * @param inputOptions           ImportOptions for the parser
      * @return                       list of extracted WikiStructLine
-     * @throws Exception             parser/format-Exceptions possible
+     * @throws ParserException       parser/format-Exceptions possible
      */
     public List<WikiStructLine> extractWikiStructLinesFromSrc(final String src,
-            final WikiImportOptions inputOptions) throws Exception {
+            final WikiImportOptions inputOptions) throws ParserException {
         // Parameter pruefen
         if (src == null || src.trim().length() <= 0) {
             throw new IllegalArgumentException("Src must not be empty: '" + src + "'");
@@ -624,10 +626,11 @@ public class WikiImporter extends ImporterImpl {
      * @param fileName               fileName to be read and parsed
      * @param inputOptions           ImportOptions for the parser
      * @return                       list of extracted WikiStructLine
-     * @throws Exception             parser/format/io-Exceptions possible
+     * @throws ParserException       parser-Exceptions possible
+     * @throws IOException           io-Exceptions possible
      */
     public List<WikiStructLine> extractWikiStructLinesFromFile(final String fileName,
-            final WikiImportOptions inputOptions) throws Exception {
+            final WikiImportOptions inputOptions) throws IOException, ParserException {
         String fileContent = PPLImporter.readFromFile(fileName);
         List<WikiStructLine> wikiLines = extractWikiStructLinesFromSrc(fileContent, inputOptions);
 

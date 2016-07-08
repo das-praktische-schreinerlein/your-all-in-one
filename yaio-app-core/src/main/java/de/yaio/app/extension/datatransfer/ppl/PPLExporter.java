@@ -47,7 +47,7 @@ public class PPLExporter extends ExporterImpl {
     ////////////////
     @Override
     public String getMasterNodeResult(final DataDomain masterNode,
-            final OutputOptions oOptions) throws Exception {
+            final OutputOptions oOptions) {
         // Parameter pruefen
         if (masterNode == null) {
             throw new IllegalArgumentException("Masternode must not be null: '" + masterNode + "'");
@@ -58,7 +58,7 @@ public class PPLExporter extends ExporterImpl {
 
     @Override
     public StringBuffer getNodeResult(final DataDomain node,
-            final String pPraefix, final OutputOptions oOptions) throws Exception {
+            final String pPraefix, final OutputOptions oOptions) {
         // Parameter pruefen
         if (node == null) {
             throw new IllegalArgumentException("Node must not be null: '" + node + "'");

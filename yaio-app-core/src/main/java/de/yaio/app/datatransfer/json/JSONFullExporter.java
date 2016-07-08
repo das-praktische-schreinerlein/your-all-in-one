@@ -14,6 +14,7 @@
 package de.yaio.app.datatransfer.json;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -22,9 +23,9 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import de.yaio.app.core.datadomain.DataDomain;
 import de.yaio.app.core.node.*;
-import de.yaio.app.datatransfer.exporter.OutputOptions;
 import de.yaio.app.core.nodeservice.NodeService;
 import de.yaio.app.datatransfer.exporter.ExporterImpl;
+import de.yaio.app.datatransfer.exporter.OutputOptions;
 import org.apache.log4j.Logger;
 
 import java.util.Collections;
@@ -68,7 +69,7 @@ public class JSONFullExporter extends ExporterImpl {
     ////////////////
     @Override
     public String getMasterNodeResult(final DataDomain pMasterNode,
-            final OutputOptions oOptions) throws Exception {
+            final OutputOptions oOptions) {
         DataDomain masterNode = pMasterNode;
         // Parameter pruefen
         if (masterNode == null) {
@@ -102,8 +103,7 @@ public class JSONFullExporter extends ExporterImpl {
     // service-functions to generate JSON from node
     ////////////////
     @Override
-    public StringBuffer getNodeResult(final DataDomain curNode,  final String praefix,
-            final OutputOptions oOptions) throws Exception {
+    public StringBuffer getNodeResult(final DataDomain curNode,  final String praefix, final OutputOptions oOptions) {
         StringBuffer res = new StringBuffer();
         BaseNode node = (BaseNode) curNode;
         
@@ -127,7 +127,11 @@ public class JSONFullExporter extends ExporterImpl {
                         "node '" + node.getSysUID() + "' found", 
                         node, 
                         parentIdHierarchy);
-        res.append(writer.writeValueAsString(response));
+        try {
+            res.append(writer.writeValueAsString(response));
+        }catch (JsonProcessingException ex) {
+            throw new IllegalArgumentException("cant write object as json", ex);
+        }
 
         return res;
     }

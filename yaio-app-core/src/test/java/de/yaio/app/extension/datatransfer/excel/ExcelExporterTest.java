@@ -12,22 +12,23 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 package de.yaio.app.extension.datatransfer.excel;
-import static org.junit.Assert.assertEquals;
 
-import java.io.ByteArrayOutputStream;
-import java.io.OutputStream;
-
-import de.yaio.app.extension.datatransfer.excel.ExcelExporter;
-import de.yaio.app.extension.datatransfer.excel.ExcelOutputOptions;
+import de.yaio.app.core.datadomain.DataDomain;
+import de.yaio.app.core.node.BaseNode;
+import de.yaio.app.datatransfer.common.ConverterException;
+import de.yaio.app.datatransfer.common.ParserException;
+import de.yaio.app.datatransfer.exporter.Exporter;
+import de.yaio.app.extension.datatransfer.wiki.WikiExporterTest;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.springframework.mock.staticmock.MockStaticEntityMethods;
 
-import de.yaio.app.core.datadomain.DataDomain;
-import de.yaio.app.core.node.BaseNode;
-import de.yaio.app.datatransfer.exporter.Exporter;
-import de.yaio.app.extension.datatransfer.wiki.WikiExporterTest;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+
+import static org.junit.Assert.assertEquals;
 
 /** 
  * test of the excel-exporter-logic<br>
@@ -45,12 +46,12 @@ import de.yaio.app.extension.datatransfer.wiki.WikiExporterTest;
 public class ExcelExporterTest extends WikiExporterTest {
 
     @Override
-    public Exporter setupNewExporter() throws Exception {
+    public Exporter setupNewExporter() {
         return new ExcelExporter();
     }
     
     @Override
-    public void testExport() throws Exception {
+    public void testExport() throws ConverterException, ParserException, IOException {
         testExportFromFixture("FixtureExcelExportSource.ppl", "FixtureExcelExportResult.xls"); 
     }
 
@@ -58,8 +59,9 @@ public class ExcelExporterTest extends WikiExporterTest {
      * parse the ppl-source, format it and compare the result with expectedResult 
      * @param source                 the ppl-lines to parse and to convert
      * @param expectedResult         the expected lines from exporter
-     * @throws Exception             possible Exception     */
-    public synchronized void testExport(final String source, final String expectedResult) throws Exception {
+     * @throws ParserException             possible Exception
+     **/
+    public synchronized void testExport(final String source, final String expectedResult) throws ParserException, IOException {
         // parse
         DataDomain masterNode  = importerObj.createNodeObjFromText(1, "Test", "Test", null);
         String delimiter = "\t";

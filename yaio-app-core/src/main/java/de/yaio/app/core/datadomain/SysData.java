@@ -39,8 +39,8 @@ public interface SysData extends DataDomain {
     Date getSysChangeDate();
     void setSysChangeDate(Date sysChangeDate);
 
-    String getDataBlocks4CheckSum() throws Exception;
-    void initSysData(boolean flgForceUpdate) throws Exception;
+    String getDataBlocks4CheckSum();
+    void initSysData(boolean flgForceUpdate);
 
     void resetSysData();
 }

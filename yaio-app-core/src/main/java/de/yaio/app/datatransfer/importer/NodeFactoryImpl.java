@@ -13,11 +13,12 @@
  */
 package de.yaio.app.datatransfer.importer;
 
+import de.yaio.app.core.datadomain.BaseData;
 import de.yaio.app.core.datadomain.DataDomain;
 import de.yaio.app.core.datadomainservice.MetaDataService;
-import de.yaio.app.datatransfer.importer.parser.*;
-import de.yaio.app.core.datadomain.BaseData;
 import de.yaio.app.core.node.BaseNode;
+import de.yaio.app.datatransfer.common.ParserException;
+import de.yaio.app.datatransfer.importer.parser.*;
 import org.apache.log4j.Logger;
 
 import java.lang.reflect.Constructor;
@@ -132,7 +133,7 @@ public class NodeFactoryImpl implements NodeFactory {
     // Parser-Funktionen
     ////////////////
     @Override
-    public int parseNodeDataDomains(final DataDomain node, final ImportOptions options)  throws Exception {
+    public int parseNodeDataDomains(final DataDomain node, final ImportOptions options) throws ParserException {
         int found = 0;
         for (Parser parser : getDataDomainParser()) {
             found += this.parseNodeDataDomain(node, parser, options);
@@ -142,7 +143,7 @@ public class NodeFactoryImpl implements NodeFactory {
 
     @Override
     public int parseNodeDataDomain(final DataDomain node, final Parser parser, 
-                                   final ImportOptions options) throws Exception {
+                                   final ImportOptions options) throws ParserException {
         // nur parsen, wenn zustaendig
         if (parser.getTargetClass().isInstance(node)) {
             return parser.parseFromName(node, options);
@@ -160,7 +161,7 @@ public class NodeFactoryImpl implements NodeFactory {
     @Override
     public DataDomain createNodeObjFromText(final Class<?> classType, final int id, 
                                             final String strFullSrc, final String pSrcName,
-            final DataDomain curParentNode) throws Exception {
+                                            final DataDomain curParentNode)throws ParserException {
         String srcName = pSrcName;
 
         // Node anlegen
@@ -172,10 +173,15 @@ public class NodeFactoryImpl implements NodeFactory {
         }
 
         // Node anhand des Konstruktors anlegen
-        Constructor<?> constr = classType.getDeclaredConstructor(
-                CONST_NODE_CONSTRUCTOR
-                );
-        BaseData node = (BaseData) constr.newInstance();
+        BaseData node = null;
+        try {
+            Constructor<?> constr = classType.getDeclaredConstructor(CONST_NODE_CONSTRUCTOR);
+            node = (BaseData) constr.newInstance();
+        } catch (NoSuchMethodException ex) {
+            throw new IllegalArgumentException("constructor for class not exists", ex);
+        } catch (ReflectiveOperationException ex) {
+            throw new IllegalArgumentException("cant instantiate object of class", ex);
+        }
 
         // Nodetype extrahieren
         Map<String, Class<?>> hshCurNodeTypeIdentifier = this.hshNodeTypeIdentifier;
@@ -207,7 +213,7 @@ public class NodeFactoryImpl implements NodeFactory {
     }
 
     @Override
-    public Class<?> getNodeTypeFromText(final String strFullSrc, final String srcName) throws Exception {
+    public Class<?> getNodeTypeFromText(final String strFullSrc, final String srcName) {
         // Node-Klasse festlegen
         Class<?> classType = BaseNode.class;
         Map<String, Class<?>> hshCurNodeTypeIdentifier = this.hshNodeTypeIdentifier;
@@ -225,12 +231,12 @@ public class NodeFactoryImpl implements NodeFactory {
     }
 
     protected String getNodeTypeIdentifierFromText(
-            final Map<String, Class<?>>hshCurNodeTypeIdentifier, final String srcName) throws Exception {
+            final Map<String, Class<?>>hshCurNodeTypeIdentifier, final String srcName) {
         // TODO - change implementation: extract first word an check if key exists in hash
         for (Iterator<String> iter = hshCurNodeTypeIdentifier.keySet().iterator();
                 iter.hasNext();) {
             // die Identifier durchlaufen und den ersten Treffer benutzen
-            String typeIdentifier = iter.next().toString();
+            String typeIdentifier = iter.next();
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Check typeIdentifier:" + typeIdentifier + " for Name:" + srcName);
             }

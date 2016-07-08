@@ -17,15 +17,14 @@ import de.yaio.app.core.datadomain.BaseWorkflowData;
 import de.yaio.app.core.datadomain.DataDomain;
 import de.yaio.app.core.datadomain.WorkflowState;
 import de.yaio.app.core.node.BaseNode;
-import de.yaio.app.utils.db.DBFilter;
 import de.yaio.app.core.nodeservice.NodeService;
+import de.yaio.app.utils.db.DBFilter;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
-import java.util.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -46,7 +45,7 @@ public class WorkflowRecalcDataServiceImpl extends TriggeredDataDomainRecalcImpl
 
     @Override
     @Transactional
-    public void doRecalcWhenTriggered(final DataDomain datanode) throws Exception {
+    public void doRecalcWhenTriggered(final DataDomain datanode) {
         if (datanode == null) {
             return;
         }
@@ -62,21 +61,21 @@ public class WorkflowRecalcDataServiceImpl extends TriggeredDataDomainRecalcImpl
             // recalc
             baseWorkflowDataService.doRecalcBeforeChildren(node, NodeService.RecalcRecurseDirection.ONLYME);
             baseWorkflowDataService.doRecalcAfterChildren(node, NodeService.RecalcRecurseDirection.ONLYME);
-        } catch (IOException ex) {
+
+            // save node
+            node.getBaseNodeDBService().updateBaseNode(node);
+        } catch (IllegalArgumentException ex) {
             LOGGER.error("error while recalcing node:" + node.getNameForLogger(), ex);
         }
-
-        // save node
-        node.getBaseNodeDBService().updateBaseNode(node);
     }
 
     @Override
-    protected String createSort() throws Exception {
+    protected String createSort() {
         return "order by ebene desc";
     }
 
     @Override
-    public List<DBFilter> getDBTriggerFilter() throws IOException {
+    public List<DBFilter> getDBTriggerFilter() {
         List<DBFilter> dbFilters = new ArrayList<DBFilter>();
 
         // filter open and running only

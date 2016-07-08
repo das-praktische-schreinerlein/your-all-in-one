@@ -14,8 +14,11 @@
 package de.yaio.app.core.datadomain;
 
 import de.yaio.app.core.node.InfoNode;
+import de.yaio.app.datatransfer.common.ParserException;
 import de.yaio.app.datatransfer.exporter.formatter.MetaDataFormatterImpl;
 import de.yaio.app.datatransfer.importer.parser.MetaDataParserImpl;
+
+import java.text.ParseException;
 
 /** 
  * test of the datadomain-logic: MetaData<br>
@@ -55,30 +58,30 @@ public class MetaDataTest extends DataDomainTest {
     }
 
     @Override
-    public void setupParser() throws Exception {
+    public void setupParser() {
         parser = new MetaDataParserImpl();
     }
 
     @Override
-    public void setupFormatter() throws Exception {
+    public void setupFormatter() {
         formatter = new MetaDataFormatterImpl();
     }
 
     @Override
-    public TestObj setupNewTestObj() throws Exception {
+    public TestObj setupNewTestObj() {
         return new MetaDataTestObj();
     }
     
     /** 
      * setup the a TestObj for the test
      * @return                       a new dataobj for the test
-     * @throws Exception             possible Exception     */
-    protected MetaDataTestObj getNewMetaDataTestObj() throws Exception  {
+     **/
+    protected MetaDataTestObj getNewMetaDataTestObj() {
         return (MetaDataTestObj) setupNewTestObj();
     }
 
     @Override
-    public void testParser() throws Exception {
+    public void testParser() throws ParserException {
         MetaDataTestObj mytestObj = null;
         String expected = null;
 
@@ -96,7 +99,7 @@ public class MetaDataTest extends DataDomainTest {
     }
 
     @Override
-    public void testFormatter() throws Exception {
+    public void testFormatter() throws ParseException {
         MetaDataTestObj mytestObj = null;
         String expected = null;
         

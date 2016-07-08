@@ -60,15 +60,15 @@ public abstract class DataDomainServiceTest extends BaseTest {
     
     /** 
      * setup the datadomainservice-obj to test
-     * @throws Exception             possible Exception     */
+     **/
     @Before
-    public abstract void setupDataDomainService() throws Exception;
+    public abstract void setupDataDomainService();
     
     @Test
     /** 
      * do the ServiceRecalc-tests
-     * @throws Exception             possible Exception     */
-    public abstract void testServiceDoRecalc() throws Exception;
+     **/
+    public abstract void testServiceDoRecalc();
 
     /** 
      * does a datadomainservice-test on the datadomainservice-obj with the dataobj<br>
@@ -79,11 +79,11 @@ public abstract class DataDomainServiceTest extends BaseTest {
      * @param expectedAfterDoBeforeChildren the expected result after call doRecalcBeforeChildren
      * @param expectedAfterDoAfterChildren the expected result after call doRecalcAfterChildren
      * @param recurseDirection       direction of recalc
-     * @throws Exception             possible Exception     */
+     **/
     public void testServiceDoRecalc(final TestObj testObj, 
                     final String expectedAfterDoBeforeChildren,
                     final String expectedAfterDoAfterChildren,
-                    final NodeService.RecalcRecurseDirection recurseDirection) throws Exception {
+                    final NodeService.RecalcRecurseDirection recurseDirection) {
         
         DataDomain myDataDomainObj = (DataDomain) testObj;
         
@@ -109,5 +109,5 @@ public abstract class DataDomainServiceTest extends BaseTest {
         }
         dataDomainService.doRecalcAfterChildren(myDataDomainObj, recurseDirection);
         testService.checkToStringResult(testObj, expectedAfterDoAfterChildren);
-    };
+    }
 }

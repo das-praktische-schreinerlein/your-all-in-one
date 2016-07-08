@@ -13,7 +13,7 @@
  */
 package de.yaio.app.config;
 
-import de.yaio.app.utils.config.Configuration;
+import de.yaio.commons.config.Configuration;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

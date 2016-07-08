@@ -44,7 +44,7 @@ public class JobWorkflowRecalcer {
                initialDelayString = "${yaio.jobs.workflowRecalcer.initialDelay}"
 //               cron = "${yaio.jobs.workflowRecalcer.cron}"
                )
-    public void doSearchAndTrigger() throws Exception {
+    public void doSearchAndTrigger() {
         LOGGER.info("start job");
         workflowDataService.doSearchAndTrigger();
         LOGGER.info("end job");

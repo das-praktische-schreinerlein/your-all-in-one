@@ -13,31 +13,34 @@
  */
 package de.yaio.app.server.controller;
 
+import de.yaio.app.core.node.BaseNode;
+import de.yaio.app.datatransfer.common.ParserException;
+import de.yaio.app.datatransfer.jpa.JPAExporter;
 import de.yaio.app.extension.datatransfer.common.ExtendedDatatransferUtils;
 import de.yaio.app.extension.datatransfer.ppl.PPLImporter;
+import de.yaio.app.extension.datatransfer.wiki.WikiImportOptions;
 import de.yaio.app.extension.datatransfer.wiki.WikiImporter;
 import de.yaio.app.server.restcontroller.NodeActionResponse;
 import de.yaio.app.server.restcontroller.NodeRestController;
-import de.yaio.app.core.node.BaseNode;
-import de.yaio.app.datatransfer.jpa.JPAExporter;
-import de.yaio.app.extension.datatransfer.wiki.WikiImportOptions;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.IOException;
+
+import static org.apache.http.HttpStatus.SC_BAD_REQUEST;
+import static org.apache.http.HttpStatus.SC_INTERNAL_SERVER_ERROR;
 
 /** 
  * Upload-Services to import BaseNodes in different 
  * formats (wiki, ppl, excel..)
  *  
- * @FeatureDomain                Webservice
- * @package                      de.yaio.server.controller
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category                     collaboration
- * @copyright                    Copyright (c) 2014, Michael Schreiner
- * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 @Controller
 @RequestMapping("/imports")
@@ -52,7 +55,10 @@ public class ImportController {
     @Autowired
     protected ExtendedDatatransferUtils datatransferUtils;
 
-    /** 
+    // Logger
+    private static final Logger LOGGER = Logger.getLogger(ExportController.class);
+
+    /**
      * Request to import the uploaded wiki-file from param "file" to the 
      * node parentSysUID returning a simple message
      * @param parentSysUID           sysUID to append the new nodes
@@ -64,7 +70,7 @@ public class ImportController {
                     value = "/wiki/{parentSysUID}", 
                     produces = "text/html")
     public String importNodeAsWiki(@PathVariable(value = "parentSysUID") final String parentSysUID,
-                                   @RequestParam("file") final MultipartFile file) {
+                                   @RequestParam("file") final MultipartFile file) throws IOException, ParserException {
         NodeActionResponse response = new NodeActionResponse(
                         "ERROR", "node '" + parentSysUID + "' doesnt exists", 
                         null, null, null, null);
@@ -77,47 +83,37 @@ public class ImportController {
         
         // check file
         if (!file.isEmpty()) {
-            try {
-                // copy to tmpFile
-                File tmpFile = File.createTempFile("upload", "wiki");
-                tmpFile.deleteOnExit();
-                file.transferTo(tmpFile);
-                
-                // read filecontent + delete
-                String wikiSrc = PPLImporter.readFromInput(tmpFile);
-                tmpFile.delete();
+            // copy to tmpFile
+            File tmpFile = File.createTempFile("upload", "wiki");
+            tmpFile.deleteOnExit();
+            file.transferTo(tmpFile);
 
-                // read the childnodes only 1 level
-                node.initChildNodesFromDB(0);
-                
-                // create dummy masternode
-                BaseNode masterNode = datatransferUtils.createTemporaryMasternode(
-                                parentSysUID, node.getMetaNodePraefix(), node.getMetaNodeNummer());
-                
-                // Parser+Options anlegen
-                WikiImportOptions inputOptions = new WikiImportOptions();
-                inputOptions.setFlgReadList(true);
-                inputOptions.setFlgReadUe(true);
-                inputOptions.setStrDefaultMetaNodePraefix(masterNode.getMetaNodePraefix());
-                WikiImporter wikiImporter = new WikiImporter(inputOptions);
-                datatransferUtils.parseNodesFromWiki(wikiImporter, inputOptions, masterNode, wikiSrc);
-                
-                // JPA-Exporter
-                JPAExporter jpaExporter = new JPAExporter();
-                jpaExporter.getMasterNodeResult(masterNode, null);
-                
-                // create new response
-                response = NodeRestController.createResponseObj(
-                                node, "data for node '" + parentSysUID + "' imported", true);
+            // read filecontent + delete
+            String wikiSrc = PPLImporter.readFromInput(tmpFile);
+            tmpFile.delete();
 
-            } catch (Exception e) {
-                e.printStackTrace();
-                return new NodeActionResponse(
-                    "ERROR", 
-                    "You failed to upload data to node '" 
-                        + parentSysUID + "' => " + e, 
-                    null, null, null, null).getStateMsg();
-            }
+            // read the childnodes only 1 level
+            node.initChildNodesFromDB(0);
+
+            // create dummy masternode
+            BaseNode masterNode = datatransferUtils.createTemporaryMasternode(
+                            parentSysUID, node.getMetaNodePraefix(), node.getMetaNodeNummer());
+
+            // Parser+Options anlegen
+            WikiImportOptions inputOptions = new WikiImportOptions();
+            inputOptions.setFlgReadList(true);
+            inputOptions.setFlgReadUe(true);
+            inputOptions.setStrDefaultMetaNodePraefix(masterNode.getMetaNodePraefix());
+            WikiImporter wikiImporter = new WikiImporter(inputOptions);
+            datatransferUtils.parseNodesFromWiki(wikiImporter, inputOptions, masterNode, wikiSrc);
+
+            // JPA-Exporter
+            JPAExporter jpaExporter = new JPAExporter();
+            jpaExporter.getMasterNodeResult(masterNode, null);
+
+            // create new response
+            response = NodeRestController.createResponseObj(
+                            node, "data for node '" + parentSysUID + "' imported", true);
         } else {
             return new NodeActionResponse(
                     "ERROR", 
@@ -141,7 +137,7 @@ public class ImportController {
                     value = "/json/{parentSysUID}", 
                     produces = "text/html")
     public String importNodeAsJson(@PathVariable(value = "parentSysUID") final String parentSysUID,
-                                   @RequestParam("file") final MultipartFile file) {
+                                   @RequestParam("file") final MultipartFile file) throws IOException, ParserException {
         NodeActionResponse response = new NodeActionResponse(
                         "ERROR", "node '" + parentSysUID + "' doesnt exists", 
                         null, null, null, null);
@@ -154,44 +150,35 @@ public class ImportController {
         
         // check file
         if (!file.isEmpty()) {
-            try {
-                // copy to tmpFile
-                File tmpFile = File.createTempFile("upload", "json");
-                tmpFile.deleteOnExit();
-                file.transferTo(tmpFile);
-                
-                // read filecontent + delete
-                String jsonSrc = PPLImporter.readFromInput(tmpFile);
-                tmpFile.delete();
+            // copy to tmpFile
+            File tmpFile = File.createTempFile("upload", "json");
+            tmpFile.deleteOnExit();
+            file.transferTo(tmpFile);
 
-                // read the childnodes only 1 level
-                node.initChildNodesFromDB(0);
-                
-                // create dummy masternode
-                BaseNode masterNode = datatransferUtils.createTemporaryMasternode(
-                                parentSysUID, node.getMetaNodePraefix(), node.getMetaNodeNummer());
-                
-                // Parser+Options anlegen
-                WikiImportOptions inputOptions = new WikiImportOptions();
-                inputOptions.setStrDefaultMetaNodePraefix(masterNode.getMetaNodePraefix());
-                datatransferUtils.parseValidatedNodesFromJson(inputOptions, masterNode, jsonSrc);
-                
-                // JPA-Exporter
-                JPAExporter jpaExporter = new JPAExporter();
-                jpaExporter.getMasterNodeResult(masterNode, null);
-                
-                // create new response
-                response = NodeRestController.createResponseObj(
-                                node, "data for node '" + parentSysUID + "' imported", true);
-            } catch (Exception e) {
-                e.printStackTrace();
-                return new NodeActionResponse(
-                    "ERROR", 
-                    "You failed to upload data to node '" 
-                        + parentSysUID + "' => " + e, 
-                    null, null, null, null).getStateMsg();
-            }
-        } else {
+            // read filecontent + delete
+            String jsonSrc = PPLImporter.readFromInput(tmpFile);
+            tmpFile.delete();
+
+            // read the childnodes only 1 level
+            node.initChildNodesFromDB(0);
+
+            // create dummy masternode
+            BaseNode masterNode = datatransferUtils.createTemporaryMasternode(
+                            parentSysUID, node.getMetaNodePraefix(), node.getMetaNodeNummer());
+
+            // Parser+Options anlegen
+            WikiImportOptions inputOptions = new WikiImportOptions();
+            inputOptions.setStrDefaultMetaNodePraefix(masterNode.getMetaNodePraefix());
+            datatransferUtils.parseValidatedNodesFromJson(inputOptions, masterNode, jsonSrc);
+
+            // JPA-Exporter
+            JPAExporter jpaExporter = new JPAExporter();
+            jpaExporter.getMasterNodeResult(masterNode, null);
+
+            // create new response
+            response = NodeRestController.createResponseObj(
+                            node, "data for node '" + parentSysUID + "' imported", true);
+       } else {
             return new NodeActionResponse(
                     "ERROR", 
                     "You failed to upload to node '" 
@@ -200,5 +187,29 @@ public class ImportController {
         }            
         
         return response.getStateMsg();
+    }
+
+    @ExceptionHandler(ParserException.class)
+    public String handleCustomException(final HttpServletRequest request, final ParserException e,
+                                        final HttpServletResponse response) {
+        LOGGER.info("ParserException while running request:" + request.toString(), e);
+        response.setStatus(SC_BAD_REQUEST);
+        return "cant parse uploaded source => " + e.getMessage();
+    }
+
+    @ExceptionHandler(IOException.class)
+    public String handleCustomException(final HttpServletRequest request, final IOException e,
+                                        final HttpServletResponse response) {
+        LOGGER.info("IOException while running request:" + request.toString(), e);
+        response.setStatus(SC_BAD_REQUEST);
+        return "cant handle uploaded file => " + e.getMessage();
+    }
+
+    @ExceptionHandler(value = {Exception.class, RuntimeException.class})
+    public String handleAllException(final HttpServletRequest request, final Exception e,
+                                     final HttpServletResponse response) {
+        LOGGER.warn("error while running request:" + request.toString(), e);
+        response.setStatus(SC_INTERNAL_SERVER_ERROR);
+        return "cant export node";
     }
 }

@@ -16,23 +16,22 @@
 # @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
 
 # set pathes
-YAIOSCRIPTPATH=$(dirname $0)/
+YAIOSCRIPTPATH=$(dirname $(readlink -f $0))
 YAIOBASEPATH=${YAIOSCRIPTPATH}
 BASEPATH=${YAIOBASEPATH}
 YAIOCONFIGPATH=${YAIOSCRIPTPATH}../config/
 
 # init config
 . ${YAIOCONFIGPATH}/config-server.sh ${YAIOSCRIPTPATH}
-
-CMD="java ${JAVAOPTIONS} -cp ${CP} ${PROG_FLYWAY} ${FLYWAYCFGFILE}"
+CMD="java ${JAVAOPTIONS} -cp \"${CP}\" ${PROG_FLYWAY} ${FLYWAYCFG}"
 echo "run-flyway: ${CMD}"
-${CMD} &
+${CMD}
 
 # add --debug option to see the startprocess of spring-boot
-CMD="java ${JAVAOPTIONS} -cp ${CP} ${PROG_APP} ${CFG} ${NEWID_OPTIONS}"
+CMD="java ${JAVAOPTIONS} -cp \"${CP}\" ${PROG_APP} ${CFG} ${NEWID_OPTIONS}"
 echo "start-yaioapp: ${CMD}"
 ${CMD} &
 
-CMD="java ${JAVAOPTIONS} -cp ${CP} ${PROG_APPPROPAGATOR} ${CFG}"
+CMD="java ${JAVAOPTIONS} -cp \"${CP}\" ${PROG_APPPROPAGATOR} ${CFG}"
 echo "start-apppropagator: ${CMD}"
 ${CMD} &

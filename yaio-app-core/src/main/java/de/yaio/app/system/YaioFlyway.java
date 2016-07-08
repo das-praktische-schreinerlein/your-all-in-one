@@ -14,8 +14,8 @@
 package de.yaio.app.system;
 
 import de.yaio.app.config.YaioConfiguration;
-import de.yaio.app.utils.config.Configuration;
-import de.yaio.app.utils.config.ConfigurationOption;
+import de.yaio.commons.config.Configuration;
+import de.yaio.commons.config.ConfigurationOption;
 import org.apache.log4j.Logger;
 import org.flywaydb.core.Flyway;
 
@@ -31,9 +31,8 @@ public class YaioFlyway {
     /**
      * do flyway on db
      * @return                       result-message
-     * @throws Exception             possible io/db/recalc-Exceptions
      */
-    public static String doFlyway() throws Exception {
+    public static String doFlyway() {
         // do flyWay before applicationContext
         Configuration config = YaioConfiguration.getInstance();
         if ("true".equalsIgnoreCase(

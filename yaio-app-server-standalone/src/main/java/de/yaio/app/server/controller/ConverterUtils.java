@@ -15,6 +15,7 @@ package de.yaio.app.server.controller;
 
 import de.yaio.app.config.YaioConfiguration;
 import de.yaio.app.core.node.BaseNode;
+import de.yaio.app.datatransfer.common.ConverterException;
 import de.yaio.app.datatransfer.exporter.Exporter;
 import de.yaio.app.datatransfer.exporter.OutputOptions;
 import de.yaio.app.datatransfer.exporter.OutputOptionsImpl;
@@ -26,6 +27,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -38,19 +40,13 @@ import java.util.regex.Pattern;
  * Services to parse text to nodes and convert them in different 
  * formats (wiki, ppl, excel..)
  *  
- * @FeatureDomain                Webservice
- * @package                      de.yaio.server.controller
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category                     collaboration
- * @copyright                    Copyright (c) 2014, Michael Schreiner
- * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 @Service
 public class ConverterUtils {
 
     // Logger
-    private static final Logger LOGGER =
-            Logger.getLogger(ConverterUtils.class);
+    private static final Logger LOGGER = Logger.getLogger(ConverterUtils.class);
 
     /** 
      * read the node and use the converter to convert it with all children to
@@ -65,19 +61,18 @@ public class ConverterUtils {
      */
     public String exportNode(final String sysUID, final Exporter exporter,
                              final OutputOptions oOptions, final String extension,
-                             final HttpServletResponse response) {
+                             final HttpServletResponse response) throws ConverterException {
         // find a specific node
-        try {
-            BaseNode node = BaseNode.findBaseNode(sysUID);
-            if (node != null && !exporter.hasOwnNodeReader()) {
-                node.initChildNodesFromDB(-1);
-            }
-            
-            return exportNode(node, exporter, oOptions, extension, response);
-        } catch (Exception ex) {
-            LOGGER.error("error while exporting sysUID:" + sysUID, ex);
-            return "";
+        BaseNode node = BaseNode.findBaseNode(sysUID);
+        if (node == null) {
+            throw new ConverterException("cant find node for sysUID", sysUID,
+                    new IllegalArgumentException("sysUID not found"));
         }
+        if (!exporter.hasOwnNodeReader()) {
+            node.initChildNodesFromDB(-1);
+        }
+
+        return exportNode(node, exporter, oOptions, extension, response);
     }
 
     /** 
@@ -90,11 +85,11 @@ public class ConverterUtils {
      * @param extension              the fileextension for the Content-Disposition
      * @param response               the response-Obj to set contenttype and headers
      * @return                       String - export-format of the node
-     * @throws Exception             possible Exceptions
+     * @throws ConverterException    possible Exceptions
      */
     public String exportNode(final BaseNode node, final Exporter exporter, 
                              final OutputOptions oOptions, final String extension,
-                             final HttpServletResponse response) throws Exception {
+                             final HttpServletResponse response) throws ConverterException {
         // find a specific node
         String res = "";
         if (node != null) {
@@ -127,19 +122,18 @@ public class ConverterUtils {
     public String commonExportNodeAsHtml(final String sysUID,
                                          final OutputOptions oOptions,
                                          final HttpServletResponse response,
-                                         final String pTplFile) {
-        try {
-            // read node
-            BaseNode node = BaseNode.findBaseNode(sysUID);
-            if (node != null) {
-                node.initChildNodesFromDB(-1);
-            }
-            
-            return commonExportNodeAsHtml(node, oOptions, response, pTplFile);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "";
+                                         final String pTplFile) throws ConverterException {
+        // read node
+        BaseNode node = BaseNode.findBaseNode(sysUID);
+        if (node == null) {
+            throw new ConverterException("cant find node for sysUID", sysUID,
+                    new IllegalArgumentException("sysUID not found"));
         }
+        if (node != null) {
+            node.initChildNodesFromDB(-1);
+        }
+
+        return commonExportNodeAsHtml(node, oOptions, response, pTplFile);
     }
 
     /** 
@@ -150,12 +144,12 @@ public class ConverterUtils {
      * @param response               the response-Obj to set contenttype and headers
      * @param pTplFile               path to tplFile-resource (if null=defaultfile will used; if empty=ignored)
      * @return                       String - html-format of the node
-     * @throws Exception             IOException and Parser-Exceptions possible
+     * @throws ConverterException    IOException and Parser-Exceptions possible
      */
     public String commonExportNodeAsHtml(final BaseNode basenode,
                                          final OutputOptions oOptions,
                                          final HttpServletResponse response,
-                                         final String pTplFile) throws Exception {
+                                         final String pTplFile) throws ConverterException {
         Exporter exporter = new HtmlExporter();
         String res = "";
         String tplFile = pTplFile;
@@ -166,11 +160,9 @@ public class ConverterUtils {
         }
         // run export
         res = this.exportNode(basenode, exporter, oOptions, ".html", response);
-        if (tplFile != "") {
+        if (!StringUtils.isEmpty(tplFile)) {
             // read tpl
-            InputStream in = this.getClass().getResourceAsStream(tplFile);
-            String content = IOUtils.toString(in);
-            in.close();
+            String content = readTplFileAsStream(tplFile);
 
             Pattern pattern = Pattern.compile("\\<\\!-- REPLACECONTENT_START --\\>.*<\\!-- REPLACECONTENT_END --\\>", 
                             Pattern.DOTALL);
@@ -216,12 +208,12 @@ public class ConverterUtils {
      * @param pTplFile               path to tplFile-resource (if null=defaultfile will used; if empty=ignored)
      * @param flgExport              if set it will be prepared as export (baseref will be set and static is default datasource)
      * @return                       String - html-format of the node
-     * @throws Exception             IOException and Parser-Exceptions possible
+     * @throws ConverterException    IOException and Parser-Exceptions possible
      */
     public String commonExportNodeAsYaioApp(final String sysUID,
                                          final HttpServletResponse response,
                                          final String pTplFile,
-                                         final boolean flgExport) {
+                                         final boolean flgExport) throws ConverterException {
         // configure
         Exporter exporter = new JSONFullExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
@@ -238,74 +230,66 @@ public class ConverterUtils {
                    + " childNodes: []}";
         
         List<String> addResBaseUrls = new ArrayList<String>();
-        try {
-            
-            if (!StringUtils.isEmpty(sysUID)) {
-                res = this.exportNode(sysUID, exporter, oOptions, ".json", response);
+        if (!StringUtils.isEmpty(sysUID)) {
+            res = this.exportNode(sysUID, exporter, oOptions, ".json", response);
+        }
+
+        if (!StringUtils.isEmpty(tplFile)) {
+            // read tpl
+            String content = readTplFileAsStream(tplFile);
+
+            // Include static json
+            Pattern pattern = Pattern.compile("\\<\\!-- INCLUDESTATICJSON_SNIP --\\>.*\\<\\!-- INCLUDESTATICJSON_SNAP --\\>", Pattern.DOTALL);
+            String replacement = "<!-- INCLUDESTATICJSON_SNIP -->\n"
+                            + "<script type=\"text/javascript\">\n"
+                            + "window.yaioUseStaticJson = " + (flgExport ? "true" : " false") + ";\n"
+                            + "window.yaioStaticJSON = " + res.replaceAll("/", "\\\\/") + ";\n"
+                            + "</script>\n"
+                            + "<!-- INCLUDESTATICJSON_SNAP -->\n";
+            Matcher matcher = pattern.matcher(content);
+            StringBuffer buffer = new StringBuffer();
+            while (matcher.find()) {
+                matcher.appendReplacement(buffer, "");
+                buffer.append(replacement);
             }
+            matcher.appendTail(buffer);
+            content =  buffer.toString();
 
-            if (tplFile != "") {
-                // read tpl
-                InputStream in = this.getClass().getResourceAsStream(tplFile);
-                String content = IOUtils.toString(in);
-                in.close();
-
-                // Include static json
-                Pattern pattern = Pattern.compile("\\<\\!-- INCLUDESTATICJSON_SNIP --\\>.*\\<\\!-- INCLUDESTATICJSON_SNAP --\\>", Pattern.DOTALL);
-                String replacement = "<!-- INCLUDESTATICJSON_SNIP -->\n"
-                                + "<script type=\"text/javascript\">\n" 
-                                + "window.yaioUseStaticJson = " + (flgExport ? "true" : " false") + ";\n"
-                                + "window.yaioStaticJSON = " + res.replaceAll("/", "\\\\/") + ";\n"
-                                + "</script>\n"
-                                + "<!-- INCLUDESTATICJSON_SNAP -->\n";
-                Matcher matcher = pattern.matcher(content);
-                StringBuffer buffer = new StringBuffer();
-                while (matcher.find()) {
-                    matcher.appendReplacement(buffer, "");
-                    buffer.append(replacement);
-                }
-                matcher.appendTail(buffer);
-                content =  buffer.toString();
-
-                // include yaioinstances
-                res = "";
-                Map<String, Map<String, String>> knownYaioInstances = YaioConfiguration.getInstance().getKnownYaioInstances();
-                for (String name : knownYaioInstances.keySet()) {
-                    Map<String, String> yaioInstance = knownYaioInstances.get(name);
-                    String url = yaioInstance.get(YaioConfiguration.CONST_PROPNAME_YAIOINSTANCES_URL);
-                    String desc = yaioInstance.get(YaioConfiguration.CONST_PROPNAME_YAIOINSTANCES_DESC);
-                    res += "// add " + url + "\n";
-                    res += "yaioAppBase.configureService('Yaio.ServerNodeDBDriver_" + url + "', function() { return Yaio.ServerNodeDBDriver(yaioAppBase, Yaio.ServerNodeDBDriverConfig('" + url + "', '" + name + "',  '" + desc + "')); });\n";
-                    res += "yaioAppBase.configureService('YaioServerNodeDBDriver_" + url + "', function() { return yaioAppBase.get('Yaio.ServerNodeDBDriver_" + url + "'); });\n";
-                    res += "yaioAppBase.config.datasources.push('YaioServerNodeDBDriver_" + url + "');\n";
-                    res += "yaioAppBase.get('YaioDataSourceManager').addConnection('YaioServerNodeDBDriver_" + url + "', function () { return yaioAppBase.get('YaioServerNodeDBDriver_" + url + "'); });\n" ;
-                    addResBaseUrls.add(url);
-                }
-                pattern = Pattern.compile("\\/\\/ CONFIGUREDATASOURCES_SNIP.*\\/\\/ CONFIGUREDATASOURCES_SNAP", Pattern.DOTALL);
-                replacement = "// CONFIGUREDATASOURCES_SNIP\n"
-                                + "\n" + res + "\n"
-                                + "yaioAppBase.configureService('Yaio.StaticNodeDBDriver', function() { return Yaio.StaticNodeDBDriver(yaioAppBase, Yaio.StaticNodeDBDriverConfig('', 'Statische InApp-Daten für \"" + sysUID + "\"', 'Die statisch in der App hinterlegten Daten werden geladen.')); });\n"
-                                + "yaioAppBase.config.datasources.push('YaioStaticNodeDBDriver');\n" 
-                                + "yaioAppBase.get('YaioDataSourceManager').addConnection('YaioStaticNodeDBDriver', function () { return yaioAppBase.get('YaioStaticNodeDBDriver'); });\n"
-                                + "yaioAppBase.config.datasources.push('YaioFileNodeDBDriver');\n" 
-                                + "yaioAppBase.get('YaioDataSourceManager').addConnection('YaioFileNodeDBDriver', function () { return yaioAppBase.get('YaioFileNodeDBDriver'); });\n"
-                                // skip localhost-server on export 
-                                + (!flgExport ? "yaioAppBase.config.datasources.push('YaioServerNodeDBDriver_Local');\n" : "") 
-                                + (!flgExport ? "yaioAppBase.get('YaioDataSourceManager').addConnection('YaioServerNodeDBDriver_Local', function () { return yaioAppBase.get('YaioServerNodeDBDriver_Local'); });\n" : "") 
-                                + "datasourceKey = 'YaioServerNodeDBDriver_Local';\n"
-                                + "// CONFIGUREDATASOURCES_SNAP\n";
-                matcher = pattern.matcher(content);
-                buffer = new StringBuffer();
-                while (matcher.find()) {
-                    matcher.appendReplacement(buffer, "");
-                    buffer.append(replacement);
-                }
-                matcher.appendTail(buffer);
-                res =  buffer.toString();
+            // include yaioinstances
+            res = "";
+            Map<String, Map<String, String>> knownYaioInstances = YaioConfiguration.getInstance().getKnownYaioInstances();
+            for (String name : knownYaioInstances.keySet()) {
+                Map<String, String> yaioInstance = knownYaioInstances.get(name);
+                String url = yaioInstance.get(YaioConfiguration.CONST_PROPNAME_YAIOINSTANCES_URL);
+                String desc = yaioInstance.get(YaioConfiguration.CONST_PROPNAME_YAIOINSTANCES_DESC);
+                res += "// add " + url + "\n";
+                res += "yaioAppBase.configureService('Yaio.ServerNodeDBDriver_" + url + "', function() { return Yaio.ServerNodeDBDriver(yaioAppBase, Yaio.ServerNodeDBDriverConfig('" + url + "', '" + name + "',  '" + desc + "')); });\n";
+                res += "yaioAppBase.configureService('YaioServerNodeDBDriver_" + url + "', function() { return yaioAppBase.get('Yaio.ServerNodeDBDriver_" + url + "'); });\n";
+                res += "yaioAppBase.config.datasources.push('YaioServerNodeDBDriver_" + url + "');\n";
+                res += "yaioAppBase.get('YaioDataSourceManager').addConnection('YaioServerNodeDBDriver_" + url + "', function () { return yaioAppBase.get('YaioServerNodeDBDriver_" + url + "'); });\n" ;
+                addResBaseUrls.add(url);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "";
+            pattern = Pattern.compile("\\/\\/ CONFIGUREDATASOURCES_SNIP.*\\/\\/ CONFIGUREDATASOURCES_SNAP", Pattern.DOTALL);
+            replacement = "// CONFIGUREDATASOURCES_SNIP\n"
+                            + "\n" + res + "\n"
+                            + "yaioAppBase.configureService('Yaio.StaticNodeDBDriver', function() { return Yaio.StaticNodeDBDriver(yaioAppBase, Yaio.StaticNodeDBDriverConfig('', 'Statische InApp-Daten für \"" + sysUID + "\"', 'Die statisch in der App hinterlegten Daten werden geladen.')); });\n"
+                            + "yaioAppBase.config.datasources.push('YaioStaticNodeDBDriver');\n"
+                            + "yaioAppBase.get('YaioDataSourceManager').addConnection('YaioStaticNodeDBDriver', function () { return yaioAppBase.get('YaioStaticNodeDBDriver'); });\n"
+                            + "yaioAppBase.config.datasources.push('YaioFileNodeDBDriver');\n"
+                            + "yaioAppBase.get('YaioDataSourceManager').addConnection('YaioFileNodeDBDriver', function () { return yaioAppBase.get('YaioFileNodeDBDriver'); });\n"
+                            // skip localhost-server on export
+                            + (!flgExport ? "yaioAppBase.config.datasources.push('YaioServerNodeDBDriver_Local');\n" : "")
+                            + (!flgExport ? "yaioAppBase.get('YaioDataSourceManager').addConnection('YaioServerNodeDBDriver_Local', function () { return yaioAppBase.get('YaioServerNodeDBDriver_Local'); });\n" : "")
+                            + "datasourceKey = 'YaioServerNodeDBDriver_Local';\n"
+                            + "// CONFIGUREDATASOURCES_SNAP\n";
+            matcher = pattern.matcher(content);
+            buffer = new StringBuffer();
+            while (matcher.find()) {
+                matcher.appendReplacement(buffer, "");
+                buffer.append(replacement);
+            }
+            matcher.appendTail(buffer);
+            res =  buffer.toString();
         }
 
         // add additional resBaseUrls for CORS
@@ -345,5 +329,24 @@ public class ConverterUtils {
         response.setHeader("Content-Disposition", "");
         
         return res;
+    }
+
+    protected String readTplFileAsStream(final String tplFile) {
+        InputStream in = this.getClass().getResourceAsStream(tplFile);
+        String content;
+        try {
+            content = IOUtils.toString(in);
+        }  catch (IOException ex) {
+            throw new IllegalArgumentException("cant read tplFile for htmlExport", ex);
+        } finally {
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+        return content;
     }
 }

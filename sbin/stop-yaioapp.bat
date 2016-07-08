@@ -26,9 +26,9 @@ call %YAIOCONFIGPATH%\config-server.bat %YAIOSCRIPTPATH%
 
 set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_APPPROPAGATOR% %CFG%
 echo "stop-apppropagator: %CMD%"
-taskkill /FI "WINDOWTITLE eq C:\Windows\system32\java.exe"
+taskkill /F /FI "WINDOWTITLE eq yaio-apppropagator-%YAIOINSTANCE%*"
 
 rem add --debug option to see the startprocess of spring-boot
 set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_APP% %CFG% %NEWID_OPTIONS%
 echo "stop-yaioapp: %CMD%"
-taskkill /FI "WINDOWTITLE eq C:\Windows\system32\java.exe"
+taskkill /F /FI "WINDOWTITLE eq yaio-app-%YAIOINSTANCE%*"

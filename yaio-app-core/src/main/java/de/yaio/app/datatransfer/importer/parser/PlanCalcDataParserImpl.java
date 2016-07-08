@@ -15,10 +15,12 @@ package de.yaio.app.datatransfer.importer.parser;
 
 import de.yaio.app.core.datadomain.DataDomain;
 import de.yaio.app.core.datadomain.PlanCalcData;
+import de.yaio.app.datatransfer.common.ParserException;
 import de.yaio.app.datatransfer.importer.ImportOptions;
 import de.yaio.app.datatransfer.importer.NodeFactory;
 import org.apache.log4j.Logger;
 
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.regex.Matcher;
@@ -71,7 +73,7 @@ public class PlanCalcDataParserImpl  extends ParserImpl implements PlanCalcDataP
     }
 
     @Override
-    public int parseFromName(final DataDomain node, final ImportOptions options) throws Exception {
+    public int parseFromName(final DataDomain node, final ImportOptions options) throws ParserException {
         if (node == null) {
             return 0;
         }
@@ -84,7 +86,7 @@ public class PlanCalcDataParserImpl  extends ParserImpl implements PlanCalcDataP
     }
 
     @Override
-    public int parsePlanCalcDataFromName(final PlanCalcData node, final ImportOptions options) throws Exception {
+    public int parsePlanCalcDataFromName(final PlanCalcData node, final ImportOptions options) throws ParserException {
         int found = 0;
 
         // Check for valid data
@@ -120,7 +122,11 @@ public class PlanCalcDataParserImpl  extends ParserImpl implements PlanCalcDataP
                         + " for node:" + node.getNameForLogger());
             }
             if (matcher.group(matcherindex) != null) {
-                calDate.setTime(DF.parse(matcher.group(matcherindex)));
+                try {
+                    calDate.setTime(DF.parse(matcher.group(matcherindex)));
+                } catch (ParseException ex) {
+                    throw new ParserException("cant parse planCalcStart", node.getName(), ex);
+                }
                 calDate.set(Calendar.SECOND, CONST_FLAG_NODATE_SECONDS);
                 node.setPlanCalcStart(calDate.getTime());
             }
@@ -133,7 +139,11 @@ public class PlanCalcDataParserImpl  extends ParserImpl implements PlanCalcDataP
             }
             if (matcher.group(matcherindex) != null && node.getPlanCalcStart() != null) {
                 calDate.setTime(node.getPlanCalcStart());
-                timeOffsett = TF.parse(matcher.group(matcherindex));
+                try {
+                    timeOffsett = TF.parse(matcher.group(matcherindex));
+                } catch (ParseException ex) {
+                    throw new ParserException("cant parse timeOffsett for planCalcStart", node.getName(), ex);
+                }
 
                 // zum Datum addieren
                 calTime.setTime(timeOffsett);
@@ -150,7 +160,11 @@ public class PlanCalcDataParserImpl  extends ParserImpl implements PlanCalcDataP
                         + " for node:" + node.getNameForLogger());
             }
             if (matcher.group(matcherindex) != null) {
-                calDate.setTime(DF.parse(matcher.group(matcherindex)));
+                try {
+                    calDate.setTime(DF.parse(matcher.group(matcherindex)));
+                } catch (ParseException ex) {
+                    throw new ParserException("cant parse planCalcEnd", node.getName(), ex);
+                }
                 calDate.set(Calendar.SECOND, CONST_FLAG_NODATE_SECONDS);
                 node.setPlanCalcEnde(calDate.getTime());
             }
@@ -163,7 +177,11 @@ public class PlanCalcDataParserImpl  extends ParserImpl implements PlanCalcDataP
             }
             if (matcher.group(matcherindex) != null && node.getPlanCalcEnde() != null) {
                 calDate.setTime(node.getPlanCalcEnde());
-                timeOffsett = TF.parse(matcher.group(matcherindex));
+                try {
+                    timeOffsett = TF.parse(matcher.group(matcherindex));
+                } catch (ParseException ex) {
+                    throw new ParserException("cant parse timeoffset for planCalcEnd", node.getName(), ex);
+                }
 
                 // zum Datum addieren
                 calTime.setTime(timeOffsett);

@@ -16,7 +16,7 @@ echo off
 # @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
 
 # set pathes
-YAIOSCRIPTPATH=$(dirname $0)/
+YAIOSCRIPTPATH=$(dirname $(readlink -f $0))
 YAIOBASEPATH=${YAIOSCRIPTPATH}
 BASEPATH=${YAIOBASEPATH}
 YAIOCONFIGPATH=${YAIOSCRIPTPATH}../config/
@@ -25,6 +25,6 @@ YAIOCONFIGPATH=${YAIOSCRIPTPATH}../config/
 . ${YAIOCONFIGPATH}/config-cli.sh ${YAIOSCRIPTPATH}
 
 # add --debug option to see the startprocess of spring-boot
-CMD="java ${JAVAOPTIONS} -cp ${CP} ${PROG_RECALC} ${CFG} --sysuid ${MASTERNODEID}"
+CMD="java ${JAVAOPTIONS} -cp \"${CP}\" ${PROG_RECALC} ${CFG} --sysuid ${MASTERNODEID}"
 echo "jobRecalcNode: ${CMD}"
 ${CMD}

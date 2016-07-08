@@ -66,7 +66,7 @@ public class DescDataParserImpl  extends ParserImpl implements DescDataParser {
     }
 
     @Override
-    public int parseFromName(final DataDomain node, final ImportOptions options) throws Exception {
+    public int parseFromName(final DataDomain node, final ImportOptions options) {
         if (node == null) {
             return 0;
         }
@@ -79,7 +79,7 @@ public class DescDataParserImpl  extends ParserImpl implements DescDataParser {
     }
 
     @Override
-    public int parseDescDataFromName(final DescData node, final ImportOptions options) throws Exception {
+    public int parseDescDataFromName(final DescData node, final ImportOptions options) {
         int found = 0;
 
         // Check for valid data

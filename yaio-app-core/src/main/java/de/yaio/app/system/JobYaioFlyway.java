@@ -16,9 +16,9 @@ package de.yaio.app.system;
 import de.yaio.app.config.ContextHelper;
 import de.yaio.app.config.JobConfig;
 import de.yaio.app.config.YaioConfigurationHelper;
-import de.yaio.app.utils.CmdLineHelper;
-import de.yaio.app.utils.CmdLineJob;
-import de.yaio.app.utils.config.Configuration;
+import de.yaio.commons.cli.CmdLineHelper;
+import de.yaio.commons.cli.CmdLineJob;
+import de.yaio.commons.config.Configuration;
 import org.apache.commons.cli.Options;
 import org.apache.log4j.Logger;
 
@@ -40,7 +40,7 @@ public class JobYaioFlyway extends CmdLineJob {
     }
 
     @Override
-    protected Options addAvailiableCmdLineOptions() throws Exception {
+    protected Options addAvailiableCmdLineOptions() {
         Options availiableCmdLineOptions = CmdLineHelper.getNewOptionsInstance();
 
         // add default-Options
@@ -54,7 +54,7 @@ public class JobYaioFlyway extends CmdLineJob {
     }
 
     @Override
-    protected void initJob() throws Exception {
+    protected void initJob() {
         YaioConfigurationHelper configurationHelper = YaioConfigurationHelper.getInstance();
         Configuration config = configurationHelper.initConfiguration();
         config.publishProperties();
@@ -66,15 +66,15 @@ public class JobYaioFlyway extends CmdLineJob {
                 " options:" + config.optionsAsProperties() +
                 " properties:" + config.propertiesAsProperties() +
                 " contextConfigs:" + ContextHelper.getInstance().getSpringConfig());
-    };
+    }
 
     @Override
-    public void doJob() throws Exception {
+    public void doJob() {
         System.out.println(YaioFlyway.doFlyway());
     }
 
     @Override
-    protected void cleanUpAfterJob() throws Exception {
+    protected void cleanUpAfterJob() {
         // TODO: hack to close HSLDB-connection -> Hibernate doesn't close the
         //       database and so the content is not written to file
         org.hsqldb.DatabaseManager.closeDatabases(0);

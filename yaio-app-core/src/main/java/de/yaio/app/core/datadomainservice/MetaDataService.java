@@ -33,29 +33,25 @@ public interface MetaDataService {
     /** 
      * inititialize the MetaData-Fields of the node (id, praefix) 
      * @param node                   node to initialize
-     * @throws Exception             parser/format-Exceptions possible
      */
-    void initMetaData(MetaData node) throws Exception;
+    void initMetaData(MetaData node);
 
     /** 
      * get next human readable Node-number for this node-hierarchy (praefix)
      * @param node                   node (praefix)
      * @return                       next available Node-number for this node-hierarchy (praefix)
-     * @throws Exception             io-Exceptions possible
      */
-    Object getNextNodeNumber(MetaData node) throws Exception;
+    Object getNextNodeNumber(MetaData node);
 
     /** 
      * sets the NodeNumberService
      * @param nodeNumberService      service to get nodeNumbers
-     * @throws Exception             io-Exceptions possible
      */
-    void setNodeNumberService(NodeNumberService nodeNumberService) throws Exception;
+    void setNodeNumberService(NodeNumberService nodeNumberService);
 
     /** 
      * returns the NodeNumberService
      * @return                       service to get nodeNumbers
-     * @throws Exception             io-Exceptions possible
      */
-    NodeNumberService getNodeNumberService() throws Exception;
+    NodeNumberService getNodeNumberService();
 }

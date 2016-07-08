@@ -71,11 +71,11 @@ public class Calculator {
      * @param arg2                   value1 for calculation
      * @param action                 calculation action CONST_CALCULATE_ACTION_*
      * @return                       result of the calculation
-     * @throws Exception             action not allowed possible
+     * @throws UnsupportedOperationException     action not allowed possible
      */
     public static Object calculate(final Object arg1, final Object arg2, 
-                                   final int action) throws Exception {
-        Object res = null;
+                                   final int action) {
+        Object res;
 
         // test ob beide belegt
         if (arg1 != null && arg2 != null) {
@@ -100,7 +100,7 @@ public class Calculator {
                     }
                 } else {
                     // unbekannter Typ
-                    throw new Exception("Action for Datatype BaseWorkflow not allowed: " + action);
+                    throw new UnsupportedOperationException("Action for Datatype BaseWorkflow not allowed: " + action);
                 }
             } else if (Date.class.isInstance(arg1)) {
                 //
@@ -123,7 +123,7 @@ public class Calculator {
                     }
                 } else {
                     // unbekannter Typ
-                    throw new Exception("Action for Datatype java.util.Date not allowed: " + action);
+                    throw new UnsupportedOperationException("Action for Datatype java.util.Date not allowed: " + action);
                 }
             } else if (Double.class.isInstance(arg1)) {
                 //
@@ -185,11 +185,11 @@ public class Calculator {
                     }
                 } else {
                     // unbekannter Typ
-                    throw new Exception("Action for Datatype java.lang.Double not allowed: " + action);
+                    throw new UnsupportedOperationException("Action for Datatype java.lang.Double not allowed: " + action);
                 }
             } else {
                 // unbekannter Typ
-                throw new Exception("Unknown Datatype: arg1" + arg1.getClass());
+                throw new UnsupportedOperationException("Unknown Datatype: arg1" + arg1.getClass());
             }
         } else {
             if (action == CONST_CALCULATE_ACTION_WORKFLOWSTATE) {

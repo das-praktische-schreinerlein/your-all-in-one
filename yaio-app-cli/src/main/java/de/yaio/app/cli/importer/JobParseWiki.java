@@ -16,8 +16,9 @@ package de.yaio.app.cli.importer;
 import de.yaio.app.cli.YaioCmdLineJob;
 import de.yaio.app.config.ContextHelper;
 import de.yaio.app.config.JobConfig;
-import de.yaio.app.utils.CmdLineHelper;
-import de.yaio.app.utils.config.ConfigurationOption;
+import de.yaio.app.config.YaioConfiguration;
+import de.yaio.commons.cli.CmdLineHelper;
+import de.yaio.commons.config.ConfigurationOption;
 import org.apache.commons.cli.Options;
 
 /** 
@@ -44,7 +45,7 @@ public class JobParseWiki extends YaioCmdLineJob {
     }
     
     @Override
-    protected Options addAvailiableCmdLineOptions() throws Exception {
+    protected Options addAvailiableCmdLineOptions() {
         Options availiableCmdLineOptions = 
                         CmdLineHelper.getNewOptionsInstance();
         
@@ -57,21 +58,25 @@ public class JobParseWiki extends YaioCmdLineJob {
     }
 
     @Override
-    public void doJob() throws Exception {
+    public void doJob() {
         // parse PPL-source
-        String pplSource = commonImporter.extractDataFromWiki();
+        if (YaioConfiguration.getInstance().getArgNames().size() <= 0) {
+            throw new IllegalArgumentException("Import from Wiki-File requires filename.");
+        }
+        String srcFile = ConfigurationOption.stringValueOf(YaioConfiguration.getInstance().getArg(0));
+        String pplSource = commonImporter.extractDataFromWiki(srcFile);
         System.out.println(pplSource);
     }
 
     @Override
-    protected void configureContext() throws Exception {
+    protected void configureContext() {
         String sourceType = ConfigurationOption.stringValueOf(this.getConfiguration().getCliOption("sourcetype", ""));
         if ("jpa".equalsIgnoreCase(sourceType)) {
             ContextHelper.getInstance().addSpringConfig(JobConfig.class);
             // initApplicationContext
             ContextHelper.getInstance().getSpringApplicationContext();
         }
-    };
+    }
 
     /**
      * create the commonly used importer to imports the data from differenet 

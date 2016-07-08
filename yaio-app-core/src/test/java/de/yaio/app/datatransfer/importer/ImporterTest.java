@@ -12,18 +12,16 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 package de.yaio.app.datatransfer.importer;
-import de.yaio.app.datatransfer.importer.Importer;
-import de.yaio.app.datatransfer.importer.ImporterImpl;
-import de.yaio.app.datatransfer.importer.NodeFactory;
+
+import de.yaio.app.BaseTest;
+import de.yaio.app.core.datadomain.DataDomain;
+import de.yaio.app.core.node.BaseNode;
+import de.yaio.app.datatransfer.common.ParserException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.springframework.mock.staticmock.MockStaticEntityMethods;
-
-import de.yaio.app.BaseTest;
-import de.yaio.app.core.datadomain.DataDomain;
-import de.yaio.app.core.node.BaseNode;
 
 /** 
  * test of the importer-logic<br>
@@ -71,7 +69,7 @@ public class ImporterTest extends BaseTest {
     }
 
     @Override
-    public TestObj setupNewTestObj() throws Exception {
+    public TestObj setupNewTestObj() {
         return null;
     }
     
@@ -81,9 +79,9 @@ public class ImporterTest extends BaseTest {
     
     /** 
      * configure the importer for the tests
-     * @throws Exception             possible Exception     */
+     **/
     @Before
-    public void setupImporter() throws Exception {
+    public void setupImporter() {
         importerObj = new ImporterImpl(null);
         NodeFactory nodeFactoryObj = importerObj.getNodeFactory();
         TestNode.configureNodeTypeIdentifier(nodeFactoryObj);
@@ -94,9 +92,9 @@ public class ImporterTest extends BaseTest {
     
     /** 
      * do tests for creation of nodes from text
-     * @throws Exception             possible Exception     */
+     **/
     @Test
-    public void testCreateNode() throws Exception {
+    public void testCreateNode() throws ParserException {
         String expected = null;
         String src = null;
         ImporterTestObj testObj = null;
