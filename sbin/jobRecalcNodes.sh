@@ -1,4 +1,4 @@
-echo off
+#!/usr/bin/env bash
 # <h4>FeatureDomain:</h4>
 #     Collaboration
 # <h4>FeatureDescription:</h4>
@@ -16,7 +16,7 @@ echo off
 # @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
 
 # set pathes
-YAIOSCRIPTPATH=$(dirname $(readlink -f $0))
+YAIOSCRIPTPATH=$(dirname $(readlink -f $0))/
 YAIOBASEPATH=${YAIOSCRIPTPATH}
 BASEPATH=${YAIOBASEPATH}
 YAIOCONFIGPATH=${YAIOSCRIPTPATH}../config/

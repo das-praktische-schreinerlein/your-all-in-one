@@ -16,7 +16,7 @@
 # @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
 
 # set pathes
-ORIGYAIOSCRIPTPATH=$(dirname $(readlink -f $0))
+ORIGYAIOSCRIPTPATH=$(dirname $(readlink -f $0))/
 YAIOSCRIPTPATH=${ORIGYAIOSCRIPTPATH}/../../sbin/
 YAIOBASEPATH=${YAIOSCRIPTPATH}
 BASEPATH=${YAIOBASEPATH}
