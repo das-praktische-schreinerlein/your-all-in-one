@@ -17,8 +17,8 @@ echo off
 # @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
 
 # set pathes
-ORIGYAIOSCRIPTPATH=$(dirname $0)
-YAIOSCRIPTPATH=../../sbin/
+ORIGYAIOSCRIPTPATH=$(dirname $(readlink -f $0))
+YAIOSCRIPTPATH=${ORIGYAIOSCRIPTPATH}/../../sbin/
 YAIOBASEPATH=${YAIOSCRIPTPATH}
 BASEPATH=${YAIOBASEPATH}
 YAIOCONFIGPATH=${YAIOSCRIPTPATH}../config/
@@ -26,22 +26,22 @@ YAIOCONFIGPATH=${YAIOSCRIPTPATH}../config/
 # init config
 . ${YAIOCONFIGPATH}/config-server.sh ${YAIOSCRIPTPATH}
 YAIOAPP=$BASEPATH/../yaio-app-e2e/target/yaio.jar
-CP="${YAIOAPP}:${APPPROPAGATOR}:${BASEPATH}../target/"
+CP="${YAIOAPP}"
 
-cd $ORIGYAIOSCRIPTPATH\..
+cd $ORIGYAIOSCRIPTPATH/..
 
 # init webdriver
-CMD="${ORIGYAIOSCRIPTPATH}../node_modules/.bin/webdriver-manager update --ie"
+CMD="${ORIGYAIOSCRIPTPATH}/../node_modules/.bin/webdriver-manager update --ie"
 echo "update webdriver ${CMD}"
 ${CMD}
 
 # start webdriver
-CMD="${ORIGYAIOSCRIPTPATH}../node_modules/.bin/webdriver-manager start"
+CMD="${ORIGYAIOSCRIPTPATH}/../node_modules/.bin/webdriver-manager start"
 echo "start webdriver ${CMD}"
 ${CMD} &
 
-cd $YAIOSCRIPTPATH\..
-
+cd $YAIOSCRIPTPATH/..
+pwd
 CMD="java ${JAVAOPTIONS} -cp \"${CP}\" ${PROG_FLYWAY} ${FLYWAYCFG}"
 echo "run-flyway: ${CMD}"
 ${CMD}

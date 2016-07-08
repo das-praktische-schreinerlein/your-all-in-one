@@ -16,8 +16,8 @@
 # @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
 
 # set pathes
-ORIGYAIOSCRIPTPATH=$(dirname $0)
-YAIOSCRIPTPATH=../../sbin/
+ORIGYAIOSCRIPTPATH=$(dirname $(readlink -f $0))
+YAIOSCRIPTPATH=${ORIGYAIOSCRIPTPATH}/../../sbin/
 YAIOBASEPATH=${YAIOSCRIPTPATH}
 BASEPATH=${YAIOBASEPATH}
 YAIOCONFIGPATH=${YAIOSCRIPTPATH}../config/
@@ -25,9 +25,9 @@ YAIOCONFIGPATH=${YAIOSCRIPTPATH}../config/
 # init config
 . ${YAIOCONFIGPATH}/config-server.sh ${YAIOSCRIPTPATH}
 YAIOAPP=$BASEPATH/../yaio-app-e2e/target/yaio.jar
-CP="${YAIOAPP}:${APPPROPAGATOR}:${BASEPATH}../target/"
+CP="${YAIOAPP}"
 
-cd $ORIGYAIOSCRIPTPATH\..
+cd $ORIGYAIOSCRIPTPATH/..
 
 # add --debug option to see the startprocess of spring-boot
 CMD="java ${JAVAOPTIONS} -cp \"${CP}\" ${PROG_APP} ${CFG} ${NEWID_OPTIONS}"
