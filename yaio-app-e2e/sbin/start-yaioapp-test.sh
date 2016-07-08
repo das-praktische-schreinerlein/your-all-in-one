@@ -44,7 +44,7 @@ cd $YAIOSCRIPTPATH\..
 
 CMD="java ${JAVAOPTIONS} -cp ${CP} ${PROG_FLYWAY} ${FLYWAYCFGFILE}"
 echo "run-flyway: ${CMD}"
-${CMD} &
+${CMD}
 
 # add --debug option to see the startprocess of spring-boot
 CMD="java ${JAVAOPTIONS} -cp ${CP} ${PROG_APP} ${CFG} ${NEWID_OPTIONS}"
