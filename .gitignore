@@ -19,6 +19,8 @@
 /tmp
 /*/target
 /var/hsqldb/yaio.lck
+/var/hsqldb/yaio.log
+/var/hsqldb/yaio.properties
 /yaio-app-webapp/vendors/html
 /yaio-app-webapp/vendors/js
 /yaio-app-webapp/vendors/css

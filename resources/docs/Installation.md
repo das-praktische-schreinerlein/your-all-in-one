@@ -16,18 +16,18 @@ download installer
     mkdir yaiodemo
     cd yaiodemo
     mkdir datatransfer
-    cd datatransfer
-    git clone https://github.com/das-praktische-schreinerlein/yaioinstaller.git
     cd ..
 
-start a new vagrantbox
+start a new vagrantbox (set memory to 1GB in Vagrantfile)
 
-    vagrant up
+    vagrant init ubuntu/trusty64
+    vagrant up --provider virtualbox
     vagrant ssh
 
 run installer on new vagrantbox
 
     cd /vagrant/datatransfer/
+    git clone https://github.com/das-praktische-schreinerlein/yaioinstaller.git
     sudo chmod 555 -R ./yaioinstaller
     sudo ./yaioinstaller/install-yaiodemo/uninstall-allsteps-all-root-UBUNTU.sh
     sudo ./yaioinstaller/install-yaiodemo/install-allsteps-all-root-UBUNTU.sh
