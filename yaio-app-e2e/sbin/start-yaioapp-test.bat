@@ -38,7 +38,7 @@ rem start webdriver
 cd %ORIGYAIOSCRIPTPATH%\..
 set CMD=%ORIGYAIOSCRIPTPATH%../node_modules/.bin/webdriver-manager start
 echo "start webdriver %CMD%"
-start %CMD%
+start "yaio-apptest-webdriver" %CMD%
 
 cd %YAIOSCRIPTPATH%\..
 set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_FLYWAY% %FLYWAYCFG%
@@ -48,4 +48,4 @@ echo "run-flyway: %CMD%"
 rem add --debug option to see the startprocess of spring-boot
 set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_APP% %CFG% %NEWID_OPTIONS%
 echo "start-yaioapp: %CMD%"
-start %CMD%
+start "yaio-apptest-app-%YAIOINSTANCE%" %CMD%
