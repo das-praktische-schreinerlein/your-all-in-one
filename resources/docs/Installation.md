@@ -18,7 +18,7 @@ download installer
     mkdir datatransfer
     cd ..
 
-start a new vagrantbox (set memory to 1GB in Vagrantfile)
+start a new vagrantbox (set memory to 1.5GB in Vagrantfile)
 
     vagrant init ubuntu/trusty64
     vagrant up --provider virtualbox
