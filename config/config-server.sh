@@ -37,3 +37,6 @@ export PROG_WINMERGE="C:/ProgrammePortable/PortableApps/PortableApps/WinMergePor
 export FILE_DELIM="-"
 
 echo ${CP}
+
+export NEWID_OPTIONS="-pathiddb ${YAIOVARPATH}/nodeids.properties"
+
