@@ -60,26 +60,14 @@ Rechte
     mkdir logs
 
 ### Step2: baseconfigure and build
-config/applicationContext.xml
 
-    <context:property-placeholder location="YOURAPPBASEDIR/config/application.properties"/>
+config/yaio-application.properties
 
-config/application.properties
-
-    config.spring.applicationconfig.path=YOURAPPBASEDIR/config/applicationContext.xml
     port: 8666
     server: 0.0.0.0
     yaio.exportcontroller.examples.location=file:///YOURAPPBASEDIR/resources/examples/
     databaseHsqldb.url=jdbc\:hsqldb\:file\:YOURAPPBASEDIR/var/hsqldb/yaio;shutdown\=true;hsqldb.write_delay\=false;
     yaio.exportcontroller.replace.baseref=/
-
-karma-executable in pom.xml
-
-    <karmaExecutable>${basedir}/node_modules/karma/bin/karma</karmaExecutable>
-
-karma-config karma.yaio.conf.js
-
-    browsers: ['PhantomJS']
 
 delete last empty lines in database-file
 
@@ -87,7 +75,7 @@ delete last empty lines in database-file
 
 generate without tests
 
-    mvn -Dmaven.test.skip=true package
+    mvn package
 
 ### Step3: finish config
 

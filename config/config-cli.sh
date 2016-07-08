@@ -52,7 +52,7 @@ export FILE_DELIM="-"
 echo ${CP}
 
 # set Config
-export NEWID_OPTIONS="-pathiddb ${YAIOVARPATH}//nodeids.properties"
+export NEWID_OPTIONS="-pathiddb ${YAIOVARPATH}/nodeids.properties"
 export PARSER_OPTIONS="${NEWID_OPTIONS} ${FLGWP}"
 export PARSER_OPTIONS_EXCEL="${NEWID_OPTIONS}"
 export OUTPUT_OPTIONS="--calcsum -U 3 -p -i -s -d -t -intend 80 -intendli 2 -l" 
