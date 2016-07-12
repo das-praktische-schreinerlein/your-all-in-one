@@ -1,5 +1,95 @@
 # Changelog
 
+## Changelog for release: feature-YAIO2574-improvements-201606-RELEASE
+- **YaioServer (YAIO2585)**
+    - **Code-Verbesserungen (YAIO2587)**
+        - improved package-structure (move creation of filters, queries... to factories) (YAIO2615) 
+        - removed xml-based (YAIO2645) 
+        - improved startup and shutdown (YAIO2646) 
+        - bugfix: unrechable code on skipping NOOP-services (YAIO2647) 
+        - improved package-structure: moved all to subpackage: de.yaio.app (YAIO2648) 
+        - improved package-structure: decoupled dependencies (YAIO2649) 
+        - improved build process: moved code and config into submodules (YAIO2650) 
+        - use separate spring-configs (YAIO2651) 
+        - improved cli-handling (YAIO2652) 
+        - added option to deactivate swagger (YAIO2653) 
+        - improved configuration and parameter-handling (YAIO2654) 
+        - added own e2e-project (gets test-sources from yaioapp) (YAIO2655) 
+        - fixed config in build-process (YAIO2656) 
+        - use separate configuration-scripts (cli, server, client) (YAIO2657) 
+        - copy full-jars to common dist-folder (YAIO2658) 
+        - findbugs broken (YAIO2659) 
+        - updated default database (YAIO2660) 
+        - upgraded e2e:suite (YAIO2661) 
+        - upgraded yaio-appexplorer (YAIO2662) 
+        - improved exception-handling (YAIO2663) 
+        - fixed checkstyle-hints (YAIO2664) 
+        - introduced IOUtils (YAIO2665) 
+        - moved some common utils from yaio to yaio-commons (YAIO2666) 
+        - use client-libs for webshot and metaextract (YAIO2667) 
+        - improved client-docu (YAIO2668) 
+        - use client-lib for dms (YAIO2669) 
+        - improved versioning (YAIO2670) 
+        - activated e2e-module (YAIO2671) 
+        - updated versions (YAIO2672) 
+        - initialize client-libs (YAIO2673) 
+        - updated build-config for webapp (YAIO2674) 
+        - fixed windows-scripts (start/stop) (YAIO2675) 
+        - fixed linux-scripts (start/stop) (YAIO2676) 
+        - use os-profiles for preparing integration-test (YAIO2677) 
+        - fixed stop-scripts (YAIO2678) 
+        - fixed linux-scripts (YAIO2679) 
+        - fixed docu (YAIO2680) 
+        - fixed build-process: generate aop only if needed (YAIO2681) 
+        - optimized startprocess: include only needed autoconfiguration (YAIO2682) 
+    - **neue Funktionen (YAIO2588)**
+        - added job to recalc workflow as cron (YAIO2616) 
+        - added statistic-controller (YAIO2617) 
+    - **Admin/Doku-Funktionen (YAIO2589)**
+        - added credits (YAIO2618) 
+- **YaioApp (YAIO2591)**
+    - **GUI (YAIO2592)**
+        - improved layout of dashboard/search (toggler for nodeCard-details) (YAIO2619) 
+        - added focus/extend-toggler to dashboard (YAIO2620) 
+        - Feature - Daten übernehmen/Vorausfüllen (Datumsfelder...) (YAIO2427) 
+    - **Code-Verbesserungen (YAIO2593)**
+        - moved functions to utils (YAIO2622) 
+        - added date-servicefunctions (YAIO2623) 
+        - improved parameterHandling of dashBoard (YAIO2624) 
+        - added new NodeSearch-Module for common search-functions (YAIO2625) 
+        - improved package-structure (service-functions) (YAIO2626) 
+        - improved parameter-handling (YAIO2627) 
+        - improved naming and codeclean (YAIO2628) 
+    - **neue Funktionen (YAIO2594)**
+        - added new workboard (YAIO2629) 
+        - added Chartboard (YAIO2630)
+        - added chartboard (YAIO2631) 
+        - added new charts (YAIO2632) 
+        - added calendar-charts (YAIO2633) 
+        - improved charts (timeframe) (YAIO2634) 
+        - improved chart-generation (YAIO2635) 
+        - improved parameter-handling for search (YAIO2636) 
+        - added statistic-calls instead of search (YAIO2637) 
+        - added new charts data-lines (aufwandPerDay) (YAIO2638) 
+        - added search-link to chartpoints (YAIO2639) 
+        - improved package-structure (new chart-package, service-functions) (YAIO2640) 
+        - configure and check availability of datasets and statistic-calls (YAIO2641) 
+    - **Admin/Doku-Funktionen (YAIO2595)**
+        - documentation (YAIO2642) 
+        - added credits (YAIO2643) 
+    - **Bugfixes (YAIO2596)**
+        - bugfix: fix e2e-tests - search-test broken after introducing node-cards (YAIO2546) 
+        - fixed e2e: search-suite (YAIO2687) 
+        - fixed e2e: suite (YAIO2688) 
+        - upgraded e2e-suite (YAIO2689) 
+        - fixed e2e: wysiwyg-suite (YAIO2690) 
+- **Services: webshot, plantuml, dms, metaextract, markdown, commons (YAIO2692)**
+    - removed xml-based config (YAIO2693) 
+    - improved package-structure: seperated code and config-classes (YAIO2694) 
+    - improved package-structure: decoupled dependencies (YAIO2695) 
+    - improved build process: moved code and config into submodules (YAIO2696) 
+    - improved exception-handling (YAIO2697) 
+
 ## Changelog for release: feature-YAIO2383-improvements-201604-RELEASE
 - **Subprojekte**
     - create new subproject [jsh-pregdown](https://github.com/das-praktische-schreinerlein/jsh-pegdown) my own markdown-parser based on pegdown

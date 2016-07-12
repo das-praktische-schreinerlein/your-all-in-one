@@ -34,7 +34,6 @@
     - checksum+version per json uebertragen, beim speichern kontrollieren und ggf. Warnung (YAIO1541)
     - für Formular eigene Angular-Directive (Tag mit Layout, ganze Form-Elemente, ganze Forms) (YAIO1550)
     - autom Classloader fuer Formatter/Parser-Plugins (YAIO575)
-    - Exceptions aufräumen (YAIO676)
 
 ## long term
 
