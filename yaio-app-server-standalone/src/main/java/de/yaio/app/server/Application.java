@@ -25,7 +25,17 @@ import org.apache.log4j.Logger;
 import org.apache.tomcat.util.http.fileupload.FileUpload;
 import org.apache.tomcat.util.http.fileupload.FileUploadBase;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.actuate.autoconfigure.*;
+import org.springframework.boot.autoconfigure.PropertyPlaceholderAutoConfiguration;
+import org.springframework.boot.autoconfigure.aop.AopAutoConfiguration;
+import org.springframework.boot.autoconfigure.dao.PersistenceExceptionTranslationAutoConfiguration;
+import org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration;
+import org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.AuthenticationManagerConfiguration;
+import org.springframework.boot.autoconfigure.security.BootGlobalAuthenticationConfiguration;
+import org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.SecurityFilterAutoConfiguration;
+import org.springframework.boot.autoconfigure.web.*;
 import org.springframework.boot.context.embedded.MultipartConfigFactory;
 import org.springframework.context.annotation.*;
 import org.springframework.context.annotation.ComponentScan.Filter;
@@ -41,16 +51,11 @@ import java.util.List;
 /** 
  * the yaio-app as spring boot application
  * 
- * @FeatureDomain                Webservice
- * @package                      de.yaio.app
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category                     collaboration
- * @copyright                    Copyright (c) 2014, Michael Schreiner
- * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 @Configuration
+@Lazy
 @EnableSpringConfigured // <context:spring-configured/>
-@EnableAutoConfiguration()
 @ComponentScan(basePackages = {"de.yaio.app.core", "de.yaio.app.datatransfer",
                                "de.yaio.app.extension", "de.yaio.app.server",
                                "de.yaio.services.webshot", "de.yaio.services.dms",
@@ -67,7 +72,45 @@ import java.util.List;
                     })
                 })
 @EnableScheduling
-@Import(PersistenceConfig.class)
+// exgttract while running server with "-Ddebug"
+@Import({PersistenceConfig.class,
+        AopAutoConfiguration.class,
+        AopAutoConfiguration.JdkDynamicAutoProxyConfiguration.class,
+        AuditAutoConfiguration.class,
+        AuthenticationManagerConfiguration.class,
+        BootGlobalAuthenticationConfiguration.class,
+        DispatcherServletAutoConfiguration.class,
+        EmbeddedServletContainerAutoConfiguration.class,
+        EmbeddedServletContainerAutoConfiguration.EmbeddedTomcat.class,
+        EndpointAutoConfiguration.class,
+        EndpointMBeanExportAutoConfiguration.class,
+        EndpointWebMvcAutoConfiguration.class,
+        EndpointWebMvcManagementContextConfiguration.class,
+        ErrorMvcAutoConfiguration.class,
+        HealthIndicatorAutoConfiguration.class,
+        HealthIndicatorAutoConfiguration.DataSourcesHealthIndicatorConfiguration.class,
+        HealthIndicatorAutoConfiguration.DiskSpaceHealthIndicatorConfiguration.class,
+        HttpEncodingAutoConfiguration.class,
+        HttpMessageConvertersAutoConfiguration.class,
+        JacksonAutoConfiguration.class,
+        JmxAutoConfiguration.class,
+        ManagementServerPropertiesAutoConfiguration.class,
+        ManagementWebSecurityAutoConfiguration.class,
+        MetricExportAutoConfiguration.class,
+        MetricFilterAutoConfiguration.class,
+        MetricRepositoryAutoConfiguration.class,
+        PersistenceExceptionTranslationAutoConfiguration.class,
+        PropertyPlaceholderAutoConfiguration.class,
+        PublicMetricsAutoConfiguration.class,
+        SecurityAutoConfiguration.class,
+        SecurityFilterAutoConfiguration.class,
+        ServerPropertiesAutoConfiguration.class,
+        TraceRepositoryAutoConfiguration.class,
+        TraceWebFilterAutoConfiguration.class,
+        WebMvcAutoConfiguration.class,
+        WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter.class,
+        WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter.FaviconConfiguration.class
+})
 public class Application {
     private static final Logger LOGGER = Logger.getLogger(Application.class);
 
@@ -83,8 +126,8 @@ public class Application {
             // parse cmdArgs
             LOGGER.info("initCommandLine");
             Option pathIdDB = new Option(null, "pathiddb", true,
-                            "Pfad zur ID-Datenbank");
-                    pathIdDB.setRequired(true);
+                    "Pfad zur ID-Datenbank");
+            pathIdDB.setRequired(true);
             cmdLineHelper.getAvailiableCmdLineOptions().addOption(pathIdDB);
             cmdLineHelper.setCmdLineArgs(args);
             cmdLineHelper.getCommandLine();

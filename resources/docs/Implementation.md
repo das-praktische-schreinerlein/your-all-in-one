@@ -21,9 +21,10 @@
     - Datatransfer
     - Converter
 - packages
-    - de.yaio.datatransfer.exporter: Exporter
-    - de.yaio.datatransfer.importer: Importer
-    - de.yaio.extension.datatransfer: Extensions for converter to different formats
+    - de.yaio.app.datatransfer.exporter: Exporter
+    - de.yaio.app.datatransfer.importer: Importer
+    - de.yaio.app.extension.datatransfer: Extensions for converter to different formats
+    - de.yaio.app.cli: CLI 
 - use external libs
     - Encoding detector: [icu4j](http://icu-project.org/)
     - Excel Ex/Import: [Apache Poi](https://github.com/apache/poi)
@@ -35,8 +36,7 @@
     - WebFrontend Converter
     - Admin-WebFrontend
 - packages
-    - de.yaio.rest.controller: controller for the webservices
-    - de.yaio.webapp: web-application-sources
+    - de.yaio.app.server: controller for the webservices
 - use external libs
     - Security: [Spring Security](https://github.com/spring-projects/spring-security)
     - WebFramework: [Spring-boot](https://github.com/spring-projects/spring-boot)
