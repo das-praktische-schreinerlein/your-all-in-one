@@ -37,6 +37,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Map;
 
 import static org.apache.http.HttpStatus.SC_BAD_REQUEST;
@@ -67,6 +68,7 @@ public class ExportController {
      * @param sysUID                 sysUID to export
      * @param response               the response-Obj to set contenttype and headers
      * @return                       String - wiki-format of the node
+     * @throws ConverterException    if something went wrong
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
@@ -90,6 +92,7 @@ public class ExportController {
      * @param oOptions               the outputOptions 
      * @param response               the response-Obj to set contenttype and headers
      * @return                       String - wiki-format of the node
+     * @throws ConverterException    if something went wrong
      */
     @ResponseBody
     @RequestMapping(method = {RequestMethod.POST}, 
@@ -111,6 +114,7 @@ public class ExportController {
      * @param sysUID                 sysUID to export
      * @param response               the response-Obj to set contenttype and headers
      * @return                       String - mindmap-format of the node
+     * @throws ConverterException    if something went wrong
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
@@ -133,6 +137,7 @@ public class ExportController {
      * @param oOptions               the outputOptions 
      * @param response               the response-Obj to set contenttype and headers
      * @return                       String - mindmap-format of the node
+     * @throws ConverterException    if something went wrong
      */
     @ResponseBody
     @RequestMapping(method = {RequestMethod.POST}, 
@@ -154,6 +159,7 @@ public class ExportController {
      * @param sysUID                 sysUID to export
      * @param response               the response-Obj to set contenttype and headers
      * @return                       String - csv-format of the node
+     * @throws ConverterException    if something went wrong
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
@@ -177,6 +183,7 @@ public class ExportController {
      * @param oOptions               the outputOptions 
      * @param response               the response-Obj to set contenttype and headers
      * @return                       String - csv-format of the node
+     * @throws ConverterException    if something went wrong
      */
     @ResponseBody
     @RequestMapping(method = {RequestMethod.POST}, 
@@ -198,6 +205,7 @@ public class ExportController {
      * @param sysUID                 sysUID to export
      * @param response               the response-Obj to set contenttype and headers
      * @return                       String - csv-format of the node
+     * @throws ConverterException    if something went wrong
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
@@ -218,6 +226,7 @@ public class ExportController {
      * @param sysUID                 sysUID to export
      * @param response               the response-Obj to set contenttype and headers
      * @return                       String - ppl-format of the node
+     * @throws ConverterException    if something went wrong
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
@@ -241,6 +250,7 @@ public class ExportController {
      * @param oOptions               the outputOptions 
      * @param response               the response-Obj to set contenttype and headers
      * @return                       String - ppl-format of the node
+     * @throws ConverterException    if something went wrong
      */
     @ResponseBody
     @RequestMapping(method = {RequestMethod.POST}, 
@@ -262,6 +272,7 @@ public class ExportController {
      * @param sysUID                 sysUID to export
      * @param response               the response-Obj to set contenttype and headers
      * @return                       String - ical-format of the node
+     * @throws ConverterException    if something went wrong
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
@@ -286,6 +297,7 @@ public class ExportController {
      * @param sysUID                 sysUID to export
      * @param response               the response-Obj to set contenttype and headers
      * @return                       String - ical-format of the node
+     * @throws ConverterException    if something went wrong
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
@@ -311,6 +323,7 @@ public class ExportController {
      * @param sysUID                 sysUID to export
      * @param response               the response-Obj to set contenttype and headers
      * @return                       String - ical-format of the node
+     * @throws ConverterException    if something went wrong
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
@@ -337,6 +350,7 @@ public class ExportController {
      * @param sysUID                 sysUID to export
      * @param response               the response-Obj to set contenttype and headers
      * @return                       String - ical-format of the node
+     * @throws ConverterException    if something went wrong
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
@@ -364,6 +378,7 @@ public class ExportController {
      * @param sysUID                 sysUID to export
      * @param response               the response-Obj to set contenttype and headers
      * @return                       String - ical-format of the node
+     * @throws ConverterException    if something went wrong
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
@@ -392,6 +407,7 @@ public class ExportController {
      * @param oOptions               the outputOptions 
      * @param response               the response-Obj to set contenttype and headers
      * @return                       String - ical-format of the node
+     * @throws ConverterException    if something went wrong
      */
     @ResponseBody
     @RequestMapping(method = {RequestMethod.POST}, 
@@ -415,6 +431,7 @@ public class ExportController {
      * @param sysUID                 sysUID to export
      * @param response               the response-Obj to set contenttype and headers
      * @return                       String - html-format of the node
+     * @throws ConverterException    if something went wrong
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
@@ -433,6 +450,7 @@ public class ExportController {
      * @param sysUID                 sysUID to export
      * @param response               the response-Obj to set contenttype and headers
      * @return                       String - html-format of the node
+     * @throws ConverterException    if something went wrong
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
@@ -454,6 +472,7 @@ public class ExportController {
      * @param sysUID                 sysUID to export
      * @param response               the response-Obj to set contenttype and headers
      * @return                       String - html-format of the node
+     * @throws ConverterException    if something went wrong
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
@@ -482,6 +501,7 @@ public class ExportController {
      * @param oOptions               the outputOptions 
      * @param response               the response-Obj to set contenttype and headers
      * @return                       String - html-format of the node
+     * @throws ConverterException    if something went wrong
      */
     @ResponseBody
     @RequestMapping(method = {RequestMethod.POST}, 
@@ -499,6 +519,7 @@ public class ExportController {
      * @param sysUID                 sysUID to export
      * @param response               the response-Obj to set contenttype and headers
      * @return                       String - documentation-html-format of the node
+     * @throws ConverterException    if something went wrong
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
@@ -531,6 +552,7 @@ public class ExportController {
      * @param sysUID                 sysUID to export
      * @param response               the response-Obj to set contenttype and headers
      * @return                       String - yaioOfflineApp-html-format of the node
+     * @throws ConverterException    if something went wrong
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
@@ -553,13 +575,14 @@ public class ExportController {
      * @param sysUID                 sysUID to export
      * @param response               the response-Obj to set contenttype and headers
      * @return                       ByteArrayOutputStream - excel-format of the node
+     * @throws ConverterException    if something went wrong
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, 
                     value = "/excel/{sysUID}", 
                     produces = "application/excel")
     public String exportNodeAsExcel(@PathVariable(value = "sysUID") final String sysUID, 
-                                    final HttpServletResponse response) {
+                                    final HttpServletResponse response) throws ConverterException {
         ExcelOutputOptions oOptions = new ExcelOutputOptions(new OutputOptionsImpl());
         return this.commonExportNodeAsExcel(sysUID, oOptions, response);
     }
@@ -572,6 +595,7 @@ public class ExportController {
      * @param oOptions               the outputOptions 
      * @param response               the response-Obj to set contenttype and headers
      * @return                       String - html-format of the node
+     * @throws ConverterException    if something went wrong
      */
     @ResponseBody
     @RequestMapping(method = {RequestMethod.POST}, 
@@ -580,7 +604,7 @@ public class ExportController {
                     consumes = "application/x-www-form-urlencoded")
     public String exportNodeAsExcel(@PathVariable(value = "sysUID") final String sysUID,
                                     @ModelAttribute final ExcelOutputOptions oOptions,
-           final HttpServletResponse response) {
+           final HttpServletResponse response) throws ConverterException {
         return this.commonExportNodeAsExcel(sysUID, oOptions, response);
     }
 
@@ -607,11 +631,12 @@ public class ExportController {
      * @param oOptions               the outputOptions
      * @param response               the response-Obj to set contenttype and headers
      * @return                       ByteArrayOutputStream - excel-format of the node
+     * @throws ConverterException    if something went wrong
      */
     protected String commonExportNodeAsExcel(final String sysUID,
                                              final ExcelOutputOptions oOptions,
-                                             final HttpServletResponse response) {
-        ServletOutputStream out;
+                                             final HttpServletResponse response) throws ConverterException {
+        ServletOutputStream out = null;
         HSSFWorkbook wb;
 
         // configure
@@ -620,31 +645,46 @@ public class ExportController {
         // find a specific node
         BaseNode node = BaseNode.findBaseNode(sysUID);
 
-        if (node != null) {
+        if (node == null) {
+            throw new ConverterException("cant find node for sysUID", sysUID,
+                    new IllegalArgumentException("sysUID not found"));
+        }
+
+
+        try {
             // read all childnodes
             node.initChildNodesFromDB(-1);
 
             // export node with converter
-            try {
-                // renew oOptions
-                oOptions.initFilterMaps();
+            // renew oOptions
+            oOptions.initFilterMaps();
 
-                // WorkBook erzeugen
-                wb = exporter.toExcel(node, oOptions);
+            // WorkBook erzeugen
+            wb = exporter.toExcel(node, oOptions);
+        }  catch (Exception ex) {
+            throw new ConverterException("error while generating excel", sysUID, ex);
+        }
 
-                // set headers to force download
-                response.setContentType("application/force-download");
-                response.setHeader("Content-Disposition",
-                        "attachment; filename=" + sysUID + ".xls");
+        try {
+            // set headers to force download
+            response.setContentType("application/force-download");
+            response.setHeader("Content-Disposition", "attachment; filename=" + sysUID + ".xls");
 
-                // get outputstream
-                out = response.getOutputStream();
+            // get outputstream
+            out = response.getOutputStream();
 
-                // write outputstream
-                wb.write(out);
-                out.close();
-            } catch (Exception e) {
-                e.printStackTrace();
+            // write outputstream
+            wb.write(out);
+            out.close();
+        }  catch (IOException ex) {
+            throw new IllegalArgumentException("cant write excelexport to outputstream", ex);
+        } finally {
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
         }
 
