@@ -16,14 +16,13 @@ package de.yaio.app.server;
 import de.yaio.app.config.ContextHelper;
 import de.yaio.app.config.PersistenceConfig;
 import de.yaio.app.config.YaioConfigurationHelper;
+import de.yaio.app.server.config.MvcConfig;
 import de.yaio.app.system.YaioFlyway;
 import de.yaio.commons.cli.CmdLineHelper;
 import de.yaio.commons.cli.CmdLineJob;
 import de.yaio.commons.config.ConfigurationHelper;
 import org.apache.commons.cli.Option;
 import org.apache.log4j.Logger;
-import org.apache.tomcat.util.http.fileupload.FileUpload;
-import org.apache.tomcat.util.http.fileupload.FileUploadBase;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.actuate.autoconfigure.*;
 import org.springframework.boot.autoconfigure.PropertyPlaceholderAutoConfiguration;
@@ -36,14 +35,12 @@ import org.springframework.boot.autoconfigure.security.BootGlobalAuthenticationC
 import org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.SecurityFilterAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.*;
-import org.springframework.boot.context.embedded.MultipartConfigFactory;
 import org.springframework.context.annotation.*;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 import javax.annotation.PreDestroy;
-import javax.servlet.MultipartConfigElement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -74,6 +71,7 @@ import java.util.List;
 @EnableScheduling
 // exgttract while running server with "-Ddebug"
 @Import({PersistenceConfig.class,
+        MvcConfig.class,
         AopAutoConfiguration.class,
         AopAutoConfiguration.JdkDynamicAutoProxyConfiguration.class,
         AuditAutoConfiguration.class,
@@ -99,6 +97,7 @@ import java.util.List;
         MetricExportAutoConfiguration.class,
         MetricFilterAutoConfiguration.class,
         MetricRepositoryAutoConfiguration.class,
+        MultipartAutoConfiguration.class,
         PersistenceExceptionTranslationAutoConfiguration.class,
         PropertyPlaceholderAutoConfiguration.class,
         PublicMetricsAutoConfiguration.class,
@@ -185,22 +184,6 @@ public class Application {
             }
             System.exit(CmdLineJob.CONST_EXITCODE_FAILED_ARGS);
         }
-    }
-    
-    @Bean
-    MultipartConfigElement configureMultipartConfigElement() {
-        // spring-config
-        MultipartConfigFactory factory = new MultipartConfigFactory();
-        factory.setMaxFileSize(System.getProperty("yaio.server.maxfilesize", "128kb"));
-        factory.setMaxRequestSize(System.getProperty("yaio.server.maxrequestsize", "128kb"));
-        MultipartConfigElement config = factory.createMultipartConfig();
-        
-        // tomcat-config
-        FileUploadBase tomcatConfig = new FileUpload();
-        tomcatConfig.setFileSizeMax(config.getMaxFileSize());
-        tomcatConfig.setSizeMax(config.getMaxFileSize());
-
-        return config;
     }
 
     @PreDestroy
