@@ -210,6 +210,6 @@ public class ImportController {
                                      final HttpServletResponse response) {
         LOGGER.warn("error while running request:" + request.toString(), e);
         response.setStatus(SC_INTERNAL_SERVER_ERROR);
-        return "cant export node";
+        return "cant import node";
     }
 }

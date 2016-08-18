@@ -6,14 +6,14 @@
     <parent>
         <groupId>de.yaio.app</groupId>
         <artifactId>yaio-app-pom-springboot</artifactId>
-        <version>0.1.0-beta-feature-YAIO2574-improvements-201606-RELEASE</version>
+        <version>0.1.0-beta-feature-YAIO2698-improvements-201608-SNAPSHOT</version>
         <relativePath>../yaio-app-pom-springboot/pom.xml</relativePath>
     </parent>
 
     <!-- the base -->
     <groupId>de.yaio.app</groupId>
     <artifactId>yaio-app-core</artifactId>
-    <version>0.1.0-beta-feature-YAIO2574-improvements-201606-RELEASE</version>
+    <version>0.1.0-beta-feature-YAIO2698-improvements-201608-SNAPSHOT</version>
     <name>yaio-app-core</name>
     <description>core modules for yaio-apps</description>
 
@@ -194,6 +194,11 @@
             <groupId>org.apache.poi</groupId>
             <artifactId>poi</artifactId>
             <version>${poi.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+            <version>${spring-boot.version}</version>
         </dependency>
 
         <!-- YAIO -->

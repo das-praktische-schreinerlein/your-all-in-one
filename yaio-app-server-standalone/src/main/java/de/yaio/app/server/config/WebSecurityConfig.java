@@ -203,7 +203,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         .antMatchers("/js/**", "/css/**", "/yaio-explorerapp/**", "/dist/**",
                                      "/converters/**", "/apiconfig/**", "/yaio-explorerapp/yaio-explorerapp.html",
                                      "/freemind-flash/**",
-                                     "/examples/**", "/tests/**",
+                                     "/fixtures/**", "/examples/**", "/tests/**",
                                      "/user/current", "/login", "/logout",
                                      "/index.html", "/demo-public.html", "/demo.html")
                             .permitAll()

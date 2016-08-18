@@ -277,7 +277,9 @@ public class ConverterUtils {
                             + "yaioAppBase.get('YaioDataSourceManager').addConnection('YaioStaticNodeDBDriver', function () { return yaioAppBase.get('YaioStaticNodeDBDriver'); });\n"
                             + "yaioAppBase.config.datasources.push('YaioFileNodeDBDriver');\n"
                             + "yaioAppBase.get('YaioDataSourceManager').addConnection('YaioFileNodeDBDriver', function () { return yaioAppBase.get('YaioFileNodeDBDriver'); });\n"
-                            // skip localhost-server on export
+                            + "yaioAppBase.config.datasources.push('YaioUrlDownloadNodeDBDriver');\n"
+                            + "yaioAppBase.get('YaioDataSourceManager').addConnection('YaioUrlDownloadNodeDBDriver', function () { return yaioAppBase.get('YaioUrlDownloadNodeDBDriver'); });\n"
+            // skip localhost-server on export
                             + (!flgExport ? "yaioAppBase.config.datasources.push('YaioServerNodeDBDriver_Local');\n" : "")
                             + (!flgExport ? "yaioAppBase.get('YaioDataSourceManager').addConnection('YaioServerNodeDBDriver_Local', function () { return yaioAppBase.get('YaioServerNodeDBDriver_Local'); });\n" : "")
                             + "datasourceKey = 'YaioServerNodeDBDriver_Local';\n"
