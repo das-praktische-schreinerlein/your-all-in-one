@@ -11,7 +11,7 @@
   ],
   "homepage": "http://www.your-all-in-one.de",
   "dependencies": {
-    "yaio-explorerapp": "das-praktische-schreinerlein/yaio-explorerapp#0.4.x"
+    "yaio-explorerapp": "das-praktische-schreinerlein/yaio-explorerapp#0.5.x"
   },
   "exportsOverride": {
     "x": {
