@@ -13,24 +13,23 @@
  */
 package de.yaio.app.server.restcontroller;
 
+import de.yaio.app.core.dbservice.BaseNodeDBService;
 import de.yaio.app.core.dbservice.BaseNodeDBServiceImpl;
 import de.yaio.app.core.dbservice.SearchOptions;
 import de.yaio.app.core.dbservice.SearchOptionsImpl;
 import de.yaio.app.core.node.*;
+import de.yaio.app.core.nodeservice.BaseNodeService;
 import de.yaio.app.core.nodeservice.UrlResNodeService;
 import de.yaio.app.datatransfer.common.ConverterException;
-import de.yaio.app.extension.dms.services.ResContentDataService;
-import de.yaio.app.core.dbservice.BaseNodeDBService;
-import de.yaio.app.core.nodeservice.BaseNodeService;
 import de.yaio.app.datatransfer.common.DatatransferUtils;
 import de.yaio.app.extension.datatransfer.common.ExtendedDatatransferUtils;
+import de.yaio.app.extension.dms.services.ResContentDataService;
 import de.yaio.app.server.controller.CommonApiConfig;
 import de.yaio.commons.io.IOExceptionWithCause;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.access.SingletonBeanFactoryLocator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -38,7 +37,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.ConstraintValidatorContext;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.io.IOException;
