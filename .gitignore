@@ -28,8 +28,11 @@
 /vendors/css
 /log.roo
 */sbin/var
+yaio-app-e2e/var
+yaio-app-server-standalone/var
 /dependency-reduced-pom.xml
 */dependency-reduced-pom.xml
 /.project
 /.classpath
 *.iml
+/yaio-app-webapp/vendors/archiv/
