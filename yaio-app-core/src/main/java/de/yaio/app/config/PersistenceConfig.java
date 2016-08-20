@@ -29,60 +29,60 @@ public class PersistenceConfig {
     @Value("${hibernate.ejb.naming_strategy}") private String hibernateEjbNamingSstrategy;
 
     // http://shengwangi.blogspot.de/2016/03/replace-jpa-persistencexml-with-java-config.html
-        @Bean
-        public BasicDataSource dataSource() {
-            // org.apache.commons.dbcp.BasicDataSource
-            BasicDataSource basicDataSource = new BasicDataSource();
-            basicDataSource.setDriverClassName(driverClassName);
-            basicDataSource.setUrl(url);
-            basicDataSource.setUsername(username);
-            basicDataSource.setPassword(password);
-            return basicDataSource;
-        }
+    @Bean
+    public BasicDataSource dataSource() {
+        // org.apache.commons.dbcp.BasicDataSource
+        BasicDataSource basicDataSource = new BasicDataSource();
+        basicDataSource.setDriverClassName(driverClassName);
+        basicDataSource.setUrl(url);
+        basicDataSource.setUsername(username);
+        basicDataSource.setPassword(password);
+        return basicDataSource;
+    }
 
-        @Bean
-        public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
-            LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
-            entityManagerFactory.setPersistenceUnitName("default");
-            entityManagerFactory.setPersistenceProviderClass(org.hibernate.ejb.HibernatePersistence.class);
-            entityManagerFactory.setDataSource(dataSource);
-            entityManagerFactory.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
-            entityManagerFactory.setJpaDialect(new HibernateJpaDialect());
-            entityManagerFactory.setPackagesToScan(new String[] {
-                    "de.yaio.app.core.node"
-            });
-            entityManagerFactory.setMappingResources();
+    @Bean
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
+        LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
+        entityManagerFactory.setPersistenceUnitName("default");
+        entityManagerFactory.setPersistenceProviderClass(org.hibernate.jpa.HibernatePersistenceProvider.class);
+        entityManagerFactory.setDataSource(dataSource);
+        entityManagerFactory.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
+        entityManagerFactory.setJpaDialect(new HibernateJpaDialect());
+        entityManagerFactory.setPackagesToScan(new String[] {
+                "de.yaio.app.core.node"
+        });
+        entityManagerFactory.setMappingResources();
 
-            entityManagerFactory.setJpaPropertyMap(hibernateJpaProperties());
-            entityManagerFactory.afterPropertiesSet();
-            return entityManagerFactory;
-        }
+        entityManagerFactory.setJpaPropertyMap(hibernateJpaProperties());
+        entityManagerFactory.afterPropertiesSet();
+        return entityManagerFactory;
+    }
 
-        private Map<String, ?> hibernateJpaProperties() {
-            HashMap<String, String> properties = new HashMap<>();
-            properties.put("hibernate.hbm2ddl.auto", hibernateHbm2ddlAuto);
-            properties.put("hibernate.show_sql", hibernateShowSql);
-            properties.put("hibernate.format_sql", "false");
-            properties.put("hibernate.ejb.naming_strategy", hibernateEjbNamingSstrategy);
+    private Map<String, ?> hibernateJpaProperties() {
+        HashMap<String, String> properties = new HashMap<>();
+        properties.put("hibernate.hbm2ddl.auto", hibernateHbm2ddlAuto);
+        properties.put("hibernate.show_sql", hibernateShowSql);
+        properties.put("hibernate.format_sql", "false");
+        properties.put("hibernate.ejb.naming_strategy", hibernateEjbNamingSstrategy);
 
-            properties.put("hibernate.c3p0.min_size", "2");
-            properties.put("hibernate.c3p0.max_size", "5");
-            properties.put("hibernate.c3p0.timeout", "300"); // 5mins
-            properties.put("hibernate.dialect", hibernateDialect);
+        properties.put("hibernate.c3p0.min_size", "2");
+        properties.put("hibernate.c3p0.max_size", "5");
+        properties.put("hibernate.c3p0.timeout", "300"); // 5mins
+        properties.put("hibernate.dialect", hibernateDialect);
 
-            return properties;
-        }
+        return properties;
+    }
 
-        @Bean
-        public JpaTransactionManager transactionManager(EntityManagerFactory emf) {
-            //org.springframework.orm.jpa.JpaTransactionManager
-            JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();
-            jpaTransactionManager.setEntityManagerFactory(emf);
-            return jpaTransactionManager;
-        }
+    @Bean
+    public JpaTransactionManager transactionManager(EntityManagerFactory emf) {
+        //org.springframework.orm.jpa.JpaTransactionManager
+        JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();
+        jpaTransactionManager.setEntityManagerFactory(emf);
+        return jpaTransactionManager;
+    }
 
     // http://stackoverflow.com/questions/3573188/spring-transactional-is-applied-both-as-a-dynamic-jdk-proxy-and-an-aspectj-aspe
-/**
+    /**
     @Bean
     public AnnotationTransactionAspect annotationTransactionAspect() {
 

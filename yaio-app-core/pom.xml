@@ -106,12 +106,12 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>${hibernate-core.version}</version>
+            <version>${hibernate.version}</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
-            <version>${hibernate-entitymanager.version}</version>
+            <version>${hibernate.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>cglib</groupId>
@@ -127,11 +127,6 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
             <version>${hibernate-validator.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate.javax.persistence</groupId>
-            <artifactId>hibernate-jpa-2.0-api</artifactId>
-            <version>${hibernate-jpa-2.0-api.version}</version>
         </dependency>
         <dependency>
             <groupId>org.flywaydb</groupId>
