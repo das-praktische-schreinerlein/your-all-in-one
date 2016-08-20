@@ -84,19 +84,24 @@ public class ContextHelper {
         }
 
         Configuration config = YaioConfiguration.getInstance();
+        LOGGER.info("done getInstance initSpringApplicationContext");
         config.publishProperties();
+        LOGGER.info("done publishProperties initSpringApplicationContext");
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("init spring with props:" + System.getProperties());
         }
 
         // init applicationContext
         applicationContext = new AnnotationConfigApplicationContext();
+        LOGGER.info("done AnnotationConfigApplicationContext initSpringApplicationContext");
         for (Class<?> configClass : configClasses) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.info("init spring with class:" + configClass);
             }
             ((AnnotationConfigApplicationContext)applicationContext).register(configClass);
+            LOGGER.info("done register initSpringApplicationContext=" + configClass);
         }
         ((AnnotationConfigApplicationContext)applicationContext).refresh();
+        LOGGER.info("done refresh initSpringApplicationContext=");
     }
 }
