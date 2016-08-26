@@ -44,19 +44,19 @@ public class PersistenceConfig {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
         LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactory.setPersistenceUnitName("default");
-        entityManagerFactory.setPersistenceProviderClass(org.hibernate.jpa.HibernatePersistenceProvider.class);
+        entityManagerFactory.setPersistenceProviderClass(org.hibernate.ejb.HibernatePersistence.class);
         entityManagerFactory.setDataSource(dataSource);
         entityManagerFactory.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         entityManagerFactory.setJpaDialect(new HibernateJpaDialect());
         entityManagerFactory.setPackagesToScan(new String[] {
                 "de.yaio.app.core.node"
         });
-        entityManagerFactory.setMappingResources();
 
         entityManagerFactory.setJpaPropertyMap(hibernateJpaProperties());
         entityManagerFactory.afterPropertiesSet();
         return entityManagerFactory;
     }
+
 
     private Map<String, ?> hibernateJpaProperties() {
         HashMap<String, String> properties = new HashMap<>();
