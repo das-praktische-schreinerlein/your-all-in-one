@@ -259,6 +259,10 @@
                     <configuration>
                         <encoding>${project.build.sourceEncoding}</encoding>
                         <nonFilteredFileExtensions>
+                            <nonFilteredFileExtension>eot</nonFilteredFileExtension>
+                            <nonFilteredFileExtension>woff</nonFilteredFileExtension>
+                            <nonFilteredFileExtension>woff2</nonFilteredFileExtension>
+                            <nonFilteredFileExtension>ttf</nonFilteredFileExtension>
                             <nonFilteredFileExtension>swf</nonFilteredFileExtension>
                             <nonFilteredFileExtension>pdf</nonFilteredFileExtension>
                         </nonFilteredFileExtensions>
