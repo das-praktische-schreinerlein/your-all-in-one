@@ -4,6 +4,7 @@ import de.yaio.app.config.PersistenceConfig;
 import org.springframework.boot.autoconfigure.PropertyPlaceholderAutoConfiguration;
 import org.springframework.boot.autoconfigure.aop.AopAutoConfiguration;
 import org.springframework.boot.autoconfigure.dao.PersistenceExceptionTranslationAutoConfiguration;
+import org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration;
 import org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.AuthenticationManagerConfiguration;
 import org.springframework.boot.autoconfigure.security.BootGlobalAuthenticationConfiguration;
@@ -29,6 +30,7 @@ import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
         EmbeddedServletContainerAutoConfiguration.class,
         EmbeddedServletContainerAutoConfiguration.EmbeddedTomcat.class,
         ErrorMvcAutoConfiguration.class,
+        FlywayAutoConfiguration.class,
         HttpEncodingAutoConfiguration.class,
         HttpMessageConvertersAutoConfiguration.class,
         JacksonAutoConfiguration.class,
