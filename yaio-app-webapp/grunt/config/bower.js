@@ -25,6 +25,9 @@
                     } else if (-1 < component.search('ace-builds')) {
                         // map ace
                         component = 'ace';
+                    } else if (-1 < component.search('components-font-awesome')) {
+                        // map ace
+                        component = 'font-awesome';
                     } else if (-1 < component.search('jquery-ui')) {
                         // map jqueryui
                         component = 'jqueryui';

@@ -41,6 +41,7 @@
                 {expand: true, cwd: '<%= bowerSrcBase %>angular-translate-loader-static-files', src: ['angular-translate-loader-static-files.js'], dest: '<%= vendorDestBase %>js/angularjs/', flatten: false},
                 {expand: true, cwd: '<%= bowerSrcBase %>angular-update-meta/dist', src: ['update-meta.js'], dest: '<%= vendorDestBase %>js/angularjs/', flatten: false},
                 {expand: true, cwd: '<%= bowerSrcBase %>c3/', src: ['c3.min.js'], dest: '<%= vendorDestBase %>js/c3/', flatten: false},
+                {expand: true, cwd: '<%= bowerSrcBase %>spin.js/', src: ['spin.min.js'], dest: '<%= vendorDestBase %>js/spin.js/', flatten: false},
                 {expand: true, cwd: '<%= bowerSrcBase %>d3/', src: ['d3.min.js'], dest: '<%= vendorDestBase %>js/d3/', flatten: false},
                 {expand: true, cwd: '<%= bowerSrcBase %>fancytree/dist/', src: ['skin-win8/*.js', 'skin-win8/*.css', 'jquery.fancytree.js'], dest: '<%= vendorDestBase %>js/fancytree/', flatten: false},
                 {expand: true, cwd: '<%= bowerSrcBase %>fancytree/dist/src', src: ['jquery.fancytree.dnd.js',
@@ -48,6 +49,7 @@
                     'jquery.fancytree.gridnav.js',
                     'jquery.fancytree.table.js'], dest: '<%= vendorDestBase %>js/fancytree/', flatten: true},
                 {expand: true, cwd: '<%= bowerSrcBase %>find-and-replace-dom-text/src', src: ['findAndReplaceDOMText.js'], dest: '<%= vendorDestBase %>js/findandreplacedomtext/', flatten: false},
+                {expand: true, cwd: '<%= bowerSrcBase %>components-font-awesome/', src: ['css/**'], dest: '<%= vendorDestBase %>css/font-awesome/', flatten: false},
                 {expand: true, cwd: '<%= bowerSrcBase %>highlightjs/', src: ['**/highlight.pack.js'], dest: '<%= vendorDestBase %>js/highlightjs/', flatten: true},
                 {expand: true, cwd: '<%= bowerSrcBase %>jquery/dist', src: ['jquery.min.js'], dest: '<%= vendorDestBase %>js/jquery/', flatten: false},
                 {expand: true, cwd: '<%= bowerSrcBase %>jquery-lang-js/js', src: ['jquery-lang.js'], dest: '<%= vendorDestBase %>js/jquery/', flatten: false},
@@ -98,6 +100,7 @@
             files: [
                 {expand: true, cwd: '<%= bowerSrcBase %>fancytree/dist/', src: ['skin-win8/*.png', 'skin-win8/*.gif'], dest: '<%= vendorDestBase %>js/fancytree/', flatten: false},
                 {expand: true, cwd: '<%= bowerSrcBase %>fancytree/dist/', src: ['skin-lion/*.png', 'skin-lion/*.gif'], dest: '<%= vendorDestBase %>js/fancytree/', flatten: false},
+                {expand: true, cwd: '<%= bowerSrcBase %>components-font-awesome/', src: ['fonts/**'], dest: '<%= vendorDestBase %>css/font-awesome/', flatten: false},
                 {expand: true, cwd: '<%= bowerSrcBase %>jquery-ui/themes/smoothness', src: ['images/*.*'], dest: '<%= vendorDestBase %>css/jqueryui/', flatten: false},
                 {expand: true, cwd: '<%= bowerSrcBase %>ymf/build/dist/', src: ['*.png'], dest: '<%= vendorDestBase %>css/ymf/', flatten: false},
                 {expand: true, cwd: '<%= bowerSrcBase %>yaio-explorerapp/build/dist/', src: ['*.png'], dest: '<%= vendorDestBase %>css/yaio-explorerapp/', flatten: false}
@@ -108,6 +111,7 @@
             files: [
                 // vendors
                 {expand: true, cwd: '<%= vendorDestBase %>js/', src: ['ace/**'], dest: '<%= destBase %>dist/vendors-<%= pkg.vendorversion %>/', flatten: false},
+                {expand: true, cwd: '<%= vendorDestBase %>css/', src: ['font-awesome/**'], dest: '<%= destBase %>dist/vendors-<%= pkg.vendorversion %>/', flatten: false},
                 {expand: true, cwd: '<%= vendorDestBase %>js/fancytree', src: ['jquery.fancytree.js',
                     'jquery.fancytree.dnd.js',
                     'jquery.fancytree.edit.js',
