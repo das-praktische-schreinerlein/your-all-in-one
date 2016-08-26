@@ -16,6 +16,7 @@ package de.yaio.app.clients;
 import de.yaio.commons.config.ConfigurationOption;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -59,6 +60,11 @@ public class CallYaioImport extends CallYaioInstance {
         parentsysuidOption.setRequired(true);
         availiableCmdLineOptions.addOption(parentsysuidOption);
 
+        // filetype for import
+        Option importTypeOption = new Option(null, "importtype", true, "importtype of the importfile (wiki(default)/json/mail)");
+        importTypeOption.setRequired(false);
+        availiableCmdLineOptions.addOption(importTypeOption);
+
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("addAvailiableCmdLineOptions: " + availiableCmdLineOptions);
         }
@@ -71,13 +77,26 @@ public class CallYaioImport extends CallYaioInstance {
         // get options
         String parentsysUID = ConfigurationOption.stringValueOf(this.getConfiguration().getCliOption("parentsysuid"));
         String importfile = ConfigurationOption.stringValueOf(this.getConfiguration().getCliOption("importfile"));
-        
+        String importType = ConfigurationOption.stringValueOf(this.getConfiguration().getCliOption("importtype"));
+
+        // check options
+        String url;
+        if (StringUtils.isEmpty(importType) || "wiki".equals(importType.toLowerCase())) {
+            url = "/imports/wiki/";
+        } else if ("json".equals(importType.toLowerCase())) {
+            url = "/imports/json/";
+        } else if ("mail".equals(importType.toLowerCase())) {
+            url = "/imports/mail/";
+        } else {
+            throw new RuntimeException("illegal importtype:" + importType);
+        }
+
         // call url
         Map<String, String> files = new HashMap<String, String>();
         files.put("file", importfile);
         byte[] result;
         try {
-            result = this.callPostUrl("/imports/wiki/" + parentsysUID, null, files);
+            result = this.callPostUrl(url + parentsysUID, null, files);
         } catch (IOException ex) {
             throw new RuntimeException("error while calling importUrl", ex);
         }

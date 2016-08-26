@@ -17,11 +17,13 @@ import de.yaio.app.core.node.BaseNode;
 import de.yaio.app.datatransfer.common.ParserException;
 import de.yaio.app.datatransfer.jpa.JPAExporter;
 import de.yaio.app.extension.datatransfer.common.ExtendedDatatransferUtils;
+import de.yaio.app.extension.datatransfer.mail.EmailImporter;
 import de.yaio.app.extension.datatransfer.ppl.PPLImporter;
 import de.yaio.app.extension.datatransfer.wiki.WikiImportOptions;
 import de.yaio.app.extension.datatransfer.wiki.WikiImporter;
 import de.yaio.app.server.restcontroller.NodeActionResponse;
 import de.yaio.app.server.restcontroller.NodeRestController;
+import de.yaio.commons.io.IOExceptionWithCause;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,6 +34,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
 
 import static org.apache.http.HttpStatus.SC_BAD_REQUEST;
 import static org.apache.http.HttpStatus.SC_INTERNAL_SERVER_ERROR;
@@ -54,6 +57,9 @@ public class ImportController {
     
     @Autowired
     protected ExtendedDatatransferUtils datatransferUtils;
+
+    @Autowired
+    protected EmailImporter mailImporter;
 
     // Logger
     private static final Logger LOGGER = Logger.getLogger(ExportController.class);
@@ -186,6 +192,52 @@ public class ImportController {
                      null, null, null, null).getStateMsg();
         }            
         
+        return response.getStateMsg();
+    }
+
+    /**
+     * Request to import the uploaded mail-file from param "file" to the
+     * node parentSysUID returning a simple message
+     * @param parentSysUID           sysUID to append the new nodes
+     * @param file                   the uploaded file stream with the data to import as mail
+     * @return                       text-message
+     */
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST,
+            value = "/mail/{parentSysUID}",
+            produces = "text/html")
+    public String importMail(@PathVariable(value = "parentSysUID") final String parentSysUID,
+                             @RequestParam("file") final MultipartFile file) throws IOException, IOExceptionWithCause {
+        NodeActionResponse response = new NodeActionResponse(
+                "ERROR", "node '" + parentSysUID + "' doesnt exists",
+                null, null, null, null);
+
+        // find the parentnode
+        BaseNode node = BaseNode.findBaseNode(parentSysUID);
+        if (node == null) {
+            return response.getStateMsg();
+        }
+
+        // check file
+        if (!file.isEmpty()) {
+            // copy to tmpFile
+            File tmpFile = File.createTempFile("upload", "json");
+            tmpFile.deleteOnExit();
+            file.transferTo(tmpFile);
+
+            mailImporter.importMailFiles(parentSysUID, Collections.singletonList(tmpFile));
+
+            // create new response
+            response = NodeRestController.createResponseObj(
+                    node, "mail appended to '" + parentSysUID + "'", true);
+        } else {
+            return new NodeActionResponse(
+                    "ERROR",
+                    "You failed to upload the mail to '"
+                            + parentSysUID + "' because the file was empty.",
+                    null, null, null, null).getStateMsg();
+        }
+
         return response.getStateMsg();
     }
 
