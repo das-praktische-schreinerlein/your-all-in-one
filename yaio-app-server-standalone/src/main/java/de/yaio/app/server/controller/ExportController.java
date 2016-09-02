@@ -13,6 +13,7 @@
  */
 package de.yaio.app.server.controller;
 
+import de.yaio.app.config.ContextHelper;
 import de.yaio.app.config.YaioConfiguration;
 import de.yaio.app.core.dbservice.BaseNodeRepository;
 import de.yaio.app.core.node.BaseNode;
@@ -32,6 +33,7 @@ import de.yaio.app.extension.datatransfer.wiki.WikiExporter;
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -62,6 +64,9 @@ public class ExportController {
 
     @Autowired
     protected BaseNodeRepository baseNodeDBService;
+
+    @Autowired
+    private ApplicationContext appContext;
 
     // Logger
     private static final Logger LOGGER = Logger.getLogger(ExportController.class);
@@ -285,7 +290,7 @@ public class ExportController {
     public String exportNodeAsICal(@PathVariable(value = "sysUID") final String sysUID, 
                                    final HttpServletResponse response) throws ConverterException {
         // configure
-        Exporter exporter = new ICalDBExporter();
+        Exporter exporter = getICalDBExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
         
         // exclude system-nodes
@@ -310,7 +315,7 @@ public class ExportController {
     public String exportNodeAsICalOnlyEvents(@PathVariable(value = "sysUID") final String sysUID, 
                                              final HttpServletResponse response) throws ConverterException {
         // configure
-        Exporter exporter = new ICalDBExporter();
+        Exporter exporter = getICalDBExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
         
         // exclude system-nodes
@@ -336,7 +341,7 @@ public class ExportController {
     public String exportNodeAsICalOnlyTasks(@PathVariable(value = "sysUID") final String sysUID, 
                                             final HttpServletResponse response) throws ConverterException {
         // configure
-        Exporter exporter = new ICalDBExporter();
+        Exporter exporter = getICalDBExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
         
         // exclude system-nodes
@@ -363,7 +368,7 @@ public class ExportController {
     public String exportNodeAsICalOnlyTasksTodo(@PathVariable(value = "sysUID") final String sysUID, 
                                                 final HttpServletResponse response) throws ConverterException {
         // configure
-        Exporter exporter = new ICalDBExporter();
+        Exporter exporter = getICalDBExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
         
         // exclude system-nodes
@@ -391,7 +396,7 @@ public class ExportController {
     public String exportNodeAsICalOnlyTasksLate(@PathVariable(value = "sysUID") final String sysUID, 
                                                 final HttpServletResponse response) throws ConverterException {
         // configure
-        Exporter exporter = new ICalDBExporter();
+        Exporter exporter = getICalDBExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
         
         // exclude system-nodes
@@ -422,7 +427,7 @@ public class ExportController {
                                    @ModelAttribute final EmptyOutputOptionsImpl oOptions,
                                    final HttpServletResponse response) throws ConverterException {
         // configure
-        Exporter exporter = new ICalDBExporter();
+        Exporter exporter = getICalDBExporter();
         
         // run
         return converterUtils.exportNode(sysUID, exporter, oOptions, ".ics", response);
@@ -693,5 +698,11 @@ public class ExportController {
         }
 
         return null;
+    }
+
+    protected ICalDBExporter getICalDBExporter() {
+        ICalDBExporter exporter = new ICalDBExporter();
+        ContextHelper.getInstance().autowireService(appContext, exporter);
+        return exporter;
     }
 }
