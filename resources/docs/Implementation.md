@@ -14,7 +14,6 @@
 - use external libs
     - Persistence, Validation...: [Spring-Framework](https://github.com/spring-projects/spring-framework)
     - Persistence: [Hibernate](https://github.com/hibernate/)
-    - Persistence: [Spring-roo](https://github.com/spring-projects/spring-roo)
 
 ## Java-Datatransfer-Tools
 - functionality

@@ -98,7 +98,6 @@ More information about the prototype at [http://www.your-all-in-one.de/yaio/stat
     - Markdown-Formatter: [Pegdown](https://github.com/sirthias/pegdown)
     - Persistence, Validation...: [Spring-Framework](https://github.com/spring-projects/spring-framework)
     - Persistence: [Hibernate](https://github.com/hibernate/)
-    - Persistence: [Spring-roo](https://github.com/spring-projects/spring-roo)
     - Security: [Spring Security](https://github.com/spring-projects/spring-security)
     - WebFramework: [Spring-boot](https://github.com/spring-projects/spring-boot)
 - **More Java-libs and progs**
