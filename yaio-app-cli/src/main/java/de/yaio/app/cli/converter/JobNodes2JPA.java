@@ -66,6 +66,7 @@ public class JobNodes2JPA extends JobNodes2Wiki {
         // initApplicationContext
         ContextHelper.getInstance().getSpringApplicationContext();
         ContextHelper.getInstance().autowireService(this);
+        ContextHelper.getInstance().autowireService(exporter);
 
         // check for sysUID
         String sysUID = ConfigurationOption.stringValueOf(this.getConfiguration().getCliOption("addnodestosysuid"));
