@@ -13,6 +13,7 @@
  */
 package de.yaio.app.extension.datatransfer.common;
 
+import de.yaio.app.config.ContextHelper;
 import de.yaio.app.core.dbservice.BaseNodeRepository;
 import de.yaio.app.core.node.BaseNode;
 import de.yaio.app.datatransfer.common.ConverterException;
@@ -31,6 +32,7 @@ import de.yaio.app.extension.datatransfer.wiki.WikiImporter;
 import de.yaio.app.extension.datatransfer.wiki.WikiImporter.WikiStructLine;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,6 +53,9 @@ import java.util.List;
 public class ExtendedDatatransferUtils extends DatatransferUtils {
     @Autowired
     protected BaseNodeRepository baseNodeDBService;
+
+    @Autowired
+    private ApplicationContext appContext;
 
     // Logger
     private static final Logger LOGGER =
@@ -112,17 +117,17 @@ public class ExtendedDatatransferUtils extends DatatransferUtils {
         resetRestrictedData(masterNode, importOptions, true);
 
         // JPA-Exporter
-        JPAExporter jpaExporter = new JPAExporter();
+        JPAExporter jpaExporter = getJPAExporter();
         jpaExporter.getMasterNodeResult(masterNode, null);
 
         // renew old parent only if different from newParent
         if (!newParent.getSysUID().equals(oldParent.getSysUID())) {
             // renew oldParent
-            oldParent = baseNodeDBService.findBaseNode(oldParent.getSysUID());
+            oldParent = getBaseNodeRepository().findBaseNode(oldParent.getSysUID());
             oldParent.initChildNodesFromDB(0);
             
             // recalc old parent
-            baseNodeDBService.updateMeAndMyParents(oldParent);
+            getBaseNodeRepository().updateMeAndMyParents(oldParent);
         }
     }
 
@@ -255,5 +260,15 @@ public class ExtendedDatatransferUtils extends DatatransferUtils {
             LOGGER.debug("masternode after wiki:" 
                          + masterNode.getBaseNodeService().visualizeNodeHierarchy("", masterNode));
         }
+    }
+
+    protected BaseNodeRepository getBaseNodeRepository() {
+        return baseNodeDBService;
+    }
+
+    protected JPAExporter getJPAExporter() {
+        JPAExporter exporter = new JPAExporter();
+        ContextHelper.getInstance().autowireService(appContext, exporter);
+        return exporter;
     }
 }
