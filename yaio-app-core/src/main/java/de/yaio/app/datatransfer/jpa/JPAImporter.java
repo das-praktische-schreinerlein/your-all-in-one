@@ -14,21 +14,20 @@
 package de.yaio.app.datatransfer.jpa;
 
 import de.yaio.app.core.datadomain.DataDomain;
+import de.yaio.app.core.dbservice.BaseNodeRepository;
 import de.yaio.app.core.node.BaseNode;
 import de.yaio.app.datatransfer.importer.ImportOptions;
 import de.yaio.app.datatransfer.importer.ImporterImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /** 
  * import of Nodes from JPA
  * 
- * @FeatureDomain                import
- * @package                      de.yaio.extension.datatransfer.jpa
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category                     collaboration
- * @copyright                    Copyright (c) 2014, Michael Schreiner
- * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class JPAImporter extends ImporterImpl {
+    @Autowired
+    protected BaseNodeRepository baseNodeDBService;
 
     /** 
      * create object to import nodes from JPA
@@ -46,7 +45,7 @@ public class JPAImporter extends ImporterImpl {
      */
     public DataDomain getBaseNodeBySysUID(final String sysUID) {
         // look for this Basenode in DB
-        BaseNode dbNode = BaseNode.findBaseNode(sysUID);
+        BaseNode dbNode = baseNodeDBService.findBaseNode(sysUID);
         
         if (dbNode != null) {
             dbNode.initChildNodesFromDB(-1);

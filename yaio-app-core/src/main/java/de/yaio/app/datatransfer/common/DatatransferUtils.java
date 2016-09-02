@@ -14,23 +14,24 @@
 package de.yaio.app.datatransfer.common;
 
 import de.yaio.app.core.datadomain.*;
-import de.yaio.app.core.dbservice.BaseNodeDBServiceImpl;
+import de.yaio.app.core.datadomain.ResContentData.UploadWorkflowState;
+import de.yaio.app.core.dbservice.BaseNodeRepository;
 import de.yaio.app.core.node.*;
+import de.yaio.app.core.nodeservice.BaseNodeService;
+import de.yaio.app.core.nodeservice.NodeService;
 import de.yaio.app.core.nodeservice.UrlResNodeService;
+import de.yaio.app.core.utils.Calculator;
 import de.yaio.app.datatransfer.exporter.OutputOptions;
 import de.yaio.app.datatransfer.exporter.OutputOptionsImpl;
 import de.yaio.app.datatransfer.importer.ImportOptions;
-import de.yaio.app.datatransfer.json.JSONFullExporter;
-import de.yaio.app.datatransfer.json.JSONResponse;
-import de.yaio.app.core.utils.Calculator;
-import de.yaio.app.core.datadomain.ResContentData.UploadWorkflowState;
-import de.yaio.app.core.nodeservice.BaseNodeService;
-import de.yaio.app.core.nodeservice.NodeService;
 import de.yaio.app.datatransfer.importer.ImportOptionsImpl;
 import de.yaio.app.datatransfer.jpa.JPAExporter;
+import de.yaio.app.datatransfer.json.JSONFullExporter;
 import de.yaio.app.datatransfer.json.JSONFullImporter;
+import de.yaio.app.datatransfer.json.JSONResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,6 +49,8 @@ import java.util.Set;
  */
 @Service
 public class DatatransferUtils {
+    @Autowired
+    protected BaseNodeRepository baseNodeDBService;
 
     // Logger
     private static final Logger LOGGER =
@@ -98,11 +101,11 @@ public class DatatransferUtils {
         // renew old parent only if different from newParent
         if (!newParent.getSysUID().equals(oldParent.getSysUID())) {
             // renew oldParent
-            oldParent = BaseNode.findBaseNode(oldParent.getSysUID());
+            oldParent = baseNodeDBService.findBaseNode(oldParent.getSysUID());
             oldParent.initChildNodesFromDB(0);
             
             // recalc old parent
-            BaseNodeDBServiceImpl.getInstance().updateMeAndMyParents(oldParent);
+            baseNodeDBService.updateMeAndMyParents(oldParent);
         }
     }
 
@@ -145,19 +148,19 @@ public class DatatransferUtils {
             node.recalcData(BaseNodeService.RecalcRecurseDirection.CHILDREN);
 
             // save all children of node recursively
-            node.saveChildNodesToDB(NodeService.CONST_DB_RECURSIONLEVEL_ALL_CHILDREN, true);
+            baseNodeDBService.saveChildNodesToDB(node, NodeService.CONST_DB_RECURSIONLEVEL_ALL_CHILDREN, true);
 
             // save children of newParent
-            newParent.saveChildNodesToDB(0, true);
+            baseNodeDBService.saveChildNodesToDB(newParent, 0, true);
 
             // recalc and save parents
-            BaseNodeDBServiceImpl.getInstance().updateMeAndMyParents(node);
+            baseNodeDBService.updateMeAndMyParents(node);
 
             // renew oldParent
-            oldParent = BaseNode.findBaseNode(oldParent.getSysUID());
+            oldParent = baseNodeDBService.findBaseNode(oldParent.getSysUID());
 
             // recalc old parent
-            BaseNodeDBServiceImpl.getInstance().updateMeAndMyParents(oldParent);
+            baseNodeDBService.updateMeAndMyParents(oldParent);
         } else if (node.getSortPos().intValue() != newSortPos.intValue()) {
             // changed only position
             if (LOGGER.isInfoEnabled()) {
@@ -172,7 +175,7 @@ public class DatatransferUtils {
             oldParent.getBaseNodeService().moveChildToSortPos(oldParent, resultNode, newSortPos);
 
             // save children of old parent
-            oldParent.saveChildNodesToDB(0, true);
+            baseNodeDBService.saveChildNodesToDB(oldParent, 0, true);
         } else {
             // read children for node
             node.initChildNodesFromDB(0);

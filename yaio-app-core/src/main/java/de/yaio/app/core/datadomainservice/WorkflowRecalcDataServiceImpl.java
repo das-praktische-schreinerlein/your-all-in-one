@@ -16,10 +16,12 @@ package de.yaio.app.core.datadomainservice;
 import de.yaio.app.core.datadomain.BaseWorkflowData;
 import de.yaio.app.core.datadomain.DataDomain;
 import de.yaio.app.core.datadomain.WorkflowState;
+import de.yaio.app.core.dbservice.BaseNodeRepository;
 import de.yaio.app.core.node.BaseNode;
 import de.yaio.app.core.nodeservice.NodeService;
 import de.yaio.app.utils.db.DBFilter;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,6 +36,9 @@ import java.util.List;
 public class WorkflowRecalcDataServiceImpl extends TriggeredDataDomainRecalcImpl implements WorkflowRecalcDataService {
 
     protected BaseWorkflowDataServiceImpl baseWorkflowDataService = BaseWorkflowDataServiceImpl.getInstance();
+
+    @Autowired
+    protected BaseNodeRepository baseNodeDBService;
 
     // Logger
     private static final Logger LOGGER =
@@ -63,7 +68,7 @@ public class WorkflowRecalcDataServiceImpl extends TriggeredDataDomainRecalcImpl
             baseWorkflowDataService.doRecalcAfterChildren(node, NodeService.RecalcRecurseDirection.ONLYME);
 
             // save node
-            node.getBaseNodeDBService().updateBaseNode(node);
+            baseNodeDBService.update(node);
         } catch (IllegalArgumentException ex) {
             LOGGER.error("error while recalcing node:" + node.getNameForLogger(), ex);
         }
@@ -89,5 +94,10 @@ public class WorkflowRecalcDataServiceImpl extends TriggeredDataDomainRecalcImpl
         dbFilters.add(new DBFilter(sql, parameters));
 
         return dbFilters;
+    }
+
+    @Override
+    protected BaseNodeRepository getBaseNodeDBService() {
+        return baseNodeDBService;
     }
 }

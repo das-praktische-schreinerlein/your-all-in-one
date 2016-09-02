@@ -13,10 +13,7 @@
  */
 package de.yaio.app.server.restcontroller;
 
-import de.yaio.app.core.dbservice.BaseNodeDBService;
-import de.yaio.app.core.dbservice.BaseNodeDBServiceImpl;
-import de.yaio.app.core.dbservice.SearchOptions;
-import de.yaio.app.core.dbservice.SearchOptionsImpl;
+import de.yaio.app.core.dbservice.*;
 import de.yaio.app.core.node.*;
 import de.yaio.app.core.nodeservice.BaseNodeService;
 import de.yaio.app.core.nodeservice.UrlResNodeService;
@@ -57,13 +54,19 @@ public class NodeRestController {
     public static final String API_VERSION = "1.0.0";
 
     @Autowired
+    protected BaseNodeRepository baseNodeDBService;
+
+    @Autowired
     private ResContentDataService resContentService;
 
     @Autowired
     private CommonApiConfig commonApiConfig;
 
-    //@Autowired TODO: failed on unitstest...
-    protected DatatransferUtils datatransferUtils = new ExtendedDatatransferUtils();
+    @Autowired //TODO: failed on unitstest...
+    protected ExtendedDatatransferUtils datatransferUtils;
+
+    @Autowired
+    protected BaseNodeSearchDBService baseNodeSearchDBService;
 
     // Logger
     private static final Logger LOGGER = Logger.getLogger(NodeRestController.class);
@@ -182,7 +185,7 @@ public class NodeRestController {
                         null, null, null, null);
 
         // find a specific node
-        BaseNode node = BaseNode.findBaseNode(sysUID);
+        BaseNode node = baseNodeDBService.findBaseNode(sysUID);
         if (node != null) {
             // read the childnodes only 1 level
             node.initChildNodesFromDB(0);
@@ -210,7 +213,6 @@ public class NodeRestController {
                         null, null, null, null);
 
         // find a specific node
-        BaseNodeDBService baseNodeDBService = BaseNodeDBServiceImpl.getInstance();
         List<BaseNode> nodes = baseNodeDBService.findSymLinkBaseNode(symLinkRef);
         if (CollectionUtils.isNotEmpty(nodes)) {
             // symLinkref found
@@ -252,14 +254,14 @@ public class NodeRestController {
                         null, null, null, null);
 
         // find a specific node
-        BaseNode node = BaseNode.findBaseNode(sysUID);
+        BaseNode node = baseNodeDBService.findBaseNode(sysUID);
         if (node != null) {
             // read parent
             BaseNode parent = node.getParentNode();
             
             // delete the node
-            node.removeChildNodesFromDB();
-            node.remove();
+            baseNodeDBService.removeChildNodesFromDB(node);
+            baseNodeDBService.delete(node);
             
             try {
                 // recalc parent
@@ -478,13 +480,13 @@ public class NodeRestController {
                         null, null, null, null);
 
         // find a specific node
-        BaseNode node = BaseNode.findBaseNode(sysUID);
+        BaseNode node = baseNodeDBService.findBaseNode(sysUID);
         if (node == null) {
             return response;
         }
         
         // check new parent
-        BaseNode newParent = BaseNode.findBaseNode(newParentSysUID);
+        BaseNode newParent = baseNodeDBService.findBaseNode(newParentSysUID);
         if (newParent == null) {
             response = new NodeActionResponse(
                             "ERROR", "new parentNode '" + newParentSysUID 
@@ -520,13 +522,13 @@ public class NodeRestController {
                         null, null, null, null);
 
         // find a specific node
-        BaseNode node = BaseNode.findBaseNode(sysUID);
+        BaseNode node = baseNodeDBService.findBaseNode(sysUID);
         if (node == null) {
             return response;
         }
         
         // check new parent
-        BaseNode newParent = BaseNode.findBaseNode(newParentSysUID);
+        BaseNode newParent = baseNodeDBService.findBaseNode(newParentSysUID);
         if (newParent == null) {
             response = new NodeActionResponse(
                             "ERROR", "new parentNode '" + newParentSysUID 
@@ -588,7 +590,7 @@ public class NodeRestController {
                         null, null, null, null);
 
         // find a specific node
-        BaseNode node = BaseNode.findBaseNode(sysUID);
+        BaseNode node = baseNodeDBService.findBaseNode(sysUID);
         if (node == null) {
             // node not found
             return response;
@@ -704,7 +706,7 @@ public class NodeRestController {
                         null, null, null, null);
 
         // find a specific node
-        BaseNode parentNode = BaseNode.findBaseNode(parentSysUID);
+        BaseNode parentNode = baseNodeDBService.findBaseNode(parentSysUID);
         if (parentNode == null) {
             // node not found
             return response;
@@ -729,7 +731,7 @@ public class NodeRestController {
             origNode.recalcData(BaseNodeService.RecalcRecurseDirection.ONLYME);
             
             // save
-            origNode.persist();
+            baseNodeDBService.save(origNode);
 
             // handle uploads for UrlResNode
             if (commonApiConfig != null && commonApiConfig.dmsAvailable
@@ -813,7 +815,7 @@ public class NodeRestController {
      * @return                       List - list of the recalced and saved parenthierarchy
      */
     protected List<BaseNode> updateMeAndMyParents(final BaseNode node) {
-        return BaseNodeDBServiceImpl.getInstance().updateMeAndMyParents(node);
+        return baseNodeDBService.updateMeAndMyParents(node);
     }
 
     /** 
@@ -835,13 +837,12 @@ public class NodeRestController {
                         null, curPage, pageSize, 0L);
 
         // search nodes
-        BaseNodeDBService baseNodeDBService = BaseNodeDBServiceImpl.getInstance();
-        List<BaseNode> resultList = baseNodeDBService.findExtendedSearchBaseNodeEntries(fulltext, sysUID, searchOptions,
+        List<BaseNode> resultList = baseNodeSearchDBService.findExtendedSearchBaseNodeEntries(fulltext, sysUID, searchOptions,
                         sortConfig, (curPage.intValue() - 1) * pageSize.intValue(),
                         pageSize.intValue());
 
         // create response
-        response.setCount(baseNodeDBService.countExtendedSearchBaseNodes(fulltext, sysUID, searchOptions));
+        response.setCount(baseNodeSearchDBService.countExtendedSearchBaseNodes(fulltext, sysUID, searchOptions));
 
         // add node
         response.setNodes(resultList);

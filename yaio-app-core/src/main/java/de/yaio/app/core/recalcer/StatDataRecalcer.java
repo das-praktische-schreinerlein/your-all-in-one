@@ -15,17 +15,24 @@ package de.yaio.app.core.recalcer;
 
 import de.yaio.app.core.datadomainservice.StatDataService;
 import de.yaio.app.core.datadomainservice.StatDataServiceImpl;
+import de.yaio.app.core.dbservice.BaseNodeRepository;
 import de.yaio.app.core.node.BaseNode;
+import de.yaio.app.utils.db.DBFilter;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.TypedQuery;
+import java.util.ArrayList;
 import java.util.List;
 
 /** 
  * recalc statData
  */
 public class StatDataRecalcer {
+
+    @Autowired
+    protected BaseNodeRepository baseNodeDBService;
 
     protected StatDataService statDataService = StatDataServiceImpl.getInstance();
 
@@ -47,14 +54,16 @@ public class StatDataRecalcer {
     @Transactional
     public String recalcStatData() {
 
-        long count = BaseNode.countBaseNodes();
+        long count = baseNodeDBService.countBaseNodes();
         // look for this masternode in DB
         if (LOGGER.isInfoEnabled()) {
             LOGGER.info("read nodes for recalc statData count:" + count);
         }
         int maxPerRun = 500;
         int maxRun = new Long(count / maxPerRun).intValue();
-        TypedQuery<BaseNode> query = BaseNode.entityManager().createQuery("SELECT o FROM BaseNode o order by ebene desc", BaseNode.class);
+
+        List<DBFilter> dbFilters = new ArrayList<>();
+        TypedQuery<BaseNode> query = baseNodeDBService.createTypedQuery(BaseNode.class, dbFilters, "order by ebene asc");
 
         for (int run = 0; run <= maxRun; run++) {
             if (LOGGER.isInfoEnabled()) {
@@ -70,7 +79,7 @@ public class StatDataRecalcer {
                     LOGGER.debug("updated statdata node:" + node.getNameForLogger());
                 }
 
-                node.merge();
+                baseNodeDBService.update(node);
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("save node:" + node.getNameForLogger());
                 }

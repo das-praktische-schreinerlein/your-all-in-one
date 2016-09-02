@@ -307,6 +307,8 @@ public class JobNodes2Wiki extends YaioCmdLineJob {
             ContextHelper.getInstance().addSpringConfig(JobConfig.class);
             // initApplicationContext
             ContextHelper.getInstance().getSpringApplicationContext();
+            ContextHelper.getInstance().autowireService(commonImporter);
+            ContextHelper.getInstance().autowireService(exporter);
         }
     }
 

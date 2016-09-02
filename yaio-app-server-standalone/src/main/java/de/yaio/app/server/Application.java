@@ -38,6 +38,7 @@ import org.springframework.boot.autoconfigure.web.*;
 import org.springframework.context.annotation.*;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 import javax.annotation.PreDestroy;
@@ -53,6 +54,7 @@ import java.util.List;
 @Configuration
 @Lazy
 @EnableSpringConfigured // <context:spring-configured/>
+@EnableJpaRepositories(basePackages = {"de.yaio.app.core"})
 @ComponentScan(basePackages = {"de.yaio.app.core", "de.yaio.app.datatransfer",
                                "de.yaio.app.extension", "de.yaio.app.server",
                                "de.yaio.services.webshot", "de.yaio.services.dms",
@@ -69,7 +71,7 @@ import java.util.List;
                     })
                 })
 @EnableScheduling
-// exgttract while running server with "-Ddebug"
+// extract while running server with "-Ddebug"
 @Import({PersistenceConfig.class,
         MvcConfig.class,
         AopAutoConfiguration.class,

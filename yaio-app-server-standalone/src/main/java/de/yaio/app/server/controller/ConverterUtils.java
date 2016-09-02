@@ -14,6 +14,7 @@
 package de.yaio.app.server.controller;
 
 import de.yaio.app.config.YaioConfiguration;
+import de.yaio.app.core.dbservice.BaseNodeRepository;
 import de.yaio.app.core.node.BaseNode;
 import de.yaio.app.datatransfer.common.ConverterException;
 import de.yaio.app.datatransfer.exporter.Exporter;
@@ -24,6 +25,7 @@ import de.yaio.app.extension.datatransfer.html.HtmlExporter;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
@@ -44,6 +46,8 @@ import java.util.regex.Pattern;
  */
 @Service
 public class ConverterUtils {
+    @Autowired
+    protected BaseNodeRepository baseNodeDBService;
 
     // Logger
     private static final Logger LOGGER = Logger.getLogger(ConverterUtils.class);
@@ -63,7 +67,7 @@ public class ConverterUtils {
                              final OutputOptions oOptions, final String extension,
                              final HttpServletResponse response) throws ConverterException {
         // find a specific node
-        BaseNode node = BaseNode.findBaseNode(sysUID);
+        BaseNode node = baseNodeDBService.findBaseNode(sysUID);
         if (node == null) {
             throw new ConverterException("cant find node for sysUID", sysUID,
                     new IllegalArgumentException("sysUID not found"));
@@ -124,7 +128,7 @@ public class ConverterUtils {
                                          final HttpServletResponse response,
                                          final String pTplFile) throws ConverterException {
         // read node
-        BaseNode node = BaseNode.findBaseNode(sysUID);
+        BaseNode node = baseNodeDBService.findBaseNode(sysUID);
         if (node == null) {
             throw new ConverterException("cant find node for sysUID", sysUID,
                     new IllegalArgumentException("sysUID not found"));

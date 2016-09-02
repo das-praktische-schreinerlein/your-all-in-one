@@ -13,10 +13,11 @@
  */
 package de.yaio.app.core.recalcer;
 
-import de.yaio.app.core.dbservice.BaseNodeDBServiceImpl;
+import de.yaio.app.core.dbservice.BaseNodeRepository;
 import de.yaio.app.core.node.BaseNode;
 import de.yaio.app.core.nodeservice.NodeService;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 /** 
@@ -30,7 +31,9 @@ import org.springframework.transaction.annotation.Transactional;
  * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class NodeRecalcer {
-    
+    @Autowired
+    protected BaseNodeRepository baseNodeDBService;
+
     // Logger
     private static final Logger LOGGER = Logger.getLogger(NodeRecalcer.class);
 
@@ -52,7 +55,7 @@ public class NodeRecalcer {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("read node:" + sysUID);
         }
-        BaseNode masterDbNode = BaseNode.findBaseNode(sysUID);
+        BaseNode masterDbNode = baseNodeDBService.findBaseNode(sysUID);
         if (masterDbNode != null) {
             // read masternode with all children
             if (LOGGER.isDebugEnabled()) {
@@ -71,13 +74,13 @@ public class NodeRecalcer {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("recalc+save existing master+parents for:" + masterDbNode.getNameForLogger());
             }
-            BaseNodeDBServiceImpl.getInstance().updateMeAndMyParents(masterDbNode);
+            baseNodeDBService.updateMeAndMyParents(masterDbNode);
 
             // save children
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("recalc+save existing master+parents for:" + masterDbNode.getNameForLogger());
             }
-            masterDbNode.saveChildNodesToDB(NodeService.CONST_DB_RECURSIONLEVEL_ALL_CHILDREN, true);
+            baseNodeDBService.saveChildNodesToDB(masterDbNode, NodeService.CONST_DB_RECURSIONLEVEL_ALL_CHILDREN, true);
         } else {
             LOGGER.error("masternode not found:" + sysUID);
             throw new IllegalArgumentException("masternode not found:" + sysUID);

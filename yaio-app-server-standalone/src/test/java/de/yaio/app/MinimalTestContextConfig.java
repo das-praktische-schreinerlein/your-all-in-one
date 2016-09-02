@@ -13,14 +13,19 @@ import org.springframework.boot.autoconfigure.security.SecurityFilterAutoConfigu
 import org.springframework.boot.autoconfigure.web.*;
 import org.springframework.context.annotation.*;
 import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Configuration  // <context:spring-configured/>
 @Lazy
 @EnableSpringConfigured() // <context:spring-configured/>
-@ComponentScan(basePackages = {"de.yaio.app.core"},
-        excludeFilters={@ComponentScan.Filter(type=FilterType.ANNOTATION, value=org.springframework.stereotype.Controller.class),
+@ComponentScan(basePackages = {"de.yaio.app.core",
+        "de.yaio.app.server.restcontroller",
+        "de.yaio.app.server.controller",
+        "de.yaio.app.extension"},
+        excludeFilters={
                 @ComponentScan.Filter(type=FilterType.REGEX, pattern={".*_Roo_.*"})}
 )
+@EnableJpaRepositories(basePackages = {"de.yaio.app.core"})
 @Import({PersistenceConfig.class,
         AopAutoConfiguration.class,
         AopAutoConfiguration.JdkDynamicAutoProxyConfiguration.class,

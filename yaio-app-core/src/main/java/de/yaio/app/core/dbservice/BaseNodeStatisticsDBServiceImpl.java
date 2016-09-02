@@ -13,80 +13,63 @@
  */
 package de.yaio.app.core.dbservice;
 
-import de.yaio.app.utils.db.DBFilterUtils;
-import de.yaio.app.core.node.BaseNode;
 import de.yaio.app.utils.db.DBFilter;
+import de.yaio.app.utils.db.DBFilterUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 import java.util.Date;
 import java.util.List;
 
+
 /** 
- * factory to create queries for BaseNode
+ * implementation of dbservices for BaseNodes
  * 
- * @FeatureDomain                Persistence
- * @package                      de.yaio.core.dbservice
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category                     collaboration
- * @copyright                    Copyright (c) 2014, Michael Schreiner
- * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-public class BaseNodeQueryFactory {
+@Service
+public class BaseNodeStatisticsDBServiceImpl implements BaseNodeStatisticsDBService {
+    @PersistenceContext
+    protected transient EntityManager entityManager;
+
     // Logger
     private static final Logger LOGGER =
-            Logger.getLogger(BaseNodeQueryFactory.class);
+        Logger.getLogger(BaseNodeStatisticsDBServiceImpl.class);
 
-    public enum IstPlanPerDayStatisticQueryType {
-        PLAN,
-        IST
+    @Override
+    public List<List> calcAufwandPerDayStatistic(final IstPlanPerDayStatisticQueryType type,
+                                           final Date start, final Date end, final String pfulltext,
+                                           final String rootSysUID, final SearchOptions searchOptions) {
+        return createAufwandPerDayStatisticQuery(type, start, end, pfulltext, rootSysUID,
+                searchOptions).getResultList();
     }
 
-    public enum StartEndPerDayStatisticQueryType {
-        START,
-        ENDE
+    @Override
+    public List<List> calcCountPerDayStatistic(final IstPlanPerDayStatisticQueryType type,
+                                         final StartEndPerDayStatisticQueryType timeType,
+                                         final Date start, final Date end, final String pfulltext,
+                                         final String rootSysUID, final SearchOptions searchOptions) {
+        return createCountPerDayStatisticQuery(type, timeType, start, end, pfulltext,
+                rootSysUID, searchOptions).getResultList();
     }
 
-    /**
-     * create query to read tasks matching the filter
-     * @param flgCount               if true select only the count else select the whole BaseNodes
-     * @param pfulltext              filter: optional fulltext the tasks must contain
-     * @param rootSysUID             filter: SysUID of the root element whose children have to read
-     * @param searchOptions          filter: optional searchOptions
-     * @return                       query generated for the parameters
-     */
-    public static TypedQuery<?> createExtendedSearchQuery(final boolean flgCount, final String pfulltext,
-                                                      final String rootSysUID, final SearchOptions searchOptions,
-                                                      final String sortConfig) {
-        // setup class
-        Class<?> resClass = BaseNode.class;
-        if (flgCount) {
-            resClass = Long.class;
-        }
+    @Override
+    public List<List> calcDonePerDayStatistic(final Date start, final Date end, final String pfulltext,
+                                        final String rootSysUID, final SearchOptions searchOptions) {
+        return createDonePerDayStatisticQuery(start, end, pfulltext, rootSysUID,
+                searchOptions).getResultList();
+    }
 
-        List<DBFilter> dbFilters = BaseNodeFilterFactory.createCommonFilter(pfulltext, rootSysUID, searchOptions);
-        String filter = DBFilterUtils.generateFilterSql(dbFilters);
-
-        String sort = BaseNodeSortFactory.createSort(sortConfig);
-
-        String select = "SELECT o FROM BaseNode o"
-                + filter
-                + sort;
-        if (flgCount) {
-            select = "SELECT COUNT(o) FROM BaseNode o"
-                    + filter;
-        }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("select with filters:" + select + " dbFilters:" + dbFilters);
-        }
-
-        TypedQuery<?> query = BaseNode.entityManager().createQuery(select, resClass);
-
-        DBFilterUtils.addFilterParameterToQuery(query, dbFilters);
-
-        return query;
+    @Override
+    public List<List> calcRunningPerDayStatistic(final IstPlanPerDayStatisticQueryType type,
+                                           final Date start, final Date end, final String pfulltext,
+                                           final String rootSysUID, final SearchOptions searchOptions) {
+        return createRunningPerDayStatisticQuery(type, start, end, pfulltext, rootSysUID,
+                searchOptions).getResultList();
     }
 
     /**
@@ -100,15 +83,15 @@ public class BaseNodeQueryFactory {
      * @param searchOptions          filter: optional searchOptions
      * @return                       query generated for the parameters
      */
-    public static Query createAufwandPerDayStatisticQuery(final IstPlanPerDayStatisticQueryType type, final Date start,
-                                                          final Date end, final String pfulltext,
-                                                          final String rootSysUID, final SearchOptions searchOptions) {
+    public Query createAufwandPerDayStatisticQuery(final IstPlanPerDayStatisticQueryType type, final Date start,
+                                                   final Date end, final String pfulltext,
+                                                   final String rootSysUID, final SearchOptions searchOptions) {
         // create filter
         List<DBFilter> dbFilters = BaseNodeFilterFactory.createCommonFilter(pfulltext, rootSysUID, searchOptions);
         String filter = DBFilterUtils.generateFilterSql(dbFilters);
         //filter += (StringUtils.isEmpty(filter) ? " where " : " or ") + " D is not null ";
 
-        String prefix = (type == IstPlanPerDayStatisticQueryType.IST ? "IST" : "PLAN");
+        String prefix = (type == BaseNodeStatisticsDBService.IstPlanPerDayStatisticQueryType.IST ? "IST" : "PLAN");
         String select = "SELECT" +
                 "  I, D, count(" + prefix + "_AUFWAND)," +
                 "  sum(" + prefix + "_AUFWAND/(DATEDIFF ( 'day', trunc(" + prefix + "_START), trunc(" + prefix + "_ENDE))+1))" +
@@ -125,7 +108,7 @@ public class BaseNodeQueryFactory {
             LOGGER.debug("select with filters:" + select + " dbFilters:" + dbFilters);
         }
 
-        Query query = BaseNode.entityManager().createNativeQuery(select);
+        Query query = entityManager().createNativeQuery(select);
         query.setFirstResult(0);
         query.setMaxResults(9999);
 
@@ -144,7 +127,7 @@ public class BaseNodeQueryFactory {
      * @param searchOptions          filter: optional searchOptions
      * @return                       query generated for the parameters
      */
-    public static Query createDonePerDayStatisticQuery(final Date start, final Date end, final String pfulltext,
+    public Query createDonePerDayStatisticQuery(final Date start, final Date end, final String pfulltext,
                                                        final String rootSysUID, final SearchOptions searchOptions) {
         List<DBFilter> dbFilters = BaseNodeFilterFactory.createCommonFilter(pfulltext, rootSysUID, searchOptions);
         String filter = DBFilterUtils.generateFilterSql(dbFilters);
@@ -165,7 +148,7 @@ public class BaseNodeQueryFactory {
             LOGGER.debug("select with filters:" + select + " dbFilters:" + dbFilters);
         }
 
-        Query query = BaseNode.entityManager().createNativeQuery(select);
+        Query query = entityManager().createNativeQuery(select);
         query.setFirstResult(0);
         query.setMaxResults(9999);
 
@@ -185,14 +168,14 @@ public class BaseNodeQueryFactory {
      * @param searchOptions          filter: optional searchOptions
      * @return                       query generated for the parameters
      */
-    public static Query createRunningPerDayStatisticQuery(final IstPlanPerDayStatisticQueryType type, final Date start,
-                                                        final Date end, final String pfulltext,
-                                                        final String rootSysUID, final SearchOptions searchOptions) {
+    public Query createRunningPerDayStatisticQuery(final IstPlanPerDayStatisticQueryType type, final Date start,
+                                                   final Date end, final String pfulltext,
+                                                   final String rootSysUID, final SearchOptions searchOptions) {
         List<DBFilter> dbFilters = BaseNodeFilterFactory.createCommonFilter(pfulltext, rootSysUID, searchOptions);
         String filter = DBFilterUtils.generateFilterSql(dbFilters);
         //filter += (StringUtils.isEmpty(filter) ? " where " : " or ") + " D is not null ";
 
-        String prefix = (type == IstPlanPerDayStatisticQueryType.IST ? "IST" : "PLAN");
+        String prefix = (type == BaseNodeStatisticsDBService.IstPlanPerDayStatisticQueryType.IST ? "IST" : "PLAN");
         String fieldNameStart = prefix + "_START";
         String fieldNameEnde = prefix + "_ENDE";
         String select = "SELECT" +
@@ -210,7 +193,7 @@ public class BaseNodeQueryFactory {
             LOGGER.debug("select with filters:" + select + " dbFilters:" + dbFilters);
         }
 
-        Query query = BaseNode.entityManager().createNativeQuery(select);
+        Query query = entityManager().createNativeQuery(select);
         query.setFirstResult(0);
         query.setMaxResults(9999);
 
@@ -232,16 +215,16 @@ public class BaseNodeQueryFactory {
      * @param searchOptions          filter: optional searchOptions
      * @return                       query generated for the parameters
      */
-    public static Query createCountPerDayStatisticQuery(final IstPlanPerDayStatisticQueryType type,
-                                                        final StartEndPerDayStatisticQueryType timeType, final Date start,
-                                                        final Date end, final String pfulltext,
-                                                        final String rootSysUID, final SearchOptions searchOptions) {
+    public Query createCountPerDayStatisticQuery(final IstPlanPerDayStatisticQueryType type,
+                                                 final StartEndPerDayStatisticQueryType timeType, final Date start,
+                                                 final Date end, final String pfulltext,
+                                                 final String rootSysUID, final SearchOptions searchOptions) {
         List<DBFilter> dbFilters = BaseNodeFilterFactory.createCommonFilter(pfulltext, rootSysUID, searchOptions);
         String filter = DBFilterUtils.generateFilterSql(dbFilters);
         //filter += (StringUtils.isEmpty(filter) ? " where " : " or ") + " D is not null ";
 
-        String prefix = (type == IstPlanPerDayStatisticQueryType.IST ? "IST" : "PLAN");
-        String suffix = (timeType == StartEndPerDayStatisticQueryType.START ? "START" : "ENDE");
+        String prefix = (type == BaseNodeStatisticsDBService.IstPlanPerDayStatisticQueryType.IST ? "IST" : "PLAN");
+        String suffix = (timeType == BaseNodeStatisticsDBService.StartEndPerDayStatisticQueryType.START ? "START" : "ENDE");
         String fieldName = prefix + "_" + suffix;
         String select = "SELECT" +
                 "  I, D, count(" + fieldName + ")" +
@@ -258,7 +241,7 @@ public class BaseNodeQueryFactory {
             LOGGER.debug("select with filters:" + select + " dbFilters:" + dbFilters);
         }
 
-        Query query = BaseNode.entityManager().createNativeQuery(select);
+        Query query = this.entityManager().createNativeQuery(select);
         query.setFirstResult(0);
         query.setMaxResults(9999);
 
@@ -266,4 +249,11 @@ public class BaseNodeQueryFactory {
 
         return query;
     }
+
+    protected final EntityManager entityManager() {
+        EntityManager em = entityManager;
+        if (em == null) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
+        return em;
+    }
 }
+

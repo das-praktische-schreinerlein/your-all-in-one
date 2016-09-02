@@ -15,17 +15,25 @@ package de.yaio.app.core.recalcer;
 
 import de.yaio.app.core.datadomainservice.CachedDataService;
 import de.yaio.app.core.datadomainservice.CachedDataServiceImpl;
+import de.yaio.app.core.dbservice.BaseNodeRepository;
 import de.yaio.app.core.node.BaseNode;
+import de.yaio.app.utils.db.DBFilter;
+import de.yaio.app.utils.db.DBFilterFactory;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.TypedQuery;
+import java.util.ArrayList;
 import java.util.List;
 
 /** 
  * recalc cachedData
  */
 public class CachedDataRecalcer {
+
+    @Autowired
+    protected BaseNodeRepository baseNodeDBService;
 
     protected CachedDataService cachedDataService = CachedDataServiceImpl.getInstance();
 
@@ -47,15 +55,17 @@ public class CachedDataRecalcer {
     @Transactional
     public String recalcCachedData() {
 
-        long count = BaseNode.countBaseNodes();
+        long count = baseNodeDBService.countBaseNodes();
         // look for this masternode in DB
         if (LOGGER.isInfoEnabled()) {
             LOGGER.info("read nodes for recalc CachedData count:" + count);
         }
         int maxPerRun = 500;
         int maxRun = new Long(count / maxPerRun).intValue();
-        TypedQuery<BaseNode> query = BaseNode.entityManager().createQuery("SELECT o FROM BaseNode o " +
-                "where cachedParentHierarchy is null order by ebene asc", BaseNode.class);
+
+        List<DBFilter> dbFilters = new ArrayList<>();
+        dbFilters.addAll(DBFilterFactory.createIsNullFilter("cachedParentHierarchyIsNull", "cachedParentHierarchy", "true"));
+        TypedQuery<BaseNode> query = baseNodeDBService.createTypedQuery(BaseNode.class, dbFilters, "order by ebene asc");
 
         for (int run = 0; run <= maxRun; run++) {
             if (LOGGER.isInfoEnabled()) {
@@ -70,7 +80,7 @@ public class CachedDataRecalcer {
                     LOGGER.debug("updated CachedData node:" + node.getNameForLogger());
                 }
 
-                node.merge();
+                baseNodeDBService.update(node);
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("save node:" + node.getNameForLogger());
                 }

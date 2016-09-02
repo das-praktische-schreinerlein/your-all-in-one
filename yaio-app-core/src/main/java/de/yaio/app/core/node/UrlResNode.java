@@ -14,15 +14,16 @@
 package de.yaio.app.core.node;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import de.yaio.app.core.nodeservice.UrlResNodeService;
 import de.yaio.app.core.datadomain.ResContentData;
 import de.yaio.app.core.datadomain.ResIndexData;
 import de.yaio.app.core.datadomain.ResLocData;
 import de.yaio.app.core.nodeservice.BaseNodeService;
-import org.springframework.roo.addon.javabean.RooJavaBean;
-import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
-import org.springframework.roo.addon.tostring.RooToString;
+import de.yaio.app.core.nodeservice.UrlResNodeService;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+import org.springframework.beans.factory.annotation.Configurable;
 
+import javax.persistence.Entity;
 import javax.persistence.Transient;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
@@ -31,16 +32,10 @@ import javax.xml.bind.annotation.XmlTransient;
 /** 
  * bean with UrlResNode-data (files, urls, links) and matching businesslogic
  *
- * @FeatureDomain                DataDefinition Persistence BusinessLogic
- * @package                      de.yaio.core.node
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category                     collaboration
- * @copyright                    Copyright (c) 2014, Michael Schreiner
- * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-@RooJavaBean
-@RooToString
-@RooJpaActiveRecord
+@Configurable
+@Entity
 public class UrlResNode extends InfoNode implements ResLocData, ResContentData, ResIndexData {
     @Transient
     protected static UrlResNodeService nodeDataService = UrlResNodeService.getInstance();
@@ -126,5 +121,97 @@ public class UrlResNode extends InfoNode implements ResLocData, ResContentData, 
         this.setResIndexDMSId(null);
         this.setResIndexDMSType(null);
         this.setResIndexDMSState(IndexWorkflowState.NOINDEX);
+    }
+
+    public String getResLocRef() {
+        return this.resLocRef;
+    }
+
+    public void setResLocRef(String resLocRef) {
+        this.resLocRef = resLocRef;
+    }
+
+    public String getResLocName() {
+        return this.resLocName;
+    }
+
+    public void setResLocName(String resLocName) {
+        this.resLocName = resLocName;
+    }
+
+    public String getResLocTags() {
+        return this.resLocTags;
+    }
+
+    public void setResLocTags(String resLocTags) {
+        this.resLocTags = resLocTags;
+    }
+
+    public String getResContentMime() {
+        return this.resContentMime;
+    }
+
+    public void setResContentMime(String resContentMime) {
+        this.resContentMime = resContentMime;
+    }
+
+    public Long getResContentSize() {
+        return this.resContentSize;
+    }
+
+    public void setResContentSize(Long resContentSize) {
+        this.resContentSize = resContentSize;
+    }
+
+    public String getResContentDMSId() {
+        return this.resContentDMSId;
+    }
+
+    public void setResContentDMSId(String resContentDMSId) {
+        this.resContentDMSId = resContentDMSId;
+    }
+
+    public String getResContentDMSType() {
+        return this.resContentDMSType;
+    }
+
+    public void setResContentDMSType(String resContentDMSType) {
+        this.resContentDMSType = resContentDMSType;
+    }
+
+    public UploadWorkflowState getResContentDMSState() {
+        return this.resContentDMSState;
+    }
+
+    public void setResContentDMSState(UploadWorkflowState resContentDMSState) {
+        this.resContentDMSState = resContentDMSState;
+    }
+
+    public String getResIndexDMSId() {
+        return this.resIndexDMSId;
+    }
+
+    public void setResIndexDMSId(String resIndexDMSId) {
+        this.resIndexDMSId = resIndexDMSId;
+    }
+
+    public String getResIndexDMSType() {
+        return this.resIndexDMSType;
+    }
+
+    public void setResIndexDMSType(String resIndexDMSType) {
+        this.resIndexDMSType = resIndexDMSType;
+    }
+
+    public IndexWorkflowState getResIndexDMSState() {
+        return this.resIndexDMSState;
+    }
+
+    public void setResIndexDMSState(IndexWorkflowState resIndexDMSState) {
+        this.resIndexDMSState = resIndexDMSState;
+    }
+
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
 }

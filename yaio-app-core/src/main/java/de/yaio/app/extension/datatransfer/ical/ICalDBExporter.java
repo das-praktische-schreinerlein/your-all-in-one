@@ -14,7 +14,7 @@
 package de.yaio.app.extension.datatransfer.ical;
 
 import de.yaio.app.core.datadomain.DataDomain;
-import de.yaio.app.core.dbservice.BaseNodeDBService;
+import de.yaio.app.core.dbservice.BaseNodeSearchDBService;
 import de.yaio.app.core.node.BaseNode;
 import de.yaio.app.core.node.EventNode;
 import de.yaio.app.core.node.InfoNode;
@@ -26,6 +26,7 @@ import de.yaio.app.datatransfer.exporter.OutputOptionsImpl;
 import de.yaio.app.datatransfer.exporter.formatter.FormatterImpl;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.util.List;
@@ -33,14 +34,12 @@ import java.util.List;
 /** 
  * export of Nodes as ICal from database
  * 
- * @FeatureDomain                DatenExport Praesentation
- * @package                      de.yaio.extension.datatransfer.ical
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category                     collaboration
- * @copyright                    Copyright (c) 2014, Michael Schreiner
- * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class ICalDBExporter extends ICalExporter {
+
+    @Autowired
+    BaseNodeSearchDBService dbService;
 
     // Logger
     private static final Logger LOGGER =
@@ -110,7 +109,6 @@ public class ICalDBExporter extends ICalExporter {
             // if not set: set default-filters
             oOptions.setStrClassFilter("EventNode,TaskNode");
         }
-        BaseNodeDBService dbService = parentNode.getBaseNodeDBService();
         List<BaseNode> matchingNodes = dbService.findExtendedSearchBaseNodeEntries(null, parentNode.getSysUID(), oOptions, null, 0, 99999);
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("node:" + parentNode.getWorkingId() 

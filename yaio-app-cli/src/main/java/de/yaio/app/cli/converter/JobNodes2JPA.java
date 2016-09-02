@@ -16,6 +16,7 @@ package de.yaio.app.cli.converter;
 import de.yaio.app.config.ContextHelper;
 import de.yaio.app.config.JobConfig;
 import de.yaio.app.core.datadomain.DataDomain;
+import de.yaio.app.core.dbservice.BaseNodeRepository;
 import de.yaio.app.core.node.BaseNode;
 import de.yaio.app.datatransfer.common.ParserException;
 import de.yaio.app.datatransfer.jpa.JPAExporter;
@@ -24,6 +25,8 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 
 /** 
  * job for import of Nodes in PPL-Format and output to JPA-Provider
@@ -31,7 +34,10 @@ import org.apache.log4j.Logger;
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
  */
 public class JobNodes2JPA extends JobNodes2Wiki {
-    
+
+    @Autowired
+    protected BaseNodeRepository baseNodeDBService;
+
     private static final Logger LOGGER =
         Logger.getLogger(JobNodes2JPA.class);
 
@@ -59,6 +65,7 @@ public class JobNodes2JPA extends JobNodes2Wiki {
 
         // initApplicationContext
         ContextHelper.getInstance().getSpringApplicationContext();
+        ContextHelper.getInstance().autowireService(this);
 
         // check for sysUID
         String sysUID = ConfigurationOption.stringValueOf(this.getConfiguration().getCliOption("addnodestosysuid"));
@@ -67,7 +74,7 @@ public class JobNodes2JPA extends JobNodes2Wiki {
             if (LOGGER.isInfoEnabled()) {
                 LOGGER.info("read Masternode from JPA:" + sysUID);
             }
-            masterNode = BaseNode.findBaseNode(sysUID);
+            masterNode = baseNodeDBService.findBaseNode(sysUID);
             if (masterNode == null) {
                 throw new IllegalArgumentException("Masternode to add the new node with "
                                 + "sysUID:" + sysUID + " not found!");

@@ -13,8 +13,7 @@
  */
 package de.yaio.app.extension.datatransfer.mail;
 
-import de.yaio.app.core.dbservice.BaseNodeDBService;
-import de.yaio.app.core.dbservice.BaseNodeDBServiceImpl;
+import de.yaio.app.core.dbservice.BaseNodeRepository;
 import de.yaio.app.core.node.BaseNode;
 import de.yaio.app.core.nodeservice.NodeService;
 import de.yaio.commons.io.IOExceptionWithCause;
@@ -25,7 +24,9 @@ import org.springframework.stereotype.Service;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +42,8 @@ public class EmailImporter {
     private EmailConverter emailConverterService;
     @Autowired
     protected EmailFormatter emailFormatterService;
+    @Autowired
+    protected BaseNodeRepository baseNodeDBService;
 
     // Logger
     private static final Logger LOGGER = Logger.getLogger(EmailImporter.class);
@@ -110,14 +113,13 @@ public class EmailImporter {
      * @throws IOExceptionWithCause   if reading of emails went wrong
      */
     public void importEmails(String parentSysUID, List<Message> messages) throws IOExceptionWithCause {
-        BaseNodeDBService nodeService = BaseNodeDBServiceImpl.getInstance();
-        BaseNode parent = BaseNode.findBaseNode(parentSysUID);
+        BaseNode parent = baseNodeDBService.findBaseNode(parentSysUID);
 
         emailConverterService.importEmailsToParent(parent, messages);
         emailFormatterService.genMetadataForEmailNodes(parent.getChildNodes());
 
-        nodeService.saveChildNodesToDB(parent, NodeService.CONST_DB_RECURSIONLEVEL_ALL_CHILDREN, false);
-        nodeService.updateMeAndMyParents(parent);
+        baseNodeDBService.saveChildNodesToDB(parent, NodeService.CONST_DB_RECURSIONLEVEL_ALL_CHILDREN, false);
+        baseNodeDBService.updateMeAndMyParents(parent);
     }
 
 }

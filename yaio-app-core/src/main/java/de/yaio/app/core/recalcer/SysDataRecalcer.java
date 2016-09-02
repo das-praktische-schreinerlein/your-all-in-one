@@ -15,18 +15,25 @@ package de.yaio.app.core.recalcer;
 
 import de.yaio.app.core.datadomainservice.SysDataService;
 import de.yaio.app.core.datadomainservice.SysDataServiceImpl;
+import de.yaio.app.core.dbservice.BaseNodeRepository;
 import de.yaio.app.core.node.BaseNode;
+import de.yaio.app.utils.db.DBFilter;
+import de.yaio.app.utils.db.DBFilterFactory;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.TypedQuery;
+import java.util.ArrayList;
 import java.util.List;
 
 /** 
  * recalc sysData
  */
 public class SysDataRecalcer {
+    @Autowired
+    protected BaseNodeRepository baseNodeDBService;
 
     protected SysDataService sysDataService = SysDataServiceImpl.getInstance();
 
@@ -48,14 +55,17 @@ public class SysDataRecalcer {
     @Transactional
     public String recalcSysData() {
 
-        long count = BaseNode.countBaseNodes();
+        long count = baseNodeDBService.countBaseNodes();
         // look for this masternode in DB
         if (LOGGER.isInfoEnabled()) {
             LOGGER.info("read nodes for recalc sysData count:" + count);
         }
         int maxPerRun = 500;
         int maxRun = new Long(count / maxPerRun).intValue();
-        TypedQuery<BaseNode> query = BaseNode.entityManager().createQuery("SELECT o FROM BaseNode o where sysCurChecksum is null", BaseNode.class);
+
+        List<DBFilter> dbFilters = new ArrayList<>();
+        dbFilters.addAll(DBFilterFactory.createIsNullFilter("sysCurChecksumIsNull", "sysCurChecksum", "true"));
+        TypedQuery<BaseNode> query = baseNodeDBService.createTypedQuery(BaseNode.class, dbFilters, "");
 
         for (int run = 0; run <= maxRun; run++) {
             if (LOGGER.isInfoEnabled()) {
@@ -72,7 +82,7 @@ public class SysDataRecalcer {
                     LOGGER.debug("updated sysdata node:" + node.getNameForLogger());
                 }
 
-                node.merge();
+                baseNodeDBService.update(node);
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("save node:" + node.getNameForLogger());
                 }

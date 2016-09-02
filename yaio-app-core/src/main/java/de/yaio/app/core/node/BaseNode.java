@@ -17,19 +17,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import de.yaio.app.core.datadomain.*;
 import de.yaio.app.core.datadomainservice.MetaDataService;
 import de.yaio.app.core.datadomainservice.MetaDataServiceImpl;
-import de.yaio.app.core.dbservice.BaseNodeDBServiceImpl;
-import de.yaio.app.datatransfer.importer.parser.Parser;
 import de.yaio.app.core.datadomainservice.SysDataService;
 import de.yaio.app.core.datadomainservice.SysDataServiceImpl;
-import de.yaio.app.core.dbservice.BaseNodeDBService;
 import de.yaio.app.core.nodeservice.BaseNodeService;
 import de.yaio.app.core.nodeservice.NodeService;
+import de.yaio.app.datatransfer.importer.parser.Parser;
 import org.apache.log4j.Logger;
 import org.hibernate.annotations.Type;
+import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.roo.addon.javabean.RooJavaBean;
-import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
-import org.springframework.roo.addon.tostring.RooToString;
 
 import javax.persistence.*;
 import javax.validation.ConstraintViolation;
@@ -43,16 +39,10 @@ import java.util.*;
 /** 
  * bean with Node-data (as base) and belonging businesslogic
  * 
- * @FeatureDomain                DataDefinition Persistence BusinessLogic
- * @package                      de.yaio.core.node
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category                     collaboration
- * @copyright                    Copyright (c) 2014, Michael Schreiner
- * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-@RooJavaBean
-@RooToString
-@RooJpaActiveRecord
+@Configurable
+@Entity
 public class BaseNode implements BaseData, MetaData, SysData,
         DescData, BaseWorkflowData, StatData, CachedData {
     
@@ -62,8 +52,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     protected static SysDataService sysDataService = SysDataServiceImpl.getInstance();
     protected static MetaDataService metaDataService = MetaDataServiceImpl.getInstance();
     protected static BaseNodeService nodeService = BaseNodeService.getInstance();
-    protected static BaseNodeDBService baseNodeDBService = BaseNodeDBServiceImpl.getInstance();
-    
+
     // Logger
     private static final Logger LOGGER = Logger.getLogger(BaseNode.class);
 
@@ -390,7 +379,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
 
     /**
      */
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "parentNode", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "parentNode", fetch = FetchType.LAZY)
     @Transient
     @XmlTransient
     @JsonIgnore
@@ -465,6 +454,22 @@ public class BaseNode implements BaseData, MetaData, SysData,
     @Min(0L)
     private Integer sortPos;
 
+    /**
+     * version
+     */
+    @Version
+    @Column(name = "version")
+    private Integer version;
+
+    public Integer getVersion() {
+        return this.version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
+
+
     public BaseNode() {
         super();
     }
@@ -474,21 +479,25 @@ public class BaseNode implements BaseData, MetaData, SysData,
     public SysDataService getSysDataService() {
         return sysDataService;
     }
+
     @XmlTransient
     @JsonIgnore
     public static SysDataService getConfiguredSysDataService() {
         return sysDataService;
     }
+
     @XmlTransient
     @JsonIgnore
     public static final void setSysDataService(final SysDataService newSysDataService) {
         sysDataService = newSysDataService;
     }
+
     @XmlTransient
     @JsonIgnore
     public static MetaDataService getConfiguredMetaDataService() {
         return metaDataService;
     }
+
     @XmlTransient
     @JsonIgnore
     public MetaDataService getMetaDataService() {
@@ -507,26 +516,6 @@ public class BaseNode implements BaseData, MetaData, SysData,
         return nodeService;
     }
 
-    /**
-     * @return                       the {@link BaseNode#baseNodeDBService}
-     */
-    @XmlTransient
-    @JsonIgnore
-    public BaseNodeDBService getBaseNodeDBService() {
-        return baseNodeDBService;
-    }
-    /**
-     * @param newBaseNodeDBService   the {@link BaseNode#baseNodeDBService} to set
-     */
-    @XmlTransient
-    @JsonIgnore
-    public void setBaseNodeDBService(final BaseNodeDBService newBaseNodeDBService) {
-        baseNodeDBService = newBaseNodeDBService;
-    }
-
-    
-    
-    
     /**
      * summary of all children workflowstate with the highest priority
      */
@@ -669,8 +658,8 @@ public class BaseNode implements BaseData, MetaData, SysData,
     //####################
     // persistence-functions
     //####################
-    
-    /** 
+
+    /**
      * initialize the Children from database (childNodes and childNodesByNameMapMap)
      * recursivly
      * @param pRecursionLevel        how many recursion-level will be read from DB
@@ -679,46 +668,9 @@ public class BaseNode implements BaseData, MetaData, SysData,
         this.getBaseNodeService().initChildNodesFromDB(this, pRecursionLevel);
     }
 
-    /** 
-     * initialize the Children from database (childNodes and childNodesByNameMapMap)
-     * for all parents
-     */
-    public void initChildNodesForParentsFromDB() {
-        List<BaseNode> parentHierarchy = this.getBaseNodeService().getParentHierarchy(this);
-        for (BaseNode parent : parentHierarchy) {
-            parent.initChildNodesFromDB(0);
-        }
-    }
-
-    /** 
-     * saves the children to database (childNodes) recursivly<br>
-     * check if entityManger contains objects<br>
-     * if not: do persist
-     * if yes or flgForceMerge is set: do merge
-     * @param pRecursionLevel        how many recursion-level will be saved to DB (0 = only my children)
-     * @param flgForceMerge          force merge not persists
-     */
-    public void saveChildNodesToDB(final int pRecursionLevel, final boolean flgForceMerge) {
-        this.getBaseNodeDBService().saveChildNodesToDB(this, pRecursionLevel, flgForceMerge);
-    }
-
-    /** 
-     * remove the children from database recursivly
-     */
-    public void removeChildNodesFromDB() {
-        this.getBaseNodeDBService().removeChildNodesFromDB(this);
-    }
-
     //####################
     // Hierarchy-functions
     //####################
-    public void initChildNodesByNameMap() {
-        Set<BaseNode> childSet = this.getChildNodes();
-        for (BaseNode child : childSet) {
-            this.getChildNodesByNameMap().put(child.getIdForChildByNameMap(), child);
-        }
-    }
-
     @Override
     @XmlTransient
     @JsonIgnore
@@ -947,5 +899,464 @@ public class BaseNode implements BaseData, MetaData, SysData,
     @Override
     public void resetCachedData() {
         this.setCachedParentHierarchy(null);
+    }
+
+    /**
+     * getter
+     */
+    public Long getImportTmpId() {
+        return this.importTmpId;
+    }
+
+    public void setImportTmpId(Long importTmpId) {
+        this.importTmpId = importTmpId;
+    }
+
+    public String getFullSrc() {
+        return this.fullSrc;
+    }
+
+    public void setFullSrc(String fullSrc) {
+        this.fullSrc = fullSrc;
+    }
+
+    public String getSrcName() {
+        return this.srcName;
+    }
+
+    public void setSrcName(String srcName) {
+        this.srcName = srcName;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getEbene() {
+        return this.ebene;
+    }
+
+    public void setEbene(Integer ebene) {
+        this.ebene = ebene;
+    }
+
+    public String getNodeDesc() {
+        return this.nodeDesc;
+    }
+
+    public void setNodeDesc(String nodeDesc) {
+        this.nodeDesc = nodeDesc;
+    }
+
+    public String getDocLayoutTagCommand() {
+        return this.docLayoutTagCommand;
+    }
+
+    public void setDocLayoutTagCommand(String docLayoutTagCommand) {
+        this.docLayoutTagCommand = docLayoutTagCommand;
+    }
+
+    public String getDocLayoutAddStyleClass() {
+        return this.docLayoutAddStyleClass;
+    }
+
+    public void setDocLayoutAddStyleClass(String docLayoutAddStyleClass) {
+        this.docLayoutAddStyleClass = docLayoutAddStyleClass;
+    }
+
+    public String getDocLayoutShortName() {
+        return this.docLayoutShortName;
+    }
+
+    public void setDocLayoutShortName(String docLayoutShortName) {
+        this.docLayoutShortName = docLayoutShortName;
+    }
+
+    public String getDocLayoutFlgCloseDiv() {
+        return this.docLayoutFlgCloseDiv;
+    }
+
+    public void setDocLayoutFlgCloseDiv(String docLayoutFlgCloseDiv) {
+        this.docLayoutFlgCloseDiv = docLayoutFlgCloseDiv;
+    }
+
+    public String getSysUID() {
+        return this.sysUID;
+    }
+
+    public void setSysUID(String sysUID) {
+        this.sysUID = sysUID;
+    }
+
+    public String getSysCurChecksum() {
+        return this.sysCurChecksum;
+    }
+
+    public void setSysCurChecksum(String sysCurChecksum) {
+        this.sysCurChecksum = sysCurChecksum;
+    }
+
+    public Integer getSysChangeCount() {
+        return this.sysChangeCount;
+    }
+
+    public void setSysChangeCount(Integer sysChangeCount) {
+        this.sysChangeCount = sysChangeCount;
+    }
+
+    public Date getSysCreateDate() {
+        return this.sysCreateDate;
+    }
+
+    public void setSysCreateDate(Date sysCreateDate) {
+        this.sysCreateDate = sysCreateDate;
+    }
+
+    public Date getSysChangeDate() {
+        return this.sysChangeDate;
+    }
+
+    public void setSysChangeDate(Date sysChangeDate) {
+        this.sysChangeDate = sysChangeDate;
+    }
+
+    public String getMetaNodePraefix() {
+        return this.metaNodePraefix;
+    }
+
+    public void setMetaNodePraefix(String metaNodePraefix) {
+        this.metaNodePraefix = metaNodePraefix;
+    }
+
+    public String getMetaNodeNummer() {
+        return this.metaNodeNummer;
+    }
+
+    public void setMetaNodeNummer(String metaNodeNummer) {
+        this.metaNodeNummer = metaNodeNummer;
+    }
+
+    public String getMetaNodeTypeTags() {
+        return this.metaNodeTypeTags;
+    }
+
+    public void setMetaNodeTypeTags(String metaNodeTypeTags) {
+        this.metaNodeTypeTags = metaNodeTypeTags;
+    }
+
+    public String getMetaNodeSubType() {
+        return this.metaNodeSubType;
+    }
+
+    public void setMetaNodeSubType(String metaNodeSubType) {
+        this.metaNodeSubType = metaNodeSubType;
+    }
+
+    public Date getPlanStart() {
+        return this.planStart;
+    }
+
+    public void setPlanStart(Date planStart) {
+        this.planStart = planStart;
+    }
+
+    public Date getPlanEnde() {
+        return this.planEnde;
+    }
+
+    public void setPlanEnde(Date planEnde) {
+        this.planEnde = planEnde;
+    }
+
+    public Double getPlanAufwand() {
+        return this.planAufwand;
+    }
+
+    public void setPlanAufwand(Double planAufwand) {
+        this.planAufwand = planAufwand;
+    }
+
+    public String getPlanTask() {
+        return this.planTask;
+    }
+
+    public void setPlanTask(String planTask) {
+        this.planTask = planTask;
+    }
+
+    public Date getPlanCalcStart() {
+        return this.planCalcStart;
+    }
+
+    public void setPlanCalcStart(Date planCalcStart) {
+        this.planCalcStart = planCalcStart;
+    }
+
+    public Date getPlanCalcEnde() {
+        return this.planCalcEnde;
+    }
+
+    public void setPlanCalcEnde(Date planCalcEnde) {
+        this.planCalcEnde = planCalcEnde;
+    }
+
+    public String getPlanCalcCheckSum() {
+        return this.planCalcCheckSum;
+    }
+
+    public void setPlanCalcCheckSum(String planCalcCheckSum) {
+        this.planCalcCheckSum = planCalcCheckSum;
+    }
+
+    public Date getPlanChildrenSumStart() {
+        return this.planChildrenSumStart;
+    }
+
+    public void setPlanChildrenSumStart(Date planChildrenSumStart) {
+        this.planChildrenSumStart = planChildrenSumStart;
+    }
+
+    public Date getPlanChildrenSumEnde() {
+        return this.planChildrenSumEnde;
+    }
+
+    public void setPlanChildrenSumEnde(Date planChildrenSumEnde) {
+        this.planChildrenSumEnde = planChildrenSumEnde;
+    }
+
+    public Double getPlanChildrenSumAufwand() {
+        return this.planChildrenSumAufwand;
+    }
+
+    public void setPlanChildrenSumAufwand(Double planChildrenSumAufwand) {
+        this.planChildrenSumAufwand = planChildrenSumAufwand;
+    }
+
+    public Integer getPlanDuration() {
+        return this.planDuration;
+    }
+
+    public void setPlanDuration(Integer planDuration) {
+        this.planDuration = planDuration;
+    }
+
+    public PlanDependencieData.DurationMeasure getPlanDurationMeasure() {
+        return this.planDurationMeasure;
+    }
+
+    public void setPlanDurationMeasure(PlanDependencieData.DurationMeasure planDurationMeasure) {
+        this.planDurationMeasure = planDurationMeasure;
+    }
+
+    public PlanDependencieData.PredecessorType getPlanPredecessorType() {
+        return this.planPredecessorType;
+    }
+
+    public void setPlanPredecessorType(PlanDependencieData.PredecessorType planPredecessorType) {
+        this.planPredecessorType = planPredecessorType;
+    }
+
+    public BaseNode getPlanPredecessor() {
+        return this.planPredecessor;
+    }
+
+    public void setPlanPredecessor(BaseNode planPredecessor) {
+        this.planPredecessor = planPredecessor;
+    }
+
+    public PlanDependencieData.PredecessorDependencieType getPlanPredecessorDependencieType() {
+        return this.planPredecessorDependencieType;
+    }
+
+    public void setPlanPredecessorDependencieType(PlanDependencieData.PredecessorDependencieType planPredecessorDependencieType) {
+        this.planPredecessorDependencieType = planPredecessorDependencieType;
+    }
+
+    public Integer getPlanPredecessorShift() {
+        return this.planPredecessorShift;
+    }
+
+    public void setPlanPredecessorShift(Integer planPredecessorShift) {
+        this.planPredecessorShift = planPredecessorShift;
+    }
+
+    public PlanDependencieData.DurationMeasure getPlanPredecessorShiftMeasure() {
+        return this.planPredecessorShiftMeasure;
+    }
+
+    public void setPlanPredecessorShiftMeasure(PlanDependencieData.DurationMeasure planPredecessorShiftMeasure) {
+        this.planPredecessorShiftMeasure = planPredecessorShiftMeasure;
+    }
+
+    public Double getIstStand() {
+        return this.istStand;
+    }
+
+    public void setIstStand(Double istStand) {
+        this.istStand = istStand;
+    }
+
+    public Date getIstStart() {
+        return this.istStart;
+    }
+
+    public void setIstStart(Date istStart) {
+        this.istStart = istStart;
+    }
+
+    public Date getIstEnde() {
+        return this.istEnde;
+    }
+
+    public void setIstEnde(Date istEnde) {
+        this.istEnde = istEnde;
+    }
+
+    public Double getIstAufwand() {
+        return this.istAufwand;
+    }
+
+    public void setIstAufwand(Double istAufwand) {
+        this.istAufwand = istAufwand;
+    }
+
+    public String getIstTask() {
+        return this.istTask;
+    }
+
+    public void setIstTask(String istTask) {
+        this.istTask = istTask;
+    }
+
+    public Double getIstChildrenSumStand() {
+        return this.istChildrenSumStand;
+    }
+
+    public void setIstChildrenSumStand(Double istChildrenSumStand) {
+        this.istChildrenSumStand = istChildrenSumStand;
+    }
+
+    public Date getIstChildrenSumStart() {
+        return this.istChildrenSumStart;
+    }
+
+    public void setIstChildrenSumStart(Date istChildrenSumStart) {
+        this.istChildrenSumStart = istChildrenSumStart;
+    }
+
+    public Date getIstChildrenSumEnde() {
+        return this.istChildrenSumEnde;
+    }
+
+    public void setIstChildrenSumEnde(Date istChildrenSumEnde) {
+        this.istChildrenSumEnde = istChildrenSumEnde;
+    }
+
+    public Double getIstChildrenSumAufwand() {
+        return this.istChildrenSumAufwand;
+    }
+
+    public void setIstChildrenSumAufwand(Double istChildrenSumAufwand) {
+        this.istChildrenSumAufwand = istChildrenSumAufwand;
+    }
+
+    public Set<BaseNode> getChildNodes() {
+        return this.childNodes;
+    }
+
+    public void setChildNodes(Set<BaseNode> childNodes) {
+        this.childNodes = childNodes;
+    }
+
+    public Integer getStatChildNodeCount() {
+        return this.statChildNodeCount;
+    }
+
+    public void setStatChildNodeCount(Integer statChildNodeCount) {
+        this.statChildNodeCount = statChildNodeCount;
+    }
+
+    public Integer getStatWorkflowCount() {
+        return this.statWorkflowCount;
+    }
+
+    public void setStatWorkflowCount(Integer statWorkflowCount) {
+        this.statWorkflowCount = statWorkflowCount;
+    }
+
+    public Integer getStatWorkflowTodoCount() {
+        return this.statWorkflowTodoCount;
+    }
+
+    public void setStatWorkflowTodoCount(Integer statWorkflowTodoCount) {
+        this.statWorkflowTodoCount = statWorkflowTodoCount;
+    }
+
+    public void setStatUrlResCount(Integer statUrlResCount) {
+        this.statUrlResCount = statUrlResCount;
+    }
+
+    public Integer getStatUrlResCount() {
+        return this.statUrlResCount;
+    }
+
+    public void setStatInfoCount(Integer statInfoCount) {
+        this.statInfoCount = statInfoCount;
+    }
+
+    public Integer getStatInfoCount() {
+        return this.statInfoCount;
+    }
+
+    public BaseNode getParentNode() {
+        return this.parentNode;
+    }
+
+    public String getState() {
+        return this.state;
+    }
+
+    public String getType() {
+        return this.type;
+    }
+
+    public Integer getSortPos() {
+        return this.sortPos;
+    }
+
+    public void setSortPos(Integer sortPos) {
+        this.sortPos = sortPos;
+    }
+
+    public int getCurSortIdx() {
+        return this.curSortIdx;
+    }
+
+    public void setCurSortIdx(int curSortIdx) {
+        this.curSortIdx = curSortIdx;
+    }
+
+    public Map<String, DataDomain> getChildNodesByNameMapMap() {
+        return this.childNodesByNameMapMap;
+    }
+
+    public void setChildNodesByNameMapMap(Map<String, DataDomain> childNodesByNameMapMap) {
+        this.childNodesByNameMapMap = childNodesByNameMapMap;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
+    }
+
+    public String getCachedParentHierarchy() {
+        return this.cachedParentHierarchy;
+    }
+
+    public void setCachedParentHierarchy(String cachedParentHierarchy) {
+        this.cachedParentHierarchy = cachedParentHierarchy;
     }
 }

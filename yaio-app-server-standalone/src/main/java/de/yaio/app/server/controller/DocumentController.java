@@ -13,6 +13,7 @@
  */
 package de.yaio.app.server.controller;
 
+import de.yaio.app.core.dbservice.BaseNodeRepository;
 import de.yaio.app.core.node.BaseNode;
 import de.yaio.app.core.node.UrlResNode;
 import de.yaio.app.extension.dms.services.ResDocumentService;
@@ -50,6 +51,8 @@ public class DocumentController {
 
     @Autowired
     protected ResDocumentService resDocumentService;
+    @Autowired
+    protected BaseNodeRepository baseNodeDBService;
     protected FileTypeMap fileTypeMap = FileTypeMap.getDefaultFileTypeMap();
 
     // Logger
@@ -140,7 +143,7 @@ public class DocumentController {
                                           final HttpServletResponse response,
                                           final boolean flgEmbed,
                                           final boolean flgIndexData) throws IOExceptionWithCause, IOException {
-        BaseNode baseNode = BaseNode.findBaseNode(sysUID);
+        BaseNode baseNode = baseNodeDBService.findBaseNode(sysUID);
         if (sysUID == null) {
             // node not found
             response.setStatus(404);

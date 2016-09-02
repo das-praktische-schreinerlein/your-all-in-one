@@ -14,6 +14,7 @@
 package de.yaio.app.server.controller;
 
 import de.yaio.app.config.YaioConfiguration;
+import de.yaio.app.core.dbservice.BaseNodeRepository;
 import de.yaio.app.core.node.BaseNode;
 import de.yaio.app.datatransfer.common.ConverterException;
 import de.yaio.app.datatransfer.exporter.EmptyOutputOptionsImpl;
@@ -58,6 +59,9 @@ public class ExportController {
 
     @Autowired
     protected ConverterUtils converterUtils;
+
+    @Autowired
+    protected BaseNodeRepository baseNodeDBService;
 
     // Logger
     private static final Logger LOGGER = Logger.getLogger(ExportController.class);
@@ -643,7 +647,7 @@ public class ExportController {
         ExcelExporter exporter = new ExcelExporter();
 
         // find a specific node
-        BaseNode node = BaseNode.findBaseNode(sysUID);
+        BaseNode node = baseNodeDBService.findBaseNode(sysUID);
 
         if (node == null) {
             throw new ConverterException("cant find node for sysUID", sysUID,

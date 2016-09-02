@@ -13,26 +13,27 @@
  */
 package de.yaio.app.extension.datatransfer.common;
 
-import de.yaio.app.core.dbservice.BaseNodeDBServiceImpl;
+import de.yaio.app.core.dbservice.BaseNodeRepository;
+import de.yaio.app.core.node.BaseNode;
 import de.yaio.app.datatransfer.common.ConverterException;
+import de.yaio.app.datatransfer.common.DatatransferUtils;
+import de.yaio.app.datatransfer.common.ParserException;
 import de.yaio.app.datatransfer.exporter.Exporter;
 import de.yaio.app.datatransfer.exporter.OutputOptions;
 import de.yaio.app.datatransfer.exporter.OutputOptionsImpl;
 import de.yaio.app.datatransfer.importer.ImportOptions;
-import de.yaio.app.extension.datatransfer.ppl.PPLImporter;
-import de.yaio.app.extension.datatransfer.wiki.WikiExporter;
-import de.yaio.app.core.node.BaseNode;
-import de.yaio.app.datatransfer.common.DatatransferUtils;
 import de.yaio.app.datatransfer.jpa.JPAExporter;
+import de.yaio.app.extension.datatransfer.ppl.PPLImporter;
 import de.yaio.app.extension.datatransfer.wiki.InlineWikiImporter;
+import de.yaio.app.extension.datatransfer.wiki.WikiExporter;
 import de.yaio.app.extension.datatransfer.wiki.WikiImportOptions;
 import de.yaio.app.extension.datatransfer.wiki.WikiImporter;
 import de.yaio.app.extension.datatransfer.wiki.WikiImporter.WikiStructLine;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import de.yaio.app.datatransfer.common.ParserException;
 import java.util.List;
 
 /** 
@@ -48,6 +49,8 @@ import java.util.List;
  */
 @Service
 public class ExtendedDatatransferUtils extends DatatransferUtils {
+    @Autowired
+    protected BaseNodeRepository baseNodeDBService;
 
     // Logger
     private static final Logger LOGGER =
@@ -115,11 +118,11 @@ public class ExtendedDatatransferUtils extends DatatransferUtils {
         // renew old parent only if different from newParent
         if (!newParent.getSysUID().equals(oldParent.getSysUID())) {
             // renew oldParent
-            oldParent = BaseNode.findBaseNode(oldParent.getSysUID());
+            oldParent = baseNodeDBService.findBaseNode(oldParent.getSysUID());
             oldParent.initChildNodesFromDB(0);
             
             // recalc old parent
-            BaseNodeDBServiceImpl.getInstance().updateMeAndMyParents(oldParent);
+            baseNodeDBService.updateMeAndMyParents(oldParent);
         }
     }
 

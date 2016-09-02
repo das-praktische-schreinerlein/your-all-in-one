@@ -13,6 +13,7 @@
  */
 package de.yaio.app.server.controller;
 
+import de.yaio.app.core.dbservice.BaseNodeRepository;
 import de.yaio.app.core.node.BaseNode;
 import de.yaio.app.datatransfer.common.ParserException;
 import de.yaio.app.datatransfer.jpa.JPAExporter;
@@ -61,6 +62,9 @@ public class ImportController {
     @Autowired
     protected EmailImporter mailImporter;
 
+    @Autowired
+    protected BaseNodeRepository baseNodeDBService;
+
     // Logger
     private static final Logger LOGGER = Logger.getLogger(ExportController.class);
 
@@ -82,7 +86,7 @@ public class ImportController {
                         null, null, null, null);
 
         // find the parentnode
-        BaseNode node = BaseNode.findBaseNode(parentSysUID);
+        BaseNode node = baseNodeDBService.findBaseNode(parentSysUID);
         if (node == null) {
             return response.getStateMsg();
         }
@@ -149,7 +153,7 @@ public class ImportController {
                         null, null, null, null);
 
         // find the parentnode
-        BaseNode node = BaseNode.findBaseNode(parentSysUID);
+        BaseNode node = baseNodeDBService.findBaseNode(parentSysUID);
         if (node == null) {
             return response.getStateMsg();
         }
@@ -213,7 +217,7 @@ public class ImportController {
                 null, null, null, null);
 
         // find the parentnode
-        BaseNode node = BaseNode.findBaseNode(parentSysUID);
+        BaseNode node = baseNodeDBService.findBaseNode(parentSysUID);
         if (node == null) {
             return response.getStateMsg();
         }

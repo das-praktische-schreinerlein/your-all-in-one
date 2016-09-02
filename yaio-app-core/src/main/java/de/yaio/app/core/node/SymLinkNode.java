@@ -15,12 +15,13 @@ package de.yaio.app.core.node;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import de.yaio.app.core.datadomain.SymLinkData;
-import de.yaio.app.core.nodeservice.SymLinkNodeService;
 import de.yaio.app.core.nodeservice.BaseNodeService;
-import org.springframework.roo.addon.javabean.RooJavaBean;
-import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
-import org.springframework.roo.addon.tostring.RooToString;
+import de.yaio.app.core.nodeservice.SymLinkNodeService;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+import org.springframework.beans.factory.annotation.Configurable;
 
+import javax.persistence.Entity;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -28,16 +29,10 @@ import javax.xml.bind.annotation.XmlTransient;
  * bean with SymLinkNode-data (SymLink to another node corresponding 
  * fileystems-link) and matching businesslogic
  * 
- * @FeatureDomain                DataDefinition Persistence BusinessLogic
- * @package                      de.yaio.core.node
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category                     collaboration
- * @copyright                    Copyright (c) 2014, Michael Schreiner
- * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-@RooJavaBean
-@RooToString
-@RooJpaActiveRecord
+@Configurable
+@Entity
 public class SymLinkNode extends BaseNode implements SymLinkData {
 
     protected static SymLinkNodeService nodeDataService = SymLinkNodeService.getInstance();
@@ -63,10 +58,38 @@ public class SymLinkNode extends BaseNode implements SymLinkData {
         return nodeDataService;
     }
 
+    public String getSymLinkRef() {
+        return this.symLinkRef;
+    }
+
+    public void setSymLinkRef(String symLinkRef) {
+        this.symLinkRef = symLinkRef;
+    }
+
+    public String getSymLinkName() {
+        return this.symLinkName;
+    }
+
+    public void setSymLinkName(String symLinkName) {
+        this.symLinkName = symLinkName;
+    }
+
+    public String getSymLinkTags() {
+        return this.symLinkTags;
+    }
+
+    public void setSymLinkTags(String symLinkTags) {
+        this.symLinkTags = symLinkTags;
+    }
+
     @Override
     public void resetSymLinkData() {
         this.setSymLinkRef(null);
         this.setSymLinkName(null);
         this.setSymLinkTags(null);
+    }
+
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
 }

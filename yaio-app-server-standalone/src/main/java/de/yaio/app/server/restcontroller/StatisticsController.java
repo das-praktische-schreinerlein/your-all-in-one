@@ -13,11 +13,10 @@
  */
 package de.yaio.app.server.restcontroller;
 
-import de.yaio.app.core.dbservice.BaseNodeDBService;
-import de.yaio.app.core.dbservice.BaseNodeDBServiceImpl;
-import de.yaio.app.core.dbservice.BaseNodeQueryFactory;
+import de.yaio.app.core.dbservice.BaseNodeStatisticsDBService;
 import de.yaio.app.core.dbservice.SearchOptionsImpl;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -39,6 +38,10 @@ public class StatisticsController {
     
     /** API-Version **/
     public static final String API_VERSION = "1.0.0";
+
+    @Autowired
+    protected BaseNodeStatisticsDBService baseNodeDBService;
+
 
     // Logger
     private static final Logger LOGGER = Logger.getLogger(StatisticsController.class);
@@ -62,8 +65,7 @@ public class StatisticsController {
                                                @PathVariable(value = "fulltext") final String fulltext,
                                                @RequestBody final SearchOptionsImpl searchOptions) {
         // create default response
-        BaseNodeDBService baseNodeDBService = BaseNodeDBServiceImpl.getInstance();
-        List values = baseNodeDBService.calcAufwandPerDayStatistic(BaseNodeQueryFactory.IstPlanPerDayStatisticQueryType.IST,
+        List values = baseNodeDBService.calcAufwandPerDayStatistic(BaseNodeStatisticsDBService.IstPlanPerDayStatisticQueryType.IST,
                 start, end, fulltext, sysUID, searchOptions);
         return new StatisticsResponse( "OK", "data fetched", values);
     }
@@ -87,8 +89,7 @@ public class StatisticsController {
                                                @PathVariable(value = "fulltext") final String fulltext,
                                                @RequestBody final SearchOptionsImpl searchOptions) {
         // create default response
-        BaseNodeDBService baseNodeDBService = BaseNodeDBServiceImpl.getInstance();
-        List values = baseNodeDBService.calcAufwandPerDayStatistic(BaseNodeQueryFactory.IstPlanPerDayStatisticQueryType.PLAN,
+        List values = baseNodeDBService.calcAufwandPerDayStatistic(BaseNodeStatisticsDBService.IstPlanPerDayStatisticQueryType.PLAN,
                 start, end, fulltext, sysUID, searchOptions);
         return new StatisticsResponse( "OK", "data fetched", values);
     }
@@ -112,7 +113,6 @@ public class StatisticsController {
                                              @PathVariable(value = "fulltext") final String fulltext,
                                              @RequestBody final SearchOptionsImpl searchOptions) {
         // create default response
-        BaseNodeDBService baseNodeDBService = BaseNodeDBServiceImpl.getInstance();
         List values = baseNodeDBService.calcDonePerDayStatistic(start, end, fulltext, sysUID, searchOptions);
         return new StatisticsResponse( "OK", "data fetched", values);
     }
@@ -136,8 +136,7 @@ public class StatisticsController {
                                             @PathVariable(value = "fulltext") final String fulltext,
                                             @RequestBody final SearchOptionsImpl searchOptions) {
         // create default response
-        BaseNodeDBService baseNodeDBService = BaseNodeDBServiceImpl.getInstance();
-        List values = baseNodeDBService.calcRunningPerDayStatistic(BaseNodeQueryFactory.IstPlanPerDayStatisticQueryType.IST,
+        List values = baseNodeDBService.calcRunningPerDayStatistic(BaseNodeStatisticsDBService.IstPlanPerDayStatisticQueryType.IST,
                 start, end, fulltext, sysUID, searchOptions);
         return new StatisticsResponse( "OK", "data fetched", values);
     }
@@ -161,8 +160,7 @@ public class StatisticsController {
                                                @PathVariable(value = "fulltext") final String fulltext,
                                                @RequestBody final SearchOptionsImpl searchOptions) {
         // create default response
-        BaseNodeDBService baseNodeDBService = BaseNodeDBServiceImpl.getInstance();
-        List values = baseNodeDBService.calcRunningPerDayStatistic(BaseNodeQueryFactory.IstPlanPerDayStatisticQueryType.PLAN,
+        List values = baseNodeDBService.calcRunningPerDayStatistic(BaseNodeStatisticsDBService.IstPlanPerDayStatisticQueryType.PLAN,
                 start, end, fulltext, sysUID, searchOptions);
         return new StatisticsResponse( "OK", "data fetched", values);
     }
@@ -186,9 +184,8 @@ public class StatisticsController {
                                                @PathVariable(value = "fulltext") final String fulltext,
                                                @RequestBody final SearchOptionsImpl searchOptions) {
         // create default response
-        BaseNodeDBService baseNodeDBService = BaseNodeDBServiceImpl.getInstance();
-        List values = baseNodeDBService.calcCountPerDayStatistic(BaseNodeQueryFactory.IstPlanPerDayStatisticQueryType.IST,
-                BaseNodeQueryFactory.StartEndPerDayStatisticQueryType.START,
+        List values = baseNodeDBService.calcCountPerDayStatistic(BaseNodeStatisticsDBService.IstPlanPerDayStatisticQueryType.IST,
+                BaseNodeStatisticsDBService.StartEndPerDayStatisticQueryType.START,
                 start, end, fulltext, sysUID, searchOptions);
         return new StatisticsResponse( "OK", "data fetched", values);
     }
@@ -212,9 +209,8 @@ public class StatisticsController {
                                              @PathVariable(value = "fulltext") final String fulltext,
                                              @RequestBody final SearchOptionsImpl searchOptions) {
         // create default response
-        BaseNodeDBService baseNodeDBService = BaseNodeDBServiceImpl.getInstance();
-        List values = baseNodeDBService.calcCountPerDayStatistic(BaseNodeQueryFactory.IstPlanPerDayStatisticQueryType.PLAN,
-                BaseNodeQueryFactory.StartEndPerDayStatisticQueryType.START,
+        List values = baseNodeDBService.calcCountPerDayStatistic(BaseNodeStatisticsDBService.IstPlanPerDayStatisticQueryType.PLAN,
+                BaseNodeStatisticsDBService.StartEndPerDayStatisticQueryType.START,
                 start, end, fulltext, sysUID, searchOptions);
         return new StatisticsResponse( "OK", "data fetched", values);
     }
@@ -238,9 +234,8 @@ public class StatisticsController {
                                               @PathVariable(value = "fulltext") final String fulltext,
                                               @RequestBody final SearchOptionsImpl searchOptions) {
         // create default response
-        BaseNodeDBService baseNodeDBService = BaseNodeDBServiceImpl.getInstance();
-        List values = baseNodeDBService.calcCountPerDayStatistic(BaseNodeQueryFactory.IstPlanPerDayStatisticQueryType.PLAN,
-                BaseNodeQueryFactory.StartEndPerDayStatisticQueryType.ENDE,
+        List values = baseNodeDBService.calcCountPerDayStatistic(BaseNodeStatisticsDBService.IstPlanPerDayStatisticQueryType.PLAN,
+                BaseNodeStatisticsDBService.StartEndPerDayStatisticQueryType.ENDE,
                 start, end, fulltext, sysUID, searchOptions);
         return new StatisticsResponse( "OK", "data fetched", values);
     }
@@ -264,9 +259,8 @@ public class StatisticsController {
                                             @PathVariable(value = "fulltext") final String fulltext,
                                             @RequestBody final SearchOptionsImpl searchOptions) {
         // create default response
-        BaseNodeDBService baseNodeDBService = BaseNodeDBServiceImpl.getInstance();
-        List values = baseNodeDBService.calcCountPerDayStatistic(BaseNodeQueryFactory.IstPlanPerDayStatisticQueryType.IST,
-                BaseNodeQueryFactory.StartEndPerDayStatisticQueryType.ENDE,
+        List values = baseNodeDBService.calcCountPerDayStatistic(BaseNodeStatisticsDBService.IstPlanPerDayStatisticQueryType.IST,
+                BaseNodeStatisticsDBService.StartEndPerDayStatisticQueryType.ENDE,
                 start, end, fulltext, sysUID, searchOptions);
         return new StatisticsResponse( "OK", "data fetched", values);
     }

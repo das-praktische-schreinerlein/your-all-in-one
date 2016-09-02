@@ -13,6 +13,7 @@
  */
 package de.yaio.app.server;
 
+import de.yaio.app.config.ContextHelper;
 import de.yaio.app.config.YaioConfiguration;
 import de.yaio.app.core.datadomainservice.NodeNumberService;
 import de.yaio.app.core.node.BaseNode;
@@ -22,7 +23,9 @@ import de.yaio.app.core.recalcer.StatDataRecalcer;
 import de.yaio.app.core.recalcer.SysDataRecalcer;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -32,6 +35,8 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class ApplicationStartup implements ApplicationListener<ContextRefreshedEvent> {
+    @Autowired
+    private ApplicationContext appContext;
 
     protected static NodeNumberService nodeNumberService;
     protected static String strPathIdDB;
@@ -58,6 +63,7 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
      */
     @Override
     public void onApplicationEvent(final ContextRefreshedEvent event) {
+        ContextHelper.getInstance().autowireDefaultServices(appContext);
         initMetaDataService();
 
         if (!StringUtils.isEmpty(onStartupRecalcMasterSysUID)) {
@@ -110,6 +116,7 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
     protected void recalcSysData() {
         try {
             SysDataRecalcer recalcer = new SysDataRecalcer();
+            ContextHelper.getInstance().autowireService(appContext, recalcer);
             String res = recalcer.recalcSysData();
             LOGGER.info("recalcing SysData done:" + res);
         } catch (Exception ex) {
@@ -123,6 +130,7 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
     protected void recalcStatData() {
         try {
             StatDataRecalcer recalcer = new StatDataRecalcer();
+            ContextHelper.getInstance().autowireService(appContext, recalcer);
             String res = recalcer.recalcStatData();
             LOGGER.info("recalcing StatData done:" + res);
         } catch (Exception ex) {
@@ -136,6 +144,7 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
     protected void recalcCachedData() {
         try {
             CachedDataRecalcer recalcer = new CachedDataRecalcer();
+            ContextHelper.getInstance().autowireService(appContext, recalcer);
             String res = recalcer.recalcCachedData();
             LOGGER.info("recalcing CachedData done:" + res);
         } catch (Exception ex) {
@@ -150,6 +159,7 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
     protected void recalcAllData() {
         try {
             NodeRecalcer recalcer = new NodeRecalcer();
+            ContextHelper.getInstance().autowireService(appContext, recalcer);
             String res = recalcer.findAndRecalcMasternode(this.onStartupRecalcMasterSysUID);
             LOGGER.info("recalcing StatData done:" + res);
         } catch (Exception ex) {
