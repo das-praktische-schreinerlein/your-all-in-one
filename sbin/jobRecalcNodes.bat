@@ -24,7 +24,14 @@ set YAIOCONFIGPATH=%YAIOSCRIPTPATH%..\config\
 rem init config
 call %YAIOCONFIGPATH%\config-cli.bat %YAIOSCRIPTPATH%
 
+rem use correct pathes
+set SAVEDPWD=%cd%
+set LOCALBASEPATH=%~dp0\..
+cd %LOCALBASEPATH%
+
 rem add --debug option to see the startprocess of spring-boot
 set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_RECALC% %CFG% --sysuid %MASTERNODEID%
 echo "jobRecalcNode: %CMD%"
 %CMD%
+
+cd %SAVEDPWD%
