@@ -62,6 +62,8 @@ public class EmailFormatter {
                     contentNode = (UrlResNode) subNode;
                 } else if (UrlResNodeService.CONST_NODETYPE_IDENTIFIER_EMAILHEADERRES.equals(subNode.getType())) {
                     headerNode = (UrlResNode) subNode;
+                } else if (UrlResNodeService.CONST_NODETYPE_IDENTIFIER_EMAILRES.equals(subNode.getType())) {
+                    genMetadataForEmailNode(subNode);
                 }
             }
             if (contentNode == null) {
