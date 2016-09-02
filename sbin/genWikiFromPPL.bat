@@ -20,11 +20,19 @@ set MMPATH=%1%
 set SRCFILE=%2%
 set PROJNAME=%3%
 
+rem use correct pathes
+set SAVEDPWD=%cd%
+set LOCALBASEPATH=%~dp0\..
+cd %LOCALBASEPATH%
+
 rem create Wiki from PPL
 set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_WN% %CFG% -m %PROJNAME% %SRC_OPTIONS%  %OUTPUT_OPTIONS_WIKI% %MMPATH%%SRCFILE%.ppl
 echo "create Wiki from PPL: %PROG_WN% %CFG% -m %PROJNAME% %SRC_OPTIONS%  %OUTPUT_OPTIONS_WIKI% %MMPATH%%SRCFILE%.ppl > %MMPATH%\%SRCFILE%.wiki"
-rem echo %CMD%
+echo "from: %SAVEDPWD% to: %LOCALBASEPATH% for:  %CMD%
 %CMD% > %MMPATH%\%SRCFILE%.new.wiki
 
-rem gen Html-Wiki 
+
+rem gen Html-Wiki
 rem type %BASEPATH%\projektplan-header.html %MMPATH%\%SRCFILE%.new.wiki %BASEPATH%\projektplan-footer.html > %MMPATH%\%SRCFILE%.wiki.html
+
+cd %SAVEDPWD%

@@ -20,8 +20,15 @@ set MMPATH=%1%
 set SRCFILE=%2%
 set PROJNAME=%3%
 
+rem use correct pathes
+set SAVEDPWD=%cd%
+set LOCALBASEPATH=%~dp0\..
+cd %LOCALBASEPATH%
+
 rem create MM from PPL
 set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_MM% %CFG% -m %PROJNAME% %SRC_OPTIONS%  %OUTPUT_OPTIONS% %MMPATH%%SRCFILE%.ppl
 echo "create MM from PPL: %PROG_MM% %CFG% -m %PROJNAME% %SRC_OPTIONS%  %OUTPUT_OPTIONS% %MMPATH%%SRCFILE%.ppl > %MMPATH%\%SRCFILE%.mm"
 rem echo %CMD%
 %CMD% > %MMPATH%\%SRCFILE%.mm
+
+cd %SAVEDPWD%

@@ -20,8 +20,15 @@ set MMPATH=%1%
 set SRCFILE=%2%
 set PROJNAME=%3%
 
+rem use correct pathes
+set SAVEDPWD=%cd%
+set LOCALBASEPATH=%~dp0\..
+cd %LOCALBASEPATH%
+
 rem import JPA from PPL
 set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_JPAN% %CFG% -m %PROJNAME% %SRC_OPTIONS% %IMPORT_OPTIONS_JPA% %MMPATH%%SRCFILE%.wiki
 echo "import JPA from Wiki: %PROG_JPAN% %CFG% -m %PROJNAME% %SRC_OPTIONS% %IMPORT_OPTIONS_JPA% %MMPATH%%SRCFILE%.wiki > %MMPATH%\%SRCFILE%.tmp"
 rem echo %CMD%
 %CMD% > %MMPATH%\%SRCFILE%.jpa.log
+
+cd %SAVEDPWD%

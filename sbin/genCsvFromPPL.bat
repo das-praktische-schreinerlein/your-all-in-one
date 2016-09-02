@@ -20,6 +20,11 @@ set MMPATH=%1%
 set SRCFILE=%2%
 set PROJNAME=%3%
 
+rem use correct pathes
+set SAVEDPWD=%cd%
+set LOCALBASEPATH=%~dp0\..
+cd %LOCALBASEPATH%
+
 rem create CSV from PPL
 set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_CSVN% %CFG% -m %PROJNAME% %SRC_OPTIONS% %OUTPUT_OPTIONS% %MMPATH%%SRCFILE%.ppl
 echo "create CSV from PPL: %PROG_CSVN% %JAVAOPTIONS% %CFG% -m %PROJNAME% %SRC_OPTIONS%  %OUTPUT_OPTIONS% %MMPATH%%SRCFILE%.ppl > %MMPATH%\%SRCFILE%.tab"
@@ -28,3 +33,5 @@ rem echo %CMD%
 
 rem del tmp-files
 del %MMPATH%\%SRCFILE%.tmp
+
+cd %SAVEDPWD%
