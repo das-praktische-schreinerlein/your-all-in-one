@@ -62,7 +62,7 @@ public class NodeRestController {
     @Autowired
     private CommonApiConfig commonApiConfig;
 
-    @Autowired //TODO: failed on unitstest...
+    @Autowired
     protected ExtendedDatatransferUtils datatransferUtils;
 
     @Autowired
