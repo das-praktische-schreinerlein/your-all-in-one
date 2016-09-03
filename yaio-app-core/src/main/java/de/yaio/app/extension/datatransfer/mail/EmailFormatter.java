@@ -46,13 +46,13 @@ public class EmailFormatter {
     // Logger
     private static final Logger LOGGER = Logger.getLogger(EmailFormatter.class);
 
-    public void genMetadataForEmailNodes(Set<BaseNode> emailNodes) throws IOExceptionWithCause {
+    public void genMetadataForEmailNodes(final Set<BaseNode> emailNodes) throws IOExceptionWithCause {
         for (BaseNode node : emailNodes) {
             genMetadataForEmailNode(node);
         }
     }
 
-    public void genMetadataForEmailNode(BaseNode node) throws IOExceptionWithCause {
+    public void genMetadataForEmailNode(final BaseNode node) throws IOExceptionWithCause {
         try {
             // get content and header
             UrlResNode contentNode = null;
@@ -168,7 +168,7 @@ public class EmailFormatter {
      * @param address an array of Address objects
      * @return a string represents a list of addresses
      */
-    private String parseAddresses(Address[] address) {
+    private String parseAddresses(final Address[] address) {
         String listAddress = "";
 
         if (address != null) {

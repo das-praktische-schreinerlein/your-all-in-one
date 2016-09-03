@@ -39,7 +39,7 @@ public class EmailReceiver {
      * @return                       List of messages fetched
      * @throws IOExceptionWithCause  possible problem to connect or fetch emails
      */
-    public List<Message> downloadEmails(EmailAccount account) throws IOExceptionWithCause {
+    public List<Message> downloadEmails(final EmailAccount account) throws IOExceptionWithCause {
         Properties properties = getServerProperties(account.getProtocol(), account.getHost(), account.getPort());
         Session session = Session.getDefaultInstance(properties);
         List<Message> messages = new ArrayList<Message>();
@@ -96,7 +96,7 @@ public class EmailReceiver {
      * @param port                  port
      * @return                      a Properties object
      */
-    private Properties getServerProperties(String protocol, String host, String port) {
+    private Properties getServerProperties(final String protocol, final String host, final String port) {
         Properties properties = new Properties();
 
         // server setting

@@ -235,7 +235,7 @@ public class ImportController {
             tmpFile.deleteOnExit();
             file.transferTo(tmpFile);
 
-            mailImporter.importMailFiles(parentSysUID, Collections.singletonList(tmpFile));
+            mailImporter.importMailFiles(parentSysUID, Collections.singletonList(tmpFile), false, null, null);
 
             // create new response
             response = NodeRestController.createResponseObj(

@@ -77,18 +77,49 @@ public class DBFilterFactory {
      * @return                      a dbfilter
      */
     public static List<DBFilter> createMapStringContainsFilter(final String fieldName, final Set<String> values) {
+        return DBFilterFactory.createMapStringLikeFilter(fieldName, values, true);
+    }
+
+    /**
+     * create or-joined string-filters for every value "lower({fieldName}) like lower(:mapStringContainsFilter{fieldName}{idx})"
+     * @param fieldName             name of the dbfield to filter
+     * @param values                value of the dbfilter (used as parameter)
+     * @param flgContains           if true add % infront and after value
+     * @return                      a dbfilter
+     */
+    public static List<DBFilter> createMapStringLikeFilter(final String fieldName, final Set<String> values,
+                                                           final boolean flgContains) {
         int idx = 0;
         List<DBFilter> dbFilters = new ArrayList<>();
         if (values != null) {
             List<String> sqlList = new ArrayList<>();
             List<DBFilter.Parameter> parameters = new ArrayList<>();
             for (String value : values) {
+                String valueStr = value;
+                String filterName = "createMapStringLikeFilter";
+                if (flgContains) {
+                    valueStr = "%" + valueStr + "%";
+                    filterName = "createMapStringContainsFilter";
+                }
                 sqlList.add("(" + "lower(" + fieldName + ") like " +
-                        "lower(:mapStringContainsFilter" + fieldName + idx + ")" + ")");
-                parameters.add(new DBFilter.Parameter("mapStringContainsFilter" + fieldName + idx, "%"+ value + "%"));
+                        "lower(:" + filterName + fieldName + idx + ")" + ")");
+                parameters.add(new DBFilter.Parameter(filterName + fieldName + idx, valueStr));
                 idx++;
             }
             dbFilters.add(new DBFilter("(" + StringUtils.join(sqlList, " or ") + ")", parameters));
+        }
+        return dbFilters;
+    }
+
+    public static List<DBFilter> createStringContainsFilter(final String filterName, final String fieldName,
+                                                            final String value) {
+        List<DBFilter> dbFilters = new ArrayList<>();
+        if (!StringUtils.isEmpty(value)) {
+            String sql = "(" + "lower(" + fieldName + ") like " +
+                        "lower(:" + filterName + fieldName + ")" + ")";
+            List<DBFilter.Parameter> parameters = new ArrayList<>();
+            parameters.add(new DBFilter.Parameter(filterName + fieldName, "%"+ value + "%"));
+            dbFilters.add(new DBFilter(sql, parameters));
         }
         return dbFilters;
     }

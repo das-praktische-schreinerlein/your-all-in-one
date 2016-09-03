@@ -166,6 +166,30 @@ public class BaseNodeFilterFactory {
     }
 
     /**
+     * generate common dbfilters for nodepraefix which should contain one of the values
+     * @param pnodepraefix          filter: optional nodepraefix the meta_node_praefix should contain (or)
+     * @return                       list of dbfilters created
+     */
+    public static List<DBFilter> createNodePraefixFilter(final String pnodepraefix) {
+        List<DBFilter> dbFilters = new ArrayList<>();
+
+        // tokenize words
+        String[] searchWords;
+        if (!StringUtils.isEmpty(pnodepraefix)) {
+            String notnodepraefix = pnodepraefix.replace("  ", " ");
+            searchWords = notnodepraefix.split(" ");
+            for (int idx = 0; idx < searchWords.length; idx++) {
+                String sql = "not (lower(meta_node_praefix) like lower(:notnodepraefix" + idx + ")"
+                        + ")";
+                List<DBFilter.Parameter> parameters = new ArrayList<>();
+                parameters.add(new DBFilter.Parameter("notnodepraefix" + idx, searchWords[idx]));
+                dbFilters.add(new DBFilter(sql, parameters));
+            }
+        }
+        return dbFilters;
+    }
+
+    /**
      * generate common dbfilters for tasks that must have a concreteToDo (effort > 0)
      * @param pFlgConcreteTodosOnly  filter: pFlgConcreteTodosOnly > 0
      * @return                       list of dbfilters created
