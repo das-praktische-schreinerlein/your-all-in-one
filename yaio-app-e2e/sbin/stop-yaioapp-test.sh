@@ -42,4 +42,3 @@ echo "stop-webdriver: ${CMD}"
 pid=`ps aux | grep "${CMD}" | grep -v grep | awk '{print $2}'`
 echo "kill $pid"
 kill TERM $pid
-
