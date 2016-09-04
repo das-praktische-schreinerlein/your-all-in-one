@@ -20,6 +20,7 @@ import de.yaio.app.core.datadomain.ResIndexData;
 import de.yaio.app.core.datadomain.ResIndexData.IndexWorkflowState;
 import de.yaio.app.core.datadomain.ResLocData;
 import de.yaio.app.core.datadomainservice.TriggeredDataDomainRecalcImpl;
+import de.yaio.app.core.dbservice.BaseNodeRepository;
 import de.yaio.app.core.node.UrlResNode;
 import de.yaio.app.core.nodeservice.UrlResNodeService;
 import de.yaio.app.extension.dms.utils.DMSClient;
@@ -56,6 +57,8 @@ public class ResIndexDataServiceImpl extends TriggeredDataDomainRecalcImpl imple
     protected YaioMetaExtractClient metaextractProvider;
     @Autowired
     protected DMSClient dmsProvider;
+    @Autowired
+    protected BaseNodeRepository baseNodeDBService;
 
     public Class<?> getRecalcTargetClass() {
         return ResContentData.class;
@@ -99,7 +102,7 @@ public class ResIndexDataServiceImpl extends TriggeredDataDomainRecalcImpl imple
         }
 
         // save node
-        node.getBaseNodeDBService().updateBaseNode(node);
+       baseNodeDBService.update(node);
     }
 
     @Override
@@ -168,5 +171,10 @@ public class ResIndexDataServiceImpl extends TriggeredDataDomainRecalcImpl imple
         // everything fine
         node.setResIndexDMSType("yaio-dms-service");
         node.setResIndexDMSState(IndexWorkflowState.INDEX_DONE);
+    }
+
+    @Override
+    protected BaseNodeRepository getBaseNodeDBService() {
+        return baseNodeDBService;
     }
 }

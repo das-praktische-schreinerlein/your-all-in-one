@@ -13,8 +13,10 @@
  */
 package de.yaio.app.config;
 
+import de.yaio.app.core.nodeservice.*;
 import de.yaio.commons.config.Configuration;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -71,9 +73,30 @@ public class ContextHelper {
         // check weather exists
         if (applicationContext == null) {
             this.initSpringApplicationContext();
+            this.autowireDefaultServices(applicationContext);
         }
 
         return applicationContext;
+    }
+
+    public void autowireService(Object instance) {
+        autowireService(applicationContext, instance);
+    }
+
+    public void autowireService(ApplicationContext applicationContext, Object instance) {
+        AutowireCapableBeanFactory beanFactory = applicationContext.getAutowireCapableBeanFactory();
+        beanFactory.autowireBean(instance);
+        LOGGER.info("done autowire service with context:" + instance.getClass().getName());
+    }
+
+    public void autowireDefaultServices(ApplicationContext applicationContext) {
+        autowireService(applicationContext, BaseNodeService.getInstance());
+        autowireService(applicationContext, EventNodeService.getInstance());
+        autowireService(applicationContext, InfoNodeService.getInstance());
+        autowireService(applicationContext, SymLinkNodeService.getInstance());
+        autowireService(applicationContext, TaskNodeService.getInstance());
+        autowireService(applicationContext, UrlResNodeService.getInstance());
+        LOGGER.info("done autowire services with context");
     }
 
     protected void initSpringApplicationContext() {

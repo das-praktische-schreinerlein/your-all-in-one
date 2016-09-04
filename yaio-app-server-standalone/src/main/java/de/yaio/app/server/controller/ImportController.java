@@ -13,6 +13,8 @@
  */
 package de.yaio.app.server.controller;
 
+import de.yaio.app.config.ContextHelper;
+import de.yaio.app.core.dbservice.BaseNodeRepository;
 import de.yaio.app.core.node.BaseNode;
 import de.yaio.app.datatransfer.common.ParserException;
 import de.yaio.app.datatransfer.jpa.JPAExporter;
@@ -26,6 +28,7 @@ import de.yaio.app.server.restcontroller.NodeRestController;
 import de.yaio.commons.io.IOExceptionWithCause;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -61,6 +64,13 @@ public class ImportController {
     @Autowired
     protected EmailImporter mailImporter;
 
+    @Autowired
+    protected BaseNodeRepository baseNodeDBService;
+
+    @Autowired
+    private ApplicationContext appContext;
+
+
     // Logger
     private static final Logger LOGGER = Logger.getLogger(ExportController.class);
 
@@ -82,7 +92,7 @@ public class ImportController {
                         null, null, null, null);
 
         // find the parentnode
-        BaseNode node = BaseNode.findBaseNode(parentSysUID);
+        BaseNode node = baseNodeDBService.findBaseNode(parentSysUID);
         if (node == null) {
             return response.getStateMsg();
         }
@@ -114,7 +124,7 @@ public class ImportController {
             datatransferUtils.parseNodesFromWiki(wikiImporter, inputOptions, masterNode, wikiSrc);
 
             // JPA-Exporter
-            JPAExporter jpaExporter = new JPAExporter();
+            JPAExporter jpaExporter = getJPAExporter();
             jpaExporter.getMasterNodeResult(masterNode, null);
 
             // create new response
@@ -149,7 +159,7 @@ public class ImportController {
                         null, null, null, null);
 
         // find the parentnode
-        BaseNode node = BaseNode.findBaseNode(parentSysUID);
+        BaseNode node = baseNodeDBService.findBaseNode(parentSysUID);
         if (node == null) {
             return response.getStateMsg();
         }
@@ -178,7 +188,7 @@ public class ImportController {
             datatransferUtils.parseValidatedNodesFromJson(inputOptions, masterNode, jsonSrc);
 
             // JPA-Exporter
-            JPAExporter jpaExporter = new JPAExporter();
+            JPAExporter jpaExporter = getJPAExporter();
             jpaExporter.getMasterNodeResult(masterNode, null);
 
             // create new response
@@ -213,7 +223,7 @@ public class ImportController {
                 null, null, null, null);
 
         // find the parentnode
-        BaseNode node = BaseNode.findBaseNode(parentSysUID);
+        BaseNode node = baseNodeDBService.findBaseNode(parentSysUID);
         if (node == null) {
             return response.getStateMsg();
         }
@@ -225,7 +235,7 @@ public class ImportController {
             tmpFile.deleteOnExit();
             file.transferTo(tmpFile);
 
-            mailImporter.importMailFiles(parentSysUID, Collections.singletonList(tmpFile));
+            mailImporter.importMailFiles(parentSysUID, Collections.singletonList(tmpFile), false, null, null);
 
             // create new response
             response = NodeRestController.createResponseObj(
@@ -263,5 +273,11 @@ public class ImportController {
         LOGGER.warn("error while running request:" + request.toString(), e);
         response.setStatus(SC_INTERNAL_SERVER_ERROR);
         return "cant import node";
+    }
+
+    protected JPAExporter getJPAExporter() {
+        JPAExporter exporter = new JPAExporter();
+        ContextHelper.getInstance().autowireService(appContext, exporter);
+        return exporter;
     }
 }

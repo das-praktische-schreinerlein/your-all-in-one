@@ -13,6 +13,7 @@
  */
 package de.yaio.app.cli.converter;
 
+import de.yaio.app.config.ContextHelper;
 import de.yaio.app.extension.datatransfer.ical.ICalDBExporter;
 import de.yaio.app.extension.datatransfer.ical.ICalExporter;
 import de.yaio.commons.config.ConfigurationOption;
@@ -49,6 +50,7 @@ public class JobNodes2ICal extends JobNodes2Wiki {
         if ("jpa".equalsIgnoreCase(sourceType)) {
             // from jpa: use dbExporter
             exporter = new ICalDBExporter();
+            ContextHelper.getInstance().autowireService(exporter);
         } else {
             // all other
             exporter = new ICalExporter();

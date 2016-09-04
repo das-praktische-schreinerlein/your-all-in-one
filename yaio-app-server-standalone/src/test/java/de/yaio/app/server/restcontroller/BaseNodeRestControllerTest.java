@@ -28,6 +28,8 @@ import de.yaio.commons.config.ConfigurationHelper;
 import org.apache.log4j.Logger;
 import org.hamcrest.core.IsNull;
 import org.junit.Test;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+import org.springframework.context.ApplicationContext;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
@@ -35,6 +37,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -76,10 +79,12 @@ public abstract class BaseNodeRestControllerTest  extends BaseTest {
         CmdLineHelper cmdLineHelper = CmdLineHelper.getInstance();
         ConfigurationHelper configurationHelper = YaioConfigurationHelper.getInstance();
         ContextHelper contextHelper = ContextHelper.getInstance();
+        ApplicationContext context = null;
 
-        String[] args = new String[2];
+        String[] args = new String[3];
         args[0] = "--config";
         args[1] = "/config/application-test.properties"; // load as resource
+        args[2] = "--debug";
         if (cmdLineHelper.getCmdLineArgs() == null) {
             cmdLineHelper.getAvailiableCmdLineOptions();
             cmdLineHelper.setCmdLineArgs(args);
@@ -95,15 +100,21 @@ public abstract class BaseNodeRestControllerTest  extends BaseTest {
                     " properties:" + config.propertiesAsProperties() +
                     " contextConfigs:" + ContextHelper.getInstance().getSpringConfig());
 
-            contextHelper.getSpringApplicationContext();
+            context = contextHelper.getSpringApplicationContext();
             
             // gets NodeNumberService
             NodeNumberService nodeNumberService = 
                             BaseNode.getConfiguredMetaDataService().getNodeNumberService();
             nodeNumberService.initNextNodeNumber("WEBTEST", 1);
+        } else {
+            context = contextHelper.getSpringApplicationContext();
         }
-        
         NodeRestController nodeController = new NodeRestController();
+
+        // autowire controller
+        AutowireCapableBeanFactory beanFactory = context.getAutowireCapableBeanFactory();
+        beanFactory.autowireBean(nodeController);
+
         mockMvc = MockMvcBuilders.standaloneSetup(nodeController).build();
     };
 

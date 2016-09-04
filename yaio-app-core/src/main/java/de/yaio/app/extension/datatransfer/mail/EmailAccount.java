@@ -24,8 +24,11 @@ public class EmailAccount {
     private String userName;
     private String password;
     private String inboxSysUID;
+    private String refBlackListPattern;
+    private String refWhiteListPattern;
 
-    public EmailAccount(String key, String protocol, String host, String port, String userName, String password, String inboxSysUID) {
+    public EmailAccount(String key, String protocol, String host, String port, String userName, String password,
+                        String inboxSysUID, String refBlackListPattern, String refWhiteListPattern) {
         this.key = key;
         this.protocol = protocol;
         this.host = host;
@@ -33,6 +36,8 @@ public class EmailAccount {
         this.userName = userName;
         this.password = password;
         this.inboxSysUID = inboxSysUID;
+        this.refBlackListPattern = refBlackListPattern;
+        this.refWhiteListPattern = refWhiteListPattern;
     }
 
     public String getKey() {
@@ -63,6 +68,16 @@ public class EmailAccount {
         return inboxSysUID;
     }
 
+    public String getRefBlackListPattern() {
+        return refBlackListPattern;
+    }
+
+    public String getRefWhiteListPattern() {
+        return refWhiteListPattern;
+    }
+
+
+
     @Override
     public String toString() {
         return new StringBuilder().append("EmailAccount{")
@@ -72,6 +87,8 @@ public class EmailAccount {
            .append(" port:").append(getPort())
            .append(" userName:").append(getUserName())
            .append(" inboxSysUID:").append(getInboxSysUID())
+           .append(" refBlackListPattern:").append(getRefBlackListPattern())
+           .append(" refWhiteListPattern:").append(getRefWhiteListPattern())
            .append("}").toString();
     }
 }

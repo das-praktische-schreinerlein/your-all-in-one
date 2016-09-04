@@ -24,8 +24,12 @@ export CP="${YAIOAPP}"
 export CFGFILE=${BASEPATH}../config/yaio-application.properties
 export CFG="--config ${CFGFILE}"
 export FLYWAYCFG=${CFG}
-export JAVAOPTIONS="-Xmx768m -Xms128m -Djava.net.preferIPv4Stack=true -Djava.net.preferIPv4Addresses -Dspring.config.location=file:${CFGFILE} -Dlog4j.configuration=file:${BASEPATH}../config/log4j.properties"
 
+export JVMMEMOPTIONS="-Xmx512m -Xms128m"
+# java 1.8
+# set export JVMMEMOPTIONS="-XX:MaxMetaspaceSize=512m -Xms128m"
+export JVMOPTIONS="$JVMMEMOPTIONS -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=70 -XX:+ScavengeBeforeFullGC -XX:+CMSScavengeBeforeRemark"
+export JAVAOPTIONS="$JVMOPTIONS -Djava.net.preferIPv4Stack=true -Djava.net.preferIPv4Addresses -Dspring.config.location=file:${CFGFILE} -Dlog4j.configuration=file:${BASEPATH}../config/log4j.properties"
 
 # set progs
 export PROG_APP=de.yaio.app.server.Application

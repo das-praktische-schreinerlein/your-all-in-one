@@ -13,12 +13,12 @@
  */
 package de.yaio.app.server.controller;
 
-import de.yaio.app.core.dbservice.BaseNodeDBService;
-import de.yaio.app.core.dbservice.BaseNodeDBServiceImpl;
+import de.yaio.app.core.dbservice.BaseNodeRepository;
 import de.yaio.app.core.node.BaseNode;
 import de.yaio.app.core.recalcer.NodeRecalcer;
 import de.yaio.app.server.restcontroller.NodeActionResponse;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,6 +39,9 @@ public class AdminController {
     /** API-Version **/
     public static final String API_VERSION = "1.0.0";
 
+    @Autowired
+    protected BaseNodeRepository baseNodeDBService;
+
     // Logger
     private static final Logger LOGGER = Logger.getLogger(AdminController.class);
 
@@ -57,7 +60,7 @@ public class AdminController {
                         null, null, null, null);
 
         // find the parentnode
-        BaseNode node = BaseNode.findBaseNode(sysUID);
+        BaseNode node = baseNodeDBService.findBaseNode(sysUID);
         if (node == null) {
             return response.getStateMsg();
         }
@@ -89,8 +92,7 @@ public class AdminController {
 
         if ("true".equalsIgnoreCase(System.getProperty("yaio.demo.allow-reset", "false"))) {
             // reset if option allows it
-            BaseNodeDBService dbService = new BaseNodeDBServiceImpl();
-            BaseNode masterNode = dbService.resetYaio();
+            BaseNode masterNode = baseNodeDBService.resetYaio();
 
             response = new NodeActionResponse(
                             "OK", "yaio-instance resetet",

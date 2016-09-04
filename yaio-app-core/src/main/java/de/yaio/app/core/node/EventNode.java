@@ -14,27 +14,22 @@
 package de.yaio.app.core.node;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import de.yaio.app.core.nodeservice.EventNodeService;
 import de.yaio.app.core.nodeservice.BaseNodeService;
-import org.springframework.roo.addon.javabean.RooJavaBean;
-import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
-import org.springframework.roo.addon.tostring.RooToString;
+import de.yaio.app.core.nodeservice.EventNodeService;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+import org.springframework.beans.factory.annotation.Configurable;
 
+import javax.persistence.Entity;
 import javax.xml.bind.annotation.XmlTransient;
 
 /** 
  * bean with EventNode-data (calendar-events) and matching businesslogic
  * 
- * @FeatureDomain                DataDefinition Persistence BusinessLogic
- * @package                      de.yaio.core.node
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category                     collaboration
- * @copyright                    Copyright (c) 2014, Michael Schreiner
- * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-@RooJavaBean
-@RooToString
-@RooJpaActiveRecord
+@Configurable
+@Entity
 public class EventNode extends TaskNode {
 
     protected static EventNodeService nodeDataService = EventNodeService.getInstance();
@@ -44,5 +39,9 @@ public class EventNode extends TaskNode {
     @Override
     public BaseNodeService getBaseNodeService() {
         return nodeDataService;
+    }
+
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
 }

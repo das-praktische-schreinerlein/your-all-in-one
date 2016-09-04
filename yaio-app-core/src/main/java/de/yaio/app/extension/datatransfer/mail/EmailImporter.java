@@ -13,8 +13,7 @@
  */
 package de.yaio.app.extension.datatransfer.mail;
 
-import de.yaio.app.core.dbservice.BaseNodeDBService;
-import de.yaio.app.core.dbservice.BaseNodeDBServiceImpl;
+import de.yaio.app.core.dbservice.BaseNodeRepository;
 import de.yaio.app.core.node.BaseNode;
 import de.yaio.app.core.nodeservice.NodeService;
 import de.yaio.commons.io.IOExceptionWithCause;
@@ -25,9 +24,10 @@ import org.springframework.stereotype.Service;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.*;
 
 /**
  * receive and import emails for accounts
@@ -38,21 +38,27 @@ public class EmailImporter {
     @Autowired
     private EmailReceiver emailReceiverService;
     @Autowired
+    private EmailGrouper emailGroupService;
+    @Autowired
     private EmailConverter emailConverterService;
     @Autowired
     protected EmailFormatter emailFormatterService;
+    @Autowired
+    protected BaseNodeRepository baseNodeDBService;
 
     // Logger
     private static final Logger LOGGER = Logger.getLogger(EmailImporter.class);
 
     /**
-     * receive, import email for this accounts and append them to the configured sysUID (IOExceptionWithCause will be catched per account)
+     * receive, import email for this accounts and append them to the configured inbox
+     * (IOExceptionWithCause will be catched per account)
      * @param accounts        accounts to import the emails from
+     * @param checkForRefs    check for refs and append email to ref instead of inbox (inbox is fallback)
      */
-    public void importEmails(List<EmailAccount> accounts) {
+    public void importEmails(final List<EmailAccount> accounts, final boolean checkForRefs) {
         for (EmailAccount account : accounts) {
             try {
-                this.importEmails(account);
+                this.importEmails(account, checkForRefs);
             } catch (IOExceptionWithCause ex) {
                 LOGGER.info("error while loading emails for account:" + account, ex);
             }
@@ -60,26 +66,34 @@ public class EmailImporter {
     }
 
     /**
-     * receive, import email for this account and append them to the configured sysUID
+     * receive, import email for this account and append them to the configured inbox
      * @param account                account to import the emails from
+     * @param checkForRefs           check for refs and append email to ref instead of inbox (inbox is fallback)
      * @return                       count of imported messages
      * @throws IOExceptionWithCause  if account is blocked or so on
      */
-    public int importEmails(EmailAccount account) throws IOExceptionWithCause {
+    public int importEmails(final EmailAccount account, final boolean checkForRefs) throws IOExceptionWithCause {
         List<Message> messages = emailReceiverService.downloadEmails(account);
-        this.importEmails(account.getInboxSysUID(), messages);
+        this.importEmails(account.getInboxSysUID(), messages, checkForRefs,
+                account.getRefBlackListPattern(), account.getRefWhiteListPattern());
         LOGGER.info("loaded " + messages.size() + " emails for account:" + account);
         return messages.size();
     }
 
     /**
-     * import email from file and append them to sysUID
-     * @param parentSysUID           sysUID of the basenode to which emails will be append
+     * import email from file and append them to parsed refs (if checkForRefs) or if no ref found to defaultParentSysUID
+     * @param defaultParentSysUID     sysUID of the basenode to which emails will be appended if no ref found
      * @param files                  files to import as emails
+     * @param checkForRefs           check for refs and append email to ref instead of inbox (inbox is fallback)
+     * @param refBlackListPattern    refs-blacklist as space-separated metaName-pattern
+     * @param refWhiteListPattern    refs-whitelist as space-separated metaName-pattern
      * @return                       count of imported messages
      * @throws IOExceptionWithCause  if reading of emails went wrong
      */
-    public int importMailFiles(String parentSysUID, List<File> files) throws IOExceptionWithCause {
+    public int importMailFiles(final String defaultParentSysUID, final List<File> files, final boolean checkForRefs,
+                               final String refBlackListPattern,
+                               final String refWhiteListPattern)
+            throws IOExceptionWithCause {
         List<Message> messages = new ArrayList<>();
         for (File file : files) {
             try {
@@ -98,9 +112,44 @@ public class EmailImporter {
             }
         }
 
-        this.importEmails(parentSysUID, messages);
+        this.importEmails(defaultParentSysUID, messages, checkForRefs, refBlackListPattern, refWhiteListPattern);
         LOGGER.info("loaded " + messages.size() + " emails from files:" + files);
         return messages.size();
+    }
+
+    /**
+     * import emails and append them to parsed refs (if checkForRefs) or if no ref found to defaultParentSysUID
+     * @param defaultParentSysUID     sysUID of the basenode to which emails will be appended if no ref found
+     * @param messages                messages to import
+     * @param checkForRefs            check for refs and append email to ref instead of inbox (inbox is fallback)
+     * @param refBlackListPattern     refs-blacklist as space-separated metaName-pattern
+     * @param refWhiteListPattern     refs-whitelist as space-separated metaName-pattern
+     * @throws IOExceptionWithCause   if reading of emails went wrong
+     */
+    public void importEmails(final String defaultParentSysUID, final List<Message> messages, final boolean checkForRefs,
+                             final String refBlackListPattern,
+                             final String refWhiteListPattern)
+            throws IOExceptionWithCause {
+        BaseNode parent = baseNodeDBService.findBaseNode(defaultParentSysUID);
+        if (parent == null) {
+            throw new IOExceptionWithCause("defaultParentSysUID not found", defaultParentSysUID,
+                    new NoSuchElementException());
+        }
+
+        Map<String, Set<Message>> emailsGroupByRef;
+        if (checkForRefs) {
+            emailsGroupByRef = emailGroupService.groupEmailsByRef(defaultParentSysUID, messages,
+                    refBlackListPattern, refWhiteListPattern);
+        } else {
+            emailsGroupByRef = new HashMap<>();
+            Set<Message> uniqueMesssages = new HashSet<>();
+            uniqueMesssages.addAll(messages);
+            emailsGroupByRef.put(defaultParentSysUID, uniqueMesssages);
+        }
+
+        for (String sysUID : emailsGroupByRef.keySet()) {
+            importEmails(sysUID, emailsGroupByRef.get(sysUID));
+        }
     }
 
     /**
@@ -109,16 +158,17 @@ public class EmailImporter {
      * @param messages                messages to import
      * @throws IOExceptionWithCause   if reading of emails went wrong
      */
-    public void importEmails(String parentSysUID, List<Message> messages) throws IOExceptionWithCause {
-        BaseNodeDBService nodeService = BaseNodeDBServiceImpl.getInstance();
-        BaseNode parent = BaseNode.findBaseNode(parentSysUID);
+    public void importEmails(final String parentSysUID, final Set<Message> messages) throws IOExceptionWithCause {
+        BaseNode parent = baseNodeDBService.findBaseNode(parentSysUID);
+        if (parent == null) {
+            throw new IOExceptionWithCause("parentSysUID not found", parentSysUID, new NoSuchElementException());
+        }
 
         emailConverterService.importEmailsToParent(parent, messages);
         emailFormatterService.genMetadataForEmailNodes(parent.getChildNodes());
 
-        nodeService.saveChildNodesToDB(parent, NodeService.CONST_DB_RECURSIONLEVEL_ALL_CHILDREN, false);
-        nodeService.updateMeAndMyParents(parent);
+        baseNodeDBService.saveChildNodesToDB(parent, NodeService.CONST_DB_RECURSIONLEVEL_ALL_CHILDREN, false);
+        baseNodeDBService.updateMeAndMyParents(parent);
     }
-
 }
 

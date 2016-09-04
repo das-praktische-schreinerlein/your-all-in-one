@@ -13,15 +13,22 @@
  */
 package de.yaio.app.core.dbservice;
 
-import de.yaio.app.core.node.TaskNode;
 import de.yaio.app.core.node.BaseNode;
+import de.yaio.app.core.node.TaskNode;
 import de.yaio.app.core.nodeservice.BaseNodeService;
 import de.yaio.app.core.nodeservice.NodeService;
 import de.yaio.app.core.nodeservice.TaskNodeService;
+import de.yaio.app.utils.db.DBFilter;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /** 
@@ -29,22 +36,17 @@ import java.util.*;
  * 
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
  */
-public class BaseNodeDBServiceImpl implements BaseNodeDBService {
-    protected static BaseNodeDBService instance = new BaseNodeDBServiceImpl();
-    
+@Service
+public class BaseNodeRepositoryImpl implements BaseNodeRepositoryCustom {
+    @PersistenceContext
+    protected transient EntityManager entityManager;
+
     // Logger
     private static final Logger LOGGER =
-        Logger.getLogger(BaseNodeDBServiceImpl.class);
+        Logger.getLogger(BaseNodeRepositoryImpl.class);
 
-    /** 
-     * return the instance of BaseNodeDBService
-     * @return                       the instance of BaseNodeDBService
-     */
-    public static BaseNodeDBService getInstance() {
-        return instance;
-    }
-    
     @Override
+    @Transactional
     public List<BaseNode> updateMeAndMyParents(final BaseNode node) {
         List<BaseNode> parentHierarchy = null;
         if (node != null) {
@@ -56,7 +58,7 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
                 node.recalcData(BaseNodeService.RecalcRecurseDirection.ONLYME);
 
                 // save me
-                node.merge();
+                update(node);
                 //CHECKSTYLE.OFF: IllegalCatch - Much more readable than catching x exceptions
             } catch (Exception ex) {
                 //CHECKSTYLE.ON: IllegalCatch
@@ -83,39 +85,15 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
 
     @Override
     public List<BaseNode> findChildNodes(final String sysUID) {
-        return BaseNode.entityManager().createQuery(
+        return entityManager().createQuery(
                         "SELECT o FROM BaseNode o where parent_node = :sysUID order by sort_pos asc", 
                         BaseNode.class
                         ).setParameter("sysUID", sysUID).getResultList();
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public long countExtendedSearchBaseNodes(final String fulltext, final String rootSysUID,
-                                             final SearchOptions searchOptions) {
-        TypedQuery<Long> query = (TypedQuery<Long>) BaseNodeQueryFactory.createExtendedSearchQuery(true, fulltext,
-                rootSysUID, searchOptions, null);
-        return query.getSingleResult();
-    }
-    
-    
-    @SuppressWarnings("unchecked")
-    @Override
-    public List<BaseNode> findExtendedSearchBaseNodeEntries(final String fulltext, final String rootSysUID,
-                                                            final SearchOptions searchOptions,
-                                                            final String sortConfig, final int firstResult,
-                                                            final int maxResults) {
-        TypedQuery<BaseNode> query = (TypedQuery<BaseNode>) BaseNodeQueryFactory.createExtendedSearchQuery(
-                        false, fulltext, rootSysUID, searchOptions, sortConfig);
-        query.setFirstResult(firstResult);
-        query.setMaxResults(maxResults);
-        
-        return query.getResultList();
-    }
-
     @Override
     public List<BaseNode> findSymLinkBaseNode(final String symLinkRef) {
-        return BaseNode.entityManager().createQuery(
+        return entityManager().createQuery(
                         "SELECT o FROM BaseNode o where sysUID = :symLinkRef"
                         + " or CONCAT(metaNodePraefix, metaNodeNummer) = :symLinkRef"
                         + " order by sort_pos asc", 
@@ -124,41 +102,10 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
     }
 
     @Override
-    public List<List> calcAufwandPerDayStatistic(final BaseNodeQueryFactory.IstPlanPerDayStatisticQueryType type,
-                                           final Date start, final Date end, final String pfulltext,
-                                           final String rootSysUID, final SearchOptions searchOptions) {
-        return BaseNodeQueryFactory.createAufwandPerDayStatisticQuery(type, start, end, pfulltext, rootSysUID,
-                searchOptions).getResultList();
-    }
-
-    @Override
-    public List<List> calcCountPerDayStatistic(final BaseNodeQueryFactory.IstPlanPerDayStatisticQueryType type,
-                                         final BaseNodeQueryFactory.StartEndPerDayStatisticQueryType timeType,
-                                         final Date start, final Date end, final String pfulltext,
-                                         final String rootSysUID, final SearchOptions searchOptions) {
-        return BaseNodeQueryFactory.createCountPerDayStatisticQuery(type, timeType, start, end, pfulltext,
-                rootSysUID, searchOptions).getResultList();
-    }
-
-    @Override
-    public List<List> calcDonePerDayStatistic(final Date start, final Date end, final String pfulltext,
-                                        final String rootSysUID, final SearchOptions searchOptions) {
-        return BaseNodeQueryFactory.createDonePerDayStatisticQuery(start, end, pfulltext, rootSysUID,
-                searchOptions).getResultList();
-    }
-
-    @Override
-    public List<List> calcRunningPerDayStatistic(final BaseNodeQueryFactory.IstPlanPerDayStatisticQueryType type,
-                                           final Date start, final Date end, final String pfulltext,
-                                           final String rootSysUID, final SearchOptions searchOptions) {
-        return BaseNodeQueryFactory.createRunningPerDayStatisticQuery(type, start, end, pfulltext, rootSysUID,
-                searchOptions).getResultList();
-    }
-
-    @Override
+    @Transactional
     public BaseNode resetYaio() {
         // delete all nodes
-        BaseNode.entityManager().createNativeQuery("delete from BASE_NODE").executeUpdate();
+        entityManager().createNativeQuery("delete from BASE_NODE").executeUpdate();
         
         TaskNode masterNode = new TaskNode();
         masterNode.setEbene(0);
@@ -170,13 +117,14 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
         masterNode.setState(TaskNodeService.CONST_NODETYPE_IDENTIFIER_RUNNNING);
         masterNode.setSysUID("MasterplanMasternode1");
         masterNode.setType(TaskNodeService.CONST_NODETYPE_IDENTIFIER_RUNNNING);
-        
-        masterNode.persist();
+
+        save(masterNode);
         return masterNode;
     }
     
     @Override
-    public void saveChildNodesToDB(final BaseNode baseNode, final int pRecursionLevel, 
+    @Transactional
+    public void saveChildNodesToDB(final BaseNode baseNode, final int pRecursionLevel,
                                    final boolean flgForceMerge) {
         // set new level if it is not -1
         int recursionLevel = pRecursionLevel;
@@ -203,10 +151,10 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
                 }
                 
                 // check if persist or merge
-                if (BaseNode.entityManager().contains(childNode) || flgForceMerge) {
-                    childNode.merge();
+                if (entityManager().contains(childNode) || flgForceMerge) {
+                    update(childNode);
                 } else {
-                    childNode.persist();
+                    save(childNode);
                 }
                 //CHECKSTYLE.OFF: IllegalCatch - Much more readable than catching x exceptions
             } catch (Exception ex) {
@@ -240,7 +188,7 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
                  || (recursionLevel > 0)) {
                 // recurse
 //                if (flgOK)
-                childNode.saveChildNodesToDB(recursionLevel, flgForceMerge);
+                saveChildNodesToDB(childNode, recursionLevel, flgForceMerge);
             }
         }
     }
@@ -248,17 +196,112 @@ public class BaseNodeDBServiceImpl implements BaseNodeDBService {
     @Override
     public void removeChildNodesFromDB(final BaseNode baseNode) {
         // interate children on db
-        for (BaseNode childNode : baseNode.getBaseNodeDBService().findChildNodes(baseNode.getSysUID())) {
+        for (BaseNode childNode : findChildNodes(baseNode.getSysUID())) {
             // persist to DB
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("removeChildNodesFromDB from " + baseNode.getNameForLogger() 
                            + " child:" + childNode.getNameForLogger());
             }
             // recurse
-            childNode.removeChildNodesFromDB();
+            removeChildNodesFromDB(childNode);
             
             // remove this child
-            childNode.remove();
+            delete(childNode);
         }
+    }
+
+    @Override
+    public TypedQuery<BaseNode> createTypedQuery(Class<?> resClass, List<DBFilter> dbFilters, String sort) {
+        // create filter
+        String filter = "";
+        if (dbFilters.size() > 0) {
+            List<String>sqlList = new ArrayList<String>();
+            for (DBFilter dbFilter : dbFilters) {
+                sqlList.add(dbFilter.getSql());
+            }
+            filter = " where " + StringUtils.join(sqlList, " and ");
+        }
+
+        // setup select
+        String select = "SELECT o FROM BaseNode o"
+                + filter + " " + sort;
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("select with filters:" + select + " dbFilters:" + dbFilters);
+        }
+
+        // create query
+        TypedQuery<BaseNode> query = (TypedQuery<BaseNode>)entityManager().createQuery(select, resClass);
+
+        // add parameters
+        if (dbFilters.size() > 0) {
+            for (DBFilter dbFilter : dbFilters) {
+                for (DBFilter.Parameter parameter : dbFilter.getParameters()) {
+                    query.setParameter(parameter.getName(), parameter.getValue());
+                }
+            }
+        }
+
+        return query;
+    }
+
+
+    @Override
+    public void save(BaseNode baseNode) {
+        this.persist(baseNode);
+    }
+
+    @Override
+    public BaseNode update(BaseNode baseNode) {
+        return this.merge(baseNode);
+    }
+
+    @Override
+    public void delete(BaseNode baseNode) {
+        this.remove(baseNode);
+    }
+
+    @Override
+    public long countBaseNodes() {
+        return entityManager().createQuery("SELECT COUNT(o) FROM BaseNode o", Long.class).getSingleResult();
+    }
+
+    @Override
+    public BaseNode findBaseNode(String sysUID) {
+        if (sysUID == null || sysUID.length() == 0) return null;
+        return entityManager().find(BaseNode.class, sysUID);
+    }
+
+    /**
+     * active record
+     */
+    protected final EntityManager entityManager() {
+        EntityManager em = entityManager;
+        if (em == null) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
+        return em;
+    }
+
+    @Transactional
+    protected void persist(BaseNode baseNode) {
+        if (this.entityManager == null) this.entityManager = entityManager();
+        this.entityManager.persist(baseNode);
+    }
+
+    @Transactional
+    protected void remove(BaseNode baseNode) {
+        if (this.entityManager == null) this.entityManager = entityManager();
+        if (this.entityManager.contains(baseNode)) {
+            this.entityManager.remove(baseNode);
+        } else {
+            BaseNode attached = findBaseNode(baseNode.getSysUID());
+            this.entityManager.remove(attached);
+        }
+    }
+
+    @Transactional
+    protected BaseNode merge(BaseNode baseNode) {
+        if (this.entityManager == null) this.entityManager = entityManager();
+        BaseNode merged = this.entityManager.merge(baseNode);
+        this.entityManager.flush();
+        return merged;
     }
 }

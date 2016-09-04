@@ -57,7 +57,7 @@ public class JobEmailImporter {
                )
     public void doImportEmails() {
         LOGGER.info("start job doImportEmails");
-        emailImporterService.importEmails(this.getAccounts());
+        emailImporterService.importEmails(this.getAccounts(), true);
         LOGGER.info("end job doImportEmails");
     }
 

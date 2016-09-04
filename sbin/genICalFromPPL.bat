@@ -20,6 +20,11 @@ set MMPATH=%1%
 set SRCFILE=%2%
 set PROJNAME=%3%
 
+rem use correct pathes
+set SAVEDPWD=%cd%
+set LOCALBASEPATH=%~dp0\..
+cd %LOCALBASEPATH%
+
 rem create Event-ICal from PPL
 grep EVENT_ %MMPATH%%SRCFILE%.ppl > %MMPATH%%SRCFILE%-events.ppl
 set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_ICalN% %CFG% -m %PROJNAME% %SRC_OPTIONS%  %OUTPUT_OPTIONS% %MMPATH%%SRCFILE%-events.ppl
@@ -31,3 +36,5 @@ grep -v EVENT_ %MMPATH%%SRCFILE%.ppl > %MMPATH%%SRCFILE%-tasks.ppl
 set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_ICalN% %CFG% -m %PROJNAME% %SRC_OPTIONS%  %OUTPUT_OPTIONS% %MMPATH%%SRCFILE%-tasks.ppl
 echo "create ICal from PPL: %PROG_ICalN% %CFG% -m %PROJNAME% %SRC_OPTIONS%  %OUTPUT_OPTIONS% %MMPATH%%SRCFILE%-tasks.ppl > %MMPATH%\%SRCFILE%-tasks.ics"
 %CMD% > %MMPATH%\%SRCFILE%-tasks.ics
+
+cd %SAVEDPWD%

@@ -113,6 +113,7 @@ public class CommonImporter {
         
         // create own importer
         JPAImporter jpaImporter = new JPAImporter(null);
+        ContextHelper.getInstance().autowireService(jpaImporter);
         if (LOGGER.isInfoEnabled()) {
             LOGGER.info("read from JPA exportsysuid: '" + exportSysUID + "'");
         }

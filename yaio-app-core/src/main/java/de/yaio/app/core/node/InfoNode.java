@@ -14,28 +14,23 @@
 package de.yaio.app.core.node;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import de.yaio.app.core.nodeservice.InfoNodeService;
 import de.yaio.app.core.datadomain.DocLayoutData;
 import de.yaio.app.core.nodeservice.BaseNodeService;
-import org.springframework.roo.addon.javabean.RooJavaBean;
-import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
-import org.springframework.roo.addon.tostring.RooToString;
+import de.yaio.app.core.nodeservice.InfoNodeService;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+import org.springframework.beans.factory.annotation.Configurable;
 
+import javax.persistence.Entity;
 import javax.xml.bind.annotation.XmlTransient;
 
 /** 
  * bean with InfoNode-data (ideas, documentation...) and belonging businesslogic
  * 
- * @FeatureDomain                DataDefinition Persistence BusinessLogic
- * @package                      de.yaio.core.node
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category                     collaboration
- * @copyright                    Copyright (c) 2014, Michael Schreiner
- * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
-@RooJavaBean
-@RooToString
-@RooJpaActiveRecord
+@Configurable
+@Entity
 public class InfoNode extends BaseNode implements DocLayoutData {
     
     protected static InfoNodeService nodeDataService = InfoNodeService.getInstance();
@@ -53,5 +48,9 @@ public class InfoNode extends BaseNode implements DocLayoutData {
         this.setDocLayoutFlgCloseDiv(null);
         this.setDocLayoutShortName(null);
         this.setDocLayoutTagCommand(null);
+    }
+
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
 }

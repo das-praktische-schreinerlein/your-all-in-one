@@ -69,13 +69,14 @@ public class JobRecalcNodes extends YaioCmdLineJob {
     public void doJob() {
         // initApplicationContext
         ContextHelper.getInstance().getSpringApplicationContext();
-        
+
         // extract sysUID
         String sysUID = ConfigurationOption.stringValueOf(this.getConfiguration().getCliOption("sysuid"));
 
         // create recalcer
         NodeRecalcer nodeRecalcer = new NodeRecalcer();
-        
+        ContextHelper.getInstance().autowireService(nodeRecalcer);
+
         // recalc
         System.out.println(nodeRecalcer.findAndRecalcMasternode(sysUID));
     }

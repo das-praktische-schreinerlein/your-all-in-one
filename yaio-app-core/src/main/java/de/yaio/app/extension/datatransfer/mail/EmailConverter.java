@@ -31,6 +31,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Set;
 
 /**
  * convert emails to UrlResNodes
@@ -51,7 +52,7 @@ public class EmailConverter {
      * @param messages               emails to import
      * @throws IOExceptionWithCause  possible IOExceptions or email not parsable
      */
-    public void importEmailsToParent(BaseNode parent, List<Message> messages) throws IOExceptionWithCause {
+    public void importEmailsToParent(final BaseNode parent, final Set<Message> messages) throws IOExceptionWithCause {
         for (Message msg : messages) {
             BaseNode newNode = convertEmailToBaseNode(msg);
             newNode.setParentNode(parent);
@@ -65,7 +66,7 @@ public class EmailConverter {
      * @return                       converted email
      * @throws IOExceptionWithCause  possible IOExceptions or email not parsable
      */
-    protected BaseNode convertEmailToBaseNode(Message msg) throws IOExceptionWithCause {
+    protected BaseNode convertEmailToBaseNode(final Message msg) throws IOExceptionWithCause {
         UrlResNode node = new UrlResNode();
         try {
             node.setEbene(0);
@@ -96,7 +97,7 @@ public class EmailConverter {
      * @param msg                    part of the email to import and append to parent
      * @throws IOExceptionWithCause  possible IOExceptions or email not parsable
      */
-    protected void addPartsToBaseNode(UrlResNode parent, Part msg) throws IOExceptionWithCause {
+    protected void addPartsToBaseNode(final UrlResNode parent, final Part msg) throws IOExceptionWithCause {
         try {
             Object content = msg.getContent();
             String disposition = msg.getDisposition();
@@ -129,7 +130,7 @@ public class EmailConverter {
      * @param msg                    attachment of the email to import and append to parent
      * @throws IOExceptionWithCause  possible IOExceptions or email not parsable
      */
-    protected void addAttachmentToBaseNode(UrlResNode parent, Part msg) throws IOExceptionWithCause {
+    protected void addAttachmentToBaseNode(final UrlResNode parent, final Part msg) throws IOExceptionWithCause {
         try {
             UrlResNode subNode;
             subNode = new UrlResNode();
@@ -165,7 +166,7 @@ public class EmailConverter {
      * @param msg                    text/htmltext of the email to import and append to parent
      * @throws IOExceptionWithCause  possible IOExceptions or email not parsable
      */
-    protected void addMailtextToBaseNode(UrlResNode parent, Part msg) throws IOExceptionWithCause {
+    protected void addMailtextToBaseNode(final UrlResNode parent, final Part msg) throws IOExceptionWithCause {
         try {
             UrlResNode subNode;
             subNode = new UrlResNode();
@@ -213,7 +214,7 @@ public class EmailConverter {
      * @param msg                    header of the email to import and append to parent
      * @throws IOExceptionWithCause  possible IOExceptions or email not parsable
      */
-    protected void addHeaderToBaseNode(UrlResNode parent, Message msg) throws IOExceptionWithCause {
+    protected void addHeaderToBaseNode(final UrlResNode parent, final Message msg) throws IOExceptionWithCause {
         try {
             UrlResNode subNode;
             subNode = new UrlResNode();

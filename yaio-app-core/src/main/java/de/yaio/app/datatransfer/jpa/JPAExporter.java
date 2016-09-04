@@ -14,29 +14,28 @@
 package de.yaio.app.datatransfer.jpa;
 
 import de.yaio.app.core.datadomain.DataDomain;
-import de.yaio.app.core.dbservice.BaseNodeDBServiceImpl;
+import de.yaio.app.core.dbservice.BaseNodeRepository;
 import de.yaio.app.core.node.BaseNode;
 import de.yaio.app.core.nodeservice.BaseNodeService;
 import de.yaio.app.core.nodeservice.NodeService;
 import de.yaio.app.datatransfer.exporter.ExporterImpl;
 import de.yaio.app.datatransfer.exporter.OutputOptions;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 /** 
  * export of Nodes to JPA
  * 
- * @FeatureDomain                DatenExport Praesentation
- * @package                      de.yaio.extension.datatransfer.jpa
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category                     collaboration
- * @copyright                    Copyright (c) 2014, Michael Schreiner
- * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class JPAExporter extends ExporterImpl {
     
     // Logger
     private static final Logger LOGGER = Logger.getLogger(JPAExporter.class);
+
+    @Autowired
+    protected BaseNodeRepository baseNodeDBService;
 
     /** 
      * service functions to export nodes to JPA
@@ -67,20 +66,20 @@ public class JPAExporter extends ExporterImpl {
 
         // iterate the new children, look for them and delete them in db
         for (BaseNode newChildNode : masterNode.getChildNodes()) {
-            BaseNode childDbNode = BaseNode.findBaseNode(newChildNode.getSysUID());
+            BaseNode childDbNode = baseNodeDBService.findBaseNode(newChildNode.getSysUID());
             if (childDbNode != null) {
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("delete dbchildren for:" + masterNode.getNameForLogger() 
                                     + " child:" + childDbNode.getNameForLogger());
                 }
                 // delete the old dbNode with all children
-                childDbNode.removeChildNodesFromDB();
-                childDbNode.remove();
+                baseNodeDBService.removeChildNodesFromDB(childDbNode);
+                baseNodeDBService.delete(childDbNode);
             }
         }
         
         // look for this masternode in DB
-        BaseNode masterDbNode = BaseNode.findBaseNode(masterNode.getSysUID());
+        BaseNode masterDbNode = baseNodeDBService.findBaseNode(masterNode.getSysUID());
         if (masterDbNode != null) {
             if (LOGGER.isInfoEnabled()) {
                 LOGGER.info("copy children to existing master:" + masterNode.getNameForLogger());
@@ -99,25 +98,27 @@ public class JPAExporter extends ExporterImpl {
                 newChildNode.setParentNode(masterDbNode);
                 
                 // save newChildNode
-                newChildNode.persist();
-                newChildNode.saveChildNodesToDB(NodeService.CONST_DB_RECURSIONLEVEL_ALL_CHILDREN, false);
+                baseNodeDBService.save(newChildNode);
+                baseNodeDBService.saveChildNodesToDB(newChildNode,
+                        NodeService.CONST_DB_RECURSIONLEVEL_ALL_CHILDREN, false);
             }
             
             // recalc+save masterNode and parents
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("recalc+save existing master+parents for:" + masterNode.getNameForLogger());
             }
-            BaseNodeDBServiceImpl.getInstance().updateMeAndMyParents(masterDbNode);
+            baseNodeDBService.updateMeAndMyParents(masterDbNode);
             
         } else {
             if (LOGGER.isInfoEnabled()) {
                 LOGGER.info("save new master for:" + masterNode.getNameForLogger());
             }
             // create masterDBNode and persist children
-            masterNode.persist();
+            baseNodeDBService.save(masterNode);
             
             // save the children
-            masterNode.saveChildNodesToDB(NodeService.CONST_DB_RECURSIONLEVEL_ALL_CHILDREN, false);
+            baseNodeDBService.saveChildNodesToDB(masterNode,
+                    NodeService.CONST_DB_RECURSIONLEVEL_ALL_CHILDREN, false);
         }
 
         // add it to masterDBNode

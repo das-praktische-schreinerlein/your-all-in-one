@@ -36,7 +36,12 @@ set CP="%YAIOAPP%;"
 set CFGFILE=%BASEPATH%..\config\yaio-application.properties
 set CFG=--config %CFGFILE% 
 set FLYWAYCFG=%CFG%
-set JAVAOPTIONS=-Xmx768m -Xms128m -Dspring.config.location=file:%CFGFILE% -Dlog4j.configuration=file:%BASEPATH%..\config\log4j.properties
+
+set JVMMEMOPTIONS=-Xmx512m -Xms128m
+rem java 1.8
+rem set JVMMEMOPTIONS=-XX:MaxMetaspaceSize=512m -Xms128m
+set JVMOPTIONS=%JVMMEMOPTIONS% -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=70 -XX:+ScavengeBeforeFullGC -XX:+CMSScavengeBeforeRemark
+set JAVAOPTIONS=%JVMOPTIONS% -Dspring.config.location=file:%CFGFILE% -Dlog4j.configuration=file:%BASEPATH%..\config\log4j.properties
 
 rem change CodePage
 CHCP 1252

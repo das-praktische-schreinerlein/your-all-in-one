@@ -75,6 +75,7 @@ public class JobParseWiki extends YaioCmdLineJob {
             ContextHelper.getInstance().addSpringConfig(JobConfig.class);
             // initApplicationContext
             ContextHelper.getInstance().getSpringApplicationContext();
+            ContextHelper.getInstance().autowireService(commonImporter);
         }
     }
 

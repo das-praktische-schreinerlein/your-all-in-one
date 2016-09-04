@@ -20,8 +20,15 @@ set MMPATH=%1%
 set SRCFILE=%2%
 set PROJNAME=%3%
 
+rem use correct pathes
+set SAVEDPWD=%cd%
+set LOCALBASEPATH=%~dp0\..
+cd %LOCALBASEPATH%
+
 rem create PPL from Excel
 set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_EP% %CFG% %PARSER_OPTIONS_EXCEL% %MMPATH%%SRCFILE%.xls
 echo "create PPL from Excel: %PROG_EP% %CFG% %PARSER_OPTIONS_EXCEL% %MMPATH%%SRCFILE%.xls > %MMPATH%\%SRCFILE%.ppl"
 rem echo %CMD%
 %CMD% > %MMPATH%\%SRCFILE%.ppl
+
+cd %SAVEDPWD%

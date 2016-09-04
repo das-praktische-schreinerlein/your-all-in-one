@@ -17,9 +17,11 @@ import de.yaio.app.core.datadomain.BaseWorkflowData;
 import de.yaio.app.core.datadomain.DataDomain;
 import de.yaio.app.core.datadomain.WorkflowState;
 import de.yaio.app.core.datadomainservice.*;
+import de.yaio.app.core.dbservice.BaseNodeRepository;
 import de.yaio.app.core.node.BaseNode;
 import org.apache.commons.collections4.map.SingletonMap;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
 
@@ -44,6 +46,9 @@ public class BaseNodeService extends NodeServiceImpl {
     private static final Logger LOGGER = Logger.getLogger(NodeServiceImpl.class);
 
     public static final String CONST_NODETYPE_IDENTIFIER_UNKNOWN = "UNKNOWN";
+
+    @Autowired
+    protected BaseNodeRepository dbService;
 
     private static final Map<String, String> CONST_MAP_NODETYPE_IDENTIFIER = new HashMap<String, String>();
     private static final Map<String, WorkflowState> CONST_MAP_STATE_WORKFLOWSTATE =
@@ -353,7 +358,7 @@ public class BaseNodeService extends NodeServiceImpl {
         baseNode.getChildNodesByNameMap().clear();
         
         // read my childNodes
-        List<BaseNode> tmpChildNodes = baseNode.getBaseNodeDBService().findChildNodes(baseNode.getSysUID());
+        List<BaseNode> tmpChildNodes = dbService.findChildNodes(baseNode.getSysUID());
         
         // set new level if it is not -1
         recursionLevel = recursionLevel > 0 ? recursionLevel-- : recursionLevel;

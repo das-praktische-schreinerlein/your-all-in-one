@@ -20,8 +20,15 @@ set MMPATH=%1%
 set SRCFILE=%2%
 set PROJNAME=%3%
 
+rem use correct pathes
+set SAVEDPWD=%cd%
+set LOCALBASEPATH=%~dp0\..
+cd %LOCALBASEPATH%
+
 rem create Excel from PPL
 set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_EX% %CFG% -m %PROJNAME% %SRC_OPTIONS%  %OUTPUT_OPTIONS%  --mergeexcelplanunggantsheets %MMPATH%%SRCFILE%.ppl %MMPATH%%SRCFILE%.xls
 echo "create Excel from PPL: %PROG_EX% %CFG% -m %PROJNAME% %SRC_OPTIONS%  %OUTPUT_OPTIONS%  --mergeexcelplanunggantsheets %MMPATH%%SRCFILE%.ppl %MMPATH%%SRCFILE%.xls"
 rem echo %CMD%
 %CMD%
+
+cd %SAVEDPWD%

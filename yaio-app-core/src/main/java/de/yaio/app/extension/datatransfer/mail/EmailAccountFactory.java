@@ -22,7 +22,8 @@ import java.util.Properties;
  */
 public class EmailAccountFactory {
     /**
-     * create accounts from properties of form: key=protocol,host,port,username,password,importSysUID
+     * create accounts from properties of form:
+     * key=protocol,host,port,username,password,defaultInboxSysUID,refs-blacklist as space-separated metaName-pattern,refs-whitelist as space-separated metaName-pattern
      * @param props     props to convert
      * @return          list of parsed accounts
      */
@@ -30,7 +31,17 @@ public class EmailAccountFactory {
         List<EmailAccount> accounts = new ArrayList<EmailAccount>();
         for (String key: props.stringPropertyNames()) {
             String [] values = props.getProperty(key).split(",");
-            accounts.add(new EmailAccount(key, values[0], values[1], values[2], values[3], values[4], values[5]));
+            String refBlackListPattern = null;
+            String refWhiteListPattern = null;
+            if (values.length > 5) {
+                refBlackListPattern = values[6];
+                if (values.length > 6) {
+                    refWhiteListPattern = values[7];
+                }
+            }
+
+            accounts.add(new EmailAccount(key, values[0], values[1], values[2], values[3], values[4],
+                    values[5], refBlackListPattern, refWhiteListPattern));
         }
 
         return accounts;

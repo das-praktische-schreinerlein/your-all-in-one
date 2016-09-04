@@ -219,7 +219,7 @@ public class JobNodes2Wiki extends YaioCmdLineJob {
         try {
             this.publishResult(exporter, masterNode, oOptions);
         } catch (ConverterException ex) {
-            throw new IllegalArgumentException("cant pubish masternode - error while converting masternode", ex);
+            throw new IllegalArgumentException("cant publish masternode - error while converting masternode", ex);
         }
     }
 
@@ -307,6 +307,7 @@ public class JobNodes2Wiki extends YaioCmdLineJob {
             ContextHelper.getInstance().addSpringConfig(JobConfig.class);
             // initApplicationContext
             ContextHelper.getInstance().getSpringApplicationContext();
+            ContextHelper.getInstance().autowireService(commonImporter);
         }
     }
 

@@ -13,6 +13,7 @@
  */
 package de.yaio.app.server.controller;
 
+import de.yaio.app.config.ContextHelper;
 import de.yaio.app.core.node.BaseNode;
 import de.yaio.app.datatransfer.common.ConverterException;
 import de.yaio.app.datatransfer.common.ParserException;
@@ -24,6 +25,7 @@ import de.yaio.app.extension.datatransfer.ical.ICalDBExporter;
 import de.yaio.app.extension.datatransfer.mindmap.MindMapExporter;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,6 +52,9 @@ public class ConverterController {
     
     @Autowired
     protected ExtendedDatatransferUtils datatransferUtils;
+
+    @Autowired
+    private ApplicationContext appContext;
 
     // Logger
     private static final Logger LOGGER = Logger.getLogger(ConverterController.class);
@@ -84,7 +89,7 @@ public class ConverterController {
                     produces = "application/ical")
     public String convertToICal(@RequestParam(value = "source") final String source, 
                                 final HttpServletResponse response) throws ParserException, ConverterException {
-        Exporter exporter = new ICalDBExporter();
+        Exporter exporter = getICalDBExporter();
         return commonConvertSource(exporter, ".ics", source, response);
     }
 
@@ -144,5 +149,11 @@ public class ConverterController {
         LOGGER.warn("error while running request:" + request.toString(), e);
         response.setStatus(SC_INTERNAL_SERVER_ERROR);
         return "cant convert source";
+    }
+
+    protected ICalDBExporter getICalDBExporter() {
+        ICalDBExporter exporter = new ICalDBExporter();
+        ContextHelper.getInstance().autowireService(appContext, exporter);
+        return exporter;
     }
 }

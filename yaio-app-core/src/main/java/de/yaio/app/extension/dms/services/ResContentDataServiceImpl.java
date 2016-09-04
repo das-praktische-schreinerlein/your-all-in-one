@@ -18,6 +18,7 @@ import de.yaio.app.core.datadomain.ResContentData;
 import de.yaio.app.core.datadomain.ResContentData.UploadWorkflowState;
 import de.yaio.app.core.datadomain.ResLocData;
 import de.yaio.app.core.datadomainservice.TriggeredDataDomainRecalcImpl;
+import de.yaio.app.core.dbservice.BaseNodeRepository;
 import de.yaio.app.core.node.UrlResNode;
 import de.yaio.app.core.nodeservice.UrlResNodeService;
 import de.yaio.app.extension.dms.utils.DMSClient;
@@ -49,6 +50,8 @@ public class ResContentDataServiceImpl extends TriggeredDataDomainRecalcImpl imp
     private static final Logger LOGGER =
             Logger.getLogger(ResContentDataServiceImpl.class);
 
+    @Autowired
+    protected BaseNodeRepository baseNodeDBService;
     @Autowired
     protected YaioWebshotClient webshotProvider;
     @Autowired
@@ -97,7 +100,7 @@ public class ResContentDataServiceImpl extends TriggeredDataDomainRecalcImpl imp
         }
 
         // save node
-        node.getBaseNodeDBService().updateBaseNode(node);
+        baseNodeDBService.update(node);
     }
 
     @Override
@@ -152,5 +155,10 @@ public class ResContentDataServiceImpl extends TriggeredDataDomainRecalcImpl imp
         // everything fine
         node.setResContentDMSType("yaio-dms-service");
         node.setResContentDMSState(UploadWorkflowState.UPLOAD_DONE);
+    }
+
+    @Override
+    protected BaseNodeRepository getBaseNodeDBService() {
+        return baseNodeDBService;
     }
 }

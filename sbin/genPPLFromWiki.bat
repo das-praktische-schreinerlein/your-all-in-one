@@ -20,8 +20,15 @@ set MMPATH=%1%
 set SRCFILE=%2%
 set PROJNAME=%3%
 
+rem use correct pathes
+set SAVEDPWD=%cd%
+set LOCALBASEPATH=%~dp0\..
+cd %LOCALBASEPATH%
+
 rem create PPL from Wiki
 set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_WP% %CFG% %PARSER_OPTIONS% %MMPATH%%SRCFILE%.wiki
 echo "create PPL from Wiki: %PROG_WP% %CFG% %PARSER_OPTIONS% %MMPATH%%SRCFILE%.wiki > %MMPATH%\%SRCFILE%.ppl"
 rem echo %CMD%
 %CMD% > %MMPATH%\%SRCFILE%.ppl
+
+cd %SAVEDPWD%
