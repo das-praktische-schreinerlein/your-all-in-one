@@ -29,7 +29,14 @@ set YAIOCONFIGPATH=%YAIOSCRIPTPATH%..\config\
 rem init config
 call %YAIOCONFIGPATH%\config-client.bat %YAIOSCRIPTPATH%
 
+rem use correct pathes
+set SAVEDPWD=%cd%
+set LOCALBASEPATH=%~dp0\..
+cd %LOCALBASEPATH%
+
 rem import data to running yaio
 set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_CALLYAIOIMPORT% %YAIOAPPURLCONFIG% -parentsysuid %SYSUID% -importtype mail -importfile %MMPATH%\%SRCFILE%
 rem echo "%CMD%"
 %CMD%
+
+cd %SAVEDPWD%
