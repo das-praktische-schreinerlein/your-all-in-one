@@ -125,7 +125,7 @@ public class EmailFormatter {
                     content.append("\n<!---BOX--->\n" +
                             "## Text <!---TOGGLER content" + id + ",text--->\n" +
                             "<!---CONTAINER content" + id + "--->\n\n" +
-                            "```\n");
+                            "```nocode\n");
                     StringWriter writer = new StringWriter();
                     IOUtils.copy(is, writer);
                     content.append(writer.toString().replaceAll("```", "'''"));
