@@ -23,7 +23,7 @@ YAIOCONFIGPATH=${YAIOSCRIPTPATH}../config/
 
 # init config
 . ${YAIOCONFIGPATH}/config-server.sh ${YAIOSCRIPTPATH}
-CMD="java ${JAVAOPTIONS} -cp ${CP}\" ${PROG_FLYWAY} ${FLYWAYCFG}"
+CMD="java ${JAVAOPTIONS} -cp ${CP} ${PROG_FLYWAY} ${FLYWAYCFG}"
 echo "run-flyway: ${CMD}"
 ${CMD}
 
