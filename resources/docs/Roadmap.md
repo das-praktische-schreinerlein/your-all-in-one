@@ -1,6 +1,10 @@
 # Roadmap
 
 ## short term
+- **Projekt - Correspondence-Modul (YAIO1688)**
+    - neuer Typ Kontakt (YAIO246)
+- **Code-refactoring**
+    - introduce separate api/business/db-model (YAIO2882)
 
 ## mid term
 - **Dokumentation (YAIO1143)**
@@ -52,7 +56,6 @@
     - neue Bereiche Taskstati Sleep, Wait (YAIO243)
 - **Projekt - Correspondence-Modul (YAIO1688)**
     - Einführung eines Correspondence-Modells mit Kontakten/Email/Tel... (YAIO1551)
-    - neuer Typ Kontakt (YAIO246)
     - Dokumentenverwaltung (YAIO187)
         - Inbox mit allen möglichen Ressourcen (YAIO188)
         - Ressource verlinkt auf Ressource mit Detaildaten (analog Correspondence) (YAIO189)
