@@ -24,6 +24,11 @@ set YAIOCONFIGPATH=%YAIOSCRIPTPATH%..\config\
 rem init config
 call %YAIOCONFIGPATH%\config-server.bat %YAIOSCRIPTPATH%
 
+rem use correct pathes
+set SAVEDPWD=%cd%
+set LOCALBASEPATH=%~dp0\..
+cd %LOCALBASEPATH%
+
 set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_FLYWAY% %FLYWAYCFG%
 echo "run-flyway: %CMD%"
 %CMD%
@@ -36,6 +41,8 @@ rem add --debug option to see the startprocess of spring-boot
 set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_APP% %CFG% %NEWID_OPTIONS%
 echo "start-yaioapp: %CMD%"
 start "yaio-app-%YAIOINSTANCE%" %CMD%
+
+cd %SAVEDPWD%
 
 :openurl
 timeout /T 30 /nobreak

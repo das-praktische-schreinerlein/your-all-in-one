@@ -1,6 +1,10 @@
 # Roadmap
 
 ## short term
+- **Projekt - Correspondence-Modul (YAIO1688)**
+    - neuer Typ Kontakt (YAIO246)
+- **Code-refactoring**
+    - introduce separate api/business/db-model (YAIO2882)
 
 ## mid term
 - **Dokumentation (YAIO1143)**
@@ -30,7 +34,6 @@
     - Java-Codeabdeckung für neue Java-Funktionen(YAIO2098)
     - Layout-Tests(YAIO2100)
     - Optionen in Config auslagern (YAIO1638)
-    - DB-Zugriffe von BaseNodeDBService machen und nicht von BaseNode (YAIO1553)
     - checksum+version per json uebertragen, beim speichern kontrollieren und ggf. Warnung (YAIO1541)
     - für Formular eigene Angular-Directive (Tag mit Layout, ganze Form-Elemente, ganze Forms) (YAIO1550)
     - autom Classloader fuer Formatter/Parser-Plugins (YAIO575)
@@ -53,7 +56,6 @@
     - neue Bereiche Taskstati Sleep, Wait (YAIO243)
 - **Projekt - Correspondence-Modul (YAIO1688)**
     - Einführung eines Correspondence-Modells mit Kontakten/Email/Tel... (YAIO1551)
-    - neuer Typ Kontakt (YAIO246)
     - Dokumentenverwaltung (YAIO187)
         - Inbox mit allen möglichen Ressourcen (YAIO188)
         - Ressource verlinkt auf Ressource mit Detaildaten (analog Correspondence) (YAIO189)

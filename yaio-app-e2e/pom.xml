@@ -6,14 +6,14 @@
     <parent>
         <groupId>de.yaio.app</groupId>
         <artifactId>yaio-app-pom-parent</artifactId>
-        <version>0.1.0-beta-feature-YAIO2698-improvements-201608-SNAPSHOT</version>
+        <version>0.1.0-beta-feature-YAIO2698-improvements-201608-RELEASE</version>
         <relativePath>../yaio-app-pom-parent/pom.xml</relativePath>
     </parent>
 
     <!-- the base -->
     <groupId>de.yaio.app</groupId>
     <artifactId>yaio-app-e2e</artifactId>
-    <version>0.1.0-beta-feature-YAIO2698-improvements-201608-SNAPSHOT</version>
+    <version>0.1.0-beta-feature-YAIO2698-improvements-201608-RELEASE</version>
     <name>yaio-app-e2e</name>
     <description>e2e modules for yaio-apps</description>
 
@@ -21,7 +21,7 @@
         <dependency>
             <groupId>de.yaio.app</groupId>
             <artifactId>yaio-app-server-full</artifactId>
-            <version>0.1.0-beta-feature-YAIO2698-improvements-201608-SNAPSHOT</version>
+            <version>0.1.0-beta-feature-YAIO2698-improvements-201608-RELEASE</version>
         </dependency>
     </dependencies>
 

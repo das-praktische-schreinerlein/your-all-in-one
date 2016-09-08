@@ -15,7 +15,8 @@ More information about the prototype at [http://www.your-all-in-one.de/yaio/stat
 # Todos for me
 - [ ] update the documentation on [http://www.your-all-in-one.de/yaio/static/lepetit](http://www.your-all-in-one.de/yaio/static/lepetit) (new features, howto...)
 - [ ] code-documentation
-- [ ] code review: configuration, minor layout-bugs
+- [ ] code review: minor layout-bugs
+- [ ] code refactoring: introduce separate api/business/db-model
 - [ ] new feature: new nodetypes (contact, call, bug, document..)
 - [ ] new feature: contact-management
 - [ ] use and optimize it :-)

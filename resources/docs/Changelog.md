@@ -1,5 +1,55 @@
 # Changelog
 
+## Changelog for release: feature-YAIO2698-improvements-201608-RELEASE
+- **YaioApp (YAIO2709)**
+    - **GUI (YAIO2710)**
+        - added awesome-font (YAIO2825)
+    - **Code-Verbesserungen (YAIO2711)**
+        - improved dms-handing (noDMS-Url if not available) (YAIO2826)
+        - improved upload/download of static examples (broadcast, typos..) (YAIO2827)
+        - DB-Zugriffe von BaseNodeDBService machen und nicht von BaseNode (YAIO1553)
+    - **neue Funktionen (YAIO2712)**
+        - added email-receiver (YAIO2828)
+        - added examples (YAIO2829)
+        - added example-download (YAIO2830)
+        - added spinner (YAIO2831)
+        - added activate-editor-checkbox for file and downloadurl (YAIO2832)
+    - **Admin/Doku-Funktionen (YAIO2713)**
+        - improved gitignore (YAIO2833)
+        - updated version (YAIO2834)
+    - **Bugfixes (YAIO2714)**
+        - bugfix: update hierarchy everytime (YAIO2835)
+        - fixed fixture-loading (YAIO2836)
+- **YaioServer (YAIO2715)**
+    - **GUI (YAIO2716)**
+        - added fixtures (YAIO2837)
+    - **Code-Verbesserungen (YAIO2717)**
+        - improved exceptionhandling (YAIO2838)
+        - improved logging (YAIO2839)
+        - added logappender with meminfo (YAIO2840)
+        - carved out spring-roo improved service-structure (repository...) (YAIO2841)
+        - use spring-boot hibernate-versions (YAIO2842)
+        - disable email-polling by default (YAIO2843)
+        - improved jvm-config (YAIO2844)
+    - **neue Funktionen (YAIO2718)**
+        - added email-receiver (YAIO2845)
+        - added mailfile-import (added black/whitelist, parse yaio-refs and append to that nodes instead of inbox) (YAIO2846)
+    - **Admin/Doku-Funktionen (YAIO2719)**
+        - new app-version (YAIO2847)
+        - added files to gitignore (YAIO2848)
+        - removed unused defs (YAIO2849)
+        - improved testconfig (YAIO2850)
+    - **Bugfixes (YAIO2720)**
+        - fix importer: drop checkconstraints (YAIO2851)
+        - fix upload: configure multipart in separate class (YAIO2852)
+        - bugfix: exclude webfonts from resource-plugin encoding (YAIO2853)
+        - fixed batchcripts (YAIO2854)
+        - fixed bug if email is embedded (YAIO2855)
+        - fixed imports (YAIO2856)
+        - fixed tests: start flyway (YAIO2857)
+        - typos (YAIO2858)
+        - bugfix: hibernate consumes 1GB memory while initialising (downgrade to hibernate "4.2.2.Final" because of high memory-consumption in 4.3.11.Final) (YAIO2691)
+
 ## Changelog for release: feature-YAIO2574-improvements-201606-RELEASE
 - **YaioServer (YAIO2585)**
     - **Code-Verbesserungen (YAIO2587)**
