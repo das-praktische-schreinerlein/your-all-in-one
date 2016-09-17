@@ -17,8 +17,9 @@ rem @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
 
 rem set CONFIG
 set MMPATH=%1%
-set SRCFILE=%2%
+set SRCFILE=%~2
 set SYSUID=%3%
+set DELETEIFOK=%4%
 
 rem set pathes
 set YAIOSCRIPTPATH=%~dp0
@@ -35,8 +36,23 @@ set LOCALBASEPATH=%~dp0\..
 cd %LOCALBASEPATH%
 
 rem import data to running yaio
-set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_CALLYAIOIMPORT% %YAIOAPPURLCONFIG% -parentsysuid %SYSUID% -importtype mail -importfile %MMPATH%\%SRCFILE%
+set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_CALLYAIOIMPORT% %YAIOAPPURLCONFIG% -parentsysuid %SYSUID% -importtype mail -importfile "%MMPATH%\%SRCFILE%"
 rem echo "%CMD%"
 %CMD%
+echo %ERRORLEVEL%
+IF %ERRORLEVEL% NEQ 0 (
+  cd %SAVEDPWD%
+  echo "mail import failed: %MMPATH%\%SRCFILE%"
+  set ERRORLEVEL=1
+  exit /B 1
+)
+
+echo "mail import done: %MMPATH%\%SRCFILE%"
+
+if "%DELETEIFOK%" NEQ "" (
+  echo "delete: %MMPATH%\%SRCFILE%"
+  del "%MMPATH%\%SRCFILE%"
+)
 
 cd %SAVEDPWD%
+exit /B 0
