@@ -64,9 +64,9 @@ public interface Parser extends Comparable<Parser> {
     /** Pattern to validate Layoutcommands */
     String CONST_PATTERN_SEG_LAYOUTCOMMAND = "[-0-9A-Za-z_\\.]";
     /** Pattern to validate name */
-    String CONST_PATTERN_SEG_NAME = "[\\p{L}\\p{M}\\{Z}\\p{S}\\p{N}\\p{P}\\p{Print}\\{Punct}\\p{Graph}\\p{Blank}]";
+    String CONST_PATTERN_SEG_NAME = "[\\p{L}\\p{M}\\p{Z}\\p{S}\\p{N}\\p{P}\\p{Print}\\p{Punct}\\p{Graph}\\p{Blank}]";
     /** Pattern to validate desc */
-    String CONST_PATTERN_SEG_DESC = "[\\p{L}\\p{M}\\{Z}\\p{S}\\p{N}\\p{P}\\p{Print}\\{Punct}\\p{Graph}\\p{Blank}\\n\\r]";
+    String CONST_PATTERN_SEG_DESC = "[\\p{L}\\p{M}\\p{Z}\\p{S}\\p{N}\\p{P}\\p{Print}\\p{Punct}\\p{Graph}\\p{Blank}\\n\\r]";
     /** Pattern to validate styleclass */
     String CONST_PATTERN_SEG_STYLECLASS = "[-0-9A-Za-z_\\.]";
     /** Pattern to validate shortname */
