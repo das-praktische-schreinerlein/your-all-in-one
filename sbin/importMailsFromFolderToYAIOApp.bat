@@ -2,7 +2,7 @@ echo off
 rem <h4>FeatureDomain:</h4>
 rem     Collaboration
 rem <h4>FeatureDescription:</h4>
-rem     imports mailfile to running yaio-app
+rem     imports mailfiles from importpath to running yaio-app
 rem <h4>Syntax:</h4>
 rem     PROG importpath DELETEIFOK
 rem <h4>Example:</h4>
