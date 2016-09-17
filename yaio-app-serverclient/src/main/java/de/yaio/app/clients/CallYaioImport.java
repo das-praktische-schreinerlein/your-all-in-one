@@ -13,7 +13,9 @@
  */
 package de.yaio.app.clients;
 
+import de.yaio.commons.cli.CmdLineJob;
 import de.yaio.commons.config.ConfigurationOption;
+import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.lang3.StringUtils;
@@ -127,5 +129,6 @@ public class CallYaioImport extends CallYaioInstance {
     public static void main(final String[] args) {
         CallYaioImport me = new CallYaioImport(args);
         me.startJobProcessing();
+        System.exit(CmdLineJob.CONST_EXITCODE_OK);
     }
 }
