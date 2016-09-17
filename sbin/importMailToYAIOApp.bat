@@ -1,4 +1,4 @@
-rem echo off
+echo off
 rem <h4>FeatureDomain:</h4>
 rem     Collaboration
 rem <h4>FeatureDescription:</h4>
@@ -35,16 +35,16 @@ set SAVEDPWD=%cd%
 set LOCALBASEPATH=%~dp0\..
 cd %LOCALBASEPATH%
 
+set MYRETCODE=0
+
 rem import data to running yaio
 set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_CALLYAIOIMPORT% %YAIOAPPURLCONFIG% -parentsysuid %SYSUID% -importtype mail -importfile "%MMPATH%\%SRCFILE%"
 rem echo "%CMD%"
 %CMD%
-echo %ERRORLEVEL%
 IF %ERRORLEVEL% NEQ 0 (
-  cd %SAVEDPWD%
   echo "mail import failed: %MMPATH%\%SRCFILE%"
-  set ERRORLEVEL=1
-  exit /B 1
+  set MYRETCODE=1
+  goto END
 )
 
 echo "mail import done: %MMPATH%\%SRCFILE%"
@@ -54,5 +54,6 @@ if "%DELETEIFOK%" NEQ "" (
   del "%MMPATH%\%SRCFILE%"
 )
 
+:END
 cd %SAVEDPWD%
-exit /B 0
+exit /B %MYRETCODE%

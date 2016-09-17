@@ -1,4 +1,4 @@
-rem echo off
+echo off
 rem <h4>FeatureDomain:</h4>
 rem     Collaboration
 rem <h4>FeatureDescription:</h4>
@@ -45,10 +45,10 @@ for /f "tokens=*" %%A in ('dir /b /s /a:d "%MAILDIRBASEPATH%\*"') do (
         set CMD=call %YAIOSCRIPTPATH%\importMailToYAIOApp.bat !MAILDIR! !MAILFILE! !PARENTID! %DELETEIFOK%
         echo !CMD!
         !CMD!
-        IF %ERRORLEVEL% NEQ 0 (
-          echo "something went wrong %ERRORLEVEL%"
+        IF !ERRORLEVEL! NEQ 0 (
+          echo "something went wrong !ERRORLEVEL! for !MAILDIR! !MAILFILE!"
         ) else (
-          echo "everything fine %ERRORLEVEL%"
+          echo "everything fine !ERRORLEVEL! for !MAILDIR! !MAILFILE!"
         )
     )
 )
