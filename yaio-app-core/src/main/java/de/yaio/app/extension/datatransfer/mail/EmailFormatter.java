@@ -35,6 +35,9 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.Set;
 
+import static de.yaio.app.datatransfer.importer.parser.Parser.CONST_PATTERN_SEG_DESC;
+import static de.yaio.app.datatransfer.importer.parser.Parser.CONST_PATTERN_SEG_NAME;
+
 /**
  * format emails
  */
@@ -87,7 +90,10 @@ public class EmailFormatter {
             Date sentDate = msg.getSentDate();
             Date receivedDate = msg.getReceivedDate();
 
-            node.setName("Email: " + subject + " [" + from + " -> " + toList + "]");
+            String name = "Email: " + subject + " [" + from + " -> " + toList + "]";
+            name = name.replaceAll("(?!" + CONST_PATTERN_SEG_NAME + ").+", " ");
+            node.setName(name);
+
             StringBuilder nodeDesc = new StringBuilder();
             nodeDesc.append("# Email: " + subject + "\n");
             String id = node.getSysUID();
@@ -153,7 +159,10 @@ public class EmailFormatter {
             nodeDesc.append(content);
             nodeDesc.append(parts);
             nodeDesc.append(headers);
-            node.setNodeDesc(nodeDesc.toString());
+
+            String desc = nodeDesc.toString();
+            desc = desc.replaceAll("(?!" + CONST_PATTERN_SEG_DESC + ").+", " ");
+            node.setNodeDesc(desc);
             LOGGER.info("updated node metaddata with headersources:" + node.getNameForLogger());
         } catch (MessagingException ex) {
             throw new IOExceptionWithCause("could not convert email to node", node.getNameForLogger(), ex);
