@@ -16,8 +16,10 @@ rem @copyright Copyright (c) 2011-2014, Michael Schreiner
 rem @license http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
 
 rem set CONFIG
-set MAILDIRBASEPATH=%1%
-set DELETEIFOK=%2%
+set IMPORTTYPE=%1%
+set IMPORTDIRBASEPATH=%2%
+set DELETEIFOK=%3%
+
 
 rem set pathes
 set YAIOSCRIPTPATH=%~dp0
@@ -34,21 +36,21 @@ set LOCALBASEPATH=%~dp0\..
 cd %LOCALBASEPATH%
 
 Setlocal EnableDelayedExpansion
-for /f "tokens=*" %%A in ('dir /b /s /a:d "%MAILDIRBASEPATH%\*"') do (
-    set MAILDIR=%%A
-    set PARENTID=!MAILDIR!
+for /f "tokens=*" %%A in ('dir /b /s /a:d "%IMPORTDIRBASEPATH%\*"') do (
+    set IMPORTDIR=%%A
+    set PARENTID=!IMPORTDIR!
 
     call :methodExtractParentId !PARENTID!
 
-    for %%F in ("!MAILDIR!\*") do (
-        set MAILFILE="%%~nF%%~xF"
-        set CMD=call %YAIOSCRIPTPATH%\importMailToYAIOApp.bat !MAILDIR! !MAILFILE! !PARENTID! %DELETEIFOK%
+    for %%F in ("!IMPORTDIR!\*") do (
+        set IMPORTFILE="%%~nF%%~xF"
+        set CMD=call %YAIOSCRIPTPATH%\importFileToYAIOApp.bat %IMPORTTYPE% !IMPORTDIR! !IMPORTFILE! !PARENTID! %DELETEIFOK%
         echo !CMD!
         !CMD!
         IF !ERRORLEVEL! NEQ 0 (
-          echo "something went wrong !ERRORLEVEL! for !MAILDIR! !MAILFILE!"
+          echo "something went wrong !ERRORLEVEL! for !IMPORTDIR! !IMPORTFILE!"
         ) else (
-          echo "everything fine !ERRORLEVEL! for !MAILDIR! !MAILFILE!"
+          echo "everything fine !ERRORLEVEL! for !IMPORTDIR! !IMPORTFILE!"
         )
     )
 )

@@ -36,3 +36,7 @@ taskkill /F /FI "WINDOWTITLE eq yaio-app-%YAIOINSTANCE%*"
 set CMD=%YAIOSCRIPTPATH%\importMailsFromMailImportQueueToYAIOApp.bat 60
 echo "stop-yaioapp-mailimportqueue: %CMD%"
 taskkill /F /FI "WINDOWTITLE eq yaio-app-mailimportqueue-%YAIOINSTANCE%*"
+
+set CMD=%YAIOSCRIPTPATH%\importFilesFromFileImportQueueToYAIOApp.bat 60
+echo "stop-yaioapp-fileimportqueue: %CMD%"
+taskkill /F /FI "WINDOWTITLE eq yaio-app-fileimportqueue-%YAIOINSTANCE%*"

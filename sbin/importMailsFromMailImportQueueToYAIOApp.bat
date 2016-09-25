@@ -32,7 +32,7 @@ set LOCALBASEPATH=%~dp0\..
 cd %LOCALBASEPATH%
 
 :startloop
-set CMD=call %YAIOSCRIPTPATH%\importMailsFromFolderToYAIOApp.bat %YAIOSCRIPTPATH%\..\queues\mailimportqueue\ DELETE
+set CMD=call %YAIOSCRIPTPATH%\importFilesFromFolderToYAIOApp.bat mail %YAIOSCRIPTPATH%\..\queues\mailimportqueue\ DELETE
 echo %CMD%
 %CMD%
 
