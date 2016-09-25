@@ -58,12 +58,14 @@ public class CallYaioImport extends CallYaioInstance {
         availiableCmdLineOptions.addOption(formatOption);
 
         // sysuid for import
-        Option parentsysuidOption = new Option(null, "parentsysuid", true, "SysUID of Masternode to append importfile");
+        Option parentsysuidOption = new Option(null, "parentsysuid", true,
+                "SysUID of Masternode to append importfile");
         parentsysuidOption.setRequired(true);
         availiableCmdLineOptions.addOption(parentsysuidOption);
 
         // filetype for import
-        Option importTypeOption = new Option(null, "importtype", true, "importtype of the importfile (wiki(default)/json/mail)");
+        Option importTypeOption = new Option(null, "importtype", true,
+                "importtype of the importfile (wiki(default)/json/mail/file)");
         importTypeOption.setRequired(false);
         availiableCmdLineOptions.addOption(importTypeOption);
 
@@ -89,6 +91,8 @@ public class CallYaioImport extends CallYaioInstance {
             url = "/imports/json/";
         } else if ("mail".equals(importType.toLowerCase())) {
             url = "/imports/mail/";
+        } else if ("file".equals(importType.toLowerCase())) {
+            url = "/imports/file/";
         } else {
             throw new RuntimeException("illegal importtype:" + importType);
         }
