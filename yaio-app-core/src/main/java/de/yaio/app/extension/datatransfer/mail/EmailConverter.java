@@ -30,8 +30,10 @@ import javax.mail.*;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Enumeration;
-import java.util.List;
 import java.util.Set;
+
+import static de.yaio.app.extension.autoformatter.formatter.BaseNodeDescAutoFormatter.COMMAND_DO_AUTO_GENERATE_DESC;
+import static de.yaio.app.extension.autoformatter.formatter.BaseNodeDescAutoFormatter.PROFILE_SHOWCONTENT;
 
 /**
  * convert emails to UrlResNodes
@@ -78,7 +80,9 @@ public class EmailConverter {
             node.setType(de.yaio.app.core.nodeservice.UrlResNodeService.CONST_NODETYPE_IDENTIFIER_EMAILRES);
             node.setMetaNodeSubType("UrlResNodeMetaNodeSubType." + node.getType());
             node.setState(node.getType());
+            node.setName("Email: " + msg.getSubject());
             node.initSysData(true);
+            node.setNodeDesc("<!---" + COMMAND_DO_AUTO_GENERATE_DESC + " " + PROFILE_SHOWCONTENT + " --->\n");
 
             // parse parts
             this.addPartsToBaseNode(node, msg);
