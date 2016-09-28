@@ -22,6 +22,7 @@ import de.yaio.app.core.node.BaseNode;
 import de.yaio.app.core.nodeservice.UrlResNodeService;
 import de.yaio.app.extension.autoformatter.formatter.FileDescAutoFormatter;
 import de.yaio.app.extension.autoformatter.formatter.EmailDescAutoFormatter;
+import de.yaio.app.extension.autoformatter.formatter.UrlDescAutoFormatter;
 import de.yaio.app.utils.db.DBFilter;
 import de.yaio.commons.io.IOExceptionWithCause;
 import org.apache.log4j.Logger;
@@ -52,6 +53,8 @@ public class DescAutoFormatterServiceImpl extends TriggeredDataDomainRecalcImpl 
     protected EmailDescAutoFormatter emailFormatter;
     @Autowired
     protected FileDescAutoFormatter fileFormatter;
+    @Autowired
+    protected UrlDescAutoFormatter urlFormatter;
 
     public Class<?> getRecalcTargetClass() {
         return ResContentData.class;
@@ -110,6 +113,9 @@ public class DescAutoFormatterServiceImpl extends TriggeredDataDomainRecalcImpl 
                 return;
             case UrlResNodeService.CONST_NODETYPE_IDENTIFIER_FILERES:
                 fileFormatter.genMetadataForNode(node);
+                return;
+            case UrlResNodeService.CONST_NODETYPE_IDENTIFIER_URLRES:
+                urlFormatter.genMetadataForNode(node);
                 return;
             default:
         }
