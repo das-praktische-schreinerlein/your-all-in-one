@@ -67,7 +67,7 @@ public class EmailDescAutoFormatter extends BaseNodeDescAutoFormatter {
             throws IOExceptionWithCause{
         UrlResNode headerNode =
                 (UrlResNode)getChildNodeByType(node, UrlResNodeService.CONST_NODETYPE_IDENTIFIER_EMAILHEADERRES);
-        if (Objects.isNull(headerNode)) {
+        if (headerNode == null) {
             return;
         }
 
@@ -101,7 +101,7 @@ public class EmailDescAutoFormatter extends BaseNodeDescAutoFormatter {
             throws IOExceptionWithCause{
         UrlResNode headerNode =
                 (UrlResNode)getChildNodeByType(node, UrlResNodeService.CONST_NODETYPE_IDENTIFIER_EMAILHEADERRES);
-        if (Objects.isNull(headerNode)) {
+        if (headerNode == null) {
             return;
         }
 
@@ -150,12 +150,12 @@ public class EmailDescAutoFormatter extends BaseNodeDescAutoFormatter {
             throws IOExceptionWithCause{
         UrlResNode contentNode =
                 (UrlResNode)getChildNodeByType(node, UrlResNodeService.CONST_NODETYPE_IDENTIFIER_EMAILTEXTRES);
-        if (Objects.isNull(contentNode)) {
+        if (contentNode == null) {
             return;
         }
         UrlResNode headerNode =
                 (UrlResNode)getChildNodeByType(node, UrlResNodeService.CONST_NODETYPE_IDENTIFIER_EMAILHEADERRES);
-        if (Objects.isNull(headerNode)) {
+        if (headerNode == null) {
             return;
         }
 
