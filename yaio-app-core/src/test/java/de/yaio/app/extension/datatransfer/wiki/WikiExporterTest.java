@@ -29,6 +29,7 @@ import org.junit.runners.JUnit4;
 import org.springframework.mock.staticmock.MockStaticEntityMethods;
 
 import java.io.IOException;
+import java.util.TimeZone;
 
 /** 
  * test of the wiki-exporter-logic<br>
@@ -80,7 +81,11 @@ public class WikiExporterTest extends BaseTest {
         importoptions = new ImportOptionsImpl();
         importerObj = new PPLImporter(importoptions);
         exporter = setupNewExporter();
-        oOptions = setupNewOutputOptions();   
+        oOptions = setupNewOutputOptions();
+
+        // configure timezone for tests as Berlin because of fixtures
+        importerObj.getNodeFactory().setTimeZone(TimeZone.getTimeZone("Europe/Berlin"));
+        exporter.setTimeZone(TimeZone.getTimeZone("Europe/Berlin"));
     }
     
     /** 
