@@ -48,8 +48,8 @@ public class IstChildrenSumDataTest extends DataDomainTest {
             resBuffer.append(this.getName()).append("|")
                      .append(this.getIstChildrenSumStand()).append("|")
                      .append(this.getIstChildrenSumAufwand()).append("|")
-                     .append(this.getIstChildrenSumStart()).append("|")
-                     .append(this.getIstChildrenSumEnde()).append("|");
+                     .append(formatDateForCheck(this.getIstChildrenSumStart())).append("|")
+                     .append(formatDateForCheck(this.getIstChildrenSumEnde())).append("|");
             return resBuffer.toString();
             
         }

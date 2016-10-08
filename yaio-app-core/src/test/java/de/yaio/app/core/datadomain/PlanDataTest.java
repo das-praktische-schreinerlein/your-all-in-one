@@ -49,8 +49,8 @@ public class PlanDataTest extends DataDomainTest {
             StringBuffer resBuffer = new StringBuffer();
             resBuffer.append(this.getName()).append("|")
                      .append(this.getPlanAufwand()).append("|")
-                     .append(this.getPlanStart()).append("|")
-                     .append(this.getPlanEnde()).append("|");
+                     .append(formatDateForCheck(this.getPlanStart())).append("|")
+                     .append(formatDateForCheck(this.getPlanEnde())).append("|");
             return resBuffer.toString();
             
         }
@@ -84,28 +84,29 @@ public class PlanDataTest extends DataDomainTest {
         PlanDataTestObj mytestObj = null;
         String expected = null;
 
+
         // normal with date
         mytestObj = getNewPlanDataTestObj();
         mytestObj.setName("Name [Plan: 2h 12.03.2014-12.04.2014]");
-        expected = "Name|2.0|Wed Mar 12 00:00:59 CET 2014|Sat Apr 12 00:00:59 CEST 2014|";
+        expected = "Name|2.0|12.03.2014 00:00|12.04.2014 00:00|";
         testParser(mytestObj, expected, importOptions);
 
         // normal with datetime
         mytestObj = getNewPlanDataTestObj();
         mytestObj.setName("Name [Plan: 2h 12.03.2014 12:00-12.04.2014]");
-        expected = "Name|2.0|Wed Mar 12 12:00:00 CET 2014|Sat Apr 12 00:00:59 CEST 2014|";
+        expected = "Name|2.0|12.03.2014 12:00|12.04.2014 00:00|";
         testParser(mytestObj, expected, importOptions);
 
         // normal without startdate
         mytestObj = getNewPlanDataTestObj();
         mytestObj.setName("Name [Plan: 2h -12.04.2014]");
-        expected = "Name|2.0|null|Sat Apr 12 00:00:59 CEST 2014|";
+        expected = "Name|2.0|null|12.04.2014 00:00|";
         testParser(mytestObj, expected, importOptions);
 
         // normal without enddate
         mytestObj = getNewPlanDataTestObj();
         mytestObj.setName("Name [Plan: 2h 12.03.2014 12:00-]");
-        expected = "Name|2.0|Wed Mar 12 12:00:00 CET 2014|null|";
+        expected = "Name|2.0|12.03.2014 12:00|null|";
         testParser(mytestObj, expected, importOptions);
 
         // without date

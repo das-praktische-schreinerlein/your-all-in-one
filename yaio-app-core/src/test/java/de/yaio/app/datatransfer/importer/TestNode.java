@@ -1,12 +1,10 @@
 package de.yaio.app.datatransfer.importer;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import de.yaio.app.BaseTest.TestObj;
 import de.yaio.app.core.node.BaseNode;
-import de.yaio.app.datatransfer.importer.Importer;
-import de.yaio.app.datatransfer.importer.NodeFactory;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /** 
  * testnode for importer-logic

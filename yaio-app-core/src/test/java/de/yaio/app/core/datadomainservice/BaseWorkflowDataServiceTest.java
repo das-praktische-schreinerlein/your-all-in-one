@@ -50,18 +50,18 @@ public class BaseWorkflowDataServiceTest extends DataDomainServiceTest {
                      .append(this.getState()).append("|")
                      .append(this.getIstStand()).append("|")
                      .append(this.getIstAufwand()).append("|")
-                     .append(this.getIstStart()).append("|")
-                     .append(this.getIstEnde()).append("|")
+                     .append(formatDateForCheck(this.getIstStart())).append("|")
+                     .append(formatDateForCheck(this.getIstEnde())).append("|")
                      .append(this.getIstChildrenSumStand()).append("|")
                      .append(this.getIstChildrenSumAufwand()).append("|")
-                     .append(this.getIstChildrenSumStart()).append("|")
-                     .append(this.getIstChildrenSumEnde()).append("|")
+                     .append(formatDateForCheck(this.getIstChildrenSumStart())).append("|")
+                     .append(formatDateForCheck(this.getIstChildrenSumEnde())).append("|")
                      .append(this.getPlanAufwand()).append("|")
-                     .append(this.getPlanStart()).append("|")
-                     .append(this.getPlanEnde()).append("|")
+                     .append(formatDateForCheck(this.getPlanStart())).append("|")
+                     .append(formatDateForCheck(this.getPlanEnde())).append("|")
                      .append(this.getPlanChildrenSumAufwand()).append("|")
-                     .append(this.getPlanChildrenSumStart()).append("|")
-                     .append(this.getPlanChildrenSumEnde()).append("|");
+                     .append(formatDateForCheck(this.getPlanChildrenSumStart())).append("|")
+                     .append(formatDateForCheck(this.getPlanChildrenSumEnde())).append("|");
             return resBuffer.toString();
             
         }
@@ -167,7 +167,7 @@ public class BaseWorkflowDataServiceTest extends DataDomainServiceTest {
         expectedAfterDoBeforeChildren = 
                         "null|OFFEN|null|null|null|null|null|null|null|null|50.0|null|null|null|null|null|";
         expectedAfterDoAfterChildren = 
-                        "null|LATE|null|null|null|null|13.5|10.0|null|null|50.0|null|null|100.0|Tue Oct 22 00:00:00 CEST 2013|null|";
+                        "null|LATE|null|null|null|null|13.5|10.0|null|null|50.0|null|null|100.0|22.10.2013 00:00|null|";
         this.testServiceDoRecalc(myDataDomainObj, expectedAfterDoBeforeChildren, 
                         expectedAfterDoAfterChildren, recurseDirection);
 

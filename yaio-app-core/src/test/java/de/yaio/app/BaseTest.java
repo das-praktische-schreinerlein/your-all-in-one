@@ -12,11 +12,14 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 package de.yaio.app;
+import de.yaio.commons.data.DataUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.springframework.mock.staticmock.MockStaticEntityMethods;
+
+import java.util.Date;
 
 /** 
  * baseinterface for tests<br>
@@ -57,5 +60,12 @@ public abstract class BaseTest {
      */
     @After
     public void tearDown() {
+    }
+
+    protected String formatDateForCheck(final Date date) {
+        if (date == null) {
+            return null;
+        }
+        return DataUtils.getDTF().format(date);
     }
 }
