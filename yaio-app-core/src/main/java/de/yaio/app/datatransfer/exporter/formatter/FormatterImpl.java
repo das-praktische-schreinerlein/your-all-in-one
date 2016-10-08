@@ -23,6 +23,7 @@ import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 /** 
  * service-functions for formatting of dataDomains
@@ -198,5 +199,15 @@ public abstract class FormatterImpl implements Formatter {
            }
            return out;
        }
+
+    @Override
+    public void setTimeZone(final TimeZone timeZone) {
+        calTime.setTimeZone(timeZone);
+
+        DF.setTimeZone(timeZone);
+        TF.setTimeZone(timeZone);
+        DTF.setTimeZone(timeZone);
+        UIDF.setTimeZone(timeZone);
+    }
 
 }

@@ -18,6 +18,7 @@ import de.yaio.app.core.datadomain.DataDomain;
 import de.yaio.app.datatransfer.common.ConverterException;
 import de.yaio.app.datatransfer.exporter.formatter.*;
 import de.yaio.app.core.node.BaseNode;
+import de.yaio.app.datatransfer.exporter.formatter.Formatter;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.log4j.Logger;
 
@@ -84,8 +85,15 @@ public class ExporterImpl implements Exporter {
                 formatter.getClass().getName(), formatter);
     }
 
-    protected de.yaio.app.datatransfer.exporter.formatter.Formatter getDataDomainFormatterByClassName(final String className) {
+    protected Formatter getDataDomainFormatterByClassName(final String className) {
         return this.hshDataDomainFormatterByClassName.get(className);
+    }
+
+    @Override
+    public void setTimeZone(final TimeZone timeZone) {
+        for (Formatter formatter : this.hshDataDomainFormatter) {
+            formatter.setTimeZone(timeZone);
+        }
     }
     
     //////////////

@@ -18,6 +18,7 @@ import de.yaio.app.datatransfer.common.ConverterException;
 import de.yaio.app.datatransfer.exporter.formatter.Formatter;
 
 import java.util.Map;
+import java.util.TimeZone;
 
 /** 
  * interface with service-functions for export of Nodes
@@ -48,6 +49,12 @@ public interface Exporter {
      * @param formatter              instance of the formatter
      */
     void addDataDomainFormatter(Formatter formatter);
+
+    /**
+     * sets timezone to all Formatters
+     * @param timeZone     new timeZone (like "Europe/Berlin")
+     */
+    void setTimeZone(final TimeZone timeZone);
 
     ////////////////
     // service-functions for node-output

@@ -17,6 +17,7 @@ import de.yaio.app.core.datadomain.DataDomain;
 import de.yaio.app.datatransfer.common.ParserException;
 import de.yaio.app.datatransfer.importer.ImportOptions;
 
+import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -112,4 +113,10 @@ public interface Parser extends Comparable<Parser> {
      */
     boolean trimNodeName(DataDomain node, Pattern pattern, 
             Matcher matcher, int first, int last);
+
+    /**
+     * sets timezone to all Formatters
+     * @param timeZone     new timeZone (like "Europe/Berlin")
+     */
+    void setTimeZone(final TimeZone timeZone);
 }
