@@ -82,10 +82,6 @@ public class WikiExporterTest extends BaseTest {
         importerObj = new PPLImporter(importoptions);
         exporter = setupNewExporter();
         oOptions = setupNewOutputOptions();
-
-        // configure timezone for tests as Berlin because of fixtures
-        importerObj.getNodeFactory().setTimeZone(TimeZone.getTimeZone("Europe/Berlin"));
-        exporter.setTimeZone(TimeZone.getTimeZone("Europe/Berlin"));
     }
     
     /** 

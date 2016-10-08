@@ -22,6 +22,7 @@ import de.yaio.app.extension.datatransfer.csv.CSVExporter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 /** 
  * export of Nodes in JSON-format
@@ -106,4 +107,10 @@ public class JSONExporter extends CSVExporter {
         return baseFormatter.formatNumber(src, minStellen, maxStellen).replace(".", ",");
     }
 
+    @Override
+    public void setTimeZone(TimeZone timeZone) {
+        super.setTimeZone(timeZone);
+        DF.setTimeZone(timeZone);
+        TF.setTimeZone(timeZone);
+    }
 }

@@ -25,6 +25,7 @@ import org.junit.runners.JUnit4;
 import org.springframework.mock.staticmock.MockStaticEntityMethods;
 
 import java.text.DateFormat;
+import java.util.TimeZone;
 
 /** 
  * interface for test of the datadomainservice-logic<br>
@@ -108,5 +109,12 @@ public abstract class DataDomainServiceTest extends BaseTest {
         }
         dataDomainService.doRecalcAfterChildren(myDataDomainObj, recurseDirection);
         testService.checkToStringResult(testObj, expectedAfterDoAfterChildren);
+    }
+
+    protected void setTimeZone(final TimeZone timeZone) {
+        DF.setTimeZone(timeZone);
+        TF.setTimeZone(timeZone);
+        DTF.setTimeZone(timeZone);
+        UIDF.setTimeZone(timeZone);
     }
 }

@@ -12,6 +12,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 package de.yaio.app;
+
 import de.yaio.commons.data.DataUtils;
 import org.junit.After;
 import org.junit.Before;
@@ -20,6 +21,7 @@ import org.junit.runners.JUnit4;
 import org.springframework.mock.staticmock.MockStaticEntityMethods;
 
 import java.util.Date;
+import java.util.TimeZone;
 
 /** 
  * baseinterface for tests<br>
@@ -30,6 +32,11 @@ import java.util.Date;
 @RunWith(JUnit4.class)
 @MockStaticEntityMethods
 public abstract class BaseTest {
+
+    static {
+        // dirty hack: set timezone to pass tests with fixtures
+        TimeZone.setDefault(TimeZone.getTimeZone("Europe/Berlin"));
+    }
     
     protected TestServices testService = new TestServices();
     

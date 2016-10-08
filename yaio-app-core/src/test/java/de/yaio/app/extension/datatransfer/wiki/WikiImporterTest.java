@@ -54,11 +54,7 @@ public class WikiImporterTest extends BaseTest {
      * @throws Exception             io-Exceptions possible
      */
     public Importer setupNewImporter() {
-        Importer importerObj = new WikiImporter(setupNewImportOptions());
-        // configure timezone for tests as Berlin because of fixtures
-        importerObj.getNodeFactory().setTimeZone(TimeZone.getTimeZone("Europe/Berlin"));
-
-        return importerObj;
+        return new WikiImporter(setupNewImportOptions());
     }
     
     /** 

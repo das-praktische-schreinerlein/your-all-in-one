@@ -41,6 +41,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 /** 
  * export of Nodes as ICal
@@ -603,5 +604,12 @@ public class ICalExporter extends WikiExporter {
     
     public ICalendar createICalendar() {
         return new ICalendar();
+    }
+
+    @Override
+    public void setTimeZone(TimeZone timeZone) {
+        super.setTimeZone(timeZone);
+        DF.setTimeZone(timeZone);
+        TF.setTimeZone(timeZone);
     }
 }
