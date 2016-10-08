@@ -47,8 +47,8 @@ public class PlanChildrenSumDataTest extends DataDomainTest {
             StringBuffer resBuffer = new StringBuffer();
             resBuffer.append(this.getName()).append("|")
                      .append(this.getPlanChildrenSumAufwand()).append("|")
-                     .append(this.getPlanChildrenSumStart()).append("|")
-                     .append(this.getPlanChildrenSumEnde()).append("|");
+                     .append(formatDateForCheck(this.getPlanChildrenSumStart())).append("|")
+                     .append(formatDateForCheck(this.getPlanChildrenSumEnde())).append("|");
             return resBuffer.toString();
             
         }

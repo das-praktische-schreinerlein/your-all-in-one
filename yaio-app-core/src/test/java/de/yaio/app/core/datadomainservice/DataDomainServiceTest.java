@@ -12,9 +12,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 package de.yaio.app.core.datadomainservice;
-import java.text.DateFormat;
 
-import de.yaio.app.core.datadomainservice.DataDomainRecalc;
+import de.yaio.app.BaseTest;
+import de.yaio.app.core.datadomain.DataDomain;
+import de.yaio.app.core.nodeservice.NodeService;
+import de.yaio.commons.data.DataUtils;
 import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,10 +24,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.springframework.mock.staticmock.MockStaticEntityMethods;
 
-import de.yaio.app.BaseTest;
-import de.yaio.commons.data.DataUtils;
-import de.yaio.app.core.datadomain.DataDomain;
-import de.yaio.app.core.nodeservice.NodeService;
+import java.text.DateFormat;
 
 /** 
  * interface for test of the datadomainservice-logic<br>
@@ -57,8 +56,8 @@ public abstract class DataDomainServiceTest extends BaseTest {
     protected final DateFormat DTF = DataUtils.getDTF();
     /** dateformat-instance for UID yyyyMMddHHmmssSSS */
     protected final DateFormat UIDF = DataUtils.getUIDF();
-    
-    /** 
+
+    /**
      * setup the datadomainservice-obj to test
      **/
     @Before

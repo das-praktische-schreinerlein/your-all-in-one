@@ -22,6 +22,7 @@ import de.yaio.app.datatransfer.importer.parser.Parser;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
+import java.util.TimeZone;
 
 /** 
  *    interface with factory-functions for creation of Nodes
@@ -133,6 +134,12 @@ public interface NodeFactory {
      * @throws ParserException        parser/format-Exceptions possible
      */
     int parseNodeDataDomain(DataDomain node, Parser parser, ImportOptions options) throws ParserException;
+
+    /**
+     * sets timezone to all Formatters
+     * @param timeZone     new timeZone (like "Europe/Berlin")
+     */
+    void setTimeZone(final TimeZone timeZone);
 
     ////////////////
     // Generierungs-Funktionen

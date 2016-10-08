@@ -36,3 +36,5 @@ yaio-app-server-standalone/var
 /.classpath
 *.iml
 /yaio-app-webapp/vendors/archiv/
+/queues
+

@@ -19,6 +19,7 @@ import de.yaio.commons.data.DataUtils;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -87,5 +88,16 @@ public abstract class ParserImpl implements Parser {
         node.setName(name);
 
         return flgBrackets;
+    }
+
+    @Override
+    public void setTimeZone(final TimeZone timeZone) {
+        calDate.setTimeZone(timeZone);
+        calTime.setTimeZone(timeZone);
+
+        DF.setTimeZone(timeZone);
+        TF.setTimeZone(timeZone);
+        DTF.setTimeZone(timeZone);
+        UIDF.setTimeZone(timeZone);
     }
 }

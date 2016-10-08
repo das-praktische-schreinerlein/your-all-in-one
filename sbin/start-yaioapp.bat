@@ -42,6 +42,14 @@ set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_APP% %CFG% %NEWID_OPTIONS%
 echo "start-yaioapp: %CMD%"
 start "yaio-app-%YAIOINSTANCE%" %CMD%
 
+set CMD=%YAIOSCRIPTPATH%\importMailsFromMailImportQueueToYAIOApp.bat 60
+echo "start-yaioapp-mailimportqueue: %CMD%"
+start "yaio-app-mailimportqueue-%YAIOINSTANCE%" %CMD%
+
+set CMD=%YAIOSCRIPTPATH%\importFilesFromFileImportQueueToYAIOApp.bat 60
+echo "start-yaioapp-fileimportqueue: %CMD%"
+start "yaio-app-fileimportqueue-%YAIOINSTANCE%" %CMD%
+
 cd %SAVEDPWD%
 
 :openurl

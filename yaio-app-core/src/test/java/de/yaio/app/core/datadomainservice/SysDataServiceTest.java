@@ -49,9 +49,9 @@ public class SysDataServiceTest extends DataDomainServiceTest {
             StringBuffer resBuffer = new StringBuffer();
             resBuffer.append(this.getName()).append("|")
             .append(this.getSysUID()).append("|")
-            .append(this.getSysCreateDate()).append("|")
+            .append(formatDateForCheck(this.getSysCreateDate())).append("|")
             .append(this.getSysCurChecksum()).append("|")
-            .append(this.getSysChangeDate()).append("|")
+            .append(formatDateForCheck(this.getSysChangeDate())).append("|")
             .append(this.getSysChangeCount()).append("|");
             return resBuffer.toString();
         }
@@ -87,8 +87,8 @@ public class SysDataServiceTest extends DataDomainServiceTest {
 
             // check sys
             myDataDomainObj = getNewSysDataTestObj();
-            expectedAfterDoBeforeChildren = "Name XX  |DT201404081141327673|Tue Apr 08 11:41:00 CEST 2014|2586BA8C5D9B1C3D1DB52F90086EB844|Thu Apr 10 10:04:00 CEST 2014|9|";
-            expectedAfterDoAfterChildren = "Name XX  |DT201404081141327673|Tue Apr 08 11:41:00 CEST 2014|2586BA8C5D9B1C3D1DB52F90086EB844|Thu Apr 10 10:04:00 CEST 2014|9|";
+            expectedAfterDoBeforeChildren = "Name XX  |DT201404081141327673|08.04.2014 11:41|2586BA8C5D9B1C3D1DB52F90086EB844|10.04.2014 10:04|9|";
+            expectedAfterDoAfterChildren = "Name XX  |DT201404081141327673|08.04.2014 11:41|2586BA8C5D9B1C3D1DB52F90086EB844|10.04.2014 10:04|9|";
             myDataDomainObj.setName("Name XX  ");
             myDataDomainObj.setSysUID("DT201404081141327673");
             myDataDomainObj.setSysCreateDate(DTF.parse("08.04.2014 11:41"));
@@ -100,7 +100,7 @@ public class SysDataServiceTest extends DataDomainServiceTest {
 
             // new record (passes only on fast computers ;-)
             myDataDomainObj = getNewSysDataTestObj();
-            expectedAfterDoBeforeChildren = "Name XX2|DT201404081141327673|" + new Date() + "|E7FA4150920D398AC180C7EEA1E14676|" + new Date() + "|1|";
+            expectedAfterDoBeforeChildren = "Name XX2|DT201404081141327673|" + formatDateForCheck(new Date()) + "|E7FA4150920D398AC180C7EEA1E14676|" + formatDateForCheck(new Date()) + "|1|";
             expectedAfterDoAfterChildren = expectedAfterDoBeforeChildren;
             myDataDomainObj.setName("Name XX2");
             myDataDomainObj.setSysUID("DT201404081141327673"); // cant be computed because of Milliseconds
@@ -109,8 +109,8 @@ public class SysDataServiceTest extends DataDomainServiceTest {
 
             // with changes (passes only on fast computers ;-)
             myDataDomainObj = getNewSysDataTestObj();
-            expectedAfterDoBeforeChildren = "Name XX2|DT201404081141327673|Tue Apr 08 11:41:00 CEST 2014|459FB28B91E59689E400563665B6B513|Thu Apr 10 10:04:00 CEST 2014|9|";
-            expectedAfterDoAfterChildren = "Name XX2|DT201404081141327673|Tue Apr 08 11:41:00 CEST 2014|E7FA4150920D398AC180C7EEA1E14676|" + new Date() + "|10|";
+            expectedAfterDoBeforeChildren = "Name XX2|DT201404081141327673|08.04.2014 11:41|459FB28B91E59689E400563665B6B513|10.04.2014 10:04|9|";
+            expectedAfterDoAfterChildren = "Name XX2|DT201404081141327673|08.04.2014 11:41|E7FA4150920D398AC180C7EEA1E14676|" + formatDateForCheck(new Date()) + "|10|";
             myDataDomainObj.setName("Name XX2");
             myDataDomainObj.setSysUID("DT201404081141327673");
             myDataDomainObj.setSysCreateDate(DTF.parse("08.04.2014 11:41"));

@@ -49,9 +49,9 @@ public class SysDataTest extends DataDomainTest {
             StringBuffer resBuffer = new StringBuffer();
             resBuffer.append(this.getName()).append("|")
                      .append(this.getSysUID()).append("|")
-                     .append(this.getSysCreateDate()).append("|")
+                     .append(formatDateForCheck(this.getSysCreateDate())).append("|")
                      .append(this.getSysCurChecksum()).append("|")
-                     .append(this.getSysChangeDate()).append("|")
+                     .append(formatDateForCheck(this.getSysChangeDate())).append("|")
                      .append(this.getSysChangeCount()).append("|");
             return resBuffer.toString();
             
@@ -90,7 +90,7 @@ public class SysDataTest extends DataDomainTest {
         // normal
         mytestObj = getNewSysDataTestObj();
         mytestObj.setName("Name [NodeSys: DT201404081141327673,08.04.2014 11:41,BD87EF8392D672FE28B4D861A43A9F5F,10.04.2014 10:04,9]");
-        expected = "Name|DT201404081141327673|Tue Apr 08 11:41:00 CEST 2014|BD87EF8392D672FE28B4D861A43A9F5F|Thu Apr 10 10:04:00 CEST 2014|9|";
+        expected = "Name|DT201404081141327673|08.04.2014 11:41|BD87EF8392D672FE28B4D861A43A9F5F|10.04.2014 10:04|9|";
         testParser(mytestObj, expected, importOptions);
     }
 

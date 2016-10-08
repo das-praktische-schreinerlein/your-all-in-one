@@ -16,6 +16,7 @@ package de.yaio.app.extension.datatransfer.mail;
 import de.yaio.app.core.dbservice.BaseNodeRepository;
 import de.yaio.app.core.node.BaseNode;
 import de.yaio.app.core.nodeservice.NodeService;
+import de.yaio.app.extension.autoformatter.formatter.EmailDescAutoFormatter;
 import de.yaio.commons.io.IOExceptionWithCause;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,7 @@ public class EmailImporter {
     @Autowired
     private EmailConverter emailConverterService;
     @Autowired
-    protected EmailFormatter emailFormatterService;
+    protected EmailDescAutoFormatter emailFormatterService;
     @Autowired
     protected BaseNodeRepository baseNodeDBService;
 
@@ -165,7 +166,7 @@ public class EmailImporter {
         }
 
         emailConverterService.importEmailsToParent(parent, messages);
-        emailFormatterService.genMetadataForEmailNodes(parent.getChildNodes());
+        emailFormatterService.genMetadataForNodes(parent.getChildNodes());
 
         baseNodeDBService.saveChildNodesToDB(parent, NodeService.CONST_DB_RECURSIONLEVEL_ALL_CHILDREN, false);
         baseNodeDBService.updateMeAndMyParents(parent);

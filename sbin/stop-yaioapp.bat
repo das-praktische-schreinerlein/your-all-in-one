@@ -28,7 +28,14 @@ set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_APPPROPAGATOR% %CFG%
 echo "stop-apppropagator: %CMD%"
 taskkill /F /FI "WINDOWTITLE eq yaio-apppropagator-%YAIOINSTANCE%*"
 
-rem add --debug option to see the startprocess of spring-boot
 set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_APP% %CFG% %NEWID_OPTIONS%
 echo "stop-yaioapp: %CMD%"
-taskkill /F /FI "WINDOWTITLE eq yaio-app-%YAIOINSTANCE%*"
+rem bullshit springapp cant regulary stop :-( taskkill /T /FI "WINDOWTITLE eq yaio-app-%YAIOINSTANCE%*"
+
+set CMD=%YAIOSCRIPTPATH%\importMailsFromMailImportQueueToYAIOApp.bat 60
+echo "stop-yaioapp-mailimportqueue: %CMD%"
+taskkill /F /FI "WINDOWTITLE eq yaio-app-mailimportqueue-%YAIOINSTANCE%*"
+
+set CMD=%YAIOSCRIPTPATH%\importFilesFromFileImportQueueToYAIOApp.bat 60
+echo "stop-yaioapp-fileimportqueue: %CMD%"
+taskkill /F /FI "WINDOWTITLE eq yaio-app-fileimportqueue-%YAIOINSTANCE%*"

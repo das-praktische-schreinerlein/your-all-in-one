@@ -50,8 +50,8 @@ public class IstDataTest extends DataDomainTest {
             resBuffer.append(this.getName()).append("|")
                      .append(this.getIstStand()).append("|")
                      .append(this.getIstAufwand()).append("|")
-                     .append(this.getIstStart()).append("|")
-                     .append(this.getIstEnde()).append("|");
+                     .append(formatDateForCheck(this.getIstStart())).append("|")
+                     .append(formatDateForCheck(this.getIstEnde())).append("|");
             return resBuffer.toString();
             
         }
@@ -88,25 +88,25 @@ public class IstDataTest extends DataDomainTest {
         // normal with date
         mytestObj = getNewIstDataTestObj();
         mytestObj.setName("Name [Ist: 30% 2h 12.03.2014-12.04.2014]");
-        expected = "Name|30.0|2.0|Wed Mar 12 00:00:59 CET 2014|Sat Apr 12 00:00:59 CEST 2014|";
+        expected = "Name|30.0|2.0|12.03.2014 00:00|12.04.2014 00:00|";
         testParser(mytestObj, expected, importOptions);
 
         // normal with datetime
         mytestObj = getNewIstDataTestObj();
         mytestObj.setName("Name [Ist: 30% 2h 12.03.2014 12:00-12.04.2014]");
-        expected = "Name|30.0|2.0|Wed Mar 12 12:00:00 CET 2014|Sat Apr 12 00:00:59 CEST 2014|";
+        expected = "Name|30.0|2.0|12.03.2014 12:00|12.04.2014 00:00|";
         testParser(mytestObj, expected, importOptions);
 
         // normal without startdate
         mytestObj = getNewIstDataTestObj();
         mytestObj.setName("Name [Ist: 30% 2h -12.04.2014]");
-        expected = "Name|30.0|2.0|null|Sat Apr 12 00:00:59 CEST 2014|";
+        expected = "Name|30.0|2.0|null|12.04.2014 00:00|";
         testParser(mytestObj, expected, importOptions);
 
         // normal without enddate
         mytestObj = getNewIstDataTestObj();
         mytestObj.setName("Name [Ist: 30% 2h 12.03.2014 12:00-]");
-        expected = "Name|30.0|2.0|Wed Mar 12 12:00:00 CET 2014|null|";
+        expected = "Name|30.0|2.0|12.03.2014 12:00|null|";
         testParser(mytestObj, expected, importOptions);
 
         // without date

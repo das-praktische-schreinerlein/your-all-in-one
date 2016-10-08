@@ -155,6 +155,13 @@ public class NodeFactoryImpl implements NodeFactory {
         return 0;
     }
 
+    @Override
+    public void setTimeZone(final TimeZone timeZone) {
+        for (Parser parser : this.hshDataDomainParser) {
+            parser.setTimeZone(timeZone);
+        }
+    }
+
     ////////////////
     // Generierungs-Funktionen
     ////////////////

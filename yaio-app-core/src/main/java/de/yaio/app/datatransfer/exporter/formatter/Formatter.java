@@ -16,6 +16,8 @@ package de.yaio.app.datatransfer.exporter.formatter;
 import de.yaio.app.core.datadomain.DataDomain;
 import de.yaio.app.datatransfer.exporter.OutputOptions;
 
+import java.util.TimeZone;
+
 /** 
  * interface with service-functions for formatting of dataDomains
  * 
@@ -42,7 +44,13 @@ public interface Formatter extends Comparable<Formatter> {
      */
     int getTargetOrder();
 
-    /** 
+    /**
+     * sets timezone to all Formatters
+     * @param timeZone     new timeZone (like "Europe/Berlin")
+     */
+    void setTimeZone(final TimeZone timeZone);
+
+    /**
      * formats DomainData and appends output to StringBuffer nodeOutput
      * @param node                   node to be formatted
      * @param nodeOutput             to append the output

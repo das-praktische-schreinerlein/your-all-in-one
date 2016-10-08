@@ -48,8 +48,8 @@ public class PlanCalcDataTest extends DataDomainTest {
         public String toString() {
             StringBuffer resBuffer = new StringBuffer();
             resBuffer.append(this.getName()).append("|")
-                     .append(this.getPlanCalcStart()).append("|")
-                     .append(this.getPlanCalcEnde()).append("|");
+                     .append(formatDateForCheck(this.getPlanCalcStart())).append("|")
+                     .append(formatDateForCheck(this.getPlanCalcEnde())).append("|");
             return resBuffer.toString();
             
         }
@@ -86,25 +86,25 @@ public class PlanCalcDataTest extends DataDomainTest {
         // normal with date
         mytestObj = getNewPlanCalcDataTestObj();
         mytestObj.setName("Name [PlanCalc: 12.03.2014-12.04.2014]");
-        expected = "Name|Wed Mar 12 00:00:59 CET 2014|Sat Apr 12 00:00:59 CEST 2014|";
+        expected = "Name|12.03.2014 00:00|12.04.2014 00:00|";
         testParser(mytestObj, expected, importOptions);
 
         // normal with datetime
         mytestObj = getNewPlanCalcDataTestObj();
         mytestObj.setName("Name [PlanCalc: 12.03.2014 12:00-12.04.2014]");
-        expected = "Name|Wed Mar 12 12:00:00 CET 2014|Sat Apr 12 00:00:59 CEST 2014|";
+        expected = "Name|12.03.2014 12:00|12.04.2014 00:00|";
         testParser(mytestObj, expected, importOptions);
 
         // normal without startdate
         mytestObj = getNewPlanCalcDataTestObj();
         mytestObj.setName("Name [PlanCalc: -12.04.2014]");
-        expected = "Name|null|Sat Apr 12 00:00:59 CEST 2014|";
+        expected = "Name|null|12.04.2014 00:00|";
         testParser(mytestObj, expected, importOptions);
 
         // normal without enddate
         mytestObj = getNewPlanCalcDataTestObj();
         mytestObj.setName("Name [PlanCalc: 12.03.2014 12:00-]");
-        expected = "Name|Wed Mar 12 12:00:00 CET 2014|null|";
+        expected = "Name|12.03.2014 12:00|null|";
         testParser(mytestObj, expected, importOptions);
 
         // without date
