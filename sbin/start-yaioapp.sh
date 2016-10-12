@@ -32,6 +32,6 @@ CMD="java ${JAVAOPTIONS} -cp ${CP} ${PROG_APP} ${CFG} ${NEWID_OPTIONS}"
 echo "start-yaioapp: ${CMD}"
 ${CMD} &
 
-CMD="java ${JAVAOPTIONS} -cp ${CP} ${PROG_APPPROPAGATOR} ${CFG}"
+CMD="java ${JAVAOPTIONS} -cp ${APPPROPAGATOR} ${PROG_APPPROPAGATOR} ${CFG}"
 echo "start-apppropagator: ${CMD}"
 ${CMD} &
