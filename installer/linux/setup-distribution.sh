@@ -26,7 +26,7 @@ mkdir -p ${YAIO_DIST_DIR}
 # create empty dirs
 mkdir -p ${YAIO_DIST_DIR}/config
 mkdir -p ${YAIO_DIST_DIR}/dist
-mkdir -p ${YAIO_DIST_DIR}/installer
+mkdir -p ${YAIO_DIST_DIR}/installer/linux
 mkdir -p ${YAIO_DIST_DIR}/logs
 mkdir -p ${YAIO_DIST_DIR}/queues/fileimportqueue
 mkdir -p ${YAIO_DIST_DIR}/queues/mailimportqueue
@@ -39,7 +39,7 @@ mkdir -p ${YAIO_DIST_DIR}/var/tessdata
 
 # copy data
 cp -r ${YAIO_SRC_BASE}/config/* ${YAIO_DIST_DIR}/config/
-cp -r ${YAIO_SRC_BASE}/installer/* ${YAIO_DIST_DIR}/installer/
+cp -r ${YAIO_SRC_BASE}/installer/linux/* ${YAIO_DIST_DIR}/installer/linux/
 #cp -r ${YAIO_SRC_BASE}/dist/yaio-app-cli-full.jar ${YAIO_DIST_DIR}/dist/
 cp -r ${YAIO_SRC_BASE}/dist/yaio-app-server-full.jar ${YAIO_DIST_DIR}/dist/
 #cp -r ${YAIO_SRC_BASE}/dist/yaio-app-serverclient-full.jar ${YAIO_DIST_DIR}/dist/
