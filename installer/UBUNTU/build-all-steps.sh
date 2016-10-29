@@ -4,8 +4,8 @@
 ###################
 
 export YAIOUSER=yaiodemo
-export SCRIPT_DIR=$(dirname $0)
-export INSTALLER_DIR=${SCRIPT_DIR}../
+export SCRIPT_DIR=$(dirname $0)/
+export INSTALLER_DIR=${SCRIPT_DIR}/../
 export BASE_DIR=${INSTALLER_DIR}/../
 
 chmod 755 -R ${INSTALLER_DIR}/*.sh
