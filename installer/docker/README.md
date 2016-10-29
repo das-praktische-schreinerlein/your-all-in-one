@@ -4,7 +4,7 @@ A build environment for a dockered version of YAIO
 ## docker-compose current version
 or build a version with docker-compose
     
-    ./setup-build.sh /cygdrive/d/Projekte/yaio-playground/
+    ./setup-build.sh
     docker-compose up
 
 and run a version with docker-compose

@@ -17,21 +17,13 @@ export DEBIAN_FRONTEND=noninteractive
 apt-get update -q
 
 # install maven
-apt-get -y remove maven
-apt-get -y install gdebi
-wget http://ppa.launchpad.net/natecarlson/maven3/ubuntu/pool/main/m/maven3/maven3_3.2.1-0~ppa1_all.deb
-gdebi --non-interactive maven3_3.2.1-0~ppa1_all.deb
-ln -s /usr/share/maven3/bin/mvn /usr/bin/maven
-ln -s /usr/share/maven3/bin/mvn /usr/bin/mvn
+apt-get install -q -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" maven
 
 # install nodejs 10
 apt-cache showpkg nodejs
-apt-get remove node
-apt-get install -q -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" nodejs=0.10.25~dfsg2-2ubuntu1
-apt-get install -q -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" npm
-# link because of collision with node-package
-apt-get remove node
-ln -s /usr/bin/nodejs /usr/sbin/node
+apt-get remove -q -y nodejs
+curl -sL https://deb.nodesource.com/setup_0.10 | sudo bash -
+apt-get install -q -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" nodejs
 
 # install git
 apt-cache showpkg git
