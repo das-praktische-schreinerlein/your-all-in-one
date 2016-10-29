@@ -3,7 +3,6 @@
 # check yaio_srcdir
 BASE_DIR=$(dirname $(readlink -f $0))/
 YAIO_SRC_BASE=${BASE_DIR}/../../
-DOCKER_SRC_DIR=${BASE_DIR}/yaio/
 
 PWD=`pwd`
 
@@ -25,6 +24,7 @@ ${BASE_DIR}/setup-build.sh ${YAIO_SRC_BASE}
 ###################
 ## Configure docker
 ###################
+DOCKER_SRC_DIR=./yaio/
 BASE_TAG=yaio/yaioserver
 BASE_VERSION=`date +%Y%m%d_%H%M%S`
 VERSION_TAGS=""
