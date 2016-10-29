@@ -1,0 +1,20 @@
+version: '2'
+
+networks:
+  prodnetwork:
+    driver: bridge
+
+services:
+  "yaioserver":
+    build: ./yaio
+    image: yaio/yaioserver:currencompose
+    ports:
+      - "8666:8666"
+    networks:
+      - prodnetwork
+#    volumes:
+#      - /docker_shared/do_ci/jenkins:/home/do_ci_jenkins
+#    depends_on:
+#
+#    environment:
+#

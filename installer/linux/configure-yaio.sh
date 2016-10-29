@@ -4,7 +4,7 @@
 ###################
 
 SCRIPT_DIR=$(dirname $(readlink -f $0))/
-BASE_DIR=${SCRIPT_DIR}/../
+BASE_DIR=${SCRIPT_DIR}/../../
 CONFIG_DIR=${BASE_DIR}/config/
 
 # load utils

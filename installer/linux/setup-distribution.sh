@@ -11,14 +11,13 @@ if [ "${YAIO_DIST_DIR}" = "" ]; then
 fi
 
 SCRIPT_DIR=$(dirname $(readlink -f $0))/
-BASE_DIR=${SCRIPT_DIR}/../
+BASE_DIR=${SCRIPT_DIR}/../../
 CONFIG_DIR=${BASE_DIR}/config/
 
 ###################
 ## Configure and package yaio
 ###################
-BASE_DIR=$(dirname $(readlink -f $0))/
-YAIO_SRC_BASE=${BASE_DIR}../
+YAIO_SRC_BASE=${BASE_DIR}/
 
 # prepare build-dir
 rm -fr ${YAIO_DIST_DIR}

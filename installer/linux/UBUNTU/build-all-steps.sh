@@ -5,10 +5,10 @@
 
 export YAIOUSER=yaiodemo
 export SCRIPT_DIR=$(dirname $0)/
-export INSTALLER_DIR=${SCRIPT_DIR}/../
-export BASE_DIR=${INSTALLER_DIR}/../
+export LINUX_BASE_DIR=${SCRIPT_DIR}/../
+export BASE_DIR=${LINUX_BASE_DIR}/../../
 
-chmod 755 -R ${INSTALLER_DIR}/*.sh
+chmod 755 -R ${LINUX_BASE_DIR}/*.sh
 
 # create user
 useradd -m ${YAIOUSER}

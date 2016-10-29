@@ -3,10 +3,10 @@
 ## prepare system for yaio-install
 ###################
 SCRIPT_DIR=$(dirname $0)/
-SCRIT_BASE_DIR=${SCRIPT_DIR}/../
+LINUX_BASE_DIR=${SCRIPT_DIR}/../
 
 # load utils
-. ${SCRIT_BASE_DIR}/utils.sh
+. ${LINUX_BASE_DIR}/utils.sh
 
 # set noninteractive and updatepackages
 export DEBIAN_FRONTEND=noninteractive \
