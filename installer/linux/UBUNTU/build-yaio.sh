@@ -11,6 +11,9 @@ export CONFIG_DIR=${BASE_DIR}/config/
 
 CURDIR=`pwd`
 
+# load utils
+. ${LINUX_BASE_DIR}/utils.sh
+
 cd $BASE_DIR
 mkdir logs
 

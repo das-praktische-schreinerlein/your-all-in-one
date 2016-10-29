@@ -13,7 +13,7 @@ USER root
 RUN useradd -ms /bin/bash -d /opt/yaio_home yaio
 COPY build/ overrides/OVERWRITE/ /opt/yaio_home/
 
-RUN chown -R yaio /opt/yaio_home && chmod +x /opt/yaio_home/sbin/*.sh /opt/yaio_home/config/*.sh /opt/yaio_home/installer/*.sh
+RUN chown -R yaio /opt/yaio_home && chmod +x /opt/yaio_home/sbin/*.sh /opt/yaio_home/config/*.sh /opt/yaio_home/installer/**/*.sh
 RUN /opt/yaio_home/installer/linux/UBUNTU/install-prepare-packages.sh \
     && /opt/yaio_home/installer/linux/configure-yaio.sh
 
