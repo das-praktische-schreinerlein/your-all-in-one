@@ -72,7 +72,7 @@
                 <executions>
                     <execution>
                         <id>copy-jar</id>
-                        <phase>install</phase>
+                        <phase>package</phase>
                         <configuration>
                             <target>
                                 <copy file="${yaioBaseDir}/${project.artifactId}/target/${project.artifactId}-${project.version}.jar" tofile="${yaioBaseDir}/dist/${project.artifactId}-${project.version}.jar" />
