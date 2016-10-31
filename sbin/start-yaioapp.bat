@@ -33,7 +33,7 @@ set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_FLYWAY% %FLYWAYCFG%
 echo "run-flyway: %CMD%"
 %CMD%
 
-set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_APPPROPAGATOR% %CFG%
+set CMD=java %JAVAOPTIONS% -cp %APPPROPAGATOR% %PROG_APPPROPAGATOR% %CFG%
 echo "start-apppropagator: %CMD%"
 start "yaio-apppropagator-%YAIOINSTANCE%" %CMD%
 

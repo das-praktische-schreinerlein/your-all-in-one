@@ -37,4 +37,6 @@ yaio-app-server-standalone/var
 *.iml
 /yaio-app-webapp/vendors/archiv/
 /queues
-
+/.idea
+/*.iml
+/installer/docker/yaio/build

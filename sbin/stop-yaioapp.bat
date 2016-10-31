@@ -24,7 +24,7 @@ set YAIOCONFIGPATH=%YAIOSCRIPTPATH%..\config\
 rem init config
 call %YAIOCONFIGPATH%\config-server.bat %YAIOSCRIPTPATH%
 
-set CMD=java %JAVAOPTIONS% -cp %CP% %PROG_APPPROPAGATOR% %CFG%
+set CMD=java %JAVAOPTIONS% -cp %APPPROPAGATOR% %PROG_APPPROPAGATOR% %CFG%
 echo "stop-apppropagator: %CMD%"
 taskkill /F /FI "WINDOWTITLE eq yaio-apppropagator-%YAIOINSTANCE%*"
 
