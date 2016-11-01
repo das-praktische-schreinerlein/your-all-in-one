@@ -4,9 +4,12 @@
 ###################
 SCRIPT_DIR=$(dirname $0)/
 LINUX_BASE_DIR=${SCRIPT_DIR}/../
+ME=`basename "$0"`
 
 # load utils
 . ${LINUX_BASE_DIR}/utils.sh
+
+echo "$ME: install packages"
 
 # set noninteractive and updatepackages
 export DEBIAN_FRONTEND=noninteractive \
@@ -27,11 +30,11 @@ export DEBIAN_FRONTEND=noninteractive \
 
 # install wkhtmltopdf for yaio-webshot-service
 apt-get remove -q -y wkhtmltopdf wkhtmltox
-wget http://download.gna.org/wkhtmltopdf/0.12/0.12.2.1/wkhtmltox-0.12.2.1_linux-trusty-amd64.deb \
-    && dpkg -i wkhtmltox-0.12.2.1_linux-trusty-amd64.deb \
-    && apt-get -y -f install \
-    && dpkg -i wkhtmltox-0.12.2.1_linux-trusty-amd64.deb \
-    && rm wkhtmltox-0.12.2.1_linux-trusty-amd64.deb;
+#wget http://download.gna.org/wkhtmltopdf/0.12/0.12.2.1/wkhtmltox-0.12.2.1_linux-trusty-amd64.deb \
+#    && dpkg -i wkhtmltox-0.12.2.1_linux-trusty-amd64.deb \
+#    && apt-get -y -f install \
+#    && dpkg -i wkhtmltox-0.12.2.1_linux-trusty-amd64.deb \
+#    && rm wkhtmltox-0.12.2.1_linux-trusty-amd64.deb;
 wget http://download.gna.org/wkhtmltopdf/0.12/0.12.2.1/wkhtmltox-0.12.2.1_linux-jessie-amd64.deb \
     && dpkg -i wkhtmltox-0.12.2.1_linux-jessie-amd64.deb \
     && apt-get -y -f install \

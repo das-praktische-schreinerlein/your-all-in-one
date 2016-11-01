@@ -9,10 +9,13 @@ export LINUX_BASE_DIR=${SCRIPT_DIR}/../
 export BASE_DIR=${LINUX_BASE_DIR}/../../
 export CONFIG_DIR=${BASE_DIR}/config/
 
+ME=`basename "$0"`
 CURDIR=`pwd`
 
 # load utils
 . ${LINUX_BASE_DIR}/utils.sh
+
+echo "$ME: replace configs"
 
 cd $BASE_DIR
 mkdir logs
@@ -25,6 +28,7 @@ replaceConfigFileBySed ${CONFIG_DIR}/log4j.properties ${LINUX_BASE_DIR}/log4j.pr
 cp ${CONFIG_DIR}/log4j.properties ${BASE_DIR}/src/test/java/
 
 # generate
+echo "$ME: build yaio"
 mvn install
 
 cd $CURDIR
