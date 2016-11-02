@@ -36,11 +36,11 @@ run installer on new vagrantbox
 
 expose Port 8666 on the vagrantbox and call your browser: http://IpOfTheVagrantBox:8666/index.html
     
-## C) Install from git (windows or linux with existing java1.7, maven)
+## C) Install from git (windows or linux with existing java1.8, maven)
 
 ### Requires
 - for building
-    - java 1.7
+    - java 1.8
     - maven
     - IDE (I built it with eclipse)
 - to use, take a look at http://www.your-all-in-one.de/yaio/static/lepetithow#h3_YAIO716
