@@ -1,5 +1,58 @@
 # Changelog
 
+## Changelog for release: feature-YAIO2859-improvements-201610-RELEASE
+- **YaioApp (YAIO2870)**
+    - **GUI (YAIO2871)**
+        - added mailimport to import-menu (YAIO2934) 
+    - **Code-Verbesserungen (YAIO2872)**
+        - code-clean (YAIO2935) 
+        - new version and deleted dependencies solved by ymf (YAIO2936) 
+    - **neue Funktionen (YAIO2873)**
+        - added command to create mailimportqueue-dirs from nodetree (YAIO2937) 
+    - **Admin/Doku-Funktionen (YAIO2874)**
+        - added coverage on build process (YAIO2938) 
+    - **Bugfixes (YAIO2875)**
+        - ymf-bugfix: fixed speech-synth - made it compatible with firefox and edge (YAIO2939) 
+- **YaioServer (YAIO2876)**
+    - **Code-Verbesserungen (YAIO2878)**
+        - added function to set timezone (YAIO2940) 
+        - return exit-code 0 if everything is fine (YAIO2941) 
+        - use metaeaxtract-json-parser to get indexed-data (YAIO2942) 
+        - improved naming and logging (YAIO2943) 
+    - **neue Funktionen (YAIO2879)**
+        - added autoformatter for nodes (YAIO2944) 
+        - added autoformatter for url (YAIO2945) 
+        - added batchscripts for mailimport from queuedir (YAIO2946) 
+        - added fileimport (YAIO2947) 
+        - added fileimportqueue (YAIO2948) 
+        - improved mailimport (YAIO2949) 
+    - **Admin/Doku-Funktionen (YAIO2880)**
+        - copied installer to yaio-project (YAIO2950) 
+        - updated dependency-versions (YAIO2951) 
+        - added installer to create docker-image for project (YAIO2964)
+    - **Bugfixes (YAIO2881)**
+        - bug: taskkill will kill and not stop java :- (YAIO2952) 
+        - bugfix: copy files on goal package not install (YAIO2953) 
+        - delete characters not allowed from emaildesc and subject for node (YAIO2954) 
+        - fixed classpath for apppropagator (YAIO2955) 
+        - fixed options for webshot of large pages (YAIO2956) 
+        - fixed pattern for desc (YAIO2957) 
+        - fixed returncode of batchscripts for mailimport from queuedir (YAIO2958) 
+        - fixed tests (dateformat on non cet-computers) (YAIO2959) 
+        - fixed tests with setting correct timezone for fixtures (YAIO2960) 
+- **YaioCIServer (YAIO2961)**
+    - **prototypischer Aufbau eines CI-Servers (YAIO2883)**
+        - Testinstallation bestehender CI-Doker-Container github.com/marcelbirkner/docker-ci-tool-stack (YAIO2884) 
+        - Configuration Jenkins -> Sonarcube (YAIO2885) 
+        - configure sonarcube (YAIO2886) 
+        - docker load localfiles for jenkins (YAIO2887) 
+        - testweises backup (YAIO2888) 
+        - jenkins automatic job-creation via dsl from github-pojects (github, build, sonar) fro java+js (YAIO2889) 
+        - jenkins: howto job automatic creation via rest (YAIO2890) 
+    - **Aufbau produktiver CI-Server (YAIO2962)**
+        - jenkins on docker to build yaio-docker-image (YAIO2965)
+        - Jenkins: Job to start docker-yaio and start e2e (YAIO2966)
+
 ## Changelog for release: feature-YAIO2698-improvements-201608-RELEASE
 - **YaioApp (YAIO2709)**
     - **GUI (YAIO2710)**
