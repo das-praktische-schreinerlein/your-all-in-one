@@ -12,6 +12,8 @@ get the installer and start it on an system
     sudo ./installer/linux/jessie/install-all-steps.sh
     sudo /etc/init.d/yaio-app.sh start
 
+call your browser: http://localhost:8666/index.html
+
 ## B) linux/windows (with vagrant)
 download project
 
@@ -93,7 +95,7 @@ start
     cd YOURBASEDIR
     sbin\start-yaioapp.bat
 
-call your browser: http://localhost:8666/demo.html
+call your browser: http://localhost:8666/index.html
 
 ### Step5: Example for the batches
 
