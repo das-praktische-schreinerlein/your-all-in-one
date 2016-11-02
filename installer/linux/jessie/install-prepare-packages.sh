@@ -25,6 +25,7 @@ export DEBIAN_FRONTEND=noninteractive \
         wget \
         xfonts-base \
         xfonts-75dpi \
+        xvfb \
         wkhtmltopdf \
     && apt-get autoremove -q -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" \
     && rm -rf /var/lib/apt/lists/*
