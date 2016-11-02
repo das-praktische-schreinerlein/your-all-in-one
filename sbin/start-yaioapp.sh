@@ -31,7 +31,7 @@ ${CMD}
 echo "Starting X virtual framebuffer (Xvfb) for webshots in background..."
 if [ -z "$DISPLAY" ]; then
   export XVFB_DISPLAY=:99
-  DISPLAY=$XVFB_DISPLAY
+  export DISPLAY=$XVFB_DISPLAY
   Xvfb -ac $XVFB_DISPLAY -screen 0 1280x1024x16 &
 fi
 
