@@ -10,6 +10,6 @@ s/^yaio.security.xframe-allowed-domains=.*/yaio.security.xframe-allowed-domains=
 s/localhost\:8083\/services/localhost:8666\/services/
 s/D\:\\\\Programme\\\\wkhtmltopdf\\\\bin\\\\/\/usr\/local\/bin\//
 s/C\:\\\\Program Files \(x86\)\\\\wkhtmltopdf\\\\bin\\\\/\/usr\/local\/bin\//
-s/wkhtmltoimage\.exe$/wkhtmltoimage/
-s/wkhtmltopdf\.exe$/wkhtmltopdf/
+s/wkhtmltoimage\.exe/wkhtmltoimage/
+s/wkhtmltopdf\.exe/wkhtmltopdf/
 s/\.exe$//
