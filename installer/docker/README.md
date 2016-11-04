@@ -16,7 +16,7 @@ checkit [http://192.168.99.100:8666/yaio-explorerapp/yaio-explorerapp.html](http
 ## build and run tagged special versions
 build a docker-container for a packaged version of yaio (build from src)
 
-    ./build-dockerimage.sh /cygdrive/d/Projekte/yaio-playground/
+    ./build-dockerimage.sh
 
 run it (specify the version of the pom - 0.1.0-beta-feature-YAIO2859-improvements-201610-SNAPSHOT)
     

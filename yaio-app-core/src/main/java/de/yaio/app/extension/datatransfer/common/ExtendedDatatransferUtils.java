@@ -88,9 +88,8 @@ public class ExtendedDatatransferUtils extends DatatransferUtils {
         String wikiSrc = exporter.getMasterNodeResult(node, oOptions);
 
         // create dummy masternode
-        BaseNode masterNode = createTemporaryMasternode(
-                        newParent.getSysUID(), newParent.getMetaNodePraefix(), newParent.getMetaNodeNummer());
-        masterNode.setCachedParentHierarchy(newParent.getCachedParentHierarchy());
+        BaseNode masterNode = createTemporaryMasternode(newParent.getSysUID(), newParent.getMetaNodePraefix(),
+                        newParent.getMetaNodeNummer(), newParent.getCachedParentHierarchy());
 
         // Parser+Options anlegen
         WikiImportOptions inputOptions = new WikiImportOptions();
@@ -118,6 +117,7 @@ public class ExtendedDatatransferUtils extends DatatransferUtils {
 
         // JPA-Exporter
         JPAExporter jpaExporter = getJPAExporter();
+        masterNode.setCachedParentHierarchy(newParent.getCachedParentHierarchy());
         jpaExporter.getMasterNodeResult(masterNode, null);
 
         // renew old parent only if different from newParent
@@ -235,26 +235,28 @@ public class ExtendedDatatransferUtils extends DatatransferUtils {
                                     final BaseNode masterNode, 
                                     final String jsonSrc) throws ParserException {
         // parse json to dummy-masternode
-        BaseNode tmpMasterNode = 
-             createTemporaryMasternode("dummy", masterNode.getMetaNodePraefix(), masterNode.getMetaNodeNummer());
+        BaseNode tmpMasterNode = createTemporaryMasternode("dummy", masterNode.getMetaNodePraefix(),
+                masterNode.getMetaNodeNummer(), masterNode.getCachedParentHierarchy());
         this.parseNodesFromJson(inputOptions, tmpMasterNode, jsonSrc);
-        
+
         // export as wiki
         Exporter exporter = new WikiExporter();
         OutputOptions oOptions = new OutputOptionsImpl();
         String wikiSrc;
         try {
+            tmpMasterNode.setCachedParentHierarchy(masterNode.getCachedParentHierarchy());
             wikiSrc = exporter.getMasterNodeResult(tmpMasterNode, oOptions);
         } catch (ConverterException ex) {
             throw new ParserException("error while converting json to wiki", jsonSrc, ex);
         }
-        
+
         // import from wiki
         WikiImportOptions tmpInputOptions = new WikiImportOptions();
         inputOptions.setFlgReadList(true);
         inputOptions.setFlgReadUe(true);
         inputOptions.setStrDefaultMetaNodePraefix(masterNode.getMetaNodePraefix());
         WikiImporter wikiImporter = new WikiImporter(tmpInputOptions);
+        tmpMasterNode.setCachedParentHierarchy(masterNode.getCachedParentHierarchy());
         this.parseNodesFromWiki(wikiImporter, tmpInputOptions, masterNode, wikiSrc);
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("masternode after wiki:" 
