@@ -119,8 +119,8 @@ public class ImportController {
             node.initChildNodesFromDB(0);
 
             // create dummy masternode
-            BaseNode masterNode = datatransferUtils.createTemporaryMasternode(
-                            parentSysUID, node.getMetaNodePraefix(), node.getMetaNodeNummer());
+            BaseNode masterNode = datatransferUtils.createTemporaryMasternode(parentSysUID, node.getMetaNodePraefix(),
+                    node.getMetaNodeNummer(), node.getCachedParentHierarchy());
 
             // Parser+Options anlegen
             WikiImportOptions inputOptions = new WikiImportOptions();
@@ -132,6 +132,7 @@ public class ImportController {
 
             // JPA-Exporter
             JPAExporter jpaExporter = getJPAExporter();
+            masterNode.setCachedParentHierarchy(node.getCachedParentHierarchy());
             jpaExporter.getMasterNodeResult(masterNode, null);
 
             // create new response
@@ -186,8 +187,8 @@ public class ImportController {
             node.initChildNodesFromDB(0);
 
             // create dummy masternode
-            BaseNode masterNode = datatransferUtils.createTemporaryMasternode(
-                            parentSysUID, node.getMetaNodePraefix(), node.getMetaNodeNummer());
+            BaseNode masterNode = datatransferUtils.createTemporaryMasternode(parentSysUID,
+                    node.getMetaNodePraefix(), node.getMetaNodeNummer(), node.getCachedParentHierarchy());
 
             // Parser+Options anlegen
             WikiImportOptions inputOptions = new WikiImportOptions();
@@ -196,6 +197,7 @@ public class ImportController {
 
             // JPA-Exporter
             JPAExporter jpaExporter = getJPAExporter();
+            masterNode.setCachedParentHierarchy(node.getCachedParentHierarchy());
             jpaExporter.getMasterNodeResult(masterNode, null);
 
             // create new response

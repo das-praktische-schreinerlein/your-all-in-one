@@ -87,9 +87,8 @@ public class DatatransferUtils {
         String jsonSrc = exporter.getMasterNodeResult(node, oOptions);
 
         // create dummy masternode
-        BaseNode masterNode = createTemporaryMasternode(
-                        newParent.getSysUID(), newParent.getMetaNodePraefix(), newParent.getMetaNodeNummer());
-        masterNode.setCachedParentHierarchy(newParent.getCachedParentHierarchy());
+        BaseNode masterNode = createTemporaryMasternode(newParent.getSysUID(), newParent.getMetaNodePraefix(),
+                newParent.getMetaNodeNummer(), newParent.getCachedParentHierarchy());
 
         // Parser+Options anlegen
         ImportOptions importOptions = createCopyImportOptions();
@@ -101,6 +100,7 @@ public class DatatransferUtils {
 
         // JPA-Exporter
         JPAExporter jpaExporter = getJPAExporter();
+        masterNode.setCachedParentHierarchy(newParent.getCachedParentHierarchy());
         jpaExporter.getMasterNodeResult(masterNode, null);
 
         // renew old parent only if different from newParent
@@ -486,7 +486,6 @@ public class DatatransferUtils {
         }
         resetRestrictedData(masterNode, importOptions, true);
         LOGGER.info("masterNode after json:" + masterNode.getBaseNodeService().visualizeNodeHierarchy("", masterNode));
-        
     }
     
     /** 
@@ -494,14 +493,18 @@ public class DatatransferUtils {
      * @param sysUID                 sysUID
      * @param nodePraefix            metaNodePraefix
      * @param nodeNummer             metaNodeNumber
+     * @param cachedParentHierarchy  cachedParentHierarchy
      * @return                       the Basenode to use as masternode 
      */
-    public BaseNode createTemporaryMasternode(final String sysUID, final String nodePraefix, final String nodeNummer) {
+    public BaseNode createTemporaryMasternode(final String sysUID, final String nodePraefix,
+            final String nodeNummer, final String cachedParentHierarchy) {
         BaseNode tmpMasterNode = new BaseNode();
         tmpMasterNode.setSysUID(sysUID);
         tmpMasterNode.setMetaNodePraefix(nodePraefix);
         tmpMasterNode.setMetaNodeNummer(nodeNummer);
         tmpMasterNode.setEbene(0);
+        tmpMasterNode.setCachedParentHierarchy(cachedParentHierarchy);
+
         return tmpMasterNode;
     }
 

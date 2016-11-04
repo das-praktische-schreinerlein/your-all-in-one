@@ -4,9 +4,12 @@
 ###################
 SCRIPT_DIR=$(dirname $0)/
 LINUX_BASE_DIR=${SCRIPT_DIR}/../
+ME=`basename "$0"`
 
 # load utils
 . ${LINUX_BASE_DIR}/utils.sh
+
+echo "$ME: prepare packages for build"
 
 # set timezone
 echo 'Europe/Berlin' | tee /etc/timezone > /dev/null
