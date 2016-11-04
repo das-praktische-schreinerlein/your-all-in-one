@@ -52,6 +52,7 @@
     - **Aufbau produktiver CI-Server (YAIO2962)**
         - jenkins on docker to build yaio-docker-image (YAIO2965)
         - Jenkins: Job to start docker-yaio and start e2e (YAIO2966)
+        - see it on [GitHub docker-yaioci](https://github.com/das-praktische-schreinerlein/docker-yaioci)
 
 ## Changelog for release: feature-YAIO2698-improvements-201608-RELEASE
 - **YaioApp (YAIO2709)**

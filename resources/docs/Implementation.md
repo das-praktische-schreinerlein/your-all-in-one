@@ -156,3 +156,9 @@
     - **Virtualisation**
         - Docker: [Docker](https://www.docker.com/)
         - Vagrant: [Vagrant](https://www.vagrantup.com/)
+
+### CI-server docker-yaioci
+- functionality
+    - a set of docker-images for a ci-system based on jenkins, sonarcube and postgres 
+    - inspired by an article of [Marcel Birkner](https://blog.codecentric.de/en/2015/10/continuous-integration-platform-using-docker-container-jenkins-sonarqube-nexus-gitlab)  
+- use subproject [docker-yaioci on Github](https://github.com/das-praktische-schreinerlein/docker-yaioci)
