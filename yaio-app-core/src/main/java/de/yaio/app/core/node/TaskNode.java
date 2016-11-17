@@ -38,7 +38,7 @@ import java.util.Date;
 @Entity
 public class TaskNode extends BaseNode implements ExtendedWorkflowData {
     @Transient
-    protected static TaskNodeService nodeDataService = TaskNodeService.getInstance();
+    private static TaskNodeService nodeDataService = TaskNodeService.getInstance();
 
     @XmlTransient
     @JsonIgnore

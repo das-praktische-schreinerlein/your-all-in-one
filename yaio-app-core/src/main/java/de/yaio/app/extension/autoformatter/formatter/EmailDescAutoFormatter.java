@@ -38,19 +38,6 @@ import static de.yaio.app.datatransfer.importer.parser.Parser.CONST_PATTERN_SEG_
  */
 @Service
 public class EmailDescAutoFormatter extends BaseNodeDescAutoFormatter {
-    @Autowired
-    protected ResDocumentService resDocumentService;
-
-    // Logger
-    private static final Logger LOGGER = Logger.getLogger(EmailDescAutoFormatter.class);
-
-    @Override
-    public void genMetadataForNodes(final Set<BaseNode> emailNodes) throws IOExceptionWithCause {
-        for (BaseNode node : emailNodes) {
-            genMetadataForNode(node);
-        }
-    }
-
     @Override
     public void genMetadataForNode(final BaseNode node) throws IOExceptionWithCause {
         for (BaseNode subNode : node.getChildNodes()) {

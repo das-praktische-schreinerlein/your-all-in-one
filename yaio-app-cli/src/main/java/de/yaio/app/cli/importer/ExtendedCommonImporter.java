@@ -43,7 +43,6 @@ public class ExtendedCommonImporter extends CommonImporter {
     // Logger
     private static final Logger LOGGER = Logger.getLogger(ExtendedCommonImporter.class);
 
-    protected String defaultSourceType = "ppl";
     protected PPLImporter pplImporter = null;
     
     /** 

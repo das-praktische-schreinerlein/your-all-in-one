@@ -42,21 +42,10 @@ import java.util.List;
  * Services to parse text to nodes and convert them in different 
  * formats (wiki, ppl, excel..)
  *  
- * @FeatureDomain                Webservice
- * @package                      de.yaio.webapp.controller
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category                     collaboration
- * @copyright                    Copyright (c) 2014, Michael Schreiner
- * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 @Service
 public class ExtendedDatatransferUtils extends DatatransferUtils {
-    @Autowired
-    protected BaseNodeRepository baseNodeDBService;
-
-    @Autowired
-    private ApplicationContext appContext;
-
     // Logger
     private static final Logger LOGGER =
             Logger.getLogger(ExtendedDatatransferUtils.class);

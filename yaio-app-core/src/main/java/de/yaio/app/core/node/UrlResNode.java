@@ -38,7 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 public class UrlResNode extends InfoNode implements ResLocData, ResContentData, ResIndexData {
     @Transient
-    protected static UrlResNodeService nodeDataService = UrlResNodeService.getInstance();
+    private static UrlResNodeService nodeDataService = UrlResNodeService.getInstance();
 
     /**
      */

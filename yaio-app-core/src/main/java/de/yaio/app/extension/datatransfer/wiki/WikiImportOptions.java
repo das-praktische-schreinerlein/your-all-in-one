@@ -27,7 +27,6 @@ public class WikiImportOptions extends ImportOptionsImpl {
     protected boolean flgReadList = true;
     protected boolean flgReadWithStatusOnly = false;
     protected boolean flgReadWithWFStatusOnly = false;
-    protected String strReadIfStatusInListOnly = null;
 
     @Override
     public String toString() {

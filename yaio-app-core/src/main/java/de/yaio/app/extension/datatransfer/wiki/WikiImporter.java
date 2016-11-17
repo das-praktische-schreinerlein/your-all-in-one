@@ -79,11 +79,7 @@ public class WikiImporter extends ImporterImpl {
 
     /** 
      * helper single WikiStructLine
-     * @package                      de.schreiner.yaio.adapter.wiki
      * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
-     * @category                     Parser helper
-     * @copyright                    Copyright (c) 2014, Michael Schreiner
-     * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
      */
     public class WikiStructLine {
 
@@ -325,10 +321,10 @@ public class WikiImporter extends ImporterImpl {
 
             // Filter konfigurieren
             Map<String, Object> mpStates = null;
-            if (inputOptions.strReadIfStatusInListOnly != null) {
+            if (!StringUtils.isEmpty(inputOptions.getStrReadIfStatusInListOnly())) {
                 mpStates = new HashMap<String, Object>();
                 String[] arrStatusFilter = 
-                        inputOptions.strReadIfStatusInListOnly.split(",");
+                        inputOptions.getStrReadIfStatusInListOnly().split(",");
                 for (int zaehler = 0; zaehler < arrStatusFilter.length; zaehler++) {
                     mpStates.put(arrStatusFilter[zaehler], arrStatusFilter[zaehler]);
                 }
@@ -606,7 +602,7 @@ public class WikiImporter extends ImporterImpl {
         // Falls Filter gesetzt: nur zeilen mit Status filtern
         if (inputOptions.flgReadWithStatusOnly
                 || inputOptions.flgReadWithWFStatusOnly
-                || inputOptions.strReadIfStatusInListOnly != null) {
+                || !StringUtils.isEmpty(inputOptions.getStrReadIfStatusInListOnly())) {
             projektWikiLines = filterOnlyKnownNodeTypesFromWikiStructLines(wikiLines, 
                     inputOptions.flgReadWithWFStatusOnly, inputOptions);
         }

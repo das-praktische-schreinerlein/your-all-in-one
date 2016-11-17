@@ -1,4 +1,4 @@
-/** 
+/*
  * software for projectmanagement and documentation
  * 
  * @FeatureDomain                Collaboration 
@@ -26,15 +26,10 @@ public class ExcelOutputService extends ExcelService {
 
     public static final short CONST_CS_BGCOLOR_PLANUNG =
         new HSSFColor.LIGHT_TURQUOISE().getIndex();
-    public static final short CONST_CS_BGCOLOR_IST =
+    private static final short CONST_CS_BGCOLOR_IST =
         new HSSFColor.LIGHT_YELLOW().getIndex();
     public static final short CONST_CS_BGCOLOR_REALT =
         new HSSFColor.LIGHT_ORANGE().getIndex();
-
-    public static final int CONST_COL_WIDTH_INT = 8 * 256;
-    public static final int CONST_COL_WIDTH_DATE = 15 * 256;
-    public static final int CONST_COL_WIDTH_DATE_SHORT = 6 * 256;
-
 
     public HSSFFont fsFieldPlanungBase_Entry;
     public HSSFFont fsFieldPlanungBase_Modul;

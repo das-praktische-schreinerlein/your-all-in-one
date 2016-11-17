@@ -31,7 +31,6 @@ public class OutputOptionsImpl extends SearchOptionsImpl implements OutputOption
     protected Integer intendFuncArea = 80;
     protected boolean flgIntendSum = false;
 
-    protected Integer maxEbene = 9999;
     protected Integer maxUeEbene = 3;
     protected Integer intend = 2;
     protected Integer intendLi = 2;

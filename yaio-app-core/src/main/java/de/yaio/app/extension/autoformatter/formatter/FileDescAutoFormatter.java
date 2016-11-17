@@ -30,19 +30,6 @@ import java.util.Set;
  */
 @Service
 public class FileDescAutoFormatter extends BaseNodeDescAutoFormatter {
-    @Autowired
-    protected ResDocumentService resDocumentService;
-
-    // Logger
-    private static final Logger LOGGER = Logger.getLogger(FileDescAutoFormatter.class);
-
-    @Override
-    public void genMetadataForNodes(final Set<BaseNode> nodes) throws IOExceptionWithCause {
-        for (BaseNode node : nodes) {
-            genMetadataForNode(node);
-        }
-    }
-
     @Override
     protected boolean checkConditions(final BaseNode node, List<String> profiles) {
         // Skip

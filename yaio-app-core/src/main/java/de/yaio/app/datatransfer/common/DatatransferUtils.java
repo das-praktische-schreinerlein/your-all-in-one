@@ -55,7 +55,7 @@ public class DatatransferUtils {
     protected BaseNodeRepository baseNodeDBService;
 
     @Autowired
-    private ApplicationContext appContext;
+    protected ApplicationContext appContext;
 
     // Logger
     private static final Logger LOGGER =
