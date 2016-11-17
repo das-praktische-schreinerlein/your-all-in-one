@@ -13,19 +13,17 @@
  */
 package de.yaio.app.server.restcontroller;
 
-import static org.hamcrest.core.Is.is;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-
+import com.jayway.jsonpath.JsonPath;
+import de.yaio.app.core.node.BaseNode;
+import de.yaio.app.core.node.UrlResNode;
 import org.hamcrest.core.IsNull;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.jayway.jsonpath.JsonPath;
-
-import de.yaio.app.core.node.BaseNode;
-import de.yaio.app.core.node.UrlResNode;
+import static org.hamcrest.core.Is.is;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 /** 
  * test: RESTFull webservices for UrlResNodes

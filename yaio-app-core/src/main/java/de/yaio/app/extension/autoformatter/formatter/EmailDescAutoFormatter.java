@@ -16,10 +16,7 @@ package de.yaio.app.extension.autoformatter.formatter;
 import de.yaio.app.core.node.BaseNode;
 import de.yaio.app.core.node.UrlResNode;
 import de.yaio.app.core.nodeservice.UrlResNodeService;
-import de.yaio.app.extension.dms.services.ResDocumentService;
 import de.yaio.commons.io.IOExceptionWithCause;
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.mail.Address;
@@ -29,7 +26,9 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.*;
+import java.util.Date;
+import java.util.Enumeration;
+import java.util.List;
 
 import static de.yaio.app.datatransfer.importer.parser.Parser.CONST_PATTERN_SEG_NAME;
 

@@ -13,8 +13,8 @@
  */
 package de.yaio.app.datatransfer.exporter.formatter;
 
-import de.yaio.app.datatransfer.exporter.OutputOptions;
 import de.yaio.app.core.datadomain.DocLayoutData;
+import de.yaio.app.datatransfer.exporter.OutputOptions;
 
 /** 
  * interface with service-functions for formatting of dataDomain: DocLayoutData

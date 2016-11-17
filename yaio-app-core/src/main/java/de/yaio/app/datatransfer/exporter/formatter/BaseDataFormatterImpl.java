@@ -13,10 +13,10 @@
  */
 package de.yaio.app.datatransfer.exporter.formatter;
 
+import de.yaio.app.core.datadomain.BaseData;
 import de.yaio.app.core.datadomain.DataDomain;
 import de.yaio.app.datatransfer.exporter.Exporter;
 import de.yaio.app.datatransfer.exporter.OutputOptions;
-import de.yaio.app.core.datadomain.BaseData;
 import org.apache.log4j.Logger;
 
 /** 

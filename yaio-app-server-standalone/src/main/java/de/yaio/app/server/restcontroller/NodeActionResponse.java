@@ -13,8 +13,8 @@
  */
 package de.yaio.app.server.restcontroller;
 
-import de.yaio.app.datatransfer.json.CommonJSONResponse;
 import de.yaio.app.core.node.BaseNode;
+import de.yaio.app.datatransfer.json.CommonJSONResponse;
 
 import java.util.List;
 

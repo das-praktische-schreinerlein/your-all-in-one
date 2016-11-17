@@ -15,8 +15,8 @@ package de.yaio.app.core.datadomainservice;
 
 import de.yaio.app.core.datadomain.DataDomain;
 import de.yaio.app.core.datadomain.SysData;
-import de.yaio.commons.data.DataUtils;
 import de.yaio.app.core.nodeservice.NodeService;
+import de.yaio.commons.data.DataUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 

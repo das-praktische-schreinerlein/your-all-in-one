@@ -13,12 +13,14 @@
  */
 package de.yaio.app.server.restcontroller;
 
-import de.yaio.app.core.dbservice.*;
+import de.yaio.app.core.dbservice.BaseNodeRepository;
+import de.yaio.app.core.dbservice.BaseNodeSearchDBService;
+import de.yaio.app.core.dbservice.SearchOptions;
+import de.yaio.app.core.dbservice.SearchOptionsImpl;
 import de.yaio.app.core.node.*;
 import de.yaio.app.core.nodeservice.BaseNodeService;
 import de.yaio.app.core.nodeservice.UrlResNodeService;
 import de.yaio.app.datatransfer.common.ConverterException;
-import de.yaio.app.datatransfer.common.DatatransferUtils;
 import de.yaio.app.extension.datatransfer.common.ExtendedDatatransferUtils;
 import de.yaio.app.extension.dms.services.ResContentDataService;
 import de.yaio.app.server.controller.CommonApiConfig;

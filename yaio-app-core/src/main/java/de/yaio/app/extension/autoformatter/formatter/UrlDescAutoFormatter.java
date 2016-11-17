@@ -16,14 +16,10 @@ package de.yaio.app.extension.autoformatter.formatter;
 import de.yaio.app.core.datadomain.ResIndexData;
 import de.yaio.app.core.node.BaseNode;
 import de.yaio.app.core.node.UrlResNode;
-import de.yaio.app.extension.dms.services.ResDocumentService;
 import de.yaio.commons.io.IOExceptionWithCause;
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * format url-webshots

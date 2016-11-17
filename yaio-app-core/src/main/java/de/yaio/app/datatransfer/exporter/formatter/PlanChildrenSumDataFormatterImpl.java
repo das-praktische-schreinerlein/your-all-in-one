@@ -15,9 +15,9 @@ package de.yaio.app.datatransfer.exporter.formatter;
 
 import de.yaio.app.core.datadomain.DataDomain;
 import de.yaio.app.core.datadomain.PlanChildrenSumData;
+import de.yaio.app.core.utils.Calculator;
 import de.yaio.app.datatransfer.exporter.Exporter;
 import de.yaio.app.datatransfer.exporter.OutputOptions;
-import de.yaio.app.core.utils.Calculator;
 import org.apache.log4j.Logger;
 
 import java.util.Date;

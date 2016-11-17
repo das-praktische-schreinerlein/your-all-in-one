@@ -13,16 +13,10 @@
  */
 package de.yaio.app.server;
 
-import de.yaio.app.server.restcontroller.EventNodeRestControllerTest;
+import de.yaio.app.server.restcontroller.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
-
-import de.yaio.app.server.restcontroller.InfoNodeRestControllerTest;
-import de.yaio.app.server.restcontroller.MasterNodeRestControllerTest;
-import de.yaio.app.server.restcontroller.SymLinkNodeRestControllerTest;
-import de.yaio.app.server.restcontroller.TaskNodeRestControllerTest;
-import de.yaio.app.server.restcontroller.UrlResNodeRestControllerTest;
 
 /** 
  * Testsuite for the restFULL-webservice-logic

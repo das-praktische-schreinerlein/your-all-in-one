@@ -13,13 +13,9 @@
  */
 package de.yaio.app.extension.datatransfer.mail;
 
-import de.yaio.app.core.datadomain.ResIndexData;
 import de.yaio.app.core.dbservice.BaseNodeFilterFactory;
 import de.yaio.app.core.dbservice.BaseNodeRepository;
 import de.yaio.app.core.node.BaseNode;
-import de.yaio.app.core.node.UrlResNode;
-import de.yaio.app.core.nodeservice.NodeService;
-import de.yaio.app.core.nodeservice.UrlResNodeService;
 import de.yaio.app.utils.db.DBFilter;
 import de.yaio.app.utils.db.DBFilterFactory;
 import de.yaio.app.utils.db.DBFilterUtils;
@@ -29,11 +25,9 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.activation.DataHandler;
-import javax.mail.*;
+import javax.mail.Message;
+import javax.mail.MessagingException;
 import javax.persistence.TypedQuery;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

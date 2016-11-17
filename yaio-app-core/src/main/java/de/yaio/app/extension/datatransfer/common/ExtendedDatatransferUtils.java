@@ -31,8 +31,6 @@ import de.yaio.app.extension.datatransfer.wiki.WikiImportOptions;
 import de.yaio.app.extension.datatransfer.wiki.WikiImporter;
 import de.yaio.app.extension.datatransfer.wiki.WikiImporter.WikiStructLine;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
