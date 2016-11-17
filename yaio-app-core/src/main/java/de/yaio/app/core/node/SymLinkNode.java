@@ -20,6 +20,7 @@ import de.yaio.app.core.nodeservice.SymLinkNodeService;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.data.annotation.Transient;
 
 import javax.persistence.Entity;
 import javax.validation.constraints.Size;
@@ -35,7 +36,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 public class SymLinkNode extends BaseNode implements SymLinkData {
 
-    protected static SymLinkNodeService nodeDataService = SymLinkNodeService.getInstance();
+    @Transient
+    private static SymLinkNodeService nodeDataService = SymLinkNodeService.getInstance();
 
     /**
      */
