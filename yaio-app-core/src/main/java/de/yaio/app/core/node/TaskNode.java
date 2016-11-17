@@ -86,6 +86,7 @@ public class TaskNode extends BaseNode implements ExtendedWorkflowData {
     public void resetExtendedWorkflowData() {
     }
 
+    @Override
     public String toString() {
         return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }

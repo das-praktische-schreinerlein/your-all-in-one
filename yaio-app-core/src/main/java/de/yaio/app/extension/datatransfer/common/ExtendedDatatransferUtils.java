@@ -264,10 +264,12 @@ public class ExtendedDatatransferUtils extends DatatransferUtils {
         }
     }
 
+    @Override
     protected BaseNodeRepository getBaseNodeRepository() {
         return baseNodeDBService;
     }
 
+    @Override
     protected JPAExporter getJPAExporter() {
         JPAExporter exporter = new JPAExporter();
         ContextHelper.getInstance().autowireService(appContext, exporter);

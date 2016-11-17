@@ -41,6 +41,7 @@ public class EventNode extends TaskNode {
         return nodeDataService;
     }
 
+    @Override
     public String toString() {
         return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }

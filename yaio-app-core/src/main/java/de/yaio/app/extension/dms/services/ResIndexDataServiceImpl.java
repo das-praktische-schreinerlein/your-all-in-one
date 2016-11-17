@@ -60,6 +60,7 @@ public class ResIndexDataServiceImpl extends TriggeredDataDomainRecalcImpl imple
     @Autowired
     protected BaseNodeRepository baseNodeDBService;
 
+    @Override
     public Class<?> getRecalcTargetClass() {
         return ResContentData.class;
     }

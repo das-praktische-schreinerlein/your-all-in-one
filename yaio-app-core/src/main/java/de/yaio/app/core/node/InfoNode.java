@@ -50,6 +50,7 @@ public class InfoNode extends BaseNode implements DocLayoutData {
         this.setDocLayoutTagCommand(null);
     }
 
+    @Override
     public String toString() {
         return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }

@@ -39,12 +39,7 @@ import java.util.regex.Pattern;
 /** 
  * import of Nodes in Wiki-Format
  * 
- * @FeatureDomain                import
- * @package                      de.yaio.extension.datatransfer.wiki
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category                     collaboration
- * @copyright                    Copyright (c) 2014, Michael Schreiner
- * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class WikiImporter extends ImporterImpl {
 
@@ -100,7 +95,7 @@ public class WikiImporter extends ImporterImpl {
 
         /** 
          * create object of WikiStructLine
-                     * @param wiki                   the wiki-sourceline
+         * @param wiki                   the wiki-sourceline
          * @param text                   the text
          * @param desc                   the optional desc
          */
@@ -110,13 +105,14 @@ public class WikiImporter extends ImporterImpl {
             this.desc = desc;
         }
 
+        @Override
         public String toString() {
             return "WL: " + getWiki() + " " + text + " HI:" + getHirarchy();
         }
 
         /** 
          * get the wiki-hirarchy-line
-                     * @return                       wiki-hirarchy-line
+         * @return                       wiki-hirarchy-line
          */
         public String getHirarchy() {
             return this.hirarchy;
@@ -124,7 +120,7 @@ public class WikiImporter extends ImporterImpl {
 
         /** 
          * get clean wiki-text (replace \* -> "", \t - <WLTAB> and escaped desc
-                     * @return                       clean Wiki-text
+         * @return                       clean Wiki-text
          */
         public String getCleanText() {
             // Standardzeile bereinigen
@@ -140,7 +136,7 @@ public class WikiImporter extends ImporterImpl {
 
         /** 
          * append to desc
-                 * @param desc                   desc to append
+         * @param desc                   desc to append
          */
         public void addDesc(final String desc) {
             // an bestehende desc anfuegen
@@ -153,7 +149,7 @@ public class WikiImporter extends ImporterImpl {
 
         /** 
          * get escaped wiki-desc (\n -> <WLBR>, \t -> <WLTAB>
-                     * @param praefix                to set in front of the desc
+         * @param praefix                to set in front of the desc
          * @return                       escaped desc
          */
         public String getEscapedDesc(final String praefix) {

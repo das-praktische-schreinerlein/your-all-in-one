@@ -512,6 +512,7 @@ public class BaseNode implements BaseData, MetaData, SysData,
     
     @XmlTransient
     @JsonIgnore
+    @Override
     public BaseNodeService getBaseNodeService() {
         return nodeService;
     }
@@ -519,12 +520,14 @@ public class BaseNode implements BaseData, MetaData, SysData,
     /**
      * summary of all children workflowstate with the highest priority
      */
+    @Override
     public WorkflowState getWorkflowState() {
         if (workflowState == null || workflowState == WorkflowState.NOWORKFLOW) {
             return this.getBaseNodeService().getWorkflowState(this);
         }
         return workflowState;
     }
+    @Override
     public void setWorkflowState(final WorkflowState istState) {
         workflowState = istState;
     }
@@ -904,50 +907,62 @@ public class BaseNode implements BaseData, MetaData, SysData,
     /**
      * getter
      */
+    @Override
     public Long getImportTmpId() {
         return this.importTmpId;
     }
 
+    @Override
     public void setImportTmpId(Long importTmpId) {
         this.importTmpId = importTmpId;
     }
 
+    @Override
     public String getFullSrc() {
         return this.fullSrc;
     }
 
+    @Override
     public void setFullSrc(String fullSrc) {
         this.fullSrc = fullSrc;
     }
 
+    @Override
     public String getSrcName() {
         return this.srcName;
     }
 
+    @Override
     public void setSrcName(String srcName) {
         this.srcName = srcName;
     }
 
+    @Override
     public String getName() {
         return this.name;
     }
 
+    @Override
     public void setName(String name) {
         this.name = name;
     }
 
+    @Override
     public Integer getEbene() {
         return this.ebene;
     }
 
+    @Override
     public void setEbene(Integer ebene) {
         this.ebene = ebene;
     }
 
+    @Override
     public String getNodeDesc() {
         return this.nodeDesc;
     }
 
+    @Override
     public void setNodeDesc(String nodeDesc) {
         this.nodeDesc = nodeDesc;
     }
@@ -984,74 +999,92 @@ public class BaseNode implements BaseData, MetaData, SysData,
         this.docLayoutFlgCloseDiv = docLayoutFlgCloseDiv;
     }
 
+    @Override
     public String getSysUID() {
         return this.sysUID;
     }
 
+    @Override
     public void setSysUID(String sysUID) {
         this.sysUID = sysUID;
     }
 
+    @Override
     public String getSysCurChecksum() {
         return this.sysCurChecksum;
     }
 
+    @Override
     public void setSysCurChecksum(String sysCurChecksum) {
         this.sysCurChecksum = sysCurChecksum;
     }
 
+    @Override
     public Integer getSysChangeCount() {
         return this.sysChangeCount;
     }
 
+    @Override
     public void setSysChangeCount(Integer sysChangeCount) {
         this.sysChangeCount = sysChangeCount;
     }
 
+    @Override
     public Date getSysCreateDate() {
         return this.sysCreateDate;
     }
 
+    @Override
     public void setSysCreateDate(Date sysCreateDate) {
         this.sysCreateDate = sysCreateDate;
     }
 
+    @Override
     public Date getSysChangeDate() {
         return this.sysChangeDate;
     }
 
+    @Override
     public void setSysChangeDate(Date sysChangeDate) {
         this.sysChangeDate = sysChangeDate;
     }
 
+    @Override
     public String getMetaNodePraefix() {
         return this.metaNodePraefix;
     }
 
+    @Override
     public void setMetaNodePraefix(String metaNodePraefix) {
         this.metaNodePraefix = metaNodePraefix;
     }
 
+    @Override
     public String getMetaNodeNummer() {
         return this.metaNodeNummer;
     }
 
+    @Override
     public void setMetaNodeNummer(String metaNodeNummer) {
         this.metaNodeNummer = metaNodeNummer;
     }
 
+    @Override
     public String getMetaNodeTypeTags() {
         return this.metaNodeTypeTags;
     }
 
+    @Override
     public void setMetaNodeTypeTags(String metaNodeTypeTags) {
         this.metaNodeTypeTags = metaNodeTypeTags;
     }
 
+    @Override
     public String getMetaNodeSubType() {
         return this.metaNodeSubType;
     }
 
+    @Override
     public void setMetaNodeSubType(String metaNodeSubType) {
         this.metaNodeSubType = metaNodeSubType;
     }
@@ -1088,106 +1121,132 @@ public class BaseNode implements BaseData, MetaData, SysData,
         this.planTask = planTask;
     }
 
+    @Override
     public Date getPlanCalcStart() {
         return this.planCalcStart;
     }
 
+    @Override
     public void setPlanCalcStart(Date planCalcStart) {
         this.planCalcStart = planCalcStart;
     }
 
+    @Override
     public Date getPlanCalcEnde() {
         return this.planCalcEnde;
     }
 
+    @Override
     public void setPlanCalcEnde(Date planCalcEnde) {
         this.planCalcEnde = planCalcEnde;
     }
 
+    @Override
     public String getPlanCalcCheckSum() {
         return this.planCalcCheckSum;
     }
 
+    @Override
     public void setPlanCalcCheckSum(String planCalcCheckSum) {
         this.planCalcCheckSum = planCalcCheckSum;
     }
 
+    @Override
     public Date getPlanChildrenSumStart() {
         return this.planChildrenSumStart;
     }
 
+    @Override
     public void setPlanChildrenSumStart(Date planChildrenSumStart) {
         this.planChildrenSumStart = planChildrenSumStart;
     }
 
+    @Override
     public Date getPlanChildrenSumEnde() {
         return this.planChildrenSumEnde;
     }
 
+    @Override
     public void setPlanChildrenSumEnde(Date planChildrenSumEnde) {
         this.planChildrenSumEnde = planChildrenSumEnde;
     }
 
+    @Override
     public Double getPlanChildrenSumAufwand() {
         return this.planChildrenSumAufwand;
     }
 
+    @Override
     public void setPlanChildrenSumAufwand(Double planChildrenSumAufwand) {
         this.planChildrenSumAufwand = planChildrenSumAufwand;
     }
 
+    @Override
     public Integer getPlanDuration() {
         return this.planDuration;
     }
 
+    @Override
     public void setPlanDuration(Integer planDuration) {
         this.planDuration = planDuration;
     }
 
+    @Override
     public PlanDependencieData.DurationMeasure getPlanDurationMeasure() {
         return this.planDurationMeasure;
     }
 
+    @Override
     public void setPlanDurationMeasure(PlanDependencieData.DurationMeasure planDurationMeasure) {
         this.planDurationMeasure = planDurationMeasure;
     }
 
+    @Override
     public PlanDependencieData.PredecessorType getPlanPredecessorType() {
         return this.planPredecessorType;
     }
 
+    @Override
     public void setPlanPredecessorType(PlanDependencieData.PredecessorType planPredecessorType) {
         this.planPredecessorType = planPredecessorType;
     }
 
+    @Override
     public BaseNode getPlanPredecessor() {
         return this.planPredecessor;
     }
 
+    @Override
     public void setPlanPredecessor(BaseNode planPredecessor) {
         this.planPredecessor = planPredecessor;
     }
 
+    @Override
     public PlanDependencieData.PredecessorDependencieType getPlanPredecessorDependencieType() {
         return this.planPredecessorDependencieType;
     }
 
+    @Override
     public void setPlanPredecessorDependencieType(PlanDependencieData.PredecessorDependencieType planPredecessorDependencieType) {
         this.planPredecessorDependencieType = planPredecessorDependencieType;
     }
 
+    @Override
     public Integer getPlanPredecessorShift() {
         return this.planPredecessorShift;
     }
 
+    @Override
     public void setPlanPredecessorShift(Integer planPredecessorShift) {
         this.planPredecessorShift = planPredecessorShift;
     }
 
+    @Override
     public PlanDependencieData.DurationMeasure getPlanPredecessorShiftMeasure() {
         return this.planPredecessorShiftMeasure;
     }
 
+    @Override
     public void setPlanPredecessorShiftMeasure(PlanDependencieData.DurationMeasure planPredecessorShiftMeasure) {
         this.planPredecessorShiftMeasure = planPredecessorShiftMeasure;
     }
@@ -1232,38 +1291,47 @@ public class BaseNode implements BaseData, MetaData, SysData,
         this.istTask = istTask;
     }
 
+    @Override
     public Double getIstChildrenSumStand() {
         return this.istChildrenSumStand;
     }
 
+    @Override
     public void setIstChildrenSumStand(Double istChildrenSumStand) {
         this.istChildrenSumStand = istChildrenSumStand;
     }
 
+    @Override
     public Date getIstChildrenSumStart() {
         return this.istChildrenSumStart;
     }
 
+    @Override
     public void setIstChildrenSumStart(Date istChildrenSumStart) {
         this.istChildrenSumStart = istChildrenSumStart;
     }
 
+    @Override
     public Date getIstChildrenSumEnde() {
         return this.istChildrenSumEnde;
     }
 
+    @Override
     public void setIstChildrenSumEnde(Date istChildrenSumEnde) {
         this.istChildrenSumEnde = istChildrenSumEnde;
     }
 
+    @Override
     public Double getIstChildrenSumAufwand() {
         return this.istChildrenSumAufwand;
     }
 
+    @Override
     public void setIstChildrenSumAufwand(Double istChildrenSumAufwand) {
         this.istChildrenSumAufwand = istChildrenSumAufwand;
     }
 
+    @Override
     public Set<BaseNode> getChildNodes() {
         return this.childNodes;
     }
@@ -1272,62 +1340,77 @@ public class BaseNode implements BaseData, MetaData, SysData,
         this.childNodes = childNodes;
     }
 
+    @Override
     public Integer getStatChildNodeCount() {
         return this.statChildNodeCount;
     }
 
+    @Override
     public void setStatChildNodeCount(Integer statChildNodeCount) {
         this.statChildNodeCount = statChildNodeCount;
     }
 
+    @Override
     public Integer getStatWorkflowCount() {
         return this.statWorkflowCount;
     }
 
+    @Override
     public void setStatWorkflowCount(Integer statWorkflowCount) {
         this.statWorkflowCount = statWorkflowCount;
     }
 
+    @Override
     public Integer getStatWorkflowTodoCount() {
         return this.statWorkflowTodoCount;
     }
 
+    @Override
     public void setStatWorkflowTodoCount(Integer statWorkflowTodoCount) {
         this.statWorkflowTodoCount = statWorkflowTodoCount;
     }
 
+    @Override
     public void setStatUrlResCount(Integer statUrlResCount) {
         this.statUrlResCount = statUrlResCount;
     }
 
+    @Override
     public Integer getStatUrlResCount() {
         return this.statUrlResCount;
     }
 
+    @Override
     public void setStatInfoCount(Integer statInfoCount) {
         this.statInfoCount = statInfoCount;
     }
 
+    @Override
     public Integer getStatInfoCount() {
         return this.statInfoCount;
     }
 
+    @Override
     public BaseNode getParentNode() {
         return this.parentNode;
     }
 
+    @Override
     public String getState() {
         return this.state;
     }
 
+    @Override
     public String getType() {
         return this.type;
     }
 
+    @Override
     public Integer getSortPos() {
         return this.sortPos;
     }
 
+    @Override
     public void setSortPos(Integer sortPos) {
         this.sortPos = sortPos;
     }
@@ -1352,10 +1435,12 @@ public class BaseNode implements BaseData, MetaData, SysData,
         this.className = className;
     }
 
+    @Override
     public String getCachedParentHierarchy() {
         return this.cachedParentHierarchy;
     }
 
+    @Override
     public void setCachedParentHierarchy(String cachedParentHierarchy) {
         this.cachedParentHierarchy = cachedParentHierarchy;
     }

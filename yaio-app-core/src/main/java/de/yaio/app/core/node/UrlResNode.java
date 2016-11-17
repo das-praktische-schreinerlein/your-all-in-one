@@ -123,94 +123,117 @@ public class UrlResNode extends InfoNode implements ResLocData, ResContentData, 
         this.setResIndexDMSState(IndexWorkflowState.NOINDEX);
     }
 
+    @Override
     public String getResLocRef() {
         return this.resLocRef;
     }
 
+    @Override
     public void setResLocRef(String resLocRef) {
         this.resLocRef = resLocRef;
     }
 
+    @Override
     public String getResLocName() {
         return this.resLocName;
     }
 
+    @Override
     public void setResLocName(String resLocName) {
         this.resLocName = resLocName;
     }
 
+    @Override
     public String getResLocTags() {
         return this.resLocTags;
     }
 
+    @Override
     public void setResLocTags(String resLocTags) {
         this.resLocTags = resLocTags;
     }
 
+    @Override
     public String getResContentMime() {
         return this.resContentMime;
     }
 
+    @Override
     public void setResContentMime(String resContentMime) {
         this.resContentMime = resContentMime;
     }
 
+    @Override
     public Long getResContentSize() {
         return this.resContentSize;
     }
 
+    @Override
     public void setResContentSize(Long resContentSize) {
         this.resContentSize = resContentSize;
     }
 
+    @Override
     public String getResContentDMSId() {
         return this.resContentDMSId;
     }
 
+    @Override
     public void setResContentDMSId(String resContentDMSId) {
         this.resContentDMSId = resContentDMSId;
     }
 
+    @Override
     public String getResContentDMSType() {
         return this.resContentDMSType;
     }
 
+    @Override
     public void setResContentDMSType(String resContentDMSType) {
         this.resContentDMSType = resContentDMSType;
     }
 
+    @Override
     public UploadWorkflowState getResContentDMSState() {
         return this.resContentDMSState;
     }
 
+    @Override
     public void setResContentDMSState(UploadWorkflowState resContentDMSState) {
         this.resContentDMSState = resContentDMSState;
     }
 
+    @Override
     public String getResIndexDMSId() {
         return this.resIndexDMSId;
     }
 
+    @Override
     public void setResIndexDMSId(String resIndexDMSId) {
         this.resIndexDMSId = resIndexDMSId;
     }
 
+    @Override
     public String getResIndexDMSType() {
         return this.resIndexDMSType;
     }
 
+    @Override
     public void setResIndexDMSType(String resIndexDMSType) {
         this.resIndexDMSType = resIndexDMSType;
     }
 
+    @Override
     public IndexWorkflowState getResIndexDMSState() {
         return this.resIndexDMSState;
     }
 
+    @Override
     public void setResIndexDMSState(IndexWorkflowState resIndexDMSState) {
         this.resIndexDMSState = resIndexDMSState;
     }
 
+    @Override
     public String toString() {
         return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }

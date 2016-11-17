@@ -40,6 +40,7 @@ public enum WorkflowState implements PersistentIntEnumable {
      * get integer-value for workflowstate
      * @return      Integer-value of the workflowstate
      */
+    @Override
     public Integer getValue() {
         return this.value;
     }
@@ -49,6 +50,7 @@ public enum WorkflowState implements PersistentIntEnumable {
      * @param value value to convert to state
      * @return      workflowstate of the Integer-value
      */
+    @Override
     public Enum getEnumFromValue(Integer value) {
         return PersistentIntEnumable.EnumableHelper.getEnumFromValue(this, value, null);
     }

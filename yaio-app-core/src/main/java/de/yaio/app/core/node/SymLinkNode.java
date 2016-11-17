@@ -54,30 +54,37 @@ public class SymLinkNode extends BaseNode implements SymLinkData {
 
     @XmlTransient
     @JsonIgnore
+    @Override
     public BaseNodeService getBaseNodeService() {
         return nodeDataService;
     }
 
+    @Override
     public String getSymLinkRef() {
         return this.symLinkRef;
     }
 
+    @Override
     public void setSymLinkRef(String symLinkRef) {
         this.symLinkRef = symLinkRef;
     }
 
+    @Override
     public String getSymLinkName() {
         return this.symLinkName;
     }
 
+    @Override
     public void setSymLinkName(String symLinkName) {
         this.symLinkName = symLinkName;
     }
 
+    @Override
     public String getSymLinkTags() {
         return this.symLinkTags;
     }
 
+    @Override
     public void setSymLinkTags(String symLinkTags) {
         this.symLinkTags = symLinkTags;
     }
@@ -89,6 +96,7 @@ public class SymLinkNode extends BaseNode implements SymLinkData {
         this.setSymLinkTags(null);
     }
 
+    @Override
     public String toString() {
         return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }

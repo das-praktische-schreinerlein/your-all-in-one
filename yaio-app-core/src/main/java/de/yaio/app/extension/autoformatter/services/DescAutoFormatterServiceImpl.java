@@ -56,6 +56,7 @@ public class DescAutoFormatterServiceImpl extends TriggeredDataDomainRecalcImpl 
     @Autowired
     protected UrlDescAutoFormatter urlFormatter;
 
+    @Override
     public Class<?> getRecalcTargetClass() {
         return ResContentData.class;
     }

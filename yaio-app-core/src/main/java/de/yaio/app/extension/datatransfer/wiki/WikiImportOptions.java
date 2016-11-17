@@ -19,12 +19,7 @@ import de.yaio.app.datatransfer.importer.ImportOptionsImpl;
 /** 
  * options for import of Nodes in Wiki-Format
  * 
- * @FeatureDomain                import
- * @package                      de.yaio.extension.datatransfer.wiki
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category                     collaboration
- * @copyright                    Copyright (c) 2014, Michael Schreiner
- * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class WikiImportOptions extends ImportOptionsImpl {
 
@@ -116,6 +111,7 @@ public class WikiImportOptions extends ImportOptionsImpl {
      * on import
      * @return                       strReadIfStatusInListOnly - commaseparated list of node-stati to filter
      */
+    @Override
     public String getStrReadIfStatusInListOnly() {
         return strReadIfStatusInListOnly;
     }
@@ -125,6 +121,7 @@ public class WikiImportOptions extends ImportOptionsImpl {
      * on import
      * @param strReadIfStatusInListOnly commaseparated list of node-stati to filter
      */
+    @Override
     public void setStrReadIfStatusInListOnly(final String strReadIfStatusInListOnly) {
         this.strReadIfStatusInListOnly = strReadIfStatusInListOnly;
     }
