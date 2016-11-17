@@ -6,14 +6,14 @@
     <parent>
         <groupId>de.yaio.app</groupId>
         <artifactId>yaio-app-pom-parent</artifactId>
-        <version>0.2.0-feature-YAIO2859-improvements-201610-RELEASE</version>
+        <version>0.3.0-feature-YAIO2893-improvements-201612-SNAPSHOT</version>
         <relativePath>../yaio-app-pom-parent/pom.xml</relativePath>
     </parent>
 
     <!-- the base -->
     <groupId>de.yaio.app</groupId>
     <artifactId>yaio-app-pom-springboot</artifactId>
-    <version>0.2.0-feature-YAIO2859-improvements-201610-RELEASE</version>
+    <version>0.3.0-feature-YAIO2893-improvements-201612-SNAPSHOT</version>
     <name>yaio-app-pom-springboot</name>
     <description>a POM for springboot-apps</description>
 
