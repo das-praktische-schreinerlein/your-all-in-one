@@ -6,14 +6,12 @@
     <parent>
         <groupId>de.yaio.app</groupId>
         <artifactId>yaio-app-pom-parent</artifactId>
-        <version>0.3.0-feature-YAIO2893-improvements-201612-SNAPSHOT</version>
+        <version>0.3.0-feature-YAIO2893-improvements-201702-SNAPSHOT</version>
         <relativePath>../yaio-app-pom-parent/pom.xml</relativePath>
     </parent>
 
     <!-- the base -->
-    <groupId>de.yaio.app</groupId>
     <artifactId>yaio-app-full</artifactId>
-    <version>0.3.0-feature-YAIO2893-improvements-201612-SNAPSHOT</version>
     <name>yaio-app-full</name>
     <description>app-full modules for yaio-apps</description>
 
@@ -21,17 +19,17 @@
         <dependency>
             <groupId>de.yaio.app</groupId>
             <artifactId>yaio-app-cli</artifactId>
-            <version>0.3.0-feature-YAIO2893-improvements-201612-SNAPSHOT</version>
+            <version>0.3.0-feature-YAIO2893-improvements-201702-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>de.yaio.app</groupId>
             <artifactId>yaio-app-serverclient</artifactId>
-            <version>0.3.0-feature-YAIO2893-improvements-201612-SNAPSHOT</version>
+            <version>0.3.0-feature-YAIO2893-improvements-201702-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>de.yaio.app</groupId>
             <artifactId>yaio-app-server-full</artifactId>
-            <version>0.3.0-feature-YAIO2893-improvements-201612-SNAPSHOT</version>
+            <version>0.3.0-feature-YAIO2893-improvements-201702-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
