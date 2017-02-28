@@ -11,7 +11,7 @@
     <!-- the base -->
     <groupId>de.yaio.app</groupId>
     <artifactId>yaio</artifactId>
-    <version>0.3.0-feature-YAIO2859-improvements-201702-RELEASE</version>
+    <version>0.3.0-feature-YAIO2893-improvements-201702-RELEASE</version>
     <name>yaio</name>
     <description>YourAllInOne D'Artagnan</description>
     <url>http://www.your-all-in-one.de</url>

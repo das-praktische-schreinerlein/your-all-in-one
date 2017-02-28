@@ -6,7 +6,7 @@
     <parent>
         <groupId>de.yaio.app</groupId>
         <artifactId>yaio-app-pom-parent</artifactId>
-        <version>0.3.0-feature-YAIO2859-improvements-201702-RELEASE</version>
+        <version>0.3.0-feature-YAIO2893-improvements-201702-RELEASE</version>
         <relativePath>../yaio-app-pom-parent/pom.xml</relativePath>
     </parent>
 
@@ -19,7 +19,7 @@
         <dependency>
             <groupId>de.yaio.app</groupId>
             <artifactId>yaio-app-server-full</artifactId>
-            <version>0.3.0-feature-YAIO2859-improvements-201702-RELEASE</version>
+            <version>0.3.0-feature-YAIO2893-improvements-201702-RELEASE</version>
         </dependency>
     </dependencies>
 
