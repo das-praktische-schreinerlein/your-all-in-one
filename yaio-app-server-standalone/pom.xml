@@ -6,7 +6,7 @@
     <parent>
         <groupId>de.yaio.app</groupId>
         <artifactId>yaio-app-pom-springboot-web</artifactId>
-        <version>0.3.0-feature-YAIO2893-improvements-201702-SNAPSHOT</version>
+        <version>0.3.0-feature-YAIO2859-improvements-201702-RELEASE</version>
         <relativePath>../yaio-app-pom-springboot-web/pom.xml</relativePath>
     </parent>
 
@@ -38,12 +38,12 @@
         <dependency>
             <groupId>de.yaio.app</groupId>
             <artifactId>yaio-app-core</artifactId>
-            <version>0.3.0-feature-YAIO2893-improvements-201702-SNAPSHOT</version>
+            <version>0.3.0-feature-YAIO2859-improvements-201702-RELEASE</version>
         </dependency>
         <dependency>
             <groupId>de.yaio.app</groupId>
             <artifactId>yaio-app-webapp</artifactId>
-            <version>0.3.0-feature-YAIO2893-improvements-201702-SNAPSHOT</version>
+            <version>0.3.0-feature-YAIO2859-improvements-201702-RELEASE</version>
         </dependency>
 
         <dependency>
