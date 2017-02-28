@@ -18,8 +18,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
 import de.yaio.app.BaseTest;
 import de.yaio.app.MinimalTestContextConfig;
-import de.yaio.app.config.YaioConfigurationHelper;
 import de.yaio.app.config.ContextHelper;
+import de.yaio.app.config.YaioConfigurationHelper;
 import de.yaio.app.core.datadomainservice.NodeNumberService;
 import de.yaio.app.core.node.BaseNode;
 import de.yaio.commons.cli.CmdLineHelper;
@@ -37,7 +37,6 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 import java.io.IOException;
 import java.nio.charset.Charset;

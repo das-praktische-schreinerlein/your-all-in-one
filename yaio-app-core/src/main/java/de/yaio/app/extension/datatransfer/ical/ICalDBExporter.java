@@ -85,7 +85,8 @@ public class ICalDBExporter extends ICalExporter {
      * @param poOptions              options for output (formatter)
      * @return                       formatted output of node-hierarchy and DataDomains
      */
-    public String genICalForNode(final BaseNode parentNode, 
+    @Override
+    public String genICalForNode(final BaseNode parentNode,
         final OutputOptions poOptions) {
         OutputOptions oOptions = new OutputOptionsImpl(poOptions);
         String res = "";

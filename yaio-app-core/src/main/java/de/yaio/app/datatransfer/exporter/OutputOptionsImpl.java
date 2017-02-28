@@ -31,7 +31,6 @@ public class OutputOptionsImpl extends SearchOptionsImpl implements OutputOption
     protected Integer intendFuncArea = 80;
     protected boolean flgIntendSum = false;
 
-    protected Integer maxEbene = 9999;
     protected Integer maxUeEbene = 3;
     protected Integer intend = 2;
     protected Integer intendLi = 2;
@@ -101,193 +100,252 @@ public class OutputOptionsImpl extends SearchOptionsImpl implements OutputOption
         this.initFilterMaps();
     }
 
+    @Override
     public boolean isFlgDoIntend() {
         return flgDoIntend;
     }
+    @Override
     public void setFlgDoIntend(final boolean flgDoIntend) {
         this.flgDoIntend = flgDoIntend;
     }
+    @Override
     public boolean isFlgIntendSum() {
         return flgIntendSum;
     }
+    @Override
     public void setFlgIntendSum(final boolean flgIntendSum) {
         this.flgIntendSum = flgIntendSum;
     }
+    @Override
     public boolean isFlgShowChildrenSum() {
         return flgShowChildrenSum;
     }
+    @Override
     public void setFlgShowChildrenSum(final boolean flgShowChildrenSum) {
         this.flgShowChildrenSum = flgShowChildrenSum;
     }
+    @Override
     public int getIntendFuncArea() {
         return manageIntValues(intendFuncArea);
     }
+    @Override
     public void setIntendFuncArea(final Integer intendPlanToPos) {
         this.intendFuncArea = intendPlanToPos;
     }
+    @Override
     public boolean isFlgShowBrackets() {
         return flgShowBrackets;
     }
+    @Override
     public void setFlgShowBrackets(final boolean flgShowBrackets) {
         this.flgShowBrackets = flgShowBrackets;
     }
 
+    @Override
     public boolean isFlgShowName() {
         return flgShowName;
     }
+    @Override
     public void setFlgShowName(final boolean flgShowName) {
         this.flgShowName = flgShowName;
     }
+    @Override
     public boolean isFlgShowResLoc() {
         return flgShowResLoc;
     }
 
+    @Override
     public void setFlgShowResLoc(final boolean flgShowResLoc) {
         this.flgShowResLoc = flgShowResLoc;
     }
 
+    @Override
     public boolean isFlgShowSymLink() {
         return flgShowSymLink;
     }
 
+    @Override
     public void setFlgShowSymLink(final boolean flgShowSymLink) {
         this.flgShowSymLink = flgShowSymLink;
     }
 
+    @Override
     public boolean isFlgShowPlan() {
         return flgShowPlan;
     }
+    @Override
     public void setFlgShowPlan(final boolean flgShowPlan) {
         this.flgShowPlan = flgShowPlan;
     }
+    @Override
     public boolean isFlgShowPlanCalc() {
         return flgShowPlanCalc;
     }
+    @Override
     public void setFlgShowPlanCalc(final boolean flgShowPlanCalc) {
         this.flgShowPlanCalc = flgShowPlanCalc;
     }
+    @Override
     public boolean isFlgShowIst() {
         return flgShowIst;
     }
+    @Override
     public void setFlgShowIst(final boolean flgShowIst) {
         this.flgShowIst = flgShowIst;
     }
+    @Override
     public boolean isFlgShowDesc() {
         return flgShowDesc;
     }
+    @Override
     public void setFlgShowDesc(final boolean flgShowDesc) {
         this.flgShowDesc = flgShowDesc;
     }
+    @Override
     public boolean isFlgShowType() {
         return flgShowType;
     }
+    @Override
     public void setFlgShowType(final boolean flgShowType) {
         this.flgShowType = flgShowType;
     }
+    @Override
     public boolean isFlgShowState() {
         return flgShowState;
     }
+    @Override
     public void setFlgShowState(final boolean flgShowState) {
         this.flgShowState = flgShowState;
     }
+    @Override
     public boolean isFlgShowDocLayout() {
         return flgShowDocLayout;
     }
+    @Override
     public void setFlgShowDocLayout(final boolean flgShowDocLayout) {
         this.flgShowDocLayout = flgShowDocLayout;
     }
+    @Override
     public boolean isFlgShowMetaData() {
         return flgShowMetaData;
     }
+    @Override
     public void setFlgShowMetaData(final boolean flgShowMetaData) {
         this.flgShowMetaData = flgShowMetaData;
     }
+    @Override
     public boolean isFlgShowSysData() {
         return flgShowSysData;
     }
+    @Override
     public void setFlgShowSysData(final boolean flgShowSysData) {
         this.flgShowSysData = flgShowSysData;
     }
+    @Override
     public boolean isFlgRecalc() {
         return flgRecalc;
     }
+    @Override
     public void setFlgRecalc(final boolean flgRecalc) {
         this.flgRecalc = flgRecalc;
     }
+    @Override
     public boolean isFlgProcessDocLayout() {
         return flgProcessDocLayout;
     }
+    @Override
     public void setFlgProcessDocLayout(final boolean flgProcessDocLayout) {
         this.flgProcessDocLayout = flgProcessDocLayout;
     }
+    @Override
     public boolean isFlgUsePublicBaseRef() {
         return flgUsePublicBaseRef;
     }
+    @Override
     public void setFlgUsePublicBaseRef(final boolean flgUsePublicBaseRef) {
         this.flgUsePublicBaseRef = flgUsePublicBaseRef;
     }
+    @Override
     public int getMaxEbene() {
         return manageIntValues(maxEbene);
     }
+    @Override
     public void setMaxEbene(final Integer maxEbene) {
         this.maxEbene = maxEbene;
     }
+    @Override
     public int getMaxUeEbene() {
         return manageIntValues(maxUeEbene);
     }
+    @Override
     public void setMaxUeEbene(final Integer maxUeEbene) {
         this.maxUeEbene = maxUeEbene;
     }
+    @Override
     public int getIntend() {
         return manageIntValues(intend);
     }
+    @Override
     public void setIntend(final Integer intend) {
         this.intend = intend;
     }
+    @Override
     public int getIntendLi() {
         return manageIntValues(intendLi);
     }
+    @Override
     public void setIntendLi(final Integer intendLi) {
         this.intendLi = intendLi;
     }
+    @Override
     public int getIntendSys() {
         return manageIntValues(intendSys);
     }
+    @Override
     public void setIntendSys(final Integer intendSys) {
         this.intendSys = intendSys;
     }
 
+    @Override
     public boolean isFlgTrimDesc() {
         return flgTrimDesc;
     }
+    @Override
     public void setFlgTrimDesc(final boolean flgTrimDesc) {
         this.flgTrimDesc = flgTrimDesc;
     }
 
+    @Override
     public boolean isFlgReEscapeDesc() {
         return flgReEscapeDesc;
     }
 
+    @Override
     public void setFlgReEscapeDesc(final boolean flgReEscapeDesc) {
         this.flgReEscapeDesc = flgReEscapeDesc;
     }
 
+    @Override
     public boolean isFlgShowDescWithUe() {
         return flgShowDescWithUe;
     }
 
+    @Override
     public void setFlgShowDescWithUe(final boolean flgShowDescWithUe) {
         this.flgShowDescWithUe = flgShowDescWithUe;
     }
 
+    @Override
     public boolean isFlgShowDescInNextLine() {
         return flgShowDescInNextLine;
     }
 
+    @Override
     public void setFlgShowDescInNextLine(final boolean flgShowDescInNextLine) {
         this.flgShowDescInNextLine = flgShowDescInNextLine;
     }
 
+    @Override
     public void setAllFlgShow(final boolean value) {
         setFlgShowType(value);
         setFlgShowState(value);
@@ -303,7 +361,8 @@ public class OutputOptionsImpl extends SearchOptionsImpl implements OutputOption
         setFlgShowSysData(value);
         setFlgShowDesc(value);
     }
-    
+
+    @Override
     public void resetDefaults() {
         super.resetDefaults();
         this.flgDoIntend = false;

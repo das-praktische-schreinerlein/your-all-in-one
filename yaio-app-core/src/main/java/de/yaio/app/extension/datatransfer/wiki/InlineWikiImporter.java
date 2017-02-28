@@ -22,23 +22,18 @@ import java.util.regex.Pattern;
 /** 
  * import of Nodes in InlineWiki-Format
  * 
- * @FeatureDomain                import
- * @package                      de.yaio.extension.datatransfer.wiki
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category                     collaboration
- * @copyright                    Copyright (c) 2014, Michael Schreiner
- * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class InlineWikiImporter extends WikiImporter {
 
-    protected static final String CONST_UE = "-";
-    protected static final String CONST_LIST = "-";
+    protected static final String CONST_INLINE_UE = "-";
+    protected static final String CONST_INLINE_LIST = "-";
 
-    protected static final String CONST_PATTERN =
-            "^[ ]*?([" + CONST_LIST + "]+)[ ]*(.*)";
+    protected static final String CONST_INLINE_PATTERN =
+            "^[ ]*?([" + CONST_INLINE_LIST + "]+)[ ]*(.*)";
 
-    private static final Pattern CONST_WIKI =
-            Pattern.compile(CONST_PATTERN, Pattern.UNICODE_CHARACTER_CLASS);
+    private static final Pattern CONST_INLINE_WIKI =
+            Pattern.compile(CONST_INLINE_PATTERN, Pattern.UNICODE_CHARACTER_CLASS);
 
     protected int localId = 1;
     protected String strMetaIdPraefix = "Inline";
@@ -67,16 +62,16 @@ public class InlineWikiImporter extends WikiImporter {
 
     @Override
     public Pattern getWikiPattern() {
-        return CONST_WIKI;
+        return CONST_INLINE_WIKI;
     }
 
     @Override
     public String getWikiCharUe() {
-        return CONST_UE;
+        return CONST_INLINE_UE;
     }
     
     @Override
     public String getWikiCharList() {
-        return CONST_LIST;
+        return CONST_INLINE_LIST;
     }
 }

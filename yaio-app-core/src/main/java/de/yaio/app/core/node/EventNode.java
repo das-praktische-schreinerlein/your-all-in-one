@@ -21,6 +21,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.beans.factory.annotation.Configurable;
 
 import javax.persistence.Entity;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlTransient;
 
 /** 
@@ -32,7 +33,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 public class EventNode extends TaskNode {
 
-    protected static EventNodeService nodeDataService = EventNodeService.getInstance();
+    @Transient
+    private static EventNodeService nodeDataService = EventNodeService.getInstance();
 
     @XmlTransient
     @JsonIgnore
@@ -41,6 +43,7 @@ public class EventNode extends TaskNode {
         return nodeDataService;
     }
 
+    @Override
     public String toString() {
         return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }

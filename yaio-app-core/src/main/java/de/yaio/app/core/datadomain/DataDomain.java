@@ -13,8 +13,8 @@
  */
 package de.yaio.app.core.datadomain;
 
-import de.yaio.app.core.nodeservice.BaseNodeService;
 import de.yaio.app.core.node.BaseNode;
+import de.yaio.app.core.nodeservice.BaseNodeService;
 import de.yaio.app.core.nodeservice.NodeService;
 
 import javax.validation.ConstraintViolation;

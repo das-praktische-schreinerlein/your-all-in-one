@@ -44,6 +44,7 @@ public class WorkflowRecalcDataServiceImpl extends TriggeredDataDomainRecalcImpl
     private static final Logger LOGGER =
             Logger.getLogger(WorkflowRecalcDataServiceImpl.class);
 
+    @Override
     public Class<?> getRecalcTargetClass() {
         return BaseWorkflowData.class;
     }

@@ -26,7 +26,6 @@ import org.springframework.mock.staticmock.MockStaticEntityMethods;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.TimeZone;
 
 /** 
  * test of the wiki-importer-logic<br>

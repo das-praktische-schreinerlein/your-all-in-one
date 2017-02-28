@@ -13,9 +13,9 @@
  */
 package de.yaio.app.core.utils;
 
-import de.yaio.app.core.datadomain.WorkflowState;
 import de.yaio.app.core.datadomain.ResContentData.UploadWorkflowState;
 import de.yaio.app.core.datadomain.ResIndexData.IndexWorkflowState;
+import de.yaio.app.core.datadomain.WorkflowState;
 import org.apache.log4j.Logger;
 
 import java.sql.Timestamp;

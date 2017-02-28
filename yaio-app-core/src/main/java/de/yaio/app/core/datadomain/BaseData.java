@@ -35,7 +35,9 @@ public interface BaseData extends DataDomain {
     void setImportTmpId(Long id);
     String getType();
     void setType(String type);
+    @Override
     String getName();
+    @Override
     void setName(String name);
     String getParentNameHirarchry(String delimiter, boolean directionForward);
 

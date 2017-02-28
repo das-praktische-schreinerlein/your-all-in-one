@@ -31,8 +31,6 @@ import de.yaio.app.extension.datatransfer.wiki.WikiImportOptions;
 import de.yaio.app.extension.datatransfer.wiki.WikiImporter;
 import de.yaio.app.extension.datatransfer.wiki.WikiImporter.WikiStructLine;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,21 +40,10 @@ import java.util.List;
  * Services to parse text to nodes and convert them in different 
  * formats (wiki, ppl, excel..)
  *  
- * @FeatureDomain                Webservice
- * @package                      de.yaio.webapp.controller
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category                     collaboration
- * @copyright                    Copyright (c) 2014, Michael Schreiner
- * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 @Service
 public class ExtendedDatatransferUtils extends DatatransferUtils {
-    @Autowired
-    protected BaseNodeRepository baseNodeDBService;
-
-    @Autowired
-    private ApplicationContext appContext;
-
     // Logger
     private static final Logger LOGGER =
             Logger.getLogger(ExtendedDatatransferUtils.class);
@@ -264,10 +251,12 @@ public class ExtendedDatatransferUtils extends DatatransferUtils {
         }
     }
 
+    @Override
     protected BaseNodeRepository getBaseNodeRepository() {
         return baseNodeDBService;
     }
 
+    @Override
     protected JPAExporter getJPAExporter() {
         JPAExporter exporter = new JPAExporter();
         ContextHelper.getInstance().autowireService(appContext, exporter);

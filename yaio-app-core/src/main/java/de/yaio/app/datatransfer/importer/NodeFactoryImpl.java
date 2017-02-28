@@ -87,6 +87,7 @@ public class NodeFactoryImpl implements NodeFactory {
         this.hshNodeTypeIdentifier.put(type, classType);
     }
 
+    @Override
     public Map<String, Class<?>> getHshNodeTypeIdentifier() {
         return hshNodeTypeIdentifier;
     }
@@ -124,7 +125,7 @@ public class NodeFactoryImpl implements NodeFactory {
         return this.hshDataDomainParser;
     }
 
-
+    @Override
     public Set<Parser> getHshDataDomainParser() {
         return hshDataDomainParser;
     }

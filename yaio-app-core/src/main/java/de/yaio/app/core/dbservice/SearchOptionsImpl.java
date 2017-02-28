@@ -13,8 +13,8 @@
  */
 package de.yaio.app.core.dbservice;
 
-import de.yaio.commons.data.DataUtils;
 import de.yaio.app.core.datadomain.WorkflowState;
+import de.yaio.commons.data.DataUtils;
 import org.apache.commons.collections4.MapUtils;
 
 import java.util.Date;

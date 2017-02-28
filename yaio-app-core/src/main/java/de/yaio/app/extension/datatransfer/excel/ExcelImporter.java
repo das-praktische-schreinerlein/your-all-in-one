@@ -1,4 +1,4 @@
-/** 
+/*
  * software for projectmanagement and documentation
  * 
  * @FeatureDomain                Collaboration 
@@ -44,12 +44,7 @@ import java.util.*;
 /** 
  * import of Nodes from Excel
  * 
- * @FeatureDomain                import
- * @package                      de.yaio.extension.datatransfer.excel
  * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category                     collaboration
- * @copyright                    Copyright (c) 2014, Michael Schreiner
- * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 public class ExcelImporter extends ImporterImpl {
 
@@ -73,9 +68,8 @@ public class ExcelImporter extends ImporterImpl {
 
         // WorkBook erzeugen
         HSSFWorkbook wb = null;
-        try {
-            File inFile = new File(inFileName);
-            InputStream is = new FileInputStream(inFile);
+        File inFile = new File(inFileName);
+        try (InputStream is = new FileInputStream(inFile);) {
             wb = new HSSFWorkbook(is);
         } catch (IOException ex) {
             throw new IllegalArgumentException("cant parse excelfile:" + inFileName, ex);

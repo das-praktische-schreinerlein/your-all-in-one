@@ -13,8 +13,8 @@
  */
 package de.yaio.app.core.datadomainservice;
 
-import de.yaio.app.core.datadomain.DataDomain;
 import de.yaio.app.core.datadomain.CachedData;
+import de.yaio.app.core.datadomain.DataDomain;
 import de.yaio.app.core.node.BaseNode;
 import de.yaio.app.core.nodeservice.NodeService;
 import org.apache.commons.lang3.StringUtils;
