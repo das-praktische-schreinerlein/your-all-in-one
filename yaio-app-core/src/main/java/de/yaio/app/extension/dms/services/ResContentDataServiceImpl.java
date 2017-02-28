@@ -57,6 +57,7 @@ public class ResContentDataServiceImpl extends TriggeredDataDomainRecalcImpl imp
     @Autowired
     protected DMSClient dmsProvider;
 
+    @Override
     public Class<?> getRecalcTargetClass() {
         return ResContentData.class;
     }

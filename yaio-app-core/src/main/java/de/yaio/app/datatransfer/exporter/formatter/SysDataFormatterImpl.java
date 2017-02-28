@@ -14,9 +14,9 @@
 package de.yaio.app.datatransfer.exporter.formatter;
 
 import de.yaio.app.core.datadomain.DataDomain;
+import de.yaio.app.core.datadomain.SysData;
 import de.yaio.app.datatransfer.exporter.Exporter;
 import de.yaio.app.datatransfer.exporter.OutputOptions;
-import de.yaio.app.core.datadomain.SysData;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 

@@ -20,6 +20,7 @@ import de.yaio.app.core.nodeservice.InfoNodeService;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.data.annotation.Transient;
 
 import javax.persistence.Entity;
 import javax.xml.bind.annotation.XmlTransient;
@@ -33,7 +34,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 public class InfoNode extends BaseNode implements DocLayoutData {
     
-    protected static InfoNodeService nodeDataService = InfoNodeService.getInstance();
+    @Transient
+    private static InfoNodeService nodeDataService = InfoNodeService.getInstance();
 
     @XmlTransient
     @JsonIgnore
@@ -50,6 +52,7 @@ public class InfoNode extends BaseNode implements DocLayoutData {
         this.setDocLayoutTagCommand(null);
     }
 
+    @Override
     public String toString() {
         return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }

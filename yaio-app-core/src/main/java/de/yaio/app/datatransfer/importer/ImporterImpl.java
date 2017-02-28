@@ -83,14 +83,16 @@ public class ImporterImpl implements Importer {
     }
 
 
+    @Override
     public Map<String, String> getHshNodeTypeIdentifierVariantMapping() {
         return hshNodeTypeIdentifierVariantMapping;
     }
-    
+
     protected void initNodeFactory(final ImportOptions iOptions) {
         this.nodeFactory = new NodeFactoryImpl(iOptions);
     }
-    
+
+    @Override
     public NodeFactory getNodeFactory() {
         return this.nodeFactory;
     }
@@ -116,10 +118,12 @@ public class ImporterImpl implements Importer {
         this.hshWorkflowNodeTypeMapping.put(type, masterType);
     }
 
+    @Override
     public Map<String, String> getHshWorkflowNodeTypeMapping() {
         return hshWorkflowNodeTypeMapping;
     }
 
+    @Override
     public boolean isWFStatus(final String state) {
         if (this.hshWorkflowNodeTypeMapping.get(state) != null) {
             return true;
@@ -137,5 +141,4 @@ public class ImporterImpl implements Importer {
         return myNodeFactory.createNodeObjFromText(
                 classType, curId++, strFullSrc, srcName, curParentNode);
     }
-    
 }

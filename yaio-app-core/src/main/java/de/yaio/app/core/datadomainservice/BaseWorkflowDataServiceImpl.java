@@ -15,13 +15,13 @@ package de.yaio.app.core.datadomainservice;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import de.yaio.app.core.datadomain.*;
-import de.yaio.app.core.node.TaskNode;
-import de.yaio.commons.data.DataUtils;
 import de.yaio.app.core.node.EventNode;
+import de.yaio.app.core.node.TaskNode;
 import de.yaio.app.core.nodeservice.BaseNodeService;
 import de.yaio.app.core.nodeservice.NodeService;
 import de.yaio.app.core.utils.Calculator;
 import de.yaio.app.core.utils.PredecessorCalculator;
+import de.yaio.commons.data.DataUtils;
 import org.apache.log4j.Logger;
 
 import javax.xml.bind.annotation.XmlTransient;

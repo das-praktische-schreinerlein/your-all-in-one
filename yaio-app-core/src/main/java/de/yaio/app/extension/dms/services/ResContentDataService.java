@@ -13,9 +13,9 @@
  */
 package de.yaio.app.extension.dms.services;
 
-import de.yaio.app.core.datadomainservice.TriggeredDataDomainRecalc;
 import de.yaio.app.core.datadomain.ResContentData;
 import de.yaio.app.core.datadomain.ResLocData;
+import de.yaio.app.core.datadomainservice.TriggeredDataDomainRecalc;
 import de.yaio.commons.io.IOExceptionWithCause;
 
 import java.io.IOException;

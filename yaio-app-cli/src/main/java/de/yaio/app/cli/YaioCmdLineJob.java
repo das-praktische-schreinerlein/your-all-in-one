@@ -51,6 +51,7 @@ public abstract class YaioCmdLineJob extends CmdLineJob {
 
     protected abstract void configureContext();
 
+    @Override
     protected void initJob() {
         // init configuration
         Configuration config = configurationHelper.initConfiguration();
@@ -64,6 +65,7 @@ public abstract class YaioCmdLineJob extends CmdLineJob {
                 " contextConfigs:" + ContextHelper.getInstance().getSpringConfig());
     }
 
+    @Override
     protected void cleanUpAfterJob() {
         // TODO: hack to close HSLDB-connection -> Hibernate doesn't close the
         //       database and so the content is not written to file

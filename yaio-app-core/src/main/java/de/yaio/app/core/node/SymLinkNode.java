@@ -20,6 +20,7 @@ import de.yaio.app.core.nodeservice.SymLinkNodeService;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.data.annotation.Transient;
 
 import javax.persistence.Entity;
 import javax.validation.constraints.Size;
@@ -35,7 +36,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 public class SymLinkNode extends BaseNode implements SymLinkData {
 
-    protected static SymLinkNodeService nodeDataService = SymLinkNodeService.getInstance();
+    @Transient
+    private static SymLinkNodeService nodeDataService = SymLinkNodeService.getInstance();
 
     /**
      */
@@ -54,30 +56,37 @@ public class SymLinkNode extends BaseNode implements SymLinkData {
 
     @XmlTransient
     @JsonIgnore
+    @Override
     public BaseNodeService getBaseNodeService() {
         return nodeDataService;
     }
 
+    @Override
     public String getSymLinkRef() {
         return this.symLinkRef;
     }
 
+    @Override
     public void setSymLinkRef(String symLinkRef) {
         this.symLinkRef = symLinkRef;
     }
 
+    @Override
     public String getSymLinkName() {
         return this.symLinkName;
     }
 
+    @Override
     public void setSymLinkName(String symLinkName) {
         this.symLinkName = symLinkName;
     }
 
+    @Override
     public String getSymLinkTags() {
         return this.symLinkTags;
     }
 
+    @Override
     public void setSymLinkTags(String symLinkTags) {
         this.symLinkTags = symLinkTags;
     }
@@ -89,6 +98,7 @@ public class SymLinkNode extends BaseNode implements SymLinkData {
         this.setSymLinkTags(null);
     }
 
+    @Override
     public String toString() {
         return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }

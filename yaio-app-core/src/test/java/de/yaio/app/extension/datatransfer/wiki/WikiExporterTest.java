@@ -29,7 +29,6 @@ import org.junit.runners.JUnit4;
 import org.springframework.mock.staticmock.MockStaticEntityMethods;
 
 import java.io.IOException;
-import java.util.TimeZone;
 
 /** 
  * test of the wiki-exporter-logic<br>

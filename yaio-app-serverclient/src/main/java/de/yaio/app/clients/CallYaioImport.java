@@ -15,7 +15,6 @@ package de.yaio.app.clients;
 
 import de.yaio.commons.cli.CmdLineJob;
 import de.yaio.commons.config.ConfigurationOption;
-import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.lang3.StringUtils;

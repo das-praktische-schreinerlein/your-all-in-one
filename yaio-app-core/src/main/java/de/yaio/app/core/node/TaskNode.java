@@ -38,7 +38,7 @@ import java.util.Date;
 @Entity
 public class TaskNode extends BaseNode implements ExtendedWorkflowData {
     @Transient
-    protected static TaskNodeService nodeDataService = TaskNodeService.getInstance();
+    private static TaskNodeService nodeDataService = TaskNodeService.getInstance();
 
     @XmlTransient
     @JsonIgnore
@@ -86,6 +86,7 @@ public class TaskNode extends BaseNode implements ExtendedWorkflowData {
     public void resetExtendedWorkflowData() {
     }
 
+    @Override
     public String toString() {
         return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
